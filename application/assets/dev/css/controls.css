@@ -1,0 +1,122 @@
+.row.iconize .cell > .fa {
+    margin-top: 6px;
+    font-size: 22px;
+    color: #bc3402;
+    display: block;
+    text-align: center;
+    text-shadow: 0 0 3px rgba(0,0,0,0.4);
+}
+
+.form_input {
+    display: block;
+    width: 100%;
+    border-left: 1px solid #bc3402;
+    border-bottom: 2px solid #bc3402;
+    border-right: 1px solid #bc3402;
+    border-top: none;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    margin-top: 4px;
+    background: linear-gradient(to bottom, #fff6bf 0%, #fff7e8 19%,#fff7e8 100%);
+    transition: all 0.1s;
+}
+
+input[type=checkbox].form_input {
+    display: inline-block;
+    width: auto;
+}
+
+.form_input:focus {
+    box-shadow: 0 3px 3px rgba(0,0,0,0.2);
+    background: #ffdcda 19%;
+}
+
+.form_input > .fa {
+    color: #bc3402;
+    width: 16px;
+    display: inline-block;
+}
+
+.form_input > input {
+    border: none;
+    background: none;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    width: calc(100% - 20px);
+}
+
+.form_input.form_input-disabled, .form_input[disabled] {
+    border-left: 1px solid #8d8d8d;
+    border-bottom: 2px solid #8d8d8d;
+    border-right: 1px solid #8d8d8d;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+.btn {
+    display: block;
+    white-space: nowrap;
+    position: relative;
+    background: #940202;
+    border: 1px solid #520202;
+    padding: 3px 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #fff6bf;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.80);
+    border-radius: 3px;
+    box-shadow: 0 0 1px 1px rgba(210, 60, 2, 0.80) inset, 0 1px 0 rgba(0,0,0,.3);
+    cursor: pointer;
+    text-align: center;
+    overflow: hidden;
+}
+
+.btn.btn-icon {
+    padding-left: 39px;
+}
+
+
+.btn:hover {
+    background: #bc3402;
+}
+
+.btn:active {
+    box-shadow: 0 0 4px 2px rgba(0,0,0,.3) inset;
+    position: relative;
+    top: 1px;
+}
+
+.btn:focus {
+    outline: 0;
+    background: #fafafa;
+}
+
+.btn.btn-icon > .btn-icon-inner {
+    display: inline-block;
+    position: absolute;
+    background: rgba(186, 186, 186, 0.45);
+    height: 500px;
+    left: 0;
+    top: 0;
+    width: 36px;
+    border-right: 1px solid rgba(188, 188, 188, 0.30);
+    padding-top: 5px;
+    text-align: center;
+    text-shadow: none;
+}
+
+.btn.btn-disabled {
+    background: #c8bcbd;
+    color: #797979;
+    box-shadow: 0 0 1px 1px rgba(188, 188, 188, 0.80) inset, 0 1px 0 rgb(200,200,200);
+    text-shadow: 0 1px 0 rgba(245, 245, 245, 0.80);
+    pointer-events: none;
+    cursor: not-allowed;
+    border: 1px solid #8a8a8a;
+}
+
+.btn.btn-icon.btn-disabled > .btn-icon-inner {
+    background: rgba(255, 255, 255, 0.45);
+}

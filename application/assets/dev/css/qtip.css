@@ -1,0 +1,10 @@
+.qtip-custom-help {
+    padding: 10px;
+    background: linear-gradient(to bottom, rgba(109,0,25,1) 0%,rgba(72,2,2,1) 100%);
+    border: 3px solid #480202;
+    box-shadow: 0 0 10px black;
+}
+
+.qtip-custom-help .qtip-content {
+    text-align: justify;
+}

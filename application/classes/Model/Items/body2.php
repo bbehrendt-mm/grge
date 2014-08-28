@@ -1,0 +1,53 @@
+<?php defined('SYSPATH') OR die('No direct access allowed.');
+
+class Model_Items_Body2 extends Model_Items_Abstract_Item implements Interface_Static {
+
+	protected static $static_info = Array(
+			'name' => 'Zerfetzter Zombie',
+			'icon' => 'body2',
+			'description' => 'Dieses Ding riecht noch gammeliger als gewöhnliche Leichen. Vermutlich sind es die Überreste eines Zombies, allerdings kann man das bei dieser Fleischpampe schwer sagen. Na, macht das Teil nicht Appetit?',
+			'category' => Model_Items_Abstract_Item::MIAI_CAT_FOOD,
+	);
+	
+	protected static $weight = 75;
+	
+	public function __construct($name = null, $desc = null) {
+		parent::__construct();
+		if ($name) $this->custom_info["name"] = $name;
+		if ($desc) $this->custom_info["description"] = $desc;	
+	}
+
+    protected function hid() {
+        return parent::hid()
+            ->add_action('Fressen', Model_Action::factory()
+                    ->effect(
+                        Model_Effect::factory()
+                            ->effect(Model_Player::MP_STAT_HUNGER, 100)
+                            ->effect(Model_Player::MP_STAT_HEALTH, -90)
+                            ->effect(Model_Player::MP_STAT_ZOMBIFY, 10)
+                            ->consume($this)
+                            ->achieve(Model_Achievement::MA_BODY_EATER)
+                            ->spawn('Model_Items_Generic_Bone3')
+                            ->message('Ohje, wer hätte das gedacht? Du hast dieses völlig verseuchte Stück Zombiefleisch runtergeschlungen und dich mit der Zombiekrankheit infiziert. Welch eine Überraschung!')
+                    )
+            );
+    }
+	
+	public function mixchem($chemval) {
+        /**
+         * @global $player Model_Player
+         */
+		global $player;
+
+		if ($chemval == 1) {
+			$player->log()->add(new Model_Log_Types_Text(null, null, 'Die Chemikalie ätzt der Leiche das Fleisch von den Knochen! Es bleibt ledigtlich etwas Blut zurück... und ein perfekt erhaltenes Skelett!'));
+			$player->location()->inventory()->add(new Model_Items_Generic_Bone3);
+			$player->location()->inventory()->add(new Model_Items_Generic_Waterb());
+			$this->consume();
+			return true;
+		} else {
+			$player->log()->add(new Model_Log_Types_Text(null, null, 'Der zerfetzte Körper der Leiche saugt die Chemikalie auf, aber du kannst keine Veränderung feststellen ...'));
+			return false;
+		}
+	}
+}	

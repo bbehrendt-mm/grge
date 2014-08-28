@@ -1,0 +1,138 @@
+h1 {
+    font-family: 'Exo 2', sans-serif;
+    margin: 0 0 10px 0;
+    padding: 5px 0 5px 40px;
+    background: #670202;
+    background: linear-gradient(to right, rgb(103,2,2) 0%,rgb(103,2,2) 53%, rgb(148, 2, 2) 100%);
+    color: rgb(255, 246, 191);
+    text-shadow: 0 1px 0 #9d2a02, 0 -1px 0 #9d2a02, 1px 0 0 #9d2a02, -1px 0 0 #9d2a02, 1px 1px 0 #9d2a02, -1px -1px 0 #9d2a02, -1px 1px 0 #9d2a02, 1px -1px 0 #9d2a02;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+
+h1 > .fa {
+    margin-right: 16px;
+}
+
+h2 {
+    margin: 5px 0 10px 4px;
+    color: #9d2a02;
+    text-shadow: 0 0 3px rgba(0,0,0,0.4);
+}
+
+h2:first-child {
+    margin-top: 0;
+}
+
+#content > h1:first-child::after {
+    display: block;
+    width: 910px;
+    height: 5px;
+    position: relative;
+    top: 5px;
+    left: -45px;
+    background-color: #670202;
+    content: " ";
+    box-shadow: 0 0 2px black;
+}
+
+.help {
+    background-color: #670202;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: justify;
+    font-size: 13px;
+    border: 2px solid #9d2a02;
+    color: #ffb797;
+}
+
+.help h4 {
+    margin: 9px 0;
+    color: white;
+    position: relative;
+}
+
+.help h4::before {
+    color: white;
+    display: inline-block;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    content: "\f02d";
+    margin-right: 12px;
+}
+
+.help h4::after {
+    color: #FFF;
+    display: inline-block;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    content: "\f05a";
+    margin-right: 12px;
+    position: absolute;
+    font-size: 128px;
+    right: 0;
+    opacity: 0.1;
+    pointer-events: none
+}
+
+.mugshot {
+    display: inline-block;
+    background: white;
+    box-shadow: 0 0 5px black;
+    width: 104px;
+    position: relative;
+    border: 2px solid #dddddd;
+    cursor: pointer;
+}
+
+.mugshot > img {
+    height: 100px;
+    width: 100px;
+}
+
+.mugshot:hover {
+    background: #ffb797;
+    border: 2px solid #d23c02;
+}
+
+.mugshot > span {
+    display: block;
+    font-size: 11px;
+    text-align: center;
+}
+
+.mugshot .mugshot-head {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255,255,255,0.5);
+    font-family: "Strait",sans-serif;
+}
+
+.mugshot .mugshot-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    font-size: 30px;
+    padding-top: 30px;
+}
+
+.mugshot .mugshot-append {
+    font-weight: bold;
+}
+
+

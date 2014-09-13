@@ -5303,4 +5303,26 @@ return array (
 	'Bitte warten...',
   'Willkommen bei ZombVival' =>
 	'Willkommen bei ZombVival',
+  ':error' =>
+	':error',
+  'Die Seite konnte nicht geladen werden!' =>
+	'Die Seite konnte nicht geladen werden!',
+  'Leider wurde diese Seite noch nicht für ::b::ZombVival Evolution::/b:: überarbeitet. Bitte kehre zur ::i::klassischen ZombVival-Webseite::/i:: zurück, um diese Seite aufzurufen.' =>
+	'Leider wurde diese Seite noch nicht für ::b::ZombVival Evolution::/b:: überarbeitet. Bitte kehre zur ::i::klassischen ZombVival-Webseite::/i:: zurück, um diese Seite aufzurufen.',
+  'Zur klassischen Webseite' =>
+	'Zur klassischen Webseite',
+  'Die Zombies freuen sich schon darauf, dich zu sehen...' =>
+	'Die Zombies freuen sich schon darauf, dich zu sehen...',
+  'Willkommen, :name!' =>
+	'Willkommen, :name!',
+  'Bis bald!' =>
+	'Bis bald!',
+  'Komm bald zurück! Die Zombies fühlen sich sonst so einsam...' =>
+	'Komm bald zurück! Die Zombies fühlen sich sonst so einsam...',
+  'Spielmodus' =>
+	'Spielmodus',
+  'Season :num' =>
+	'Season :num',
+  'Bob der Zombie' =>
+	'Bob der Zombie',
 );

@@ -4,7 +4,10 @@
         <img class="pointer" src="media/icons/lang/en.png" alt="en" title="<b>English</b><br />Translation by Brainbox" />
     </div>
 
+    <div class="navsection navtext" id="main-menu"></div>
 </div>
+
+<div id="notifications"></div>
 
 <div id="wrapper">
     <div></div>

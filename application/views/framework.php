@@ -11,8 +11,6 @@
     <link rel="icon" href="media/fav/favicon.ico" sizes="16x16 24x24 32x32 48x48 256x256" />
     <title>ZombVival Evolved!</title>
 
-    <link href='http://fonts.googleapis.com/css?family=Strait|Open+Sans|Exo+2:400,900' rel='stylesheet' type='text/css'>
-
     <!-- Make all the apple mindslaves happy -->
     <link rel="apple-touch-icon" sizes="57x57" href="media/fav/apple_small.png" />
     <link rel="apple-touch-icon" sizes="72x72" href="media/fav/apple_medium.png" />
@@ -27,6 +25,7 @@
     <script type="application/javascript" src="js/jquery.qtip.min.js" ></script>
     <script type="application/javascript" src="js/jquery.transform2d.js" ></script>
     <script type="application/javascript" src="js/jquery.topzindex.min.js" ></script>
+    <script type="application/javascript" src="js/rasterizeHTML.allinone.js" ></script>
     <script type="application/javascript" src="js/zombvival.min.js" ></script>
 
 
@@ -36,12 +35,25 @@
 </head>
 <body>
 
-    <div id="boot">
+    <div id="boot" style="display: none">
         <b>ZombVival Evolution</b>
         <i class="fa fa-spin fa-circle-o-notch"></i>
     </div>
 
+    <div id="nojs">
+        <b><?=__('JavaScript erforderlich');?></b>
+        <i class="fa fa-exclamation-triangle"></i>
+        <span><?=__(
+        'Bitte lasse die Verwendung von JavaScript für die Domain :domain zu und überprüfe, ob dein Internetbrowser auf dem neusten Stand ist. Solltest du diese Meldung trotz aktiviertem JavaScript und aktuellem Browser angezeigt bekommen, melde dich bitte bei :admin.',
+        array(
+        ':domain' => '<i>zvg.boerde.de</i>',
+        ':admin' => '<a href="mailto:kontakt@ruine.dvspot.de">Brainbox</a>',
+        ));?></span>
+    </div>
+
     <script type="text/javascript">
+        document.getElementById('boot').style.display = 'block';
+        document.getElementById('nojs').style.display = 'none';
         window.addEventListener('load',function(){
             game.network.load('web/body',{},true);
         });

@@ -2,8 +2,11 @@ goog.provide('game');
 
 game = { 
     temp: {},
-    clean: function() {
-        game.temp = {};
+    clean: function(skip_temp) {
+        if (!skip_temp) {
+            game.temp = {};
+            $('.canvasHTML').remove();
+        }
         game.render.html.modal.unblend(0, true);
     },
 
@@ -26,3 +29,17 @@ game = {
         } else return cfg;
     }
 };
+
+//jQuery Overrides
+(function() {
+
+    var injectCleaner = function(jqFuncName) {
+        var backup = jQuery.fn[jqFuncName];
+        jQuery.fn[jqFuncName] = function() {
+            $(this).find('*[data-hasqtip]').qtip('destroy',true);
+            return backup.apply(this,arguments);
+        };
+    };
+
+    $.each(['html','empty','remove'],function(k,v) {injectCleaner(v)});
+})();

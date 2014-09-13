@@ -135,4 +135,25 @@ h2:first-child {
     font-weight: bold;
 }
 
+.inline-player {
+    display: inline-block;
+    white-space: nowrap;
+    position: relative;
+    background: #337b94;
+    border: 1px solid #2c677e;
+    color: #fff6bf;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.80);
+    border-radius: 3px;
+    box-shadow: 0 0 1px 1px rgba(140, 200, 210, 0.80) inset, 0 1px 0 rgba(0,0,0,.3);
+    cursor: default;
+    padding: 0 4px;
+    margin: 2px;
+}
+
+.inline-player::before {
+    font-family: FontAwesome;
+    content: "\f007";
+    margin-right: 3px;
+}
+
 

@@ -8,11 +8,11 @@ class Controller_Landing extends Controller {
             $this->redirect(URL::site('account/login', 'http'));
 
         //Check if user has a game going on, and send him to game setup page if he is not
-        /*if (!$this->session->get('game',NULL))
+        //if (!$this->session->get('game',NULL))
             $this->redirect(URL::site('lobby/main', 'http'));
 
         //Redirect to game system
-        $this->redirect(URL::site('game/redirect', 'http'));*/
+        //$this->redirect(URL::site('game/redirect', 'http'));
     }
 
 }

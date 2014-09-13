@@ -12,6 +12,8 @@ class Controller_Account extends Controller {
             ->set('services', $services)
             ->render());
 
+        $this->add_widget('main-menu', View::factory('menus/login')->render());
+
         $this->render();
     }
 
@@ -108,18 +110,28 @@ class Controller_Account extends Controller {
                 }
             }
 
-            $this->render(['login' => [
-                'user' => $user->uid(),
-                'name' => $user->name(),
-                'region' => $region,
-                'mtid' => $mtid,
-                'avatar' => $avatar,
-                'host' => $host,
-                'key' => $key
-            ]]);
+            $this->render([
+                'redirect' => 'lobby/main',
+                'login' => [
+                    'user' => $user->uid(),
+                    'name' => $user->name(),
+                    'region' => $region,
+                    'mtid' => $mtid,
+                    'avatar' => $avatar,
+                    'host' => $host,
+                    'key' => $key
+                    ]
+                ]);
         }
         else return $this->error(\grge\E_AUTH_PROFILE_DAMAGED);
 
         return true;
+    }
+
+    public function japi_logout() {
+        $this->session->destroy();
+        $this->render([
+            'redirect' => 'account/login',
+        ]);
     }
 }

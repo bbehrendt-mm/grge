@@ -7,52 +7,65 @@ game.render.html = {
 
         var target;
         switch (id) {
-            case ':body': target = $('body'); break;
+            case ':body':
+                target = $('body');
+                break;
             default: target = $('#'+id); break;
         }
 
         if (!target.length) return;
 
-        // Embed HTML into main container
-        target.html(content);
+        //target.find('*[data-hasqtip]').qtip('destroy',true);
+        target.empty().html(content);
     },
 
-    qtip: {
-        lang: function() {
-            return {
-                style: {
-                    classes: 'qtip-tipsy qtip-shadow qtip-rounded'
-                },
-                position: {
-                    my: 'top left',
-                    at: 'bottom center'
-                }
-            }
-        },
+    notify: function(type, content, title, custom_timeout) {
+        if (!custom_timeout)
+            custom_timeout = 10000;
 
-        help: function($pos) {
-            var m = {my: 'right center', at: 'left center'};
-            switch ($pos) {
-                case 'left': m = {my: 'right center', at: 'left center'}; break;
-                case 'right': m = {my: 'left center', at: 'right center'}; break;
-                case 'top': m = {my: 'bottom center', at: 'top center'}; break;
-                case 'bottom': m = {my: 'top center', at: 'bottom center'}; break;
-            }
-            return {
-                style: {
-                    classes: 'qtip-tipsy qtip-shadow qtip-rounded qtip-custom-help'
-                },
-                position: {
-                    my: m.my,
-                    at: m.at,
-                    viewport: $(window),
-                    container: $('#content'),
-                    adjust: {
-                        method: 'shift none'
-                    }
-                }
-            }
-        }
+        var notification  = $('<div class="' + type + '"><div></div><div>' + content + '</div></div>');
+        if (title)
+            notification.find('> div:last-child').prepend('<b class="headline">' + title + '</b>');
 
+        notification.appendTo('#notifications').css({
+            width: 96,
+            'margin-left': 252,
+            opacity: 0,
+            transform: 'scale(0.5)'
+        }).animate({
+            opacity: 1,
+            transform: 'scale(1)'
+        }, 200, 'swing', function() {
+            notification.animate({
+                width: 600,
+                'margin-left': 0
+            }, 300, 'swing');
+        }).click(function() {
+            notification.animate({
+                width: 96,
+                'margin-left': 252
+            }, 200, 'swing', function() {
+                notification.animate({
+                    opacity: 0,
+                    transform: 'scale(0.5)'
+                }, 100, 'swing', function() {
+                    notification.css({
+                        transform: 'scale(1)',
+                        'min-height': 0
+                    }).animate({
+                        height: 0
+                    }, 100, 'swing', function() {
+                        notification.remove();
+                    })
+                })
+            })
+        }).mouseleave(function() {
+            var timeout_id = window.setTimeout(function() {
+                notification.trigger('click');
+            }, custom_timeout);
+            notification.off('mouseenter').on('mouseenter',function() {
+                window.clearTimeout(timeout_id);
+            })
+        }).trigger('mouseleave');
     }
 };

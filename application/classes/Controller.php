@@ -7,32 +7,53 @@ abstract class Controller extends Kohana_Controller {
      */
     protected $session;
     protected static $force_ajax = true;
+    protected static $force_login = false;
+    protected static $menu = null;
     private $widgets = array();
+    private $notifications = array();
+
+    protected function is_ajax_request() {
+        return ($this->request->headers('X-Requested-With') == 'XMLHttpRequest' );
+    }
 
     protected function force_ajax() {
-        if ($this->request->headers('X-Requested-With') != 'XMLHttpRequest' )
+        if (!$this->is_ajax_request())
             die(Error::m(\grge\E_HTTP_AJAX_REQUIRED));
+    }
+
+    protected function get_user_obj() {
+        global $user;
+        if (empty($user))
+            $user = $this->session->get('user',NULL);
+
+        return !empty($user);
+    }
+
+    protected function force_login() {
+        Error::i();
+        global $user;
+        if (!$this->get_user_obj())
+            die($this->is_ajax_request() ? $this->error(\grge\E_SERVER_INVALID_SESSION) : Error::m(\grge\E_SERVER_INVALID_SESSION));
     }
 
     public function before() {
         //Init error class
         Error::i();
 
-        //AJAX check
+        //Check AJAX
         if (static::$force_ajax)
             $this->force_ajax();
+
+        //Load session, perform session checks
+        $this->session = Session::instance();
+        if (static::$force_login)
+            $this->force_login();
 
         //Avoid caching!
         $this->response->headers("Cache-Control: no-cache, must-revalidate");
         $this->response->headers("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
 
-
-
         //TODO: Maintenance Mode
-
-        $this->session = Session::instance();
-
-        //TODO: Call security
     }
 
     public function action_japi() {
@@ -47,16 +68,35 @@ abstract class Controller extends Kohana_Controller {
         else return $this->error(\grge\E_HTTP_REQUEST_INVALID);
     }
 
+    private function render_defaults() {
+        if (!isset($this->widgets['main-menu']) && static::$menu)
+            $this->add_widget('main-menu', View::factory('menus/' . static::$menu)->render());
+    }
+
     protected function add_widget($widget, $content = null) {
         if ($content === null) $this->widgets['content'] = $widget;
         else $this->widgets[$widget] = $content;
     }
 
+    protected function add_note($type, $content = null, $title = false) {
+        if ($content === null) $this->notifications[] = array('type' => '', 'content' => $title, 'title' => false);
+        else $this->notifications[] = array('type' => $type, 'content' => $content, 'title' => $title);
+    }
+
     protected function render($obj = null) {
         $this->response->headers('Content-Type', 'application/json');
 
-        $tmp = ($obj === null) ? array('content' => $this->widgets) : $obj;
-        $this->response->body(json_encode($tmp, JSON_FORCE_OBJECT));
+        if ($obj === null) {
+            $this->render_defaults();
+            $obj = array();
+        }
+
+        if (empty($obj['content']) && !empty($this->widgets))
+            $obj['content'] = $this->widgets;
+        if (empty($obj['notifications']) && !empty($this->notifications))
+            $obj['notifications'] = $this->notifications;
+
+        $this->response->body(json_encode($obj, JSON_FORCE_OBJECT));
     }
 
     protected function error($c, $additional_data = null) {

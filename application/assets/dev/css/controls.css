@@ -71,6 +71,7 @@ input[type=checkbox].form_input {
     cursor: pointer;
     text-align: center;
     overflow: hidden;
+    text-decoration: none;
 }
 
 .btn.btn-icon {
@@ -90,7 +91,7 @@ input[type=checkbox].form_input {
 
 .btn:focus {
     outline: 0;
-    background: #fafafa;
+    background: #ab2b02;
 }
 
 .btn.btn-icon > .btn-icon-inner {

@@ -26,14 +26,22 @@ game.network = {
         game.clean();
         if (!silent) game.render.html.modal.work();
         game.network.query(url,args,function(data) {
+
             if (data.error) {
                 alert(data.error.code + ' [' + data.error.name + ']: ' + data.error.message);
                 window.location.href = "index.php";
                 game.clean();
-            } else $.each(data.content, function(k,v) {
-                game.clean();
-                game.render.html.put(k,v);
-            })
+            } else {
+                if (data.content)
+                    $.each(data.content, function(k,v) {
+                        game.clean(true);
+                        game.render.html.put(k,v);
+                    });
+                if (data.notifications)
+                    $.each(data.notifications, function(k,v) {
+                        game.render.html.notify(v['type'], v['content'], v['title']);
+                    })
+            }
         });
     }
 };

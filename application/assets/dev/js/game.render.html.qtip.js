@@ -17,27 +17,38 @@ game.render.html.qtip = {
         }
     },
 
-    help: function($pos) {
-        var m = {my: 'right center', at: 'left center'};
-        switch ($pos) {
-            case 'left': m = {my: 'right center', at: 'left center'}; break;
-            case 'right': m = {my: 'left center', at: 'right center'}; break;
-            case 'top': m = {my: 'bottom center', at: 'top center'}; break;
-            case 'bottom': m = {my: 'top center', at: 'bottom center'}; break;
+    posify: function(pos) {
+        switch (pos) {
+            case 'left': return {my: 'right center', at: 'left center'};
+            case 'right':return {my: 'left center', at: 'right center'}; break;
+            case 'top': return {my: 'bottom center', at: 'top center'}; break;
+            case 'bottom': return {my: 'top center', at: 'bottom center'}; break;
         }
+    },
+
+    generic: function(pos, classes) {
+        var m = game.render.html.qtip.posify(pos);
         return {
             style: {
-                classes: 'qtip-tipsy qtip-shadow qtip-rounded qtip-custom-help'
+                classes: classes
             },
             position: {
                 my: m.my,
                 at: m.at,
                 viewport: $(window),
-                container: $('#content'),
+                container: $('body'),
                 adjust: {
                     method: 'shift none'
                 }
             }
         }
+    },
+
+    help: function(pos) {
+        return game.render.html.qtip.generic(pos,'qtip-tipsy qtip-shadow qtip-rounded qtip-custom-help');
+    },
+
+    player: function(pos) {
+        return game.render.html.qtip.generic(pos,'qtip-tipsy qtip-shadow qtip-rounded');
     }
 };

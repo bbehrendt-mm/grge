@@ -1,0 +1,139 @@
+<?php defined('SYSPATH') or die('No direct script access.');
+
+class Controller_Ranking extends Controller {
+
+    protected static $force_login = true;
+    protected static $menu = 'logout';
+
+    private function get_ranking_data_sp(&$raw_count, $season = null, $mode = null, $job = null, $flow = null, $player = null, $offset = null, $count = null) {
+        $base_query = DB::select('season', 'gameid', 'points', 'ticks', 'job', 'board', 'start', 'end', 'name', 'ranking.uid')->from('ranking')->join('users')->on('ranking.uid', '=', 'users.uid')->where('users.ban', '=', '0');
+
+        if ($season !== null) $base_query->where('season', '=', $season);
+        if ($mode !== null) $base_query->where('board', '=', $mode);
+        if ($job !== null) $base_query->where('job', '=', $mode);
+        if ($flow !== null) $base_query->where('flow', '=', $flow);
+        if ($player !== null) $base_query->where('users.uid', '=', $player);
+
+        $data = $base_query->order_by('points', 'DESC')->order_by('ticks', 'DESC')->execute()->as_array();
+        $raw_count = count($data);
+        array_unshift($data, true);
+        return array_slice($data, $offset === null ? 1 : (1 + $offset), $count, true);
+    }
+
+    private function get_ranking_data_mp(&$raw_count, $season = null, $mode = null, $offset = null, $count = null) {
+        $base_query = DB::select('ranking_mp.season','ranking_mp.gameid', 'ranking_mp.board', 'ranking_mp.name', 'ranking_mp.points', 'users.uid', array('ranking.ticks', 'pticks'),array('ranking.points', 'ppoints'), array('ranking.job', 'job'), array('users.name', 'player'))->from('ranking_mp')->join('ranking', 'LEFT')->on('ranking_mp.gameid', '=', 'ranking.gameid')->on('ranking_mp.season', '=', 'ranking.season')->join('users', 'LEFT')->on('ranking.uid', '=', 'users.uid');
+
+        if ($season !== null) $base_query->where('ranking_mp.season', '=', $season);
+        if ($mode !== null) $base_query->where('ranking_mp.board', '=', $mode);
+
+        $data = $base_query->order_by('ranking_mp.points', 'DESC')->order_by('ranking_mp.points', 'DESC')->execute()->as_array();
+
+        $ranks = Array();
+        foreach ($data as $line) {
+            $adr = "{$line['season']}-{$line['gameid']}";
+            if (!isset($ranks[$adr]))
+                $ranks[$adr] = array();
+
+            $ranks[$adr][] = $line;
+        }
+        $ranks = array_values($ranks);
+
+        $raw_count = count($ranks);
+        array_unshift($ranks, true);
+        return array_slice($ranks, $offset === null ? 1 : (1 + $offset), $count, true);
+    }
+
+    private function convert_data($lists, $is_mp = false) {
+        return $is_mp ? array_map(function($element) {
+            $tmp = [
+                'season'    => $element[0]['season'],
+                'id'        => $element[0]['gameid'],
+                'score'     => $element[0]['points'],
+                'name'      => $element[0]['name'],
+                'duration'  => false,
+                'mode'      => __(Tool_Modes::get_mode_by_id($element[0]['board'])),
+                'players'   => []
+            ];
+
+            if ($element[0]['uid'])
+                foreach ($element as $sub)
+                    $tmp['players'][] = [
+                        'name'  => $sub['player'],
+                        'id'    => $sub['uid'],
+                        'job'   => __(Tool_Modes::get_job_by_id($sub['job'])),
+                        'life'  => Tool_Numerics::duration_to_string($sub['pticks']),
+                        'score' => $sub['ppoints']
+                    ];
+
+            return $tmp;
+        }, $lists) : array_map(function($element) {
+            return [
+                'season'    => $element['season'],
+                'id'        => $element['gameid'],
+                'score'     => $element['points'],
+                'name'      => false,
+                'duration'  => Tool_Numerics::duration_to_string($element['ticks']),
+                'mode'      => __(Tool_Modes::get_mode_by_id($element['board'])),
+                'players'   => [[
+                    'name'  => $element['name'],
+                    'id'    => $element['uid'],
+                    'job'   => __(Tool_Modes::get_job_by_id($element['job'])),
+                    'life'  => Tool_Numerics::duration_to_string($element['ticks']),
+                    'score' => $element['points']
+                ]]
+            ];
+        }, $lists);
+    }
+
+    public function japi_single() {
+        $season = $this->request->current()->post('season');
+        $mode = $this->request->current()->post('mode');
+        $time = $this->request->current()->post('time');
+        $offset = $this->request->current()->post('offset');
+        $length = $this->request->current()->post('length');
+
+        if (!isset($season, $mode, $time, $offset, $length))
+            return $this->error(\grge\E_HTTP_REQUEST_INCOMPLETE);
+
+        $ranks = $this->get_ranking_data_sp($count, $season, $mode, null, $time, null, $offset, $length);
+        $this->render([
+            'games' => $count,
+            'ranking' => $this->convert_data($ranks)
+        ]);
+
+        return true;
+    }
+
+    public function japi_multi() {
+        $season = $this->request->current()->post('season');
+        $mode = $this->request->current()->post('mode');
+        $offset = $this->request->current()->post('offset');
+        $length = $this->request->current()->post('length');
+
+        if (!isset($season, $mode, $offset, $length))
+            return $this->error(\grge\E_HTTP_REQUEST_INCOMPLETE);
+
+        $ranks = $this->get_ranking_data_mp($count, $season, $mode, $offset, $length);
+        $this->render([
+            'games' => $count,
+            'ranking' => $this->convert_data($ranks, true)
+        ]);
+
+        return true;
+    }
+
+    public function action_lists() {
+
+        $converter = function($meta) {
+            return __($meta['name']);
+        };
+
+        $this->add_widget(View::factory('pages/ranking')
+            ->set('season', Kohana::$config->load('server.season'))
+            ->set('sp_modes', array_map($converter, Tool_Modes::config_get_modes('single')))
+            ->set('mp_modes', array_map($converter, Tool_Modes::config_get_modes(['multi_auto','multi_custom'])))
+            ->render()
+        );
+        $this->render();
+    }
+}

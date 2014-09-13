@@ -63,6 +63,26 @@ if (!isset($services)) $services = array();
     </div>
 </div>
 <script type="application/javascript">
+    var login = function(key, service,remember, fail_callback) {
+        game.network.query('/japi/account/login', {key: key, service: service}, function(data) {
+            if (data.error) {
+                alert(data.error.code + ' [' + data.error.name + ']: ' + data.error.message);
+
+                fail_callback();
+
+            } else {
+                game.network.load(data.redirect);
+                game.render.html.notify('smile', '<?=__('Die Zombies freuen sich schon darauf, dich zu sehen...');?>', game.i18n('<?=__('Willkommen, :name!');?>', {':name': data.login.name}), 4000);
+
+                if (remember) {
+                    var profiles = game.storage.get('login','profiles',{});
+                    profiles[data.login.user] = data.login;
+                    game.storage.set('login','profiles',profiles);
+                }
+            }
+        });
+    };
+
     $('#delete').click(function() {
         if (!confirm('<?=__('Bist du sicher?');?>'))
             return;
@@ -83,19 +103,15 @@ if (!isset($services)) $services = array();
         var mugshot = $('<div class="mugshot"><span class="mugshot-head">' + v.host + '</span><span class="mugshot-fill"><i class="fa fa-spin fa-circle-o-notch"></i></span><img alt="" src="' + v.avatar + '" /><span class="mugshot-append">' + v.name + '</span></div>');
         mugshot.find('.mugshot-fill').hide();
         mugshot.click(function() {
+            var alias = $(this);
             $('#content').find('.mugshot').addClass('disabled');
             $('#custom').addClass('btn-disabled');
-            $(this).find('.mugshot-fill').show();
+            alias.find('.mugshot-fill').show();
 
-            game.network.query('/japi/account/login', {key: v.key, service: v.host}, function(data) {
-                if (data.error) {
-                    alert(data.error.code + ' [' + data.error.name + ']: ' + data.error.message);
-
-                    $('#custom').addClass('btn-disabled');
-                    $('#content').find('.mugshot').removeClass('disabled');
-                } else {
-                    //TODO: Redirect
-                }
+            login(v.key, v.host, false, function() {
+                $('#custom').addClass('btn-disabled');
+                $('#content').find('.mugshot').removeClass('disabled');
+                alias.find('.mugshot-fill').hide();
             });
         });
 
@@ -116,30 +132,19 @@ if (!isset($services)) $services = array();
             return;
         }
 
-        $(this).addClass('btn-disabled').find('.fa').attr('class','fa fa-spin fa-circle-o-notch');
-        $(this).find('#confirm-content').html('<?=__('Bitte warten...');?>');
+        var alias = $(this);
+        alias.addClass('btn-disabled').find('.fa').attr('class','fa fa-spin fa-circle-o-notch');
+        alias.find('#confirm-content').html('<?=__('Bitte warten...');?>');
 
         $('#content').find('.form_input').attr('disabled', 'disabled');
 
-        game.network.query('/japi/account/login', {key: key, service: service}, function(data) {
-            if (data.error) {
-                alert(data.error.code + ' [' + data.error.name + ']: ' + data.error.message);
+        login(key, service, $('#remember').is(':checked'), function() {
+            var confirm = $('#confirm');
+            confirm.removeClass('btn-disabled').find('.fa').attr('class','fa fa-arrow-right');
+            confirm.find('#confirm-content').html('Einloggen');
 
-                var confirm = $('#confirm');
-                confirm.removeClass('btn-disabled').find('.fa').attr('class','fa fa-arrow-right');
-                confirm.find('#confirm-content').html('Einloggen');
-
-                $('#content').find('.form_input').removeAttr('disabled');
-            } else {
-                //TODO: Redirect
-
-                if ($('#remember').is(':checked')) {
-                    var profiles = game.storage.get('login','profiles',{});
-                    profiles[data.login.user] = data.login;
-                    game.storage.set('login','profiles',profiles);
-                }
-            }
-        })
+            $('#content').find('.form_input').removeAttr('disabled');
+        });
     });
 </script>
 

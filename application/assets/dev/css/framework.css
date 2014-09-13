@@ -5,7 +5,7 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
-#boot {
+#boot, #nojs {
     position: relative;
     background: rgba(72, 2, 2, 0.51);
     border: 1px solid #880202;
@@ -20,16 +20,25 @@ body {
     width: 700px;
 }
 
-#boot > b {
+#boot > b, #nojs > b {
     display: block;
     font-size: 30px;
 }
 
-#boot > i.fa {
+#boot > i.fa, #nojs > i.fa {
     display: block;
     font-size: 60px;
     margin: 10px;
     text-shadow: none;
+}
+
+#nojs > span {
+    text-align: justify;
+    display: block;
+}
+
+#nojs a {
+    color: #fff6bf;
 }
 
 #navbar {
@@ -43,8 +52,96 @@ body {
     z-index: 100;
 }
 
+#navbar > .navsection {
+    display: inline-block;
+    color: #fff6bf;
+}
+
 #navbar > .navsection.navtext {
     margin: 0 5px;
+}
+
+#navbar #main-menu {
+    font-family: "Exo 2",sans-serif;
+    font-weight: bold;
+    font-variant: small-caps;
+}
+
+#navbar #main-menu > span {
+    display:  inline-block;
+    text-align: center;
+    cursor: pointer;
+    width: 150px;
+}
+
+#navbar #main-menu > span:hover {
+    background: rgba(255,255,255,0.3);
+    text-shadow: 0 0 3px black;
+}
+
+#notifications {
+    position: fixed;
+    width: 600px;
+    z-index: 200;
+    top: 30px;
+    left: calc(50% - 300px);
+    text-align: center;
+    overflow: visible;
+    pointer-events: none;
+}
+
+#notifications > div {
+    background: #524d49;
+    position: relative;
+    display: block;
+    text-align: justify;
+    color: white;
+    overflow: hidden;
+    pointer-events: auto;
+    box-shadow: 0 0 2px black;
+    cursor: pointer;
+}
+
+#notifications > div + div {
+    margin-top: 4px;
+}
+
+#notifications > div > div:first-child {
+    height: 96px;
+    width: 96px;
+    background: #0066CC;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 5px;
+    text-align: center;
+}
+#notifications > div > div:first-child::after {
+    font-family: FontAwesome;
+    font-size: 76px;
+}
+
+#notifications > div > div:last-child {
+    width: 600px;
+    min-height: 96px;
+    padding: 4px 4px 4px 100px;
+}
+
+#notifications > div > div:last-child > b.headline {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 4px;
+    font-size: 18px;
+    text-shadow: 0 0 2px #fffde6;
+}
+
+#notifications > div.smile > div:first-child {
+    background: #ff6600;
+    color: #100C0B;
+
+}
+#notifications > div.smile > div:first-child::after {
+    content: "\f118";
 }
 
 #wrapper {
@@ -79,6 +176,7 @@ body {
 
 #content {
     padding: 5px 0;
+    overflow: visible;
 }
 
 #disclaimer {

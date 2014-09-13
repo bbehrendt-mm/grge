@@ -7,6 +7,7 @@ define('grge\E_HTTP_REQUEST_INVALID', 'GRGE-0000-0002');
 define('grge\E_CLIENT_CONNECTION_TIMEOUT', 'GRGE-0001-0000');
 
 define('grge\E_SERVER_ERROR', 'GRGE-0002-0000');
+define('grge\E_SERVER_INVALID_SESSION', 'GRGE-0002-0001');
 
 define('grge\E_AUTH_INVALID_PROVIDER', 'GRGE-0003-0000');
 define('grge\E_AUTH_CONNECTION_FAILED', 'GRGE-0003-0001');
@@ -49,6 +50,7 @@ class Error {
             case grge\E_CLIENT_CONNECTION_TIMEOUT:      return "Connection timed out.";
 
             case grge\E_SERVER_ERROR:                   return "Unexpected error while processing the request.";
+            case grge\E_SERVER_INVALID_SESSION:         return "Inconsistent session data, client reset required!";
 
             case grge\E_AUTH_INVALID_PROVIDER:          return "Remote authentication provider is invalid.";
             case grge\E_AUTH_CONNECTION_FAILED:         return "Connection to remote authentication provider failed.";

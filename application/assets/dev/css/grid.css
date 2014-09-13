@@ -62,3 +62,26 @@
 .row > .cell.ro-10 {margin-left: 83.33333333%;}
 .row > .cell.ro-11 {margin-left: 91.66666667%;}
 .row > .cell.ro-12 {margin-left: 100.0000000%;}
+
+.row-table.padded {
+    margin: 5px;
+}
+
+.row-table.row-table-borders {
+    border: 2px solid #520202;
+    border-radius: 2px;
+}
+
+.row-table.row-table-striped > .row:nth-child(odd) {
+    background: rgba(0, 0, 0, 0.10);
+}
+
+.row-table.row-table-interact > .row:hover {
+    background: rgba(0, 0, 0, 0.19);
+}
+
+.row-table > .row:first-child {
+    background: #520202 !important;
+    color: white;
+    font-weight: bold;
+}

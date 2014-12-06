@@ -2,8 +2,8 @@
 
 class Model_User extends Model {
 
-	private $set;
-	private $sid;
+	protected $set;
+    protected $sid;
 
 	public function __sleep() {
 		return array('set', 'sid');
@@ -15,7 +15,7 @@ class Model_User extends Model {
 		$user = $this;
 	}
 	
-	final public function __construct($session_id) {
+	public function __construct($session_id) {
 		//Bind global user variable
 		global $user;
 		$user = $this;	

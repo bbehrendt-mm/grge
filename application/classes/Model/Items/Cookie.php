@@ -24,17 +24,20 @@ class Model_Items_Cookie extends Model_Items_Abstract_Item implements Interface_
     }
 	
 	public function mixchem($chemval) {
-		global $game, $player;
-		
-		$this->consume();	
-		if ($chemval > 3) {
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Du tunkst das Plätzchen in die Chemikalie - und beginnt zu blubbern und löst sich vor deinen Augen auf! So ein Ärger, das wirst du wohl nicht mehr essen können...'));
-			return false;
-		} else {
-			$player->location()->inventory()->add(new Model_Items_Cookie2);
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Du tunkst das Plätzchen in die Chemikalie - und beginnt zu blubbern, während die Chemikalie langsam vom Plätzchenteig aufgenommen wird. Ob du dieses Plätzchen noch .... essen kannst?'));
-			return true;
-		}
+        $this->consume();
+        switch ($chemval)
+        {
+            case 4:case 5:case 6:case 8:case 10:case 12:
+                Tool_Scripts::chem_reaction(
+                    'Du tunkst das Plätzchen in die Chemikalie - und beginnt zu blubbern und löst sich vor deinen Augen auf! So ein Ärger, das wirst du wohl nicht mehr essen können...',
+                    $chemval,$this);
+                return false;
+            default:
+                Tool_Scripts::chem_reaction(
+                    'Du tunkst das Plätzchen in die Chemikalie - und beginnt zu blubbern, während die Chemikalie langsam vom Plätzchenteig aufgenommen wird. Ob du dieses Plätzchen noch .... essen kannst?',
+                    $chemval,$this, new Model_Items_Cookie2);
+                return true;
+        }
 	}
 
 }	

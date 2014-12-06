@@ -8,6 +8,8 @@ define('grge\E_CLIENT_CONNECTION_TIMEOUT', 'GRGE-0001-0000');
 
 define('grge\E_SERVER_ERROR', 'GRGE-0002-0000');
 define('grge\E_SERVER_INVALID_SESSION', 'GRGE-0002-0001');
+define('grge\E_SERVER_ACCESS_DENIED', 'GRGE-0002-0002');
+define('grge\E_SERVER_LOGIN_REJECTED', 'GRGE-0002-0003');
 
 define('grge\E_AUTH_INVALID_PROVIDER', 'GRGE-0003-0000');
 define('grge\E_AUTH_CONNECTION_FAILED', 'GRGE-0003-0001');
@@ -19,6 +21,11 @@ define('grge\E_AUTH_INCOMPLETE_REQUEST', 'GRGE-0003-0006');
 define('grge\E_AUTH_LOCAL_PROVIDER_FAILED', 'GRGE-0003-0007');
 define('grge\E_AUTH_WHITELISTING_FAILED', 'GRGE-0003-0008');
 define('grge\E_AUTH_PROFILE_DAMAGED', 'GRGE-0003-0009');
+
+define('grge\E_EXT_SERVICE_UNAVAILABLE', 'GRGE-0004-0000');
+
+define('grge\E_STARTER_GAME_RUNNING', 'GRGE-0005-0000');
+define('grge\E_STARTER_INVALID_SETUP', 'GRGE-0005-0001');
 
 class Error {
 
@@ -51,6 +58,8 @@ class Error {
 
             case grge\E_SERVER_ERROR:                   return "Unexpected error while processing the request.";
             case grge\E_SERVER_INVALID_SESSION:         return "Inconsistent session data, client reset required!";
+            case grge\E_SERVER_ACCESS_DENIED:           return "You do not possess the rights to access this resource.";
+            case grge\E_SERVER_LOGIN_REJECTED:          return "The authentication process has failed.";
 
             case grge\E_AUTH_INVALID_PROVIDER:          return "Remote authentication provider is invalid.";
             case grge\E_AUTH_CONNECTION_FAILED:         return "Connection to remote authentication provider failed.";
@@ -62,6 +71,11 @@ class Error {
             case grge\E_AUTH_LOCAL_PROVIDER_FAILED:     return "The local authentication provider failed to authenticate your key.";
             case grge\E_AUTH_WHITELISTING_FAILED:       return "You do not have permission to play on this server.";
             case grge\E_AUTH_PROFILE_DAMAGED:           return "Unable to read profile data.";
+
+            case grge\E_EXT_SERVICE_UNAVAILABLE:        return "An external service provider is not available.";
+
+            case grge\E_STARTER_GAME_RUNNING:           return "Game Starter is unable to initialize while in game client mode.";
+            case grge\E_STARTER_INVALID_SETUP:          return "Your game setup is invalid.";
 
             default:                                    return "Undocumented error.";
         }

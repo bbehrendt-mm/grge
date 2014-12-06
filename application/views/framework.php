@@ -25,6 +25,7 @@
     <script type="application/javascript" src="js/jquery.qtip.min.js" ></script>
     <script type="application/javascript" src="js/jquery.transform2d.js" ></script>
     <script type="application/javascript" src="js/jquery.topzindex.min.js" ></script>
+    <script type="application/javascript" src="js/jquery.selectric.min.js" ></script>
     <script type="application/javascript" src="js/rasterizeHTML.allinone.js" ></script>
     <script type="application/javascript" src="js/zombvival.min.js" ></script>
 

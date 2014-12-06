@@ -2,6 +2,7 @@
 
 class Model_Items_Virtual_Location_Landfill extends Model_Items_Abstract_Virtual {
 
+    protected static $graceful_fail = true;
     private $spawn_twinoid = false;
 
     protected $remaining = array(

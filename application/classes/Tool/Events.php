@@ -42,6 +42,10 @@ class Tool_Events {
         return (static::get(static::TE_MONTH) == 4 && static::get(static::TE_DAY) == 1) && ($game->duration() > 300) && !$player->april_fools();
     }
 
+    public static function is_october_midness() {
+        return (static::get(static::TE_MONTH) == 10 && static::get(static::TE_DAY) == 14);
+    }
+
     public static function maintenance($time = null) {
         $data = Kohana::$config->load('server.downtime');
         return ($data['h'] == static::get(static::TE_HOUR, $time) && $data['start'] <= static::get(static::TE_MINUTE, $time) && $data['finish'] > static::get(static::TE_MINUTE, $time));

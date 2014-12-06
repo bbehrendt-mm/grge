@@ -17,6 +17,7 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
 
     protected $extensions = Array();
     protected $survival_find = true;
+    protected $upgradable = true;
 
     protected $mapnodes = Array(-1 => 'Versteck verlassen');
     protected $breakins = 0;
@@ -25,7 +26,7 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         if ($uin === NULL) return parent::uin();
         else $t = parent::uin($uin);
 
-        $this->inventory->add(new Model_Items_Virtual_Location_Hideout());
+        $this->inventory->add(new Model_Items_Virtual_Location_Hideout(!$this->home_extensions("hideout", "cursed")));
         return $t;
     }
 
@@ -48,7 +49,7 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
 
         //Check for zombie attack
         if (($this->get_defense() < 1) && ($battle_log = Tool_Scripts::battle($this->zombie_factory->spawn_zombies(), Tool_Scripts::at_location($this->uin), true, $battle, $zc))) {
-            $this->log->add(new Model_Log_Types_Battle(':zombiestr tauchen auf!', $battle_log, array(':zombiestr' => '<span class="value"><img src="/application/assets/icons/zombie.gif"></img>' . $zc . ' ' . __('Zombies') . '</span>')));
+            $this->log->add(new Model_Log_Types_Battle(':zombiestr tauchen auf!', $battle_log, array(':zombiestr' => '<span class="value"><img src="/application/assets/icons/zombie.gif" />' . $zc . ' ' . __('Zombies') . '</span>')));
             return;
         }
 
@@ -84,7 +85,7 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
          */
         global $game, $player;
 
-        if (Tool_Events::current($game->next_tick()) == 'halloween')
+        if (Tool_Events::current($game->next_tick()) == 'halloween' && !$this->home_extensions("hideout", "cursed"))
             new Model_Buffs_Scarecrow($player->user_id());
 
         //Build chance array
@@ -125,7 +126,7 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         else $player = $game->get_player($pid);
         parent::enter($pid);
         new Model_Buffs_Home($player->id());
-        if (Tool_Events::current($game->next_tick()) == 'halloween')
+        if (Tool_Events::current($game->next_tick()) == 'halloween' && !$this->home_extensions("hideout", "cursed"))
             new Model_Buffs_Scarecrow($player->user_id());
     }
 
@@ -156,7 +157,7 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         global $game;
         $ret = parent::create_npcs();
 
-        if (Tool_Events::current($game->next_tick()) == 'halloween')
+        if (Tool_Events::current($game->next_tick()) == 'halloween' && !$this->home_extensions("hideout", "cursed"))
             $ret['halloween'] = Model_Npc::factory()->name('Grausame Vogelscheuche')
                 ->add_action('Ansehen', Model_Action::factory()
                         ->effect(Model_Effect::factory()
@@ -164,6 +165,7 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
                         )
                 )
                 ->add_action('Gehirn einsetzen', Model_Action::factory()
+                        ->grind_requirements(false)
                         ->requirement('Model_Items_Brainbox', 1)
                         ->condition(function($p) {
                             /** @var Model_Player $p */
@@ -380,6 +382,10 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
          * @global $player Model_Player
          */
         global $player;
+
+        if (!$this->upgradable)
+            return false;
+
         $buildcfg = Kohana::$config->load('blueprints.build.table.' . $project);
 
         if (!$buildcfg) return true;

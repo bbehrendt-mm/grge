@@ -41,7 +41,6 @@ class Model_Items_Coffin2 extends Model_Items_Coffin implements Interface_Static
 		
 		if (mt_rand(0, 100) < 20) {
 			$txt .= 'Zu deiner Überraschung ist die Leiche im Sarg weniger tot als sie aussieht!';
-			$game->stats(Model_Game::MGLS_Health, -mt_rand(5, 15));
 			Tool_Scripts::simple_battle(1, 0, "Der Leichnam im Sarg greift an!", true, false);
 		} else {
 			switch (mt_rand(0, 1)) {

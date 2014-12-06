@@ -48,7 +48,7 @@ class Model_Log_Types_Item extends Model implements Interface_Message {
         if (count($selected) <= 5)
             array_walk($selected, function($a) use (&$return) {
                 /** @var Model_Struct_Item $a */
-                $return[] = "<span class=\"value\"><img src=\"{$a->getIcon()}\" alt=\"?\"></img> " . __($a->getName()) . (($a->getCount() !== null) ? " ({$a->getCount()})" : "") . "</span>";
+                $return[] = "<span class=\"value\"><img src=\"{$a->getIcon()}\" alt=\"?\" /> " . __($a->getName()) . (($a->getCount() !== null) ? " ({$a->getCount()})" : "") . "</span>";
             });
         else array_walk($selected, function($a) use (&$return) {
                 /** @var Model_Struct_Item $a */
@@ -79,6 +79,8 @@ class Model_Log_Types_Item extends Model implements Interface_Message {
     public function render_title()
     {
         global $game;
+        if (is_string($this->type))
+            return __(':itemdef erhalten!', array(':itemdef' => $this->finalize_item_string()));
         switch ($this->type) {
             case static::MLTI_DIGUP:
                 return __(':itemdef gefunden!', array(':itemdef' => $this->finalize_item_string()));
@@ -110,7 +112,9 @@ class Model_Log_Types_Item extends Model implements Interface_Message {
         $fstp = count($data) == 1 && isset($data[$player->id()]);
 
         $return = "";
-        switch ($this->type) {
+        if (is_string($this->type))
+            $return = __($this->type);
+        else switch ($this->type) {
             case static::MLTI_DIGUP:
                 $return .= $fstp ? __('Geduld zahlt sich aus. Es war nicht leicht, aber du hast etwas nützliches finden können.') : __('Geduld zahlt sich aus. Es war nicht leicht, aber ihr habt etwas nützliches finden können.');
                 break;

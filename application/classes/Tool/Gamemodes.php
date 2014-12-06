@@ -1,0 +1,149 @@
+<?php defined('SYSPATH') OR die('No direct access allowed.');
+
+class Tool_Gamemodes {
+
+    private static $usp_cache = array('job' => array(), 'mode' => array());
+
+    private static function get_sp_mode($mode) {
+        /** @global Model_User $user */
+        global $user;
+
+        $accum = 0;
+        foreach (explode(',', $mode) as $imode) {
+            if (!isset(static::$usp_cache['mode'][$imode]))
+                static::$usp_cache['mode'][$imode] = (int)$user->soulpoints(null, null, $imode, true);
+            $accum += static::$usp_cache['mode'][$imode];
+        }
+
+        return $accum;
+    }
+
+    private static function get_sp_job($job) {
+        /** @global Model_User $user */
+        global $user;
+
+        $accum = 0;
+        foreach (explode(',', $job) as $ijob) {
+            if (!isset(static::$usp_cache['job'][$ijob]))
+                static::$usp_cache['job'][$ijob] = (int)$user->soulpoints(null, $ijob, null, true);
+            $accum += static::$usp_cache['job'][$ijob];
+        }
+        return $accum;
+    }
+
+    /**
+     * @param $mode
+     * @return array|object
+     */
+    public static function compile_startup_mode($mode) {
+        $ret = (array)Kohana::$config->load('modes.modes.' . $mode . '.setup');
+        if (!$ret) return array();
+        if (!$ret['inherit']) return $ret;
+
+        $inherit = array();
+        foreach ($ret['inherit'] as $from) $inherit = array_replace_recursive($inherit, static::compile_startup_mode($from));
+        return array_replace_recursive($inherit, $ret);
+    }
+
+    public static function compile_startup_job($job) {
+        $ret = (array)Kohana::$config->load('modes.jobs.' . $job . '.setup');
+        if (!$ret) return function($mode, $level) {};
+        if (!isset($ret['f'])) $ret['f'] = function($mode, $level) {};
+        if (!$ret['inherit']) return $ret['f'];
+
+        $func = isset($ret['f']) ? $ret['f'] : function($mode, $level) {};
+        $inherit = array();
+        foreach ($ret['inherit'] as $from) $inherit[] = static::compile_startup_job($from);
+        return function($mode, $level) use ($inherit, $func) {
+            foreach ($inherit as $f) $f($mode, $level);
+            $func($mode, $level);
+        };
+    }
+
+    private static function compile_requirements(&$rqdb) {
+        $ret = true;
+
+        if (Kohana::$config->load('server.version.type') != 's' || Tool_Events::is_october_midness())
+            return true;
+
+        foreach ($rqdb['mode'] as $key => &$requirement) {
+            if (($current = static::get_sp_mode($key)) < $requirement)
+                $ret = false;
+            $requirement = array($current, $requirement);
+        }
+        foreach ($rqdb['job'] as $key => &$requirement2) {
+            if (($current = static::get_sp_job($key)) < $requirement2)
+                $ret = false;
+            $requirement2 = array($current, $requirement2);
+        }
+        foreach ($rqdb['ext'] as &$requirement3) {
+            if (!($tmp = $requirement3()))
+                $ret = false;
+            $requirement3 = $tmp;
+        }
+
+        return $ret;
+    }
+
+    public static function compile_mode_database($short = false) {
+        global $user;
+
+        $ret = (array)Kohana::$config->load('modes');
+        $joblist = array();
+
+        unset($ret['modes']['default']);
+
+        //Modes
+        foreach ($ret['modes'] as &$mode) {
+            $mode['locked'] = !static::compile_requirements($mode['requirements']);
+            foreach ($mode['jobs'] as $jid)
+                $joblist[$jid] = true;
+
+            if ($short) {
+                unset($mode['setup']);
+            }
+        }
+
+        if ($short)
+            foreach ($ret['modes'] as $mid => $m)
+                if ($m['type'] == 'none')
+                    unset($ret['modes'][$mid]);
+
+        //Jobs
+        foreach ($ret['jobs'] as $jid => &$job) {
+            if (!isset($joblist[$jid]) || !$joblist[$jid]) {
+                unset($ret['jobs'][$jid]);
+                continue;
+            }
+
+            if ($short)
+                unset($job['setup']);
+
+            $job['level'] = 0;
+            $job['locked'] = !static::compile_requirements($job['requirements']);
+            $job['points'] = static::get_sp_job($jid);
+            if (Kohana::$config->load('server.version.type') != 's' || Tool_Events::is_october_midness()) {
+                $job['level'] = count($job['levels']) + 1;
+                $job['next_level'] = null;
+            } elseif (!$job['locked']) {
+                $c = static::get_sp_job($jid);
+                while ($job['level'] < count($job['levels']))
+                    if ($job['levels'][$job['level']] <= $c)
+                        $job['level']++;
+                    else break;
+                $job['level']++;
+                $job['next_level'] = isset($job['levels'][$job['level']-1]) ? $job['levels'][$job['level']-1] : null;
+            }
+        }
+
+        return $ret;
+    }
+
+    public static function get_job_by_id($jobid) {
+        return Kohana::$config->load("modes.jobs.$jobid.meta.name");
+    }
+
+    public static function get_board_by_id($bid) {
+        return Kohana::$config->load("modes.modes.$bid.meta.name");
+    }
+}

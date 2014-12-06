@@ -42,6 +42,7 @@ class Model_Player extends Model_Cloudshard {
 	private $location;
 	private $inventory;
 	private $cod = null;
+    private $points = null;
 
     private $messages = array();
 	
@@ -150,7 +151,7 @@ class Model_Player extends Model_Cloudshard {
 		$this->status_bars = Array();
 		$this->buffs = Array();
 		$this->alive = true;
-		$this->inventory = new Model_Inventory();
+		$this->inventory = new Model_Inventory(null, true);
 		$this->log = new Model_Log_Log();
 		$this->achievements = new Model_Achievement();
 		
@@ -270,7 +271,9 @@ class Model_Player extends Model_Cloudshard {
 		$this->log()->add(new Model_Log_Types_Death($this->cod));
 		$this->calculate_static_achievements();
 		$this->alive = false;
-		
+
+        $this->points = $game->points($this->user_id);
+
 		if ($game->config('modules.multiplayer')) {
 			$drop = array();
 			foreach ($this->inventory->get() as $item)
@@ -457,6 +460,12 @@ class Model_Player extends Model_Cloudshard {
         }
 		else
         {
+            $tmp = explode('/', $obj);
+            $obj = $tmp[0];
+
+            if (isset($this->buffs[$obj]) && isset($tmp[1]) && $this->buff_retr($obj)->abid() != $tmp[1])
+                return;
+
             if (isset($this->buffs[$obj]))
                 /** @noinspection PhpUndefinedMethodInspection */
                 $this->buffs[$obj]->remove();
@@ -470,7 +479,14 @@ class Model_Player extends Model_Cloudshard {
 	 * @return Model_Buffs_Abstract_Buff
 	 */
 	final public function buff_retr($id) {
-		if (isset($this->buffs[$id])) return $this->buffs[$id];
+        $tmp = explode('/', $id);
+        $id = $tmp[0];
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        if (isset($this->buffs[$id]) && isset($tmp[1]) && $this->buffs[$id]->abid() != $tmp[1])
+            return NULL;
+
+        if (isset($this->buffs[$id])) return $this->buffs[$id];
 		else return NULL;
 	}
 	
@@ -600,6 +616,10 @@ class Model_Player extends Model_Cloudshard {
 		else return ($this->job == $compare_job && (($exact) ? ($compare_level == $this->level) : ($compare_level <= $this->level)));
 	}
 
+    public function get_points() {
+        return $this->points;
+    }
+
     /**
      * Creates game ranking entry one the player has been killed
      * @param $season
@@ -613,15 +633,16 @@ class Model_Player extends Model_Cloudshard {
          * @global $game Model_Game
          */
         global $game;
-		
-		$points = $game->points($this->user_id);
+
+        if ($this->points === null)
+            $this->points = $game->points($this->user_id);
 		//Create ranking entry if game is rankable and player has more than zero points
 		try
 		{
-			if ($rank && $points > 0)
+			if ($rank && $this->points > 0)
 			{				
 				$this->calculate_static_achievements();
-				DB::insert('ranking', array('season', 'gameid', 'uid', 'points', 'ticks', 'job', 'board', 'flow', 'start', 'end'))->values(array($season, $gameid, $this->user_id, $points, $this->livetime, $this->job, $this->mode, $game->timeflow(), $start, $end))->execute();
+				DB::insert('ranking', array('season', 'gameid', 'uid', 'points', 'ticks', 'job', 'board', 'flow', 'start', 'end'))->values(array($season, $gameid, $this->user_id, $this->points, $this->livetime, $this->job, $this->mode, $game->timeflow(), $start, $end))->execute();
 				$this->achievements->award($this->user_id, $gameid, $season);
 			}	
 		}

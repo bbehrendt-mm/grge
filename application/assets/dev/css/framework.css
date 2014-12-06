@@ -144,6 +144,33 @@ body {
     content: "\f118";
 }
 
+#notifications > div.info > div:first-child {
+    background: #00d7ff;
+    color: #FFFFFF;
+
+}
+#notifications > div.info > div:first-child::after {
+    content: "\f05a";
+}
+
+#notifications > div.error > div:first-child {
+    background: #ff0f00;
+    color: #000000;
+
+}
+#notifications > div.error > div:first-child::after {
+    content: "\f057";
+}
+
+#notifications > div.success > div:first-child {
+    background: #00ff7f;
+    color: #ffffff;
+
+}
+#notifications > div.success > div:first-child::after {
+    content: "\f058";
+}
+
 #wrapper {
     padding: 0 0 90px;
     background: url('media/img/dunes.png') repeat-x scroll center bottom #FFF6BF;

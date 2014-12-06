@@ -8,9 +8,18 @@
     cursor: default;
 }
 
+.hidden {
+    display: none;
+}
+
 .disabled {
     pointer-events: none;
-    cursor: not-allowed;
+    cursor: default;
+}
+
+*[disabled] {
+    pointer-events: none;
+    cursor: default;
 }
 
 .pointer {
@@ -29,4 +38,16 @@
 
 .center {
     text-align: center;
+}
+
+.left {
+    text-align: left;
+}
+
+.right {
+     text-align: right;
+ }
+
+.justify {
+      text-align: justify;
 }

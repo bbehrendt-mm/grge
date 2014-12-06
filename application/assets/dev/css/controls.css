@@ -10,17 +10,17 @@
 .form_input {
     display: block;
     width: 100%;
-    border-left: 1px solid #bc3402;
-    border-bottom: 2px solid #bc3402;
-    border-right: 1px solid #bc3402;
-    border-top: none;
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
     margin-top: 4px;
-    background: linear-gradient(to bottom, #fff6bf 0%, #fff7e8 19%,#fff7e8 100%);
     transition: all 0.1s;
+    border: 1px solid #E0E0E0;
+    border-bottom-width: 2px;
+    border-image: none;
+    background: none repeat scroll 0% 0% #F8F8F8;
+    position: relative;
+    border-radius: 4px;
+    padding: 4px;
 }
 
 input[type=checkbox].form_input {
@@ -28,9 +28,13 @@ input[type=checkbox].form_input {
     width: auto;
 }
 
-.form_input:focus {
-    box-shadow: 0 3px 3px rgba(0,0,0,0.2);
-    background: #ffdcda 19%;
+.form_input:hover:not(.form_input-disabled):not([disabled]) {
+    border-color: #CCC;
+}
+
+.form_input:focus:not(.form_input-disabled):not([disabled]) {
+    border-color: #CCC;
+    background: #F0F0F0;
 }
 
 .form_input > .fa {
@@ -47,10 +51,9 @@ input[type=checkbox].form_input {
     width: calc(100% - 20px);
 }
 
-.form_input.form_input-disabled, .form_input[disabled] {
-    border-left: 1px solid #8d8d8d;
-    border-bottom: 2px solid #8d8d8d;
-    border-right: 1px solid #8d8d8d;
+.form_input.form_input-disabled, .form_input[disabled], .form_input.disabled {
+    background: #e6e6e6;
+    color: #808080
     pointer-events: none;
     cursor: not-allowed;
 }
@@ -72,6 +75,23 @@ input[type=checkbox].form_input {
     text-align: center;
     overflow: hidden;
     text-decoration: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.btn + .btn {
+    margin-top: 3px;
+}
+
+.btn.small {
+    display: inline-block;
+    height: 22px;
+}
+
+.btn.small > .fa {
+    font-size: 14px;
 }
 
 .btn.btn-icon {
@@ -108,7 +128,7 @@ input[type=checkbox].form_input {
     text-shadow: none;
 }
 
-.btn.btn-disabled {
+.btn.btn-disabled, .btn[disabled], .btn.disabled {
     background: #c8bcbd;
     color: #797979;
     box-shadow: 0 0 1px 1px rgba(188, 188, 188, 0.80) inset, 0 1px 0 rgb(200,200,200);
@@ -118,6 +138,6 @@ input[type=checkbox].form_input {
     border: 1px solid #8a8a8a;
 }
 
-.btn.btn-icon.btn-disabled > .btn-icon-inner {
+.btn.btn-icon.btn-disabled > .btn-icon-inner, .btn.btn-icon[disabled] > .btn-icon-inner {
     background: rgba(255, 255, 255, 0.45);
 }

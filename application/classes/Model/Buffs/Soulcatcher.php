@@ -17,9 +17,9 @@ class Model_Buffs_Soulcatcher extends Model_Buffs_Abstract_Buff {
 
         if (Tool_System::instance_of($this->assoc_player->location(), 'Model_Places_Mental'))
             $soulchance = 30;
-        elseif (Tool_System::instance_of($this->assoc_player->location(), 'Model_Places_Mausoleum'))
+        elseif (Tool_System::instance_of($this->assoc_player->location(), 'Model_Places_Mausoleum')  || Tool_System::instance_of($this->assoc_player->location(), 'Model_Places_Asylumhideout'))
             $soulchance = 10;
-        elseif (Tool_System::instance_of($this->assoc_player->location(), 'Model_Places_Home') || Tool_System::instance_of($this->assoc_player->location(), 'Model_Places_Outworld'))
+        elseif (Tool_System::instance_of($this->assoc_player->location(), 'Model_Places_Abstract_Hideout') || Tool_System::instance_of($this->assoc_player->location(), 'Model_Places_Abstract_Node'))
             $soulchance = 0;
         elseif (Tool_System::instance_of($this->assoc_player->location(), 'Model_Places_Hospital'))
             $soulchance = 8;

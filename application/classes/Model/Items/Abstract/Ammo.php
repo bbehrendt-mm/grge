@@ -11,7 +11,7 @@ abstract class Model_Items_Abstract_Ammo extends Model_Items_Abstract_Stackable 
         global $player;
 		parent::__construct($num);
 		
-		if ($num === null && isset(static::$boni[$player->job()]) && isset(static::$boni[$player->job()][$player->job(false)]))
+		if ($num === null && isset(static::$boni[$player->job()]))
 			$this->count = ceil($this->count * static::$boni[$player->job()][$player->job(false)]);
 	}
 

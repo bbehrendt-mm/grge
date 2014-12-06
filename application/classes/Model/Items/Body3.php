@@ -28,20 +28,19 @@ class Model_Items_Body3 extends Model_Items_Abstract_Item implements Interface_S
     }
 	
 	public function mixchem($chemval) {
-        /**
-         * @global $player Model_Player
-         */
-		global $player;
-
-		if ($chemval == 1) {
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Die Chemikalie ätzt der Leiche das Fleisch von den Knochen! Es bleibt ledigtlich etwas Blut zurück... und ein perfekt erhaltenes Skelett!'));
-			$player->location()->inventory()->add(new Model_Items_Bone);
-			$player->location()->inventory()->add(new Model_Items_Generic_Waterb());
-			$this->consume();
-			return true;
-		} else {
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Der zerfetzte Körper der Leiche saugt die Chemikalie auf, aber du kannst keine Veränderung feststellen ...'));
-			return false;
-		}
+        switch ($chemval)
+        {
+            case 1:
+                $this->consume();
+                Tool_Scripts::chem_reaction(
+                    'Die Chemikalie ätzt der Leiche das Fleisch von den Knochen! Es bleibt ledigtlich etwas Blut zurück... und ein perfekt erhaltenes Skelett!',
+                    $chemval,$this, [new Model_Items_Generic_Bone3,new Model_Items_Generic_Waterb]);
+                return true;
+            default:
+                Tool_Scripts::chem_reaction(
+                    'Der zerfetzte Körper der Leiche saugt die Chemikalie auf, aber du kannst keine Veränderung feststellen ...',
+                    $chemval,$this);
+                return false;
+        }
 	}
 }	

@@ -12,6 +12,11 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
         'hideout_couch' => PHP_INT_MAX,
     );
 
+    public function __construct($upgradable = true) {
+        if (!$upgradable)
+            $this->remaining['hideout_builder'] = 0;
+    }
+
     protected function hid() {
         global $player;
 
@@ -66,6 +71,7 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
                 if ($p->stats_get(Model_Player::MP_STAT_THIRST) < 20) return 'thirst';
                 if ($p->stats_get(Model_Player::MP_STAT_HUNGER) < 20) return 'hunger';
                 if ($p->stats_get(Model_Player::MP_STAT_SLEEPY) > 85) return 'sleepy';
+                if ($p->location()->home_extensions("hideout", "cursed")) return 'cursed';
                 return true;
             })
             ->fail_message('Du bist im Moment beschäftigt.', 'fragile')
@@ -73,6 +79,7 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
             ->fail_message('Du wälzt dich hin und her, aber dein furchtbarer Durst hindert sich am Einschlafen...', 'thirst')
             ->fail_message('Du wälzt dich hin und her, aber dein furchtbarer Hunger hindert sich am Einschlafen...', 'hunger')
             ->fail_message('Du wälzt dich hin und her, aber kannst einfach nicht einschlafen... Vielleicht bist du ja gar nicht müde.', 'sleepy')
+            ->fail_message('Du legst dich auf das Bett und versuchst zu schlafen. Allerdings kannst du dich einfach nicht dazu durchringen, in diesem fürchterlichen Raum die Augen zu schließen. Als du dann auch noch jemanden (oder etwas?) in der Ferne durch die Gänge schleichen hörst, springst du wieder auf. Sieht nicht so aus, als könntest du hier schlafen...', 'cursed')
             ->show_as(Model_Effect::factory()
                 ->effect(Model_Player::MP_STAT_ENERGY, '++')
                 ->effect(Model_Player::MP_STAT_SLEEPY, '++')

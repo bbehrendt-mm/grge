@@ -25,17 +25,21 @@ class Model_Items_Machete extends Model_Battle_Weapon implements Interface_Stati
 	public static $energy_cost = 5;
 	
 	public function mixchem($chemval) {
-		global $game, $player;
 
-		if ($chemval == 4) {
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Die Chemikalie läuft an der Klinge herunter und ätzt den Rost weg! Deine Machete ist nun schärfer den je!'));
-			$player->location()->inventory()->add(new Model_Items_Machete2);
-			$this->consume();
-			return true;
-		} else {
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Die Chemikalie läuft an der Klinge herunter, doch nichts passiert ...'));
-			return false;
-		}
+        switch ($chemval)
+        {
+            case 4:
+                $this->consume();
+                Tool_Scripts::chem_reaction(
+                    'Die Chemikalie läuft an der Klinge herunter und ätzt den Rost weg! Deine Machete ist nun schärfer den je!',
+                    $chemval,$this, new Model_Items_Machete2);
+                return true;
+            default:
+                Tool_Scripts::chem_reaction(
+                    'Die Chemikalie läuft an der Klinge herunter, doch nichts passiert ...',
+                    $chemval,$this);
+                return false;
+        }
 	}
 
 }	

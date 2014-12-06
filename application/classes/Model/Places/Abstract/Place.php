@@ -334,10 +334,10 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 	}
 	
 	//Interact with location
-	public function interact($action, $argument) {
-		$method = "interaction_{$action}";
+	public function interact($action, $argument, $force = false) {
+		$method = $force ? "interaction_forced_{$action}" : "interaction_{$action}";
 		if (method_exists($this, $method)) $r = $this->$method($argument);
-		else throw new Exception("Location method interaction_{$action} doesnt exist", 1);
+		else throw new Exception("Location method '{$action}' (" . ($force ? 'enforced' : 'unenforced') . ") doesnt exist!", 1);
 		
 		return $r;
 	}

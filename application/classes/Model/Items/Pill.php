@@ -179,21 +179,26 @@ class Model_Items_Pill extends Model_Items_Abstract_Item implements Interface_St
 	protected static $cat = Model_Items_Abstract_Item::MIAI_CAT_DRUG;
 	
 	public function mixchem($chemval) {
-		global $player;
+        $this->consume();
+        switch ($chemval)
+        {
+            case 1:case 2:
+                Tool_Scripts::chem_reaction(
+                    'Du wirfst die Pille in die Chemikalie ... sie löst sich sofort und rückstandslos auf. Toll ...',
+                    $chemval,$this);
 
-		if ($chemval < 3) {
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Du wirfst die Pille in die Chemikalie ... sie löst sich sofort und rückstandslos auf. Toll ...'));
-			$this->consume();
-			return false;
-		} elseif ($chemval < 6) {
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Du wirfst die Pille in die Chemikalie ... es blubbert ein bisschen, und als du die Pille herausholst stellst du fest, dass sie die Farbe geändert hat!'));
-			$player->location()->inventory()->add(new Model_Items_Pill());
-			$this->consume();
-			return true;
-		} else {
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Du wirfst die Pille in die Chemikalie ... es blubbert relativ stark. Als du die Pille herausnehmen möchtest stellst du fest, dass plötzlich eine zweite, identische Pille im Reagenzglas liegt! Welch Wunder der Chemie!'));
-			$player->location()->inventory()->add(new Model_Items_Pill($this->type));
-			return true;
-		}
+                return false;
+            case 3:case 4:case 5:
+                Tool_Scripts::chem_reaction(
+                    'Du wirfst die Pille in die Chemikalie ... es blubbert ein bisschen, und als du die Pille herausholst stellst du fest, dass sie die Farbe geändert hat!',
+                    $chemval,$this);
+
+                return true;
+            default:
+                Tool_Scripts::chem_reaction(
+                    'Du wirfst die Pille in die Chemikalie ... es blubbert relativ stark. Als du die Pille herausnehmen möchtest stellst du fest, dass plötzlich eine zweite, identische Pille im Reagenzglas liegt! Welch Wunder der Chemie!',
+                    $chemval,$this, [new Model_Items_Pill($this->type),new Model_Items_Pill($this->type)]);
+                return true;
+        }
 	}
 }	

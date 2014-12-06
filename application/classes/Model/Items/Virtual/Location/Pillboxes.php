@@ -4,6 +4,7 @@ class Model_Items_Virtual_Location_Pillboxes extends Model_Items_Abstract_Virtua
 
     private $spawn_twinoid = false;
 
+    protected static $graceful_fail = true;
     protected $remaining = array(
         'find_pills' => 1
     );

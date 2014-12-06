@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
 class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Item implements Interface_Countable {
-	protected static $cat = Model_Items_Abstract_Item::MIAI_CAT_GEAR;
+	protected static $cat = Model_Items_Abstract_Item::MIAI_CAT_BOTTLES;
 
 	protected static $capacity = 4;
 
@@ -243,18 +243,30 @@ class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Item implements I
 	}
 		
 	public function mixchem($chemval) {
-		global $game, $player;
-	
-		if ($this->fillrate == 0) return parent::mixchem($chemval);
-	
-		if ($chemval == 6) {
-			$this->toxicity = 0;
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Zunächst hörst du ein Zischen aus deiner Flasche, danach stellst du fest dass die Chemikalie dein Wasser gereinigt hat! Hurra!'));
-			return true;
-		} else {
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Zunächst hörst du ein Zischen aus deiner Flasche, danach bemerkst du einen beissenden Geruch. Willst du das Zeug jetzt wirklich noch trinken ... ?'));
-			$this->toxicity += 9 * $chemval;
-			return false;
-		}
+		global $player;
+
+        if ($this->fillrate == 0) return parent::mixchem($chemval);
+
+        switch ($chemval)
+        {
+            case 6:
+                $this->toxicity = 0;
+                $player->log()->add(new Model_Log_Types_Text(null, null, 'Zunächst hörst du ein Zischen aus deiner Flasche, danach stellst du fest dass die Chemikalie dein Wasser gereinigt hat! Hurra!'));
+                return true;
+            case 10:
+                $res = [];
+                while ($this->fillrate(1))
+                    $res[] = $player->job(1040) ? new Model_Items_Wine() : new Model_Items_Beer();
+                $this->toxicity = 0;
+
+                Tool_Scripts::chem_reaction(
+                    'Heilige Scheiße! Du hast ein Wunder verbracht und Wasser in Alkohol verwandelt!',
+                    $chemval,$this, $res);
+                return true;
+            default:
+                $player->log()->add(new Model_Log_Types_Text(null, null, 'Zunächst hörst du ein Zischen aus deiner Flasche, danach bemerkst du einen beissenden Geruch. Willst du das Zeug jetzt wirklich noch trinken ... ?'));
+                $this->toxicity += 9 * $chemval;
+                return false;
+        }
 	}
 }	

@@ -83,7 +83,9 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
         else global $player;
 		
 		if (!$pid) $duration = $this->duration();
-		else $duration = $this->get_player($pid)->get_lifetime();
+		elseif (!$player->alive() && $player->get_points() !== null)
+            return $player->get_points();
+        else $duration = $this->get_player($pid)->get_lifetime();
 		
 		if (isset($this->set['gamedata']->head->contest) && $this->set['gamedata']->head->contest) {
 			$raw = Kohana::$config->load('contests.' . $this->set['gamedata']->head->contest['id']);
@@ -161,12 +163,16 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
 			$this->purge();
 		}
 	}
+
+    public function delete_lobby() {
+        DB::delete('multiplayer_lobby')->where('gameid', '=', $this->set['gameid'])->execute();
+    }
 	
 	public function purge() {
         Model_Chat::delete_room($this->chatroom());
 
         DB::delete('games')->where('gameid', '=', $this->set['gameid'])->execute();
-        DB::delete('multiplayer_lobby')->where('gameid', '=', $this->set['gameid'])->execute();
+        $this->delete_lobby();
 		$this->set['gamedata']->uin->clean();
 	}
 	

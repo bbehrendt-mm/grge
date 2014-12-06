@@ -3,6 +3,7 @@
 class Model_Log_Types_Movement extends Model implements Interface_Message {
 
     private $uin;
+    private $name = null;
 	private $type;
 	private $timecode;
 
@@ -13,12 +14,19 @@ class Model_Log_Types_Movement extends Model implements Interface_Message {
     /**
      * Creates a message that a player has entered or left the place
      * @param number $type
-     * @param null|number $pid
+     * @param null|number|String $pid PID or translatable name
      * @internal param \Model_Places_Abstract_Place $ruin Short message title
      */
 	public function __construct($type, $pid = null) {
         global $player;
-        $this->uin = $pid ? $pid : $player->user_id();
+        if ($pid === null)
+            $this->uin = $player->user_id();
+        elseif (is_numeric($pid))
+            $this->uin = $pid;
+        else {
+            $this->uin = -1;
+            $this->name = $pid;
+        }
 
 		$this->type = $type;
 		$this->timecode = time();
@@ -44,7 +52,7 @@ class Model_Log_Types_Movement extends Model implements Interface_Message {
                 break;
         }
 
-        return $s ? __($s, array(':name' => $game->get_player($this->uin)->name())) : '[ERROR] MOVEMENT: META_UNPACK_CRITICAL_FAILURE';
+        return $s ? __($s, array(':name' => ($this->uin <= 0) ? __($this->name) :  $game->get_player($this->uin)->name())) : '[ERROR] MOVEMENT: META_UNPACK_CRITICAL_FAILURE';
 	}
 	
 	public function timecode() {

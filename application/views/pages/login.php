@@ -21,13 +21,11 @@ if (!isset($services)) $services = array();
             <div id="custom_login">
                 <div class="row iconize" title="<?=__('Bitte wähle, welches ::i::Motion-Twin::/i::-Spiel du für den Login nutzen möchtest.');?>">
                     <div class="cell rw-1"><i class="fa fa-gamepad"></i></div>
-                    <div class="cell rw-11">
-                        <label for="service"></label><select class="form_input" id="service">
-                            <?php foreach ($services as $name) { ?>
-                                <option value="<?=$name?>"><?=$name?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
+                    <label for="service"></label><select class="form_input" id="service">
+                        <?php foreach ($services as $name) { ?>
+                            <option data-description="<?=__('Verwende deinen :name-Account', [':name' => $name]);?>" value="<?=$name?>"><?=$name?></option>
+                        <?php } ?>
+                    </select>
                 </div><br />
 
                 <div class="row iconize" title="<?=__('Um deinen geheimen Schlüssel zu erhalten, musst du ZombVival über das ::b::Verzeichnis::/b:: von ::i::Die Verdammten::/i:: betreten.');?>">
@@ -64,7 +62,7 @@ if (!isset($services)) $services = array();
 </div>
 <script type="application/javascript">
     var login = function(key, service,remember, fail_callback) {
-        game.network.query('/japi/account/login', {key: key, service: service}, function(data) {
+        game.network.query('japi/account/login', {key: key, service: service}, function(data) {
             if (data.error) {
                 alert(data.error.code + ' [' + data.error.name + ']: ' + data.error.message);
 
@@ -146,5 +144,8 @@ if (!isset($services)) $services = array();
             $('#content').find('.form_input').removeAttr('disabled');
         });
     });
+
+    $('#service').selectric();
+    $('#remember').customRadioCheck();
 </script>
 

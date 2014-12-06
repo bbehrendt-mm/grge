@@ -3,6 +3,7 @@
 class Model_Items_Vending extends Model_Items_Abstract_Item {
 
 	protected $factory;
+    private $chem_rand_type = null;
 	
 	protected static $static_info = Array(
 			'name' => 'Verkaufsautomat',
@@ -61,4 +62,32 @@ class Model_Items_Vending extends Model_Items_Abstract_Item {
 		$player->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_VENDING, $item));
         return true;
 	}
+
+    public function mixchem($chemval) {
+        global $player;
+
+        if ($this->chem_rand_type === null)
+            $this->chem_rand_type = mt_rand(8,12);
+
+        switch ($chemval)
+        {
+            case 7:
+                $player->stats_modify(Model_Player::MP_STAT_HEALTH, -35);
+                Tool_Scripts::chem_reaction(
+                    'Du gießt etwas von der Chemikalie in den Münzschlitz... es gibt einen Knall, und der Automat fliegt in die Luft! Du wurdest durch die Explosion verletzt, aber wenigstens hast du ein paar neue gegenstände erhalten...',
+                    $chemval,$this, [$this->factory->spawn(true),$this->factory->spawn(true),$this->factory->spawn(true),$this->factory->spawn(true),$this->factory->spawn(true)]);
+                $this->consume();
+                return true;
+            case $this->chem_rand_type:
+                Tool_Scripts::chem_reaction(
+                    'Du gießt etwas von der Chemikalie in den Münzschlitz... es klickt, und ein Gegenstand fällt aus dem Automaten!',
+                    $chemval,$this, $this->factory->spawn(true));
+                return true;
+            default:
+                Tool_Scripts::chem_reaction(
+                    'Du gießt etwas von der Chemikalie in den Münzschlitz... doch nichts geschieht',
+                    $chemval,$this);
+                return false;
+        }
+    }
 }	

@@ -27,17 +27,25 @@ class Model_Items_Bodycrisp extends Model_Items_Abstract_Item implements Interfa
     }
 	
 	public function mixchem($chemval) {
-		global $player;
-
-		if ($chemval == 5) {
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Die Chemikalie ätzt die Kruste der Leiche weg! Es bleibt ledigtlich etwas Nährschleim zurück... und ein perfekt erhaltenes Skelett!'));
-			$player->location()->inventory()->add(new Model_Items_Generic_Bone3);
-			$player->location()->inventory()->add(new Model_Items_Nutrient());
-			$this->consume();
-			return true;
-		} else {
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Der frittierte Körper der Leiche saugt die Chemikalie auf, aber du kannst keine Veränderung feststellen ...'));
-			return false;
-		}
+        switch ($chemval)
+        {
+            case 5:
+                $this->consume();
+                Tool_Scripts::chem_reaction(
+                    'Die Chemikalie ätzt die Kruste der Leiche weg! Es bleibt ledigtlich etwas Nährschleim zurück... und ein perfekt erhaltenes Skelett!',
+                    $chemval,$this, [new Model_Items_Generic_Bone3,new Model_Items_Nutrient]);
+                return true;
+            case 10:
+                $this->consume();
+                Tool_Scripts::chem_reaction(
+                    'Die Chemikalie löst die Leiche vollständig auf! Zurück bleibt nur eine ganze Menge Schleim...',
+                    $chemval,$this, [new Model_Items_Nutrient,new Model_Items_Nutrient, new Model_Items_Nutrient2]);
+                return true;
+            default:
+                Tool_Scripts::chem_reaction(
+                    'Der frittierte Körper der Leiche saugt die Chemikalie auf, aber du kannst keine Veränderung feststellen ...',
+                    $chemval,$this);
+                return false;
+        }
 	}
 }	

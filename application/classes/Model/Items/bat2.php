@@ -24,13 +24,11 @@ class Model_Items_Bat2 extends Model_Battle_Weapon implements Interface_Static {
 	public static $energy_cost = 3;
 	
 	public function mixchem($chemval) {
-		global $game, $player;
-
-        $player->log()->add('Sofort als die Chemikalie auf das Holz trifft beginnt sie, zu blubbern und zu zischen. Scheinbar reagiert sie mit dem Lack auf dem Schläger.... und löst das Holz auf. Tja, das war einmal ein Baseballschläger.');
-        $player->location()->inventory()->add(new Model_Items_Generic_Crwood());
-        $player->location()->inventory()->add(new Model_Items_Generic_Crmetal());
-
-		return false;
+        $this->consume();
+        Tool_Scripts::chem_reaction(
+            'Sofort als die Chemikalie auf das Holz trifft beginnt sie, zu blubbern und zu zischen. Scheinbar reagiert sie mit dem Lack auf dem Schläger.... und löst das Holz auf. Tja, das war einmal ein Baseballschläger.',
+            $chemval,$this, [new Model_Items_Generic_Crwood,new Model_Items_Generic_Crmetal]);
+        return false;
 	}
 
 }	

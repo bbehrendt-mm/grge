@@ -21,6 +21,8 @@ class Model_Action {
     private $description = null;
     private $skin = null;
 
+    private $consume_by_grind = true;
+
     private $has_se = false;
 
     /**
@@ -36,6 +38,11 @@ class Model_Action {
      */
     public function condition($cond) {
         $this->condition = $cond;
+        return $this;
+    }
+
+    public function grind_requirements($set) {
+        $this->consume_by_grind = $set;
         return $this;
     }
 
@@ -187,13 +194,8 @@ class Model_Action {
             if (($r = $cf($player, $side_player, $argument)) !== true) {
                 if ($this->failmsg)
                     $player->log()->add(new Model_Log_Types_Text(null, null, is_array($this->failmsg) ? $this->failmsg[$r] : $this->failmsg));
-                return true;
+                return false;
             }
-        }
-
-        if (!Tool_Scripts::consume_available_items($this->get_item_requirements(), true, true, false, $player, true)) {
-            $player->log()->add(new Model_Log_Types_Text(null, null, 'Dir fehlen Gegenstände, um diese Aktion durchzuführen.'));
-            return false;
         }
 
         foreach ($this->get_stat_requirements() as $stat => $value)
@@ -201,6 +203,11 @@ class Model_Action {
                 $player->log()->add(new Model_Log_Types_Text(null, null, 'Du bist derzeit nicht in der Lage diese Aktion durchzuführen.'));
                 return false;
             }
+
+        if (!Tool_Scripts::consume_available_items($this->get_item_requirements(), true, true, false, $player, $this->consume_by_grind)) {
+            $player->log()->add(new Model_Log_Types_Text(null, null, 'Dir fehlen Gegenstände, um diese Aktion durchzuführen.'));
+            return false;
+        }
 
         foreach ($this->get_stat_requirements() as $stat => $value)
             $player->stats_modify($stat, -$value);

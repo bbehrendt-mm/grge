@@ -32,8 +32,16 @@ abstract class Controller extends Kohana_Controller {
     protected function force_login() {
         Error::i();
         global $user;
-        if (!$this->get_user_obj())
-            die($this->is_ajax_request() ? $this->error(\grge\E_SERVER_INVALID_SESSION) : Error::m(\grge\E_SERVER_INVALID_SESSION));
+        if (!$this->get_user_obj()) {
+            if (!$this->is_ajax_request())
+                // Output error message as string
+                die(Error::m(\grge\E_SERVER_INVALID_SESSION));
+            else {
+                // Create JSOn error output, then stop the action from being executed by redirecting to noaction
+                $this->error(\grge\E_SERVER_INVALID_SESSION);
+                $this->request->action('noaction');
+            }
+        }
     }
 
     public function before() {
@@ -55,6 +63,8 @@ abstract class Controller extends Kohana_Controller {
 
         //TODO: Maintenance Mode
     }
+
+    public function action_noaction() {}
 
     public function action_japi() {
         $action = $this->request->param('jaction');
@@ -97,6 +107,7 @@ abstract class Controller extends Kohana_Controller {
             $obj['notifications'] = $this->notifications;
 
         $this->response->body(json_encode($obj, JSON_FORCE_OBJECT));
+        return true;
     }
 
     protected function error($c, $additional_data = null) {
@@ -107,7 +118,8 @@ abstract class Controller extends Kohana_Controller {
             'message' => Error::d($c),
             'details' => $additional_data,
         ));
+
         $this->response->body(json_encode($tmp, JSON_FORCE_OBJECT));
-        return true;
+        return false;
     }
 }

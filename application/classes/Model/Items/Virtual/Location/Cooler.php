@@ -2,6 +2,7 @@
 
 class Model_Items_Virtual_Location_Cooler extends Model_Items_Abstract_Virtual {
 
+    protected static $graceful_fail = true;
     protected $remaining = array(
         'cooler_open' => 1
     );

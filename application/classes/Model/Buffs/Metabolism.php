@@ -6,6 +6,7 @@ class Model_Buffs_Metabolism extends Model_Buffs_Abstract_Buff {
 	protected static $icon = 'metabolism';
 	protected static $desc = 'In deinem Körper laufen jederzeit unglaublich viele biochemische Prozesse ab, die zwar kein Mensch versteht, aber die dich irgendwie am Laufen halten. ';
 	protected static $bid = 'metabolism';
+    protected static $remotable = false;
 	
 	protected $effects = Array(
 				Model_Player::MP_STAT_ENERGY => Array(

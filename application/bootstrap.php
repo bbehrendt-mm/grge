@@ -92,7 +92,7 @@ if (isset($_SERVER['KOHANA_ENV']))
  * - boolean  caching     enable or disable internal caching                 FALSE
  */
 Kohana::init(array(
-	'base_url'   => '/',
+	'base_url'   => '/grge/',
 ));
 
 /**
@@ -123,6 +123,16 @@ Kohana::modules(array(
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
  */
+Route::set('japi_admin', 'admin/japi/<controller>/<jaction>')
+    ->defaults(array(
+        'directory'  => 'admin',
+        'action'     => 'japi',
+    ));
+Route::set('default_admin', 'admin/(<controller>(/<action>(/<id>)))')
+    ->defaults(array(
+        'directory'  => 'admin',
+        'action'     => 'main',
+    ));
 Route::set('japi', 'japi/<controller>/<jaction>')
     ->defaults(array(
         'action'     => 'japi',

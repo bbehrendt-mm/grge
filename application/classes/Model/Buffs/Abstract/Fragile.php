@@ -3,6 +3,7 @@
 abstract class Model_Buffs_Abstract_Fragile extends Model_Buffs_Abstract_Buff {
 	
 	protected static $bid = 'fragile';
+    protected static $alt_id = 'fragile';
 	protected static $abortable;
 	
 	protected $effects = Array();

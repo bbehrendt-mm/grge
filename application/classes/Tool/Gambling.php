@@ -24,5 +24,16 @@ class Tool_Gambling {
         foreach ($data as $elem) if (($range+=$elem['chance']) >= $rval) return $elem['value'];
         return $data[count($data)-1]['value'];
 	}
+
+    /**
+     * Returns a random element from the given array. If the given parameter is not an array, or is empty, null will be returned
+     * @param array $array The array
+     * @return mixed|null
+     */
+    public static function select( $array ) {
+        if (!is_array($array) || count($array) == 0)
+            return null;
+        return $array[mt_rand(0,count($array) - 1)];
+    }
 		
 }	

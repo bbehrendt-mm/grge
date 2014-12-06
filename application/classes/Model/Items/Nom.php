@@ -25,17 +25,25 @@ class Model_Items_Nom extends Model_Items_Abstract_Item implements Interface_Sta
     }
 	
 	public function mixchem($chemval) {
-		global $player;
-
-		$item->consume();
-		if ($chemval > 3) {
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Du tunkst das Essen in die Chemikalie - und beginnt zu blubbern und löst sich vor deinen Augen auf! So ein Ärger, das wirst du wohl nicht mehr essen können...'));
-			return false;
-		} else {
-			$player->location()->inventory()->add(new Model_Items_Nutrient);
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Du tunkst das Essen in die Chemikalie - und beginnt zu blubbern und löst sich vor deinen Augen in seine Bestandteile auf! Zurück bleibt nur eine große glibbrige Masse Nährschleim. Lecker ...'));
-			return true;
-		}
+        $this->consume();
+        switch ($chemval)
+        {
+            case 4:case 5:case 6:case 9:case 12:
+                Tool_Scripts::chem_reaction(
+                    'Du tunkst das Essen in die Chemikalie - und beginnt zu blubbern und löst sich vor deinen Augen auf! So ein Ärger, das wirst du wohl nicht mehr essen können...',
+                    $chemval,$this);
+                return false;
+            case 7:
+                Tool_Scripts::chem_reaction(
+                    'Du tunkst das Essen in die Chemikalie - und beginnt zu blubbern und löst sich vor deinen Augen in seine Bestandteile auf! Zurück bleibt nur eine große glibbrige Masse Nährschleim. Lecker ...',
+                    $chemval,$this, new Model_Items_Nutrient2);
+                return true;
+            default:
+                Tool_Scripts::chem_reaction(
+                    'Du tunkst das Essen in die Chemikalie - und beginnt zu blubbern und löst sich vor deinen Augen in seine Bestandteile auf! Zurück bleibt nur eine große glibbrige Masse Nährschleim. Lecker ...',
+                    $chemval,$this, new Model_Items_Nutrient);
+                return true;
+        }
 	}
 
 }	

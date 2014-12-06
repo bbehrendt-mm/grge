@@ -27,6 +27,10 @@ game = {
             game.storage.set('settings','language',set);
             return set;
         } else return cfg;
+    },
+
+    reset: function() {
+        document.location.href = "index.php";
     }
 };
 

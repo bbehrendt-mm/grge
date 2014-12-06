@@ -8,24 +8,15 @@ Options -Indexes
 
 # Turn on URL rewriting
 RewriteEngine On
-RewriteBase /
 
 # Protect application and system files from being viewed
 # Make an exception for the assets folder!
 RewriteCond %{REQUEST_URI} ^/(system|modules)/.* [NC]
 RewriteRule .* - [F]
 
-# Fix CSS bug
-RewriteCond %{REQUEST_URI} (?:css/).*\.(js|jpg|bmp|gif|png|ico|webp|eot|svg|ttf|woff)$ [NC]
-RewriteRule ^(?:css/)(.*)$ /$1 [N,L]
-
 # Catch media querys
 RewriteCond %{REQUEST_URI} \.(css|js|jpg|bmp|gif|png|ico|webp|eot|svg|ttf|woff)$ [NC]
-RewriteRule (.*) application/assets/$1 [END]
-
-# Fix CSS bug
-RewriteCond %{REQUEST_URI} (?:css/).*\.(js|jpg|bmp|gif|png|ico|webp|eot|svg|ttf|woff)$ [NC]
-RewriteRule ^(?:css/)(.*)$ /$1 [N,L]
+RewriteRule (.*) application/assets/index.php/$1 [L]
 
 
 # Allow any files or directories that exist to be displayed directly

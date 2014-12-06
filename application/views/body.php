@@ -24,7 +24,7 @@
                 ':url' => '<a href="http://dieverdammten.de">Die Verdammten</a>',
                 ':mt' => '<b>MotionTwin</b>'
             )); ?>
-        <?=__('Unterstütze ZombVival!')?> <a onclick="game.xmlhttp.load('donate');"><?=__('Spenden')?> </a>
+        <?=__('Unterstütze ZombVival!')?> <a href="#" id="main_donate"><?=__('Spenden')?> </a>
     </div>
 
     <div class="cell rw-3">
@@ -38,7 +38,7 @@
         <b><?=__('Kontakt'); ?></b><br />
         <a href="mailto: kontakt@ruine.dvspot.de">kontakt@ruine.dvspot.de</a><br />
         <img src="media/img/small.png" alt="Zombvival">
-        <i class="min" style="cursor: pointer" onclick="game.xmlhttp.load('admin/view');">[Back-End]</i>
+        <i id="main_backend" class="min pointer" style="cursor: pointer">[Back-End]</i>
     </div>
 </div>
 
@@ -48,4 +48,12 @@
         game.network.load('web/body');
     });
     game.network.load('landing/redirect');
+
+    $('#main_donate').click(function() {
+        alert('Coming soon!');
+    });
+
+    $('#main_backend').click(function() {
+        game.network.load('admin/account/login');
+    });
 </script>

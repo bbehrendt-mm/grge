@@ -1,6 +1,6 @@
 <?php 
 
-if ( ! function_exists('__'))
+if ( !function_exists('__'))
 {
     /**
      * Kohana translation/internationalization function. The PHP function
@@ -31,12 +31,21 @@ if ( ! function_exists('__'))
 	}
 }
 
+if ( !function_exists('__j'))
+{
+    function __j($string, array $values = null, $lang = 'de-de')
+    {
+        return json_encode(__($string, $values, $lang));
+    }
+}
+
+
 class I18n extends Kohana_I18n {
 	// Cache of missing strings
 	protected static $cache = array();
 	protected static $lang_list = array('de', 'en');
- 
-	public static function get($string, $lang = NULL) {				
+
+	public static function get($string, $lang = NULL, $pool = false) {
 		if (!is_string($string)) return $string;
 				
 		if (strpos($string, '[nt]') === 0)
@@ -44,12 +53,13 @@ class I18n extends Kohana_I18n {
 		
 		if ($lang == null) $lang = I18n::$lang;
 
-		$table = I18n::load($lang);
+		$table = I18n::load(($pool ? 'pool/' : '') .$lang);
 		I18n::$cache[$string] = $string;
 		
 		// Return the translated string if it exists
 	    if(isset($table[$string])) return $table[$string];
-	    else return $string;
+	    elseif (!$pool) return static::get($string, $lang, true);
+        else return $string;
 	}
  
 	private static function toDisk($lang, $table) {
@@ -77,7 +87,7 @@ class I18n extends Kohana_I18n {
    		$update = array();
    		foreach (array_keys($full_lg) as $key) if (!is_numeric($key) && $key != '') foreach ($tables as $lang => $table) {
    			if (!isset($table[$key])) {
-   				$tables[$lang][$key] = $key;
+   				$tables[$lang][$key] = static::get($key,$lang);
    				$update[$lang] = true;
    			}
    		}	

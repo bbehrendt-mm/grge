@@ -6,10 +6,19 @@ class Model_Inventory extends Model {
 	private $limit = NULL;
 	private $t_limit = NULL;
 	private $current = NULL;
-	
+    private $current_full = NULL;
+    private $carrier_inventory = null;
+
+    // S6 to S6.5 converter
+    public function __wakeup() {
+        if ($this->carrier_inventory === null)
+            $this->carrier_inventory = ($this->limit > 0);
+    }
+
 	//Create inventory, set weight limit
-	public function __construct($weight_limit = NULL) {
+	public function __construct($weight_limit = NULL, $carrier = false) {
 		$this->limit = $weight_limit;
+        $this->carrier_inventory = $carrier;
 	}
 
     /**
@@ -52,10 +61,11 @@ class Model_Inventory extends Model {
 
     /**
      * Returns the current weight of all items in this inventory combined
+     * @param bool $ignore_carrier_state Count carrier items even if this is a carrier inventory
      * @return number
      */
-    public function weight() {
-		return min($this->current, $this->limit);
+    public function weight($ignore_carrier_state = false) {
+        return  $this->limit ? min($this->current, $this->limit) : ($ignore_carrier_state ? $this->current_full : $this->current);
 	}
 
     /**
@@ -69,13 +79,16 @@ class Model_Inventory extends Model {
         global $game;
 			
 		$this->current = 0;
-		foreach (array_keys($this->data) as $uin)
-		{
-			$item = $game->uin()->get($uin);
-			
-			if ($item) $this->current += $item->weight();
-			else $this->remove($uin);
-		}
+		foreach (array_keys($this->data) as $uin) {
+            $item = $game->uin()->get($uin);
+
+            if (!$item) {
+                $this->remove($uin);
+                continue;
+            } elseif (!$this->carrier_inventory || !$item->is_carrier_item())
+                $this->current += $item->weight();
+            $this->current_full += $item->weight();
+        }
 	}
 
     /**
@@ -91,7 +104,9 @@ class Model_Inventory extends Model {
         global $game;
 			
 		if (!(Tool_System::instance_of($item, 'Model_Items_Abstract_Item'))) return false;
-		if ($this->limit() && ($this->current + $item->weight() > $this->limit())) return false;
+		if ($this->limit() && !($this->carrier_inventory && $item->is_carrier_item()) && ($this->current + $item->weight() > $this->limit())) return false;
+        if ($this->carrier_inventory && ($item->get_max_per_player() > 0) && (count($this->get(get_class($item))) >= $item->get_max_per_player()))
+            return false;
 		
 		if (!$item->uin()) $game->uin()->set($item);
 		

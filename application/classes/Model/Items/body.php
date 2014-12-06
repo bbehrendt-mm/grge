@@ -17,6 +17,7 @@ class Model_Items_Body extends Model_Items_Abstract_Item implements Interface_St
 	);
 	
 	protected static $weight = 95;
+    protected $body_name = null;
 	
 	public function __construct($name = null, $desc = null) {
 		parent::__construct();
@@ -38,22 +39,35 @@ class Model_Items_Body extends Model_Items_Abstract_Item implements Interface_St
                     )
             );
     }
+
+    public function give_name($new_name) {
+        $this->body_name = $new_name;
+    }
+
+    public function label() {
+        return $this->body_name;
+    }
 	
 	public function mixchem($chemval) {
-        /**
-         * @global $player Model_Player
-         */
-		global $player;
-
-		if ($chemval == 6) {
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Die Chemikalie ätzt der Leiche das Fleisch von den Knochen! Es bleibt ledigtlich etwas Blut zurück... und ein perfekt erhaltenes Skelett!'));
-			$player->location()->inventory()->add(new Model_Items_Generic_Bone3);
-			$player->location()->inventory()->add(new Model_Items_Generic_Waterb());
-			$this->consume();
-			return true;
-		} else {
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Der zerfetzte Körper der Leiche saugt die Chemikalie auf, aber du kannst keine Veränderung feststellen ...'));
-			return false;
-		}
+        switch ($chemval)
+        {
+            case 6:
+                $this->consume();
+                Tool_Scripts::chem_reaction(
+                    'Die Chemikalie ätzt der Leiche das Fleisch von den Knochen! Es bleibt ledigtlich etwas Blut zurück... und ein perfekt erhaltenes Skelett!',
+                    $chemval,$this, [new Model_Items_Generic_Bone3,new Model_Items_Generic_Waterb]);
+                return true;
+            case 9:
+                $this->consume();
+                Tool_Scripts::chem_reaction(
+                    'Die Chemikalie ätzt der Leiche das Fleisch von den Knochen! Es bleibt ledigtlich etwas Blut zurück... und ein perfekt erhaltenes Skelett!',
+                    $chemval,$this, [new Model_Items_Generic_Bone3,new Model_Items_Generic_Waterb,new Model_Items_Generic_Waterb]);
+                return true;
+            default:
+                Tool_Scripts::chem_reaction(
+                    'Der zerfetzte Körper der Leiche saugt die Chemikalie auf, aber du kannst keine Veränderung feststellen ...',
+                    $chemval,$this);
+                return false;
+        }
 	}
 }	

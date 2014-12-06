@@ -15,7 +15,6 @@ game.render.html = {
 
         if (!target.length) return;
 
-        //target.find('*[data-hasqtip]').qtip('destroy',true);
         target.empty().html(content);
     },
 

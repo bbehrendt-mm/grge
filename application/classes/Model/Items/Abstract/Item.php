@@ -10,6 +10,7 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 	const MIAI_CAT_MISC = 32;
     const MIAI_CAT_EVENT = 64;
     const MIAI_CAT_LITERATURE = 128;
+    const MIAI_CAT_BOTTLES = 256;
 	
 	protected static $static_info = Array(
 				'name' => 'item_name',
@@ -18,7 +19,11 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 				'category' => 'item_cat',
 			);
 	protected static $instances_info = Array();
+    protected static $icon_ext = 'gif';
+    protected static $carrier_item = false;
+    protected static $max_per_player = 0;
 	protected $custom_info = Array();
+    protected static $idea_contest_player = null;
 	
 	public $type = -1;
 	
@@ -26,6 +31,18 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 	protected static $essential = false;
 	
 	protected static $associated_view = 'auto';
+
+    public function is_carrier_item() {
+        return static::$carrier_item;
+    }
+
+    public function get_max_per_player() {
+        return static::$max_per_player;
+    }
+
+    public static function idea_contest_player() {
+        return static::$idea_contest_player;
+    }
 
     /**
      * @return Model_Hid
@@ -134,7 +151,7 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 	 * @return string
 	 */
 	public function icon() {
-		return "/application/assets/icons/items/{$this->instance_info('icon')}.gif";
+		return "/application/assets/icons/items/{$this->instance_info('icon')}." . static::$icon_ext;
 	}
 	
 	/**
@@ -142,7 +159,7 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 	 * @return string
 	 */
 	public static function static_icon() {
-		return "/application/assets/icons/items/" . static::static_info('icon') . ".gif";
+		return "/application/assets/icons/items/" . static::static_info('icon') . "." . static::$icon_ext;
 	}
 	
 	/**

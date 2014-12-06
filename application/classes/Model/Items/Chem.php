@@ -16,9 +16,19 @@ class Model_Items_Chem extends Model_Items_Abstract_Item implements Interface_St
 			Array(	'name' => 'Farbige Substanz (Limosuptin)',		'icon' => 'chem/chem4'),
 			Array(	'name' => 'Farbige Substanz (Gatonoptium)',		'icon' => 'chem/chem5'),
 			Array(	'name' => 'Farbige Substanz (Betakosimtat)',	'icon' => 'chem/chem6'),
+
+            Array(	'name' => 'Seltsame Substanz (Milodrin)',		'icon' => 'chem/chem1s'),
+            Array(	'name' => 'Seltsame Substanz (Karmitain)',		'icon' => 'chem/chem2s'),
+            Array(	'name' => 'Seltsame Substanz (Neotrigmat)',		'icon' => 'chem/chem3s'),
+            Array(	'name' => 'Seltsame Substanz (Limosuritat)',	'icon' => 'chem/chem4s'),
+            Array(	'name' => 'Seltsame Substanz (Gatonoptigin)',	'icon' => 'chem/chem5s'),
+            Array(	'name' => 'Seltsame Substanz (Betakosidatin)',	'icon' => 'chem/chem6s'),
 	);
 
     protected function hid() {
+        if ($this->type < 0)
+            $this->type = 0;
+
         return parent::hid()
             ->add_action('Experimentieren ...', Model_Action::factory()
                     ->javascript(
@@ -32,9 +42,11 @@ class Model_Items_Chem extends Model_Items_Abstract_Item implements Interface_St
 	protected static $weight = 0.2;
 	
 	public function __construct($target = null) {
-		parent::__construct();
+		global $game;
+        parent::__construct();
 		
-		if ($target === NULL) $this->type = mt_rand(0, 1);
+		if ($target === NULL)
+            $this->type = mt_rand(0, 1) + ($game->config('modules.additionalchems') ? 1 : 0) * mt_rand(0,1) * 6;
 		else $this->type = $target - 1;
 	}
 	
@@ -50,20 +62,60 @@ class Model_Items_Chem extends Model_Items_Abstract_Item implements Interface_St
          */
 		global $game, $player;
 
-		$this->type += $chemval;
-		
-		if ($this->type > 6) {
-			$damage = -20 - ($this->type - 6) * 9;
-			$drunk = ($this->type - 6) * 20;
-			
-			$game->stats(Model_Game::MGLS_Health, $damage);
-			$game->stats(Model_Game::MGLS_Drunk, $drunk);
-			
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Du mischt beide Chemikalien zusammen. Mit einem Schlag gibt es einen lauten Knall, das Reagenzglas zerspringt und du findest dich in einer bestialisch stinkenden Wolke wieder. Diese beiden Stoffe zu mischen scheint keine allzu gute Idee gewesen zu sein...'));
-			$this->consume();
-			return false;
-		} else {
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Du mischt beide Chemikalien zusammen. Es blubbert ein wenig, aber nachdem sich die Blasen gelegt haben stellst du fest, dass du soeben ein Fläschchen mit :result hergestellt hast! Herzlichen Glückwunsch!', array(), array(':result' => $this->name())));		
+        $d = 0;
+        $mixed = false;
+        $ot = $this->chem_value();
+
+        if ($chemval > 6 && $this->type > 5) {
+            $this->type += ($chemval - 6);
+            $d = $this->type - 11;
+        } elseif ($chemval <= 6 && $this->type <= 5) {
+            $this->type += $chemval;
+            $d = $this->type - 5;
+        } else {
+            if ($chemval > 6)
+                $chemval -= 6;
+            if ($this->type > 5)
+                $this->type -= 6;
+
+            $this->type += $chemval;
+            $d = $this->type - 5;
+            $this->type += 6 * mt_rand(0,1);
+            $mixed = true;
+        }
+
+        $this->consume();
+		if ($d > 0 && !$mixed) {
+            $damage = -20 - ($d - 1) * 9;
+            $drunk = ($d - 1) * 20;
+
+            $player->stats_modify(Model_Player::MP_STAT_HEALTH, $damage, Model_Player::MP_STAT_DRUNK, $drunk);
+
+            Tool_Scripts::chem_reaction(
+                'Du mischt beide Chemikalien zusammen. Mit einem Schlag gibt es einen lauten Knall, das Reagenzglas zerspringt und du findest dich in einer bestialisch stinkenden Wolke wieder. Diese beiden Stoffe zu mischen scheint keine allzu gute Idee gewesen zu sein...',
+                $chemval, new Model_Items_Chem($ot)
+            );
+
+            return false;
+        } elseif ($d > 0 && $mixed) {
+            $damage = -5 - ($d - 1) * 4;
+            $radiation = ($d - 1) * 15;
+
+            $player->stats_modify(Model_Player::MP_STAT_HEALTH, $damage, Model_Player::MP_STAT_RADIATION, $radiation);
+
+            Tool_Scripts::chem_reaction(
+                'Du mischt beide Chemikalien zusammen. Mit einem Schlag gibt es einen lauten Knall, das Reagenzglas zerspringt und du findest dich in einer bestialisch stinkenden Wolke wieder. Diese beiden Stoffe zu mischen scheint keine allzu gute Idee gewesen zu sein...',
+                $chemval, new Model_Items_Chem($ot)
+            );
+
+            return false;
+        } else {
+            Tool_Scripts::chem_reaction(
+                null,
+                $chemval, new Model_Items_Chem($ot), new Model_Items_Chem($this->chem_value())
+            );
+
+            $player->log()->add(new Model_Log_Types_Text(null, null, 'Du mischt beide Chemikalien zusammen. Es blubbert ein wenig, aber nachdem sich die Blasen gelegt haben stellst du fest, dass du soeben ein Fläschchen mit :result hergestellt hast! Herzlichen Glückwunsch!', array(), array(':result' => $this->name())));
 			return true;
 		}
 	}

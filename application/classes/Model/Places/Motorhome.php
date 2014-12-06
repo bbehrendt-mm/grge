@@ -4,6 +4,7 @@ class Model_Places_Motorhome extends Model_Places_Home {
 
     protected static $name = 'Klappriger Wohnwagen';
     protected static $description = 'Als die Zombies kamen haben sich die meisten deiner Nachbarn einfach in ihren Häusern verbarrikadiert. Du hingegen bist mit deinem Wohnmobil geflohen, was sich im Nachhinein leider auch als nicht optimal erwiesen hat. Immerhin musst du regelmäßig Benzin für dieses Teil finden und es in Schuss halten, um weiterfahren zu können.';
+    protected static $icon = 'motorhome';
 
     private $progress = 0;
     private $driving = false;
@@ -28,6 +29,10 @@ class Model_Places_Motorhome extends Model_Places_Home {
 
     public function get_distance() {
         return $this->km;
+    }
+
+    public function get_map_points() {
+        return $this->get_distance();
     }
 
     public function get_level() {
@@ -76,16 +81,36 @@ class Model_Places_Motorhome extends Model_Places_Home {
                 else $game->uin()->remove($location);
             }
 
-        $game->reset_maps($populate ? 'roadtrip_easy' : 'roadtrip_driving');
+        if ($populate) {
+            if ($this->progress <= 2)
+                $game->reset_maps('roadtrip_easy');
+            elseif ($this->progress <= 5)
+                $game->reset_maps('roadtrip_medium');
+            else $game->reset_maps('roadtrip_hard');
+        } else $game->reset_maps('roadtrip_driving');
+
         $game->map_main()->insert_location($this);
     }
 
     private function drivecontrol($start, $break = false) {
+        global $player, $game;
+
         if ($start == $this->driving)
             return;
 
-        if (!$start && !$break)
+        if (!$start && !$break) {
             $this->progress++;
+            $game->config('zombies.accum', $game->config('zombies.accum') + 0.15);
+            $game->config('places.dryout_factor', $game->config('places.dryout_factor') + 0.15);
+            $game->config('places.outworld.location_density', $game->config('places.outworld.location_density') + 0.05);
+        }
+
+        if (!$start)
+            foreach (Tool_Scripts::at_location($this->uin()) as $p)
+                $p->buff_remove('fragile/driver');
+        else new Model_Buffs_Driver($player->id());
+
+        $game->delete_lobby();
 
         $this->force_nomap = (!$start && $break);
 
@@ -116,13 +141,13 @@ class Model_Places_Motorhome extends Model_Places_Home {
         return static::$max_weight;
     }
 
-    public function interaction_break() {
+    public function interaction_forced_break() {
         global $player;
         $player->log()->add('Du fährst deinen Wohnwagen auf den Standstreifen und hälst an. Eine kleine Pause tut gut...');
         $this->drivecontrol(false, true);
     }
 
-    public function interaction_stop() {
+    public function interaction_forced_stop() {
         global $player;
         $player->log()->add('Du suchst einen geeigneten Parkplatz und hälst das Wohnmobil an. Tja, Zeit sich hier mal etwas umzusehen...');
         $this->drivecontrol(false);
@@ -160,12 +185,17 @@ class Model_Places_Motorhome extends Model_Places_Home {
         if ($this->driving)
             return;
 
+        if ($player->job(1080)) {
+            $player->log()->add('Es hat diverse Vorteile, ein Kind zu sein. Die Tatsache, dass du nicht Autofahren kannst, ist keiner davon.');
+            return;
+        }
+
         if ($this->motor_status() <= 0) {
             $player->log()->add('Du drehst den Zündschlüssel und hörst ein Klappern, aber der Motor springt nicht an. Irgend etwas muss da kaputt sein...');
             return;
         }
 
-        if ($this->weight() > static::$max_weight) {
+        if (!$this->force_nomap && $this->weight() > static::$max_weight) {
             $player->log()->add('Du drehst den Zündschlüssel und trittst auf das Gaspedal. Der Motor ächzt, aber du kommst keinen Meter vorran. Anscheinend ist das Wohnmobil überladen...');
             return;
         }
@@ -184,11 +214,40 @@ class Model_Places_Motorhome extends Model_Places_Home {
     public function tick() {
         if (!$this->driving)
             return;
+        $this->km += $this->get_speed();
+
+        foreach (Tool_Scripts::at_location($this->uin()) as $p)
+            if ($p->buff_retr('fragile/driver')) {
+
+                $kc = 100;
+                if (($s = $p->stats_get(Model_Player::MP_STAT_SLEEPY) < 20))
+                    $kc *= $s/20;
+                if (($s = $p->stats_get(Model_Player::MP_STAT_DRUNK) > 20))
+                    $kc *= (100-$s)/80;
+
+                if (mt_rand(0,100) > $kc) {
+
+                    $this->log()->add(':name hat einen Unfall gebaut! Die Insassen haben Verletzungen davon getragen und der Wohnwagen wurde schwer beschädigt!', array(':name' => $p->name()));
+                    foreach (Tool_Scripts::at_location($this->uin()) as $ps) {
+                        $ps->set_cod('Autounfall');
+                        $ps->stats_modify(Model_Player::MP_STAT_HEALTH, -mt_rand(10,80));
+                        if ($ps->id() != $p->id())
+                            $ps->log()->add('Du hast gerade eben noch friedlich aus dem Fenster geschaut, jetzt liegst du plötzlich in einem Trümmerhaufen aus Blech und Blut. :name, dieser verblödete Idiot, hat anscheinend einen Unfall gebaut.', array(':name' => $p->name()));
+                    }
+                    $p->stats_modify(Model_Player::MP_STAT_HEALTH, -mt_rand(20,50));
+                    $p->log()->add('Tja, sowas passiert wenn man in deinem Zustand autofährt. Vielleicht hättest du das jemand anderen tun lassen sollen, zum Beispiel jemandem der nicht das einzige Fahrzeugwrack auf der Straße im Umkreis von 10 Kilometern frontal rammt?');
+
+                    foreach ($this->parts as &$status_value)
+                        $status_value[0] = 0;
+
+                    $this->drivecontrol(false);
+                    return;
+                }
+
+            }
 
         $status = $this->motor_status();
         $damage = (mt_rand(0,110) > ($status * 100));
-
-        $this->km += $this->get_speed();
 
         if (!$damage)
             return;

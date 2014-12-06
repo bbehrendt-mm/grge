@@ -32,7 +32,7 @@ class Controller_Account extends Controller {
             return $this->japi_login(true);
 
         if ($attempt_local) {
-            if (!$data = Model_User::fromfs($key, Kohana::$config->load('mt.links.' . $host . '.lang')))
+            if (!$data = Model_Euser::fromfs($key, Kohana::$config->load('mt.links.' . $host . '.lang')))
                 return $this->error(\grge\E_AUTH_LOCAL_PROVIDER_FAILED);
 
             $mtid = $data['mtid'];
@@ -76,23 +76,23 @@ class Controller_Account extends Controller {
                 return $this->error(\grge\E_AUTH_WHITELISTING_FAILED);
 
         //Finally get a real UID from all the crap we just collected
-        if (!$uid = Model_User::mt2gr($mtid, $region))
+        if (!$uid = Model_Euser::mt2gr($mtid, $region))
             //Register player, if he does not yet have an account
-            $uid = Model_User::register($mtid, $region, $name);
+            $uid = Model_Euser::register($mtid, $region, $name);
 
         //Check if user is banned
-        if (Model_User::is_banned($uid))
+        if (Model_Euser::is_banned($uid))
             return $this->error(\grge\E_AUTH_ACCOUNT_BANNED);
 
         //Create user object and try to read from database
-        $user = new Model_User($this->session->id());
+        $user = new Model_Euser($this->session->id());
         if ($user->read($uid))
         {
             //Append user object to session
             $this->session->set('user',$user);
 
             //Create or update FS
-            Model_User::tofs($key, $user->name(), $mtid, $region);
+            Model_Euser::tofs($key, $user->name(), $mtid, $region);
 
             //Try to load current game
             if ($gameid = $user->get_current_game())

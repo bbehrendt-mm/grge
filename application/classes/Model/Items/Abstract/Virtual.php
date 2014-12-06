@@ -2,6 +2,7 @@
 
 abstract class Model_Items_Abstract_Virtual extends Model_Items_Abstract_Item {
 	protected static $weight = 0;
+    protected static $graceful_fail = false;
 
     protected $remaining = array();
 
@@ -16,8 +17,8 @@ abstract class Model_Items_Abstract_Virtual extends Model_Items_Abstract_Item {
 
     public function interact($action, $argument = NULL, $side_player = null) {
         if ($this->remaining_actions($action)) {
-            parent::interact($action, $argument, $side_player);
-            if ($this->remaining[$action] < PHP_INT_MAX)
+            $preserve = !parent::interact($action, $argument, $side_player) && static::$graceful_fail;
+            if (!$preserve && $this->remaining[$action] < PHP_INT_MAX)
                 $this->remaining[$action]--;
         }
     }

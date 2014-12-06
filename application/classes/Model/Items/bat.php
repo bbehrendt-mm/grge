@@ -24,13 +24,22 @@ class Model_Items_Bat extends Model_Battle_Weapon implements Interface_Static {
 	public static $energy_cost = 3;
 	
 	public function mixchem($chemval) {
-		global $game, $player;
+        $this->consume();
 
-        $player->log()->add('Sofort als die Chemikalie auf das Holz trifft beginnt sie, zu blubbern und zu zischen. Scheinbar reagiert sie mit dem Lack auf dem Schläger.... und löst das Holz auf. Tja, das war einmal ein Baseballschläger.');
-        $player->location()->inventory()->add(new Model_Items_Generic_Crwood());
-        $player->location()->inventory()->add(new Model_Items_Generic_Crwood());
-
-		return false;
+        switch ($chemval)
+        {
+            case 11:case 12:
+                Tool_Scripts::chem_reaction(
+                    'Die Pillen saugen die Chemikalie regelrecht auf! Wow, du hast Twinoid erzeugt!',
+                    $chemval,$this, new Model_Items_Batc);
+                $this->grind();
+                return true;
+            default:
+                Tool_Scripts::chem_reaction(
+                    'Sofort als die Chemikalie auf das Holz trifft beginnt sie, zu blubbern und zu zischen. Scheinbar reagiert sie mit dem Lack auf dem Schläger.... und löst das Holz auf. Tja, das war einmal ein Baseballschläger.',
+                    $chemval,$this, [new Model_Items_Generic_Crwood,new Model_Items_Generic_Crwood]);
+                return false;
+        }
 	}
 
 }	

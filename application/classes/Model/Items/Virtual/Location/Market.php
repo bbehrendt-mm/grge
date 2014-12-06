@@ -2,6 +2,7 @@
 
 class Model_Items_Virtual_Location_Market extends Model_Items_Abstract_Virtual {
 
+    protected static $graceful_fail = true;
     protected $remaining = array(
         'wagon_open' => 1
     );

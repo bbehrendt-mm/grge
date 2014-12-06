@@ -426,4 +426,44 @@ class Tool_Scripts
 
         return $c;
     }
+
+    /**
+     * @param string|null $message Message
+     * @param number $cv Chem Value
+     * @param Model_Items_Abstract_Item $item Target item
+     * @param Model_Items_Abstract_Item|Model_Items_Abstract_Item[] $results Resulting items
+     * @param number|null $p Player ID
+     */
+    public static function chem_reaction($message, $cv, $item, $results = array(), $p = null) {
+        global $game;
+
+        if ($p === null)
+            $p = $game->get_player()->id();
+
+        if ($message)
+            $game->get_player($p)->log()->add($message);
+
+        $game->get_player($p)->location()->log()->add(new Model_Log_Types_Chem($cv, $item, $results, $p));
+        static::place_new_item($results, false, $game->get_player($p)->location());
+    }
+
+    /**
+     * @param null|Model_Player $player
+     * @return Model_Items_Abstract_Transport|null
+     */
+    public static function get_active_transport($player = null) {
+        if ($player === null)
+            global $player;
+
+        $selected = null;
+        $items = $player->inventory()->get('Model_Items_Abstract_Transport');
+        foreach ($items as $item) {
+            /** @var Model_Items_Abstract_Transport $item */
+            /** @var Model_Items_Abstract_Transport $selected */
+            if ($item->active() && ($selected === null || $item->speedup() > $selected->speedup()))
+                $selected = $item;
+        }
+
+        return $selected;
+    }
 }

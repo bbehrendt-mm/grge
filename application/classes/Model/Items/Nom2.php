@@ -25,17 +25,20 @@ class Model_Items_Nom2 extends Model_Items_Abstract_Item implements Interface_St
     }
 	
 	public function mixchem($chemval) {
-		global $player;
-		
-		$this->consume();
-		if ($chemval < 2) {
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Du tunkst das Essen in die Chemikalie - und beginnt zu blubbern und löst sich vor deinen Augen auf! So ein Ärger, das wirst du wohl nicht mehr essen können...'));
-			return false;
-		} else {
-			$player->location()->inventory()->add(new Model_Items_Nutrient);
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Du tunkst das Essen in die Chemikalie - und beginnt zu blubbern und löst sich vor deinen Augen in seine Bestandteile auf! Zurück bleibt nur eine große glibbrige Masse Nährschleim. Lecker ...'));
-			return true;
-		}
+        $this->consume();
+        switch ($chemval)
+        {
+            case 1:
+                Tool_Scripts::chem_reaction(
+                    'Du tunkst das Essen in die Chemikalie - und beginnt zu blubbern und löst sich vor deinen Augen auf! So ein Ärger, das wirst du wohl nicht mehr essen können...',
+                    $chemval,$this);
+                return false;
+            default:
+                Tool_Scripts::chem_reaction(
+                    'Du tunkst das Essen in die Chemikalie - und beginnt zu blubbern und löst sich vor deinen Augen in seine Bestandteile auf! Zurück bleibt nur eine große glibbrige Masse Nährschleim. Lecker ...',
+                    $chemval,$this, new Model_Items_Nutrient);
+                return true;
+        }
 	}
 
 }	

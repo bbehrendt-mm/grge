@@ -17,7 +17,9 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
 	protected static $icon;
 	protected static $desc;
 	protected static $bid;
+    protected static $alt_id = null;
 	protected static $visible = true;
+    protected static $remotable = true;
     protected static $dominance = Model_Buffs_Abstract_Buff::MBR_EQUAL;
 	
 	protected $assoc_player;
@@ -54,18 +56,20 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
 
     /**
      * Returns weather the buff should be visualized
+     * @param bool $remotable Get visibillity status for remote player views
      * @return bool
      */
-    public function visible() {
-		return static::$visible;
+    public function visible($remotable = false) {
+        return $remotable ? (static::$visible && static::$remotable) : static::$visible;
 	}
 
     /**
      * Returns weather the buff should be visualized
+     * @param bool $remotable Get visibillity status for remote player views
      * @return bool
      */
-    public static function static_visible() {
-        return static::$visible;
+    public static function static_visible($remotable = false) {
+        return $remotable ? (static::$visible && static::$remotable) : static::$visible;
     }
 
     /**
@@ -98,6 +102,22 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
      */
     public static function static_bid() {
         return static::$bid;
+    }
+
+    /**
+     * Returns the static buff alternative identifier for this buff
+     * @return string
+     */
+    public function abid() {
+        return static::$alt_id;
+    }
+
+    /**
+     * Returns the static buff alternative identifier for this buff
+     * @return string
+     */
+    public static function static_abid() {
+        return static::$alt_id;
     }
 
     /**

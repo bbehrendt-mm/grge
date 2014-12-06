@@ -24,17 +24,20 @@ class Model_Items_Nutrient extends Model_Items_Abstract_Item implements Interfac
     }
 	
 	public function mixchem($chemval) {
-		global $player;
-		
-		$this->consume();
-		if ($chemval < 6) {
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Du rührst die Chemikalie in den Nährschleim... zunächst geschieht nichts, doch dann beginnt der Schleim plötzlich zu verbrennen! Naja siehs mal so... jetzt musst du das Zeug wenigstens nicht mehr essen.'));
-			return false;
-		} else {
-			$player->location()->inventory()->add(new Model_Items_Nutrient2);
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Du rührst die Chemikalie in den Nährschleim... es fängt an zu blubbern und der Schleim ändert seine Farbe. Ähm... lecker?'));
-			return true;
-		}
+        $this->consume();
+        switch ($chemval)
+        {
+            case 6:
+                Tool_Scripts::chem_reaction(
+                    'Du rührst die Chemikalie in den Nährschleim... es fängt an zu blubbern und der Schleim ändert seine Farbe. Ähm... lecker?',
+                    $chemval,$this, new Model_Items_Nutrient2);
+                return true;
+            default:
+                Tool_Scripts::chem_reaction(
+                    'Du rührst die Chemikalie in den Nährschleim... zunächst geschieht nichts, doch dann beginnt der Schleim plötzlich zu verbrennen! Naja siehs mal so... jetzt musst du das Zeug wenigstens nicht mehr essen.',
+                    $chemval,$this);
+                return false;
+        }
 	}
 
 }	

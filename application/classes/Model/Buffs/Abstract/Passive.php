@@ -4,8 +4,8 @@ abstract class Model_Buffs_Abstract_Passive extends Model_Buffs_Abstract_Buff {
 	
 	protected $active = false;
 	
-	public function visible() {
-		return $this->active;
+	public function visible($remoteable = true) {
+		return parent::visible($remoteable) && $this->active;
 	}
 
     public function active() {

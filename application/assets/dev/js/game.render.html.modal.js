@@ -58,7 +58,7 @@ game.render.html.modal = {
 
         loader.css({
             opacity: 0,
-            top: $(window).height()/2 - 25,
+            top: 64,
             left: $(window).width()/2 - 25,
             'z-index': z
         }).animate({

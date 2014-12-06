@@ -17,19 +17,25 @@ class Model_Items_Paracetoid extends Model_Items_Abstract_Pillbox {
     );
 	
 	public function mixchem($chemval) {
-        /**
-         * @global $player Model_Player
-         */
-		global $player;
-
-		if ($chemval == 1) {
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Die Pillen saugen die Chemikalie regelrecht auf! Wow, du hast Twinoid erzeugt!'));
-			$player->location()->inventory()->add(new Model_Items_Twinoid($this->count));
-			$this->grind();
-			return true;
-		} else {
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Die Chemikalie perlt von den Pillen ab... das hat wohl nichts gebracht.'));
-			return false;
-		}
+        switch ($chemval)
+        {
+            case 1:
+                Tool_Scripts::chem_reaction(
+                    'Die Pillen saugen die Chemikalie regelrecht auf! Wow, du hast Twinoid erzeugt!',
+                    $chemval,$this, new Model_Items_Twinoid($this->count));
+                $this->grind();
+                return true;
+            case 10:
+                Tool_Scripts::chem_reaction(
+                    'Die Pillen saugen die Chemikalie regelrecht auf! Vermutlich ast du jetzt ihre Wirkungsweise geändert...',
+                    $chemval,$this, new Model_Items_Foodsupplement($this->count));
+                $this->grind();
+                return true;
+            default:
+                Tool_Scripts::chem_reaction(
+                    'Die Chemikalie perlt von den Pillen ab... das hat wohl nichts gebracht.',
+                    $chemval,$this);
+                return false;
+        }
 	}
 }	

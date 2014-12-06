@@ -4,6 +4,7 @@ class Model_Buffs_Daytime extends Model_Buffs_Abstract_Buff {
 
 	protected static $bid = 'daytime';
 	protected static $visible = true;
+    protected static $remotable = false;
 	
 	protected $effects = Array();
 

@@ -6,6 +6,7 @@ class Model_Buffs_Heartbeat extends Model_Buffs_Abstract_Buff {
 	protected static $icon = 'heartbeat';
 	protected static $desc = 'Eine alte chinesische Weisheit sagt: Wenn dein Herz aufhört zu schlagen bist du tot!';
 	protected static $bid = 'heartbeat';
+    protected static $remotable = false;
 	
 	protected $effects = Array();
 	

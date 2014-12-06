@@ -26,16 +26,19 @@ class Model_Items_Rawmeat2 extends Model_Items_Abstract_Item implements Interfac
     }
 
 	public function mixchem($chemval) {
-		global $player;
-
-		if ($chemval == 6) {
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Die Chemikalie ätzt das gesamte Fleisch weg! Nur der Knochen bleibt zurück...'));
-			$player->location()->inventory()->add(new Model_Items_Bone);
-			$this->consume();
-			return true;
-		} else {
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Das Fleisch saugt die Chemikalie auf, aber du kannst keine Veränderung feststellen ...'));
-			return false;
-		}
+        switch ($chemval)
+        {
+            case 6:
+                $this->consume();
+                Tool_Scripts::chem_reaction(
+                    'Die Chemikalie ätzt das gesamte Fleisch weg! Nur der Knochen bleibt zurück...',
+                    $chemval,$this, new Model_Items_Bone);
+                return true;
+            default:
+                Tool_Scripts::chem_reaction(
+                    'Das Fleisch saugt die Chemikalie auf, aber du kannst keine Veränderung feststellen ...',
+                    $chemval,$this);
+                return false;
+        }
 	}
 }	

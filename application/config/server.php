@@ -4,7 +4,7 @@ return array(
 	'season' => 6,
 	'version' => array(
 		'revision' => 216,
-		'type' 	   => 's',
+		'type' 	   => 'n',
 		'date'	   => '17.02.2014',
 	),
     'downtime' => array(

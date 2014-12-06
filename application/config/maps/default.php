@@ -57,4 +57,6 @@ return array(
     'Model_Places_Villa'				=> Array('auto' => false, 'sub' => null, 'iteration' =>  0, 'distance' => array(15,20), 'num' =>  1, 'max_local' =>  1, 'contortion' =>  0, 'chance' =>   0, 'obvious' => false, 'branchable' => false, 'root' => 'Model_Places_Outworld'),
     'Model_Places_Cathedral'			=> Array('auto' => false, 'sub' => null, 'iteration' =>  0, 'distance' => array(15,20), 'num' =>  1, 'max_local' =>  1, 'contortion' =>  0, 'chance' =>   0, 'obvious' => false, 'branchable' => false, 'root' => 'Model_Places_Outworld'),
     'Model_Places_Colosseum'			=> Array('auto' => false, 'sub' => null, 'iteration' =>  0, 'distance' => array( 5, 5), 'num' =>  1, 'max_local' =>  1, 'contortion' =>  0, 'chance' =>   0, 'obvious' => false, 'branchable' => false, 'root' => 'Model_Places_Outworld'),
+
+    'Model_Places_Asylumhideout'        => Array('auto' => true, 'sub' => 'ashide', 'iteration' => 0, 'distance' => array( 0, 0), 'num' =>  1, 'max_local' =>  1, 'contortion' =>  0, 'chance' =>   2, 'obvious' => true,  'branchable' => true, 'root' => null, 'fixed' => 1),
 );

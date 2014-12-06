@@ -14,6 +14,10 @@ class Model_Factory_Items extends Model {
 		$this->found = 0;
         $this->config = $config;
 	}
+
+    public function updateConfigBase($config = 'default') {
+        $this->config = $config;
+    }
 	
 	private function traverse($data) {
 		if (!is_array($data) || count($data) == 0) return null;

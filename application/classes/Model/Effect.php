@@ -20,11 +20,12 @@ class Model_Effect {
         Model_Player::MP_STAT_SLEEPY => 'status_sleepy',
         Model_Player::MP_STAT_RADIATION => 'status_rad',
         Model_Player::MP_STAT_THIRST => 'status_thirst',
-        Model_Player::MP_STAT_ZOMBIFY => 'status_zmb'
+        Model_Player::MP_STAT_ZOMBIFY => 'status_zmb',
+        Model_Player::MP_STAT_FREEZE => 'status_freeze',
     );
 
     private static $reversed_colors = array(
-        Model_Player::MP_STAT_RADIATION, Model_Player::MP_STAT_DRUNK, Model_Player::MP_STAT_ZOMBIFY
+        Model_Player::MP_STAT_RADIATION, Model_Player::MP_STAT_DRUNK, Model_Player::MP_STAT_ZOMBIFY, Model_Player::MP_STAT_FREEZE
     );
 
     const CFUNC_PROCESS_POST = 1;
@@ -147,12 +148,18 @@ class Model_Effect {
     }
 
     /**
-     * @param null|int $stat
+     * @param null|int|array $stat
      * @param null|number|number[]|string $diff
      * @param null|number $diff2
      * @return Model_Effect|null|number|number[]
      */
     public function effect($stat = null, $diff = null, $diff2 = null) {
+        if (is_array($stat)) {
+            foreach ($stat as $t => $d)
+                $this->effect($t,$d);
+            return $this;
+        }
+
         if ($diff === 0 && $diff2 === null)
             return $this;
 
@@ -169,6 +176,7 @@ class Model_Effect {
     }
 
     /**
+     * @param null|int $stat Display a stat icon in addition to the question marks
      * @return Model_Effect|null|number|number[]
      */
     public function ambiguous_effect($stat = null) {

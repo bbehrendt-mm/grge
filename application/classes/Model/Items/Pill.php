@@ -191,7 +191,7 @@ class Model_Items_Pill extends Model_Items_Abstract_Item implements Interface_St
             case 3:case 4:case 5:
                 Tool_Scripts::chem_reaction(
                     'Du wirfst die Pille in die Chemikalie ... es blubbert ein bisschen, und als du die Pille herausholst stellst du fest, dass sie die Farbe geändert hat!',
-                    $chemval,$this);
+                    $chemval,$this, new Model_Items_Pill);
 
                 return true;
             default:

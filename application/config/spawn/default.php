@@ -451,9 +451,46 @@ return array(
                 Array('type' => 'Model_Battle_Mutant',		'num' => Array(   0,   1), 'distance' => Array( 10,  50)),
         ),
     )),
-    'Model_Places_Xmasfair'			    => Array('chance' =>  15, 'accum' =>  0, 'range' =>  0,	'groups' => Array(
+    'Model_Places_Roadtrip_Garage'		=> Array('chance' =>  20, 'accum' =>  10, 'range' =>  30,	'groups' => Array(
         Array(
-            Array('type' => 'Model_Battle_Shambler',	'num' => Array(   1,   2), 'distance' => Array(  1,   100)),
+            Array('type' => 'Model_Battle_Mutant',		'num' => Array(   1,   4), 'distance' => Array( 10, 50)),
+            Array('type' => 'Model_Battle_Shambler',	'num' => Array(   1,   2), 'distance' => Array( 5,  50)),
+            Array('type' => 'Model_Battle_Fatass',		'num' => Array(   1,   1), 'distance' => Array( 10, 50)),
+        ),
+        Array(
+            Array('type' => 'Model_Battle_Mutant',		'num' => Array(   0,   6), 'distance' => Array( 10,  50)),
+        ),
+        Array(
+            Array('type' => 'Model_Battle_Mutant',		'num' => Array(   0,   1), 'distance' => Array( 10, 50)),
+            Array('type' => 'Model_Battle_Shambler',	'num' => Array(   0,   1), 'distance' => Array( 5,  50)),
+            Array('type' => 'Model_Battle_Fatass',		'num' => Array(   0,   1), 'distance' => Array( 10, 50)),
         ),
     )),
+    'Model_Places_Roadtrip_Myhouse'					=> Array('chance' =>   15, 'accum' =>  12, 'range' =>   0, 'groups' => Array(
+        Array(
+            Array('type' => 'Model_Battle_Shambler',	'num' => Array(   1,   1), 'distance' => Array(   1,  3)),
+            Array('type' => 'Model_Battle_Shambler',	'num' => Array(   1,   1), 'distance' => Array(   1,  3)),
+            Array('type' => 'Model_Battle_Shambler',	'num' => Array(   1,   1), 'distance' => Array(   1,  3)),
+            Array('type' => 'Model_Battle_Shambler',	'num' => Array(   2,   2), 'distance' => Array(   1,  3)),
+        ),
+        Array(
+            Array('type' => 'Model_Battle_Shambler',	'num' => Array(   1,   3), 'distance' => Array(   2,  5)),
+            Array('type' => 'Model_Battle_Shambler',	'num' => Array(   1,   3), 'distance' => Array(   2,  5)),
+        ),
+        Array(
+            Array('type' => 'Model_Battle_Shambler',	'num' => Array(   1,   5), 'distance' => Array(   3,  5)),
+        ),
+    )),
+    'Model_Places_Roadtrip_Roadblock'	=> Array('chance' =>   5, 'accum' =>  30, 'range' =>  50, 'groups' => Array(
+        Array(
+            Array('type' => 'Model_Battle_Shambler',	'num' => Array(   5,   8), 'distance' => Array(  10,   20)),
+        ),
+        Array(
+            Array('type' => 'Model_Battle_Runner',		'num' => Array(   2,   4), 'distance' => Array(  50,  80)),
+        ),
+        Array(
+            Array('type' => 'Model_Battle_Fatass',		'num' => Array(   3,   5), 'distance' => Array(  5,   10)),
+        ),
+    )),
+    'Model_Places_Asylumhideout'	=> Array('chance' =>   0, 'accum' =>  0, 'range' =>   0, 'groups' => Array()),
 );

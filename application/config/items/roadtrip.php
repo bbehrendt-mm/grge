@@ -54,6 +54,14 @@ return array(
                 'Model_Items_Generic_Micropur'	=>		1,
                 'Model_Items_Shield'	        =>		1,
                 'Model_Items_Helmet'            =>      1,
+                'Model_Items_Generic_Bike'      =>      1,
+        ),
+        'garage' => array(
+                'Model_Items_Generic_Motor' => 1,
+                'Model_Items_Generic_Belt'  => 2,
+                'Model_Items_Generic_Tube'  => 5,
+                'Model_Items_Generic_Sum'   => 10,
+                'Model_Items_Generic_Bike'  => 3,
         ),
         'diy' => array(
                 'Model_Items_Generic_Wire'      =>      1,
@@ -81,6 +89,7 @@ return array(
                 'Model_Items_Shield3'           =>      1,
                 'Model_Items_Phone'             =>      1,
                 'Model_Items_Flashlight'        =>      1,
+                'Model_Items_Generic_Bike'      =>      2,
         ),
         'hideout' => array(
                 'Model_Items_Generic_Bed'		=>		1,
@@ -120,10 +129,10 @@ return array(
                 'Model_Items_Generic_Water2'	=>		2,
         ),
         'swater' => array(
-            'Model_Items_Generic_Water2'	=>		2,
-            'Model_Items_Generic_Water1'	=>		1,
-            'Model_Items_Cwater'	        =>		3,
-            'Model_Items_Cwater2'	        =>		4,
+                'Model_Items_Generic_Water2'	=>		2,
+                'Model_Items_Generic_Water1'	=>		1,
+                'Model_Items_Cwater'	        =>		3,
+                'Model_Items_Cwater2'	        =>		4,
         ),
         'bedroom' => array(
                 'Model_Items_Generic_Bed'		=>		2,
@@ -140,6 +149,7 @@ return array(
         'meds' => array(
                 'Model_Items_Paracetin'			=>		2,
                 'Model_Items_Paracetoid'		=>		2,
+                'Model_Items_Foodsupplement'	=>		1,
                 'Model_Items_Paralaxium'		=>		2,
                 'Model_Items_Nutrient'			=>		1,
                 'Model_Items_Pill'				=>		1,
@@ -150,6 +160,7 @@ return array(
         'smeds' => array(
             'Model_Items_Paracetin'			=>		2,
             'Model_Items_Paracetoid'		=>		2,
+            'Model_Items_Foodsupplement'	=>		1,
             'Model_Items_Paralaxium'		=>		2,
             'Model_Items_Nutrient'			=>		1,
             'Model_Items_Pill'				=>		1,
@@ -347,6 +358,15 @@ return array(
         ),
         'Model_Places_Camping'		        => Array('size' =>  10,
             'content' => Array('useless' => 1),
+        ),
+        'Model_Places_Roadtrip_Garage'		=> Array(	'size' =>  7,
+            'content' => Array('garage' => 5, 'hideout' => 2, 'useless' => 2),
+        ),
+        'Model_Places_Roadtrip_Roadblock'	=> Array(	'size' =>  2,
+            'content' => Array('hideout' => 1, 'useless' => 10, 'kitchenutils' => 1, 'gardening' => 1, 'diy' => 1),
+        ),
+        'Model_Places_Roadtrip_Myhouse'	=> Array(	'size' =>  0,
+            'content' => Array(),
         ),
         'Model_Places_Asylumhideout'		=> Array(	'size' =>   0,
             'content' => Array()

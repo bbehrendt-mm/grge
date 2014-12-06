@@ -67,7 +67,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
 	 */
 	public function is_alive() {
 		$tmp = false;
-		foreach (array_keys($this->set['gamedata']->players) as $remote_player) $tmp = $tmp || $this->get_player($remote_player)->alive();
+		foreach (array_keys($this->set['gamedata']->players) as $remote_player) $tmp = $tmp || ($this->get_player($remote_player) && $this->get_player($remote_player)->alive());
 		
 		return $tmp;
 	}
@@ -311,7 +311,8 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
     public function players($limit_alive = true) {
     	$ret = Array();
     	foreach ($this->set['gamedata']->players as $player_id => $pid)
-    		if (!$limit_alive || $this->get_player($player_id)->alive()) $ret[] = $this->get_player($player_id);
+            if (!$this->get_player($player_id)) continue;
+    		elseif (!$limit_alive || $this->get_player($player_id)->alive()) $ret[] = $this->get_player($player_id);
     
     	return $ret;
     }

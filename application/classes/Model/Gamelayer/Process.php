@@ -6,6 +6,8 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
 	abstract public function paused();
 	abstract public function is_alive();
 
+    abstract public function recalculate_flow();
+
 	final protected function process() {
 		global $user;
 
@@ -45,7 +47,7 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
                 if (!$this->is_alive())
                     $this->set['gamedata']->timing->last_point = time();
                 else
-                    Controller_Game::recalculate_flow();
+                    $this->recalculate_flow();
 			}
 		} catch (Exception $e) {
 			//Resync with DB

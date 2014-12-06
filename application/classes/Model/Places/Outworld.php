@@ -65,17 +65,6 @@ class Model_Places_Outworld extends Model_Places_Abstract_Node {
 			return true;	
 		}
 
-        // Spwan ticket
-        if (!isset($this->tickets[$player->id()])) {
-            $num = max(1,mt_rand(1,3) - mt_rand(0,2));
-            $tmp = array();
-            for ($i = 0; $i < $num; $i++)
-                $tmp[] = new Model_Items_Generic_Ticket();
-
-            Tool_Scripts::place_new_item($tmp);
-            $this->tickets[$player->id()] = true;
-        }
-
 		return parent::tick();
 	}
 
@@ -144,10 +133,20 @@ class Model_Places_Outworld extends Model_Places_Abstract_Node {
                                     /** @var Model_Player $p */
                                     global $game;
 
-                                    $xmasfair = new Model_Places_Xmasfair();
-                                    $php53bb->leave($p->id());
-                                    $p->location_class($game->uin()->set($xmasfair));
-                                    $xmasfair->enter($p->id());
+                                    $tid = time() . '_' . mt_rand();
+                                    $mapid = "xmasmap_{$tid}";
+                                    $xmas_id = $game->register_map($mapid, 'xmas', 'xmas');
+                                    $xmasfair = $game->location($xmas_id);
+                                    $xmasfair->register_doorway($this->uin);
+
+                                    $php53bb->leave_map($p->id());
+                                    $p->location_class($xmas_id);
+                                    $xmasfair->enter_map($p->id());
+
+
+                                    $game->map($xmas_id)->movement_modifier(0.1);
+                                    if (!$p->buff_retr('freeze'))
+                                        new Model_Buffs_Freeze($p->id());
                                 })
                         )
                 )

@@ -13,5 +13,7 @@ return array(
         'hospital'  => 'Krankenhaus',
         'camping'   => 'Campingplatz',
         'thouse'    => 'Baumhaus',
+        'ashide'    => 'Versteckter Flügel der Irrenanstalt',
+        'xmas'      => 'Event'
     ),
 );

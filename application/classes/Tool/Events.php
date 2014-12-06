@@ -12,7 +12,13 @@ class Tool_Events {
         return $time ? (int)date($what, $time) : (int)date($what);
     }
 
+    public static function ticket_event($time = null) {
+        return in_array(static::current($time),['xmas','easter']);
+    }
+
     public static function current($time = null) {
+        //return 'xmas';
+
         //Detect halloween (30.10. - 05.11.)
         if ( (static::get(static::TE_MONTH, $time) == 10 && static::get(static::TE_DAY, $time) >= 30) || (static::get(static::TE_MONTH, $time) == 11 && static::get(static::TE_DAY, $time) <= 5) )
             return 'halloween';
@@ -31,8 +37,6 @@ class Tool_Events {
                 if (static::get(static::TE_MONTH, $time) == 4 && static::get(static::TE_DAY, $time) >= 18 && static::get(static::TE_DAY, $time) <= 24 ) return 'easter';
                 break;
         }
-        if ( (static::get(static::TE_MONTH, $time) == 12 && static::get(static::TE_DAY, $time) >= 30) || (static::get(static::TE_MONTH, $time) == 1 && static::get(static::TE_DAY, $time) <= 4) )
-            return 'newyear';
 
         return null;
     }

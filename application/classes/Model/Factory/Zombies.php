@@ -11,6 +11,10 @@ class Model_Factory_Zombies extends Model {
 		$this->population = 0;
         $this->config = $config;
 	}
+
+    public function updateConfigBase($config = 'default') {
+        $this->config = $config;
+    }
 	
 	/**
 	 * Calculates zombie accumulation
@@ -26,7 +30,7 @@ class Model_Factory_Zombies extends Model {
 		if ($fixed === null) {
 			//Get Config
             if (!$config = Tool_System::config_tree("spawn/{$this->config}", $this->type))
-				throw new Exception('Failed to load zombie spawn configuration!');
+				throw new Exception('Failed to load zombie spawn configuration (' . $this->config . ')!' );
 			
 			$this->population += (mt_rand(0, $config['accum'])/100) * (1 + 0.25 * ($game->duration() / (576/$game->config('zombies.accum'))));
 		} else {
@@ -100,7 +104,7 @@ class Model_Factory_Zombies extends Model {
 		
 		//Get Config
 		if (!$config = Tool_System::config_tree("spawn/{$this->config}", $this->type))
-			throw new Exception('Failed to load zombie spawn configuration!');
+			throw new Exception('Failed to load zombie spawn configuration (' . $this->config . ')!');
 		
 		//No zombies appear
 		if ($number === null && $config['chance'] < mt_rand(0, 100)) return null;
@@ -120,7 +124,7 @@ class Model_Factory_Zombies extends Model {
          */
 		global $game;
 		if (!$config = Tool_System::config_tree("spawn/{$this->config}", $this->type))
-			throw new Exception('Failed to load zombie spawn configuration!');
+			throw new Exception('Failed to load zombie spawn configuration (' . $this->config . ')!');
 
         if (($d = count($config["groups"])) == 0)
             return 0;
@@ -136,7 +140,7 @@ class Model_Factory_Zombies extends Model {
 	
 	public function get_appearcence_factor() {
         if (!$config = Tool_System::config_tree("spawn/{$this->config}", $this->type))
-			throw new Exception('Failed to load zombie spawn configuration!');
+			throw new Exception('Failed to load zombie spawn configuration (' . $this->config . ')!');
 		
 		return $config['chance']/100;
 	}
@@ -149,7 +153,7 @@ class Model_Factory_Zombies extends Model {
 		
 		//Get Config
 		if (!$config = Tool_System::config_tree("spawn/{$this->config}", $this->type))
-			throw new Exception('Failed to load zombie spawn configuration!');
+			throw new Exception('Failed to load zombie spawn configuration (' . $this->config . ')!');
 		
 		return ($config['accum']/200) * (1 + 0.25 * ($game->duration() / (576/$game->config('zombies.accum'))));
 	}

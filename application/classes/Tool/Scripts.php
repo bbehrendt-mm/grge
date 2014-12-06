@@ -366,9 +366,12 @@ class Tool_Scripts
 
     /**
      * Returns the in-universe time of day
+     * @param Model_Player|null $p
      * @return string ("night", "morning", "day", "evening")
      */
-    public static function get_timeofday() {
+    public static function get_timeofday($p = null) {
+        if ($p && $p->location()->getPerpetualDayTime())
+            return $p->location()->getPerpetualDayTime();
         switch (static::get_daytime()->format('G')) {
             case 22:case 23:case 0:case 1:case 2:case 3:case 4:case 5:
             return "night"; break;

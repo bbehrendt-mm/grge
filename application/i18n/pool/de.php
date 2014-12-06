@@ -2,26 +2,30 @@
 /* Automatically generated translation file for de */
 
 return array (
-  'Der absolute Horror' =>
-	'Der absolute Horror',
-  'Es geht weder vor noch zurück - Zombies blockieren den Ausgang! Du kannst entweder eine waghalsige Flucht versuchen oder den Weg freizuräumen. Eins steht fest: Von alleine werden diese Zombies hier nicht verschwinden...' =>
-	'Es geht weder vor noch zurück - Zombies blockieren den Ausgang! Du kannst entweder eine waghalsige Flucht versuchen oder den Weg freizuräumen. Eins steht fest: Von alleine werden diese Zombies hier nicht verschwinden...',
-  'Zombie' =>
-	'Zombie',
-  'Weg freikämpfen' =>
-	'Weg freikämpfen',
-  'Wähle diese Option, um die belagernden Zombies zu bekämpfen. Der Kampf wird sofort beginnen, wenn alle Zombies besiegt sind kannst du diesen Ort normal verlassen.' =>
-	'Wähle diese Option, um die belagernden Zombies zu bekämpfen. Der Kampf wird sofort beginnen, wenn alle Zombies besiegt sind kannst du diesen Ort normal verlassen.',
-  'Zombies bekämpfen!' =>
-	'Zombies bekämpfen!',
-  'Fluchtversuch' =>
-	'Fluchtversuch',
-  'Wenn du einen Kampf vermeiden möchtest, versuche zu fliehen. Ob du Erfolg hast hängt von deiner Energie und der Zahl der Zombies ab. Hat die Flucht Erfolg, verlierst du all deine Energie und kehrst in dein Versteck zurück. Andernfalls fallen die Zombies über dich her und zwingen dich in den Nahkampf.' =>
-	'Wenn du einen Kampf vermeiden möchtest, versuche zu fliehen. Ob du Erfolg hast hängt von deiner Energie und der Zahl der Zombies ab. Hat die Flucht Erfolg, verlierst du all deine Energie und kehrst in dein Versteck zurück. Andernfalls fallen die Zombies über dich her und zwingen dich in den Nahkampf.',
-  'Flucht versuchen' =>
-	'Flucht versuchen',
+  'Zombies' =>
+	'Zombies',
+  'Navigation' =>
+	'Navigation',
+  'Bewegen ...' =>
+	'Bewegen ...',
+  'Umgebung' =>
+	'Umgebung',
+  'Überall auf dem Boden liegen geöffnete Pillenschachteln. Vermutlich könntest du hier noch einige einzelne Pillen finden, wenn du dich anstrengst.' =>
+	'Überall auf dem Boden liegen geöffnete Pillenschachteln. Vermutlich könntest du hier noch einige einzelne Pillen finden, wenn du dich anstrengst.',
+  'Pillenschachteln durchwühlen' =>
+	'Pillenschachteln durchwühlen',
+  'Effekte' =>
+	'Effekte',
+  '???' =>
+	'???',
+  'Erfordert' =>
+	'Erfordert',
   'Heldentaten' =>
 	'Heldentaten',
+  'Anzeigen...' =>
+	'Anzeigen...',
+  'Ausblenden...' =>
+	'Ausblenden...',
   'Dies ist eine Heldentat. Du kannst sie noch :num mal benutzen, verschwende sie also nicht!' =>
 	'Dies ist eine Heldentat. Du kannst sie noch :num mal benutzen, verschwende sie also nicht!',
   'Reduziert jede deiner Statusleisten um 15% und fügt die abgezogenen Punkte deiner Energie hinzu.' =>
@@ -32,48 +36,20 @@ return array (
 	'Setzt eine zufällige Statusleiste auf 100',
   'Glücksrad' =>
 	'Glücksrad',
+  'Du fällst an Ort und Stelle in einen erholsamen Schlaf.' =>
+	'Du fällst an Ort und Stelle in einen erholsamen Schlaf.',
+  'Winterschlaf' =>
+	'Winterschlaf',
   'Beendet Entzugserscheinungen auf der Stelle.' =>
 	'Beendet Entzugserscheinungen auf der Stelle.',
   'Willenskraft' =>
 	'Willenskraft',
-  'Jeder mit der Zombiekrankheit infizierte Spieler in der Nähe verliert 25 Infektionspunkte oder 15, wenn du selbst infiziert bist. Die Infektionsrate kann nicht unter 5 fallen. Falls du selbst gesund bist beshteht für jeden infizierten Spieler eine 15% Chance, dich mit der Zombiekrankheit anzustecken.' =>
-	'Jeder mit der Zombiekrankheit infizierte Spieler in der Nähe verliert 25 Infektionspunkte oder 15, wenn du selbst infiziert bist. Die Infektionsrate kann nicht unter 5 fallen. Falls du selbst gesund bist beshteht für jeden infizierten Spieler eine 15% Chance, dich mit der Zombiekrankheit anzustecken.',
-  'Sprechstunde' =>
-	'Sprechstunde',
-  'Spieler ist offline' =>
-	'Spieler ist offline',
-  'Letzte Aktivität' =>
-	'Letzte Aktivität',
-  'G:i:s \\U\\h\\r \\a\\m d.m.Y (T)' =>
-	'G:i:s \\U\\h\\r \\a\\m d.m.Y (T)',
-  'Energie' =>
-	'Energie',
-  'Gesundheit' =>
-	'Gesundheit',
-  'Hunger' =>
-	'Hunger',
-  'Müdigkeit' =>
-	'Müdigkeit',
-  'Durst' =>
-	'Durst',
-  'Kindlicher Metabolismus' =>
-	'Kindlicher Metabolismus',
-  'Herzschlag' =>
-	'Herzschlag',
-  'Tageszeit: Tag' =>
-	'Tageszeit: Tag',
-  'Befehle entgegennehmen' =>
-	'Befehle entgegennehmen',
-  'Chat-Aufruf' =>
-	'Chat-Aufruf',
-  'Nachrichten' =>
-	'Nachrichten',
-  'Mit deinen Mitverdammten sprechen' =>
-	'Mit deinen Mitverdammten sprechen',
-  'Spielerübersicht' =>
-	'Spielerübersicht',
-  'Dies ist die Gelegenheit für dich, das absolut billigste Zeug aus einer minimalen Auswahl von Gebrauchsgegenständen und Lebensmitteln zu ergattern! Die vernagelten (und schlecht geputzten) Schaufenster lassen jedoch erahnen, dass dieses Geschäft wohl in nächster Zeit nicht mehr öffnen wird. Vor dem Laden steht ein Marktwagen mit der Aufschrift "Vera Loewenhaupt & Söhne", unter dem eine Leiche liegt...' =>
-	'Dies ist die Gelegenheit für dich, das absolut billigste Zeug aus einer minimalen Auswahl von Gebrauchsgegenständen und Lebensmitteln zu ergattern! Die vernagelten (und schlecht geputzten) Schaufenster lassen jedoch erahnen, dass dieses Geschäft wohl in nächster Zeit nicht mehr öffnen wird. Vor dem Laden steht ein Marktwagen mit der Aufschrift "Vera Loewenhaupt & Söhne", unter dem eine Leiche liegt...',
+  'Tötet blockierende Zombies ohne Kampf. Für jeden Zombie werden 2 Gesundheitspunkte abgezogen. Deine Gesundheit kann durch diese Aktion nicht unter 20 fallen. Hast du nicht genug Gesundheit um alle Zombies zu töten, so musst du den Rest in einem normalen Kampf besiegen.' =>
+	'Tötet blockierende Zombies ohne Kampf. Für jeden Zombie werden 2 Gesundheitspunkte abgezogen. Deine Gesundheit kann durch diese Aktion nicht unter 20 fallen. Hast du nicht genug Gesundheit um alle Zombies zu töten, so musst du den Rest in einem normalen Kampf besiegen.',
+  'Umstoßen' =>
+	'Umstoßen',
+  'Die Tür dieser Apotheke ist von innen mit einem großen Blasentee-Werbeaufsteller verbarrikadiert. Leider hat das übergroße Schaufenster direkt daneben ausreichend Angriffsfläche für die Zombies geboten. Die Leute, die sich hier versteckt hatten, können mit den gelagerten Medikamenten wohl nichts mehr anfangen, also bedien dich ruhig.' =>
+	'Die Tür dieser Apotheke ist von innen mit einem großen Blasentee-Werbeaufsteller verbarrikadiert. Leider hat das übergroße Schaufenster direkt daneben ausreichend Angriffsfläche für die Zombies geboten. Die Leute, die sich hier versteckt hatten, können mit den gelagerten Medikamenten wohl nichts mehr anfangen, also bedien dich ruhig.',
   'Zombie-Radar' =>
 	'Zombie-Radar',
   'Solltest du rund um die Uhr wachsam sein, oder kannst du dich etwas entspannen? Wirf einen Blick auf das Zombie-Radar um das herauszufinden.' =>
@@ -88,48 +64,66 @@ return array (
 	'Aufkommen',
   'Zustrom' =>
 	'Zustrom',
-  'Verstrahlung' =>
-	'Verstrahlung',
-  'Du warst Strahlung ausgesetzt! Das ist relativ ungesund, und dein Körper kann die strahlenden Partikel nur langsam abbauen. Während eine geringe Strahlendosis noch vertretbar ist, können höhere Strahlenmengen schnell dein Leben bedrohen!' =>
-	'Du warst Strahlung ausgesetzt! Das ist relativ ungesund, und dein Körper kann die strahlenden Partikel nur langsam abbauen. Während eine geringe Strahlendosis noch vertretbar ist, können höhere Strahlenmengen schnell dein Leben bedrohen!',
+  'Alkohol' =>
+	'Alkohol',
+  'Mit ordentlich Promille im Blut wird das Leben nach der Apokalypse gleich viel erträglicher. Leider wird es auch kürzer, denn wenn du völlig abgefüllt in der Ecke liegst, kannst du dich nicht wirklich gut gegen Zombies verteidigen. Wenigstens um die Langzeitschäden an deiner Leber brauchst du dich nicht mehr zu sorgen ...' =>
+	'Mit ordentlich Promille im Blut wird das Leben nach der Apokalypse gleich viel erträglicher. Leider wird es auch kürzer, denn wenn du völlig abgefüllt in der Ecke liegst, kannst du dich nicht wirklich gut gegen Zombies verteidigen. Wenigstens um die Langzeitschäden an deiner Leber brauchst du dich nicht mehr zu sorgen ...',
   'Genauer Wert: ' =>
 	'Genauer Wert: ',
   'Absolute Einflüsse' =>
 	'Absolute Einflüsse',
   'Gesamt' =>
 	'Gesamt',
+  'Energie' =>
+	'Energie',
   'Du brauchst Energie, um Aktionen durchführen zu können. Energie regeneriert sich von alleine, wenn du bei guter Gesundheit und nicht hungrig/durstig bist. Es gibt allerdings auch einige Items, die Energie regenerieren.' =>
 	'Du brauchst Energie, um Aktionen durchführen zu können. Energie regeneriert sich von alleine, wenn du bei guter Gesundheit und nicht hungrig/durstig bist. Es gibt allerdings auch einige Items, die Energie regenerieren.',
-  'Relative Einflüsse' =>
-	'Relative Einflüsse',
-  'Berechnung' =>
-	'Berechnung',
+  'Gesundheit' =>
+	'Gesundheit',
   'Du stirbst, wenn deine Gesundheit den Wert 0 erreicht. Gesundheit regeneriert sich von alleine, wenn du genug gegessen und getrunken hast. Du kannst deine Gesundheit aber auch durch die Verwendung verschiedener Items verbessern.' =>
 	'Du stirbst, wenn deine Gesundheit den Wert 0 erreicht. Gesundheit regeneriert sich von alleine, wenn du genug gegessen und getrunken hast. Du kannst deine Gesundheit aber auch durch die Verwendung verschiedener Items verbessern.',
+  'Hunger' =>
+	'Hunger',
   'Mit leerem Magen fällt der Kampf ums Überleben schwer. Iss regelmäßig, ansonsten verlierst du Energie und Gesundheit.' =>
 	'Mit leerem Magen fällt der Kampf ums Überleben schwer. Iss regelmäßig, ansonsten verlierst du Energie und Gesundheit.',
+  'Müdigkeit' =>
+	'Müdigkeit',
   'Zombies müssen nicht schlafen - du hingegen schon! Du solltest Übermüdung um jeden Preis vermeiden, also schlafe regelmäßig.' =>
 	'Zombies müssen nicht schlafen - du hingegen schon! Du solltest Übermüdung um jeden Preis vermeiden, also schlafe regelmäßig.',
+  'Durst' =>
+	'Durst',
   'Es ist nicht leicht, in der Ödnis Wasser zu finden - nichtsdestotrotz ist es essentiell für dein Überleben.' =>
 	'Es ist nicht leicht, in der Ödnis Wasser zu finden - nichtsdestotrotz ist es essentiell für dein Überleben.',
   'Metabolismus' =>
 	'Metabolismus',
   'In deinem Körper laufen jederzeit unglaublich viele biochemische Prozesse ab, die zwar kein Mensch versteht, aber die dich irgendwie am Laufen halten. ' =>
 	'In deinem Körper laufen jederzeit unglaublich viele biochemische Prozesse ab, die zwar kein Mensch versteht, aber die dich irgendwie am Laufen halten. ',
+  'Herzschlag' =>
+	'Herzschlag',
   'Eine alte chinesische Weisheit sagt: Wenn dein Herz aufhört zu schlagen bist du tot!' =>
 	'Eine alte chinesische Weisheit sagt: Wenn dein Herz aufhört zu schlagen bist du tot!',
-  'Die Sonne brennt gnadenlos am Himmel. Wenn du dich jetzt im Freien aufhälst, erhöht sich dein Wasserverbrauch. Lange Märsche zu anderen Orten kosten dich nun nicht nur Energie, sie machen dich auch durstig.' =>
-	'Die Sonne brennt gnadenlos am Himmel. Wenn du dich jetzt im Freien aufhälst, erhöht sich dein Wasserverbrauch. Lange Märsche zu anderen Orten kosten dich nun nicht nur Energie, sie machen dich auch durstig.',
+  'Tageszeit: Morgen' =>
+	'Tageszeit: Morgen',
+  'Morgenstund hat Gold im Mund! Erstens ist dein Kaffee auf magische Art und Weise effektiver als am Rest des Tages, zweitens ist es draußen noch relativ kühl. Du benötigst daher weniger Energie, um Hausverbesserungen durchzuführen.' =>
+	'Morgenstund hat Gold im Mund! Erstens ist dein Kaffee auf magische Art und Weise effektiver als am Rest des Tages, zweitens ist es draußen noch relativ kühl. Du benötigst daher weniger Energie, um Hausverbesserungen durchzuführen.',
+  'Footballer-Statur' =>
+	'Footballer-Statur',
+  'Dank deiner beeindruckenden Statur kannst du mehr Schaden einstecken und bei der Flucht ein paar Extra-Zombies aus dem Weg räumen.' =>
+	'Dank deiner beeindruckenden Statur kannst du mehr Schaden einstecken und bei der Flucht ein paar Extra-Zombies aus dem Weg räumen.',
   'Kampfverhalten' =>
 	'Kampfverhalten',
   'Ist diese Option aktiviert, wirst du im Kampf keine Waffen einsetzen, die Energie verbrauchen.' =>
 	'Ist diese Option aktiviert, wirst du im Kampf keine Waffen einsetzen, die Energie verbrauchen.',
   'Keine Energie verbrauchen' =>
 	'Keine Energie verbrauchen',
-  'Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die einen internen Munitionsspeicher haben (z.B. Wasserpistole) oder beim Einsatz zerstört werden (z.B. Wasserbombe).' =>
-	'Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die einen internen Munitionsspeicher haben (z.B. Wasserpistole) oder beim Einsatz zerstört werden (z.B. Wasserbombe).',
+  'Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die beim Einsatz zerstört werden (z.B. Wasserbombe).' =>
+	'Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die beim Einsatz zerstört werden (z.B. Wasserbombe).',
   'Keine verbrauchbaren Waffen' =>
 	'Keine verbrauchbaren Waffen',
+  'Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die einen internen Munitionsspeicher haben (z.B. Wasserpistole).' =>
+	'Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die einen internen Munitionsspeicher haben (z.B. Wasserpistole).',
+  'Keine Waffen mit Tank' =>
+	'Keine Waffen mit Tank',
   'Der ausgewählte Kampfstil beeinflusst deine Waffen- und Gegnerauswahl. Offensive Spieler werden versuchen, so viel Schaden anzurichten wie möglich. Defensive Spieler werden versuchen, Zombies so gut es geht auf Abstand zu halten.' =>
 	'Der ausgewählte Kampfstil beeinflusst deine Waffen- und Gegnerauswahl. Offensive Spieler werden versuchen, so viel Schaden anzurichten wie möglich. Defensive Spieler werden versuchen, Zombies so gut es geht auf Abstand zu halten.',
   'Kampfstil' =>
@@ -170,66 +164,14 @@ return array (
 	'Leider scheint dein Browser Benachrichtigungen nicht zu unterstützen. Aktualisiere deinen Browser (wenn möglich), oder wechsele zu einem Browser der Benachrichtigungen unterstützt.',
   'Die Client-Einstellungen wurden gespeichert. Der Client wird nun neu starten.' =>
 	'Die Client-Einstellungen wurden gespeichert. Der Client wird nun neu starten.',
-  'The requested URL :uri was not found on this server.' =>
-	'The requested URL :uri was not found on this server.',
-  'Munitionsgürtel' =>
-	'Munitionsgürtel',
-  'Dieses kleidsame Accessoir ist unerlässlich für den modebewussten Überlebenskünstler. Gefertigt von geschickten Kinderhänden aus irgend einem Drittweltland und aus 100% Zombieleder garantiert dieser Munitionsgürtel volle Übersicht und schnellen Zugriff auf alle Arten von Munition.' =>
-	'Dieses kleidsame Accessoir ist unerlässlich für den modebewussten Überlebenskünstler. Gefertigt von geschickten Kinderhänden aus irgend einem Drittweltland und aus 100% Zombieleder garantiert dieser Munitionsgürtel volle Übersicht und schnellen Zugriff auf alle Arten von Munition.',
-  'Der Munitionsgürtel enthält derzeit folgende Gegenstände:' =>
-	'Der Munitionsgürtel enthält derzeit folgende Gegenstände:',
-  'Bitte gib an, wie viele du ablegen möchtest.' =>
-	'Bitte gib an, wie viele du ablegen möchtest.',
-  'Geheimnisvolles Ticket' =>
-	'Geheimnisvolles Ticket',
-  'Die Schrift auf diesem Ticket ist verblasst, nachdem es so lange der Sonnenstrahlung in der Aussenwelt ausgesetzt war. Was kann man mit diesem Ticket wohl machen?' =>
-	'Die Schrift auf diesem Ticket ist verblasst, nachdem es so lange der Sonnenstrahlung in der Aussenwelt ausgesetzt war. Was kann man mit diesem Ticket wohl machen?',
-  'Feldflasche' =>
-	'Feldflasche',
-  'Rationen' =>
-	'Rationen',
-  'Diese kleine, pfadfindergeprüfte Feldflasche kann bis zu 4 Rationen Wasser ausnehmen. Außerdem lässt sie sich beschriften - es wäre doch schade, wenn du deine Wasserfeldflasche mal mit der Feldflasche verwechselst, in der du die Batteriesäure aufbewahrst... ' =>
-	'Diese kleine, pfadfindergeprüfte Feldflasche kann bis zu 4 Rationen Wasser ausnehmen. Außerdem lässt sie sich beschriften - es wäre doch schade, wenn du deine Wasserfeldflasche mal mit der Feldflasche verwechselst, in der du die Batteriesäure aufbewahrst... ',
-  'Einen Schluck trinken' =>
-	'Einen Schluck trinken',
-  'Effekte' =>
-	'Effekte',
-  'Micropur hineinwerfen' =>
-	'Micropur hineinwerfen',
-  'Erfordert' =>
-	'Erfordert',
-  'Untersuchen ...' =>
-	'Untersuchen ...',
-  'Füllen oder Leeren...' =>
-	'Füllen oder Leeren...',
-  'Modifizierter Massagestab' =>
-	'Modifizierter Massagestab',
-  'Dieser Massagestab wurde anscheinend etwas modifiziert. Um den Massageeffekt zu erhöhen. Am Rücken! Denn an anderen Körperstellen kann man dieses Teil nicht benutzen!' =>
-	'Dieser Massagestab wurde anscheinend etwas modifiziert. Um den Massageeffekt zu erhöhen. Am Rücken! Denn an anderen Körperstellen kann man dieses Teil nicht benutzen!',
-  'Benutzen' =>
-	'Benutzen',
-  'Gewicht' =>
-	'Gewicht',
-  'Bandage' =>
-	'Bandage',
-  'Lieber Arm dran als Arm ab; aber wenn der Arm nun schonmal ab ist kann man wenigstens eine Bandage drum machen. Eine Bandage kann nur verwendet werden wenn du weniger als 50 Gesundheit hast!' =>
-	'Lieber Arm dran als Arm ab; aber wenn der Arm nun schonmal ab ist kann man wenigstens eine Bandage drum machen. Eine Bandage kann nur verwendet werden wenn du weniger als 50 Gesundheit hast!',
-  'Wunden versorgen' =>
-	'Wunden versorgen',
-  'Jmd. verbinden' =>
-	'Jmd. verbinden',
-  'Effekte auf ausgewählten Spieler' =>
-	'Effekte auf ausgewählten Spieler',
-  'Bitte wähle einen anderen Spieler aus:' =>
-	'Bitte wähle einen anderen Spieler aus:',
   'Rüstung' =>
 	'Rüstung',
   'Körper' =>
 	'Körper',
-  'Schutzweste' =>
-	'Schutzweste',
-  'Diese aus Polizeibeständen stammende Weste schützt dich zuverlässig vor Schlägen, Tritten, Schüssen und Aliens (allerdings nur, wenn die keine Laserwaffen haben).' =>
-	'Diese aus Polizeibeständen stammende Weste schützt dich zuverlässig vor Schlägen, Tritten, Schüssen und Aliens (allerdings nur, wenn die keine Laserwaffen haben).',
+  'Straßenkleidung' =>
+	'Straßenkleidung',
+  'Die Zombies haben dir alles genommen - bis auf die Kleidung, die du trägst. Da du sie aber schon einige Wochen ununterbrochen trägst, kann man verstehen, dass die Zombies mit diesen stinkenden Lumpen nichts zu tun haben wollen.' =>
+	'Die Zombies haben dir alles genommen - bis auf die Kleidung, die du trägst. Da du sie aber schon einige Wochen ununterbrochen trägst, kann man verstehen, dass die Zombies mit diesen stinkenden Lumpen nichts zu tun haben wollen.',
   'Ablegen' =>
 	'Ablegen',
   'Dies ist eine Rüstung. Sie wendet während eines Kampfes Schaden von dir ab.' =>
@@ -240,188 +182,138 @@ return array (
 	'Schützt',
   'Zustand' =>
 	'Zustand',
-  'Stabil' =>
-	'Stabil',
-  'Helm' =>
-	'Helm',
-  'Kopf' =>
-	'Kopf',
-  'Fahradhelm' =>
-	'Fahradhelm',
-  'Wusstest du, dass ein simpler Fahradhelm die Wahrscheinlichkeit eines Todes durch gehirnfressende Zombies um 23.956% reduziert?' =>
-	'Wusstest du, dass ein simpler Fahradhelm die Wahrscheinlichkeit eines Todes durch gehirnfressende Zombies um 23.956% reduziert?',
-  'Instabil' =>
-	'Instabil',
-  'Bitte gib an, wie viele Kapseln du aus der Packung nehmen möchtest.' =>
-	'Bitte gib an, wie viele Kapseln du aus der Packung nehmen möchtest.',
-  'Schachtel mit Paracetoid' =>
-	'Schachtel mit Paracetoid',
-  'Kapseln' =>
-	'Kapseln',
-  'Hilft zuverlässig gegen Kopfschmerzen, Bauchschmerzen, abgerissene Körperteile und extreme radioaktive Verstrahlung. Nicht einnehmen bei Schwangerschaft oder fortgeschrittener Zombiefizierung.' =>
-	'Hilft zuverlässig gegen Kopfschmerzen, Bauchschmerzen, abgerissene Körperteile und extreme radioaktive Verstrahlung. Nicht einnehmen bei Schwangerschaft oder fortgeschrittener Zombiefizierung.',
-  'Eine Paracetoid schlucken' =>
-	'Eine Paracetoid schlucken',
-  'Ganze Schachtel schlucken' =>
-	'Ganze Schachtel schlucken',
-  'Paracetoid zusammenführen' =>
-	'Paracetoid zusammenführen',
-  'Paracetoid trennen' =>
-	'Paracetoid trennen',
-  'Massagestab' =>
-	'Massagestab',
-  'Es ist ein Massagestab. NUR ein Massagestab. Für deinen verspannten Rücken! Und der ist auch nur deshalb so klebrig, weil du immer so schwitzige Hände bekommst, wenn du ihn benutzt!' =>
-	'Es ist ein Massagestab. NUR ein Massagestab. Für deinen verspannten Rücken! Und der ist auch nur deshalb so klebrig, weil du immer so schwitzige Hände bekommst, wenn du ihn benutzt!',
-  'Farbige Substanz (Karmigol)' =>
-	'Farbige Substanz (Karmigol)',
-  'Dieses kleine Fläschchen enthält eine hochkomplizierte chemische Verbindung, die so cool ist, dass du ihren Namen nicht mal bei Wikipedia findest. Teste doch mal was passiert, wenn du das Zeug über irgendeinen deiner Gegenstände kippst, oder mit einer anderen Substanz mischt!' =>
-	'Dieses kleine Fläschchen enthält eine hochkomplizierte chemische Verbindung, die so cool ist, dass du ihren Namen nicht mal bei Wikipedia findest. Teste doch mal was passiert, wenn du das Zeug über irgendeinen deiner Gegenstände kippst, oder mit einer anderen Substanz mischt!',
-  'Experimentieren ...' =>
-	'Experimentieren ...',
-  'Gebrauchter Leichensack' =>
-	'Gebrauchter Leichensack',
-  'Mit diesem Leichensack kannst du - Überraschung - Leichen transportieren. Schön verpackt ist so ein Körper viel einfacher zu transportieren, wenn du also auf Leichenjagd gehst solltest du so einen Sack immer dabei haben. Dieser Leichensack weist allerdings einige Gebrauchsspuren auf... er könnte beim Transport aufreißen, sei also vorsichtig.' =>
-	'Mit diesem Leichensack kannst du - Überraschung - Leichen transportieren. Schön verpackt ist so ein Körper viel einfacher zu transportieren, wenn du also auf Leichenjagd gehst solltest du so einen Sack immer dabei haben. Dieser Leichensack weist allerdings einige Gebrauchsspuren auf... er könnte beim Transport aufreißen, sei also vorsichtig.',
-  'Leiche einsacken' =>
-	'Leiche einsacken',
-  'Glasflasche' =>
-	'Glasflasche',
-  'Sie ist weder groß noch sonderlich stabil, aber du kannst trotzdem ein wenig Flüssigkeit darin aufbewahren.' =>
-	'Sie ist weder groß noch sonderlich stabil, aber du kannst trotzdem ein wenig Flüssigkeit darin aufbewahren.',
-  'Schachtel mit Paracetin' =>
-	'Schachtel mit Paracetin',
-  'Paracetin macht selbst den schlaffesten Sack wieder munter. Die hochkonzentrierte Mischung aus Koffein und dem von unserer Marketingabteilung neu entwickelten Acclerin - gewonnen aus natürlichem Orangenextrakt - bewirkt ein sofortiges Auffüllen von Energiereserven!' =>
-	'Paracetin macht selbst den schlaffesten Sack wieder munter. Die hochkonzentrierte Mischung aus Koffein und dem von unserer Marketingabteilung neu entwickelten Acclerin - gewonnen aus natürlichem Orangenextrakt - bewirkt ein sofortiges Auffüllen von Energiereserven!',
-  'Eine Paracetin schlucken' =>
-	'Eine Paracetin schlucken',
-  'Paracetin zusammenführen' =>
-	'Paracetin zusammenführen',
-  'Paracetin trennen' =>
-	'Paracetin trennen',
-  'Lunchbox' =>
-	'Lunchbox',
-  'Ration' =>
-	'Ration',
-  'Diese Lunchbox enthält mehrere Rationen einer auf optimale Nährstoffversorgung in der Postapokalypse abgestimmten Mahlzeit (auch bekannt als "belegte Brote").' =>
-	'Diese Lunchbox enthält mehrere Rationen einer auf optimale Nährstoffversorgung in der Postapokalypse abgestimmten Mahlzeit (auch bekannt als "belegte Brote").',
-  'Eine Ration essen' =>
-	'Eine Ration essen',
-  'Supercharger-Batterie' =>
-	'Supercharger-Batterie',
-  'Du hast diese Batterie so stark überladen, dass sie zu explodieren droht, deshalb musst du sie auch mit Samthandschuhen anfassen. Komm bloß nicht auf die Idee, diese Batterie zu den anderen in deinen Munitionsgürtel zu stecken oder gar mit einem Batteriewerfer abzufeuern - es sei denn, du möchtest dich gerne im Zentrum einer Pilzwolke wiederfinden.' =>
-	'Du hast diese Batterie so stark überladen, dass sie zu explodieren droht, deshalb musst du sie auch mit Samthandschuhen anfassen. Komm bloß nicht auf die Idee, diese Batterie zu den anderen in deinen Munitionsgürtel zu stecken oder gar mit einem Batteriewerfer abzufeuern - es sei denn, du möchtest dich gerne im Zentrum einer Pilzwolke wiederfinden.',
-  'Verkaufsautomat (MicroJam Vendor)' =>
-	'Verkaufsautomat (MicroJam Vendor)',
-  'Dieser Verkaufsautomat sieht ziemlich heruntergekommen aus. Die Scheibe ist verdreckt und die Beschriftungen der einzelnen Knöpfe sind nicht mehr lesbar. Vielleicht wirfst du einfach mal Geld ein und schaust, ob etwas heraus kommt?' =>
-	'Dieser Verkaufsautomat sieht ziemlich heruntergekommen aus. Die Scheibe ist verdreckt und die Beschriftungen der einzelnen Knöpfe sind nicht mehr lesbar. Vielleicht wirfst du einfach mal Geld ein und schaust, ob etwas heraus kommt?',
-  'Geld einwerfen' =>
-	'Geld einwerfen',
-  '???' =>
-	'???',
-  'Pfandautomat' =>
-	'Pfandautomat',
-  'Ein Pfandautomat - eine der wenigen Möglichkeiten, wie man im Ruhrpott noch auf legale Weise an Geld kommen kann. Verfüttere doch ein paar deiner vielen Flaschen an ihn (die aus Glas, nicht deine Mitspieler).' =>
-	'Ein Pfandautomat - eine der wenigen Möglichkeiten, wie man im Ruhrpott noch auf legale Weise an Geld kommen kann. Verfüttere doch ein paar deiner vielen Flaschen an ihn (die aus Glas, nicht deine Mitspieler).',
-  'Flasche einwerfen' =>
-	'Flasche einwerfen',
-  'Vera Loewenhaupt' =>
-	'Vera Loewenhaupt',
-  'Dies muss wohl die Namensgeberin des Wagens sein, unter dem sie liegt... allerdings keine Spur von ihren Söhnen.' =>
-	'Dies muss wohl die Namensgeberin des Wagens sein, unter dem sie liegt... allerdings keine Spur von ihren Söhnen.',
-  'Fressen' =>
-	'Fressen',
-  'Kekse' =>
-	'Kekse',
-  'KEKSE!!!!' =>
-	'KEKSE!!!!',
-  'Essen' =>
-	'Essen',
-  'Blasenkaugummi' =>
-	'Blasenkaugummi',
-  'Kaugummi ist nicht unbedingt ein vollwertiger Ersatz für eine richtige Mahlzeit, aber immer noch besser als nichts. Außerdem kannst du es aufblasen, damit es größer erscheint.' =>
-	'Kaugummi ist nicht unbedingt ein vollwertiger Ersatz für eine richtige Mahlzeit, aber immer noch besser als nichts. Außerdem kannst du es aufblasen, damit es größer erscheint.',
-  'Abgestandene Nudelsuppe' =>
-	'Abgestandene Nudelsuppe',
-  'Diese Nudelsuppe stärkt deine Anwehkräfte. Nur leider ist dein Immunsystem allgemein relativ machtlos gegen spitze Zähne und Krallen. Naja, zumindest stillt diese Suppe deinen Hunger...' =>
-	'Diese Nudelsuppe stärkt deine Anwehkräfte. Nur leider ist dein Immunsystem allgemein relativ machtlos gegen spitze Zähne und Krallen. Naja, zumindest stillt diese Suppe deinen Hunger...',
-  'Brotlaib' =>
-	'Brotlaib',
-  'Endlich bist du vernünftig dafür ausgerüstet, die Enten im Teich zu füttern. Leider sind mittlerweise sowohl Teich als auch Enten einer zombieverseuchten Ödniss gewichen. Dann musst du diesen Brotlaib wohl selbst essen...' =>
-	'Endlich bist du vernünftig dafür ausgerüstet, die Enten im Teich zu füttern. Leider sind mittlerweise sowohl Teich als auch Enten einer zombieverseuchten Ödniss gewichen. Dann musst du diesen Brotlaib wohl selbst essen...',
-  'Schwarzpulver' =>
-	'Schwarzpulver',
-  'Schon die alten Chinesen wussten: Schwarzpulver ist vielseitig einsetzbar. Zum Beispiel kann man es bei Bedarf explodieren lassen und so alle möglichen coolen Effekte erzeugen!' =>
-	'Schon die alten Chinesen wussten: Schwarzpulver ist vielseitig einsetzbar. Zum Beispiel kann man es bei Bedarf explodieren lassen und so alle möglichen coolen Effekte erzeugen!',
-  'Portion Pommes Rot-Weiß' =>
-	'Portion Pommes Rot-Weiß',
-  'Der absolute Klassiker - Pommes Frittes, auch bekannt als die Einstiegsdroge zur Fettleibigkeit.' =>
-	'Der absolute Klassiker - Pommes Frittes, auch bekannt als die Einstiegsdroge zur Fettleibigkeit.',
-  'Aquablaster XS' =>
-	'Aquablaster XS',
-  'Zombies hassen Wasser - dieser Fakt verwandelt eine Wasserpistole für Kinder in ein episches Tötungswerkzeug für Zombies. Du musst nur dafür sorgen, dass der Tank immer voll ist...' =>
-	'Zombies hassen Wasser - dieser Fakt verwandelt eine Wasserpistole für Kinder in ein episches Tötungswerkzeug für Zombies. Du musst nur dafür sorgen, dass der Tank immer voll ist...',
-  'Dies ist eine Waffe. Sie wird automatisch eingesetzt wenn du gegen Zombies kämpfst.' =>
-	'Dies ist eine Waffe. Sie wird automatisch eingesetzt wenn du gegen Zombies kämpfst.',
-  'Nährschleim' =>
-	'Nährschleim',
-  'Diese glibbrige Masse deckt den kompletten Tagesbedarf an Ekel sowie diversen Nährstoffen. Es kostet nur ein bisschen Überwindung ...' =>
-	'Diese glibbrige Masse deckt den kompletten Tagesbedarf an Ekel sowie diversen Nährstoffen. Es kostet nur ein bisschen Überwindung ...',
-  'Verschlingen' =>
-	'Verschlingen',
-  'Ektorp-Gluten Stuhl' =>
-	'Ektorp-Gluten Stuhl',
-  'Stabil und aus einem Stück gegossen - dieser Stuhl ist zwar schwerer, dafür aber auch widerstandsfähiger als ein einfacher Plastikstuhl.' =>
-	'Stabil und aus einem Stück gegossen - dieser Stuhl ist zwar schwerer, dafür aber auch widerstandsfähiger als ein einfacher Plastikstuhl.',
-  'Scharfes Messer' =>
-	'Scharfes Messer',
-  'Mit einem scharfen Messer in der Tasche bist du für alles gerüstet: Plötzliche Zombieangriffe, spontane Kochduelle, überraschende RTL-Interviews! Du solltest wirklich nie ohne Messer aus dem Haus gehen.... es sei denn, du hast eine Machete.' =>
-	'Mit einem scharfen Messer in der Tasche bist du für alles gerüstet: Plötzliche Zombieangriffe, spontane Kochduelle, überraschende RTL-Interviews! Du solltest wirklich nie ohne Messer aus dem Haus gehen.... es sei denn, du hast eine Machete.',
-  'Essbarer Kürbis' =>
-	'Essbarer Kürbis',
-  'Ein essbarer Kürbis! Dieses riesige Teil stillt deinen Hunger garantiert - allerdings musst du die harte Schale erstmal aufbekommen...' =>
-	'Ein essbarer Kürbis! Dieses riesige Teil stillt deinen Hunger garantiert - allerdings musst du die harte Schale erstmal aufbekommen...',
+  'Desolat' =>
+	'Desolat',
+  'Feldflasche' =>
+	'Feldflasche',
+  'Diese kleine, pfadfindergeprüfte Feldflasche kann bis zu 4 Rationen Wasser ausnehmen. Außerdem lässt sie sich beschriften - es wäre doch schade, wenn du deine Wasserfeldflasche mal mit der Feldflasche verwechselst, in der du die Batteriesäure aufbewahrst... ' =>
+	'Diese kleine, pfadfindergeprüfte Feldflasche kann bis zu 4 Rationen Wasser ausnehmen. Außerdem lässt sie sich beschriften - es wäre doch schade, wenn du deine Wasserfeldflasche mal mit der Feldflasche verwechselst, in der du die Batteriesäure aufbewahrst... ',
+  'Einen Schluck trinken' =>
+	'Einen Schluck trinken',
+  'Micropur hineinwerfen' =>
+	'Micropur hineinwerfen',
+  'Untersuchen ...' =>
+	'Untersuchen ...',
+  'Füllen oder Leeren...' =>
+	'Füllen oder Leeren...',
+  'Munitionsgürtel' =>
+	'Munitionsgürtel',
+  'Dieses kleidsame Accessoir ist unerlässlich für den modebewussten Überlebenskünstler. Gefertigt von geschickten Kinderhänden aus irgend einem Drittweltland und aus 100% Zombieleder garantiert dieser Munitionsgürtel volle Übersicht und schnellen Zugriff auf alle Arten von Munition.' =>
+	'Dieses kleidsame Accessoir ist unerlässlich für den modebewussten Überlebenskünstler. Gefertigt von geschickten Kinderhänden aus irgend einem Drittweltland und aus 100% Zombieleder garantiert dieser Munitionsgürtel volle Übersicht und schnellen Zugriff auf alle Arten von Munition.',
+  'Dein Munitionsgürtel ist leer...' =>
+	'Dein Munitionsgürtel ist leer...',
   'Selbstgebauter Batteriewerfer' =>
 	'Selbstgebauter Batteriewerfer',
   'Eigentlich ist es nur eine leicht modifizierte Kartoffelkanone, die man mit Batterien beladen kann. Sie schießt nicht sehr weit, und zielen kann man auch nicht sonderlich gut damit - aber 100mal besser als die Zombies mit bloßen Händen K.O. schlagen zu müssen, oder?' =>
 	'Eigentlich ist es nur eine leicht modifizierte Kartoffelkanone, die man mit Batterien beladen kann. Sie schießt nicht sehr weit, und zielen kann man auch nicht sonderlich gut damit - aber 100mal besser als die Zombies mit bloßen Händen K.O. schlagen zu müssen, oder?',
-  'Scharfe Machete' =>
-	'Scharfe Machete',
-  'Nachdem du den Rost abgeschliffen und die Klinge geschärft hast gleitet deine Machete nun wie Butter durch Zombiehorden.' =>
-	'Nachdem du den Rost abgeschliffen und die Klinge geschärft hast gleitet deine Machete nun wie Butter durch Zombiehorden.',
-  'Gewürzmischung' =>
-	'Gewürzmischung',
-  'Mit dieser Gewürzmischung kannst du beim Kochen sogar die langweiligste Speise aufpeppen!' =>
-	'Mit dieser Gewürzmischung kannst du beim Kochen sogar die langweiligste Speise aufpeppen!',
-  'Rolle Draht' =>
-	'Rolle Draht',
-  'Draht kann man eigentlich immer gebrauchen. Er ist zum beispiel nützlich um irgendwelchen Elektromüll zu verkabeln. Oder du kannst damit lustige Fallen in deinem Versteck bauen, um mit den Zombies so eine "Kevin allein zu Haus"-Nummer abzuziehen.' =>
-	'Draht kann man eigentlich immer gebrauchen. Er ist zum beispiel nützlich um irgendwelchen Elektromüll zu verkabeln. Oder du kannst damit lustige Fallen in deinem Versteck bauen, um mit den Zombies so eine "Kevin allein zu Haus"-Nummer abzuziehen.',
-  'Stofffetzen' =>
-	'Stofffetzen',
-  'Dieses große Stück Stoff ist alleine nicht sehr nützlich, aber eventuell kannst du damit etwas anfangen wenn du mehrere hast...?' =>
-	'Dieses große Stück Stoff ist alleine nicht sehr nützlich, aber eventuell kannst du damit etwas anfangen wenn du mehrere hast...?',
-  'Kalter Kaffee' =>
-	'Kalter Kaffee',
-  'Nichts geht über einen kalten Kaffee, um den Tag zu beginnen.... naja, vielleicht ein heißer Kaffee. Nichtsdestotrotz versorgt dich dieses erkaltete Heißgetränk mit frischer Energie und bekämpft deine Müdigkeit.' =>
-	'Nichts geht über einen kalten Kaffee, um den Tag zu beginnen.... naja, vielleicht ein heißer Kaffee. Nichtsdestotrotz versorgt dich dieses erkaltete Heißgetränk mit frischer Energie und bekämpft deine Müdigkeit.',
+  'Dies ist eine Waffe. Sie wird automatisch eingesetzt wenn du gegen Zombies kämpfst.' =>
+	'Dies ist eine Waffe. Sie wird automatisch eingesetzt wenn du gegen Zombies kämpfst.',
+  'Gewicht' =>
+	'Gewicht',
+  'Rostige Machete' =>
+	'Rostige Machete',
+  'Obwohl leicht abgestumpft und rostig ist diese Machete immer noch effektiv im Kampf gegen Zombiehorden. Noch besser ist es natürlich, die Zombies gar nicht erst in Machetenreichweite kommen zu lassen.' =>
+	'Obwohl leicht abgestumpft und rostig ist diese Machete immer noch effektiv im Kampf gegen Zombiehorden. Noch besser ist es natürlich, die Zombies gar nicht erst in Machetenreichweite kommen zu lassen.',
+  'Seltsame Substanz (Karmitain)' =>
+	'Seltsame Substanz (Karmitain)',
+  'Dieses kleine Fläschchen enthält eine hochkomplizierte chemische Verbindung, die so cool ist, dass du ihren Namen nicht mal bei Wikipedia findest. Teste doch mal was passiert, wenn du das Zeug über irgendeinen deiner Gegenstände kippst, oder mit einer anderen Substanz mischt!' =>
+	'Dieses kleine Fläschchen enthält eine hochkomplizierte chemische Verbindung, die so cool ist, dass du ihren Namen nicht mal bei Wikipedia findest. Teste doch mal was passiert, wenn du das Zeug über irgendeinen deiner Gegenstände kippst, oder mit einer anderen Substanz mischt!',
+  'Experimentieren ...' =>
+	'Experimentieren ...',
+  'Farbige Substanz (Milosat)' =>
+	'Farbige Substanz (Milosat)',
+  'Farbige Substanz (Karmigol)' =>
+	'Farbige Substanz (Karmigol)',
+  'Seltsame Substanz (Milodrin)' =>
+	'Seltsame Substanz (Milodrin)',
+  'Bitte gib an, wie viele Kapseln du aus der Packung nehmen möchtest.' =>
+	'Bitte gib an, wie viele Kapseln du aus der Packung nehmen möchtest.',
+  'Schachtel mit Nahrungsergänzungsmitteln' =>
+	'Schachtel mit Nahrungsergänzungsmitteln',
+  'Kapseln' =>
+	'Kapseln',
+  'Diese Nahrungsergänzungsmittel enthalten diverses hochkonzentriertes Zeug, das nach neuesten Forschungen der Marketingabteilung des Herstellers absolut lebensnotwendig und unverzichtbar ist. Jetzt kannst auch du 50€ für etwas zahlen, was du auch bekommen würdest, wenn du einfach in eine Kuh beißt.' =>
+	'Diese Nahrungsergänzungsmittel enthalten diverses hochkonzentriertes Zeug, das nach neuesten Forschungen der Marketingabteilung des Herstellers absolut lebensnotwendig und unverzichtbar ist. Jetzt kannst auch du 50€ für etwas zahlen, was du auch bekommen würdest, wenn du einfach in eine Kuh beißt.',
+  'Eine NEM schlucken' =>
+	'Eine NEM schlucken',
+  'Ganze Schachtel schlucken' =>
+	'Ganze Schachtel schlucken',
+  'NEM zusammenführen' =>
+	'NEM zusammenführen',
+  'NEM trennen' =>
+	'NEM trennen',
+  'Bandage' =>
+	'Bandage',
+  'Lieber Arm dran als Arm ab; aber wenn der Arm nun schonmal ab ist kann man wenigstens eine Bandage drum machen. Eine Bandage kann nur verwendet werden wenn du weniger als 50 Gesundheit hast!' =>
+	'Lieber Arm dran als Arm ab; aber wenn der Arm nun schonmal ab ist kann man wenigstens eine Bandage drum machen. Eine Bandage kann nur verwendet werden wenn du weniger als 50 Gesundheit hast!',
+  'Wunden versorgen' =>
+	'Wunden versorgen',
+  'Jmd. verbinden' =>
+	'Jmd. verbinden',
+  'Effekte auf ausgewählten Spieler' =>
+	'Effekte auf ausgewählten Spieler',
+  'Hier ist niemand, auf den du diese Aktion anwenden könntest...' =>
+	'Hier ist niemand, auf den du diese Aktion anwenden könntest...',
+  'Gelbe Pille' =>
+	'Gelbe Pille',
+  'Leider hast du zu dieser Pille weder Packung noch Beipackzettel gefunden. Ein versierter Mediziner könnte sicherlich von der Farbe auf die Wirkung dieser Pille schließen - dir bleibt dafür wohl nur der Selbstversuch übrig.' =>
+	'Leider hast du zu dieser Pille weder Packung noch Beipackzettel gefunden. Ein versierter Mediziner könnte sicherlich von der Farbe auf die Wirkung dieser Pille schließen - dir bleibt dafür wohl nur der Selbstversuch übrig.',
+  'Runter damit!' =>
+	'Runter damit!',
+  'Was möchtest du auf das Glas schreiben?' =>
+	'Was möchtest du auf das Glas schreiben?',
+  'Glas mit bunten Pillen' =>
+	'Glas mit bunten Pillen',
+  'Pillen' =>
+	'Pillen',
+  'Der Apotheker, der dieses Glas gefüllt hat, scheint kein Freund von Ordnung gewesen zu sein. Es ist unmöglich zu wissen, was diese Pillen machen - es sei denn, du bist Mediziner.' =>
+	'Der Apotheker, der dieses Glas gefüllt hat, scheint kein Freund von Ordnung gewesen zu sein. Es ist unmöglich zu wissen, was diese Pillen machen - es sei denn, du bist Mediziner.',
+  'Schlucken' =>
+	'Schlucken',
+  'Beschriften...' =>
+	'Beschriften...',
+  'Schachtel mit Paracetoid' =>
+	'Schachtel mit Paracetoid',
+  'Hilft zuverlässig gegen Kopfschmerzen, Bauchschmerzen, abgerissene Körperteile und extreme radioaktive Verstrahlung. Nicht einnehmen bei Schwangerschaft oder fortgeschrittener Zombiefizierung.' =>
+	'Hilft zuverlässig gegen Kopfschmerzen, Bauchschmerzen, abgerissene Körperteile und extreme radioaktive Verstrahlung. Nicht einnehmen bei Schwangerschaft oder fortgeschrittener Zombiefizierung.',
+  'Eine Paracetoid schlucken' =>
+	'Eine Paracetoid schlucken',
+  'Paracetoid zusammenführen' =>
+	'Paracetoid zusammenführen',
+  'Paracetoid trennen' =>
+	'Paracetoid trennen',
+  'Weißbier' =>
+	'Weißbier',
+  'Die gute Nachricht: Es ist Bier. Die schlechte Nachricht: Es ist Otterberger, das einzige Bier das billiger ist als seine Zutaten. Naja, wer wird schon wählerisch sein ...' =>
+	'Die gute Nachricht: Es ist Bier. Die schlechte Nachricht: Es ist Otterberger, das einzige Bier das billiger ist als seine Zutaten. Naja, wer wird schon wählerisch sein ...',
   'Trinken' =>
 	'Trinken',
-  'Dreckiges Kondenswasser' =>
-	'Dreckiges Kondenswasser',
-  'Du hast ein paar Tropfen Kondenswasser gesammelt... Leider war die Oberfläche nicht allzu sauber. Dieses Wasser ist vermutlich nicht übermäßig gesund...' =>
-	'Du hast ein paar Tropfen Kondenswasser gesammelt... Leider war die Oberfläche nicht allzu sauber. Dieses Wasser ist vermutlich nicht übermäßig gesund...',
-  'Dalad Jelly' =>
-	'Dalad Jelly',
-  '... WAS ZUM TEUFEL IST "DALAD JELLY"???' =>
-	'... WAS ZUM TEUFEL IST "DALAD JELLY"???',
-  '... Essen?' =>
-	'... Essen?',
-  'Jmd. verabreichen' =>
-	'Jmd. verabreichen',
-  'Motor' =>
-	'Motor',
-  'Dieser Motor ist ein Wunderwerk der Technik, ausgezeichnet durch geringen Abgaßausstoß und hohe Energieeffizienz. Leider nützt er dir nicht viel ohne Kraftstoff...' =>
-	'Dieser Motor ist ein Wunderwerk der Technik, ausgezeichnet durch geringen Abgaßausstoß und hohe Energieeffizienz. Leider nützt er dir nicht viel ohne Kraftstoff...',
+  'Blut' =>
+	'Blut',
+  'Wäre dies ein Browserspiel mit Vampiren, dann wäre dieses Item sicher wertvoll. Weil Zombies aber viel cooler sind als Vampire, ist dieses Item einfach nur eklig. Bäh!' =>
+	'Wäre dies ein Browserspiel mit Vampiren, dann wäre dieses Item sicher wertvoll. Weil Zombies aber viel cooler sind als Vampire, ist dieses Item einfach nur eklig. Bäh!',
+  'Umfüllen ...' =>
+	'Umfüllen ...',
+  'Dieser Gegenstand verschwindet, wenn du ihn zurücklässt.' =>
+	'Dieser Gegenstand verschwindet, wenn du ihn zurücklässt.',
+  'Schwarzbier' =>
+	'Schwarzbier',
+  'Die gute Nachricht: Es ist Bier. Die schlechte Nachricht: Du kannst nicht sicher sagen, ob es echtes Schwarzbier, oder nur sehr verunreinigtes Weißbier ist ...' =>
+	'Die gute Nachricht: Es ist Bier. Die schlechte Nachricht: Du kannst nicht sicher sagen, ob es echtes Schwarzbier, oder nur sehr verunreinigtes Weißbier ist ...',
+  'Schachtel mit Paralaxium' =>
+	'Schachtel mit Paralaxium',
+  'Manchmal muss man einfach mal abschalten; Paralaxium hilft dir dabei. Mit nur ein paar Kapseln bist du selbst dann noch entspannt, wenn Zombies an deinem Kopf knabbern.' =>
+	'Manchmal muss man einfach mal abschalten; Paralaxium hilft dir dabei. Mit nur ein paar Kapseln bist du selbst dann noch entspannt, wenn Zombies an deinem Kopf knabbern.',
+  'Eine Paralaxium schlucken' =>
+	'Eine Paralaxium schlucken',
+  'Paralaxium zusammenführen' =>
+	'Paralaxium zusammenführen',
+  'Paralaxium trennen' =>
+	'Paralaxium trennen',
+  'Micropur Reinigungstablette' =>
+	'Micropur Reinigungstablette',
+  'Deine Wasserflasche hat sich im Laufe der Zeit in eine biologische Kontaminierungszone verwandelt? Kein Problem! Die neue Micropur Extra4, reinigt, desinfiziert, entkalkt und sorgt für frischen Zitronenduft! Darum wird nur Micropur von führenden Wasserflaschen-Herstellern empfohlen.' =>
+	'Deine Wasserflasche hat sich im Laufe der Zeit in eine biologische Kontaminierungszone verwandelt? Kein Problem! Die neue Micropur Extra4, reinigt, desinfiziert, entkalkt und sorgt für frischen Zitronenduft! Darum wird nur Micropur von führenden Wasserflaschen-Herstellern empfohlen.',
   'Gegenstände' =>
 	'Gegenstände',
   'Dein Rucksack' =>
@@ -430,30 +322,30 @@ return array (
 	'Ausrüstung',
   'Alle Items dieses Typs ablegen' =>
 	'Alle Items dieses Typs ablegen',
-  'Besonderes' =>
-	'Besonderes',
+  'Wasserbehälter' =>
+	'Wasserbehälter',
+  'Waffen und Verteidigung' =>
+	'Waffen und Verteidigung',
+  'Alle ablegen' =>
+	'Alle ablegen',
   'Drogen und med. Zubehör' =>
 	'Drogen und med. Zubehör',
-  'Nahrungsmittel' =>
-	'Nahrungsmittel',
-  'Baumaterialien' =>
-	'Baumaterialien',
   'Du kannst nur so viel Zeug mit dir rumschleppen wie du tragen kannst. Wenn dein Rucksack voll ist musst du wohl oder übel Gegenstände liegen lassen.' =>
 	'Du kannst nur so viel Zeug mit dir rumschleppen wie du tragen kannst. Wenn dein Rucksack voll ist musst du wohl oder übel Gegenstände liegen lassen.',
   'Aktueller Wert' =>
 	'Aktueller Wert',
   'Items am Boden' =>
 	'Items am Boden',
-  'Sonstiges' =>
-	'Sonstiges',
+  'Alle mitnehmen' =>
+	'Alle mitnehmen',
   'Alle Items dieses Typs mitnehmen' =>
 	'Alle Items dieses Typs mitnehmen',
-  'Waffen und Verteidigung' =>
-	'Waffen und Verteidigung',
+  'Nahrungsmittel' =>
+	'Nahrungsmittel',
+  'Baumaterialien' =>
+	'Baumaterialien',
   'Zonenlog' =>
 	'Zonenlog',
-  'Geld' =>
-	'Geld',
   ':itemdef gefunden!' =>
 	':itemdef gefunden!',
   'Geduld zahlt sich aus. Es war nicht leicht, aber du hast etwas nützliches finden können.' =>
@@ -472,14 +364,12 @@ return array (
 	'Anzahl der Zombies dieser Spieler erledigt hat.',
   'Runde' =>
 	'Runde',
-  'Vermodernde Zombies' =>
-	'Vermodernde Zombies',
-  'in unmittelbarer Nähe' =>
-	'in unmittelbarer Nähe',
+  'Untote Fleischberge' =>
+	'Untote Fleischberge',
+  'in einiger Entfernung' =>
+	'in einiger Entfernung',
   ':zombies tauchen :distance auf.' =>
 	':zombies tauchen :distance auf.',
-  'in einer dunklen Ecke' =>
-	'in einer dunklen Ecke',
   ':name tritt dem Kampfgeschehen bei!' =>
 	':name tritt dem Kampfgeschehen bei!',
   'Eine Flucht scheint aussichtslos...' =>
@@ -508,34 +398,32 @@ return array (
 	'Die Reihen der Zombies wurden etwas gelichtet.',
   'Die Meute :zombies wurde zerschlagen!' =>
 	'Die Meute :zombies wurde zerschlagen!',
-  'Munition' =>
-	'Munition',
-  'Geduld zahlt sich aus. Es war nicht leicht, aber ihr habt etwas nützliches finden können.' =>
-	'Geduld zahlt sich aus. Es war nicht leicht, aber ihr habt etwas nützliches finden können.',
-  'Du greifst die :zombiestr an, die den Weg versperren!' =>
-	'Du greifst die :zombiestr an, die den Weg versperren!',
-  'Es gibt kein Entkommen!' =>
-	'Es gibt kein Entkommen!',
-  'Angriff' =>
-	'Angriff',
-  'Der Kampf beginnt!' =>
-	'Der Kampf beginnt!',
-  'Du versteckst dich hinter einer Ecke und atmest ein paar mal tief durch. Als du genug Mut gesammelt hast, trittst du hervor und ziehst deine Waffen. Der Kampf kann beginnen!' =>
-	'Du versteckst dich hinter einer Ecke und atmest ein paar mal tief durch. Als du genug Mut gesammelt hast, trittst du hervor und ziehst deine Waffen. Der Kampf kann beginnen!',
-  'Kondenswasser' =>
-	'Kondenswasser',
-  'Verseuchtes Wasser' =>
-	'Verseuchtes Wasser',
-  'Gegenstände, die dieser Spieler im Kampf verbraucht hat.' =>
-	'Gegenstände, die dieser Spieler im Kampf verbraucht hat.',
-  'Verbrauchte Ressourcen' =>
-	'Verbrauchte Ressourcen',
-  'Durch den Einsatz der Waffe wurden einige Ressourcen verbraucht.' =>
-	'Durch den Einsatz der Waffe wurden einige Ressourcen verbraucht.',
+  'Verbrauchte Energie' =>
+	'Verbrauchte Energie',
+  'Der Einsatz dieser Waffe hat Energie verbraucht.' =>
+	'Der Einsatz dieser Waffe hat Energie verbraucht.',
+  'Verletzungen die dieser Spieler erlitten hat.' =>
+	'Verletzungen die dieser Spieler erlitten hat.',
+  ':name hat eine Verletzung davongetragen: ' =>
+	':name hat eine Verletzung davongetragen: ',
+  'Bisswunde' =>
+	'Bisswunde',
+  'Seltsame Substanz (Limosuritat)' =>
+	'Seltsame Substanz (Limosuritat)',
+  'Du hast :item mit :chem kombiniert, und dabei :list erhalten.' =>
+	'Du hast :item mit :chem kombiniert, und dabei :list erhalten.',
+  'Verkaufsautomat (MedCo. Pharmacorp.)' =>
+	'Verkaufsautomat (MedCo. Pharmacorp.)',
+  'Seltsame Substanz (Betakosidatin)' =>
+	'Seltsame Substanz (Betakosidatin)',
+  'Seltsame Substanz (Neotrigmat)' =>
+	'Seltsame Substanz (Neotrigmat)',
+  'Du hast erfolglos :item mit :chem kombiniert...' =>
+	'Du hast erfolglos :item mit :chem kombiniert...',
+  'Seltsame Substanz (Gatonoptigin)' =>
+	'Seltsame Substanz (Gatonoptigin)',
   'Du hast diesen Ort betreten.' =>
 	'Du hast diesen Ort betreten.',
-  ':name hat diesen Ort betreten.' =>
-	':name hat diesen Ort betreten.',
   'Spielen' =>
 	'Spielen',
   'Ranking' =>
@@ -564,6 +452,8 @@ return array (
 	'Neuigkeiten',
   'WTHM' =>
 	'WTHM',
+  'G:i:s \\U\\h\\r \\a\\m d.m.Y (T)' =>
+	'G:i:s \\U\\h\\r \\a\\m d.m.Y (T)',
   'Ereignis-Countdown' =>
 	'Ereignis-Countdown',
   'Hier siehst du, wann das nächste Ereignis stattfindet.' =>
@@ -572,14 +462,14 @@ return array (
 	'Spielinformationen',
   'Spieltyp' =>
 	'Spieltyp',
-  'Survival Privat' =>
-	'Survival Privat',
+  'Roadtrip' =>
+	'Roadtrip',
   'Freie Plätze' =>
 	'Freie Plätze',
   'Beruf' =>
 	'Beruf',
-  'Medizinstudent' =>
-	'Medizinstudent',
+  'Football-Coach' =>
+	'Football-Coach',
   'Berufslevel' =>
 	'Berufslevel',
   'Verg. Zeit' =>
@@ -606,8 +496,8 @@ return array (
 	'Ereigniss-Countdown',
   'Der Ereigniss-Countdown in deinem aktuellen ZombVival-Spiel ist soeben abgelaufen. Möglicherweise hast du eine neue Ruine entdeckt, ein nützliches Item gefunden oder bist von Zombies angefallen worden?' =>
 	'Der Ereigniss-Countdown in deinem aktuellen ZombVival-Spiel ist soeben abgelaufen. Möglicherweise hast du eine neue Ruine entdeckt, ein nützliches Item gefunden oder bist von Zombies angefallen worden?',
-  'Mini-Markt' =>
-	'Mini-Markt',
+  'Apotheke "Wehwehchen"' =>
+	'Apotheke "Wehwehchen"',
   'Laie' =>
 	'Laie',
   'Tja, du hast beim Losen wohl die Arschkarte gezogen. Nicht nur, dass du aus deiner gemütlichen Stadt hierher geschickt wurdest, du hast noch nicht mal wirklich Ahnung von dem, was du hier tun sollst. Ob das gut gehen kann...?' =>
@@ -818,10 +708,10 @@ return array (
 	'Wähle deinen Beruf',
   'Politiker' =>
 	'Politiker',
-  'Football-Coach' =>
-	'Football-Coach',
   'Als Football-Coach bist du ein Meister subtiler Künste wie &quot;Frontal durch Zombiehorden brechen&quot;, außerdem kannst du im Kampf einiges einstecken, ohne dich zu verletzen. Mit ein bisschen Übung gelingt es dir eventuell sogar, eine Meute von belagernden Zombies so zu durchberechen, dass auch andere Spieler dir folgen können.' =>
 	'Als Football-Coach bist du ein Meister subtiler Künste wie &quot;Frontal durch Zombiehorden brechen&quot;, außerdem kannst du im Kampf einiges einstecken, ohne dich zu verletzen. Mit ein bisschen Übung gelingt es dir eventuell sogar, eine Meute von belagernden Zombies so zu durchberechen, dass auch andere Spieler dir folgen können.',
+  'Medizinstudent' =>
+	'Medizinstudent',
   'Als Student hast du viele medizinische Studien durchgeführt, die meisten davon hatten mit den Auswirkungen von Alkohol und Drogen auf den eigenen Körper zu tun. Aus diesem Grund warst du leider etwas weniger Aufmerksam in den Vorlesungen. Aber zum Aufkleben von Pflastern reichen deine Kenntnisse gerade so noch aus.' =>
 	'Als Student hast du viele medizinische Studien durchgeführt, die meisten davon hatten mit den Auswirkungen von Alkohol und Drogen auf den eigenen Körper zu tun. Aus diesem Grund warst du leider etwas weniger Aufmerksam in den Vorlesungen. Aber zum Aufkleben von Pflastern reichen deine Kenntnisse gerade so noch aus.',
   'Frauenrechtlerin' =>
@@ -1060,8 +950,6 @@ return array (
 	'Dreckiges Wasser',
   'Dieses Wasser ist abgestanden, es haben sich sogar schon Algen darin gebildet. Du kannst es immer noch trinken, aber es wird wahrscheinlich deiner Gesundheit schaden.' =>
 	'Dieses Wasser ist abgestanden, es haben sich sogar schon Algen darin gebildet. Du kannst es immer noch trinken, aber es wird wahrscheinlich deiner Gesundheit schaden.',
-  'Dieser Gegenstand verschwindet, wenn du ihn zurücklässt.' =>
-	'Dieser Gegenstand verschwindet, wenn du ihn zurücklässt.',
   'Fülle Flüssigkeiten um, indem du sie' =>
 	'Fülle Flüssigkeiten um, indem du sie',
   'mit der Maus' =>
@@ -1074,8 +962,12 @@ return array (
 	'Hier kannst du die Beschriftung deiner Flasche ändern. Gib einen Text mit maximal 12 Buchstaben ein und bestätige mit ENTER.',
   'Flüssigkeiten in der Nähe' =>
 	'Flüssigkeiten in der Nähe',
+  'Ration' =>
+	'Ration',
   'Hier gibt es nichts, was du in eine Flasche füllen könntest...' =>
 	'Hier gibt es nichts, was du in eine Flasche füllen könntest...',
+  'Rationen' =>
+	'Rationen',
   'Versteck ausbauen ...' =>
 	'Versteck ausbauen ...',
   'Werkbank ...' =>
@@ -1084,12 +976,14 @@ return array (
 	'Ins Bett gehen',
   '++' =>
 	'++',
-  'Schlucken' =>
-	'Schlucken',
   '-∞' =>
 	'-∞',
   '-??' =>
 	'-??',
+  'Relative Einflüsse' =>
+	'Relative Einflüsse',
+  'Berechnung' =>
+	'Berechnung',
   'Insel der Ruhe' =>
 	'Insel der Ruhe',
   'Endlich mal ein bisschen ausruhen. Zuhause ist dein Wasser- und Nahrungsverbrauch leicht reduziert.' =>
@@ -1110,10 +1004,16 @@ return array (
 	'Bist du sicher, dass du das Spiel pausieren möchtest? Du kannst das Spiel frühestens in :time fortsetzen!',
   'Spielverlauf pausieren' =>
 	'Spielverlauf pausieren',
+  'Munition' =>
+	'Munition',
   'Welch ein glücklicher Fund - Munition! Soetwas findet man sehr selten, manche behaupten sogar soetwas wie "Munition" existiere gar nicht. Wenn du jetzt noch zufällig etwas hast, womit du diese Munition verschießen kannst haben die Zombies keine Chance mehr!' =>
 	'Welch ein glücklicher Fund - Munition! Soetwas findet man sehr selten, manche behaupten sogar soetwas wie "Munition" existiere gar nicht. Wenn du jetzt noch zufällig etwas hast, womit du diese Munition verschießen kannst haben die Zombies keine Chance mehr!',
   'Gewöhnliche Nahrung' =>
 	'Gewöhnliche Nahrung',
+  'Blasenkaugummi' =>
+	'Blasenkaugummi',
+  'Kaugummi ist nicht unbedingt ein vollwertiger Ersatz für eine richtige Mahlzeit, aber immer noch besser als nichts. Außerdem kannst du es aufblasen, damit es größer erscheint.' =>
+	'Kaugummi ist nicht unbedingt ein vollwertiger Ersatz für eine richtige Mahlzeit, aber immer noch besser als nichts. Außerdem kannst du es aufblasen, damit es größer erscheint.',
   'Ei' =>
 	'Ei',
   'Dies ist ein einfaches, braunes Hühnerei, das ein paar Jahre in der Sonne gelegen hat. Daran solltest du aber besser gar nicht denken, wenn du es isst...' =>
@@ -1126,6 +1026,18 @@ return array (
 	'Schokoriegel',
   'Erinnerst du dich noch an das kleine, dicke Kind, dass auf dem Schulhof immer alleine in einer Ecke stand und an einem Schokoriegel gelutscht hat? Tja, das fette Kind hat inzwischen einen Hunger auf Menschenfleisch entwickelt und hat daher sicher nichts dagegen, dass du dich an seinen Schokoriegeln bedienst.' =>
 	'Erinnerst du dich noch an das kleine, dicke Kind, dass auf dem Schulhof immer alleine in einer Ecke stand und an einem Schokoriegel gelutscht hat? Tja, das fette Kind hat inzwischen einen Hunger auf Menschenfleisch entwickelt und hat daher sicher nichts dagegen, dass du dich an seinen Schokoriegeln bedienst.',
+  'Abgestandene Nudelsuppe' =>
+	'Abgestandene Nudelsuppe',
+  'Diese Nudelsuppe stärkt deine Anwehkräfte. Nur leider ist dein Immunsystem allgemein relativ machtlos gegen spitze Zähne und Krallen. Naja, zumindest stillt diese Suppe deinen Hunger...' =>
+	'Diese Nudelsuppe stärkt deine Anwehkräfte. Nur leider ist dein Immunsystem allgemein relativ machtlos gegen spitze Zähne und Krallen. Naja, zumindest stillt diese Suppe deinen Hunger...',
+  'Brotlaib' =>
+	'Brotlaib',
+  'Endlich bist du vernünftig dafür ausgerüstet, die Enten im Teich zu füttern. Leider sind mittlerweise sowohl Teich als auch Enten einer zombieverseuchten Ödniss gewichen. Dann musst du diesen Brotlaib wohl selbst essen...' =>
+	'Endlich bist du vernünftig dafür ausgerüstet, die Enten im Teich zu füttern. Leider sind mittlerweise sowohl Teich als auch Enten einer zombieverseuchten Ödniss gewichen. Dann musst du diesen Brotlaib wohl selbst essen...',
+  'Kekse' =>
+	'Kekse',
+  'KEKSE!!!!' =>
+	'KEKSE!!!!',
   'Angebissener Apfel' =>
 	'Angebissener Apfel',
   'Um Himmels Willen, sei bloß vorsichtigt! Wenn man dich mit einem angebissenen Apfel auf der Straße erwischt tauchen Anwälte aus dem Nichts heraus auf und verprügeln dich mit überteuerten Tablet-Computern!' =>
@@ -1156,8 +1068,6 @@ return array (
 	'Diese kleinen Teile kannst du benutzen um Elektrogeräte zu betreiben. Alternativ kannst du sie auch als Munition für einen Batteriewerfer verwenden.',
   'Bier' =>
 	'Bier',
-  'Die gute Nachricht: Es ist Bier. Die schlechte Nachricht: Es ist Otterberger, das einzige Bier das billiger ist als seine Zutaten. Naja, wer wird schon wählerisch sein ...' =>
-	'Die gute Nachricht: Es ist Bier. Die schlechte Nachricht: Es ist Otterberger, das einzige Bier das billiger ist als seine Zutaten. Naja, wer wird schon wählerisch sein ...',
   'Bauchmuskeltrainer H.U.L.K.' =>
 	'Bauchmuskeltrainer H.U.L.K.',
   'Du benötigst einen spontanen Kraftschub? Dann einfach Batterie einlegen und auf Start drücken! Dieser Bauchmuskeltrainer bringt dich garantiert auf Touren und ist dabei auch nur ein ganz kleines bisschen tödlich.' =>
@@ -1182,6 +1092,10 @@ return array (
 	'Leichensack',
   'Mit diesem Leichensack kannst du - Überraschung - Leichen transportieren. Schön verpackt ist so ein Körper viel einfacher zu transportieren, wenn du also auf Leichenjagd gehst solltest du so einen Sack immer dabei haben.' =>
 	'Mit diesem Leichensack kannst du - Überraschung - Leichen transportieren. Schön verpackt ist so ein Körper viel einfacher zu transportieren, wenn du also auf Leichenjagd gehst solltest du so einen Sack immer dabei haben.',
+  'Gebrauchter Leichensack' =>
+	'Gebrauchter Leichensack',
+  'Mit diesem Leichensack kannst du - Überraschung - Leichen transportieren. Schön verpackt ist so ein Körper viel einfacher zu transportieren, wenn du also auf Leichenjagd gehst solltest du so einen Sack immer dabei haben. Dieser Leichensack weist allerdings einige Gebrauchsspuren auf... er könnte beim Transport aufreißen, sei also vorsichtig.' =>
+	'Mit diesem Leichensack kannst du - Überraschung - Leichen transportieren. Schön verpackt ist so ein Körper viel einfacher zu transportieren, wenn du also auf Leichenjagd gehst solltest du so einen Sack immer dabei haben. Dieser Leichensack weist allerdings einige Gebrauchsspuren auf... er könnte beim Transport aufreißen, sei also vorsichtig.',
   'Prall gefüllter Leichensack' =>
 	'Prall gefüllter Leichensack',
   'Da hast du ja einen dicken Fang an Land gezogen. Zum Glück kannst du ihn in diesem Leichensack gut transportieren.' =>
@@ -1212,14 +1126,16 @@ return array (
 	'Diese Kettensäge wurde von der Bundesprüfstelle für jugendgefährdende Schriften indiziert und kurz darauf auf Anordnung des Jugendamtes in allen Baumärkten beschlagnamt. Tja, die hochintelligenten, aufgeschlossenen und weitsichtigen Menschen, die dies beschlossen haben, hatten nun die Gelegenheit zu intensivem Körperkontakt mit Zombies. Wie wärs, wenn du dich über diese wirklich sehr sinnvolle Beschlagnamung hinwegsetzt und ein paar Schnittmengen einer Gruppe Zombies bildest?',
   'Eine Chemikalie' =>
 	'Eine Chemikalie',
-  'Farbige Substanz (Milosat)' =>
-	'Farbige Substanz (Milosat)',
   'Farbige Substanz (Limosuptin)' =>
 	'Farbige Substanz (Limosuptin)',
   'Farbige Substanz (Gatonoptium)' =>
 	'Farbige Substanz (Gatonoptium)',
   'Farbige Substanz (Neotrigin)' =>
 	'Farbige Substanz (Neotrigin)',
+  'Kalter Kaffee' =>
+	'Kalter Kaffee',
+  'Nichts geht über einen kalten Kaffee, um den Tag zu beginnen.... naja, vielleicht ein heißer Kaffee. Nichtsdestotrotz versorgt dich dieses erkaltete Heißgetränk mit frischer Energie und bekämpft deine Müdigkeit.' =>
+	'Nichts geht über einen kalten Kaffee, um den Tag zu beginnen.... naja, vielleicht ein heißer Kaffee. Nichtsdestotrotz versorgt dich dieses erkaltete Heißgetränk mit frischer Energie und bekämpft deine Müdigkeit.',
   'Heißer Kaffee' =>
 	'Heißer Kaffee',
   'Heißer Kaffee... welch ein Luxus. Dank deines Wasserkochers ist dieser Kaffee übrigens so heiß, dass er niemals wieder kalt wird. Für die einen wäre das einfach eine Lücke in der Spiellogik, für andere aber ..... heißer Kaffee!' =>
@@ -1262,6 +1178,10 @@ return array (
 	'Chicken Nuggets',
   'Diese Chicken Nuggets bestehen zu 0.1% aus echtem Hühnchenfleisch und zu 99.9% aus dem, was in den letzten Tagen so auf der Autobahn überfahren wurde.' =>
 	'Diese Chicken Nuggets bestehen zu 0.1% aus echtem Hühnchenfleisch und zu 99.9% aus dem, was in den letzten Tagen so auf der Autobahn überfahren wurde.',
+  'Portion Pommes Rot-Weiß' =>
+	'Portion Pommes Rot-Weiß',
+  'Der absolute Klassiker - Pommes Frittes, auch bekannt als die Einstiegsdroge zur Fettleibigkeit.' =>
+	'Der absolute Klassiker - Pommes Frittes, auch bekannt als die Einstiegsdroge zur Fettleibigkeit.',
   'Salat "Fettfried"' =>
 	'Salat "Fettfried"',
   'Heureka! Den besten Wissenschaftlern diesseits des Rubikon haben es geschafft! Dieser Salat verbindet ein gesund aussehendes Äußeres mit gigantischem Fettgehalt. Dieses Ding hilft nun zwar nicht unbedingt beim Abnehmen, aber es sorgt für ein gutes Gefühl - beim Zunehmen.' =>
@@ -1272,6 +1192,10 @@ return array (
 	'Plastikstuhl',
   'Dieser Stuhl sieht ziemlich unbequem und wenig stabil aus - und dreckig ist er auch noch. Dafür ist er aber wenigstens leicht genug, um damit Zombies auf Distanz zu halten.' =>
 	'Dieser Stuhl sieht ziemlich unbequem und wenig stabil aus - und dreckig ist er auch noch. Dafür ist er aber wenigstens leicht genug, um damit Zombies auf Distanz zu halten.',
+  'Ektorp-Gluten Stuhl' =>
+	'Ektorp-Gluten Stuhl',
+  'Stabil und aus einem Stück gegossen - dieser Stuhl ist zwar schwerer, dafür aber auch widerstandsfähiger als ein einfacher Plastikstuhl.' =>
+	'Stabil und aus einem Stück gegossen - dieser Stuhl ist zwar schwerer, dafür aber auch widerstandsfähiger als ein einfacher Plastikstuhl.',
   'Revolver' =>
 	'Revolver',
   'Batteriewerfer? HA! Mit diesem Baby nimmst du Zombies aus der Entfernung mit einem Lächeln aufs Korn!' =>
@@ -1284,14 +1208,22 @@ return array (
 	'Weihasserbombe',
   'Sobald die Zombies in Wurfreichweite kommen kannst du ihnen mit diesem kleinen Geschenk die Tour vermiesen. Nichts ist effektiver gegen eine Gruppe Zombies als eine Wasserbombe - außer natürlich einer Weihwasserbombe!!' =>
 	'Sobald die Zombies in Wurfreichweite kommen kannst du ihnen mit diesem kleinen Geschenk die Tour vermiesen. Nichts ist effektiver gegen eine Gruppe Zombies als eine Wasserbombe - außer natürlich einer Weihwasserbombe!!',
+  'Scharfes Messer' =>
+	'Scharfes Messer',
+  'Mit einem scharfen Messer in der Tasche bist du für alles gerüstet: Plötzliche Zombieangriffe, spontane Kochduelle, überraschende RTL-Interviews! Du solltest wirklich nie ohne Messer aus dem Haus gehen.... es sei denn, du hast eine Machete.' =>
+	'Mit einem scharfen Messer in der Tasche bist du für alles gerüstet: Plötzliche Zombieangriffe, spontane Kochduelle, überraschende RTL-Interviews! Du solltest wirklich nie ohne Messer aus dem Haus gehen.... es sei denn, du hast eine Machete.',
   'Lunchbag' =>
 	'Lunchbag',
   'Es gibt nichts schöneres als liebevoll von Mutti bestrichene Brote. Gut, es war nicht deine eigene Mutter, und diese Tüte liegt seit Jahren hier in der Sonne, aber wir wollen doch jetzt nicht anfangen wählerisch zu werden, oder?' =>
 	'Es gibt nichts schöneres als liebevoll von Mutti bestrichene Brote. Gut, es war nicht deine eigene Mutter, und diese Tüte liegt seit Jahren hier in der Sonne, aber wir wollen doch jetzt nicht anfangen wählerisch zu werden, oder?',
-  'Rostige Machete' =>
-	'Rostige Machete',
-  'Obwohl leicht abgestumpft und rostig ist diese Machete immer noch effektiv im Kampf gegen Zombiehorden. Noch besser ist es natürlich, die Zombies gar nicht erst in Machetenreichweite kommen zu lassen.' =>
-	'Obwohl leicht abgestumpft und rostig ist diese Machete immer noch effektiv im Kampf gegen Zombiehorden. Noch besser ist es natürlich, die Zombies gar nicht erst in Machetenreichweite kommen zu lassen.',
+  'Lunchbox' =>
+	'Lunchbox',
+  'Diese Lunchbox enthält mehrere Rationen einer auf optimale Nährstoffversorgung in der Postapokalypse abgestimmten Mahlzeit (auch bekannt als "belegte Brote").' =>
+	'Diese Lunchbox enthält mehrere Rationen einer auf optimale Nährstoffversorgung in der Postapokalypse abgestimmten Mahlzeit (auch bekannt als "belegte Brote").',
+  'Scharfe Machete' =>
+	'Scharfe Machete',
+  'Nachdem du den Rost abgeschliffen und die Klinge geschärft hast gleitet deine Machete nun wie Butter durch Zombiehorden.' =>
+	'Nachdem du den Rost abgeschliffen und die Klinge geschärft hast gleitet deine Machete nun wie Butter durch Zombiehorden.',
   'Kosmische Machete' =>
 	'Kosmische Machete',
   'Diese Machete ist nicht einfach scharf - sie ist kosmisch! Die Klinge besteht aus gehärtetem Meteoritenstahl und ist schärfer als Tods Sense. Notfalls kannst du damit sogar Atome spalten, durch Zombies geht die Klinge wie durch Luft.' =>
@@ -1316,6 +1248,8 @@ return array (
 	'Lächerliches Taschenmesser der Männlichkeit',
   'Wenn alles andere fehlschlägt kannst du die Zombies immernoch mit diesem Taschenmesser .... zum Lachen bringen.' =>
 	'Wenn alles andere fehlschlägt kannst du die Zombies immernoch mit diesem Taschenmesser .... zum Lachen bringen.',
+  'Geld' =>
+	'Geld',
   'So richtig viel kannst du mit diesem Geld nicht wirklich anfangen, immerhin haben die meisten Geschäfte hier in der Umgebung geschlossen. Aber hey, einem geschenkten Gaul haut nicht aufs Maul... oder so. Steck die Kohle einfach in deinen Munitionsgürtel, bis du etwas findest für dass du es ausgeben kannst.' =>
 	'So richtig viel kannst du mit diesem Geld nicht wirklich anfangen, immerhin haben die meisten Geschäfte hier in der Umgebung geschlossen. Aber hey, einem geschenkten Gaul haut nicht aufs Maul... oder so. Steck die Kohle einfach in deinen Munitionsgürtel, bis du etwas findest für dass du es ausgeben kannst.',
   'Leckere Speise' =>
@@ -1326,14 +1260,18 @@ return array (
 	'Superleckere Speise',
   'Diese leckere Speise ist zusätzlich noch perfekt gewürzt. Einen so verführerischen Gaumenschmauß dürfen nur die wenigsten Verdammten genießen... du bist nun einer von ihnen.' =>
 	'Diese leckere Speise ist zusätzlich noch perfekt gewürzt. Einen so verführerischen Gaumenschmauß dürfen nur die wenigsten Verdammten genießen... du bist nun einer von ihnen.',
+  'Nährschleim' =>
+	'Nährschleim',
+  'Diese glibbrige Masse deckt den kompletten Tagesbedarf an Ekel sowie diversen Nährstoffen. Es kostet nur ein bisschen Überwindung ...' =>
+	'Diese glibbrige Masse deckt den kompletten Tagesbedarf an Ekel sowie diversen Nährstoffen. Es kostet nur ein bisschen Überwindung ...',
   'Nährplasma' =>
 	'Nährplasma',
   'Dieses Zeug ist vollgepumpt mit Chemie. Was diese Chemie bewirkt? Who knows?' =>
 	'Dieses Zeug ist vollgepumpt mit Chemie. Was diese Chemie bewirkt? Who knows?',
-  'Schachtel mit Paralaxium' =>
-	'Schachtel mit Paralaxium',
-  'Manchmal muss man einfach mal abschalten; Paralaxium hilft dir dabei. Mit nur ein paar Kapseln bist du selbst dann noch entspannt, wenn Zombies an deinem Kopf knabbern.' =>
-	'Manchmal muss man einfach mal abschalten; Paralaxium hilft dir dabei. Mit nur ein paar Kapseln bist du selbst dann noch entspannt, wenn Zombies an deinem Kopf knabbern.',
+  'Schachtel mit Paracetin' =>
+	'Schachtel mit Paracetin',
+  'Paracetin macht selbst den schlaffesten Sack wieder munter. Die hochkonzentrierte Mischung aus Koffein und dem von unserer Marketingabteilung neu entwickelten Acclerin - gewonnen aus natürlichem Orangenextrakt - bewirkt ein sofortiges Auffüllen von Energiereserven!' =>
+	'Paracetin macht selbst den schlaffesten Sack wieder munter. Die hochkonzentrierte Mischung aus Koffein und dem von unserer Marketingabteilung neu entwickelten Acclerin - gewonnen aus natürlichem Orangenextrakt - bewirkt ein sofortiges Auffüllen von Energiereserven!',
   'Pfefferspray' =>
 	'Pfefferspray',
   'Dieses Pfefferspray ist eigentlich für Bären gedacht - hilft aber auch super gegen Zombies, Männer und andere hirntote Gestalten.' =>
@@ -1344,8 +1282,6 @@ return array (
 	'Wow, du hast ein Windows Phone gefunden - DAS Smartphone für Menschen, die sich auch einen Trabbi zum Preis eines Porsches andrehen lassen. Naja, mit diesem Teil kannst du zwar nicht wirklich angeben (oder ZombVival spielen), aber du kannst es zumindest auf einen Zombie werfen. Das ist doch auch was!',
   'Eine Pille' =>
 	'Eine Pille',
-  'Leider hast du zu dieser Pille weder Packung noch Beipackzettel gefunden. Ein versierter Mediziner könnte sicherlich von der Farbe auf die Wirkung dieser Pille schließen - dir bleibt dafür wohl nur der Selbstversuch übrig.' =>
-	'Leider hast du zu dieser Pille weder Packung noch Beipackzettel gefunden. Ein versierter Mediziner könnte sicherlich von der Farbe auf die Wirkung dieser Pille schließen - dir bleibt dafür wohl nur der Selbstversuch übrig.',
   'Orange Pille' =>
 	'Orange Pille',
   'Blaue Pille' =>
@@ -1370,8 +1306,6 @@ return array (
 	'Rosa Pille',
   'Rote Pille' =>
 	'Rote Pille',
-  'Gelbe Pille' =>
-	'Gelbe Pille',
   'Experimentelle Plasmakanone' =>
 	'Experimentelle Plasmakanone',
   'Dieser Waffe liegt ein faszinierendes Konzept zu grunde: Was, wenn man die Energie einer Batterie als Waffe nutzen würde, anstatt einfach die Batterie zu verschießen? Die experimentelle Plasmakanone benutzt richtig abgefahrene Wissenschaft sowie eine Batterie, um auf Plasmatemperatur erhitzte Luftpartikel in Richtung Zombies zu katapultieren. Wo diese Waffe hinfeuert bleibt kein Stein mehr auf dem anderen... allerdings kannst du sie aufgrund der extremen Hitzeentwicklung nur einmal pro Kampf einsetzen - und auch nur gegen Zombies, die weit entfernt stehen.' =>
@@ -1406,6 +1340,10 @@ return array (
 	'Dein altes Sturmgewehr',
   'Es hat dich bisher gut duch die Zombieapokalypse gebracht, es wird dich auch weiter gut durchbringen. Zumindest, solange dir die Munition nicht ausgeht.' =>
 	'Es hat dich bisher gut duch die Zombieapokalypse gebracht, es wird dich auch weiter gut durchbringen. Zumindest, solange dir die Munition nicht ausgeht.',
+  'Glasflasche' =>
+	'Glasflasche',
+  'Sie ist weder groß noch sonderlich stabil, aber du kannst trotzdem ein wenig Flüssigkeit darin aufbewahren.' =>
+	'Sie ist weder groß noch sonderlich stabil, aber du kannst trotzdem ein wenig Flüssigkeit darin aufbewahren.',
   'Softdrink' =>
 	'Softdrink',
   'Als Durstlöscher nicht ganz so effizient wie einfaches Wasser, aber man nimmt ja was man kriegen kann. Im Notfall auch verwendbar als Superkleber, Abführmittel und Ätzmittel.' =>
@@ -1454,10 +1392,16 @@ return array (
 	'Genau DAS kommt dabei raus, wenn Mutter Natur von den Zombies total angepisst ist. Diese .... ähem ... "Frucht" hat einen ausgeprägten Selbsterhaltungstrieb und neigt bei Zombiekontakt zur Explosion. Du könntest sie auch essen... auch wenn das nicht unbedingt empfehlenswert ist.',
   'Verkaufsautomat' =>
 	'Verkaufsautomat',
+  'Dieser Verkaufsautomat sieht ziemlich heruntergekommen aus. Die Scheibe ist verdreckt und die Beschriftungen der einzelnen Knöpfe sind nicht mehr lesbar. Vielleicht wirfst du einfach mal Geld ein und schaust, ob etwas heraus kommt?' =>
+	'Dieser Verkaufsautomat sieht ziemlich heruntergekommen aus. Die Scheibe ist verdreckt und die Beschriftungen der einzelnen Knöpfe sind nicht mehr lesbar. Vielleicht wirfst du einfach mal Geld ein und schaust, ob etwas heraus kommt?',
   'Wasserbombe' =>
 	'Wasserbombe',
   'Sobald die Zombies in Wurfreichweite kommen kannst du ihnen mit diesem kleinen Geschenk die Tour vermiesen. Nichts ist effektiver gegen eine Gruppe Zombies als eine Wasserbombe!' =>
 	'Sobald die Zombies in Wurfreichweite kommen kannst du ihnen mit diesem kleinen Geschenk die Tour vermiesen. Nichts ist effektiver gegen eine Gruppe Zombies als eine Wasserbombe!',
+  'Aquablaster XS' =>
+	'Aquablaster XS',
+  'Zombies hassen Wasser - dieser Fakt verwandelt eine Wasserpistole für Kinder in ein episches Tötungswerkzeug für Zombies. Du musst nur dafür sorgen, dass der Tank immer voll ist...' =>
+	'Zombies hassen Wasser - dieser Fakt verwandelt eine Wasserpistole für Kinder in ein episches Tötungswerkzeug für Zombies. Du musst nur dafür sorgen, dass der Tank immer voll ist...',
   'Starker Alkohol' =>
 	'Starker Alkohol',
   'Ob es hilfreich ist, wenn du die Zombies zwar nicht mehr ganz so scharf, dafür aber doppelt siehst? Keine Ahnung, am besten du probierst es einfach mal aus!' =>
@@ -1536,8 +1480,6 @@ return array (
 	'Früher blühte hier das Leben, jetzt findet man hier nur noch Sand und gelegentlich ein paar Zombies, die in kleinen Grüppchen die Ruinen der Zivilisation umstreifen. Unwahrscheinlich, dass du hier etwas nützliches findest. Eventuell findest du aber das ein oder andere Gebäude, das du nach nützlichen Dingen durchsuchen kannst.',
   'Alte Apotheke' =>
 	'Alte Apotheke',
-  'Die Tür dieser Apotheke ist von innen mit einem großen Blasentee-Werbeaufsteller verbarrikadiert. Leider hat das übergroße Schaufenster direkt daneben ausreichend Angriffsfläche für die Zombies geboten. Die Leute, die sich hier versteckt hatten, können mit den gelagerten Medikamenten wohl nichts mehr anfangen, also bedien dich ruhig.' =>
-	'Die Tür dieser Apotheke ist von innen mit einem großen Blasentee-Werbeaufsteller verbarrikadiert. Leider hat das übergroße Schaufenster direkt daneben ausreichend Angriffsfläche für die Zombies geboten. Die Leute, die sich hier versteckt hatten, können mit den gelagerten Medikamenten wohl nichts mehr anfangen, also bedien dich ruhig.',
   'Kernkraftwerksruine' =>
 	'Kernkraftwerksruine',
   'Zäune und Warnschilder umranden die gigantische Stahlbetonkuppel, in der du dich nun befindest. Dieser Kernreaktor hat vor langer Zeit viele Städte mit Energie versorgt, jetzt tut er nicht mehr sonderlich viel (außer die Umgebung zu verstrahlen). Wenn du keine Angst vor Strahlung hast, kannst du hier nach Überresten des Kühlwassers oder nach Ersatzteilen suchen.' =>
@@ -1556,10 +1498,16 @@ return array (
 	'Dieser Waffenladen war schon so oft das Ziel von Plünderern, dass hier kaum noch etwas zu holen ist. Glücklicherweise gibt es dafür aber auch kaum Zombies hier.',
   'Schlüssel merken' =>
 	'Schlüssel merken',
+  'Essen' =>
+	'Essen',
   'Einsetzen' =>
 	'Einsetzen',
   'Supercharger verwenden' =>
 	'Supercharger verwenden',
+  'Fressen' =>
+	'Fressen',
+  'Leiche einsacken' =>
+	'Leiche einsacken',
   'Leiche herausholen' =>
 	'Leiche herausholen',
   'Tank befüllen' =>
@@ -1570,12 +1518,14 @@ return array (
 	'Öffnen',
   'Aufbrechen' =>
 	'Aufbrechen',
-  'Eine Paralaxium schlucken' =>
-	'Eine Paralaxium schlucken',
-  'Paralaxium zusammenführen' =>
-	'Paralaxium zusammenführen',
-  'Runter damit!' =>
-	'Runter damit!',
+  'Eine Ration essen' =>
+	'Eine Ration essen',
+  'Verschlingen' =>
+	'Verschlingen',
+  'Eine Paracetin schlucken' =>
+	'Eine Paracetin schlucken',
+  'Paracetin zusammenführen' =>
+	'Paracetin zusammenführen',
   '"Verwenden"' =>
 	'"Verwenden"',
   'Auspacken' =>
@@ -1602,6 +1552,10 @@ return array (
 	'Angenagte Leiche',
   'Hier hat anscheinend jemand in der Nähe einer Leichen einen Fressanfall gehabt ...  oder du hast einfach die Überreste eines Magersüchtigen gefunden.' =>
 	'Hier hat anscheinend jemand in der Nähe einer Leichen einen Fressanfall gehabt ...  oder du hast einfach die Überreste eines Magersüchtigen gefunden.',
+  'Stofffetzen' =>
+	'Stofffetzen',
+  'Dieses große Stück Stoff ist alleine nicht sehr nützlich, aber eventuell kannst du damit etwas anfangen wenn du mehrere hast...?' =>
+	'Dieses große Stück Stoff ist alleine nicht sehr nützlich, aber eventuell kannst du damit etwas anfangen wenn du mehrere hast...?',
   'Teigkügelchen' =>
 	'Teigkügelchen',
   'Dieser von Elfen in weihnachtlicher Kinderarbeit hergestellte Teig ist alles, was du brauchst, um in Festtagsstimmung zu kommen. Und weil er von Elfen gemacht wurde ist er selbstständlich so magisch, dass sich aus ihm geformte Plätzchen automatisch selbst aufbacken. Wie praktisch!' =>
@@ -1634,6 +1588,10 @@ return array (
 	'Elektronisches Bauteil',
   'Es ist gar nicht wichtig, was dieses Teil mal war oder wozu es gut ist. Es ist eine Leiterplatte mit Leiterbahnen und diversen Schickschnack drauf - steck es einfach in eine von deinen Konstruktionen und es wird schon irgendwie funktionieren!' =>
 	'Es ist gar nicht wichtig, was dieses Teil mal war oder wozu es gut ist. Es ist eine Leiterplatte mit Leiterbahnen und diversen Schickschnack drauf - steck es einfach in eine von deinen Konstruktionen und es wird schon irgendwie funktionieren!',
+  'Schwarzpulver' =>
+	'Schwarzpulver',
+  'Schon die alten Chinesen wussten: Schwarzpulver ist vielseitig einsetzbar. Zum Beispiel kann man es bei Bedarf explodieren lassen und so alle möglichen coolen Effekte erzeugen!' =>
+	'Schon die alten Chinesen wussten: Schwarzpulver ist vielseitig einsetzbar. Zum Beispiel kann man es bei Bedarf explodieren lassen und so alle möglichen coolen Effekte erzeugen!',
   'Kraftstoff-Kanister' =>
 	'Kraftstoff-Kanister',
   'Kraftstoff ist selten geworden nach der Zombieinvasion... hauptsächlich, weil die OPEC jede Gelegenheit nutzt, die Fördermengen zu senken. Freu dich also, dass du zumindest diesen einen, halbvollen Kanister gefunden hast!' =>
@@ -1650,14 +1608,14 @@ return array (
 	'Alteisen',
   'Alteisen ist ein grundlegendes Baumaterial und wird für viele verschiedene Konstruktionen benötigt. Eigentlich kann man davon gar nicht genug haben.' =>
 	'Alteisen ist ein grundlegendes Baumaterial und wird für viele verschiedene Konstruktionen benötigt. Eigentlich kann man davon gar nicht genug haben.',
-  'Micropur Reinigungstablette' =>
-	'Micropur Reinigungstablette',
-  'Deine Wasserflasche hat sich im Laufe der Zeit in eine biologische Kontaminierungszone verwandelt? Kein Problem! Die neue Micropur Extra4, reinigt, desinfiziert, entkalkt und sorgt für frischen Zitronenduft! Darum wird nur Micropur von führenden Wasserflaschen-Herstellern empfohlen.' =>
-	'Deine Wasserflasche hat sich im Laufe der Zeit in eine biologische Kontaminierungszone verwandelt? Kein Problem! Die neue Micropur Extra4, reinigt, desinfiziert, entkalkt und sorgt für frischen Zitronenduft! Darum wird nur Micropur von führenden Wasserflaschen-Herstellern empfohlen.',
   'Rostiger Handmixer' =>
 	'Rostiger Handmixer',
   'Dieser Handmixer hat schon bessere Tage gesehen... Naja, wenigstens verleiht er allen Speisen, die du mit seiner Hilfe zubereitest, ein würziges Rost-Aroma. Lecker!' =>
 	'Dieser Handmixer hat schon bessere Tage gesehen... Naja, wenigstens verleiht er allen Speisen, die du mit seiner Hilfe zubereitest, ein würziges Rost-Aroma. Lecker!',
+  'Motor' =>
+	'Motor',
+  'Dieser Motor ist ein Wunderwerk der Technik, ausgezeichnet durch geringen Abgaßausstoß und hohe Energieeffizienz. Leider nützt er dir nicht viel ohne Kraftstoff...' =>
+	'Dieser Motor ist ein Wunderwerk der Technik, ausgezeichnet durch geringen Abgaßausstoß und hohe Energieeffizienz. Leider nützt er dir nicht viel ohne Kraftstoff...',
   'Alter Ofen' =>
 	'Alter Ofen',
   'Dieser alte, aber noch funktionstüchtige Ofen wird dir helfen, in deiner heimischen Küche !' =>
@@ -1678,10 +1636,18 @@ return array (
 	'Kürbis',
   'Leider ist es nur ein Zierkürbis, du kannst ihn also nicht essen. Aber sicherlich findest du eine Verwendung für ihn. ' =>
 	'Leider ist es nur ein Zierkürbis, du kannst ihn also nicht essen. Aber sicherlich findest du eine Verwendung für ihn. ',
+  'Gewürzmischung' =>
+	'Gewürzmischung',
+  'Mit dieser Gewürzmischung kannst du beim Kochen sogar die langweiligste Speise aufpeppen!' =>
+	'Mit dieser Gewürzmischung kannst du beim Kochen sogar die langweiligste Speise aufpeppen!',
   'Schrauben, Muttern, Zahnräder' =>
 	'Schrauben, Muttern, Zahnräder',
   'In dieser bunten Mischung mechanischer Kleinteile findest du eigentlich immer, was du brauchst - es sei denn, du brauchst was gegen die Zombies.' =>
 	'In dieser bunten Mischung mechanischer Kleinteile findest du eigentlich immer, was du brauchst - es sei denn, du brauchst was gegen die Zombies.',
+  'Supercharger-Batterie' =>
+	'Supercharger-Batterie',
+  'Du hast diese Batterie so stark überladen, dass sie zu explodieren droht, deshalb musst du sie auch mit Samthandschuhen anfassen. Komm bloß nicht auf die Idee, diese Batterie zu den anderen in deinen Munitionsgürtel zu stecken oder gar mit einem Batteriewerfer abzufeuern - es sei denn, du möchtest dich gerne im Zentrum einer Pilzwolke wiederfinden.' =>
+	'Du hast diese Batterie so stark überladen, dass sie zu explodieren droht, deshalb musst du sie auch mit Samthandschuhen anfassen. Komm bloß nicht auf die Idee, diese Batterie zu den anderen in deinen Munitionsgürtel zu stecken oder gar mit einem Batteriewerfer abzufeuern - es sei denn, du möchtest dich gerne im Zentrum einer Pilzwolke wiederfinden.',
   'Järpen-Tisch' =>
 	'Järpen-Tisch',
   'Dieser mit nur leichten Gebrauchsspuren versehene Järpen-Tisch verwandelt selbst die schäbigste Bruchbude in... naja, eine schäbige Bruchbude mit Tisch.' =>
@@ -1704,12 +1670,10 @@ return array (
 	'Klares Wasser',
   'Klares Wasser zu finden ist eine Seltenheit - pass auf, dass du es nicht ruinierst indem du es mit dreckigem Wasser mischt!' =>
 	'Klares Wasser zu finden ist eine Seltenheit - pass auf, dass du es nicht ruinierst indem du es mit dreckigem Wasser mischt!',
+  'Verseuchtes Wasser' =>
+	'Verseuchtes Wasser',
   'Dieses Wasser zu finden war nicht schwer - immerhin riecht man es Kilometer gegen den Wind. Um dieses ekelhafte schleimige Zeug zu trinken musst du schon sehr verzweifelt sein.' =>
 	'Dieses Wasser zu finden war nicht schwer - immerhin riecht man es Kilometer gegen den Wind. Um dieses ekelhafte schleimige Zeug zu trinken musst du schon sehr verzweifelt sein.',
-  'Blut' =>
-	'Blut',
-  'Wäre dies ein Browserspiel mit Vampiren, dann wäre dieses Item sicher wertvoll. Weil Zombies aber viel cooler sind als Vampire, ist dieses Item einfach nur eklig. Bäh!' =>
-	'Wäre dies ein Browserspiel mit Vampiren, dann wäre dieses Item sicher wertvoll. Weil Zombies aber viel cooler sind als Vampire, ist dieses Item einfach nur eklig. Bäh!',
   'Wasser aus deiner Flasche' =>
 	'Wasser aus deiner Flasche',
   'Dieses Wasser stammt aus einer deiner Flaschen. Du willst es doch hier nicht versickern lassen, oder?' =>
@@ -1804,6 +1768,8 @@ return array (
 	'Erfolgreiche Flucht!',
   'Fehlgeschlagene Flucht!' =>
 	'Fehlgeschlagene Flucht!',
+  'Angriff' =>
+	'Angriff',
   'Arbeit in der Ruine abgeschlossen!' =>
 	'Arbeit in der Ruine abgeschlossen!',
   'Kampf' =>
@@ -1820,6 +1786,8 @@ return array (
 	'Das Spiel beginnt...',
   'Du bist entkommen!' =>
 	'Du bist entkommen!',
+  'Der Kampf beginnt!' =>
+	'Der Kampf beginnt!',
   'Du hast den Kampf überstanden!' =>
 	'Du hast den Kampf überstanden!',
   'Ein hilfreicher Fund' =>
@@ -2190,6 +2158,8 @@ return array (
 	'Schreiend und mit geschlossenen Augen rennst du auf die Zombies zu. Die sind von dieser Aktion so überrascht, dass du die meisten von ihnen einfach aus dem Weg stoßen kannst. <br /><br />Die Zombies, die du nicht einfach wegstoßen kannst lenkst du durch den geschickten Einsatz folgender Gegenstände ab:<br />:items<br /><br /> Ohne zurückzublicken rennst du weiter, bis du dein Versteck erreicht hast .... Du bist der Zombiehölle entkommen! Aber es hat dich deine ganze Kraft gekostet.',
   'Schreiend und mit geschlossenen Augen rennst du auf die Zombies zu. Die sind von dieser Aktion so überrascht, dass du die meisten von ihnen einfach aus dem Weg stoßen kannst - aber leider nicht alle. Ein Zombie steht dir mitten im Weg, und wirft dich zu Boden als du versuchst, ihn umzurennen. Zwar kannst du schnell wieder aufspringen, bist nun aber von geifernden Zombies umzingelt. Flucht ist keine Option mehr, du wirst kämpfen müssen.' =>
 	'Schreiend und mit geschlossenen Augen rennst du auf die Zombies zu. Die sind von dieser Aktion so überrascht, dass du die meisten von ihnen einfach aus dem Weg stoßen kannst - aber leider nicht alle. Ein Zombie steht dir mitten im Weg, und wirft dich zu Boden als du versuchst, ihn umzurennen. Zwar kannst du schnell wieder aufspringen, bist nun aber von geifernden Zombies umzingelt. Flucht ist keine Option mehr, du wirst kämpfen müssen.',
+  'Du versteckst dich hinter einer Ecke und atmest ein paar mal tief durch. Als du genug Mut gesammelt hast, trittst du hervor und ziehst deine Waffen. Der Kampf kann beginnen!' =>
+	'Du versteckst dich hinter einer Ecke und atmest ein paar mal tief durch. Als du genug Mut gesammelt hast, trittst du hervor und ziehst deine Waffen. Der Kampf kann beginnen!',
   'Die Tür ist völlig verrostet. Es wird schwierig werden, sie aufzubekommen - und du hast dafür im Moment einfach keine Kraft. Erhole dich ein wenig und versuch es später nochmal.' =>
 	'Die Tür ist völlig verrostet. Es wird schwierig werden, sie aufzubekommen - und du hast dafür im Moment einfach keine Kraft. Erhole dich ein wenig und versuch es später nochmal.',
   'Die schwere Metalltür, die die Küche vom Kühlraum trennt, ist inzwischen startk verrostet. Nach einiger Anstrengung gelingt es dir aber doch, sie einen Spalt zu öffnen. Für diese Leistung kannst du dich nun selbst mit einem Fastfood-Festmahl beglücken!' =>
@@ -2372,14 +2342,14 @@ return array (
 	'Änderung der Spielgeschwindigkeit wieder möglich um :time',
   'Den nächsten Kampf austragen!' =>
 	'Den nächsten Kampf austragen!',
+  'Der Munitionsgürtel enthält derzeit folgende Gegenstände:' =>
+	'Der Munitionsgürtel enthält derzeit folgende Gegenstände:',
   'Untotes Strahlenopfer' =>
 	'Untotes Strahlenopfer',
   'am Horizont' =>
 	'am Horizont',
-  'Verbrauchte Energie' =>
-	'Verbrauchte Energie',
-  'Der Einsatz dieser Waffe hat Energie verbraucht.' =>
-	'Der Einsatz dieser Waffe hat Energie verbraucht.',
+  'Es gibt kein Entkommen!' =>
+	'Es gibt kein Entkommen!',
   'In die Aussenwelt' =>
 	'In die Aussenwelt',
   'Zurück zum Versteck' =>
@@ -2398,6 +2368,8 @@ return array (
 	'Die Sterne waren dir wohlgesonnen! Nachdem du ewig durch die Ödniss geirrt bist hast du nun endlich folgende Ruine aufgedeckt: ',
   'Du hast eine Ruine aufgedeckt!' =>
 	'Du hast eine Ruine aufgedeckt!',
+  'Vermodernde Zombies' =>
+	'Vermodernde Zombies',
   'Gerade noch so entkommen! Das war knapp...' =>
 	'Gerade noch so entkommen! Das war knapp...',
   'Nach einer langen und erschöpfenden Suche hast du nun endlich mal etwas nützliches gefunden: :items' =>
@@ -2414,8 +2386,10 @@ return array (
 	'Nach einer langen und erschöpfenden Suche hast du nun endlich :desc gefunden: :items',
   '€' =>
 	'€',
-  'Untote Fleischberge' =>
-	'Untote Fleischberge',
+  'Sonstiges' =>
+	'Sonstiges',
+  'Gegenstände, die dieser Spieler im Kampf verbraucht hat.' =>
+	'Gegenstände, die dieser Spieler im Kampf verbraucht hat.',
   'in der Umgebung' =>
 	'in der Umgebung',
   'Wahnsinnige Ghule' =>
@@ -2426,20 +2400,16 @@ return array (
 	'Durch den Einsatz dieser Waffe wurde ein Gegenstand verbraucht: ',
   'Direkt nachdem du die Paracetoid schluckst merkst du, wie es dir besser geht. Die Schachtel ist leer!' =>
 	'Direkt nachdem du die Paracetoid schluckst merkst du, wie es dir besser geht. Die Schachtel ist leer!',
-  'in einiger Entfernung' =>
-	'in einiger Entfernung',
   'Oh nein!' =>
 	'Oh nein!',
   'Und wieder hat ein Mensch ein grausames Ende gefunden...' =>
 	'Und wieder hat ein Mensch ein grausames Ende gefunden...',
   ':name hat es hinter sich...' =>
 	':name hat es hinter sich...',
+  'in unmittelbarer Nähe' =>
+	'in unmittelbarer Nähe',
   'Von Zombies gefressen' =>
 	'Von Zombies gefressen',
-  'Verletzungen die dieser Spieler erlitten hat.' =>
-	'Verletzungen die dieser Spieler erlitten hat.',
-  ':name hat eine Verletzung davongetragen: ' =>
-	':name hat eine Verletzung davongetragen: ',
   'Schwere Blutung' =>
 	'Schwere Blutung',
   'Tja, hier hättest du mal eher suchen sollen - hat ja ganz schön gedauert, bis du diese Ruine endlich gefunden hast: ' =>
@@ -2518,12 +2488,28 @@ return array (
 	'Lasermessgerät einsetzen',
   'Du hast keine Lust, unnötig Zeit mit dem Untersuchen dieses Orts zu verschwenden? Lass eine Maschine deine Arbeit machen! Dein Lasermessgerät wird verbraucht, und du erhälst sofort ein Ergebnis.' =>
 	'Du hast keine Lust, unnötig Zeit mit dem Untersuchen dieses Orts zu verschwenden? Lass eine Maschine deine Arbeit machen! Dein Lasermessgerät wird verbraucht, und du erhälst sofort ein Ergebnis.',
-  'Zombies' =>
-	'Zombies',
+  'Zombie' =>
+	'Zombie',
+  'Der absolute Horror' =>
+	'Der absolute Horror',
   'Die Zombies haben dein Versteck aufgespürt. Von hier kannst du nicht mehr fliehen - du musst die Zombies bekämpfen!' =>
 	'Die Zombies haben dein Versteck aufgespürt. Von hier kannst du nicht mehr fliehen - du musst die Zombies bekämpfen!',
+  'Es geht weder vor noch zurück - Zombies blockieren den Ausgang! Du kannst entweder eine waghalsige Flucht versuchen oder den Weg freizuräumen. Eins steht fest: Von alleine werden diese Zombies hier nicht verschwinden...' =>
+	'Es geht weder vor noch zurück - Zombies blockieren den Ausgang! Du kannst entweder eine waghalsige Flucht versuchen oder den Weg freizuräumen. Eins steht fest: Von alleine werden diese Zombies hier nicht verschwinden...',
+  'Weg freikämpfen' =>
+	'Weg freikämpfen',
   'Aus deinem Versteck kannst du nicht fliehen, du wirst also kämpfen müssen. Vielleicht wäre es aber sinnvoll, die Zahl der Zombies vor dem Kampf mit Verteidigungsanlagen zu dezimieren.' =>
 	'Aus deinem Versteck kannst du nicht fliehen, du wirst also kämpfen müssen. Vielleicht wäre es aber sinnvoll, die Zahl der Zombies vor dem Kampf mit Verteidigungsanlagen zu dezimieren.',
+  'Zombies bekämpfen!' =>
+	'Zombies bekämpfen!',
+  'Fluchtversuch' =>
+	'Fluchtversuch',
+  'Wähle diese Option, um die belagernden Zombies zu bekämpfen. Der Kampf wird sofort beginnen, wenn alle Zombies besiegt sind kannst du diesen Ort normal verlassen.' =>
+	'Wähle diese Option, um die belagernden Zombies zu bekämpfen. Der Kampf wird sofort beginnen, wenn alle Zombies besiegt sind kannst du diesen Ort normal verlassen.',
+  'Wenn du einen Kampf vermeiden möchtest, versuche zu fliehen. Ob du Erfolg hast hängt von deiner Energie und der Zahl der Zombies ab. Hat die Flucht Erfolg, verlierst du all deine Energie und kehrst in dein Versteck zurück. Andernfalls fallen die Zombies über dich her und zwingen dich in den Nahkampf.' =>
+	'Wenn du einen Kampf vermeiden möchtest, versuche zu fliehen. Ob du Erfolg hast hängt von deiner Energie und der Zahl der Zombies ab. Hat die Flucht Erfolg, verlierst du all deine Energie und kehrst in dein Versteck zurück. Andernfalls fallen die Zombies über dich her und zwingen dich in den Nahkampf.',
+  'Flucht versuchen' =>
+	'Flucht versuchen',
   'Aktion abbrechen' =>
 	'Aktion abbrechen',
   'Bist du sicher, dass du diese Aktion abbrechen willst?' =>
@@ -2532,10 +2518,10 @@ return array (
 	'Abkürzung suchen',
   'Versteck verlassen' =>
 	'Versteck verlassen',
-  'Bewegen ...' =>
-	'Bewegen ...',
   'Personen in der Nähe' =>
 	'Personen in der Nähe',
+  'Mit deinen Mitverdammten sprechen' =>
+	'Mit deinen Mitverdammten sprechen',
   'Einzelne' =>
 	'Einzelne',
   'Schlafecke einrichten' =>
@@ -2560,6 +2546,8 @@ return array (
 	'Leiche eines Schnitzeljägers',
   'Sieht so aus als hätte dieser arme Tropf an einer Schnitzeljagt teilgenommen... seine linke Hand hält ein paar unleserliche Schriftstücke fest umklammert, seine rechte einen Text, der mit "Dayan" unterschrieben ist...' =>
 	'Sieht so aus als hätte dieser arme Tropf an einer Schnitzeljagt teilgenommen... seine linke Hand hält ein paar unleserliche Schriftstücke fest umklammert, seine rechte einen Text, der mit "Dayan" unterschrieben ist...',
+  'Du greifst die :zombiestr an, die den Weg versperren!' =>
+	'Du greifst die :zombiestr an, die den Weg versperren!',
   'Die Zombies haben deine Verteidigung durchbrochen! :num Zombies dringen ein!' =>
 	'Die Zombies haben deine Verteidigung durchbrochen! :num Zombies dringen ein!',
   'Der Qualifikationskampf im Kolosseum beginnt!' =>
@@ -2582,8 +2570,18 @@ return array (
 	'Eiskalter Killer',
   'Marktwagen freilegen' =>
 	'Marktwagen freilegen',
+  'Verkaufsautomat (MicroJam Vendor)' =>
+	'Verkaufsautomat (MicroJam Vendor)',
+  'Geld einwerfen' =>
+	'Geld einwerfen',
   '-5€' =>
 	'-5€',
+  'Vera Loewenhaupt' =>
+	'Vera Loewenhaupt',
+  'Dies muss wohl die Namensgeberin des Wagens sein, unter dem sie liegt... allerdings keine Spur von ihren Söhnen.' =>
+	'Dies muss wohl die Namensgeberin des Wagens sein, unter dem sie liegt... allerdings keine Spur von ihren Söhnen.',
+  'in einer dunklen Ecke' =>
+	'in einer dunklen Ecke',
   'Stück' =>
 	'Stück',
   'Kraft schöpfen' =>
@@ -2658,10 +2656,6 @@ return array (
 	'Diese Waffe hat ihren Einsatz nicht überlebt...',
   'Leider wurden in diesem Spiel keine Auszeichnungen erreicht.... :(' =>
 	'Leider wurden in diesem Spiel keine Auszeichnungen erreicht.... :(',
-  'Alkohol' =>
-	'Alkohol',
-  'Mit ordentlich Promille im Blut wird das Leben nach der Apokalypse gleich viel erträglicher. Leider wird es auch kürzer, denn wenn du völlig abgefüllt in der Ecke liegst, kannst du dich nicht wirklich gut gegen Zombies verteidigen. Wenigstens um die Langzeitschäden an deiner Leber brauchst du dich nicht mehr zu sorgen ...' =>
-	'Mit ordentlich Promille im Blut wird das Leben nach der Apokalypse gleich viel erträglicher. Leider wird es auch kürzer, denn wenn du völlig abgefüllt in der Ecke liegst, kannst du dich nicht wirklich gut gegen Zombies verteidigen. Wenigstens um die Langzeitschäden an deiner Leber brauchst du dich nicht mehr zu sorgen ...',
   'Hat dich jemand hierher eingeladen?' =>
 	'Hat dich jemand hierher eingeladen?',
   'Wenn du von einem Freund eingeladen wurdest, ZombVival zu spielen, dann bedanke dich doch bei ihm indem du ihn als Mentor hinzufügst.' =>
@@ -2688,6 +2682,10 @@ return array (
 	'Farbige Substanz (Betakosimtat)',
   'Aquablaster XS (geladen, 1 Schuss)' =>
 	'Aquablaster XS (geladen, 1 Schuss)',
+  'Verbrauchte Ressourcen' =>
+	'Verbrauchte Ressourcen',
+  'Durch den Einsatz der Waffe wurden einige Ressourcen verbraucht.' =>
+	'Durch den Einsatz der Waffe wurden einige Ressourcen verbraucht.',
   'Direkt nachdem du die Paracetoid schluckst merkst du, wie es dir besser geht. Jetzt sind noch :num Pillen in der Schachtel.' =>
 	'Direkt nachdem du die Paracetoid schluckst merkst du, wie es dir besser geht. Jetzt sind noch :num Pillen in der Schachtel.',
   'Direkt nachdem du die Paracetoid schluckst merkst du, wie es dir besser geht. In der Schachtel ist nur noch eine Pille. Setze sie mit Bedacht ein!' =>
@@ -2894,16 +2892,14 @@ return array (
 	'Bist du sicher, dass du jetzt weiterspielen möchtest? Du kannst die nächste Pause frühestens in :next antreten!',
   'Die Aktion konnte nicht vollständig ausgeführt werden, da eines oder mehrere der ausgewählten Gegenstände nicht länger in deiner Reichweite sind.' =>
 	'Die Aktion konnte nicht vollständig ausgeführt werden, da eines oder mehrere der ausgewählten Gegenstände nicht länger in deiner Reichweite sind.',
-  'Umfüllen ...' =>
-	'Umfüllen ...',
   'Arbeit am Notstrom-Aggregat abgeschlossen!' =>
 	'Arbeit am Notstrom-Aggregat abgeschlossen!',
   'Es werde Licht! Herzlichen Glückwunsch, du hast etwas Strom für dein Versteck erzeugt!' =>
 	'Es werde Licht! Herzlichen Glückwunsch, du hast etwas Strom für dein Versteck erzeugt!',
-  'Dein Munitionsgürtel ist leer...' =>
-	'Dein Munitionsgürtel ist leer...',
   'Die Umgebung des Verstecks' =>
 	'Die Umgebung des Verstecks',
+  ':name hat diesen Ort betreten.' =>
+	':name hat diesen Ort betreten.',
   'Versteck' =>
 	'Versteck',
   'ZombVival Chat Gateway' =>
@@ -2934,10 +2930,6 @@ return array (
 	':name hat eine Ruine aufgedeckt!',
   'Nach einer langen und erschöpfenden Suche hat :name endlich genau das gefunden was euch noch fehlte: :items' =>
 	'Nach einer langen und erschöpfenden Suche hat :name endlich genau das gefunden was euch noch fehlte: :items',
-  'Pillenschachteln durchwühlen' =>
-	'Pillenschachteln durchwühlen',
-  'Verkaufsautomat (MedCo. Pharmacorp.)' =>
-	'Verkaufsautomat (MedCo. Pharmacorp.)',
   ':name hat diesen Ort verlassen.' =>
 	':name hat diesen Ort verlassen.',
   'Nach einer langen und erschöpfenden Suche hat :name endlich mal etwas nützliches gefunden: :items' =>
@@ -2974,10 +2966,6 @@ return array (
 	'Befehlsmenü',
   'Schließen' =>
 	'Schließen',
-  'Footballer-Statur' =>
-	'Footballer-Statur',
-  'Dank deiner beeindruckenden Statur kannst du mehr Schaden einstecken und bei der Flucht ein paar Extra-Zombies aus dem Weg räumen.' =>
-	'Dank deiner beeindruckenden Statur kannst du mehr Schaden einstecken und bei der Flucht ein paar Extra-Zombies aus dem Weg räumen.',
   'Im Drogenrausch' =>
 	'Im Drogenrausch',
   'Dein Körper ist momentan damit beschäftigt, den Mist wegzuräumen mit dem du ihn gerade geflutet hast. Sei lieber vorsichtig, wenn du jetzt weiter Drogen nimmst wirst du möglicherweise abhängig...' =>
@@ -2992,6 +2980,10 @@ return array (
 	'Du benutzt deine Machete, um die Leiche in kleine Stücke zu schneiden. Das macht sie zwar nicht genießbarer, aber zumindest handlicher.',
   'weit entfernt' =>
 	'weit entfernt',
+  'Verstrahlung' =>
+	'Verstrahlung',
+  'Du warst Strahlung ausgesetzt! Das ist relativ ungesund, und dein Körper kann die strahlenden Partikel nur langsam abbauen. Während eine geringe Strahlendosis noch vertretbar ist, können höhere Strahlenmengen schnell dein Leben bedrohen!' =>
+	'Du warst Strahlung ausgesetzt! Das ist relativ ungesund, und dein Körper kann die strahlenden Partikel nur langsam abbauen. Während eine geringe Strahlendosis noch vertretbar ist, können höhere Strahlenmengen schnell dein Leben bedrohen!',
   'Leiche ausnehmen' =>
 	'Leiche ausnehmen',
   'Knochen mit Fleisch abkochen' =>
@@ -3072,6 +3064,10 @@ return array (
 	'Du hast nicht genug Energie um diesen Weg zu bewältigen während du jemand anderem hilfst.',
   ':name hat dich gebeten, ihn nach :location zu begleiten.' =>
 	':name hat dich gebeten, ihn nach :location zu begleiten.',
+  'Befehle entgegennehmen' =>
+	'Befehle entgegennehmen',
+  'Chat-Aufruf' =>
+	'Chat-Aufruf',
   'pre' =>
 	'pre',
   'post' =>
@@ -3106,12 +3102,14 @@ return array (
 	'Direkt nachdem du die Paracetin schluckst fühlst du, wie deine Kraft zurückkehrt. Jetzt sind noch :num Pillen in der Schachtel.',
   'Das Sprachensymbol vor jedem Spiel gibt die Sprache an, in der du mit anderen Spielern kommunizieren musst. Bitte tritt nur Spielen bei, deren Sprache du tatsächlich sprechen kannst.' =>
 	'Das Sprachensymbol vor jedem Spiel gibt die Sprache an, in der du mit anderen Spielern kommunizieren musst. Bitte tritt nur Spielen bei, deren Sprache du tatsächlich sprechen kannst.',
+  'Paracetin trennen' =>
+	'Paracetin trennen',
   'So viele Kapseln kannst du nicht aus der Box nehmen.' =>
 	'So viele Kapseln kannst du nicht aus der Box nehmen.',
   'Du hast :num Kapseln aus der Verpackung genommen.' =>
 	'Du hast :num Kapseln aus der Verpackung genommen.',
-  'Hier ist niemand, auf den du diese Aktion anwenden könntest...' =>
-	'Hier ist niemand, auf den du diese Aktion anwenden könntest...',
+  'Bitte wähle einen anderen Spieler aus:' =>
+	'Bitte wähle einen anderen Spieler aus:',
   'Du machst dir zuviel Sorgen... bei ein paar kleinen Kratzern wäre eine Bandage doch wohl etwas übertrieben. Warte bis die Gesundheit deines Freundes unter 50 gefallen ist.' =>
 	'Du machst dir zuviel Sorgen... bei ein paar kleinen Kratzern wäre eine Bandage doch wohl etwas übertrieben. Warte bis die Gesundheit deines Freundes unter 50 gefallen ist.',
   'Du wickelst die Bandage straff um die Verletzungen deines Freundes. Mit den Bandagen im Gesicht sieht er gleich viel besser aus...' =>
@@ -3138,6 +3136,8 @@ return array (
 	'Auch wenn diese dreckige Bandage deinem Freund sicher gut stehen würde - warte lieber, bis er blutet.',
   'So ein Teil solltest du dir nicht zum Spaß umlegen... wie wärs, wenn du wartest, bis du stark blutest?' =>
 	'So ein Teil solltest du dir nicht zum Spaß umlegen... wie wärs, wenn du wartest, bis du stark blutest?',
+  'Bitte gib an, wie viele du ablegen möchtest.' =>
+	'Bitte gib an, wie viele du ablegen möchtest.',
   'Soviele hast du nicht dabei.' =>
 	'Soviele hast du nicht dabei.',
   'Du wickelst die Bandage straff um die Verletzungen deines Freundes. Er ist zwar immer noch Leichenblass, das hat aber nichts mehr mit dem Blutverlust zu tun...' =>
@@ -3180,8 +3180,6 @@ return array (
 	'Wenige Sekunden nachdem du diesen Ort betrittst siehst du etwas, das den meisten Anderen vermutlich noch eine Weile verborgen geblieben wäre! Du hast :desc gefunden: :items',
   'Erste Etage des verbrannten Hauses' =>
 	'Erste Etage des verbrannten Hauses',
-  'Paralaxium trennen' =>
-	'Paralaxium trennen',
   'MP' =>
 	'MP',
   'Multiplayer-Ranking' =>
@@ -3200,14 +3198,6 @@ return array (
 	'Wenn du einem Link in einem Forum oder Blog gefolgt bist, ist dieser möglicherweise veraltet oder der Spieler hat inzwischen sein Profil auf ZombVival gelöscht. Kontaktiere bitte in diesem Fall den Autor des Links und bitte ihn, diesen anzupassen oder zu entfernen.',
   ':sp SP' =>
 	':sp SP',
-  'Was möchtest du auf das Glas schreiben?' =>
-	'Was möchtest du auf das Glas schreiben?',
-  'Glas mit bunten Pillen' =>
-	'Glas mit bunten Pillen',
-  'Der Apotheker, der dieses Glas gefüllt hat, scheint kein Freund von Ordnung gewesen zu sein. Es ist unmöglich zu wissen, was diese Pillen machen - es sei denn, du bist Mediziner.' =>
-	'Der Apotheker, der dieses Glas gefüllt hat, scheint kein Freund von Ordnung gewesen zu sein. Es ist unmöglich zu wissen, was diese Pillen machen - es sei denn, du bist Mediziner.',
-  'Beschriften...' =>
-	'Beschriften...',
   'Auf gut Glück ganze Gläser voll mit Pillen schlucken hat noch nie jemandem geschadet - zumindest niemandem, der noch am Leben ist...' =>
 	'Auf gut Glück ganze Gläser voll mit Pillen schlucken hat noch nie jemandem geschadet - zumindest niemandem, der noch am Leben ist...',
   'Lokaler Login' =>
@@ -3258,6 +3248,8 @@ return array (
 	'OK',
   'Alpha-Version' =>
 	'Alpha-Version',
+  'Nachrichten' =>
+	'Nachrichten',
   'Nachricht verfassen' =>
 	'Nachricht verfassen',
   'Zum Posteingang' =>
@@ -3286,12 +3278,14 @@ return array (
 	'Brieffreund',
   'Jmd. Wunde auswaschen' =>
 	'Jmd. Wunde auswaschen',
-  'Weißbier' =>
-	'Weißbier',
-  'Schwarzbier' =>
-	'Schwarzbier',
-  'Die gute Nachricht: Es ist Bier. Die schlechte Nachricht: Du kannst nicht sicher sagen, ob es echtes Schwarzbier, oder nur sehr verunreinigtes Weißbier ist ...' =>
-	'Die gute Nachricht: Es ist Bier. Die schlechte Nachricht: Du kannst nicht sicher sagen, ob es echtes Schwarzbier, oder nur sehr verunreinigtes Weißbier ist ...',
+  'Dalad Jelly' =>
+	'Dalad Jelly',
+  '... WAS ZUM TEUFEL IST "DALAD JELLY"???' =>
+	'... WAS ZUM TEUFEL IST "DALAD JELLY"???',
+  '... Essen?' =>
+	'... Essen?',
+  'Jmd. verabreichen' =>
+	'Jmd. verabreichen',
   'Du hast deinem Freund Dalad Jelly gegeben... was immer das auch sein mag.' =>
 	'Du hast deinem Freund Dalad Jelly gegeben... was immer das auch sein mag.',
   'Dein Freund hat keine Wunde, die du auswaschen könntest...' =>
@@ -3332,6 +3326,10 @@ return array (
 	'Leider existiert momentan kein Wiki in deiner Sprache... Wenn du möchtest kannst du dein eigenes ZombVival-Wiki starten und den Link an diese Stelle setzen lassen.',
   'Leider existiert momentan keine offizielle Hilfe in deiner Sprache...' =>
 	'Leider existiert momentan keine offizielle Hilfe in deiner Sprache...',
+  'Spieler ist offline' =>
+	'Spieler ist offline',
+  'Letzte Aktivität' =>
+	'Letzte Aktivität',
   'Spieler ist online' =>
 	'Spieler ist online',
   'Matriarchiale Kampfkunst' =>
@@ -3346,6 +3344,10 @@ return array (
 	'Du hast eine Reihe nützlicher Informationen für deine Stadt gesammelt! Du kannst sie in deinem Versteck an deine Stadt senden.',
   'Zierkürbis' =>
 	'Zierkürbis',
+  'Essbarer Kürbis' =>
+	'Essbarer Kürbis',
+  'Ein essbarer Kürbis! Dieses riesige Teil stillt deinen Hunger garantiert - allerdings musst du die harte Schale erstmal aufbekommen...' =>
+	'Ein essbarer Kürbis! Dieses riesige Teil stillt deinen Hunger garantiert - allerdings musst du die harte Schale erstmal aufbekommen...',
   'Der Kürbis saugt die Chemikalie auf und verliert etwas an Farbe... jetzt kannst du ihn nur noch als Zierkürbis verwenden.' =>
 	'Der Kürbis saugt die Chemikalie auf und verliert etwas an Farbe... jetzt kannst du ihn nur noch als Zierkürbis verwenden.',
   'Verfaulter Kürbis' =>
@@ -3370,6 +3372,10 @@ return array (
 	'Zerstampfen, verrühren, würzen. Für dieses Rezept muss man kein Meisterkoch sein, und man kann es in allen Lebenslagen anwenden (Kürbisse zubereiten, Gespräche mit dem Finanzamt etc) ',
   'Du schlürfst deine Schale Kürbissuppe als sei sie das beste, was du in letzter Zeit gegessen hast. Moment.... sie IST das beste, was du in letzter Zeit gegessen hast!' =>
 	'Du schlürfst deine Schale Kürbissuppe als sei sie das beste, was du in letzter Zeit gegessen hast. Moment.... sie IST das beste, was du in letzter Zeit gegessen hast!',
+  'Massagestab' =>
+	'Massagestab',
+  'Benutzen' =>
+	'Benutzen',
   'Aufgeregt' =>
 	'Aufgeregt',
   'Du bist ganz schön aufgeregt... das wird dich eine ganze Weile am Schlafen hindern.' =>
@@ -3384,6 +3390,8 @@ return array (
 	'AAAARGH! GOTT VERDAMMT! Eine falsche Handbewegung, schon leckst du wie ein Weinfass mit Einschussloch!',
   'Masochist' =>
 	'Masochist',
+  'Es ist ein Massagestab. NUR ein Massagestab. Für deinen verspannten Rücken! Und der ist auch nur deshalb so klebrig, weil du immer so schwitzige Hände bekommst, wenn du ihn benutzt!' =>
+	'Es ist ein Massagestab. NUR ein Massagestab. Für deinen verspannten Rücken! Und der ist auch nur deshalb so klebrig, weil du immer so schwitzige Hände bekommst, wenn du ihn benutzt!',
   ':name ist soeben der Partie beigetreten.' =>
 	':name ist soeben der Partie beigetreten.',
   'Du hast eine Anzeige erhalten!' =>
@@ -3628,6 +3636,8 @@ return array (
 	'Gequälte Seele',
   'Dies ist eine gequälte Seele, die von deinem Seelenfänger-zeichen angelockt wurde. Diese Seele ist besonders wertvoll, daher solltest du sie unbedingt dem Seelenfänger übergeben!' =>
 	'Dies ist eine gequälte Seele, die von deinem Seelenfänger-zeichen angelockt wurde. Diese Seele ist besonders wertvoll, daher solltest du sie unbedingt dem Seelenfänger übergeben!',
+  'Besonderes' =>
+	'Besonderes',
   'Du hast :itemdef angelockt!' =>
 	'Du hast :itemdef angelockt!',
   'Du hast eine Seele angelockt!' =>
@@ -3766,6 +3776,8 @@ return array (
 	'Rückkehr zum Versteck',
   'Wenn du es draußen nicht mehr aushälst, geh am besten zurück in dein Versteck. Von dort wirst du selbstverständlich keine neuen Ruinen aufdecken können.' =>
 	'Wenn du es draußen nicht mehr aushälst, geh am besten zurück in dein Versteck. Von dort wirst du selbstverständlich keine neuen Ruinen aufdecken können.',
+  'Geheimnisvolles Ticket' =>
+	'Geheimnisvolles Ticket',
   'Die Schrift auf diesem Ticket ist verblasst, nachdem es so lange der Sonnenstrahlung in der Aussenwelt ausgesetzt war. Man kann nur noch kleine Textfetzen entziffern... "[...] bereit fü[..] triff in [...] Auss[...]elt [...]ird dir den Weg wei[...] uni[...]enpunk[...]". Was das wohl bedeutet?' =>
 	'Die Schrift auf diesem Ticket ist verblasst, nachdem es so lange der Sonnenstrahlung in der Aussenwelt ausgesetzt war. Man kann nur noch kleine Textfetzen entziffern... "[...] bereit fü[..] triff in [...] Auss[...]elt [...]ird dir den Weg wei[...] uni[...]enpunk[...]". Was das wohl bedeutet?',
   'Der Schaffner' =>
@@ -3796,6 +3808,8 @@ return array (
 	'Schmuckseil herstellen',
   'Schmuckseil' =>
 	'Schmuckseil',
+  'Rolle Draht' =>
+	'Rolle Draht',
   'LED-Lichterkette herstellen' =>
 	'LED-Lichterkette herstellen',
   'Christbaumlichter' =>
@@ -3810,6 +3824,8 @@ return array (
 	'Beutel mit Tannennadeln',
   'Sicher!' =>
 	'Sicher!',
+  'Draht kann man eigentlich immer gebrauchen. Er ist zum beispiel nützlich um irgendwelchen Elektromüll zu verkabeln. Oder du kannst damit lustige Fallen in deinem Versteck bauen, um mit den Zombies so eine "Kevin allein zu Haus"-Nummer abzuziehen.' =>
+	'Draht kann man eigentlich immer gebrauchen. Er ist zum beispiel nützlich um irgendwelchen Elektromüll zu verkabeln. Oder du kannst damit lustige Fallen in deinem Versteck bauen, um mit den Zombies so eine "Kevin allein zu Haus"-Nummer abzuziehen.',
   'Diese wundervolle Christbaumkugel weckt weihnachtliche Gefühle in dir - und sie weckt mörderische Gefühle in dir, wenn du daran denkst, dass du sie auch auf einen Zombie werfen kannst.' =>
 	'Diese wundervolle Christbaumkugel weckt weihnachtliche Gefühle in dir - und sie weckt mörderische Gefühle in dir, wenn du daran denkst, dass du sie auch auf einen Zombie werfen kannst.',
   'Modern Talking CD' =>
@@ -3924,8 +3940,6 @@ return array (
 	'"Bloodway" Restaurant',
   'Apotheke "Hypochonders bester Freund"' =>
 	'Apotheke "Hypochonders bester Freund"',
-  'Apotheke "Wehwehchen"' =>
-	'Apotheke "Wehwehchen"',
   'Kleiner Discounter' =>
 	'Kleiner Discounter',
   'Kleiner Markt' =>
@@ -3938,6 +3952,8 @@ return array (
 	'Apotheke "Hustensaft-Schlürfer"',
   'Kleines Geschäft' =>
 	'Kleines Geschäft',
+  'Mini-Markt' =>
+	'Mini-Markt',
   '"Corpseland" Restaurant' =>
 	'"Corpseland" Restaurant',
   'Geschäftszentrum "Zur Indianischen Begräbnisstätte"' =>
@@ -4070,10 +4086,6 @@ return array (
 	'Klassiker',
   'Diesen Klassiker der Literatur sollte man gelesen haben. Hast du das nicht, dann hol es gefälligst nach bevor du stirbst! Zeit genug hast du ja jetzt...' =>
 	'Diesen Klassiker der Literatur sollte man gelesen haben. Hast du das nicht, dann hol es gefälligst nach bevor du stirbst! Zeit genug hast du ja jetzt...',
-  'Straßenkleidung' =>
-	'Straßenkleidung',
-  'Die Zombies haben dir alles genommen - bis auf die Kleidung, die du trägst. Da du sie aber schon einige Wochen ununterbrochen trägst, kann man verstehen, dass die Zombies mit diesen stinkenden Lumpen nichts zu tun haben wollen.' =>
-	'Die Zombies haben dir alles genommen - bis auf die Kleidung, die du trägst. Da du sie aber schon einige Wochen ununterbrochen trägst, kann man verstehen, dass die Zombies mit diesen stinkenden Lumpen nichts zu tun haben wollen.',
   'Du hast eine Rüstung abgelegt.' =>
 	'Du hast eine Rüstung abgelegt.',
   'Anlegen' =>
@@ -4146,10 +4158,12 @@ return array (
 	'Dieser Gegenstand hat Schaden absorbiert.',
   'Schutz zerstört!' =>
 	'Schutz zerstört!',
+  'Instabil' =>
+	'Instabil',
   'Schild' =>
 	'Schild',
-  'Desolat' =>
-	'Desolat',
+  'Kopf' =>
+	'Kopf',
   'Solider Holzkistendeckel' =>
 	'Solider Holzkistendeckel',
   'Dieser Holzkistendeckel sieht relativ stabil aus... du könntest damit sicherlich zombies abwehren, aber übertreib es besser nicht.' =>
@@ -4162,8 +4176,6 @@ return array (
 	'Kalenderblatt-Verschwender',
   'Sehr Instabil' =>
 	'Sehr Instabil',
-  'Bisswunde' =>
-	'Bisswunde',
   'Du hast im kampf eine Bisswunde davongetragen. Das ist soweit erstmal nichts schlimmes... solange du dir dadurch keine infektion eingefangen hast.' =>
 	'Du hast im kampf eine Bisswunde davongetragen. Das ist soweit erstmal nichts schlimmes... solange du dir dadurch keine infektion eingefangen hast.',
   'Zombie-Infektion' =>
@@ -4224,10 +4236,22 @@ return array (
 	'Es scheint, als wäre dieses kurz vor der Zombieapokalypse fertig geworden. Es ist zwar vollständig eingerichtet, aber gewohnt hat hier wohl niemand. Dies könnte der ideale Ort für ein Versteck sein... wenn es nicht gerade der Ort wäre, an dem Zombies zuerst nach dir suchen würden.',
   'Eigentlich war dieser Bunker dafür gedacht, den Menschen im Falle eines Atomkriegs Schutz zu bieten. Darauf, dass man ihn auch bei der Zombieapokalypse gebrauchen könnte, ist wohl niemand gekommen. Umso besser für dich, denn du kannst diesen Bunker zu einem Versteck machen!' =>
 	'Eigentlich war dieser Bunker dafür gedacht, den Menschen im Falle eines Atomkriegs Schutz zu bieten. Darauf, dass man ihn auch bei der Zombieapokalypse gebrauchen könnte, ist wohl niemand gekommen. Umso besser für dich, denn du kannst diesen Bunker zu einem Versteck machen!',
+  'Helm' =>
+	'Helm',
+  'Fahradhelm' =>
+	'Fahradhelm',
+  'Wusstest du, dass ein simpler Fahradhelm die Wahrscheinlichkeit eines Todes durch gehirnfressende Zombies um 23.956% reduziert?' =>
+	'Wusstest du, dass ein simpler Fahradhelm die Wahrscheinlichkeit eines Todes durch gehirnfressende Zombies um 23.956% reduziert?',
   'Verstärkter Fahradhelm' =>
 	'Verstärkter Fahradhelm',
   'Für einen normalen Radfahrer wären diese Upgrades ein ziemlicher Overkill - im Falle einer Zombieapokalypse kann man jedoch nicht vorsichtig genug sein.' =>
 	'Für einen normalen Radfahrer wären diese Upgrades ein ziemlicher Overkill - im Falle einer Zombieapokalypse kann man jedoch nicht vorsichtig genug sein.',
+  'Schutzweste' =>
+	'Schutzweste',
+  'Diese aus Polizeibeständen stammende Weste schützt dich zuverlässig vor Schlägen, Tritten, Schüssen und Aliens (allerdings nur, wenn die keine Laserwaffen haben).' =>
+	'Diese aus Polizeibeständen stammende Weste schützt dich zuverlässig vor Schlägen, Tritten, Schüssen und Aliens (allerdings nur, wenn die keine Laserwaffen haben).',
+  'Stabil' =>
+	'Stabil',
   'Einfachen Holzkistendeckel bauen' =>
 	'Einfachen Holzkistendeckel bauen',
   'Holzkistendeckel stabilisieren' =>
@@ -4250,6 +4274,8 @@ return array (
 	'Shrimps',
   'Du hast Shrimps gefunden - die Kartoffelchips des Meeres. Wie wir alle wissen ist Seafood auch ungekühlt praktisch unbegrenzt haltbar, du musst dir also keine Sorgen darüber machen, dass dieser Teller monatelang in der Sonne lag.' =>
 	'Du hast Shrimps gefunden - die Kartoffelchips des Meeres. Wie wir alle wissen ist Seafood auch ungekühlt praktisch unbegrenzt haltbar, du musst dir also keine Sorgen darüber machen, dass dieser Teller monatelang in der Sonne lag.',
+  'Dies ist die Gelegenheit für dich, das absolut billigste Zeug aus einer minimalen Auswahl von Gebrauchsgegenständen und Lebensmitteln zu ergattern! Die vernagelten (und schlecht geputzten) Schaufenster lassen jedoch erahnen, dass dieses Geschäft wohl in nächster Zeit nicht mehr öffnen wird. Vor dem Laden steht ein Marktwagen mit der Aufschrift "Vera Loewenhaupt & Söhne", unter dem eine Leiche liegt...' =>
+	'Dies ist die Gelegenheit für dich, das absolut billigste Zeug aus einer minimalen Auswahl von Gebrauchsgegenständen und Lebensmitteln zu ergattern! Die vernagelten (und schlecht geputzten) Schaufenster lassen jedoch erahnen, dass dieses Geschäft wohl in nächster Zeit nicht mehr öffnen wird. Vor dem Laden steht ein Marktwagen mit der Aufschrift "Vera Loewenhaupt & Söhne", unter dem eine Leiche liegt...',
   'Religiöse Schrift' =>
 	'Religiöse Schrift',
   'Dir ist langweilig und du würdest dich gerne uneingeladen in jemandes Leben einmischen, weißt aber nicht in wessen? Keine Sorge, mithilfe dieser Schrift wirst du Rechtfertigungen finden um gegen alle möglichen Minderheiten zu hetzen, um von deinem eigenen, völlig verkorksten Leben abzulenken.' =>
@@ -4454,8 +4480,8 @@ return array (
 	'Oster-Pechvogel',
   'Du hörst ein lautes Krähen in der Ferne...' =>
 	'Du hörst ein lautes Krähen in der Ferne...',
-  'Umgebung' =>
-	'Umgebung',
+  'Die Schrift auf diesem Ticket ist verblasst, nachdem es so lange der Sonnenstrahlung in der Aussenwelt ausgesetzt war. Was kann man mit diesem Ticket wohl machen?' =>
+	'Die Schrift auf diesem Ticket ist verblasst, nachdem es so lange der Sonnenstrahlung in der Aussenwelt ausgesetzt war. Was kann man mit diesem Ticket wohl machen?',
   'Dein Versteck sieht etwas langweilig aus... du solltest es mit einigen nützlichen Erweiterungen etwas aufpeppen!' =>
 	'Dein Versteck sieht etwas langweilig aus... du solltest es mit einigen nützlichen Erweiterungen etwas aufpeppen!',
   'Diese einmalige Aktion läd deine Energie und Müdigkeit auf.' =>
@@ -4486,6 +4512,10 @@ return array (
 	'Reduziert die benötigte Energie für alle Arbeiten an der Werkbank.',
   'Schaltet zusätzliche Optionen für die Werkbank frei.' =>
 	'Schaltet zusätzliche Optionen für die Werkbank frei.',
+  'Tageszeit: Tag' =>
+	'Tageszeit: Tag',
+  'Die Sonne brennt gnadenlos am Himmel. Wenn du dich jetzt im Freien aufhälst, erhöht sich dein Wasserverbrauch. Lange Märsche zu anderen Orten kosten dich nun nicht nur Energie, sie machen dich auch durstig.' =>
+	'Die Sonne brennt gnadenlos am Himmel. Wenn du dich jetzt im Freien aufhälst, erhöht sich dein Wasserverbrauch. Lange Märsche zu anderen Orten kosten dich nun nicht nur Energie, sie machen dich auch durstig.',
   'Ermöglicht es, Strom aus Batterien zu gewinnen.' =>
 	'Ermöglicht es, Strom aus Batterien zu gewinnen.',
   'Ermöglicht die Herstellung verschiedener Speisen.' =>
@@ -4494,10 +4524,8 @@ return array (
 	'Verstärkt die Verteidigung des Verstecks.',
   'Ermöglicht es, einmal pro Belagerung eine große Menge Zombies zu vernichten. Muss nach dem Einsatz durch Verlassen des verstecks reaktiviert werden.' =>
 	'Ermöglicht es, einmal pro Belagerung eine große Menge Zombies zu vernichten. Muss nach dem Einsatz durch Verlassen des verstecks reaktiviert werden.',
-  'Tageszeit: Morgen' =>
-	'Tageszeit: Morgen',
-  'Morgenstund hat Gold im Mund! Erstens ist dein Kaffee auf magische Art und Weise effektiver als am Rest des Tages, zweitens ist es draußen noch relativ kühl. Du benötigst daher weniger Energie, um Hausverbesserungen durchzuführen.' =>
-	'Morgenstund hat Gold im Mund! Erstens ist dein Kaffee auf magische Art und Weise effektiver als am Rest des Tages, zweitens ist es draußen noch relativ kühl. Du benötigst daher weniger Energie, um Hausverbesserungen durchzuführen.',
+  'Geduld zahlt sich aus. Es war nicht leicht, aber ihr habt etwas nützliches finden können.' =>
+	'Geduld zahlt sich aus. Es war nicht leicht, aber ihr habt etwas nützliches finden können.',
   ':job Seelenpunkte (:a/:b)' =>
 	':job Seelenpunkte (:a/:b)',
   'Spiel auswählen' =>
@@ -4512,6 +4540,8 @@ return array (
 	'Haben Sie eine Reservierung?',
   'In diesem Modus kannst du mit deinen Freunden gemeinsam ums Überleben kämpfen ohne Angst haben zu müssen, dass plötzlich Fremde dazustoßen. Dieser Modus ist für 2 - 5 Spieler geeignet.' =>
 	'In diesem Modus kannst du mit deinen Freunden gemeinsam ums Überleben kämpfen ohne Angst haben zu müssen, dass plötzlich Fremde dazustoßen. Dieser Modus ist für 2 - 5 Spieler geeignet.',
+  'Survival Privat' =>
+	'Survival Privat',
   'In einer gemütlichen Runde gemeinsam sterben.' =>
 	'In einer gemütlichen Runde gemeinsam sterben.',
   'In diesem Modus kannst du mit deinen Freunden gemeinsam ums Überleben kämpfen ohne Angst haben zu müssen, dass plötzlich Fremde dazustoßen. Dieser Modus ist für 6 - 10 Spieler geeignet.' =>
@@ -4524,12 +4554,16 @@ return array (
 	'Zombie-Behemoth',
   'Fleischfetzer' =>
 	'Fleischfetzer',
+  'The requested URL :uri was not found on this server.' =>
+	'The requested URL :uri was not found on this server.',
   'Du hast dein Kampfverhalten angepasst.' =>
 	'Du hast dein Kampfverhalten angepasst.',
   'Ermöglicht die Herstellung verschiedener Gegenstände.' =>
 	'Ermöglicht die Herstellung verschiedener Gegenstände.',
   'Client-Einstellungen werden auf deinem Gerät gespeichert. Du kannst für jedes deiner Geräte, mit denen du ZombVival spielst, unterschiedliche Einstellungen festlegen.' =>
 	'Client-Einstellungen werden auf deinem Gerät gespeichert. Du kannst für jedes deiner Geräte, mit denen du ZombVival spielst, unterschiedliche Einstellungen festlegen.',
+  'Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die einen internen Munitionsspeicher haben (z.B. Wasserpistole) oder beim Einsatz zerstört werden (z.B. Wasserbombe).' =>
+	'Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die einen internen Munitionsspeicher haben (z.B. Wasserpistole) oder beim Einsatz zerstört werden (z.B. Wasserbombe).',
   'Zuckerwasser' =>
 	'Zuckerwasser',
   'Taschenlampe' =>
@@ -4564,8 +4598,6 @@ return array (
 	'Du schaltest die Taschenlampe ein, die sofort einen enormen Lichtblitz erzeugt. Als du deine Augen wieder öffnest stellst du fest, dass der Blitz alle Zombies vertrieben hat, die deinen Weg blockiert haben. Die Taschenlampe ist jedoch völlig zerstört.',
   'Du schaltest die Taschenlampe an. Mit einem lauten Knall explodiert sie in deiner Hand und fügt dir schwere Verletzungen zu!' =>
 	'Du schaltest die Taschenlampe an. Mit einem lauten Knall explodiert sie in deiner Hand und fügt dir schwere Verletzungen zu!',
-  'Navigation' =>
-	'Navigation',
   'Unbekannte Karte' =>
 	'Unbekannte Karte',
   'Weltkarte' =>
@@ -4614,6 +4646,8 @@ return array (
 	':error [ :query ]',
   'Nicht voll erkundet' =>
 	'Nicht voll erkundet',
+  'Kindlicher Metabolismus' =>
+	'Kindlicher Metabolismus',
   'Leichenhalle' =>
 	'Leichenhalle',
   'Es scheint, als hätte der diensthabende Pathologe versucht, sich hier drin zu verbarrikadieren. Die schwere Metalltür ist fest verschlossen, und der Öffnungsmechanismus ist zerstört. Leider hat er nicht bedacht, dass er sich in einer LEICHENHALLE befindet - mit Leichen, die vielleicht noch nicht vollständig verstorben sind. Wenigstens scheint er vor seinem Tod ordentlich Schaden angerichtet zu haben...' =>
@@ -4720,6 +4754,12 @@ return array (
 	'Aus 10 Eimern mit Splittern kannst du eine Splitterkugel pressen, die du als Munition verwenden kannst.',
   'Hier lagern momentan :num Eimer voller Splitter, aus denen du :num2 Splitterkugeln formen könntest.' =>
 	'Hier lagern momentan :num Eimer voller Splitter, aus denen du :num2 Splitterkugeln formen könntest.',
+  'Pfandautomat' =>
+	'Pfandautomat',
+  'Ein Pfandautomat - eine der wenigen Möglichkeiten, wie man im Ruhrpott noch auf legale Weise an Geld kommen kann. Verfüttere doch ein paar deiner vielen Flaschen an ihn (die aus Glas, nicht deine Mitspieler).' =>
+	'Ein Pfandautomat - eine der wenigen Möglichkeiten, wie man im Ruhrpott noch auf legale Weise an Geld kommen kann. Verfüttere doch ein paar deiner vielen Flaschen an ihn (die aus Glas, nicht deine Mitspieler).',
+  'Flasche einwerfen' =>
+	'Flasche einwerfen',
   'Der Automat hat deine Flasche geschluckt und etwas Geld dafür ausgespuckt.' =>
 	'Der Automat hat deine Flasche geschluckt und etwas Geld dafür ausgespuckt.',
   'Dein Freund benötigt einen Munitionsgürtel, um diesen Gegenstand mitführen zu können.' =>
@@ -4752,8 +4792,6 @@ return array (
 	'Unbefleckte Seele',
   'Graben' =>
 	'Graben',
-  'Überall auf dem Boden liegen geöffnete Pillenschachteln. Vermutlich könntest du hier noch einige einzelne Pillen finden, wenn du dich anstrengst.' =>
-	'Überall auf dem Boden liegen geöffnete Pillenschachteln. Vermutlich könntest du hier noch einige einzelne Pillen finden, wenn du dich anstrengst.',
   'Im Hinterzimmer befinden sich allerlei Werkzeuge, die du zur Produktion von Waffen und Munition verwenden kannst.' =>
 	'Im Hinterzimmer befinden sich allerlei Werkzeuge, die du zur Produktion von Waffen und Munition verwenden kannst.',
   'Du hast :project mithilfe der Gerätschaften an diesem Ort hergestellt.' =>
@@ -4804,10 +4842,6 @@ return array (
 	'Eigentlich kann man ja mit dem Trinken nie früh genug anfangen. Nachdem du die Flasche ausgetrunken hast, stellst du diese Aussage jedoch spontan in Frage - immerhin dreht sich die Welt um dich herum, und dir ist speiübel.',
   'Einmal tief durchatmen, dann kanns losgehen. Die nächste Reise wird ein Klacks für dich!' =>
 	'Einmal tief durchatmen, dann kanns losgehen. Die nächste Reise wird ein Klacks für dich!',
-  'Du fällst an Ort und Stelle in einen erholsamen Schlaf.' =>
-	'Du fällst an Ort und Stelle in einen erholsamen Schlaf.',
-  'Winterschlaf' =>
-	'Winterschlaf',
   'Bekämpft Müdigkeit und regeneriert Energie. Der Effekt ist abhängig von Hunger, Durst und Gewicht des Rucksacks - je voller der Rucksack, desto besser.' =>
 	'Bekämpft Müdigkeit und regeneriert Energie. Der Effekt ist abhängig von Hunger, Durst und Gewicht des Rucksacks - je voller der Rucksack, desto besser.',
   'Workout' =>
@@ -4918,10 +4952,12 @@ return array (
 	'Tierkadaver',
   'Diese öffentlichen Toiletten sind im Prinzip das Hilton jedes Penners. Für andere Menschen sind diese Toiletten eher wie Paris Hilton: Ziemlich schmutzig, übler Geruch und die halbe Welt war schonmal drin.' =>
 	'Diese öffentlichen Toiletten sind im Prinzip das Hilton jedes Penners. Für andere Menschen sind diese Toiletten eher wie Paris Hilton: Ziemlich schmutzig, übler Geruch und die halbe Welt war schonmal drin.',
+  'Dreckiges Kondenswasser' =>
+	'Dreckiges Kondenswasser',
+  'Kondenswasser' =>
+	'Kondenswasser',
   'Lederjacke' =>
 	'Lederjacke',
-  'Pillen' =>
-	'Pillen',
   'In der Postapokalypse musst du als Überlebender, der etwas auf sich hält, selbstverständlich eine Lederjacke tragen. Wenn du den Mad-Max-Look vollständig umsetzen willst musst du dir allerdings noch irgendwo eine Portion Antisemitismus besorgen...' =>
 	'In der Postapokalypse musst du als Überlebender, der etwas auf sich hält, selbstverständlich eine Lederjacke tragen. Wenn du den Mad-Max-Look vollständig umsetzen willst musst du dir allerdings noch irgendwo eine Portion Antisemitismus besorgen...',
   'Nicht schlecht! Vielen wäre das verborgen geblieben, aber du hast es auf Anhieb entdeckt.' =>
@@ -4930,6 +4966,8 @@ return array (
 	'Du hast ein paar Tropfen Kondenswasser gesammelt. Wirklich viel ist es nicht, aber immerhin besser als nichts!',
   'Tja, Zombies ist es wohl ziemlich egal ob sie Jagd auf Menschen oder Tiere machen. Dieses Vieh war mal Zombiesfutter.... jetzt könnte es Futter für dich werden, sofern du ziemlich anspruchslos bist.' =>
 	'Tja, Zombies ist es wohl ziemlich egal ob sie Jagd auf Menschen oder Tiere machen. Dieses Vieh war mal Zombiesfutter.... jetzt könnte es Futter für dich werden, sofern du ziemlich anspruchslos bist.',
+  'Du hast ein paar Tropfen Kondenswasser gesammelt... Leider war die Oberfläche nicht allzu sauber. Dieses Wasser ist vermutlich nicht übermäßig gesund...' =>
+	'Du hast ein paar Tropfen Kondenswasser gesammelt... Leider war die Oberfläche nicht allzu sauber. Dieses Wasser ist vermutlich nicht übermäßig gesund...',
   'Trotz des ekligen geschmacks leckst du das Gefäß ab, um auch die letzten Tropfen Wasser noch in deinen Mund zu bekommen.' =>
 	'Trotz des ekligen geschmacks leckst du das Gefäß ab, um auch die letzten Tropfen Wasser noch in deinen Mund zu bekommen.',
   'Du leckst das Gefäß gierig leer, um auch die letzten Tropfen Wasser noch in deinen Mund zu bekommen.' =>
@@ -4972,6 +5010,10 @@ return array (
 	'Lächelnder Leichnam',
   'Auf welche Art auch immer er gestorben ist, es scheint ihm unglaublichen Spaß gemacht zu haben - zumindest basierend auf seinem Gesichtsausdruck.' =>
 	'Auf welche Art auch immer er gestorben ist, es scheint ihm unglaublichen Spaß gemacht zu haben - zumindest basierend auf seinem Gesichtsausdruck.',
+  'Modifizierter Massagestab' =>
+	'Modifizierter Massagestab',
+  'Dieser Massagestab wurde anscheinend etwas modifiziert. Um den Massageeffekt zu erhöhen. Am Rücken! Denn an anderen Körperstellen kann man dieses Teil nicht benutzen!' =>
+	'Dieser Massagestab wurde anscheinend etwas modifiziert. Um den Massageeffekt zu erhöhen. Am Rücken! Denn an anderen Körperstellen kann man dieses Teil nicht benutzen!',
   'Hobbykeller' =>
 	'Hobbykeller',
   'Die ganze Einrichtung hier erinnert dich irgendwie an den Londoner Dungeon...' =>
@@ -4996,6 +5038,8 @@ return array (
 	'Keine Karma-Bewertung',
   ':name nicht bewerten.' =>
 	':name nicht bewerten.',
+  'Spielerübersicht' =>
+	'Spielerübersicht',
   'Spieler-Infos' =>
 	'Spieler-Infos',
   'Rank' =>
@@ -5012,6 +5056,8 @@ return array (
 	'Zwischen den Puppen in der Kinderkrippe liegt noch etwas anderes... ein blutverschmierter Teddybär! Warum kommt es dir nur so vor, als wenn du den schon einmal irgendwo gesehen hättest?',
   'Jeder mit der Zombiekrankheit infizierte Spieler in der Nähe verliert 25 Infektionspunkte oder 15, wenn du selbst infiziert bist. Die Infektionsrate kann nicht unter 5 fallen. Falls du selbst gesund bist besteht für jeden infizierten Spieler eine 15% Chance, dich mit der Zombiekrankheit anzustecken.' =>
 	'Jeder mit der Zombiekrankheit infizierte Spieler in der Nähe verliert 25 Infektionspunkte oder 15, wenn du selbst infiziert bist. Die Infektionsrate kann nicht unter 5 fallen. Falls du selbst gesund bist besteht für jeden infizierten Spieler eine 15% Chance, dich mit der Zombiekrankheit anzustecken.',
+  'Sprechstunde' =>
+	'Sprechstunde',
   'Und es hat wieder geklappt! Du hast dir etwas zu essen und zu trinken ergaunert.' =>
 	'Und es hat wieder geklappt! Du hast dir etwas zu essen und zu trinken ergaunert.',
   ':p ist schon wieder am quengeln... du hast ihm etwas von deiner Nahrungs- und Wasserration gegeben, damit er endlich die Klappe hält.' =>
@@ -5020,6 +5066,8 @@ return array (
 	':name hat :project mithilfe der Gerätschaften an diesem Ort hergestellt.',
   'Pille' =>
 	'Pille',
+  'Jeder mit der Zombiekrankheit infizierte Spieler in der Nähe verliert 25 Infektionspunkte oder 15, wenn du selbst infiziert bist. Die Infektionsrate kann nicht unter 5 fallen. Falls du selbst gesund bist beshteht für jeden infizierten Spieler eine 15% Chance, dich mit der Zombiekrankheit anzustecken.' =>
+	'Jeder mit der Zombiekrankheit infizierte Spieler in der Nähe verliert 25 Infektionspunkte oder 15, wenn du selbst infiziert bist. Die Infektionsrate kann nicht unter 5 fallen. Falls du selbst gesund bist beshteht für jeden infizierten Spieler eine 15% Chance, dich mit der Zombiekrankheit anzustecken.',
   'Handmixer-Bauteile' =>
 	'Handmixer-Bauteile',
   'Sortierte Knochen' =>
@@ -5048,26 +5096,6 @@ return array (
 	'Zombies oder Zeugen Jehovas stehen an deiner Tür? Nicht mehr lange...',
   'Fallgruben' =>
 	'Fallgruben',
-  'Dieses Steak ist perfekt gegrillt - es ist bis zur Mitte durchgebraten und noch immer schön saftig. Iss es lieber schnell, bevor ein Zombie es dir streitig macht.' =>
-	'Dieses Steak ist perfekt gegrillt - es ist bis zur Mitte durchgebraten und noch immer schön saftig. Iss es lieber schnell, bevor ein Zombie es dir streitig macht.',
-  'Mit einem Grill kannst du selbst das ekelhafteste Zeug schmackhaft machen. Herzlichen Glückwunsch, du hast ein paar Steaks erzeugt.' =>
-	'Mit einem Grill kannst du selbst das ekelhafteste Zeug schmackhaft machen. Herzlichen Glückwunsch, du hast ein paar Steaks erzeugt.',
-  'Die Reifen dieses Wohnmobils sind zerstört, der Motor ist beschädigt und Benzin ist auch nicht mehr im Tank. Ich würde sagen, mit diesem Teil fährst du nirgenwo mehr hin; aber häuslich einrichten kannst du dich da drin natürlich trotzdem.' =>
-	'Die Reifen dieses Wohnmobils sind zerstört, der Motor ist beschädigt und Benzin ist auch nicht mehr im Tank. Ich würde sagen, mit diesem Teil fährst du nirgenwo mehr hin; aber häuslich einrichten kannst du dich da drin natürlich trotzdem.',
-  'Ein Zelt bietet leider überhaupt keinen Schutz vor Zombies - der Bewohner dieses Zelts hat das wohl auf die harte Tour lernen müssen. Wenigstens kannst du jetzt ungesraft in seinen Sachen wühlen.' =>
-	'Ein Zelt bietet leider überhaupt keinen Schutz vor Zombies - der Bewohner dieses Zelts hat das wohl auf die harte Tour lernen müssen. Wenigstens kannst du jetzt ungesraft in seinen Sachen wühlen.',
-  ':name hat den Generator in Gang gesetzt und :project für das Versteck produziert.' =>
-	':name hat den Generator in Gang gesetzt und :project für das Versteck produziert.',
-  'Hungerer' =>
-	'Hungerer',
-  'Die Tür zur Leichenhalle ist fest versiegelt und lässt sich nicht öffnen. Über dir befindet sich ein kleines Lüftungsgitter, über das du vermutlich in die Leichenhalle gelangen könntest - wenn du hinein passen würdest. Echt Mist dass du kein Kind mehr bist...' =>
-	'Die Tür zur Leichenhalle ist fest versiegelt und lässt sich nicht öffnen. Über dir befindet sich ein kleines Lüftungsgitter, über das du vermutlich in die Leichenhalle gelangen könntest - wenn du hinein passen würdest. Echt Mist dass du kein Kind mehr bist...',
-  'Knöcherne Klaue' =>
-	'Knöcherne Klaue',
-  'Privatpatienten haben mehr Geld, also sind sie die besseren Menschen und verdienen bessere medizinische Versorgung. Dazu gehört auch dieses Luxuszimmer, mit Besuchersessel aus Leder, Heimkinoanlage und natürlich einer gut bestückten Bar. Eigentlich könntest du dich auch selbst hier "einliefern" lassen und diesen Ort zu einem Versteck umbauen...' =>
-	'Privatpatienten haben mehr Geld, also sind sie die besseren Menschen und verdienen bessere medizinische Versorgung. Dazu gehört auch dieses Luxuszimmer, mit Besuchersessel aus Leder, Heimkinoanlage und natürlich einer gut bestückten Bar. Eigentlich könntest du dich auch selbst hier "einliefern" lassen und diesen Ort zu einem Versteck umbauen...',
-  'Ein übliches Patientenzimmer... klein, muffig, ein billiger Fernseher an der Wand. Auf dessen Fernbedienungen ist die MDR-Taste ziemlich abgenutzt. Überall auf dem Boden und an den Wänden ist Blut. Alles in allem sieht es hier wie in jedem anderen Krankenhaus aus...' =>
-	'Ein übliches Patientenzimmer... klein, muffig, ein billiger Fernseher an der Wand. Auf dessen Fernbedienungen ist die MDR-Taste ziemlich abgenutzt. Überall auf dem Boden und an den Wänden ist Blut. Alles in allem sieht es hier wie in jedem anderen Krankenhaus aus...',
   'Bolzen fertigen' =>
 	'Bolzen fertigen',
   'Bolzen' =>
@@ -5090,6 +5118,26 @@ return array (
 	'An der Tür dieses Baumhauses befindet sich ein Schild, auf dem in krakeliger Schrift geschrieben steht: "Führ Erwaksene ferboten!!!". So ein Ärger aber auch...',
   'Aufgrund der mangelhaften Kletterfähigkeiten von Zombies gibt dieses Baumhaus ein überraschend gutes Versteck ab. Im Brandfall solltest du es jedoch lieber nicht verwenden...' =>
 	'Aufgrund der mangelhaften Kletterfähigkeiten von Zombies gibt dieses Baumhaus ein überraschend gutes Versteck ab. Im Brandfall solltest du es jedoch lieber nicht verwenden...',
+  'Dieses Steak ist perfekt gegrillt - es ist bis zur Mitte durchgebraten und noch immer schön saftig. Iss es lieber schnell, bevor ein Zombie es dir streitig macht.' =>
+	'Dieses Steak ist perfekt gegrillt - es ist bis zur Mitte durchgebraten und noch immer schön saftig. Iss es lieber schnell, bevor ein Zombie es dir streitig macht.',
+  'Mit einem Grill kannst du selbst das ekelhafteste Zeug schmackhaft machen. Herzlichen Glückwunsch, du hast ein paar Steaks erzeugt.' =>
+	'Mit einem Grill kannst du selbst das ekelhafteste Zeug schmackhaft machen. Herzlichen Glückwunsch, du hast ein paar Steaks erzeugt.',
+  'Die Reifen dieses Wohnmobils sind zerstört, der Motor ist beschädigt und Benzin ist auch nicht mehr im Tank. Ich würde sagen, mit diesem Teil fährst du nirgenwo mehr hin; aber häuslich einrichten kannst du dich da drin natürlich trotzdem.' =>
+	'Die Reifen dieses Wohnmobils sind zerstört, der Motor ist beschädigt und Benzin ist auch nicht mehr im Tank. Ich würde sagen, mit diesem Teil fährst du nirgenwo mehr hin; aber häuslich einrichten kannst du dich da drin natürlich trotzdem.',
+  'Ein Zelt bietet leider überhaupt keinen Schutz vor Zombies - der Bewohner dieses Zelts hat das wohl auf die harte Tour lernen müssen. Wenigstens kannst du jetzt ungesraft in seinen Sachen wühlen.' =>
+	'Ein Zelt bietet leider überhaupt keinen Schutz vor Zombies - der Bewohner dieses Zelts hat das wohl auf die harte Tour lernen müssen. Wenigstens kannst du jetzt ungesraft in seinen Sachen wühlen.',
+  ':name hat den Generator in Gang gesetzt und :project für das Versteck produziert.' =>
+	':name hat den Generator in Gang gesetzt und :project für das Versteck produziert.',
+  'Hungerer' =>
+	'Hungerer',
+  'Die Tür zur Leichenhalle ist fest versiegelt und lässt sich nicht öffnen. Über dir befindet sich ein kleines Lüftungsgitter, über das du vermutlich in die Leichenhalle gelangen könntest - wenn du hinein passen würdest. Echt Mist dass du kein Kind mehr bist...' =>
+	'Die Tür zur Leichenhalle ist fest versiegelt und lässt sich nicht öffnen. Über dir befindet sich ein kleines Lüftungsgitter, über das du vermutlich in die Leichenhalle gelangen könntest - wenn du hinein passen würdest. Echt Mist dass du kein Kind mehr bist...',
+  'Knöcherne Klaue' =>
+	'Knöcherne Klaue',
+  'Privatpatienten haben mehr Geld, also sind sie die besseren Menschen und verdienen bessere medizinische Versorgung. Dazu gehört auch dieses Luxuszimmer, mit Besuchersessel aus Leder, Heimkinoanlage und natürlich einer gut bestückten Bar. Eigentlich könntest du dich auch selbst hier "einliefern" lassen und diesen Ort zu einem Versteck umbauen...' =>
+	'Privatpatienten haben mehr Geld, also sind sie die besseren Menschen und verdienen bessere medizinische Versorgung. Dazu gehört auch dieses Luxuszimmer, mit Besuchersessel aus Leder, Heimkinoanlage und natürlich einer gut bestückten Bar. Eigentlich könntest du dich auch selbst hier "einliefern" lassen und diesen Ort zu einem Versteck umbauen...',
+  'Ein übliches Patientenzimmer... klein, muffig, ein billiger Fernseher an der Wand. Auf dessen Fernbedienungen ist die MDR-Taste ziemlich abgenutzt. Überall auf dem Boden und an den Wänden ist Blut. Alles in allem sieht es hier wie in jedem anderen Krankenhaus aus...' =>
+	'Ein übliches Patientenzimmer... klein, muffig, ein billiger Fernseher an der Wand. Auf dessen Fernbedienungen ist die MDR-Taste ziemlich abgenutzt. Überall auf dem Boden und an den Wänden ist Blut. Alles in allem sieht es hier wie in jedem anderen Krankenhaus aus...',
   'Kostet 20 Energie. Jeder andere Spieler in der Nähe regeneriert 20 Energie und Müdigkeit und erhält den Buff "Aufgeregt" für 15 Minuten. Hat keinen Effekt auf Kinder und Spieler, die gerade beschäftigt sind.' =>
 	'Kostet 20 Energie. Jeder andere Spieler in der Nähe regeneriert 20 Energie und Müdigkeit und erhält den Buff "Aufgeregt" für 15 Minuten. Hat keinen Effekt auf Kinder und Spieler, die gerade beschäftigt sind.',
   'Oben-Ohne-Protest' =>
@@ -5126,10 +5174,6 @@ return array (
 	'Splitterwerfer Mark II',
   'Ofen-Bauteile' =>
 	'Ofen-Bauteile',
-  'Tötet blockierende Zombies ohne Kampf. Für jeden Zombie werden 2 Gesundheitspunkte abgezogen. Deine Gesundheit kann durch diese Aktion nicht unter 20 fallen. Hast du nicht genug Gesundheit um alle Zombies zu töten, so musst du den Rest in einem normalen Kampf besiegen.' =>
-	'Tötet blockierende Zombies ohne Kampf. Für jeden Zombie werden 2 Gesundheitspunkte abgezogen. Deine Gesundheit kann durch diese Aktion nicht unter 20 fallen. Hast du nicht genug Gesundheit um alle Zombies zu töten, so musst du den Rest in einem normalen Kampf besiegen.',
-  'Umstoßen' =>
-	'Umstoßen',
   'Fast hätte es geklappt... leider sind ein paar standhafte Zombies übrig geblieben, die dich jetzt ziemlich grimmig anschauen...' =>
 	'Fast hätte es geklappt... leider sind ein paar standhafte Zombies übrig geblieben, die dich jetzt ziemlich grimmig anschauen...',
   'Dieser Splitterwerfer mit verbessertem Druckausgleichsregler, feinjustierter Zielautomatik und integriertem Fluxkompensator übertrifft alle Leistungsdaten des Basismodells um Längen. Außerdem erhöht er den Rambo-Faktor des Trägers sofort um 78.92%.' =>
@@ -5168,46 +5212,8 @@ return array (
 	'Wirklich lecker, wenn man bedenkt, woraus dieses Steak gemacht wurde...',
   'Du benötigst eine leere Flasche, die du hineinwerfen kannst.' =>
 	'Du benötigst eine leere Flasche, die du hineinwerfen kannst.',
-  'Alle mitnehmen' =>
-	'Alle mitnehmen',
-  'Alle ablegen' =>
-	'Alle ablegen',
   'Hmm... nichts passiert. Kann es eventuell sein, dass du gar nicht auf Entzug warst?' =>
 	'Hmm... nichts passiert. Kann es eventuell sein, dass du gar nicht auf Entzug warst?',
-  'Roadtrip' =>
-	'Roadtrip',
-  'In diesem Spielmodus reist du mit einem klapprigen Wohnmobil durch die Welt. Versuche, so weit zu kommen wie möglich. Dieser Modus ist für 2 - 5 Spieler geeignet.' =>
-	'In diesem Spielmodus reist du mit einem klapprigen Wohnmobil durch die Welt. Versuche, so weit zu kommen wie möglich. Dieser Modus ist für 2 - 5 Spieler geeignet.',
-  'Immer auf der Flucht vor Zombies' =>
-	'Immer auf der Flucht vor Zombies',
-  'Als die Zombies kamen haben sich die meisten deiner Nachbarn einfach in ihren Häusern verbarrikadiert. Du hingegen bist mit deinem Wohnmobil geflohen, was sich im Nachhinein leider auch als nicht optimal erwiesen hat. Immerhin musst du regelmäßig Benzin für dieses Teil finden und es in Schuss halten, um weiterfahren zu können.' =>
-	'Als die Zombies kamen haben sich die meisten deiner Nachbarn einfach in ihren Häusern verbarrikadiert. Du hingegen bist mit deinem Wohnmobil geflohen, was sich im Nachhinein leider auch als nicht optimal erwiesen hat. Immerhin musst du regelmäßig Benzin für dieses Teil finden und es in Schuss halten, um weiterfahren zu können.',
-  'Klappriger Wohnwagen' =>
-	'Klappriger Wohnwagen',
-  'Und weiter gehts...' =>
-	'Und weiter gehts...',
-  'Weiterfahren' =>
-	'Weiterfahren',
-  'Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die beim Einsatz zerstört werden (z.B. Wasserbombe).' =>
-	'Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die beim Einsatz zerstört werden (z.B. Wasserbombe).',
-  'Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die einen internen Munitionsspeicher haben (z.B. Wasserpistole).' =>
-	'Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die einen internen Munitionsspeicher haben (z.B. Wasserpistole).',
-  'Keine Waffen mit Tank' =>
-	'Keine Waffen mit Tank',
-  'Kämpfen!' =>
-	'Kämpfen!',
-  'Fliehen!' =>
-	'Fliehen!',
-  'Anzeigen...' =>
-	'Anzeigen...',
-  'Ausblenden...' =>
-	'Ausblenden...',
-  'Karte ...' =>
-	'Karte ...',
-  'Bist du sicher, dass du die Reise nach :name antreten möchtest?' =>
-	'Bist du sicher, dass du die Reise nach :name antreten möchtest?',
-  'Achtung: Du kannst deine aktuelle Position im Moment nicht verlassen.' =>
-	'Achtung: Du kannst deine aktuelle Position im Moment nicht verlassen.',
   'Barrikade (Wände)' =>
 	'Barrikade (Wände)',
   'Holzzaun' =>
@@ -5224,6 +5230,28 @@ return array (
 	'Makaberer Zaun',
   'Was tun, wenn sich die Knochen im Lagerraum langsam stapeln? Bau einen Zaun damit! Das ist eine gute Beschäftigungstherapie und sieht einfach megacool aus. Achja, Zombies kannst du auf die Art auch von deinem Rasen fernhalten.' =>
 	'Was tun, wenn sich die Knochen im Lagerraum langsam stapeln? Bau einen Zaun damit! Das ist eine gute Beschäftigungstherapie und sieht einfach megacool aus. Achja, Zombies kannst du auf die Art auch von deinem Rasen fernhalten.',
+  'In diesem Spielmodus reist du mit einem klapprigen Wohnmobil durch die Welt. Versuche, so weit zu kommen wie möglich. Dieser Modus ist für 2 - 5 Spieler geeignet.' =>
+	'In diesem Spielmodus reist du mit einem klapprigen Wohnmobil durch die Welt. Versuche, so weit zu kommen wie möglich. Dieser Modus ist für 2 - 5 Spieler geeignet.',
+  'Immer auf der Flucht vor Zombies' =>
+	'Immer auf der Flucht vor Zombies',
+  'Als die Zombies kamen haben sich die meisten deiner Nachbarn einfach in ihren Häusern verbarrikadiert. Du hingegen bist mit deinem Wohnmobil geflohen, was sich im Nachhinein leider auch als nicht optimal erwiesen hat. Immerhin musst du regelmäßig Benzin für dieses Teil finden und es in Schuss halten, um weiterfahren zu können.' =>
+	'Als die Zombies kamen haben sich die meisten deiner Nachbarn einfach in ihren Häusern verbarrikadiert. Du hingegen bist mit deinem Wohnmobil geflohen, was sich im Nachhinein leider auch als nicht optimal erwiesen hat. Immerhin musst du regelmäßig Benzin für dieses Teil finden und es in Schuss halten, um weiterfahren zu können.',
+  'Klappriger Wohnwagen' =>
+	'Klappriger Wohnwagen',
+  'Und weiter gehts...' =>
+	'Und weiter gehts...',
+  'Weiterfahren' =>
+	'Weiterfahren',
+  'Kämpfen!' =>
+	'Kämpfen!',
+  'Fliehen!' =>
+	'Fliehen!',
+  'Karte ...' =>
+	'Karte ...',
+  'Bist du sicher, dass du die Reise nach :name antreten möchtest?' =>
+	'Bist du sicher, dass du die Reise nach :name antreten möchtest?',
+  'Achtung: Du kannst deine aktuelle Position im Moment nicht verlassen.' =>
+	'Achtung: Du kannst deine aktuelle Position im Moment nicht verlassen.',
   'Beladung' =>
 	'Beladung',
   'Du fährst ein Wohnmobil, keinen LKW - wenn du mehr einlädst als der Motor ziehen kann, wirst du nicht vom Fleck kommen.' =>
@@ -5276,68 +5304,304 @@ return array (
 	'Nächste Stadt suchen',
   'Du fährst deinen Wohnwagen auf den Standstreifen und hälst an. Eine kleine Pause tut gut...' =>
 	'Du fährst deinen Wohnwagen auf den Standstreifen und hälst an. Eine kleine Pause tut gut...',
-  'Cannot create instances of abstract :controller' =>
-	'Cannot create instances of abstract :controller',
-  'ZombVival ist ein an Die Verdammten von MotionTwin angelehntes, kostenloses Browserspiel. Entwickelt wird es von einem Die Verdammten-Spieler namens Brainbox. In ZombVival kämpfst du als Überlebender einer Zombie-Apokalypse gegen Horden von Untoten, während du die Überreste der Zivilisation nach Nahrung, Waffen und anderen nützlichen Gegenständen durchsuchst. Dein Tod ist gewiss - aber es liegt an dir, ihn so lange wie möglich herauszuzögern! Nebenbei kannst du versuchen, Auszeichnungen zu sammeln und die Spitze diverser Rankings zu erobern!' =>
-	'ZombVival ist ein an Die Verdammten von MotionTwin angelehntes, kostenloses Browserspiel. Entwickelt wird es von einem Die Verdammten-Spieler namens Brainbox. In ZombVival kämpfst du als Überlebender einer Zombie-Apokalypse gegen Horden von Untoten, während du die Überreste der Zivilisation nach Nahrung, Waffen und anderen nützlichen Gegenständen durchsuchst. Dein Tod ist gewiss - aber es liegt an dir, ihn so lange wie möglich herauszuzögern! Nebenbei kannst du versuchen, Auszeichnungen zu sammeln und die Spitze diverser Rankings zu erobern!',
-  'Logge dich über deinen ::i::Twinoid::/i::-Account ein!' =>
-	'Logge dich über deinen ::i::Twinoid::/i::-Account ein!',
-  'Bitte wähle, welches ::i::Motion-Twin::/i::-Spiel du für den Login nutzen möchtest.' =>
-	'Bitte wähle, welches ::i::Motion-Twin::/i::-Spiel du für den Login nutzen möchtest.',
-  'Um deinen geheimen Schlüssel zu erhalten, musst du ZombVival über das ::b::Verzeichnis::/b:: von ::i::Die Verdammten::/i:: betreten.' =>
-	'Um deinen geheimen Schlüssel zu erhalten, musst du ZombVival über das ::b::Verzeichnis::/b:: von ::i::Die Verdammten::/i:: betreten.',
-  'Aktiviere diese Option, wenn du möchtest, dass deine Daten beim nächsten Besuch von ZombVival automatisch eingetragen werden. ::b::Aktiviere diese Option nicht, wenn du einen öffentlichen Computer verwendest!::/b::' =>
-	'Aktiviere diese Option, wenn du möchtest, dass deine Daten beim nächsten Besuch von ZombVival automatisch eingetragen werden. ::b::Aktiviere diese Option nicht, wenn du einen öffentlichen Computer verwendest!::/b::',
-  'Einloggen' =>
-	'Einloggen',
-  'Gespeicherte Daten löschen' =>
-	'Gespeicherte Daten löschen',
-  'Anderer Account' =>
-	'Anderer Account',
-  'Bist du sicher?' =>
-	'Bist du sicher?',
-  'Bitte gib deinen Geheimen Schlüssel ein.' =>
-	'Bitte gib deinen Geheimen Schlüssel ein.',
-  'Bitte warten...' =>
-	'Bitte warten...',
-  'Willkommen bei ZombVival' =>
-	'Willkommen bei ZombVival',
+  'Fahrer' =>
+	'Fahrer',
+  'Du fährst das Wohnmobil - halte also immer ein Auge auf der Straße und vermeide Übermüdung oder extensiven Alkoholkonsum. Oder willst du dich und deine Mitfahrer umbringen?' =>
+	'Du fährst das Wohnmobil - halte also immer ein Auge auf der Straße und vermeide Übermüdung oder extensiven Alkoholkonsum. Oder willst du dich und deine Mitfahrer umbringen?',
+  'Du bist bereits :distance km gefahren und hast :breaks Städte aufgesucht.' =>
+	'Du bist bereits :distance km gefahren und hast :breaks Städte aufgesucht.',
+  'Zombifizierung' =>
+	'Zombifizierung',
+  'Großmeisterseele' =>
+	'Großmeisterseele',
+  'Du hast dir einen guten Überblick über die Lage verschafft und kannst daher wesentlich effektiver kämpfen.' =>
+	'Du hast dir einen guten Überblick über die Lage verschafft und kannst daher wesentlich effektiver kämpfen.',
+  'Ein guter Soldat kennt seine Umgebung - und nutzt sie zu seinem Vorteil. Wenn du jetzt gegen Zombies kämpfst, werden die ihr blaues Wunder erleben!' =>
+	'Ein guter Soldat kennt seine Umgebung - und nutzt sie zu seinem Vorteil. Wenn du jetzt gegen Zombies kämpfst, werden die ihr blaues Wunder erleben!',
+  'Eine leckere Speise ist nur halb so gut, wenn sie kalt und ungewürzt ist. Du streust also ein paar Gewürze drüber und lässt das ganze eine Weile im Ofen schmoren - voilá, du hast deine Speise noch leckerer gemacht!' =>
+	'Eine leckere Speise ist nur halb so gut, wenn sie kalt und ungewürzt ist. Du streust also ein paar Gewürze drüber und lässt das ganze eine Weile im Ofen schmoren - voilá, du hast deine Speise noch leckerer gemacht!',
+  'Druckregler-Bauteile' =>
+	'Druckregler-Bauteile',
+  'Hier kommt ihr nicht weiter... ihr müsst eure Reise nach :od unterbrechen und bei :ad eine Pause machen..' =>
+	'Hier kommt ihr nicht weiter... ihr müsst eure Reise nach :od unterbrechen und bei :ad eine Pause machen..',
+  'Störenfried' =>
+	'Störenfried',
+  'Samariter' =>
+	'Samariter',
+  'Sofort als die Chemikalie auf das Holz trifft beginnt sie, zu blubbern und zu zischen. Scheinbar reagiert sie mit dem Lack auf dem Schläger.... und löst das Holz auf. Tja, das war einmal ein Baseballschläger.' =>
+	'Sofort als die Chemikalie auf das Holz trifft beginnt sie, zu blubbern und zu zischen. Scheinbar reagiert sie mit dem Lack auf dem Schläger.... und löst das Holz auf. Tja, das war einmal ein Baseballschläger.',
+  'Du hörst den Alarmdraht klingen und springst aus dem Bett, um dich gegen Zombies zu verteidigen!' =>
+	'Du hörst den Alarmdraht klingen und springst aus dem Bett, um dich gegen Zombies zu verteidigen!',
+  'Verfehlt!, Waffe zerstört!' =>
+	'Verfehlt!, Waffe zerstört!',
+  'Epische Seele' =>
+	'Epische Seele',
+  'Barrikade (Dach)' =>
+	'Barrikade (Dach)',
+  'süße Kätzchen' =>
+	'süße Kätzchen',
+  'die Freiheit' =>
+	'die Freiheit',
+  'die Gesundheit' =>
+	'die Gesundheit',
+  'die Umwelt' =>
+	'die Umwelt',
+  'Keine Ahnung wozu du als Survivalist überhaupt eine Matratze brauchst... aber gut, wenn du Spaß an Bastelarbeit hast.' =>
+	'Keine Ahnung wozu du als Survivalist überhaupt eine Matratze brauchst... aber gut, wenn du Spaß an Bastelarbeit hast.',
+  'Es ist immer gut, mit den Patienten zu sprechen. Das macht deren Krankheit direkt weniger schlimm.' =>
+	'Es ist immer gut, mit den Patienten zu sprechen. Das macht deren Krankheit direkt weniger schlimm.',
+  'Du hast dich soeben in einen Zombie verwandelt!' =>
+	'Du hast dich soeben in einen Zombie verwandelt!',
+  'So ein Kürbis kann sicher toll explodieren, wenn man ihn bis zum Rand mit Schwarzpulver vollstopft! Und das Gesicht.... naja, der Kürbis hätt halt ohne einfach doof ausgesehen.' =>
+	'So ein Kürbis kann sicher toll explodieren, wenn man ihn bis zum Rand mit Schwarzpulver vollstopft! Und das Gesicht.... naja, der Kürbis hätt halt ohne einfach doof ausgesehen.',
+  'alternative Lebensentwürfe' =>
+	'alternative Lebensentwürfe',
+  'October Midness' =>
+	'October Midness',
+  'Der absolute Wahnsinn! NUR HEUTE kannst du ZombVival ohne Beschränkungen genießen! Alle Berufs- und Spielmodus-Sperren sind aufgehoben. Alle Berufe haben ihr maximales Level! Es ist MIDNESS!' =>
+	'Der absolute Wahnsinn! NUR HEUTE kannst du ZombVival ohne Beschränkungen genießen! Alle Berufs- und Spielmodus-Sperren sind aufgehoben. Alle Berufe haben ihr maximales Level! Es ist MIDNESS!',
+  'Verstörter Patient' =>
+	'Verstörter Patient',
+  'Bestehlen' =>
+	'Bestehlen',
+  'Er sieht wie ein Patient dieser Einrichtung aus. Sein Hemd ist voller Blut, und er umklammert irgend etwas mit beiden Händen während er mit leerem Blick die Gänge der Anstalt schleicht. Auf Zurufe reagiert er nicht... anscheinend nimmt er dich nicht einmal wahr. Was er da wohl dabei hat... du könntest versuchen, es ihm wegzunehmen. Immerhin sieht er nicht sehr wehrhaft aus.' =>
+	'Er sieht wie ein Patient dieser Einrichtung aus. Sein Hemd ist voller Blut, und er umklammert irgend etwas mit beiden Händen während er mit leerem Blick die Gänge der Anstalt schleicht. Auf Zurufe reagiert er nicht... anscheinend nimmt er dich nicht einmal wahr. Was er da wohl dabei hat... du könntest versuchen, es ihm wegzunehmen. Immerhin sieht er nicht sehr wehrhaft aus.',
+  'Als du versuchst nach ihm zu greifen, beginnt der Patient markerschütternd zu schreien und greift an!' =>
+	'Als du versuchst nach ihm zu greifen, beginnt der Patient markerschütternd zu schreien und greift an!',
+  'Metallsäge' =>
+	'Metallsäge',
+  'Der Patient trägt ein Identifikationsarmband, auf dem sich ein Barcode sowie ein Name befindet. Du wirst wohl nie erfahren, wer das war oder was mit ihm in der Irrenanstalt geschehen ist. Wobei... vermutlich willst du das auch lieber gar nicht wissen.' =>
+	'Der Patient trägt ein Identifikationsarmband, auf dem sich ein Barcode sowie ein Name befindet. Du wirst wohl nie erfahren, wer das war oder was mit ihm in der Irrenanstalt geschehen ist. Wobei... vermutlich willst du das auch lieber gar nicht wissen.',
+  'Beim Anblick dieser Säge läuft dir ein kalter Schauer den Rücken herunter...' =>
+	'Beim Anblick dieser Säge läuft dir ein kalter Schauer den Rücken herunter...',
+  'Eklige Fleischfetzen' =>
+	'Eklige Fleischfetzen',
+  'Ein Haufen undefinierbarer Fleischfetzen. Es ist unmöglich zu erkennen, wovon sie stammen. Du kannst sie einfach herunterschlingen und hoffen, dass das mal ein Tier war... Oder du könntest kranke chemische Experimente damit anstellen.' =>
+	'Ein Haufen undefinierbarer Fleischfetzen. Es ist unmöglich zu erkennen, wovon sie stammen. Du kannst sie einfach herunterschlingen und hoffen, dass das mal ein Tier war... Oder du könntest kranke chemische Experimente damit anstellen.',
+  ':itemdef erhalten!' =>
+	':itemdef erhalten!',
+  'Der Patient hat sich mächtig gewehrt, aber letztendlich bist du doch an seine Gegenstände gekommen.' =>
+	'Der Patient hat sich mächtig gewehrt, aber letztendlich bist du doch an seine Gegenstände gekommen.',
+  'Du wirfst die Fetzen in ein Gefäß mit der Chemikalie... und wirst sofort von einem Lichtblitz geblendet! Die Fleischfetzen haben eine Seele freigesetzt!' =>
+	'Du wirfst die Fetzen in ein Gefäß mit der Chemikalie... und wirst sofort von einem Lichtblitz geblendet! Die Fleischfetzen haben eine Seele freigesetzt!',
+  'Du wirfst die Fetzen in ein Gefäß mit der Chemikalie... es blubbert und spritzt ein wenig. Als du in das Gefäß schaust, hat sich die Struktur der Fetzen komplett verändert!' =>
+	'Du wirfst die Fetzen in ein Gefäß mit der Chemikalie... es blubbert und spritzt ein wenig. Als du in das Gefäß schaust, hat sich die Struktur der Fetzen komplett verändert!',
+  'Hm.... das hat ein bisschen wie Döner geschmeckt, nur ohne das Pferdefleisch.' =>
+	'Hm.... das hat ein bisschen wie Döner geschmeckt, nur ohne das Pferdefleisch.',
+  'Die Fleischfetzen wurden in einen neuen Gegenstand umgewandelt.' =>
+	'Die Fleischfetzen wurden in einen neuen Gegenstand umgewandelt.',
+  'Teddy geben' =>
+	'Teddy geben',
+  'Anderen Teddy geben' =>
+	'Anderen Teddy geben',
+  'Der Patient hat seine Gegenstände fallen gelassen, als du ihm den Teddy gegeben hast.' =>
+	'Der Patient hat seine Gegenstände fallen gelassen, als du ihm den Teddy gegeben hast.',
+  'Du hälst ihm deinen Teddy hin. Er sieht ihn mit glasigen Augen an, und greift nach ein paar Sekunden zu. Irgendetwas scheint ihn enttäuscht zu haben, denn er schleicht mit hängenden Schultern davon.' =>
+	'Du hälst ihm deinen Teddy hin. Er sieht ihn mit glasigen Augen an, und greift nach ein paar Sekunden zu. Irgendetwas scheint ihn enttäuscht zu haben, denn er schleicht mit hängenden Schultern davon.',
+  'Du hälst ihm deinen Teddy hin. Eine Träne läuft ihm aus dem Auge, dann greift er zu und drückt den Teddy fest an sich. Eine Weile verharrt er regungslos, dann zeigt er mit dem Finger auf einen dunklen Gang, der dir bisher verborgen geblieben ist. Als du dich wieder zu ihm umdrehst, ist er verschwunden...' =>
+	'Du hälst ihm deinen Teddy hin. Eine Träne läuft ihm aus dem Auge, dann greift er zu und drückt den Teddy fest an sich. Eine Weile verharrt er regungslos, dann zeigt er mit dem Finger auf einen dunklen Gang, der dir bisher verborgen geblieben ist. Als du dich wieder zu ihm umdrehst, ist er verschwunden...',
+  'Versteckter Flügel der Irrenanstalt' =>
+	'Versteckter Flügel der Irrenanstalt',
+  'Dieses Zimmer befindet sich in einem abgelegenen Flügel der Irrenanstalt... du hättest es nie gefunden, wenn dir der Patient nicht den Weg gezeigt hätte. Es ist überraschend groß, und hat ein schönes Erkerfenster mit Blick auf einen überwucherten Garten. Man könnte es fast als schön bezeichnen... wären die Wände nicht mit schauderhaften Fingerzeichnungen aus Blut übersäht. Es hilft auch nicht, dass hier diverse Foltergeräte und Autopsiewerkzeuge herumstehen. Das grauenhafteste in diesem Raum ist jedoch ohne Frage der DVD-Spieler mit eingelegter Helene-Fischer-DVD. Der pure Horror...' =>
+	'Dieses Zimmer befindet sich in einem abgelegenen Flügel der Irrenanstalt... du hättest es nie gefunden, wenn dir der Patient nicht den Weg gezeigt hätte. Es ist überraschend groß, und hat ein schönes Erkerfenster mit Blick auf einen überwucherten Garten. Man könnte es fast als schön bezeichnen... wären die Wände nicht mit schauderhaften Fingerzeichnungen aus Blut übersäht. Es hilft auch nicht, dass hier diverse Foltergeräte und Autopsiewerkzeuge herumstehen. Das grauenhafteste in diesem Raum ist jedoch ohne Frage der DVD-Spieler mit eingelegter Helene-Fischer-DVD. Der pure Horror...',
+  'Toter Patient' =>
+	'Toter Patient',
+  'Leiche zersägen' =>
+	'Leiche zersägen',
+  'Suppe aus "Tomaten" herstellen' =>
+	'Suppe aus "Tomaten" herstellen',
+  'Tomatencremesuppe (?)' =>
+	'Tomatencremesuppe (?)',
+  'Zersägte Leiche' =>
+	'Zersägte Leiche',
+  'Diese ... öhm ... "Tomatencremesuppe" ... sieht ziemlich fleischig aus. Denk am besten gar nicht darüber nach, was wirklich hier drin sein könnte.' =>
+	'Diese ... öhm ... "Tomatencremesuppe" ... sieht ziemlich fleischig aus. Denk am besten gar nicht darüber nach, was wirklich hier drin sein könnte.',
+  'Nicht daran denken was du hier gerade tust... nicht daran denken was du hier gerade tust... nicht daran denken was du hier gerade tust...' =>
+	'Nicht daran denken was du hier gerade tust... nicht daran denken was du hier gerade tust... nicht daran denken was du hier gerade tust...',
+  ':itemdef angelockt!' =>
+	':itemdef angelockt!',
+  'Na sowas. Es scheint, als würde sich da etwas zu dir hingezogen fühlen!' =>
+	'Na sowas. Es scheint, als würde sich da etwas zu dir hingezogen fühlen!',
+  'Insel des Schreckens' =>
+	'Insel des Schreckens',
+  'Diese gruselige Umgebung stört deine empfindliche Darmflora... dein Wasser- und Nahrungsverbrauch steigt.' =>
+	'Diese gruselige Umgebung stört deine empfindliche Darmflora... dein Wasser- und Nahrungsverbrauch steigt.',
+  'Du hättest eventuell bei den Vorlesungen zum Thema "Infektionsgefahr" und "Hygiene" besser zuhören sollen... oder vielleicht einfach deinen Patienten keinen Abschiedskuss geben. Jetzt hast du dir nämlich auch eine Infektion eingefangen. Glückwunsch!' =>
+	'Du hättest eventuell bei den Vorlesungen zum Thema "Infektionsgefahr" und "Hygiene" besser zuhören sollen... oder vielleicht einfach deinen Patienten keinen Abschiedskuss geben. Jetzt hast du dir nämlich auch eine Infektion eingefangen. Glückwunsch!',
   ':error' =>
 	':error',
-  'Die Seite konnte nicht geladen werden!' =>
-	'Die Seite konnte nicht geladen werden!',
-  'Leider wurde diese Seite noch nicht für ::b::ZombVival Evolution::/b:: überarbeitet. Bitte kehre zur ::i::klassischen ZombVival-Webseite::/i:: zurück, um diese Seite aufzurufen.' =>
-	'Leider wurde diese Seite noch nicht für ::b::ZombVival Evolution::/b:: überarbeitet. Bitte kehre zur ::i::klassischen ZombVival-Webseite::/i:: zurück, um diese Seite aufzurufen.',
-  'Zur klassischen Webseite' =>
-	'Zur klassischen Webseite',
-  'Die Zombies freuen sich schon darauf, dich zu sehen...' =>
-	'Die Zombies freuen sich schon darauf, dich zu sehen...',
-  'Willkommen, :name!' =>
-	'Willkommen, :name!',
-  'Bis bald!' =>
-	'Bis bald!',
-  'Komm bald zurück! Die Zombies fühlen sich sonst so einsam...' =>
-	'Komm bald zurück! Die Zombies fühlen sich sonst so einsam...',
-  'Spielmodus' =>
-	'Spielmodus',
-  'Season :num' =>
-	'Season :num',
-  'Bob der Zombie' =>
-	'Bob der Zombie',
-  'Seite :c/:m' =>
-	'Seite :c/:m',
-  'Zu welcher Seite möchtest du springen?' =>
-	'Zu welcher Seite möchtest du springen?',
-  'Zum Anfang' =>
-	'Zum Anfang',
-  'Eine Seite zurück' =>
-	'Eine Seite zurück',
-  'Zu bestimmter Seite springen' =>
-	'Zu bestimmter Seite springen',
-  'Eine Seite weiter' =>
-	'Eine Seite weiter',
-  'Zum Ende' =>
-	'Zum Ende',
-  'Überlebt' =>
-	'Überlebt',
+  'Du legst dich auf das Bett und versuchst zu schlafen. Allerdings kannst du dich einfach nicht dazu durchringen, in diesem fürchterlichen Raum die Augen zu schließen. Als du dann auch noch jemanden (oder etwas?) in der Ferne durch die Gänge schleichen hörst, springst du wieder auf. Sieht nicht so aus, als könntest du hier schlafen...' =>
+	'Du legst dich auf das Bett und versuchst zu schlafen. Allerdings kannst du dich einfach nicht dazu durchringen, in diesem fürchterlichen Raum die Augen zu schließen. Als du dann auch noch jemanden (oder etwas?) in der Ferne durch die Gänge schleichen hörst, springst du wieder auf. Sieht nicht so aus, als könntest du hier schlafen...',
+  'Bobs Autobude' =>
+	'Bobs Autobude',
+  'Dein Einfamilienhaus' =>
+	'Dein Einfamilienhaus',
+  'Provisorische Straßenbarrikade' =>
+	'Provisorische Straßenbarrikade',
+  'Diese Barrikade sieht ziemlich stabil aus, aber wenn du dich etwas ins Zeug legst kannst du hier bestimmt das eine oder andere nützliche Item ausbauen.' =>
+	'Diese Barrikade sieht ziemlich stabil aus, aber wenn du dich etwas ins Zeug legst kannst du hier bestimmt das eine oder andere nützliche Item ausbauen.',
+  'Barrikade abbauen' =>
+	'Barrikade abbauen',
+  'Hier haben die Menschen anscheinend versucht, die Zombies mithilfe improvisierter Straßenbarrikaden aufzuhalten. So richtig funktioniert hat das wohl aber nicht, immerhin liegen hier überall Leichen herum...' =>
+	'Hier haben die Menschen anscheinend versucht, die Zombies mithilfe improvisierter Straßenbarrikaden aufzuhalten. So richtig funktioniert hat das wohl aber nicht, immerhin liegen hier überall Leichen herum...',
+  'Es hat dich etwas Arbeit gekostet, aber du konntest etwas nützliches aus dieser Barrikade herauszerren.' =>
+	'Es hat dich etwas Arbeit gekostet, aber du konntest etwas nützliches aus dieser Barrikade herauszerren.',
+  'roadip' =>
+	'roadip',
+  'Dieser Beruf kann nicht vom ersten Spieler der Partie ausgewählt werden.' =>
+	'Dieser Beruf kann nicht vom ersten Spieler der Partie ausgewählt werden.',
+  'Stillstand' =>
+	'Stillstand',
+  'Sobald du losgefahren bist, können keine weiteren Spieler deiner Partie beitreten. Fortfahren?' =>
+	'Sobald du losgefahren bist, können keine weiteren Spieler deiner Partie beitreten. Fortfahren?',
+  'Es hat diverse Vorteile, ein Kind zu sein. Die Tatsache, dass du nicht Autofahren kannst, ist keiner davon.' =>
+	'Es hat diverse Vorteile, ein Kind zu sein. Die Tatsache, dass du nicht Autofahren kannst, ist keiner davon.',
+  '"Pay\'n\'Spray" Autowerkstatt' =>
+	'"Pay\'n\'Spray" Autowerkstatt',
+  'Gerade erst hast du die letzte Rate für dein Haus bezahlt, da musst du es wegen der Zombieapokalypse direkt wieder evakuieren. Hättest du doch damals nur diese Zombieversicherung abgeschlossen...' =>
+	'Gerade erst hast du die letzte Rate für dein Haus bezahlt, da musst du es wegen der Zombieapokalypse direkt wieder evakuieren. Hättest du doch damals nur diese Zombieversicherung abgeschlossen...',
+  'Zurückgelassen' =>
+	'Zurückgelassen',
+  'Wenn du in Physik aufgepasst hättest, wüsstest du das Riemen in vielen mechanischen Anlagen unerlässlich sind. Ihre wichtigste Funktion ist, genau im falschen Moment zu reißen, was im Allgemeinen zu lustigen und gelegentlich tödlichen Situationen führt.' =>
+	'Wenn du in Physik aufgepasst hättest, wüsstest du das Riemen in vielen mechanischen Anlagen unerlässlich sind. Ihre wichtigste Funktion ist, genau im falschen Moment zu reißen, was im Allgemeinen zu lustigen und gelegentlich tödlichen Situationen führt.',
+  '"Zombiewagen" Vertragswerkstatt' =>
+	'"Zombiewagen" Vertragswerkstatt',
+  'Du drehst den Zündschlüssel und trittst auf das Gaspedal. Der Motor ächzt, aber du kommst keinen Meter vorran. Anscheinend ist das Wohnmobil überladen...' =>
+	'Du drehst den Zündschlüssel und trittst auf das Gaspedal. Der Motor ächzt, aber du kommst keinen Meter vorran. Anscheinend ist das Wohnmobil überladen...',
+  ':name hat einen Unfall gebaut! Die Insassen haben Verletzungen davon getragen und der Wohnwagen wurde schwer beschädigt!' =>
+	':name hat einen Unfall gebaut! Die Insassen haben Verletzungen davon getragen und der Wohnwagen wurde schwer beschädigt!',
+  'Autounfall' =>
+	'Autounfall',
+  'Tja, sowas passiert wenn man in deinem Zustand autofährt. Vielleicht hättest du das jemand anderen tun lassen sollen, zum Beispiel jemandem der nicht das einzige Fahrzeugwrack auf der Straße im Umkreis von 10 Kilometern frontal rammt?' =>
+	'Tja, sowas passiert wenn man in deinem Zustand autofährt. Vielleicht hättest du das jemand anderen tun lassen sollen, zum Beispiel jemandem der nicht das einzige Fahrzeugwrack auf der Straße im Umkreis von 10 Kilometern frontal rammt?',
+  ':name hat :item mit :chem kombiniert, und dabei :list erhalten.' =>
+	':name hat :item mit :chem kombiniert, und dabei :list erhalten.',
+  ':name hat erfolglos :item mit :chem kombiniert...' =>
+	':name hat erfolglos :item mit :chem kombiniert...',
+  'Die Chemikalie löst die Leiche vollständig auf! Zurück bleibt nur eine ganze Menge Schleim...' =>
+	'Die Chemikalie löst die Leiche vollständig auf! Zurück bleibt nur eine ganze Menge Schleim...',
+  'Desinfizierter Körper' =>
+	'Desinfizierter Körper',
+  'Hurra, du hast es geschafft, einen Menschen von der Zombiekrankheit zu heilen... allerdings leider nur post mortem.' =>
+	'Hurra, du hast es geschafft, einen Menschen von der Zombiekrankheit zu heilen... allerdings leider nur post mortem.',
+  'Der zerfetzte Körper saugt die Chemikalie auf. Es sieht aus, als würde sie ihn irgendwie desinfizieren...' =>
+	'Der zerfetzte Körper saugt die Chemikalie auf. Es sieht aus, als würde sie ihn irgendwie desinfizieren...',
+  'Wenn dein Auto merkwürdige Geräusche macht, hast du entweder einen Motorschaden oder einen Zombie auf der Rückbank. Glücklicherweise findet sich immer eine Werkstatt wie diese in der Nähe, die deine Karre reparieren oder den Zombie fachmännisch (mit einem großen Schraubenschlüssel) entfernen können. Unglücklicherweise hat diese Werkstatt derzeit leider aus unerfindlichen Gründen geschlossen...' =>
+	'Wenn dein Auto merkwürdige Geräusche macht, hast du entweder einen Motorschaden oder einen Zombie auf der Rückbank. Glücklicherweise findet sich immer eine Werkstatt wie diese in der Nähe, die deine Karre reparieren oder den Zombie fachmännisch (mit einem großen Schraubenschlüssel) entfernen können. Unglücklicherweise hat diese Werkstatt derzeit leider aus unerfindlichen Gründen geschlossen...',
+  'Die Pillen saugen die Chemikalie regelrecht auf! Vermutlich ast du jetzt ihre Wirkungsweise geändert...' =>
+	'Die Pillen saugen die Chemikalie regelrecht auf! Vermutlich ast du jetzt ihre Wirkungsweise geändert...',
+  'Du gießt etwas von der Chemikalie in den Münzschlitz... doch nichts geschieht' =>
+	'Du gießt etwas von der Chemikalie in den Münzschlitz... doch nichts geschieht',
+  'Du gießt etwas von der Chemikalie in den Münzschlitz... es klickt, und ein Gegenstand fällt aus dem Automaten!' =>
+	'Du gießt etwas von der Chemikalie in den Münzschlitz... es klickt, und ein Gegenstand fällt aus dem Automaten!',
+  'Du gießt etwas von der Chemikalie in den Münzschlitz... es gibt einen Knall, und der Automat fliegt in die Luft! Du wurdest durch die Explosion verletzt, aber wenigstens hast du ein paar neue gegenstände erhalten...' =>
+	'Du gießt etwas von der Chemikalie in den Münzschlitz... es gibt einen Knall, und der Automat fliegt in die Luft! Du wurdest durch die Explosion verletzt, aber wenigstens hast du ein paar neue gegenstände erhalten...',
+  'Heilige Scheiße! Du hast ein Wunder verbracht und Wasser in Alkohol verwandelt!' =>
+	'Heilige Scheiße! Du hast ein Wunder verbracht und Wasser in Alkohol verwandelt!',
+  'Verflucht! Nachdem du etwas Schutt aus dem Weg geräumt hast, springt dich ein Zombie an! Wie zur Hölle ist der da nur rein gekommen??' =>
+	'Verflucht! Nachdem du etwas Schutt aus dem Weg geräumt hast, springt dich ein Zombie an! Wie zur Hölle ist der da nur rein gekommen??',
+  'Fahrrad' =>
+	'Fahrrad',
+  'Du kannst hiervon maximal :num gleichzeitig tragen.' =>
+	'Du kannst hiervon maximal :num gleichzeitig tragen.',
+  'Ein simpler Drahtesel, mit dem du jederzeit überall hin kommst! Achtung: Kann nicht verwendet werden, um Zombieschädel zu spalten. Erstens würdest du es damit kaputt machen, zweitens ist es eh viel zu schwer dafür.' =>
+	'Ein simpler Drahtesel, mit dem du jederzeit überall hin kommst! Achtung: Kann nicht verwendet werden, um Zombieschädel zu spalten. Erstens würdest du es damit kaputt machen, zweitens ist es eh viel zu schwer dafür.',
+  'Du kannst diesen Gegenstand mitführen, ohne dass dein Rucksack belastet wird.' =>
+	'Du kannst diesen Gegenstand mitführen, ohne dass dein Rucksack belastet wird.',
+  'ZombVival Item Wettbewerb' =>
+	'ZombVival Item Wettbewerb',
+  'Kaputtes Fahrrad' =>
+	'Kaputtes Fahrrad',
+  'Ein simpler Drahtesel, mit dem du jederzeit überall hin kommst! Nur jetzt gerade nicht, denn es ist kaputt und muss repariert werden. Aber wenn du erstmal ein bisschen Arbeit reingesteckt hast wird es sich sicher lohnen!' =>
+	'Ein simpler Drahtesel, mit dem du jederzeit überall hin kommst! Nur jetzt gerade nicht, denn es ist kaputt und muss repariert werden. Aber wenn du erstmal ein bisschen Arbeit reingesteckt hast wird es sich sicher lohnen!',
+  'Transportmittel' =>
+	'Transportmittel',
+  'Du hast ein Transportmittel gefunden! Jetzt kannst du dich wesentlich leichter in der Welt bewegen!' =>
+	'Du hast ein Transportmittel gefunden! Jetzt kannst du dich wesentlich leichter in der Welt bewegen!',
+  'So ein Mist... dein Fahrrad ist auf dem Weg hierher kaputt gegangen...' =>
+	'So ein Mist... dein Fahrrad ist auf dem Weg hierher kaputt gegangen...',
+  'Fahrrad reparieren' =>
+	'Fahrrad reparieren',
+  'Das war einfacher als du dachtest - dein Fahrrad ist nun wieder einsatzbereit!' =>
+	'Das war einfacher als du dachtest - dein Fahrrad ist nun wieder einsatzbereit!',
+  'Hurra, du hast deinen Hunger (ein bisschen) bekämpft und sogar noch etwas neue Energie erhalten. Die Schachtel ist leer!' =>
+	'Hurra, du hast deinen Hunger (ein bisschen) bekämpft und sogar noch etwas neue Energie erhalten. Die Schachtel ist leer!',
+  'Möchtest du zwei Einheiten dieser Substanz zusammenmischen?' =>
+	'Möchtest du zwei Einheiten dieser Substanz zusammenmischen?',
+  'Du hast einige Anzeigen gesammelt, da du in mehreren Multiplayer-Partien sehr früh gestorben bist. Aus diesem Grund kannst du für eine Weile keinen öffentlichen Multiplayer-Partien mehr beitreten.' =>
+	'Du hast einige Anzeigen gesammelt, da du in mehreren Multiplayer-Partien sehr früh gestorben bist. Aus diesem Grund kannst du für eine Weile keinen öffentlichen Multiplayer-Partien mehr beitreten.',
+  'Du hast gerade eben noch friedlich aus dem Fenster geschaut, jetzt liegst du plötzlich in einem Trümmerhaufen aus Blech und Blut. :name, dieser verblödete Idiot, hat anscheinend einen Unfall gebaut.' =>
+	'Du hast gerade eben noch friedlich aus dem Fenster geschaut, jetzt liegst du plötzlich in einem Trümmerhaufen aus Blech und Blut. :name, dieser verblödete Idiot, hat anscheinend einen Unfall gebaut.',
+  'Hurra, du hast deinen Hunger (ein bisschen) bekämpft und sogar noch etwas neue Energie erhalten. Jetzt sind noch :num Pillen in der Schachtel.' =>
+	'Hurra, du hast deinen Hunger (ein bisschen) bekämpft und sogar noch etwas neue Energie erhalten. Jetzt sind noch :num Pillen in der Schachtel.',
+  'Hurra, du hast deinen Hunger (ein bisschen) bekämpft und sogar noch etwas neue Energie erhalten. In der Schachtel ist nur noch eine Pille. Setze sie mit Bedacht ein!' =>
+	'Hurra, du hast deinen Hunger (ein bisschen) bekämpft und sogar noch etwas neue Energie erhalten. In der Schachtel ist nur noch eine Pille. Setze sie mit Bedacht ein!',
+  'Barrikaden' =>
+	'Barrikaden',
+  'Überlebenstipp #5 gegen Zombieinvasionen: Wenn alle anderen Überlebenstipps versagt haben, bist du ziemlich am Arsch. Also verbarrikadier dich lieber mit allem was du finden kannst!' =>
+	'Überlebenstipp #5 gegen Zombieinvasionen: Wenn alle anderen Überlebenstipps versagt haben, bist du ziemlich am Arsch. Also verbarrikadier dich lieber mit allem was du finden kannst!',
+  'die Kinder' =>
+	'die Kinder',
+  'Heute ist ein trauriger Tag für eure kleine Gemeinschaft, denn sie ist soeben wieder etwas geschrumpft. Die Zombiehorden hingegen haben Zuwachs zu verzeichnen...' =>
+	'Heute ist ein trauriger Tag für eure kleine Gemeinschaft, denn sie ist soeben wieder etwas geschrumpft. Die Zombiehorden hingegen haben Zuwachs zu verzeichnen...',
+  'Event' =>
+	'Event',
+  'Backwaren-Stand' =>
+	'Backwaren-Stand',
+  'Eierpunsch-Stand' =>
+	'Eierpunsch-Stand',
+  'Fleisch-Stand' =>
+	'Fleisch-Stand',
+  'Glühwein-Stand' =>
+	'Glühwein-Stand',
+  'Grill-Stand' =>
+	'Grill-Stand',
+  'Schmalzkuchen-Stand' =>
+	'Schmalzkuchen-Stand',
+  'Süssigkeiten-Stand' =>
+	'Süssigkeiten-Stand',
+  'Weihnachtsdeko-Stand' =>
+	'Weihnachtsdeko-Stand',
+  'Dies ist ein Event-Gegenstand. Er verschwindet, wenn du das Event-Gebiet verlässt oder das Event endet.' =>
+	'Dies ist ein Event-Gegenstand. Er verschwindet, wenn du das Event-Gebiet verlässt oder das Event endet.',
+  'Glühwein' =>
+	'Glühwein',
+  'Ein absolut klassisches Weihnachtsgetränk! Hauptsächlich deshalb, weil man sich im Dezember so viel davon reinschüttet, dass man es die restlichen 11 Monate nicht mehr anrühren kann.' =>
+	'Ein absolut klassisches Weihnachtsgetränk! Hauptsächlich deshalb, weil man sich im Dezember so viel davon reinschüttet, dass man es die restlichen 11 Monate nicht mehr anrühren kann.',
+  'Es ist kalt, und Schnee weht dir ins Gesicht. An diesem Ort scheint ewige Nacht zu herrschen... ' =>
+	'Es ist kalt, und Schnee weht dir ins Gesicht. An diesem Ort scheint ewige Nacht zu herrschen... ',
+  'Tageszeit: Ewige Nacht' =>
+	'Tageszeit: Ewige Nacht',
+  'Eisige Kälte' =>
+	'Eisige Kälte',
+  'Der kalte Wind bläst dir um die Ohren... allzu lange kann du hier nicht bleiben, wenn du nicht erfrieren willst.' =>
+	'Der kalte Wind bläst dir um die Ohren... allzu lange kann du hier nicht bleiben, wenn du nicht erfrieren willst.',
+  'Schaschlik' =>
+	'Schaschlik',
+  'Früher hast du immer gerne versucht zu erraten, ob das Fleisch auf deinem Spieß vom Rind, Schwein oder Lamm stammt... nun, woraus dieses Schaschlik gemacht ist willst du lieber nicht erraten.' =>
+	'Früher hast du immer gerne versucht zu erraten, ob das Fleisch auf deinem Spieß vom Rind, Schwein oder Lamm stammt... nun, woraus dieses Schaschlik gemacht ist willst du lieber nicht erraten.',
+  'Thüringer Bratwurst' =>
+	'Thüringer Bratwurst',
+  '... sieht zumindest so ähnlich aus wie eine Thüringer Bratwurst. Die wirkliche Herkunft dieser Wurst wird wohl für immer ein Mysterium bleiben...' =>
+	'... sieht zumindest so ähnlich aus wie eine Thüringer Bratwurst. Die wirkliche Herkunft dieser Wurst wird wohl für immer ein Mysterium bleiben...',
+  'Kandierte Nüsse' =>
+	'Kandierte Nüsse',
+  'Mutzbraten' =>
+	'Mutzbraten',
+  'Schokolade' =>
+	'Schokolade',
+  'Bonbons' =>
+	'Bonbons',
+  'Diese Süssigkeit weckt schlimme Erinnerungen an deine Kindheit, als dir ein fremder in einer dunklen Gasse seine "ganz speziellen" kandierten Nüsse zeigen wollte...' =>
+	'Diese Süssigkeit weckt schlimme Erinnerungen an deine Kindheit, als dir ein fremder in einer dunklen Gasse seine "ganz speziellen" kandierten Nüsse zeigen wollte...',
+  'Eine lokale Köstlichkeit aus Sachen und Thüringen, die auf keinem Weihnachtsmarkt fehlen darf!' =>
+	'Eine lokale Köstlichkeit aus Sachen und Thüringen, die auf keinem Weihnachtsmarkt fehlen darf!',
+  'An diesem Stand findest du alles, was das hungrige Herz begehrt - vorrausgesetzt, dir machen die zweifelhafte Hygiene und amateurhaft installierten Gasanlagen nichts aus...' =>
+	'An diesem Stand findest du alles, was das hungrige Herz begehrt - vorrausgesetzt, dir machen die zweifelhafte Hygiene und amateurhaft installierten Gasanlagen nichts aus...',
+  'Eierpunsch' =>
+	'Eierpunsch',
+  'Was wäre ein Weihnachtsmarkt ohne weihnachtsliche Getränke? An diesem Stand kannst du dir die nervige Musik und brüllende Kinder schöntrinken.' =>
+	'Was wäre ein Weihnachtsmarkt ohne weihnachtsliche Getränke? An diesem Stand kannst du dir die nervige Musik und brüllende Kinder schöntrinken.',
+  'An diesem Stand konntest du früher allerlei Weihnachtsdekoration kaufen - natürlich in minderer Qualität und zu horrenden Preisen.' =>
+	'An diesem Stand konntest du früher allerlei Weihnachtsdekoration kaufen - natürlich in minderer Qualität und zu horrenden Preisen.',
 );

@@ -114,7 +114,7 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
 		//Create ranking entry if game is rankable and player has more than zero points
 		$this->get_player($uid)->expire($this->set['gamedata']->head->season, $this->set['gameid'], ($this->set['gamedata']->head->rankable && !(isset($this->set['gamedata']->head->contest) && $this->set['gamedata']->head->contest)), $this->set['gamedata']->timing->game_start, $this->set['gamedata']->timing->last_point);
 
-        $this->set["gamedata"]->graveyard[$uid] = $this->get_player($uid)->get_lifetime();
+        $this->set["gamedata"]->graveyard[$uid] = $this->setting_mode(11000) ? $this->get_player($uid)->get_points() : $this->get_player($uid)->get_lifetime();
 		
 		DB::delete('xref_game_player')->where('uid', '=', $uid)->execute();
 
@@ -153,8 +153,11 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
             //Create MP ranking
             if ($this->config('modules.multiplayer') && ($this->set['gamedata']->head->rankable && !(isset($this->set['gamedata']->head->contest) && $this->set['gamedata']->head->contest))) {
                 $sum = 0;
+
                 foreach ($this->set["gamedata"]->graveyard as $points)
-                    $sum += $points;
+                    if ($this->setting_mode(11000))
+                        $sum = max($sum, $points);
+                    else $sum += $points;
                 if ($sum > 0)
                     DB::insert('ranking_mp', array('season', 'board', 'gameid', 'name', 'points'))->values(array($this->set['gamedata']->head->season, $this->set['gamedata']->head->mode, $this->set['gameid'], $this->set['gamedata']->head->name, $sum))->execute();
             }

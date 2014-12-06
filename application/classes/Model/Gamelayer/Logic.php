@@ -9,6 +9,24 @@ abstract class Model_Gamelayer_Logic extends Model_Gamelayer_Io {
 	const MGLS_Drunk  = 16;
 	const MGLS_Sleepy = 32;
 
+
+    public function recalculate_flow() {
+        if ($this->timeflow() != 1) return;
+        $steps = array(15,30,60,120,300,600,900);
+
+        $sum = 0;
+        $players = $this->players(true);
+
+        if (count($players) == 0)
+            return;
+
+        foreach ($players as $p)
+            $sum += $p->vote_time();
+
+        //Reflow
+        $this->reflow_ticks($steps[(int)round($sum/count($players))]);
+    }
+
     /**
      * @param number $location
      * @param Model_Battle_Ghul $obj

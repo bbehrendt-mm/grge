@@ -22,16 +22,19 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
 
         /** @var Model_Places_Abstract_Hideout $location */
         $location = $player->location();
+        /** @noinspection PhpUndefinedMethodInspection */
+        $location_driving = Tool_System::instance_of($location, 'Model_Places_Motorhome') && $location->is_driving();
 
         $tmp = parent::hid();
 
-        $tmp->add_action('Versteck ausbauen ...', Model_Action::factory()
-            ->buttonskin('hideout')
-            ->description('Dein Versteck sieht etwas langweilig aus... du solltest es mit einigen nützlichen Erweiterungen etwas aufpeppen!')
-            ->javascript(Model_Javascript::factory()
-                    ->close_qtip()
-                    ->versa('builder'))
-        , 'hideout_builder');
+        if (!$location_driving)
+            $tmp->add_action('Versteck ausbauen ...', Model_Action::factory()
+                ->buttonskin('hideout')
+                ->description('Dein Versteck sieht etwas langweilig aus... du solltest es mit einigen nützlichen Erweiterungen etwas aufpeppen!')
+                ->javascript(Model_Javascript::factory()
+                        ->close_qtip()
+                        ->versa('builder'))
+            , 'hideout_builder');
 
         if (!$location->home_extensions("hideout", "lv1"))
             return $tmp;
@@ -125,7 +128,7 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
                     ->close_qtip()
                     ->versa('kitchen'))
             , 'hideout_kitchen');
-        if ($location->any_def())
+        if ($location->any_def() && !$location_driving)
             $tmp->add_action('Verteidigung ...', Model_Action::factory()
                 ->buttonskin('hideout')
                 ->description('Zombies oder Zeugen Jehovas stehen an deiner Tür? Nicht mehr lange...')

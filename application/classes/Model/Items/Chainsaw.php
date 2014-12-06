@@ -13,10 +13,12 @@ class Model_Items_Chainsaw extends Model_Battle_Weapon implements Interface_Coun
 	protected static $essential = true;
 	
 	protected static $capacity = 2;
-	public static $range = Array(0,5);
-	protected static $damage = Array(20,20);
-	public static $damage_type = Model_Battle_Weapon::MBW_DMG_SCATTER;
-	protected static $custom_icon = "gas";
+
+    public static       $range = [0,5];
+	protected static    $damage = [20,20];
+	public static       $damage_type = Model_Battle_Weapon::MBW_DMG_SCATTER;
+
+    protected static $custom_icon = "gas";
 	protected static $ammo = 'custom';
 	public static $accuracy = 1;
 	public static $accuracy_type = Model_Battle_Weapon::MBW_ACC_STATIC;

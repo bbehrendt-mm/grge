@@ -3,6 +3,9 @@
 class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
 	
 	protected static $alcohol = 10;
+    protected static $energy = 10;
+    protected static $thirst = 20;
+    protected static $additional_effects = [];
 	protected static $cat = Model_Items_Abstract_Item::MIAI_CAT_FOOD;
 
     protected function hid() {
@@ -13,8 +16,9 @@ class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
                     ->effect(
                         Model_Effect::factory()
                             ->effect(Model_Player::MP_STAT_DRUNK, $a)
-                            ->effect(Model_Player::MP_STAT_ENERGY, 10)
-                            ->effect(Model_Player::MP_STAT_THIRST, 20)
+                            ->effect(Model_Player::MP_STAT_ENERGY, static::$energy)
+                            ->effect(Model_Player::MP_STAT_THIRST, static::$thirst)
+                            ->effect(static::$additional_effects)
                             ->consume($this)
                             ->spawn('Model_Items_Smallbottle')
                             ->message('Das tut gut ... nach einem ordentlichen Drink sieht die Welt gleich weniger apokalyptisch aus!')
@@ -33,9 +37,10 @@ class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
                     ->effect(
                         Model_Effect::factory()
                             ->effect(Model_Player::MP_STAT_DRUNK, $a)
-                            ->effect(Model_Player::MP_STAT_ENERGY, 15)
+                            ->effect(Model_Player::MP_STAT_ENERGY, static::$energy)
                             ->effect(Model_Player::MP_STAT_HEALTH, -static::$alcohol)
-                            ->effect(Model_Player::MP_STAT_THIRST, 20)
+                            ->effect(Model_Player::MP_STAT_THIRST, static::$thirst)
+                            ->effect(static::$additional_effects)
                             ->consume($this)
                             ->spawn('Model_Items_Smallbottle')
                             ->message('Eigentlich kann man ja mit dem Trinken nie früh genug anfangen. Nachdem du die Flasche ausgetrunken hast, stellst du diese Aussage jedoch spontan in Frage - immerhin dreht sich die Welt um dich herum, und dir ist speiübel.')
@@ -43,8 +48,9 @@ class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
                     ->effect(
                         Model_Effect::factory()
                             ->effect(Model_Player::MP_STAT_DRUNK, $a)
-                            ->effect(Model_Player::MP_STAT_ENERGY, 10)
-                            ->effect(Model_Player::MP_STAT_THIRST, 20)
+                            ->effect(Model_Player::MP_STAT_ENERGY, static::$energy)
+                            ->effect(Model_Player::MP_STAT_THIRST, static::$thirst)
+                            ->effect(static::$additional_effects)
                             ->buff('Model_Buffs_Drunk')
                             ->consume($this)
                             ->spawn('Model_Items_Smallbottle')
@@ -54,9 +60,10 @@ class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
                     ->effect(
                         Model_Effect::factory()
                             ->effect(Model_Player::MP_STAT_DRUNK, $a)
-                            ->effect(Model_Player::MP_STAT_ENERGY, 15)
+                            ->effect(Model_Player::MP_STAT_ENERGY, static::$energy)
                             ->effect(Model_Player::MP_STAT_HEALTH, -static::$alcohol)
-                            ->effect(Model_Player::MP_STAT_THIRST, 20)
+                            ->effect(Model_Player::MP_STAT_THIRST, static::$thirst)
+                            ->effect(static::$additional_effects)
                             ->buff('Model_Buffs_Drunk')
                             ->consume($this)
                             ->spawn('Model_Items_Smallbottle')

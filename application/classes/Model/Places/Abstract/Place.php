@@ -8,6 +8,8 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 	protected static $description;
     protected static $outside = true;
 
+    protected static $perpetualDaytime = null;
+
 	protected static $widget_list = Array(
 				'zombie-radar',
 				'mapper',
@@ -48,6 +50,10 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 
     public function register_doorway($lid) {
         $this->doorway[] = $lid;
+    }
+
+    public function getPerpetualDayTime() {
+        return static::$perpetualDaytime;
     }
 
     public function uin($uin = NULL) {
@@ -153,6 +159,16 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
         global $game;
         return ($game->get_player($pid)->can_escape() || $this->zombie_factory->get_zombie_accumulation() <= 0);
 	}
+
+    //Enter map
+    public function can_enter_map($pid = null) {
+        return $this->can_enter($pid);
+    }
+
+    //Leave map
+    public function can_leave_map($pid = null) {
+        return $this->can_leave();
+    }
 	
 	//Enter location
 	public function enter($pid = null) {
@@ -188,6 +204,16 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 		return true;
 	}
 
+    //Enter map
+    public function enter_map($pid = null) {
+        return $this->enter($pid);
+    }
+
+    //Leave map
+    public function leave_map($pid = null) {
+        return $this->leave($pid);
+    }
+
     public function pass($pid = null) {
         $this->log->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_PASS, $pid));
 
@@ -218,7 +244,18 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
          * @global $player Model_Player
          */
 		global $game, $player;
-		
+
+        // Spwan ticket
+        if (Tool_Events::ticket_event($game->next_tick()) && !$player->golden_ticket()) {
+            $num = max(1,mt_rand(1,3) - mt_rand(0,2));
+            $tmp = array();
+            for ($i = 0; $i < $num; $i++)
+                $tmp[] = new Model_Items_Generic_Ticket();
+
+            Tool_Scripts::place_new_item($tmp);
+            $player->golden_ticket(true);
+        }
+
 		if ($player->buff_retr('fragile') || $player->buff_retr('passout')) return true;
 		if ($item = $this->item_factory->spawn($force, 1, Tool_Scripts::calculate_find_chances($player->id())))
 			Tool_Scripts::place_new_item($item);

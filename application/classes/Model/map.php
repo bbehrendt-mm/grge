@@ -37,6 +37,8 @@ class Model_Map {
      */
     private $lib_routing_reverse = Array();
 
+    private $movement_cost_modifier = 1;
+
     public function __construct($map) {
         $this->mapname = $map;
         $this->sub_routing = new Model_Routing();
@@ -44,6 +46,18 @@ class Model_Map {
 
     public function get_mapname() {
         return $this->mapname;
+    }
+
+    /**
+     * Sets the movement cost modifier or returns the current modifier
+     * @param null|number $set
+     * @return int
+     */
+    public function movement_modifier($set = null) {
+        $t = $this->movement_cost_modifier;
+        if ($set !== null)
+            $this->movement_cost_modifier = $set;
+        return $t;
     }
 
     /**

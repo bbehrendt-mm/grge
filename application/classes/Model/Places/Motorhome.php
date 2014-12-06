@@ -55,6 +55,8 @@ class Model_Places_Motorhome extends Model_Places_Home {
             $this->home_extensions("solar", "base", true);
             $this->home_extensions("solar", "generator", true);
             $this->home_extensions("kitchen", "base", true);
+
+            $this->home_extensions("limits", "notrench", true);
             $this->set_decay(0, true);
         }
         return parent::uin($new);
@@ -103,6 +105,7 @@ class Model_Places_Motorhome extends Model_Places_Home {
             $game->config('zombies.accum', $game->config('zombies.accum') + 0.15);
             $game->config('places.dryout_factor', $game->config('places.dryout_factor') + 0.15);
             $game->config('places.outworld.location_density', $game->config('places.outworld.location_density') + 0.05);
+            $game->config('places.outworld.alt_spawn_stranger', false);
         }
 
         if (!$start)
@@ -111,6 +114,11 @@ class Model_Places_Motorhome extends Model_Places_Home {
         else new Model_Buffs_Driver($player->id());
 
         $game->delete_lobby();
+        $this->impaler = 0;
+        if ($this->home_extensions("defense", "fence")) {
+            $this->home_extensions("defense", "fence", false);
+            $this->defense -= 10;
+        }
 
         $this->force_nomap = (!$start && $break);
 
@@ -156,6 +164,7 @@ class Model_Places_Motorhome extends Model_Places_Home {
     public function interaction_repair($arg) {
         global $player;
         if ($this->driving) return false;
+        if ($player->buff_retr('fragile')) return false;
         if (!isset($arg['action']) || !$arg['action'] || !isset($arg['num']) || $arg['num'] <= 0) return false;
 
         foreach ($this->parts as $part => &$data) {
@@ -183,6 +192,8 @@ class Model_Places_Motorhome extends Model_Places_Home {
         global $player;
 
         if ($this->driving)
+            return;
+        if ($player->buff_retr('fragile'))
             return;
 
         if ($player->job(1080)) {
@@ -212,8 +223,11 @@ class Model_Places_Motorhome extends Model_Places_Home {
     }
 
     public function tick() {
-        if (!$this->driving)
+        if (!$this->driving) {
+            foreach (Tool_Scripts::at_location($this->uin()) as $p)
+                $p->buff_remove('fragile/driver');
             return;
+        }
         $this->km += $this->get_speed();
 
         foreach (Tool_Scripts::at_location($this->uin()) as $p)
@@ -268,5 +282,17 @@ class Model_Places_Motorhome extends Model_Places_Home {
 
         if ($this->is_driving())
             $this->zombie_factory()->reset_zombie_population();
+    }
+
+    public function defense_actions() {
+        if ($this->is_driving())
+            return array();
+        else return parent::defense_actions();
+    }
+
+    public function interaction_build($project) {
+        if ($this->is_driving())
+            return false;
+        else return parent::interaction_build($project);
     }
 }	

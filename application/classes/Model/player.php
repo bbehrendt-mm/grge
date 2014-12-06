@@ -10,6 +10,7 @@ class Model_Player extends Model_Cloudshard {
 	const MP_STAT_DRUNK  = 6;
 	const MP_STAT_RADIATION = 7;
     const MP_STAT_ZOMBIFY = 8;
+    const MP_STAT_FREEZE = 9;
 	
 	const MP_THRESHOLD = 512;
 	
@@ -57,6 +58,7 @@ class Model_Player extends Model_Cloudshard {
     private $clock_repaired = false;
 
     private $april = false;
+    private $got_ticket = false;
 
     private $battle_settings = array(
         Model_Player::MP_SETTINGS_BATTLE_NOENERGY => false,
@@ -169,6 +171,12 @@ class Model_Player extends Model_Cloudshard {
         if ($set === null)
             return $this->april;
         else return $this->april = $set;
+    }
+
+    final public function golden_ticket($set = null) {
+        if ($set === null)
+            return $this->got_ticket;
+        else return $this->got_ticket = $set;
     }
 	
 	/**

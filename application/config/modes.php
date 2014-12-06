@@ -7,6 +7,7 @@ return array(
             'type' => 'none',
             'requirements' => array('mode' => array(),'job' => array(),'ext' => array(),'ext_note' => array()),
             'jobs' => array(),
+            'unstartable_jobs' => array(),
             'setup' => array(
                 'inherit' => array(),
                 'config' => array(
@@ -27,6 +28,7 @@ return array(
                     'items.pill.use_default_effect_proc'    => true,
                     'modules.mapping'                       => false,
                     'modules.armory'                        => true,
+                    'modules.additionalchems'               => false,
                     'modules.multiplayer'                   => false,
                     'game.bhav.infections'                  => false,
                     'game.config.map'                       => 'default',
@@ -48,7 +50,7 @@ return array(
             'type' => 'single',
             'requirements' => array('mode' => array(),'job' => array(),'ext' => array(),'ext_note' => array()),
             'jobs' => array(1011, 1012, 1020, 1030, 1040, 1050, 1060, 1070),
-
+            'unstartable_jobs' => array(),
             'setup' => array(
                 'inherit' => array(0),
                 'config' => array(
@@ -82,6 +84,7 @@ return array(
             ),
 
             'jobs' => array(1020, 1030, 1040, 1050, 1060, 1070),
+            'unstartable_jobs' => array(),
 
             'setup' => array(
                 'inherit' => array(1000),
@@ -116,6 +119,8 @@ return array(
             ),
 
             'jobs' => array(2010, 2020, 2030),
+            'unstartable_jobs' => array(),
+
             'setup' => array(
                 'inherit' => array(0),
                 'config' => array(
@@ -154,6 +159,7 @@ return array(
             ),
 
             'jobs' => array(3010, 3020, 3030),
+            'unstartable_jobs' => array(),
 
             'setup' => array(
                 'inherit' => array(0),
@@ -188,6 +194,8 @@ return array(
             ),
 
             'jobs' => array(4010),
+            'unstartable_jobs' => array(),
+
             'setup' => array(
                 'inherit' => array(0),
                 'config' => array(
@@ -216,6 +224,8 @@ return array(
             'requirements' => array('mode' => array(),'job' => array(),'ext' => array(),'ext_note' => array()),
 
             'jobs' => array(10010,10020,10030,10040,1080),
+            'unstartable_jobs' => array(),
+
             'setup' => array(
                 'inherit' => array(0),
                 'config' => array(
@@ -249,6 +259,8 @@ return array(
             'requirements' => array('mode' => array(),'job' => array(),'ext' => array(),'ext_note' => array()),
 
             'jobs' => array(10010,10020,10030,10040,1080),
+            'unstartable_jobs' => array(),
+
             'setup' => array(
                 'inherit' => array(10000),
                 'config' => array(),
@@ -267,6 +279,8 @@ return array(
             'requirements' => array('mode' => array(),'job' => array(),'ext' => array(),'ext_note' => array()),
 
             'jobs' => array(10010,10020,10030,10040,1080),
+            'unstartable_jobs' => array(),
+
             'setup' => array(
                 'inherit' => array(10000),
                 'config' => array(),
@@ -285,11 +299,24 @@ return array(
             'requirements' => array('mode' => array(),'job' => array(10010 => 150),'ext' => array(),'ext_note' => array()),
 
             'jobs' => array(10020,10030,10040,1080),
+            'unstartable_jobs' => array(1080),
+
             'setup' => array(
                 'inherit' => array(10000),
                 'config' => array(
                     'game.config.map' => 'roadtrip_init',
-                    'game.config.itemset' => 'roadtrip_init'
+                    'game.config.itemset' => 'roadtrip',
+
+                    'modules.additionalchems'  => true,
+
+                    'ranking.points.zombie_kills.factor'=> 0,
+                    'ranking.points.zombie_kills.offset'=> 0,
+                    'ranking.points.survival.factor'    => 0,
+                    'ranking.points.survival.offset'    => 0,
+                    'ranking.points.home.factor'        => 1,
+                    'ranking.points.home.offset'        => 0,
+                    'ranking.points.home.stretch'       => 200000,
+                    'ranking.points.home.threshold'     => -15,
                 ),
                 'spawn' => array(),
             ),
@@ -324,8 +351,10 @@ return array(
                         new Model_Buffs_Nuclear();
                         new Model_Buffs_Heartbeat(null, ($mode == 2000) ? 2016 : -1);
                         new Model_Buffs_Backpack();
+                        new Model_Buffs_Transport();
                         new Model_Buffs_Flashlight();
                         new Model_Buffs_Daytime();
+                        new Model_Buffs_Freeze();
 
                         //Clothes
                         $clothes = new Model_Items_Clothes();
@@ -753,7 +782,7 @@ return array(
 
             'levels' => array(),
             'setup' => array('inherit' => array(0), 'f' => function($mode, $level) {
-                    global $player;
+                    global $player, $game;
                     $bottle = new Model_Items_Bottle;
                     $bottle->add_water(2, 16);
                     $player->inventory()->add($bottle);
@@ -761,7 +790,9 @@ return array(
                     $player->inventory()->add(new Model_Items_Paracetoid);
                     $player->inventory()->add(new Model_Items_Paracetin);
                     $player->inventory()->add(new Model_Items_Miniknife);
-                }),
+
+                    $game->map()->add_location('Model_Places_Colosseum');
+            }),
         ),
         10000 => array(
             'setup' => array('inherit' => array(0), 'f' => function($mode, $level) {
@@ -797,7 +828,7 @@ return array(
             ),
 
             'requirements' => array(
-                'mode' => array('1000,1100,3000,4000' => 50),
+                'mode' => array('1000,1100,3000,4000,10000,10100,10200,11000' => 50),
                 'job' => array(10010 => 150),
                 'ext' => array(),
                 'ext_note' => array(),
@@ -818,7 +849,7 @@ return array(
             ),
 
             'requirements' => array(
-                'mode' => array('1000,1100,3000,4000' => 50),
+                'mode' => array('1000,1100,3000,4000,10000,10100,10200,11000' => 50),
                 'job' => array(10010 => 150),
                 'ext' => array(),
                 'ext_note' => array(),
@@ -839,7 +870,7 @@ return array(
             ),
 
             'requirements' => array(
-                'mode' => array('1000,1100,3000,4000' => 50),
+                'mode' => array('1000,1100,3000,4000,10000,10100,10200,11000' => 50),
                 'job' => array(10010 => 150),
                 'ext' => array(),
                 'ext_note' => array(),

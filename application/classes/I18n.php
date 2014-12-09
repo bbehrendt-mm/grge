@@ -16,7 +16,7 @@ if ( !function_exists('__'))
      * @param string $lang source language
      * @return  string
      */
-	function __($string, array $values = null, $lang = 'de-de')
+	function __($string, array $values = null, $lang = null)
 	{
 
         $values = array_merge(empty($values) ? [] : $values, [
@@ -27,13 +27,13 @@ if ( !function_exists('__'))
             '::/b::' => '</b>'
         ]);
 
-		return empty($values) ? I18n::get($string) : strtr(I18n::get($string), $values);
+		return empty($values) ? I18n::get($string, $lang) : strtr(I18n::get($string, $lang), $values);
 	}
 }
 
 if ( !function_exists('__j'))
 {
-    function __j($string, array $values = null, $lang = 'de-de')
+    function __j($string, array $values = null, $lang = null)
     {
         return json_encode(__($string, $values, $lang));
     }
@@ -43,7 +43,49 @@ if ( !function_exists('__j'))
 class I18n extends Kohana_I18n {
 	// Cache of missing strings
 	protected static $cache = array();
+    protected static $missing = array();
+    protected static $got_missing = array();
+
 	protected static $lang_list = array('de', 'en');
+
+    public static function get_all($lang = NULL) {
+        return I18n::load($lang);
+    }
+
+    public static function set($string, $translation, $lang) {
+        $table = I18n::load($lang);
+        if (!isset($table[$string]))
+            return false;
+        $table[$string] = $translation;
+        I18n::toDisk($lang, $table);
+        return true;
+    }
+
+    public static function set_missing($string,$lang) {
+        if (!isset(static::$missing[$lang]))
+            static::$missing[$lang] = [];
+        static::$missing[$lang][$string] = '';
+    }
+
+    public static function get_missing($lang) {
+        if (isset(static::$got_missing[$lang]))
+            return static::$missing[$lang];
+        static::$got_missing[$lang] = true;
+        if (!isset(static::$missing[$lang]))
+            static::$missing[$lang] = [];
+        static::$missing[$lang] = array_merge(I18n::load("auto/$lang"),static::$missing[$lang]);
+        return static::$missing[$lang];
+    }
+
+    public static function remove_missing($string, $lang) {
+        static::get_missing($lang);
+        if (isset(static::$missing[$lang][$string])) {
+            unset(static::$missing[$lang][$string]);
+            I18n::toDisk("auto/$lang", static::$missing[$lang]);
+            return true;
+        }
+        return false;
+    }
 
 	public static function get($string, $lang = NULL, $pool = false) {
 		if (!is_string($string)) return $string;
@@ -59,7 +101,10 @@ class I18n extends Kohana_I18n {
 		// Return the translated string if it exists
 	    if(isset($table[$string])) return $table[$string];
 	    elseif (!$pool) return static::get($string, $lang, true);
-        else return $string;
+        else {
+            static::set_missing($string,$lang);
+            return $string;
+        }
 	}
  
 	private static function toDisk($lang, $table) {
@@ -94,5 +139,8 @@ class I18n extends Kohana_I18n {
    			
    		foreach ($tables as $lang => $table) if (isset($update[$lang]))
    			I18n::toDisk($lang, $table);
+
+        foreach (static::$missing as $lang => $table)
+            I18n::toDisk("auto/$lang", static::get_missing($lang));
 	}
 }

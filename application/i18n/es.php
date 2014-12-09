@@ -468,20 +468,4 @@ return array (
 	'Alle',
   'Quell- und Zielsprache dürfen nicht identisch sein.' =>
 	'Quell- und Zielsprache dürfen nicht identisch sein.',
-  'Voll' =>
-	'Voll',
-  'Kontrollzentrum' =>
-	'Kontrollzentrum',
-  'Übersetzungen' =>
-	'Übersetzungen',
-  'Spanish' =>
-	'Spanish',
-  'Hello, world!' =>
-	'Hello, world!',
-  'Dein Zugangstoken läuft in :sec Sekunde/n (ca. :min Minute/n) ab.' =>
-	'Dein Zugangstoken läuft in :sec Sekunde/n (ca. :min Minute/n) ab.',
-  'Willkommen im Administrationsbereich, :name!' =>
-	'Willkommen im Administrationsbereich, :name!',
-  'Einzelspieler-Modus' =>
-	'Einzelspieler-Modus',
 );

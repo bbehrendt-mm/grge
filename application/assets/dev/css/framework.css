@@ -252,6 +252,10 @@ body {
     color: white;
 }
 
-
+.logo {
+    background-size: contain;
+    background-image: url('media/img/logo.png');
+    background-repeat: no-repeat;
+}
 
 

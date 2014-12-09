@@ -8,7 +8,7 @@ game.network = {
     queries: {},
     ai: 0,
 
-    query: function(url,args,callback) {
+    query: function(url,args,callback, always_callback) {
         var ajax_id = game.network.ai;
         game.network.ai++;
         game.network.queries[ajax_id] = $.ajax(url, {
@@ -48,6 +48,8 @@ game.network = {
                 callback({error: 'GRGE-0001-0000', name: 'E_CLIENT_CONNECTION_TIMEOUT', message: 'Connection timed out.'});
             else callback({error: 'GRGE-0002-0000', name: 'E_SERVER_ERROR', message: 'Unexpected error while processing the request.'});
         }).always(function() {
+            if (always_callback)
+                always_callback();
             game.network.queries[ajax_id] = null;
         });
     },

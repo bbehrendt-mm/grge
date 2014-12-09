@@ -4,6 +4,86 @@ abstract class Controller_Admin_Admin extends Controller {
 
     protected static $force_login = true;
     protected static $force_admin = true;
+    protected static $auto_require = [];
+
+    protected static $admin_data = null;
+
+    protected static function priv_get($user, $pw = null) {
+        if (static::$admin_data === null || $pw) {
+            $data = DB::select('relation','data')->from('admins')->where('user', '=', $user)->execute()->as_array();
+            $enable = ($pw == null);
+            $tmp = [];
+            foreach ($data as $row) {
+                switch ($row['relation']) {
+                    case 'ALLOW':
+                        if (!isset($tmp[$row['data']]))
+                            $tmp[$row['data']] = true;
+                        break;
+                    case 'DENY':
+                        $tmp[$row['data']] = false;
+                        break;
+                    case 'DISABLE':
+                        $enable = false;
+                        break(2);
+                    case 'LOGIN':
+                        $enable = $enable || ($row['data'] == hash('sha256', $pw, false));
+                        break;
+                }
+            }
+            static::$admin_data = $enable ? $tmp : false;
+            return $enable;
+        } else return (bool)static::$admin_data;
+    }
+
+    /**
+     * This function will return true if the current user possesses any of the given permissions AND is denied none of them, or if he has the ROOT permission. If no arguments are given, it will return true.
+     * @param String $args,...
+     * @return bool
+     */
+    protected static function priv_allow_any($args) {
+        if (!static::$admin_data) return false;
+
+        if (!is_array($args))
+            $args = func_get_args();
+
+        if (!$args)
+            return true;
+
+        if (!static::$admin_data)
+            return false;
+        elseif (isset(static::$admin_data['ROOT']) && static::$admin_data['ROOT'])
+            return true;
+        else foreach ($args as $arg)
+            if (isset(static::$admin_data[$arg]) && static::$admin_data[$arg])
+                return true;
+            elseif (isset(static::$admin_data[$arg]) && !static::$admin_data[$arg])
+                return false;
+        return false;
+    }
+
+    /**
+     * This function will return true if the current user possesses all of the given permissions or if he has the ROOT permission. If no arguments are given, it will return true.
+     * @param String $args,...
+     * @return bool
+     */
+    protected static function priv_allow_all($args) {
+        if (!static::$admin_data) return false;
+
+        if (!is_array($args))
+            $args = func_get_args();
+
+        if (!$args)
+            return true;
+
+        if (!static::$admin_data)
+            return false;
+        elseif (isset(static::$admin_data['ROOT']) && static::$admin_data['ROOT'])
+            return true;
+        else foreach ($args as $arg)
+            if (!isset(static::$admin_data[$arg]) || static::$admin_data[$arg])
+                return false;
+        return false;
+    }
 
     public function admin_status_get($refresh = 2) {
 
@@ -36,7 +116,7 @@ abstract class Controller_Admin_Admin extends Controller {
 
     protected function force_admin() {
         Error::i();
-        if (!$this->admin_status_get()) {
+        if (!$this->admin_status_get() || !static::priv_allow_all(static::$auto_require)) {
             if (!$this->is_ajax_request())
                 // Output error message as string
                 die(Error::m(\grge\E_SERVER_ACCESS_DENIED));
@@ -49,10 +129,14 @@ abstract class Controller_Admin_Admin extends Controller {
     }
 
     public function before() {
+        /** @global Model_Euser $user */
+        global $user;
         parent::before();
 
         //Check admin privileges
-        if (static::$force_admin)
+        if ($user && static::$force_admin) {
+            static::priv_get($user->uid());
             $this->force_admin();
+        }
     }
 }

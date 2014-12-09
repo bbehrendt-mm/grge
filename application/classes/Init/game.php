@@ -7,7 +7,7 @@ class Init_Game {
 	}
 	
 	private function init(&$game, &$set, $gameid, $mode, $flow, $speed, $contest = null, $name = null) {
-        if (!($config_data = Controller_Gamestarter::compile_startup_mode($mode)))
+        if (!($config_data = Tool_Gamemodes::compile_startup_mode($mode)))
             throw new Exception('Unable to compile game setup configuration!');
 
 		//Base container

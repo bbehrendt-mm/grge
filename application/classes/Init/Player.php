@@ -33,7 +33,7 @@ class Init_Player {
         $set->maps['main']->get_by_fixed_id(2)->enter();
 		$player->location_class($set->maps['main']->get_by_fixed_id(2)->uin());
 
-        $init = Controller_Gamestarter::compile_startup_job($job);
+        $init = Tool_Gamemodes::compile_startup_job($job);
         $init($game->setting_mode(), $level);
 	}
 }

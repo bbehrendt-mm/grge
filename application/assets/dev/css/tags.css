@@ -51,3 +51,19 @@
 .justify {
       text-align: justify;
 }
+
+.resize-v {
+    resize: vertical;
+}
+
+.resize-h {
+    resize: horizontal;
+}
+
+.resize-hv, .resize-vh, .resize-both, .resize, .resize-h.resize-v {
+    resize: both;
+}
+
+.resize-none {
+    resize: none;
+}

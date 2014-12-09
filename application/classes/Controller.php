@@ -32,6 +32,7 @@ abstract class Controller extends Kohana_Controller {
     protected function force_login() {
         Error::i();
         global $user;
+
         if (!$this->get_user_obj()) {
             if (!$this->is_ajax_request())
                 // Output error message as string

@@ -5,8 +5,13 @@ class Controller_Lobby extends Controller {
     protected static $force_login = true;
 
     public function action_main() {
+        /**
+         * @global Model_EUser $user
+         */
+        global $user;
         $this->add_widget('main-menu',View::factory('menus/logout')->render());
         $this->add_widget(View::factory('pages/main')
+            ->set('ingame', (bool)$user->get_current_game())
             ->render());
         $this->render();
     }

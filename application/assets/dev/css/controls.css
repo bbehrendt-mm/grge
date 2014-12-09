@@ -51,7 +51,7 @@ input[type=checkbox].form_input {
     width: calc(100% - 20px);
 }
 
-.form_input.form_input-disabled, .form_input[disabled], .form_input.disabled {
+.form_input.form_input-disabled, .form_input[disabled], .form_input.disabled, .disabled .form_input {
     background: #e6e6e6;
     color: #808080
     pointer-events: none;
@@ -128,7 +128,7 @@ input[type=checkbox].form_input {
     text-shadow: none;
 }
 
-.btn.btn-disabled, .btn[disabled], .btn.disabled {
+.btn.btn-disabled, .btn[disabled], .btn.disabled, .disabled .btn {
     background: #c8bcbd;
     color: #797979;
     box-shadow: 0 0 1px 1px rgba(188, 188, 188, 0.80) inset, 0 1px 0 rgb(200,200,200);
@@ -141,3 +141,40 @@ input[type=checkbox].form_input {
 .btn.btn-icon.btn-disabled > .btn-icon-inner, .btn.btn-icon[disabled] > .btn-icon-inner {
     background: rgba(255, 255, 255, 0.45);
 }
+
+.tile {
+    margin: 4px;
+    display: inline-block;
+}
+
+.tile > i.fa {
+    display: block;
+    width: 96px;
+    height: 96px;
+    background: #940202;
+    border: 1px solid #520202;
+    padding: 0;
+    font-weight: bold;
+    color: #fff6bf;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.80);
+    border-radius: 3px;
+    box-shadow: 0 0 1px 1px rgba(210, 60, 2, 0.80) inset, 0 1px 0 rgba(0,0,0,.3);
+    text-align: center;
+    line-height: 96px;
+    font-size: 86px;
+    cursor: pointer;
+}
+
+.tile.disabled > i.fa, .disabled .tile > i.fa {
+    background: #c8bcbd;
+    color: #797979;
+    box-shadow: 0 0 1px 1px rgba(188, 188, 188, 0.80) inset, 0 1px 0 rgb(200,200,200);
+    text-shadow: 0 1px 0 rgba(245, 245, 245, 0.80);
+    pointer-events: none;
+    cursor: not-allowed;
+    border: 1px solid #8a8a8a;
+}
+
+.tile:hover > i.fa {
+     background: #bc3402;
+ }

@@ -42,7 +42,7 @@
                 fail_callback();
             } else {
                 game.network.load(data.redirect);
-                game.render.html.notify('smile', game.i18n('Dein Zugangstoken läuft in :sec Sekunde/n (ca. :min Minute/n) ab.', {':sec': data.duration, ':min': Math.round(data.duration/60)}), game.i18n('Willkommen im Administrationsbereich, :name!', {':name': '<?=$user;?>'}), 4000);
+                game.render.html.notify('smile', game.i18n(<?=__j('Dein Zugangstoken läuft in :sec Sekunde/n (ca. :min Minute/n) ab.');?>, {':sec': data.duration, ':min': Math.round(data.duration/60)}), game.i18n(<?=__j('Willkommen im Administrationsbereich, :name!');?>, {':name': '<?=$user;?>'}), 4000);
             }
         });
     };

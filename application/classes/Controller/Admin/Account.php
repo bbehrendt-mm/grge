@@ -5,7 +5,7 @@ class Controller_Admin_Account extends Controller_Admin_Admin {
     protected static $force_admin = false;
 
     public function action_login() {
-        /** @global Model_User $user */
+        /** @global Model_Euser $user */
         global $user;
 
         if ($this->admin_status_get(0)) {
@@ -21,8 +21,14 @@ class Controller_Admin_Account extends Controller_Admin_Admin {
     }
 
     public function japi_login() {
-        //ToDo Actual login
-        if (in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1','::1']))
+        /** @global Model_Euser $user */
+        global $user;
+
+        $pw = $this->request->post('password');
+        if (!$pw)
+            return $this->error(\grge\E_SERVER_LOGIN_REJECTED);
+
+        if (static::priv_get($user->uid(), $pw))
             $this->admin_status_set(30);
 
         if (!$this->admin_status_get(0))

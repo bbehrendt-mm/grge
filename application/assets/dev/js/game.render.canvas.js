@@ -5,7 +5,7 @@ goog.require('game.render');
 game.render.canvas = {
 
     drawHTML: function(html, canvas, callback, error_callback) {
-        rasterizeHTML.drawHTML($('head').html() + '<link rel="stylesheet" type="text/css" href="css/zombvival.canvas.css" />' + html, $(canvas).get(0)).then(callback, error_callback);
+        rasterizeHTML.drawHTML($('head').html() + '<link rel="stylesheet" type="text/css" href="css/zombvival.canvas.css" />' + html, $(canvas).get(0)).then(function() {callback($(canvas).get(0))}, error_callback);
     },
 
     copyHTML: function(element, canvas, callback, error_callback) {
@@ -32,7 +32,7 @@ game.render.canvas = {
             $(canvas).css({
                 position: 'absolute',
                 top: Math.round(offset.top),
-                left: Math.round(offset.left)
+                left: Math.round(offset.left) + 11
             }).appendTo($('body'));
             $(element).css('opacity', 0);
 

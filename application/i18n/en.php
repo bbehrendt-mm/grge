@@ -19,49 +19,49 @@ return array (
   'Login' =>
 	'Login',
   'Willkommen bei ZombVival' =>
-	'Willkommen bei ZombVival',
+	'Welcome to ZombVival',
   'ZombVival ist ein an Die Verdammten von MotionTwin angelehntes, kostenloses Browserspiel. Entwickelt wird es von einem Die Verdammten-Spieler namens Brainbox. In ZombVival kämpfst du als Überlebender einer Zombie-Apokalypse gegen Horden von Untoten, während du die Überreste der Zivilisation nach Nahrung, Waffen und anderen nützlichen Gegenständen durchsuchst. Dein Tod ist gewiss - aber es liegt an dir, ihn so lange wie möglich herauszuzögern! Nebenbei kannst du versuchen, Auszeichnungen zu sammeln und die Spitze diverser Rankings zu erobern!' =>
-	'ZombVival ist ein an Die Verdammten von MotionTwin angelehntes, kostenloses Browserspiel. Entwickelt wird es von einem Die Verdammten-Spieler namens Brainbox. In ZombVival kämpfst du als Überlebender einer Zombie-Apokalypse gegen Horden von Untoten, während du die Überreste der Zivilisation nach Nahrung, Waffen und anderen nützlichen Gegenständen durchsuchst. Dein Tod ist gewiss - aber es liegt an dir, ihn so lange wie möglich herauszuzögern! Nebenbei kannst du versuchen, Auszeichnungen zu sammeln und die Spitze diverser Rankings zu erobern!',
+	'ZombVival is a free browser game modeled on Die2Nite by Motion Twin. It\'s being developed by a player named Brainbox. In ZombVival you fight as a survivor of a zombie apocalypse against hordes of the undead, while searching the remains of civilization for food, weapons and other useful items. Your death is certain - but it\'s up to delay it as long as possible! Meanwhile, you can try to collect awards and to conquer the top of various rankings!',
   'Logge dich über deinen ::i::Twinoid::/i::-Account ein!' =>
 	'Simply log in using your ::i::Twinoid::/i:: account!',
   'Bitte wähle, welches ::i::Motion-Twin::/i::-Spiel du für den Login nutzen möchtest.' =>
-	'Bitte wähle, welches ::i::Motion-Twin::/i::-Spiel du für den Login nutzen möchtest.',
+	'Please choose the ::i::Motion Twin::/i:: game you want to use to log in.',
   'Um deinen geheimen Schlüssel zu erhalten, musst du ZombVival über das ::b::Verzeichnis::/b:: von ::i::Die Verdammten::/i:: betreten.' =>
-	'Um deinen geheimen Schlüssel zu erhalten, musst du ZombVival über das ::b::Verzeichnis::/b:: von ::i::Die Verdammten::/i:: betreten.',
+	'To obtain your secret key, please visit ZombVival via the ::b::Die2Nite Directory::/b::.',
   'Geheimer Schlüssel' =>
 	'Secret key',
   'Aktiviere diese Option, wenn du möchtest, dass deine Daten beim nächsten Besuch von ZombVival automatisch eingetragen werden. ::b::Aktiviere diese Option nicht, wenn du einen öffentlichen Computer verwendest!::/b::' =>
-	'Aktiviere diese Option, wenn du möchtest, dass deine Daten beim nächsten Besuch von ZombVival automatisch eingetragen werden. ::b::Aktiviere diese Option nicht, wenn du einen öffentlichen Computer verwendest!::/b::',
+	'Enable this option if you want your data entered automatically on your next visit. ::b::Don\'t enable this option if you are using a public computer!::/b::',
   'Einloggen' =>
-	'Einloggen',
+	'Log in',
   'Gespeicherte Daten löschen' =>
-	'Gespeicherte Daten löschen',
+	'Delete stored data',
   'Anderer Account' =>
-	'Anderer Account',
+	'Other Account',
   'Die Zombies freuen sich schon darauf, dich zu sehen...' =>
-	'Die Zombies freuen sich schon darauf, dich zu sehen...',
+	'The zombies are waiting for you...',
   'Willkommen, :name!' =>
-	'Willkommen, :name!',
+	'Welcome, :name!',
   'Bist du sicher?' =>
-	'Bist du sicher?',
+	'Are you sure?',
   'Bitte gib deinen Geheimen Schlüssel ein.' =>
-	'Bitte gib deinen Geheimen Schlüssel ein.',
+	'Please enter your secret key.',
   'Bitte warten...' =>
-	'Bitte warten...',
+	'Please wait...',
   'Ranking' =>
 	'Ranking',
   'Logout' =>
 	'Log Out',
   'Komm bald zurück! Die Zombies fühlen sich sonst so einsam...' =>
-	'Komm bald zurück! Die Zombies fühlen sich sonst so einsam...',
+	'Please come back soon! The zombies are going to get lonely...',
   'Bis bald!' =>
-	'Bis bald!',
+	'See you!',
   'Die Seite konnte nicht geladen werden!' =>
-	'Die Seite konnte nicht geladen werden!',
+	'The page could not be displayed.',
   'Leider wurde diese Seite noch nicht für ::b::ZombVival Evolution::/b:: überarbeitet. Bitte kehre zur ::i::klassischen ZombVival-Webseite::/i:: zurück, um diese Seite aufzurufen.' =>
-	'Leider wurde diese Seite noch nicht für ::b::ZombVival Evolution::/b:: überarbeitet. Bitte kehre zur ::i::klassischen ZombVival-Webseite::/i:: zurück, um diese Seite aufzurufen.',
+	'Sorry, this page has not been updated for ::b::ZombVival Evolution::/b::. Please return to the ::i::classic ZombVival website::/i:: to access this page.',
   'Zur klassischen Webseite' =>
-	'Zur klassischen Webseite',
+	'Back to the classic page',
   'Hardcore' =>
 	'Hardcore',
   'Zombie-Massaker' =>
@@ -83,15 +83,15 @@ return array (
   'Season :num' =>
 	'Season :num',
   'Zum Anfang' =>
-	'Zum Anfang',
+	'Jump to Start',
   'Eine Seite zurück' =>
-	'Eine Seite zurück',
+	'Back',
   'Zu bestimmter Seite springen' =>
-	'Zu bestimmter Seite springen',
+	'Jump to Page',
   'Eine Seite weiter' =>
-	'Eine Seite weiter',
+	'Next',
   'Zum Ende' =>
-	'Zum Ende',
+	'Jump to End',
   'Klassischer Zeitfluss' =>
 	'Classic time flow',
   'Variabler Zeitfluss' =>
@@ -111,11 +111,11 @@ return array (
   'Es wurden keine Spiele im Ranking gefunden, die deinen Suchkriterien entsprechen.' =>
 	'There seems to be an alarming amount of emptyness in this ranking... better try a different filter.',
   'Überlebt' =>
-	'Überlebt',
+	'Survived',
   'Zu welcher Seite möchtest du springen?' =>
-	'Zu welcher Seite möchtest du springen?',
+	'Jump to which page?',
   'Seite :c/:m' =>
-	'Seite :c/:m',
+	'Page :c/:m',
   'Frauenrechtlerin' =>
 	'Woman Rights Activist',
   'Medizinstudent' =>
@@ -161,7 +161,7 @@ return array (
   'Kontakt' =>
 	'Contact',
   'Verwende deinen :name-Account' =>
-	'Verwende deinen :name-Account',
+	'Use your :name account',
   'Unable to find a route to match the URI: :uri' =>
 	'Unable to find a route to match the URI: :uri',
   'Environment' =>
@@ -183,31 +183,31 @@ return array (
   'Football-Coach' =>
 	'Football Coach',
   'Der Nachrichtendienst steht derzeit nicht zur Verfügung.' =>
-	'Der Nachrichtendienst steht derzeit nicht zur Verfügung.',
+	'The news service is not available right now.',
   'Erneut versuchen' =>
-	'Erneut versuchen',
+	'Retry',
   'Keine Kommentare' =>
-	'Keine Kommentare',
+	'No comments',
   '1 Kommentar' =>
-	'1 Kommentar',
+	'1 comment',
   ':num Kommentare' =>
-	':num Kommentare',
+	':num comments',
   'Es gibt gerade nichts Neues.' =>
-	'Es gibt gerade nichts Neues.',
+	'There is nothing new right now.',
   'Es gibt keine weiteren Neuigkeiten.' =>
-	'Es gibt keine weiteren Neuigkeiten.',
+	'There are no further news.',
   'Ältere Artikel anzeigen' =>
 	'Show older articles',
   'Backend-Login' =>
-	'Backend-Login',
+	'Backend Login',
   'ZombVival Backend' =>
 	'ZombVival Backend',
   'Hier gehts für dich vermutlich erstmal nicht weiter. Das ZombVival-Backend ist ausschließlich für Moderatoren und Administratoren gedacht. ::b::Bitte versuche nicht, dich hier einzuloggen, wenn du nicht genau weist was du tust!::/b::' =>
-	'Hier gehts für dich vermutlich erstmal nicht weiter. Das ZombVival-Backend ist ausschließlich für Moderatoren und Administratoren gedacht. ::b::Bitte versuche nicht, dich hier einzuloggen, wenn du nicht genau weist was du tust!::/b::',
+	'Nothing to see here, people. The ZombVival Backend is an interface for administrators and moderators. ::b::Please do not try to log in here unless you know what you\'re doing.::/b::',
   'Backend-Passwort' =>
-	'Backend-Passwort',
+	'Backend Passwort',
   'Bitte gib dein Passwort ein.' =>
-	'Bitte gib dein Passwort ein.',
+	'Please enter your password.',
   'Error reading session data.' =>
 	'Error reading session data.',
   'Ziel: Überleben! Mal sehen wie lange das gut geht.' =>
@@ -221,15 +221,15 @@ return array (
   'Du vs. Zombies! Das ist das ultimative Kräftemessen!' =>
 	'You against Zombies - the ultimate test of strenght!',
   ':min bis :max Spieler' =>
-	':min bis :max Spieler',
+	':min to :max Players',
   'In einer gemütlichen Runde gemeinsam sterben.' =>
 	'Have fun dying with your friends!',
   'Der Modus für Spieler mit vielen Freunden.' =>
 	'Lots of friends? Lots of zombie fodder!',
   'Immer auf der Flucht vor Zombies' =>
-	'Immer auf der Flucht vor Zombies',
+	'Always on the run from zombies',
   'Kommentieren' =>
-	'Kommentieren',
+	'Comment',
   'Ein ganz normaler, sympathischer Kerl.' =>
 	'Just your average, sympathetic guy.',
   'Eine ganz normale, sympathische Frau.' =>
@@ -253,7 +253,7 @@ return array (
   'Berserker' =>
 	'Berserker',
   'Mit dieser Einstellung startest du dein Spiel mit einer einzigartigen, besonders starken Machete.' =>
-	'Mit dieser Einstellung startest du dein Spiel mit einer einzigartigen, besonders starken Machete.',
+	'With this setting, you start your game with an unique and strong machete.',
   'Eiskalter Killer' =>
 	'Ice-cold killer',
   'Mit dieser Einstellung startest du dein Spiel mit einem einzigartigen, besonders starken Batteriewerfer.' =>
@@ -285,39 +285,39 @@ return array (
   'Du bist eine Meisterin, lautstark gegen alles und jeden zu hetzen der dir nicht in den Kram passt - der einzige Grund, warum deine Mitüberlebenden dir noch keine Rohrzange über den Schädel gezogen haben, ist dass du dir in schöner Regelmäßigkeit Sprüche auf die Titten schreibst und dann stundenlang oben ohne gegen die Zombies protestierst. Dank deiner kratzfreudigen Fingernägel und dem Endlos-Vorrat Pfefferspray bist du aber auch im Kampf ganz brauchbar.' =>
 	'You\'re really good at protesting pretty much anything that you don\'t approve of - the only reason why you didn\'t end as zombie bait is the fact that you regularly run around topless while protesting the male dominance in the undead hordes. Your sharp nails and the endless amound of pepper spray you can dispense also make you an effective fighter.',
   ':num Seelenpunkte' =>
-	':num Seelenpunkte',
+	':num Soul Points',
   'Spielen' =>
 	'Play',
   'noch :num Plätze frei' =>
-	'noch :num Plätze frei',
+	':num free slots',
   'Passwort eingeben' =>
-	'Passwort eingeben',
+	'Enter password',
   'Kein Passwort verwenden' =>
-	'Kein Passwort verwenden',
+	'Don\'t use password protection',
   'Passwort generieren' =>
-	'Passwort generieren',
+	'Generate password',
   'Weiter' =>
 	'Continue',
   'Wenn du dein Spiel mit einem Passwort schützt, können nur Spieler beitreten, die dieses Passwort kennen. Denk daran, dir das Passwort zu notieren, denn nach der Erzeugung des Spiels kannst du es nicht mehr einsehen! Entscheidest du dich gegen die Verwendung eines Passworts, wird dein Spiel öffentlich zugänglich. Spieler, die aufgrund von Beschwerden nicht mehr an öffentlichen Spielen teilnehmen können, dürfen deinem Spiel dann nicht mehr beitreten.' =>
-	'Wenn du dein Spiel mit einem Passwort schützt, können nur Spieler beitreten, die dieses Passwort kennen. Denk daran, dir das Passwort zu notieren, denn nach der Erzeugung des Spiels kannst du es nicht mehr einsehen! Entscheidest du dich gegen die Verwendung eines Passworts, wird dein Spiel öffentlich zugänglich. Spieler, die aufgrund von Beschwerden nicht mehr an öffentlichen Spielen teilnehmen können, dürfen deinem Spiel dann nicht mehr beitreten.',
+	'If you protect your game with a password, only players who know the password can join. Remember to write down the password, because after the creation of the game you won\'t be able to bring it back up! If you decide not to use a password, your game will be available to the public. Players who are no longer able to participate in public games due to complaints may not join your game.',
   'Über den Passwortschutz' =>
-	'Über den Passwortschutz',
+	'About password protection',
   'Mehrspieler-Lobby' =>
-	'Mehrspieler-Lobby',
+	'Multiplayer Lobby',
   'Hier findest du offene Mehrspieler-Partien, denen du beitreten kannst. Ist eine Partie voll, so wird sie automatisch aus dieser Liste entfernt.' =>
-	'Hier findest du offene Mehrspieler-Partien, denen du beitreten kannst. Ist eine Partie voll, so wird sie automatisch aus dieser Liste entfernt.',
+	'Here, you\'ll find a list of open multiplayer parties. Once a partie is full, it will be removed from this list.',
   'Beschwerden' =>
-	'Beschwerden',
+	'Complaints',
   'Beschwerden sind eine automatisierte Maßnahme, um gegen Griefer im Spiel vorzugehen. Wenn du in einer Mehrspieler-Partie frühzeitig stirbst erhälst du eine Beschwerde, die nach einer gewissen Zeit wieder verschwindet. Hast du mehr als :max aktive Beschwerden angehäuft, kannst du öffentlichen Partien nicht mehr beitreten. Du kannst allerdings weiterhin eigene Spiele starten und passwortgeschützten Partien beitreten.' =>
-	'Beschwerden sind eine automatisierte Maßnahme, um gegen Griefer im Spiel vorzugehen. Wenn du in einer Mehrspieler-Partie frühzeitig stirbst erhälst du eine Beschwerde, die nach einer gewissen Zeit wieder verschwindet. Hast du mehr als :max aktive Beschwerden angehäuft, kannst du öffentlichen Partien nicht mehr beitreten. Du kannst allerdings weiterhin eigene Spiele starten und passwortgeschützten Partien beitreten.',
+	'Complaints are an automated measure to combat griefers in the game. If you die early in a multiplayer game, you\'ll get a complaint which disappears after a certain period of time. Once you have accumulated more than :max active complaints, you can no longer join public games. You can, however, continue to launch own games or join password protected parties.',
   'Du hast momentan ::b:::num::/b:: aktive Beschwerden!' =>
-	'Du hast momentan ::b:::num::/b:: aktive Beschwerden!',
+	'You have ::b:::num::/b:: active complaints.',
   'Da du zuviele Beschwerden angehäuft hast, kannst du bis :time nicht mehr an öffentlichen Pastien teilnehmen!' =>
-	'Da du zuviele Beschwerden angehäuft hast, kannst du bis :time nicht mehr an öffentlichen Pastien teilnehmen!',
+	'Since you have accumulated to many complaints, you can no longer join public games until :time.',
   'Kein Passwort' =>
-	'Kein Passwort',
+	'No password',
   'Passwort ":pw"' =>
-	'Passwort ":pw"',
+	'Password ":pw"',
   'Jaja, ihr habt mich überredet.' =>
 	'Yes, OK, you got me! Shut up!',
   'Minuten' =>
@@ -355,11 +355,11 @@ return array (
   'Ohmeingottwokam dasdennjetzther???' =>
 	'Theflyingfuck whatjusthappened???',
   'Der Fluss der Zeit' =>
-	'Der Fluss der Zeit',
+	'The Flow of Time',
   'Der Lauf der Zeit ist in ZombVival in sog. "Ticks" organisiert. Oben rechts auf der Seite wird ein Countdown bis zum nächsten Tick eingeblendet. Bei jedem Tick wird dein Status neu berechnet, außerdem gibt es eine Chance das Dinge geschehen. Wenn du beispielsweise in der Umgebung deines Verstecks stehst, hast du bei jedem Tick die Chance eine Ruine aufzudecken. Bist du in einer Ruine, hast du die Chance einen Gegenstand zu finden und/oder von Zombies attackiert zu werden.' =>
-	'Der Lauf der Zeit ist in ZombVival in sog. "Ticks" organisiert. Oben rechts auf der Seite wird ein Countdown bis zum nächsten Tick eingeblendet. Bei jedem Tick wird dein Status neu berechnet, außerdem gibt es eine Chance das Dinge geschehen. Wenn du beispielsweise in der Umgebung deines Verstecks stehst, hast du bei jedem Tick die Chance eine Ruine aufzudecken. Bist du in einer Ruine, hast du die Chance einen Gegenstand zu finden und/oder von Zombies attackiert zu werden.',
+	'The passage of time in ZombVival is organized in so-called. "Ticks". At the top right of the page, a countdown to the next tick will be displayed. With every tick, your status is recalculated and there is a chance that things happen. If you, for example, happen to be in the Wasteland around your Hideout, you have the chance to discover a ruin at every tick. Are you in a ruin, you have the chance to find an item and / or being attacked by zombies.',
   'Ein "Tick" entspricht 5 Minuten Spielzeit. Hast du bei den Spieleinstellungen einen klassischen, festen Zeitfluss gewählt, so musst du direkt beim Start eines Spiels festlegen, wie lange ein Tick in echter Zeit dauern soll. Stellst du dort beispielsweise 1 Minute ein, so läuft das Spiel in 5-facher Geschwindigkeit. Hast du den variablen Zeitfluss gewählt, so kannst du die Geschwindigkeit während des Spiels ändern. Beim klassischen Zeitfluss hingegen hast du jederzeit die Möglichkeit, das Spiel vollständig zu pausieren. Ist das Spiel pausiert, kannst du keinerlei Aktionen durchführen. Dafür werden auch die Ticks angehalten.' =>
-	'Ein "Tick" entspricht 5 Minuten Spielzeit. Hast du bei den Spieleinstellungen einen klassischen, festen Zeitfluss gewählt, so musst du direkt beim Start eines Spiels festlegen, wie lange ein Tick in echter Zeit dauern soll. Stellst du dort beispielsweise 1 Minute ein, so läuft das Spiel in 5-facher Geschwindigkeit. Hast du den variablen Zeitfluss gewählt, so kannst du die Geschwindigkeit während des Spiels ändern. Beim klassischen Zeitfluss hingegen hast du jederzeit die Möglichkeit, das Spiel vollständig zu pausieren. Ist das Spiel pausiert, kannst du keinerlei Aktionen durchführen. Dafür werden auch die Ticks angehalten.',
+	'A "tick" is equivalent to 5 minutes of game time. There are two different time flow modes; classic and variable. If you choose the classic mode, you\'ll have to specify the actual length of a tick at the start of your game. You can not change the speed later on, but you do have the possibility to pause the game entirely. With the variable mode, you can change the speed during gameplay, but you can no longer completely pause the game.',
   'Der Weltuntergang wartet.' =>
 	'The apocalypse awaits.',
   'Du willst die Zombies doch nicht enttäuschen, oder?' =>
@@ -371,23 +371,23 @@ return array (
   'Oder bist du wirklich so eine Lusche wie alle sagen?' =>
 	'Or do you just suck as bad as like everyone says?',
   'Jetzt, wo ich so drüber nachdenke...' =>
-	'Jetzt, wo ich so drüber nachdenke...',
+	'Well, if you put it like this...',
   'Auf geht\'s!' =>
 	'Let\'s go!',
   'Du hängst doch nicht wirklich an deinem Leben, oder?' =>
 	'Your life sucks anyways, right?',
   'Öhm... ich spiele doch lieber weiter WoW' =>
-	'Öhm... ich spiele doch lieber weiter WoW',
+	'Um... can\'t I just play WoW insead?',
   'Oder hast du doch zu viel Angst?' =>
 	'Or are you afraid?',
   'Nein, danke' =>
-	'Nein, danke',
+	'No, thanks',
   'Die Zombies warten schon sehnsüchtig auf dich.' =>
 	'The zombies are waiting vor you... eagerly!',
   'Oder traust du dich nur in Spiele, bei denen man sich Vorteile erkaufen kann?' =>
 	'Or are you afraid of a game where you can\'t buy advantages?',
   'Mir fällt gerade ein, ich hab den Ofen angelassen...' =>
-	'Mir fällt gerade ein, ich hab den Ofen angelassen...',
+	'You know, I think I forgot to turn off the stove...',
   'Oder willst du lieber weiter mit deinen Barbiepuppen spielen?' =>
 	'Or would you rather play with your barbie dolls?',
   'Oder willst du deine Zeit lieber mit etwas sinnvollem verbringen?' =>
@@ -395,23 +395,93 @@ return array (
   'Mario, die Prinzessin wurde entführt! .... Oh halt, falsches Spiel.' =>
 	'Mario, the princess has been kidnapped! .... Oh wait, wrong game.',
   'Spielnamen eingeben' =>
-	'Spielnamen eingeben',
+	'Enter game name',
   'Es ist Fütterungszeit...' =>
 	'It is feeding time...',
   'Bitte gib deiner Partie einen Namen.' =>
-	'Bitte gib deiner Partie einen Namen.',
+	'Please name your partie.',
   'Du musst ein Passwort eingeben, um dieser Partie beitreten zu können!' =>
-	'Du musst ein Passwort eingeben, um dieser Partie beitreten zu können!',
+	'You\'ll have to enter a password to join this game.',
   'Passwort bestätigt' =>
-	'Passwort bestätigt',
+	'Password confirmed',
   ':n Spieler' =>
-	':n Spieler',
+	':n Players',
   'Dein Spielname muss mindestens 4 Zeichen lang sein.' =>
-	'Dein Spielname muss mindestens 4 Zeichen lang sein.',
+	'Your game name has to be at least 4 characters long.',
   'Validiere...' =>
-	'Validiere...',
+	'Validating...',
   'Das angegebene Passwort war leider nicht korrekt. Bitte prüfe deine Eingabe und versuche es erneut.' =>
-	'Das angegebene Passwort war leider nicht korrekt. Bitte prüfe deine Eingabe und versuche es erneut.',
+	'Your password was incorrect. Please try again.',
   'Dein Passwort wurde akzeptiert.' =>
-	'Dein Passwort wurde akzeptiert.',
+	'Your password has been accepted.',
+  'Zurück zum Spiel' =>
+	'Back to the game',
+  'ZombVival kann im Mehrspieler-Modus nur Spaß machen, wenn sich alle Spieler fair verhalten. Bitte behandle deine Mitspieler so, wie du selbst behandelt werden möchtest. Fehlverhalten anderer Spieler kannst du jederzeit an Brainbox melden.' =>
+	'ZombVival can only be fun if everyone plays fair. Please tread your fellow players the same way you would want to be treated. If you encounter someone you think is playing unfairly, please inform Brainbox.',
+  'Ein Spiel starten' =>
+	'Start a new game',
+  'Lobby' =>
+	'Lobby',
+  'Tritt einer Mehrspieler-Partie bei...' =>
+	'Join an existing game...',
+  '...  oder eröffne eine eigene Einzel- oder Mehrspieler-Partie!' =>
+	'...  or create your own!',
+  'Dieses Spiel erfordert ein Passwort.' =>
+	'This game requires a password.',
+  'Spieleinstellungen' =>
+	'Game Settings',
+  'Wähle deinen Beruf!' =>
+	'Choose a profession!',
+  'Wähle eine Spielgeschwindigkeit!' =>
+	'Choose a game speed!',
+  'Kanns losgehen?' =>
+	'Ready?',
+  'Benutzer' =>
+	'User',
+  'Login-Gültigkeit' =>
+	'Login Validity',
+  ':s Sekunden (ca. :m Minuten)' =>
+	':s seconds (approx. :m minutes)',
+  'Admin-Token zurückziehen' =>
+	'Revoke Access Token',
+  'Ausloggen' =>
+	'Log Out',
+  'Lade Cache' =>
+	'Load Cache',
+  'Autosuche' =>
+	'Autosearch',
+  'Suchbegriff eingeben...' =>
+	'Search for...',
+  'Suche' =>
+	'Search',
+  'Es wurden keine Übersetzungen gefunden.' =>
+	'No translations found.',
+  'Deine Übersetzung wurde erfolgreich gespeichert.' =>
+	'Your translation was saved successfully.',
+  'Vielen Dank!' =>
+	'Thank you!',
+  'Ein Fehler ist aufgetreten...' =>
+	'An errror occured...',
+  'Oops' =>
+	'Oops',
+  'Alle' =>
+	'Everyone',
+  'Quell- und Zielsprache dürfen nicht identisch sein.' =>
+	'Source- and translation language must not be identical.',
+  'Voll' =>
+	'Full',
+  'Kontrollzentrum' =>
+	'Control Center',
+  'Übersetzungen' =>
+	'Translations',
+  'Spanish' =>
+	'Spanish',
+  'Hello, world!' =>
+	'Hello, world!',
+  'Dein Zugangstoken läuft in :sec Sekunde/n (ca. :min Minute/n) ab.' =>
+	'You access token will be revoked in :sec second/s (approx :min minute/s).',
+  'Willkommen im Administrationsbereich, :name!' =>
+	'Welcome to the Control Panel, :name!',
+  'Einzelspieler-Modus' =>
+	'Singleplayer',
 );

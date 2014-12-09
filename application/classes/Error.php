@@ -26,6 +26,11 @@ define('grge\E_EXT_SERVICE_UNAVAILABLE', 'GRGE-0004-0000');
 
 define('grge\E_STARTER_GAME_RUNNING', 'GRGE-0005-0000');
 define('grge\E_STARTER_INVALID_SETUP', 'GRGE-0005-0001');
+define('grge\E_STARTER_CREATION_FAILED', 'GRGE-0005-0002');
+define('grge\E_STARTER_JOIN_FAILED', 'GRGE-0005-0003');
+define('grge\E_STARTER_PLAYER_BANNED', 'GRGE-0005-0004');
+define('grge\E_STARTER_FETCH_FAILED', 'GRGE-0005-0005');
+define('grge\E_STARTER_LOBBY_UPDATE_FAILURE', 'GRGE-0005-0006');
 
 class Error {
 
@@ -76,6 +81,11 @@ class Error {
 
             case grge\E_STARTER_GAME_RUNNING:           return "Game Starter is unable to initialize while in game client mode.";
             case grge\E_STARTER_INVALID_SETUP:          return "Your game setup is invalid.";
+            case grge\E_STARTER_CREATION_FAILED:        return "An error occurred during population and storage of the initialized game.";
+            case grge\E_STARTER_JOIN_FAILED:            return "An error occurred during pairing game and user account.";
+            case grge\E_STARTER_PLAYER_BANNED:          return "You have been banned from playing using this game setup.";
+            case grge\E_STARTER_FETCH_FAILED:           return "An error occurred during retrieving the selected game from database.";
+            case grge\E_STARTER_LOBBY_UPDATE_FAILURE:   return "The game lobby could not be updated.";
 
             default:                                    return "Undocumented error.";
         }

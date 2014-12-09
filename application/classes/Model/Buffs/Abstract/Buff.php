@@ -180,7 +180,7 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
      * @return int
      */
     public function effect($stat, $type) {
-		if (isset($this->effects[$stat]))
+		if (isset($this->effects[$stat]) && isset($this->effects[$stat][$type]))
 			 return $this->effects[$stat][$type];
 		else return 0;
 	}

@@ -1,15 +1,20 @@
+<?php
+/**
+ * @var bool $ingame If user is in a game
+ */
+?>
 <h1 class="noclick"><i class="fa fa-arrow-circle-right"></i><?=__('Neuigkeiten')?></h1>
 
 <div class="row">
     <div class="cell rw-12 padded">
-        <div class="btn" id="game-btn">Spielen</div><br />
+        <div class="btn" id="game-btn"><?=$ingame ? __('Zurück zum Spiel') : __('Ein Spiel starten') ?></div><br />
         <div id="newsboard"></div>
     </div>
 
 </div>
 <script type="application/javascript">
     $('#game-btn').click(function() {
-        game.network.load('gamemaster/lobby');
+        game.network.load('<?=$ingame ? 'game/redirect' : 'gamemaster/lobby' ?>');
     });
 
     var load_news = function(p, first) {

@@ -21,7 +21,7 @@ abstract class Controller extends Kohana_Controller {
             die(Error::m(\grge\E_HTTP_AJAX_REQUIRED));
     }
 
-    protected function get_user_obj() {
+    private function get_user_obj() {
         global $user;
         if (empty($user))
             $user = $this->session->get('user',NULL);
@@ -29,11 +29,15 @@ abstract class Controller extends Kohana_Controller {
         return !empty($user);
     }
 
-    protected function force_login() {
-        Error::i();
+    private function force_login() {
+        /** @global Model_Euser $user */
         global $user;
 
-        if (!$this->get_user_obj()) {
+        if (!$this->get_user_obj() || !$user->valid()) {
+            Session::instance()->destroy();
+            unset($GLOBALS['game']);
+            unset($GLOBALS['user']);
+
             if (!$this->is_ajax_request())
                 // Output error message as string
                 die(Error::m(\grge\E_SERVER_INVALID_SESSION));

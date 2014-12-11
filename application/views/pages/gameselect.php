@@ -433,10 +433,11 @@
             tmp_obj[v.name] = v.value;
         });
 
+        var layer = $('<div />');
         $('#wrapper,#navbar,#disclaimer').addClass('disabled').animate({
             opacity: 0
         },100, 'swing', function() {
-            var layer = $('<div />').css({
+            layer.css({
                 position: 'fixed',
                 width: $(document).width()/2,
                 height: 413 * (($(document).width()/2)/1280),
@@ -451,26 +452,27 @@
                 opacity: 1,
                 top: 300,
                 transform: 'scale(1)'
-            }, 4000, 'swing', function() {
-                game.network.query('japi/gamemaster/start', tmp_obj, function(data) {
-                    if (data.error) {
-                        alert(data.error.code + ' [' + data.error.name + ']: ' + data.error.message);
-                    } else
-                        game.network.load(data.redirect);
-                }, function() {
-                    layer.animate({
-                        opacity: 0,
-                        transform: 'scale(2)',
-                        top: 400
-                    }, 300, 'swing', function() {
-                        layer.remove();
-                        $('#wrapper,#navbar,#disclaimer').removeClass('disabled').animate({
-                            opacity: 1
-                        },200);
-                    });
-                });
-            })
+            }, 4000, 'swing');
         });
+
+        setTimeout(function() {
+            game.network.query('japi/gamemaster/start', tmp_obj, function(data) {
+            if (data.error) {
+                alert(data.error.code + ' [' + data.error.name + ']: ' + data.error.message);
+            } else
+                game.network.load(data.redirect);
+            }, function() {
+                layer.animate({
+                    opacity: 0,
+                    transform: 'scale(2)',
+                    top: 400
+                }, 300, 'swing', function() {
+                    layer.remove();
+                    $('#wrapper,#navbar,#disclaimer').removeClass('disabled').animate({
+                        opacity: 1
+                    },200);
+                });
+            })}, 4000);
     });
 
     $('#lang_in').val(game.lang()).selectric({

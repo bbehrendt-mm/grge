@@ -44,7 +44,7 @@ class Controller_Gamemaster extends Controller {
         $a = Tool_Gambling::select($list_a[$lang]);
         $b = Tool_Gambling::select($list_b[$lang]);
 
-        return "{$list_a[$lang][$a]} {$list_b[$lang][$b]}";
+        return "{$a} {$b}";
     }
 
     /**
@@ -209,7 +209,7 @@ class Controller_Gamemaster extends Controller {
             return false;
 
         //Check speed
-        if ($flow > 0 && (!in_array($flow,[15,30,60,120,300,600,900]) || $config['modes']['type'] != 'single'))
+        if ($flow > 0 && (!in_array($flow,[15,30,60,120,300,600,900]) || $config['modes'][$mode]['type'] != 'single'))
             return false;
 
         //Check name

@@ -484,4 +484,42 @@ return array (
 	'Welcome to the Control Panel, :name!',
   'Einzelspieler-Modus' =>
 	'Singleplayer',
+  'Die Suche lieferte keine Ergebnisse.' =>
+	'Your search did not yield any results.',
+  'Die Flags wurden übermittelt.' =>
+	'Flag changes have been transmitted.',
+  'Infos' =>
+	'Infos',
+  'Aktionen' =>
+	'Actions',
+  'Setzen' =>
+	'Set',
+  'Auswahl erforderlich!' =>
+	'Selection required!',
+  'Kein Admin-Zugang' =>
+	'No Admin Access',
+  'Inaktiver Admin-Zugang' =>
+	'Inactive Admin Access',
+  'Administrator' =>
+	'Admin',
+  'Das Password wurde gesetzt.' =>
+	'The password has been set.',
+  'Das Password wurde entfernt.' =>
+	'The password has been removed.',
+  'Requests' =>
+	'Requests',
+  'Benchmark' =>
+	'Benchmark',
+  'Min' =>
+	'Min',
+  'Max' =>
+	'Max',
+  'Average' =>
+	'Average',
+  'Total' =>
+	'Total',
+  'Kohana' =>
+	'Kohana',
+  'Application Execution' =>
+	'Application Execution',
 );

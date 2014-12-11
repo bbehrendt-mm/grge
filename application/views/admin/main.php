@@ -5,6 +5,7 @@
  * @var string $expires Expiration string
  *
  * @var bool $allow_translate Allow Translation functions
+ * @var bool $allow_userlist Allow user listing
  */
 
 ?>
@@ -30,17 +31,22 @@
         <div class="btn" id="logout"><?=__('Ausloggen');?></div>
     </div>
 </div>
-<div class="row">
+<div class="row" id="tiles">
     <div class="cell rw-12 padded">
-        <div class="tile" id="goto_lang">
-            <i class="fa fa-language"></i>
-        </div>
+        <div class="tile" data-ref="translate" data-icon="language" data-active="<?=$allow_translate ? 1 : 0 ?>"></div>
+        <div class="tile" data-ref="users" data-icon="users" data-active="<?=$allow_userlist ? 1 : 0 ?>"></div>
     </div>
 </div>
 <script type="application/javascript">
-    $('#goto_lang').click(function(){
-        game.network.load('admin/translate');
-    })<?php if (!$allow_translate) { ?>.addClass('disabled')<?php } ?>;
+
+    $('#tiles').find('.tile[data-active]').each(function() {
+        $(this).append('<i class="fa fa-' + $(this).data('icon') + '" />');
+        if ($(this).data('active') == '1')
+            $(this).click(function(){
+                game.network.load('admin/' + $(this).data('ref'));
+            });
+        else $(this).addClass('disabled');
+    });
 
     $('#logout').click(function(){
         $(this).html('<i class="fa fa-spin fa-circle-o-notch"></i>');

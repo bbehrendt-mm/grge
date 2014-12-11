@@ -106,6 +106,15 @@ abstract class Controller extends Kohana_Controller {
             $obj = array();
         }
 
+        $version_data = Kohana::$config->load('build.version');
+        if (empty($obj['profiling']) && $version_data['stage'] < 3) {
+            $obj['profiling'] = [
+                'version' => "GRGE {$version_data['major']}.{$version_data['minor']}.{$version_data['service']}-{$version_data['stage']}-{$version_data['maintenance']}-{$version_data['build']} ({$version_data['date']})",
+                'path' => $this->request->controller() . ' / ' . ($this->request->action() == 'japi' ? ($this->request->param('jaction') . ' (japi)') : $this->request->action()),
+                'memory' => number_format((memory_get_peak_usage() - KOHANA_START_MEMORY) / 1024, 2).'KB',
+                'time' => number_format(microtime(TRUE) - KOHANA_START_TIME, 5).'s'
+            ];
+        }
         if (empty($obj['content']) && !empty($this->widgets))
             $obj['content'] = $this->widgets;
         if (empty($obj['notifications']) && !empty($this->notifications))

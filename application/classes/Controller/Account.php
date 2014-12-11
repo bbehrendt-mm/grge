@@ -70,19 +70,21 @@ class Controller_Account extends Controller {
             $avatar = $xpath->evaluate('string(//owner/citizen/@avatar)');
         }
 
-        //Check if we're using whitelisting
-        if (Kohana::$config->load('basic.access.whitelisting'))
-            if (Kohana::$config->load('basic.access.whitelist.' . $region) !== true && !Kohana::$config->load('basic.access.whitelist.' . $region . '.' . $mtid))
-                return $this->error(\grge\E_AUTH_WHITELISTING_FAILED);
-
         //Finally get a real UID from all the crap we just collected
         if (!$uid = Model_Euser::mt2gr($mtid, $region))
             //Register player, if he does not yet have an account
             $uid = Model_Euser::register($mtid, $region, $name);
 
+        //Get whitelisting entry
+        $wl = DB::select('relation')->from('user_flags')->where('user','=',$uid)->and_where('relation','IN',['ALLOW','DENY'])->and_where('data','=','WHITELIST')->execute()->as_array();
+        if (count($wl) > 0) $wl = $wl[0]['relation'];
+        else $wl = false;
+
         //Check if user is banned
-        if (Model_Euser::is_banned($uid))
+        if ($wl == 'DENY')
             return $this->error(\grge\E_AUTH_ACCOUNT_BANNED);
+        else if (Kohana::$config->load('basic.access.whitelisting') && $wl != 'ALLOW')
+            return $this->error(\grge\E_AUTH_WHITELISTING_FAILED);
 
         //Create user object and try to read from database
         $user = new Model_Euser($this->session->id());

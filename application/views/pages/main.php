@@ -28,7 +28,7 @@
                 })));
             } else {
                 var i = 0;
-                $.each(data, function() {
+                if (data.feeds) $.each(data.feeds, function() {
                     var response = this.response;
                     var view = this.view;
                     i++;

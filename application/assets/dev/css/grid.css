@@ -76,7 +76,7 @@
     background: rgba(0, 0, 0, 0.10);
 }
 
-.row-table.row-table-interact > .row:hover {
+.row-table.row-table-interact > .row:hover, .row-table.row-table-interact > .row.selected {
     background: rgba(0, 0, 0, 0.19);
 }
 

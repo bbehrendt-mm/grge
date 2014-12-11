@@ -5,6 +5,14 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
+footer {
+    text-align: center;
+    padding: 20px 0;
+    font-family: "Strait",sans-serif;
+    color: #4b4b4b;
+    font-size: 10px;
+}
+
 #boot, #nojs {
     position: relative;
     background: rgba(72, 2, 2, 0.51);
@@ -117,7 +125,7 @@ body {
     text-align: center;
 }
 #notifications > div > div:first-child::after {
-    font-family: FontAwesome;
+    font-family: FontAwesome,serif;
     font-size: 76px;
 }
 
@@ -179,7 +187,6 @@ body {
     margin: 0 auto;
     width: 900px;
     position: relative;
-    overflow: hidden;
 }
 
 #wrapper > *:first-child {

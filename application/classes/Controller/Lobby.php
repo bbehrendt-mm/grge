@@ -52,7 +52,9 @@ class Controller_Lobby extends Controller {
             $article['content']['text'] = str_replace('{SMILIES_PATH}', "{$url}/{$ret['smileys']}", $article['content']['text']);
         }
 
-        return $this->render($ret['threads']);
+        return $this->render([
+            'feeds' => $ret['threads']
+        ]);
     }
 
 }

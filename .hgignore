@@ -2,3 +2,4 @@ syntax: glob
 application/logs/*
 .idea/*
 *.orig
+application/cache/*

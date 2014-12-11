@@ -3,6 +3,7 @@ goog.require('game');
 
 goog.require('game.render.html');
 
+//noinspection JSUnusedGlobalSymbols
 game.network = {
 
     queries: {},
@@ -28,12 +29,18 @@ game.network = {
                         break;
                 }
 
-            if (data.notifications)
+            if (data && data.profiling) {
+                if (args && Object.keys(args).length)
+                    data.profiling.args = args;
+                console.debug(data.profiling);
+            }
+
+            if (data && data.notifications)
                 $.each(data.notifications, function(k,v) {
                     game.render.html.notify(v['type'], v['content'], v['title']);
                 });
             callback(data);
-        }).fail(function(obj, status, server) {
+        }).fail(function(obj, status) {
             if (obj && obj.responseText && 0 < (e = obj.responseText.search('<!-- ### GRG CORE INLINE RENDERING EXCEPTION: ERROR PAGE BEYOND THIS LINE ### -->'))) {
                 var d = $(obj.responseText.slice(e).replace(/<(\/{0,1})(html|head|body)(.*?)>/g, '<$1var$2$3>'));
                 jQuery('head').html(d.find('varhead').html());
@@ -70,6 +77,8 @@ game.network = {
                 window.location.href = "index.php";
                 game.clean();
             } else {
+                if (data.profiling)
+                    game.render.html.put(':footer',data.profiling.version + ' Path: <b>' + data.profiling.path + '</b> Execution Time: <b>' + data.profiling.time + '</b> Memory Usage: <b>' + data.profiling.memory + '</b>');
                 if (data.content)
                     $.each(data.content, function(k,v) {
                         game.clean(true);

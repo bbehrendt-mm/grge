@@ -1,3 +1,14 @@
-$by: Benjamin Behrendt $
+<?php defined('SYSPATH') or die('No direct access allowed.');
 
-$date: Wed, 10 Dec 2014 15:20:07 +0100 $
+return array(
+    'version' => array(
+        'major'         => 2,
+        'minor'         => 0,
+        'service'       => 0,
+        'maintenance'   => 1,
+        'build'         => 10,
+
+        'stage'         => 0,               //0=nightly, 1=alpha, 2=beta, 3=rc, 4=final
+        'date'	        => '11.12.2014',
+    ),
+);

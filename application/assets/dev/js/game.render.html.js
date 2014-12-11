@@ -10,6 +10,11 @@ game.render.html = {
             case ':body':
                 target = $('body');
                 break;
+            case ':footer':
+                target = $('footer');
+                if (!target.size())
+                    $('html').append(target = $('<footer />'));
+                break;
             default: target = $('#'+id); break;
         }
 

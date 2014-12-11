@@ -230,4 +230,52 @@ return array (
 	'',
   'Quell- und Zielsprache dürfen nicht identisch sein.' =>
 	'',
+  'Voll' =>
+	'',
+  'Kontrollzentrum' =>
+	'',
+  'Übersetzungen' =>
+	'',
+  'Dein Zugangstoken läuft in :sec Sekunde/n (ca. :min Minute/n) ab.' =>
+	'',
+  'Willkommen im Administrationsbereich, :name!' =>
+	'',
+  'Die Suche lieferte keine Ergebnisse.' =>
+	'',
+  'Die Flags wurden übermittelt.' =>
+	'',
+  'Infos' =>
+	'',
+  'Aktionen' =>
+	'',
+  'Setzen' =>
+	'',
+  'Auswahl erforderlich!' =>
+	'',
+  'Kein Admin-Zugang' =>
+	'',
+  'Inaktiver Admin-Zugang' =>
+	'',
+  'Administrator' =>
+	'',
+  'Das Password wurde gesetzt.' =>
+	'',
+  'Das Password wurde entfernt.' =>
+	'',
+  'Requests' =>
+	'',
+  'Benchmark' =>
+	'',
+  'Min' =>
+	'',
+  'Max' =>
+	'',
+  'Average' =>
+	'',
+  'Total' =>
+	'',
+  'Kohana' =>
+	'',
+  'Application Execution' =>
+	'',
 );

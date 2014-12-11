@@ -484,4 +484,42 @@ return array (
 	'Willkommen im Administrationsbereich, :name!',
   'Einzelspieler-Modus' =>
 	'Einzelspieler-Modus',
+  'Die Suche lieferte keine Ergebnisse.' =>
+	'Die Suche lieferte keine Ergebnisse.',
+  'Die Flags wurden übermittelt.' =>
+	'Die Flags wurden übermittelt.',
+  'Infos' =>
+	'Infos',
+  'Aktionen' =>
+	'Aktionen',
+  'Setzen' =>
+	'Setzen',
+  'Auswahl erforderlich!' =>
+	'Auswahl erforderlich!',
+  'Kein Admin-Zugang' =>
+	'Kein Admin-Zugang',
+  'Inaktiver Admin-Zugang' =>
+	'Inaktiver Admin-Zugang',
+  'Administrator' =>
+	'Administrator',
+  'Das Password wurde gesetzt.' =>
+	'Das Password wurde gesetzt.',
+  'Das Password wurde entfernt.' =>
+	'Das Password wurde entfernt.',
+  'Requests' =>
+	'Requests',
+  'Benchmark' =>
+	'Benchmark',
+  'Min' =>
+	'Min',
+  'Max' =>
+	'Max',
+  'Average' =>
+	'Average',
+  'Total' =>
+	'Total',
+  'Kohana' =>
+	'Kohana',
+  'Application Execution' =>
+	'Application Execution',
 );

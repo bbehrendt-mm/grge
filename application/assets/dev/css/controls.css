@@ -17,7 +17,7 @@
     border: 1px solid #E0E0E0;
     border-bottom-width: 2px;
     border-image: none;
-    background: none repeat scroll 0% 0% #F8F8F8;
+    background: none repeat scroll 0 0 #F8F8F8;
     position: relative;
     border-radius: 4px;
     padding: 4px;
@@ -154,14 +154,13 @@ input[type=checkbox].form_input {
     background: #940202;
     border: 1px solid #520202;
     padding: 0;
-    font-weight: bold;
     color: #fff6bf;
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.80);
     border-radius: 3px;
     box-shadow: 0 0 1px 1px rgba(210, 60, 2, 0.80) inset, 0 1px 0 rgba(0,0,0,.3);
     text-align: center;
     line-height: 96px;
-    font-size: 86px;
+    font-size: 72px;
     cursor: pointer;
 }
 

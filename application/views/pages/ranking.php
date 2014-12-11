@@ -175,7 +175,9 @@
         });
     };
 
-    $('#content').find('select').change(read_fetch(0)).selectric();
+    $('#content').find('select').change(read_fetch(0)).selectric({
+        maxHeight: 200
+    });
     $('.navigation').hide();
     game_type_elem.trigger('change');
 </script>

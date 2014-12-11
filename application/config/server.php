@@ -1,11 +1,12 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
 return array(
-	'season' => 6,
-	'version' => array(
-		'revision' => 216,
+	'season' => 7,
+	//ToDo: Integrate new version system
+    'version' => array(
+		'revision' => 0,
 		'type' 	   => 'n',
-		'date'	   => '17.02.2014',
+		'date'	   => '?',
 	),
     'downtime' => array(
         'h' => 0,

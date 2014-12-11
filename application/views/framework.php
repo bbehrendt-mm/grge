@@ -3,7 +3,8 @@
     <!-- Meta -->
     <meta content="text/html; charset=UTF-8" />
     <meta http-equiv="content-language" content="de">
-    <meta name="robots" content="nofollow" />
+    <meta name="robots" content="index,nofollow" />
+    <meta name="keywords" content="Zombie,Survival,Browsergame,Die Verdammten,Die2Nite,GRGE">
     <meta name="description" content="Ein Single Player Survival Game. Könnte Spuren von Zombies enthalten..." />
     <meta name="author" content="Benjamin 'Brainbox' Behrendt" />
 
@@ -59,6 +60,5 @@
             game.network.load('web/body',{},true);
         });
     </script>
-
 </body>
 </html>

@@ -10,7 +10,7 @@ abstract class Controller_Admin_Admin extends Controller {
 
     protected static function priv_get($user, $pw = null) {
         if (static::$admin_data === null || $pw) {
-            $data = DB::select('relation','data')->from('admins')->where('user', '=', $user)->execute()->as_array();
+            $data = DB::select('relation','data')->from('user_flags')->where('user', '=', $user)->execute()->as_array();
             $enable = ($pw == null);
             $tmp = [];
             foreach ($data as $row) {
@@ -58,7 +58,7 @@ abstract class Controller_Admin_Admin extends Controller {
                 return true;
             elseif (isset(static::$admin_data[$arg]) && !static::$admin_data[$arg])
                 return false;
-        return false;
+        return true;
     }
 
     /**
@@ -80,9 +80,9 @@ abstract class Controller_Admin_Admin extends Controller {
         elseif (isset(static::$admin_data['ROOT']) && static::$admin_data['ROOT'])
             return true;
         else foreach ($args as $arg)
-            if (!isset(static::$admin_data[$arg]) || static::$admin_data[$arg])
+            if (!isset(static::$admin_data[$arg]) || !static::$admin_data[$arg])
                 return false;
-        return false;
+        return true;
     }
 
     public function admin_status_get($refresh = 2) {

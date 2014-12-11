@@ -1,7 +1,11 @@
 <?php defined('SYSPATH') or die('No direct script access.');
-/* Automatically generated translation file for de */
+/* Automatically generated translation file for es */
 
 return array (
+  'Spanish' =>
+	'Español',
+  'Hello, world!' =>
+	'¡Hola, mundo!',
   'WTHM' =>
 	'WTHM',
   'Survival' =>
@@ -468,4 +472,54 @@ return array (
 	'Alle',
   'Quell- und Zielsprache dürfen nicht identisch sein.' =>
 	'Quell- und Zielsprache dürfen nicht identisch sein.',
+  'Voll' =>
+	'Voll',
+  'Kontrollzentrum' =>
+	'Kontrollzentrum',
+  'Übersetzungen' =>
+	'Übersetzungen',
+  'Dein Zugangstoken läuft in :sec Sekunde/n (ca. :min Minute/n) ab.' =>
+	'Dein Zugangstoken läuft in :sec Sekunde/n (ca. :min Minute/n) ab.',
+  'Willkommen im Administrationsbereich, :name!' =>
+	'Willkommen im Administrationsbereich, :name!',
+  'Einzelspieler-Modus' =>
+	'Einzelspieler-Modus',
+  'Die Suche lieferte keine Ergebnisse.' =>
+	'Die Suche lieferte keine Ergebnisse.',
+  'Die Flags wurden übermittelt.' =>
+	'Die Flags wurden übermittelt.',
+  'Infos' =>
+	'Infos',
+  'Aktionen' =>
+	'Aktionen',
+  'Setzen' =>
+	'Setzen',
+  'Auswahl erforderlich!' =>
+	'Auswahl erforderlich!',
+  'Kein Admin-Zugang' =>
+	'Kein Admin-Zugang',
+  'Inaktiver Admin-Zugang' =>
+	'Inaktiver Admin-Zugang',
+  'Administrator' =>
+	'Administrator',
+  'Das Password wurde gesetzt.' =>
+	'Das Password wurde gesetzt.',
+  'Das Password wurde entfernt.' =>
+	'Das Password wurde entfernt.',
+  'Requests' =>
+	'Requests',
+  'Benchmark' =>
+	'Benchmark',
+  'Min' =>
+	'Min',
+  'Max' =>
+	'Max',
+  'Average' =>
+	'Average',
+  'Total' =>
+	'Total',
+  'Kohana' =>
+	'Kohana',
+  'Application Execution' =>
+	'Application Execution',
 );

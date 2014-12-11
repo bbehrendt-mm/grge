@@ -46,7 +46,7 @@ class I18n extends Kohana_I18n {
     protected static $missing = array();
     protected static $got_missing = array();
 
-	protected static $lang_list = array('de', 'en');
+	protected static $lang_list = array('de', 'en', 'es');
 
     public static function get_all($lang = NULL) {
         return I18n::load($lang);
@@ -89,6 +89,7 @@ class I18n extends Kohana_I18n {
 
 	public static function get($string, $lang = NULL, $pool = false) {
 		if (!is_string($string)) return $string;
+        if ($pool)
 				
 		if (strpos($string, '[nt]') === 0)
 			return str_replace('[nt]', '', $string);
@@ -140,7 +141,7 @@ class I18n extends Kohana_I18n {
    		foreach ($tables as $lang => $table) if (isset($update[$lang]))
    			I18n::toDisk($lang, $table);
 
-        foreach (static::$missing as $lang => $table)
+        foreach (static::$missing as $lang => $table) if ($lang != 'de')
             I18n::toDisk("auto/$lang", static::get_missing($lang));
 	}
 }

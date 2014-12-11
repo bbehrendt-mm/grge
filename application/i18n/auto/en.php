@@ -2,4 +2,20 @@
 /* Automatically generated translation file for auto/en */
 
 return array (
+  'Requests' =>
+	'',
+  'Benchmark' =>
+	'',
+  'Min' =>
+	'',
+  'Max' =>
+	'',
+  'Average' =>
+	'',
+  'Total' =>
+	'',
+  'Kohana' =>
+	'',
+  'Application Execution' =>
+	'',
 );

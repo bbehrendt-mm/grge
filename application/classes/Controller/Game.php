@@ -15,15 +15,16 @@ class Controller_Game extends Controller {
         $this->add_data('debug', $player->location()->zombie_factory()->get_radar_data());
 
         $hideout = Tool_Scripts::current_location_hideout();
-        if ($hideout && $hideout->get_defense() > 0)
+        $protected_hideout = $hideout && $hideout->get_defense() > 0;
+        if ($protected_hideout)
             $radar_prop = 0;
         else $radar_prop = ($radar_prop > 0) ? ceil(pow($radar_prop,-1)) : 0;
         $radar_increase = ($radar_increase > 0) ? ceil(pow($radar_increase,-1)) : 0;
 
 
         $danger = ($radar_prop > 0) ? floor($radar_max/4) : 0;
-        if ($radar_prop <= 1.5)     $danger += 2;
-        elseif ($radar_prop <= 3)   $danger += 1;
+        if (!$protected_hideout && $radar_prop <= 1.5)     $danger += 2;
+        elseif (!$protected_hideout && $radar_prop <= 3)   $danger += 1;
         elseif ($radar_prop <= 15)  $danger -= 1;
 
         if ($radar_increase != 0 && $radar_increase <= 3)   $danger += 1;

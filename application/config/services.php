@@ -6,9 +6,9 @@ return array(
         'server' => 'http://forum.zombvival.de',
         'token' => '61dbd53df8cd70fd85efc91367786bb13119e546',
         'topics' => array(
-            'de' => 27,
-            'en' => 28,
-            'default' => 28,
+            'de' => 29,
+            'en' => 30,
+            'default' => 30,
         ),
     ),
 );

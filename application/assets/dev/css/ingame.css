@@ -1,0 +1,93 @@
+.location_box {
+    box-shadow: 0 0 4px black;
+    padding: 10px;
+}
+
+.location_box > h2 {
+    display: block;
+    text-align: center;
+}
+
+.location_box.outside {
+    background: url("media/img/location_outside.png") bottom no-repeat, #9dc6c9;
+    padding-bottom: 48px;
+    color: black;
+    text-shadow: 0 0 1px #ffffff;
+}
+
+.location_box.outside > h2 {
+    border-bottom: solid 2px #61656d;
+    color: #61656d;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.location_box.inside {
+    background: url("media/img/location_inside.png") no-repeat, #1b1d1d;
+    color: white;
+    text-shadow: 0 0 1px black;
+}
+
+.location_box.inside > h2 {
+    border-bottom: solid 2px #b2bcc5;
+    color: #b2bcc5;
+    text-shadow: 0 0 3px black, -1px -1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.location_box .widget {
+    border: 1px solid rgba(0,0,0,0.4);
+    box-shadow: 0 0 3px rgba(0,0,0,0.2);
+    position: relative;
+    overflow: hidden;
+    padding: 5px;
+}
+
+.location_box .radar, .location_box .siege {
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 0 0 4px rgba(0,0,0,0.4);
+}
+
+.location_box .radar:after, .location_box .siege:after {
+    width: 100%;
+    position: absolute;
+    height: 3px;
+    content: " ";
+    bottom: 0;
+    left: 0;
+}
+
+.location_box .widget.alert-0::after {
+    background: #1582c6;
+    box-shadow: 0 0 4px rgba(21, 130, 198, 0.51);
+}
+.location_box .widget.alert-1::after {
+    background: #52c600;
+    box-shadow: 0 0 4px rgba(82, 198, 0, 0.51);
+}
+.location_box .widget.alert-2::after {
+    background: #f7e400;
+    box-shadow: 0 0 4px rgba(247, 228, 0, 0.51);
+}
+.location_box .widget.alert-3::after {
+    background: #eaac06;
+    box-shadow: 0 0 4px rgba(234, 172, 6, 0.51);
+}
+.location_box .widget.alert-4::after {
+     background: #ea4803;
+     box-shadow: 0 0 4px rgba(234, 72, 3, 0.51);
+}
+.location_box .widget.alert-5::after {
+    background: #af1900;
+    box-shadow: 0 0 4px rgba(175, 25, 0, 0.51);
+    animation: redflash 0.5s infinite alternate;
+}
+@keyframes redflash {
+    from {
+        background: #ea4803;
+        box-shadow: 0 0 4px rgba(234, 72, 3, 0.51);
+    }
+    to {
+        background: #af1900;
+        box-shadow: 0 0 4px rgba(175, 25, 0, 0.51);
+    }
+}

@@ -8,6 +8,15 @@ class Controller_Web extends Controller {
         $this->response->body(View::factory('framework'));
     }
 
+    public function action_core() {
+        $buffer = '';
+        foreach (scandir(APPPATH . 'views/core/') as $f)
+            if (!in_array($f, ['.','..']))
+                $buffer .= JView::factory('core/' . str_replace('.php','',$f));
+        $this->response->headers('Content-Type', 'application/javascript; charset=utf-8');
+        $this->response->body($buffer);
+    }
+
     public function action_body() {
         $this->force_ajax();
         $this->add_widget(':body', View::factory('body')->render());

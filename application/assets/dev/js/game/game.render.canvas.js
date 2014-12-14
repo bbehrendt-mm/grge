@@ -5,7 +5,7 @@ goog.require('game.render');
 game.render.canvas = {
 
     drawHTML: function(html, canvas, callback, error_callback) {
-        rasterizeHTML.drawHTML($('head').html() + '<link rel="stylesheet" type="text/css" href="css/zombvival.canvas.css" />' + html, $(canvas).get(0)).then(function() {callback($(canvas).get(0))}, error_callback);
+        rasterizeHTML.drawHTML($('head').html() + '<link rel="stylesheet" type="text/css" href="../../../css/zombvival.canvas.css" />' + html, $(canvas).get(0)).then(function() {callback($(canvas).get(0))}, error_callback);
     },
 
     copyHTML: function(element, canvas, callback, error_callback) {

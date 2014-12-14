@@ -522,4 +522,72 @@ return array (
 	'Kohana',
   'Application Execution' =>
 	'Application Execution',
+  'The requested view :file could not be found' =>
+	'The requested view :file could not be found',
+  'Sprachabhängige Scripte werden nachgeladen...' =>
+	'Loading language-dependent scripts...',
+  'Geringe Gefahr' =>
+	'Low Danger',
+  'Versteck' =>
+	'Hideout',
+  'In deinem Versteck bist du vor Zombieangriffen geschützt und kannst dich von deinen Aktionen in der Aussenwelt erholen - zumindest, wenn du dich gut verbarrikadiert hast! Unglücklicherweise kannst du nicht für immer hier sitzen bleiben - das wirst du spätestens dann merken, wenn deine gesammelten Vorräte aufgebraucht sind ...' =>
+	'In your hideout, you are safe from surprise zombie attacks and can relax after a hard day - as long as your barricades keep unwelcome visitors out! You won\'t be able to stay here forever - sooner or later, you\'ll have to leave this place in search for food and water ...',
+  'Dein Gespühr sagt dir, dass du auf Zombie-Gruppen mit einer Größe von bis zu :max Zombies gefasst sein solltest.' =>
+	'Your expierience tell you to be prepared for zombie groups with up to :max individuals.',
+  'Rechne damit, etwa alle :pc_min Minuten auf Zombies zu treffen.' =>
+	'Expect to run into them around every :pc_min minutes.',
+  'Die Zombies könnten sich hier versammeln und dir den Fluchtweg abschneiden... So wies aussieht würden sie dafür vermutlich um die :sg_min Minuten benötigen.' =>
+	'The zombies could congregate here and block your escape route. It\'d probably take them around :sg_min minutes to do that.',
+  'Spielstand herunterladen...' =>
+	'Downloading savegame...',
+  'Sicher' =>
+	'Safe',
+  'Moderate Gefahr' =>
+	'Moderate Danger',
+  'Beträchtliche Gefahr' =>
+	'Significant Danger',
+  'Hohe Gefahr' =>
+	'Great Danger',
+  'Sehr hohe Gefahr!' =>
+	'Extreme Danger!',
+  'Hier musst du vorerst keine Angst unerwarteten Angriffen haben.' =>
+	'You don\'t have to fear any suprise attacks here.',
+  'Die Zombies haben hier keine Gelegenheit, dir den Weg zu versperren.' =>
+	'The zombies have no way to block your escape here.',
+  'Dieses Versteck werden die Zombies niemals finden!' =>
+	'The zombies are never going to find this hideout!',
+  'Es ist nur eine Frage der Zeit, bis dieses Versteck von Zombies umstellt wird. So wies aussieht würden sie dafür vermutlich um die :sg_min Minuten benötigen.' =>
+	'It\'s just a matter of time until zombies will start roaming around your hideout and keeping you from leaving. They will probably need :sg_min minutes for that.',
+  'Du bist hier so lange sicher, wie dein Versteck den Zombies widerstehen kann.' =>
+	'You\'re safe here... as long as your hideout can keep the zombies out.',
+  'Keine Zombies' =>
+	'No zombies',
+  '1 Zombie' =>
+	'1 zombie',
+  ':num Zombies' =>
+	':num zombies',
+  'Es sieht so aus, als könntest du diesen Ort momentan ohne Probleme verlassen. Du solltest trotzdem regelmäßig nachschauen, ob Zombies eventuell den Weg blockieren.' =>
+	'It looks like the way out of here is open right now. Still, you should check that regularly, otherwise you might be in for a suprise...',
+  'Die Zombies haben dein Versteck aufgespürt. Von hier kannst du nicht mehr fliehen - du musst die Zombies bekämpfen!' =>
+	'The zombies have found your hideout. You can not escape from here - violence is the only option!',
+  'Es geht weder vor noch zurück - Zombies blockieren den Ausgang! Du kannst entweder eine waghalsige Flucht versuchen oder den Weg freizuräumen. Eins steht fest: Von alleine werden diese Zombies hier nicht verschwinden...' =>
+	'There is no way out - zombies are blocking every exit. You can either make a bold attempt to escape, or fight the zombies head on. One thing is for sure: The zombies won\'t leave on their own...',
+  'Weg freikämpfen' =>
+	'Clear the way!',
+  'Fluchtversuch' =>
+	'Attempt to escape',
+  'Zombies' =>
+	'Zombies',
+  'Drogenlabor' =>
+	'Druglab',
+  'In diesem heruntergekommenen Schuppen wurden jahrelang diverse Mittelchen mit eher kontroverser Wirkung produziert. Es ist immer noch einiges an Equipment da, das du sicher für irgendwas nutzen kannst. Leider haben auch die Zombies Gefallen an diesem Örtchen gefunden... allerdings weniger wegen dem Equipment, sondern eher wegen den wehrlosen Junkies, die sich hier herumtreiben.' =>
+	'This rundown shack was used to produce chemicals with a rather controversial effects for a long time. There is still some equipment laying around - as well as some bodies, that may or may not come to life! Let\'s hope these are just remnants of some junkies...',
+  'Die Umgebung des Verstecks' =>
+	'Wasteland around the hideout',
+  'Früher blühte hier das Leben, jetzt findet man hier nur noch Sand und gelegentlich ein paar Zombies, die in kleinen Grüppchen die Ruinen der Zivilisation umstreifen. Unwahrscheinlich, dass du hier etwas nützliches findest. Eventuell findest du aber das ein oder andere Gebäude, das du nach nützlichen Dingen durchsuchen kannst.' =>
+	'This used to be a thriving city full of happy people. Now, all that is left is dust and zombies. You won\'t find any interesting items here, but you might be able to uncover other locations.',
+  '"Corpseland" Restaurant' =>
+	'"Corpseland" Franchise',
+  'Dieses Franchise hat schonmal bessere Zeiten erlebt ... Die dicken Kinder, die sich hier früher Essensschlachten geliefert haben sind schon lange verschwunden - dafür schleichen nun Zombies zwischen den Tischen und in der Küche umher. Die gute Nachricht ist: Selbst ein Zombie würde das Zeug, das hier serviert wurde, nicht anrühren - du kannst hier also bestimmt noch ein paar Combomenüs abstauben.' =>
+	'This franchised restaurant has seen better times ... All those fat children throwing food around have long disappeared - and replaced by zombies shambling around the tables and inside the kitchen. The upside is, however: Even zombies wouldn\'t touch the stuff they used to serve here, so you might be able to score a deal on all those XXL menus left behind...',
 );

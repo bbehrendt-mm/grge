@@ -13,7 +13,9 @@
 <div id="wrapper">
     <div></div>
 
-    <div id="content"></div>
+    <div id="content">
+        <div class="center"><i class="fa fa-circle-o-notch fa-spin"></i> <?=__('Sprachabhängige Scripte werden nachgeladen...')?></div>
+    </div>
 </div>
 
 <div id="disclaimer" class="row">
@@ -44,11 +46,11 @@
 </div>
 
 <script type="application/javascript">
+// ## JS COMPRESS BEGIN ## //
     $('#lang-select').find('> img').qtip(game.render.html.qtip.lang()).click(function() {
         game.lang($(this).attr('alt'));
         game.network.load('web/body');
     });
-    game.network.load('landing/redirect');
 
     $('#main_donate').click(function() {
         alert('Coming soon!');
@@ -57,4 +59,13 @@
     $('#main_backend').click(function() {
         game.network.load('admin/account/login');
     });
+
+    $.getScript('web/core/?l=' + game.lang(), function() {
+        game.network.load('landing/redirect');
+    }).fail(function( jqxhr, settings, exception ) {
+        $('#content').empty()
+            .append($('<div />').addClass('center').text(exception.message));
+    });
+
+// ## JS COMPRESS END ## //
 </script>

@@ -15,6 +15,26 @@ class Model_Factory_Zombies extends Model {
     public function updateConfigBase($config = 'default') {
         $this->config = $config;
     }
+
+    /**
+     * Returns the group size multiplier for this factory
+     * @return number The return value is never smaller than 1
+     */
+    private function get_group_multiplier() {
+        /** @global Model_Game $game */
+        global $game;
+        return max(1,$game->duration() / 1440);
+    }
+
+    /**
+     * Returns the accumulation size multiplier for this factory
+     * @return number The return value is never smaller than 1
+     */
+    private function get_accumulation_multiplier() {
+        /** @global Model_Game $game */
+        global $game;
+        return 1 + 0.25 * ($game->duration() / (576/$game->config('zombies.accum')));
+    }
 	
 	/**
 	 * Calculates zombie accumulation
@@ -32,7 +52,7 @@ class Model_Factory_Zombies extends Model {
             if (!$config = Tool_System::config_tree("spawn/{$this->config}", $this->type))
 				throw new Exception('Failed to load zombie spawn configuration (' . $this->config . ')!' );
 			
-			$this->population += (mt_rand(0, $config['accum'])/100) * (1 + 0.25 * ($game->duration() / (576/$game->config('zombies.accum'))));
+			$this->population += (mt_rand(0, $config['accum'])/100) * $this->get_accumulation_multiplier();
 		} else {
 			$this->population += $fixed;
 		}
@@ -82,7 +102,7 @@ class Model_Factory_Zombies extends Model {
 		if (!is_array($data) || count($data) == 0) return null;
 		
 		$ret = Array();
-		foreach ($data as $instance) if (($num = round(mt_rand($instance["num"][0] * max(1, $multiply/2), $instance["num"][1] * max(1, $multiply)))) > 0)
+		foreach ($data as $instance) if (($num = round($multiply * mt_rand($instance["num"][0], $instance["num"][1]))) > 0)
 			$ret[] = new $instance["type"]($num, mt_rand($instance["distance"][0], $instance["distance"][1]));
 		
 		return $ret;
@@ -115,47 +135,32 @@ class Model_Factory_Zombies extends Model {
 		if (count($config["groups"]) == 0) return null;
 		
 		//Calculate zombies
-		return $this->dice($config["groups"][mt_rand(0, count($config["groups"]) - 1)], max(1,$game->duration() / 1440));
+		return $this->dice($config["groups"][mt_rand(0, count($config["groups"]) - 1)], $this->get_group_multiplier());
 	}
-	
-	public function get_grouping_factor() {
-        /**
-         * @global $game Model_Game
-         */
-		global $game;
-		if (!$config = Tool_System::config_tree("spawn/{$this->config}", $this->type))
-			throw new Exception('Failed to load zombie spawn configuration (' . $this->config . ')!');
 
-        if (($d = count($config["groups"])) == 0)
-            return 0;
-
-		$r = 0;
-		$multiply = max(1,$game->duration() / 1440);
-		foreach ($config["groups"] as $group)
-			foreach ($group as $instance)
-				$r += (($instance["num"][0] * max(1, $multiply/2) + $instance["num"][1] * max(1, $multiply))/2);
-		
-		return $r/$d;
-	}
-	
-	public function get_appearcence_factor() {
+    /**
+     * Returns zombie radar data: Minimal group size, maximal group size, appearance probability per tick, average blocking increase per tick
+     * @return array
+     * @throws Exception When no spawn config exists
+     */
+    public function get_radar_data() {
         if (!$config = Tool_System::config_tree("spawn/{$this->config}", $this->type))
-			throw new Exception('Failed to load zombie spawn configuration (' . $this->config . ')!');
-		
-		return $config['chance']/100;
-	}
-	
-	public function get_accumulation_factor() {
-        /**
-         * @global $game Model_Game
-         */
-		global $game;
-		
-		//Get Config
-		if (!$config = Tool_System::config_tree("spawn/{$this->config}", $this->type))
-			throw new Exception('Failed to load zombie spawn configuration (' . $this->config . ')!');
-		
-		return ($config['accum']/200) * (1 + 0.25 * ($game->duration() / (576/$game->config('zombies.accum'))));
-	}
+            throw new Exception('Failed to load zombie spawn configuration (' . $this->config . ')!');
 
+        $sums_min = $sums_max = [];
+        $m = $this->get_group_multiplier();
+        foreach ($config['groups'] as $group) {
+            $sum_min = $sum_max = 0;
+            foreach ($group as $element) {
+                $sum_min += round($element['num'][0] * $m);
+                $sum_max += round($element['num'][1] * $m);
+            }
+            $sums_min[] = $sum_min;
+            $sums_max[] = $sum_max;
+        }
+
+        return [
+            min($sums_min), max($sums_max), $config['chance']/100, ($config['accum']/200) * $this->get_accumulation_multiplier()
+        ];
+    }
 }

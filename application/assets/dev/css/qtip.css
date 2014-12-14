@@ -6,5 +6,15 @@
 }
 
 .qtip-custom-help .qtip-content {
+     text-align: justify;
+ }
+
+.qtip-custom-ingame {
+    max-width: 360px;
+}
+
+.qtip-custom-ingame .qtip-content {
     text-align: justify;
+    font-size: 14px;
+    line-height: 18px;
 }

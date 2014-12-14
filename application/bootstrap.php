@@ -17,6 +17,13 @@ else
 }
 
 /**
+ * Compression Profiling
+ */
+global $compression;
+$compression[0] = 0;
+$compression[1] = 0;
+
+/**
  * Set the default time zone.
  *
  * @see  http://kohanaframework.org/guide/using.configuration
@@ -65,18 +72,12 @@ $lang_parts = explode('-', $lang);
 
 if (in_array($lang_parts[0], array('de', 'en','es')))
 	I18n::lang($lang);
-else I18n::lang('en-en');
+else I18n::lang('en');
 
 /**
- * Set Kohana::$environment if a 'KOHANA_ENV' environment variable has been supplied.
- *
- * Note: If you supply an invalid environment name, a PHP warning will be thrown
- * saying "Couldn't find constant Kohana::<INVALID_ENV_NAME>"
+ * Set the environment string by the domain (defaults to Kohana::DEVELOPMENT).
  */
-if (isset($_SERVER['KOHANA_ENV']))
-{
-	Kohana::$environment = constant('Kohana::'.strtoupper($_SERVER['KOHANA_ENV']));
-}
+Kohana::$environment = ($_SERVER['SERVER_NAME'] !== 'localhost') ? Kohana::PRODUCTION : Kohana::DEVELOPMENT;
 
 /**
  * Initialize Kohana, setting the default options.
@@ -93,6 +94,8 @@ if (isset($_SERVER['KOHANA_ENV']))
  */
 Kohana::init(array(
 	'base_url'   => '/grge/',
+    'caching'    => Kohana::$environment === Kohana::PRODUCTION,
+    'profile'    => Kohana::$environment !== Kohana::PRODUCTION,
 ));
 
 /**

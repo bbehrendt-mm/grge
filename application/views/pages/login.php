@@ -63,6 +63,7 @@ if (!isset($services)) $services = array();
     </div>
 </div>
 <script type="application/javascript">
+// ## JS COMPRESS BEGIN ## //
     var login = function(key, service,remember, fail_callback) {
         game.network.query('japi/account/login', {key: key, service: service}, function(data) {
             if (data.error) {
@@ -149,5 +150,6 @@ if (!isset($services)) $services = array();
 
     $('#service').selectric();
     $('#remember').customRadioCheck();
+// ## JS COMPRESS END ## //
 </script>
 

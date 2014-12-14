@@ -83,6 +83,7 @@
     </div>
 </div>
 <script type="application/javascript">
+// ## JS COMPRESS BEGIN ## //
     $('#lang, #mask').selectric();
 
     var translation_source = {};
@@ -211,5 +212,6 @@
     });
     $('#format_i').mousedown(function() {
         format('i');
-    })
+    });
+// ## JS COMPRESS END ## //
 </script>

@@ -1,5 +1,4 @@
 <?php
-
 if (file_exists('syslock.f') && !isset($_COOKIE['syslock_admin_bypass']))
 {
 	require 'mnt.php';

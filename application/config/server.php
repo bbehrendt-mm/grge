@@ -53,6 +53,7 @@ return array(
 			'force_main_rewrite' => true,
 			'force_revalidate' => true,
 			'compression_level' => 9,
+            'output_compression' => true,
 		),
 	),
 	'debug' => array(

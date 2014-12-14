@@ -278,4 +278,46 @@ return array (
 	'',
   'Application Execution' =>
 	'',
+  'The requested view :file could not be found' =>
+	'',
+  'Sprachabhängige Scripte werden nachgeladen...' =>
+	'',
+  'Geringe Gefahr' =>
+	'',
+  'Dein Gespühr sagt dir, dass du auf Zombie-Gruppen mit einer Größe von bis zu :max Zombies gefasst sein solltest.' =>
+	'',
+  'Rechne damit, etwa alle :pc_min Minuten auf Zombies zu treffen.' =>
+	'',
+  'Die Zombies könnten sich hier versammeln und dir den Fluchtweg abschneiden... So wies aussieht würden sie dafür vermutlich um die :sg_min Minuten benötigen.' =>
+	'',
+  'Spielstand herunterladen...' =>
+	'',
+  'Sicher' =>
+	'',
+  'Moderate Gefahr' =>
+	'',
+  'Beträchtliche Gefahr' =>
+	'',
+  'Hohe Gefahr' =>
+	'',
+  'Sehr hohe Gefahr!' =>
+	'',
+  'Hier musst du vorerst keine Angst unerwarteten Angriffen haben.' =>
+	'',
+  'Die Zombies haben hier keine Gelegenheit, dir den Weg zu versperren.' =>
+	'',
+  'Dieses Versteck werden die Zombies niemals finden!' =>
+	'',
+  'Es ist nur eine Frage der Zeit, bis dieses Versteck von Zombies umstellt wird. So wies aussieht würden sie dafür vermutlich um die :sg_min Minuten benötigen.' =>
+	'',
+  'Du bist hier so lange sicher, wie dein Versteck den Zombies widerstehen kann.' =>
+	'',
+  'Keine Zombies' =>
+	'',
+  '1 Zombie' =>
+	'',
+  ':num Zombies' =>
+	'',
+  'Es sieht so aus, als könntest du diesen Ort momentan ohne Probleme verlassen. Du solltest trotzdem regelmäßig nachschauen, ob Zombies eventuell den Weg blockieren.' =>
+	'',
 );

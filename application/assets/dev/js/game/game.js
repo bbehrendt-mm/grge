@@ -18,7 +18,7 @@ game = {
             if (!navigator.language) {
                 if (navigator.browserLanguage) navigator.language = navigator.browserLanguage;
                 else if (navigator.userLanguage) navigator.language = navigator.userLanguage;
-                else navigator.language = 'en-en';
+                else navigator.language = 'en';
             }
 
             game.storage.set('settings','language',navigator.language);
@@ -30,20 +30,6 @@ game = {
     },
 
     reset: function() {
-        document.location.href = "index.php";
+        window.location.reload();
     }
 };
-
-//jQuery Overrides
-(function() {
-
-    var injectCleaner = function(jqFuncName) {
-        var backup = jQuery.fn[jqFuncName];
-        jQuery.fn[jqFuncName] = function() {
-            $(this).find('*[data-hasqtip]').qtip('destroy',true);
-            return backup.apply(this,arguments);
-        };
-    };
-
-    $.each(['html','empty','remove'],function(k,v) {injectCleaner(v)});
-})();

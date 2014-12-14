@@ -13,6 +13,7 @@
 
 </div>
 <script type="application/javascript">
+// ## JS COMPRESS BEGIN ## //
     $('#game-btn').click(function() {
         game.network.load('<?=$ingame ? 'game/redirect' : 'gamemaster/lobby' ?>');
     });
@@ -68,5 +69,6 @@
     };
 
     load_news(1,true);
+// ## JS COMPRESS END ## //
 </script>
 

@@ -38,7 +38,7 @@
     </div>
 </div>
 <script type="application/javascript">
-
+// ## JS COMPRESS BEGIN ## //
     $('#tiles').find('.tile[data-active]').each(function() {
         $(this).append('<i class="fa fa-' + $(this).data('icon') + '" />');
         if ($(this).data('active') == '1')
@@ -68,5 +68,6 @@
                 game.network.load(data.redirect);
             }
         });
-    })
+    });
+// ## JS COMPRESS END ## //
 </script>

@@ -2,21 +2,41 @@
 <project version="4">
   <component name="ProjectTasksOptions">
     <TaskOptions isEnabled="true">
-      <option name="arguments" value="--compilation_level SIMPLE_OPTIMIZATIONS --js_output_file=&quot;application\assets\js\zombvival.min.js&quot; --js &quot;application\assets\dev\js\**.js&quot;" />
+      <option name="arguments" value="--compilation_level SIMPLE_OPTIMIZATIONS --js_output_file=&quot;application\assets\js\framework.min.js&quot; --js &quot;application\assets\dev\js\game\**.js&quot;" />
       <option name="checkSyntaxErrors" value="true" />
       <option name="description" value="Compiles .js files" />
       <option name="exitCodeBehavior" value="ERROR" />
       <option name="fileExtension" value="js" />
       <option name="immediateSync" value="false" />
-      <option name="name" value="Closure Compiler" />
-      <option name="output" value="$ProjectFileDir$\application\assets\js\zombvival.min.js" />
+      <option name="name" value="Closure Compiler (Framework)" />
+      <option name="output" value="$ProjectFileDir$\application\assets\js\framework.min.js" />
       <option name="outputFilters">
         <array />
       </option>
       <option name="outputFromStdout" value="false" />
       <option name="passParentEnvs" value="true" />
       <option name="program" value="$ProjectFileDir$/application/assets/dev/compiler.jar" />
-      <option name="scopeName" value="Javascript DEV" />
+      <option name="scopeName" value="Javascript DEV (Game)" />
+      <option name="trackOnlyRoot" value="true" />
+      <option name="workingDir" value="$ProjectFileDir$" />
+      <envs />
+    </TaskOptions>
+    <TaskOptions isEnabled="true">
+      <option name="arguments" value="--compilation_level SIMPLE_OPTIMIZATIONS --js_output_file=&quot;application\assets\js\jquery.ext.min.js&quot; --js &quot;application\assets\dev\js\jquery\**.js&quot;" />
+      <option name="checkSyntaxErrors" value="true" />
+      <option name="description" value="Compiles .js files" />
+      <option name="exitCodeBehavior" value="ERROR" />
+      <option name="fileExtension" value="js" />
+      <option name="immediateSync" value="false" />
+      <option name="name" value="Closure Compiler (jQuery)" />
+      <option name="output" value="$ProjectFileDir$\application\assets\js\jQuery.ext.min.js" />
+      <option name="outputFilters">
+        <array />
+      </option>
+      <option name="outputFromStdout" value="false" />
+      <option name="passParentEnvs" value="true" />
+      <option name="program" value="$ProjectFileDir$/application/assets/dev/compiler.jar" />
+      <option name="scopeName" value="Javascript DEV jQuery" />
       <option name="trackOnlyRoot" value="true" />
       <option name="workingDir" value="$ProjectFileDir$" />
       <envs />

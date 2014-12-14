@@ -11,6 +11,7 @@ abstract class Controller extends Kohana_Controller {
     protected static $menu = null;
     private $widgets = array();
     private $notifications = array();
+    private $data = array();
 
     protected function is_ajax_request() {
         return ($this->request->headers('X-Requested-With') == 'XMLHttpRequest' );
@@ -98,29 +99,36 @@ abstract class Controller extends Kohana_Controller {
         else $this->notifications[] = array('type' => $type, 'content' => $content, 'title' => $title);
     }
 
+    protected function add_data($key, $data = null, $no_override = false) {
+        if (is_array($key))
+            $this->data = array_merge($this->data, $key);
+        elseif (!$no_override || !isset($this->data[$key])) $this->data[$key] = $data;
+    }
+
     protected function render($obj = null) {
         $this->response->headers('Content-Type', 'application/json');
 
         if ($obj === null) {
             $this->render_defaults();
-            $obj = array();
-        }
+        } elseif (is_array($obj)) $this->add_data($obj);
 
         $version_data = Kohana::$config->load('build.version');
-        if (empty($obj['profiling']) && $version_data['stage'] < 3) {
-            $obj['profiling'] = [
+        if ($version_data['stage'] < 3) {
+            global $compression;
+
+            $this->add_data('profiling', [
                 'version' => "GRGE {$version_data['major']}.{$version_data['minor']}.{$version_data['service']}-{$version_data['stage']}-{$version_data['maintenance']}-{$version_data['build']} ({$version_data['date']})",
                 'path' => $this->request->controller() . ' / ' . ($this->request->action() == 'japi' ? ($this->request->param('jaction') . ' (japi)') : $this->request->action()),
                 'memory' => number_format((memory_get_peak_usage() - KOHANA_START_MEMORY) / 1024, 2).'KB',
-                'time' => number_format(microtime(TRUE) - KOHANA_START_TIME, 5).'s'
-            ];
+                'time' => number_format(microtime(TRUE) - KOHANA_START_TIME, 5).'s',
+                'compression' => number_format(($compression[0] == $compression[1]) ? 1 : $compression[1]/$compression[0] ,3)
+            ], true);
         }
-        if (empty($obj['content']) && !empty($this->widgets))
-            $obj['content'] = $this->widgets;
-        if (empty($obj['notifications']) && !empty($this->notifications))
-            $obj['notifications'] = $this->notifications;
 
-        $this->response->body(json_encode($obj, JSON_FORCE_OBJECT));
+        $this->add_data('content', $this->widgets, true);
+        $this->add_data('notifications', $this->notifications, true);
+
+        $this->response->body(json_encode($this->data, JSON_FORCE_OBJECT));
         return true;
     }
 

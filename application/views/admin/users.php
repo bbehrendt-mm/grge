@@ -76,6 +76,7 @@
 </div>
 
 <script type="application/javascript">
+// ## JS COMPRESS BEGIN ## //
     var get_selected = function() {
         return $.map($('#target_list').find(':checked'), function(k) {
             return $(k).val();
@@ -219,4 +220,5 @@
             game.render.html.notify('error', <?=__j('Auswahl erforderlich!');?>);
         else password(users,'');
     });
+// ## JS COMPRESS END ## //
 </script>

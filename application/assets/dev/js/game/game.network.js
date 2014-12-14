@@ -74,11 +74,10 @@ game.network = {
         game.network.query(url,args,function(data) {
             if (data.error) {
                 alert(data.error.code + ' [' + data.error.name + ']: ' + data.error.message);
-                window.location.href = "index.php";
-                game.clean();
+                game.reset();
             } else {
                 if (data.profiling)
-                    game.render.html.put(':footer',data.profiling.version + ' Path: <b>' + data.profiling.path + '</b> Execution Time: <b>' + data.profiling.time + '</b> Memory Usage: <b>' + data.profiling.memory + '</b>');
+                    game.render.html.put(':footer',data.profiling.version + ' Path: <b>' + data.profiling.path + '</b> Execution Time: <b>' + data.profiling.time + '</b> Memory Usage: <b>' + data.profiling.memory + '</b>' + ' Compression: <b>' + data.profiling.compression + '</br>');
                 if (data.content)
                     $.each(data.content, function(k,v) {
                         game.clean(true);

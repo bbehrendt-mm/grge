@@ -265,8 +265,8 @@
     </div>
 </div>
 <script type="application/javascript">
+// ## JS COMPRESS BEGIN ## //
     $('[data-conditional=1]').hide();
-
     <?php
         foreach ($database['modes'] as &$db_entry)
             unset($db_entry['locked'],$db_entry['type'],$db_entry['meta'],$db_entry['requirements']);
@@ -481,5 +481,6 @@
         }
     });
     rebuild();
+// ## JS COMPRESS END ## //
 </script>
 

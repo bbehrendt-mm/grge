@@ -26,11 +26,15 @@ game.render.html.qtip = {
         }
     },
 
-    generic: function(pos, classes) {
+    generic: function(pos, classes,interactable, events) {
         var m = game.render.html.qtip.posify(pos);
         return {
             style: {
                 classes: classes
+            },
+            hide: {
+                fixed: interactable,
+                delay: interactable ? 100 : 0
             },
             position: {
                 my: m.my,
@@ -40,7 +44,8 @@ game.render.html.qtip = {
                 adjust: {
                     method: 'shift none'
                 }
-            }
+            },
+            events: events
         }
     },
 
@@ -50,5 +55,9 @@ game.render.html.qtip = {
 
     player: function(pos) {
         return game.render.html.qtip.generic(pos,'qtip-tipsy qtip-shadow qtip-rounded');
+    },
+
+    ingame: function(pos, events) {
+        return game.render.html.qtip.generic(pos,'qtip-default qtip-shadow qtip-custom-ingame',true, events);
     }
 };

@@ -13,6 +13,3 @@
 		<a href="../" class="btn btn-icon"><span class="btn-icon-inner"><i class="fa fa-space-shuttle"></i></span><span><?=__('Zur klassischen Webseite');?></span></a>
 	</div>
 </div>
-<script type="application/javascript">
-    
-</script>

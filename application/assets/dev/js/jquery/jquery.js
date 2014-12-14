@@ -1,4 +1,4 @@
-;(function(){
+(function(){
     $.fn.customRadioCheck = function() {
 
         return this.each(function() {
@@ -29,4 +29,14 @@
             });
         });
     };
+
+    var injectCleaner = function(jqFuncName) {
+        var backup = jQuery.fn[jqFuncName];
+        jQuery.fn[jqFuncName] = function() {
+            $(this).find('*[data-hasqtip]').qtip('destroy',true);
+            return backup.apply(this,arguments);
+        };
+    };
+
+    $.each(['html','empty','remove'],function(k,v) {injectCleaner(v)});
 }());

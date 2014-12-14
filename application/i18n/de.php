@@ -522,4 +522,72 @@ return array (
 	'Kohana',
   'Application Execution' =>
 	'Application Execution',
+  'The requested view :file could not be found' =>
+	'The requested view :file could not be found',
+  'Sprachabhängige Scripte werden nachgeladen...' =>
+	'Sprachabhängige Scripte werden nachgeladen...',
+  'Geringe Gefahr' =>
+	'Geringe Gefahr',
+  'Versteck' =>
+	'Versteck',
+  'In deinem Versteck bist du vor Zombieangriffen geschützt und kannst dich von deinen Aktionen in der Aussenwelt erholen - zumindest, wenn du dich gut verbarrikadiert hast! Unglücklicherweise kannst du nicht für immer hier sitzen bleiben - das wirst du spätestens dann merken, wenn deine gesammelten Vorräte aufgebraucht sind ...' =>
+	'In deinem Versteck bist du vor Zombieangriffen geschützt und kannst dich von deinen Aktionen in der Aussenwelt erholen - zumindest, wenn du dich gut verbarrikadiert hast! Unglücklicherweise kannst du nicht für immer hier sitzen bleiben - das wirst du spätestens dann merken, wenn deine gesammelten Vorräte aufgebraucht sind ...',
+  'Dein Gespühr sagt dir, dass du auf Zombie-Gruppen mit einer Größe von bis zu :max Zombies gefasst sein solltest.' =>
+	'Dein Gespühr sagt dir, dass du auf Zombie-Gruppen mit einer Größe von bis zu :max Zombies gefasst sein solltest.',
+  'Rechne damit, etwa alle :pc_min Minuten auf Zombies zu treffen.' =>
+	'Rechne damit, etwa alle :pc_min Minuten auf Zombies zu treffen.',
+  'Die Zombies könnten sich hier versammeln und dir den Fluchtweg abschneiden... So wies aussieht würden sie dafür vermutlich um die :sg_min Minuten benötigen.' =>
+	'Die Zombies könnten sich hier versammeln und dir den Fluchtweg abschneiden... So wies aussieht würden sie dafür vermutlich um die :sg_min Minuten benötigen.',
+  'Spielstand herunterladen...' =>
+	'Spielstand herunterladen...',
+  'Sicher' =>
+	'Sicher',
+  'Moderate Gefahr' =>
+	'Moderate Gefahr',
+  'Beträchtliche Gefahr' =>
+	'Beträchtliche Gefahr',
+  'Hohe Gefahr' =>
+	'Hohe Gefahr',
+  'Sehr hohe Gefahr!' =>
+	'Sehr hohe Gefahr!',
+  'Hier musst du vorerst keine Angst unerwarteten Angriffen haben.' =>
+	'Hier musst du vorerst keine Angst unerwarteten Angriffen haben.',
+  'Die Zombies haben hier keine Gelegenheit, dir den Weg zu versperren.' =>
+	'Die Zombies haben hier keine Gelegenheit, dir den Weg zu versperren.',
+  'Dieses Versteck werden die Zombies niemals finden!' =>
+	'Dieses Versteck werden die Zombies niemals finden!',
+  'Es ist nur eine Frage der Zeit, bis dieses Versteck von Zombies umstellt wird. So wies aussieht würden sie dafür vermutlich um die :sg_min Minuten benötigen.' =>
+	'Es ist nur eine Frage der Zeit, bis dieses Versteck von Zombies umstellt wird. So wies aussieht würden sie dafür vermutlich um die :sg_min Minuten benötigen.',
+  'Du bist hier so lange sicher, wie dein Versteck den Zombies widerstehen kann.' =>
+	'Du bist hier so lange sicher, wie dein Versteck den Zombies widerstehen kann.',
+  'Keine Zombies' =>
+	'Keine Zombies',
+  '1 Zombie' =>
+	'1 Zombie',
+  ':num Zombies' =>
+	':num Zombies',
+  'Es sieht so aus, als könntest du diesen Ort momentan ohne Probleme verlassen. Du solltest trotzdem regelmäßig nachschauen, ob Zombies eventuell den Weg blockieren.' =>
+	'Es sieht so aus, als könntest du diesen Ort momentan ohne Probleme verlassen. Du solltest trotzdem regelmäßig nachschauen, ob Zombies eventuell den Weg blockieren.',
+  'Die Zombies haben dein Versteck aufgespürt. Von hier kannst du nicht mehr fliehen - du musst die Zombies bekämpfen!' =>
+	'Die Zombies haben dein Versteck aufgespürt. Von hier kannst du nicht mehr fliehen - du musst die Zombies bekämpfen!',
+  'Es geht weder vor noch zurück - Zombies blockieren den Ausgang! Du kannst entweder eine waghalsige Flucht versuchen oder den Weg freizuräumen. Eins steht fest: Von alleine werden diese Zombies hier nicht verschwinden...' =>
+	'Es geht weder vor noch zurück - Zombies blockieren den Ausgang! Du kannst entweder eine waghalsige Flucht versuchen oder den Weg freizuräumen. Eins steht fest: Von alleine werden diese Zombies hier nicht verschwinden...',
+  'Weg freikämpfen' =>
+	'Weg freikämpfen',
+  'Fluchtversuch' =>
+	'Fluchtversuch',
+  'Zombies' =>
+	'Zombies',
+  'Drogenlabor' =>
+	'Drogenlabor',
+  'In diesem heruntergekommenen Schuppen wurden jahrelang diverse Mittelchen mit eher kontroverser Wirkung produziert. Es ist immer noch einiges an Equipment da, das du sicher für irgendwas nutzen kannst. Leider haben auch die Zombies Gefallen an diesem Örtchen gefunden... allerdings weniger wegen dem Equipment, sondern eher wegen den wehrlosen Junkies, die sich hier herumtreiben.' =>
+	'In diesem heruntergekommenen Schuppen wurden jahrelang diverse Mittelchen mit eher kontroverser Wirkung produziert. Es ist immer noch einiges an Equipment da, das du sicher für irgendwas nutzen kannst. Leider haben auch die Zombies Gefallen an diesem Örtchen gefunden... allerdings weniger wegen dem Equipment, sondern eher wegen den wehrlosen Junkies, die sich hier herumtreiben.',
+  'Die Umgebung des Verstecks' =>
+	'Die Umgebung des Verstecks',
+  'Früher blühte hier das Leben, jetzt findet man hier nur noch Sand und gelegentlich ein paar Zombies, die in kleinen Grüppchen die Ruinen der Zivilisation umstreifen. Unwahrscheinlich, dass du hier etwas nützliches findest. Eventuell findest du aber das ein oder andere Gebäude, das du nach nützlichen Dingen durchsuchen kannst.' =>
+	'Früher blühte hier das Leben, jetzt findet man hier nur noch Sand und gelegentlich ein paar Zombies, die in kleinen Grüppchen die Ruinen der Zivilisation umstreifen. Unwahrscheinlich, dass du hier etwas nützliches findest. Eventuell findest du aber das ein oder andere Gebäude, das du nach nützlichen Dingen durchsuchen kannst.',
+  '"Corpseland" Restaurant' =>
+	'"Corpseland" Restaurant',
+  'Dieses Franchise hat schonmal bessere Zeiten erlebt ... Die dicken Kinder, die sich hier früher Essensschlachten geliefert haben sind schon lange verschwunden - dafür schleichen nun Zombies zwischen den Tischen und in der Küche umher. Die gute Nachricht ist: Selbst ein Zombie würde das Zeug, das hier serviert wurde, nicht anrühren - du kannst hier also bestimmt noch ein paar Combomenüs abstauben.' =>
+	'Dieses Franchise hat schonmal bessere Zeiten erlebt ... Die dicken Kinder, die sich hier früher Essensschlachten geliefert haben sind schon lange verschwunden - dafür schleichen nun Zombies zwischen den Tischen und in der Küche umher. Die gute Nachricht ist: Selbst ein Zombie würde das Zeug, das hier serviert wurde, nicht anrühren - du kannst hier also bestimmt noch ein paar Combomenüs abstauben.',
 );

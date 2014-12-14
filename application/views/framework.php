@@ -28,8 +28,8 @@
     <script type="application/javascript" src="js/jquery.topzindex.min.js" ></script>
     <script type="application/javascript" src="js/jquery.selectric.min.js" ></script>
     <script type="application/javascript" src="js/rasterizeHTML.allinone.js" ></script>
-    <script type="application/javascript" src="js/zombvival.min.js" ></script>
-
+    <script type="application/javascript" src="js/framework.min.js" ></script>
+    <script type="application/javascript" src="js/jquery.ext.min.js" ></script>
 
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="css/jquery.qtip.min.css" />
@@ -54,11 +54,13 @@
     </div>
 
     <script type="text/javascript">
+    // ## JS COMPRESS BEGIN ## //
         document.getElementById('boot').style.display = 'block';
         document.getElementById('nojs').style.display = 'none';
         window.addEventListener('load',function(){
             game.network.load('web/body',{},true);
         });
+    // ## JS COMPRESS END ## //
     </script>
 </body>
 </html>

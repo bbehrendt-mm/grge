@@ -42,6 +42,7 @@
 <div id="ranking_target" class="center"></div>
 
 <script type="application/javascript">
+// ## JS COMPRESS BEGIN ## //
     var game_type_elem = $('#game_type').change(function() {
         var gm = $('#game_mode').empty();
         var gs = $('#game_season');
@@ -180,4 +181,5 @@
     });
     $('.navigation').hide();
     game_type_elem.trigger('change');
+// ## JS COMPRESS END ## //
 </script>

@@ -34,6 +34,7 @@
     </div>
 </div>
 <script type="application/javascript">
+// ## JS COMPRESS BEGIN ## //
     var login = function(password, fail_callback) {
         game.network.query('admin/japi/account/login', {password: password}, function(data) {
             if (data.error) {
@@ -69,5 +70,6 @@
             $('#content').find('.form_input').removeAttr('disabled');
         });
     });
+// ## JS COMPRESS END ## //
 </script>
 

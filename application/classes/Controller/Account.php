@@ -2,21 +2,33 @@
 
 class Controller_Account extends Controller {
 
+    /**
+     * Login View
+     * @throws Kohana_Exception
+     */
     public function action_login() {
-
+        // Read login services from config
         $services = [];
         foreach (Kohana::$config->load('mt.links') as $v)
             $services[] = $v['name'];
 
+        // Render page
         $this->add_widget(View::factory('pages/login')
             ->set('services', $services)
             ->render());
 
+        // Render menu
         $this->add_widget('main-menu', View::factory('menus/login')->render());
 
         $this->render();
     }
 
+    /**
+     * Login API
+     * @param bool $attempt_local Attempt to log in using only supplicant to avoid having to contact MT servers
+     * @return bool
+     * @throws Kohana_Exception
+     */
     public function japi_login($attempt_local = false) {
         //Get key
         $key = $this->request->current()->post('key');
@@ -101,14 +113,14 @@ class Controller_Account extends Controller {
             {
                 //Create game object and try to read from database
                 $game = new Model_Game;
-                if (!$game->read($gameid)) throw new Exception('Unable to bind game object; Invalid database reference.');
+                if (!$game->read($gameid)) return $this->error(\grge\E_GAME_INDEX_ERROR);
 
                 //Append game object to session
                 try {
                     $this->session->set('game',$game);
                 } catch (Exception $e) {
                     Session::instance()->destroy();
-                    throw $e;
+                    return $this->error(\grge\E_GAME_INDEX_ERROR);
                 }
             }
 
@@ -130,6 +142,9 @@ class Controller_Account extends Controller {
         return true;
     }
 
+    /**
+     * Logout API
+     */
     public function japi_logout() {
         $this->session->destroy();
         $this->render([

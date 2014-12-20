@@ -48,10 +48,22 @@ class I18n extends Kohana_I18n {
 
 	protected static $lang_list = array('de', 'en', 'es');
 
+    /**
+     * Returns a complete translation table
+     * @param string|null $lang Language, or null to use default
+     * @return array
+     */
     public static function get_all($lang = NULL) {
         return I18n::load($lang);
     }
 
+    /**
+     * Changes an existing translation. This function can NOT add a completely new original/translation pair
+     * @param string $string Original string
+     * @param string $translation Translated string
+     * @param string $lang Translation language
+     * @return bool True when successfull, otherwise false
+     */
     public static function set($string, $translation, $lang) {
         $table = I18n::load($lang);
         if (!isset($table[$string]))
@@ -61,12 +73,22 @@ class I18n extends Kohana_I18n {
         return true;
     }
 
+    /**
+     * Marks a string as missing in a certain language
+     * @param string $string Missing string
+     * @param string $lang Language
+     */
     public static function set_missing($string,$lang) {
         if (!isset(static::$missing[$lang]))
             static::$missing[$lang] = [];
         static::$missing[$lang][$string] = '';
     }
 
+    /**
+     * Returns a list of all missing strings for one language
+     * @param string $lang Language
+     * @return mixed
+     */
     public static function get_missing($lang) {
         if (isset(static::$got_missing[$lang]))
             return static::$missing[$lang];
@@ -77,6 +99,12 @@ class I18n extends Kohana_I18n {
         return static::$missing[$lang];
     }
 
+    /**
+     * Removes a string from the list of missing language strings
+     * @param string $string String to remove
+     * @param string $lang Language
+     * @return bool
+     */
     public static function remove_missing($string, $lang) {
         static::get_missing($lang);
         if (isset(static::$missing[$lang][$string])) {
@@ -87,15 +115,25 @@ class I18n extends Kohana_I18n {
         return false;
     }
 
+    /**
+     * Fetches a translation in a given language for a given string. If there is no translation, the same string will be returned. If the given string is not part of the translation database, it will be added to the missing strings list.
+     * @param string $string String to translate
+     * @param string|null $lang Language (null, to use default language)
+     * @param bool $pool True, if you want to fetch from the pool. If set to false, and the string is not found, this function will try to fetch it from the pool automatically and add it to the new translation file
+     * @return string Translated string
+     */
 	public static function get($string, $lang = NULL, $pool = false) {
-		if (!is_string($string)) return $string;
-        if ($pool)
-				
+		// Return identity if input is something other than a string
+        if (!is_string($string)) return $string;
+
+        // Don't translate anything that begins with [nt]
 		if (strpos($string, '[nt]') === 0)
 			return str_replace('[nt]', '', $string);
-		
+
+        // Load default lang if none is given
 		if ($lang == null) $lang = I18n::$lang;
 
+        // Load language table
 		$table = I18n::load(($pool ? 'pool/' : '') .$lang);
 		I18n::$cache[$string] = $string;
 		
@@ -107,7 +145,12 @@ class I18n extends Kohana_I18n {
             return $string;
         }
 	}
- 
+
+    /**
+     * Writes a language table to disc
+     * @param string $lang Language
+     * @param mixed $table Translation table
+     */
 	private static function toDisk($lang, $table) {
 		$contents = "<?php defined('SYSPATH') or die('No direct script access.');\n/* Automatically generated translation file for $lang */\n\nreturn ";
 		$contents .= var_export($table, true);
@@ -116,7 +159,10 @@ class I18n extends Kohana_I18n {
 		$contents = str_replace(' => ', " =>\n\t", $contents);
 		file_put_contents(APPPATH.'/i18n/' . $lang . '.php', $contents);
 	}
-	
+
+    /**
+     * Write all pending data to their appropriate files
+     */
 	public static function write() {
         $tables = array();
         foreach (I18n::$lang_list as $lang)

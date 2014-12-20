@@ -32,6 +32,8 @@ define('grge\E_STARTER_PLAYER_BANNED', 'GRGE-0005-0004');
 define('grge\E_STARTER_FETCH_FAILED', 'GRGE-0005-0005');
 define('grge\E_STARTER_LOBBY_UPDATE_FAILURE', 'GRGE-0005-0006');
 
+define('grge\E_GAME_INDEX_ERROR', 'GRGE-0006-0000');
+
 class Error {
 
     public static function i() {
@@ -86,6 +88,8 @@ class Error {
             case grge\E_STARTER_PLAYER_BANNED:          return "You have been banned from playing using this game setup.";
             case grge\E_STARTER_FETCH_FAILED:           return "An error occurred during retrieving the selected game from database.";
             case grge\E_STARTER_LOBBY_UPDATE_FAILURE:   return "The game lobby could not be updated.";
+
+            case grge\E_GAME_INDEX_ERROR:              return "The game index file could not be loaded.";
 
             default:                                    return "Undocumented error.";
         }

@@ -54,6 +54,7 @@
         .js .collapsed { display: none; }
     </style>
     <script type="text/javascript">
+    // ## JS COMPRESS BEGIN ## //
         document.documentElement.className = document.documentElement.className + ' js';
         function koggle(elem)
         {
@@ -73,6 +74,7 @@
             elem.style.display = disp == 'block' ? 'none' : 'block';
             return false;
         }
+    // ## JS COMPRESS END ## //
     </script>
 </head>
 

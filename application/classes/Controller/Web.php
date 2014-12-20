@@ -10,9 +10,10 @@ class Controller_Web extends Controller {
 
     public function action_core() {
         $buffer = '';
+        $version = Kohana::$config->load('build.version');
         foreach (scandir(APPPATH . 'views/core/') as $f)
             if (!in_array($f, ['.','..']))
-                $buffer .= JView::factory('core/' . str_replace('.php','',$f));
+                $buffer .= JView::factory('core/' . str_replace('.php','',$f))->set('version_data', $version);
         $this->response->headers('Content-Type', 'application/javascript; charset=utf-8');
         $this->response->body($buffer);
     }

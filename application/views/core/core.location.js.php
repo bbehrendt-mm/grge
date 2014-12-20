@@ -1,6 +1,7 @@
 (function() {
 
     var zombieradar = function(data, target) {
+        // Create danger text
         var danger_text, zombie_text;
         switch (data.danger) {
             case 0:             danger_text = <?=__j('Sicher')?>; break;
@@ -11,6 +12,7 @@
             case 5: default:    danger_text = <?=__j('Sehr hohe Gefahr!')?>; break;
         }
 
+        // Create zombie count
         if (data.zombies == 0)
             zombie_text = <?=__j('Keine Zombies')?>;
         else if (data.zombies == 1)

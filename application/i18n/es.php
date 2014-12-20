@@ -590,4 +590,106 @@ return array (
 	'"Corpseland" Restaurant',
   'Dieses Franchise hat schonmal bessere Zeiten erlebt ... Die dicken Kinder, die sich hier früher Essensschlachten geliefert haben sind schon lange verschwunden - dafür schleichen nun Zombies zwischen den Tischen und in der Küche umher. Die gute Nachricht ist: Selbst ein Zombie würde das Zeug, das hier serviert wurde, nicht anrühren - du kannst hier also bestimmt noch ein paar Combomenüs abstauben.' =>
 	'Dieses Franchise hat schonmal bessere Zeiten erlebt ... Die dicken Kinder, die sich hier früher Essensschlachten geliefert haben sind schon lange verschwunden - dafür schleichen nun Zombies zwischen den Tischen und in der Küche umher. Die gute Nachricht ist: Selbst ein Zombie würde das Zeug, das hier serviert wurde, nicht anrühren - du kannst hier also bestimmt noch ein paar Combomenüs abstauben.',
+  'Ausrüstung' =>
+	'Ausrüstung',
+  'Wasserbehälter' =>
+	'Wasserbehälter',
+  'Drogen und med. Zubehör' =>
+	'Drogen und med. Zubehör',
+  'Waffen und Verteidigung' =>
+	'Waffen und Verteidigung',
+  'Straßenkleidung' =>
+	'Straßenkleidung',
+  'Die Zombies haben dir alles genommen - bis auf die Kleidung, die du trägst. Da du sie aber schon einige Wochen ununterbrochen trägst, kann man verstehen, dass die Zombies mit diesen stinkenden Lumpen nichts zu tun haben wollen.' =>
+	'Die Zombies haben dir alles genommen - bis auf die Kleidung, die du trägst. Da du sie aber schon einige Wochen ununterbrochen trägst, kann man verstehen, dass die Zombies mit diesen stinkenden Lumpen nichts zu tun haben wollen.',
+  'Magische Box' =>
+	'Magische Box',
+  'Dieses Item wurde zu Testzwecken implementiert und erlaubt es, beliebige andere Items zu erzeugen.' =>
+	'Dieses Item wurde zu Testzwecken implementiert und erlaubt es, beliebige andere Items zu erzeugen.',
+  'Feldflasche' =>
+	'Feldflasche',
+  'Diese kleine, pfadfindergeprüfte Feldflasche kann bis zu 4 Rationen Wasser ausnehmen. Außerdem lässt sie sich beschriften - es wäre doch schade, wenn du deine Wasserfeldflasche mal mit der Feldflasche verwechselst, in der du die Batteriesäure aufbewahrst... ' =>
+	'Diese kleine, pfadfindergeprüfte Feldflasche kann bis zu 4 Rationen Wasser ausnehmen. Außerdem lässt sie sich beschriften - es wäre doch schade, wenn du deine Wasserfeldflasche mal mit der Feldflasche verwechselst, in der du die Batteriesäure aufbewahrst... ',
+  'Selbstmord-Pille' =>
+	'Selbstmord-Pille',
+  'Obwohl dieses kleine Ding die meisten deiner Probleme lösen kann - beim Erklimmen des Rankings hilft es nur bedingt.' =>
+	'Obwohl dieses kleine Ding die meisten deiner Probleme lösen kann - beim Erklimmen des Rankings hilft es nur bedingt.',
+  'Lächerliches Taschenmesser der Männlichkeit' =>
+	'Lächerliches Taschenmesser der Männlichkeit',
+  'Wenn alles andere fehlschlägt kannst du die Zombies immernoch mit diesem Taschenmesser .... zum Lachen bringen.' =>
+	'Wenn alles andere fehlschlägt kannst du die Zombies immernoch mit diesem Taschenmesser .... zum Lachen bringen.',
+  'Dein Rucksack' =>
+	'Dein Rucksack',
+  'Deine Truhe' =>
+	'Deine Truhe',
+  'Items am Boden' =>
+	'Items am Boden',
+  'Krummes Holzbrett' =>
+	'Krummes Holzbrett',
+  'Holzbretter sind ein grundlegendes Baumaterial und werden für viele verschiedene Konstruktionen benötigt. Eigentlich kann man von ihnen gar nicht genug haben.' =>
+	'Holzbretter sind ein grundlegendes Baumaterial und werden für viele verschiedene Konstruktionen benötigt. Eigentlich kann man von ihnen gar nicht genug haben.',
+  'Alteisen' =>
+	'Alteisen',
+  'Alteisen ist ein grundlegendes Baumaterial und wird für viele verschiedene Konstruktionen benötigt. Eigentlich kann man davon gar nicht genug haben.' =>
+	'Alteisen ist ein grundlegendes Baumaterial und wird für viele verschiedene Konstruktionen benötigt. Eigentlich kann man davon gar nicht genug haben.',
+  'Schachtel mit Twinoid' =>
+	'Schachtel mit Twinoid',
+  'Twinoid macht müde Verdammte munter! Nach einer Twinoi-Kapsel ströhmt neue Energie durch deinen Körper, die dich antreibt und deine Wunden heilt.' =>
+	'Twinoid macht müde Verdammte munter! Nach einer Twinoi-Kapsel ströhmt neue Energie durch deinen Körper, die dich antreibt und deine Wunden heilt.',
+  'Pink-Rote Pille' =>
+	'Pink-Rote Pille',
+  'Leider hast du zu dieser Pille weder Packung noch Beipackzettel gefunden. Ein versierter Mediziner könnte sicherlich von der Farbe auf die Wirkung dieser Pille schließen - dir bleibt dafür wohl nur der Selbstversuch übrig.' =>
+	'Leider hast du zu dieser Pille weder Packung noch Beipackzettel gefunden. Ein versierter Mediziner könnte sicherlich von der Farbe auf die Wirkung dieser Pille schließen - dir bleibt dafür wohl nur der Selbstversuch übrig.',
+  'Türkise Pille' =>
+	'Türkise Pille',
+  'Pinke Pille' =>
+	'Pinke Pille',
+  'Weiße Pille' =>
+	'Weiße Pille',
+  'Rot-Blaue Pille' =>
+	'Rot-Blaue Pille',
+  'Rosa Pille' =>
+	'Rosa Pille',
+  'Schwarze Pille' =>
+	'Schwarze Pille',
+  'Grün-Rote Pille' =>
+	'Grün-Rote Pille',
+  'Beige Pille' =>
+	'Beige Pille',
+  'Rote Pille' =>
+	'Rote Pille',
+  'Blaue Pille' =>
+	'Blaue Pille',
+  'Baumaterialien' =>
+	'Baumaterialien',
+  'Zyanid' =>
+	'Zyanid',
+  'Klares Wasser' =>
+	'Klares Wasser',
+  'Klares Wasser zu finden ist eine Seltenheit - pass auf, dass du es nicht ruinierst indem du es mit dreckigem Wasser mischt!' =>
+	'Klares Wasser zu finden ist eine Seltenheit - pass auf, dass du es nicht ruinierst indem du es mit dreckigem Wasser mischt!',
+  'Heißer Kaffee' =>
+	'Heißer Kaffee',
+  'Heißer Kaffee... welch ein Luxus. Dank deines Wasserkochers ist dieser Kaffee übrigens so heiß, dass er niemals wieder kalt wird. Für die einen wäre das einfach eine Lücke in der Spiellogik, für andere aber ..... heißer Kaffee!' =>
+	'Heißer Kaffee... welch ein Luxus. Dank deines Wasserkochers ist dieser Kaffee übrigens so heiß, dass er niemals wieder kalt wird. Für die einen wäre das einfach eine Lücke in der Spiellogik, für andere aber ..... heißer Kaffee!',
+  'Schachtel mit Paracetoid' =>
+	'Schachtel mit Paracetoid',
+  'Hilft zuverlässig gegen Kopfschmerzen, Bauchschmerzen, abgerissene Körperteile und extreme radioaktive Verstrahlung. Nicht einnehmen bei Schwangerschaft oder fortgeschrittener Zombiefizierung.' =>
+	'Hilft zuverlässig gegen Kopfschmerzen, Bauchschmerzen, abgerissene Körperteile und extreme radioaktive Verstrahlung. Nicht einnehmen bei Schwangerschaft oder fortgeschrittener Zombiefizierung.',
+  'Orange Pille' =>
+	'Orange Pille',
+  'Nahrungsmittel' =>
+	'Nahrungsmittel',
+  'Dies ist eine Rüstung. Sie wendet während eines Kampfes Schaden von dir ab.' =>
+	'Dies ist eine Rüstung. Sie wendet während eines Kampfes Schaden von dir ab.',
+  'Dies ist eine Waffe. Sie wird automatisch eingesetzt wenn du gegen Zombies kämpfst.' =>
+	'Dies ist eine Waffe. Sie wird automatisch eingesetzt wenn du gegen Zombies kämpfst.',
+  'Dieser Gegenstand hilft dir dabei, vor Zombies zu fliehen die dich Belagern. Er wird automatisch bei Bedarf eingesetzt.' =>
+	'Dieser Gegenstand hilft dir dabei, vor Zombies zu fliehen die dich Belagern. Er wird automatisch bei Bedarf eingesetzt.',
+  'Dieser Gegenstand verschwindet, wenn du ihn zurücklässt.' =>
+	'Dieser Gegenstand verschwindet, wenn du ihn zurücklässt.',
+  'Dies ist ein Event-Gegenstand. Er verschwindet, wenn du das Event-Gebiet verlässt oder das Event endet.' =>
+	'Dies ist ein Event-Gegenstand. Er verschwindet, wenn du das Event-Gebiet verlässt oder das Event endet.',
+  'Du kannst diesen Gegenstand mitführen, ohne dass dein Rucksack belastet wird.' =>
+	'Du kannst diesen Gegenstand mitführen, ohne dass dein Rucksack belastet wird.',
 );

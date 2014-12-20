@@ -4,6 +4,9 @@ class Controller_Lobby extends Controller {
 
     protected static $force_login = true;
 
+    /**
+     * News Renderer
+     */
     public function action_main() {
         /**
          * @global Model_EUser $user
@@ -16,15 +19,23 @@ class Controller_Lobby extends Controller {
         $this->render();
     }
 
+    /**
+     * Forum Newsfeed API
+     * @return bool
+     * @throws Kohana_Exception
+     */
     public function japi_feedproxy() {
+        // Get config
         $offset = max(0,(int)$this->request->current()->post('page') - 1) * 5;
         $url = Kohana::$config->load('services.newsfeed.server');
         $auth = Kohana::$config->load('services.newsfeed.token');
         $fid = Kohana::$config->load('services.newsfeed.topics');
 
+        // Get forum ID based on language, or use default if no specific ID is set
         if (isset($fid[I18n::$lang])) $fid = $fid[I18n::$lang];
         else $fid = $fid['default'];
 
+        // Connect to forum, read threads
         try {
             $ret = json_decode(file_get_contents("{$url}/remote.php", false, stream_context_create([
                 'http' => array(
@@ -45,6 +56,7 @@ class Controller_Lobby extends Controller {
             return $this->error(\grge\E_EXT_SERVICE_UNAVAILABLE);
         }
 
+        // Convert stuff
         foreach ($ret['threads'] as &$article) {
             $article['date'] = date(__('G:i \U\h\r \a\m d.m.'), $article['date']);
             $article['response'] = "{$url}/posting.php?mode=reply&f={$fid}&t={$article['id']}";

@@ -92,6 +92,19 @@ class Controller_Gamemaster extends Controller {
         return true;
     }
 
+    /**
+     * Create a multi player game and add the current user as player. Note that this function does NOT attempt to validate the configuration!
+     * @param int $mode Game mode
+     * @param int $job Player profession
+     * @param int $level Player Profession level
+     * @param string $name Game name
+     * @param string $lang Language name
+     * @param int $slots Number of open slots
+     * @param string|bool $pw Password, or anything that equals false to disable password protection
+     * @return bool
+     * @throws Exception
+     * @throws Kohana_Exception
+     */
     private function start_multiplayer($mode,$job,$level,$name,$lang,$slots,$pw) {
         // Check if lang is valid
         if (!in_array($lang, array_keys(static::get_lang_flags())))
@@ -114,6 +127,15 @@ class Controller_Gamemaster extends Controller {
         return true;
     }
 
+    /**
+     * Join an existing multi player game. Note that this function does NOT attempt to validate the configuration!
+     * @param int $job Player profession
+     * @param int $level Player Profession level
+     * @param string|bool $pw Password, can be empty if the game is not password protected
+     * @return bool
+     * @throws Exception
+     * @throws Kohana_Exception
+     */
     private function join_multiplayer($id,$job,$level,$pw) {
         /**
          * @global Model_EUser $user
@@ -147,13 +169,20 @@ class Controller_Gamemaster extends Controller {
         return true;
     }
 
+    /**
+     * Automatically starts games to fill up the public multiplayer lobby
+     * @throws Exception
+     * @throws Kohana_Exception
+     */
     private function fill_multiplayer_lobby() {
         global $game;
 
+        // Get games matching the auto-fill language that have no password
         foreach (Kohana::$config->load('basic.multiplayer.parallel_games') as $lang => $count) {
-            $num = DB::select(array(DB::expr('COUNT(*)'), 'num'))->from('multiplayer_lobby')->where('slots', '>', 0)->where('lang', '=', $lang)->execute()->as_array();
+            $num = DB::select(array(DB::expr('COUNT(*)'), 'num'))->from('multiplayer_lobby')->where('slots', '>', 0)->where('lang', '=', $lang)->and_where('password','=',null)->execute()->as_array();
             $num = (int)$num[0]['num'];
 
+            // As long there is not enough of them, make more games
             while($num < $count) {
                 $name = static::create_gamename($lang);
                 $game = new Model_Game(false);
@@ -177,15 +206,35 @@ class Controller_Gamemaster extends Controller {
         return $ret;
     }
 
+    /**
+     * Checks the password for a game; when no password is set, this will always return true
+     * @param number $id Game ID
+     * @param string $pw Password
+     * @param bool $graceful_fail Value to return in case the game doesn't exist
+     * @return bool True, when the password matches or there is no password; false, when the password doesn't match; $graceful_fail, when the game does not exist
+     */
     private function check_password($id, $pw, $graceful_fail = false) {
+        // Get lobby entry
         $data = DB::select('password')->from('multiplayer_lobby')->where('slots', '>', 0)->where('gameid', '=', $id)->execute()->as_array();
 
+        // In case of missing entry, fail
         if (count($data) != 1)
             return $graceful_fail;
 
+        // Check PW
         return (!$data[0]['password'] || $data[0]['password'] == hash('sha256', $pw, false));
     }
 
+    /**
+     * Checks game parameters for validity
+     * @param int $mode Game mode; is checked for existence and lock status
+     * @param int $job Player profession; is checked for existence, lock status and if it is a valid profession for the given game mode
+     * @param int $flow Tick length; is checked for existence and validity in relation to the game mode
+     * @param int $slots Number of open slots; is only checked for multiplayer games; checked for being in the range for selected game mode
+     * @param int $id Game ID; must be nagative for a newly created game that does not have an ID yet
+     * @param string $name Game name; Only checked for multiplayer games; checked for length
+     * @return bool|int Returns false if the given setting is invalid; otherwise, returns the player profession level (at least 1)
+     */
     private function check_game_params($mode,$job,$flow,$slots,$id,$name) {
         $startup = ($id < 0);
 
@@ -219,19 +268,21 @@ class Controller_Gamemaster extends Controller {
         return max(1,(int)$config['jobs'][$job]['level']);
     }
 
+    /**
+     * Password check API
+     */
     public function japi_check_pw() {
         $pw = $this->request->current()->post('password');
         $id = (int)$this->request->current()->post('id');
         $this->render(['proceed' => $this->check_password($id,$pw)]);
     }
 
+    /**
+     * Game start API
+     * @return bool
+     */
     public function japi_start() {
-        /**
-         * @global Model_EUser $user
-         */
-        global $game, $player, $user;
-
-        Error::i();
+        // Get POST stuff
         $mode = (int)$this->request->current()->post('mode');
         $job = (int)$this->request->current()->post('job');
         $id = (int)$this->request->current()->post('id');
@@ -241,41 +292,58 @@ class Controller_Gamemaster extends Controller {
         $name = preg_replace('/[^\w &.,!?\-\+:\/@\(\)=;\|]/', ' ', $this->request->current()->post('name'));
         $slots = (int)$this->request->current()->post('slots');
 
+        // Check if all that config stuff is valid
         if (!($level = $this->check_game_params($mode,$job,$flow,$slots,$id,$name)))
             return $this->error(\grge\E_STARTER_INVALID_SETUP);
 
+        // If an ID is given, we want to join a multiplayer game
         if ($id > 0) return $this->join_multiplayer($id,$job,$level,$pw);
+        // If a name is given, we want to greate a multiplayer game
         if ($name) return $this->start_multiplayer($mode,$job,$level,$name,'xx',$slots,$protect);
-
+        // Otherwise, we probably want to create a single player game
         return $this->start_singleplayer($mode,$flow,$job,$level);
     }
 
+    /**
+     * Game Creator Renderer
+     * @throws Exception
+     * @throws Kohana_Exception
+     */
     public function action_lobby() {
         /** @global Model_Euser $user */
-        global $user;
+        global $user, $game;
 
+        // Make sure there are enough open games in the lobby
         $this->fill_multiplayer_lobby();
 
+        // Get active games; if user is banned, filter out public ones
         $data = DB::select()->from('multiplayer_lobby')->where('slots', '>', 0);
         if ($user->lockouts_is_locked()) $data->where('password', 'IS NOT', NULL);
         $data = $data->order_by('password', 'ASC')->order_by('lang')->execute()->as_array();
 
-        global $game;
+        // Iterate over each entry
         foreach ($data as &$entry) {
+            // Make sure ID and slots are stored as int
             foreach (['gameid','slots'] as $key)
                 $entry[$key] = (int)$entry[$key];
-
+            // Remove exact timestamp; the client doesn't need that
             unset($entry['timestamp']);
+            // Don't send the password hash; just store if we have a password or not
             $entry['password'] = (bool)$entry['password'];
 
+            // Load game to get more info
             $entry['locked'] = false;
             $local_game_obj = new Model_Game();
+            // If we can't load the game, lock it
             if (!$local_game_obj->read($entry['gameid'], false)) {
                 $entry['locked'] = true;
                 continue;
             }
+
+            // Get game mode
             $entry['mode'] = $local_game_obj->setting_mode();
 
+            // Get players
             $entry['players'] = array();
             foreach ($local_game_obj->players(false) as $p) if ($p) {
                 $entry['players'][] = array('name' => $p->name(), 'id' => (int)$p->id(), 'job' => $p->job(), 'cod' => $p->alive() ? null : $p->get_cod());
@@ -285,6 +353,7 @@ class Controller_Gamemaster extends Controller {
         }
         $game = null;
 
+        // Render
         $this->add_widget(View::factory('pages/gameselect')
                 ->set('database', Tool_Gamemodes::compile_mode_database(true))
                 ->set('games', $data)

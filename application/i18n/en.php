@@ -590,4 +590,106 @@ return array (
 	'"Corpseland" Franchise',
   'Dieses Franchise hat schonmal bessere Zeiten erlebt ... Die dicken Kinder, die sich hier früher Essensschlachten geliefert haben sind schon lange verschwunden - dafür schleichen nun Zombies zwischen den Tischen und in der Küche umher. Die gute Nachricht ist: Selbst ein Zombie würde das Zeug, das hier serviert wurde, nicht anrühren - du kannst hier also bestimmt noch ein paar Combomenüs abstauben.' =>
 	'This franchised restaurant has seen better times ... All those fat children throwing food around have long disappeared - and replaced by zombies shambling around the tables and inside the kitchen. The upside is, however: Even zombies wouldn\'t touch the stuff they used to serve here, so you might be able to score a deal on all those XXL menus left behind...',
+  'Ausrüstung' =>
+	'Equipment',
+  'Wasserbehälter' =>
+	'Water Containers',
+  'Drogen und med. Zubehör' =>
+	'Drugs & medical tools',
+  'Waffen und Verteidigung' =>
+	'Weapons and Protection',
+  'Straßenkleidung' =>
+	'Street Clothes',
+  'Die Zombies haben dir alles genommen - bis auf die Kleidung, die du trägst. Da du sie aber schon einige Wochen ununterbrochen trägst, kann man verstehen, dass die Zombies mit diesen stinkenden Lumpen nichts zu tun haben wollen.' =>
+	'Zombies took everything from you - except for your clothes. Well, you\'ve been wearing these for a couple of weeks now, so it\'s understandable zombies don\'t want anything to do with these...',
+  'Magische Box' =>
+	'Magische Box',
+  'Dieses Item wurde zu Testzwecken implementiert und erlaubt es, beliebige andere Items zu erzeugen.' =>
+	'Dieses Item wurde zu Testzwecken implementiert und erlaubt es, beliebige andere Items zu erzeugen.',
+  'Feldflasche' =>
+	'Flask',
+  'Diese kleine, pfadfindergeprüfte Feldflasche kann bis zu 4 Rationen Wasser ausnehmen. Außerdem lässt sie sich beschriften - es wäre doch schade, wenn du deine Wasserfeldflasche mal mit der Feldflasche verwechselst, in der du die Batteriesäure aufbewahrst... ' =>
+	'This proven-to-work flask can hold 4 rations of water. There is also a small spot on it that you could write something on - it\'d be a shame if you confused this flask with the one holding your battery acid... ',
+  'Selbstmord-Pille' =>
+	'Suicide Pill',
+  'Obwohl dieses kleine Ding die meisten deiner Probleme lösen kann - beim Erklimmen des Rankings hilft es nur bedingt.' =>
+	'This little thing will solve most of your problems - except reaching a good position in the games ranking.',
+  'Lächerliches Taschenmesser der Männlichkeit' =>
+	'Preposterous Pocket Knife of Manhood',
+  'Wenn alles andere fehlschlägt kannst du die Zombies immernoch mit diesem Taschenmesser .... zum Lachen bringen.' =>
+	'When everything else fails, you can still use this pocket knife to .... amuse the zombies.',
+  'Dein Rucksack' =>
+	'Your Rucksack',
+  'Deine Truhe' =>
+	'Your Chest',
+  'Items am Boden' =>
+	'Items on the ground',
+  'Krummes Holzbrett' =>
+	'Twisted Plank',
+  'Holzbretter sind ein grundlegendes Baumaterial und werden für viele verschiedene Konstruktionen benötigt. Eigentlich kann man von ihnen gar nicht genug haben.' =>
+	'Twisted Planks are one of the most basic materials you will need for construction. You can actually never have enough of these.',
+  'Alteisen' =>
+	'Wrought Iron',
+  'Alteisen ist ein grundlegendes Baumaterial und wird für viele verschiedene Konstruktionen benötigt. Eigentlich kann man davon gar nicht genug haben.' =>
+	'Wrought Iron is one of the most basic materials you will need for construction. You can actually never have enough of these.',
+  'Schachtel mit Twinoid' =>
+	'Packet of Twinoid',
+  'Twinoid macht müde Verdammte munter! Nach einer Twinoi-Kapsel ströhmt neue Energie durch deinen Körper, die dich antreibt und deine Wunden heilt.' =>
+	'Twinoid boosts anyone who is still alive! After taking a single of these Twinoid pills, energy surges throug your body, getting you powered up and even healing your wounds.',
+  'Pink-Rote Pille' =>
+	'Magenta-Red Pill',
+  'Leider hast du zu dieser Pille weder Packung noch Beipackzettel gefunden. Ein versierter Mediziner könnte sicherlich von der Farbe auf die Wirkung dieser Pille schließen - dir bleibt dafür wohl nur der Selbstversuch übrig.' =>
+	'Unfortunately, this pill comes without package or instruction leaflet. A skilled medic might be able to deduct the effects of this pill from its color - you\'ll have no option but to experiment on yourself...',
+  'Türkise Pille' =>
+	'Cyan Pill',
+  'Pinke Pille' =>
+	'Magenta Pill',
+  'Weiße Pille' =>
+	'White Pill',
+  'Rot-Blaue Pille' =>
+	'Red & Blue Pill',
+  'Rosa Pille' =>
+	'Pink Pill',
+  'Schwarze Pille' =>
+	'Black Pill',
+  'Grün-Rote Pille' =>
+	'Green & Red Pill',
+  'Beige Pille' =>
+	'Beige Pill',
+  'Rote Pille' =>
+	'Red Pill',
+  'Blaue Pille' =>
+	'Blue Pill',
+  'Baumaterialien' =>
+	'Building materials',
+  'Zyanid' =>
+	'Cyanide',
+  'Klares Wasser' =>
+	'Clear Water',
+  'Klares Wasser zu finden ist eine Seltenheit - pass auf, dass du es nicht ruinierst indem du es mit dreckigem Wasser mischt!' =>
+	'Clear water is amoung the things you miss most in the apocalypse! You\'d better not ruin it by mixing it with dirty water.',
+  'Heißer Kaffee' =>
+	'Hot Coffee',
+  'Heißer Kaffee... welch ein Luxus. Dank deines Wasserkochers ist dieser Kaffee übrigens so heiß, dass er niemals wieder kalt wird. Für die einen wäre das einfach eine Lücke in der Spiellogik, für andere aber ..... heißer Kaffee!' =>
+	'Hot Coffee... pure luxury. Thanks to your water boiler this coffe has been heated so much, it will never ever cool off again. Some would call this a hole in the games logic, but ..... hot coffee!',
+  'Schachtel mit Paracetoid' =>
+	'Box of Paracetoid',
+  'Hilft zuverlässig gegen Kopfschmerzen, Bauchschmerzen, abgerissene Körperteile und extreme radioaktive Verstrahlung. Nicht einnehmen bei Schwangerschaft oder fortgeschrittener Zombiefizierung.' =>
+	'Reliably cures headaches, abdominal pain, torn off body parts and extreme irradiation. Not to be taken in case of pregnancy or advanced zombification.',
+  'Orange Pille' =>
+	'Orange Pill',
+  'Nahrungsmittel' =>
+	'Food',
+  'Dies ist eine Rüstung. Sie wendet während eines Kampfes Schaden von dir ab.' =>
+	'This is armor. It will deflect some damage during battle.',
+  'Dies ist eine Waffe. Sie wird automatisch eingesetzt wenn du gegen Zombies kämpfst.' =>
+	'This is a weapon. It will be used automatically when you face zombies.',
+  'Dieser Gegenstand hilft dir dabei, vor Zombies zu fliehen die dich Belagern. Er wird automatisch bei Bedarf eingesetzt.' =>
+	'Dieser Gegenstand hilft dir dabei, vor Zombies zu fliehen die dich Belagern. Er wird automatisch bei Bedarf eingesetzt.',
+  'Dieser Gegenstand verschwindet, wenn du ihn zurücklässt.' =>
+	'This item will disapear if you leave it behind!',
+  'Dies ist ein Event-Gegenstand. Er verschwindet, wenn du das Event-Gebiet verlässt oder das Event endet.' =>
+	'This is an event item. It will vanish once the event ends or you try to remove it from the event area.',
+  'Du kannst diesen Gegenstand mitführen, ohne dass dein Rucksack belastet wird.' =>
+	'You can carry this without it affecting your rucksack weight.',
 );

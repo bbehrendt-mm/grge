@@ -692,4 +692,108 @@ return array (
 	'This is an event item. It will vanish once the event ends or you try to remove it from the event area.',
   'Du kannst diesen Gegenstand mitführen, ohne dass dein Rucksack belastet wird.' =>
 	'You can carry this without it affecting your rucksack weight.',
+  'Ablegen' =>
+	'Unequip',
+  'Einen Schluck trinken' =>
+	'Drink',
+  'Micropur hineinwerfen' =>
+	'Put purifying tablet in',
+  'Untersuchen ...' =>
+	'Examine ...',
+  'Füllen oder Leeren...' =>
+	'Transfer liquids...',
+  'Schlucken' =>
+	'Swallow',
+  'Erfordert' =>
+	'Requires',
+  'Effekte' =>
+	'Effects',
+  'Effekte auf ausgewählten Spieler' =>
+	'Effects on target player',
+  'Runter damit!' =>
+	'Swallow',
+  'Schwarz-weiße Pille' =>
+	'Black & White Pill',
+  'Aufbrechen' =>
+	'Break open',
+  'Mysteriöse Kiste' =>
+	'Mysterious Box',
+  'Diese Kiste sieht nicht so aus als wäre sie für den regulären Handel bestimmt... du könntest sie öffnen und schauen, was drin ist.' =>
+	'This box does not look like it was designed to hold something legal... why don\'t you open it and take a look inside?',
+  'Wunden versorgen' =>
+	'Fix wounds',
+  'Bandage' =>
+	'Bandage',
+  'Lieber Arm dran als Arm ab; aber wenn der Arm nun schonmal ab ist kann man wenigstens eine Bandage drum machen. Eine Bandage kann nur verwendet werden wenn du weniger als 50 Gesundheit hast!' =>
+	'I used to be an adventurer like you, then I took an arrow in the knee. Would I have had a bandage, I could have fixed that pretty quickly. If you don\'t want to suffer the same fate, you better always have a bandage at hand.',
+  'Sonstiges' =>
+	'Others',
+  'Alle ablegen' =>
+	'Drop all',
+  'Alle mitnehmen' =>
+	'Take all',
+  'Bitte gib an, wie viele Kapseln du aus der Packung nehmen möchtest.' =>
+	'Please enter the number of pills to take out of the box.',
+  'Eine Paracetoid schlucken' =>
+	'Take single pill',
+  'Ganze Schachtel schlucken' =>
+	'Take whole box',
+  'Paracetoid zusammenführen' =>
+	'Collect pills',
+  'Paracetoid trennen' =>
+	'Seperate pills',
+  'Rationen' =>
+	'rations',
+  'Kapseln' =>
+	'Capsules',
+  'Gewicht' =>
+	'Weight',
+  'Eine Paracetin schlucken' =>
+	'Take single pill',
+  'Paracetin zusammenführen' =>
+	'Collect pills',
+  'Paracetin trennen' =>
+	'Seperate pills',
+  'Schachtel mit Paracetin' =>
+	'Box of Paracetin',
+  'Paracetin macht selbst den schlaffesten Sack wieder munter. Die hochkonzentrierte Mischung aus Koffein und dem von unserer Marketingabteilung neu entwickelten Acclerin - gewonnen aus natürlichem Orangenextrakt - bewirkt ein sofortiges Auffüllen von Energiereserven!' =>
+	'Paracetin has been reported to even wake the dead. It contains a mixture of highly concentrated caffeine and molecule complex called accelerin, that was just developed by our marketing department.',
+  'Kapsel' =>
+	'Capsule',
+  'Eine Paralaxium schlucken' =>
+	'Take single pill',
+  'Paralaxium zusammenführen' =>
+	'Collect pills',
+  'Paralaxium trennen' =>
+	'Split Paralaxium',
+  'Schachtel mit Paralaxium' =>
+	'Box of Paralaxium',
+  'Manchmal muss man einfach mal abschalten; Paralaxium hilft dir dabei. Mit nur ein paar Kapseln bist du selbst dann noch entspannt, wenn Zombies an deinem Kopf knabbern.' =>
+	'In desperate need of a timeout? Paralaxium might help you with that. Just down a few of these pills, and not even a zombie munching on your face will get you worked up!',
+  'Eine Twinoid schlucken' =>
+	'Take single pill',
+  'Twinoid zusammenführen' =>
+	'Collect pills',
+  'Twinoid trennen' =>
+	'Split twinoid',
+  'Mit etwas Mühe bekommst du die Kiste aufgebrochen - und stellst fest dass sie randvoll mit Medikamenten ist!' =>
+	'It takes some effort, but you finally manage to crack this crate open - which is full of medicine!!',
+  'Gelbe Pille' =>
+	'Yellow Pill',
+  'Mit etwas Mühe bekommst du die Kiste aufgebrochen - und stellst fest dass sie randvoll mit bunten Pillen ist!' =>
+	'It takes some effort, but you finally manage to crack this crate open - which is full of various colorful pills!',
+  'Mit etwas Mühe bekommst du die Kiste aufgebrochen - und stellst fest dass sie leer ist. Na toll ...' =>
+	'It takes some effort, but you finally manage to crack this crate open - which turns out to be empty. Great.',
+  'Mit all den anderen Kapseln konntest du diese Schachtel füllen. Sie enthält nun :max Kapseln.' =>
+	'You\'ve found enough capsules around to fill this box. It now contains :max capsules.',
+  'Du sammelst alle Kapseln die du dabei hast in dieser Schachtel. Sie ist zwar nicht voll, enthält nun aber immerhin :num Kapseln.' =>
+	'You\'ve collected all the capsules you could find in this single box. It now contains :num capsules, so there is still room for more.',
+  'Anlegen' =>
+	'Equip',
+  'Du hast eine Rüstung abgelegt.' =>
+	'You\'ve unequipped your armor.',
+  'Du hast eine neue Rüstung angelegt.' =>
+	'You\'ve equipped some armor.',
+  'Diese Flasche ist leer.' =>
+	'Your bottle is empty!',
 );

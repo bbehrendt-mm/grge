@@ -62,23 +62,28 @@ class Controller_Game extends Controller {
         $grouping = Array();
         $cache = Array();
 
+        // iterate over item list
         foreach ($itemlist as $item)
         {
+            // Create category array
             if (!isset($grouping[$item->cat()])) $grouping[$item->cat()] = Array('items' => Array(), 'name' => '');
 
+            // Check if our item supports static stacking
             $static = Tool_System::instance_of($item, 'Interface_Static');
-
+            // If we support stacking and a stack for this item exists, simply add to stack
             if ($static && isset($cache[get_class($item) . "/" . $item->icon() . "/" . $item->name()])) {
                 $link = &$grouping[$item->cat()]['items'][$cache[get_class($item) . "/" . $item->icon() . "/" . $item->name()]];
                 $link['static']++;
-                $link['uins'][] = $item->uin();
+                $link['set'][] = $item->uin();
                 continue;
+            // If we support stacking and a stack for this item does not exists, create one
             } elseif ($static)
                 $cache[get_class($item) . "/" . $item->icon() . "/" . $item->name()] = $item->uin();
 
             $flags = [];
 
             /** @noinspection PhpUndefinedMethodInspection */
+            // Set item flags
             if (Tool_System::instance_of($item, 'Model_Items_Abstract_Armor') && $item->is_active())    $flags[] = 'equipped';
             if (Tool_System::instance_of($item, 'Model_Items_Abstract_Armor'))                          $flags[] = 'armor';
             if (Tool_System::instance_of($item, 'Model_Battle_Weapon'))                                 $flags[] = 'weapon';
@@ -87,25 +92,43 @@ class Controller_Game extends Controller {
             if (Tool_System::instance_of($item, 'Interface_Event'))                                     $flags[] = 'event';
             if ($item->is_carrier_item())                                                               $flags[] = 'carrier';
 
-                $grouping[$item->cat()]['items'][$item->uin()] = Array(
+            // Prepare actions
+            $actions = $item->auto_actions();
+            foreach ($actions as &$action) {
+                // Translate
+                foreach (['description', 'tooltip'] as $t)
+                    if ($action[$t]) $action[$t] = __($action[$t]);
+                // Clean
+                foreach (['action'] as $t)
+                    unset ($action[$t]);
+            }
+
+            // Build final item object
+            $grouping[$item->cat()]['items'][$item->uin()] = Array(
                 'name' => __($item->name()),
                 'description' => __($item->description()),
                 'icon' => $item->icon(),
+                'weight' => $item->weight(),
+                'actions' => $actions,
                 'addr' => substr(md5(get_class($item) . '__salt'), 0, 5),
                 'flags' => $flags,
                 'uin' => $item->uin(),
                 'set' => [$item->uin()],
                 'static' => 1,
                 'count' => (Tool_System::instance_of($item, 'Interface_Countable')) ? $item->count() : null,
+                'capacity' => (Tool_System::instance_of($item, 'Interface_Countable')) ? $item->capacity() : null,
+                'stack' => __($item->stackname()),
+                'label' => $item->label()
             );
         }
 
+        // Sort items based on their address
         foreach (array_keys($grouping) as $gid)
             uasort($grouping[$gid]['items'], function($a, $b) {return strcmp($a['addr'], $b['addr']);});
 
+        // Set category strings
         foreach (array_keys($grouping) as $gid)
-            switch ($gid)
-            {
+            switch ($gid) {
                 case Model_Items_Abstract_Item::MIAI_CAT_GEAR:          $grouping[$gid]['name'] = __('Ausrüstung'); break;
                 case Model_Items_Abstract_Item::MIAI_CAT_FIGHT:         $grouping[$gid]['name'] = __('Waffen und Verteidigung'); break;
                 case Model_Items_Abstract_Item::MIAI_CAT_FOOD:          $grouping[$gid]['name'] = __('Nahrungsmittel'); break;
@@ -122,10 +145,9 @@ class Controller_Game extends Controller {
 
     private function render_inventory() {
         /**
-         * @global $game Model_Game
          * @global $player Model_Player
          */
-        global $game, $player;
+        global $player;
 
         /** @noinspection PhpVoidFunctionResultUsedInspection */
         /** @noinspection PhpUndefinedMethodInspection */
@@ -138,18 +160,34 @@ class Controller_Game extends Controller {
         ]);
     }
 
+    private function render_notifications() {
+        /**
+         * @global $player Model_Player
+         */
+        global $player;
+
+        foreach ($player->log()->get_all() as $message)
+            /** @var Interface_Message $message */
+            $this->add_note('info',$message->render_body(),$message->render_title());
+        $player->log()->clear();
+    }
+
     /**
      * Renderer API
      * @throws Kohana_Exception
      */
     public function japi_data() {
+
+
         $this->render_location();
         $this->render_inventory();
+        $this->render_notifications();
 
         $version_data = Kohana::$config->load('build.version');
         $this->add_data('version', "{$version_data['major']}.{$version_data['minor']}.{$version_data['service']}-{$version_data['stage']}-{$version_data['maintenance']}-{$version_data['build']}");
 
         $this->render(false);
+        return true;
     }
 
     /**

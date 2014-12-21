@@ -19,7 +19,6 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 				'category' => 'item_cat',
 			);
 	protected static $instances_info = Array();
-    protected static $icon_ext = 'gif';
     protected static $carrier_item = false;
     protected static $max_per_player = 0;
 	protected $custom_info = Array();
@@ -151,7 +150,7 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 	 * @return string
 	 */
 	public function icon() {
-		return $this->instance_info('icon') .'.'. static::$icon_ext;
+		return 'items/' . $this->instance_info('icon');
 	}
 	
 	/**
@@ -159,7 +158,7 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 	 * @return string
 	 */
 	public static function static_icon() {
-		return static::static_info('icon') .'.'. static::$icon_ext;
+		return 'items/' . static::static_info('icon');
 	}
 	
 	/**

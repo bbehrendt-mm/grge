@@ -61,6 +61,25 @@
       <option name="workingDir" value="$ProjectFileDir$/application/assets/dev/" />
       <envs />
     </TaskOptions>
+    <TaskOptions isEnabled="true">
+      <option name="arguments" value="" />
+      <option name="checkSyntaxErrors" value="true" />
+      <option name="description" value="" />
+      <option name="exitCodeBehavior" value="ERROR" />
+      <option name="fileExtension" value="php" />
+      <option name="immediateSync" value="true" />
+      <option name="name" value="CORE compiler" />
+      <option name="output" value="$ProjectFileDir$\application\assets\dev\js\core.js" />
+      <option name="outputFilters">
+        <array />
+      </option>
+      <option name="outputFromStdout" value="true" />
+      <option name="passParentEnvs" value="true" />
+      <option name="program" value="$ProjectFileDir$/application/assets/dev/core_compiler.bat" />
+      <option name="scopeName" value="Core" />
+      <option name="trackOnlyRoot" value="false" />
+      <option name="workingDir" value="$ProjectFileDir$\application\assets" />
+      <envs />
+    </TaskOptions>
   </component>
 </project>
-

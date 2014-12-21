@@ -95,7 +95,6 @@ class Model_Hid {
                         ->use_item($uid, $action['id'], $action['action']->argument() ? array('coarg' => '$arg') : null  )
                 )) : null,
                 'requires' => $a->convert_requires(),
-                'upg' => true,
                 'skin' => $a->has_side_effect() ? ('multiplayer ' . $a->buttonskin()) : $a->buttonskin()
             ));
 

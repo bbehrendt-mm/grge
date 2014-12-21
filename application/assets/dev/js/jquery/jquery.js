@@ -1,4 +1,8 @@
 (function(){
+    $.objToArray = function(obj, values) {
+        return obj ? $.map(obj, function(k,v) {return values ? k : v;}) : [];
+    };
+
     $.fn.customRadioCheck = function() {
 
         return this.each(function() {

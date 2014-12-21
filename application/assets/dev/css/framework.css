@@ -5,6 +5,18 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
+#static {
+    transition: all 2s ease;
+}
+
+/*noinspection CssInvalidFunction,CssInvalidPropertyValue*/
+#static.fade {
+    transition: all 6s ease;
+    -webkit-filter: contrast(300%) blur(30px) sepia(100%);
+    filter: contrast(300%) blur(30px) sepia(100%);
+    opacity: 0;
+}
+
 footer {
     text-align: center;
     padding: 20px 0;

@@ -1,6 +1,6 @@
 (function() {
-
     var zombieradar = function(data, target) {
+
         // Create danger text
         var danger_text, zombie_text;
         switch (data.danger) {
@@ -59,21 +59,16 @@
                         content.append(<?=__j('Die Zombies haben dein Versteck aufgespürt. Von hier kannst du nicht mehr fliehen - du musst die Zombies bekämpfen!')?>);
                     else content.append(<?=__j('Es geht weder vor noch zurück - Zombies blockieren den Ausgang! Du kannst entweder eine waghalsige Flucht versuchen oder den Weg freizuräumen. Eins steht fest: Von alleine werden diese Zombies hier nicht verschwinden...')?>);
 
-                    content.append('<br /><br />');
-                    content.append(fight = $('<div />').addClass('btn').text(<?=__j('Weg freikämpfen')?>));
-                    content.append(flee = $('<div />').addClass('btn').text(<?=__j('Fluchtversuch')?>));
-
-                    fight.click(function() {
-                        api.hide();
-                        core.command('location/fight');
-                    });
-
-                    if (data.hideout)
-                        flee.addClass('disabled');
-                    else flee.click(function() {
-                        api.hide();
-                        core.command('location/flee');
-                    });
+                    content
+                        .append('<br /><br />')
+                        .append(core.snippets.button(<?=__j('Weg freikämpfen')?>, function() {
+                            api.hide();
+                            core.command('location/fight');
+                        }))
+                        .append(core.snippets.button(<?=__j('Fluchtversuch')?>, function() {
+                            api.hide();
+                            core.command('location/flee');
+                        }).addClass(data.hideout ? 'disabled' : ''));
                 }
                 return true;
             }

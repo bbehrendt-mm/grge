@@ -292,7 +292,7 @@ class Model_Action {
     public function convert_requires() {
         $t = array();
         foreach ($this->get_stat_requirements() as $stat => $value)
-            $t[] = array('icon' => 'application/assets/icons/' . Model_Effect::translate($stat) . '.gif', 'value' => $value);
+            $t[] = array('icon' => Model_Effect::translate($stat), 'value' => $value);
         foreach ($this->get_item_requirements() as $class => $value)
             /** @var Model_Items_Abstract_Item $class */
         $t[] = array('icon' => $class::static_icon(), 'value' => $value);

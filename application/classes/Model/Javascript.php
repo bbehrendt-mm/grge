@@ -22,9 +22,10 @@ class Model_Javascript {
 
     /**
      * @return Model_Javascript
+     * @deprecated
      */
     public function close_qtip() {
-        return $this->custom("jQuery('.qtip').hide();");
+        return $this;
     }
 
     /**
@@ -54,7 +55,7 @@ class Model_Javascript {
      */
     public function use_item($id, $action, $additional = null) {
         if ($additional === null)
-            return $this->custom("game.xmlhttp.command('item/use', {action: '{$action}', item: {$id}});");
+            return $this->custom("core.command('act/item', {action: '{$action}', item: {$id}});");
         else {
             $args = array();
             foreach ($additional as $name => $value)
@@ -64,7 +65,7 @@ class Model_Javascript {
                     $args[] = "{$name}: " . $var;
                 } else $args[] = "{$name}: " . json_encode($value);
             $args = implode(', ', $args);
-            return $this->custom("game.xmlhttp.command('item/use', {action: '{$action}', item: {$id}, " . htmlspecialchars($args) . "});");
+            return $this->custom("core.command('act/item', {action: '{$action}', item: {$id}, " . htmlspecialchars($args) . "});");
         }
     }
 

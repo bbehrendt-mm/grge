@@ -19,6 +19,9 @@ class Model_Items_Generic_Cd extends Model_Items_Abstract_Item implements Interf
         Array('name' => 'Modern Talking CD',
             'icon' => 'cd/band',
             'description' => 'OH MEIN GOTT, VERNICHTE ES MIT FEUER!!!'),
+        Array('name' => 'Heino Rock CD',
+            'icon' => 'cd/band2',
+            'description' => 'OH MEIN GOTT, VERNICHTE ES MIT FEUER!!!'),
     );
 
 	protected static $weight = 2;

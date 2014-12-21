@@ -269,10 +269,10 @@ class Model_Effect {
         $tmp = array();
         foreach ($this->effects as $stat => $dif)
             if ($stat >= 0)
-                $tmp[] = array('icon' => "application/assets/icons/" . static::translate($stat) . ".gif", 'color' => static::color($stat, $dif), 'value' => $this->convert_val($dif), 'numeric' => !is_string($dif));
+                $tmp[] = array('icon' => static::translate($stat), 'color' => static::color($stat, $dif), 'value' => $this->convert_val($dif), 'numeric' => !is_string($dif));
             elseif ($stat == -PHP_INT_MAX)
                 $tmp[] = array('value' => '???');
-            else $tmp[] = array('icon' => "application/assets/icons/" . static::translate(-$stat) . ".gif", 'color' => '', 'value' => '???', 'numeric' => true);
+            else $tmp[] = array('icon' => static::translate(-$stat), 'color' => '', 'value' => '???', 'numeric' => true);
 
         foreach ($this->buffs as $icon => $act)
             $tmp[] = array('icon' => $icon, 'color' => '', 'value' => $act, 'numeric' => true);

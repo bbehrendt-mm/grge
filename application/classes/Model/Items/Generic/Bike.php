@@ -10,7 +10,6 @@ class Model_Items_Generic_Bike extends Model_Items_Abstract_Item implements Inte
 	);
 
 	protected static $weight = 60;
-    protected static $icon_ext = 'png';
     protected static $idea_contest_player = 'ExoticAsAlways';
 
 }	

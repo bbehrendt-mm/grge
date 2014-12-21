@@ -84,7 +84,7 @@ class Model_Log_Log extends Model {
 	/**
 	 * Gets only old messages
 	 * @param bool $reverse True if you want LIFO ordering; default is FIFO (false)
-	 * @return Interface_Message Message[] instances
+	 * @return Interface_Message[] Message instances
 	 */
 	public function get_old($reverse = false) {
 		$ret = array_slice(array_reverse($this->messages), $this->new);

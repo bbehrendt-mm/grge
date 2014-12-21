@@ -5,6 +5,7 @@
 ?>
 core = {
     parts: {},
+    snippets: {},
 
     version: '<?="{$version_data['major']}.{$version_data['minor']}.{$version_data['service']}-{$version_data['stage']}-{$version_data['maintenance']}-{$version_data['build']}"?>',
 
@@ -15,6 +16,13 @@ core = {
 
         if (!background) game.render.html.modal.work();
         game.network.query(url,args,function(data) {
+
+            if (data.error) {
+                alert(data.error.code + ' [' + data.error.name + ']: ' + data.error.message);
+                game.reset();
+                return;
+            }
+
             game.clean(true);
 
             if (data.version && data.version != core.version) {

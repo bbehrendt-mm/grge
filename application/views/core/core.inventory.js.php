@@ -1,14 +1,16 @@
 (function() {
 
-    var render_box = function(data, target) {
+    var render_box = function(data, target, rucksack) {
         $(target).empty();
         $.each(data, function(k,v) {
             var container;
             var flags = $.map(v.flags, function(m) {return m;});
             $(target).append(
                 container = $('<li />').append(
-                    $('<img />').attr('src', 'media/icons/items/' + v.icon)
-                )
+                    $('<img />').attr('src', 'media/icons/' + v.icon + '.gif')
+                ).click(function() {
+                    core.command('act/inventory',{action: rucksack ? 'drop' : 'take', items: [v.uin]});
+                })
             );
 
             var notes = [];
@@ -45,18 +47,45 @@
             else if (v.count != null)
                 container.append($('<div />').addClass('instanceCount').text(v.count));
 
-            container.attr('title','-').qtip(game.render.html.qtip.ingame('top',{
+            container.attr('title','-').qtip(game.render.html.qtip.ingame('bottom',{
                 render: function(event,api) {
                     var content = $(this).find('.qtip-content').empty();
 
                     content.append(
                         $('<b />').addClass('header').text(v.name)
-                    ).append(v.description);
+                    );
+
+                    var subhead = $();
+                    if (v.label)  subhead = subhead.add($('<i />').addClass('note center').text(v.label));
+                    if (v.count)  subhead = subhead.add($('<i />').addClass('note center').text(v.count + (v.capacity ? (' / ' + v.capacity + ' ') : ' ' ) + v.stack));
+                    if (v.weight) subhead = subhead.add($('<i />').addClass('note center').text(<?=__j('Gewicht')?> + ': ' + v.weight));
+
+
+                    if (subhead.size())
+                        content.append(subhead).append('<span class="separator" />');
+
+                    content.append(v.description);
 
                     if (notes.length) content.append('<span class="separator" />');
                     $.each(notes, function(k,v) {
                         content.append(
                             $('<div />').addClass('note').text(v)
+                        )
+                    });
+
+                    if (v.static > 1) {
+                        content.append('<span class="separator" />').append(core.snippets.button(rucksack ? <?=__j('Alle ablegen')?> : <?=__j('Alle mitnehmen')?>, function() {
+                            core.command('act/inventory',{action: rucksack ? 'drop' : 'take', items: $.objToArray(v.set, true)});
+                        }));
+                    }
+
+                    var actions = [];
+                    $.each(v.actions, function(k,v) {actions.push(v)});
+
+                    if (actions.length) content.append('<span class="separator" />');
+                    $.each(v.actions, function(k,v) {
+                        content.append(
+                            core.snippets.button(v)
                         )
                     });
                 }
@@ -65,7 +94,7 @@
         })
     };
 
-    var render_block = function(data, target, headline) {
+    var render_block = function(data, target, headline, rucksack) {
         $(target).empty().append(
             $('<h3 />').text(headline)
         );
@@ -78,7 +107,7 @@
                     item_target = $('<ul />')
                 )
             );
-            render_box(v.items, item_target);
+            render_box(v.items, item_target, rucksack);
         });
     };
 
@@ -94,7 +123,7 @@
             )
         );
 
-        render_block(data.player, iv_a, <?=__j('Dein Rucksack')?>);
-        render_block(data.location, iv_b, data.home ? <?=__j('Deine Truhe')?> : <?=__j('Items am Boden')?>);
+        render_block(data.player, iv_a, <?=__j('Dein Rucksack')?>, true);
+        render_block(data.location, iv_b, data.home ? <?=__j('Deine Truhe')?> : <?=__j('Items am Boden')?>, false);
     };
 })();

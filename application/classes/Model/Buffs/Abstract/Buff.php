@@ -51,7 +51,7 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
      * @return string
      */
     public static function static_icon() {
-        return "/application/assets/icons/buffs/" . static::$icon . ".gif";
+        return 'buffs/' . static::$icon;
     }
 
     /**

@@ -1,10 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 class Controller_Location extends Controller_Game {
-
-    protected static $force_login = true;
-    protected static $menu = 'logout';
-
     /**
      * Break a siege
      * @param bool $fight True to fight, false to flee

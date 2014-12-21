@@ -61,7 +61,7 @@ game.network = {
         });
     },
 
-    load: function(url,args,silent) {
+    load: function(url,args,silent,always) {
         game.clean();
 
         $.each(game.network.queries, function(k,v) {
@@ -84,7 +84,7 @@ game.network = {
                         game.render.html.put(k,v);
                     });
             }
-        });
+        }, always);
     }
 };
 

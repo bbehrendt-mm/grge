@@ -6,6 +6,18 @@ goog.require('game.render.html');
 
 game.render.html.modal = {
 
+    fade: function() {
+        $('#static').addClass('fade disabled');
+    },
+
+    blur: function() {
+        $('#static').addClass('blur disabled');
+    },
+
+    clear: function() {
+        $('#static').removeClass('fade blur disabled');
+    },
+
     blend: function(callback, clickable) {
         var targetZ = $.topZIndex('*') + 1;
         var blend = $('<div class="doc-blend" id="doc-blend-' + targetZ + '"></div>').css('z-index', targetZ).appendTo('body')

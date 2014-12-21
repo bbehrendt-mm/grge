@@ -692,4 +692,108 @@ return array (
 	'Dies ist ein Event-Gegenstand. Er verschwindet, wenn du das Event-Gebiet verlässt oder das Event endet.',
   'Du kannst diesen Gegenstand mitführen, ohne dass dein Rucksack belastet wird.' =>
 	'Du kannst diesen Gegenstand mitführen, ohne dass dein Rucksack belastet wird.',
+  'Ablegen' =>
+	'Ablegen',
+  'Einen Schluck trinken' =>
+	'Einen Schluck trinken',
+  'Micropur hineinwerfen' =>
+	'Micropur hineinwerfen',
+  'Untersuchen ...' =>
+	'Untersuchen ...',
+  'Füllen oder Leeren...' =>
+	'Füllen oder Leeren...',
+  'Schlucken' =>
+	'Schlucken',
+  'Erfordert' =>
+	'Erfordert',
+  'Effekte' =>
+	'Effekte',
+  'Effekte auf ausgewählten Spieler' =>
+	'Effekte auf ausgewählten Spieler',
+  'Runter damit!' =>
+	'Runter damit!',
+  'Schwarz-weiße Pille' =>
+	'Schwarz-weiße Pille',
+  'Aufbrechen' =>
+	'Aufbrechen',
+  'Mysteriöse Kiste' =>
+	'Mysteriöse Kiste',
+  'Diese Kiste sieht nicht so aus als wäre sie für den regulären Handel bestimmt... du könntest sie öffnen und schauen, was drin ist.' =>
+	'Diese Kiste sieht nicht so aus als wäre sie für den regulären Handel bestimmt... du könntest sie öffnen und schauen, was drin ist.',
+  'Wunden versorgen' =>
+	'Wunden versorgen',
+  'Bandage' =>
+	'Bandage',
+  'Lieber Arm dran als Arm ab; aber wenn der Arm nun schonmal ab ist kann man wenigstens eine Bandage drum machen. Eine Bandage kann nur verwendet werden wenn du weniger als 50 Gesundheit hast!' =>
+	'Lieber Arm dran als Arm ab; aber wenn der Arm nun schonmal ab ist kann man wenigstens eine Bandage drum machen. Eine Bandage kann nur verwendet werden wenn du weniger als 50 Gesundheit hast!',
+  'Sonstiges' =>
+	'Sonstiges',
+  'Alle ablegen' =>
+	'Alle ablegen',
+  'Alle mitnehmen' =>
+	'Alle mitnehmen',
+  'Bitte gib an, wie viele Kapseln du aus der Packung nehmen möchtest.' =>
+	'Bitte gib an, wie viele Kapseln du aus der Packung nehmen möchtest.',
+  'Eine Paracetoid schlucken' =>
+	'Eine Paracetoid schlucken',
+  'Ganze Schachtel schlucken' =>
+	'Ganze Schachtel schlucken',
+  'Paracetoid zusammenführen' =>
+	'Paracetoid zusammenführen',
+  'Paracetoid trennen' =>
+	'Paracetoid trennen',
+  'Rationen' =>
+	'Rationen',
+  'Kapseln' =>
+	'Kapseln',
+  'Gewicht' =>
+	'Gewicht',
+  'Eine Paracetin schlucken' =>
+	'Eine Paracetin schlucken',
+  'Paracetin zusammenführen' =>
+	'Paracetin zusammenführen',
+  'Paracetin trennen' =>
+	'Paracetin trennen',
+  'Schachtel mit Paracetin' =>
+	'Schachtel mit Paracetin',
+  'Paracetin macht selbst den schlaffesten Sack wieder munter. Die hochkonzentrierte Mischung aus Koffein und dem von unserer Marketingabteilung neu entwickelten Acclerin - gewonnen aus natürlichem Orangenextrakt - bewirkt ein sofortiges Auffüllen von Energiereserven!' =>
+	'Paracetin macht selbst den schlaffesten Sack wieder munter. Die hochkonzentrierte Mischung aus Koffein und dem von unserer Marketingabteilung neu entwickelten Acclerin - gewonnen aus natürlichem Orangenextrakt - bewirkt ein sofortiges Auffüllen von Energiereserven!',
+  'Kapsel' =>
+	'Kapsel',
+  'Eine Paralaxium schlucken' =>
+	'Eine Paralaxium schlucken',
+  'Paralaxium zusammenführen' =>
+	'Paralaxium zusammenführen',
+  'Paralaxium trennen' =>
+	'Paralaxium trennen',
+  'Schachtel mit Paralaxium' =>
+	'Schachtel mit Paralaxium',
+  'Manchmal muss man einfach mal abschalten; Paralaxium hilft dir dabei. Mit nur ein paar Kapseln bist du selbst dann noch entspannt, wenn Zombies an deinem Kopf knabbern.' =>
+	'Manchmal muss man einfach mal abschalten; Paralaxium hilft dir dabei. Mit nur ein paar Kapseln bist du selbst dann noch entspannt, wenn Zombies an deinem Kopf knabbern.',
+  'Eine Twinoid schlucken' =>
+	'Eine Twinoid schlucken',
+  'Twinoid zusammenführen' =>
+	'Twinoid zusammenführen',
+  'Twinoid trennen' =>
+	'Twinoid trennen',
+  'Mit etwas Mühe bekommst du die Kiste aufgebrochen - und stellst fest dass sie randvoll mit Medikamenten ist!' =>
+	'Mit etwas Mühe bekommst du die Kiste aufgebrochen - und stellst fest dass sie randvoll mit Medikamenten ist!',
+  'Gelbe Pille' =>
+	'Gelbe Pille',
+  'Mit etwas Mühe bekommst du die Kiste aufgebrochen - und stellst fest dass sie randvoll mit bunten Pillen ist!' =>
+	'Mit etwas Mühe bekommst du die Kiste aufgebrochen - und stellst fest dass sie randvoll mit bunten Pillen ist!',
+  'Mit etwas Mühe bekommst du die Kiste aufgebrochen - und stellst fest dass sie leer ist. Na toll ...' =>
+	'Mit etwas Mühe bekommst du die Kiste aufgebrochen - und stellst fest dass sie leer ist. Na toll ...',
+  'Mit all den anderen Kapseln konntest du diese Schachtel füllen. Sie enthält nun :max Kapseln.' =>
+	'Mit all den anderen Kapseln konntest du diese Schachtel füllen. Sie enthält nun :max Kapseln.',
+  'Du sammelst alle Kapseln die du dabei hast in dieser Schachtel. Sie ist zwar nicht voll, enthält nun aber immerhin :num Kapseln.' =>
+	'Du sammelst alle Kapseln die du dabei hast in dieser Schachtel. Sie ist zwar nicht voll, enthält nun aber immerhin :num Kapseln.',
+  'Anlegen' =>
+	'Anlegen',
+  'Du hast eine Rüstung abgelegt.' =>
+	'Du hast eine Rüstung abgelegt.',
+  'Du hast eine neue Rüstung angelegt.' =>
+	'Du hast eine neue Rüstung angelegt.',
+  'Diese Flasche ist leer.' =>
+	'Diese Flasche ist leer.',
 );

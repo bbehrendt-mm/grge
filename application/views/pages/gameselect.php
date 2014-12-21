@@ -434,9 +434,9 @@
         });
 
         var layer = $('<div />');
-        $('#wrapper,#navbar,#disclaimer').addClass('disabled').animate({
-            opacity: 0
-        },100, 'swing', function() {
+
+        game.render.html.modal.fade();
+        setTimeout(function() {
             layer.css({
                 position: 'fixed',
                 width: $(document).width()/2,
@@ -453,26 +453,24 @@
                 top: 300,
                 transform: 'scale(1)'
             }, 4000, 'swing');
-        });
+        }, 500);
 
         setTimeout(function() {
             game.network.query('japi/gamemaster/start', tmp_obj, function(data) {
             if (data.error) {
                 alert(data.error.code + ' [' + data.error.name + ']: ' + data.error.message);
             } else
-                game.network.load(data.redirect);
-            }, function() {
-                layer.animate({
-                    opacity: 0,
-                    transform: 'scale(2)',
-                    top: 400
-                }, 300, 'swing', function() {
-                    layer.remove();
-                    $('#wrapper,#navbar,#disclaimer').removeClass('disabled').animate({
-                        opacity: 1
-                    },200);
+                game.network.load(data.redirect, {}, null, function() {
+                    game.render.html.modal.clear();
+                    layer.animate({
+                        opacity: 0,
+                        transform: 'scale(2)',
+                        top: 400
+                    }, 300, 'swing', function() {
+                        layer.remove();
+                    });
                 });
-            })}, 4000);
+            })}, 3000);
     });
 
     $('#lang_in').val(game.lang()).selectric({

@@ -796,4 +796,8 @@ return array (
 	'You\'ve equipped some armor.',
   'Diese Flasche ist leer.' =>
 	'Your bottle is empty!',
+  'Daten merken' =>
+	'Daten merken',
+  'Klassische Seite' =>
+	'Klassische Seite',
 );

@@ -36,7 +36,7 @@ if (!isset($services)) $services = array();
                 </div><br />
 
                 <div class="row">
-                    <div class="cell rw-6"><label title="<?=__('Aktiviere diese Option, wenn du möchtest, dass deine Daten beim nächsten Besuch von ZombVival automatisch eingetragen werden. ::b::Aktiviere diese Option nicht, wenn du einen öffentlichen Computer verwendest!::/b::');?>"><input type="checkbox" class="form_input" id="remember">Daten merken</label></div>
+                    <div class="cell rw-6"><label title="<?=__('Aktiviere diese Option, wenn du möchtest, dass deine Daten beim nächsten Besuch von ZombVival automatisch eingetragen werden. ::b::Aktiviere diese Option nicht, wenn du einen öffentlichen Computer verwendest!::/b::');?>"><input type="checkbox" class="form_input" id="remember"><?=__('Daten merken');?></label></div>
                     <div class="cell rw-6"></div>
                 </div>
 
@@ -101,8 +101,13 @@ if (!isset($services)) $services = array();
         $('#profiles, #custom').show();
         $('#custom_login').hide();
 
-        var mugshot = $('<div class="mugshot"><span class="mugshot-head">' + v.host + '</span><span class="mugshot-fill"><i class="fa fa-spin fa-circle-o-notch"></i></span><img alt="" src="' + v.avatar + '" /><span class="mugshot-append">' + v.name + '</span></div>');
+        var mugshot = $('<div class="mugshot"><span class="mugshot-head" /><span class="mugshot-fill"><i class="fa fa-spin fa-circle-o-notch"></i></span><img alt="" /><span class="mugshot-append" /></div>');
+        mugshot.find('.mugshot-head').text(v.host).end().find('img').attr('src', v.avatar || 'media/img/mugshot.png').end().find('.mugshot-append').text(v.name);
         mugshot.find('.mugshot-fill').hide();
+        mugshot.find('img').error(function() {
+            alert('!');
+            $(this).attr('src', 'media/img/mugshot.png').off('error');
+        });
         mugshot.click(function() {
             var alias = $(this);
             $('#content').find('.mugshot').addClass('disabled');

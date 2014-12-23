@@ -796,4 +796,8 @@ return array (
 	'Du hast eine neue Rüstung angelegt.',
   'Diese Flasche ist leer.' =>
 	'Diese Flasche ist leer.',
+  'Daten merken' =>
+	'Daten merken',
+  'Klassische Seite' =>
+	'Klassische Seite',
 );

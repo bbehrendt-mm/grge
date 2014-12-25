@@ -36,10 +36,33 @@
     overflow: hidden;
 }
 
+.qtip-custom-ingame .qtip-content span.separator:last-child {
+    display: none;
+}
+
 .qtip-custom-ingame .qtip-content .note {
     font-size: 12px;
     color: #878b93;
     line-height: 12px;
     padding-left: 12px;
     display: block;
+}
+
+.qtip-custom-ingame .qtip-content > div.consequence {
+    text-align: left;
+}
+
+.qtip-custom-ingame .qtip-content > div.consequence i.separator {
+    text-align: center;
+}
+
+.qtip-custom-ingame .qtip-content > div.consequence .group {
+    background: white;
+    border-left: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.qtip-custom-ingame .qtip-content > div.consequence .group.default {
+    border-top: 3px solid #808080;
 }

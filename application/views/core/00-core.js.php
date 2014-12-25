@@ -41,10 +41,9 @@ core = {
             core.parts.location(data.location, location_box);
         }
 
-        var active_box = $('<div />').addClass('row').appendTo(target);
+        var action_box = $('<div />').addClass('row action_box ' + (data.location.meta.outside ? 'outside' : 'inside')).appendTo(target);
         if (data.inventory) {
-            var inventory_box = $('<div />').addClass('cell rw-8 row').appendTo(active_box);
-            core.parts.inventory(data.inventory, inventory_box)
+            core.parts.inventory(data.inventory, action_box)
         }
     }
 };

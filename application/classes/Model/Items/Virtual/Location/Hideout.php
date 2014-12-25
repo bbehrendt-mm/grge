@@ -18,6 +18,7 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
     }
 
     protected function hid() {
+        /** @global Model_Player $player */
         global $player;
 
         /** @var Model_Places_Abstract_Hideout $location */

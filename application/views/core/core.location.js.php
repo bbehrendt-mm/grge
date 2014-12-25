@@ -76,19 +76,25 @@
     };
 
     core.parts.location = function(data, target) {
-        var zradar;
+        var zradar, actions;
 
-        $(target).empty().append(
-            $('<div />').addClass('row location_box ' + (data.meta.outside ? 'outside' : 'inside')).append(
-                $('<h2 />').text(data.meta.name)
+        $(target).empty().addClass('row location_box ' + (data.meta.outside ? 'outside' : 'inside')).append(
+            $('<h2 />').text(data.meta.name)
+        ).append(
+            $('<div />').addClass('cell rw-6 padded').append(
+                zradar = $('<div />').addClass('row')
             ).append(
-                $('<div />').addClass('cell rw-6 padded').append(
-                    zradar = $('<div />').addClass('row')
-                )
-            ).append(
-                $('<div />').addClass('cell rw-6 padded justify').text(data.meta.desc)
+                actions = $('<div />').addClass('row')
             )
+        ).append(
+            $('<div />').addClass('cell rw-6 padded justify').text(data.meta.desc)
         );
+
+        $.each(data.actions, function(k,v) {
+            actions.append(
+                $('<div />').addClass('cell rw-6 padded justify').append(core.snippets.button(v, null, 'tooltip'))
+            )
+        });
 
         zombieradar(data.radar, zradar);
 

@@ -114,16 +114,29 @@
     core.parts.inventory = function(data, target) {
         var iv_a, iv_b;
         $(target).empty().append(
-            $('<div />').addClass('cell rw-6 padded').append(
+            $('<div />').addClass('cell rw-4 padded').append(
                 iv_a = $('<div />').addClass('row inventory inventory_location')
             )
         ).append(
-            $('<div />').addClass('cell rw-6 padded').append(
+            $('<div />').addClass('cell rw-4 padded').append(
                 iv_b = $('<div />').addClass('row inventory inventory_player')
+            )
+        ).append(
+            $('<div />').addClass('cell rw-4 padded').append(
+                iv_c = $('<div />').addClass('row inventory inventory_hero')
             )
         );
 
         render_block(data.player, iv_a, <?=__j('Dein Rucksack')?>, true);
         render_block(data.location, iv_b, data.home ? <?=__j('Deine Truhe')?> : <?=__j('Items am Boden')?>, false);
+
+        iv_c.append($('<h3 />').text(<?=__j('Heldentaten')?>));
+        $.each(data.heroics, function(k,v) {
+            iv_c.append(
+                $('<div />').addClass('cell rw-6 padded').append(core.snippets.button(v, function() {
+                    return confirm(<?=__j('Bist du sicher, dass du diese Heldentat ausführen möchtest?')?>)
+                }, 'tooltip'))
+            )
+        });
     };
 })();

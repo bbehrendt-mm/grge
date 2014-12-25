@@ -6,6 +6,28 @@ class Controller_Game extends Controller {
     protected static $menu = 'logout';
 
     /**
+     * @param Model_Hid[] $actions
+     * @param Model_Items_Abstract_Virtual $v_item
+     * @return mixed
+     */
+    private function prepare_actionlist($actions, $v_item = null) {
+        // Prepare actions
+        foreach ($actions as &$action) {
+            // Check vitem
+            $action['remaining'] = $v_item ? ($v_item->remaining_actions($action['action']) < PHP_INT_MAX ? $v_item->remaining_actions($action['action']) : -1 ) : -1;
+
+            // Translate
+            foreach (['description', 'tooltip'] as $t)
+                if ($action[$t]) $action[$t] = __($action[$t]);
+            // Clean
+            foreach (['action'] as $t)
+                unset ($action[$t]);
+        }
+
+        return $actions;
+    }
+
+    /**
      * Renderer Subroutine; Render Location Box
      * @throws Exception
      */
@@ -35,6 +57,12 @@ class Controller_Game extends Controller {
         if ($radar_increase != 0 && $radar_increase <= 3)   $danger += 1;   // Increase by 1 if we have a very high blocking speed
         $danger = min(5,max(($radar_prop > 0) ? 1 : 0,$danger));            // Confine danger to 0-5 range
 
+        // Get local actions
+        $a = [];
+        foreach (Tool_Scripts::available_items('Model_Items_Abstract_Virtual',false,true,false,$player) as $a_item)
+            /** @var  Model_Items_Abstract_Virtual $a_item */
+            $a = array_merge($a,$this->prepare_actionlist($a_item->auto_actions(), $a_item));
+
         // Add render data
         $this->add_data('location', [
             'meta' => [
@@ -42,6 +70,7 @@ class Controller_Game extends Controller {
                 'desc' => __($player->location()->description()),
                 'outside' => $player->location()->is_outside()
             ],
+            'actions' => $a,
             'radar' => [
                 'danger' => $danger,
                 'min' => 0,
@@ -92,24 +121,13 @@ class Controller_Game extends Controller {
             if (Tool_System::instance_of($item, 'Interface_Event'))                                     $flags[] = 'event';
             if ($item->is_carrier_item())                                                               $flags[] = 'carrier';
 
-            // Prepare actions
-            $actions = $item->auto_actions();
-            foreach ($actions as &$action) {
-                // Translate
-                foreach (['description', 'tooltip'] as $t)
-                    if ($action[$t]) $action[$t] = __($action[$t]);
-                // Clean
-                foreach (['action'] as $t)
-                    unset ($action[$t]);
-            }
-
             // Build final item object
             $grouping[$item->cat()]['items'][$item->uin()] = Array(
                 'name' => __($item->name()),
                 'description' => __($item->description()),
                 'icon' => $item->icon(),
                 'weight' => $item->weight(),
-                'actions' => $actions,
+                'actions' => $this->prepare_actionlist($item->auto_actions()),
                 'addr' => substr(md5(get_class($item) . '__salt'), 0, 5),
                 'flags' => $flags,
                 'uin' => $item->uin(),
@@ -149,14 +167,20 @@ class Controller_Game extends Controller {
          */
         global $player;
 
+        // Get heroic actions
+        $a = [];
+        foreach (Tool_Scripts::available_items('Model_Items_Abstract_Virtual',true,false,false,$player) as $a_item)
+            /** @var  Model_Items_Abstract_Virtual $a_item */
+            $a = array_merge($a,$this->prepare_actionlist($a_item->auto_actions(), $a_item));
+
         /** @noinspection PhpVoidFunctionResultUsedInspection */
         /** @noinspection PhpUndefinedMethodInspection */
-
         $this->add_data('inventory', [
             'player' => $this->group_itemlist($player->inventory()->get()),
             'weight' => [$player->inventory()->weight(),$player->inventory()->limit()],
             'location' => $this->group_itemlist($player->location()->inventory()->get()),
             'home' => (bool)Tool_Scripts::current_location_hideout(),
+            'heroics' => $a
         ]);
     }
 

@@ -151,7 +151,7 @@ input[type=checkbox].form_input {
     padding-bottom: 3px;
 }
 
-.btn.btn-zv > div {
+.btn.btn-zv > div.consequence {
     text-align: left;
     background: #494949;
     border: 1px solid #5b0000;
@@ -162,41 +162,16 @@ input[type=checkbox].form_input {
     box-shadow: 0 0 1px 1px rgba(108, 108, 108, 0.80) inset, 0 1px 0 rgba(0,0,0,.3);
 }
 
-.btn.btn-zv > div i.separator {
-    display: block;
-    font-size: 10px;
+.btn.btn-zv > div.consequence i.separator {
     border-bottom: 1px solid #fff6bf;
 }
 
-.btn.btn-zv > div .group {
-    display: inline-block;
-    margin: 4px 2px 2px;
-    padding: 3px;
+.btn.btn-zv > div.consequence .group {
     background: #363636;
+}
+
+.btn.btn-zv > div.consequence .group.default {
     border-top: 3px solid black;
-    font-size: 10px;
-}
-
-.btn.btn-zv > div .group.green {
-    border-top: 3px solid #8fea00;
-}
-
-.btn.btn-zv > div .group.red {
-    border-top: 3px solid #ea4803;
-}
-
-.btn.btn-zv > div .group > span {
-    display: inline-block;
-    line-height: 16px;
-    vertical-align: top;
-}
-
-.btn.btn-zv > div .group > img:not(.fake) + span {
-     margin-left: 5px;
-}
-
-.btn.btn-zv > div .group > img.fake + span {
-    margin: 0 3px;
 }
 
 .tile {

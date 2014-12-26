@@ -40,16 +40,16 @@ class Model_Buffs_Daytime extends Model_Buffs_Abstract_Buff {
         if (!$s) $s = Tool_Scripts::get_timeofday();
         switch ($s) {
             case "night":
-                return "/application/assets/icons/buffs/dtnight.gif"; break;
+                return "buffs/dtnight"; break;
             case "morning":
-                return "/application/assets/icons/buffs/dtmorning.gif"; break;
+                return "buffs/dtmorning"; break;
             case "day":
-                return "/application/assets/icons/buffs/dtday.gif"; break;
+                return "buffs/dtday"; break;
             case "evening":
-                return "/application/assets/icons/buffs/dtevening.gif"; break;
+                return "buffs/dtevening"; break;
 
             case "snowynight":
-                return "/application/assets/icons/buffs/dtperpetualnight.gif"; break;
+                return "buffs/dtperpetualnight"; break;
             default: return "";
         }
     }

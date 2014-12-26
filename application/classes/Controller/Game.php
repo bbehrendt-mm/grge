@@ -218,12 +218,24 @@ class Controller_Game extends Controller {
     }
 
     private function render_status() {
+        /**
+         * @global $player Model_Player
+         */
+        global $player;
+
         $cache = [];
-        foreach ([Model_Player::MP_STAT_ENERGY,Model_Player::MP_STAT_HEALTH,Model_Player::MP_STAT_HUNGER,Model_Player::MP_STAT_SLEEPY,Model_Player::MP_STAT_THIRST] as $type)
-            $cache[$type] = $this->status($type);
+        $tmp = 0;
+        for ($type = 1; $type <= Model_Player::MP_STATUS_COUNT; $type++)
+            if ($type <= 5 || $player->stats_get($type))
+                $cache[$type] = $this->status($type);
+
+        $buffs = [];
+        foreach ($player->buff_get() as $buff) if ($buff->visible())
+            $buffs[] = ['icon' => $buff->icon(), 'name' => __($buff->name()), 'desc' => __($buff->description())];
 
         $this->add_data('status', [
             'bars' => $cache,
+            'buffs' => $buffs
         ]);
     }
 

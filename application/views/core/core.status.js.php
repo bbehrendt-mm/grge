@@ -146,8 +146,8 @@
         return table;
     };
 
-    var make_bar = function(type, value, effects) {
-        return $('<div />').addClass('cell rw-4').append(
+    var make_bar = function(type, value, effects, inline) {
+        var bar = $('<div />').addClass('cell rw-' + (inline ? 12 : 4)).append(
             $('<div />').addClass('bar').append(
                 $('<img />').attr('src', 'media/icons/status_' + num_decode_str(type) + '.gif')
             ).append(
@@ -155,7 +155,9 @@
                     $('<div />').css({width: value + '%', background: num_decode_color(type)})
                 )
             )
-        ).attr('title','-').qtip(game.render.html.qtip.ingame('bottom', {
+        );
+
+        if (!inline) bar.attr('title','-').qtip(game.render.html.qtip.ingame('bottom', {
                 render: function (event, api) {
                     var content = $(this).find('.qtip-content').empty().append(
                         $('<b />').addClass('header').text(num_decode_title(type))
@@ -167,16 +169,65 @@
                         $('<span />').text(num_decode_description(type))
                     ).append(
                         $('<span />').addClass('separator')
-                    ).append(
-                        make_buff_table(effects, num_decode_inverse(type))
-                    )
+                    ).append(make_buff_table(effects, num_decode_inverse(type)))
                 }
             })
         );
+
+        return bar;
     };
 
-    var make_buffbar = function() {
-        var bar = $('<div />').addClass('cell rw-4').text('buffs');
+    var make_buffbar = function(buffs, bars) {
+        var target;
+        var bar = $('<div />').addClass('cell rw-4').append(
+            target = $('<div />').addClass('bar')
+        );
+
+        var hidden = [];
+        $.each(bars, function(k,v) {
+            if (k > 5) hidden.push(k);
+        });
+
+        if (!(buffs.length + hidden.length))
+            target.append($('<img />').addClass('fake').attr('src', 'media/icons/fake_h.gif'));
+        else {
+
+            $.each(hidden,function(k,v) {
+                v = parseInt(v);
+                $('<img />').addClass('status').attr('src','media/icons/status_' + num_decode_str(v) + '.gif').attr('title','-').qtip(game.render.html.qtip.ingame('bottom', {
+                        render: function (event, api) {
+                            var content = $(this).find('.qtip-content').empty().append(
+                                $('<b />').addClass('header').text(num_decode_title(v))
+                            ).append(
+                                $('<div />').addClass('row').append(make_bar(v,bars[v].value,bars[v].buffs, true))
+                            ).append(
+                                $('<div />').addClass('note center').text(game.i18n(<?=__j('Aktueller Wert: :num')?>, {':num': Math.round(100*bars[v].value)/100}))
+                            ).append(
+                                $('<span />').addClass('separator')
+                            ).append(
+                                $('<span />').text(num_decode_description(v))
+                            ).append(
+                                $('<span />').addClass('separator')
+                            ).append(make_buff_table(bars[v].buffs, num_decode_inverse(v)));
+                        }
+                    })
+                ).appendTo(target);
+            });
+
+            $.each(buffs, function(k,v) {
+                $('<img />').addClass('buff').attr('src','media/icons/' + v.icon + '.gif').attr('title','-').qtip(game.render.html.qtip.ingame('bottom', {
+                        render: function (event, api) {
+                            var content = $(this).find('.qtip-content').empty().append(
+                                $('<b />').addClass('header').text(v.name)
+                            ).append(
+                                $('<span />').text(v.desc)
+                            );
+                        }
+                    })
+                ).appendTo(target);
+            });
+        }
+
         return bar;
     };
 
@@ -196,7 +247,7 @@
         );
 
         $.each([5,3,1,4,null,2], function(k,v) {
-            inventory.append(v ? make_bar(v,data.bars[v].value,data.bars[v].buffs) : make_buffbar());
+            inventory.append(v ? make_bar(v,data.bars[v].value,data.bars[v].buffs) : make_buffbar($.objToArray(data.buffs,true), data.bars));
         })
 
 

@@ -11,7 +11,8 @@ class Model_Player extends Model_Cloudshard {
 	const MP_STAT_RADIATION = 7;
     const MP_STAT_ZOMBIFY = 8;
     const MP_STAT_FREEZE = 9;
-	
+
+	const MP_STATUS_COUNT = 9;
 	const MP_THRESHOLD = 512;
 	
 	const MP_CHAR_DISTANCING = 512;

@@ -291,6 +291,15 @@ div.consequence .group > img.fake + span {
     display: block;
 }
 
+.bar > img.buff:not(:last-child), .bar > img.status:not(:last-child) {
+    margin-right: 2px;
+}
+
+.bar > img.status + img.buff {
+    padding-left: 2px;
+    border-left: 2px solid #a5a5a5;
+}
+
 .statcalc > h4 {
     margin-top: 5px;
     margin-bottom: 5px;

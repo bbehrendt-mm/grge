@@ -220,6 +220,29 @@ footer {
     box-shadow: 0 0 2px black;
 }
 
+#persistent {
+    position: fixed;
+    width: 860px;
+    height: 101px;
+    padding: 0;
+    z-index: 100;
+    top: 29px;
+    left: calc(50% - 430px);
+    border: 2px solid rgba(103, 2, 2, 0);
+    transition: background 300ms ease, box-shadow 350ms ease, border 120ms ease;
+}
+
+#persistent.float {
+    background: #A42A00;
+    box-shadow: 0 0 6px black;
+    border: 2px solid #670202;
+}
+
+#persistent:empty {
+    opacity: 0;
+    pointer-events: none;
+ }
+
 #content {
     padding: 5px 0;
     overflow: visible;

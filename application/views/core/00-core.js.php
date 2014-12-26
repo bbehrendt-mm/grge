@@ -42,8 +42,10 @@ core = {
         }
 
         var action_box = $('<div />').addClass('row action_box ' + (data.location.meta.outside ? 'outside' : 'inside')).appendTo(target);
-        if (data.inventory) {
-            core.parts.inventory(data.inventory, action_box)
-        }
+        if (data.inventory)
+            core.parts.inventory(data.inventory, action_box);
+
+        if (data.status)
+            core.parts.status(data.status, $('#persistent'));
     }
 };

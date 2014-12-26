@@ -184,6 +184,49 @@ class Controller_Game extends Controller {
         ]);
     }
 
+    private function condense_buff($bar) {
+        /**
+         * @global Model_Player $player
+         */
+        global $player;
+
+        $ret = Array();
+        foreach ($player->buff_get() as $buff) {
+            $t = ['icon' => $buff->icon(), 'effects' => []];
+            $apply = false;
+            foreach ([Model_Buffs_Abstract_Buff::MB_RAISE_ACC, Model_Buffs_Abstract_Buff::MB_DROP_ACC, Model_Buffs_Abstract_Buff::MB_RAISE_PRC, Model_Buffs_Abstract_Buff::MB_DROP_PRC] as $id) {
+                $effect = $buff->effect($bar, $id);
+                $t['effects'][$id] = $effect;
+                $apply = $apply || ($effect != 0);
+            }
+            if ($apply) $ret[] = $t;
+        }
+
+        return $ret;
+    }
+
+    private function status($type) {
+        /**
+         * @global $player Model_Player
+         */
+        global $player;
+
+        return [
+            'value' => round($player->stats_get($type),2),
+            'buffs' => $this->condense_buff($type)
+        ];
+    }
+
+    private function render_status() {
+        $cache = [];
+        foreach ([Model_Player::MP_STAT_ENERGY,Model_Player::MP_STAT_HEALTH,Model_Player::MP_STAT_HUNGER,Model_Player::MP_STAT_SLEEPY,Model_Player::MP_STAT_THIRST] as $type)
+            $cache[$type] = $this->status($type);
+
+        $this->add_data('status', [
+            'bars' => $cache,
+        ]);
+    }
+
     private function render_notifications() {
         /**
          * @global $player Model_Player
@@ -205,6 +248,7 @@ class Controller_Game extends Controller {
 
         $this->render_location();
         $this->render_inventory();
+        $this->render_status();
         $this->render_notifications();
 
         $version_data = Kohana::$config->load('build.version');

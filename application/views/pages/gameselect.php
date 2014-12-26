@@ -266,6 +266,8 @@
 </div>
 <script type="application/javascript">
 // ## JS COMPRESS BEGIN ## //
+
+    $('#persistent').empty();
     $('[data-conditional=1]').hide();
     <?php
         foreach ($database['modes'] as &$db_entry)

@@ -12,7 +12,9 @@
     <div id="notifications"></div>
 
     <div id="wrapper">
-        <div></div>
+        <div>
+            <div id="persistent"></div>
+        </div>
 
         <div id="content">
             <div class="center"><i class="fa fa-circle-o-notch fa-spin"></i> <?=__('Sprachabhängige Scripte werden nachgeladen...')?></div>
@@ -60,6 +62,13 @@
 
     $('#main_backend').click(function() {
         game.network.load('admin/account/login');
+    });
+
+    $(window).scroll(function() {
+        var scroll = $('body').scrollTop();
+        if (scroll)
+            $('#persistent').addClass('float');
+        else $('#persistent').removeClass('float');
     });
 
     $.getScript('web/core/?l=' + game.lang(), function() {

@@ -37,10 +37,10 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
                         ->versa('builder'))
             , 'hideout_builder');
 
-        if (!$location->home_extensions("hideout", "lv1"))
+        if (!$location->has_upgrade("hideout"))
             return $tmp;
 
-        if ($location->home_extensions("sofa", "lv1"))
+        if ($location->has_upgrade("sofa1"))
             $tmp->add_action('In der Sitzecke entspannen', Model_Action::factory()
                     ->buttonskin('hideout')
                     ->condition(function($p) {
@@ -60,13 +60,13 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
                                 /** @var Model_Places_Abstract_Hideout $l */
                                 $l = $p->location();
 
-                                if		($l->home_extensions("sofa", "lv2"))	new Model_Buffs_Couch($p->id(), 2);
-                                elseif	($l->home_extensions("sofa", "lv1"))	new Model_Buffs_Couch($p->id(), 1);
+                                if		($l->has_upgrade("sofa2"))	new Model_Buffs_Couch($p->id(), 2);
+                                elseif	($l->has_upgrade("sofa1"))	new Model_Buffs_Couch($p->id(), 1);
                             })
                     )
                 , 'hideout_couch');
 
-        $tmp->add_action($location->home_extensions("bed", "lv1") ? 'Ins Bett gehen' : 'Auf dem Boden schlafen', Model_Action::factory()
+        $tmp->add_action($location->has_upgrade("bedr1") ? 'Ins Bett gehen' : 'Auf dem Boden schlafen', Model_Action::factory()
             ->buttonskin('hideout')
             ->condition(function($p) {
                 /** @var Model_Player $p */
@@ -87,7 +87,7 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
             ->show_as(Model_Effect::factory()
                 ->effect(Model_Player::MP_STAT_ENERGY, '++')
                 ->effect(Model_Player::MP_STAT_SLEEPY, '++')
-                ->effect(Model_Player::MP_STAT_HEALTH, $location->home_extensions("bed", "lv1") ? '++' : 0)
+                ->effect(Model_Player::MP_STAT_HEALTH, $location->has_upgrade("bedr1") ? '++' : 0)
             )
             ->effect(Model_Effect::factory()
                 ->message('Es war ein langer Tag, und du bist froh wenigstens für ein paar Stunden alles um dich herum vergessen zu können ...')
@@ -95,17 +95,17 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
                         /** @var Model_Player $p */
                         /** @var Model_Places_Abstract_Hideout $l */
                         $l = $p->location();
-                        $d = $l->home_extensions("bed", "light") ? 2 : 5;
+                        $d = $l->has_upgrade("bedrlights") ? 2 : 5;
 
-                        if		($l->home_extensions("bed", "lv3"))	new Model_Buffs_Presleep($p->id(), 3, $d);
-                        elseif	($l->home_extensions("bed", "lv2"))	new Model_Buffs_Presleep($p->id(), 2, $d);
-                        elseif	($l->home_extensions("bed", "lv1"))	new Model_Buffs_Presleep($p->id(), 1, $d);
+                        if		($l->has_upgrade("bedr3"))	new Model_Buffs_Presleep($p->id(), 3, $d);
+                        elseif	($l->has_upgrade("bedr2"))	new Model_Buffs_Presleep($p->id(), 2, $d);
+                        elseif	($l->has_upgrade("bedr1"))	new Model_Buffs_Presleep($p->id(), 1, $d);
                         else										new Model_Buffs_Presleep($p->id(), 0, 6);
                     })
             )
         , 'hideout_sleep');
 
-        if ($location->home_extensions("manu", "base"))
+        if ($location->has_upgrade("manu1"))
             $tmp->add_action('Werkbank ...', Model_Action::factory()
                 ->buttonskin('hideout')
                 ->description('Nicht jedes Items lässt sich einfach so finden - manche musst du auch auf einer Werkbank wie dieser herstellen.')
@@ -113,7 +113,7 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
                     ->close_qtip()
                     ->versa('workshop'))
             , 'hideout_workshop');
-        if ($location->home_extensions("solar", "base"))
+        if ($location->has_upgrade("gen1"))
             $tmp->add_action('Notstrom-Aggregat ...', Model_Action::factory()
                 ->buttonskin('hideout')
                 ->description('Bist du es nicht leid, immer bei Kerzenlicht fernzusehen? Dann beweg mal deinen faulen Hintern und erzeug etwas Strom!')

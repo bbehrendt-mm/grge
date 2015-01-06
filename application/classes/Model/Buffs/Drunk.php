@@ -36,11 +36,10 @@ class Model_Buffs_Drunk extends Model_Buffs_Abstract_Fragile {
     protected function action_on_complete() {
         if (Tool_Scripts::location_type($this->assoc_player->location_class()) == 2) {
 
-            /** @var Model_Places_Abstract_Hideout $l */
             $l = $this->assoc_player->location();
-            if		($l->home_extensions("bed", "lv3"))	new Model_Buffs_Sleep($this->assoc_player->id(), 3);
-            elseif	($l->home_extensions("bed", "lv2"))	new Model_Buffs_Sleep($this->assoc_player->id(), 2);
-            elseif	($l->home_extensions("bed", "lv1"))	new Model_Buffs_Sleep($this->assoc_player->id(), 1);
+            if		($l->has_upgrade('bedr3'))	new Model_Buffs_Sleep($this->assoc_player->id(), 3);
+            elseif	($l->has_upgrade('bedr2'))	new Model_Buffs_Sleep($this->assoc_player->id(), 2);
+            elseif	($l->has_upgrade('bedr1'))	new Model_Buffs_Sleep($this->assoc_player->id(), 1);
             else										new Model_Buffs_Sleep($this->assoc_player->id(), 0);
         }
 

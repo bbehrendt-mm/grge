@@ -49,11 +49,8 @@ class Model_Places_Motorhome extends Model_Places_Home {
 
     public function uin($new = null) {
         if ($new !== null) {
-            $this->home_extensions("bed", "lv1", true);
-            $this->home_extensions("sofa", "lv1", true);
-            $this->home_extensions("manu", "base", true);
-            $this->home_extensions("solar", "base", true);
-            $this->home_extensions("solar", "generator", true);
+            $this->add_upgrades(['bedr1','sofa1','manu1','gen1','gen2']);
+
             $this->home_extensions("kitchen", "base", true);
 
             $this->home_extensions("limits", "notrench", true);

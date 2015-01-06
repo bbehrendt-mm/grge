@@ -20,11 +20,8 @@ class Model_Places_Asylumhideout extends Model_Places_Abstract_Hideout implement
         if ($new !== null) {
             $this->set_decay(0, true);
 
-            $this->home_extensions("hideout", "lv1", true);
+            $this->add_upgrades(['hideout','bedr3']);
             $this->home_extensions("hideout", "cursed", true);
-
-            $this->home_extensions("bed", "lv3", true);
-
             $this->home_extensions("kitchen", "base", true);
             $this->home_extensions("kitchen", "utils", true);
             $this->home_extensions("kitchen", "cursed", true);

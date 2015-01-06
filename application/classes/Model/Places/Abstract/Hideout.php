@@ -57,8 +57,8 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         $this->zombie_factory->accumulate_zombies();
 
         if (($this->get_defense() > 0) && floor($this->zombie_factory->get_zombie_accumulation()) > $this->get_defense()) {
-            if ($this->home_extensions("bed", "wire")) {
-                $this->home_extensions("bed", "wire", false);
+            if ($this->has_upgrade("bedrwake")) {
+                $this->remove_upgrades("bedrwake");
                 foreach (Tool_Scripts::at_location($this->uin) as $s_player)
                     if ($s_player->buff_retr('sleep_cozy')) {
                         $s_player->buff_retr('sleep_cozy')->unbuff();
@@ -357,92 +357,5 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
 
         } else $player->log()->add(new Model_Log_Types_Text(null, null, 'Diese Verteidigungsanlage ist momentan nicht einsatzbereit...'));
         return false;
-    }
-
-    protected function requirements($level, $type, $energy, $items, $callbacks = NULL) {
-        global $game;
-
-        return $game->requirements($energy, $items, $callbacks);
-    }
-
-    public function interaction_ktc($project) {
-        return $this->build_project($project, 'kitchen', 'kitchen', 'Arbeit in der Küche abgeschlossen!', Model_Log_Types_Built::MLTB_KITCHEN);
-    }
-
-    public function interaction_power($project) {
-        return $this->build_project($project, 'power', 'solar', 'Arbeit am Notstrom-Aggregat abgeschlossen!', Model_Log_Types_Built::MLTB_GENERATOR);
-    }
-
-    public function interaction_manu($project) {
-        return $this->build_project($project, 'workshop', 'manu', 'Arbeit an der Werkbank abgeschlossen!', Model_Log_Types_Built::MLTB_WORKBENCH);
-    }
-
-    public function interaction_build($project) {
-        /**
-         * @global $player Model_Player
-         */
-        global $player;
-
-        if (!$this->upgradable)
-            return false;
-
-        $buildcfg = Kohana::$config->load('blueprints.build.table.' . $project);
-
-        if (!$buildcfg) return true;
-
-        if (isset($buildcfg['energy']) && Tool_Scripts::get_timeofday() == "morning")
-            $buildcfg['energy'] = round(max(0, $buildcfg['energy'] * 0.75));
-
-        if ($this->requirements($buildcfg['condition']($this), NULL, $buildcfg['energy'], $buildcfg['requires']))
-        {
-            $buildcfg['action']($this);
-            $player->achievements()->achieve(Model_Achievement::MA_CONSTRUCTIONS);
-            if (isset($buildcfg['achievement'])) $player->achievements()->achieve($buildcfg['achievement']);
-
-            if (isset($buildcfg['short']))
-                $p = $buildcfg['short'];
-            else $p = $buildcfg['text'];
-
-            $this->log->add(new Model_Log_Types_Built(Model_Log_Types_Built::MLTB_BUILD,$p, $player->id()),null);
-            $player->log()->add(isset($buildcfg['finalmsg']) ? $buildcfg['finalmsg'] : 'Bauarbeiten abgeschlossen!');
-        }
-        return true;
-    }
-
-    protected function build_project($project, $config_base, $symbol_name, $finalmsg, $symbol = 0) {
-        global $player;
-        $buildcfg = Kohana::$config->load('blueprints.' . $config_base . '.table.' . $project);
-
-        if (!$buildcfg) return true;
-
-        if (isset($buildcfg['energy']) && $config_base == 'workshop' && $this->home_extensions("manu", "susp"))
-            $buildcfg['energy'] = round(max(0, $buildcfg['energy'] * 0.5));
-
-        if (isset($buildcfg["environment"]))
-            foreach ($buildcfg["environment"] as $base)
-                if (!$this->home_extensions($symbol_name, $base)) return true;
-
-        if ($this->requirements(true, true, $buildcfg['energy'], $buildcfg['requires']))
-        {
-            foreach($buildcfg['produces'] as $class => $count) {
-                if (Tool_System::instance_of($class, 'Model_Items_Abstract_Stackable'))
-                    $this->inventory->add(new $class($count));
-                else for ($i = 0; $i < $count; $i++) $this->inventory->add(new $class);
-            }
-            if ($buildcfg['achievement']) $player->achievements()->achieve($buildcfg['achievement']);
-
-            if (isset($buildcfg['short']))
-                $p = $buildcfg['short'];
-            elseif (isset($buildcfg['produces'])) {
-                $c = array_keys($buildcfg['produces']);
-                $c = $c[0];
-                /** @noinspection PhpUndefinedMethodInspection */
-                $p = $c::static_name();
-            } else $p = $buildcfg['text'];
-
-            $this->log->add(new Model_Log_Types_Built($symbol,$p, $player->id()),null);
-            $player->log()->add(isset($buildcfg['finalmsg']) ? $buildcfg['finalmsg'] : 'Arbeit abgeschlossen!');
-        }
-        return true;
     }
 }	

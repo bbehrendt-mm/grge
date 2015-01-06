@@ -21,6 +21,8 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 	protected $variant_name;
 	
 	protected $inventory;
+
+    protected $upgrades = [];
 	
 	protected $zombie_factory;
 	protected $item_factory;
@@ -54,6 +56,35 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 
     public function getPerpetualDayTime() {
         return static::$perpetualDaytime;
+    }
+
+    public function get_upgrades() {
+        return $this->upgrades;
+    }
+
+    public function add_upgrades($a) {
+        if (is_array($a))
+            foreach ($a as $elem)
+                $this->add_upgrades($elem);
+        elseif (!in_array($a,$this->upgrades))
+            $this->upgrades[] = $a;
+    }
+
+    public function remove_upgrades($a) {
+        if (!is_array($a))
+            $a = [$a];
+        $this->upgrades = array_filter($this->upgrades, function($elem) use ($a) {
+            return !in_array($elem, $a);
+        });
+    }
+
+    public function has_upgrade($a) {
+        if (is_array($a)) {
+            foreach ($a as $elem)
+                if (!$this->has_upgrade($elem))
+                    return false;
+            return true;
+        } else return in_array($a, $this->upgrades);
     }
 
     public function uin($uin = NULL) {

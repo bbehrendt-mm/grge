@@ -17,13 +17,7 @@ class Model_Places_House extends Model_Places_Abstract_Hideout {
 
     public function uin($new = null) {
         if ($new !== null) {
-            $this->home_extensions("bed", "lv1", true);
-            $this->home_extensions("bed", "lv2", true);
-            $this->home_extensions("bed", "lv3", true);
-
-            $this->home_extensions("manu", "base", true);
-
-            $this->home_extensions("solar", "base", true);
+            $this->add_upgrades(['bedr1','bedr2','bedr3','manu1','gen1']);
 
             $this->home_extensions("kitchen", "base", true);
             $this->home_extensions("kitchen", "boiler", true);

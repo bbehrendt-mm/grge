@@ -16,11 +16,9 @@ class Model_Places_Vault extends Model_Places_Abstract_Hideout {
     protected static $decay_exp = 0.01;
 
     public function uin($new = null) {
-        if ($new !== null) {
-            $this->home_extensions("bed", "lv1", true);
-            $this->home_extensions("manu", "base", true);
-            $this->home_extensions("solar", "base", true);
-        }
+        if ($new !== null)
+            $this->add_upgrades(['bedr1','manu1','gen1']);
+
         return parent::uin($new);
     }
 

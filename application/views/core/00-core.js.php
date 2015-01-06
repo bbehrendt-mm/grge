@@ -23,14 +23,14 @@ core = {
                 return;
             }
 
-            game.clean(true);
+            if (!background) game.clean(true);
 
             if (data.version && data.version != core.version) {
                 game.reset();
                 return;
             } if (callback)
-                callback(data.callback || {});
-            core.render(data, $('#content').empty());
+                callback(data);
+            else core.render(data, $('#content').empty());
         });
     },
 

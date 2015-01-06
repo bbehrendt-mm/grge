@@ -17,6 +17,29 @@ class Tool_System {
 	}
 
     /**
+     * Returns an array containing all parent classes of this object in order
+     * @param Object|string $obj Object or class name
+     * @return array
+     */
+    public static function get_class_hierarchy($obj) {
+        $hierarchy = [];
+        if (is_object($obj) || is_string($obj)) {
+            $class = is_object($obj) ? get_class($obj) : $obj;
+            do {
+                $hierarchy[] = $class;
+            } while (($class = get_parent_class($class)) !== false);
+        }
+        return $hierarchy;
+    }
+
+    public static function simple_config($path) {
+        if (!file_exists(APPPATH . 'config/' . $path . EXT))
+            return null;
+        else /** @noinspection PhpIncludeInspection */
+            return include(APPPATH . '/config/' . $path . EXT);
+    }
+
+    /**
      * Accumulated configuration entries using classnames as key according to a given derived class instance
      * @param string|array $base Config object to use as base; when given as string, it is interpreted as path to a Kohana config object
      * @param string|object $subject Class instance

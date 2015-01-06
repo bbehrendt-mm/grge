@@ -16,11 +16,9 @@ class Model_Places_Hotel extends Model_Places_Abstract_Hideout {
     protected static $decay_exp = 0.02;
 
     public function uin($new = null) {
-        if ($new !== null) {
-            $this->home_extensions("bed", "lv1", true);
-            $this->home_extensions("bed", "lv2", true);
-            $this->home_extensions("bed", "lv3", true);
-        }
+        if ($new !== null)
+            $this->add_upgrades(['bedr1','bedr2','bedr3']);
+
         return parent::uin($new);
     }
 

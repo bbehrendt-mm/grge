@@ -542,8 +542,7 @@ return array(
                     if ($level >= 3)
                         $game->map()->add_location('Model_Places_Villa');
 
-                    if ($level >= 4) Tool_Scripts::home($game)->home_extensions("bed", "lv1", true);
-                    if ($level >= 5) Tool_Scripts::home($game)->home_extensions("manu", "base", true);
+                    if ($level >= 4) Tool_Scripts::home($game)->add_upgrades(['bedr1','manu1']);
                 }),
         ),
         1060 => array(

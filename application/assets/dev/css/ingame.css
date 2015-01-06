@@ -373,3 +373,10 @@ div.consequence .group > img.fake + span {
 .statcalc.inverse > .row.line.sum > .cell.left, .statcalc.inverse > .row.line.sum > .cell.center.negative {
     background: #c0ffc9;
 }
+
+div.popup {
+    position: fixed;
+    background: #ffeba5;
+    border: 2px solid #e7d395;
+    box-shadow: 0 0 15px black;
+}

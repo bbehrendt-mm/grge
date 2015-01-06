@@ -16,9 +16,9 @@ class Model_Places_Treehouse extends Model_Places_Abstract_Hideout {
     protected static $decay_exp = 0.15;
 
     public function uin($new = null) {
-        if ($new !== null) {
-            $this->home_extensions("bed", "lv1", true);
-        }
+        if ($new !== null)
+            $this->add_upgrades('bedr1');
+
         return parent::uin($new);
     }
 

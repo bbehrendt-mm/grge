@@ -44,7 +44,7 @@ class Model_Javascript {
      * @return Model_Javascript
      */
     public function versa($name, $close = false) {
-        return $this->custom("game.gui.morph.presets('versa', " . ($close ? 'false' : 'true') . ", '{$name}');");
+        return $this->custom("core.popup.{$name}();");
     }
 
     /**

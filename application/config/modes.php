@@ -711,6 +711,7 @@ return array(
                     $player->inventory()->add(new Model_Items_Lunchbox);
                     $player->inventory()->add(new Model_Items_Machete);
                     $player->inventory()->add(new Model_Items_Batgun);
+                    $player->inventory()->add(new Model_Items_Cyanide);
                 }),
         ),
         3010 => array(
@@ -790,6 +791,7 @@ return array(
                     $player->inventory()->add(new Model_Items_Paracetoid);
                     $player->inventory()->add(new Model_Items_Paracetin);
                     $player->inventory()->add(new Model_Items_Miniknife);
+                    $player->inventory()->add(new Model_Items_Cyanide);
 
                     $game->map()->add_location('Model_Places_Colosseum');
             }),

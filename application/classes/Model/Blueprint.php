@@ -230,7 +230,7 @@ class Model_Blueprint {
         return $this;
     }
 
-    private function can_req($preconditions) {
+    private function can_prod($preconditions) {
         if ($this->steps > 0) {
             foreach ($this->provides as $p)
                 if (in_array($p, $preconditions))
@@ -239,7 +239,7 @@ class Model_Blueprint {
         return true;
     }
 
-    private function can_prod($preconditions) {
+    private function can_req($preconditions) {
         foreach ($this->requires as $r_block) {
             foreach ($r_block as $requirement)
                 if (in_array($requirement, $preconditions))
@@ -298,6 +298,7 @@ class Model_Blueprint {
         if ($this->effect)
             $this->effect->execute($player, null);
 
+        $player->log()->add($this->message);
 
         if ($this->steps <= 0)
             return [];
@@ -317,7 +318,8 @@ class Model_Blueprint {
             $tmp[] = [
                 'name' => $class::static_name(),
                 'icon' => $class::static_icon(),
-                'count' => $count
+                'count' => $count,
+                'have' => Tool_Scripts::count_available_items($class)
             ];
         return $tmp;
     }
@@ -330,7 +332,6 @@ class Model_Blueprint {
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'message' => $this->message,
             'requires' => $this->requires,
             'energy' => $this->energy,
             'repair' => -$this->decay,
@@ -338,7 +339,8 @@ class Model_Blueprint {
             'material_in' => $this->materialize($this->items),
             'material_out' => $this->materialize($this->produces),
             'build' => in_array($this->id,$preconditions),
-            'status' => $still_open ? -1 : ($requirements_fulfilled ? 1 : 0),
+            'slot_open' => $still_open,
+            'build_possible' => $requirements_fulfilled,
             'steps_max' => $this->steps,
             'steps_current' => ($current_steps === true) ? $this->steps - 1 : $current_steps
         ];

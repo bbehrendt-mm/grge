@@ -27,11 +27,15 @@ game.render.html = {
         if (!custom_timeout)
             custom_timeout = 10000;
 
+        var z = $.topZIndex('*:not(#notifications)');
+        var target = $('#notifications');
+        target.css('z-index',z+1);
+
         var notification  = $('<div class="' + type + '"><div></div><div>' + content + '</div></div>');
         if (title)
             notification.find('> div:last-child').prepend('<b class="headline">' + title + '</b>');
 
-        notification.appendTo('#notifications').css({
+        notification.appendTo(target).css({
             width: 96,
             'margin-left': 252,
             opacity: 0,

@@ -9,7 +9,7 @@ core = {
 
     version: '<?="{$version_data['major']}.{$version_data['minor']}.{$version_data['service']}-{$version_data['stage']}-{$version_data['maintenance']}-{$version_data['build']}"?>',
 
-    command: function(url, args, background, callback) {
+    command: function(url, args, background, callback, no_clean) {
         if (!url)
             url = 'japi/game/data';
         else url = 'japi/' + url;
@@ -23,7 +23,7 @@ core = {
                 return;
             }
 
-            if (!background) game.clean(true);
+            if (!background && !no_clean) game.clean(true);
 
             if (data.version && data.version != core.version) {
                 game.reset();

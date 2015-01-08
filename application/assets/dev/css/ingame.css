@@ -380,3 +380,164 @@ div.popup {
     border: 2px solid #e7d395;
     box-shadow: 0 0 15px black;
 }
+
+div.blueprint {
+    border-radius: 4px;
+    background: #fff9f6;
+    border: 1px solid #f1ebe8;
+    border-bottom: 4px solid #f1ebe8;
+    margin: 3px;
+    padding: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+}
+
+div.blueprint > div.ribbon {
+    position: absolute;
+    height: 0;
+    width: 0;
+    right: 0;
+    top: 0;
+    border-top: 32px solid #f1ebe8;
+    border-left: 32px solid transparent;
+    overflow: visible;
+}
+
+div.blueprint > div.ribbon::before {
+    position: absolute;
+    height: 32px;
+    width: 32px;
+    right: 0;
+    top: -32px;
+    content: "\f023";
+    font-family: FontAwesome;
+    padding: 5px;
+    font-size: 10px;
+    text-align: right;
+}
+
+div.blueprint.blue {
+    background: #c5faff;
+    border: 1px solid #72aef1;
+    border-bottom: 4px solid #72aef1;
+}
+
+div.blueprint.blue > div.ribbon {
+    border-top: 32px solid #72aef1;
+}
+
+div.blueprint.blue > div.ribbon::before {
+    color: white;
+    content: "\f14a";
+}
+
+div.blueprint.green {
+    border: 1px solid #79f190;
+    border-bottom: 4px solid #79f190;
+}
+
+div.blueprint.green.active {
+    background: #ddffe2;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+div.blueprint.green.active:hover {
+    background: #a4ffb5;
+}
+
+div.blueprint.green > div.ribbon {
+    border-top: 32px solid #79f190;
+}
+
+div.blueprint.green > div.ribbon::before {
+    color: white;
+    content: "\f0a9";
+}
+
+div.blueprint.red {
+    background: #ffddd8;
+    border: 1px solid #f1b6c0;
+    border-bottom: 4px solid #f1b6c0;
+}
+
+div.blueprint.red > div.ribbon {
+    border-top: 32px solid #f1b6c0;
+}
+
+div.blueprint.red > div.ribbon::before {
+    color: white;
+    content: "\f05e";
+}
+
+div.blueprint > span:first-child {
+    font-weight: bold;
+    font-size: 12px;
+}
+
+div.details .cell > i:first-child {
+    font-size: 10px;
+    opacity: 0.8;
+    display: block;
+}
+
+div.details .group {
+    display: inline-block;
+    margin: 4px 2px 2px;
+    padding: 3px;
+    font-size: 13px;
+}
+
+div.details .group > img {
+    margin-right: 3px;
+}
+
+div.details .group > span > b:first-child {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+div.details .group > span > b:first-child.green {
+    color: #005d0f;
+}
+
+div.details .group > span > b:first-child.red {
+    color: #5d1a19;
+}
+
+div.point {
+    display: block;
+    margin-left: 32px;
+    position: relative;
+}
+
+div.point::before {
+    position: absolute;
+    top: 0;
+    left: -20px;
+    height: 16px;
+    width: 16px;
+    content: " ";
+    font-family: FontAwesome;
+    text-align: center;
+}
+
+div.point.success {
+    color: #005d0f;
+}
+
+div.point.success::before {
+    color: #18dd00;
+    content: "\f078";
+}
+
+div.point.failure {
+    color: #5d000a;
+}
+
+div.point.failure::before {
+    color: #dd0917;
+    content: "\f00d";
+}

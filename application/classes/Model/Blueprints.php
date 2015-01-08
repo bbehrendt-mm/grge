@@ -153,4 +153,14 @@ class Model_Blueprints {
             ]);
         return $ret;
     }
+
+    public function execute($id, $player, $preconditions) {
+        if (!isset($this->blueprints[$id]))
+            return false;
+        else {
+            /** @var Model_Blueprint $b */
+            $b = $this->blueprints[$id];
+            return $b->execute($player, $preconditions);
+        }
+    }
 }

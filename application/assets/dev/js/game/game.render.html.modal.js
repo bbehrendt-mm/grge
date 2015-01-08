@@ -18,8 +18,8 @@ game.render.html.modal = {
         $('#static').removeClass('fade blur disabled');
     },
 
-    blend: function(callback, clickable) {
-        var targetZ = $.topZIndex('*') + 1;
+    blend: function(callback, clickable, ignore_qtip) {
+        var targetZ = $.topZIndex(ignore_qtip ? '*:not(.qtip)' : '*') + 1;
         var blend = $('<div class="doc-blend" id="doc-blend-' + targetZ + '"></div>').css('z-index', targetZ).appendTo('body')
             .css('opacity', 0).animate({
                 opacity: 1

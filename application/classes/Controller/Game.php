@@ -239,7 +239,7 @@ class Controller_Game extends Controller {
         ]);
     }
 
-    private function render_notifications() {
+    protected function render_notifications() {
         /**
          * @global $player Model_Player
          */

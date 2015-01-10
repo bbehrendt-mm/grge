@@ -19,12 +19,7 @@ class Model_Places_Asylumhideout extends Model_Places_Abstract_Hideout implement
     public function uin($new = null) {
         if ($new !== null) {
             $this->set_decay(0, true);
-
-            $this->add_upgrades(['hideout','bedr3']);
-            $this->home_extensions("hideout", "cursed", true);
-            $this->home_extensions("kitchen", "base", true);
-            $this->home_extensions("kitchen", "utils", true);
-            $this->home_extensions("kitchen", "cursed", true);
+            $this->add_upgrades(['hideout_cursed','hideout_slot','bedr3','ktc1','ktc3','ktc_cursed']);
 
             $f1 = mt_rand(1,4);
             $f2 = mt_rand(2,20);

@@ -4,10 +4,8 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
 
     protected $remaining = array(
         'hideout_builder' => PHP_INT_MAX,
+        'hideout_maker' => PHP_INT_MAX,
         'hideout_sleep' => PHP_INT_MAX,
-        'hideout_workshop' => PHP_INT_MAX,
-        'hideout_power' => PHP_INT_MAX,
-        'hideout_kitchen' => PHP_INT_MAX,
         'hideout_defense' => PHP_INT_MAX,
         'hideout_couch' => PHP_INT_MAX,
     );
@@ -33,12 +31,18 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
                 ->buttonskin('hideout')
                 ->description('Dein Versteck sieht etwas langweilig aus... du solltest es mit einigen nützlichen Erweiterungen etwas aufpeppen!')
                 ->javascript(Model_Javascript::factory()
-                        ->close_qtip()
                         ->versa('builder'))
             , 'hideout_builder');
 
         if (!$location->has_upgrade("hideout"))
             return $tmp;
+
+        $tmp->add_action('Gegenstände herstellen ...', Model_Action::factory()
+            ->buttonskin('hideout')
+            ->description('Warum lange nach neuem Zeug suchen, wenn du es einfach selbst herstellen kannst?')
+            ->javascript(Model_Javascript::factory()
+                ->versa('maker'))
+            , 'hideout_maker');
 
         if ($location->has_upgrade("sofa1"))
             $tmp->add_action('In der Sitzecke entspannen', Model_Action::factory()
@@ -105,30 +109,6 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
             )
         , 'hideout_sleep');
 
-        if ($location->has_upgrade("manu1"))
-            $tmp->add_action('Werkbank ...', Model_Action::factory()
-                ->buttonskin('hideout')
-                ->description('Nicht jedes Items lässt sich einfach so finden - manche musst du auch auf einer Werkbank wie dieser herstellen.')
-                ->javascript(Model_Javascript::factory()
-                    ->close_qtip()
-                    ->versa('workshop'))
-            , 'hideout_workshop');
-        if ($location->has_upgrade("gen1"))
-            $tmp->add_action('Notstrom-Aggregat ...', Model_Action::factory()
-                ->buttonskin('hideout')
-                ->description('Bist du es nicht leid, immer bei Kerzenlicht fernzusehen? Dann beweg mal deinen faulen Hintern und erzeug etwas Strom!')
-                ->javascript(Model_Javascript::factory()
-                    ->close_qtip()
-                    ->versa('power'))
-            , 'hideout_power');
-        if ($location->home_extensions("kitchen", "base"))
-            $tmp->add_action('Küche ...', Model_Action::factory()
-                ->buttonskin('hideout')
-                ->description('Mit dieser Küche ist das leibliche Wohl gesichtert. Vorrausgesetzt natürlich, du findest Zutaten.')
-                ->javascript(Model_Javascript::factory()
-                    ->close_qtip()
-                    ->versa('kitchen'))
-            , 'hideout_kitchen');
         if ($location->any_def() && !$location_driving)
             $tmp->add_action('Verteidigung ...', Model_Action::factory()
                 ->buttonskin('hideout')

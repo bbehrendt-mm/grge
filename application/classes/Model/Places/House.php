@@ -16,14 +16,9 @@ class Model_Places_House extends Model_Places_Abstract_Hideout {
     protected static $decay_exp = 0.05;
 
     public function uin($new = null) {
-        if ($new !== null) {
-            $this->add_upgrades(['bedr1','bedr2','bedr3','manu1','gen1']);
+        if ($new !== null)
+            $this->add_upgrades(['bedr1','bedr2','bedr3','manu1','gen1','ktc1','ktc2','deffence1','fence','outside','outside_space']);
 
-            $this->home_extensions("kitchen", "base", true);
-            $this->home_extensions("kitchen", "boiler", true);
-
-            $this->home_extensions("defense", "fence", true);
-        }
         return parent::uin($new);
     }
 

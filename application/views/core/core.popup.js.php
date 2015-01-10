@@ -31,46 +31,56 @@ core.popup = {
             opacity: 1,
             transform: 'scale(1)'
         }, 500).css({
-            '-webkit-filter': 'blur(0px)',
-            'filter': 'blur(0px)'
+            '-webkit-filter': '',
+            'filter': ''
         });
 
         return popup;
     },
 
-    builder: function(popup,data) {
+    genericBlueprintLoader: function(type, popup, data, frame, filters, close) {
         if (!popup) popup = core.popup.spawn(700,450);
-        else popup.empty();
-        var frame = $('<div />').addClass('row').appendTo(
-            $('<div />').css({
-                position: 'absolute',
-                width: '100%',
-                left: 0,
-                top: 24,
-                bottom: 0,
-                overflow: 'auto'
-            }).appendTo(popup)
-        );
 
-        var filters, close;
-        $('<div />').addClass('row').append(
-            filters = $('<div />').addClass('cell rw-11')
-        ).append(
-            close = $('<div />').addClass('cell rw-1 right')
-        ).appendTo(popup);
+        if (!frame || !filters || !close) {
+            popup.empty();
 
-        filters.append($('<div />').addClass('btn small btn-exp').text('Angezeigte Projekte filtern...'));
-        close.append($('<div />').addClass('btn small').append($('<i/>').addClass('fa fa-times')).click(function() {
-            popup.trigger('unpop');
-        }));
+            frame = $('<div />').addClass('row').appendTo(
+                $('<div />').css({
+                    position: 'absolute',
+                    width: '100%',
+                    left: 0,
+                    top: 24,
+                    bottom: 0,
+                    overflow: 'auto'
+                }).appendTo(popup)
+            );
+
+            $('<div />').addClass('row').append(
+                filters = $('<div />').addClass('cell rw-11')
+            ).append(
+                close = $('<div />').addClass('cell rw-1 right')
+            ).appendTo(popup);
+
+            filters.append($('<div />').addClass('btn small btn-exp').text('Angezeigte Projekte filtern...'));
+            close.append($('<div />').addClass('btn small').append($('<i/>').addClass('fa fa-times')).click(function() {
+                popup.trigger('unpop');
+            }));
+        }
 
         var build_func = function(bdata) {
+            console.log(bdata);
             frame.empty();
             $.each(bdata.blueprints, function(k,v) {
+                if (v.hidden) return;
+
                 frame.append($('<div />').addClass('cell padded rw-4').append(core.snippets.blueprint(v, bdata.energy, bdata.blueprints, function() {
-                    core.command('location/builder', {build: k}, false, function(new_data) {
-                        core.popup.builder(popup,new_data);
-                        popup.on('unpop', function() {
+                    var prev_scroll = $('.popup').find('>*:first-child').scrollTop();
+                    popup.addClass('disabled');
+                    core.command('location/' + type, {build: k}, true, function(new_data) {
+                        core.popup.genericBlueprintLoader(type,popup,new_data,frame,filters,close);
+                        popup.removeClass('disabled');
+                        $('.popup').find('>*:first-child').animate({scrollTop: prev_scroll}, 0);
+                        popup.off('unpop').on('unpop', function() {
                             setTimeout(function() {
                                 core.command();
                             }, 100);
@@ -82,7 +92,14 @@ core.popup = {
 
         if (!data) {
             frame.append(core.snippets.wait());
-            core.command('location/builder', {}, true, build_func);
+            core.command('location/' + type, {}, true, build_func);
         } else build_func(data);
+    },
+
+    builder: function() {
+        core.popup.genericBlueprintLoader('builder');
+    },
+    maker: function() {
+        core.popup.genericBlueprintLoader('maker');
     }
 };

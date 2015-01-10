@@ -27,9 +27,10 @@ class Model_Places_Home extends Model_Places_Abstract_Hideout {
 
 
     public function uin($new = null) {
+        /** @global Model_Game $game */
         global $game;
         if ($new !== null) {
-            $this->add_upgrades('hideout');
+            $this->add_upgrades(['hideout','outside','outside_space']);
             $this->set_decay(0, true);
 
             if ($game->config('modules.mapping'))

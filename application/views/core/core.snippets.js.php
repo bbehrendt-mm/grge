@@ -119,7 +119,7 @@
     };
 
     core.snippets.blueprint = function(blueprint, energy, lib, callback) {
-        var button = $('<div />').addClass('blueprint').attr('title','-');
+        var button = $('<div />').addClass('blueprint').attr('title','-').attr('data-bid', blueprint.id);
         var ext = $('<div />').addClass('row details');
 
         var mt_in = $('<div />').addClass('cell rw-12').appendTo(ext);
@@ -143,21 +143,9 @@
             button.addClass('red');
         else button.addClass('plain');
 
-        var f = function(target) {
-            return function(k,v) {
-                target.append(
-                    $('<div />').addClass('group').append(
-                        v.icon ? $('<img />').attr('src', 'media/icons/' + v.icon + '.gif') : $('<img />').addClass('fake').attr('src', 'media/icons/fake_h.gif')
-                    ).append(
-                        $('<span />').append($('<b />').addClass(v.have >= v.count ? 'green' : 'red').text(v.have)).append($('<span />').text('/' + v.count))
-                    )
-                );
-            }
-        };
-
         if (blueprint.energy || $.objToArray(blueprint.material_in).length)
             mt_in.append($('<i/>').text(<?=__j('Erfordert')?>));
-        if ($.objToArray(blueprint.material_out).length)
+        if (blueprint.decay_speed || blueprint.repair || blueprint.defense || $.objToArray(blueprint.material_out).length)
             mt_out.append($('<i/>').text(<?=__j('Produziert')?>));
 
         if (blueprint.energy)
@@ -169,8 +157,47 @@
                 )
             );
 
+        if (blueprint.defense)
+            mt_out.append(
+                $('<div />').addClass('group').append(
+                    $('<img />').attr('src', 'media/icons/defense.gif')
+                ).append(
+                    $('<span />').append($('<span />').addClass(blueprint.defense > 0 ? 'green' : 'red').text((blueprint.defense > 0 ? '+' : '') + blueprint.defense))
+                )
+            );
+
+        if (blueprint.repair)
+            mt_out.append(
+                $('<div />').addClass('group').append(
+                    $('<img />').attr('src', 'media/icons/decay.gif')
+                ).append(
+                    $('<span />').append($('<span />').addClass(blueprint.repair > 0 ? 'green' : 'red').text((blueprint.repair > 0 ? '+' : '') + blueprint.repair + "%"))
+                )
+            );
+
+        if (blueprint.decay_speed)
+            mt_out.append(
+                $('<div />').addClass('group').append(
+                    $('<img />').attr('src', 'media/icons/decay' + (blueprint.decay_speed > 0 ? '2' : '3') + '.gif')
+                )
+            );
+
+        var f = function(target, hideScale) {
+            return function(k,v) {
+                target.append(
+                    $('<div />').addClass('group').append(
+                        v.icon ? $('<img />').attr('src', 'media/icons/' + v.icon + '.gif') : $('<img />').addClass('fake').attr('src', 'media/icons/fake_h.gif')
+                    ).append(
+                        hideScale
+                            ? $('<span />').append($('<b />').text(v.count))
+                            : $('<span />').append($('<b />').addClass(v.have >= v.count ? 'green' : 'red').text(v.have)).append($('<span />').text('/' + v.count))
+                    )
+                );
+            }
+        };
+
         $.each(blueprint.material_in, f(mt_in));
-        $.each(blueprint.material_out, f(mt_out));
+        $.each(blueprint.material_out, f(mt_out,true));
 
         button.qtip(game.render.html.qtip.ingame('bottom',{
             render: function(event,api) {
@@ -178,12 +205,20 @@
                     $('<b />').addClass('header').text(blueprint.name)
                 );
 
-                content.append($('<span />').text(blueprint.description)).append('<span class="separator" />');
+                if (blueprint.description)
+                    content.append($('<span />').text(blueprint.description)).append('<span class="separator" />');
+
                 if (blueprint.build)
                     content.append($('<div />').addClass('point success').text(<?=__j('Dieses Projekt wurde bereits gebaut.')?>));
                 else if (!blueprint.slot_open) {
                     content.append($('<div />').addClass('point failure').text(<?=__j('Du hast bereits ein ähnliches Projekt gebaut.')?>));
                 } else {
+
+                    if (blueprint.steps_max > 1)
+                        content.append($('<span />').text(game.i18n(<?=__j('Du kannst dieses Projekt :num mal bauen.')?>,{':num': blueprint.steps_max}))).append('<span class="separator" />');
+                    else if (blueprint.steps_max == 0)
+                        content.append($('<span />').text(<?=__j('Dieses Projekt kann unbegrenzt oft gebaut werden.')?>)).append('<span class="separator" />');
+
                     content.append($('<span />').text(<?=__j('Vorraussetzungen')?>));
 
                     $.each(blueprint.requires, function(k,v) {
@@ -216,15 +251,38 @@
                         content.append($('<span />').text(<?=__j('Ermöglicht')?>));
                         $.each(cache, function(k,v) {
                             content.append($('<div />').addClass('point').text(v));
-                        })
+                        });
+                        content.append('<span class="separator" />');
                     }
 
+                    cache = [];
+                    $.each(blueprint.occupies, function(k,occ) {
+                        $.each(lib, function(key, bp) {
+                            if (bp.id != blueprint.id && !bp.hidden && $.inArray(bp.id, cache) < 0 && $.inArray(occ, $.objToArray(bp.occupies, true)) >= 0)
+                                cache.push(bp.id)
+                        });
+                    });
+
+                    if (cache.length) {
+                        content.append($('<span />').text(<?=__j('Verhindert')?>));
+                        $.each(cache, function(k,v) {
+                            content.append($('<div />').addClass('point').text(lib[v].name));
+                        })
+                    }
                 }
             }})
         );
 
-        return button.append(
-            $('<span />').text(blueprint.name)
+        var desc;
+        button.append(
+            desc = $('<span />').text(blueprint.name)
         ).append($('<div />').addClass('ribbon')).append(ext);
+
+        if (!blueprint.build && blueprint.steps_max > 1)
+            desc.append(
+                $('<i/>').text( '(' + (1+blueprint.steps_current) + ' / ' + blueprint.steps_max + ')')
+            );
+
+        return button;
     }
 })();

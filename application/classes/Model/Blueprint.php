@@ -21,6 +21,7 @@ class Model_Blueprint {
     private $steps = 1;
     private $condition;
     private $message;
+    private $defense = 0;
 
     /**
      * Creates a new blueprint instance
@@ -157,6 +158,20 @@ class Model_Blueprint {
     }
 
     /**
+     * Setter / Getter for the additional defense provided by this blueprint
+     * @param null|number $d
+     * @return Model_Blueprint|int
+     */
+    public function defense($d = null) {
+        if ($d === null)
+            return $this->defense;
+        else {
+            $this->defense = $d;
+            return $this;
+        }
+    }
+
+    /**
      * Adds a new required item to the stack
      * @param string|array $class Required item class
      * @param int $count Item count
@@ -206,11 +221,17 @@ class Model_Blueprint {
 
     /**
      * Adds an item to the producer stack
-     * @param string $item Item class
-     * @param number $count Item count
+     * @param string|array $item Item class
+     * @param int $count Item count
      * @return Model_Blueprint
      */
-    public function produces($item, $count) {
+    public function produces($item, $count = 1) {
+        if (is_array($item)) {
+            foreach ($item as $i_class => $i_count)
+                $this->produces($i_class, $i_count);
+            return $this;
+        }
+
         if (!isset($this->produces[$item]))
             $this->produces[$item] = $count;
         else $this->produces[$item] += $count;
@@ -252,10 +273,11 @@ class Model_Blueprint {
     /**
      * Returns true, when the blueprint can be realized given the preconditions
      * @param string[] $preconditions Realized blueprints
+     * @param bool $ignore_blocked_slots Set true if you want to ignore blocked slots
      * @return bool
      */
-    public function can($preconditions) {
-        return $this->can_prod($preconditions) && $this->can_req($preconditions);
+    public function can($preconditions, $ignore_blocked_slots = false) {
+        return ($ignore_blocked_slots || $this->can_prod($preconditions)) && $this->can_req($preconditions);
     }
 
     /**
@@ -294,6 +316,7 @@ class Model_Blueprint {
             $place = $player->location();
             $place->set_decay($this->decay, false);
             $place->set_patchup($this->decay_speed, false);
+            $place->inc_defense($this->defense);
         }
         if ($this->effect)
             $this->effect->execute($player, null);
@@ -328,21 +351,32 @@ class Model_Blueprint {
         $current_steps = $this->completion($preconditions);
         $still_open = $this->can_prod($preconditions);
         $requirements_fulfilled = $this->can_req($preconditions);
+
+        if ($this->name)
+            $name = $this->name;
+        elseif (count($this->produces)) {
+            /** @var Model_Items_Abstract_Item $cls */
+            $cls = array_keys($this->produces)[0];
+            $name = $cls::static_name();
+        } else $name = '???';
+
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'name' => $name,
             'description' => $this->description,
             'requires' => $this->requires,
             'energy' => $this->energy,
             'repair' => -$this->decay,
-            'decay_speed' => $this->decay_speed == 0 ? 0 : ($this->decay_speed > 0 ? -1 : 1),
+            'decay_speed' => $this->decay_speed == 0 ? 0 : ($this->decay_speed > 0 ? 1 : -1),
+            'defense' => $this->defense,
             'material_in' => $this->materialize($this->items),
             'material_out' => $this->materialize($this->produces),
             'build' => in_array($this->id,$preconditions),
             'slot_open' => $still_open,
             'build_possible' => $requirements_fulfilled,
             'steps_max' => $this->steps,
-            'steps_current' => ($current_steps === true) ? $this->steps - 1 : $current_steps
+            'steps_current' => ($current_steps === true) ? $this->steps - 1 : $current_steps,
+            'occupies' => $this->provide()
         ];
     }
 

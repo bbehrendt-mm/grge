@@ -17,10 +17,9 @@ class Model_Places_Camping_Caravan extends Model_Places_Abstract_Hideout {
     protected static $decay_exp = 0.10;
 
     public function uin($new = null) {
-        if ($new !== null) {
-            $this->add_upgrades(['bedr1','gen1']);
-            $this->home_extensions("kitchen", "base", true);
-        }
+        if ($new !== null)
+            $this->add_upgrades(['bedr1','gen1','ktc1','outside','outside_space']);
+
         return parent::uin($new);
     }
 }	

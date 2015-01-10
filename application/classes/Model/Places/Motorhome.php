@@ -49,11 +49,7 @@ class Model_Places_Motorhome extends Model_Places_Home {
 
     public function uin($new = null) {
         if ($new !== null) {
-            $this->add_upgrades(['bedr1','sofa1','manu1','gen1','gen2']);
-
-            $this->home_extensions("kitchen", "base", true);
-
-            $this->home_extensions("limits", "notrench", true);
+            $this->add_upgrades(['bedr1','sofa1','manu1','gen1','gen2','ktc1','outside']);
             $this->set_decay(0, true);
         }
         return parent::uin($new);
@@ -112,8 +108,8 @@ class Model_Places_Motorhome extends Model_Places_Home {
 
         $game->delete_lobby();
         $this->impaler = 0;
-        if ($this->home_extensions("defense", "fence")) {
-            $this->home_extensions("defense", "fence", false);
+        if ($this->has_upgrade('fence')) {
+            $this->remove_upgrades(['fence','deffence1','deffence2']);
             $this->defense -= 10;
         }
 

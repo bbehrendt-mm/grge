@@ -381,6 +381,12 @@ div.popup {
     box-shadow: 0 0 15px black;
 }
 
+/*noinspection ALL*/
+div.popup.disabled {
+    filter: blur(2px) sepia(100%);
+    -webkit-filter: filter: blur(2px) sepia(100%);
+}
+
 div.blueprint {
     border-radius: 4px;
     background: #fff9f6;
@@ -441,11 +447,16 @@ div.blueprint.green {
 div.blueprint.green.active {
     background: #ddffe2;
     cursor: pointer;
-    transition: all 0.5s ease;
+    transition: background 0.5s ease;
 }
 
 div.blueprint.green.active:hover {
     background: #a4ffb5;
+}
+
+div.blueprint.green.active:active {
+    border-bottom: 1px solid #79f190;
+    margin-top: 6px;
 }
 
 div.blueprint.green > div.ribbon {
@@ -477,6 +488,13 @@ div.blueprint > span:first-child {
     font-size: 12px;
 }
 
+div.blueprint > span:first-child > i {
+    margin-right: 8px;
+    margin-left: 8px;
+    font-weight: normal;
+    opacity: 0.8;
+}
+
 div.details .cell > i:first-child {
     font-size: 10px;
     opacity: 0.8;
@@ -499,11 +517,11 @@ div.details .group > span > b:first-child {
     font-weight: bold;
 }
 
-div.details .group > span > b:first-child.green {
+div.details .group > span > *:first-child.green {
     color: #005d0f;
 }
 
-div.details .group > span > b:first-child.red {
+div.details .group > span > *:first-child.red {
     color: #5d1a19;
 }
 

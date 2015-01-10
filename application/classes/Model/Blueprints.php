@@ -100,6 +100,7 @@ class Model_Blueprints {
     /**
      * @param Model_Blueprints $other
      * @param bool $dominance
+     * @return Model_Blueprints
      */
     public function merge($other, $dominance = false) {
         $this->blueprints = $dominance ? array_merge($other->blueprints, $this->blueprints) : array_merge($this->blueprints, $other->blueprints);
@@ -107,14 +108,26 @@ class Model_Blueprints {
 
         foreach (array_keys($this->blueprints) as $id)
             unset($this->externals[$id]);
+        return $this;
     }
 
     /**
-     * Validates a blueprint group; this function will throw an exception when the group is invalid.
+     * @return Model_Blueprints
+     */
+    public function externalize() {
+        $this->externals = array_merge($this->externals, $this->blueprints);
+        $this->blueprints = [];
+
+        return $this;
+    }
+
+    /**
+     * Validates a blueprint group; this function will throw an exception when the group is invalid. This function also drops the stack.
      * @return Model_Blueprints
      * @throws Exception
      */
     public function validate() {
+        $this->drop_stack();
         $preconditions = [];
         foreach ($this->externals as $blueprint)
             /** @var Model_Blueprint $blueprint */
@@ -127,7 +140,7 @@ class Model_Blueprints {
             $deadlock = true;
             $cache = array_filter($cache, function($blueprint) use (&$deadlock, &$preconditions) {
                 /** @var Model_Blueprint $blueprint */
-                if ($blueprint->can($preconditions)) {
+                if ($blueprint->can($preconditions, true)) {
                     $deadlock = false;
                     $preconditions = array_merge($preconditions, $blueprint->provide());
                     return false;

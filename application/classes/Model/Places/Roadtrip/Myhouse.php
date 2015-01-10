@@ -17,15 +17,8 @@ class Model_Places_Roadtrip_Myhouse extends Model_Places_Abstract_Hideout {
 
     public function uin($new = null) {
         if ($new !== null) {
-            $this->add_upgrades('hideout','bedr1','bedr2','bedr3','sofa1','sofa2','manu1','manu2','gen1','gen2');
+            $this->add_upgrades('hideout','bedr1','bedr2','bedr3','sofa1','sofa2','manu1','manu2','gen1','gen2','ktc1','ktc2','ktc3','ktc4','deffence1','fence','outside','outside_space');
             $this->set_decay(0, true);
-
-            $this->home_extensions("kitchen", "base", true);
-            $this->home_extensions("kitchen", "boiler", true);
-            $this->home_extensions("kitchen", "utils", true);
-            $this->home_extensions("kitchen", "oven", true);
-
-            $this->home_extensions("defense", "fence", true);
         }
         return parent::uin($new);
     }

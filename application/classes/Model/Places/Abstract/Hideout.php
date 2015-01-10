@@ -10,34 +10,18 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
     //Exp: 8% per day
     protected static $decay_exp = 0.08;
 
-    protected static $widget_list = Array(
-        'defense',
-        'description',
-    );
-
     protected $extensions = Array();
     protected $survival_find = true;
     protected $upgradable = true;
 
-    protected $mapnodes = Array(-1 => 'Versteck verlassen');
     protected $breakins = 0;
 
     public function uin($uin = NULL) {
         if ($uin === NULL) return parent::uin();
         else $t = parent::uin($uin);
 
-        $this->inventory->add(new Model_Items_Virtual_Location_Hideout(!$this->home_extensions("hideout", "cursed")));
+        $this->inventory->add(new Model_Items_Virtual_Location_Hideout(!$this->has_upgrade('cursed_hideout')));
         return $t;
-    }
-
-    public function home_extensions($type, $ext, $set = null) {
-        if (!isset($this->extensions[$type])) $this->extensions[$type] = Array();
-        if (!isset($this->extensions[$type][$ext])) $this->extensions[$type][$ext] = false;
-
-        if ($set === null) return $this->extensions[$type][$ext];
-        else $this->extensions[$type][$ext] = $set;
-
-        return true;
     }
 
     public function pretick() {
@@ -49,7 +33,7 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
 
         //Check for zombie attack
         if (($this->get_defense() < 1) && ($battle_log = Tool_Scripts::battle($this->zombie_factory->spawn_zombies(), Tool_Scripts::at_location($this->uin), true, $battle, $zc))) {
-            $this->log->add(new Model_Log_Types_Battle(':zombiestr tauchen auf!', $battle_log, array(':zombiestr' => '<span class="value"><img src="/application/assets/icons/zombie.gif" />' . $zc . ' ' . __('Zombies') . '</span>')));
+            $this->log->add(new Model_Log_Types_Battle(':zombiestr tauchen auf!', $battle_log, array(':zombiestr' => '<span class="value"><img src="media/icons/zombie.gif" />' . $zc . ' ' . __('Zombies') . '</span>')));
             return;
         }
 
@@ -85,7 +69,7 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
          */
         global $game, $player;
 
-        if (Tool_Events::current($game->next_tick()) == 'halloween' && !$this->home_extensions("hideout", "cursed"))
+        if (Tool_Events::current($game->next_tick()) == 'halloween' && !$this->has_upgrade('cursed_hideout'))
             new Model_Buffs_Scarecrow($player->user_id());
 
         //Build chance array
@@ -126,7 +110,7 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         else $player = $game->get_player($pid);
         parent::enter($pid);
         new Model_Buffs_Home($player->id());
-        if (Tool_Events::current($game->next_tick()) == 'halloween' && !$this->home_extensions("hideout", "cursed"))
+        if (Tool_Events::current($game->next_tick()) == 'halloween' && !$this->has_upgrade('cursed_hideout'))
             new Model_Buffs_Scarecrow($player->user_id());
     }
 
@@ -141,9 +125,9 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
 
         if (!parent::leave($pid)) return false;
 
-        if ($this->impaler == 2)
+        if ($this->has_upgrade('defimp') && !$this->has_upgrade('impaler'))
         {
-            $this->impaler = 1;
+            $this->add_upgrades('impaler');
             $player->log()->add(new Model_Log_Types_Text(null, null, 'Auf dem Weg nach draußen hast du die Fallgrube wieder geschlossen und für einen erneuten Einsatz bereit gemacht.'));
         }
 
@@ -154,10 +138,11 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
     }
 
     protected function create_npcs() {
+        /** @global Model_Game $game */
         global $game;
         $ret = parent::create_npcs();
 
-        if (Tool_Events::current($game->next_tick()) == 'halloween' && !$this->home_extensions("hideout", "cursed"))
+        if (Tool_Events::current($game->next_tick()) == 'halloween' && !$this->has_upgrade('cursed_hideout'))
             $ret['halloween'] = Model_Npc::factory()->name('Grausame Vogelscheuche')
                 ->add_action('Ansehen', Model_Action::factory()
                         ->effect(Model_Effect::factory()
@@ -188,10 +173,6 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
     }
 
     protected $defense = 5;
-
-    protected $wallstrength = 0;
-    protected $impaler = 0;
-    protected $batgun = 0;
 
     protected $decay = 1;
     protected $patchup = 1;
@@ -230,95 +211,54 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
     }
 
     /**
-     * Returns the base defense level
-     * @return number
-     */
-    public function get_wallstr_level() {
-        return min(ceil($this->wallstrength/3), 4);
-    }
-
-    /**
-     * Increases the base defense level
-     * @param int $dif Levels to increase (default: 1)
-     */
-    public function increase_wallstrength($dif = 1) {
-        $this->wallstrength += $dif;
-        $this->defense += $dif * 5;
-    }
-
-    /**
      * Returns weather any form of manual defense is available
      * @return bool
      */
     public function any_def() {
-        return ($this->impaler == 1 || $this->batgun == 1);
-    }
-
-    public function get_impaler_level() {
-        return $this->impaler;
-    }
-
-    public function get_batgun_level() {
-        return $this->batgun;
-    }
-
-    public function defb_ready_impaler() {
-        $this->impaler = 1;
-    }
-
-    public function defb_ready_batgun() {
-        $this->batgun = 1;
-    }
-
-    public function use_impaler() {
-        if ($this->impaler == 1) $this->impaler = 2;
+        return $this->has_upgrade('impaler') || $this->has_upgrade('defbat');
     }
 
     public function defense_actions() {
         $ret = Array();
         $home = $this;
 
-        if ($this->impaler == 1) $ret['impale'] = Array(
+        if ($this->has_upgrade('impaler')) $ret['impale'] = Array(
             'text'			=> 'Falltür öffnen',
             'short'         => 'Fallgruben',
             'energy'		=> 2,
             'requires'		=> Array(),
             'zombies_min'	=> floor($this->zombie_factory->get_zombie_accumulation()/2),
             'zombies_max'	=> floor($this->zombie_factory->get_zombie_accumulation()/2),
-            'action'		=> function() use ($home) {$home->use_impaler();},
+            'action'		=> function() use ($home) {$home->remove_upgrades('impaler');},
         );
-        if ($this->batgun == 1) $ret['batg1'] = Array(
-            'text'			=> 'Eine Batterie abfeuern',
-            'short'         => 'Stationäres Batteriegeschütz',
-            'energy'		=> 1,
-            'requires'		=> Array('Model_Items_Battery' => 1),
-            'zombies_min'	=> 1,
-            'zombies_max'	=> 1 + floor($this->zombie_factory->get_zombie_accumulation()/10),
-        );
-        if ($this->batgun == 1) $ret['batg2'] = Array(
-            'text'			=> 'Zwei Batterien abfeuern',
-            'short'         => 'Stationäres Batteriegeschütz',
-            'energy'		=> 2,
-            'requires'		=> Array('Model_Items_Battery' => 2),
-            'zombies_min'	=> 2,
-            'zombies_max'	=> 2 * (1 + floor($this->zombie_factory->get_zombie_accumulation()/10)),
-        );
-        if ($this->batgun == 1) $ret['batg3'] = Array(
-            'text'			=> 'Fünf Batterien abfeuern',
-            'short'         => 'Stationäres Batteriegeschütz',
-            'energy'		=> 5,
-            'requires'		=> Array('Model_Items_Battery' => 5),
-            'zombies_min'	=> 5,
-            'zombies_max'	=> 5 * (1 + floor($this->zombie_factory->get_zombie_accumulation()/10)),
-        );
-        if ($this->batgun == 1) $ret['batg4'] = Array(
-            'text'			=> 'Supercharger abfeuern',
-            'short'         => 'Stationäres Batteriegeschütz',
-            'energy'		=> 1,
-            'requires'		=> Array('Model_Items_Generic_Supercharger' => 1),
-            'zombies_min'	=> 5,
-            'zombies_max'	=> 5 + floor($this->zombie_factory->get_zombie_accumulation()/3),
-        );
+        if ($this->has_upgrade('defbat'))
+        {
+            $ret['batg1'] = Array(
+                'text'			=> 'Eine Batterie abfeuern',
+                'short'         => 'Stationäres Batteriegeschütz',
+                'energy'		=> 1,
+                'requires'		=> Array('Model_Items_Battery' => 1),
+                'zombies_min'	=> 1,
+                'zombies_max'	=> 1 + floor($this->zombie_factory->get_zombie_accumulation()/10),
+            );
+            $ret['batg2'] = Array(
+                'text'			=> 'Zwei Batterien abfeuern',
+                'short'         => 'Stationäres Batteriegeschütz',
+                'energy'		=> 2,
+                'requires'		=> Array('Model_Items_Battery' => 2),
+                'zombies_min'	=> 2,
+                'zombies_max'	=> 2 * (1 + floor($this->zombie_factory->get_zombie_accumulation()/10)),
+            );
+
+            $ret['batg4'] = Array(
+                'text'			=> 'Supercharger abfeuern',
+                'short'         => 'Stationäres Batteriegeschütz',
+                'energy'		=> 1,
+                'requires'		=> Array('Model_Items_Generic_Supercharger' => 1),
+                'zombies_min'	=> 5,
+                'zombies_max'	=> 5 + floor($this->zombie_factory->get_zombie_accumulation()/3),
+            );
+        }
 
         return $ret;
     }

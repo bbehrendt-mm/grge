@@ -62,10 +62,25 @@ class Controller_Location extends Controller_Game {
             $name = str_replace('Model_Places_','',$name, $n);
             if ($n == 1 && $b = Tool_System::simple_config("blueprints/{$sub}/" . $name))
                 /** @var Model_Blueprints $b */
-                $ret->merge($b);
+                $ret->merge($b,true);
         }
 
         return $ret;
+    }
+
+    /**
+     * @param Model_Blueprints $blueprints
+     * @param string $bid
+     */
+    private function exec_build($blueprints, $bid) {
+        /** @global Model_Player $player */
+        global $player;
+
+        $r = $blueprints->execute($bid, $player, $player->location()->get_upgrades());
+        $this->add_data('result', $r);
+        if (is_array($r))
+            $player->location()->add_upgrades($r);
+        $this->render_notifications();
     }
 
     public function japi_builder() {
@@ -74,13 +89,26 @@ class Controller_Location extends Controller_Game {
 
         $blueprints = $this->combine_blueprints('upgrades');
 
-        if ($build = $this->request->post('build')) {
-            $r = $blueprints->execute($build, $player, $player->location()->get_upgrades());
-            $this->add_data('result', $r);
-            if (is_array($r))
-                $player->location()->add_upgrades($r);
-            $this->render_notifications();
-        }
+        if ($build = $this->request->post('build'))
+            $this->exec_build($blueprints, $build);
+
+        $this->add_data('blueprints', $this->compile_builder($blueprints));
+        $this->add_data('energy', $player->stats_get(Model_Player::MP_STAT_ENERGY));
+        $this->render(false);
+        return true;
+    }
+
+    public function japi_maker() {
+        /** @global Model_Player $player */
+        global $player;
+
+        $blueprints = $this->combine_blueprints('items');
+        $externals = $this->combine_blueprints('upgrades')->externalize();
+
+        if ($build = $this->request->post('build'))
+            $this->exec_build($blueprints, $build);
+
+        $blueprints->merge($externals)->validate();
 
         $this->add_data('blueprints', $this->compile_builder($blueprints));
         $this->add_data('energy', $player->stats_get(Model_Player::MP_STAT_ENERGY));

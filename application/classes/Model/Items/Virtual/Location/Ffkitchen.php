@@ -7,12 +7,10 @@ class Model_Items_Virtual_Location_Ffkitchen extends Model_Items_Abstract_Virtua
     );
 
     protected function hid() {
-        $phpbb53 = $this;
         return parent::hid()->add_action('Küche ...', Model_Action::factory()
                 ->description('Die Küchengeräte hier scheinen in passablem Zustand zu sein. Wie wärs, wenn du etwas kochen würdest?')
                 ->javascript(Model_Javascript::factory()
-                    ->close_qtip()
-                    ->versa('mypos'))
+                    ->versa('maker'))
             , 'mp_kitchen');
     }
 }	

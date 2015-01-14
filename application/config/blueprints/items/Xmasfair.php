@@ -1,0 +1,45 @@
+<?php defined('SYSPATH') or die('No direct access allowed.');
+
+return Model_Blueprints::factory()
+    ->add_blueprints(Model_Blueprint::factory()->id('manu_northpole')->name('Werkbank des Weihnachtsmanns'), true)
+
+    // ++ STACK -> All blueprints below can be produced indefinitely and require local facilities
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->steps(0)->requires('manu_northpole');})
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:xmas1')
+            ->message('Nichts macht mehr Spaß als an Weihnachten etwas schönes zu basteln. Du hast soeben Dekoration hergestellt.')
+            ->energy(5)
+            ->material(['Model_Items_Generic_Cd' => 3])
+            ->produces(['Model_Items_Generic_Lametta' => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:xmas2')
+            ->message('Nichts macht mehr Spaß als an Weihnachten etwas schönes zu basteln. Du hast soeben Dekoration hergestellt.')
+            ->energy(5)
+            ->material(['Model_Items_Generic_Lametta' => 2, 'Model_Items_Generic_Wire' => 1])
+            ->produces(['Model_Items_Generic_Xmasrope' => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:xmas3')
+            ->message('Nichts macht mehr Spaß als an Weihnachten etwas schönes zu basteln. Du hast soeben Dekoration hergestellt.')
+            ->energy(5)
+            ->material(['Model_Items_Generic_Electro' => 1, 'Model_Items_Generic_Wire' => 1, 'Model_Items_Generic_Led' => 10])
+            ->produces(['Model_Items_Generic_Xmaslights' => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:xmas4')
+            ->message('Nichts macht mehr Spaß als an Weihnachten etwas schönes zu basteln. Du hast soeben Dekoration hergestellt.')
+            ->energy(5)
+            ->material(['Model_Items_Generic_Bauble' => 3, 'Model_Items_Stick' => 2, 'Model_Items_Generic_Ducttape' => 1, 'Model_Items_Generic_Xmasneedles' => 1])
+            ->produces(['Model_Items_Generic_Mistletoe' => 1])
+    )
+
+    ->drop_stack();

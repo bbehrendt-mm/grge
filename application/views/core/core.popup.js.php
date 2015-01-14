@@ -73,7 +73,7 @@ core.popup = {
             $.each(bdata.blueprints, function(k,v) {
                 if (v.hidden) return;
 
-                frame.append($('<div />').addClass('cell padded rw-4').append(core.snippets.blueprint(v, bdata.energy, bdata.blueprints, function() {
+                frame.append($('<div />').addClass('cell padded rw-4').append(core.snippets.blueprint(v, bdata.energy, bdata.zombies, bdata.blueprints, function() {
                     var prev_scroll = $('.popup').find('>*:first-child').scrollTop();
                     popup.addClass('disabled');
                     core.command('location/' + type, {build: k}, true, function(new_data) {
@@ -101,5 +101,8 @@ core.popup = {
     },
     maker: function() {
         core.popup.genericBlueprintLoader('maker');
+    },
+    fighter: function() {
+        core.popup.genericBlueprintLoader('fighter');
     }
 };

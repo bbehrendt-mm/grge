@@ -152,18 +152,20 @@ class Model_Blueprints {
         return $this;
     }
 
-    public function compile($preconditions) {
+    public function compile($preconditions, $player) {
         $ret = [];
         foreach ($this->externals as $b)
             /** @var Model_Blueprint $b */
-            $ret[$b->id()] = array_merge($b->compile($preconditions), [
+            $ret[$b->id()] = array_merge($b->compile($preconditions, $player), [
                 'hidden' => true
             ]);
-        foreach ($this->blueprints as $b)
+        foreach ($this->blueprints as $b) {
             /** @var Model_Blueprint $b */
-            $ret[$b->id()] = array_merge($b->compile($preconditions), [
-                'hidden' => false
-            ]);
+            $tmp = $b->compile($preconditions, $player);
+            if (!$tmp['hidden'])
+                $ret[$b->id()] = $tmp;
+        }
+
         return $ret;
     }
 

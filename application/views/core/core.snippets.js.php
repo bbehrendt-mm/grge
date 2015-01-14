@@ -118,12 +118,54 @@
         ).append($('<span />').text(<?=__j('Wird geladen ...');?>))
     };
 
-    core.snippets.blueprint = function(blueprint, energy, lib, callback) {
+    /**
+     * @name Material
+     * @type Object
+     * @property {int} count
+     * @property {int} have
+     * @property {string} icon
+     * @property {string} name
+     */
+
+    /**
+     * @name Blueprint
+     * @type Object
+     * @property {bool} build
+     * @property {bool} build_possible
+     * @property {int} decay_speed
+     * @property {int} defense
+     * @property {string} description
+     * @property {int} energy
+     * @property {bool} hidden
+     * @property {string} id
+     * @property {Material[]} material_in
+     * @property {Material[]} material_out
+     * @property {string} name
+     * @property {string[]} occupies
+     * @property {int} repair
+     * @property {string[]} requires
+     * @property {bool} slot_open
+     * @property {int} steps_current
+     * @property {int} steps_max
+     * @property {bool|int[]} zombies
+     */
+
+    /**
+     *
+     * @param {Blueprint} blueprint
+     * @param {int} energy
+     * @param {int} zombies
+     * @param {Blueprint[]} lib
+     * @param {Function} callback
+     * @returns {*}
+     */
+    core.snippets.blueprint = function(blueprint, energy, zombies, lib, callback) {
         var button = $('<div />').addClass('blueprint').attr('title','-').attr('data-bid', blueprint.id);
         var ext = $('<div />').addClass('row details');
 
         var mt_in = $('<div />').addClass('cell rw-12').appendTo(ext);
         var mt_out = $('<div />').addClass('cell rw-12').appendTo(ext);
+        var mt_zmb = $('<div />').addClass('cell rw-12').appendTo(ext);
 
         if (blueprint.build)
             button.addClass('blue');
@@ -182,6 +224,17 @@
                 )
             );
 
+        if (blueprint.zombies)
+            mt_zmb.append($('<i/>').text(<?=__j('Tötet')?>)).append(
+                $('<div />').addClass('group').append(
+                    $('<img />').attr('src', 'media/icons/zombie.gif')
+                ).append(
+                    Math.min(zombies, blueprint.zombies[0]) == Math.min(zombies, blueprint.zombies[1])
+                        ? $('<span />').append($('<b />').addClass('green').text(Math.min(zombies, blueprint.zombies[0]))).append($('<span />').text('/' + zombies))
+                        : $('<span />').append($('<b />').addClass('green').text(Math.min(zombies, blueprint.zombies[0]) + ' - ' + Math.min(zombies, blueprint.zombies[1]))).append($('<span />').text('/' + zombies))
+                )
+            );
+
         var f = function(target, hideScale) {
             return function(k,v) {
                 target.append(
@@ -200,7 +253,7 @@
         $.each(blueprint.material_out, f(mt_out,true));
 
         button.qtip(game.render.html.qtip.ingame('bottom',{
-            render: function(event,api) {
+            render: function() {
                 var content = $(this).find('.qtip-content').empty().append(
                     $('<b />').addClass('header').text(blueprint.name)
                 );
@@ -209,14 +262,14 @@
                     content.append($('<span />').text(blueprint.description)).append('<span class="separator" />');
 
                 if (blueprint.build)
-                    content.append($('<div />').addClass('point success').text(<?=__j('Dieses Projekt wurde bereits gebaut.')?>));
+                    content.append($('<div />').addClass(blueprint.zombies ? 'point failure' : 'point success').text(blueprint.zombies ? <?=__j('Diese Verteidigungsmöglichkeit wurde bereits eingesetzt.')?> : <?=__j('Dieses Projekt wurde bereits gebaut.')?>));
                 else if (!blueprint.slot_open) {
                     content.append($('<div />').addClass('point failure').text(<?=__j('Du hast bereits ein ähnliches Projekt gebaut.')?>));
                 } else {
 
                     if (blueprint.steps_max > 1)
-                        content.append($('<span />').text(game.i18n(<?=__j('Du kannst dieses Projekt :num mal bauen.')?>,{':num': blueprint.steps_max}))).append('<span class="separator" />');
-                    else if (blueprint.steps_max == 0)
+                        content.append($('<span />').text(game.i18n(blueprint.zombies ? <?=__j('Hiermit kannst du :num mal Zombies angreifen.')?> : <?=__j('Du kannst dieses Projekt :num mal bauen.')?>,{':num': blueprint.steps_max}))).append('<span class="separator" />');
+                    else if (blueprint.steps_max == 0 && !blueprint.zombies)
                         content.append($('<span />').text(<?=__j('Dieses Projekt kann unbegrenzt oft gebaut werden.')?>)).append('<span class="separator" />');
 
                     content.append($('<span />').text(<?=__j('Vorraussetzungen')?>));
@@ -237,7 +290,7 @@
 
                     content.append('<span class="separator" />');
 
-                    cache = [];
+                    var cache = [];
                     $.each(lib,function(key,bp) {
                         $.each(bp.requires,function(k,req) {
                             $.each(req,function(k,vi) {

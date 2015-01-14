@@ -64,6 +64,7 @@ class Model_Places_Xmasfair extends Model_Places_Abstract_Xmas {
         $this->inventory()->add(new Model_Items_Virtual_Location_Ffxmas());
         for ($i = 0; $i < 5; $i++) $this->inventory->add(new Model_Items_Stick());
         for ($i = 0; $i < 2; $i++) $this->inventory->add(new Model_Items_Generic_Ducttape());
+        $this->add_upgrades('manu_northpole');
         return $t;
     }
 

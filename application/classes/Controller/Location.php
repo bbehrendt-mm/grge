@@ -42,7 +42,7 @@ class Controller_Location extends Controller_Game {
         global $player;
 
         // Translate stuff
-        $data = $blueprints->compile($player->location()->get_upgrades());
+        $data = $blueprints->compile($player->location()->get_upgrades(), $player);
         foreach ($data as &$blueprint) {
             foreach (['name','description'] as $key)
                 $blueprint[$key] = __($blueprint[$key]);
@@ -94,6 +94,7 @@ class Controller_Location extends Controller_Game {
 
         $this->add_data('blueprints', $this->compile_builder($blueprints));
         $this->add_data('energy', $player->stats_get(Model_Player::MP_STAT_ENERGY));
+        $this->add_data('zombies', $player->location()->zombie_pop());
         $this->render(false);
         return true;
     }
@@ -112,6 +113,26 @@ class Controller_Location extends Controller_Game {
 
         $this->add_data('blueprints', $this->compile_builder($blueprints));
         $this->add_data('energy', $player->stats_get(Model_Player::MP_STAT_ENERGY));
+        $this->add_data('zombies', $player->location()->zombie_pop());
+        $this->render(false);
+        return true;
+    }
+
+    public function japi_fighter() {
+        /** @global Model_Player $player */
+        global $player;
+
+        $blueprints = $this->combine_blueprints('attack');
+        $externals = $this->combine_blueprints('upgrades')->externalize();
+
+        if ($build = $this->request->post('build'))
+            $this->exec_build($blueprints, $build);
+
+        $blueprints->merge($externals)->validate();
+
+        $this->add_data('blueprints', $this->compile_builder($blueprints));
+        $this->add_data('energy', $player->stats_get(Model_Player::MP_STAT_ENERGY));
+        $this->add_data('zombies', $player->location()->zombie_pop());
         $this->render(false);
         return true;
     }

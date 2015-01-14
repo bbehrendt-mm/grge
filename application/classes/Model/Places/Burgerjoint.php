@@ -12,6 +12,7 @@ class Model_Places_Burgerjoint extends Model_Places_Abstract_Place {
         if ($new !== null) {
             $this->inventory->add(new Model_Items_Virtual_Location_Cooler());
             $this->inventory->add(new Model_Items_Virtual_Location_Ffkitchen());
+            $this->add_upgrades('ktc_burgerjoint');
         }
         return parent::uin($new);
     }

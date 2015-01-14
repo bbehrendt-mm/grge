@@ -12,6 +12,7 @@ class Model_Items_Dildo2 extends Model_Items_Abstract_Item implements Interface_
 	protected static $weight = 1;
 
     protected function hid() {
+        /** @global Model_Player $player */
         global $player;
         if ($player->job(1080))
             return parent::hid();

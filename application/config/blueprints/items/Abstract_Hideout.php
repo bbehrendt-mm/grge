@@ -92,6 +92,32 @@ return Model_Blueprints::factory()
             ->produces(['Model_Items_Pumpkinsoup' => 5])
     )
 
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:xmas1_cookie1')
+            ->requires('ktc3')
+            ->name('Plätzchen backen')
+            ->message('Ein weihnachtlicher Durft erfüllt dein Versteck, als du kleine Figürchen aus dem Teig presst und diese zu Plätzchen backst.')
+            ->material(['Model_Items_Generic_Cookieproto' => 1])
+            ->produces(['Model_Items_Cookie' => 5])
+            ->show_condition(function() {
+                return Tool_Events::current() == 'xmas';
+            })
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:xmas1_cookie2')
+            ->requires('ktc3')
+            ->name('Besondere Plätzchen backen')
+            ->message('Normale Plätzchen sind langweilig, also fügst du ein paar kreative Extra-Zutaten hinzu...')
+            ->material(['Model_Items_Generic_Cookieproto' => 1, 'Model_Items_Powderpack' => 1])
+            ->produces(['Model_Items_Cookie2' => 5])
+            ->show_condition(function() {
+                return Tool_Events::current() == 'xmas';
+            })
+    )
+
     // -- STACK -> All blueprints below NO LONGER need the basic kitchen
     ->pop_stack()
 
@@ -167,5 +193,362 @@ return Model_Blueprints::factory()
             ->material(['Model_Items_Generic_Bike' => 1, 'Model_Items_Generic_Sum' => 2, 'Model_Items_Generic_Belt' => 1])
             ->produces(['Model_Items_Generic_Bike2' => 1])
     )
+
+    // ++ STACK -> All blueprints below can only be built by a survivalist
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->show_condition(function($player) {/** @var Model_Player $player */return $player->job(1060);});})
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:srv_sum')
+            ->name('Selbstgebaute Kleinteile')
+            ->message('Großartig - andere hätten diese Kleinteile mühsam zusammensuchen müssen, du kannst sie einfach selbst herstellen!')
+            ->energy(25)
+            ->material(['Model_Items_Generic_Crmetal' => 5])
+            ->produces(['Model_Items_Generic_Sum' => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:srv_mat')
+            ->name('Flickenmatratze')
+            ->message('Keine Ahnung wozu du als Survivalist überhaupt eine Matratze brauchst... aber gut, wenn du Spaß an Bastelarbeit hast.')
+            ->energy(25)
+            ->material(['Model_Items_Generic_Cloth' => 8])
+            ->produces(['Model_Items_Generic_Bed' => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:srv_tbl')
+            ->name('Provisorischer Tisch')
+            ->message('Wer braucht schon EKEA? Dieser Tisch hat eine mindestens genauso fragwürdige Qualität, und er ist aus echtem undefinierbaren Holz!')
+            ->energy(25)
+            ->material(['Model_Items_Generic_Wood' => 7])
+            ->produces(['Model_Items_Generic_Table' => 1])
+    )
+
+    // -- STACK -> All blueprints below can NO LONGER only be built by a survivalist
+    ->pop_stack()
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:tech')
+            ->message('Dank deiner beeindruckenden Techniker-Ausbildung hast du es geschafft, aus Schrott dieses hochpräzise Vermessungsinstrument zusammenzubauen.')
+            ->energy(10)
+            ->material(['Model_Items_Generic_Metal' => 1, 'Model_Items_Generic_Sum' => 1, 'Model_Items_Generic_Tube' => 1])
+            ->produces(['Model_Items_Generic_Lasermapper' => 1])
+            ->show_condition(function($p) {
+                /** @var Model_Player $p */
+                return $p->job(3030);
+            })
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:crwood1')
+            ->message('Gäbe es einen Gott für Recycling, er wäre sicherlich stolz auf dich!')
+            ->energy(6)
+            ->material(['Model_Items_Generic_Crwood' => 4])
+            ->produces(['Model_Items_Generic_Wood' => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:crwood2')
+            ->requires('manu2')
+            ->message('Gäbe es einen Gott für Recycling, er wäre sicherlich stolz auf dich!')
+            ->material(['Model_Items_Generic_Crwood' => 4, 'Model_Items_Energy' => 2])
+            ->produces(['Model_Items_Generic_Wood' => 3])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:crmetal1')
+            ->message('Gäbe es einen Gott für Recycling, er wäre sicherlich stolz auf dich!')
+            ->energy(6)
+            ->material(['Model_Items_Generic_Crmetal' => 4])
+            ->produces(['Model_Items_Generic_Metal' => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:crmetal2')
+            ->requires('manu2')
+            ->message('Gäbe es einen Gott für Recycling, er wäre sicherlich stolz auf dich!')
+            ->material(['Model_Items_Generic_Crmetal' => 4, 'Model_Items_Energy' => 2])
+            ->produces(['Model_Items_Generic_Metal' => 3])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:bolts1')
+            ->message('Wäre dies ein Vampirspiel, so wärst du mit diesen Bolzen perfekt ausgerüstet, um Dracula gegenüber zu treten. Leider ist dies ein Zombiespiel, also wirst du wohl doch zur Armbrust greifen müssen...')
+            ->energy(2)
+            ->material(['Model_Items_Generic_Crwood' => 1])
+            ->produces(['Model_Items_Bolts' => 3])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:bolts2')
+            ->message('Wäre dies ein Vampirspiel, so wärst du mit diesen Bolzen perfekt ausgerüstet, um Dracula gegenüber zu treten. Leider ist dies ein Zombiespiel, also wirst du wohl doch zur Armbrust greifen müssen...')
+            ->energy(3)
+            ->material(['Model_Items_Generic_Wood' => 1])
+            ->produces(['Model_Items_Bolts' => 10])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:bbag1')
+            ->message('Ein Stich hier.... ein Stich dort... Fertig! Dieser stylische Leichensack wird deine Transportprobleme zumindest im Bezug auf Leichen für immer lösen!')
+            ->energy(15)
+            ->material(['Model_Items_Generic_Cloth' => 8])
+            ->produces(['Model_Items_Bodybag' => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:bbag2')
+            ->name('Leichensack provisorisch flicken')
+            ->message('Du fühlst sich wie eine Art makabrer Modedesigner! Ein paar Sticke mit der Nadel, schon ist dieser hässliche Riss fast nicht mehr zu sehen.')
+            ->energy(5)
+            ->material(['Model_Items_Generic_Cloth' => 3, 'Model_Items_Bodybag4' => 1])
+            ->produces(['Model_Items_Bodybag2' => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:bbag3')
+            ->name('Leichensack gründlich flicken')
+            ->message('Du fühlst sich wie eine Art makabrer Modedesigner! Ein paar Sticke mit der Nadel, schon ist dieser hässliche Riss nicht mehr zu sehen. Und ein paar potentielle Schwachstellen hast du gleich mit ausgebessert! Bravo!')
+            ->energy(9)
+            ->material(['Model_Items_Generic_Cloth' => 5, 'Model_Items_Bodybag4' => 1])
+            ->produces(['Model_Items_Bodybag' => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:skel')
+            ->name('Sortierte Knochen')
+            ->message('Endlich kannst du deine destruktiven Energien mal an was anderem als an Zombies ausleben. Aus irgend einem Grund bereitet dir das Auseinandernehmen dieses Skeletts eine merkwürdige Befriedigung...')
+            ->energy(10)
+            ->material(['Model_Items_Generic_Bone3' => 1])
+            ->produces(['Model_Items_Bone' => 8, 'Model_Items_Bone2' => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:bbbat1')
+            ->message('Mit diesem Schläger fährst du keine Homerun-Rekorde mehr ein... Dafür ist er wesentlich Effektiver im Bereich "Zombieverstümmelung".')
+            ->energy(20)
+            ->material(['Model_Items_Bat' => 1, 'Model_Items_Generic_Ducttape' => 2, 'Model_Items_Generic_Crmetal' => 4])
+            ->produces(['Model_Items_Bat2' => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:crossbow')
+            ->message('Du hast eine Armbrust hergestellt. Wie wärs, wenn du direkt mal mit Zielübungen auf ein paar Zombies beginnst?')
+            ->energy(50)
+            ->material(['Model_Items_Generic_Wire' => 1, 'Model_Items_Generic_Wood' => 2, 'Model_Items_Generic_Metal' => 1, 'Model_Items_Generic_Sum' => 1])
+            ->produces(['Model_Items_Crossbow' => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:batgun1')
+            ->message('Mit ein paar kleinen Verbesserungen kann man die Effektivität eines Batteriewerfers ungemein erhöhen. Mit der neuen Ladevorrichtung sparst du im Kampf viel Zeit, die du wiederum in das Abschlachten weiterer Zombies investieren kannst.')
+            ->energy(5)
+            ->material(['Model_Items_Generic_Ducttape' => 1, 'Model_Items_Generic_Tube' => 1, 'Model_Items_Batgun' => 1])
+            ->produces(['Model_Items_Batgun2' => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:batgun2')
+            ->requires('manu2')
+            ->message('Mit ein paar kleinen Verbesserungen kann man die Effektivität eines Batteriewerfers ungemein erhöhen. Der neue Druckregler passt die Abschussgeschwindigkeit genau der Entfernung an und erhöht so deine Treffsicherheit. Mit ein wenig Glück kannst du mit einer Baterie sogar zwei Zombies erwischen!')
+            ->energy(5)
+            ->material(['Model_Items_Generic_Pressure' => 1, 'Model_Items_Generic_Sum' => 2, 'Model_Items_Generic_Tube' => 1, 'Model_Items_Batgun2' => 1])
+            ->produces(['Model_Items_Batgun2' => 1])
+            ->effect(Model_Effect::factory()
+                ->achieve(Model_Achievement::MA_BUILD_MKII)
+            )
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:splintergun1')
+            ->requires('manu2')
+            ->message('Was kann man mit einer verrückten Waffe machen? Sie NOCH verrückter machen, natürlich! Was denn sonst?')
+            ->energy(25)
+            ->material(['Model_Items_Generic_Pressure' => 1, 'Model_Items_Generic_Sum' => 2, 'Model_Items_Generic_Tube' => 1, 'Model_Items_Generic_Metal' => 3, 'Model_Items_Splintergun' => 1])
+            ->produces(['Model_Items_Splintergun2' => 1])
+            ->effect(Model_Effect::factory()
+                ->achieve(Model_Achievement::MA_BUILD_MKII)
+            )
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:aquagun1')
+            ->requires('manu2')
+            ->message('Es ist wirklich überhaupt nicht bizarr, wenn erwachsene Überlebende einer Apokalypse durch die Ruinen der Zivilisation rennen und mit militärischen Wasserpistolen um sich spritzen! Hört auch zu lachen!')
+            ->energy(5)
+            ->material(['Model_Items_Generic_Pressure' => 1, 'Model_Items_Generic_Sum' => 1, 'Model_Items_Generic_Tube' => 4, 'Model_Items_Watergun' => 1])
+            ->produces(['Model_Items_Watergun2' => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:clothes_impr')
+            ->message('Normalerweise würde kein Mensch so etwas machen - aber in der aktuellen Situation ist es tatsächlich notwendig, seine Bequemlichkeit zugunsten von etwas mehr Sicherheit zu opfern.')
+            ->energy(15)
+            ->material(['Model_Items_Clothes' => 1, 'Model_Items_Generic_Cloth' => 1, 'Model_Items_Generic_Metal' => 1, 'Model_Items_Generic_Crmetal' => 4])
+            ->produces(['Model_Items_Clothes2' => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:clothes_fix')
+            ->name('Kleidung nähen')
+            ->message('Es sieht etwas zusammengeschustert aus... aber wenigstens musst du nun nicht mehr in Unterwäsche herumlaufen.')
+            ->energy(5)
+            ->material(['Model_Items_Generic_Clothes' => 1, 'Model_Items_Generic_Cloth' => 2])
+            ->produces(['Model_Items_Clothes' => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:shield1')
+            ->message('Hierfür muss man wahrlich kein Meister der Handwerkskunst sein. Du hast einen Holzkistendeckel zusammengebaut.')
+            ->energy(10)
+            ->material(['Model_Items_Generic_Wood' => 4, 'Model_Items_Generic_Ducttape' => 1])
+            ->produces(['Model_Items_Shield' => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:shield2')
+            ->message('Mit ein bisschen mehr Holz (und Schrauben anstelle von Klebeband) hast du deinen Holzkistendeckel stabilisiert.')
+            ->energy(20)
+            ->material(['Model_Items_Shield' => 1, 'Model_Items_Generic_Wood' => 4, 'Model_Items_Generic_Sum' => 1])
+            ->produces(['Model_Items_Shield2' => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:helmet')
+            ->message('Mit ein bisschen Metall (und Schrauben anstelle von Klebeband) hast du deinen Fahrradhelm verbessert.')
+            ->energy(20)
+            ->material(['Model_Items_Helmet' => 1, 'Model_Items_Generic_Metal' => 4, 'Model_Items_Generic_Sum' => 1])
+            ->produces(['Model_Items_Helmet2' => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:ripbed')
+            ->name('Matratze auseinanderschneiden')
+            ->message('Dieses Teil hast du eh nicht mehr gebraucht... und warum soll es rumliegen und Platz verschwenden, wenn du es einfach auseinandernehmen kannst?')
+            ->energy(10)
+            ->material(['Model_Items_Generic_Bed' => 1])
+            ->produces(['Model_Items_Generic_Cloth' => 5])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:ripboil')
+            ->name('Wasserkocher-Bauteile')
+            ->message('Dieses Teil hast du eh nicht mehr gebraucht... und warum soll es rumliegen und Platz verschwenden, wenn du es einfach auseinandernehmen kannst?')
+            ->energy(10)
+            ->material(['Model_Items_Generic_Boiler' => 1])
+            ->produces(['Model_Items_Generic_Crmetal' => 1, 'Model_Items_Generic_Electro' => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:ripmix')
+            ->name('Handmixer-Bauteile')
+            ->message('Dieses Teil hast du eh nicht mehr gebraucht... und warum soll es rumliegen und Platz verschwenden, wenn du es einfach auseinandernehmen kannst?')
+            ->energy(6)
+            ->material(['Model_Items_Generic_Mixer' => 1])
+            ->produces(['Model_Items_Generic_Metal' => 1, 'Model_Items_Generic_Sum' => 2])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:riptable')
+            ->name('Järpen-Bauteile')
+            ->message('Dieses Teil hast du eh nicht mehr gebraucht... und warum soll es rumliegen und Platz verschwenden, wenn du es einfach auseinandernehmen kannst?')
+            ->energy(10)
+            ->material(['Model_Items_Generic_Table' => 1])
+            ->produces(['Model_Items_Generic_Wood' => 5, 'Model_Items_Generic_Sum' => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:rippressure')
+            ->requires('manu2')
+            ->name('Druckregler-Bauteile')
+            ->message('Dieses Teil hast du eh nicht mehr gebraucht... und warum soll es rumliegen und Platz verschwenden, wenn du es einfach auseinandernehmen kannst?')
+            ->energy(30)
+            ->material(['Model_Items_Generic_Pressure' => 1])
+            ->produces(['Model_Items_Generic_Metal' => 1, 'Model_Items_Generic_Sum' => 3, 'Model_Items_Generic_Tube' => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:ripmotor')
+            ->requires('manu2')
+            ->name('Motor-Bauteile')
+            ->message('Dieses Teil hast du eh nicht mehr gebraucht... und warum soll es rumliegen und Platz verschwenden, wenn du es einfach auseinandernehmen kannst?')
+            ->energy(50)
+            ->material(['Model_Items_Generic_Motor' => 1])
+            ->produces(['Model_Items_Generic_Metal' => 7, 'Model_Items_Generic_Electro' => 3, 'Model_Items_Generic_Tube' => 5])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:ripoven')
+            ->requires('manu2')
+            ->name('Ofen-Bauteile')
+            ->message('Dieses Teil hast du eh nicht mehr gebraucht... und warum soll es rumliegen und Platz verschwenden, wenn du es einfach auseinandernehmen kannst?')
+            ->energy(50)
+            ->material(['Model_Items_Generic_Oven' => 1])
+            ->produces(['Model_Items_Generic_Metal' => 5, 'Model_Items_Generic_Sum' => 5, 'Model_Items_Generic_Cloth' => 2])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:pbomb')
+            ->message('Vorsichtig füllst du das Schwarzpulver in eine Plastiktüte... BINGO! Perfekte Schwarzpulverbombe! Dieses Teil wird dir sicher irgendwann einmal das Leben retten.')
+            ->energy(1)
+            ->material(['Model_Items_Generic_Ducttape' => 1, 'Model_Items_Generic_Gunpowder' => 1, 'Model_Items_Generic_Plasticbag' => 1])
+            ->produces(['Model_Items_Powderbomb' => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:pkbomb')
+            ->message('So ein Kürbis kann sicher toll explodieren, wenn man ihn bis zum Rand mit Schwarzpulver vollstopft! Und das Gesicht.... naja, der Kürbis hätt halt ohne einfach doof ausgesehen.')
+            ->energy(10)
+            ->material(['Model_Items_Generic_Pumpkin' => 1, 'Model_Items_Generic_Gunpowder' => 5])
+            ->produces(['Model_Items_Pumpkinbomb' => 1])
+            ->effect(Model_Effect::factory()
+                ->achieve(Model_Achievement::MA_PUMPKINHEAD)
+            )
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:bandage')
+            ->message('Also, so richtig hygienisch sieht das jetzt nicht aus...')
+            ->energy(5)
+            ->material(['Model_Items_Generic_Cloth' => 2, 'Model_Items_Whiskey' => 1])
+            ->produces(['Model_Items_Bandage2' => 1, 'Model_Items_Smallbottle' => 1])
+    )
+
+    // -- STACK -> All blueprints below NO LONGER need the basic workbench
+    ->pop_stack()
 
     ->drop_stack();

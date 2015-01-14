@@ -7,12 +7,10 @@ class Model_Items_Virtual_Location_Ffgunsmith extends Model_Items_Abstract_Virtu
     );
 
     protected function hid() {
-        $phpbb53 = $this;
         return parent::hid()->add_action('Hinterzimmer ...', Model_Action::factory()
                 ->description('Im Hinterzimmer befinden sich allerlei Werkzeuge, die du zur Produktion von Waffen und Munition verwenden kannst.')
                 ->javascript(Model_Javascript::factory()
-                    ->close_qtip()
-                    ->versa('mypos'))
+                    ->versa('maker'))
             , 'mp_gunshop');
     }
 }	

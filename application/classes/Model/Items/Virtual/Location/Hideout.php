@@ -44,6 +44,14 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
                 ->versa('maker'))
             , 'hideout_maker');
 
+        if (!$location_driving)
+            $tmp->add_action('Verteidigung ...', Model_Action::factory()
+                ->buttonskin('hideout')
+                ->description('Zombies oder Zeugen Jehovas stehen an deiner Tür? Nicht mehr lange...')
+                ->javascript(Model_Javascript::factory()
+                    ->versa('fighter'))
+                , 'hideout_defense');
+
         if ($location->has_upgrade("sofa1"))
             $tmp->add_action('In der Sitzecke entspannen', Model_Action::factory()
                     ->buttonskin('hideout')
@@ -108,15 +116,6 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
                     })
             )
         , 'hideout_sleep');
-
-        if ($location->any_def() && !$location_driving)
-            $tmp->add_action('Verteidigung ...', Model_Action::factory()
-                ->buttonskin('hideout')
-                ->description('Zombies oder Zeugen Jehovas stehen an deiner Tür? Nicht mehr lange...')
-                ->javascript(Model_Javascript::factory()
-                    ->close_qtip()
-                    ->versa('defense'))
-            , 'hideout_defense');
 
         return $tmp;
     }

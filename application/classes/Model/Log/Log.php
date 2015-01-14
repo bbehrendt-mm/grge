@@ -29,8 +29,10 @@ class Model_Log_Log extends Model {
 	/**
 	 * Adds a new message to buffer
 	 * @param Interface_Message|String $new_message
+	 * @param array $variables
+	 * @param array $translateables
 	 */
-	public function add($new_message, $variables = Array(), $translateables = Array()) {
+	public function add($new_message, $variables = [], $translateables = []) {
 		if (is_string($new_message)) {
             $this->add(new Model_Log_Types_Text(null,null,$new_message,$variables,$translateables));
         } else {

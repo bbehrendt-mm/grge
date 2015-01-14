@@ -20,8 +20,13 @@ class Model_Blueprint {
     private $decay_speed = 0;
     private $steps = 1;
     private $condition;
+    private $show_condition;
     private $message;
     private $defense = 0;
+
+    /** @var bool|array|callable|int */
+    private $zombies = false;
+    private $zombies_optional = false;
 
     /**
      * Creates a new blueprint instance
@@ -52,6 +57,16 @@ class Model_Blueprint {
      */
     public function condition($c) {
         $this->condition = $c;
+        return $this;
+    }
+
+    /**
+     * Sets a callable condition function to decide weather this blueprint should be visible. The function receives the active player as first parameter and must return either TRUE or FALSE.
+     * @param callable $c
+     * @return Model_Blueprint
+     */
+    public function show_condition($c) {
+        $this->show_condition = $c;
         return $this;
     }
 
@@ -240,6 +255,27 @@ class Model_Blueprint {
     }
 
     /**
+     * Getter / Setter for the amount of zombies that are killed by building this blueprint.
+     * @param bool $optional Set true if destroying zombies is not the primary function of this blueprint (meaning it can be constructed even if there are no zombies)
+     * @param int|array|callable $min Minimal number of kills OR an array containing both min and max numbers as first an second elements OR a function that receives the number of present zombies as well as the active player as an argument and must return a single number or an array containing min/max numbers
+     * @param int|null $max Maximum number of kills; only possible if the first parameter is an int
+     * @return Model_Blueprint
+     */
+    public function zombies($optional, $min,$max = null) {
+        if (is_array($min))
+            return $this->zombies($optional,$min[0],$min[1]);
+
+        $this->zombies_optional = $optional;
+
+        if (is_callable($min))
+            $this->zombies = $min;
+        else
+            $this->zombies = ($max !== null) ? [$min,max($min,$max)] : $min;
+
+        return $this;
+    }
+
+    /**
      * Modifies the decay values of the location; only has an effect if the location is a hideout, otherwise these variables will be discarded
      * @param number $decay_dif Decay difference (positive values INCREASE decay)
      * @param int $speed_dif Decay speed difference (positive values INCREASE decay speed)
@@ -286,10 +322,18 @@ class Model_Blueprint {
      * @return bool|string[] Returns if execution failed, or an array containing the newly activated blueprint ids. Note that this function may return an empty array on success!
      */
     public function execute($player, $preconditions) {
-        if ($this->condition) {
-            $c = $this->condition;
+        if ($this->show_condition) {
+            $c = $this->show_condition;
             if ($c($player) !== true)
                 return false;
+        }
+
+        if ($this->condition) {
+            $c = $this->condition;
+            if ($tmp = $c($player) !== true) {
+                $player->log()->add($tmp);
+                return false;
+            }
         }
 
         if ($player->stats_get(Model_Player::MP_STAT_ENERGY) < $this->energy) {
@@ -299,6 +343,11 @@ class Model_Blueprint {
 
         if (!$this->can($preconditions)) {
             $player->log()->add('Nicht alle Vorraussetungen für diese Aktion sind erfüllt.');
+            return false;
+        }
+
+        if ($this->zombies && !$player->location()->zombie_pop() && !$this->zombies_optional) {
+            $player->log()->add('Es ist verständlich dass du gerne irgend etwas töten möchtest... nur sind leider gerade keine Zombies in der Nähe.');
             return false;
         }
 
@@ -321,7 +370,23 @@ class Model_Blueprint {
         if ($this->effect)
             $this->effect->execute($player, null);
 
-        $player->log()->add($this->message);
+        if ($this->zombies) {
+            $z = $this->zombies;
+            if (is_callable($z))
+                $z = $z($player->location()->zombie_pop(), $player);
+
+            if (is_numeric($z))
+                $z = [$z,$z];
+
+            $z = min(mt_rand($z[0],$z[1]), $player->location()->zombie_pop());
+
+            if (!$z) $player->log()->add('Mist... du hast nicht mal einen einzigen Zombie umgebracht.');
+            else {
+                $player->log()->add('Du hast :num Zombies vernichtet!', array(':num' => $z));
+                $player->achievements()->achieve(Model_Achievement::MA_KILLED_ZOMBIES, $z);
+                $player->location()->zombie_factory()->destroy_zombie_population($z);
+            }
+        } else $player->log()->add($this->message);
 
         if ($this->steps <= 0)
             return [];
@@ -347,10 +412,31 @@ class Model_Blueprint {
         return $tmp;
     }
 
-    public function compile($preconditions) {
+    /**
+     * @param string[] $preconditions
+     * @param Model_Player $player
+     * @return array
+     */
+    public function compile($preconditions, $player) {
         $current_steps = $this->completion($preconditions);
         $still_open = $this->can_prod($preconditions);
         $requirements_fulfilled = $this->can_req($preconditions);
+
+        if ($this->zombies) {
+            $z = $this->zombies;
+            if (is_callable($z))
+                $z = $z($player->location()->zombie_pop(), $player);
+
+            if (is_numeric($z))
+                $z = [$z,$z];
+        } else $z = false;
+
+        $hidden = false;
+        if ($this->show_condition) {
+            $c = $this->show_condition;
+            if ($c($player) !== true)
+                $hidden = true;
+        }
 
         if ($this->name)
             $name = $this->name;
@@ -376,7 +462,9 @@ class Model_Blueprint {
             'build_possible' => $requirements_fulfilled,
             'steps_max' => $this->steps,
             'steps_current' => ($current_steps === true) ? $this->steps - 1 : $current_steps,
-            'occupies' => $this->provide()
+            'occupies' => $this->provide(),
+            'hidden' => $hidden,
+            'zombies' => $z
         ];
     }
 

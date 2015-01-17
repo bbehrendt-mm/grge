@@ -3,6 +3,10 @@
  * @var array $version_data Version Data
  */
 ?>
+
+/**
+ * @var {Core} core
+ */
 core = {
     parts: {},
     snippets: {},
@@ -10,6 +14,8 @@ core = {
     version: '<?="{$version_data['major']}.{$version_data['minor']}.{$version_data['service']}-{$version_data['stage']}-{$version_data['maintenance']}-{$version_data['build']}"?>',
 
     command: function(url, args, background, callback, no_clean) {
+        var c;
+
         if (!url)
             url = 'japi/game/data';
         else url = 'japi/' + url;

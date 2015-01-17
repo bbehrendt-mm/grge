@@ -2,6 +2,7 @@
 /**
  * @var string $base Base lang
  * @var string[] $langs Available Languages
+ * @var bool $adv_priv Additional privileges
  */
 ?>
 
@@ -62,7 +63,10 @@
 </div>
 
 <div class="row disabled" id="toolbar">
-    <div class="cell rw-6 padded" id="pos_display"></div>
+    <div class="cell rw-5 padded" id="pos_display"></div>
+    <div class="cell rw-1 padded">
+        <div class="btn" id="toolbar_del"><i class="fa fa-trash-o"></i></div>
+    </div>
     <div class="cell rw-1 padded">
         <div class="btn" id="toolbar_prev"><i class="fa fa-angle-left"></i></div>
     </div>
@@ -172,6 +176,41 @@
         loader('all', $('#searchbox').val());
     });
 
+    $('#toolbar_del').click(function() {
+        if (!confirm(<?=__j('Der Eintrag wird aus allen Übersetzungsdateien entfernt. Sicher?')?>)) return;
+
+        $('#toolbar, #actionbar').addClass('disabled');
+
+        game.network.query('admin/japi/translate/del', {
+            from: translation_source[translation_index]
+        }, function(data) {
+
+            if (data.error)
+                alert(data.error.code + ' [' + data.error.name + ']: ' + data.error.message);
+            else if (data.success > 0) {
+                game.render.html.notify('success', <?=__j('Der Eintrag wurde entfernt.');?>, <?=__j('Vielen Dank!');?>);
+
+                var tmp_1 = {}, tmp_2 = {}, tmp_3 = {};
+                for (var i = 0; i < translation_length; i++)
+                    if (i != translation_index) {
+                        tmp_1[(i > translation_index) ? i-1 : i] = translation_data[i];
+                        tmp_2[(i > translation_index) ? i-1 : i] = translation_source[i];
+                        tmp_3[(i > translation_index) ? i-1 : i] = translation_mask[i];
+                    }
+
+                translation_data = tmp_1;
+                translation_source = tmp_2;
+                translation_mask = tmp_3;
+                translation_length--;
+                if (translation_index >= translation_length) translation_index = 0;
+                jump(0);
+            } else game.render.html.notify('error', <?=__j('Ein Fehler ist aufgetreten...');?>, <?=__j('Oops');?>);
+        }, function() {
+            $('#toolbar, #actionbar').removeClass('disabled');
+        });
+    })<?php if (!$adv_priv) { ?>.addClass('disabled')<?php } ?>;
+
+
     $('#toolbar_prev').click(function() {
         jump(-1);
     });
@@ -189,10 +228,10 @@
             to: $('#lang-to').val(),
             language: $('#lang').val()
         }, function(data) {
-            translation_data[translation_index] = $('#lang-to').val();
             if (data.error)
                 alert(data.error.code + ' [' + data.error.name + ']: ' + data.error.message);
             else if (data.success > 0) {
+                translation_data[translation_index] = $('#lang-to').val();
                 game.render.html.notify('success', <?=__j('Deine Übersetzung wurde erfolgreich gespeichert.');?>, <?=__j('Vielen Dank!');?>);
                 jump(1);
             } else game.render.html.notify('error', <?=__j('Ein Fehler ist aufgetreten...');?>, <?=__j('Oops');?>);

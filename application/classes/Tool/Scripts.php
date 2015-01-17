@@ -353,6 +353,7 @@ class Tool_Scripts
      * @return DateTime
      */
     public static function get_daytime() {
+        /** @global Model_Game $game */
         global $game;
         $ticks = $game->duration() + $game->getDaytimeOffset();
         $days = floor($ticks/288);

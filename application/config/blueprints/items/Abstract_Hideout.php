@@ -182,8 +182,11 @@ return Model_Blueprints::factory()
     // -- STACK -> All blueprints below NO LONGER need the basic generator
     ->pop_stack()
 
-    // ++ STACK -> All blueprints below need the basic workbench
-    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires('manu1');})
+    // ++ STACK -> All blueprints below need the basic workbench and benefit from suspender upgrade
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires('manu1')->add_modifier(Model_Blueprint::BP_MOD_ENERGY, function($pl,$pre,$e) {
+        /** @var Model_Player $pl */
+        return ($pl->location()->has_upgrade('manuspd')) ? max(min(1,$e),floor($e*0.5)) : $e;
+    });})
 
     ->add_blueprints(
         Model_Blueprint::factory()

@@ -6,6 +6,11 @@ return Model_Blueprints::factory()
     ->add_blueprints(Model_Blueprint::factory()->id('outside_space')->name('Großflächiger Aussenbereich'), true)
     ->add_blueprints(Model_Blueprint::factory()->id('impaler')->name('Vorbereitete Fallgruben'), true)
 
+    // ++ STACK -> All blueprints below benefit from daytime bonus
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->add_modifier(Model_Blueprint::BP_MOD_ENERGY, function($pl,$pre,$e) {
+        return (Tool_Scripts::get_timeofday($pl) == 'morning') ? max(min(1,$e),floor($e*0.75)) : $e;
+    });})
+
     // Hideout repair stuff
     ->add_blueprints(
         Model_Blueprint::factory()

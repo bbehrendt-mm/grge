@@ -6,7 +6,7 @@ class Controller_Admin_Users extends Controller_Admin_Admin {
 
     public function action_main() {
         $this->add_widget(View::factory('admin/users')
-            ->set('permissions',['ROOT','TRANSLATE','USERLIST','WHITELIST'])
+            ->set('permissions',['ROOT','TRANSLATE','TRANSLATE_MOD','USERLIST','WHITELIST'])
             ->render());
 
         $this->render();

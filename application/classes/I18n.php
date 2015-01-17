@@ -116,6 +116,20 @@ class I18n extends Kohana_I18n {
     }
 
     /**
+     * Removes a string from all translations as well as the cache and missing list. Legacy translations can not be removed!
+     * @param string $string String to remove
+     */
+    public static function remove($string) {
+        foreach (static::$lang_list as $lang) {
+            static::remove_missing($string, $lang);
+
+            $table = I18n::load($lang);
+            unset(I18n::$cache[$string], $table[$string]);
+            I18n::toDisk($lang, $table);
+        }
+    }
+
+    /**
      * Fetches a translation in a given language for a given string. If there is no translation, the same string will be returned. If the given string is not part of the translation database, it will be added to the missing strings list.
      * @param string $string String to translate
      * @param string|null $lang Language (null, to use default language)

@@ -8,9 +8,23 @@ class Controller_Admin_Translate extends Controller_Admin_Admin {
         $this->add_widget(View::factory('admin/translate')
             ->set('base', 'de')
             ->set('langs', ['en','es'])
+            ->set('adv_priv', static::priv_allow_all('TRANSLATE_MOD'))
             ->render());
 
         $this->render();
+    }
+
+    public function japi_del() {
+        if (!static::priv_allow_all('TRANSLATE_MOD'))
+            return $this->error(\grge\E_SERVER_ACCESS_DENIED);
+
+        $from = $this->request->post('from');
+
+        I18n::remove($from);
+        I18n::write();
+
+        $this->render(['success' => 1]);
+        return true;
     }
 
     public function japi_set() {

@@ -2,6 +2,8 @@
 
 class Model_Blueprint {
 
+    const BP_MOD_ENERGY = 1;
+
     /**
      * @var Model_Effect $effect
      */
@@ -23,6 +25,8 @@ class Model_Blueprint {
     private $show_condition;
     private $message;
     private $defense = 0;
+    private $categories = [];
+    private $modifiers = [];
 
     /** @var bool|array|callable|int */
     private $zombies = false;
@@ -37,6 +41,36 @@ class Model_Blueprint {
     }
 
     /**
+     * Adds an object modifier to this blueprint
+     * @param int $mod Mod type;
+     * @param callable $f Modifier function; receives the player and precondition data as parameters; it may also receive additional parameters depending on the mod type
+     * @return Model_Blueprint
+     */
+    public function add_modifier($mod, $f) {
+        switch ($mod) {
+            case static::BP_MOD_ENERGY:
+                $this->modifiers[] = function($player, $pre) use ($f) {
+                    /** @var Model_Blueprint $bp */
+                    $this->energy = $f($player, $pre, $this->energy);
+                };
+        };
+        return $this;
+    }
+
+    /**
+     * Applies all modifiers, and clears the modifier cache
+     * @param Model_Player $player
+     * @param string[] $pre
+     * @return Model_Blueprint
+     */
+    public function modify($player, $pre) {
+        foreach ($this->modifiers as $mod)
+            $mod($player, $pre);
+        $this->modifiers = [];
+        return $this;
+    }
+
+    /**
      * Setter / Getter for the blueprint name
      * @param null|string $name New name
      * @return Model_Blueprint|string
@@ -48,6 +82,21 @@ class Model_Blueprint {
             $this->name = $name;
             return $this;
         }
+    }
+
+    /**
+     * Setter for the blueprint categories
+     * @param array|string $name New category name
+     * @return Model_Blueprint
+     */
+    public function category($name) {
+        if (is_string($name)) {
+            if (!in_array($name, $this->categories))
+                $this->categories[] = $name;
+        } elseif (is_array($name))
+            foreach ($name as $elem)
+                $this->category($elem);
+        return $this;
     }
 
     /**
@@ -449,6 +498,7 @@ class Model_Blueprint {
         return [
             'id' => $this->id,
             'name' => $name,
+            'categories' => $this->categories,
             'description' => $this->description,
             'requires' => $this->requires,
             'energy' => $this->energy,

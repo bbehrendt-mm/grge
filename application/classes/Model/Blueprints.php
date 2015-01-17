@@ -161,7 +161,7 @@ class Model_Blueprints {
             ]);
         foreach ($this->blueprints as $b) {
             /** @var Model_Blueprint $b */
-            $tmp = $b->compile($preconditions, $player);
+            $tmp = $b->modify($player, $preconditions)->compile($preconditions, $player);
             if (!$tmp['hidden'])
                 $ret[$b->id()] = $tmp;
         }
@@ -175,7 +175,7 @@ class Model_Blueprints {
         else {
             /** @var Model_Blueprint $b */
             $b = $this->blueprints[$id];
-            return $b->execute($player, $preconditions);
+            return $b->modify($player, $preconditions)->execute($player, $preconditions);
         }
     }
 }

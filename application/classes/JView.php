@@ -2,6 +2,8 @@
 
 class JView extends Kohana_View {
 
+    private $use_compression = true;
+
     /**
      * Returns a new View object. If you do not define the "file" parameter,
      * you must call [View::set_filename].
@@ -16,10 +18,15 @@ class JView extends Kohana_View {
         return new JView($file, $data);
     }
 
+    public function disable_compression() {
+        $this->use_compression = false;
+        return $this;
+    }
+
     public function render($file = null) {
         $buffer = parent::render($file);
 
-        if (Kohana::$config->load('server.io.performance.output_compression'))
+        if ($this->use_compression && Kohana::$config->load('server.io.performance.output_compression'))
             $buffer = Minifier::minify($buffer);
 
         return $buffer;

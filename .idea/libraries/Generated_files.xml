@@ -3,9 +3,8 @@
     <properties>
       <sourceFilesUrls>
         <item url="file://$PROJECT_DIR$/application/assets/js/framework.min.js" />
+        <item url="file://$PROJECT_DIR$/application/assets/dev/js/core.js" />
         <item url="file://$PROJECT_DIR$/application/assets/js/jquery.ext.min.js" />
-        <item url="file://$PROJECT_DIR$/application/assets/dev/js/core.js" />
-        <item url="file://$PROJECT_DIR$/application/assets/dev/js/core.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
@@ -14,7 +13,6 @@
       <root url="file://$PROJECT_DIR$/application/assets/js/zombvival.min.js" />
       <root url="file://$PROJECT_DIR$/application/assets/js/zombvival.min.js" />
       <root url="file://$PROJECT_DIR$/application/assets/js/framework.min.js" />
-      <root url="file://$PROJECT_DIR$/application/assets/dev/js/core.js" />
       <root url="file://$PROJECT_DIR$/application/assets/js/jquery.ext.min.js" />
       <root url="file://$PROJECT_DIR$/application/assets/dev/js/core.js" />
     </CLASSES>

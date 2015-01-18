@@ -48,6 +48,10 @@ class Model_Map {
         return $this->mapname;
     }
 
+    public function get_network() {
+        return $this->sub_routing->get_network();
+    }
+
     /**
      * Sets the movement cost modifier or returns the current modifier
      * @param null|number $set

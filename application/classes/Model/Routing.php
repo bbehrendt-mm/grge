@@ -154,6 +154,10 @@ class Model_Routing {
         return $map;
     }
 
+    public function get_network() {
+        return $this->links;
+    }
+
     /**
      * Returns all nodes
      * @return array

@@ -96,6 +96,12 @@
             )
         });
 
+        actions.append(
+            $('<div />').addClass('cell rw-12 padded justify').append(core.snippets.button(<?=__j('Karte');?>, function() {
+                core.popup.map();
+            }))
+        );
+
         zombieradar(data.radar, zradar);
 
     };

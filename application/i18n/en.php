@@ -1746,4 +1746,110 @@ return array (
 	'This entry will be removed from all translation files. Proceed?',
   'Der Eintrag wurde entfernt.' =>
 	'The entry was removed.',
+  'Weltkarte' =>
+	'World Map',
+  'Rathausplatz' =>
+	'Townhall Square',
+  'Lagerhaus' =>
+	'Warehouse',
+  'Dunkle Kaschemme' =>
+	'Dodgy Saloon',
+  'Messeplatz' =>
+	'Fair Square',
+  '"Bloodway" Restaurant' =>
+	'"Bloodway" Franchise',
+  'Alter Marktplatz' =>
+	'Old Market Square',
+  'Verfallene Herberge' =>
+	'Derelict Hostel',
+  'Kleiner Discounter' =>
+	'Small Discounter',
+  'Stadtpark' =>
+	'City Park',
+  'Laden' =>
+	'Shop',
+  'Baustelle' =>
+	'Construction Site',
+  'Öffentliche Toiletten' =>
+	'Public Restrooms',
+  'Schäbige Bar' =>
+	'Shabby Bar',
+  'Unbewohntes Einfamilienhaus' =>
+	'Uninhabited House',
+  'Apotheke "Hypochonders bester Freund"' =>
+	'Pharmacy "Valetudinarian Vault"',
+  'Gate\'s Motel' =>
+	'Gate\'s Motel',
+  'Museumsplatz' =>
+	'Museum Square',
+  'Baumarkt "Meister Hämmerlein"' =>
+	'Hardware Store "Bob the Killer"',
+  'Geschäftszentrum "Call & Die"' =>
+	'Business Center "Call & Die"',
+  'Verlassener Bunker' =>
+	'Empty Bunker',
+  'Baumarkt "D-I-Y"' =>
+	'Hardware Store "Kill-It-Yourself"',
+  'Radio Sandstorm Sendestation' =>
+	'Sandstorm Radio Broadcasting Station',
+  'Campingplatz' =>
+	'Campsite ',
+  'Gewächshaus "Plants & Zombies"' =>
+	'Greenhouse "Plants & Zombies"',
+  'Geschäftszentrum "Zur Indianischen Begräbnisstätte"' =>
+	'Business Center "Indian Burial Grounds"',
+  'Gigantisches Einkaufszentrum' =>
+	'Gigantic Shopping Mall',
+  'Mülldeponie' =>
+	'Landfill',
+  'Kernkraftwerksruine' =>
+	'Ruins of a Nuclear Reactor',
+  'Verfallene Kneipe' =>
+	'Run-down Pub',
+  'Mausoleum' =>
+	'Mausoleum',
+  'Verbranntes Haus' =>
+	'Burned House',
+  'Außenbereich des Krankenhauses' =>
+	'Outer Hospital Area',
+  '"Ostsee" Restaurant' =>
+	'"Zombys" Franchise',
+  'Verlassene Irrenanstalt' =>
+	'Abandoned Insane Asylum',
+  'Karte' =>
+	'Map',
+  'Seltsames Gewächs gießen' =>
+	'Water the strange plant',
+  'Achtung: Diese Aktion wird sämtliches Wasser auf dem Boden verbrauchen!' =>
+	'Warning: This action will use up all the water on the floor!',
+  'Die Scheiben um dieses Gewächshauses sind allesamt zersprungen, die meisten Pflanzen sind infolge dessen vertrocknet. Im Zentrum des Gewächshauses steht, von einem kleinen Weg umschlossen, ein riesiges baumartiges Gewächs. Obwohl es wie der Rest der Pflanzen hier ziemlich vertrocknet ist, sieht es irgendwie noch lebendig aus... Vielleicht kannst du es zum Leben erwecken, wenn du es gießt?' =>
+	'Most of the glass panels shielding the inside of this greenhouse are broken, therefore nearly all plants here have withered and died. In the central plaza you see a giant, tree-like plant that seems to be still alive despite the hostile environment. Maybe something will happen if you decide to water it?',
+  'Du machst dich auf den Weg zu/zur/zum :location.' =>
+	'You\'re on your way to :location.',
+  'Diese öffentlichen Toiletten sind im Prinzip das Hilton jedes Penners. Für andere Menschen sind diese Toiletten eher wie Paris Hilton: Ziemlich schmutzig, übler Geruch und die halbe Welt war schonmal drin.' =>
+	'These public restrooms are like a a Hilton for bums. For everyone else, they are more like Paris Hilton: Pretty filthy, smells bad and half of the world\'s population was in there at least once.',
+  'Wer sich kein Hotel leisten kann, auf Körperkontakt mit anderen Campern steht und keinerlei Ansprüche an Komfort stellt, der ist genau richtig auf dem Campingplatz. Einziges Problem: All diese Dinge treffen besonders gut auf Zombies zu...' =>
+	'If you can\'t affort a real hotel, enjoy bodily contact with other campers and have really low demands converning comfort, this campsite is for you. Problem is: This description also fits zombies perfectly...',
+  'Du kannst diese Reise nicht antreten.' =>
+	'You can\'t travel there right now',
+  'Einen Container öffnen' =>
+	'Open container',
+  'Hier stehen einige Container herum. Da du nicht hereinschauen kannst, musst du sie wohl aufmachen, um herauszufinden, was drin ist.' =>
+	'There are some containers standing around here. You can\'t look inside, but you sure can open them.',
+  'Was hier mal gebaut werden sollte ist nicht erkennbar - man sieht nur verrostete Eisenträger und Baumaterial, das am Boden liegt. Einige Zombies haben die Baustelle offenbar zu ihrem Wohnsitz erkoren. Glücklicherweise haben sie hier praktisch keine Möglichkeit, einen Überraschungsangriff zu starten.' =>
+	'It\'s impossible to see what was being built here - this construction site mainly consists of a couple of steel beams in the ground and building materials laying around. Some zombies can be seen roaming this place in a distance. Luckily, since the whole place is pretty open, they won\'t be able to surprise attack you from the shadows.',
+  'Andere Orte' =>
+	'Other Places',
+  'Bürohäuschen' =>
+	'Small Office Building',
+  'Dies ist eines der wenigen befestigten Gebäude auf dem Camping-Platz. Früher beinhaltete es die Rezeption sowie diverse Büros für Angestellte des Camping-Platzes. Jetzt beinhaltet es hauptsächlich Chaos.' =>
+	'This is one of the very few stone buildings at this campsite. It used to house the reception as well as some small offices. Now, it mostly houses chaos and bodies.',
+  'Kettensäge Campbell B81 E-D' =>
+	'Chainsaw Campbell B81 E-D',
+  'Diese Kettensäge wurde von der Bundesprüfstelle für jugendgefährdende Schriften indiziert und kurz darauf auf Anordnung des Jugendamtes in allen Baumärkten beschlagnamt. Tja, die hochintelligenten, aufgeschlossenen und weitsichtigen Menschen, die dies beschlossen haben, hatten nun die Gelegenheit zu intensivem Körperkontakt mit Zombies. Wie wärs, wenn du dich über diese wirklich sehr sinnvolle Beschlagnamung hinwegsetzt und ein paar Schnittmengen einer Gruppe Zombies bildest?' =>
+	'Groovy.',
+  'Tank befüllen' =>
+	'Fill tank',
+  'Grillplatz' =>
+	'Barbecue Area',
 );

@@ -322,4 +322,8 @@ return array (
 	'',
   'Dieser Gegenstand hilft dir dabei, vor Zombies zu fliehen die dich Belagern. Er wird automatisch bei Bedarf eingesetzt.' =>
 	'',
+  'Karte' =>
+	'',
+  'Andere Orte' =>
+	'',
 );

@@ -266,7 +266,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
      * @return string
      */
     public function icon() {
-        return "/application/assets/icons/places/" . static::$icon . ".gif";
+        return static::$icon . ".gif";
     }
 	
 	public function find_item($force = false) {

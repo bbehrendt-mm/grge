@@ -1747,4 +1747,110 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
 	'Der Eintrag wird aus allen Übersetzungsdateien entfernt. Sicher?',
   'Der Eintrag wurde entfernt.' =>
 	'Der Eintrag wurde entfernt.',
+  'Weltkarte' =>
+	'Weltkarte',
+  'Rathausplatz' =>
+	'Rathausplatz',
+  'Lagerhaus' =>
+	'Lagerhaus',
+  'Dunkle Kaschemme' =>
+	'Dunkle Kaschemme',
+  'Messeplatz' =>
+	'Messeplatz',
+  '"Bloodway" Restaurant' =>
+	'"Bloodway" Restaurant',
+  'Alter Marktplatz' =>
+	'Alter Marktplatz',
+  'Verfallene Herberge' =>
+	'Verfallene Herberge',
+  'Kleiner Discounter' =>
+	'Kleiner Discounter',
+  'Stadtpark' =>
+	'Stadtpark',
+  'Laden' =>
+	'Laden',
+  'Baustelle' =>
+	'Baustelle',
+  'Öffentliche Toiletten' =>
+	'Öffentliche Toiletten',
+  'Schäbige Bar' =>
+	'Schäbige Bar',
+  'Unbewohntes Einfamilienhaus' =>
+	'Unbewohntes Einfamilienhaus',
+  'Apotheke "Hypochonders bester Freund"' =>
+	'Apotheke "Hypochonders bester Freund"',
+  'Gate\'s Motel' =>
+	'Gate\'s Motel',
+  'Museumsplatz' =>
+	'Museumsplatz',
+  'Baumarkt "Meister Hämmerlein"' =>
+	'Baumarkt "Meister Hämmerlein"',
+  'Geschäftszentrum "Call & Die"' =>
+	'Geschäftszentrum "Call & Die"',
+  'Verlassener Bunker' =>
+	'Verlassener Bunker',
+  'Baumarkt "D-I-Y"' =>
+	'Baumarkt "D-I-Y"',
+  'Radio Sandstorm Sendestation' =>
+	'Radio Sandstorm Sendestation',
+  'Campingplatz' =>
+	'Campingplatz',
+  'Gewächshaus "Plants & Zombies"' =>
+	'Gewächshaus "Plants & Zombies"',
+  'Geschäftszentrum "Zur Indianischen Begräbnisstätte"' =>
+	'Geschäftszentrum "Zur Indianischen Begräbnisstätte"',
+  'Gigantisches Einkaufszentrum' =>
+	'Gigantisches Einkaufszentrum',
+  'Mülldeponie' =>
+	'Mülldeponie',
+  'Kernkraftwerksruine' =>
+	'Kernkraftwerksruine',
+  'Verfallene Kneipe' =>
+	'Verfallene Kneipe',
+  'Mausoleum' =>
+	'Mausoleum',
+  'Verbranntes Haus' =>
+	'Verbranntes Haus',
+  'Außenbereich des Krankenhauses' =>
+	'Außenbereich des Krankenhauses',
+  '"Ostsee" Restaurant' =>
+	'"Ostsee" Restaurant',
+  'Verlassene Irrenanstalt' =>
+	'Verlassene Irrenanstalt',
+  'Karte' =>
+	'Karte',
+  'Seltsames Gewächs gießen' =>
+	'Seltsames Gewächs gießen',
+  'Achtung: Diese Aktion wird sämtliches Wasser auf dem Boden verbrauchen!' =>
+	'Achtung: Diese Aktion wird sämtliches Wasser auf dem Boden verbrauchen!',
+  'Die Scheiben um dieses Gewächshauses sind allesamt zersprungen, die meisten Pflanzen sind infolge dessen vertrocknet. Im Zentrum des Gewächshauses steht, von einem kleinen Weg umschlossen, ein riesiges baumartiges Gewächs. Obwohl es wie der Rest der Pflanzen hier ziemlich vertrocknet ist, sieht es irgendwie noch lebendig aus... Vielleicht kannst du es zum Leben erwecken, wenn du es gießt?' =>
+	'Die Scheiben um dieses Gewächshauses sind allesamt zersprungen, die meisten Pflanzen sind infolge dessen vertrocknet. Im Zentrum des Gewächshauses steht, von einem kleinen Weg umschlossen, ein riesiges baumartiges Gewächs. Obwohl es wie der Rest der Pflanzen hier ziemlich vertrocknet ist, sieht es irgendwie noch lebendig aus... Vielleicht kannst du es zum Leben erwecken, wenn du es gießt?',
+  'Du machst dich auf den Weg zu/zur/zum :location.' =>
+	'Du machst dich auf den Weg zu/zur/zum :location.',
+  'Diese öffentlichen Toiletten sind im Prinzip das Hilton jedes Penners. Für andere Menschen sind diese Toiletten eher wie Paris Hilton: Ziemlich schmutzig, übler Geruch und die halbe Welt war schonmal drin.' =>
+	'Diese öffentlichen Toiletten sind im Prinzip das Hilton jedes Penners. Für andere Menschen sind diese Toiletten eher wie Paris Hilton: Ziemlich schmutzig, übler Geruch und die halbe Welt war schonmal drin.',
+  'Wer sich kein Hotel leisten kann, auf Körperkontakt mit anderen Campern steht und keinerlei Ansprüche an Komfort stellt, der ist genau richtig auf dem Campingplatz. Einziges Problem: All diese Dinge treffen besonders gut auf Zombies zu...' =>
+	'Wer sich kein Hotel leisten kann, auf Körperkontakt mit anderen Campern steht und keinerlei Ansprüche an Komfort stellt, der ist genau richtig auf dem Campingplatz. Einziges Problem: All diese Dinge treffen besonders gut auf Zombies zu...',
+  'Du kannst diese Reise nicht antreten.' =>
+	'Du kannst diese Reise nicht antreten.',
+  'Einen Container öffnen' =>
+	'Einen Container öffnen',
+  'Hier stehen einige Container herum. Da du nicht hereinschauen kannst, musst du sie wohl aufmachen, um herauszufinden, was drin ist.' =>
+	'Hier stehen einige Container herum. Da du nicht hereinschauen kannst, musst du sie wohl aufmachen, um herauszufinden, was drin ist.',
+  'Was hier mal gebaut werden sollte ist nicht erkennbar - man sieht nur verrostete Eisenträger und Baumaterial, das am Boden liegt. Einige Zombies haben die Baustelle offenbar zu ihrem Wohnsitz erkoren. Glücklicherweise haben sie hier praktisch keine Möglichkeit, einen Überraschungsangriff zu starten.' =>
+	'Was hier mal gebaut werden sollte ist nicht erkennbar - man sieht nur verrostete Eisenträger und Baumaterial, das am Boden liegt. Einige Zombies haben die Baustelle offenbar zu ihrem Wohnsitz erkoren. Glücklicherweise haben sie hier praktisch keine Möglichkeit, einen Überraschungsangriff zu starten.',
+  'Andere Orte' =>
+	'Andere Orte',
+  'Bürohäuschen' =>
+	'Bürohäuschen',
+  'Dies ist eines der wenigen befestigten Gebäude auf dem Camping-Platz. Früher beinhaltete es die Rezeption sowie diverse Büros für Angestellte des Camping-Platzes. Jetzt beinhaltet es hauptsächlich Chaos.' =>
+	'Dies ist eines der wenigen befestigten Gebäude auf dem Camping-Platz. Früher beinhaltete es die Rezeption sowie diverse Büros für Angestellte des Camping-Platzes. Jetzt beinhaltet es hauptsächlich Chaos.',
+  'Kettensäge Campbell B81 E-D' =>
+	'Kettensäge Campbell B81 E-D',
+  'Diese Kettensäge wurde von der Bundesprüfstelle für jugendgefährdende Schriften indiziert und kurz darauf auf Anordnung des Jugendamtes in allen Baumärkten beschlagnamt. Tja, die hochintelligenten, aufgeschlossenen und weitsichtigen Menschen, die dies beschlossen haben, hatten nun die Gelegenheit zu intensivem Körperkontakt mit Zombies. Wie wärs, wenn du dich über diese wirklich sehr sinnvolle Beschlagnamung hinwegsetzt und ein paar Schnittmengen einer Gruppe Zombies bildest?' =>
+	'Diese Kettensäge wurde von der Bundesprüfstelle für jugendgefährdende Schriften indiziert und kurz darauf auf Anordnung des Jugendamtes in allen Baumärkten beschlagnamt. Tja, die hochintelligenten, aufgeschlossenen und weitsichtigen Menschen, die dies beschlossen haben, hatten nun die Gelegenheit zu intensivem Körperkontakt mit Zombies. Wie wärs, wenn du dich über diese wirklich sehr sinnvolle Beschlagnamung hinwegsetzt und ein paar Schnittmengen einer Gruppe Zombies bildest?',
+  'Tank befüllen' =>
+	'Tank befüllen',
+  'Grillplatz' =>
+	'Grillplatz',
 );

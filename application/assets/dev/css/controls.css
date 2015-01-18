@@ -85,8 +85,12 @@ input[type=checkbox].form_input {
     margin-top: 3px;
 }
 
-.btn.small {
+.btn.small:not(.block) {
     display: inline-block;
+    height: 22px;
+}
+
+.btn.small.block {
     height: 22px;
 }
 

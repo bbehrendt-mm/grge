@@ -8,8 +8,9 @@ class Model_Items_Virtual_Location_Ffxmas extends Model_Items_Abstract_Virtual {
 
     protected function hid() {
         return parent::hid()->add_action('Basteln ...', Model_Action::factory()
-                ->javascript(Model_Javascript::factory()
-                    ->versa('maker'))
-            , 'mp_xmas');
+            ->buttonskin('location')
+            ->javascript(Model_Javascript::factory()
+                ->versa('maker'))
+        , 'mp_xmas');
     }
 }	

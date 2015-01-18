@@ -26,11 +26,14 @@ game.render.html.qtip = {
         }
     },
 
-    generic: function(pos, classes,interactable, events) {
+    generic: function(pos, classes,interactable, delay, events) {
         var m = game.render.html.qtip.posify(pos);
         return {
             style: {
                 classes: classes
+            },
+            show: {
+                delay: delay
             },
             hide: {
                 fixed: interactable,
@@ -58,6 +61,34 @@ game.render.html.qtip = {
     },
 
     ingame: function(pos, events) {
-        return game.render.html.qtip.generic(pos,'qtip-default qtip-shadow qtip-custom-ingame',true, events);
+        return game.render.html.qtip.generic(pos,'qtip-default qtip-shadow qtip-custom-ingame',true, 0, events);
+    },
+
+    map: function(target, events) {
+        return {
+            style: {
+                classes: 'qtip-default qtip-youtube qtip-shadow'
+            },
+            show: {
+                ready: true,
+                event: 'none',
+                delay: 0
+            },
+            position: {
+                my: 'top center',
+                at: 'bottom center',
+                viewport: $(window),
+                container: $('body'),
+                target: target,
+                adjust: {
+                    method: 'shift none'
+                }
+            },
+            events: $.extend(events, {
+                show: function(event) {
+                    event.preventDefault();
+                }
+            })
+        }
     }
 };

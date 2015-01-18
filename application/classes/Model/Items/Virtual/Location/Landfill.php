@@ -15,11 +15,14 @@ class Model_Items_Virtual_Location_Landfill extends Model_Items_Abstract_Virtual
         global $player;
         $tar = floor($player->location()->splinters()/10);
         return parent::hid()->add_action('Splitter zählen', Model_Action::factory()
+            ->buttonskin('location')
             ->effect(Model_Effect::factory()->custom(function($p) {
                     /** @var Model_Player $p */
                     $p->log()->add(new Model_Log_Types_Text(null,null,'Hier lagern momentan :num Eimer voller Splitter, aus denen du :num2 Splitterkugeln formen könntest.', array(':num' => $p->location()->splinters(), ':num2' => floor($p->location()->splinters()/10))));
                 }))
-            ,'count')->add_action('Schredder verwenden', Model_Action::factory()
+            ,'count')
+            ->add_action('Schredder verwenden', Model_Action::factory()
+                ->buttonskin('location')
                 ->description('Mit dieser Aktion kannst du alle Gegenstände, die im Moment auf dem Boden liegen, zerstören um Splitter herzustellen.')
                 ->requirement(Model_Player::MP_STAT_ENERGY, 5)
                 ->condition(function($p) {
@@ -48,7 +51,9 @@ class Model_Items_Virtual_Location_Landfill extends Model_Items_Abstract_Virtual
                         return true;
                     })
                 )
-            , 'dump')->add_action('Splitterkugeln herstellen', Model_Action::factory()
+            , 'dump')
+            ->add_action('Splitterkugeln herstellen', Model_Action::factory()
+                ->buttonskin('location')
                 ->description('Aus 10 Eimern mit Splittern kannst du eine Splitterkugel pressen, die du als Munition verwenden kannst.')
                 ->requirement(Model_Player::MP_STAT_ENERGY, 50)
                 ->condition(function($p) {

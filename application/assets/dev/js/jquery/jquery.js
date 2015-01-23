@@ -3,6 +3,11 @@
         return obj ? $.map(obj, function(k,v) {return values ? k : v;}) : [];
     };
 
+    $.fn.softText = function(str) {
+        if (!str) return this.text();
+        else if (this.text() != str) this.text(str);
+    };
+
     $.fn.customRadioCheck = function() {
 
         return this.each(function() {

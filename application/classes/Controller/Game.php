@@ -251,16 +251,31 @@ class Controller_Game extends Controller {
         $player->log()->clear();
     }
 
+    private function render_clock() {
+        /**
+         * @global $game Model_Game
+         * @global $player Model_Player
+         */
+        global $game, $player;
+
+        $this->add_data('clock', [
+            'show' => $game->is_alive() && !$game->paused() && $player && $player->alive() && !Tool_Events::is_april_fools(),
+            'next_tick' => $game->next_tick(),
+            'last_tick' => $game->now(),
+            'current' => time(),
+            'ingame' => Tool_Scripts::get_daytime()->getTimestamp(),
+        ]);
+    }
+
     /**
      * Renderer API
      * @throws Kohana_Exception
      */
     public function japi_data() {
-
-
         $this->render_location();
         $this->render_inventory();
         $this->render_status();
+        $this->render_clock();
         $this->render_notifications();
 
         $version_data = Kohana::$config->load('build.version');

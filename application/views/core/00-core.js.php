@@ -51,7 +51,7 @@ core = {
         if (data.inventory)
             core.parts.inventory(data.inventory, action_box);
 
-        if (data.status)
-            core.parts.status(data.status, $('#persistent'));
+        if (data.status && data.clock)
+            core.parts.status(data.status, data.clock, $('#persistent'));
     }
 };

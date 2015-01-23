@@ -66,9 +66,10 @@
 
     $(window).scroll(function() {
         var scroll = $('body').scrollTop();
-        if (scroll)
-            $('#persistent').addClass('float');
-        else $('#persistent').removeClass('float');
+        var p = $('#persistent');
+        if (scroll > (95 - p.height()))
+            p.addClass('float');
+        else p.removeClass('float');
     });
 
     $.getScript('web/core/?l=' + game.lang(), function() {

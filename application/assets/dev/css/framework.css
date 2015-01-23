@@ -218,24 +218,50 @@ footer {
     background-color: #670202;
     content: " ";
     box-shadow: 0 0 2px black;
+    z-index: 90;
 }
 
 #persistent {
     position: fixed;
-    width: 860px;
-    height: 101px;
-    padding: 0;
-    z-index: 100;
-    top: 29px;
-    left: calc(50% - 430px);
-    border: 2px solid rgba(103, 2, 2, 0);
+    width: 920px;
+    padding: 0 10px;
+    z-index: 95;
+    top: 0;
+    left: calc(50% - 460px);
     transition: background 300ms ease, box-shadow 350ms ease, border 120ms ease;
+    margin-top: 35px;
+}
+
+#persistent::before, #persistent::after {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 100%;
+    border-width: 3px 5px;
+    border-style: solid;
+    z-index: 80;
+    opacity: 0;
+    transition: opacity 300ms ease;
+}
+
+#persistent.float::before, #persistent.float::after {
+    opacity: 1;
+}
+
+#persistent::before {
+    left: 0;
+    border-color: #7e1800 #7e1800 transparent transparent;
+}
+
+#persistent::after {
+    right: 0;
+    border-color: #7e1800 transparent  transparent #7e1800;
 }
 
 #persistent.float {
     background: #A42A00;
-    box-shadow: 0 0 6px black;
-    border: 2px solid #670202;
+    box-shadow: 0 0 10px black;
 }
 
 #persistent:empty {

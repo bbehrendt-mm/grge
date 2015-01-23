@@ -1853,4 +1853,22 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
 	'Tank befüllen',
   'Grillplatz' =>
 	'Grillplatz',
+  'Mo' =>
+	'Mo',
+  'So' =>
+	'So',
+  'Di' =>
+	'Di',
+  'Mi' =>
+	'Mi',
+  'Do' =>
+	'Do',
+  'Fr' =>
+	'Fr',
+  'Sa' =>
+	'Sa',
+  'Du hast soeben die Antwort auf eine philosophische Frage gefunden, die dich schon seit Jahren quält. Das hat dir etwas zusätzliche Energie verschafft.' =>
+	'Du hast soeben die Antwort auf eine philosophische Frage gefunden, die dich schon seit Jahren quält. Das hat dir etwas zusätzliche Energie verschafft.',
+  'We' =>
+	'We',
 );

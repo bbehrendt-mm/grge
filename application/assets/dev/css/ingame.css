@@ -628,3 +628,46 @@ div.map.panel h3 {
 div.map.panel img + * {
     margin-left: 3px;
 }
+
+div.clockbox {
+    background: rgba(102, 0, 0, 0.5);
+    border: 2px solid #600;
+    box-shadow: 0 0 3px #000;
+    width: 100%;
+    text-align: center;
+    color: #FFF;
+}
+
+div.clockbox > .countdown > div {
+    display: inline-block;
+    position: relative;
+}
+
+div.clockbox > .countdown {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+div.clockbox > .countdown > div + div {
+    margin-left: 10px;
+}
+
+div.clockbox > .countdown > div + div:last-child {
+    font-size: 13px;
+    font-weight: normal;
+}
+
+div.clockbox > .countdown > div + div:not(:last-child)::before {
+    content: ":";
+    position: absolute;
+    top: 0;
+    left: -9px;
+}
+
+div.clockbox > .datebox {
+    font-size: 12px;
+}
+
+div.clockbox > .datebox .fa {
+    margin-right: 4px;
+}

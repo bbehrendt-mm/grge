@@ -1852,4 +1852,22 @@ return array (
 	'Fill tank',
   'Grillplatz' =>
 	'Barbecue Area',
+  'Mo' =>
+	'Mo',
+  'So' =>
+	'So',
+  'Di' =>
+	'Di',
+  'Mi' =>
+	'Mi',
+  'Do' =>
+	'Do',
+  'Fr' =>
+	'Fr',
+  'Sa' =>
+	'Sa',
+  'Du hast soeben die Antwort auf eine philosophische Frage gefunden, die dich schon seit Jahren quält. Das hat dir etwas zusätzliche Energie verschafft.' =>
+	'You\'ve just found the answer to a complicated zen riddle that you\'ve tried to figure out for years. This gives you some new energy.',
+  'We' =>
+	'We',
 );

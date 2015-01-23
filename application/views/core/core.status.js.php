@@ -231,25 +231,93 @@
         return bar;
     };
 
-    core.parts.status = function(data, target) {
+    core.parts.status = function(data, data_clock, target) {
         var main, inventory, clock;
 
         target.empty().append(
             main = $('<div />').addClass('row').append(
                 $('<div />').addClass('cell rw-9').append(
-                    inventory = $('<div />').addClass('row')
+                    bars = $('<div />').addClass('row')
                 )
             ).append(
-                $('<div />').addClass('cell rw-3').append(
-                    clock = $('<div />').addClass('row')
-                )
+                clock = $('<div />').addClass('cell rw-3 padded')
             )
         );
 
         $.each([5,3,1,4,null,2], function(k,v) {
-            inventory.append(v ? make_bar(v,data.bars[v].value,data.bars[v].buffs) : make_buffbar($.objToArray(data.buffs,true), data.bars));
-        })
+            bars.append(v ? make_bar(v,data.bars[v].value,data.bars[v].buffs) : make_buffbar($.objToArray(data.buffs,true), data.bars));
+        });
 
-
+        core.parts.clock(data_clock,clock);
     };
+
+    core.parts.clock = function(data, target) {
+
+        var clockbox = $('<div />').addClass('clockbox').appendTo(target);
+        var countdown = $('<div />').addClass('countdown').appendTo(clockbox);
+
+        var timestr, datestr;
+        $('<div />').addClass('datebox').append(
+            $('<div />').addClass('row').append(
+                $('<div />').addClass('cell rw-4').append(
+                    $('<i />').addClass('fa fa-clock-o')
+                ).append(
+                    timestr = $('<span />')
+                )
+            ).append(
+                $('<div />').addClass('cell rw-8').append(
+                    $('<i />').addClass('fa fa-calendar')
+                ).append(
+                    datestr = $('<span />')
+                )
+            )
+        ).appendTo(clockbox);
+
+        var next_tick = data.next_tick * 1000;
+        var last_tick = data.last_tick * 1000;
+        var current_offset = (data.current * 1000) - (new Date()).getTime();
+
+        var updater = function() {
+            var left = next_tick - ((new Date()).getTime() + current_offset);
+
+            if (left < 0) {
+                countdown.text(<?=__j('Weiter');?>);
+                return;
+            }
+
+            var datetime = new Date(last_tick);
+            var date = [<?=__j('So')?>,<?=__j('Mo')?>,<?=__j('Di')?>,<?=__j('Mi')?>,<?=__j('Do')?>,<?=__j('Fr')?>,<?=__j('Sa')?>][datetime.getDay()] + ', ' + datetime.toLocaleDateString();
+            var time = datetime.getHours() + ':' + (datetime.getMinutes() < 10 ? '0' + datetime.getMinutes() : datetime.getMinutes());
+
+            datestr.softText(date);
+            timestr.softText(time);
+
+            var scm = [];
+            $.each([86400000,3600000,60000,1000,10], function(k,v) {
+                var tmp = Math.floor(left/v);
+                left -= tmp * v;
+                if (tmp > 0 || v <= 60000)
+                    scm.push(tmp);
+            });
+
+            var i = 0;
+            countdown.children().each(function() {
+                if (i >= scm.length)
+                    $(this).remove();
+                else {
+                    var tx = scm[i] < 10 ? '0' + scm[i] : scm[i];
+                    $(this).softText(tx);
+                }
+                i++;
+            });
+            if (i < scm.length)
+                for (i; i < scm.length; i++)
+                    $('<div />').text(scm[i] < 10 ? '0' + scm[i] : scm[i]).appendTo(countdown);
+
+            window.requestAnimationFrame(updater);
+        };
+
+        updater();
+        console.log(data);
+    }
 })();

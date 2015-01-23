@@ -358,7 +358,7 @@ class Tool_Scripts
         $ticks = $game->duration() + $game->getDaytimeOffset();
         $days = floor($ticks/288);
         $d = new DateTime();
-        $d->setDate(1998,6,1);
+        $d->setDate(1998,7,2);
         $d->setTime(floor(($ticks%288)/12), 5 * ($ticks%12), 0);
         $d->add(new DateInterval("P{$days}D"));
 

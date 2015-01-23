@@ -2,4 +2,20 @@
 /* Automatically generated translation file for auto/en */
 
 return array (
+  'Mo' =>
+	'',
+  'So' =>
+	'',
+  'Di' =>
+	'',
+  'Mi' =>
+	'',
+  'Do' =>
+	'',
+  'Fr' =>
+	'',
+  'Sa' =>
+	'',
+  'We' =>
+	'',
 );

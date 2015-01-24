@@ -671,3 +671,94 @@ div.clockbox > .datebox {
 div.clockbox > .datebox .fa {
     margin-right: 4px;
 }
+
+div.log_box {
+    margin-top: 30px !important;
+    border-radius: 8px;
+    background: whitesmoke;
+    border: 1px solid #d9c6c6;
+    box-shadow: 0 0 4px rgba(0,0,0,0.3);
+    padding: 4px;
+}
+
+
+
+div.log_box > .message {
+    padding: 5px 2px;
+}
+
+div.log_box > .message:not(.pointer) {
+    cursor: default;
+}
+
+
+div.log_box > .message:first-child {
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+}
+
+div.log_box > .message:last-child {
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+div.log_box > .message + .message {
+    border-top: 1px solid #d3d3d3;
+}
+
+
+div.log_box > .message > .timestamp {
+    display: inline-block;
+    width: 80px;
+    padding-left: 5px;
+    text-align: center;
+    position: relative;
+    vertical-align: top;
+    color: #9b9b9b;
+}
+
+div.log_box > .message > .timestamp.new::before {
+    background: #680404;
+    color: #fff6bf;
+    position: absolute;
+    top: 0;
+    left: -15px;
+    height: 24px;
+    width: 24px;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    content: "\f12a";
+    font-size: 22px;
+    border-radius: 12px;
+    pointer-events: none;
+}
+
+
+div.log_box > .message > .content {
+    display: inline-block;
+    width: calc(100% - 80px);
+    padding-right: 10px;
+    padding-left: 10px;
+    position: relative;
+}
+
+div.log_box > .message.pointer > .content {
+    padding-left: 20px;
+}
+
+div.log_box > .message.pointer > .content::before {
+    position: absolute;
+    top: 0;
+    left: 3px;
+    height: 24px;
+    width: 24px;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    content: "\f0d7";
+    font-size: 22px;
+    pointer-events: none;
+    color: #9b9b9b;
+}
+

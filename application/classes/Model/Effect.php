@@ -222,7 +222,7 @@ class Model_Effect {
         $player->stats_modify($accum);
 
         if ($this->message)
-            $player->log()->add(new Model_Log_Types_Text(null, null, $this->message, $this->m_variables, $this->m_translateables));
+            $player->log()->add($this->message, $this->m_variables, $this->m_translateables);
 
         $this->call_custom_func($player, static::CFUNC_PROCESS_POST, $argument);
 

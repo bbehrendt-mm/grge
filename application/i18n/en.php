@@ -1870,4 +1870,24 @@ return array (
 	'You\'ve just found the answer to a complicated zen riddle that you\'ve tried to figure out for years. This gives you some new energy.',
   'We' =>
 	'We',
+  'Transzendente Handtasche' =>
+	'Transcendental Handbag',
+  'Es ist unglaublich, was alles in diese Handtasche passt! Schminkspiegel, mit Glitzerzeug verziehrtes Handy, Hello-Kitty-Digitalkamera ... alles sofort griffig! Man weiß nie wan man sowas in der Postapokalypse mal brauchen kann!' =>
+	'The amount of stuff you can put in this handbag is truly amazing! Makeup mirror, cellphone tooled with diamonds, Hello-Kitty-Digital Camera ... everything instantly at hand! You never know when you need that stuff in a postapocalyptic world!',
+  'Du hast diesen Ort betreten.' =>
+	'You\'ve entered this place.',
+  ':name hat diesen Ort betreten.' =>
+	':name has entered this place.',
+  'Du hast diesen Ort verlassen.' =>
+	'You have left this place.',
+  ':name hat diesen Ort verlassen.' =>
+	':name has left this place.',
+  'Du hast diesen Ort auf deinem Weg passiert.' =>
+	'You have passed this place on your way.',
+  ':name hat diesen Ort auf seinem Weg passiert.' =>
+	':name has passed this place on his way.',
+  'Verschiedene Gegenstände gefunden' =>
+	'Some items were found!',
+  'Nach nur ein paar Metern findest du ein notdürftig aufgeschlagenes Lager - der Besitzer ist wohl im Schlaf überrascht worden. Naja, wenigstens wird er dann wohl nichts mehr dagegen haben wenn du dich an seiner Ausrüstung bedienst ...' =>
+	'A few meters from your hideout, you find a makeshift camp - its maker must have been attacked while sleeping. Well, he probably won\'t object to you taking some of his gear ...',
 );

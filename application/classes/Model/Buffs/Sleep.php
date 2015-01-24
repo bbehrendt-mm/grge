@@ -60,11 +60,11 @@ class Model_Buffs_Sleep extends Model_Buffs_Abstract_Buff {
 		}
 		
 		if ($this->assoc_player->stats_get(Model_Player::MP_STAT_HUNGER) < 20 ) {
-			$this->assoc_player->log()->add(new Model_Log_Types_Text(null, null, 'Dein furchtbarer Hunger hindert dich am weiterschlafen... Du bist aufgewacht.'));
+			$this->assoc_player->log()->add('Dein furchtbarer Hunger hindert dich am weiterschlafen... Du bist aufgewacht.');
 			return $this->unbuff();
 		}
 		if ($this->assoc_player->stats_get(Model_Player::MP_STAT_THIRST) < 20 ) {
-			$this->assoc_player->log()->add(new Model_Log_Types_Text(null, null, 'Dein furchtbarer Durst hindert dich am weiterschlafen... Du bist aufgewacht.'));
+			$this->assoc_player->log()->add('Dein furchtbarer Durst hindert dich am weiterschlafen... Du bist aufgewacht.');
 			return $this->unbuff();
 		}
 		

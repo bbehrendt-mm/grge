@@ -1,25 +1,18 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-/**
- * Class Model_Log_Types_Text
- * @deprecated
- */
-class Model_Log_Types_Text extends Model_Log_Message {
+class Model_Log_Types_String extends Model_Log_Message {
 
 	protected static $type = Model_Log_Message::MLM_PRERENDERED_STRING;
 
 	private $var = Array();
-	private $trv = Array();
 	
 	/**
 	 * Creates a simple text message
 	 * @param String $title Short message title
-	 * @param String $head Message headline; will be used as title if no headline is provided
 	 * @param String $body Message body
 	 * @param Array $variables Variables
-	 * @param Array $translateables Variables that need to be translated
 	 */
-	public function __construct($title, $head, $body, $variables = Array(), $translateables = Array()) {
+	public function __construct($title, $body, $variables = []) {
 
 		parent::__construct([
 			'title' => $title,
@@ -27,7 +20,6 @@ class Model_Log_Types_Text extends Model_Log_Message {
 		]);
 		
 		$this->var = $variables;
-		$this->trv = $translateables;
 	}
 
 	public function as_notification() {
@@ -41,13 +33,13 @@ class Model_Log_Types_Text extends Model_Log_Message {
 
 	protected function postprocess($data) {
 		if ($this->var === true) return $data;
-		$tmp = $this->var;
-		foreach ($this->trv as $key => $value)
-			$tmp[$key] = __($value);
+		$tmp = [];
 
-		if ($data['title'])
-			$data['title'] = __($data['title'], $tmp);
-		else unset($data['title']);
+		$this->var;
+		foreach ($this->var as $key => $value)
+			$tmp[$key] = is_array($value) ? __($value[0]) :$value;
+
+		$data['title'] = __($data['title'], $tmp);
 		$data['body'] = __($data['body'], $tmp);
 		return $data;
 	}

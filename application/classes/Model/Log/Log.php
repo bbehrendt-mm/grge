@@ -6,7 +6,7 @@ class Model_Log_Log extends Model {
      * @var Interface_Message[] messages
      */
     private $messages;
-	private $new = 0;
+	private $new = [];
 	private $max_length;
 	
 	/**
@@ -17,13 +17,25 @@ class Model_Log_Log extends Model {
 		$this->max_length = $max_length;
 		$this->messages = Array();
 	}
+
+	private function unread($set = null) {
+		/** @global Model_Player $player */
+		global $player;
+
+		if (!isset($this->new[$player->id()]))
+			$this->new[$player->id()] = 0;
+
+		if ($set !== null)
+			return $this->new[$player->id()] = $set;
+		else return $this->new[$player->id()];
+	}
 	
 	/**
 	 * Clears all stores messages
 	 */
 	public function clear() {
 		$this->messages = Array();
-		$this->new = 0;
+		$this->new = [];
 	}
 
 	/**
@@ -34,25 +46,20 @@ class Model_Log_Log extends Model {
 	 */
 	public function add($new_message, $variables = [], $translateables = []) {
 		if (is_string($new_message)) {
-            $this->add(new Model_Log_Types_Text(null,null,$new_message,$variables,$translateables));
-        } else {
+			foreach ($translateables as $k => $v)
+				$variables[$k] = [$v];
+            $this->add(new Model_Log_Types_String(null,$new_message,$variables));
+        } elseif (Tool_System::instance_of($new_message, 'Model_Log_Message')) {
 
             if (count($this->messages) == 0 || !$this->messages[count($this->messages)-1]->merge($new_message))
                 $this->messages[] = $new_message;
 
-            $this->new++;
+			foreach ($this->new as &$counter) $counter++;
 
             //Delete oldest messages once counter is reached
             while($this->max_length > 0 && count($this->messages) > $this->max_length) array_shift($this->messages);
         }
 
-	}
-
-	/**
-	 * Resets news counter
-	 */
-	public function reset_news_counter() {
-		$this->new = 0;
 	}
 	
 	/**
@@ -61,13 +68,14 @@ class Model_Log_Log extends Model {
 	 */
 	public function trim($length) {
 		while(count($this->messages) > $length) array_shift($this->messages);
-		$this->new = min($this->new, count($this->messages));
+		foreach ($this->new as &$counter)
+			$counter= min($counter, count($this->messages));
 	}
 	
 	/**
 	 * Returns all message instances
 	 * @param bool $reverse True if you want LIFO ordering; default is FIFO (false)
-	 * @return Interface_Message Message[] instances
+	 * @return Model_Log_Message[]
 	 */
 	public function get_all($reverse = false) {
 		return $reverse ? array_reverse($this->messages) : $this->messages;
@@ -76,46 +84,27 @@ class Model_Log_Log extends Model {
 	/**
 	 * Gets only new messages
 	 * @param bool $reverse True if you want LIFO ordering; default is FIFO (false)
-	 * @return Interface_Message Message[] instances
+	 * @return Model_Log_Message[]
 	 */
 	public function get_new($reverse = false) {
-		$ret = array_slice(array_reverse($this->messages), 0, $this->new);
+		$ret = array_slice(array_reverse($this->messages), 0, $this->unread());
 		return $reverse ?  $ret : array_reverse($ret);
 	}
 	
 	/**
 	 * Gets only old messages
 	 * @param bool $reverse True if you want LIFO ordering; default is FIFO (false)
-	 * @return Interface_Message[] Message instances
+	 * @return Model_Log_Message[]
 	 */
 	public function get_old($reverse = false) {
-		$ret = array_slice(array_reverse($this->messages), $this->new);
+		$ret = array_slice(array_reverse($this->messages), $this->unread());
 		return $reverse ?  $ret : array_reverse($ret);
 	}
-	
+
 	/**
-	 * Renders all titles and returns them as array
-	 * @return Array All titles as string
+	 * Resets news counter
 	 */
-	public function render_titles() {
-		return array_map(
-            function($obj) {
-                /**
-                 * @var $obj Model_Log_Types_Text
-                 */
-                return $obj->render_title();
-            }, $this->messages);
-	}
-	
-	/**
-	 * Renders all bodies and returns them as array
-	 * @return string[] All bodies as string
-	 */
-	public function render_bodies() {
-		return array_map(
-            function($obj) {
-                /** @var $obj Model_Log_Types_Text */
-                return $obj->render_body();
-            }, $this->messages);
+	public function reset_news_counter() {
+		$this->unread(0);
 	}
 }

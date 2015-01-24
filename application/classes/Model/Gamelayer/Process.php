@@ -6,6 +6,8 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
 	abstract public function paused();
 	abstract public function is_alive();
 
+	protected static $now_is_real_time = false;
+
     abstract public function recalculate_flow();
 
 	final protected function process() {
@@ -61,6 +63,8 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
         global $player;
 		if ($user)
             $player = $this->get_player($user->uid());
+
+		static::$now_is_real_time = true;
 	}
 	
 	protected function tick() {

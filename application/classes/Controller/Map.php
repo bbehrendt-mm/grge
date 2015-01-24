@@ -27,7 +27,7 @@ class Controller_Map extends Controller_Game {
         //Check if any player is passed out or performs a fragile action
         foreach ($companion as $current)
             if ($current->buff_retr('passout') || $current->buff_retr('fragile')) {
-                $player->log()->add(new Model_Log_Types_Text(null, null, ($current == $player) ? 'Du kannst dich zur Zeit nicht bewegen...' : ':name kann sich zur Zeit nicht bewegen...', array(':name' => $current->name())));
+                $player->log()->add(($current == $player) ? 'Du kannst dich zur Zeit nicht bewegen...' : ':name kann sich zur Zeit nicht bewegen...', array(':name' => $current->name()));
                 return false;
             }
 
@@ -39,7 +39,7 @@ class Controller_Map extends Controller_Game {
         if (!$sub) {
             //Check route
             if (!($route = $game->map($lid)->get_route($lid, $did))) {
-                $player->log()->add(new Model_Log_Types_Text(null, null, 'Diesen Ort kannst du von hier aus nicht erreichen ...'));
+                $player->log()->add('Diesen Ort kannst du von hier aus nicht erreichen ...');
                 return false;
             }
 
@@ -58,10 +58,10 @@ class Controller_Map extends Controller_Game {
 
             //Check if we've reached the end
             if ($last_pass->uin() == $location->uin()) {
-                $player->log()->add(new Model_Log_Types_Text(null, null, ((count($companion) == 1) ? 'Du kannst diese Reise nicht antreten.' : 'Ihr könnt diese Reise nicht antreten.')));
+                $player->log()->add(((count($companion) == 1) ? 'Du kannst diese Reise nicht antreten.' : 'Ihr könnt diese Reise nicht antreten.'));
                 return false;
             } elseif ($last_pass->uin() != $destination->uin()) {
-                $player->log()->add(new Model_Log_Types_Text(null, null, (count($companion) == 1) ? 'Hier kommst du nicht weiter... du musst deine Reise nach :od unterbrechen und bei :ad eine Pause machen.' : 'Hier kommt ihr nicht weiter... ihr müsst eure Reise nach :od unterbrechen und bei :ad eine Pause machen..', array(':od' => $destination->name(), ':ad' => $last_pass->name())));
+                $player->log()->add((count($companion) == 1) ? 'Hier kommst du nicht weiter... du musst deine Reise nach :od unterbrechen und bei :ad eine Pause machen.' : 'Hier kommt ihr nicht weiter... ihr müsst eure Reise nach :od unterbrechen und bei :ad eine Pause machen..', array(':od' => $destination->name(), ':ad' => $last_pass->name()));
                 $destination = $last_pass;
                 $did = $last_pass->uin();
                 if (!($route = $game->map($lid)->get_route($lid, $last_pass->uin())))
@@ -83,7 +83,7 @@ class Controller_Map extends Controller_Game {
             if ($current->stats_get(Model_Player::MP_STAT_ENERGY) < $energy) {
                 if ($support) $overhead += ($energy - $current->stats_get(Model_Player::MP_STAT_ENERGY));
                 else {
-                    $player->log()->add(new Model_Log_Types_Text(null, null, ($current == $player) ? 'Du hast nicht genug Energie, um diesen Ort zu erreichen ...' : ':name hat nicht genug Energie, um diesen Ort zu erreichen ...', array(':name' => $current->name())));
+                    $player->log()->add(($current == $player) ? 'Du hast nicht genug Energie, um diesen Ort zu erreichen ...' : ':name hat nicht genug Energie, um diesen Ort zu erreichen ...', array(':name' => $current->name()));
                     return false;
                 }
             }
@@ -91,7 +91,7 @@ class Controller_Map extends Controller_Game {
 
         $energy = floor($distance * $player->stats_get(Model_Player::MP_CHAR_DISTANCING) * $modifier);
         if ($player->stats_get(Model_Player::MP_STAT_ENERGY) < ($energy + $overhead * 1.2)) {
-            $player->log()->add(new Model_Log_Types_Text(null, null, 'Du hast nicht genug Energie um diesen Weg zu bewältigen während du jemand anderem hilfst.'));
+            $player->log()->add('Du hast nicht genug Energie um diesen Weg zu bewältigen während du jemand anderem hilfst.');
             return false;
         }
 
@@ -115,7 +115,7 @@ class Controller_Map extends Controller_Game {
 
             //Tumbles
             if ($game->tumble($current->id())) {
-                $current->log()->add(new Model_Log_Types_Text(null, null, 'Du bist gestolpert und hast dir das Knie aufgeschlagen! Vielleicht solltest du deinen Alkoholkonsum zügeln ...'));
+                $current->log()->add('Du bist gestolpert und hast dir das Knie aufgeschlagen! Vielleicht solltest du deinen Alkoholkonsum zügeln ...');
                 $current->stats_modify(Model_Player::MP_STAT_HEALTH, -mt_rand(3, 10));
             }
 
@@ -124,14 +124,14 @@ class Controller_Map extends Controller_Game {
 
             //Messages
             if (count($companion) == 1 && $current == $player)
-                $current->log()->add(new Model_Log_Types_Text(null, null, 'Du machst dich auf den Weg zu/zur/zum :location.', array(), array(':location' => $destination->name())));
+                $current->log()->add('Du machst dich auf den Weg zu/zur/zum :location.', array(), array(':location' => $destination->name()));
             elseif (count($companion) > 1 && $current == $player)
-                $current->log()->add(new Model_Log_Types_Text(null, null, 'Ihr macht euch auf den Weg zu/zur/zum :location.', array(), array(':location' => $destination->name())));
+                $current->log()->add('Ihr macht euch auf den Weg zu/zur/zum :location.', array(), array(':location' => $destination->name()));
             elseif (count($companion) > 1 && $current != $player)
-                $current->log()->add(new Model_Log_Types_Text(null, null, ':name hat dich gebeten, ihn nach :location zu begleiten.', array(':name' => $player->name()), array(':location' => $destination->name())));
+                $current->log()->add(':name hat dich gebeten, ihn nach :location zu begleiten.', array(':name' => $player->name()), array(':location' => $destination->name()));
             else {
-                $current->log()->add(new Model_Log_Types_Text(null, null, ':name hat dich angewiesen, bei :location nach dem Rechten zu sehen.', array(':name' => $player->name()), array(':location' => $destination->name())));
-                $player->log()->add(new Model_Log_Types_Text(null, null, 'Du entsendest :name nach :location, um dort nach dem Rechten zu sehen.', array(':name' => $current->name()), array(':location' => $destination->name())));
+                $current->log()->add(':name hat dich angewiesen, bei :location nach dem Rechten zu sehen.', array(':name' => $player->name()), array(':location' => $destination->name()));
+                $player->log()->add('Du entsendest :name nach :location, um dort nach dem Rechten zu sehen.', array(':name' => $current->name()), array(':location' => $destination->name()));
             }
 
             if ($transport = Tool_Scripts::get_active_transport($current))

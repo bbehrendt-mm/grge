@@ -245,10 +245,28 @@ class Controller_Game extends Controller {
          */
         global $player;
 
-        foreach ($player->log()->get_all() as $message)
-            /** @var Interface_Message $message */
-            $this->add_note('info',$message->render_body(),$message->render_title());
+        foreach ($player->log()->get_all() as $message) {
+            $r = $message->as_notification();
+            if ($r) $this->add_note($r[0],$r[1],$r[2]);
+        }
+
         $player->log()->clear();
+    }
+
+    protected function render_log() {
+        /**
+         * @global $player Model_Player
+         */
+        global $player;
+
+        $ret = [];
+        foreach ($player->location()->log()->get_new(true) as $message)
+            $ret[] = array_merge(['new' => true], $message->render());
+        foreach ($player->location()->log()->get_old(true) as $message)
+            $ret[] = array_merge(['new' => false], $message->render());
+        $player->location()->log()->reset_news_counter();
+
+        $this->add_data('log', $ret);
     }
 
     private function render_clock() {
@@ -276,6 +294,7 @@ class Controller_Game extends Controller {
         $this->render_inventory();
         $this->render_status();
         $this->render_clock();
+        $this->render_log();
         $this->render_notifications();
 
         $version_data = Kohana::$config->load('build.version');

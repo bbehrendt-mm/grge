@@ -12,10 +12,11 @@ class Model_Buffs_Bite extends Model_Buffs_Abstract_Buff {
 	}
 	
 	public function tick() {
-        global $game;
+        /** @global Model_Game $game */
+		global $game;
         if ($game->config('game.bhav.infections') && !$this->assoc_player->buff_retr('immune') && $this->assoc_player->stats_get(Model_Player::MP_STAT_ZOMBIFY) <= 0 && (mt_rand(0,100) <= 5)) {
             $this->assoc_player->stats_set(Model_Player::MP_STAT_ZOMBIFY, 5);
-            $this->assoc_player->log()->add(new Model_Log_Types_Text(null, null, 'Deine Bisswunde sieht aber gar nicht gut aus... offenbar hast du dich mit dem Zombievirus infiziert!'));
+            $this->assoc_player->log()->add('Deine Bisswunde sieht aber gar nicht gut aus... offenbar hast du dich mit dem Zombievirus infiziert!');
         }
         return parent::tick();
     }

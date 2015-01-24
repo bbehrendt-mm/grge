@@ -53,5 +53,9 @@ core = {
 
         if (data.status && data.clock)
             core.parts.status(data.status, data.clock, $('#persistent'));
+        
+        if (data.log)
+            core.parts.log(data.log,$('<div />').addClass('row log_box').appendTo(target))
+
     }
 };

@@ -17,7 +17,7 @@ class Model_Buffs_Mapping extends Model_Buffs_Abstract_Fragile {
 	
 	protected function action_on_complete() {
 		$items = $this->assoc_player->inventory()->get('Model_Items_Maptool');
-		if (count($items) != 1) $this->assoc_player->log()->add(new Model_Log_Types_Text(null, null, 'Das Kartographieren dieses Orts ist fehlgeschlagen...'));
+		if (count($items) != 1) $this->assoc_player->log()->add('Das Kartographieren dieses Orts ist fehlgeschlagen...');
 		else $items[0]->score($this->level);
 	}
 

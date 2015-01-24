@@ -1870,4 +1870,24 @@ return array (
 	'Du hast soeben die Antwort auf eine philosophische Frage gefunden, die dich schon seit Jahren quält. Das hat dir etwas zusätzliche Energie verschafft.',
   'We' =>
 	'We',
+  'Transzendente Handtasche' =>
+	'Transzendente Handtasche',
+  'Es ist unglaublich, was alles in diese Handtasche passt! Schminkspiegel, mit Glitzerzeug verziehrtes Handy, Hello-Kitty-Digitalkamera ... alles sofort griffig! Man weiß nie wan man sowas in der Postapokalypse mal brauchen kann!' =>
+	'Es ist unglaublich, was alles in diese Handtasche passt! Schminkspiegel, mit Glitzerzeug verziehrtes Handy, Hello-Kitty-Digitalkamera ... alles sofort griffig! Man weiß nie wan man sowas in der Postapokalypse mal brauchen kann!',
+  'Du hast diesen Ort betreten.' =>
+	'Du hast diesen Ort betreten.',
+  ':name hat diesen Ort betreten.' =>
+	':name hat diesen Ort betreten.',
+  'Du hast diesen Ort verlassen.' =>
+	'Du hast diesen Ort verlassen.',
+  ':name hat diesen Ort verlassen.' =>
+	':name hat diesen Ort verlassen.',
+  'Du hast diesen Ort auf deinem Weg passiert.' =>
+	'Du hast diesen Ort auf deinem Weg passiert.',
+  ':name hat diesen Ort auf seinem Weg passiert.' =>
+	':name hat diesen Ort auf seinem Weg passiert.',
+  'Verschiedene Gegenstände gefunden' =>
+	'Verschiedene Gegenstände gefunden',
+  'Nach nur ein paar Metern findest du ein notdürftig aufgeschlagenes Lager - der Besitzer ist wohl im Schlaf überrascht worden. Naja, wenigstens wird er dann wohl nichts mehr dagegen haben wenn du dich an seiner Ausrüstung bedienst ...' =>
+	'Nach nur ein paar Metern findest du ein notdürftig aufgeschlagenes Lager - der Besitzer ist wohl im Schlaf überrascht worden. Naja, wenigstens wird er dann wohl nichts mehr dagegen haben wenn du dich an seiner Ausrüstung bedienst ...',
 );

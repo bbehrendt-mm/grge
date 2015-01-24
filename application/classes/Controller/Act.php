@@ -59,7 +59,7 @@ class Controller_Act extends Controller_Game {
             }
 
         //Message
-        if ($lost) $player->log()->add(new Model_Log_Types_Text(null, null, 'Die Aktion konnte nicht vollständig ausgeführt werden, da eines oder mehrere der ausgewählten Gegenstände nicht länger in deiner Reichweite sind.'));
+        if ($lost) $player->log()->add('Die Aktion konnte nicht vollständig ausgeführt werden, da eines oder mehrere der ausgewählten Gegenstände nicht länger in deiner Reichweite sind.');
 
         $this->japi_data();
     }

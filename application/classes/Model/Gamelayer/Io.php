@@ -126,7 +126,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
 	 * Returns the exact unix timestamp of the last tick (i.e. the current ingame game time)
 	 */
 	final public function now() {
-		return $this->set['gamedata']->timing->last_point;
+		return static::$now_is_real_time ? time() : $this->set['gamedata']->timing->last_point;
 	}
 	
 	/**

@@ -275,6 +275,7 @@
 
         var next_tick = data.next_tick * 1000;
         var last_tick = data.last_tick * 1000;
+        var ingame = data.ingame * 1000;
         var current_offset = (data.current * 1000) - (new Date()).getTime();
 
         var updater = function() {
@@ -285,7 +286,7 @@
                 return;
             }
 
-            var datetime = new Date(last_tick);
+            var datetime = new Date(ingame);
             var date = [<?=__j('So')?>,<?=__j('Mo')?>,<?=__j('Di')?>,<?=__j('Mi')?>,<?=__j('Do')?>,<?=__j('Fr')?>,<?=__j('Sa')?>][datetime.getDay()] + ', ' + datetime.toLocaleDateString();
             var time = datetime.getHours() + ':' + (datetime.getMinutes() < 10 ? '0' + datetime.getMinutes() : datetime.getMinutes());
 
@@ -318,6 +319,5 @@
         };
 
         updater();
-        console.log(data);
     }
 })();

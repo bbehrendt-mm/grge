@@ -118,7 +118,7 @@
     background: url("media/img/actions_outside.png")
 }
 
-.inventory h3 {
+.flatbox h3 {
     margin: 2px;
     padding: 0;
     text-align: center;
@@ -127,14 +127,14 @@
     font-size: 16px;
 }
 
-.inventory {
+.flatbox {
     border: 1px solid #f5f5f5;
     background: #ffffff;
     box-shadow: 0 0 4px black;
     padding-bottom: 8px;
 }
 
-.inventory b {
+.flatbox b {
     font-size: 10px;
     border-bottom: 1px solid #ffcaa9;
     display: block;
@@ -147,7 +147,7 @@
     margin: 2px;
 }
 
-.inventory ul li {
+.inventory ul li, div.item {
     display: inline-block;
     list-style: none;
     padding: 2px;
@@ -157,11 +157,15 @@
     height: 22px;
 }
 
+.inventory ul li {
+    cursor: pointer;
+}
+
 .inventory ul li:hover {
     background: rgba(0,0,0,0.1);
 }
 
-.inventory ul li > .staticCount, .inventory ul li > .instanceCount {
+.inventory ul li > .staticCount, .inventory ul li > .instanceCount, div.item > .staticCount, div.item > .instanceCount {
     position: absolute;
     top: 14px;
     left: 14px;
@@ -172,11 +176,11 @@
     color: white;
 }
 
-.inventory ul li > .staticCount {
+.inventory ul li > .staticCount, div.item > .staticCount {
     background: #1582c6;
 }
 
-.inventory ul li > .instanceCount {
+.inventory ul li > .instanceCount, div.item > .instanceCount {
     background: #c60054;
 }
 

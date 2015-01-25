@@ -277,7 +277,7 @@ class Model_Player extends Model_Cloudshard {
          * @global $game Model_Game
          */
 		global $game;
-		$this->log()->add(new Model_Log_Types_Death($this->cod));
+		$this->log()->add(new Model_Log_Types_String('Du bist tot!','Du hast soeben deinen letzten Atemzug getan... Du bist auf die folgende schreckliche Art von dieser Welt gegangen: :cod!',[':cod' => [$this->cod]]));
 		$this->calculate_static_achievements();
 		$this->alive = false;
 

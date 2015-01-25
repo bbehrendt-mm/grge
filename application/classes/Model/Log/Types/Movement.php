@@ -30,7 +30,7 @@ class Model_Log_Types_Movement extends Model_Log_Message {
             'id' => -1,
             'name' => $pid,
             'class' => $type
-        ]);
+        ],$pid);
 	}
 
     protected function postprocess($data) {
@@ -41,10 +41,8 @@ class Model_Log_Types_Movement extends Model_Log_Message {
         if (isset($data['name'])) {
             $data['self'] = false;
             $data['name'] = __($data['name']);
-        } else {
-            $data['self'] = ($data['id'] == $player->id());
+        } else
             $data['name'] = $game->get_player($data['id'])->name();
-        }
 
         return $data;
     }

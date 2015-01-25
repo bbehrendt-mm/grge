@@ -3,12 +3,10 @@
     var render_box = function(data, target, rucksack) {
         $(target).empty();
         $.each(data, function(k,v) {
-            var container;
+            var container = core.snippets.item(false, v.name, v.icon, v.count ? v.count : v.static, v.count <= 1, true);
             var flags = $.map(v.flags, function(m) {return m;});
             $(target).append(
-                container = $('<li />').append(
-                    $('<img />').attr('src', 'media/icons/' + v.icon + '.gif')
-                ).click(function() {
+                container.click(function() {
                     core.command('act/inventory',{action: rucksack ? 'drop' : 'take', items: [v.uin]});
                 })
             );
@@ -41,11 +39,6 @@
                         break;
                 }
             });
-
-            if (v.static > 1)
-                container.append($('<div />').addClass('staticCount').text(v.static));
-            else if (v.count != null)
-                container.append($('<div />').addClass('instanceCount').text(v.count));
 
             container.attr('title','-').qtip(game.render.html.qtip.ingame('bottom',{
                 render: function(event,api) {
@@ -115,15 +108,15 @@
         var iv_a, iv_b;
         $(target).empty().append(
             $('<div />').addClass('cell rw-4 padded').append(
-                iv_a = $('<div />').addClass('row inventory inventory_location')
+                iv_a = $('<div />').addClass('row inventory flatbox inventory_location')
             )
         ).append(
             $('<div />').addClass('cell rw-4 padded').append(
-                iv_b = $('<div />').addClass('row inventory inventory_player')
+                iv_b = $('<div />').addClass('row inventory flatbox inventory_player')
             )
         ).append(
             $('<div />').addClass('cell rw-4 padded').append(
-                iv_c = $('<div />').addClass('row inventory inventory_hero')
+                iv_c = $('<div />').addClass('row inventory flatbox inventory_hero')
             )
         );
 

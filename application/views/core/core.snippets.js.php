@@ -1,4 +1,27 @@
 (function() {
+    core.snippets.item = function(show_title, name, icon, count, is_static, in_inventory) {
+        var container = $(in_inventory ? '<li />' : '<div />').addClass(in_inventory ? '' : 'item').append(
+            $('<img />').attr('src', 'media/icons/' + icon + '.gif')
+        );
+
+        if (count) {
+            if (is_static) container.append($('<div />').addClass('staticCount').text(count));
+            else if (count > 1) container.append($('<div />').addClass('instanceCount').text(count));
+        }
+
+        if (show_title)
+            container.attr('title','-').qtip(game.render.html.qtip.ingame('bottom',{
+                render: function(event,api) {
+                    var content = $(this).find('.qtip-content').empty();
+                    if (typeof show_title === "string")
+                        content.append($('<b />').addClass('header').text(name)).append($('<span />').text(show_title));
+                    else content.append($('<span />').text(name));
+                }
+            }));
+
+        return container;
+    };
+
     //Ext mode: extend (default), static, tooltip
     core.snippets.button = function(action, call, ext_mode) {
         if (typeof action === "string")

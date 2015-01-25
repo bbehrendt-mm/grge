@@ -1890,4 +1890,56 @@ return array (
 	'Verschiedene Gegenstände gefunden',
   'Nach nur ein paar Metern findest du ein notdürftig aufgeschlagenes Lager - der Besitzer ist wohl im Schlaf überrascht worden. Naja, wenigstens wird er dann wohl nichts mehr dagegen haben wenn du dich an seiner Ausrüstung bedienst ...' =>
 	'Nach nur ein paar Metern findest du ein notdürftig aufgeschlagenes Lager - der Besitzer ist wohl im Schlaf überrascht worden. Naja, wenigstens wird er dann wohl nichts mehr dagegen haben wenn du dich an seiner Ausrüstung bedienst ...',
+  'Items gefun' =>
+	'Items gefun',
+  'Items gefunden!' =>
+	'Items gefunden!',
+  ':itemdef gefunden!' =>
+	':itemdef gefunden!',
+  ':itemdef entdeckt!' =>
+	':itemdef entdeckt!',
+  ':name ist von uns gegangen...' =>
+	':name ist von uns gegangen...',
+  ':name ist gestorben und hat sich in einen Zombie verwandelt!' =>
+	':name ist gestorben und hat sich in einen Zombie verwandelt!',
+  ':name hat nun endlich seinen ewigen Frieden gefunden...' =>
+	':name hat nun endlich seinen ewigen Frieden gefunden...',
+  ':itemdef angelockt!' =>
+	':itemdef angelockt!',
+  ':itemdef erworben!' =>
+	':itemdef erworben!',
+  ':itemdef aufgetaucht!' =>
+	':itemdef aufgetaucht!',
+  ':itemdef erhalten!' =>
+	':itemdef erhalten!',
+  'Alte Apotheke' =>
+	'Alte Apotheke',
+  'Kleiner Markt' =>
+	'Kleiner Markt',
+  'Du hast soeben deinen letzten Atemzug getan und deiner Gemeinschaft das wenige, was du hattest, hinterlassen. Das wars dann wohl...' =>
+	'Du hast soeben deinen letzten Atemzug getan und deiner Gemeinschaft das wenige, was du hattest, hinterlassen. Das wars dann wohl...',
+  'Heute ist ein trauriger Tag für eure kleine Gemeinschaft, denn sie ist soeben wieder etwas geschrumpft. Nur einige sterbliche Überreste sind noch zurück geblieben...' =>
+	'Heute ist ein trauriger Tag für eure kleine Gemeinschaft, denn sie ist soeben wieder etwas geschrumpft. Nur einige sterbliche Überreste sind noch zurück geblieben...',
+  'Heute ist ein trauriger Tag für eure kleine Gemeinschaft, denn sie ist soeben wieder etwas geschrumpft. Die Zombiehorden hingegen haben Zuwachs zu verzeichnen...' =>
+	'Heute ist ein trauriger Tag für eure kleine Gemeinschaft, denn sie ist soeben wieder etwas geschrumpft. Die Zombiehorden hingegen haben Zuwachs zu verzeichnen...',
+  'Du hast dich soeben in einen Zombie verwandelt!' =>
+	'Du hast dich soeben in einen Zombie verwandelt!',
+  'Deine Freunde haben dir endlich den ewigen Frieden geschenkt.' =>
+	'Deine Freunde haben dir endlich den ewigen Frieden geschenkt.',
+  'Es ist immer schwer, jemandem den man gekannt hat den Gnadenstoß zu geben. Nur einige sterbliche Überreste sind noch zurück geblieben...' =>
+	'Es ist immer schwer, jemandem den man gekannt hat den Gnadenstoß zu geben. Nur einige sterbliche Überreste sind noch zurück geblieben...',
+  'Du hast :item mit :chem kombiniert, und dabei :list erhalten.' =>
+	'Du hast :item mit :chem kombiniert, und dabei :list erhalten.',
+  ':name hat :item mit :chem kombiniert, und dabei :list erhalten.' =>
+	':name hat :item mit :chem kombiniert, und dabei :list erhalten.',
+  'Du hast erfolglos :item mit :chem kombiniert...' =>
+	'Du hast erfolglos :item mit :chem kombiniert...',
+  ':name hat erfolglos :item mit :chem kombiniert...' =>
+	':name hat erfolglos :item mit :chem kombiniert...',
+  ':building aufgedeckt!' =>
+	':building aufgedeckt!',
+  'Apotheke "Hustensaft-Schlürfer"' =>
+	'Apotheke "Hustensaft-Schlürfer"',
+  '"Kentucky Fried Eyeballs" Restaurant' =>
+	'"Kentucky Fried Eyeballs" Restaurant',
 );

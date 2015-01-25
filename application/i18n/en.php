@@ -1890,4 +1890,56 @@ return array (
 	'Some items were found!',
   'Nach nur ein paar Metern findest du ein notdürftig aufgeschlagenes Lager - der Besitzer ist wohl im Schlaf überrascht worden. Naja, wenigstens wird er dann wohl nichts mehr dagegen haben wenn du dich an seiner Ausrüstung bedienst ...' =>
 	'A few meters from your hideout, you find a makeshift camp - its maker must have been attacked while sleeping. Well, he probably won\'t object to you taking some of his gear ...',
+  'Items gefun' =>
+	'Items gefun',
+  'Items gefunden!' =>
+	'Items gefunden!',
+  ':itemdef gefunden!' =>
+	'Found :itemdef!',
+  ':itemdef entdeckt!' =>
+	'Found :itemdef!',
+  ':name ist von uns gegangen...' =>
+	':name has passed away...',
+  ':name ist gestorben und hat sich in einen Zombie verwandelt!' =>
+	':name has died and turend into a zombie!',
+  ':name hat nun endlich seinen ewigen Frieden gefunden...' =>
+	':name has finally found eternal peace...',
+  ':itemdef angelockt!' =>
+	'Attracted :itemdef!',
+  ':itemdef erworben!' =>
+	':itemdef erworben!',
+  ':itemdef aufgetaucht!' =>
+	':itemdef aufgetaucht!',
+  ':itemdef erhalten!' =>
+	'Got :itemdef!',
+  'Alte Apotheke' =>
+	'Ye Olde Pharmacy',
+  'Kleiner Markt' =>
+	'Small Market',
+  'Du hast soeben deinen letzten Atemzug getan und deiner Gemeinschaft das wenige, was du hattest, hinterlassen. Das wars dann wohl...' =>
+	'You just took your last breath and left your few possessions to other survivors. Guess that\'s it for you...',
+  'Heute ist ein trauriger Tag für eure kleine Gemeinschaft, denn sie ist soeben wieder etwas geschrumpft. Nur einige sterbliche Überreste sind noch zurück geblieben...' =>
+	'This is a sad day for your little community, because said community just got a little smaller. Only a few mortal remains are left of your friend, who died here today...',
+  'Heute ist ein trauriger Tag für eure kleine Gemeinschaft, denn sie ist soeben wieder etwas geschrumpft. Die Zombiehorden hingegen haben Zuwachs zu verzeichnen...' =>
+	'This is a sad day for your little community, because you have just lost a valued member - a member that involuntairly has switched sides...',
+  'Du hast dich soeben in einen Zombie verwandelt!' =>
+	'You\'ve just turned into a zombie!',
+  'Deine Freunde haben dir endlich den ewigen Frieden geschenkt.' =>
+	'Deine Freunde haben dir endlich den ewigen Frieden geschenkt.',
+  'Es ist immer schwer, jemandem den man gekannt hat den Gnadenstoß zu geben. Nur einige sterbliche Überreste sind noch zurück geblieben...' =>
+	'Es ist immer schwer, jemandem den man gekannt hat den Gnadenstoß zu geben. Nur einige sterbliche Überreste sind noch zurück geblieben...',
+  'Du hast :item mit :chem kombiniert, und dabei :list erhalten.' =>
+	'You have combined :item with :chem and got :list.',
+  ':name hat :item mit :chem kombiniert, und dabei :list erhalten.' =>
+	':name has combined :item with :chem and got :list.',
+  'Du hast erfolglos :item mit :chem kombiniert...' =>
+	'You tried (and failed) to combine :item with :chem...',
+  ':name hat erfolglos :item mit :chem kombiniert...' =>
+	':name tried (and failed) to combine :item with :chem...',
+  ':building aufgedeckt!' =>
+	':building discovered!',
+  'Apotheke "Hustensaft-Schlürfer"' =>
+	'Pharmacy "Linctus Addict"',
+  '"Kentucky Fried Eyeballs" Restaurant' =>
+	'"Kentucky Fried Eyeballs" Franchise',
 );

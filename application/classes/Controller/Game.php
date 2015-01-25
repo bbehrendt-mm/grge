@@ -260,9 +260,7 @@ class Controller_Game extends Controller {
         global $player;
 
         $ret = [];
-        foreach ($player->location()->log()->get_new(true) as $message)
-            $ret[] = array_merge(['new' => true], $message->render());
-        foreach ($player->location()->log()->get_old(true) as $message)
+        foreach ($player->location()->log()->get_all(true) as $message)
             $ret[] = array_merge(['new' => false], $message->render());
         $player->location()->log()->reset_news_counter();
 

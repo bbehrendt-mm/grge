@@ -459,7 +459,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
             $player->log()->add(new Model_Log_Types_Text(null, null, 'Du hast eine neue Ruine entdeckt und eine grobe Karte mit ihrer Position gezeichnet. Diese Informationen sind sicher nützlich für deine Stadt.... besser wäre es natürlich, du würdest diese Ruine genauer erkunden.'));
         }
 
-        $this->log->add(new Model_Log_Types_Building($building));
+        $this->log->add(new Model_Log_Types_Building($building, $player->user_id()));
         return true;
     }
 

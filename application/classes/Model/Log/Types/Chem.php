@@ -1,46 +1,75 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Log_Types_Chem extends Model implements Interface_Message {
+class Model_Log_Types_Chem extends Model_Log_Message {
 
-    private static $item_trunc_length = 15;
-
-    private $type = Model_Log_Types_Item::MLTI_OTHER;
-    /**
-     * @var Model_Struct_Item[][]
-     */
-    private $chem, $item;
-    private $results = array();
-    private $uid;
-
-    private $timecode;
-
+    protected static $type = Model_Log_Message::MLM_CHEM_EXPERIMENT;
 
     public function __construct($chemvalue, $item, $results, $uid = null) {
+        /**
+         * @global Model_Game $game
+         * @global Model_Player $player
+         */
         global $game, $player;
-        $this->uid = $uid ? $uid : $player->user_id();
+        if ($uid === null) $uid = $player->user_id();
 
         if (!is_array($results))
-            $results = array($results);
+            $results = [$results];
 
-        $this->chem = new Model_Struct_Item(new Model_Items_Chem($chemvalue));
-        $this->item = new Model_Struct_Item($item);
-
+        $tmp = [];
         foreach ($results as $single)
-            $this->results[] = new Model_Struct_Item($single);
+            $tmp[] = new Model_Struct_Item($single);
 
-        $this->timecode = $game->now();
+        parent::__construct([
+            'name' => $game->get_player($uid)->name(),
+            'chem' => new Model_Struct_Item(new Model_Items_Chem($chemvalue)),
+            'item' => new Model_Struct_Item($item),
+            'results' => $tmp,
+        ], $uid);
     }
 
-    public function render_title()
-    {
-        return null;
+    protected function postprocess($data) {
+        /**
+         * @global Model_Game $game
+         * @global Model_Player $player
+         */
+        global $game, $player;
+
+        /**
+         * @var Model_Struct_Item $chem
+         * @var Model_Struct_Item $item
+         */
+        $chem = $data['chem'];
+        $item = $data['item'];
+
+        $data['chem'] = [
+            'name' => __($chem->getName()),
+            'icon' => $chem->getIcon(),
+            'count' => $chem->getCount()
+        ];
+        $data['item'] = [
+            'name' => __($item->getName()),
+            'icon' => $item->getIcon(),
+            'count' => $item->getCount()
+        ];
+
+        if ($data['results'])
+            foreach ($data['results'] as &$res)
+                /** @var Model_Struct_Item $res */
+                $res = [
+                    'name' => __($res->getName()),
+                    'icon' => $res->getIcon(),
+                    'count' => $res->getCount()
+                ];
+        else $data['results'] = false;
+
+        return $data;
     }
 
     /**
      * Renders a body, or returns null
      * @return string|NULL Body as string or null if no body applies
      */
-    public function render_body()
+    /*public function render_body()
     {
         global $game, $player;
 
@@ -53,32 +82,5 @@ class Model_Log_Types_Chem extends Model implements Interface_Message {
             : 'Du hast :item mit :chem kombiniert, und dabei :list erhalten.';
 
         return __($s, array(':name' => $game->get_player($this->uid)->name(), ':chem' => $this->render_item($this->chem), ':item' => $this->render_item($this->item), ':list' => $this->render_item($this->results)));
-    }
-
-    /**
-     * @param Model_Struct_Item|Model_Struct_Item[] $item
-     * @return string
-     */
-    private function render_item($item) {
-        if (is_array($item))
-            return implode(', ', array_map(function($f) {return $this->render_item($f);}, $item));
-        else return "<span class=\"value\"><img src=\"{$item->getIcon()}\" alt=\"?\">" . __($item->getName()) . "</span>";
-    }
-
-    /**
-     * Returns the message timecode
-     * @return int
-     */
-    public function timecode() {
-        return $this->timecode;
-    }
-
-    /**
-     * @param Interface_Message $new
-     * @return bool
-     */
-    public function merge($new)
-    {
-        return false;
-    }
+    }*/
 }

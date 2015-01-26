@@ -1942,4 +1942,488 @@ return array (
 	'Apotheke "Hustensaft-Schlürfer"',
   '"Kentucky Fried Eyeballs" Restaurant' =>
 	'"Kentucky Fried Eyeballs" Restaurant',
+  'Munition' =>
+	'Munition',
+  'Welch ein glücklicher Fund - Munition! Soetwas findet man sehr selten, manche behaupten sogar soetwas wie "Munition" existiere gar nicht. Wenn du jetzt noch zufällig etwas hast, womit du diese Munition verschießen kannst haben die Zombies keine Chance mehr!' =>
+	'Welch ein glücklicher Fund - Munition! Soetwas findet man sehr selten, manche behaupten sogar soetwas wie "Munition" existiere gar nicht. Wenn du jetzt noch zufällig etwas hast, womit du diese Munition verschießen kannst haben die Zombies keine Chance mehr!',
+  'Aus einem allträglichen Sportinstrument hast du ein bizarres Mordinstrument gemacht. Das sagt eine Menge über deine Psyche aus... zum Glück wird sich niemand trauen, dir das ins Gesicht zu sagen, solange du diesen Schläger in der Hand hälst.' =>
+	'Aus einem allträglichen Sportinstrument hast du ein bizarres Mordinstrument gemacht. Das sagt eine Menge über deine Psyche aus... zum Glück wird sich niemand trauen, dir das ins Gesicht zu sagen, solange du diesen Schläger in der Hand hälst.',
+  'Chemische Keule' =>
+	'Chemische Keule',
+  'Dieser Schläger ist mit merkwürdigen Substanzen getränkt und wirkt äußerst schädlich auf Zombies, die in näheren Kontakt mit ihm kommen. Allerdings hat er durch die Chemikalien einiges an Stabilität verloren...' =>
+	'Dieser Schläger ist mit merkwürdigen Substanzen getränkt und wirkt äußerst schädlich auf Zombies, die in näheren Kontakt mit ihm kommen. Allerdings hat er durch die Chemikalien einiges an Stabilität verloren...',
+  'In mühevoller Handarbeit hast du diesem Batteriewerfer eine selbst entworfene, neue Ladevorrichtung verpasst. Eigentlich solltest du das Teil von nun an "Batterie-Maschinenwerfer" nennen ...' =>
+	'In mühevoller Handarbeit hast du diesem Batteriewerfer eine selbst entworfene, neue Ladevorrichtung verpasst. Eigentlich solltest du das Teil von nun an "Batterie-Maschinenwerfer" nennen ...',
+  'Batteriewerfer MK II' =>
+	'Batteriewerfer MK II',
+  'Der Batteriewerfer MK II ist die Bazooka unter den Batteriewerfern. Durch den automatischen Druckregler kannst du sowohl weiter schießen als auch genauer zielen. Damit wird dein Batteriewerfer zur absolut tödlichen Waffe! ...' =>
+	'Der Batteriewerfer MK II ist die Bazooka unter den Batteriewerfern. Durch den automatischen Druckregler kannst du sowohl weiter schießen als auch genauer zielen. Damit wird dein Batteriewerfer zur absolut tödlichen Waffe! ...',
+  'Batteriewerfer MK IV Prototyp' =>
+	'Batteriewerfer MK IV Prototyp',
+  'Dieses Gerät wurde kurz nach der Apokalypse vom Militär entwickelt. Die enorm hohe Abschussgeschwindigkeit des MK IV erlaubt maximale Präzision - wenn nötig kannst du damit einem Zombie auf 500m Entfernung den rechten Backenzahn herausschießen (inklusive dem Rest seines Gebisses). Ein hübscher Nebeneffekt dieser Feuerkraft ist die Tatsache, dass die Batterien beim Aufprall zerplatzen und wie Splittergranaten wirken.' =>
+	'Dieses Gerät wurde kurz nach der Apokalypse vom Militär entwickelt. Die enorm hohe Abschussgeschwindigkeit des MK IV erlaubt maximale Präzision - wenn nötig kannst du damit einem Zombie auf 500m Entfernung den rechten Backenzahn herausschießen (inklusive dem Rest seines Gebisses). Ein hübscher Nebeneffekt dieser Feuerkraft ist die Tatsache, dass die Batterien beim Aufprall zerplatzen und wie Splittergranaten wirken.',
+  'Scharfschützen-Batteriewerfer' =>
+	'Scharfschützen-Batteriewerfer',
+  'Wenn du nicht so darauf stehst, wie Rambo wild in der Gegend rumzuballern und trotzdem nichts zu treffen, dann benutze dieses hochelegante Batterie-Scharfschützengewehr. Jeder Schuss ist äußerst tödlich und garantiert ein Treffer - vorrausgesetzt, du hast dir die Zeit zum Zielen genommen.' =>
+	'Wenn du nicht so darauf stehst, wie Rambo wild in der Gegend rumzuballern und trotzdem nichts zu treffen, dann benutze dieses hochelegante Batterie-Scharfschützengewehr. Jeder Schuss ist äußerst tödlich und garantiert ein Treffer - vorrausgesetzt, du hast dir die Zeit zum Zielen genommen.',
+  'Zerstörer' =>
+	'Zerstörer',
+  'Der Zerstörer verfügt über einen Hochdruck-Kompressor, um eine Batterie besonder effektiv zu verschießen. Unglücklicherweise halten Batterien diesem Druck nicht sonderlich gut stand, sodass der Zerstörer eher Metallsplitter als komplette Batterien verschießt. Diese richten zwar gewaltigen Schaden an, haben aber nicht unbedingt eine sonderlich große Reichweite. Außerdem wird dich der Rückstoß von den Füßen reissen, sodass du für eine kurze Zeit wehrlos bist.' =>
+	'Der Zerstörer verfügt über einen Hochdruck-Kompressor, um eine Batterie besonder effektiv zu verschießen. Unglücklicherweise halten Batterien diesem Druck nicht sonderlich gut stand, sodass der Zerstörer eher Metallsplitter als komplette Batterien verschießt. Diese richten zwar gewaltigen Schaden an, haben aber nicht unbedingt eine sonderlich große Reichweite. Außerdem wird dich der Rückstoß von den Füßen reissen, sodass du für eine kurze Zeit wehrlos bist.',
+  'Diese kleinen Teile kannst du benutzen um Elektrogeräte zu betreiben. Alternativ kannst du sie auch als Munition für einen Batteriewerfer verwenden.' =>
+	'Diese kleinen Teile kannst du benutzen um Elektrogeräte zu betreiben. Alternativ kannst du sie auch als Munition für einen Batteriewerfer verwenden.',
+  'Bier' =>
+	'Bier',
+  'Bauchmuskeltrainer H.U.L.K.' =>
+	'Bauchmuskeltrainer H.U.L.K.',
+  'Du benötigst einen spontanen Kraftschub? Dann einfach Batterie einlegen und auf Start drücken! Dieser Bauchmuskeltrainer bringt dich garantiert auf Touren und ist dabei auch nur ein ganz kleines bisschen tödlich.' =>
+	'Du benötigst einen spontanen Kraftschub? Dann einfach Batterie einlegen und auf Start drücken! Dieser Bauchmuskeltrainer bringt dich garantiert auf Touren und ist dabei auch nur ein ganz kleines bisschen tödlich.',
+  'Dieses Ding liegt hier schon eine Weile. Die Kleidung ist zerfetzt und der Körper übersäht mit Bisspuren. Nichtsdestotrotz ist da noch einiges an Fleisch übrig geblieben ... die Zombies scheinen nicht an restlose Verwertung zu glauben. Du könntest deine Zähne auch noch dort reinschlagen - wenn du wirklich so verzweifelt bist.' =>
+	'Dieses Ding liegt hier schon eine Weile. Die Kleidung ist zerfetzt und der Körper übersäht mit Bisspuren. Nichtsdestotrotz ist da noch einiges an Fleisch übrig geblieben ... die Zombies scheinen nicht an restlose Verwertung zu glauben. Du könntest deine Zähne auch noch dort reinschlagen - wenn du wirklich so verzweifelt bist.',
+  'Zerfetzter Zombie' =>
+	'Zerfetzter Zombie',
+  'Dieses Ding riecht noch gammeliger als gewöhnliche Leichen. Vermutlich sind es die Überreste eines Zombies, allerdings kann man das bei dieser Fleischpampe schwer sagen. Na, macht das Teil nicht Appetit?' =>
+	'Dieses Ding riecht noch gammeliger als gewöhnliche Leichen. Vermutlich sind es die Überreste eines Zombies, allerdings kann man das bei dieser Fleischpampe schwer sagen. Na, macht das Teil nicht Appetit?',
+  'Tierkadaver' =>
+	'Tierkadaver',
+  'Tja, Zombies ist es wohl ziemlich egal ob sie Jagd auf Menschen oder Tiere machen. Dieses Vieh war mal Zombiesfutter.... jetzt könnte es Futter für dich werden, sofern du ziemlich anspruchslos bist.' =>
+	'Tja, Zombies ist es wohl ziemlich egal ob sie Jagd auf Menschen oder Tiere machen. Dieses Vieh war mal Zombiesfutter.... jetzt könnte es Futter für dich werden, sofern du ziemlich anspruchslos bist.',
+  'Mit diesem Leichensack kannst du - Überraschung - Leichen transportieren. Schön verpackt ist so ein Körper viel einfacher zu transportieren, wenn du also auf Leichenjagd gehst solltest du so einen Sack immer dabei haben.' =>
+	'Mit diesem Leichensack kannst du - Überraschung - Leichen transportieren. Schön verpackt ist so ein Körper viel einfacher zu transportieren, wenn du also auf Leichenjagd gehst solltest du so einen Sack immer dabei haben.',
+  'Mit diesem Leichensack kannst du - Überraschung - Leichen transportieren. Schön verpackt ist so ein Körper viel einfacher zu transportieren, wenn du also auf Leichenjagd gehst solltest du so einen Sack immer dabei haben. Dieser Leichensack weist allerdings einige Gebrauchsspuren auf... er könnte beim Transport aufreißen, sei also vorsichtig.' =>
+	'Mit diesem Leichensack kannst du - Überraschung - Leichen transportieren. Schön verpackt ist so ein Körper viel einfacher zu transportieren, wenn du also auf Leichenjagd gehst solltest du so einen Sack immer dabei haben. Dieser Leichensack weist allerdings einige Gebrauchsspuren auf... er könnte beim Transport aufreißen, sei also vorsichtig.',
+  'Prall gefüllter Leichensack' =>
+	'Prall gefüllter Leichensack',
+  'Da hast du ja einen dicken Fang an Land gezogen. Zum Glück kannst du ihn in diesem Leichensack gut transportieren.' =>
+	'Da hast du ja einen dicken Fang an Land gezogen. Zum Glück kannst du ihn in diesem Leichensack gut transportieren.',
+  'Dieser Leichensack ist sicherlich praktisch - wäre da nicht dieses klaffende Loch. Hiermit kannst du nichts transportieren, aber du könntest es zuhause auf deiner Werkbank flicken...' =>
+	'Dieser Leichensack ist sicherlich praktisch - wäre da nicht dieses klaffende Loch. Hiermit kannst du nichts transportieren, aber du könntest es zuhause auf deiner Werkbank flicken...',
+  'Frittierte Leiche' =>
+	'Frittierte Leiche',
+  'Wer sagt, dass man nur kleine Dinge frittieren kann? Diese Leiche kannst du jetzt fast ohne gesundheitliche Risiken essen, und sie schmeckt auch noch viel besser!' =>
+	'Wer sagt, dass man nur kleine Dinge frittieren kann? Diese Leiche kannst du jetzt fast ohne gesundheitliche Risiken essen, und sie schmeckt auch noch viel besser!',
+  'Du kannst diese kleinen Holzbolzen mit einer Armbrust abfeuern. Die werden nicht so viel Schaden anrichten wie eine Batterie, aber dafür kannst du sie leichter herstellen.' =>
+	'Du kannst diese kleinen Holzbolzen mit einer Armbrust abfeuern. Die werden nicht so viel Schaden anrichten wie eine Batterie, aber dafür kannst du sie leichter herstellen.',
+  'Häng dir einen Mammut-Mantel um und zieh den Lendenschurz stramm - dieses Accessoire komplettiert deinen stylischen Neandertal-Look. Wenn du Ärger mit einem Zombie hast, knall ihm einfach dieses Ding über die Rübe und zieh ihn dann in deine Höhle.' =>
+	'Häng dir einen Mammut-Mantel um und zieh den Lendenschurz stramm - dieses Accessoire komplettiert deinen stylischen Neandertal-Look. Wenn du Ärger mit einem Zombie hast, knall ihm einfach dieses Ding über die Rübe und zieh ihn dann in deine Höhle.',
+  'To be, or not to be... wobei die Frage eher ist: "Warum zur Hölle schleppst du einen Schädel mit dir rum?". Du könntest dich natürlich damit rausreden, dass du das Ding auf Zombies werfen willst...' =>
+	'To be, or not to be... wobei die Frage eher ist: "Warum zur Hölle schleppst du einen Schädel mit dir rum?". Du könntest dich natürlich damit rausreden, dass du das Ding auf Zombies werfen willst...',
+  'Klassiker' =>
+	'Klassiker',
+  'Diesen Klassiker der Literatur sollte man gelesen haben. Hast du das nicht, dann hol es gefälligst nach bevor du stirbst! Zeit genug hast du ja jetzt...' =>
+	'Diesen Klassiker der Literatur sollte man gelesen haben. Hast du das nicht, dann hol es gefälligst nach bevor du stirbst! Zeit genug hast du ja jetzt...',
+  'Dieses kleine Heftchen beschreibt die komplexe Funktionsweise eines Haushaltsgegenstands in 6 verschiedenen Sprachen - eine davon ist chinesisch, der Rest Kauderwelsch.' =>
+	'Dieses kleine Heftchen beschreibt die komplexe Funktionsweise eines Haushaltsgegenstands in 6 verschiedenen Sprachen - eine davon ist chinesisch, der Rest Kauderwelsch.',
+  'Kiste mit Gehirnen' =>
+	'Kiste mit Gehirnen',
+  'Diese Kiste enthält... nun... GEHIRNE! Wer zum Teufel verpackt denn bitte GEHIRNE in KISTEN? Und... warum?' =>
+	'Diese Kiste enthält... nun... GEHIRNE! Wer zum Teufel verpackt denn bitte GEHIRNE in KISTEN? Und... warum?',
+  'Eine Chemikalie' =>
+	'Eine Chemikalie',
+  'Das ist der letzte Fashion-Schrei aus der neuen Mad Max Collection - und praktisch ist es auch noch. Durch die verschiedenen Schutzschichten dieser verstärkten Straßenkleidung beisst sich so schnell kein Zombie durch!' =>
+	'Das ist der letzte Fashion-Schrei aus der neuen Mad Max Collection - und praktisch ist es auch noch. Durch die verschiedenen Schutzschichten dieser verstärkten Straßenkleidung beisst sich so schnell kein Zombie durch!',
+  'Nichts geht über einen kalten Kaffee, um den Tag zu beginnen.... naja, vielleicht ein heißer Kaffee. Nichtsdestotrotz versorgt dich dieses erkaltete Heißgetränk mit frischer Energie und bekämpft deine Müdigkeit.' =>
+	'Nichts geht über einen kalten Kaffee, um den Tag zu beginnen.... naja, vielleicht ein heißer Kaffee. Nichtsdestotrotz versorgt dich dieses erkaltete Heißgetränk mit frischer Energie und bekämpft deine Müdigkeit.',
+  'Billiger Holzsarg' =>
+	'Billiger Holzsarg',
+  'Der Besitzer dieses Holzsargs hat bei seinem Begräbnis anscheinend gespart. Willst du nicht mal einen blick hinein riskieren? Möglicherweise hab man dem armen Tropf in dieser Kiste eine Beigabe in den Sarg gepackt ...' =>
+	'Der Besitzer dieses Holzsargs hat bei seinem Begräbnis anscheinend gespart. Willst du nicht mal einen blick hinein riskieren? Möglicherweise hab man dem armen Tropf in dieser Kiste eine Beigabe in den Sarg gepackt ...',
+  'Edler Sarg' =>
+	'Edler Sarg',
+  'Bestes mit Klavirlack bemaltes Holz, goldene Griffe, ein religiöses Emblem in der Mitte... dieser Sarg war sicher ziemlich teuer! Mit etwas Glück liegt im Sarg noch eine wertvolle Beigabe! Warum schaust du nicht mal nach?' =>
+	'Bestes mit Klavirlack bemaltes Holz, goldene Griffe, ein religiöses Emblem in der Mitte... dieser Sarg war sicher ziemlich teuer! Mit etwas Glück liegt im Sarg noch eine wertvolle Beigabe! Warum schaust du nicht mal nach?',
+  'Allein der Duft dieses leckeren Plätzchens lässt dich alles um dich herum vergessen. Plötzlich bist du wieder ein kleines Kind, das unter dem Weihnachtsbaum sitzt und seine Geschenke auspackt. Natürlich kannst du dieses Plätzchen einfach essen - du könntest es natürlich auch in deinem Versteck für den Weihnachtsmann zurücklassen, der dir dafür sicherlich dankbar wäre...' =>
+	'Allein der Duft dieses leckeren Plätzchens lässt dich alles um dich herum vergessen. Plötzlich bist du wieder ein kleines Kind, das unter dem Weihnachtsbaum sitzt und seine Geschenke auspackt. Natürlich kannst du dieses Plätzchen einfach essen - du könntest es natürlich auch in deinem Versteck für den Weihnachtsmann zurücklassen, der dir dafür sicherlich dankbar wäre...',
+  'Besonderes Weihnachtsplätzchen' =>
+	'Besonderes Weihnachtsplätzchen',
+  'Allein der Duft dieses leckeren Plätzchens lässt dich alles um dich herum vergessen - hauptsächlich wegen der in den Teig gemischten Drogen. Dieses Plätzchen verbreitet zwar nicht unbedingt Weihnachtsstimmung, aber du siehst nach seinem Genuss zumindest Sterne!' =>
+	'Allein der Duft dieses leckeren Plätzchens lässt dich alles um dich herum vergessen - hauptsächlich wegen der in den Teig gemischten Drogen. Dieses Plätzchen verbreitet zwar nicht unbedingt Weihnachtsstimmung, aber du siehst nach seinem Genuss zumindest Sterne!',
+  'Diese nicht sonderlich stabil aussehende Armbrust kann dein Retter in der Not werden, wenn dir mal wieder die Batterien ausgegangen sind. Immerhin kannst du ihre Bolzen an deiner Werkbank selbst fertigen.' =>
+	'Diese nicht sonderlich stabil aussehende Armbrust kann dein Retter in der Not werden, wenn dir mal wieder die Batterien ausgegangen sind. Immerhin kannst du ihre Bolzen an deiner Werkbank selbst fertigen.',
+  'Kondenswasser' =>
+	'Kondenswasser',
+  'Du hast ein paar Tropfen Kondenswasser gesammelt. Wirklich viel ist es nicht, aber immerhin besser als nichts!' =>
+	'Du hast ein paar Tropfen Kondenswasser gesammelt. Wirklich viel ist es nicht, aber immerhin besser als nichts!',
+  'Dreckiges Kondenswasser' =>
+	'Dreckiges Kondenswasser',
+  'Du hast ein paar Tropfen Kondenswasser gesammelt... Leider war die Oberfläche nicht allzu sauber. Dieses Wasser ist vermutlich nicht übermäßig gesund...' =>
+	'Du hast ein paar Tropfen Kondenswasser gesammelt... Leider war die Oberfläche nicht allzu sauber. Dieses Wasser ist vermutlich nicht übermäßig gesund...',
+  'Energie wird von deinem Notstrom-Aggregat erzeugt und ist für diverse Ausbauten erforderlich. Außerdem kannst du damit Batterien in Supercarger-Batterien verwandeln..' =>
+	'Energie wird von deinem Notstrom-Aggregat erzeugt und ist für diverse Ausbauten erforderlich. Außerdem kannst du damit Batterien in Supercarger-Batterien verwandeln..',
+  'Fastfood' =>
+	'Fastfood',
+  'Instabile Taschenlampe' =>
+	'Instabile Taschenlampe',
+  'Diese Taschenlampe wurde mit einer Supercharger-Batterie geladen. Niemand kann vorhersagen was passiert wenn du dieses Ding einschaltest. Möglicherweise vertreibt es in der Nähe stehende Zombies, vielleicht aber auch nicht...' =>
+	'Diese Taschenlampe wurde mit einer Supercharger-Batterie geladen. Niemand kann vorhersagen was passiert wenn du dieses Ding einschaltest. Möglicherweise vertreibt es in der Nähe stehende Zombies, vielleicht aber auch nicht...',
+  'Eklige Fleischfetzen' =>
+	'Eklige Fleischfetzen',
+  'Ein Haufen undefinierbarer Fleischfetzen. Es ist unmöglich zu erkennen, wovon sie stammen. Du kannst sie einfach herunterschlingen und hoffen, dass das mal ein Tier war... Oder du könntest kranke chemische Experimente damit anstellen.' =>
+	'Ein Haufen undefinierbarer Fleischfetzen. Es ist unmöglich zu erkennen, wovon sie stammen. Du kannst sie einfach herunterschlingen und hoffen, dass das mal ein Tier war... Oder du könntest kranke chemische Experimente damit anstellen.',
+  'Tomatencremesuppe (?)' =>
+	'Tomatencremesuppe (?)',
+  'Diese ... öhm ... "Tomatencremesuppe" ... sieht ziemlich fleischig aus. Denk am besten gar nicht darüber nach, was wirklich hier drin sein könnte.' =>
+	'Diese ... öhm ... "Tomatencremesuppe" ... sieht ziemlich fleischig aus. Denk am besten gar nicht darüber nach, was wirklich hier drin sein könnte.',
+  'Schachtel mit Nahrungsergänzungsmitteln' =>
+	'Schachtel mit Nahrungsergänzungsmitteln',
+  'Diese Nahrungsergänzungsmittel enthalten diverses hochkonzentriertes Zeug, das nach neuesten Forschungen der Marketingabteilung des Herstellers absolut lebensnotwendig und unverzichtbar ist. Jetzt kannst auch du 50€ für etwas zahlen, was du auch bekommen würdest, wenn du einfach in eine Kuh beißt.' =>
+	'Diese Nahrungsergänzungsmittel enthalten diverses hochkonzentriertes Zeug, das nach neuesten Forschungen der Marketingabteilung des Herstellers absolut lebensnotwendig und unverzichtbar ist. Jetzt kannst auch du 50€ für etwas zahlen, was du auch bekommen würdest, wenn du einfach in eine Kuh beißt.',
+  'Christbaumkugel' =>
+	'Christbaumkugel',
+  'Diese wundervolle Christbaumkugel weckt weihnachtliche Gefühle in dir - und sie weckt mörderische Gefühle in dir, wenn du daran denkst, dass du sie auch auf einen Zombie werfen kannst.' =>
+	'Diese wundervolle Christbaumkugel weckt weihnachtliche Gefühle in dir - und sie weckt mörderische Gefühle in dir, wenn du daran denkst, dass du sie auch auf einen Zombie werfen kannst.',
+  'Sarg-Matratze' =>
+	'Sarg-Matratze',
+  'Dafür dass normalerweise nur Tote auf ihr liegen ist diese Matratze enorm bequem! ' =>
+	'Dafür dass normalerweise nur Tote auf ihr liegen ist diese Matratze enorm bequem! ',
+  'Wenn du in Physik aufgepasst hättest, wüsstest du das Riemen in vielen mechanischen Anlagen unerlässlich sind. Ihre wichtigste Funktion ist, genau im falschen Moment zu reißen, was im Allgemeinen zu lustigen und gelegentlich tödlichen Situationen führt.' =>
+	'Wenn du in Physik aufgepasst hättest, wüsstest du das Riemen in vielen mechanischen Anlagen unerlässlich sind. Ihre wichtigste Funktion ist, genau im falschen Moment zu reißen, was im Allgemeinen zu lustigen und gelegentlich tödlichen Situationen führt.',
+  'Ein simpler Drahtesel, mit dem du jederzeit überall hin kommst! Nur jetzt gerade nicht, denn es ist kaputt und muss repariert werden. Aber wenn du erstmal ein bisschen Arbeit reingesteckt hast wird es sich sicher lohnen!' =>
+	'Ein simpler Drahtesel, mit dem du jederzeit überall hin kommst! Nur jetzt gerade nicht, denn es ist kaputt und muss repariert werden. Aber wenn du erstmal ein bisschen Arbeit reingesteckt hast wird es sich sicher lohnen!',
+  'Ein simpler Drahtesel, mit dem du jederzeit überall hin kommst! Achtung: Kann nicht verwendet werden, um Zombieschädel zu spalten. Erstens würdest du es damit kaputt machen, zweitens ist es eh viel zu schwer dafür.' =>
+	'Ein simpler Drahtesel, mit dem du jederzeit überall hin kommst! Achtung: Kann nicht verwendet werden, um Zombieschädel zu spalten. Erstens würdest du es damit kaputt machen, zweitens ist es eh viel zu schwer dafür.',
+  'Han Solo Wackelkopf-Figur' =>
+	'Han Solo Wackelkopf-Figur',
+  'Dies ist die originale Han Solo Wackelkopf-Figur, die im Film als Stund-Double von Harrison Ford eingesetzt wurde. Hätte es die nicht gegeben, dann hätte Han ja zuerst schießen müssen!' =>
+	'Dies ist die originale Han Solo Wackelkopf-Figur, die im Film als Stund-Double von Harrison Ford eingesetzt wurde. Hätte es die nicht gegeben, dann hätte Han ja zuerst schießen müssen!',
+  'Dieser Wasserkocher ist vielseitig einsetzbar - er kann zum Beispiel Wasser kochen. Und das ist nur eine seiner besonderen Fähigkeiten!' =>
+	'Dieser Wasserkocher ist vielseitig einsetzbar - er kann zum Beispiel Wasser kochen. Und das ist nur eine seiner besonderen Fähigkeiten!',
+  'Hier hat anscheinend jemand in der Nähe einer Leichen einen Fressanfall gehabt ...  oder du hast einfach die Überreste eines Magersüchtigen gefunden.' =>
+	'Hier hat anscheinend jemand in der Nähe einer Leichen einen Fressanfall gehabt ...  oder du hast einfach die Überreste eines Magersüchtigen gefunden.',
+  'Schlimme Musik-CD' =>
+	'Schlimme Musik-CD',
+  'Dieser von Elfen in weihnachtlicher Kinderarbeit hergestellte Teig ist alles, was du brauchst, um in Festtagsstimmung zu kommen. Und weil er von Elfen gemacht wurde ist er selbstständlich so magisch, dass sich aus ihm geformte Plätzchen automatisch selbst aufbacken. Wie praktisch!' =>
+	'Dieser von Elfen in weihnachtlicher Kinderarbeit hergestellte Teig ist alles, was du brauchst, um in Festtagsstimmung zu kommen. Und weil er von Elfen gemacht wurde ist er selbstständlich so magisch, dass sich aus ihm geformte Plätzchen automatisch selbst aufbacken. Wie praktisch!',
+  'Böser Teddy' =>
+	'Böser Teddy',
+  'Diesem Teddy wurden die Augen herausgerissen und er ist mit Blut beschmiert! Normalerweise sind Teddies ja niedlich, aber DIESER HIER ...' =>
+	'Diesem Teddy wurden die Augen herausgerissen und er ist mit Blut beschmiert! Normalerweise sind Teddies ja niedlich, aber DIESER HIER ...',
+  'Kaputtes Ei' =>
+	'Kaputtes Ei',
+  'Nicht nur, dass dieses Ei kaputt ist, es ist auch noch nicht einmal gefärbt. Tja, da hast du wohl eine Niete gezogen...' =>
+	'Nicht nur, dass dieses Ei kaputt ist, es ist auch noch nicht einmal gefärbt. Tja, da hast du wohl eine Niete gezogen...',
+  'Farbiges Osterei' =>
+	'Farbiges Osterei',
+  'Du hast ein farbiges Osterei gefunden! Leider ist es schon aufgebrochen, daher kannst du es nicht essen. Naja, Corax wird dir das Ei sicher trotzdem abnehmen.' =>
+	'Du hast ein farbiges Osterei gefunden! Leider ist es schon aufgebrochen, daher kannst du es nicht essen. Naja, Corax wird dir das Ei sicher trotzdem abnehmen.',
+  'Prächtiges Osterei' =>
+	'Prächtiges Osterei',
+  'Du hast ein prächtiges Osterei gefunden! Es ist bunt bemalt, kunstvoll verziehrt und fast völlig unbeschädigt - das Teil ist sicher einiges wert!' =>
+	'Du hast ein prächtiges Osterei gefunden! Es ist bunt bemalt, kunstvoll verziehrt und fast völlig unbeschädigt - das Teil ist sicher einiges wert!',
+  'Designer-Osterei' =>
+	'Designer-Osterei',
+  'Du hast ein Designer-Osterei gefunden! Es ist aus schwarz glänzendem Marmor gefertigt und sieht sehr edel aus. Für so ein Teil müsste man auf einer Auktion Millionen hinblättern, dir hingegen fällt es einfach so vor die Füße.' =>
+	'Du hast ein Designer-Osterei gefunden! Es ist aus schwarz glänzendem Marmor gefertigt und sieht sehr edel aus. Für so ein Teil müsste man auf einer Auktion Millionen hinblättern, dir hingegen fällt es einfach so vor die Füße.',
+  'Lametta' =>
+	'Lametta',
+  'An Lametta scheiden sich die Geister - die einen lieben es, die anderen hassen es. Der Entwickler dieses Spiels gehört offensichtlich zur ersten Gruppe.' =>
+	'An Lametta scheiden sich die Geister - die einen lieben es, die anderen hassen es. Der Entwickler dieses Spiels gehört offensichtlich zur ersten Gruppe.',
+  'Lasermessgerät' =>
+	'Lasermessgerät',
+  'Wenn du es richtig bedienst, kann dir dieses Ding beim Kartographieren einer Ruine sehr viel Arbeit abnehmen.' =>
+	'Wenn du es richtig bedienst, kann dir dieses Ding beim Kartographieren einer Ruine sehr viel Arbeit abnehmen.',
+  'LED' =>
+	'LED',
+  'Diese LED ist so unglaublich energieeffizient, dass sie fast von alleine leuchtet. Allerdings wird dir eine einzige nicht allzu viel bringen, denn sonderlich viel Licht erzeugt sie nicht...' =>
+	'Diese LED ist so unglaublich energieeffizient, dass sie fast von alleine leuchtet. Allerdings wird dir eine einzige nicht allzu viel bringen, denn sonderlich viel Licht erzeugt sie nicht...',
+  'Mistelzweig' =>
+	'Mistelzweig',
+  'Willst du wirklich hier einen Mistelzweig aufhängen? Schau dir doch mal an, wer hier alles rumläuft... willst du wirklich einen von denen küssen müssen?' =>
+	'Willst du wirklich hier einen Mistelzweig aufhängen? Schau dir doch mal an, wer hier alles rumläuft... willst du wirklich einen von denen küssen müssen?',
+  'Dieser Handmixer hat schon bessere Tage gesehen... Naja, wenigstens verleiht er allen Speisen, die du mit seiner Hilfe zubereitest, ein würziges Rost-Aroma. Lecker!' =>
+	'Dieser Handmixer hat schon bessere Tage gesehen... Naja, wenigstens verleiht er allen Speisen, die du mit seiner Hilfe zubereitest, ein würziges Rost-Aroma. Lecker!',
+  'Dieser Motor ist ein Wunderwerk der Technik, ausgezeichnet durch geringen Abgaßausstoß und hohe Energieeffizienz. Leider nützt er dir nicht viel ohne Kraftstoff...' =>
+	'Dieser Motor ist ein Wunderwerk der Technik, ausgezeichnet durch geringen Abgaßausstoß und hohe Energieeffizienz. Leider nützt er dir nicht viel ohne Kraftstoff...',
+  'Dieser alte, aber noch funktionstüchtige Ofen wird dir helfen, in deiner heimischen Küche !' =>
+	'Dieser alte, aber noch funktionstüchtige Ofen wird dir helfen, in deiner heimischen Küche !',
+  'Plasmablitz-Generator' =>
+	'Plasmablitz-Generator',
+  'Ein Gerät, dass Luft auf eine ultrahohe Temperatur erhitzen und so Plasma erzeugen kann - und alles was man dafür braucht ist eine kleine Erregerspannung. Damit kannst du doch sicher was tolles bauen - schau am besten mal in deinem lokalen Waffengeschäft vorbei, dort solltest du alle nötigen Werkzeuge finden.' =>
+	'Ein Gerät, dass Luft auf eine ultrahohe Temperatur erhitzen und so Plasma erzeugen kann - und alles was man dafür braucht ist eine kleine Erregerspannung. Damit kannst du doch sicher was tolles bauen - schau am besten mal in deinem lokalen Waffengeschäft vorbei, dort solltest du alle nötigen Werkzeuge finden.',
+  'Dieses unscheinbare Bauteil ist unglaublich selten und wertvoll! Du solltest es unbedingt mitnehmen, möglicherweise kann es deine Zombie- oder Wasserprobleme lösen...' =>
+	'Dieses unscheinbare Bauteil ist unglaublich selten und wertvoll! Du solltest es unbedingt mitnehmen, möglicherweise kann es deine Zombie- oder Wasserprobleme lösen...',
+  'Leider ist es nur ein Zierkürbis, du kannst ihn also nicht essen. Aber sicherlich findest du eine Verwendung für ihn. ' =>
+	'Leider ist es nur ein Zierkürbis, du kannst ihn also nicht essen. Aber sicherlich findest du eine Verwendung für ihn. ',
+  'Mit dieser Gewürzmischung kannst du beim Kochen sogar die langweiligste Speise aufpeppen!' =>
+	'Mit dieser Gewürzmischung kannst du beim Kochen sogar die langweiligste Speise aufpeppen!',
+  'Du hast diese Batterie so stark überladen, dass sie zu explodieren droht, deshalb musst du sie auch mit Samthandschuhen anfassen. Komm bloß nicht auf die Idee, diese Batterie zu den anderen in deinen Munitionsgürtel zu stecken oder gar mit einem Batteriewerfer abzufeuern - es sei denn, du möchtest dich gerne im Zentrum einer Pilzwolke wiederfinden.' =>
+	'Du hast diese Batterie so stark überladen, dass sie zu explodieren droht, deshalb musst du sie auch mit Samthandschuhen anfassen. Komm bloß nicht auf die Idee, diese Batterie zu den anderen in deinen Munitionsgürtel zu stecken oder gar mit einem Batteriewerfer abzufeuern - es sei denn, du möchtest dich gerne im Zentrum einer Pilzwolke wiederfinden.',
+  'Geheimnisvolles Ticket' =>
+	'Geheimnisvolles Ticket',
+  'Die Schrift auf diesem Ticket ist verblasst, nachdem es so lange der Sonnenstrahlung in der Aussenwelt ausgesetzt war. Was kann man mit diesem Ticket wohl machen?' =>
+	'Die Schrift auf diesem Ticket ist verblasst, nachdem es so lange der Sonnenstrahlung in der Aussenwelt ausgesetzt war. Was kann man mit diesem Ticket wohl machen?',
+  'Verseuchtes Wasser' =>
+	'Verseuchtes Wasser',
+  'Dieses Wasser zu finden war nicht schwer - immerhin riecht man es Kilometer gegen den Wind. Um dieses ekelhafte schleimige Zeug zu trinken musst du schon sehr verzweifelt sein.' =>
+	'Dieses Wasser zu finden war nicht schwer - immerhin riecht man es Kilometer gegen den Wind. Um dieses ekelhafte schleimige Zeug zu trinken musst du schon sehr verzweifelt sein.',
+  'Wäre dies ein Browserspiel mit Vampiren, dann wäre dieses Item sicher wertvoll. Weil Zombies aber viel cooler sind als Vampire, ist dieses Item einfach nur eklig. Bäh!' =>
+	'Wäre dies ein Browserspiel mit Vampiren, dann wäre dieses Item sicher wertvoll. Weil Zombies aber viel cooler sind als Vampire, ist dieses Item einfach nur eklig. Bäh!',
+  'Dieses Wasser stammt aus einer deiner Flaschen. Du willst es doch hier nicht versickern lassen, oder?' =>
+	'Dieses Wasser stammt aus einer deiner Flaschen. Du willst es doch hier nicht versickern lassen, oder?',
+  'Draht kann man eigentlich immer gebrauchen. Er ist zum beispiel nützlich um irgendwelchen Elektromüll zu verkabeln. Oder du kannst damit lustige Fallen in deinem Versteck bauen, um mit den Zombies so eine "Kevin allein zu Haus"-Nummer abzuziehen.' =>
+	'Draht kann man eigentlich immer gebrauchen. Er ist zum beispiel nützlich um irgendwelchen Elektromüll zu verkabeln. Oder du kannst damit lustige Fallen in deinem Versteck bauen, um mit den Zombies so eine "Kevin allein zu Haus"-Nummer abzuziehen.',
+  'Christbaumlichter' =>
+	'Christbaumlichter',
+  'Diese Lichterkette verbreitet extreme Weihnachtsstimmung. Außerdem ist sie vielseitig einsetzbar; du kannst zum Beispiel einen Weihnachtsbaum damit schmücken.' =>
+	'Diese Lichterkette verbreitet extreme Weihnachtsstimmung. Außerdem ist sie vielseitig einsetzbar; du kannst zum Beispiel einen Weihnachtsbaum damit schmücken.',
+  'Beutel mit Tannennadeln' =>
+	'Beutel mit Tannennadeln',
+  'Welch ein merkwürdiger Gegenstand... man könnte meinen, er wäre wegen irgend einer Art von Event in dieses Spiel aufgenommen worden.' =>
+	'Welch ein merkwürdiger Gegenstand... man könnte meinen, er wäre wegen irgend einer Art von Event in dieses Spiel aufgenommen worden.',
+  'Schmuckseil' =>
+	'Schmuckseil',
+  'Eine Last kann dieses Seil nicht tragen - einen Weihnachtsbaum schmücken hingegen schon.' =>
+	'Eine Last kann dieses Seil nicht tragen - einen Weihnachtsbaum schmücken hingegen schon.',
+  'Metallsäge' =>
+	'Metallsäge',
+  'Beim Anblick dieser Säge läuft dir ein kalter Schauer den Rücken herunter...' =>
+	'Beim Anblick dieser Säge läuft dir ein kalter Schauer den Rücken herunter...',
+  'Revolver' =>
+	'Revolver',
+  'Batteriewerfer? HA! Mit diesem Baby nimmst du Zombies aus der Entfernung mit einem Lächeln aufs Korn!' =>
+	'Batteriewerfer? HA! Mit diesem Baby nimmst du Zombies aus der Entfernung mit einem Lächeln aufs Korn!',
+  'Für einen normalen Radfahrer wären diese Upgrades ein ziemlicher Overkill - im Falle einer Zombieapokalypse kann man jedoch nicht vorsichtig genug sein.' =>
+	'Für einen normalen Radfahrer wären diese Upgrades ein ziemlicher Overkill - im Falle einer Zombieapokalypse kann man jedoch nicht vorsichtig genug sein.',
+  'Heilige Schrift' =>
+	'Heilige Schrift',
+  'Wann immer du am Zustand der Welt verzweifelst kannst du aus dieser Heiligen Schrift Kraft schöpfen.' =>
+	'Wann immer du am Zustand der Welt verzweifelst kannst du aus dieser Heiligen Schrift Kraft schöpfen.',
+  'Weihasserbombe' =>
+	'Weihasserbombe',
+  'Sobald die Zombies in Wurfreichweite kommen kannst du ihnen mit diesem kleinen Geschenk die Tour vermiesen. Nichts ist effektiver gegen eine Gruppe Zombies als eine Wasserbombe - außer natürlich einer Weihwasserbombe!!' =>
+	'Sobald die Zombies in Wurfreichweite kommen kannst du ihnen mit diesem kleinen Geschenk die Tour vermiesen. Nichts ist effektiver gegen eine Gruppe Zombies als eine Wasserbombe - außer natürlich einer Weihwasserbombe!!',
+  'Lunchbag' =>
+	'Lunchbag',
+  'Es gibt nichts schöneres als liebevoll von Mutti bestrichene Brote. Gut, es war nicht deine eigene Mutter, und diese Tüte liegt seit Jahren hier in der Sonne, aber wir wollen doch jetzt nicht anfangen wählerisch zu werden, oder?' =>
+	'Es gibt nichts schöneres als liebevoll von Mutti bestrichene Brote. Gut, es war nicht deine eigene Mutter, und diese Tüte liegt seit Jahren hier in der Sonne, aber wir wollen doch jetzt nicht anfangen wählerisch zu werden, oder?',
+  'Kosmische Machete' =>
+	'Kosmische Machete',
+  'Diese Machete ist nicht einfach scharf - sie ist kosmisch! Die Klinge besteht aus gehärtetem Meteoritenstahl und ist schärfer als Tods Sense. Notfalls kannst du damit sogar Atome spalten, durch Zombies geht die Klinge wie durch Luft.' =>
+	'Diese Machete ist nicht einfach scharf - sie ist kosmisch! Die Klinge besteht aus gehärtetem Meteoritenstahl und ist schärfer als Tods Sense. Notfalls kannst du damit sogar Atome spalten, durch Zombies geht die Klinge wie durch Luft.',
+  '2 Macheten' =>
+	'2 Macheten',
+  'Es gibt nichts cooleres als mit zwei Macheten in der Hand wie ein Samurai durch Zombiehorden zu pflügen. Durch die ganze abgefahrene Choreographie verbrauchst du zwar einiges an Energie, aber das ist es wert!' =>
+	'Es gibt nichts cooleres als mit zwei Macheten in der Hand wie ein Samurai durch Zombiehorden zu pflügen. Durch die ganze abgefahrene Choreographie verbrauchst du zwar einiges an Energie, aber das ist es wert!',
+  'Kartographenausrüstung Marke "Glutspur"' =>
+	'Kartographenausrüstung Marke "Glutspur"',
+  'Dieses Sammlung nützlicher Dinge enthält alles, was du zum Kartographieren von Ruinen benötigst! ... nagut, es besteht aus einem Stapel Papier und einem Bleistift. Aber der ist immerhin spitz! Also hör auf dich zu beschweren!' =>
+	'Dieses Sammlung nützlicher Dinge enthält alles, was du zum Kartographieren von Ruinen benötigst! ... nagut, es besteht aus einem Stapel Papier und einem Bleistift. Aber der ist immerhin spitz! Also hör auf dich zu beschweren!',
+  'Geld' =>
+	'Geld',
+  'So richtig viel kannst du mit diesem Geld nicht wirklich anfangen, immerhin haben die meisten Geschäfte hier in der Umgebung geschlossen. Aber hey, einem geschenkten Gaul haut nicht aufs Maul... oder so. Steck die Kohle einfach in deinen Munitionsgürtel, bis du etwas findest für dass du es ausgeben kannst.' =>
+	'So richtig viel kannst du mit diesem Geld nicht wirklich anfangen, immerhin haben die meisten Geschäfte hier in der Umgebung geschlossen. Aber hey, einem geschenkten Gaul haut nicht aufs Maul... oder so. Steck die Kohle einfach in deinen Munitionsgürtel, bis du etwas findest für dass du es ausgeben kannst.',
+  'Diese selbstgekochte Speise ist so lecker, dass du beim gedanken an sie direkt zu Sabbern anfängst. Etwas so gutes findet man nicht einfach irgendwo - man muss es sich selbst zusammenkochen!' =>
+	'Diese selbstgekochte Speise ist so lecker, dass du beim gedanken an sie direkt zu Sabbern anfängst. Etwas so gutes findet man nicht einfach irgendwo - man muss es sich selbst zusammenkochen!',
+  'Diese leckere Speise ist zusätzlich noch perfekt gewürzt. Einen so verführerischen Gaumenschmauß dürfen nur die wenigsten Verdammten genießen... du bist nun einer von ihnen.' =>
+	'Diese leckere Speise ist zusätzlich noch perfekt gewürzt. Einen so verführerischen Gaumenschmauß dürfen nur die wenigsten Verdammten genießen... du bist nun einer von ihnen.',
+  'Nährplasma' =>
+	'Nährplasma',
+  'Dieses Zeug ist vollgepumpt mit Chemie. Was diese Chemie bewirkt? Who knows?' =>
+	'Dieses Zeug ist vollgepumpt mit Chemie. Was diese Chemie bewirkt? Who knows?',
+  'Gewehr' =>
+	'Gewehr',
+  'Ein gutes, altmodisches Gewehr - es ist nach wie vor schussbereit und sehr gut geeignet, einem Zombie den Kopf wegzublasen. Außerdem scheint man es mit der gleichen Munition wie eine Pistole laden zu können. Na, so ein Glück aber auch!' =>
+	'Ein gutes, altmodisches Gewehr - es ist nach wie vor schussbereit und sehr gut geeignet, einem Zombie den Kopf wegzublasen. Außerdem scheint man es mit der gleichen Munition wie eine Pistole laden zu können. Na, so ein Glück aber auch!',
+  'Religiöse Schrift' =>
+	'Religiöse Schrift',
+  'Dir ist langweilig und du würdest dich gerne uneingeladen in jemandes Leben einmischen, weißt aber nicht in wessen? Keine Sorge, mithilfe dieser Schrift wirst du Rechtfertigungen finden um gegen alle möglichen Minderheiten zu hetzen, um von deinem eigenen, völlig verkorksten Leben abzulenken.' =>
+	'Dir ist langweilig und du würdest dich gerne uneingeladen in jemandes Leben einmischen, weißt aber nicht in wessen? Keine Sorge, mithilfe dieser Schrift wirst du Rechtfertigungen finden um gegen alle möglichen Minderheiten zu hetzen, um von deinem eigenen, völlig verkorksten Leben abzulenken.',
+  'Pfefferspray' =>
+	'Pfefferspray',
+  'Dieses Pfefferspray ist eigentlich für Bären gedacht - hilft aber auch super gegen Zombies, Männer und andere hirntote Gestalten.' =>
+	'Dieses Pfefferspray ist eigentlich für Bären gedacht - hilft aber auch super gegen Zombies, Männer und andere hirntote Gestalten.',
+  'Windows Phone' =>
+	'Windows Phone',
+  'Wow, du hast ein Windows Phone gefunden - DAS Smartphone für Menschen, die sich auch einen Trabbi zum Preis eines Porsches andrehen lassen. Naja, mit diesem Teil kannst du zwar nicht wirklich angeben (oder ZombVival spielen), aber du kannst es zumindest auf einen Zombie werfen. Das ist doch auch was!' =>
+	'Wow, du hast ein Windows Phone gefunden - DAS Smartphone für Menschen, die sich auch einen Trabbi zum Preis eines Porsches andrehen lassen. Naja, mit diesem Teil kannst du zwar nicht wirklich angeben (oder ZombVival spielen), aber du kannst es zumindest auf einen Zombie werfen. Das ist doch auch was!',
+  'Eine Pille' =>
+	'Eine Pille',
+  'Experimentelle Plasmakanone' =>
+	'Experimentelle Plasmakanone',
+  'Dieser Waffe liegt ein faszinierendes Konzept zu grunde: Was, wenn man die Energie einer Batterie als Waffe nutzen würde, anstatt einfach die Batterie zu verschießen? Die experimentelle Plasmakanone benutzt richtig abgefahrene Wissenschaft sowie eine Batterie, um auf Plasmatemperatur erhitzte Luftpartikel in Richtung Zombies zu katapultieren. Wo diese Waffe hinfeuert bleibt kein Stein mehr auf dem anderen... allerdings kannst du sie aufgrund der extremen Hitzeentwicklung nur einmal pro Kampf einsetzen - und auch nur gegen Zombies, die weit entfernt stehen.' =>
+	'Dieser Waffe liegt ein faszinierendes Konzept zu grunde: Was, wenn man die Energie einer Batterie als Waffe nutzen würde, anstatt einfach die Batterie zu verschießen? Die experimentelle Plasmakanone benutzt richtig abgefahrene Wissenschaft sowie eine Batterie, um auf Plasmatemperatur erhitzte Luftpartikel in Richtung Zombies zu katapultieren. Wo diese Waffe hinfeuert bleibt kein Stein mehr auf dem anderen... allerdings kannst du sie aufgrund der extremen Hitzeentwicklung nur einmal pro Kampf einsetzen - und auch nur gegen Zombies, die weit entfernt stehen.',
+  'Aufgrund einer Kombination aus minderwertigem Schwarzpulver sowie deiner Unerfahrenheit im Bombenbau ist diese Schwarzpulverbombe leider nicht dafür geeignet, Zombies wegzusprengen. Sie wirbelt allerdings genug Staub auf, um Zombies zu verwirren und dir bei der Flucht vor ihnen zu helfen.' =>
+	'Aufgrund einer Kombination aus minderwertigem Schwarzpulver sowie deiner Unerfahrenheit im Bombenbau ist diese Schwarzpulverbombe leider nicht dafür geeignet, Zombies wegzusprengen. Sie wirbelt allerdings genug Staub auf, um Zombies zu verwirren und dir bei der Flucht vor ihnen zu helfen.',
+  'Geschenk' =>
+	'Geschenk',
+  '~' =>
+	'~',
+  'Ein essbarer Kürbis! Dieses riesige Teil stillt deinen Hunger garantiert - allerdings musst du die harte Schale erstmal aufbekommen...' =>
+	'Ein essbarer Kürbis! Dieses riesige Teil stillt deinen Hunger garantiert - allerdings musst du die harte Schale erstmal aufbekommen...',
+  'Verfaulter Kürbis' =>
+	'Verfaulter Kürbis',
+  'Das war mal ein essbarer Kürbis... naja, essen könntest du ihn immer noch, und vermutlich würde er deinen Hunder stillen - vorrausgesetzt, er bleibt in deinem Magen.' =>
+	'Das war mal ein essbarer Kürbis... naja, essen könntest du ihn immer noch, und vermutlich würde er deinen Hunder stillen - vorrausgesetzt, er bleibt in deinem Magen.',
+  'Süßes sonst gibts Saures! Diese Kürbisbombe ist äußerst effektiv gegen in der Nähe herumstehende Zombies, die dir einfach keine Bonbons geben wollen.' =>
+	'Süßes sonst gibts Saures! Diese Kürbisbombe ist äußerst effektiv gegen in der Nähe herumstehende Zombies, die dir einfach keine Bonbons geben wollen.',
+  'Diese leckere Suppe stillt Hunger und Durst - und verbreitet ein herbstliches Aroma. Was will man mehr?' =>
+	'Diese leckere Suppe stillt Hunger und Durst - und verbreitet ein herbstliches Aroma. Was will man mehr?',
+  'An diesem Knochen hängt noch eine Menge Fleisch. Du könntest es essen... aber dafür müsstest du schon wirklich verzweifelt sein, oder?' =>
+	'An diesem Knochen hängt noch eine Menge Fleisch. Du könntest es essen... aber dafür müsstest du schon wirklich verzweifelt sein, oder?',
+  'Du hast diesen Knochen mit Fleisch so gnadenlos abgekocht, dass du ihn nun sogar halbwegs ohne schlechtes Gewissen verputzen kannst.' =>
+	'Du hast diesen Knochen mit Fleisch so gnadenlos abgekocht, dass du ihn nun sogar halbwegs ohne schlechtes Gewissen verputzen kannst.',
+  'Dein altes Sturmgewehr' =>
+	'Dein altes Sturmgewehr',
+  'Es hat dich bisher gut duch die Zombieapokalypse gebracht, es wird dich auch weiter gut durchbringen. Zumindest, solange dir die Munition nicht ausgeht.' =>
+	'Es hat dich bisher gut duch die Zombieapokalypse gebracht, es wird dich auch weiter gut durchbringen. Zumindest, solange dir die Munition nicht ausgeht.',
+  'Dieser Holzkistendeckel sieht relativ stabil aus... du könntest damit sicherlich Zombies abwehren, aber übertreib es besser nicht.' =>
+	'Dieser Holzkistendeckel sieht relativ stabil aus... du könntest damit sicherlich Zombies abwehren, aber übertreib es besser nicht.',
+  'Autotür' =>
+	'Autotür',
+  'Autotüren geben großartige Schilde ab! Sie haben einen Griff zum Halten, sind sehr stabil, groß und nehmen dir durch das Fenster noch nicht einmal die Sicht. Leider sind sie auch ziemlich schwer...' =>
+	'Autotüren geben großartige Schilde ab! Sie haben einen Griff zum Halten, sind sehr stabil, groß und nehmen dir durch das Fenster noch nicht einmal die Sicht. Leider sind sie auch ziemlich schwer...',
+  'Verirrte Seele' =>
+	'Verirrte Seele',
+  'Dies ist eine verirrte Seele, die von deinem Seelenfänger-zeichen angelockt wurde. Erlöse sie, indem du sie dem Seelensammler übergibst!' =>
+	'Dies ist eine verirrte Seele, die von deinem Seelenfänger-zeichen angelockt wurde. Erlöse sie, indem du sie dem Seelensammler übergibst!',
+  'Gequälte Seele' =>
+	'Gequälte Seele',
+  'Dies ist eine gequälte Seele, die von deinem Seelenfänger-zeichen angelockt wurde. Diese Seele ist besonders wertvoll, daher solltest du sie unbedingt dem Seelenfänger übergeben!' =>
+	'Dies ist eine gequälte Seele, die von deinem Seelenfänger-zeichen angelockt wurde. Diese Seele ist besonders wertvoll, daher solltest du sie unbedingt dem Seelenfänger übergeben!',
+  'Splitterkugeln' =>
+	'Splitterkugeln',
+  'Splitterkugeln bestehen aus unter Hochdruck zusammengepresstem Müll. Du kannst sie in einen Splitterwerfer laden und damit auf Zombies schießen - beim Aufprall besteht eine Chance, dass die Splitterkugel explodiert und eine Menge Schaden an allen Zombies in der Umgebung anrichtet.' =>
+	'Splitterkugeln bestehen aus unter Hochdruck zusammengepresstem Müll. Du kannst sie in einen Splitterwerfer laden und damit auf Zombies schießen - beim Aufprall besteht eine Chance, dass die Splitterkugel explodiert und eine Menge Schaden an allen Zombies in der Umgebung anrichtet.',
+  'Auf den ersten Blick sieht es aus wie ein Batteriewerfer - allerdings ist die Bauweise etwas kompakter. Dieser Splitterwerfer lässt sich mit Splitterkugeln laden. Er funktioniert ähnlich wie ein Batteriewerfer, kann aber bei richtiger Handhabung wesentlich mehr Schaden anrichten. Durch die explosive Wirkung der Splitterkugeln ist er eher für große Zombiemengen geeignet.' =>
+	'Auf den ersten Blick sieht es aus wie ein Batteriewerfer - allerdings ist die Bauweise etwas kompakter. Dieser Splitterwerfer lässt sich mit Splitterkugeln laden. Er funktioniert ähnlich wie ein Batteriewerfer, kann aber bei richtiger Handhabung wesentlich mehr Schaden anrichten. Durch die explosive Wirkung der Splitterkugeln ist er eher für große Zombiemengen geeignet.',
+  'Dieser Splitterwerfer mit verbessertem Druckausgleichsregler, feinjustierter Zielautomatik und integriertem Fluxkompensator übertrifft alle Leistungsdaten des Basismodells um Längen. Außerdem erhöht er den Rambo-Faktor des Trägers sofort um 78.92%.' =>
+	'Dieser Splitterwerfer mit verbessertem Druckausgleichsregler, feinjustierter Zielautomatik und integriertem Fluxkompensator übertrifft alle Leistungsdaten des Basismodells um Längen. Außerdem erhöht er den Rambo-Faktor des Trägers sofort um 78.92%.',
+  'Leckeres Steak' =>
+	'Leckeres Steak',
+  'Dieses Steak ist perfekt gegrillt - es ist bis zur Mitte durchgebraten und noch immer schön saftig. Iss es lieber schnell, bevor ein Zombie es dir streitig macht.' =>
+	'Dieses Steak ist perfekt gegrillt - es ist bis zur Mitte durchgebraten und noch immer schön saftig. Iss es lieber schnell, bevor ein Zombie es dir streitig macht.',
+  'Brüchiger Stock' =>
+	'Brüchiger Stock',
+  'Ein brüchiger Stock ist auf sehr viele verschiedene Arten nutzlos; du kannst damit nichts bauen, und wenn du damit auf Zombies losgehst wirst du dir sicher ein paar Bissabdrücke einfangen.' =>
+	'Ein brüchiger Stock ist auf sehr viele verschiedene Arten nutzlos; du kannst damit nichts bauen, und wenn du damit auf Zombies losgehst wirst du dir sicher ein paar Bissabdrücke einfangen.',
+  'Substanz H9CE42-X' =>
+	'Substanz H9CE42-X',
+  'Dieses experimentelle Medikament wurde entwickelt, um die Zombieepidemie einzudämmen. Die Einnahme des Medikaments führt zu einer temporären Immunisierung vor der Zombieinfektion, hat jedoch bei einer bereits vorhandenen Infektion keinerlei Effekt.' =>
+	'Dieses experimentelle Medikament wurde entwickelt, um die Zombieepidemie einzudämmen. Die Einnahme des Medikaments führt zu einer temporären Immunisierung vor der Zombieinfektion, hat jedoch bei einer bereits vorhandenen Infektion keinerlei Effekt.',
+  'Saftige Mutationsmelone' =>
+	'Saftige Mutationsmelone',
+  'Diese Mutationsmelone sieht prächtig aus! Sie ist knallrot, saftig, und ihre Tentakel versuchen nur ganz selten, dich zu erwürgen.' =>
+	'Diese Mutationsmelone sieht prächtig aus! Sie ist knallrot, saftig, und ihre Tentakel versuchen nur ganz selten, dich zu erwürgen.',
+  'Unreife Mutationsmelone' =>
+	'Unreife Mutationsmelone',
+  'Ein bisschen hätte diese Mutationsmelone schon noch reifen können... sie ist ziemlich hart und grün, aber innen drin bestimmt trotzdem saftig!' =>
+	'Ein bisschen hätte diese Mutationsmelone schon noch reifen können... sie ist ziemlich hart und grün, aber innen drin bestimmt trotzdem saftig!',
+  'Schrumplige Mutationsmelone' =>
+	'Schrumplige Mutationsmelone',
+  'Also einen grünen Daumen hast du bei der Zucht dieser Mutationsmelone nicht bewiesen ...' =>
+	'Also einen grünen Daumen hast du bei der Zucht dieser Mutationsmelone nicht bewiesen ...',
+  'Vertrocknete Mutationsmelone' =>
+	'Vertrocknete Mutationsmelone',
+  'Das Ding sieht so aus, als wäre es vor 1000 Jahren mumifiziert worden - und genau so wird es wahrscheinlich auch schmecken.' =>
+	'Das Ding sieht so aus, als wäre es vor 1000 Jahren mumifiziert worden - und genau so wird es wahrscheinlich auch schmecken.',
+  'Explosive Mutationsmelone' =>
+	'Explosive Mutationsmelone',
+  'Genau DAS kommt dabei raus, wenn Mutter Natur von den Zombies total angepisst ist. Diese .... ähem ... "Frucht" hat einen ausgeprägten Selbsterhaltungstrieb und neigt bei Zombiekontakt zur Explosion. Du könntest sie auch essen... auch wenn das nicht unbedingt empfehlenswert ist.' =>
+	'Genau DAS kommt dabei raus, wenn Mutter Natur von den Zombies total angepisst ist. Diese .... ähem ... "Frucht" hat einen ausgeprägten Selbsterhaltungstrieb und neigt bei Zombiekontakt zur Explosion. Du könntest sie auch essen... auch wenn das nicht unbedingt empfehlenswert ist.',
+  'Verkaufsautomat' =>
+	'Verkaufsautomat',
+  'Wasserbombe' =>
+	'Wasserbombe',
+  'Sobald die Zombies in Wurfreichweite kommen kannst du ihnen mit diesem kleinen Geschenk die Tour vermiesen. Nichts ist effektiver gegen eine Gruppe Zombies als eine Wasserbombe!' =>
+	'Sobald die Zombies in Wurfreichweite kommen kannst du ihnen mit diesem kleinen Geschenk die Tour vermiesen. Nichts ist effektiver gegen eine Gruppe Zombies als eine Wasserbombe!',
+  'Die Aquablaster XL ist die militärische Variante der Aquablaster XS. Durch das zusätzliche Hochleistungsprühsystem handelt es sich hierbei um eine tödliche Waffe (insbesondere für Zombies). Falls gerade keine Zombie-Apokalypse stattfindet, kann man sie auch zur Auflösung lästiger Demonstationen verwenden.' =>
+	'Die Aquablaster XL ist die militärische Variante der Aquablaster XS. Durch das zusätzliche Hochleistungsprühsystem handelt es sich hierbei um eine tödliche Waffe (insbesondere für Zombies). Falls gerade keine Zombie-Apokalypse stattfindet, kann man sie auch zur Auflösung lästiger Demonstationen verwenden.',
+  'Messwein' =>
+	'Messwein',
+  'OK, für den Beichtvater und die Chorknaben konntest du nicht mehr allzuviel tun, aber wenigstens das Allerheiligste konntest du retten, als du aus der Kathedrale geflohen bist: den gesamten Messweinvorrat! Der wird dir helfen, über den Verlust deiner Gemeinde hinweg zu kommen. Waren sowieso alles Sünder...' =>
+	'OK, für den Beichtvater und die Chorknaben konntest du nicht mehr allzuviel tun, aber wenigstens das Allerheiligste konntest du retten, als du aus der Kathedrale geflohen bist: den gesamten Messweinvorrat! Der wird dir helfen, über den Verlust deiner Gemeinde hinweg zu kommen. Waren sowieso alles Sünder...',
+  'Weihnachtsgetränk' =>
+	'Weihnachtsgetränk',
+  'Ein absolut klassisches Weihnachtsgetränk! Hauptsächlich deshalb, weil man sich im Dezember so viel davon reinschüttet, dass man es die restlichen 11 Monate nicht mehr anrühren kann.' =>
+	'Ein absolut klassisches Weihnachtsgetränk! Hauptsächlich deshalb, weil man sich im Dezember so viel davon reinschüttet, dass man es die restlichen 11 Monate nicht mehr anrühren kann.',
+  'Weihnachtsessen' =>
+	'Weihnachtsessen',
+  'Süssigkeiten' =>
+	'Süssigkeiten',
+  'Besonderes' =>
+	'Besonderes',
+  'Angebissener Apfel' =>
+	'Angebissener Apfel',
+  'Um Himmels Willen, sei bloß vorsichtigt! Wenn man dich mit einem angebissenen Apfel auf der Straße erwischt tauchen Anwälte aus dem Nichts heraus auf und verprügeln dich mit überteuerten Tablet-Computern!' =>
+	'Um Himmels Willen, sei bloß vorsichtigt! Wenn man dich mit einem angebissenen Apfel auf der Straße erwischt tauchen Anwälte aus dem Nichts heraus auf und verprügeln dich mit überteuerten Tablet-Computern!',
+  'Brotlaib' =>
+	'Brotlaib',
+  'Endlich bist du vernünftig dafür ausgerüstet, die Enten im Teich zu füttern. Leider sind mittlerweise sowohl Teich als auch Enten einer zombieverseuchten Ödniss gewichen. Dann musst du diesen Brotlaib wohl selbst essen...' =>
+	'Endlich bist du vernünftig dafür ausgerüstet, die Enten im Teich zu füttern. Leider sind mittlerweise sowohl Teich als auch Enten einer zombieverseuchten Ödniss gewichen. Dann musst du diesen Brotlaib wohl selbst essen...',
+  'Offene Konservendose' =>
+	'Offene Konservendose',
+  'Konservendosen überleben alle möglichen Arten von Weltuntergängen - Asteroideneinschläge, Nukleare Explosionen, Maya-Apokalypsen und sogar Landtagswahlen! Guten Appetit!' =>
+	'Konservendosen überleben alle möglichen Arten von Weltuntergängen - Asteroideneinschläge, Nukleare Explosionen, Maya-Apokalypsen und sogar Landtagswahlen! Guten Appetit!',
+  'Blasenkaugummi' =>
+	'Blasenkaugummi',
+  'Kaugummi ist nicht unbedingt ein vollwertiger Ersatz für eine richtige Mahlzeit, aber immer noch besser als nichts. Außerdem kannst du es aufblasen, damit es größer erscheint.' =>
+	'Kaugummi ist nicht unbedingt ein vollwertiger Ersatz für eine richtige Mahlzeit, aber immer noch besser als nichts. Außerdem kannst du es aufblasen, damit es größer erscheint.',
+  'Gebrauchsanleitung für einen Kühlschrank' =>
+	'Gebrauchsanleitung für einen Kühlschrank',
+  'Gebrauchsanleitung für eine Waschmaschine' =>
+	'Gebrauchsanleitung für eine Waschmaschine',
+  'Gebrauchsanleitung für einen Wäschetrockner' =>
+	'Gebrauchsanleitung für einen Wäschetrockner',
+  'Gebrauchsanleitung für eine HiFi-Anlage' =>
+	'Gebrauchsanleitung für eine HiFi-Anlage',
+  'Gebrauchsanleitung für ein Mobiltelefon' =>
+	'Gebrauchsanleitung für ein Mobiltelefon',
+  'Gebrauchsanleitung für einen Vibrator' =>
+	'Gebrauchsanleitung für einen Vibrator',
+  'Mario Barth LIVE CD' =>
+	'Mario Barth LIVE CD',
+  'Auf dem Booklet steht was von "totlachen"... "Tod" ist schonmal sehr treffend, "lachen" eher nicht. Die Witze (bzw. der eine Witz, der über 90 Minuten immer wieder wiederholt wird) verursachen selbst bei Zombies noch den sofortigen Hirntod - was dann irgendwie doch wieder etwas beeindruckend ist.' =>
+	'Auf dem Booklet steht was von "totlachen"... "Tod" ist schonmal sehr treffend, "lachen" eher nicht. Die Witze (bzw. der eine Witz, der über 90 Minuten immer wieder wiederholt wird) verursachen selbst bei Zombies noch den sofortigen Hirntod - was dann irgendwie doch wieder etwas beeindruckend ist.',
+  'CD einer DSDS Gewinnerin' =>
+	'CD einer DSDS Gewinnerin',
+  'Diese CD enthält Musik von irgend einer Gewinnerin von DSDS, deren Namen wahrscheinlich nicht mal sie selber kennt. Leider hat sie sich nicht allzu gut verkauft, und wurde in den Top 100 Albumcharts von den CDs "Fahrstuhlmusik heute" und "Furzgeräusche rund um die Welt" vernichtend geschlagen.' =>
+	'Diese CD enthält Musik von irgend einer Gewinnerin von DSDS, deren Namen wahrscheinlich nicht mal sie selber kennt. Leider hat sie sich nicht allzu gut verkauft, und wurde in den Top 100 Albumcharts von den CDs "Fahrstuhlmusik heute" und "Furzgeräusche rund um die Welt" vernichtend geschlagen.',
+  'Modern Talking CD' =>
+	'Modern Talking CD',
+  'OH MEIN GOTT, VERNICHTE ES MIT FEUER!!!' =>
+	'OH MEIN GOTT, VERNICHTE ES MIT FEUER!!!',
+  'Knuffibonkas, der böse Todesbär' =>
+	'Knuffibonkas, der böse Todesbär',
+  'Unheiliges Stofftier' =>
+	'Unheiliges Stofftier',
+  'Verfluchter Teddybär' =>
+	'Verfluchter Teddybär',
+  'Limonade' =>
+	'Limonade',
+  'Bubble Tea' =>
+	'Bubble Tea',
+  'Glühwein' =>
+	'Glühwein',
+  'Mutzbraten' =>
+	'Mutzbraten',
+  'Eine lokale Köstlichkeit aus Sachen und Thüringen, die auf keinem Weihnachtsmarkt fehlen darf!' =>
+	'Eine lokale Köstlichkeit aus Sachen und Thüringen, die auf keinem Weihnachtsmarkt fehlen darf!',
+  'Thüringer Bratwurst' =>
+	'Thüringer Bratwurst',
+  '... sieht zumindest so ähnlich aus wie eine Thüringer Bratwurst. Die wirkliche Herkunft dieser Wurst wird wohl für immer ein Mysterium bleiben...' =>
+	'... sieht zumindest so ähnlich aus wie eine Thüringer Bratwurst. Die wirkliche Herkunft dieser Wurst wird wohl für immer ein Mysterium bleiben...',
+  'Schokolade' =>
+	'Schokolade',
+  'Auch bekannt unter dem namen "Zucker mit Schokoladengeschmack". Kinder können sich das Zeug tonnenweise in den Mund schieben, leiden danach allerdings auch für Wochen an Verstopfung und Zahnschmerzen.' =>
+	'Auch bekannt unter dem namen "Zucker mit Schokoladengeschmack". Kinder können sich das Zeug tonnenweise in den Mund schieben, leiden danach allerdings auch für Wochen an Verstopfung und Zahnschmerzen.',
+  'Kandierte Nüsse' =>
+	'Kandierte Nüsse',
+  'Diese Süssigkeit weckt schlimme Erinnerungen an deine Kindheit, als dir ein fremder in einer dunklen Gasse seine "ganz speziellen" kandierten Nüsse zeigen wollte...' =>
+	'Diese Süssigkeit weckt schlimme Erinnerungen an deine Kindheit, als dir ein fremder in einer dunklen Gasse seine "ganz speziellen" kandierten Nüsse zeigen wollte...',
+  'Stück' =>
+	'Stück',
+  'Du benötigst einen Munitionsgürtel, um diesen Gegenstand mitführen zu können.' =>
+	'Du benötigst einen Munitionsgürtel, um diesen Gegenstand mitführen zu können.',
+  'Verkaufsautomat (Vending Machine)' =>
+	'Verkaufsautomat (Vending Machine)',
+  'Dir fehlen Gegenstände, um diese Aktion durchzuführen.' =>
+	'Dir fehlen Gegenstände, um diese Aktion durchzuführen.',
+  '€' =>
+	'€',
+  'Heruntergekommenes Hotel' =>
+	'Heruntergekommenes Hotel',
+  'Platz des Himmlischen Friedens' =>
+	'Platz des Himmlischen Friedens',
+  'Geschäftszentrum "Depressivo"' =>
+	'Geschäftszentrum "Depressivo"',
 );

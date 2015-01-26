@@ -4,6 +4,7 @@ abstract class Controller_Admin_Admin extends Controller {
 
     protected static $force_login = true;
     protected static $force_admin = true;
+    protected static $allow_skip_login = false;
     protected static $auto_require = [];
 
     protected static $admin_data = null;
@@ -116,7 +117,7 @@ abstract class Controller_Admin_Admin extends Controller {
 
     protected function force_admin() {
         Error::i();
-        if (!$this->admin_status_get() || !static::priv_allow_all(static::$auto_require)) {
+        if (!(static::$allow_skip_login || $this->admin_status_get()) || !static::priv_allow_all(static::$auto_require)) {
             if (!$this->is_ajax_request())
                 // Output error message as string
                 die(Error::m(\grge\E_SERVER_ACCESS_DENIED));

@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Item implements Interface_Countable {
+abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Item implements Interface_Countable {
 	protected static $cat = Model_Items_Abstract_Item::MIAI_CAT_BOTTLES;
 
 	protected static $capacity = 4;

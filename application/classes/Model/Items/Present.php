@@ -4,8 +4,8 @@ class Model_Items_Present extends Model_Items_Abstract_Item implements Interface
 
 	protected static $static_info = Array(
 			'name' => 'Geschenk',
-			'icon' => 'present',
-			'description' => '~',
+			'icon' => 'present/small',
+			'description' => '',
 			'category' => Model_Items_Abstract_Item::MIAI_CAT_MISC,
 	);
 	
@@ -79,8 +79,8 @@ class Model_Items_Present extends Model_Items_Abstract_Item implements Interface
 	}	
 	
 	public function icon() {	
-		if ($this->is_awesome) return  '/application/assets/icons/items/present/big.gif'; 
-		else return  '/application/assets/icons/items/present/small.gif'; 
+		if ($this->is_awesome) return  'present/big';
+		else return  'present/small';
 	}	
 	
 	public function open($player = null) {

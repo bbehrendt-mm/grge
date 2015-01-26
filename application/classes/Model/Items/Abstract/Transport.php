@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Items_Abstract_Transport extends Model_Items_Abstract_Item {
+abstract class Model_Items_Abstract_Transport extends Model_Items_Abstract_Item {
 
     protected static $carrier_item = true;
     protected static $max_per_player = 1;

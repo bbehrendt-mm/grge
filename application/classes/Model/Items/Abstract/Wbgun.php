@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Items_Abstract_Wbgun extends Model_Battle_Weapon implements Interface_Fillable, Interface_Countable {
+abstract class Model_Items_Abstract_Wbgun extends Model_Battle_Weapon implements Interface_Fillable, Interface_Countable {
 	
 	private $fillrate;
 	protected static $capacity = 0;

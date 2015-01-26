@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
+abstract class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
 	
 	protected static $alcohol = 10;
     protected static $energy = 10;

@@ -146,17 +146,7 @@ class Controller_Game extends Controller {
 
         // Set category strings
         foreach (array_keys($grouping) as $gid)
-            switch ($gid) {
-                case Model_Items_Abstract_Item::MIAI_CAT_GEAR:          $grouping[$gid]['name'] = __('Ausrüstung'); break;
-                case Model_Items_Abstract_Item::MIAI_CAT_FIGHT:         $grouping[$gid]['name'] = __('Waffen und Verteidigung'); break;
-                case Model_Items_Abstract_Item::MIAI_CAT_FOOD:          $grouping[$gid]['name'] = __('Nahrungsmittel'); break;
-                case Model_Items_Abstract_Item::MIAI_CAT_DRUG:          $grouping[$gid]['name'] = __('Drogen und med. Zubehör'); break;
-                case Model_Items_Abstract_Item::MIAI_CAT_RES:           $grouping[$gid]['name'] = __('Baumaterialien'); break;
-                case Model_Items_Abstract_Item::MIAI_CAT_EVENT:         $grouping[$gid]['name'] = __('Besonderes'); break;
-                case Model_Items_Abstract_Item::MIAI_CAT_LITERATURE:    $grouping[$gid]['name'] = __('Lesestoff'); break;
-                case Model_Items_Abstract_Item::MIAI_CAT_BOTTLES:       $grouping[$gid]['name'] = __('Wasserbehälter'); break;
-                case Model_Items_Abstract_Item::MIAI_CAT_MISC: default: $grouping[$gid]['name'] = __('Sonstiges'); break;
-            }
+            $grouping[$gid]['name'] = __(Model_Items_Abstract_Item::translateCatID($gid));
 
         return $grouping;
     }

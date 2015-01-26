@@ -42,6 +42,9 @@ core = {
 
     render: function(data, target) {
         console.log(data);
+
+        if (core.parts.admin) core.parts.admin.controls($('<div />').addClass('cell rw-12 padded').appendTo($('<div />').addClass('row').appendTo(target)));
+
         if (data.location) {
             var location_box = $('<div />').addClass('row').appendTo(target);
             core.parts.location(data.location, location_box);

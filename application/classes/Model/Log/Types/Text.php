@@ -35,7 +35,7 @@ class Model_Log_Types_Text extends Model_Log_Message {
 		return [
 			'info',
 			$d['body'],
-			$d['title'] ? $d['title'] : null,
+			isset($d['title']) ? $d['title'] : null,
 		];
 	}
 

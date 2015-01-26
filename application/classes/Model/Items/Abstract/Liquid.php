@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Items_Abstract_Liquid extends Model_Items_Abstract_Item implements Interface_Tmpitem {
+abstract class Model_Items_Abstract_Liquid extends Model_Items_Abstract_Item implements Interface_Tmpitem {
 	
 	protected $toxicity;
 	protected static $weight = 0;

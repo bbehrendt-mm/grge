@@ -1942,4 +1942,488 @@ return array (
 	'Pharmacy "Linctus Addict"',
   '"Kentucky Fried Eyeballs" Restaurant' =>
 	'"Kentucky Fried Eyeballs" Franchise',
+  'Munition' =>
+	'Ammunition',
+  'Welch ein glücklicher Fund - Munition! Soetwas findet man sehr selten, manche behaupten sogar soetwas wie "Munition" existiere gar nicht. Wenn du jetzt noch zufällig etwas hast, womit du diese Munition verschießen kannst haben die Zombies keine Chance mehr!' =>
+	'What a lucky find - ammunition! These are rare, some people even deem "ammunition" a legend. Now you only need to find something to fire these babies with, and the zombies won\'t stand a chance!',
+  'Aus einem allträglichen Sportinstrument hast du ein bizarres Mordinstrument gemacht. Das sagt eine Menge über deine Psyche aus... zum Glück wird sich niemand trauen, dir das ins Gesicht zu sagen, solange du diesen Schläger in der Hand hälst.' =>
+	'You have turned this everyday sports equipment into some demented murder instrument. This does say a lot about your state of mind... luckily, nobody will dare to say this to your face as long as you hold this thing.',
+  'Chemische Keule' =>
+	'Chemische Keule',
+  'Dieser Schläger ist mit merkwürdigen Substanzen getränkt und wirkt äußerst schädlich auf Zombies, die in näheren Kontakt mit ihm kommen. Allerdings hat er durch die Chemikalien einiges an Stabilität verloren...' =>
+	'Dieser Schläger ist mit merkwürdigen Substanzen getränkt und wirkt äußerst schädlich auf Zombies, die in näheren Kontakt mit ihm kommen. Allerdings hat er durch die Chemikalien einiges an Stabilität verloren...',
+  'In mühevoller Handarbeit hast du diesem Batteriewerfer eine selbst entworfene, neue Ladevorrichtung verpasst. Eigentlich solltest du das Teil von nun an "Batterie-Maschinenwerfer" nennen ...' =>
+	'It was hard work, but you managed to improve your simple battery launcher by incorporating an automatic loader. You might even call this thing a "Battery-Minigun" ...',
+  'Batteriewerfer MK II' =>
+	'Battery Launcher MK II',
+  'Der Batteriewerfer MK II ist die Bazooka unter den Batteriewerfern. Durch den automatischen Druckregler kannst du sowohl weiter schießen als auch genauer zielen. Damit wird dein Batteriewerfer zur absolut tödlichen Waffe! ...' =>
+	'This Battery Launcher MK II is like a battery Bazooka. Thanks to an hydraulic pressure pump, you can eject batteries with high velocity and great accuracy. Your battery launcher is finally a deadly weapon! ...',
+  'Batteriewerfer MK IV Prototyp' =>
+	'Battery Launcher MK IV Prototype',
+  'Dieses Gerät wurde kurz nach der Apokalypse vom Militär entwickelt. Die enorm hohe Abschussgeschwindigkeit des MK IV erlaubt maximale Präzision - wenn nötig kannst du damit einem Zombie auf 500m Entfernung den rechten Backenzahn herausschießen (inklusive dem Rest seines Gebisses). Ein hübscher Nebeneffekt dieser Feuerkraft ist die Tatsache, dass die Batterien beim Aufprall zerplatzen und wie Splittergranaten wirken.' =>
+	'This device was developed by military forces shortly after the fall of civilization. The ejection speed and accuracy are as close to perfection as you can possibly get when launching batteries - if possible, you can shoot out a zombie\'s right molar from a 5 mile distance (as well as the rest of its face). Due to the height speed, batteries will shatter and do even more damager when they hit a zombie.',
+  'Scharfschützen-Batteriewerfer' =>
+	'Battery Sniper Rifle',
+  'Wenn du nicht so darauf stehst, wie Rambo wild in der Gegend rumzuballern und trotzdem nichts zu treffen, dann benutze dieses hochelegante Batterie-Scharfschützengewehr. Jeder Schuss ist äußerst tödlich und garantiert ein Treffer - vorrausgesetzt, du hast dir die Zeit zum Zielen genommen.' =>
+	'If shooting around like rambo and not hitting anything is not quite your style, just use this sniper rifle. Every shot will probably hit and kill - as long as you have enough time to aim.',
+  'Zerstörer' =>
+	'Devastator',
+  'Der Zerstörer verfügt über einen Hochdruck-Kompressor, um eine Batterie besonder effektiv zu verschießen. Unglücklicherweise halten Batterien diesem Druck nicht sonderlich gut stand, sodass der Zerstörer eher Metallsplitter als komplette Batterien verschießt. Diese richten zwar gewaltigen Schaden an, haben aber nicht unbedingt eine sonderlich große Reichweite. Außerdem wird dich der Rückstoß von den Füßen reissen, sodass du für eine kurze Zeit wehrlos bist.' =>
+	'This Devastator contains a high pressure compressor, in an attempt to create an armor-piercing battery launcher. Unfortunately, batteries proved unfit for this. Instead, they tend to imidiately explode into small splinters of metal. The recoil might also knock you down and leave you defenseless for a few seconds.',
+  'Diese kleinen Teile kannst du benutzen um Elektrogeräte zu betreiben. Alternativ kannst du sie auch als Munition für einen Batteriewerfer verwenden.' =>
+	'These things can be used to power small electrical devices. Of course, you might also put it in a battery launcher...',
+  'Bier' =>
+	'Beer',
+  'Bauchmuskeltrainer H.U.L.K.' =>
+	'EMS System "H.U.L.K."',
+  'Du benötigst einen spontanen Kraftschub? Dann einfach Batterie einlegen und auf Start drücken! Dieser Bauchmuskeltrainer bringt dich garantiert auf Touren und ist dabei auch nur ein ganz kleines bisschen tödlich.' =>
+	'Need a dose of instant energy? Just put a battery in and push start! This EMS System will jump-start your engine, and it might not even be lethal!',
+  'Dieses Ding liegt hier schon eine Weile. Die Kleidung ist zerfetzt und der Körper übersäht mit Bisspuren. Nichtsdestotrotz ist da noch einiges an Fleisch übrig geblieben ... die Zombies scheinen nicht an restlose Verwertung zu glauben. Du könntest deine Zähne auch noch dort reinschlagen - wenn du wirklich so verzweifelt bist.' =>
+	'This unlucky guy looks like he has been here for a while. His clothes are tattered and its body is littered with bite marks. There is still some flesh left, however ... zombies don\'t seem to believe in full processing. You could theoretically eat this - if you really are that desperate.',
+  'Zerfetzter Zombie' =>
+	'Torn Zombie',
+  'Dieses Ding riecht noch gammeliger als gewöhnliche Leichen. Vermutlich sind es die Überreste eines Zombies, allerdings kann man das bei dieser Fleischpampe schwer sagen. Na, macht das Teil nicht Appetit?' =>
+	'This thing smells even worse than all those common bodies you\'ve come around. These are probably remains of a zombie, but this thing looks so gooey, it\'s hard to tell. Well, are you hungry yet?',
+  'Tierkadaver' =>
+	'Animal Body',
+  'Tja, Zombies ist es wohl ziemlich egal ob sie Jagd auf Menschen oder Tiere machen. Dieses Vieh war mal Zombiesfutter.... jetzt könnte es Futter für dich werden, sofern du ziemlich anspruchslos bist.' =>
+	'Well, zombies probably don\'t care if they feed on humans or animals, so it looks like this creature turned to zombie food. Well, there is some meat left, so... you hungry?',
+  'Mit diesem Leichensack kannst du - Überraschung - Leichen transportieren. Schön verpackt ist so ein Körper viel einfacher zu transportieren, wenn du also auf Leichenjagd gehst solltest du so einen Sack immer dabei haben.' =>
+	'This bodybag allows you to - big surprise - move bodies. This makes it much easier to transport it, so if you plan to hunt down some bodies you should remember to bring your body bag.',
+  'Mit diesem Leichensack kannst du - Überraschung - Leichen transportieren. Schön verpackt ist so ein Körper viel einfacher zu transportieren, wenn du also auf Leichenjagd gehst solltest du so einen Sack immer dabei haben. Dieser Leichensack weist allerdings einige Gebrauchsspuren auf... er könnte beim Transport aufreißen, sei also vorsichtig.' =>
+	'This bodyback allows you to - big surprise - move bodies. This makes it much easier to transport it, so if you plan to hunt down some bodies you should remember to bring your body bag. This one, however, shows signs of usage... it might rip, so be careful.',
+  'Prall gefüllter Leichensack' =>
+	'Filled Bodybag',
+  'Da hast du ja einen dicken Fang an Land gezogen. Zum Glück kannst du ihn in diesem Leichensack gut transportieren.' =>
+	'Well, you certainly reeled in a big one. Thank godness you can move it around in this bodybag.',
+  'Dieser Leichensack ist sicherlich praktisch - wäre da nicht dieses klaffende Loch. Hiermit kannst du nichts transportieren, aber du könntest es zuhause auf deiner Werkbank flicken...' =>
+	'This bodybag is useful - if it wasn\'t for this giant gaping hole. You won\'t be able to transport anything with this, but you might be able to fix it using your workbench...',
+  'Frittierte Leiche' =>
+	'Fried Body',
+  'Wer sagt, dass man nur kleine Dinge frittieren kann? Diese Leiche kannst du jetzt fast ohne gesundheitliche Risiken essen, und sie schmeckt auch noch viel besser!' =>
+	'Who says one can only frie small things? Now, you can eat this body without risking your health, and it even tastes better!',
+  'Du kannst diese kleinen Holzbolzen mit einer Armbrust abfeuern. Die werden nicht so viel Schaden anrichten wie eine Batterie, aber dafür kannst du sie leichter herstellen.' =>
+	'These little bolts can be fired with a crossbow. They won\'t do as much damage as a battery, but are easier to manufacture.',
+  'Häng dir einen Mammut-Mantel um und zieh den Lendenschurz stramm - dieses Accessoire komplettiert deinen stylischen Neandertal-Look. Wenn du Ärger mit einem Zombie hast, knall ihm einfach dieses Ding über die Rübe und zieh ihn dann in deine Höhle.' =>
+	'Put on your mammoth coat, tighten your loincloth - this accessory completes your ultra-modern neanderthal-look. When a zombie causes trouble, just whack it over the head and drag it to your cave.',
+  'To be, or not to be... wobei die Frage eher ist: "Warum zur Hölle schleppst du einen Schädel mit dir rum?". Du könntest dich natürlich damit rausreden, dass du das Ding auf Zombies werfen willst...' =>
+	'To be, or not to be... well, the real question would be: "Why the fuck would you run around carrying this skull?". Of course, you could just lie and say that you want to throw it on a zombie or something...',
+  'Klassiker' =>
+	'Classic of Literature',
+  'Diesen Klassiker der Literatur sollte man gelesen haben. Hast du das nicht, dann hol es gefälligst nach bevor du stirbst! Zeit genug hast du ja jetzt...' =>
+	'What do you mean, you haven\'t read this already? Well, stop playing this stupid browser game and go to your local library! Seriously, people these days...',
+  'Dieses kleine Heftchen beschreibt die komplexe Funktionsweise eines Haushaltsgegenstands in 6 verschiedenen Sprachen - eine davon ist chinesisch, der Rest Kauderwelsch.' =>
+	'This little booklet describes the complex functionality of an everyday product in 6 different languages - one is Chinese, the rest is gibberish',
+  'Kiste mit Gehirnen' =>
+	'Box of Brains',
+  'Diese Kiste enthält... nun... GEHIRNE! Wer zum Teufel verpackt denn bitte GEHIRNE in KISTEN? Und... warum?' =>
+	'This box contains... well... BRAINS! Who the hell packages BRAINS in BOXES? And... why?',
+  'Eine Chemikalie' =>
+	'Some Substance',
+  'Das ist der letzte Fashion-Schrei aus der neuen Mad Max Collection - und praktisch ist es auch noch. Durch die verschiedenen Schutzschichten dieser verstärkten Straßenkleidung beisst sich so schnell kein Zombie durch!' =>
+	'This is THE new fashoin trend from out new Mad Max Collection - and it\\#s even practical. Zombies will have a hard time eating through all the different protective layers in this.!',
+  'Nichts geht über einen kalten Kaffee, um den Tag zu beginnen.... naja, vielleicht ein heißer Kaffee. Nichtsdestotrotz versorgt dich dieses erkaltete Heißgetränk mit frischer Energie und bekämpft deine Müdigkeit.' =>
+	'Nothing is better to start a day than a cup of cold coffee.... well ok, maybe a cup of hot coffee. Nevertheless, this beverage will provide you with an energy boost and blow away your weariness.',
+  'Billiger Holzsarg' =>
+	'Cheap Wooden Casket',
+  'Der Besitzer dieses Holzsargs hat bei seinem Begräbnis anscheinend gespart. Willst du nicht mal einen blick hinein riskieren? Möglicherweise hab man dem armen Tropf in dieser Kiste eine Beigabe in den Sarg gepackt ...' =>
+	'The owner of this casket obviously didn\'t spend that much money on it. Why not take a peek inside? Maybe his relatives gave him a little something for the afterlife...',
+  'Edler Sarg' =>
+	'Comfy Coffin',
+  'Bestes mit Klavirlack bemaltes Holz, goldene Griffe, ein religiöses Emblem in der Mitte... dieser Sarg war sicher ziemlich teuer! Mit etwas Glück liegt im Sarg noch eine wertvolle Beigabe! Warum schaust du nicht mal nach?' =>
+	'Fine tropical wood, golden handles, some religious emblem right in the middle... this damn thing looks expensive! Maybe there is even something expensive on the inside! You\'ll never know if you don\'t look...',
+  'Allein der Duft dieses leckeren Plätzchens lässt dich alles um dich herum vergessen. Plötzlich bist du wieder ein kleines Kind, das unter dem Weihnachtsbaum sitzt und seine Geschenke auspackt. Natürlich kannst du dieses Plätzchen einfach essen - du könntest es natürlich auch in deinem Versteck für den Weihnachtsmann zurücklassen, der dir dafür sicherlich dankbar wäre...' =>
+	'The smell of these delicious cookies give you a warm and cozy feeling inside. Suddenly you\'re a little kid again, sidding under a Christmas tree and unpacking presents. You could simply eat this cookie - or leave it hin you\'re hideout for santa...',
+  'Besonderes Weihnachtsplätzchen' =>
+	'Special Christmas Cookie',
+  'Allein der Duft dieses leckeren Plätzchens lässt dich alles um dich herum vergessen - hauptsächlich wegen der in den Teig gemischten Drogen. Dieses Plätzchen verbreitet zwar nicht unbedingt Weihnachtsstimmung, aber du siehst nach seinem Genuss zumindest Sterne!' =>
+	'The smell of these delicious cookies give you a warm and cozy feeling inside - mainly because it is full of drugs. This cookie probably won\'t spread the Christmas spirit, but you might encounter Rudolph after eating it!',
+  'Diese nicht sonderlich stabil aussehende Armbrust kann dein Retter in der Not werden, wenn dir mal wieder die Batterien ausgegangen sind. Immerhin kannst du ihre Bolzen an deiner Werkbank selbst fertigen.' =>
+	'This not-so-stable crossbow can save your life if you run out of batteries an a fight. You can even built the bolts it shoots at your workbench.',
+  'Kondenswasser' =>
+	'Condensate',
+  'Du hast ein paar Tropfen Kondenswasser gesammelt. Wirklich viel ist es nicht, aber immerhin besser als nichts!' =>
+	'You\'ve collected a few drops or condensate. It\'s not much, but better than nothing.',
+  'Dreckiges Kondenswasser' =>
+	'Dirty Condensate',
+  'Du hast ein paar Tropfen Kondenswasser gesammelt... Leider war die Oberfläche nicht allzu sauber. Dieses Wasser ist vermutlich nicht übermäßig gesund...' =>
+	'You\'ve collected a few drops of condensate... but the surface was pretty dirty, so this water might not be all that healthy...',
+  'Energie wird von deinem Notstrom-Aggregat erzeugt und ist für diverse Ausbauten erforderlich. Außerdem kannst du damit Batterien in Supercarger-Batterien verwandeln..' =>
+	'Power can be produced by your emergency generator and is required for some hideout expansions. You can also use it to turn your average batteries into superchargers.',
+  'Fastfood' =>
+	'Fast Food',
+  'Instabile Taschenlampe' =>
+	'Highly unstable Flashlight',
+  'Diese Taschenlampe wurde mit einer Supercharger-Batterie geladen. Niemand kann vorhersagen was passiert wenn du dieses Ding einschaltest. Möglicherweise vertreibt es in der Nähe stehende Zombies, vielleicht aber auch nicht...' =>
+	'This flashlight carries a supercharger battery. Nobody knows what will happen if you switch it on. Maybe it will dispel nearby groups of zombies, or maybe it won\'t...',
+  'Eklige Fleischfetzen' =>
+	'Disgusting shreds of Flesh',
+  'Ein Haufen undefinierbarer Fleischfetzen. Es ist unmöglich zu erkennen, wovon sie stammen. Du kannst sie einfach herunterschlingen und hoffen, dass das mal ein Tier war... Oder du könntest kranke chemische Experimente damit anstellen.' =>
+	'A bunch of smelly flesh shreds. It\'s impossible to find out what animal they are from... if they even ARE from an animal. Feel free to eat them or use them for horrifying scientific experiments.',
+  'Tomatencremesuppe (?)' =>
+	'Tomato Soup (?)',
+  'Diese ... öhm ... "Tomatencremesuppe" ... sieht ziemlich fleischig aus. Denk am besten gar nicht darüber nach, was wirklich hier drin sein könnte.' =>
+	'This ... ehem ... "Tomato Soup" ... looks pretty fleshy. Better not think about what\'s actually in there...',
+  'Schachtel mit Nahrungsergänzungsmitteln' =>
+	'Box of Nutritional Supplements',
+  'Diese Nahrungsergänzungsmittel enthalten diverses hochkonzentriertes Zeug, das nach neuesten Forschungen der Marketingabteilung des Herstellers absolut lebensnotwendig und unverzichtbar ist. Jetzt kannst auch du 50€ für etwas zahlen, was du auch bekommen würdest, wenn du einfach in eine Kuh beißt.' =>
+	'These nutritional supplements contain lots of highly concentrated stuff, which, according to newest studies of the manufacturer\'s marketing department, are absolutely essential and indispensable. With these pills, you can pay 50$ for stuff you would also get by simply taking a bite out of a cow.',
+  'Christbaumkugel' =>
+	'Bauble',
+  'Diese wundervolle Christbaumkugel weckt weihnachtliche Gefühle in dir - und sie weckt mörderische Gefühle in dir, wenn du daran denkst, dass du sie auch auf einen Zombie werfen kannst.' =>
+	'This beautiful bauble prompts Christmas feelings in you - it also prompts homicidal feelings, when you think about throwing it on a zombie.',
+  'Sarg-Matratze' =>
+	'Mattress from a Coffin',
+  'Dafür dass normalerweise nur Tote auf ihr liegen ist diese Matratze enorm bequem! ' =>
+	'It\'s acutally quite comfortable, given it is designed for dead people. ',
+  'Wenn du in Physik aufgepasst hättest, wüsstest du das Riemen in vielen mechanischen Anlagen unerlässlich sind. Ihre wichtigste Funktion ist, genau im falschen Moment zu reißen, was im Allgemeinen zu lustigen und gelegentlich tödlichen Situationen führt.' =>
+	'If you payed attention in science class, you\'d know that belts are essential for many mechanic devices. Their function is to fly apart in exactly the right moment, which usually leads to funny (and maybe deadly) situations.',
+  'Ein simpler Drahtesel, mit dem du jederzeit überall hin kommst! Nur jetzt gerade nicht, denn es ist kaputt und muss repariert werden. Aber wenn du erstmal ein bisschen Arbeit reingesteckt hast wird es sich sicher lohnen!' =>
+	'A simple two wheel bicycle that will take you anywhere anytime! Pretty much broken right now and needs some patching up. But when it\'s done it will be ready to do the job.',
+  'Ein simpler Drahtesel, mit dem du jederzeit überall hin kommst! Achtung: Kann nicht verwendet werden, um Zombieschädel zu spalten. Erstens würdest du es damit kaputt machen, zweitens ist es eh viel zu schwer dafür.' =>
+	'A simple two wheel bicycle that will take you anywhere anytime! Warning: Can not be used to smack the zombies in the head; it would breake in an instant. But no one would try that anyway, it is way too heavy!',
+  'Han Solo Wackelkopf-Figur' =>
+	'Han Solo Bobblehead',
+  'Dies ist die originale Han Solo Wackelkopf-Figur, die im Film als Stund-Double von Harrison Ford eingesetzt wurde. Hätte es die nicht gegeben, dann hätte Han ja zuerst schießen müssen!' =>
+	'This is the original bobblehead that was used as Harrison Ford\'s stund double. If they hadn\'t had this, Han would have to shoot first!',
+  'Dieser Wasserkocher ist vielseitig einsetzbar - er kann zum Beispiel Wasser kochen. Und das ist nur eine seiner besonderen Fähigkeiten!' =>
+	'This device has just so many uses - like boiling water. And that is just one of the many things it does!',
+  'Hier hat anscheinend jemand in der Nähe einer Leichen einen Fressanfall gehabt ...  oder du hast einfach die Überreste eines Magersüchtigen gefunden.' =>
+	'Appearently, someone was really hungry and desperate around here ...  or this is just the body of some poor girl suffering from anorexia.',
+  'Schlimme Musik-CD' =>
+	'CD with horrible music',
+  'Dieser von Elfen in weihnachtlicher Kinderarbeit hergestellte Teig ist alles, was du brauchst, um in Festtagsstimmung zu kommen. Und weil er von Elfen gemacht wurde ist er selbstständlich so magisch, dass sich aus ihm geformte Plätzchen automatisch selbst aufbacken. Wie praktisch!' =>
+	'This ball of pastry has been produced by elves (or maybe Santa forced some naughty children to work, who knows). And since the pastry is magic, it will instantly turn into a cookie after it has been formed. How useful!',
+  'Böser Teddy' =>
+	'Evil Teddy',
+  'Diesem Teddy wurden die Augen herausgerissen und er ist mit Blut beschmiert! Normalerweise sind Teddies ja niedlich, aber DIESER HIER ...' =>
+	'The eyes have been torn out of their sockets, and the whole face is covered in blood! Usually teddies are cute, but THIS GUY HERE ...',
+  'Kaputtes Ei' =>
+	'Broken Egg',
+  'Nicht nur, dass dieses Ei kaputt ist, es ist auch noch nicht einmal gefärbt. Tja, da hast du wohl eine Niete gezogen...' =>
+	'It\'s broken and it\'s not colored, so I guess this is a pretty shitty easter egg. I guess you just drew a blank.',
+  'Farbiges Osterei' =>
+	'Colorful Easter Egg',
+  'Du hast ein farbiges Osterei gefunden! Leider ist es schon aufgebrochen, daher kannst du es nicht essen. Naja, Corax wird dir das Ei sicher trotzdem abnehmen.' =>
+	'You found a colorful easter egg! Unfortunately, it is damaged and can\'t be eaten. Well, Corax will probably still take this egg from you.',
+  'Prächtiges Osterei' =>
+	'Magnificent Easter Egg',
+  'Du hast ein prächtiges Osterei gefunden! Es ist bunt bemalt, kunstvoll verziehrt und fast völlig unbeschädigt - das Teil ist sicher einiges wert!' =>
+	'What a magnificent egg! It has a colorful and elegant pattern, and it\'s completely undamaged - that\'s probably worth a lot!',
+  'Designer-Osterei' =>
+	'Modern Art Easter Egg',
+  'Du hast ein Designer-Osterei gefunden! Es ist aus schwarz glänzendem Marmor gefertigt und sieht sehr edel aus. Für so ein Teil müsste man auf einer Auktion Millionen hinblättern, dir hingegen fällt es einfach so vor die Füße.' =>
+	'You have found a modern art easter egg! It seems to be made from black marble and looks pretty precious. Couldn\'t you have found this thing BEFORE the apocalypse?.',
+  'Lametta' =>
+	'Tinsel',
+  'An Lametta scheiden sich die Geister - die einen lieben es, die anderen hassen es. Der Entwickler dieses Spiels gehört offensichtlich zur ersten Gruppe.' =>
+	'There are two kinds of people: Those who love lametta, and those who despise it. The developer of this game is part of the first group.',
+  'Lasermessgerät' =>
+	'Laser Measuring Device',
+  'Wenn du es richtig bedienst, kann dir dieses Ding beim Kartographieren einer Ruine sehr viel Arbeit abnehmen.' =>
+	'If you know how to use this, it can massively speed up mapping a ruin.',
+  'LED' =>
+	'LED',
+  'Diese LED ist so unglaublich energieeffizient, dass sie fast von alleine leuchtet. Allerdings wird dir eine einzige nicht allzu viel bringen, denn sonderlich viel Licht erzeugt sie nicht...' =>
+	'This LED is so efficient, it nearly glows on it\'s own. One of them alone will not be very usefull, however...',
+  'Mistelzweig' =>
+	'Mistletoe',
+  'Willst du wirklich hier einen Mistelzweig aufhängen? Schau dir doch mal an, wer hier alles rumläuft... willst du wirklich einen von denen küssen müssen?' =>
+	'Are you sure you want to hand a mistletoe here? Look at what runs around here... do you want to kiss one of them?',
+  'Dieser Handmixer hat schon bessere Tage gesehen... Naja, wenigstens verleiht er allen Speisen, die du mit seiner Hilfe zubereitest, ein würziges Rost-Aroma. Lecker!' =>
+	'This whisk may have looked better at some point... Well, at least it will add a side-note of rust to each and every meal you use it on. Yummy!',
+  'Dieser Motor ist ein Wunderwerk der Technik, ausgezeichnet durch geringen Abgaßausstoß und hohe Energieeffizienz. Leider nützt er dir nicht viel ohne Kraftstoff...' =>
+	'This engine is the masterpiece of the finest german engineers, having the best possible efficiency while barely producing carbon monoxyde. It still won\'t run without gasoline, though...',
+  'Dieser alte, aber noch funktionstüchtige Ofen wird dir helfen, in deiner heimischen Küche !' =>
+	'There is nothing you can\'t do with this brand-new ancient oven - except all the things you can\'t do with it, of course!',
+  'Plasmablitz-Generator' =>
+	'Plasma Spark Generator',
+  'Ein Gerät, dass Luft auf eine ultrahohe Temperatur erhitzen und so Plasma erzeugen kann - und alles was man dafür braucht ist eine kleine Erregerspannung. Damit kannst du doch sicher was tolles bauen - schau am besten mal in deinem lokalen Waffengeschäft vorbei, dort solltest du alle nötigen Werkzeuge finden.' =>
+	'This thing can turn any material into ultra-hot plasma - and all you need is some excitation voltage. Why don\'t you use this thing to build yourself an exiting new weapon - a gun shop should have all the equipment you need for that!',
+  'Dieses unscheinbare Bauteil ist unglaublich selten und wertvoll! Du solltest es unbedingt mitnehmen, möglicherweise kann es deine Zombie- oder Wasserprobleme lösen...' =>
+	'While looking plain and inconspicuous, this miracle of a device can be of the utmost value to you! You\'d better take it with you, as it could help you solve this whole zombie problem...',
+  'Leider ist es nur ein Zierkürbis, du kannst ihn also nicht essen. Aber sicherlich findest du eine Verwendung für ihn. ' =>
+	'After picking it up, you realize it is just a decorative pumpkin, so eating it is out of question. But surely you will find some other use for it. ',
+  'Mit dieser Gewürzmischung kannst du beim Kochen sogar die langweiligste Speise aufpeppen!' =>
+	'Spices just spice every meal up!',
+  'Du hast diese Batterie so stark überladen, dass sie zu explodieren droht, deshalb musst du sie auch mit Samthandschuhen anfassen. Komm bloß nicht auf die Idee, diese Batterie zu den anderen in deinen Munitionsgürtel zu stecken oder gar mit einem Batteriewerfer abzufeuern - es sei denn, du möchtest dich gerne im Zentrum einer Pilzwolke wiederfinden.' =>
+	'This battery holds so much charge, it\'s close to exploding. You absolutely need to handle it with care. Don\'t even think about tossing it in your ammobelt with all the other batteries - or do you want to be the center piece of a giant mushroom cloud?',
+  'Geheimnisvolles Ticket' =>
+	'Myterious Ticket',
+  'Die Schrift auf diesem Ticket ist verblasst, nachdem es so lange der Sonnenstrahlung in der Aussenwelt ausgesetzt war. Was kann man mit diesem Ticket wohl machen?' =>
+	'After beeing subjected to wind and weather for god knows how long, the writing on this ticket has faded. I wounder what you could do with this?',
+  'Verseuchtes Wasser' =>
+	'Contaminated Water',
+  'Dieses Wasser zu finden war nicht schwer - immerhin riecht man es Kilometer gegen den Wind. Um dieses ekelhafte schleimige Zeug zu trinken musst du schon sehr verzweifelt sein.' =>
+	'Finding this water was easy - you can smell it from a mile away! You\'d need to be really desperate if you even consider drinking it...',
+  'Wäre dies ein Browserspiel mit Vampiren, dann wäre dieses Item sicher wertvoll. Weil Zombies aber viel cooler sind als Vampire, ist dieses Item einfach nur eklig. Bäh!' =>
+	'If this browser game was about vampires, this item would be valuable. But then the game would be crap, so this is just disgusting. Yuck!',
+  'Dieses Wasser stammt aus einer deiner Flaschen. Du willst es doch hier nicht versickern lassen, oder?' =>
+	'This water comes from one of your bottles. Do you want it to dry off or what?',
+  'Draht kann man eigentlich immer gebrauchen. Er ist zum beispiel nützlich um irgendwelchen Elektromüll zu verkabeln. Oder du kannst damit lustige Fallen in deinem Versteck bauen, um mit den Zombies so eine "Kevin allein zu Haus"-Nummer abzuziehen.' =>
+	'Wires are a helpful in a lot of situations. For instance, you could use it to wire some electronics together. Or you could construct some traps in your hideout, so you can play a whacky game of "Home Alone" with some zombies.',
+  'Christbaumlichter' =>
+	'Holiday lights',
+  'Diese Lichterkette verbreitet extreme Weihnachtsstimmung. Außerdem ist sie vielseitig einsetzbar; du kannst zum Beispiel einen Weihnachtsbaum damit schmücken.' =>
+	'This chain of LED lights raises your Christmas spirit and has various uses - like putting it on y Christmas tree!',
+  'Beutel mit Tannennadeln' =>
+	'Bag of fir needles',
+  'Welch ein merkwürdiger Gegenstand... man könnte meinen, er wäre wegen irgend einer Art von Event in dieses Spiel aufgenommen worden.' =>
+	'What a strange object... it\'s like this thing exists purely for some kind of stupid event.',
+  'Schmuckseil' =>
+	'Decorative rope',
+  'Eine Last kann dieses Seil nicht tragen - einen Weihnachtsbaum schmücken hingegen schon.' =>
+	'This rope won\'t hold any load - but it will make your Christmas tree lock prettier!',
+  'Metallsäge' =>
+	'Hacksaw',
+  'Beim Anblick dieser Säge läuft dir ein kalter Schauer den Rücken herunter...' =>
+	'Somehow, this saw spreads a nightmarish feeling ...',
+  'Revolver' =>
+	'Colt',
+  'Batteriewerfer? HA! Mit diesem Baby nimmst du Zombies aus der Entfernung mit einem Lächeln aufs Korn!' =>
+	'Battery Launcher? Oh come one, these are for babies! This Colt protects you, your family and the American way of life from democrats, communists and illegal immigrants. [Disclaimer: This text may or may not be sponsored by the NRA]',
+  'Für einen normalen Radfahrer wären diese Upgrades ein ziemlicher Overkill - im Falle einer Zombieapokalypse kann man jedoch nicht vorsichtig genug sein.' =>
+	'For a normal cyclist, these upgrades would be a overkill - but when there are zombies running around, there is no such thing as overkill.',
+  'Heilige Schrift' =>
+	'Holy Book',
+  'Wann immer du am Zustand der Welt verzweifelst kannst du aus dieser Heiligen Schrift Kraft schöpfen.' =>
+	'Even if the world has gone to hell, you can still use this book to draw strength from your faith.',
+  'Weihasserbombe' =>
+	'Holy Water Bomb',
+  'Sobald die Zombies in Wurfreichweite kommen kannst du ihnen mit diesem kleinen Geschenk die Tour vermiesen. Nichts ist effektiver gegen eine Gruppe Zombies als eine Wasserbombe - außer natürlich einer Weihwasserbombe!!' =>
+	'As soon as zombies enter your throwing perimeter, you can instantly baptize them with one of these. There is nothing more effective to melt zombies faces off than a Water Bomb - except a Holy Water Bomb!!',
+  'Lunchbag' =>
+	'Lunchbag',
+  'Es gibt nichts schöneres als liebevoll von Mutti bestrichene Brote. Gut, es war nicht deine eigene Mutter, und diese Tüte liegt seit Jahren hier in der Sonne, aber wir wollen doch jetzt nicht anfangen wählerisch zu werden, oder?' =>
+	'There is nothing like sandwiches made by mom. Well OK, it wasn\'t YOUR mom, and this thing has been laying in the sun for ages. But come on - don\'t get picky on me here!',
+  'Kosmische Machete' =>
+	'Cosmic Machete',
+  'Diese Machete ist nicht einfach scharf - sie ist kosmisch! Die Klinge besteht aus gehärtetem Meteoritenstahl und ist schärfer als Tods Sense. Notfalls kannst du damit sogar Atome spalten, durch Zombies geht die Klinge wie durch Luft.' =>
+	'This machete is not just sharp - it\'s cosmic! The blade was forged from a meteorite and is - of course - approved by the Kaer Morhen Swordplay Society. This Machete is capable of splitting atoms, so a mere zombie won\'t pose a problem.',
+  '2 Macheten' =>
+	'2 Machetes',
+  'Es gibt nichts cooleres als mit zwei Macheten in der Hand wie ein Samurai durch Zombiehorden zu pflügen. Durch die ganze abgefahrene Choreographie verbrauchst du zwar einiges an Energie, aber das ist es wert!' =>
+	'There is nothing more awesome than slicing hordes of zombies like a samurai using two machetes. Your whole choreographie consumes a lot of energy, but it is SO worth it!',
+  'Kartographenausrüstung Marke "Glutspur"' =>
+	'Cartography Equipment',
+  'Dieses Sammlung nützlicher Dinge enthält alles, was du zum Kartographieren von Ruinen benötigst! ... nagut, es besteht aus einem Stapel Papier und einem Bleistift. Aber der ist immerhin spitz! Also hör auf dich zu beschweren!' =>
+	'This collection of useful stuff contains everything you need for drawing maps of the wasteland around you! ... well ok, it mainly consists of some paper and a pencil. But at least that pencil is sharpened, so stop whining!',
+  'Geld' =>
+	'Cash',
+  'So richtig viel kannst du mit diesem Geld nicht wirklich anfangen, immerhin haben die meisten Geschäfte hier in der Umgebung geschlossen. Aber hey, einem geschenkten Gaul haut nicht aufs Maul... oder so. Steck die Kohle einfach in deinen Munitionsgürtel, bis du etwas findest für dass du es ausgeben kannst.' =>
+	'Since most of the stores around here are closed due to a zombie apocalypse, this wad of cash won\'t be all that useful. But remember, never cook a gift horse\'s mouth.... or something like this. Just keep this cash in you Ammobelt until you find something to spend it on.',
+  'Diese selbstgekochte Speise ist so lecker, dass du beim gedanken an sie direkt zu Sabbern anfängst. Etwas so gutes findet man nicht einfach irgendwo - man muss es sich selbst zusammenkochen!' =>
+	'This dish sure is something to wet your teeth over. You just can\'t find something like this - you need to make it yourself!',
+  'Diese leckere Speise ist zusätzlich noch perfekt gewürzt. Einen so verführerischen Gaumenschmauß dürfen nur die wenigsten Verdammten genießen... du bist nun einer von ihnen.' =>
+	'What happens when you add just the right amound of spice to a Tasty Homemade Dish? You get this Supreme Homemade Dish! Few people can claim to have eaten something this delicious.',
+  'Nährplasma' =>
+	'Nutrient Plasma',
+  'Dieses Zeug ist vollgepumpt mit Chemie. Was diese Chemie bewirkt? Who knows?' =>
+	'It\'s goo full of chemicals. What these chemicals actually do? Who knows...',
+  'Gewehr' =>
+	'Rifle',
+  'Ein gutes, altmodisches Gewehr - es ist nach wie vor schussbereit und sehr gut geeignet, einem Zombie den Kopf wegzublasen. Außerdem scheint man es mit der gleichen Munition wie eine Pistole laden zu können. Na, so ein Glück aber auch!' =>
+	'An old fashion rifle, still as working as ever, and perfect for blowing a zombie\'s head off! In fact, it\'s a good gun that can shoot far. And it seems to use bullets from a pistol. How convenient.',
+  'Religiöse Schrift' =>
+	'Religious scripture',
+  'Dir ist langweilig und du würdest dich gerne uneingeladen in jemandes Leben einmischen, weißt aber nicht in wessen? Keine Sorge, mithilfe dieser Schrift wirst du Rechtfertigungen finden um gegen alle möglichen Minderheiten zu hetzen, um von deinem eigenen, völlig verkorksten Leben abzulenken.' =>
+	'You\'re incredibly bored and want to invade the private life of people who have done absolutely no harm to you or others? Don\'t worry, this scripture will give you plenty justification to hate on a variety of minorities. This way, you don\'t have to worry about your own sad and pathetic waste of a life!',
+  'Pfefferspray' =>
+	'Pepperspray',
+  'Dieses Pfefferspray ist eigentlich für Bären gedacht - hilft aber auch super gegen Zombies, Männer und andere hirntote Gestalten.' =>
+	'If it helps fending off bears, it will sure as hell work against zombies, men and other beings without actual brain matter.',
+  'Windows Phone' =>
+	'Windows Phone',
+  'Wow, du hast ein Windows Phone gefunden - DAS Smartphone für Menschen, die sich auch einen Trabbi zum Preis eines Porsches andrehen lassen. Naja, mit diesem Teil kannst du zwar nicht wirklich angeben (oder ZombVival spielen), aber du kannst es zumindest auf einen Zombie werfen. Das ist doch auch was!' =>
+	'Wow, you found a mobile device running Windows Phone - THE smartphone OS for people stupid enough to buy a slide ruler at the price of a state-of-the-art quantum computer. OK, you can\'t really do anything with it, but you can surely throw it at some zombies. Isn\'t that something?',
+  'Eine Pille' =>
+	'Some Pill',
+  'Experimentelle Plasmakanone' =>
+	'Experimental Plasmagun',
+  'Dieser Waffe liegt ein faszinierendes Konzept zu grunde: Was, wenn man die Energie einer Batterie als Waffe nutzen würde, anstatt einfach die Batterie zu verschießen? Die experimentelle Plasmakanone benutzt richtig abgefahrene Wissenschaft sowie eine Batterie, um auf Plasmatemperatur erhitzte Luftpartikel in Richtung Zombies zu katapultieren. Wo diese Waffe hinfeuert bleibt kein Stein mehr auf dem anderen... allerdings kannst du sie aufgrund der extremen Hitzeentwicklung nur einmal pro Kampf einsetzen - und auch nur gegen Zombies, die weit entfernt stehen.' =>
+	'This weapon follows an intriguing idea: What if we would use the energy stored in a battery to fingtz zombies instead of just using the battery itself? This experimental plasmagun uses some complicated science stuff as well as an ordinary battery to heat air particles until they become plasma and shoot them towards zombies. Wherever this weapon hits, everything turns into dust. However, due to the incredible heat this device produces, you can only use it once during a battle. It\'s also wise to not try shooting something close to you...',
+  'Aufgrund einer Kombination aus minderwertigem Schwarzpulver sowie deiner Unerfahrenheit im Bombenbau ist diese Schwarzpulverbombe leider nicht dafür geeignet, Zombies wegzusprengen. Sie wirbelt allerdings genug Staub auf, um Zombies zu verwirren und dir bei der Flucht vor ihnen zu helfen.' =>
+	'Since you lack suitable base material as well as any skill, this poor excuse for a bomb won\'t even blow ants away. It will, however, create a dust cloud that could potentially confuse zombies and allow you to get out of tight situations.',
+  'Geschenk' =>
+	'Present',
+  '~' =>
+	'~',
+  'Ein essbarer Kürbis! Dieses riesige Teil stillt deinen Hunger garantiert - allerdings musst du die harte Schale erstmal aufbekommen...' =>
+	'A pumpkin! This giant baby will surely fill your stomach - once you manage to open it.',
+  'Verfaulter Kürbis' =>
+	'Decomposed pumpkin',
+  'Das war mal ein essbarer Kürbis... naja, essen könntest du ihn immer noch, und vermutlich würde er deinen Hunder stillen - vorrausgesetzt, er bleibt in deinem Magen.' =>
+	'This used to be edible... well, technically it is stil edible, but it might make you hurl...',
+  'Süßes sonst gibts Saures! Diese Kürbisbombe ist äußerst effektiv gegen in der Nähe herumstehende Zombies, die dir einfach keine Bonbons geben wollen.' =>
+	'Trick or treat! This pumpkin bomb has proven very effective agains loitering zombies who refuse to give you candy.',
+  'Diese leckere Suppe stillt Hunger und Durst - und verbreitet ein herbstliches Aroma. Was will man mehr?' =>
+	'This tasty soup vanishes your thirst and hunger - and spreads an autumnal atmosphere. What more could you ask for?',
+  'An diesem Knochen hängt noch eine Menge Fleisch. Du könntest es essen... aber dafür müsstest du schon wirklich verzweifelt sein, oder?' =>
+	'There\'s a lot of meat dangling from this bone. You could theoretically eat it... if you are really that desperate.',
+  'Du hast diesen Knochen mit Fleisch so gnadenlos abgekocht, dass du ihn nun sogar halbwegs ohne schlechtes Gewissen verputzen kannst.' =>
+	'You\'ve kept this bone in boiling water for at least an hour, so you should be able to eat it without fear for your health.',
+  'Dein altes Sturmgewehr' =>
+	'Your old Assault Rifle',
+  'Es hat dich bisher gut duch die Zombieapokalypse gebracht, es wird dich auch weiter gut durchbringen. Zumindest, solange dir die Munition nicht ausgeht.' =>
+	'Your old, trusty assault rifle helped you through the zombie apocalypse, and it will kepp you alive in the future. At least as long as you find ammunition for it...',
+  'Dieser Holzkistendeckel sieht relativ stabil aus... du könntest damit sicherlich Zombies abwehren, aber übertreib es besser nicht.' =>
+	'This wooden crate cap looks pretty stable... you\'ll probably be able to fend off zombies with that, but don\'t rely on it too much.',
+  'Autotür' =>
+	'Car Door',
+  'Autotüren geben großartige Schilde ab! Sie haben einen Griff zum Halten, sind sehr stabil, groß und nehmen dir durch das Fenster noch nicht einmal die Sicht. Leider sind sie auch ziemlich schwer...' =>
+	'Car doors are great shields! They have a handle to hold them with, are pretty bug and durable and you can even look through their window! Unfortunately, they are also pretty big...',
+  'Verirrte Seele' =>
+	'Lost soul',
+  'Dies ist eine verirrte Seele, die von deinem Seelenfänger-zeichen angelockt wurde. Erlöse sie, indem du sie dem Seelensammler übergibst!' =>
+	'This is a lost soul, drawn to you by your mark. Redeem it by giving it to the Soul Collector!',
+  'Gequälte Seele' =>
+	'Tortured Soul',
+  'Dies ist eine gequälte Seele, die von deinem Seelenfänger-zeichen angelockt wurde. Diese Seele ist besonders wertvoll, daher solltest du sie unbedingt dem Seelenfänger übergeben!' =>
+	'This is a tortured soul, drawn to you by your mark. This soul is especially valuable, so you should redeem it by giving it to the Soul Collector!',
+  'Splitterkugeln' =>
+	'Ball of Splinters',
+  'Splitterkugeln bestehen aus unter Hochdruck zusammengepresstem Müll. Du kannst sie in einen Splitterwerfer laden und damit auf Zombies schießen - beim Aufprall besteht eine Chance, dass die Splitterkugel explodiert und eine Menge Schaden an allen Zombies in der Umgebung anrichtet.' =>
+	'These balls consist of highly compacted garbage, much like conservative politicians. You can lode these (balls of splinters, not politicians) in a Splintergun to shoot zombies with - the balls may explode and harm groups of zombies.',
+  'Auf den ersten Blick sieht es aus wie ein Batteriewerfer - allerdings ist die Bauweise etwas kompakter. Dieser Splitterwerfer lässt sich mit Splitterkugeln laden. Er funktioniert ähnlich wie ein Batteriewerfer, kann aber bei richtiger Handhabung wesentlich mehr Schaden anrichten. Durch die explosive Wirkung der Splitterkugeln ist er eher für große Zombiemengen geeignet.' =>
+	'At first glance it looks like a Battery Launcher - however, this gun is a little smaller and can be loaded with balls of splinters instead of batteries. When handled correctly, this Splintergun can cause way more damage than a Battery Launcher due to the explosive nature of its ammunition. It\'s best to use this device agains large hordes of zombies.',
+  'Dieser Splitterwerfer mit verbessertem Druckausgleichsregler, feinjustierter Zielautomatik und integriertem Fluxkompensator übertrifft alle Leistungsdaten des Basismodells um Längen. Außerdem erhöht er den Rambo-Faktor des Trägers sofort um 78.92%.' =>
+	'This splintergun with improved pressure regulation, carefully adjusted targeting mechanism and integrated flux capacitor exceeds the performance of the original splintergun in every way. It also raises your Rambo-factor by 78.92%.',
+  'Leckeres Steak' =>
+	'Tasty Steak',
+  'Dieses Steak ist perfekt gegrillt - es ist bis zur Mitte durchgebraten und noch immer schön saftig. Iss es lieber schnell, bevor ein Zombie es dir streitig macht.' =>
+	'This steak is absolutely perfect - well done and very juicy. You\'d better eat that fast, otherwise you\'ll have to fight over it with a zombie.',
+  'Brüchiger Stock' =>
+	'Fragile stick',
+  'Ein brüchiger Stock ist auf sehr viele verschiedene Arten nutzlos; du kannst damit nichts bauen, und wenn du damit auf Zombies losgehst wirst du dir sicher ein paar Bissabdrücke einfangen.' =>
+	'A fragile stick is useless in a lot of different ways; you can\'t use it to build something, and when you try using it to whack zombies, you\'re in for a pretty big dissappointment.',
+  'Substanz H9CE42-X' =>
+	'Medical Substance H9CE42-X',
+  'Dieses experimentelle Medikament wurde entwickelt, um die Zombieepidemie einzudämmen. Die Einnahme des Medikaments führt zu einer temporären Immunisierung vor der Zombieinfektion, hat jedoch bei einer bereits vorhandenen Infektion keinerlei Effekt.' =>
+	'The experimental drug was developed to contain the zombie epidemic. Taking it protects you from contracting the zombie disease, but it won\'t have any effect on an existing infection.',
+  'Saftige Mutationsmelone' =>
+	'Juicy Mutalone',
+  'Diese Mutationsmelone sieht prächtig aus! Sie ist knallrot, saftig, und ihre Tentakel versuchen nur ganz selten, dich zu erwürgen.' =>
+	'This Mutalone looks just gorgeous! It\'s bright red, juicy, and its tentacles don\'t try to strangle you most of the time.',
+  'Unreife Mutationsmelone' =>
+	'Premature Mutalone',
+  'Ein bisschen hätte diese Mutationsmelone schon noch reifen können... sie ist ziemlich hart und grün, aber innen drin bestimmt trotzdem saftig!' =>
+	'This Mutalone could have grown a little more, as it\'s still green and rough. On the inside, however, will be plenty of juice!',
+  'Schrumplige Mutationsmelone' =>
+	'Wrinkled Mutalone',
+  'Also einen grünen Daumen hast du bei der Zucht dieser Mutationsmelone nicht bewiesen ...' =>
+	'If you ever need to prove your lack of a green thumb, this Mutalone might be pretty conclusive...',
+  'Vertrocknete Mutationsmelone' =>
+	'Dried Mutalone',
+  'Das Ding sieht so aus, als wäre es vor 1000 Jahren mumifiziert worden - und genau so wird es wahrscheinlich auch schmecken.' =>
+	'Boy, this sure looks like a 1000 year old Egyptian mummy - and it tastes just like that, too.',
+  'Explosive Mutationsmelone' =>
+	'Explosive Mutalone',
+  'Genau DAS kommt dabei raus, wenn Mutter Natur von den Zombies total angepisst ist. Diese .... ähem ... "Frucht" hat einen ausgeprägten Selbsterhaltungstrieb und neigt bei Zombiekontakt zur Explosion. Du könntest sie auch essen... auch wenn das nicht unbedingt empfehlenswert ist.' =>
+	'Wow, note to self: Never piss of Mother Nature. This .... well ... "fruit" shows signs of a distinct self preservation instinct and tends to explode whenever it comes in contact with a zombie. This reaction is not limited to zombies, however... remember that when you think about eating this thing.',
+  'Verkaufsautomat' =>
+	'Vending Machine',
+  'Wasserbombe' =>
+	'Water Bomb',
+  'Sobald die Zombies in Wurfreichweite kommen kannst du ihnen mit diesem kleinen Geschenk die Tour vermiesen. Nichts ist effektiver gegen eine Gruppe Zombies als eine Wasserbombe!' =>
+	'As soon as zombies enter your throwing perimeter, you can instantly turn them into a puddle of goo. There is nothing more effective at melting zombies faces off than a Water Bomb!',
+  'Die Aquablaster XL ist die militärische Variante der Aquablaster XS. Durch das zusätzliche Hochleistungsprühsystem handelt es sich hierbei um eine tödliche Waffe (insbesondere für Zombies). Falls gerade keine Zombie-Apokalypse stattfindet, kann man sie auch zur Auflösung lästiger Demonstationen verwenden.' =>
+	'This Aquablaster XL is a military version of the standart Aquablaster XS. The additional high power spraying system turns this device into a deadly weapon (especially for zombies!). Of course, you can also use it to efficiently end annoying demonstrations.',
+  'Messwein' =>
+	'Mass Wine',
+  'OK, für den Beichtvater und die Chorknaben konntest du nicht mehr allzuviel tun, aber wenigstens das Allerheiligste konntest du retten, als du aus der Kathedrale geflohen bist: den gesamten Messweinvorrat! Der wird dir helfen, über den Verlust deiner Gemeinde hinweg zu kommen. Waren sowieso alles Sünder...' =>
+	'There was nothing you could do for your reverent, or even all these choristers, but at least could save the most holy thing in the entire cathedral when you fled: The mass wine! It will absolutely helf you get over the death of everyone in your congregation. They\'ve been sinners anyways...',
+  'Weihnachtsgetränk' =>
+	'Weihnachtsgetränk',
+  'Ein absolut klassisches Weihnachtsgetränk! Hauptsächlich deshalb, weil man sich im Dezember so viel davon reinschüttet, dass man es die restlichen 11 Monate nicht mehr anrühren kann.' =>
+	'This is an absolute classic for christmas! Mainly, because people tend to drink so much of this stuff during December, they can\'t so much as look at it for the next 11 months.',
+  'Weihnachtsessen' =>
+	'Weihnachtsessen',
+  'Süssigkeiten' =>
+	'Süssigkeiten',
+  'Besonderes' =>
+	'Special',
+  'Angebissener Apfel' =>
+	'Apple with a bitemark',
+  'Um Himmels Willen, sei bloß vorsichtigt! Wenn man dich mit einem angebissenen Apfel auf der Straße erwischt tauchen Anwälte aus dem Nichts heraus auf und verprügeln dich mit überteuerten Tablet-Computern!' =>
+	'For god\'s sake, be carefull! If you get caught holding this apple, lawyers will appear out of nowhere and beat you to death with overpriced tablet computers!',
+  'Brotlaib' =>
+	'Bread',
+  'Endlich bist du vernünftig dafür ausgerüstet, die Enten im Teich zu füttern. Leider sind mittlerweise sowohl Teich als auch Enten einer zombieverseuchten Ödniss gewichen. Dann musst du diesen Brotlaib wohl selbst essen...' =>
+	'Finally, you have everthing you need to feed the ducks in your local park - well, you would have, but park and ducks have ceased to exist lately. So you can try to feed a zombie with this, or just eat it youself...',
+  'Offene Konservendose' =>
+	'Open Can',
+  'Konservendosen überleben alle möglichen Arten von Weltuntergängen - Asteroideneinschläge, Nukleare Explosionen, Maya-Apokalypsen und sogar Landtagswahlen! Guten Appetit!' =>
+	'Cans will outlast all sorts of doomsday events - asteroid impact, nuclear explosion, the Mayan apocalypse and even federal elections! Bon appétit!',
+  'Blasenkaugummi' =>
+	'Bubblegum',
+  'Kaugummi ist nicht unbedingt ein vollwertiger Ersatz für eine richtige Mahlzeit, aber immer noch besser als nichts. Außerdem kannst du es aufblasen, damit es größer erscheint.' =>
+	'Bubblegum might not be part of a complete breakfast, but it is better than nothing. If you\'re really hungry, you can inflate it so it looks bigger.',
+  'Gebrauchsanleitung für einen Kühlschrank' =>
+	'Freezer Manual',
+  'Gebrauchsanleitung für eine Waschmaschine' =>
+	'Washing Maschine Manual',
+  'Gebrauchsanleitung für einen Wäschetrockner' =>
+	'Dryer Manual',
+  'Gebrauchsanleitung für eine HiFi-Anlage' =>
+	'Television Manual',
+  'Gebrauchsanleitung für ein Mobiltelefon' =>
+	'Cell Phone Manual',
+  'Gebrauchsanleitung für einen Vibrator' =>
+	'Vibrator Manual',
+  'Mario Barth LIVE CD' =>
+	'Justin Bieber CD',
+  'Auf dem Booklet steht was von "totlachen"... "Tod" ist schonmal sehr treffend, "lachen" eher nicht. Die Witze (bzw. der eine Witz, der über 90 Minuten immer wieder wiederholt wird) verursachen selbst bei Zombies noch den sofortigen Hirntod - was dann irgendwie doch wieder etwas beeindruckend ist.' =>
+	'The contend of this CD shows some marvellous technical achievements... I mean, would you ever have thought that you could crank up auto-tune to a level where even the grunts of a zombie sould like a rock ballad? Unfortunately, since that zombie sounds vastly to superior to Justin, his music is still shit even with auto-tune.',
+  'CD einer DSDS Gewinnerin' =>
+	'Japanese Pop CD',
+  'Diese CD enthält Musik von irgend einer Gewinnerin von DSDS, deren Namen wahrscheinlich nicht mal sie selber kennt. Leider hat sie sich nicht allzu gut verkauft, und wurde in den Top 100 Albumcharts von den CDs "Fahrstuhlmusik heute" und "Furzgeräusche rund um die Welt" vernichtend geschlagen.' =>
+	'"Weird" doesn\'t even begin to describe this. However, it\'s still better than normal, western Pop - mostly because you don\'t understand the lyrics.',
+  'Modern Talking CD' =>
+	'Twilight Soundtrack CD',
+  'OH MEIN GOTT, VERNICHTE ES MIT FEUER!!!' =>
+	'OH MY GOD, KILL IT WITH FIRE!!!',
+  'Knuffibonkas, der böse Todesbär' =>
+	'Knuffibonkas, Supreme Bear Lord of Ultimate Death',
+  'Unheiliges Stofftier' =>
+	'Unholy Stuffed Bear',
+  'Verfluchter Teddybär' =>
+	'Cursed Bear',
+  'Limonade' =>
+	'Lemonade',
+  'Bubble Tea' =>
+	'Bubble Tea',
+  'Glühwein' =>
+	'Mulled Wine',
+  'Mutzbraten' =>
+	'Mutzbraten',
+  'Eine lokale Köstlichkeit aus Sachen und Thüringen, die auf keinem Weihnachtsmarkt fehlen darf!' =>
+	'This is totally off topic; but why the fuck do you English folks not have proper translations for our regional food? Jesus, I searched the whole day for a translation for this, and I\'ve got NOTHING!',
+  'Thüringer Bratwurst' =>
+	'Thuringia Sausage',
+  '... sieht zumindest so ähnlich aus wie eine Thüringer Bratwurst. Die wirkliche Herkunft dieser Wurst wird wohl für immer ein Mysterium bleiben...' =>
+	'... at least it looks like one. The real origin of this sausage will probably remain a mystery.',
+  'Schokolade' =>
+	'Chocolate',
+  'Auch bekannt unter dem namen "Zucker mit Schokoladengeschmack". Kinder können sich das Zeug tonnenweise in den Mund schieben, leiden danach allerdings auch für Wochen an Verstopfung und Zahnschmerzen.' =>
+	'Auch bekannt unter dem namen "Zucker mit Schokoladengeschmack". Kinder können sich das Zeug tonnenweise in den Mund schieben, leiden danach allerdings auch für Wochen an Verstopfung und Zahnschmerzen.',
+  'Kandierte Nüsse' =>
+	'Sweet Nuts',
+  'Diese Süssigkeit weckt schlimme Erinnerungen an deine Kindheit, als dir ein fremder in einer dunklen Gasse seine "ganz speziellen" kandierten Nüsse zeigen wollte...' =>
+	'Ow... these remind you of that one time, where a stranger offered to show you his "very special" sweet nuts in an alley.',
+  'Stück' =>
+	'Pieces',
+  'Du benötigst einen Munitionsgürtel, um diesen Gegenstand mitführen zu können.' =>
+	'You need an ammobelt to take that with you.',
+  'Verkaufsautomat (Vending Machine)' =>
+	'Verkaufsautomat (Vending Machine)',
+  'Dir fehlen Gegenstände, um diese Aktion durchzuführen.' =>
+	'You are missing some objects to perform this action.',
+  '€' =>
+	'€',
+  'Heruntergekommenes Hotel' =>
+	'Rundown Hotel',
+  'Platz des Himmlischen Friedens' =>
+	'Tiananmen Square',
+  'Geschäftszentrum "Depressivo"' =>
+	'Business Center "The Scam Company"',
 );

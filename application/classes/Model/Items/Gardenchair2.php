@@ -2,10 +2,11 @@
 
 class Model_Items_Gardenchair2 extends Model_Items_Abstract_Chair implements Interface_Static {
 
-	protected static $instances_info = Array(
-			Array(	'name' => 'Ektorp-Gluten Stuhl',
-					'icon' => 'gardenchair2',
-					'description' => 'Stabil und aus einem Stück gegossen - dieser Stuhl ist zwar schwerer, dafür aber auch widerstandsfähiger als ein einfacher Plastikstuhl.'),
+	protected static $static_info = Array(
+		'name' => 'Ektorp-Gluten Stuhl',
+		'icon' => 'gardenchair2',
+		'description' => 'Stabil und aus einem Stück gegossen - dieser Stuhl ist zwar schwerer, dafür aber auch widerstandsfähiger als ein einfacher Plastikstuhl.',
+		'category' => Model_Items_Abstract_Item::MIAI_CAT_RES,
 	);
 
 	protected static $weight = 30;

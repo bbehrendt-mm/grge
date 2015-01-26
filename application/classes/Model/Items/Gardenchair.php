@@ -2,11 +2,12 @@
 
 class Model_Items_Gardenchair extends Model_Items_Abstract_Chair implements Interface_Static {
 
-	protected static $instances_info = Array(
-			Array(	'name' => 'Plastikstuhl',
-					'icon' => 'gardenchair',
-					'description' => 'Dieser Stuhl sieht ziemlich unbequem und wenig stabil aus - und dreckig ist er auch noch. Dafür ist er aber wenigstens leicht genug, um damit Zombies auf Distanz zu halten.'),
-			);
+	protected static $static_info = Array(
+		'name' => 'Plastikstuhl',
+		'icon' => 'gardenchair',
+		'description' => 'Dieser Stuhl sieht ziemlich unbequem und wenig stabil aus - und dreckig ist er auch noch. Dafür ist er aber wenigstens leicht genug, um damit Zombies auf Distanz zu halten.',
+		'category' => Model_Items_Abstract_Item::MIAI_CAT_RES,
+	);
 
 	protected static $weight = 20;
 

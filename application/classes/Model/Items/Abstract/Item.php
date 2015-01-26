@@ -11,7 +11,21 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
     const MIAI_CAT_EVENT = 64;
     const MIAI_CAT_LITERATURE = 128;
     const MIAI_CAT_BOTTLES = 256;
-	
+
+	public static function translateCatID($gid) {
+		switch ($gid) {
+			case Model_Items_Abstract_Item::MIAI_CAT_GEAR:          return 'Ausrüstung';
+			case Model_Items_Abstract_Item::MIAI_CAT_FIGHT:         return 'Waffen und Verteidigung';
+			case Model_Items_Abstract_Item::MIAI_CAT_FOOD:          return 'Nahrungsmittel';
+			case Model_Items_Abstract_Item::MIAI_CAT_DRUG:          return 'Drogen und med. Zubehör';
+			case Model_Items_Abstract_Item::MIAI_CAT_RES:           return 'Baumaterialien';
+			case Model_Items_Abstract_Item::MIAI_CAT_EVENT:         return 'Besonderes';
+			case Model_Items_Abstract_Item::MIAI_CAT_LITERATURE:    return 'Lesestoff';
+			case Model_Items_Abstract_Item::MIAI_CAT_BOTTLES:       return 'Wasserbehälter';
+			case Model_Items_Abstract_Item::MIAI_CAT_MISC: default: return 'Sonstiges';
+		}
+	}
+
 	protected static $static_info = Array(
 				'name' => 'item_name',
 				'icon' => 'icon_name',
@@ -77,6 +91,10 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 	public function __construct($type = null) {
 		if (count(static::$instances_info) > 0)
 			$this->type = ($type === null || $type < 0 || $type > (count(static::$instances_info) - 1)) ? mt_rand(0, count(static::$instances_info) - 1) : $type;
+	}
+
+	public static function getNumberOfTypes() {
+		return count(static::$instances_info) - 1;
 	}
 
     /**

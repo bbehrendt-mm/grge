@@ -2426,4 +2426,86 @@ return array (
 	'Platz des Himmlischen Friedens',
   'Geschäftszentrum "Depressivo"' =>
 	'Geschäftszentrum "Depressivo"',
+  'Angriff' =>
+	'Angriff',
+  'Du versteckst dich hinter einer Ecke und atmest ein paar mal tief durch. Als du genug Mut gesammelt hast, trittst du hervor und ziehst deine Waffen. Der Kampf kann beginnen!' =>
+	'Du versteckst dich hinter einer Ecke und atmest ein paar mal tief durch. Als du genug Mut gesammelt hast, trittst du hervor und ziehst deine Waffen. Der Kampf kann beginnen!',
+  'Du greifst die :zombiestr an, die den Weg versperren!' =>
+	'Du greifst die :zombiestr an, die den Weg versperren!',
+  ':name tritt dem Kampfgeschehen bei!' =>
+	':name tritt dem Kampfgeschehen bei!',
+  'in einer dunklen Ecke' =>
+	'in einer dunklen Ecke',
+  'in unmittelbarer Nähe' =>
+	'in unmittelbarer Nähe',
+  'in der Umgebung' =>
+	'in der Umgebung',
+  'in einiger Entfernung' =>
+	'in einiger Entfernung',
+  'weit entfernt' =>
+	'weit entfernt',
+  'am Horizont' =>
+	'am Horizont',
+  ':zombies erscheint :distance!' =>
+	':zombies erscheint :distance!',
+  ':zombies tauchen :distance auf.' =>
+	':zombies tauchen :distance auf.',
+  'Vermodernde Zombies' =>
+	'Vermodernde Zombies',
+  'Es gibt kein Entkommen!' =>
+	'Es gibt kein Entkommen!',
+  'Eine Flucht scheint aussichtslos...' =>
+	'Eine Flucht scheint aussichtslos...',
+  'Gerade noch so entkommen! Das war knapp...' =>
+	'Gerade noch so entkommen! Das war knapp...',
+  ':name hat es hinter sich...' =>
+	':name hat es hinter sich...',
+  ':zombies wurde besiegt!' =>
+	':zombies wurde besiegt!',
+  'Die Meute :zombies wurde zerschlagen!' =>
+	'Die Meute :zombies wurde zerschlagen!',
+  'Verfaulte Klaue' =>
+	'Verfaulte Klaue',
+  'stürzt sich auf' =>
+	'stürzt sich auf',
+  'stürzen sich auf' =>
+	'stürzen sich auf',
+  'attackiert' =>
+	'attackiert',
+  'V' =>
+	'V',
+  'Verfehlt!' =>
+	'Verfehlt!',
+  'Wurde beim ' =>
+	'Wurde beim ',
+  'Wurde beim Angriff zerstö' =>
+	'Wurde beim Angriff zerstö',
+  'Wurde beim Angriff zerstört!' =>
+	'Wurde beim Angriff zerstört!',
+  'Runde ' =>
+	'Runde ',
+  'Runde :round' =>
+	'Runde :round',
+  ':name ' =>
+	':name ',
+  ':name ha' =>
+	':name ha',
+  ':name hat sich eine Ve' =>
+	':name hat sich eine Ve',
+  ':name hat sich eine Verletzung zugezo' =>
+	':name hat sich eine Verletzung zugezo',
+  ':name hat sich eine Verletzung zugezogen!' =>
+	':name hat sich eine Verletzung zugezogen!',
+  ':name hat sich eine Verletzung zugezogen: ' =>
+	':name hat sich eine Verletzung zugezogen: ',
+  'Dieser ' =>
+	'Dieser ',
+  'Dieser Gegenstand w' =>
+	'Dieser Gegenstand w',
+  'Dieser Gegenstand wurde während des' =>
+	'Dieser Gegenstand wurde während des',
+  'Dieser Gegenstand wurde während des Kampfes zers' =>
+	'Dieser Gegenstand wurde während des Kampfes zers',
+  'Dieser Gegenstand wurde während des Kampfes zerstört.' =>
+	'Dieser Gegenstand wurde während des Kampfes zerstört.',
 );

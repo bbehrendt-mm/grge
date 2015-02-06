@@ -5,6 +5,10 @@
       <sourceFolder url="file://$MODULE_DIR$/application/assets/dev" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/application/assets/dev/css" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/application/assets/dev/js" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/application/assets/dev/less" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/application/assets/dev/js/game" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/application/assets/dev/js/jquery" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/application/assets/dev/less/modules" isTestSource="true" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

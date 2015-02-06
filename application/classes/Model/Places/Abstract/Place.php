@@ -339,12 +339,12 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 				$player->achievements()->achieve(Model_Achievement::MA_CLOSE_ESCAPES);
 				return true;
 			} else $player->log()->add(new Model_Log_Types_Text('Fehlgeschlagene Flucht!', 'Der Kampf beginnt!', 'Schreiend und mit geschlossenen Augen rennst du auf die Zombies zu. Die sind von dieser Aktion so überrascht, dass du die meisten von ihnen einfach aus dem Weg stoßen kannst - aber leider nicht alle. Ein Zombie steht dir mitten im Weg, und wirft dich zu Boden als du versuchst, ihn umzurennen. Zwar kannst du schnell wieder aufspringen, bist nun aber von geifernden Zombies umzingelt. Flucht ist keine Option mehr, du wirst kämpfen müssen.'));
-		} else $this->log->add(new Model_Log_Types_Text('Angriff', 'Der Kampf beginnt!', 'Du versteckst dich hinter einer Ecke und atmest ein paar mal tief durch. Als du genug Mut gesammelt hast, trittst du hervor und ziehst deine Waffen. Der Kampf kann beginnen!'));
+		}
 
         $battle_log = Tool_Scripts::battle($this->zombie_factory->release_zombie_population(), Tool_Scripts::at_location(), false, $battle, $zc);
         if ($battle_log) {
             /** @var Model_Battle_Battle $battle */
-            $this->log->add(new Model_Log_Types_Battle('Du greifst die :zombiestr an, die den Weg versperren!', $battle_log, array(':zombiestr' => '<span class="value"><img src="/application/assets/icons/zombie.gif"></img>' . $zc . ' ' . __('Zombies') . '</span>')));
+            $this->log->add(new Model_Log_Types_Battle('Du greifst die :zombiestr an, die den Weg versperren!', $battle_log, array(':zombiestr' => $zc . ' ' . __('Zombies'))));
             $this->zombie_factory()->accumulate_zombies($battle->get_zombie_count());
         }
 

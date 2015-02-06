@@ -585,6 +585,7 @@ return array(
                         case 3:			$player->inventory()->limit(125); break;
                         case 4:			$player->inventory()->limit(135); break;
                         case 5:			$player->inventory()->limit(150); break;
+                        case 6:			$player->inventory()->limit(166); break;
                     }
                     $player->inventory()->add(new Model_Items_Virtual_Hero_Muscle($level));
                     if ($level > 1 && $level < 5)

@@ -17,6 +17,20 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
         $this->render();
     }
 
+    public function japi_siege() {
+        /** @global Model_Game $game */
+        /** @global Model_Player $player */
+        global $game, $player;
+
+        if (!$game || !$player) return;
+
+        $z = (int)$this->request->post('z');
+        if ($z <> 0)
+            $player->location()->zombie_factory()->accumulate_zombies($z);
+
+        $this->render();
+    }
+
     public function japi_regenerate() {
         /** @global Model_Game $game */
         /** @global Model_Player $player */
@@ -61,6 +75,7 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
             }
 
             for ($i = 0; $i < min(100,$set['count']); $i++) {
+                if (!isset($set['params'])) $set['params'] = [];
                 try {
                     /** @var Model_Items_Abstract_Item $item */
                     $item = $reflector->newInstanceArgs($set['params']);

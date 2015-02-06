@@ -368,4 +368,38 @@ return array (
 	'',
   'Verkaufsautomat (Vending Machine)' =>
 	'',
+  'V' =>
+	'',
+  'Wurde beim ' =>
+	'',
+  'Wurde beim Angriff zerstö' =>
+	'',
+  'Wurde beim Angriff zerstört!' =>
+	'',
+  'Runde ' =>
+	'',
+  'Runde :round' =>
+	'',
+  ':name ' =>
+	'',
+  ':name ha' =>
+	'',
+  ':name hat sich eine Ve' =>
+	'',
+  ':name hat sich eine Verletzung zugezo' =>
+	'',
+  ':name hat sich eine Verletzung zugezogen!' =>
+	'',
+  ':name hat sich eine Verletzung zugezogen: ' =>
+	'',
+  'Dieser ' =>
+	'',
+  'Dieser Gegenstand w' =>
+	'',
+  'Dieser Gegenstand wurde während des' =>
+	'',
+  'Dieser Gegenstand wurde während des Kampfes zers' =>
+	'',
+  'Dieser Gegenstand wurde während des Kampfes zerstört.' =>
+	'',
 );

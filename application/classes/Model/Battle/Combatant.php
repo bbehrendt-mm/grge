@@ -256,7 +256,10 @@ abstract class Model_Battle_Combatant {
 					$this->lock = $item::$reload_time;
 					break;
 			}
-		}	
+		}
+
+		$atk_log = new Model_Log_Types_Battle_Atk();
+		$this->log_entry($atk_log);
 		
 		$acc = ($item::$accuracy * $this->accuracy * ($item::$accuracy_type == Model_Battle_Weapon::MBW_ACC_STATIC) ? 1 : ((110 - $combatant->distance())/100));
 		Tool_Numerics::bounds($acc, 0, 1);
@@ -272,7 +275,7 @@ abstract class Model_Battle_Combatant {
 				$dmg += mt_rand($dmg_rng[0], $dmg_rng[1]) * $this->damage_mod;
 			}
 		
-		if ($missed) $note[] = 'Verfehlt!';
+		if ($missed) $note[] = Model_Log_Types_Battle_Atk::MLTBA_ATTACK_MISSED;
 			
 		switch ($item::$damage_type) {
 			case Model_Battle_Weapon::MBW_DMG_IMPACT:
@@ -324,22 +327,22 @@ abstract class Model_Battle_Combatant {
 
             foreach ($cover as $citem)
                 if ($citem->is_destroyed()) {
-                    $note[] = 'Schutz zerstört!';
+                    $note[] = Model_Log_Types_Battle_Atk::MLTBA_COVER_DESTROYED;
                     break;
                 }
 
             if ($armor && $armor->is_destroyed())
-                $note[] = 'Rüstung zerstört!';
+                $note[] = Model_Log_Types_Battle_Atk::MLTBA_ARMOR_DESTROYED;
         } else $protect = null;
 
         if (mt_rand(0,100) > ($item::$durability * 100))
         {
             $item->consume();
-            $note[] = 'Waffe zerstört!';
+            $note[] = Model_Log_Types_Battle_Atk::MLTBA_WEAPON_DESTROYED;
         }
 		$kills = $combatant->damage($dmg);
 
-		$this->log_entry(new Model_Log_Types_Battle_Atk($this, $combatant, $item, $dmg, $kills, implode(', ', $note), $armor, $cover, $protect));
+		$atk_log->update($this, $combatant, $item, $dmg, $kills, $note, $armor, $cover, $protect);
 		
 		return (!$kills) ? true : $kills;
 	}

@@ -1,0 +1,77 @@
+@import (once) "zombvival";
+
+@log-subsegment-border: 1px solid darken(@zv-color-cream,10%);
+@log-entry-good: mix(@zv-color-cream,#00FF00,90%);
+@log-entry-bad: mix(@zv-color-cream,#FF0000,90%);
+@log-entry-odd: darken(@zv-color-cream,5%);
+
+@log-icon-padding: 20px;
+@log-icon-positioning-top: 5px;
+@log-icon-positioning-left: 3px;
+@log-icon-positioning: @log-icon-positioning-left @log-icon-positioning-top;
+
+//Battle Log
+.log-battle {>.sub {
+  >.row {
+    padding: 3px;
+    &:not(.log-battle-round) {border-left: @log-subsegment-border};
+    &:first-child {margin-top: 10px;}
+    &.log-battle-enter + *:not(.log-battle-enter):not(.log-battle-escape), &.log-battle-escape + *:not(.log-battle-enter):not(.log-battle-escape):not(.log-battle-round) {margin-top: 10px; border-top: @log-subsegment-border; border-top-left-radius: 5px;}
+    &:not(.log-battle-enter):not(.log-battle-escape) + .log-battle-enter, &.log-battle-enter:first-child {border-top: @log-subsegment-border; border-top-left-radius: 5px;}
+    &.log-battle-escape, &:last-child, &.round-close {border-bottom: @log-subsegment-border; border-bottom-left-radius: 5px;}
+
+    &.log-battle-round {
+      margin-top: 8px; margin-bottom: 8px;
+      +* {margin-top: 10px; border-top: @log-subsegment-border; border-top-left-radius: 5px;}
+    }
+
+    &.log-battle-enter {
+      padding-left: @log-icon-padding;
+      &.log-battle-enter-zombie {background: url('media/icons/zombie.gif') no-repeat @log-icon-positioning, @log-entry-bad;}
+      &.log-battle-enter-citizen {background: url('media/icons/citizen.gif') no-repeat @log-icon-positioning, @log-entry-good;}
+    }
+
+    &.log-battle-escape {
+      padding-left: @log-icon-padding; position: relative; font-weight: bold;
+      &::before{.font-awesome-insert("\f138"); left: @log-icon-positioning-left; top: @log-icon-positioning-top;}
+      &.log-battle-escape-impossible, &.log-battle-escape-futile {background: @log-entry-bad}
+      &.log-battle-escape-success {background: @log-entry-good}
+    }
+
+    &.log-battle-attack {
+      line-height: 23px;
+      .item.destroyed {
+        position: relative;
+        >img {filter: grayscale(100%); -webkit-filter: grayscale(100%)}
+        &::after {.font-awesome-insert("\f00d", 13); color: red; right: -5px; text-shadow: 0 0 3px black;}
+      }
+      >.cell:first-child {
+        >span {
+          margin-left: 2px; margin-right: 2px;
+          &.player, &.zombie {padding-left: @log-icon-padding; letter-spacing: -1px}
+          &.player {background: url('media/icons/citizen.gif') no-repeat @log-icon-positioning}
+          &.zombie {background: url('media/icons/zombie.gif') no-repeat @log-icon-positioning}
+        }
+      }
+      >.cell:last-child {
+        .fa {line-height: 23px;}
+        .calculation,.final {
+          margin-left: 3px; margin-right: 3px;
+          img {margin-left: 1px; margin-right: 1px;}
+        }
+      }
+      .energy {padding-left: @log-icon-padding; background: url('media/icons/status_energy.gif') no-repeat @log-icon-positioning}
+    }
+
+    &.log-battle-injury {
+      padding-left: @log-icon-padding;
+      background: @log-entry-bad;
+    }
+
+    &.log-battle-death {
+      padding-left: @log-icon-padding; position: relative; font-weight: bold;
+      &.log-battle-death-zombie {background: url('media/icons/killz.gif') no-repeat @log-icon-positioning, @log-entry-good}
+      &.log-battle-death-citizen {background: url('media/icons/killc.gif') no-repeat @log-icon-positioning, @log-entry-bad}
+    }
+  }
+}}

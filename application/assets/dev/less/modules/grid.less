@@ -1,0 +1,37 @@
+@import (once) "zombvival";
+
+// Grid Classes
+* {
+  box-sizing: border-box;
+  &::before,&::after {box-sizing: border-box;}
+}
+
+.grid(@n;@i:0) when (@i <= @n) {
+  &.rw-@{i} {width: (@i * 100% / @n);}
+  &.ro-@{i} {margin-left: (@i * 100% / @n);}
+  .grid(@n, (@i + 1))
+}
+
+.row {
+  &::before, &::after {content: " "; clear: both;}
+  &::before { display: table;}
+  &::after {display: block; height: 0;}
+  >.cell,.cell-small {
+    display: inline-block; float: left;
+    &.padded {padding: 5px;}
+    &::before, &::after {clear: both;}
+    &::before {content: " "; display: table;}
+  }
+  >.cell {.grid(12)}
+  >.cell-small {.grid(24)}
+}
+
+#content > .row {margin: 5px 30px;}
+
+.row-table {
+  &.padded {margin: 5px;}
+  &.row-table-borders {border: 2px solid @zv-colo-main-dark; border-radius: 2px;}
+  &.row-table-striped > .row:nth-child(odd) {background: darken(@zv-color-bg, 5%)}
+  &.row-table-interact > .row:hover, .row-table.row-table-interact > .row.selected {background: darken(@zv-color-bg, 10%);}
+  > .row:first-child {background: @zv-colo-main-dark !important; color: white; font-weight: bold;}
+}

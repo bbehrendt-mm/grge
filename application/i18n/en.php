@@ -2426,4 +2426,86 @@ return array (
 	'Tiananmen Square',
   'Geschäftszentrum "Depressivo"' =>
 	'Business Center "The Scam Company"',
+  'Angriff' =>
+	'Attack',
+  'Du versteckst dich hinter einer Ecke und atmest ein paar mal tief durch. Als du genug Mut gesammelt hast, trittst du hervor und ziehst deine Waffen. Der Kampf kann beginnen!' =>
+	'You take a few deep breaths, grab your weapons and get ready to face the zombies!',
+  'Du greifst die :zombiestr an, die den Weg versperren!' =>
+	'You are fighting the :zombiestr that block your way!',
+  ':name tritt dem Kampfgeschehen bei!' =>
+	':name enters the battlefield!',
+  'in einer dunklen Ecke' =>
+	'in a dark corner',
+  'in unmittelbarer Nähe' =>
+	'in close proximity',
+  'in der Umgebung' =>
+	'around you',
+  'in einiger Entfernung' =>
+	'in a distance',
+  'weit entfernt' =>
+	'far away',
+  'am Horizont' =>
+	'at the horizon',
+  ':zombies erscheint :distance!' =>
+	':zombies appears :distance!',
+  ':zombies tauchen :distance auf.' =>
+	':zombies appear :distance.',
+  'Vermodernde Zombies' =>
+	'Decaying Zombies',
+  'Es gibt kein Entkommen!' =>
+	'There is no escape!',
+  'Eine Flucht scheint aussichtslos...' =>
+	'Escaping is not an option...',
+  'Gerade noch so entkommen! Das war knapp...' =>
+	'You\'ve barely made it out of there... that was close...',
+  ':name hat es hinter sich...' =>
+	':name left this world for good...',
+  ':zombies wurde besiegt!' =>
+	':zombies has finally been killed!',
+  'Die Meute :zombies wurde zerschlagen!' =>
+	'The hordes of :zombies were destroyed!',
+  'Verfaulte Klaue' =>
+	'Rotting Claw',
+  'stürzt sich auf' =>
+	'leaps at',
+  'stürzen sich auf' =>
+	'leap at',
+  'attackiert' =>
+	'attacks',
+  'V' =>
+	'V',
+  'Verfehlt!' =>
+	'Miss!',
+  'Wurde beim ' =>
+	'Wurde beim ',
+  'Wurde beim Angriff zerstö' =>
+	'Wurde beim Angriff zerstö',
+  'Wurde beim Angriff zerstört!' =>
+	'Wurde beim Angriff zerstört!',
+  'Runde ' =>
+	'Runde ',
+  'Runde :round' =>
+	'Runde :round',
+  ':name ' =>
+	':name ',
+  ':name ha' =>
+	':name ha',
+  ':name hat sich eine Ve' =>
+	':name hat sich eine Ve',
+  ':name hat sich eine Verletzung zugezo' =>
+	':name hat sich eine Verletzung zugezo',
+  ':name hat sich eine Verletzung zugezogen!' =>
+	':name hat sich eine Verletzung zugezogen!',
+  ':name hat sich eine Verletzung zugezogen: ' =>
+	':name hat sich eine Verletzung zugezogen: ',
+  'Dieser ' =>
+	'Dieser ',
+  'Dieser Gegenstand w' =>
+	'Dieser Gegenstand w',
+  'Dieser Gegenstand wurde während des' =>
+	'Dieser Gegenstand wurde während des',
+  'Dieser Gegenstand wurde während des Kampfes zers' =>
+	'Dieser Gegenstand wurde während des Kampfes zers',
+  'Dieser Gegenstand wurde während des Kampfes zerstört.' =>
+	'Dieser Gegenstand wurde während des Kampfes zerstört.',
 );

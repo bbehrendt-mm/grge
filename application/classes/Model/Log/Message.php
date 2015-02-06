@@ -6,7 +6,16 @@ class Model_Log_Message extends Model {
     const MLM_MOVEMENT_EVENT = 1;
     const MLM_ITEM_LOG = 2;
     const MLM_CHEM_EXPERIMENT = 3;
-    const MLM_LOCATION_LOG = 3;
+    const MLM_LOCATION_LOG = 4;
+
+    const MLM_BATTLE_CONTAINER = 5;
+    const MLM_BATTLE_ENTER = 6;
+    const MLM_BATTLE_ESCAPE = 7;
+    const MLM_BATTLE_DEATH = 8;
+    const MLM_BATTLE_ATTACK = 9;
+    const MLM_BATTLE_INJURY = 10;
+    const MLM_BATTLE_ROUND = 11;
+
 
     protected $data = [];
     protected $uid;
@@ -32,13 +41,17 @@ class Model_Log_Message extends Model {
     }
 
     /**
+     * @param bool $plain_data
      * @return array
      */
-    public function render() {
+    public function render($plain_data = false) {
         /** @global Model_Player $player */
         global $player;
 
         $tmpd = $this->postprocess($this->data);
+        if ($plain_data)
+            return $tmpd;
+
         if (is_array($tmpd) && !isset($tmpd['self']))
             $tmpd['self'] = $player->id() === $this->uid;
 

@@ -10,6 +10,8 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
     //Exp: 8% per day
     protected static $decay_exp = 0.08;
 
+    protected $deco = 0;
+
     protected $extensions = Array();
     protected $survival_find = true;
     protected $upgradable = true;
@@ -178,7 +180,17 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
     protected $patchup = 1;
 
     public function get_defense($actual = false) {
-        return round($this->defense * ($actual ? 1 : (1- $this->decay)));
+        return round($this->defense * ($actual ? 1 : (1 - $this->decay)));
+    }
+
+    public function get_deco($actual = false) {
+        return round($this->deco * ($actual ? 1 : (1 - $this->decay)));
+    }
+
+    public function set_deco($newval, $absolute = false) {
+        if ($absolute)
+            $this->deco = $newval;
+        else $this->deco += $newval;
     }
 
     public function get_decay() {

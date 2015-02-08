@@ -71,6 +71,13 @@ class Controller_Game extends Controller {
                 'outside' => $player->location()->is_outside()
             ],
             'actions' => $a,
+            'hideout' => $hideout ? [
+                'state' => 100 * round(1 - $hideout->get_decay(), 2),
+                'max_defense' => $hideout->get_defense(true),
+                'defense' => $hideout->get_defense(false),
+                'deco' => $hideout->get_deco(false),
+                'max_deco' => $hideout->get_deco(true),
+            ] : false,
             'radar' => [
                 'danger' => $danger,
                 'min' => 0,
@@ -318,7 +325,6 @@ class Controller_Game extends Controller {
                 // Load pause screen
                 //ToDo: Pause Page
                 $this->add_widget(View::factory('pages/noview')->render());
-
             elseif (Tool_Events::is_april_fools())
                 // Aprils fools
                 //ToDo: Aprils Fools Page
@@ -329,11 +335,61 @@ class Controller_Game extends Controller {
                 $this->add_widget(View::factory('pages/ingame')->render());
         }
         //Show game summary
-        else
-            //ToDo: Death Page
-            $this->add_widget(View::factory('pages/noview')->render());
+        else {
+            $a_points = 0;
+            $a_data = [];
+            foreach ($player->achievements()->get_all() as $aid => $value) {
+                $a_points += Model_Achievement::points_aid($aid) * $value;
+                $a_data[$aid] = [
+                    'id' => $aid,
+                    'icon' => $aid . '.gif',
+                    'name' => Model_Achievement::decode_aid($aid),
+                    'class' => Model_Achievement::class_aid($aid),
+                    'count' => $value
+                ];
+            }
+
+            $this->add_widget(View::factory('pages/death')
+                ->set('soul_points', $game->points($player->id()))
+                ->set('ach_points', $game->points($player->id()))
+                ->set('achievements', $a_data)
+                ->set('rankable', $game->is_rankable())
+                ->set('time', Tool_Numerics::duration_to_string($game->get_player($player->id())->get_lifetime()))
+                ->set('split_time', Tool_Numerics::duration_to_split($game->get_player($player->id())->get_lifetime()))
+                ->set('cause_of_death', $player->get_cod())
+                ->render());
+        }
 
         $this->render();
+    }
+
+    public function japi_end() {
+        /**
+         * @global $game Model_Game
+         * @global $player Model_Player
+         * @global $user Model_User
+         */
+        global $game, $user, $player;
+
+        //Check if player is still alive
+        if (!$player->alive())
+        {
+            //ToDo: Karma
+            //foreach ($game->players(false) as $p) if ($p->id() != $player->id())
+            //    Model_User::set_karma($p->id(), $player->id(), (int)$this->request->post('karma_' . $p->id()));
+
+            //End game and delete game object from session
+            if ($game->retire($user->uid())) {
+                /** @noinspection PhpUndefinedMethodInspection */
+                $this->session->delete('game');
+                unset($GLOBALS['game']);
+            }
+        }
+
+        //Redirect
+        $this->render([
+            'redirect' => 'lobby/main',
+        ]);
     }
 
 }

@@ -311,6 +311,42 @@ core = {
         });
     };
 })();(function() {
+    var hideoutstats = function(data, target) {
+        var repair, defense, deco;
+        $(target).empty()
+        .append(
+            $('<div />').addClass('cell rw-4 padded').append(
+                deco = $('<div />').addClass('widget')
+            )
+        ).append(
+            $('<div />').addClass('cell rw-4 padded').append(
+                repair = $('<div />').addClass('widget')
+            )
+        ).append(
+            $('<div />').addClass('cell rw-4 padded').append(
+                defense = $('<div />').addClass('widget')
+            )
+        );
+
+        deco
+            .append($('<img />').attr('src', 'media/icons/deco.gif'))
+            .append($('<span />').text(data.deco == data.max_deco ? data.deco : (data.deco + '/' + data.max_deco)))
+            .attr('title', "Ein h\u00fcbsch eingerichtetes Versteck reduziert die Chance, dass pl\u00f6tzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner T\u00fcr steht. So f\u00fchlst du dich direkt viel wohler.")
+            .qtip(game.render.html.qtip.ingame('top'));
+
+        repair
+            .append($('<img />').attr('src', 'media/icons/decay.gif'))
+            .append($('<span />').text(data.state + '%'))
+            .attr('title', "Dein Versteck ist eine ziemliche Bruchbude - vermutlich hast du beim Bau nicht mal g\u00e4ngige Normen eingehalten. Tja, deswegen musst du dich nun mit Verfall herumschlagen. Mit der Zeit wird sich der Zustand deines Verstecks verschlechtern, wodurch die Hausverteidigung sinkt.")
+            .qtip(game.render.html.qtip.ingame('top'));
+
+        defense
+            .append($('<img />').attr('src', 'media/icons/defense.gif'))
+            .append($('<span />').text(data.defense == data.max_defense ? data.defense : (data.defense + '/' + data.max_defense)))
+            .attr('title', "Die Hausverteidigung gibt an, wie vielen Zombies dein Versteck bei einer Belagerung standhalten kann. Wird dein Versteck von mehr Zombies belagert, so k\u00f6nnen diese deine Verteidigung durchbrechen und dich angreifen!")
+            .qtip(game.render.html.qtip.ingame('top'));
+    };
+
     var zombieradar = function(data, target) {
 
         // Create danger text
@@ -388,13 +424,15 @@ core = {
     };
 
     core.parts.location = function(data, target) {
-        var zradar, actions;
+        var zradar, hideout, actions;
 
         $(target).empty().addClass('row location_box ' + (data.meta.outside ? 'outside' : 'inside')).append(
             $('<h2 />').text(data.meta.name)
         ).append(
             $('<div />').addClass('cell rw-6 padded').append(
                 zradar = $('<div />').addClass('row')
+            ).append(
+                hideout = data.hideout ? $('<div />').addClass('row') : null
             ).append(
                 actions = $('<div />').addClass('row')
             )
@@ -415,7 +453,8 @@ core = {
         );
 
         zombieradar(data.radar, zradar);
-
+        if (hideout)
+            hideoutstats(data.hideout, hideout);
     };
 })();(function() {
     var renderers = {};

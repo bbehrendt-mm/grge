@@ -44,6 +44,11 @@
     position: relative;
     overflow: hidden;
     padding: 5px;
+    text-align: center;
+}
+
+.location_box .widget img + span {
+    margin-left: 5px;
 }
 
 .location_box.outside .widget {
@@ -51,7 +56,6 @@
 }
 
 .location_box .radar, .location_box .siege {
-    text-align: center;
     font-weight: bold;
     text-shadow: 0 0 4px rgba(0,0,0,0.4);
 }
@@ -766,3 +770,40 @@ div.log_box > .message.pointer > .content::before {
     color: #9b9b9b;
 }
 
+.achievement {
+    height: 48px;
+    width: 48px;
+    position: relative;
+}
+
+.achievement-missed {
+    opacity: 0.5;
+    filter: grayscale(100%);
+    -webkit-filter: filter: grayscale(100%);
+}
+
+.achievement > img {
+    position: absolute;
+    left: 16px;
+    top: 10px;
+}
+
+.achievement > span {
+    position: absolute;
+    font-family: "Exo 2",sans-serif;
+    font-weight: bold;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    left: 0;
+    top: 28px;
+}
+
+.achievement-0 {background: url("media/img/achievement-bg/0.png")}
+.achievement-1 {background: url("media/img/achievement-bg/1.png")}
+.achievement-2 {background: url("media/img/achievement-bg/2.png")}
+.achievement-3 {background: url("media/img/achievement-bg/3.png")}
+.achievement-4 {background: url("media/img/achievement-bg/4.png")}
+.achievement-5 {background: url("media/img/achievement-bg/5.png")}
+.achievement-6 {background: url("media/img/achievement-bg/6.png")}

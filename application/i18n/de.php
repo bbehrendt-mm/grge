@@ -2508,4 +2508,136 @@ return array (
 	'Dieser Gegenstand wurde während des Kampfes zers',
   'Dieser Gegenstand wurde während des Kampfes zerstört.' =>
 	'Dieser Gegenstand wurde während des Kampfes zerstört.',
+  'noch 1 Platz frei' =>
+	'noch 1 Platz frei',
+  'Dein Versteck ist eine ziemliche Bruchbude - vermutlich hast du beim Bau nicht mal gängige Normen eingehalten. Tja, deswegen musst du dich nun mit Verfall herumschlagen. Mit der Zeit wird sich der Zustand deines Verstecks verschlechtern, wodurch die Hausverteidigung sinkt.' =>
+	'Dein Versteck ist eine ziemliche Bruchbude - vermutlich hast du beim Bau nicht mal gängige Normen eingehalten. Tja, deswegen musst du dich nun mit Verfall herumschlagen. Mit der Zeit wird sich der Zustand deines Verstecks verschlechtern, wodurch die Hausverteidigung sinkt.',
+  'Die Hausverteidigung gibt an, wie vielen Zombies dein Versteck bei einer Belagerung standhalten kann. Wird dein Versteck von mehr Zombies belagert, so können diese deine Verteidigung durchbrechen und dich angreifen!' =>
+	'Die Hausverteidigung gibt an, wie vielen Zombies dein Versteck bei einer Belagerung standhalten kann. Wird dein Versteck von mehr Zombies belagert, so können diese deine Verteidigung durchbrechen und dich angreifen!',
+  'Je hü' =>
+	'Je hü',
+  'Je hübscher dein' =>
+	'Je hübscher dein',
+  'Je hübscher dein Versteck ei' =>
+	'Je hübscher dein Versteck ei',
+  'Je hübscher dein Versteck eingerichtet ist, des' =>
+	'Je hübscher dein Versteck eingerichtet ist, des',
+  'Je hübscher dein Versteck eingerichtet ist, desto wohler fü' =>
+	'Je hübscher dein Versteck eingerichtet ist, desto wohler fü',
+  'Je hübscher dein Versteck eingerichtet ist, desto wohler fühlst du dich ' =>
+	'Je hübscher dein Versteck eingerichtet ist, desto wohler fühlst du dich ',
+  'Je hübscher dein Versteck eingerichtet ist, desto wohler fühlst du dich dort.' =>
+	'Je hübscher dein Versteck eingerichtet ist, desto wohler fühlst du dich dort.',
+  'Ein hübs' =>
+	'Ein hübs',
+  'Ein hübsch ei' =>
+	'Ein hübsch ei',
+  'Ein hübsch eingerichtetes V' =>
+	'Ein hübsch eingerichtetes V',
+  'Ein hübsch eingerichtetes Versteck r' =>
+	'Ein hübsch eingerichtetes Versteck r',
+  'Ein hübsch eingerichtetes Versteck redu' =>
+	'Ein hübsch eingerichtetes Versteck redu',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-T' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-T',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Team ()' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Team ()',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Team (oder Tine Wit)' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Team (oder Tine Wit)',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Team (oder Tine Wittler)' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Team (oder Tine Wittler)',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-eam (oder Tine Wittler)' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-eam (oder Tine Wittler)',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler)' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler)',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner ' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner ',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. ' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. ',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerd' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerd',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem hilft e' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem hilft e',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Das wiederum ' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Das wiederum ',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Das wiederum reduziert ' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Das wiederum reduziert ',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Das wiederum red' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Das wiederum red',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Das wiederum' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Das wiederum',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Au' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Au',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem sieh' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem sieh',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem sieht ein wohn' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem sieht ein wohn',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem sieht ein wohl' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem sieht ein wohl',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem sieht ein wohnliches ' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem sieht ein wohnliches ',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem sieht ein ' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem sieht ein ',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem erscheint dir ein wo' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem erscheint dir ein wo',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Auß' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Auß',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem ' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem ',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Das wi' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Das wi',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Das wiederu' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Das wiederu',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Da ' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Da ',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. So f' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. So f',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. So fühlst du dich direkt viel w' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. So fühlst du dich direkt viel w',
+  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. So fühlst du dich direkt viel wohler.' =>
+	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. So fühlst du dich direkt viel wohler.',
+  'Du hast soeben deinen letzten Atemzug getan... Du bist auf die folgende schreckliche Art von dieser Welt gegangen: :cod!' =>
+	'Du hast soeben deinen letzten Atemzug getan... Du bist auf die folgende schreckliche Art von dieser Welt gegangen: :cod!',
+  '3... 2... 1... MEINS!' =>
+	'3... 2... 1... MEINS!',
+  'Herzlichen Glückwunsch, du bist tot!' =>
+	'Herzlichen Glückwunsch, du bist tot!',
+  'Wochen' =>
+	'Wochen',
+  'Tage' =>
+	'Tage',
+  'Stunden' =>
+	'Stunden',
+  'Seelenpunkte' =>
+	'Seelenpunkte',
+  'Keine' =>
+	'Keine',
+  'Auszeichnungspunkte' =>
+	'Auszeichnungspunkte',
+  'Nach qualvollen :time hast du nun endlich ins Gras gebissen!' =>
+	'Nach qualvollen :time hast du nun endlich ins Gras gebissen!',
+  'Du bist auf die folgende, unsagbar qualvolle Art und Weise aus dieser Welt gegangen' =>
+	'Du bist auf die folgende, unsagbar qualvolle Art und Weise aus dieser Welt gegangen',
+  'Leider hast du es trotz harter Anstrengungen nicht geschafft, Punkte zu erspielen.' =>
+	'Leider hast du es trotz harter Anstrengungen nicht geschafft, Punkte zu erspielen.',
+  'Viel Glück in deinem nächsten Leben!' =>
+	'Viel Glück in deinem nächsten Leben!',
+  'Der Tod' =>
+	'Der Tod',
+  'Wenn deine Gesundheit auf 0 sinkt, stirbst du. Das Spiel endet dann. Aber keine Angst, du kannst sofort ein neues Spiel starten wenn du gestorben bist.' =>
+	'Wenn deine Gesundheit auf 0 sinkt, stirbst du. Das Spiel endet dann. Aber keine Angst, du kannst sofort ein neues Spiel starten wenn du gestorben bist.',
+  'Nach deinem Tod wirst du auf eine Seite geleitet, die dir die Auszeichnungen und Punkte anzeigt, die du dir im Verlauf des Spiels verdient hast. Um Punkte oder Auszeichnungen zu erhalten musst du mindestens einen Seelenpunkt erspielt haben.' =>
+	'Nach deinem Tod wirst du auf eine Seite geleitet, die dir die Auszeichnungen und Punkte anzeigt, die du dir im Verlauf des Spiels verdient hast. Um Punkte oder Auszeichnungen zu erhalten musst du mindestens einen Seelenpunkt erspielt haben.',
+  'Wenn du deinen Tod durch einen Klick auf "Das Spiel beenden" bestätigst, wird dein Spiel ins Ranking aufgenommen (sofern du mindestens einen Seelenpunkt erspielt hast). Du wirst daraufhin zur Startseite von ZombVival weitergeleitet.' =>
+	'Wenn du deinen Tod durch einen Klick auf "Das Spiel beenden" bestätigst, wird dein Spiel ins Ranking aufgenommen (sofern du mindestens einen Seelenpunkt erspielt hast). Du wirst daraufhin zur Startseite von ZombVival weitergeleitet.',
+  'Leider hast du folgende Auszeichnungen knapp verpasst:' =>
+	'Leider hast du folgende Auszeichnungen knapp verpasst:',
+  'Das Spiel beenden' =>
+	'Das Spiel beenden',
 );

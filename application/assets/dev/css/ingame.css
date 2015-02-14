@@ -146,6 +146,11 @@
     padding: 2px 8px 0;
 }
 
+.inventory.disabled > * {
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+}
+
 .inventory ul {
     padding: 0;
     margin: 2px;
@@ -203,6 +208,17 @@
 .inventory ul li.temp.event {
     animation: tmp_event 0.5s infinite alternate;
 }
+
+.inventory.inventory_action > span {
+    display: inline-block;
+    text-align: justify;
+    margin: 5px;
+}
+
+.inventory.inventory_action > .btn {
+    margin: 10px;
+}
+
 
 @keyframes tmp_event {
     from {
@@ -774,6 +790,7 @@ div.log_box > .message.pointer > .content::before {
     height: 48px;
     width: 48px;
     position: relative;
+    display: inline-block;
 }
 
 .achievement-missed {

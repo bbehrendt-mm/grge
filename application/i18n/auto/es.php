@@ -502,4 +502,36 @@ return array (
 	'',
   'Wenn du deinen Tod durch einen Klick auf "Das Spiel beenden" bestätigst, wird dein Spiel ins Ranking aufgenommen (sofern du mindestens einen Seelenpunkt erspielt hast). Du wirst daraufhin zur Startseite von ZombVival weitergeleitet.' =>
 	'',
+  'Abbr' =>
+	'',
+  'Zu' =>
+	'',
+  'K' =>
+	'',
+  'Aufstell' =>
+	'',
+  'Kampfbegin' =>
+	'',
+  'Kampfbeginn' =>
+	'',
+  'Er' =>
+	'',
+  'Erlittener Scha' =>
+	'',
+  'Erlittener Schaden' =>
+	'',
+  'Ver' =>
+	'',
+  'Verlorene Ener' =>
+	'',
+  'Ve' =>
+	'',
+  'Verbrauche' =>
+	'',
+  'Verbrauchte Ener' =>
+	'',
+  'Angerichteter Schaden' =>
+	'',
+  'Vernicht' =>
+	'',
 );

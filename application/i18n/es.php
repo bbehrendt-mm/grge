@@ -2641,4 +2641,72 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
 	'Leider hast du folgende Auszeichnungen knapp verpasst:',
   'Das Spiel beenden' =>
 	'Das Spiel beenden',
+  'Multiorganversagen' =>
+	'Multiorganversagen',
+  'Du hattest ein erfülltes Leben, das dir :points Punkte für deine Seele eingebracht hat.' =>
+	'Du hattest ein erfülltes Leben, das dir :points Punkte für deine Seele eingebracht hat.',
+  'Du hast dir einen Platz im Ranking verdient!' =>
+	'Du hast dir einen Platz im Ranking verdient!',
+  'Klicke auf "Das Spiel beenden", um ins Ranking eingetragen zu werden.' =>
+	'Klicke auf "Das Spiel beenden", um ins Ranking eingetragen zu werden.',
+  'Hiermit werden dir folgende Auszeichnungen verliehen:' =>
+	'Hiermit werden dir folgende Auszeichnungen verliehen:',
+  'Getötete Zombies' =>
+	'Getötete Zombies',
+  'Sie kamen von hinten!' =>
+	'Sie kamen von hinten!',
+  'Kreuze auf deinem Kalender' =>
+	'Kreuze auf deinem Kalender',
+  'Du musst dieses Buch aufheben, bevor du es lesen kannst.' =>
+	'Du musst dieses Buch aufheben, bevor du es lesen kannst.',
+  'Du hast es dir gemütlich gemacht und liest ein gutes Buch. Daher kannst du im Moment keine Aktion durchführen und diesen Ort nicht verlassen.' =>
+	'Du hast es dir gemütlich gemacht und liest ein gutes Buch. Daher kannst du im Moment keine Aktion durchführen und diesen Ort nicht verlassen.',
+  'Zeit zu lesen! Dieses Buch wird dir sicherlich helfen, all die schlimmen Dinge in dieser Welt für einen Augenblick zu vergessen.' =>
+	'Zeit zu lesen! Dieses Buch wird dir sicherlich helfen, all die schlimmen Dinge in dieser Welt für einen Augenblick zu vergessen.',
+  'Noch :left von :num Seiten zu lesen' =>
+	'Noch :left von :num Seiten zu lesen',
+  'Öffnen' =>
+	'Öffnen',
+  'Abbr' =>
+	'Abbr',
+  'Bist du sicher, dass du diese Aktion abbrechen willst?' =>
+	'Bist du sicher, dass du diese Aktion abbrechen willst?',
+  'Zeit, die Lektüre wegzulegen und wieder in die reale Welt einzusteigen, die in Wahrheit gar nicht real sondern ein Browserspiel ist.' =>
+	'Zeit, die Lektüre wegzulegen und wieder in die reale Welt einzusteigen, die in Wahrheit gar nicht real sondern ein Browserspiel ist.',
+  'Zu' =>
+	'Zu',
+  'Zusammenfassung' =>
+	'Zusammenfassung',
+  'K' =>
+	'K',
+  'Aufstell' =>
+	'Aufstell',
+  'Kampfbegin' =>
+	'Kampfbegin',
+  'Kampfbeginn' =>
+	'Kampfbeginn',
+  'Er' =>
+	'Er',
+  'Erlittener Scha' =>
+	'Erlittener Scha',
+  'Erlittener Schaden' =>
+	'Erlittener Schaden',
+  'Ver' =>
+	'Ver',
+  'Verlorene Ener' =>
+	'Verlorene Ener',
+  'Ve' =>
+	'Ve',
+  'Verbrauche' =>
+	'Verbrauche',
+  'Verbrauchte Ener' =>
+	'Verbrauchte Ener',
+  'Verbrauchte Energie' =>
+	'Verbrauchte Energie',
+  'Angerichteter Schaden' =>
+	'Angerichteter Schaden',
+  'Vernicht' =>
+	'Vernicht',
+  'Vernichtete Zombies' =>
+	'Vernichtete Zombies',
 );

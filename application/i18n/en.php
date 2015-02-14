@@ -2640,4 +2640,72 @@ return array (
 	'You barely missed the following achievements:',
   'Das Spiel beenden' =>
 	'End game',
+  'Multiorganversagen' =>
+	'Multiple Organ Failure',
+  'Du hattest ein erfülltes Leben, das dir :points Punkte für deine Seele eingebracht hat.' =>
+	'You\'ve lived a full life, earning you :points points for your soul.',
+  'Du hast dir einen Platz im Ranking verdient!' =>
+	'You have been accepted in the game ranking!',
+  'Klicke auf "Das Spiel beenden", um ins Ranking eingetragen zu werden.' =>
+	'Click "End game" to claim your ranking position.',
+  'Hiermit werden dir folgende Auszeichnungen verliehen:' =>
+	'Hereby, we award you the following achievements:',
+  'Getötete Zombies' =>
+	'Killed Zombies',
+  'Sie kamen von hinten!' =>
+	'They came from behind!',
+  'Kreuze auf deinem Kalender' =>
+	'Days Crossed',
+  'Du musst dieses Buch aufheben, bevor du es lesen kannst.' =>
+	'You need to pick this book up before you can read it.',
+  'Du hast es dir gemütlich gemacht und liest ein gutes Buch. Daher kannst du im Moment keine Aktion durchführen und diesen Ort nicht verlassen.' =>
+	'You\'ve made yourself comfortable and started reading a good book. That\'s why you can not perform any action nor leave this place.',
+  'Zeit zu lesen! Dieses Buch wird dir sicherlich helfen, all die schlimmen Dinge in dieser Welt für einen Augenblick zu vergessen.' =>
+	'Time to get some reading done! This book will help you to forget all those horrible things out there, at least for a moment.',
+  'Noch :left von :num Seiten zu lesen' =>
+	'Still :left of :num pages to read',
+  'Öffnen' =>
+	'Open',
+  'Abbr' =>
+	'Abbr',
+  'Bist du sicher, dass du diese Aktion abbrechen willst?' =>
+	'Are you sure you want to stop this activity?',
+  'Zeit, die Lektüre wegzulegen und wieder in die reale Welt einzusteigen, die in Wahrheit gar nicht real sondern ein Browserspiel ist.' =>
+	'Time to put the book away and reenter reality, which is actually not real, but a browser game.',
+  'Zu' =>
+	'Zu',
+  'Zusammenfassung' =>
+	'Summary',
+  'K' =>
+	'K',
+  'Aufstell' =>
+	'Aufstell',
+  'Kampfbegin' =>
+	'Kampfbegin',
+  'Kampfbeginn' =>
+	'Kampfbeginn',
+  'Er' =>
+	'Er',
+  'Erlittener Scha' =>
+	'Erlittener Scha',
+  'Erlittener Schaden' =>
+	'Erlittener Schaden',
+  'Ver' =>
+	'Ver',
+  'Verlorene Ener' =>
+	'Verlorene Ener',
+  'Ve' =>
+	'Ve',
+  'Verbrauche' =>
+	'Verbrauche',
+  'Verbrauchte Ener' =>
+	'Verbrauchte Ener',
+  'Verbrauchte Energie' =>
+	'Used energy',
+  'Angerichteter Schaden' =>
+	'Angerichteter Schaden',
+  'Vernicht' =>
+	'Vernicht',
+  'Vernichtete Zombies' =>
+	'Destroyed zombies',
 );

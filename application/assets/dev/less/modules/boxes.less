@@ -1,0 +1,55 @@
+@import (once) "zombvival";
+
+@help-color-bg: @zv-color-main;
+@help-color-border: @zv-color-main-light;
+@help-color-text-main: lighten(@zv-color-main,70%);
+@help-color-text-head: white;
+
+.help {
+  background-color: @help-color-bg; padding: 10px; border-radius: 5px; text-align: justify; font-size: 13px; border: 2px solid @help-color-border; color: @help-color-text-main;
+  h4 {
+    margin: 9px 0; color: @help-color-text-head; position: relative;
+    &::before, &::after {.font-awesome; color: @help-color-text-head; display: inline-block; font-style: normal; font-weight: normal; line-height: 1; margin-right: 12px;}
+    &::before {content: "\f02d";}
+    &::after  {content: "\f05a"; position: absolute; font-size: 128px; right: 0; opacity: 0.1; pointer-events: none}
+  }
+}
+
+@whitebox-color-bg: #fff9f6;
+@whitebox-color-border: #f1ebe8;
+
+//noinspection CssOverwrittenProperties
+.whitebox {border-radius: 4px; background: @whitebox-color-bg; border: 1px solid @whitebox-color-border; border-bottom: 4px solid @whitebox-color-border; box-shadow: 0 4px 8px rgba(0,0,0,0.3);}
+
+@mugshot-dimensions: 100px;
+@mugshot-color-hover-bg: #ffb797;
+@mugshot-color-hover-border: #d23c02;
+@mugshot-color-animation: @mugshot-color-hover-border;
+
+.mugshot {
+  .whitebox; display: inline-block; width: @mugshot-dimensions + 4; position: relative; cursor: pointer; margin: 3px; padding: 1px; transition: background 250ms ease, border-color 500ms ease;
+  .mugshot-head {position: absolute; top: 0; left: 0; width: 100%; background: fade(@whitebox-color-bg, 50%); font-family: "Strait",sans-serif; padding-top: 3px; border-top-left-radius: 2px; border-top-right-radius: 2px; transition: background 250ms ease;}
+  //noinspection CssOverwrittenProperties
+  &:hover {
+    background: @mugshot-color-hover-bg; border: 1px solid @mugshot-color-hover-border; border-bottom: 4px solid @mugshot-color-hover-border;
+    .mugshot-head {background: fade(@mugshot-color-hover-bg, 50%);}
+  }
+  .mugshot-fill {position: absolute; top: 0; left: 0; height: 100%; width: 100%; background: fade(@whitebox-color-bg, 50%); color: @mugshot-color-animation; text-shadow: 0 0 2px black; font-size: 30px; padding-top: 30px;}
+  .mugshot-append {font-weight: bold;}
+  >img {height: @mugshot-dimensions; width:@mugshot-dimensions;}
+  >span {display: block; font-size: 11px; text-align: center;}
+}
+
+@valrow-color-bg: @zv-color-main;
+@valrow-color-border: @zv-color-main-light;
+
+.value-box {
+  background: @valrow-color-bg; margin: 10px; border: 2px solid @valrow-color-border; border-radius: 2px; box-shadow: 0 0 3px rgba(0,0,0,1); position: relative; color: @zv-color-secondary;
+  >.row {
+    background: @valrow-color-bg; position: relative; z-index: 2;
+    >.cell > b:first-child {font-family: "Strait",sans-serif; font-size: 20px;}
+  }
+  &::before, &::after {display: block; position: absolute; content: " "; height: 50%; width: 40%; bottom: 0; background: transparent; box-shadow: -10px 10px 50px black; z-index: 1}
+  &::before {right: 0; transform: rotate( 5deg) translate(-10px,-15px) skew( 9deg, 0deg)}
+  &::after {left: 0;   transform: rotate(-5deg) translate( 10px,-15px) skew(-9deg, 0deg)}
+}

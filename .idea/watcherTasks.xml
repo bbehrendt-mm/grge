@@ -16,7 +16,7 @@
       <option name="outputFromStdout" value="false" />
       <option name="passParentEnvs" value="true" />
       <option name="program" value="$ProjectFileDir$/application/assets/dev/compiler.jar" />
-      <option name="scopeName" value="Framework" />
+      <option name="scopeName" value="Javascript DEV (Game)" />
       <option name="trackOnlyRoot" value="true" />
       <option name="workingDir" value="$ProjectFileDir$" />
       <envs />
@@ -36,7 +36,7 @@
       <option name="outputFromStdout" value="false" />
       <option name="passParentEnvs" value="true" />
       <option name="program" value="$ProjectFileDir$/application/assets/dev/compiler.jar" />
-      <option name="scopeName" value="jQuery" />
+      <option name="scopeName" value="Javascript DEV jQuery" />
       <option name="trackOnlyRoot" value="true" />
       <option name="workingDir" value="$ProjectFileDir$" />
       <envs />
@@ -56,7 +56,7 @@
       <option name="outputFromStdout" value="false" />
       <option name="passParentEnvs" value="true" />
       <option name="program" value="$ProjectFileDir$/application/assets/dev/minifycss.bat" />
-      <option name="scopeName" value="CSS" />
+      <option name="scopeName" value="CSS DEV" />
       <option name="trackOnlyRoot" value="true" />
       <option name="workingDir" value="$ProjectFileDir$/application/assets/dev/" />
       <envs />
@@ -76,7 +76,7 @@
       <option name="outputFromStdout" value="true" />
       <option name="passParentEnvs" value="true" />
       <option name="program" value="$ProjectFileDir$/application/assets/dev/core_compiler.bat" />
-      <option name="scopeName" value="CORE" />
+      <option name="scopeName" value="Core" />
       <option name="trackOnlyRoot" value="false" />
       <option name="workingDir" value="$ProjectFileDir$\application\assets" />
       <envs />

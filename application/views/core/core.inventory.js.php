@@ -116,20 +116,63 @@
             )
         ).append(
             $('<div />').addClass('cell rw-4 padded').append(
-                iv_c = $('<div />').addClass('row inventory flatbox inventory_hero')
+                iv_c = $('<div />').addClass('row inventory flatbox').addClass(data.action ? 'inventory_action' : 'inventory_hero')
             )
         );
 
         render_block(data.player, iv_a, <?=__j('Dein Rucksack')?>, true);
         render_block(data.location, iv_b, data.home ? <?=__j('Deine Truhe')?> : <?=__j('Items am Boden')?>, false);
 
-        iv_c.append($('<h3 />').text(<?=__j('Heldentaten')?>));
-        $.each(data.heroics, function(k,v) {
-            iv_c.append(
-                $('<div />').addClass('cell rw-6 padded').append(core.snippets.button(v, function() {
-                    return confirm(<?=__j('Bist du sicher, dass du diese Heldentat ausführen möchtest?')?>)
-                }, 'tooltip'))
-            )
-        });
+        if (data.action) {
+            iv_a.addClass('disabled');
+            iv_b.addClass('disabled');
+
+            iv_c.append($('<h3 />').text(data.action.name)).append($('<span />').text(data.action.desc));
+
+            if (data.action.remaining) {
+                var d = 1;
+                for (var i = 1; i <= 3; i++)
+                    if (data.action.remaining[i] > 0) d = i;
+
+                if (d) {
+                    var l = 12 / (d+1);
+                    var timerow;
+                    iv_c.append(timerow = $('<div />').addClass('row center'));
+
+                    var elems = [<?=__j('Minuten')?>,<?=__j('Stunden')?>,<?=__j('Tage')?>,<?=__j('Wochen')?>];
+
+                    for (i = d; i >= 0; i--)
+                        timerow.append($('<div />').addClass('cell rw-' + l).append(
+                            $('<div />').append(
+                                $('<b />').text(elems[i])
+                            ).append(
+                                $('<span />').text(data.action.remaining[i])
+                            )
+                        ))
+                }
+            }
+
+            if (data.action.abort)
+                iv_c.append(
+                    $('<div />').addClass('btn').text(<?=__j('Abbrechen')?>).click(function() {
+                        if (confirm(<?=__j('Bist du sicher, dass du diese Aktion abbrechen willst?')?>))
+                            core.command('act/cancel',{});
+                    })
+                )
+
+        } else {
+            iv_c.append($('<h3 />').text(<?=__j('Heldentaten')?>));
+            $.each(data.heroics, function(k,v) {
+                iv_c.append(
+                    $('<div />').addClass('cell rw-6 padded').append(core.snippets.button(v, function() {
+                        return confirm(<?=__j('Bist du sicher, dass du diese Heldentat ausführen möchtest?')?>)
+                    }, 'tooltip'))
+                )
+            });
+        }
+
+
+
+
     };
 })();

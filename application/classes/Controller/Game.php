@@ -59,9 +59,10 @@ class Controller_Game extends Controller {
 
         // Get local actions
         $a = [];
-        foreach (Tool_Scripts::available_items('Model_Items_Abstract_Virtual',false,true,false,$player) as $a_item)
-            /** @var  Model_Items_Abstract_Virtual $a_item */
-            $a = array_merge($a,$this->prepare_actionlist($a_item->auto_actions(), $a_item));
+        if (!$player->buff_retr('fragile'))
+            foreach (Tool_Scripts::available_items('Model_Items_Abstract_Virtual',false,true,false,$player) as $a_item)
+                /** @var  Model_Items_Abstract_Virtual $a_item */
+                $a = array_merge($a,$this->prepare_actionlist($a_item->auto_actions(), $a_item));
 
         // Add render data
         $this->add_data('location', [
@@ -166,9 +167,18 @@ class Controller_Game extends Controller {
 
         // Get heroic actions
         $a = [];
-        foreach (Tool_Scripts::available_items('Model_Items_Abstract_Virtual',true,false,false,$player) as $a_item)
-            /** @var  Model_Items_Abstract_Virtual $a_item */
-            $a = array_merge($a,$this->prepare_actionlist($a_item->auto_actions(), $a_item));
+        $action = false;
+        /** @var Model_Buffs_Abstract_Fragile $buff */
+        if (!($buff = $player->buff_retr('fragile')))
+            foreach (Tool_Scripts::available_items('Model_Items_Abstract_Virtual',true,false,false,$player) as $a_item)
+                /** @var  Model_Items_Abstract_Virtual $a_item */
+                $a = array_merge($a,$this->prepare_actionlist($a_item->auto_actions(), $a_item));
+        else $action = [
+            'name' => __($buff->name()),
+            'desc' => __($buff->description()),
+            'abort' => $buff->abortable(),
+            'remaining' => $buff->lifetime() > 0 ? Tool_Numerics::duration_to_split($buff->lifetime()) : false
+        ];
 
         /** @noinspection PhpVoidFunctionResultUsedInspection */
         /** @noinspection PhpUndefinedMethodInspection */
@@ -177,7 +187,8 @@ class Controller_Game extends Controller {
             'weight' => [$player->inventory()->weight(),$player->inventory()->limit()],
             'location' => $this->group_itemlist($player->location()->inventory()->get()),
             'home' => (bool)Tool_Scripts::current_location_hideout(),
-            'heroics' => $a
+            'heroics' => $a,
+            'action' => $action
         ]);
     }
 

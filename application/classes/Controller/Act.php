@@ -63,6 +63,25 @@ class Controller_Act extends Controller_Game {
 
         $this->japi_data();
     }
+
+    public function japi_cancel() {
+        /**
+         * @global $game Model_Game
+         * @global $player Model_Player
+         * @var $item Model_Items_Abstract_Item
+         */
+        global $game, $player;
+
+        //Block sleeping
+        /** @var Model_Buffs_Abstract_Fragile $buff */
+        if (!($buff = $player->buff_retr('fragile')) || !$buff->abortable())
+            return $this->japi_data();
+        else {
+            $buff->cancel();
+            return $this->japi_data();
+        }
+    }
+
     public function japi_item() {
         /**
          * @global $game Model_Game

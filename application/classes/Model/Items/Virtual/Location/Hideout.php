@@ -87,7 +87,7 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
                 if ($p->stats_get(Model_Player::MP_STAT_THIRST) < 20) return 'thirst';
                 if ($p->stats_get(Model_Player::MP_STAT_HUNGER) < 20) return 'hunger';
                 if ($p->stats_get(Model_Player::MP_STAT_SLEEPY) > 85) return 'sleepy';
-                if ($p->location()->home_extensions("hideout", "cursed")) return 'cursed';
+                if ($p->location()->has_upgrade('hideout_cursed')) return 'cursed';
                 return true;
             })
             ->fail_message('Du bist im Moment beschäftigt.', 'fragile')

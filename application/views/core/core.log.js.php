@@ -202,18 +202,22 @@
                 }
             });
 
+            $('<div />').addClass('row log-battle-round').text(<?=__j('Zusammenfassung')?>).appendTo(details);
+            var last_summary = $();
             $.each(summary, function(player, data) {
                 var row = $('<div />').addClass('row log-battle-summary').appendTo(details);
+                last_summary = row;
+
                 $('<div />').appendTo(row).addClass('cell rw-3 player').addClass(data.killed ? 'killed' : '').text(player);
                 var stuff = $('<div />').appendTo(row).addClass('cell rw-3 stuff');
                 var injuries = $('<div />').appendTo(row).addClass('cell rw-2 injuries');
                 var items = $('<div />').appendTo(row).addClass('cell rw-4 items_lost');
 
 
-                $('<span />').appendTo(stuff).addClass('damage_received').text(data.damage_received);
-                $('<span />').appendTo(stuff).addClass('energy_lost').text(data.energy_lost);
-                $('<span />').appendTo(stuff).addClass('damage_dealt').text(data.damage_dealt);
-                $('<span />').appendTo(stuff).addClass('zombies_killed').text(data.kills);
+                $('<span />').appendTo(stuff).addClass('damage_received').text(data.damage_received).attr('title', <?=__j('Erlittener Schaden')?>).qtip(game.render.html.qtip.ingame('top'));
+                $('<span />').appendTo(stuff).addClass('energy_lost').text(data.energy_lost).attr('title', <?=__j('Verbrauchte Energie')?>).qtip(game.render.html.qtip.ingame('top'));
+                $('<span />').appendTo(stuff).addClass('damage_dealt').text(data.damage_dealt).attr('title', <?=__j('Angerichteter Schaden')?>).qtip(game.render.html.qtip.ingame('top'));
+                $('<span />').appendTo(stuff).addClass('zombies_killed').text(data.kills).attr('title', <?=__j('Vernichtete Zombies')?>).qtip(game.render.html.qtip.ingame('top'));
 
                 $.each(data.items_lost, function(k,item) {
                     items.append(core.snippets.item(<?=__j('Dieser Gegenstand wurde während des Kampfes zerstört.')?>,item.name,item.icon,item.count,true,false))
@@ -225,6 +229,10 @@
                     s.append($('<img />').attr('src', 'media/icons/' + item.icon + '.gif'));
                 });
             });
+
+            last_summary.addClass('round-close');
+            $('<div />').addClass('row log-battle-round').text(<?=__j('Kampfbeginn')?>).appendTo(details);
+
             $.each(data.battle, function(round, obj) {
                 var row = $('<div />').addClass('row').appendTo(details);
 

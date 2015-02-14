@@ -31,7 +31,7 @@ core = {
                 return;
             } if (callback)
                 callback(data);
-            else core.render(data, $('#content').empty());
+            else if (data) core.render(data, $('#content').empty());
         });
     },
 
@@ -294,21 +294,64 @@ core = {
             )
         ).append(
             $('<div />').addClass('cell rw-4 padded').append(
-                iv_c = $('<div />').addClass('row inventory flatbox inventory_hero')
+                iv_c = $('<div />').addClass('row inventory flatbox').addClass(data.action ? 'inventory_action' : 'inventory_hero')
             )
         );
 
         render_block(data.player, iv_a, "Dein Rucksack", true);
         render_block(data.location, iv_b, data.home ? "Deine Truhe" : "Items am Boden", false);
 
-        iv_c.append($('<h3 />').text("Heldentaten"));
-        $.each(data.heroics, function(k,v) {
-            iv_c.append(
-                $('<div />').addClass('cell rw-6 padded').append(core.snippets.button(v, function() {
-                    return confirm("Bist du sicher, dass du diese Heldentat ausf\u00fchren m\u00f6chtest?")
-                }, 'tooltip'))
-            )
-        });
+        if (data.action) {
+            iv_a.addClass('disabled');
+            iv_b.addClass('disabled');
+
+            iv_c.append($('<h3 />').text(data.action.name)).append($('<span />').text(data.action.desc));
+
+            if (data.action.remaining) {
+                var d = 1;
+                for (var i = 1; i <= 3; i++)
+                    if (data.action.remaining[i] > 0) d = i;
+
+                if (d) {
+                    var l = 12 / (d+1);
+                    var timerow;
+                    iv_c.append(timerow = $('<div />').addClass('row center'));
+
+                    var elems = ["Minuten","Stunden","Tage","Wochen"];
+
+                    for (i = d; i >= 0; i--)
+                        timerow.append($('<div />').addClass('cell rw-' + l).append(
+                            $('<div />').append(
+                                $('<b />').text(elems[i])
+                            ).append(
+                                $('<span />').text(data.action.remaining[i])
+                            )
+                        ))
+                }
+            }
+
+            if (data.action.abort)
+                iv_c.append(
+                    $('<div />').addClass('btn').text("Abbrechen").click(function() {
+                        if (confirm("Bist du sicher, dass du diese Aktion abbrechen willst?"))
+                            core.command('act/cancel',{});
+                    })
+                )
+
+        } else {
+            iv_c.append($('<h3 />').text("Heldentaten"));
+            $.each(data.heroics, function(k,v) {
+                iv_c.append(
+                    $('<div />').addClass('cell rw-6 padded').append(core.snippets.button(v, function() {
+                        return confirm("Bist du sicher, dass du diese Heldentat ausf\u00fchren m\u00f6chtest?")
+                    }, 'tooltip'))
+                )
+            });
+        }
+
+
+
+
     };
 })();(function() {
     var hideoutstats = function(data, target) {
@@ -660,18 +703,22 @@ core = {
                 }
             });
 
+            $('<div />').addClass('row log-battle-round').text("Zusammenfassung").appendTo(details);
+            var last_summary = $();
             $.each(summary, function(player, data) {
                 var row = $('<div />').addClass('row log-battle-summary').appendTo(details);
+                last_summary = row;
+
                 $('<div />').appendTo(row).addClass('cell rw-3 player').addClass(data.killed ? 'killed' : '').text(player);
                 var stuff = $('<div />').appendTo(row).addClass('cell rw-3 stuff');
                 var injuries = $('<div />').appendTo(row).addClass('cell rw-2 injuries');
                 var items = $('<div />').appendTo(row).addClass('cell rw-4 items_lost');
 
 
-                $('<span />').appendTo(stuff).addClass('damage_received').text(data.damage_received);
-                $('<span />').appendTo(stuff).addClass('energy_lost').text(data.energy_lost);
-                $('<span />').appendTo(stuff).addClass('damage_dealt').text(data.damage_dealt);
-                $('<span />').appendTo(stuff).addClass('zombies_killed').text(data.kills);
+                $('<span />').appendTo(stuff).addClass('damage_received').text(data.damage_received).attr('title', "Erlittener Schaden").qtip(game.render.html.qtip.ingame('top'));
+                $('<span />').appendTo(stuff).addClass('energy_lost').text(data.energy_lost).attr('title', "Verbrauchte Energie").qtip(game.render.html.qtip.ingame('top'));
+                $('<span />').appendTo(stuff).addClass('damage_dealt').text(data.damage_dealt).attr('title', "Angerichteter Schaden").qtip(game.render.html.qtip.ingame('top'));
+                $('<span />').appendTo(stuff).addClass('zombies_killed').text(data.kills).attr('title', "Vernichtete Zombies").qtip(game.render.html.qtip.ingame('top'));
 
                 $.each(data.items_lost, function(k,item) {
                     items.append(core.snippets.item("Dieser Gegenstand wurde w\u00e4hrend des Kampfes zerst\u00f6rt.",item.name,item.icon,item.count,true,false))
@@ -683,6 +730,10 @@ core = {
                     s.append($('<img />').attr('src', 'media/icons/' + item.icon + '.gif'));
                 });
             });
+
+            last_summary.addClass('round-close');
+            $('<div />').addClass('row log-battle-round').text("Kampfbeginn").appendTo(details);
+
             $.each(data.battle, function(round, obj) {
                 var row = $('<div />').addClass('row').appendTo(details);
 

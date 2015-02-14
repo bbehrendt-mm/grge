@@ -73,5 +73,16 @@
       &.log-battle-death-zombie {background: url('media/icons/killz.gif') no-repeat @log-icon-positioning, @log-entry-good}
       &.log-battle-death-citizen {background: url('media/icons/killc.gif') no-repeat @log-icon-positioning, @log-entry-bad}
     }
+
+    &.log-battle-summary {
+      >.player {padding-left: @log-icon-padding; background: url('media/icons/citizen.gif') no-repeat @log-icon-positioning}
+      >.stuff {
+        >span {padding-left: @log-icon-padding; margin: 0 4px;}
+        >.damage_received {background: url('media/icons/damage.gif') no-repeat @log-icon-positioning}
+        >.damage_dealt {background: url('media/icons/fist.gif') no-repeat @log-icon-positioning}
+        >.energy_lost {background: url('media/icons/status_energy.gif') no-repeat @log-icon-positioning}
+        >.zombies_killed {background: url('media/icons/killz.gif') no-repeat @log-icon-positioning}
+      }
+    }
   }
 }}

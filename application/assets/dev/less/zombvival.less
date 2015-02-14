@@ -3,14 +3,18 @@
 
 @import (once) "modules/grid";
 @import (once) "modules/log";
+@import (once) "modules/boxes";
 
 @zv-color-main: #670202;
-@zv-color-bg: #FFF6BF;
+@zv-color-secondary: #FFF6BF;
+
+@zv-color-bg: @zv-color-secondary;
 @zv-color-cream: #F5F5F5;
 
-@zv-colo-main-dark: darken(@zv-color-main,8%);
+@zv-color-main-dark: darken(@zv-color-main,8%);
+@zv-color-main-light: lighten(@zv-color-main,8%);
 
 // Mixins
-.font-awesome-insert(@id; @dim: 16px;) {position: absolute; height: @dim; width: @dim; content: @id; font-family: FontAwesome; font-size: @dim;}
-
-.bevel(@base-color,@font-color) {background: @base-color; border: darken(@base-color, 20%); color: #FFF6BF; text-shadow: 0 1px 0 rgba(0, 0, 0, 0.8); border-radius: 3px; box-shadow: 0 0 1px 1px lighten(@base-color, 20%) inset, 0 1px 0 rgba(0, 0, 0, 0.3); padding: 0 4px;}
+//noinspection CssNoGenericFontName
+.font-awesome {font-family: FontAwesome}
+.font-awesome-insert(@id; @dim: 16px;) {.font-awesome; position: absolute; height: @dim; width: @dim; content: @id; font-size: @dim;}

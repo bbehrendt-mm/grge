@@ -13,35 +13,38 @@ if (!isset($services)) $services = array();
 
 <h1 class="noclick"><i class="fa fa-arrow-circle-right"></i><?=__('Herzlichen Glückwunsch, du bist tot!')?></h1>
 
-<div class="row center">
-    <div class="cell rw-3 padded">
-        <b><?php echo __('Wochen'); ?></b><br />
-        <?php echo $split_time[3] ?>
+<div class="value-box">
+    <div class="row center">
+        <div class="cell rw-3 padded">
+            <b><?php echo __('Wochen'); ?></b><br />
+            <?php echo $split_time[3] ?>
+        </div>
+        <div class="cell rw-3 padded">
+            <b><?php echo __('Tage'); ?></b><br />
+            <?php echo $split_time[2] ?>
+        </div>
+        <div class="cell rw-3 padded">
+            <b><?php echo __('Stunden'); ?></b><br />
+            <?php echo $split_time[1] ?>
+        </div>
+        <div class="cell rw-3 padded">
+            <b><?php echo __('Minuten'); ?></b><br />
+            <?php echo $split_time[0] ?>
+        </div>
     </div>
-    <div class="cell rw-3 padded">
-        <b><?php echo __('Tage'); ?></b><br />
-        <?php echo $split_time[2] ?>
-    </div>
-    <div class="cell rw-3 padded">
-        <b><?php echo __('Stunden'); ?></b><br />
-        <?php echo $split_time[1] ?>
-    </div>
-    <div class="cell rw-3 padded">
-        <b><?php echo __('Minuten'); ?></b><br />
-        <?php echo $split_time[0] ?>
+
+    <div class="row center">
+        <div class="cell rw-6 padded">
+            <b><?=__('Seelenpunkte');?></b><br />
+            <?= $soul_points ? $soul_points : __('Keine');?>
+        </div>
+        <div class="cell rw-6 padded">
+            <b><?=__('Auszeichnungspunkte');?></b><br />
+            <?= $ach_points ? $ach_points : __('Keine');?>
+        </div>
     </div>
 </div>
 
-<div class="row center">
-    <div class="cell rw-6 padded">
-        <b><?=__('Seelenpunkte');?></b><br />
-        <?= $soul_points ? $soul_points : __('Keine');?>
-    </div>
-    <div class="cell rw-6 padded">
-        <b><?=__('Auszeichnungspunkte');?></b><br />
-        <?= $ach_points ? $ach_points : __('Keine');?>
-    </div>
-</div>
 
 <div class="row">
     <div class="cell rw-7 padded justify">
@@ -71,7 +74,7 @@ if (!isset($services)) $services = array();
                 <?=__('Hiermit werden dir folgende Auszeichnungen verliehen:');?>
             <?php } else { ?>
                 <?=__('Leider hast du folgende Auszeichnungen knapp verpasst:');?>
-            <?php } ?>
+            <?php } ?><br />
 
             <?php foreach ($achievements as $achievement) { ?>
                 <div data-aid="<?=$achievement['id']?>" class="achievement <?=($rankable && $soul_points > 0) ? '' : 'achievement-missed'?> achievement-<?=$achievement['class']?>">

@@ -36,7 +36,7 @@ core = {
                 return;
             } if (callback)
                 callback(data);
-            else core.render(data, $('#content').empty());
+            else if (data) core.render(data, $('#content').empty());
         });
     },
 

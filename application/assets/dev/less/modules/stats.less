@@ -1,0 +1,73 @@
+@import (once) "zombvival";
+
+@bar-default-height: 16px;
+
+@bar-shade-color: black;
+@bar-shade-opacity-start: 0%;
+@bar-shade-opacity-end: 15%;
+@bar-inner-color: #dedede;
+@bar-inner-border-color: darken(@bar-inner-color, 20%);
+@bar-inner-shadow-strength: 50%;
+
+@status-line-color: #a5a5a5;;
+
+.bar {
+  padding: 4px; margin: 4px; .whitebox(3%, 10%);
+  >.background {
+
+    display: inline-block; width: ~"calc(100% - 20px)"; background: @bar-inner-color; border-top: 1px solid @bar-inner-border-color; box-shadow: inset 0 0 3px fade(@bar-inner-border-color, @bar-inner-shadow-strength); border-radius: 2px; height: @bar-default-height; float: right; overflow: hidden;
+    > div:first-child {
+      height: @bar-default-height;
+      &::after {height: 100%; content: " "; background: linear-gradient(to bottom, fade(@bar-shade-color, @bar-shade-opacity-start) 0%, fade(@bar-shade-color, @bar-shade-opacity-end) 100%); display: block;}
+    }
+  }
+  >img:not(:last-child) {
+    &.status, &.buff {margin-right: 2px;}
+  }
+  >img.status + img.buff {padding-left: 2px; border-left: 2px solid @status-line-color;}
+}
+
+@status-calc-color-positive: #c0ffc9;
+@status-calc-color-negative: #ff8e90;
+@status-calc-color-fade: 50%;
+
+.statcalc {
+  >h4 {margin-top: 5px; margin-bottom: 5px;}
+  >.row.line {
+    &+.row.line {
+      border-top: 1px solid @status-line-color;
+      &.sum {border-top: 2px solid @status-line-color;}
+    }
+    >.cell {
+      padding-left: 8px; padding-right: 8px;
+      >span {padding-left: 5px; padding-right: 5px;}
+      &.right > img {float: left;}
+      &.left > img {float: right;}
+    }
+    &.sum {
+      > .cell {
+        padding-top: 4px; padding-bottom: 4px; font-weight: bold;
+        &.right, &.center.positive {background: @status-calc-color-positive}
+        &.left, &.center.negative {background: @status-calc-color-negative}
+      }
+
+    }
+    &:not(.sum) > .cell {
+      padding-top: 2px; padding-bottom: 2px;
+      &.right {background: fade(@status-calc-color-positive, @status-calc-color-fade)}
+      &.left {background: fade(@status-calc-color-negative, @status-calc-color-fade)}
+    }
+  }
+  &.inverse >.row.line {
+    &.sum {
+      > .cell {
+        &.right, &.center.positive {background: @status-calc-color-negative}
+        &.left, &.center.negative {background: @status-calc-color-positive}
+      }
+    }
+    &:not(.sum) > .cell {
+      &.right {background: fade(@status-calc-color-negative, @status-calc-color-fade)}
+      &.left {background: fade(@status-calc-color-positive, @status-calc-color-fade)}
+    }
+  }
+}

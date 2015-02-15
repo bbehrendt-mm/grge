@@ -1,0 +1,79 @@
+@import (once) "zombvival";
+
+@locationbox-outside-image: url("media/img/location_outside.png") bottom no-repeat;
+@locationbox-outside-background: linear-gradient(to bottom, #7fd2df 0%,#9dc6c9 50%);
+@locationbox-outside-color-text: black;
+@locationbox-outside-color-shadow: white;
+@locationbox-outside-finish: #845b30;
+@locationbox-outside-color-head: #61656d;
+@locationbox-outside-text-blur: 50%;
+@locationbox-outside-bottom-padding: 48px;
+@locationbox-outside-widget-background: #eaffff;
+
+@locationbox-inside-image: url("media/img/location_inside.png") no-repeat, url("media/img/location_inside_floor.png") bottom repeat-x;
+@locationbox-inside-background: linear-gradient(to bottom, #1b1d1d 0%, #121212 100%);
+@locationbox-inside-color-text: white;
+@locationbox-inside-color-shadow: black;
+@locationbox-inside-finish: #462d21;
+@locationbox-inside-color-head: #b2bcc5;
+@locationbox-inside-text-blur: 25%;
+@locationbox-inside-bottom-padding: 16px;
+@locationbox-inside-widget-background: transparent;
+
+@locationbox-widget-border: black;
+
+@danger-indication-blur: 60%;
+@danger-indication-color-0: #1582c6;
+@danger-indication-color-1: #52c600;
+@danger-indication-color-2: #f7e400;
+@danger-indication-color-3: #eaac06;
+@danger-indication-color-4: #ea4803;
+@danger-indication-color-5: #af1900;
+@danger-max-number: 5;
+
+
+//noinspection LessUnresolvedVariable
+.danger-indication(@n) {
+  @var: "danger-indication-color-@{n}"; background: @@var; box-shadow: 0 0 4px fade(@@var,@danger-indication-blur);
+}
+
+.danger-loop(@n;@i:0) when (@i < @n) {
+  &.alert-@{i}::after {.danger-indication(@i)}
+  .danger-loop(@n, (@i + 1))
+}
+.danger-loop(@n;@i:0) when (@i = @n) {
+  &.alert-@{i}::after {.danger-indication(@i); animation: danger-flash 0.5s infinite alternate;}
+}
+
+@keyframes danger-flash {
+  from {.danger-indication(@danger-max-number - 1)}
+  to {.danger-indication(@danger-max-number)}
+}
+
+.location_box {
+  box-shadow: 0 0 4px black; padding: 10px; border-top-right-radius: 8px; border-top-left-radius: 8px;
+  >h2 {display: block; text-align: center;}
+
+  .widget {
+    border: 1px solid fade(@locationbox-widget-border, 40%); box-shadow: 0 0 3px fade(@locationbox-widget-border, 20%); position: relative; overflow: hidden; padding: 5px; text-align: center;
+    >img + span {margin-left: 5px;}
+
+    &.radar, &.siege {
+      font-weight: bold; text-shadow: 0 0 4px rgba(0,0,0,0.4);
+      &::after {width: 100%; position: absolute; height: 3px; content: " "; bottom: 0; left: 0;}
+      .danger-loop(@danger-max-number);
+    }
+  }
+
+  &.outside {
+    background: @locationbox-outside-image, @locationbox-outside-background; padding-bottom: @locationbox-outside-bottom-padding; color: @locationbox-outside-color-text; text-shadow: 0 0 1px @locationbox-outside-color-shadow; border-bottom: 4px solid @locationbox-outside-finish;
+    >h2 {border-bottom: solid 2px @locationbox-outside-color-head; color: @locationbox-outside-color-head; text-shadow: 0 0 10px fade(@locationbox-outside-color-text, @locationbox-outside-text-blur);}
+    .widget {background: @locationbox-outside-widget-background}
+  }
+
+  &.inside {
+    background: @locationbox-inside-image, @locationbox-inside-background; padding-bottom: @locationbox-inside-bottom-padding; color: @locationbox-inside-color-text; text-shadow: 0 0 1px @locationbox-inside-color-shadow; border-bottom: 4px solid @locationbox-inside-finish;
+    >h2 {border-bottom: solid 2px @locationbox-inside-color-head; color: @locationbox-inside-color-head; text-shadow: 0 0 10px fade(@locationbox-inside-color-text, @locationbox-inside-text-blur);}
+    .widget {background: @locationbox-inside-widget-background}
+  }
+}

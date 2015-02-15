@@ -15,11 +15,11 @@
   }
 }
 
-@whitebox-color-bg: #fff9f6;
-@whitebox-color-border: #f1ebe8;
+@whitebox-color-bg: #fafafa;
+@whitebox-color-border: #e9e9e9;
 
 //noinspection CssOverwrittenProperties
-.whitebox {border-radius: 4px; background: @whitebox-color-bg; border: 1px solid @whitebox-color-border; border-bottom: 4px solid @whitebox-color-border; box-shadow: 0 4px 8px rgba(0,0,0,0.3);}
+.whitebox(@darkness: 0%; @border-darkness: @darkness) {border-radius: 4px; background: darken(@whitebox-color-bg, @darkness); border: 1px solid darken(@whitebox-color-border, @border-darkness); border-bottom: 4px solid darken(@whitebox-color-border, @border-darkness); box-shadow: 0 4px 8px rgba(0,0,0,0.3);}
 
 @mugshot-dimensions: 100px;
 @mugshot-color-hover-bg: #ffb797;

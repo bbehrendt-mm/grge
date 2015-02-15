@@ -2708,4 +2708,86 @@ return array (
 	'Vernicht',
   'Vernichtete Zombies' =>
 	'Destroyed zombies',
+  'Wähl' =>
+	'Wähl',
+  'Wähle einen ' =>
+	'Wähle einen ',
+  'Wähle einen Wa' =>
+	'Wähle einen Wa',
+  'Wähle einen Wasserbehälter ' =>
+	'Wähle einen Wasserbehälter ',
+  'Wähle einen Wasserbehälter aus. ' =>
+	'Wähle einen Wasserbehälter aus. ',
+  'Wähle einen Wasserbehälter aus' =>
+	'Wähle einen Wasserbehälter aus',
+  'Wähle einen Wasserbehälter aus, inden du di' =>
+	'Wähle einen Wasserbehälter aus, inden du di',
+  'Wähle einen Wasserbehälter aus, inden du die gewählte Ra' =>
+	'Wähle einen Wasserbehälter aus, inden du die gewählte Ra',
+  'Wähle einen Wasserbehälter aus, inden du die gewählte Ration Wasser ' =>
+	'Wähle einen Wasserbehälter aus, inden du die gewählte Ration Wasser ',
+  'Wähle einen Wasserbehälter aus, inden du die gewählte Ration Wasser hineinschütten w' =>
+	'Wähle einen Wasserbehälter aus, inden du die gewählte Ration Wasser hineinschütten w',
+  'Wähle einen Wasserbehälter aus, inden du die gewählte Ration Wasser hineinschütten willst. ' =>
+	'Wähle einen Wasserbehälter aus, inden du die gewählte Ration Wasser hineinschütten willst. ',
+  'Wähle einen Wasserbehälter aus, inden du die gewählte Ration Wasser hineinschütten willst.' =>
+	'Wähle einen Wasserbehälter aus, inden du die gewählte Ration Wasser hineinschütten willst.',
+  'W' =>
+	'W',
+  'Wähle einen Wasserbehälter aus, in den du die gewählte Ration Wasser hineinschütten willst.' =>
+	'Wähle einen Wasserbehälter aus, in den du die gewählte Ration Wasser hineinschütten willst.',
+  'Wähle eine ' =>
+	'Wähle eine ',
+  'Wähle eine Flüssigkeit oder ' =>
+	'Wähle eine Flüssigkeit oder ',
+  'Wähle eine Flüssigkeit oder einen ander' =>
+	'Wähle eine Flüssigkeit oder einen ander',
+  'Wähle eine Flüssigkeit oder einen anderen Behälter ' =>
+	'Wähle eine Flüssigkeit oder einen anderen Behälter ',
+  'Wähle eine Flüssigkeit oder einen anderen Behälter aus, ' =>
+	'Wähle eine Flüssigkeit oder einen anderen Behälter aus, ',
+  'Wähle eine Flüssigkeit oder einen anderen Behälter aus, um die' =>
+	'Wähle eine Flüssigkeit oder einen anderen Behälter aus, um die',
+  'Wähle eine Flüssigkeit oder einen anderen Behälter aus, um diesen Behälter zu füllen.' =>
+	'Wähle eine Flüssigkeit oder einen anderen Behälter aus, um diesen Behälter zu füllen.',
+  'Klicke einen leeren Slot an, um Wasser aus einer anderen Quelle hinzuzugeben. Klicke einen gefülten Slot an, um Wasser auszuschütten. Schwarz gefärbte Slots können nicht ausgeleert werden.' =>
+	'Klicke einen leeren Slot an, um Wasser aus einer anderen Quelle hinzuzugeben. Klicke einen gefülten Slot an, um Wasser auszuschütten. Schwarz gefärbte Slots können nicht ausgeleert werden.',
+  'Klicke einen leeren Slot an, um Wasser aus einer anderen Quelle hinzuzugeben. Klicke einen gefüllten Slot an, um Wasser auszuschütten. Schwarz gefärbte Slots können nicht ausgeleert werden.' =>
+	'Klicke einen leeren Slot an, um Wasser aus einer anderen Quelle hinzuzugeben. Klicke einen gefüllten Slot an, um Wasser auszuschütten. Schwarz gefärbte Slots können nicht ausgeleert werden.',
+  'Seltsame Substanz (Limosuritat)' =>
+	'Strange Substance (Limosuritat)',
+  'Du kannst diese Chemikalie mit beliebigen anderen Gegenständen kombinieren. Welchen Effekt das hat... das wirst du selbst herausfinden müssen.' =>
+	'Du kannst diese Chemikalie mit beliebigen anderen Gegenständen kombinieren. Welchen Effekt das hat... das wirst du selbst herausfinden müssen.',
+  'Wähle einen Gegenstand, mit dem du die Chemikalie verbinden möchtest.' =>
+	'Wähle einen Gegenstand, mit dem du die Chemikalie verbinden möchtest.',
+  'Farbige Substanz (Limosuptin)' =>
+	'Colorful Substance (Limosuptin)',
+  'Du mischt beide Chemikalien zusammen. Es blubbert ein wenig, aber nachdem sich die Blasen gelegt haben stellst du fest, dass du soeben ein Fläschchen mit :result hergestellt hast! Herzlichen Glückwunsch!' =>
+	'You mix these two chemicals together. After some bubbling, you can see that you\'ve managed to create a flask of :result! Eureka!',
+  'Zunächst hörst du ein Zischen aus deiner Flasche, danach bemerkst du einen beissenden Geruch. Willst du das Zeug jetzt wirklich noch trinken ... ?' =>
+	'The water in your bottle sizzles. After it has calmed down, you notice a foul scent - great, you\'ve managed to contaminate your water.',
+  'Du mischt beide Chemikalien zusammen. Mit einem Schlag gibt es einen lauten Knall, das Reagenzglas zerspringt und du findest dich in einer bestialisch stinkenden Wolke wieder. Diese beiden Stoffe zu mischen scheint keine allzu gute Idee gewesen zu sein...' =>
+	'Only secons after mixing these two chemicals, the test tube bursts with an ear-shattering explosion and you find yourself in the middle of a toxic cloud. Maybe mixing these two chemicals wasn\'t the best of ideas...',
+  'Heilige Scheiße! Du hast ein Wunder verbracht und Wasser in Alkohol verwandelt!' =>
+	'Holy shit! You have performed the incredible miracly of turning water into alcohol!',
+  'Auffüllen' =>
+	'Auffüllen',
+  'Teilen: ' =>
+	'Teilen: ',
+  'Teilen' =>
+	'Teilen',
+  'Wie viele Kapseln möchtest du aus dieser Packung herausnehmen?' =>
+	'Wie viele Kapseln möchtest du aus dieser Packung herausnehmen?',
+  'Du hast :num Kapseln aus der Verpackung genommen.' =>
+	'You took :num pills out of the box.',
+  'Hier liegen keine weiteren Kapseln, die du in diese Schachtel legen könntest.' =>
+	'There are no more capsules around to put in this box...',
+  'Das tut gut ... nach einem ordentlichen Drink sieht die Welt gleich weniger apokalyptisch aus!' =>
+	'Yeah, that sure numbs the pain... with every drink, the apocalypse gets a little less apocalyptic.',
+  'Schlafen' =>
+	'Sleeping',
+  'Du hast es mit deinem Alkoholkonsum etwas übertrieben und bist eingeschlafen.' =>
+	'You overdid it a little with your alcohol consumption and fell asleep.',
+  'Das tut gut ... nach einem ordentlichen Drink sieht die Welt gleich weniger apokalyptisch aus! Aber warum kommt der Boden plötzlich auf dich zugeflogen?' =>
+	'Yeah, that sure numbs the pain... with every drink, the apocalypse gets a little less apocalyptic. Say, is that the floor that is flying towards your face?',
 );

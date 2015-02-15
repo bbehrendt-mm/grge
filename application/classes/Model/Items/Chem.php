@@ -25,20 +25,6 @@ class Model_Items_Chem extends Model_Items_Abstract_Item implements Interface_St
             Array(	'name' => 'Seltsame Substanz (Betakosidatin)',	'icon' => 'chem/chem6s'),
 	);
 
-    protected function hid() {
-        if ($this->type < 0)
-            $this->type = 0;
-
-        return parent::hid()
-            ->add_action('Experimentieren ...', Model_Action::factory()
-                    ->javascript(
-                        Model_Javascript::factory()
-                            ->close_qtip()
-                            ->versa('chemlab')
-                    )
-            );
-    }
-	
 	protected static $weight = 0.2;
 	
 	public function __construct($target = null) {

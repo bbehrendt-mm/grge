@@ -73,7 +73,7 @@
                 inv.append(ul = $('<ul />').attr('data-cat', v.cat));
             }
 
-            var li = core.snippets.item('[' + v.id + '] ' + v.desc, v.name, v.icon,1,false,true);
+            var li = core.snippets.item('[' + v.id + '] ' + v.desc, v.name, v.icon,0,false,true);
 
             li.click(function() {
                 var count = prompt("Number of instances?", "1");

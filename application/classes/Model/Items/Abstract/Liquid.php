@@ -5,18 +5,6 @@ abstract class Model_Items_Abstract_Liquid extends Model_Items_Abstract_Item imp
 	protected $toxicity;
 	protected static $weight = 0;
 
-    public function hid() {
-        return Model_Hid::factory()
-            ->add_action('Umfüllen ...',
-                Model_Action::factory()
-                    ->javascript(
-                        Model_Javascript::factory()
-                            ->close_qtip()
-                            ->versa('water')
-                    )
-            );
-    }
-
 	public function __construct($toxicity = 0) {
 		$this->toxicity = $toxicity;
 	}

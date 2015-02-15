@@ -61,27 +61,7 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
      * @return Model_Hid
      */
     protected function hid() {
-        $php53pb = $this;
-        return Model_Hid::factory()
-            ->add_action(null,
-                Model_Action::factory()
-                    ->condition(function($p, $s, $a) {
-                        return Tool_System::instance_of($a, 'Model_Items_Chem');
-                    })
-                    ->effect(Model_Effect::factory()
-                        ->custom(function($p, $chem) use ($php53pb) {
-                                /**
-                                 * @var Model_Items_Chem $chem
-                                 * @var Model_Player $p
-                                 */
-                                $v = $chem->chem_value();
-                                $chem->consume();
-
-                                if ($php53pb->mixchem($v)) $p->achievements()->achieve(Model_Achievement::MA_SCIENCE);
-                                else $p->achievements()->achieve(Model_Achievement::MA_NOSCIENCE);
-                            })
-                    )
-            , 'mixchem');
+        return Model_Hid::factory();
     }
 	
 	/**

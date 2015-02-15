@@ -17,6 +17,7 @@
     text-align: justify;
     font-size: 14px;
     line-height: 18px;
+    overflow: visible;
 }
 
 .qtip-custom-ingame .qtip-content b.header {
@@ -45,7 +46,12 @@
     color: #878b93;
     line-height: 12px;
     padding-left: 12px;
+    padding-right: 12px;
     display: block;
+}
+
+.qtip-custom-ingame .qtip-content .note + .btn {
+    margin-top: 6px;
 }
 
 .qtip-custom-ingame .qtip-content > div.consequence {

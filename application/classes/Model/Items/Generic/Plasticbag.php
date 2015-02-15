@@ -10,18 +10,6 @@ class Model_Items_Generic_Plasticbag extends Model_Items_Abstract_Item implement
 	);
 	
 	protected static $weight = 1;
-
-    public function hid() {
-        return Model_Hid::factory()
-            ->add_action('Füllen oder Leeren...',
-                Model_Action::factory()
-                    ->javascript(
-                        Model_Javascript::factory()
-                            ->close_qtip()
-                            ->versa('water')
-                    )
-            );
-    }
 	
 	private function produce_waterbomb() {
         /**

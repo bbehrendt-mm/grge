@@ -205,6 +205,21 @@
     border-bottom: 2px solid #b70bed;
 }
 
+.inventory ul li.disabled {
+    filter: grayscale(100%);
+    -webkit-filter: filter: grayscale(100%);
+}
+
+.inventory ul li.marked-target {
+    animation: bubble 0.7s ease infinite alternate;
+}
+
+@keyframes bubble {
+    from {transform: scale(1.0);}
+    to {transform: scale(1.5);}
+}
+
+
 .inventory ul li.temp.event {
     animation: tmp_event 0.5s infinite alternate;
 }

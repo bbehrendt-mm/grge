@@ -23,6 +23,15 @@ game.render.html = {
         target.empty().html(content);
     },
 
+    hint: function(show) {
+        var target = $('#hint').empty();
+        if (show) {
+            var z = $.topZIndex('*:not(#notifications)');
+            target.css('z-index',z+1);
+        } else target.css('z-index',0);
+        return target;
+    },
+
     notify: function(type, content, title, custom_timeout) {
         if (!custom_timeout)
             custom_timeout = 10000;

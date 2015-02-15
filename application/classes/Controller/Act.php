@@ -2,6 +2,190 @@
 
 class Controller_Act extends Controller_Game {
 
+    /**
+     * @param string $action
+     * @param int[] $items
+     * @param Model_Player $p
+     */
+    private function inventory_take_drop($action, $items, $p) {
+        /**
+         * @global Model_Game $game
+         * @global Model_Player $player
+         * @var Model_Items_Abstract_Item $item
+         */
+        global $game, $player;
+        foreach ($items as $itemid)
+            if ($action == 'drop') {
+                if (!($item = $game->uin()->get($itemid, 'Model_Items_Abstract_Item'))) continue;
+                if (!$item->drop()) continue;
+                if (!$p->inventory()->remove($itemid)) continue;
+                if (!$p->location()->inventory()->add($item)) $p->inventory()->add($item);
+            } elseif ($action == 'take') {
+                if (!($item = $game->uin()->get($itemid, 'Model_Items_Abstract_Item'))) continue;
+
+                if (Tool_System::instance_of($item, 'Model_Items_Abstract_Ammo') && $p->id() != $player->id()) {
+                    /** @var $item Model_Items_Abstract_Ammo */
+                    if (!$item->remoteTake($p->id(), count($items) > 1)) continue;
+                } else {
+                    if (!$item->take(count($items) > 1)) continue;
+                }
+
+                if (!$p->location()->inventory()->remove($itemid)) continue;
+                if (!$p->inventory()->add($item)) $p->location()->inventory()->add($item);
+            }
+    }
+
+    private function inventory_fill($items) {
+        /**
+         * @global Model_Game $game
+         * @var Model_Items_Abstract_Item $item
+         */
+        global $game;
+
+        $bottle = false;
+        $water = [];
+
+        if (count($items) < 2) return;
+
+        foreach ($items as $itemid) {
+            if (!($item = $game->uin()->get($itemid, 'Model_Items_Abstract_Item'))) continue;
+
+            if (Tool_System::instance_of($item, 'Interface_Fillable') || Tool_System::instance_of($item, 'Model_Items_Abstract_Bottle')) {
+                if (!$bottle) $bottle = $item;
+                else return;
+                continue;
+            }
+
+            if (Tool_System::instance_of($item, 'Model_Items_Abstract_Liquid')) {
+                $water[] = $item;
+                continue;
+            }
+
+            return;
+        }
+
+        if (!$bottle || !$water) return;
+
+        /**
+         * @var Model_Items_Abstract_Bottle $bottle
+         * @var Model_Items_Abstract_Liquid $water_item
+         */
+        foreach ($water as $water_item)
+            $bottle->interaction_fill($water_item);
+
+    }
+
+    private function inventory_defill($items) {
+        /**
+         * @global Model_Game $game
+         * @var Model_Items_Abstract_Item $item
+         */
+        global $game;
+
+        if (count($items) != 2) return;
+
+        if (!($target = $game->uin()->get($items[0], 'Model_Items_Abstract_Item'))) return;
+        if (!($source = $game->uin()->get($items[1], 'Model_Items_Abstract_Bottle'))) return;
+
+        if (!(Tool_System::instance_of($target, 'Interface_Fillable') || Tool_System::instance_of($target, 'Model_Items_Abstract_Bottle'))) return;
+
+        /**
+         * @var Model_Items_Abstract_Bottle|Interface_Fillable $target
+         * @var Model_Items_Abstract_Bottle $source
+         */
+        $target->interaction_fillfrom($source);
+        return;
+
+    }
+
+    private function inventory_mix($items) {
+        /**
+         * @global Model_Game $game
+         * @global Model_Player $player
+         */
+        global $game, $player;
+
+        if (count($items) != 2) return;
+
+        /** @var Model_Items_Chem $chem */
+        $chem = null;
+        /** @var Model_Items_Abstract_Item $other_item */
+        $other_item = null;
+        if ($items[0] != $items[1])
+            foreach ($items as $itemid) {
+                if (!($item = $game->uin()->get($itemid, 'Model_Items_Abstract_Item'))) return;
+
+                if (!$chem && Tool_System::instance_of($item, 'Model_Items_Chem'))
+                    $chem = $item;
+                else $other_item = $item;
+            }
+        else {
+            if (!($chem = $game->uin()->get($items[0], 'Model_Items_Chem'))) return;
+            foreach (Tool_Scripts::available_items('Model_Items_Chem') as $potential)
+                /** @var Model_Items_Chem $potential */
+                if ($potential->chem_value() == $chem->chem_value() && $chem->uin() != $potential->uin()) {
+                    $other_item = $potential;
+                    break;
+                }
+        }
+
+        if (!$chem || !$other_item) return;
+
+        $v = $chem->chem_value();
+        $chem->consume();
+
+        if ($other_item->mixchem($v)) $player->achievements()->achieve(Model_Achievement::MA_SCIENCE);
+        else $player->achievements()->achieve(Model_Achievement::MA_NOSCIENCE);
+    }
+
+    private function inventory_spill($items) {
+        /**
+         * @global Model_Game $game
+         * @var Model_Items_Abstract_Item $item
+         */
+        global $game;
+
+        if (count($items) != 1) return;
+
+        /** @var Model_Items_Abstract_Bottle $item */
+        if (!($item = $game->uin()->get($items[0], 'Model_Items_Abstract_Bottle'))) return;
+
+        $item->interaction_extract();
+    }
+
+    private function inventory_pill($action, $items, $count) {
+        /**
+         * @global Model_Game $game
+         * @global Model_Player $player
+         */
+        global $game, $player;
+
+        if (count($items) != 1) return;
+
+        /** @var Model_Items_Abstract_Pillbox $pillbox */
+        if (!($pillbox = $game->uin()->get($items[0], 'Model_Items_Abstract_Pillbox'))) return;
+
+        if ($action == 'pilltake') {
+            $before = $pillbox->count();
+            $pillbox->merge();
+            if ($before == $pillbox->count())
+                $player->log()->add('Hier liegen keine weiteren Kapseln, die du in diese Schachtel legen könntest.');
+            elseif ($pillbox->is_stack_full())
+                $player->log()->add('Mit all den anderen Kapseln konntest du diese Schachtel füllen. Sie enthält nun :max Kapseln.', array(':max' => $pillbox->stack_max_size()));
+            else
+                $player->log()->add( 'Du sammelst alle Kapseln die du dabei hast in dieser Schachtel. Sie ist zwar nicht voll, enthält nun aber immerhin :num Kapseln.', array(':num' => $pillbox->count()));
+        } elseif ($action == 'pilldrop') {
+            if ($count <= 0 || $count >= $pillbox->count()) return;
+
+            $pillbox->consume($count);
+            $s = get_class($pillbox);
+            $player->location()->inventory()->add(new $s($count));
+
+            if ($count == 1) $player->log()->add('Du hast eine Kapsel aus der Verpackung genommen.');
+            else $player->log()->add('Du hast :num Kapseln aus der Verpackung genommen.', array(':num' => $count));
+        }
+    }
+
     public function japi_inventory() {
         /**
          * @global $game Model_Game
@@ -27,7 +211,7 @@ class Controller_Act extends Controller_Game {
         if (!$p->location()) return;
 
         //Check params
-        if (!in_array($action, ($p->id() != $player->id()) ? ['take'] : ['take','drop']))
+        if (!in_array($action, ($p->id() != $player->id()) ? ['take'] : ['take','drop','fill','defill','spill','mix','pilldrop','pilltake']))
             return;
 
         $lost = false;
@@ -37,26 +221,19 @@ class Controller_Act extends Controller_Game {
                 $lost = true;
             }
 
-        //Actually transfer items
-        foreach ($items as $itemid)
-            if ($action == 'drop') {
-                if (!($item = $game->uin()->get($itemid, 'Model_Items_Abstract_Item'))) continue;
-                if (!$item->drop()) continue;
-                if (!$p->inventory()->remove($itemid)) continue;
-                if (!$p->location()->inventory()->add($item)) $p->inventory()->add($item);
-            } elseif ($action == 'take') {
-                if (!($item = $game->uin()->get($itemid, 'Model_Items_Abstract_Item'))) continue;
-
-                if (Tool_System::instance_of($item, 'Model_Items_Abstract_Ammo') && $p->id() != $player->id()) {
-                    /** @var $item Model_Items_Abstract_Ammo */
-                    if (!$item->remoteTake($p->id(), count($items) > 1)) continue;
-                } else {
-                    if (!$item->take(count($items) > 1)) continue;
-                }
-
-                if (!$p->location()->inventory()->remove($itemid)) continue;
-                if (!$p->inventory()->add($item)) $p->location()->inventory()->add($item);
-            }
+        //Transfer items
+        if (in_array($action, ['take','drop']))
+            $this->inventory_take_drop($action,$items,$p);
+        elseif (in_array($action, ['pilldrop','pilltake']))
+            $this->inventory_pill($action,$items,(int)$this->request->post('count'));
+        elseif ($action == 'fill')
+            $this->inventory_fill($items);
+        elseif ($action == 'defill')
+            $this->inventory_defill($items);
+        elseif ($action == 'spill')
+            $this->inventory_spill($items);
+        elseif ($action == 'mix')
+            $this->inventory_mix($items);
 
         //Message
         if ($lost) $player->log()->add('Die Aktion konnte nicht vollständig ausgeführt werden, da eines oder mehrere der ausgewählten Gegenstände nicht länger in deiner Reichweite sind.');

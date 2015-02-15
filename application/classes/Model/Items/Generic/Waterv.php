@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Items_Generic_Waterv extends Model_Items_Abstract_Liquid implements Interface_Static {
+class Model_Items_Generic_Waterv extends Model_Items_Abstract_Liquid {
 	
 	protected static $static_info = Array(
 			'name' => 'Wasser aus deiner Flasche',

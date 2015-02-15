@@ -11,6 +11,8 @@
 
     <div id="notifications"></div>
 
+    <div id="hint"></div>
+
     <div id="wrapper">
         <div>
             <div id="persistent"></div>

@@ -74,14 +74,6 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Item imp
                         Model_Effect::factory()
                             ->message($this->observemsg())
                     )
-            )
-            ->add_action('Füllen oder Leeren...',
-                Model_Action::factory()
-                    ->javascript(
-                        Model_Javascript::factory()
-                            ->close_qtip()
-                            ->versa('water')
-                    )
             );
     }
 	
@@ -172,7 +164,8 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Item imp
      * @return bool
      */
     public function interaction_fill($item) {
-		global $game, $player;
+		/** @global Model_Player $player */
+        global $player;
 		
 		if ($this->fillrate >= static::$capacity)
 		{
@@ -196,7 +189,8 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Item imp
      * @return bool
      */
     public function interaction_fillfrom($item) {
-		global $game, $player;
+        /** @global Model_Player $player */
+        global $player;
 	
 		if ($this->fillrate >= static::$capacity)
 		{
@@ -216,7 +210,8 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Item imp
 	}
 	
 	public function interaction_extract() {
-		global $game, $player;
+        /** @global Model_Player $player */
+        global $player;
 	
 		if ($this->fillrate <= 0)
 		{
@@ -231,7 +226,8 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Item imp
 	}
 	
 	public function interaction_label($arg) {
-		global $game, $player;
+        /** @global Model_Player $player */
+        global $player;
 
 		$arg = substr(preg_replace('/[^0-9a-zA-ZäöüÄÖÜ\+\-&.,:% _]+/i', ' ', $arg), 0, 12);
 		$this->label = $arg;
@@ -243,7 +239,8 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Item imp
 	}
 		
 	public function mixchem($chemval) {
-		global $player;
+        /** @global Model_Player $player */
+        global $player;
 
         if ($this->fillrate == 0) return parent::mixchem($chemval);
 

@@ -53,3 +53,21 @@
   &::before {right: 0; transform: rotate( 5deg) translate(-10px,-15px) skew( 9deg, 0deg)}
   &::after {left: 0;   transform: rotate(-5deg) translate( 10px,-15px) skew(-9deg, 0deg)}
 }
+
+.fillbox {
+  .whitebox; height: 24px; width: 24px; padding: 2px; display: inline-block; margin: 4px;
+  &.fillbox-filled {
+    &:not(.fillbox-fixed) {background: url('media/icons/items/water_variant.gif') center no-repeat @whitebox-color-bg; cursor: pointer}
+    &.fillbox-fixed {background: url('media/icons/items/water_grey.gif') center no-repeat @whitebox-color-bg}
+  }
+}
+
+@hint-color-bg: #18191E;
+@hint-color-border: lighten(@hint-color-bg, 10%);
+@hint-color-text: white;
+
+#hint {
+  &:empty {display: none}
+  position: fixed; bottom: 10px; left: 10px; right: 10px; text-align: center; padding: 10px; box-shadow: 0 0 10px black; background: @hint-color-bg; border: 2px solid @hint-color-border; color: @hint-color-text;
+  >.btn {margin-top: 10px;}
+}

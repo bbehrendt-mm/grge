@@ -2708,4 +2708,86 @@ return array (
 	'Vernicht',
   'Vernichtete Zombies' =>
 	'Vernichtete Zombies',
+  'Wähl' =>
+	'Wähl',
+  'Wähle einen ' =>
+	'Wähle einen ',
+  'Wähle einen Wa' =>
+	'Wähle einen Wa',
+  'Wähle einen Wasserbehälter ' =>
+	'Wähle einen Wasserbehälter ',
+  'Wähle einen Wasserbehälter aus. ' =>
+	'Wähle einen Wasserbehälter aus. ',
+  'Wähle einen Wasserbehälter aus' =>
+	'Wähle einen Wasserbehälter aus',
+  'Wähle einen Wasserbehälter aus, inden du di' =>
+	'Wähle einen Wasserbehälter aus, inden du di',
+  'Wähle einen Wasserbehälter aus, inden du die gewählte Ra' =>
+	'Wähle einen Wasserbehälter aus, inden du die gewählte Ra',
+  'Wähle einen Wasserbehälter aus, inden du die gewählte Ration Wasser ' =>
+	'Wähle einen Wasserbehälter aus, inden du die gewählte Ration Wasser ',
+  'Wähle einen Wasserbehälter aus, inden du die gewählte Ration Wasser hineinschütten w' =>
+	'Wähle einen Wasserbehälter aus, inden du die gewählte Ration Wasser hineinschütten w',
+  'Wähle einen Wasserbehälter aus, inden du die gewählte Ration Wasser hineinschütten willst. ' =>
+	'Wähle einen Wasserbehälter aus, inden du die gewählte Ration Wasser hineinschütten willst. ',
+  'Wähle einen Wasserbehälter aus, inden du die gewählte Ration Wasser hineinschütten willst.' =>
+	'Wähle einen Wasserbehälter aus, inden du die gewählte Ration Wasser hineinschütten willst.',
+  'W' =>
+	'W',
+  'Wähle einen Wasserbehälter aus, in den du die gewählte Ration Wasser hineinschütten willst.' =>
+	'Wähle einen Wasserbehälter aus, in den du die gewählte Ration Wasser hineinschütten willst.',
+  'Wähle eine ' =>
+	'Wähle eine ',
+  'Wähle eine Flüssigkeit oder ' =>
+	'Wähle eine Flüssigkeit oder ',
+  'Wähle eine Flüssigkeit oder einen ander' =>
+	'Wähle eine Flüssigkeit oder einen ander',
+  'Wähle eine Flüssigkeit oder einen anderen Behälter ' =>
+	'Wähle eine Flüssigkeit oder einen anderen Behälter ',
+  'Wähle eine Flüssigkeit oder einen anderen Behälter aus, ' =>
+	'Wähle eine Flüssigkeit oder einen anderen Behälter aus, ',
+  'Wähle eine Flüssigkeit oder einen anderen Behälter aus, um die' =>
+	'Wähle eine Flüssigkeit oder einen anderen Behälter aus, um die',
+  'Wähle eine Flüssigkeit oder einen anderen Behälter aus, um diesen Behälter zu füllen.' =>
+	'Wähle eine Flüssigkeit oder einen anderen Behälter aus, um diesen Behälter zu füllen.',
+  'Klicke einen leeren Slot an, um Wasser aus einer anderen Quelle hinzuzugeben. Klicke einen gefülten Slot an, um Wasser auszuschütten. Schwarz gefärbte Slots können nicht ausgeleert werden.' =>
+	'Klicke einen leeren Slot an, um Wasser aus einer anderen Quelle hinzuzugeben. Klicke einen gefülten Slot an, um Wasser auszuschütten. Schwarz gefärbte Slots können nicht ausgeleert werden.',
+  'Klicke einen leeren Slot an, um Wasser aus einer anderen Quelle hinzuzugeben. Klicke einen gefüllten Slot an, um Wasser auszuschütten. Schwarz gefärbte Slots können nicht ausgeleert werden.' =>
+	'Klicke einen leeren Slot an, um Wasser aus einer anderen Quelle hinzuzugeben. Klicke einen gefüllten Slot an, um Wasser auszuschütten. Schwarz gefärbte Slots können nicht ausgeleert werden.',
+  'Seltsame Substanz (Limosuritat)' =>
+	'Seltsame Substanz (Limosuritat)',
+  'Du kannst diese Chemikalie mit beliebigen anderen Gegenständen kombinieren. Welchen Effekt das hat... das wirst du selbst herausfinden müssen.' =>
+	'Du kannst diese Chemikalie mit beliebigen anderen Gegenständen kombinieren. Welchen Effekt das hat... das wirst du selbst herausfinden müssen.',
+  'Wähle einen Gegenstand, mit dem du die Chemikalie verbinden möchtest.' =>
+	'Wähle einen Gegenstand, mit dem du die Chemikalie verbinden möchtest.',
+  'Farbige Substanz (Limosuptin)' =>
+	'Farbige Substanz (Limosuptin)',
+  'Du mischt beide Chemikalien zusammen. Es blubbert ein wenig, aber nachdem sich die Blasen gelegt haben stellst du fest, dass du soeben ein Fläschchen mit :result hergestellt hast! Herzlichen Glückwunsch!' =>
+	'Du mischt beide Chemikalien zusammen. Es blubbert ein wenig, aber nachdem sich die Blasen gelegt haben stellst du fest, dass du soeben ein Fläschchen mit :result hergestellt hast! Herzlichen Glückwunsch!',
+  'Zunächst hörst du ein Zischen aus deiner Flasche, danach bemerkst du einen beissenden Geruch. Willst du das Zeug jetzt wirklich noch trinken ... ?' =>
+	'Zunächst hörst du ein Zischen aus deiner Flasche, danach bemerkst du einen beissenden Geruch. Willst du das Zeug jetzt wirklich noch trinken ... ?',
+  'Du mischt beide Chemikalien zusammen. Mit einem Schlag gibt es einen lauten Knall, das Reagenzglas zerspringt und du findest dich in einer bestialisch stinkenden Wolke wieder. Diese beiden Stoffe zu mischen scheint keine allzu gute Idee gewesen zu sein...' =>
+	'Du mischt beide Chemikalien zusammen. Mit einem Schlag gibt es einen lauten Knall, das Reagenzglas zerspringt und du findest dich in einer bestialisch stinkenden Wolke wieder. Diese beiden Stoffe zu mischen scheint keine allzu gute Idee gewesen zu sein...',
+  'Heilige Scheiße! Du hast ein Wunder verbracht und Wasser in Alkohol verwandelt!' =>
+	'Heilige Scheiße! Du hast ein Wunder verbracht und Wasser in Alkohol verwandelt!',
+  'Auffüllen' =>
+	'Auffüllen',
+  'Teilen: ' =>
+	'Teilen: ',
+  'Teilen' =>
+	'Teilen',
+  'Wie viele Kapseln möchtest du aus dieser Packung herausnehmen?' =>
+	'Wie viele Kapseln möchtest du aus dieser Packung herausnehmen?',
+  'Du hast :num Kapseln aus der Verpackung genommen.' =>
+	'Du hast :num Kapseln aus der Verpackung genommen.',
+  'Hier liegen keine weiteren Kapseln, die du in diese Schachtel legen könntest.' =>
+	'Hier liegen keine weiteren Kapseln, die du in diese Schachtel legen könntest.',
+  'Das tut gut ... nach einem ordentlichen Drink sieht die Welt gleich weniger apokalyptisch aus!' =>
+	'Das tut gut ... nach einem ordentlichen Drink sieht die Welt gleich weniger apokalyptisch aus!',
+  'Schlafen' =>
+	'Schlafen',
+  'Du hast es mit deinem Alkoholkonsum etwas übertrieben und bist eingeschlafen.' =>
+	'Du hast es mit deinem Alkoholkonsum etwas übertrieben und bist eingeschlafen.',
+  'Das tut gut ... nach einem ordentlichen Drink sieht die Welt gleich weniger apokalyptisch aus! Aber warum kommt der Boden plötzlich auf dich zugeflogen?' =>
+	'Das tut gut ... nach einem ordentlichen Drink sieht die Welt gleich weniger apokalyptisch aus! Aber warum kommt der Boden plötzlich auf dich zugeflogen?',
 );

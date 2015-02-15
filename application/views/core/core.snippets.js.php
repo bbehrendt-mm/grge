@@ -6,7 +6,7 @@
 
         if (count) {
             if (is_static) container.append($('<div />').addClass('staticCount').text(count));
-            else if (count > 1) container.append($('<div />').addClass('instanceCount').text(count));
+            else if (count > 0) container.append($('<div />').addClass('instanceCount').text(count));
         }
 
         if (show_title)

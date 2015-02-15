@@ -129,8 +129,8 @@ class Controller_Game extends Controller {
             if (Tool_System::instance_of($item, 'Interface_Event'))                                     $flags[] = 'event';
             if ($item->is_carrier_item())                                                               $flags[] = 'carrier';
 
-            // Build final item object
-            $grouping[$item->cat()]['items'][$item->uin()] = Array(
+
+            $data = [
                 'name' => __($item->name()),
                 'description' => __($item->description()),
                 'icon' => $item->icon(),
@@ -141,11 +141,35 @@ class Controller_Game extends Controller {
                 'uin' => $item->uin(),
                 'set' => [$item->uin()],
                 'static' => 1,
-                'count' => (Tool_System::instance_of($item, 'Interface_Countable')) ? $item->count() : null,
-                'capacity' => (Tool_System::instance_of($item, 'Interface_Countable')) ? $item->capacity() : null,
                 'stack' => __($item->stackname()),
                 'label' => $item->label()
-            );
+            ];
+
+            if (Tool_System::instance_of($item, 'Interface_Countable') && !Tool_System::instance_of($item, 'Model_Items_Abstract_Bottle')) {
+                $data['count'] = $item->count();
+                $data['capacity'] = $item->capacity();
+            }
+
+            /** @var Interface_Fillable|Model_Items_Abstract_Bottle $item */
+            if (Tool_System::instance_of($item, 'Interface_Fillable') || Tool_System::instance_of($item, 'Model_Items_Abstract_Bottle')) {
+                $data['count'] = (int)$item->fillrate();
+                $data['fill'] = [
+                    'capacity' => $item->capacity(),
+                    'fixed' => !Tool_System::instance_of($item, 'Model_Items_Abstract_Bottle')
+                ];
+            }
+
+            if (Tool_System::instance_of($item, 'Model_Items_Abstract_Liquid'))
+                $data['is_water'] = true;
+
+            if (Tool_System::instance_of($item, 'Model_Items_Chem'))
+                $data['is_chem'] = true;
+
+            if (Tool_System::instance_of($item, 'Model_Items_Abstract_Pillbox'))
+                $data['is_pillbox'] = true;
+
+            // Build final item object
+            $grouping[$item->cat()]['items'][$item->uin()] = $data;
         }
 
         // Sort items based on their address

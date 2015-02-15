@@ -63,15 +63,4 @@ abstract class Model_Items_Abstract_Wbgun extends Model_Battle_Weapon implements
     public function count() {
         return $this->fillrate;
     }
-
-    protected function hid() {
-        return parent::hid()
-            ->add_action('Füllen oder Leeren...', Model_Action::factory()
-                    ->javascript(
-                        Model_Javascript::factory()
-                            ->close_qtip()
-                            ->versa('water')
-                    )
-            );
-    }
 }	

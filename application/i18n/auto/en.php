@@ -216,4 +216,62 @@ return array (
 	'',
   'Vernicht' =>
 	'',
+  'Wähl' =>
+	'',
+  'Wähle einen ' =>
+	'',
+  'Wähle einen Wa' =>
+	'',
+  'Wähle einen Wasserbehälter ' =>
+	'',
+  'Wähle einen Wasserbehälter aus. ' =>
+	'',
+  'Wähle einen Wasserbehälter aus' =>
+	'',
+  'Wähle einen Wasserbehälter aus, inden du di' =>
+	'',
+  'Wähle einen Wasserbehälter aus, inden du die gewählte Ra' =>
+	'',
+  'Wähle einen Wasserbehälter aus, inden du die gewählte Ration Wasser ' =>
+	'',
+  'Wähle einen Wasserbehälter aus, inden du die gewählte Ration Wasser hineinschütten w' =>
+	'',
+  'Wähle einen Wasserbehälter aus, inden du die gewählte Ration Wasser hineinschütten willst. ' =>
+	'',
+  'Wähle einen Wasserbehälter aus, inden du die gewählte Ration Wasser hineinschütten willst.' =>
+	'',
+  'W' =>
+	'',
+  'Wähle einen Wasserbehälter aus, in den du die gewählte Ration Wasser hineinschütten willst.' =>
+	'',
+  'Wähle eine ' =>
+	'',
+  'Wähle eine Flüssigkeit oder ' =>
+	'',
+  'Wähle eine Flüssigkeit oder einen ander' =>
+	'',
+  'Wähle eine Flüssigkeit oder einen anderen Behälter ' =>
+	'',
+  'Wähle eine Flüssigkeit oder einen anderen Behälter aus, ' =>
+	'',
+  'Wähle eine Flüssigkeit oder einen anderen Behälter aus, um die' =>
+	'',
+  'Wähle eine Flüssigkeit oder einen anderen Behälter aus, um diesen Behälter zu füllen.' =>
+	'',
+  'Klicke einen leeren Slot an, um Wasser aus einer anderen Quelle hinzuzugeben. Klicke einen gefülten Slot an, um Wasser auszuschütten. Schwarz gefärbte Slots können nicht ausgeleert werden.' =>
+	'',
+  'Klicke einen leeren Slot an, um Wasser aus einer anderen Quelle hinzuzugeben. Klicke einen gefüllten Slot an, um Wasser auszuschütten. Schwarz gefärbte Slots können nicht ausgeleert werden.' =>
+	'',
+  'Du kannst diese Chemikalie mit beliebigen anderen Gegenständen kombinieren. Welchen Effekt das hat... das wirst du selbst herausfinden müssen.' =>
+	'',
+  'Wähle einen Gegenstand, mit dem du die Chemikalie verbinden möchtest.' =>
+	'',
+  'Auffüllen' =>
+	'',
+  'Teilen: ' =>
+	'',
+  'Teilen' =>
+	'',
+  'Wie viele Kapseln möchtest du aus dieser Packung herausnehmen?' =>
+	'',
 );

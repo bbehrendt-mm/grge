@@ -24,6 +24,11 @@ core = {
                 return;
             }
 
+            if (data.redirect) {
+                game.clean();
+                return game.network.load(data.redirect);
+            }
+
             if (!background && !no_clean) game.clean(true);
 
             if (data.version && data.version != core.version) {
@@ -46,14 +51,30 @@ core = {
         }
 
         var action_box = $('<div />').addClass('row action_box ' + (data.location.meta.outside ? 'outside' : 'inside')).appendTo(target);
+
+        var auto_tab = $('<ul />').addClass('tabline').appendTo(action_box)
+            .append($('<li>').data('toggle', '#inv_container').text("Gegenst\u00e4nde & Heldentaten"))
+            .append($('<li>').data('toggle', '#settings_container').text("Zeitfluss & Verhalten"))
+            .find('>li').click(function() {
+                var t = $($(this).data('toggle'));
+                $(this).addClass('active').siblings().removeClass('active');
+                action_box.children('div').hide();
+                t.show();
+            }).first();
+
         if (data.inventory)
-            core.parts.inventory(data.inventory, action_box);
+            core.parts.inventory(data.inventory, $('<div />').attr('id', 'inv_container').addClass('row').appendTo(action_box));
+
+        if (data.settings)
+            core.parts.settings(data.settings, $('<div />').attr('id', 'settings_container').addClass('row').appendTo(action_box))
 
         if (data.status && data.clock)
             core.parts.status(data.status, data.clock, $('#persistent'));
         
         if (data.log)
             core.parts.log(data.log,$('<div />').addClass('row log_box').appendTo(target))
+
+        auto_tab.click();
 
     }
 };(function() {
@@ -943,20 +964,20 @@ core = {
                         .append($('<span />').text("attackiert"))
                         .append($('<span />').addClass('zombie').text(obj.defender.count + ' ' + obj.defender.name));
 
-                    items.append(core.snippets.item(true,obj.weapon.name,obj.weapon.icon,1,false,false).addClass(obj.weapon.destroyed ? 'destroyed' : ''));
+                    items.append(core.snippets.item(true,obj.weapon.name,obj.weapon.icon,1,true,false).addClass(obj.weapon.destroyed ? 'destroyed' : ''));
                     if (obj.weapon.energy)
                         items.append($('<span />').addClass('energy').text(obj.weapon.energy));
                     $.each(obj.weapon.ammo, function(k,icon) {
-                        items.append(core.snippets.item(false,'',icon,1,false,false));
+                        items.append(core.snippets.item(false,'',icon,1,true,false));
                     });
 
                     if (obj.protection.value) {
                         items.append($('<i />').addClass('fa fa-caret-right'));
                         $.each(obj.protection.covers,function(k,item) {
-                            items.append(core.snippets.item(!item.stable ? msg_destroyed : true,item.name,item.icon,1,false,false).addClass(!item.stable ? 'destroyed' : ''));
+                            items.append(core.snippets.item(!item.stable ? msg_destroyed : true,item.name,item.icon,1,true,false).addClass(!item.stable ? 'destroyed' : ''));
                         });
                         $.each(obj.protection.armor,function(k,item) {
-                            items.append(core.snippets.item(!item.stable ? msg_destroyed : true,item.name,item.icon,1,false,false).addClass(!item.stable ? 'destroyed' : ''));
+                            items.append(core.snippets.item(!item.stable ? msg_destroyed : true,item.name,item.icon,1,true,false).addClass(!item.stable ? 'destroyed' : ''));
                         });
                     }
 
@@ -1464,14 +1485,97 @@ core.popup = {
         });
     }
 };(function() {
+
+    var fill_timesettings_var = function(data, target, lock) {
+        var set_row;
+        target.append($('<h3 />').text("Spielgeschwindigkeit"))
+            .append($('<p />').addClass('justify').text(game.i18n("Du kannst die Spielgeschwindigkeit jederzeit deinen Bed\u00fcrfnissen anpassen. Bedenke jedoch, dass eine \u00c4nderung nur alle :minutes m\u00f6glich ist.", {':minutes': core.snippets.timestr(data.interval)})))
+            .append(set_row = $('<div />').addClass('row center'));
+
+        $.each(data.selection, function(k,v) {
+            set_row.addClass(lock ? 'disabled' : '').prepend(
+                $('<label />').attr('title', core.snippets.timestr(v)).append(
+                    $('<input />').attr({
+                        name: 'set_time',
+                        type: 'radio',
+                        value: k
+                    }).prop("checked", k == data.player).click(function() {
+                        if (!confirm("Bist du sicher, dass du die Spielgeschwindigkeit \u00e4ndern m\u00f6chtest?"))
+                            return false;
+                        core.command('player/reflux', {set: $(this).val()})
+                    })
+                ).qtip(game.render.html.qtip.ingame('bottom'))
+            )
+        });
+        set_row.find('input').customRadioCheck();
+        set_row.find('>label').css('margin', 0);
+
+        target.append($('<p />').addClass('center').append($('<b />').text("Aktuelle Geschwindigkeit")).append($('<span />').text(core.snippets.timestr(data.game))));
+
+        if (lock) {
+            var ct = $('<p />').appendTo(target);
+            core.snippets.countdown(lock, function(s, v) {
+                if (v == 0) {
+                    set_row.removeClass('disabled');
+                    ct.remove();
+                    game.render.html.notify('success', "Die Sperre ist abgelaufen - ab sofort kannst du die Spielgeschwindigkeit wieder \u00e4ndern!");
+                    return false;
+                }
+
+                ct.html(game.i18n("\u00c4nderung in <i> :time <\/i> wieder m\u00f6glich.", {':time': s}));
+                return true;
+            })
+        }
+    };
+
+    var fill_timesettings_stat = function(target) {
+        target.append($('<h3 />').text("Spiel pausieren"))
+    };
+
+    core.parts.settings = function(data, target) {
+        time_settings = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-5 padded').appendTo(target));
+        if (data.time_mode == 0) fill_timesettings_stat(time_settings);
+        if (data.time_mode == 1) fill_timesettings_var(data.time_settings, time_settings, data.locked);
+    };
+})();(function() {
+    core.snippets.timestr = function(i) {
+        var cache = [["Woche","Wochen"],["Tag","Tage"],["Stunde","Stunden"],["Minute", "Minuten"],["Sekunde", "Sekunden"]];
+        var times = [604800,86400,3600,60,1];
+
+        i = Math.abs(i);
+        if (i == 0) return ("0 " + cache[cache.length - 1][1]);
+
+        var split = [];
+        $.each(times, function(k,v) {
+            split[k] = Math.floor(i/v);
+            i -= split[k] * v;
+        });
+
+        split = $.map(split, function(v, k) {
+            if (v == 0) return null;
+            return v + " " + cache[k][v == 1 ? 0 : 1]
+        });
+
+        if (split.length == 1) return split[0];
+        else {
+            var tmp = split.splice(-1,1);
+            return split.join(', ') + " " + "und" + " " + tmp[0];
+        }
+    };
+
+    core.snippets.countdown = function(initial, callback) {
+        if (callback(core.snippets.timestr(initial), initial) && initial >= 0)
+            window.setTimeout(function() {core.snippets.countdown(initial - 1, callback)}, 1000);
+    };
+
     core.snippets.item = function(show_title, name, icon, count, is_static, in_inventory) {
         var container = $(in_inventory ? '<li />' : '<div />').addClass(in_inventory ? '' : 'item').append(
             $('<img />').attr('src', 'media/icons/' + icon + '.gif')
         );
 
         if (count) {
-            if (is_static) container.append($('<div />').addClass('staticCount').text(count));
-            else if (count > 0) container.append($('<div />').addClass('instanceCount').text(count));
+            if (is_static && count > 1) container.append($('<div />').addClass('staticCount').text(count));
+            else if (!is_static && count > 0) container.append($('<div />').addClass('instanceCount').text(count));
         }
 
         if (show_title)
@@ -2079,6 +2183,9 @@ core.popup = {
 
             if (left < 0) {
                 countdown.text("Weiter");
+                clockbox.addClass('pointer').click(function() {
+                    core.command();
+                });
                 return;
             }
 

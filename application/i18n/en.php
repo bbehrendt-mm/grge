@@ -1852,24 +1852,216 @@ return array (
 	'Fill tank',
   'Grillplatz' =>
 	'Barbecue Area',
-  'Mo' =>
-	'Mo',
-  'So' =>
-	'So',
-  'Di' =>
-	'Di',
-  'Mi' =>
-	'Mi',
-  'Do' =>
-	'Do',
-  'Fr' =>
-	'Fr',
-  'Sa' =>
-	'Sa',
+  'Mini-Markt' =>
+	'Mini-Market',
+  'Dein altes Herrenhaus' =>
+	'Your Mansion',
+  'Früher hast du hier einmal wie ein König gelebt. Du hattest Bedienstete, erstklassige Einrichtung sowie einen Pudel namens Coco. Dann kamen die Zombies, und du musstest fliehen.... vom einstigen Glanz dieses Anwesens ist kaum noch etwas übrig geblieben, aber zumindest kannst du deine Sachen nach etwas durchsuchen, was dir im Kampf gegen die Zombies hilft.' =>
+	'You\'ve lived like a king, having servants for cooking your meals and wiping your ass. Your furniture was classy and expensive, and you even had a little poodle called Coco. Then the zombies came and exiled you from your home.... and all the glamour of the past vanished. Still, this is your property - there is nothing stopping you from reclaiming at least some of the things you had to leave behind.',
+  'Workout' =>
+	'Workout',
+  'Bekämpft Müdigkeit und regeneriert Energie. Der Effekt ist abhängig von Hunger, Durst und Gewicht des Rucksacks - je voller der Rucksack, desto besser.' =>
+	'Reduces fatigue and regenerates energy. The effect depends on your hunger, thirst and the weight of your rucksack - the more weight, the better.',
+  'Hulkout' =>
+	'Hulkout',
+  'Erhöht Gewichtslimit um 70 für 15 Minuten.' =>
+	'Increases weight limit by 70 for 15 minutes.',
+  'Eigentlich hat sich an diesem Ort mit der Zombieapokalypse nicht allzu viel geändert... an der Bar wird billiges, lauwarmes Bier getrunken und überall tummeln sich torkelnde, übelriechende Gestalten. Eigentlich ist der einzige Unterschied zu früher, dass einem nicht mehr nur die Brieftasche, sondern auch diverse innere Organe bei einem Besuch hier abhanden kommen könnten.' =>
+	'Not much has changed here since the zombie apocalypse... Lowlifes with bad body hygiene stumble around the place or sit at the counter drinking cheap and warm beer. The only real change is that people who visit this establishement now might not only lose their wallet, but also some of their inner organs.',
+  'Brotlaib' =>
+	'Bread',
+  'Endlich bist du vernünftig dafür ausgerüstet, die Enten im Teich zu füttern. Leider sind mittlerweise sowohl Teich als auch Enten einer zombieverseuchten Ödniss gewichen. Dann musst du diesen Brotlaib wohl selbst essen...' =>
+	'Finally, you have everthing you need to feed the ducks in your local park - well, you would have, but park and ducks have ceased to exist lately. So you can try to feed a zombie with this, or just eat it youself...',
+  'Schwarzbier' =>
+	'Black Beer',
+  'Die gute Nachricht: Es ist Bier. Die schlechte Nachricht: Du kannst nicht sicher sagen, ob es echtes Schwarzbier, oder nur sehr verunreinigtes Weißbier ist ...' =>
+	'I have good news and bad news for you. The good news: You found beer. The bad news: It\'s pretty dark, and there is no telling whether it is supposed to be that way, or if it\'s just really dirty...',
+  'Kartendaten an deine Stadt übermitteln' =>
+	'Send mapping information to town',
+  'Nach Neuigkeiten aus der Stadt fragen' =>
+	'Get latest gossip',
+  'Kartographenausrüstung Marke "Glutspur"' =>
+	'Cartography Equipment',
+  'Dieses Sammlung nützlicher Dinge enthält alles, was du zum Kartographieren von Ruinen benötigst! ... nagut, es besteht aus einem Stapel Papier und einem Bleistift. Aber der ist immerhin spitz! Also hör auf dich zu beschweren!' =>
+	'This collection of useful stuff contains everything you need for drawing maps of the wasteland around you! ... well ok, it mainly consists of some paper and a pencil. But at least that pencil is sharpened, so stop whining!',
+  'Tagebuch eines Aufklärers' =>
+	'Diary of a scout',
+  'Nachdem du bereits eine Ewigkeit durch die Wüste gelatscht bist, hast du dieses heruntergekommene Versteck gefunden - Perfekt! Du entscheidest dich, es als Operationsbasis für deine Kartografietour zu verwenden und baust dein Funkequipment auf. Zeit, die Umgebung zu erkunden...' =>
+	'After roaming the wasteland for days, you\'ve managed to find this run-down shed. This is the perfect operation base for your exploring duties, so you start setting up your radio equipment. Time to go sightseeing...',
+  'Schwer beladen' =>
+	'Deeply Loaded',
+  'Dein Rucksack ist bis zum Anschlag gefüllt. Dieses Ding durch die Gegend zu schleppen wird sicher eine Menge Kraft kosten... bist du sicher, dass du nicht ein paar Dinge hier lassen kannst?' =>
+	'Your rucksack is brimful of stuff. Moving under such conditions will consume more energy than usual... Are you sure nothing in your rucksack is expendable?',
+  'Lasermessgerät' =>
+	'Laser Measuring Device',
+  'Wenn du es richtig bedienst, kann dir dieses Ding beim Kartographieren einer Ruine sehr viel Arbeit abnehmen.' =>
+	'If you know how to use this, it can massively speed up mapping a ruin.',
+  'Das Wasser in der Flasche scheint relativ klar zu sein ...' =>
+	'The water seems to be clear ...',
+  'Batteriewerfer MK II' =>
+	'Battery Launcher MK II',
+  'Der Batteriewerfer MK II ist die Bazooka unter den Batteriewerfern. Durch den automatischen Druckregler kannst du sowohl weiter schießen als auch genauer zielen. Damit wird dein Batteriewerfer zur absolut tödlichen Waffe! ...' =>
+	'This Battery Launcher MK II is like a battery Bazooka. Thanks to an hydraulic pressure pump, you can eject batteries with high velocity and great accuracy. Your battery launcher is finally a deadly weapon! ...',
+  'Tod allen Zombies!' =>
+	'Death to zombies!',
+  'Seit Wochen verschanzt du dich in deinem Versteck, doch jetzt platzt dir der Kragen. Das Leben ist scheiße, es gibt keinen Strom, tagsüber ist es heiß und nachts arschkalt, der Sand rieselt dir in jede Ritze. Und alles wegen diesen verfluchten Zombies! ES REICHT! Du schnappst dir deine Waffen und ziehst los, um es dem Gesindel mal ordentlich heimzuzahlen - und wenn es das letzte ist was du tust!' =>
+	'You\'ve been sitting in your hideout for weeks, but now you just burst with rage. Life sucks, there is no electricity, its hot as hell by day and cold as shit by night, and the goddamn sand goes up every crack. This is all because of these zombies! THAT\'S ENOUGH!! You grab your weapons and go out to cleve some skulls - even if this ends up killing you!',
+  'Derzeit gibt es nichts Neues aus der Stadt zu berichten... probiere es in :duration noch einmal!' =>
+	'There are no interesting news from your town. Try again in :duration!',
+  'Deine Stadt ist dir äußerst dankbar für diese neuen Informationen.' =>
+	'The members of your town are thankfull for these valuable informations.',
+  'Du hast eine neue Ruine entdeckt und eine grobe Karte mit ihrer Position gezeichnet. Diese Informationen sind sicher nützlich für deine Stadt.... besser wäre es natürlich, du würdest diese Ruine genauer erkunden.' =>
+	'You\'ve discovered a new ruin and marked its approximate position on your map. This will be useful to the people of your town.... it\'d be even better if you took a closer look at this place, of course.',
+  'Alte Apotheke' =>
+	'Ye Olde Pharmacy',
+  'Hasselbachplatz' =>
+	'Hasselbach Square',
+  'Du stehst im Garten einer Ruine, die wohl früher einmal ein wunderschönes Einfamilienhaus war. Durch die offenen Türen und Fenster erkennst du jedoch, dass das Haus im Inneren weniger stark durch den Brand beschädigt ist. Du könntest versuchen, hineinzugehen - aber sei vorsichtig, das Haus sieht nicht mehr allzu stabil aus ...' =>
+	'You\'re in the garden of a burned ruin that used to be a beautiful home. Through the open doors and windows you can see that the damage inside is less severe than it looks from the outside. You could try and scavenge this house, but be careful: The floors don\'t look all that stable ...',
+  'Erdgeschoss des verbrannten Hauses' =>
+	'Ground Floor',
+  'Baumhaus' =>
+	'Treehouse',
+  'Whiskey' =>
+	'Whiskey',
+  'Verseuchtes Wasser' =>
+	'Contaminated Water',
+  'Dieses Wasser zu finden war nicht schwer - immerhin riecht man es Kilometer gegen den Wind. Um dieses ekelhafte schleimige Zeug zu trinken musst du schon sehr verzweifelt sein.' =>
+	'Finding this water was easy - you can smell it from a mile away! You\'d need to be really desperate if you even consider drinking it...',
+  'Das tut gut ... nach einem ordentlichen Drink sieht die Welt gleich weniger apokalyptisch aus!' =>
+	'Yeah, that sure numbs the pain... with every drink, the apocalypse gets a little less apocalyptic.',
+  'Kurz nach dem Ausbruch der Zombieseuche wurden in diesem Krankenhaus die ersten Opfer behandelt. Die hier ansässigen Ärzte konnten jedoch wenig mehr tun als der Seuche bei ihrer Ausbreitung zuzusehen. Du hast Glück, das Krankenhaus wurde bisher noch nicht geplündert - hier wirst du also noch allerhand hilfreicher Dinge finden können. Warum das Krankenhaus noch nicht geplündert wurde? Na, weil es darin vor Zombies nur so wimmelt natürlich!' =>
+	'Shortly after the first zombies appeared, the infected were treated here. The doctors could do little more than watching the disease spread. Until now, the hospital has not yet been looted - so you can expect to find a lot of useful items around here. You\'re wondering why the hospital has not been looted yet? Well, because it is full of zombies, of course!',
+  'Wozu lange mit Kleinigkeiten aufhalten? Beipackzettel lesen und Medikamente dosieren kosten doch nur Zeit. Viel hilft viel, also runter mit der ganzen Schachtel!' =>
+	'Instruction leaflet? Nobody reads those anyways! So let\'s not waste any time and chuck the whole box down!',
+  'Eingangsbereich des Krankenhauses' =>
+	'Hospital Lobby',
+  'Krankenhaus' =>
+	'Hospital',
+  'Die Lobby sieht aus wie ein Schlachtfeld... überall ist Blut, viele Durchgänge sind notdürftig verbarrikadiert. Wenn du dich jetzt fragst, ob du weitergehen solltest: Die Antwort lautet NEIN!' =>
+	'The lobby looks like a battlefield... there is blood everywhere, and a lot of passageways are blocked. You\'re probably asking yourself if you should go in deeper: The answer is NO, idiot!',
+  'Stationskorridor' =>
+	'Station Hallway',
+  'Notaufnahme' =>
+	'Emergency Room',
+  'Leichenhalle' =>
+	'Morgue',
+  'Zerrissener Körper' =>
+	'Tattered Body',
+  'Dieses Ding liegt hier schon eine Weile. Die Kleidung ist zerfetzt und der Körper übersäht mit Bisspuren. Nichtsdestotrotz ist da noch einiges an Fleisch übrig geblieben ... die Zombies scheinen nicht an restlose Verwertung zu glauben. Du könntest deine Zähne auch noch dort reinschlagen - wenn du wirklich so verzweifelt bist.' =>
+	'This unlucky guy looks like he has been here for a while. His clothes are tattered and its body is littered with bite marks. There is still some flesh left, however ... zombies don\'t seem to believe in full processing. You could theoretically eat this - if you really are that desperate.',
+  'Gott würfelt nicht - denn er ist zu beschäftigt damit, am Glücksrad zu drehen. Eine deiner Statusleisten wurde auf 100 gesetzt; hoffentlich bist du mit dem Ergebnis zufrieden...' =>
+	'God doesn\'t dice - because he is to busy turning the Whell of Fortune. One of your status bars was reset to 100; hope you\'re happy with the results...',
+  'Du wirst nicht sterben... nicht hier, und auch nicht auf diese Weise! Mit diesem Mantra hast du deine letzten Kräfte mobilisiert und neue Energie gewonnen.' =>
+	'You\'re not going to die... not here, and not this way! With this matra, you\'ve managed to mobilize your last energy reserves.',
+  'Es war eine langwierige Fummelarbeit, aber am Schluss hat es sich gelohnt. Du hast einen ganzen Haufen Pillen zusammentragen können. Jetzt gilt es nur hoch herauszufinden, wofür diese Pillen gut sind ...' =>
+	'After fumbling around for a while, you manage to find some useful pills in this pile of junk. Now you need to find out what these pills actually do ...',
+  'Augen zu und durch! Du schluckst die Pille herunter - und eine ungeahnte Energie durchströhmt dich! Du fühlst dich, als könntest du Bäume ausreißen!' =>
+	'Grit your teeth, close your eyes and down this pill - you suddenly feel an unbelievable power running though you.',
+  'Geschäftszentrum "Depressivo"' =>
+	'Business Center "The Scam Company"',
+  'Platz des Himmlischen Friedens' =>
+	'Tiananmen Square',
+  'Die schwere Metalltür, die die Küche vom Kühlraum trennt, ist inzwischen startk verrostet. Nach einiger Anstrengung gelingt es dir aber doch, sie einen Spalt zu öffnen. Als du hineinschaust erlebst du jedoch eine böse überraschung: Die Arbeiter in diesem Restaurant scheinen sich beim Ausbruch der Epidemie im Kühlraum versteckt zu haben! Alle Vorräte sind aufgebraucht, nur ein paar magere Leichen und eine alte Matratze liegen noch herum!' =>
+	'The hinges of this heavy, metal door are rusted, making it hard to open it. After a huge effort however, you manage to pry it open a little. Expecting humongous amounts of food, you are more than surprised to find the room nearly empty. The only thing in there is a mattress with some bodies scattered around it. Seems like these are the remnants of the employees, who hid in here when the zombie outbreak started...!',
+  'Fastfood-Küche' =>
+	'Fastfood-Küche',
+  'Frittierte Leiche' =>
+	'Fried Body',
+  'Blasenkaugummi' =>
+	'Bubblegum',
+  'Kaugummi ist nicht unbedingt ein vollwertiger Ersatz für eine richtige Mahlzeit, aber immer noch besser als nichts. Außerdem kannst du es aufblasen, damit es größer erscheint.' =>
+	'Bubblegum might not be part of a complete breakfast, but it is better than nothing. If you\'re really hungry, you can inflate it so it looks bigger.',
+  'Bubble Tea' =>
+	'Bubble Tea',
+  'Geld' =>
+	'Cash',
+  'So richtig viel kannst du mit diesem Geld nicht wirklich anfangen, immerhin haben die meisten Geschäfte hier in der Umgebung geschlossen. Aber hey, einem geschenkten Gaul haut nicht aufs Maul... oder so. Steck die Kohle einfach in deinen Munitionsgürtel, bis du etwas findest für dass du es ausgeben kannst.' =>
+	'Since most of the stores around here are closed due to a zombie apocalypse, this wad of cash won\'t be all that useful. But remember, never cook a gift horse\'s mouth.... or something like this. Just keep this cash in you Ammobelt until you find something to spend it on.',
+  '€' =>
+	'€',
+  'Du benötigst ein Gefäß, um diese Flüssigkeit transportieren zu können.' =>
+	'You need a bottle to be able to transport any liquids.',
+  'Du benötigst einen Munitionsgürtel, um diesen Gegenstand mitführen zu können.' =>
+	'You need an ammobelt to take that with you.',
+  'Kasteien' =>
+	'Mortify your Flesh',
+  'Verbraucht 50% deiner Gesundheit und wandelt die Hälfte davon in Energie um.' =>
+	'Consumes 50% of your health and turns it into energy.',
+  'Wundersame Heilung' =>
+	'Miraculous Healing',
+  'Heilt sämtliche Wunden und stellt deine Gesundheit wieder her.' =>
+	'Heals all your wounds and replensihes your health.',
+  'Heilige Schrift' =>
+	'Holy Book',
+  'Wann immer du am Zustand der Welt verzweifelst kannst du aus dieser Heiligen Schrift Kraft schöpfen.' =>
+	'Even if the world has gone to hell, you can still use this book to draw strength from your faith.',
+  'Kraft schöpfen' =>
+	'Regain strength',
+  'Messwein' =>
+	'Mass Wine',
+  'OK, für den Beichtvater und die Chorknaben konntest du nicht mehr allzuviel tun, aber wenigstens das Allerheiligste konntest du retten, als du aus der Kathedrale geflohen bist: den gesamten Messweinvorrat! Der wird dir helfen, über den Verlust deiner Gemeinde hinweg zu kommen. Waren sowieso alles Sünder...' =>
+	'There was nothing you could do for your reverent, or even all these choristers, but at least could save the most holy thing in the entire cathedral when you fled: The mass wine! It will absolutely helf you get over the death of everyone in your congregation. They\'ve been sinners anyways...',
+  'Kathedrale' =>
+	'Cathedral',
+  'Ein Haus Gottes - Zuflucht für die Erschöpften, die Verfolgten und auch für Geistliche, die etwas zu innige Beziehungen mit ihren Ministranten pflegen. Nicht, dass du soetwas je gemacht hättest...<br />Selbst nach der Apokalypse versammeln sich hier die Gläubigen auf der Suche nach Hoffnung. Wobei die Gläubigen in diesem speziellen Fall leider relativ untot sind, und "Hoffnung" die Hoffnung auf etwas zu fressen meint.' =>
+	'A house of God - Refugee for everyone who seeks protection. Especially for all those priest who got kind of close to their acolytes. But it\'s not like you ever did something like this!<br />Even after the apocalypse, believer still flock to this place. However, instead of hope, these believers seek mainly food, because they\'ve become a little undead.',
+  'Zerfetztes Gemeindemitglied' =>
+	'Torn Parishioner',
+  'Es gibt Momente, da kann der Glaube Berge versetzen und selbst die größten Probleme klein erscheinen lassen. Und dann gibt es Momente, in denen sollte man seine Gebete lieber beim Laufen sprechen, anstatt starr auf einer Kirchenbank zu verharren!' =>
+	'There are moments when faith can move mountains and even the biggest problems seem small. And then there are moments, where you\'d better say your prayer whilst running instead of remaining static at your pew!',
   'Du hast soeben die Antwort auf eine philosophische Frage gefunden, die dich schon seit Jahren quält. Das hat dir etwas zusätzliche Energie verschafft.' =>
 	'You\'ve just found the answer to a complicated zen riddle that you\'ve tried to figure out for years. This gives you some new energy.',
-  'We' =>
-	'We',
+  'Quengeln' =>
+	'Throw a fit',
+  'Entzieht jedem anwesenden Spieler 10% seiner Durst- und Hungerleiste und fügt diese den eigenen Leisten hinzu.' =>
+	'Removes 10% from all near players\' hunger and thirst bar and adds them to your own bar.',
+  'Kindlicher Metabolismus' =>
+	'Childly Metabolism',
+  'Schlafen' =>
+	'Sleeping',
+  'Du schläfst momentan, deine Aktionsmöglichkeiten sind auf Herumwinden beschränkt. Dafür regenerierst du wenigstens etwas Energie.' =>
+	'You\'re currently asleep, so your range of actions is pretty much limited to rolling around in your bed. Meanwhile, you regain energy a little faster.',
+  '"Kentucky Fried Eyeballs" Restaurant' =>
+	'"Kentucky Fried Eyeballs" Franchise',
+  'Ventile des Kühlkreislaufes öffnen' =>
+	'Open cooling circuit',
+  'Zäune und Warnschilder umranden die gigantische Stahlbetonkuppel, in der du dich nun befindest. Dieser Kernreaktor hat vor langer Zeit viele Städte mit Energie versorgt, jetzt tut er nicht mehr sonderlich viel (außer die Umgebung zu verstrahlen). Wenn du keine Angst vor Strahlung hast, kannst du hier nach Überresten des Kühlwassers oder nach Ersatzteilen suchen.' =>
+	'The giant ferroconcrete dome you\'ve just entered is surrounded by fences and warning signs. A long time ago, this building was like a heart, pumping energy through the civilization around it. Now, the only thing he pumps out is radiation, which does anything but keep people alive. If you decide that radiaton isn\'t too bothersome for you, feel free to enter and search for water and supplies.',
+  'Du stemmst dich mit aller Kraft gegen das Ventil. Als du es endlich geöffnet hast, stellst du fest dass das ganze Kühlwassersystem schon fast leergelaufen war. Naja, wenigstens ein paar Rationen konntest du dir noch sichern...' =>
+	'You use all your force to open this valve. However, there seems to be barely any water left. At least you can collect a few rations...',
+  'Dreckiges Kondenswasser' =>
+	'Dirty Condensate',
+  'Du hast ein paar Tropfen Kondenswasser gesammelt... Leider war die Oberfläche nicht allzu sauber. Dieses Wasser ist vermutlich nicht übermäßig gesund...' =>
+	'You\'ve collected a few drops of condensate... but the surface was pretty dirty, so this water might not be all that healthy...',
+  'Plasmablitz-Generator' =>
+	'Plasma Spark Generator',
+  'Ein Gerät, dass Luft auf eine ultrahohe Temperatur erhitzen und so Plasma erzeugen kann - und alles was man dafür braucht ist eine kleine Erregerspannung. Damit kannst du doch sicher was tolles bauen - schau am besten mal in deinem lokalen Waffengeschäft vorbei, dort solltest du alle nötigen Werkzeuge finden.' =>
+	'This thing can turn any material into ultra-hot plasma - and all you need is some excitation voltage. Why don\'t you use this thing to build yourself an exiting new weapon - a gun shop should have all the equipment you need for that!',
+  'Gewehr' =>
+	'Rifle',
+  'Ein gutes, altmodisches Gewehr - es ist nach wie vor schussbereit und sehr gut geeignet, einem Zombie den Kopf wegzublasen. Außerdem scheint man es mit der gleichen Munition wie eine Pistole laden zu können. Na, so ein Glück aber auch!' =>
+	'An old fashion rifle, still as working as ever, and perfect for blowing a zombie\'s head off! In fact, it\'s a good gun that can shoot far. And it seems to use bullets from a pistol. How convenient.',
+  'Kondenswasser' =>
+	'Condensate',
+  'Du hast ein paar Tropfen Kondenswasser gesammelt. Wirklich viel ist es nicht, aber immerhin besser als nichts!' =>
+	'You\'ve collected a few drops or condensate. It\'s not much, but better than nothing.',
+  'Du hast in diesem Wecker tatsächlich ein paar nützliche Teile für den Countdown finden können. Jetzt funktioniert er wieder wie er soll! Herzlichen Glückwunsch!' =>
+	'You\'ve actually managed to find some useful parts in this. Now, the event countdown will work as expected again! Congratulations!',
+  'Mo' =>
+	'Mon',
+  'So' =>
+	'Sun',
+  'Di' =>
+	'Tue',
+  'Mi' =>
+	'Wed',
+  'Do' =>
+	'Thu',
+  'Fr' =>
+	'Fri',
+  'Sa' =>
+	'Sat',
   'Transzendente Handtasche' =>
 	'Transcendental Handbag',
   'Es ist unglaublich, was alles in diese Handtasche passt! Schminkspiegel, mit Glitzerzeug verziehrtes Handy, Hello-Kitty-Digitalkamera ... alles sofort griffig! Man weiß nie wan man sowas in der Postapokalypse mal brauchen kann!' =>
@@ -1890,10 +2082,8 @@ return array (
 	'Some items were found!',
   'Nach nur ein paar Metern findest du ein notdürftig aufgeschlagenes Lager - der Besitzer ist wohl im Schlaf überrascht worden. Naja, wenigstens wird er dann wohl nichts mehr dagegen haben wenn du dich an seiner Ausrüstung bedienst ...' =>
 	'A few meters from your hideout, you find a makeshift camp - its maker must have been attacked while sleeping. Well, he probably won\'t object to you taking some of his gear ...',
-  'Items gefun' =>
-	'Items gefun',
   'Items gefunden!' =>
-	'Items gefunden!',
+	'Found items!',
   ':itemdef gefunden!' =>
 	'Found :itemdef!',
   ':itemdef entdeckt!' =>
@@ -1907,13 +2097,11 @@ return array (
   ':itemdef angelockt!' =>
 	'Attracted :itemdef!',
   ':itemdef erworben!' =>
-	':itemdef erworben!',
+	'Bought :itemdef!',
   ':itemdef aufgetaucht!' =>
-	':itemdef aufgetaucht!',
+	':itemdef appeared!',
   ':itemdef erhalten!' =>
 	'Got :itemdef!',
-  'Alte Apotheke' =>
-	'Ye Olde Pharmacy',
   'Kleiner Markt' =>
 	'Small Market',
   'Du hast soeben deinen letzten Atemzug getan und deiner Gemeinschaft das wenige, was du hattest, hinterlassen. Das wars dann wohl...' =>
@@ -1925,9 +2113,9 @@ return array (
   'Du hast dich soeben in einen Zombie verwandelt!' =>
 	'You\'ve just turned into a zombie!',
   'Deine Freunde haben dir endlich den ewigen Frieden geschenkt.' =>
-	'Deine Freunde haben dir endlich den ewigen Frieden geschenkt.',
+	'Your friends have given you eternal peace.',
   'Es ist immer schwer, jemandem den man gekannt hat den Gnadenstoß zu geben. Nur einige sterbliche Überreste sind noch zurück geblieben...' =>
-	'Es ist immer schwer, jemandem den man gekannt hat den Gnadenstoß zu geben. Nur einige sterbliche Überreste sind noch zurück geblieben...',
+	'It\'s always hard to deal the coup de grâce to someone you knew. Now, only a few mortal remains are left...',
   'Du hast :item mit :chem kombiniert, und dabei :list erhalten.' =>
 	'You have combined :item with :chem and got :list.',
   ':name hat :item mit :chem kombiniert, und dabei :list erhalten.' =>
@@ -1940,8 +2128,6 @@ return array (
 	':building discovered!',
   'Apotheke "Hustensaft-Schlürfer"' =>
 	'Pharmacy "Linctus Addict"',
-  '"Kentucky Fried Eyeballs" Restaurant' =>
-	'"Kentucky Fried Eyeballs" Franchise',
   'Munition' =>
 	'Ammunition',
   'Welch ein glücklicher Fund - Munition! Soetwas findet man sehr selten, manche behaupten sogar soetwas wie "Munition" existiere gar nicht. Wenn du jetzt noch zufällig etwas hast, womit du diese Munition verschießen kannst haben die Zombies keine Chance mehr!' =>
@@ -1949,15 +2135,11 @@ return array (
   'Aus einem allträglichen Sportinstrument hast du ein bizarres Mordinstrument gemacht. Das sagt eine Menge über deine Psyche aus... zum Glück wird sich niemand trauen, dir das ins Gesicht zu sagen, solange du diesen Schläger in der Hand hälst.' =>
 	'You have turned this everyday sports equipment into some demented murder instrument. This does say a lot about your state of mind... luckily, nobody will dare to say this to your face as long as you hold this thing.',
   'Chemische Keule' =>
-	'Chemische Keule',
+	'Chemical Mace',
   'Dieser Schläger ist mit merkwürdigen Substanzen getränkt und wirkt äußerst schädlich auf Zombies, die in näheren Kontakt mit ihm kommen. Allerdings hat er durch die Chemikalien einiges an Stabilität verloren...' =>
-	'Dieser Schläger ist mit merkwürdigen Substanzen getränkt und wirkt äußerst schädlich auf Zombies, die in näheren Kontakt mit ihm kommen. Allerdings hat er durch die Chemikalien einiges an Stabilität verloren...',
+	'This bat has been soaked in some strange chemical substances that will surely be harmful to zombies, should they get in close contact with it. But it also seems the cemicals have made that bat less sturdy...',
   'In mühevoller Handarbeit hast du diesem Batteriewerfer eine selbst entworfene, neue Ladevorrichtung verpasst. Eigentlich solltest du das Teil von nun an "Batterie-Maschinenwerfer" nennen ...' =>
 	'It was hard work, but you managed to improve your simple battery launcher by incorporating an automatic loader. You might even call this thing a "Battery-Minigun" ...',
-  'Batteriewerfer MK II' =>
-	'Battery Launcher MK II',
-  'Der Batteriewerfer MK II ist die Bazooka unter den Batteriewerfern. Durch den automatischen Druckregler kannst du sowohl weiter schießen als auch genauer zielen. Damit wird dein Batteriewerfer zur absolut tödlichen Waffe! ...' =>
-	'This Battery Launcher MK II is like a battery Bazooka. Thanks to an hydraulic pressure pump, you can eject batteries with high velocity and great accuracy. Your battery launcher is finally a deadly weapon! ...',
   'Batteriewerfer MK IV Prototyp' =>
 	'Battery Launcher MK IV Prototype',
   'Dieses Gerät wurde kurz nach der Apokalypse vom Militär entwickelt. Die enorm hohe Abschussgeschwindigkeit des MK IV erlaubt maximale Präzision - wenn nötig kannst du damit einem Zombie auf 500m Entfernung den rechten Backenzahn herausschießen (inklusive dem Rest seines Gebisses). Ein hübscher Nebeneffekt dieser Feuerkraft ist die Tatsache, dass die Batterien beim Aufprall zerplatzen und wie Splittergranaten wirken.' =>
@@ -1978,8 +2160,6 @@ return array (
 	'EMS System "H.U.L.K."',
   'Du benötigst einen spontanen Kraftschub? Dann einfach Batterie einlegen und auf Start drücken! Dieser Bauchmuskeltrainer bringt dich garantiert auf Touren und ist dabei auch nur ein ganz kleines bisschen tödlich.' =>
 	'Need a dose of instant energy? Just put a battery in and push start! This EMS System will jump-start your engine, and it might not even be lethal!',
-  'Dieses Ding liegt hier schon eine Weile. Die Kleidung ist zerfetzt und der Körper übersäht mit Bisspuren. Nichtsdestotrotz ist da noch einiges an Fleisch übrig geblieben ... die Zombies scheinen nicht an restlose Verwertung zu glauben. Du könntest deine Zähne auch noch dort reinschlagen - wenn du wirklich so verzweifelt bist.' =>
-	'This unlucky guy looks like he has been here for a while. His clothes are tattered and its body is littered with bite marks. There is still some flesh left, however ... zombies don\'t seem to believe in full processing. You could theoretically eat this - if you really are that desperate.',
   'Zerfetzter Zombie' =>
 	'Torn Zombie',
   'Dieses Ding riecht noch gammeliger als gewöhnliche Leichen. Vermutlich sind es die Überreste eines Zombies, allerdings kann man das bei dieser Fleischpampe schwer sagen. Na, macht das Teil nicht Appetit?' =>
@@ -1998,8 +2178,6 @@ return array (
 	'Well, you certainly reeled in a big one. Thank godness you can move it around in this bodybag.',
   'Dieser Leichensack ist sicherlich praktisch - wäre da nicht dieses klaffende Loch. Hiermit kannst du nichts transportieren, aber du könntest es zuhause auf deiner Werkbank flicken...' =>
 	'This bodybag is useful - if it wasn\'t for this giant gaping hole. You won\'t be able to transport anything with this, but you might be able to fix it using your workbench...',
-  'Frittierte Leiche' =>
-	'Fried Body',
   'Wer sagt, dass man nur kleine Dinge frittieren kann? Diese Leiche kannst du jetzt fast ohne gesundheitliche Risiken essen, und sie schmeckt auch noch viel besser!' =>
 	'Who says one can only frie small things? Now, you can eat this body without risking your health, and it even tastes better!',
   'Du kannst diese kleinen Holzbolzen mit einer Armbrust abfeuern. Die werden nicht so viel Schaden anrichten wie eine Batterie, aber dafür kannst du sie leichter herstellen.' =>
@@ -2040,14 +2218,6 @@ return array (
 	'The smell of these delicious cookies give you a warm and cozy feeling inside - mainly because it is full of drugs. This cookie probably won\'t spread the Christmas spirit, but you might encounter Rudolph after eating it!',
   'Diese nicht sonderlich stabil aussehende Armbrust kann dein Retter in der Not werden, wenn dir mal wieder die Batterien ausgegangen sind. Immerhin kannst du ihre Bolzen an deiner Werkbank selbst fertigen.' =>
 	'This not-so-stable crossbow can save your life if you run out of batteries an a fight. You can even built the bolts it shoots at your workbench.',
-  'Kondenswasser' =>
-	'Condensate',
-  'Du hast ein paar Tropfen Kondenswasser gesammelt. Wirklich viel ist es nicht, aber immerhin besser als nichts!' =>
-	'You\'ve collected a few drops or condensate. It\'s not much, but better than nothing.',
-  'Dreckiges Kondenswasser' =>
-	'Dirty Condensate',
-  'Du hast ein paar Tropfen Kondenswasser gesammelt... Leider war die Oberfläche nicht allzu sauber. Dieses Wasser ist vermutlich nicht übermäßig gesund...' =>
-	'You\'ve collected a few drops of condensate... but the surface was pretty dirty, so this water might not be all that healthy...',
   'Energie wird von deinem Notstrom-Aggregat erzeugt und ist für diverse Ausbauten erforderlich. Außerdem kannst du damit Batterien in Supercarger-Batterien verwandeln..' =>
 	'Power can be produced by your emergency generator and is required for some hideout expansions. You can also use it to turn your average batteries into superchargers.',
   'Fastfood' =>
@@ -2118,10 +2288,6 @@ return array (
 	'Tinsel',
   'An Lametta scheiden sich die Geister - die einen lieben es, die anderen hassen es. Der Entwickler dieses Spiels gehört offensichtlich zur ersten Gruppe.' =>
 	'There are two kinds of people: Those who love lametta, and those who despise it. The developer of this game is part of the first group.',
-  'Lasermessgerät' =>
-	'Laser Measuring Device',
-  'Wenn du es richtig bedienst, kann dir dieses Ding beim Kartographieren einer Ruine sehr viel Arbeit abnehmen.' =>
-	'If you know how to use this, it can massively speed up mapping a ruin.',
   'LED' =>
 	'LED',
   'Diese LED ist so unglaublich energieeffizient, dass sie fast von alleine leuchtet. Allerdings wird dir eine einzige nicht allzu viel bringen, denn sonderlich viel Licht erzeugt sie nicht...' =>
@@ -2136,10 +2302,6 @@ return array (
 	'This engine is the masterpiece of the finest german engineers, having the best possible efficiency while barely producing carbon monoxyde. It still won\'t run without gasoline, though...',
   'Dieser alte, aber noch funktionstüchtige Ofen wird dir helfen, in deiner heimischen Küche !' =>
 	'There is nothing you can\'t do with this brand-new ancient oven - except all the things you can\'t do with it, of course!',
-  'Plasmablitz-Generator' =>
-	'Plasma Spark Generator',
-  'Ein Gerät, dass Luft auf eine ultrahohe Temperatur erhitzen und so Plasma erzeugen kann - und alles was man dafür braucht ist eine kleine Erregerspannung. Damit kannst du doch sicher was tolles bauen - schau am besten mal in deinem lokalen Waffengeschäft vorbei, dort solltest du alle nötigen Werkzeuge finden.' =>
-	'This thing can turn any material into ultra-hot plasma - and all you need is some excitation voltage. Why don\'t you use this thing to build yourself an exiting new weapon - a gun shop should have all the equipment you need for that!',
   'Dieses unscheinbare Bauteil ist unglaublich selten und wertvoll! Du solltest es unbedingt mitnehmen, möglicherweise kann es deine Zombie- oder Wasserprobleme lösen...' =>
 	'While looking plain and inconspicuous, this miracle of a device can be of the utmost value to you! You\'d better take it with you, as it could help you solve this whole zombie problem...',
   'Leider ist es nur ein Zierkürbis, du kannst ihn also nicht essen. Aber sicherlich findest du eine Verwendung für ihn. ' =>
@@ -2152,10 +2314,6 @@ return array (
 	'Myterious Ticket',
   'Die Schrift auf diesem Ticket ist verblasst, nachdem es so lange der Sonnenstrahlung in der Aussenwelt ausgesetzt war. Was kann man mit diesem Ticket wohl machen?' =>
 	'After beeing subjected to wind and weather for god knows how long, the writing on this ticket has faded. I wounder what you could do with this?',
-  'Verseuchtes Wasser' =>
-	'Contaminated Water',
-  'Dieses Wasser zu finden war nicht schwer - immerhin riecht man es Kilometer gegen den Wind. Um dieses ekelhafte schleimige Zeug zu trinken musst du schon sehr verzweifelt sein.' =>
-	'Finding this water was easy - you can smell it from a mile away! You\'d need to be really desperate if you even consider drinking it...',
   'Wäre dies ein Browserspiel mit Vampiren, dann wäre dieses Item sicher wertvoll. Weil Zombies aber viel cooler sind als Vampire, ist dieses Item einfach nur eklig. Bäh!' =>
 	'If this browser game was about vampires, this item would be valuable. But then the game would be crap, so this is just disgusting. Yuck!',
   'Dieses Wasser stammt aus einer deiner Flaschen. Du willst es doch hier nicht versickern lassen, oder?' =>
@@ -2184,10 +2342,6 @@ return array (
 	'Battery Launcher? Oh come one, these are for babies! This Colt protects you, your family and the American way of life from democrats, communists and illegal immigrants. [Disclaimer: This text may or may not be sponsored by the NRA]',
   'Für einen normalen Radfahrer wären diese Upgrades ein ziemlicher Overkill - im Falle einer Zombieapokalypse kann man jedoch nicht vorsichtig genug sein.' =>
 	'For a normal cyclist, these upgrades would be a overkill - but when there are zombies running around, there is no such thing as overkill.',
-  'Heilige Schrift' =>
-	'Holy Book',
-  'Wann immer du am Zustand der Welt verzweifelst kannst du aus dieser Heiligen Schrift Kraft schöpfen.' =>
-	'Even if the world has gone to hell, you can still use this book to draw strength from your faith.',
   'Weihasserbombe' =>
 	'Holy Water Bomb',
   'Sobald die Zombies in Wurfreichweite kommen kannst du ihnen mit diesem kleinen Geschenk die Tour vermiesen. Nichts ist effektiver gegen eine Gruppe Zombies als eine Wasserbombe - außer natürlich einer Weihwasserbombe!!' =>
@@ -2204,14 +2358,6 @@ return array (
 	'2 Machetes',
   'Es gibt nichts cooleres als mit zwei Macheten in der Hand wie ein Samurai durch Zombiehorden zu pflügen. Durch die ganze abgefahrene Choreographie verbrauchst du zwar einiges an Energie, aber das ist es wert!' =>
 	'There is nothing more awesome than slicing hordes of zombies like a samurai using two machetes. Your whole choreographie consumes a lot of energy, but it is SO worth it!',
-  'Kartographenausrüstung Marke "Glutspur"' =>
-	'Cartography Equipment',
-  'Dieses Sammlung nützlicher Dinge enthält alles, was du zum Kartographieren von Ruinen benötigst! ... nagut, es besteht aus einem Stapel Papier und einem Bleistift. Aber der ist immerhin spitz! Also hör auf dich zu beschweren!' =>
-	'This collection of useful stuff contains everything you need for drawing maps of the wasteland around you! ... well ok, it mainly consists of some paper and a pencil. But at least that pencil is sharpened, so stop whining!',
-  'Geld' =>
-	'Cash',
-  'So richtig viel kannst du mit diesem Geld nicht wirklich anfangen, immerhin haben die meisten Geschäfte hier in der Umgebung geschlossen. Aber hey, einem geschenkten Gaul haut nicht aufs Maul... oder so. Steck die Kohle einfach in deinen Munitionsgürtel, bis du etwas findest für dass du es ausgeben kannst.' =>
-	'Since most of the stores around here are closed due to a zombie apocalypse, this wad of cash won\'t be all that useful. But remember, never cook a gift horse\'s mouth.... or something like this. Just keep this cash in you Ammobelt until you find something to spend it on.',
   'Diese selbstgekochte Speise ist so lecker, dass du beim gedanken an sie direkt zu Sabbern anfängst. Etwas so gutes findet man nicht einfach irgendwo - man muss es sich selbst zusammenkochen!' =>
 	'This dish sure is something to wet your teeth over. You just can\'t find something like this - you need to make it yourself!',
   'Diese leckere Speise ist zusätzlich noch perfekt gewürzt. Einen so verführerischen Gaumenschmauß dürfen nur die wenigsten Verdammten genießen... du bist nun einer von ihnen.' =>
@@ -2220,10 +2366,6 @@ return array (
 	'Nutrient Plasma',
   'Dieses Zeug ist vollgepumpt mit Chemie. Was diese Chemie bewirkt? Who knows?' =>
 	'It\'s goo full of chemicals. What these chemicals actually do? Who knows...',
-  'Gewehr' =>
-	'Rifle',
-  'Ein gutes, altmodisches Gewehr - es ist nach wie vor schussbereit und sehr gut geeignet, einem Zombie den Kopf wegzublasen. Außerdem scheint man es mit der gleichen Munition wie eine Pistole laden zu können. Na, so ein Glück aber auch!' =>
-	'An old fashion rifle, still as working as ever, and perfect for blowing a zombie\'s head off! In fact, it\'s a good gun that can shoot far. And it seems to use bullets from a pistol. How convenient.',
   'Religiöse Schrift' =>
 	'Religious scripture',
   'Dir ist langweilig und du würdest dich gerne uneingeladen in jemandes Leben einmischen, weißt aber nicht in wessen? Keine Sorge, mithilfe dieser Schrift wirst du Rechtfertigungen finden um gegen alle möglichen Minderheiten zu hetzen, um von deinem eigenen, völlig verkorksten Leben abzulenken.' =>
@@ -2328,36 +2470,24 @@ return array (
 	'As soon as zombies enter your throwing perimeter, you can instantly turn them into a puddle of goo. There is nothing more effective at melting zombies faces off than a Water Bomb!',
   'Die Aquablaster XL ist die militärische Variante der Aquablaster XS. Durch das zusätzliche Hochleistungsprühsystem handelt es sich hierbei um eine tödliche Waffe (insbesondere für Zombies). Falls gerade keine Zombie-Apokalypse stattfindet, kann man sie auch zur Auflösung lästiger Demonstationen verwenden.' =>
 	'This Aquablaster XL is a military version of the standart Aquablaster XS. The additional high power spraying system turns this device into a deadly weapon (especially for zombies!). Of course, you can also use it to efficiently end annoying demonstrations.',
-  'Messwein' =>
-	'Mass Wine',
-  'OK, für den Beichtvater und die Chorknaben konntest du nicht mehr allzuviel tun, aber wenigstens das Allerheiligste konntest du retten, als du aus der Kathedrale geflohen bist: den gesamten Messweinvorrat! Der wird dir helfen, über den Verlust deiner Gemeinde hinweg zu kommen. Waren sowieso alles Sünder...' =>
-	'There was nothing you could do for your reverent, or even all these choristers, but at least could save the most holy thing in the entire cathedral when you fled: The mass wine! It will absolutely helf you get over the death of everyone in your congregation. They\'ve been sinners anyways...',
   'Weihnachtsgetränk' =>
-	'Weihnachtsgetränk',
+	'Christmas Drink',
   'Ein absolut klassisches Weihnachtsgetränk! Hauptsächlich deshalb, weil man sich im Dezember so viel davon reinschüttet, dass man es die restlichen 11 Monate nicht mehr anrühren kann.' =>
 	'This is an absolute classic for christmas! Mainly, because people tend to drink so much of this stuff during December, they can\'t so much as look at it for the next 11 months.',
   'Weihnachtsessen' =>
-	'Weihnachtsessen',
+	'Christmas Food',
   'Süssigkeiten' =>
-	'Süssigkeiten',
+	'Sweets',
   'Besonderes' =>
 	'Special',
   'Angebissener Apfel' =>
 	'Apple with a bitemark',
   'Um Himmels Willen, sei bloß vorsichtigt! Wenn man dich mit einem angebissenen Apfel auf der Straße erwischt tauchen Anwälte aus dem Nichts heraus auf und verprügeln dich mit überteuerten Tablet-Computern!' =>
 	'For god\'s sake, be carefull! If you get caught holding this apple, lawyers will appear out of nowhere and beat you to death with overpriced tablet computers!',
-  'Brotlaib' =>
-	'Bread',
-  'Endlich bist du vernünftig dafür ausgerüstet, die Enten im Teich zu füttern. Leider sind mittlerweise sowohl Teich als auch Enten einer zombieverseuchten Ödniss gewichen. Dann musst du diesen Brotlaib wohl selbst essen...' =>
-	'Finally, you have everthing you need to feed the ducks in your local park - well, you would have, but park and ducks have ceased to exist lately. So you can try to feed a zombie with this, or just eat it youself...',
   'Offene Konservendose' =>
 	'Open Can',
   'Konservendosen überleben alle möglichen Arten von Weltuntergängen - Asteroideneinschläge, Nukleare Explosionen, Maya-Apokalypsen und sogar Landtagswahlen! Guten Appetit!' =>
 	'Cans will outlast all sorts of doomsday events - asteroid impact, nuclear explosion, the Mayan apocalypse and even federal elections! Bon appétit!',
-  'Blasenkaugummi' =>
-	'Bubblegum',
-  'Kaugummi ist nicht unbedingt ein vollwertiger Ersatz für eine richtige Mahlzeit, aber immer noch besser als nichts. Außerdem kannst du es aufblasen, damit es größer erscheint.' =>
-	'Bubblegum might not be part of a complete breakfast, but it is better than nothing. If you\'re really hungry, you can inflate it so it looks bigger.',
   'Gebrauchsanleitung für einen Kühlschrank' =>
 	'Freezer Manual',
   'Gebrauchsanleitung für eine Waschmaschine' =>
@@ -2390,8 +2520,6 @@ return array (
 	'Cursed Bear',
   'Limonade' =>
 	'Lemonade',
-  'Bubble Tea' =>
-	'Bubble Tea',
   'Glühwein' =>
 	'Mulled Wine',
   'Mutzbraten' =>
@@ -2405,27 +2533,17 @@ return array (
   'Schokolade' =>
 	'Chocolate',
   'Auch bekannt unter dem namen "Zucker mit Schokoladengeschmack". Kinder können sich das Zeug tonnenweise in den Mund schieben, leiden danach allerdings auch für Wochen an Verstopfung und Zahnschmerzen.' =>
-	'Auch bekannt unter dem namen "Zucker mit Schokoladengeschmack". Kinder können sich das Zeug tonnenweise in den Mund schieben, leiden danach allerdings auch für Wochen an Verstopfung und Zahnschmerzen.',
+	'Also goes by the name "Sugar with chocolate taste". Kids can shovel loads of this stuff in their mouths and then suffer from constipation and tooth aches for weeks.',
   'Kandierte Nüsse' =>
 	'Sweet Nuts',
   'Diese Süssigkeit weckt schlimme Erinnerungen an deine Kindheit, als dir ein fremder in einer dunklen Gasse seine "ganz speziellen" kandierten Nüsse zeigen wollte...' =>
 	'Ow... these remind you of that one time, where a stranger offered to show you his "very special" sweet nuts in an alley.',
   'Stück' =>
 	'Pieces',
-  'Du benötigst einen Munitionsgürtel, um diesen Gegenstand mitführen zu können.' =>
-	'You need an ammobelt to take that with you.',
-  'Verkaufsautomat (Vending Machine)' =>
-	'Verkaufsautomat (Vending Machine)',
   'Dir fehlen Gegenstände, um diese Aktion durchzuführen.' =>
 	'You are missing some objects to perform this action.',
-  '€' =>
-	'€',
   'Heruntergekommenes Hotel' =>
 	'Rundown Hotel',
-  'Platz des Himmlischen Friedens' =>
-	'Tiananmen Square',
-  'Geschäftszentrum "Depressivo"' =>
-	'Business Center "The Scam Company"',
   'Angriff' =>
 	'Attack',
   'Du versteckst dich hinter einer Ecke und atmest ein paar mal tief durch. Als du genug Mut gesammelt hast, trittst du hervor und ziehst deine Waffen. Der Kampf kann beginnen!' =>
@@ -2472,138 +2590,26 @@ return array (
 	'leap at',
   'attackiert' =>
 	'attacks',
-  'V' =>
-	'V',
   'Verfehlt!' =>
 	'Miss!',
-  'Wurde beim ' =>
-	'Wurde beim ',
-  'Wurde beim Angriff zerstö' =>
-	'Wurde beim Angriff zerstö',
   'Wurde beim Angriff zerstört!' =>
-	'Wurde beim Angriff zerstört!',
-  'Runde ' =>
-	'Runde ',
+	'Destroyed during the attack.',
   'Runde :round' =>
-	'Runde :round',
-  ':name ' =>
-	':name ',
-  ':name ha' =>
-	':name ha',
-  ':name hat sich eine Ve' =>
-	':name hat sich eine Ve',
-  ':name hat sich eine Verletzung zugezo' =>
-	':name hat sich eine Verletzung zugezo',
-  ':name hat sich eine Verletzung zugezogen!' =>
-	':name hat sich eine Verletzung zugezogen!',
+	'Round :round',
   ':name hat sich eine Verletzung zugezogen: ' =>
-	':name hat sich eine Verletzung zugezogen: ',
-  'Dieser ' =>
-	'Dieser ',
-  'Dieser Gegenstand w' =>
-	'Dieser Gegenstand w',
-  'Dieser Gegenstand wurde während des' =>
-	'Dieser Gegenstand wurde während des',
-  'Dieser Gegenstand wurde während des Kampfes zers' =>
-	'Dieser Gegenstand wurde während des Kampfes zers',
+	':name has been injured: ',
   'Dieser Gegenstand wurde während des Kampfes zerstört.' =>
-	'Dieser Gegenstand wurde während des Kampfes zerstört.',
+	'This item has been destroyed during the battle.',
   'noch 1 Platz frei' =>
-	'noch 1 Platz frei',
+	'1 slot remains',
   'Dein Versteck ist eine ziemliche Bruchbude - vermutlich hast du beim Bau nicht mal gängige Normen eingehalten. Tja, deswegen musst du dich nun mit Verfall herumschlagen. Mit der Zeit wird sich der Zustand deines Verstecks verschlechtern, wodurch die Hausverteidigung sinkt.' =>
 	'Your hideout is not much more than a hovel - probably not even build by the norm. This is why you\'d better worry about its condition. After some time, your hideout will start to fall apart, which will impair its defenses.',
   'Die Hausverteidigung gibt an, wie vielen Zombies dein Versteck bei einer Belagerung standhalten kann. Wird dein Versteck von mehr Zombies belagert, so können diese deine Verteidigung durchbrechen und dich angreifen!' =>
 	'Your home defense states how many zombies your hideout can ward off in case of a siege. When more zombies than that gather here, they might break in and attack you!',
-  'Je hü' =>
-	'Je hü',
-  'Je hübscher dein' =>
-	'Je hübscher dein',
-  'Je hübscher dein Versteck ei' =>
-	'Je hübscher dein Versteck ei',
-  'Je hübscher dein Versteck eingerichtet ist, des' =>
-	'Je hübscher dein Versteck eingerichtet ist, des',
-  'Je hübscher dein Versteck eingerichtet ist, desto wohler fü' =>
-	'Je hübscher dein Versteck eingerichtet ist, desto wohler fü',
-  'Je hübscher dein Versteck eingerichtet ist, desto wohler fühlst du dich ' =>
-	'Je hübscher dein Versteck eingerichtet ist, desto wohler fühlst du dich ',
-  'Je hübscher dein Versteck eingerichtet ist, desto wohler fühlst du dich dort.' =>
-	'Je hübscher dein Versteck eingerichtet ist, desto wohler fühlst du dich dort.',
-  'Ein hübs' =>
-	'Ein hübs',
-  'Ein hübsch ei' =>
-	'Ein hübsch ei',
-  'Ein hübsch eingerichtetes V' =>
-	'Ein hübsch eingerichtetes V',
-  'Ein hübsch eingerichtetes Versteck r' =>
-	'Ein hübsch eingerichtetes Versteck r',
-  'Ein hübsch eingerichtetes Versteck redu' =>
-	'Ein hübsch eingerichtetes Versteck redu',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-T' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-T',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Team ()' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Team ()',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Team (oder Tine Wit)' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Team (oder Tine Wit)',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Team (oder Tine Wittler)' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Team (oder Tine Wittler)',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-eam (oder Tine Wittler)' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-eam (oder Tine Wittler)',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler)' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler)',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner ' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner ',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. ' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. ',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerd' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerd',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem hilft e' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem hilft e',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Das wiederum ' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Das wiederum ',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Das wiederum reduziert ' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Das wiederum reduziert ',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Das wiederum red' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Das wiederum red',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Das wiederum' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Das wiederum',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Au' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Au',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem sieh' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem sieh',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem sieht ein wohn' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem sieht ein wohn',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem sieht ein wohl' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem sieht ein wohl',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem sieht ein wohnliches ' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem sieht ein wohnliches ',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem sieht ein ' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem sieht ein ',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem erscheint dir ein wo' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem erscheint dir ein wo',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Auß' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Auß',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem ' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Außerdem ',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Das wi' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Das wi',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Das wiederu' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Das wiederu',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Da ' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. Da ',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. So f' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. So f',
-  'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. So fühlst du dich direkt viel w' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. So fühlst du dich direkt viel w',
   'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. So fühlst du dich direkt viel wohler.' =>
-	'Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. So fühlst du dich direkt viel wohler.',
+	'A nicely decorated hideout significantly reduces the chances of the next season of Honey Boo Boo being filmed at your home. That\'s a relief, isn\'t it?',
   'Du hast soeben deinen letzten Atemzug getan... Du bist auf die folgende schreckliche Art von dieser Welt gegangen: :cod!' =>
-	'Du hast soeben deinen letzten Atemzug getan... Du bist auf die folgende schreckliche Art von dieser Welt gegangen: :cod!',
+	'You just took your last breath... This is the horrifying way you have left this world forever: :cod!',
   '3... 2... 1... MEINS!' =>
 	'All my Possessions',
   'Herzlichen Glückwunsch, du bist tot!' =>
@@ -2629,13 +2635,13 @@ return array (
   'Viel Glück in deinem nächsten Leben!' =>
 	'Good luck in your next life!',
   'Der Tod' =>
-	'Der Tod',
+	'Death',
   'Wenn deine Gesundheit auf 0 sinkt, stirbst du. Das Spiel endet dann. Aber keine Angst, du kannst sofort ein neues Spiel starten wenn du gestorben bist.' =>
-	'Wenn deine Gesundheit auf 0 sinkt, stirbst du. Das Spiel endet dann. Aber keine Angst, du kannst sofort ein neues Spiel starten wenn du gestorben bist.',
+	'If your health drops to 0, you die and the game ends. But do not worry, you can start a new game immediately after that.',
   'Nach deinem Tod wirst du auf eine Seite geleitet, die dir die Auszeichnungen und Punkte anzeigt, die du dir im Verlauf des Spiels verdient hast. Um Punkte oder Auszeichnungen zu erhalten musst du mindestens einen Seelenpunkt erspielt haben.' =>
-	'Nach deinem Tod wirst du auf eine Seite geleitet, die dir die Auszeichnungen und Punkte anzeigt, die du dir im Verlauf des Spiels verdient hast. Um Punkte oder Auszeichnungen zu erhalten musst du mindestens einen Seelenpunkt erspielt haben.',
+	'After your death you will be directed to a page that shows you the awards and points you\'ve earned over the course of the game. To obtain points or awards you must have earned at least one soul point.',
   'Wenn du deinen Tod durch einen Klick auf "Das Spiel beenden" bestätigst, wird dein Spiel ins Ranking aufgenommen (sofern du mindestens einen Seelenpunkt erspielt hast). Du wirst daraufhin zur Startseite von ZombVival weitergeleitet.' =>
-	'Wenn du deinen Tod durch einen Klick auf "Das Spiel beenden" bestätigst, wird dein Spiel ins Ranking aufgenommen (sofern du mindestens einen Seelenpunkt erspielt hast). Du wirst daraufhin zur Startseite von ZombVival weitergeleitet.',
+	'If you confirm your death, the game will be included in the ranking (given you\'ve earned at least one soul point). You will be re-directed to the game selection screen.',
   'Leider hast du folgende Auszeichnungen knapp verpasst:' =>
 	'You barely missed the following achievements:',
   'Das Spiel beenden' =>
@@ -2666,100 +2672,34 @@ return array (
 	'Still :left of :num pages to read',
   'Öffnen' =>
 	'Open',
-  'Abbr' =>
-	'Abbr',
   'Bist du sicher, dass du diese Aktion abbrechen willst?' =>
 	'Are you sure you want to stop this activity?',
   'Zeit, die Lektüre wegzulegen und wieder in die reale Welt einzusteigen, die in Wahrheit gar nicht real sondern ein Browserspiel ist.' =>
 	'Time to put the book away and reenter reality, which is actually not real, but a browser game.',
-  'Zu' =>
-	'Zu',
   'Zusammenfassung' =>
 	'Summary',
-  'K' =>
-	'K',
-  'Aufstell' =>
-	'Aufstell',
-  'Kampfbegin' =>
-	'Kampfbegin',
   'Kampfbeginn' =>
-	'Kampfbeginn',
-  'Er' =>
-	'Er',
-  'Erlittener Scha' =>
-	'Erlittener Scha',
+	'The Battle Begins!',
   'Erlittener Schaden' =>
-	'Erlittener Schaden',
-  'Ver' =>
-	'Ver',
-  'Verlorene Ener' =>
-	'Verlorene Ener',
-  'Ve' =>
-	'Ve',
-  'Verbrauche' =>
-	'Verbrauche',
-  'Verbrauchte Ener' =>
-	'Verbrauchte Ener',
+	'Substained Damage',
   'Verbrauchte Energie' =>
 	'Used energy',
   'Angerichteter Schaden' =>
-	'Angerichteter Schaden',
-  'Vernicht' =>
-	'Vernicht',
+	'Damage Dealt',
   'Vernichtete Zombies' =>
 	'Destroyed zombies',
-  'Wähl' =>
-	'Wähl',
-  'Wähle einen ' =>
-	'Wähle einen ',
-  'Wähle einen Wa' =>
-	'Wähle einen Wa',
-  'Wähle einen Wasserbehälter ' =>
-	'Wähle einen Wasserbehälter ',
-  'Wähle einen Wasserbehälter aus. ' =>
-	'Wähle einen Wasserbehälter aus. ',
-  'Wähle einen Wasserbehälter aus' =>
-	'Wähle einen Wasserbehälter aus',
-  'Wähle einen Wasserbehälter aus, inden du di' =>
-	'Wähle einen Wasserbehälter aus, inden du di',
-  'Wähle einen Wasserbehälter aus, inden du die gewählte Ra' =>
-	'Wähle einen Wasserbehälter aus, inden du die gewählte Ra',
-  'Wähle einen Wasserbehälter aus, inden du die gewählte Ration Wasser ' =>
-	'Wähle einen Wasserbehälter aus, inden du die gewählte Ration Wasser ',
-  'Wähle einen Wasserbehälter aus, inden du die gewählte Ration Wasser hineinschütten w' =>
-	'Wähle einen Wasserbehälter aus, inden du die gewählte Ration Wasser hineinschütten w',
-  'Wähle einen Wasserbehälter aus, inden du die gewählte Ration Wasser hineinschütten willst. ' =>
-	'Wähle einen Wasserbehälter aus, inden du die gewählte Ration Wasser hineinschütten willst. ',
-  'Wähle einen Wasserbehälter aus, inden du die gewählte Ration Wasser hineinschütten willst.' =>
-	'Wähle einen Wasserbehälter aus, inden du die gewählte Ration Wasser hineinschütten willst.',
-  'W' =>
-	'W',
   'Wähle einen Wasserbehälter aus, in den du die gewählte Ration Wasser hineinschütten willst.' =>
-	'Wähle einen Wasserbehälter aus, in den du die gewählte Ration Wasser hineinschütten willst.',
-  'Wähle eine ' =>
-	'Wähle eine ',
-  'Wähle eine Flüssigkeit oder ' =>
-	'Wähle eine Flüssigkeit oder ',
-  'Wähle eine Flüssigkeit oder einen ander' =>
-	'Wähle eine Flüssigkeit oder einen ander',
-  'Wähle eine Flüssigkeit oder einen anderen Behälter ' =>
-	'Wähle eine Flüssigkeit oder einen anderen Behälter ',
-  'Wähle eine Flüssigkeit oder einen anderen Behälter aus, ' =>
-	'Wähle eine Flüssigkeit oder einen anderen Behälter aus, ',
-  'Wähle eine Flüssigkeit oder einen anderen Behälter aus, um die' =>
-	'Wähle eine Flüssigkeit oder einen anderen Behälter aus, um die',
+	'Select a water container you wish to fill with the selected ration of water.',
   'Wähle eine Flüssigkeit oder einen anderen Behälter aus, um diesen Behälter zu füllen.' =>
-	'Wähle eine Flüssigkeit oder einen anderen Behälter aus, um diesen Behälter zu füllen.',
-  'Klicke einen leeren Slot an, um Wasser aus einer anderen Quelle hinzuzugeben. Klicke einen gefülten Slot an, um Wasser auszuschütten. Schwarz gefärbte Slots können nicht ausgeleert werden.' =>
-	'Klicke einen leeren Slot an, um Wasser aus einer anderen Quelle hinzuzugeben. Klicke einen gefülten Slot an, um Wasser auszuschütten. Schwarz gefärbte Slots können nicht ausgeleert werden.',
+	'Select any liquid, or a bottle that contains liquid, to fill this container with.',
   'Klicke einen leeren Slot an, um Wasser aus einer anderen Quelle hinzuzugeben. Klicke einen gefüllten Slot an, um Wasser auszuschütten. Schwarz gefärbte Slots können nicht ausgeleert werden.' =>
-	'Klicke einen leeren Slot an, um Wasser aus einer anderen Quelle hinzuzugeben. Klicke einen gefüllten Slot an, um Wasser auszuschütten. Schwarz gefärbte Slots können nicht ausgeleert werden.',
+	'Click on an empty slot to fill it with any liquid. Click a filled slot to drop it\'s content to the ground. You cannot drop the contents of black slots.',
   'Seltsame Substanz (Limosuritat)' =>
 	'Strange Substance (Limosuritat)',
   'Du kannst diese Chemikalie mit beliebigen anderen Gegenständen kombinieren. Welchen Effekt das hat... das wirst du selbst herausfinden müssen.' =>
-	'Du kannst diese Chemikalie mit beliebigen anderen Gegenständen kombinieren. Welchen Effekt das hat... das wirst du selbst herausfinden müssen.',
+	'You can combine this substance with any other item. What will happen is ... for you to discover.',
   'Wähle einen Gegenstand, mit dem du die Chemikalie verbinden möchtest.' =>
-	'Wähle einen Gegenstand, mit dem du die Chemikalie verbinden möchtest.',
+	'Select any item you wish to combine with the substance.',
   'Farbige Substanz (Limosuptin)' =>
 	'Colorful Substance (Limosuptin)',
   'Du mischt beide Chemikalien zusammen. Es blubbert ein wenig, aber nachdem sich die Blasen gelegt haben stellst du fest, dass du soeben ein Fläschchen mit :result hergestellt hast! Herzlichen Glückwunsch!' =>
@@ -2771,23 +2711,67 @@ return array (
   'Heilige Scheiße! Du hast ein Wunder verbracht und Wasser in Alkohol verwandelt!' =>
 	'Holy shit! You have performed the incredible miracly of turning water into alcohol!',
   'Auffüllen' =>
-	'Auffüllen',
+	'Fill',
   'Teilen: ' =>
-	'Teilen: ',
+	'Share:',
   'Teilen' =>
-	'Teilen',
+	'Share',
   'Wie viele Kapseln möchtest du aus dieser Packung herausnehmen?' =>
-	'Wie viele Kapseln möchtest du aus dieser Packung herausnehmen?',
+	'How many capsules do you want to take out of the package?',
   'Du hast :num Kapseln aus der Verpackung genommen.' =>
 	'You took :num pills out of the box.',
   'Hier liegen keine weiteren Kapseln, die du in diese Schachtel legen könntest.' =>
 	'There are no more capsules around to put in this box...',
-  'Das tut gut ... nach einem ordentlichen Drink sieht die Welt gleich weniger apokalyptisch aus!' =>
-	'Yeah, that sure numbs the pain... with every drink, the apocalypse gets a little less apocalyptic.',
-  'Schlafen' =>
-	'Sleeping',
   'Du hast es mit deinem Alkoholkonsum etwas übertrieben und bist eingeschlafen.' =>
 	'You overdid it a little with your alcohol consumption and fell asleep.',
   'Das tut gut ... nach einem ordentlichen Drink sieht die Welt gleich weniger apokalyptisch aus! Aber warum kommt der Boden plötzlich auf dich zugeflogen?' =>
 	'Yeah, that sure numbs the pain... with every drink, the apocalypse gets a little less apocalyptic. Say, is that the floor that is flying towards your face?',
+  'Die Zombies haben deine Verteidigung durchbrochen! :num Zombies dringen ein!' =>
+	':num zombies managed to break into your hideout!',
+  'Verrückter Wissenschaftler' =>
+	'Mad Scientist',
+  'Wissenschafts-Azubi' =>
+	'Rookie Scientist',
+  'Nicht-so-anonymer Alkoholiker' =>
+	'Not-so-annonymous Alcoholic',
+  'Schlafmütze' =>
+	'Sleepyhead',
+  'Exportieren' =>
+	'Export',
+  'Importieren' =>
+	'Import',
+  'Gegenstände & Heldentaten' =>
+	'Gegenstände & Heldentaten',
+  'Zeitfluss & Verhalten' =>
+	'Zeitfluss & Verhalten',
+  'Spielgeschwindigkeit' =>
+	'Game Speed',
+  'Spiel pausieren' =>
+	'Pause game',
+  'null' =>
+	'null',
+  'Tag' =>
+	'Tag',
+  'Stunde' =>
+	'Stunde',
+  'und' =>
+	'und',
+  'Sekunde' =>
+	'Sekunde',
+  'Woche' =>
+	'Woche',
+  'Du kannst die Spielgeschwindigkeit jederzeit deinen Bedürfnissen anpassen. Bedenke jedoch, dass eine Änderung nur alle :minutes möglich ist.' =>
+	'Du kannst die Spielgeschwindigkeit jederzeit deinen Bedürfnissen anpassen. Bedenke jedoch, dass eine Änderung nur alle :minutes möglich ist.',
+  'Aktuelle Geschwindigkeit' =>
+	'Aktuelle Geschwindigkeit',
+  'Bist du sicher, dass du die Spielgeschwindigkeit ändern möchtest?' =>
+	'Bist du sicher, dass du die Spielgeschwindigkeit ändern möchtest?',
+  'Änderung in ::i:: :time ::/i:: wieder möglich.' =>
+	'Änderung in ::i:: :time ::/i:: wieder möglich.',
+  'Deine Sperrzeit ist noch nicht abgelaufen.' =>
+	'Deine Sperrzeit ist noch nicht abgelaufen.',
+  'Die Spielgeschwindkeit wird nach Ablauf des aktuellen Ticks angepasst.' =>
+	'Die Spielgeschwindkeit wird nach Ablauf des aktuellen Ticks angepasst.',
+  'Die Sperre ist abgelaufen - ab sofort kannst du die Spielgeschwindigkeit wieder ändern!' =>
+	'Die Sperre ist abgelaufen - ab sofort kannst du die Spielgeschwindigkeit wieder ändern!',
 );

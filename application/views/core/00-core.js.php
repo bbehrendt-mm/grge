@@ -29,6 +29,11 @@ core = {
                 return;
             }
 
+            if (data.redirect) {
+                game.clean();
+                return game.network.load(data.redirect);
+            }
+
             if (!background && !no_clean) game.clean(true);
 
             if (data.version && data.version != core.version) {
@@ -51,14 +56,30 @@ core = {
         }
 
         var action_box = $('<div />').addClass('row action_box ' + (data.location.meta.outside ? 'outside' : 'inside')).appendTo(target);
+
+        var auto_tab = $('<ul />').addClass('tabline').appendTo(action_box)
+            .append($('<li>').data('toggle', '#inv_container').text(<?=__j('Gegenstände & Heldentaten')?>))
+            .append($('<li>').data('toggle', '#settings_container').text(<?=__j('Zeitfluss & Verhalten')?>))
+            .find('>li').click(function() {
+                var t = $($(this).data('toggle'));
+                $(this).addClass('active').siblings().removeClass('active');
+                action_box.children('div').hide();
+                t.show();
+            }).first();
+
         if (data.inventory)
-            core.parts.inventory(data.inventory, action_box);
+            core.parts.inventory(data.inventory, $('<div />').attr('id', 'inv_container').addClass('row').appendTo(action_box));
+
+        if (data.settings)
+            core.parts.settings(data.settings, $('<div />').attr('id', 'settings_container').addClass('row').appendTo(action_box))
 
         if (data.status && data.clock)
             core.parts.status(data.status, data.clock, $('#persistent'));
         
         if (data.log)
             core.parts.log(data.log,$('<div />').addClass('row log_box').appendTo(target))
+
+        auto_tab.click();
 
     }
 };

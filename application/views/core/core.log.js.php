@@ -305,20 +305,20 @@
                         .append($('<span />').text(<?=__j('attackiert')?>))
                         .append($('<span />').addClass('zombie').text(obj.defender.count + ' ' + obj.defender.name));
 
-                    items.append(core.snippets.item(true,obj.weapon.name,obj.weapon.icon,1,false,false).addClass(obj.weapon.destroyed ? 'destroyed' : ''));
+                    items.append(core.snippets.item(true,obj.weapon.name,obj.weapon.icon,1,true,false).addClass(obj.weapon.destroyed ? 'destroyed' : ''));
                     if (obj.weapon.energy)
                         items.append($('<span />').addClass('energy').text(obj.weapon.energy));
                     $.each(obj.weapon.ammo, function(k,icon) {
-                        items.append(core.snippets.item(false,'',icon,1,false,false));
+                        items.append(core.snippets.item(false,'',icon,1,true,false));
                     });
 
                     if (obj.protection.value) {
                         items.append($('<i />').addClass('fa fa-caret-right'));
                         $.each(obj.protection.covers,function(k,item) {
-                            items.append(core.snippets.item(!item.stable ? msg_destroyed : true,item.name,item.icon,1,false,false).addClass(!item.stable ? 'destroyed' : ''));
+                            items.append(core.snippets.item(!item.stable ? msg_destroyed : true,item.name,item.icon,1,true,false).addClass(!item.stable ? 'destroyed' : ''));
                         });
                         $.each(obj.protection.armor,function(k,item) {
-                            items.append(core.snippets.item(!item.stable ? msg_destroyed : true,item.name,item.icon,1,false,false).addClass(!item.stable ? 'destroyed' : ''));
+                            items.append(core.snippets.item(!item.stable ? msg_destroyed : true,item.name,item.icon,1,true,false).addClass(!item.stable ? 'destroyed' : ''));
                         });
                     }
 

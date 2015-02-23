@@ -12,14 +12,14 @@ if ( !function_exists('__'))
      *
      * @uses    I18n::get
      * @param string $string
-     * @param array $values values to replace in the translated text
+     * @param array|int $values values to replace in the translated text - -1 to disable default replacements
      * @param string $lang source language
      * @return  string
      */
-	function __($string, array $values = null, $lang = null)
+	function __($string, $values = null, $lang = null)
 	{
 
-        $values = array_merge(empty($values) ? [] : $values, [
+        $values = ($values === -1) ? [] : array_merge(empty($values) ? [] : $values, [
             //Defaults
             '::i::' => '<i>',
             '::/i::' => '</i>',
@@ -46,6 +46,8 @@ class I18n extends Kohana_I18n {
     protected static $missing = array();
     protected static $got_missing = array();
 
+    protected static $readonly = false;
+
 	protected static $lang_list = array('de', 'en', 'es');
 
     /**
@@ -58,18 +60,37 @@ class I18n extends Kohana_I18n {
     }
 
     /**
+     * Prevents changes to the language files to be written to disc.
+     */
+    public static function set_readonly_flag() {
+        static::$readonly = true;
+    }
+
+    protected static function flush_cache() {
+        static::$_cache = [];
+    }
+
+    /**
      * Changes an existing translation. This function can NOT add a completely new original/translation pair
-     * @param string $string Original string
-     * @param string $translation Translated string
+     * @param string|array $string Original string
+     * @param string|array $translation Translated string
      * @param string $lang Translation language
      * @return bool True when successfull, otherwise false
      */
     public static function set($string, $translation, $lang) {
+        static::flush_cache();
         $table = I18n::load($lang);
-        if (!isset($table[$string]))
-            return false;
-        $table[$string] = $translation;
+
+        if (!is_array($string)) $string = [$string];
+        if (!is_array($translation)) $translation = [$translation];
+
+        foreach ($string as $n => $s) {
+            if (!isset($table[$s])) return false;
+            $table[$s] = isset($translation[$n]) ? $translation[$n] : $translation[count($translation)-1];
+        }
+
         I18n::toDisk($lang, $table);
+        static::flush_cache();
         return true;
     }
 
@@ -120,6 +141,7 @@ class I18n extends Kohana_I18n {
      * @param string $string String to remove
      */
     public static function remove($string) {
+        static::flush_cache();
         foreach (static::$lang_list as $lang) {
             static::remove_missing($string, $lang);
 
@@ -127,6 +149,7 @@ class I18n extends Kohana_I18n {
             unset(I18n::$cache[$string], $table[$string]);
             I18n::toDisk($lang, $table);
         }
+        static::flush_cache();
     }
 
     /**
@@ -166,7 +189,9 @@ class I18n extends Kohana_I18n {
      * @param mixed $table Translation table
      */
 	private static function toDisk($lang, $table) {
-		$contents = "<?php defined('SYSPATH') or die('No direct script access.');\n/* Automatically generated translation file for $lang */\n\nreturn ";
+		if (static::$readonly) return;
+
+        $contents = "<?php defined('SYSPATH') or die('No direct script access.');\n/* Automatically generated translation file for $lang */\n\nreturn ";
 		$contents .= var_export($table, true);
 		$contents .= ';';
 		
@@ -178,6 +203,8 @@ class I18n extends Kohana_I18n {
      * Write all pending data to their appropriate files
      */
 	public static function write() {
+        if (static::$readonly) return;
+
         $tables = array();
         foreach (I18n::$lang_list as $lang)
    			$tables[$lang] = I18n::load($lang);

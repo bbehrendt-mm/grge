@@ -54,6 +54,7 @@ class Model_Achievement extends Model {
     const MA_EASTER = 50;
     const MA_EASTER_BAD = 51;
     const MA_CLOCK = 52;
+	const MA_CLOWN = 53;
 	
 	const MA_RANKING_SURVIVAL = 1000;
 	const MA_RANKING_HARDCORE = 1100;
@@ -115,6 +116,7 @@ class Model_Achievement extends Model {
             Model_Achievement::MA_EASTER                => array('name' => "Oster-Glückspilz",                      'points' => 15,),
             Model_Achievement::MA_EASTER_BAD            => array('name' => "Oster-Pechvogel",                       'points' => 0,),
             Model_Achievement::MA_CLOCK                 => array('name' => "Geöltes Uhrwerk",                       'points' => 5,),
+			Model_Achievement::MA_CLOWN                 => array('name' => "Blutiger Clown",                        'points' => 50,),
 
 			Model_Achievement::MA_RANKING_SURVIVAL	    => array('name' => "Berühmter Überlebenskünstler",          'points' => 50,),
 			Model_Achievement::MA_RANKING_HARDCORE	    => array('name' => "Berühmter Hardcore-Überlebenskünstler", 'points' => 75,),

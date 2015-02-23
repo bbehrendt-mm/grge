@@ -5,6 +5,28 @@ class Controller_Game extends Controller {
     protected static $force_login = true;
     protected static $menu = 'logout';
 
+    protected static $death_allowed_actions = ['end'];
+
+    /**
+     * Hook for AJAX calls using JAPI
+     * @return bool
+     */
+    public function action_japi() {
+        /**
+         * @global $game Model_Game
+         * @global $player Model_Player
+         */
+        global $game, $player;
+
+        if (!$game || !$player) return $this->render(['redirect' => 'landing/redirect']);
+        if (!$player->alive() && !in_array($this->request->param('jaction'), static::$death_allowed_actions)) {
+            $this->render_notifications();
+            return $this->render(['redirect' => 'game/redirect']);
+        }
+
+        return parent::action_japi();
+    }
+
     /**
      * @param Model_Hid[] $actions
      * @param Model_Items_Abstract_Virtual $v_item
@@ -315,6 +337,33 @@ class Controller_Game extends Controller {
         ]);
     }
 
+    private function render_settings() {
+        /**
+         * @global $game Model_Game
+         * @global $player Model_Player
+         */
+        global $game, $player;
+
+        $tmp =  ($game->timeflow() == 0) ? [
+            'interval' => (int)Kohana::$config->load('balancing.pause.min_interval'),
+            'duration' => (int)Kohana::$config->load('balancing.pause.min_duration'),
+        ] : [
+            'game' => $game->tick_length(),
+            'player' => $player->vote_time(),
+            'selection' => [15,30,60,120,300,600,900],
+            'interval' => (int)Kohana::$config->load('balancing.pause.min_duration'),
+        ];
+
+        $lock = (($game->timeflow() == 0) ? ($game->pauselock() + Kohana::$config->load('balancing.pause.min_interval')) : $player->vote_time(true)) - time();
+        if ($lock < 0) $lock = false;
+
+        $this->add_data('settings', [
+            'time_mode' => $game->timeflow(),
+            'time_settings' => $tmp,
+            'locked' => $lock
+        ]);
+    }
+
     /**
      * Renderer API
      * @throws Kohana_Exception
@@ -323,6 +372,7 @@ class Controller_Game extends Controller {
         $this->render_location();
         $this->render_inventory();
         $this->render_status();
+        $this->render_settings();
         $this->render_clock();
         $this->render_log();
         $this->render_notifications();

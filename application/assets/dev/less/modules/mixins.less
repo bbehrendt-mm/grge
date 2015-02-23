@@ -1,0 +1,11 @@
+@import (once) "zombvival";
+
+.border-shadow-fade-bottom(@height, @color: black, @strength: 0.75, @z-index: 1) {
+  overflow: hidden; position: relative;
+  &::before {position: absolute; height: 1px; width: 100%; left: 0; bottom: -1px; content: " "; box-shadow: 0 0 @height @height/2 @color; opacity: @strength; z-index: @z-index}
+}
+
+.incomplete-border-definition(@definition, @top: false, @left: false, @bottom: @top, @right: @left) when (@top = true)    {border-top: @definition};
+.incomplete-border-definition(@definition, @top: false, @left: false, @bottom: @top, @right: @left) when (@left = true)   {border-left: @definition};
+.incomplete-border-definition(@definition, @top: false, @left: false, @bottom: @top, @right: @left) when (@bottom = true) {border-bottom: @definition};
+.incomplete-border-definition(@definition, @top: false, @left: false, @bottom: @top, @right: @left) when (@right = true)  {border-right: @definition};

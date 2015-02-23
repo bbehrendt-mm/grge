@@ -3,6 +3,7 @@
 define('grge\E_HTTP_AJAX_REQUIRED', 'GRGE-0000-0000');
 define('grge\E_HTTP_REQUEST_INCOMPLETE', 'GRGE-0000-0001');
 define('grge\E_HTTP_REQUEST_INVALID', 'GRGE-0000-0002');
+define('grge\E_HTTP_REQUEST_POINTLESS', 'GRGE-0000-0003');
 
 define('grge\E_CLIENT_CONNECTION_TIMEOUT', 'GRGE-0001-0000');
 
@@ -60,6 +61,7 @@ class Error {
             case grge\E_HTTP_AJAX_REQUIRED:             return "This resource can only be accessed via AJAX.";
             case grge\E_HTTP_REQUEST_INCOMPLETE:        return "The request your browser has sent is incomplete.";
             case grge\E_HTTP_REQUEST_INVALID:           return "There is no handler available for your request.";
+            case grge\E_HTTP_REQUEST_POINTLESS:         return "The request your browser has sent is valid, but does not invoke an action.";
 
             case grge\E_CLIENT_CONNECTION_TIMEOUT:      return "Connection timed out.";
 

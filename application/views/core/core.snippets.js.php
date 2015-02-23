@@ -1,12 +1,42 @@
 (function() {
+    core.snippets.timestr = function(i) {
+        var cache = [[<?=__j('Woche')?>,<?=__j('Wochen')?>],[<?=__j('Tag')?>,<?=__j('Tage')?>],[<?=__j('Stunde')?>,<?=__j('Stunden')?>],[<?=__j('Minute')?>, <?=__j('Minuten')?>],[<?=__j('Sekunde')?>, <?=__j('Sekunden')?>]];
+        var times = [604800,86400,3600,60,1];
+
+        i = Math.abs(i);
+        if (i == 0) return ("0 " + cache[cache.length - 1][1]);
+
+        var split = [];
+        $.each(times, function(k,v) {
+            split[k] = Math.floor(i/v);
+            i -= split[k] * v;
+        });
+
+        split = $.map(split, function(v, k) {
+            if (v == 0) return null;
+            return v + " " + cache[k][v == 1 ? 0 : 1]
+        });
+
+        if (split.length == 1) return split[0];
+        else {
+            var tmp = split.splice(-1,1);
+            return split.join(', ') + " " + <?=__j('und')?> + " " + tmp[0];
+        }
+    };
+
+    core.snippets.countdown = function(initial, callback) {
+        if (callback(core.snippets.timestr(initial), initial) && initial >= 0)
+            window.setTimeout(function() {core.snippets.countdown(initial - 1, callback)}, 1000);
+    };
+
     core.snippets.item = function(show_title, name, icon, count, is_static, in_inventory) {
         var container = $(in_inventory ? '<li />' : '<div />').addClass(in_inventory ? '' : 'item').append(
             $('<img />').attr('src', 'media/icons/' + icon + '.gif')
         );
 
         if (count) {
-            if (is_static) container.append($('<div />').addClass('staticCount').text(count));
-            else if (count > 0) container.append($('<div />').addClass('instanceCount').text(count));
+            if (is_static && count > 1) container.append($('<div />').addClass('staticCount').text(count));
+            else if (!is_static && count > 0) container.append($('<div />').addClass('instanceCount').text(count));
         }
 
         if (show_title)

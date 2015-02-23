@@ -283,6 +283,9 @@
 
             if (left < 0) {
                 countdown.text(<?=__j('Weiter');?>);
+                clockbox.addClass('pointer').click(function() {
+                    core.command();
+                });
                 return;
             }
 

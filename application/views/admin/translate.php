@@ -86,9 +86,36 @@
         <div class="btn" id="toolbar_trb"><i class="fa fa-windows"></i></div>
     </div>
 </div>
+
+<div class="row">
+    <form class="<?=$adv_priv ? '' : 'disabled'?>" enctype="multipart/form-data" action="admin/files/import_translations" method="POST" target="_blank" id="grl_uploader">
+        <div class="row">
+            <div class="cell rw-2 padded">
+                <label for="lang2"></label><select name="lang" id="lang2">
+                    <?php foreach ($langs as $lang) {?>
+                        <option value="<?=$lang?>"><?=$lang?></option>
+                    <?php } ?>
+                </select>
+            </div>
+            <div class="cell rw-4 padded">
+                <div class="btn" id="file_export"><?=__('Exportieren');?></div>
+            </div>
+            <div class="cell rw-4 padded">
+                <div class="btn" id="file_import">
+                    <?=__('Importieren');?>
+                    <input name="grl" id="grl" type="file" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
 <script type="application/javascript">
 // ## JS COMPRESS BEGIN ## //
-    $('#lang, #mask').selectric();
+    $('#lang, #lang2, #mask').selectric();
+
+
 
     var translation_source = {};
     var translation_mask = {};
@@ -251,6 +278,14 @@
     });
     $('#format_i').mousedown(function() {
         format('i');
+    });
+
+    $('#file_export').click(function() {
+        window.open('admin/files/export_translations/' + $('#lang2').val());
+    });
+
+    $('#grl').change(function() {
+        $('#grl_uploader').submit();
     });
 // ## JS COMPRESS END ## //
 </script>

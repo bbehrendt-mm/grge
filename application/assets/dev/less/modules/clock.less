@@ -1,0 +1,23 @@
+@import (once) "zombvival";
+
+@clockbox-text-color: white;
+
+div.clockbox {
+  transition: background 1s ease;background: fade(@zv-color-main, 50%); border: 2px solid @zv-color-main; box-shadow: 0 0 3px black; width: 100%; text-align: center; color: @clockbox-text-color;
+  &.pointer:hover {background: fade(lighten(@zv-color-main,10%), 90%)}
+  > .datebox {
+    font-size: 12px;
+    .fa {margin-right: 4px;}
+  }
+  > .countdown {
+    font-size: 30px; font-weight: bold;
+    > div {
+      display: inline-block; position: relative;
+      + div {
+        margin-left: 10px;
+        &:last-child {font-size: 13px; font-weight: normal;}
+        &:not(:last-child)::before {content: ":"; position: absolute; top: 0; left: -9px;}
+      }
+    }
+  }
+}

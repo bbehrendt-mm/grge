@@ -18,6 +18,7 @@ class Controller_Web extends Controller {
     }
 
     private function debug_core() {
+        I18n::set_readonly_flag();
         $buffer = '';
         $version = Kohana::$config->load('build.version');
         foreach (scandir(APPPATH . 'views/core/') as $f)

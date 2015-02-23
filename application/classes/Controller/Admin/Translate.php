@@ -45,7 +45,7 @@ class Controller_Admin_Translate extends Controller_Admin_Admin {
         foreach (I18n::get_missing($lang) as $k => $v) {
             $tmp[$k] = $k;
             if ($mask != 'de')
-                $tmp_m[$k] = __($k, null, $mask);
+                $tmp_m[$k] = __($k, -1, $mask);
         }
         if ($mask == 'de')
             $tmp_m = [];
@@ -64,7 +64,7 @@ class Controller_Admin_Translate extends Controller_Admin_Admin {
                 $tmp[$s] = $t;
         if ($mask == 'de') $tmp_m = [];
         else foreach ($tmp as $k)
-            $tmp_m[$k] = __($k, null, $mask);
+            $tmp_m[$k] = __($k, -1, $mask);
 
         return $this->render([
             'translations' => $tmp,
@@ -76,11 +76,11 @@ class Controller_Admin_Translate extends Controller_Admin_Admin {
         $tmp = [];
         $tmp_m = [];
         foreach (I18n::get_all($lang) as $s => $t)
-            if (!$search || strpos($s, $search) !== false || strpos($t, $search) !== false || ($mask != 'de' && strpos(__($s, null, $mask), $search) !== false))
+            if (!$search || strpos($s, $search) !== false || strpos($t, $search) !== false || ($mask != 'de' && strpos(__($s, -1, $mask), $search) !== false))
                 $tmp[$s] = $t;
         if ($mask == 'de') $tmp_m = [];
         else foreach ($tmp as $k => $v)
-            $tmp_m[$k] = __($k, null, $mask);
+            $tmp_m[$k] = __($k, -1, $mask);
 
         return $this->render([
             'translations' => $tmp,

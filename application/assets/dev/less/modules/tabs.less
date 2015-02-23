@@ -1,0 +1,15 @@
+@import (once) "zombvival";
+
+@tablist-primary-color: white;
+@tablist-secondary-color: darken(@tablist-primary-color, 90%);
+
+ul.tabline {
+  .border-shadow-fade-bottom(12px, black, 0.5, 1);
+  margin: 0 4px; padding: 5px 15px 0; border-bottom: 2px solid @tablist-primary-color;
+  > li {
+    position: relative; display: inline-block; background: @tablist-primary-color; box-shadow: 0 0 4px black; padding: 2px 10px; margin: 0 5px;
+    .incomplete-border-definition(1px solid @tablist-secondary-color, true, true, false, true);
+    &.active {z-index: 2;}
+    &:not(.active) {cursor: pointer}
+  }
+}

@@ -1,3 +1,75 @@
 @import (once) "zombvival";
 
-.btn > input[type=file] {position: absolute; top: 0; left: 0; height: 100%; width: 100%; opacity: 0; cursor: inherit;}
+.generic-button-root(@font-size, @padding) {
+  font-size: @font-size; padding: @padding; position: relative; transition: background 0.3s ease;
+  overflow: hidden; text-decoration: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
+  cursor: pointer; text-align: center; border-radius: 3px;
+  &.small {
+    height: 22px; font-size: 12px;
+    &:not(.block) {display: inline-block;}
+    >.fa {font-size: 14px;}
+  }
+  +.btn {margin-top: 3px;}
+  > input[type=file] {position: absolute; top: 0; left: 0; height: 100%; width: 100%; opacity: 0; cursor: inherit;}
+}
+
+.generic-button-color(@background-color, @border-color, @font-color, @icon-bg-color) {
+  .incomplete-border-definition(1px solid @border-color, true, true, false, true);
+  .incomplete-border-definition(2px solid @border-color, false, false, true, false);
+  background: @background-color;
+  font-weight: bold; color: @font-color; text-shadow: 0 1px 0 rgba(0, 0, 0, 0.80);
+  box-shadow: 0 0 1px 1px lighten(@background-color, 10%) inset, 0 1px 0 rgba(0,0,0,.3);
+  &:focus {background: lighten(@background-color, 5%)}
+  &:hover {background: lighten(@background-color, 10%)}
+  &:active {box-shadow: 0 0 4px 2px rgba(0,0,0,0.3) inset; position: relative; margin-top: 1px; border: 1px solid @border-color}
+
+  &.btn-icon {
+    padding-left: 39px;
+    >.btn-icon-inner {
+      display: inline-block; position: absolute; background: fade(@icon-bg-color,45%); height: 500px; left: 0;
+      top: 0; width: 36px; border-right: 1px solid fade(@icon-bg-color,30%); padding-top: 5px; text-align: center;
+      text-shadow: none;
+    }
+  }
+}
+
+.generic-button(@background-color, @border-color, @font-color, @icon-bg-color, @font-size, @padding) {
+  .generic-button-root(@font-size, @padding); .generic-button-color(@background-color, @border-color, @font-color, @icon-bg-color);
+}
+
+@buttons-main-background-color: #940202;
+@buttons-main-border-color: #6c0202;
+@buttons-main-font-color: @zv-color-secondary;
+@buttons-main-icon-mask: #BABABA;
+
+@buttons-consequence-background-color: #494949;
+@buttons-consequence-border-color: #5b0000;
+@buttons-consequence-group-color: #363636;
+@buttons-consequence-group-default-color: black;
+
+.btn {
+  .generic-button(@buttons-main-background-color, @buttons-main-border-color, @buttons-main-font-color, @buttons-main-icon-mask, 1.2em, 3px 10px);
+  &.btn-zv {
+    padding-bottom: 0;
+    >span {display: block; padding-bottom: 3px;}
+    >div.consequence {
+      text-align: left; background: @buttons-consequence-background-color; border: 1px solid @buttons-consequence-border-color;
+      border-bottom: none; margin: 5px 5px 0; border-top-left-radius: 3px; border-top-right-radius: 3px;
+      box-shadow: 0 0 1px 1px rgba(108, 108, 108, 0.80) inset, 0 1px 0 rgba(0,0,0,.3);
+      i.separator {border-bottom: 1px solid @buttons-main-font-color;}
+      .group {
+        background: @buttons-consequence-group-color;
+        &.default {border-top: 3px solid @buttons-consequence-group-default-color;}
+      }
+    }
+  }
+}
+
+@buttons-disabled-background-color:  #c8bcbd;
+@buttons-disabled-border-color: #797979;
+@buttons-disabled-font-color: #797979;
+@buttons-disabled-icon-mask: white;
+
+.btn.btn-disabled, .btn[disabled], .btn.disabled, .disabled .btn {
+  pointer-events: none; .generic-button-color(@buttons-disabled-background-color, @buttons-disabled-border-color, @buttons-disabled-font-color, @buttons-disabled-icon-mask);
+}

@@ -1,0 +1,31 @@
+@import (once) "zombvival";
+
+@article-segment-seperator-color: #f1ebe8;
+@article-wrap-text-color: #8b8182;
+
+.article {
+  .whitebox();
+  +.article {margin-top: 8px;}
+  +:not(.article) {margin-top: 24px;}
+  img {max-width: 100%;}
+  > div {
+    padding: 0 10px;
+    &:not(:last-child) {
+      border-bottom: 2px solid @article-segment-seperator-color;
+      &:not(:first-child) {padding-top: 9px;}
+    }
+    &:first-child,&:last-child {color: #8b8182;}
+    &:first-child {
+      text-align: center;
+      >h3 {margin: 3px; font-size: 20px; text-shadow: 0 0 6px @article-wrap-text-color;}
+      >span {
+        font-variant: small-caps; font-size: 10px;
+        >b {font-size: 13px; font-weight: bold;}
+      }
+    }
+    &:last-child {
+      text-align: right;
+      >span+span {margin-left: 12px;}
+    }
+  }
+}

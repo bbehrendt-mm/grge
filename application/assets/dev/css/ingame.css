@@ -151,23 +151,6 @@ div.consequence .group > img.fake + span {
     margin: 0 3px;
 }
 
-.btn.btn-zv.btn-zv-skinned-hideout, .btn.btn-zv.btn-zv-skinned-hero, .btn.btn-zv.btn-zv-skinned-location {
-    font-size: 12px;
-}
-
-.btn.btn-zv.btn-zv-skinned-hero:not(.disabled):not([disabled=disabled]):not(.btn-disabled) {
-    font-size: 12px;
-    background: #005694;
-    border: 1px solid #001952;
-    color: #fff6bf;
-    box-shadow: 0 0 1px 1px rgba(12, 141, 210, 0.80) inset, 0 1px 0 rgba(0,0,0,.3);
-}
-
-.btn.btn-zv.btn-zv-skinned-hero:not(.disabled):not([disabled=disabled]):not(.btn-disabled):hover {
-    background: #008be7;
-    border: 1px solid #0042ca;
-}
-
 div.popup {
     position: fixed;
     background: #ffeba5;

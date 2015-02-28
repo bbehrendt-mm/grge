@@ -13,9 +13,9 @@ core = {
 
     version: '<?="{$version_data['major']}.{$version_data['minor']}.{$version_data['service']}-{$version_data['stage']}-{$version_data['maintenance']}-{$version_data['build']}"?>',
 
-    command: function(url, args, background, callback, no_clean) {
-        var c;
+    last: {},
 
+    command: function(url, args, background, callback, no_clean) {
         if (!url)
             url = 'japi/game/data';
         else url = 'japi/' + url;
@@ -48,6 +48,8 @@ core = {
     render: function(data, target) {
         console.log(data);
 
+        core.last = data;
+
         if (core.parts.admin) core.parts.admin.controls($('<div />').addClass('cell rw-12 padded').appendTo($('<div />').addClass('row').appendTo(target)));
 
         if (data.location) {
@@ -71,15 +73,14 @@ core = {
             core.parts.inventory(data.inventory, $('<div />').attr('id', 'inv_container').addClass('row').appendTo(action_box));
 
         if (data.settings)
-            core.parts.settings(data.settings, $('<div />').attr('id', 'settings_container').addClass('row').appendTo(action_box))
+            core.parts.settings(data.settings, $('<div />').attr('id', 'settings_container').addClass('row').appendTo(action_box));
 
         if (data.status && data.clock)
             core.parts.status(data.status, data.clock, $('#persistent'));
         
         if (data.log)
-            core.parts.log(data.log,$('<div />').addClass('row log_box').appendTo(target))
+            core.parts.log(data.log,$('<div />').addClass('row log_box').appendTo(target));
 
         auto_tab.click();
-
     }
 };

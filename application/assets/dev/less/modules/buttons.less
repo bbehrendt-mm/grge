@@ -42,6 +42,16 @@
 @buttons-main-font-color: @zv-color-secondary;
 @buttons-main-icon-mask: #BABABA;
 
+@buttons-blue-background-color: #005694;
+@buttons-blue-border-color: #001952;
+@buttons-blue-font-color: @zv-color-secondary;
+@buttons-blue-icon-mask: #BABABA;
+
+@buttons-disabled-background-color:  #c8bcbd;
+@buttons-disabled-border-color: #797979;
+@buttons-disabled-font-color: #797979;
+@buttons-disabled-icon-mask: white;
+
 @buttons-consequence-background-color: #494949;
 @buttons-consequence-border-color: #5b0000;
 @buttons-consequence-group-color: #363636;
@@ -49,8 +59,10 @@
 
 .btn {
   .generic-button(@buttons-main-background-color, @buttons-main-border-color, @buttons-main-font-color, @buttons-main-icon-mask, 1.2em, 3px 10px);
+  &.blue, &.btn-zv.btn-zv-skinned-hero {.generic-button-color(@buttons-blue-background-color, @buttons-blue-border-color, @buttons-blue-font-color, @buttons-blue-icon-mask)}
+
   &.btn-zv {
-    padding-bottom: 0;
+    padding-bottom: 0; font-size: 12px;
     >span {display: block; padding-bottom: 3px;}
     >div.consequence {
       text-align: left; background: @buttons-consequence-background-color; border: 1px solid @buttons-consequence-border-color;
@@ -65,11 +77,6 @@
   }
 }
 
-@buttons-disabled-background-color:  #c8bcbd;
-@buttons-disabled-border-color: #797979;
-@buttons-disabled-font-color: #797979;
-@buttons-disabled-icon-mask: white;
-
 .btn.btn-disabled, .btn[disabled], .btn.disabled, .disabled .btn {
-  pointer-events: none; .generic-button-color(@buttons-disabled-background-color, @buttons-disabled-border-color, @buttons-disabled-font-color, @buttons-disabled-icon-mask);
+  pointer-events: none; .generic-button-color(@buttons-disabled-background-color, @buttons-disabled-border-color, @buttons-disabled-font-color, @buttons-disabled-icon-mask) !important;
 }

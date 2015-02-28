@@ -91,6 +91,10 @@ class I18n extends Kohana_I18n {
 
         I18n::toDisk($lang, $table);
         static::flush_cache();
+
+        static::remove_missing($string, $lang);
+        static::flush_cache();
+
         return true;
     }
 
@@ -122,18 +126,18 @@ class I18n extends Kohana_I18n {
 
     /**
      * Removes a string from the list of missing language strings
-     * @param string $string String to remove
+     * @param string|string[] $string String to remove
      * @param string $lang Language
      * @return bool
      */
     public static function remove_missing($string, $lang) {
         static::get_missing($lang);
-        if (isset(static::$missing[$lang][$string])) {
-            unset(static::$missing[$lang][$string]);
-            I18n::toDisk("auto/$lang", static::$missing[$lang]);
-            return true;
-        }
-        return false;
+        if (!is_array($string)) $string = [$string];
+        foreach ($string as $s)
+            if (isset(static::$missing[$lang][$s]))
+                unset(static::$missing[$lang][$s]);
+        I18n::toDisk("auto/$lang", static::$missing[$lang]);
+        return true;
     }
 
     /**

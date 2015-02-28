@@ -8,9 +8,9 @@ core = {
 
     version: '2.0.0-0-1-30',
 
-    command: function(url, args, background, callback, no_clean) {
-        var c;
+    last: {},
 
+    command: function(url, args, background, callback, no_clean) {
         if (!url)
             url = 'japi/game/data';
         else url = 'japi/' + url;
@@ -43,6 +43,8 @@ core = {
     render: function(data, target) {
         console.log(data);
 
+        core.last = data;
+
         if (core.parts.admin) core.parts.admin.controls($('<div />').addClass('cell rw-12 padded').appendTo($('<div />').addClass('row').appendTo(target)));
 
         if (data.location) {
@@ -66,16 +68,15 @@ core = {
             core.parts.inventory(data.inventory, $('<div />').attr('id', 'inv_container').addClass('row').appendTo(action_box));
 
         if (data.settings)
-            core.parts.settings(data.settings, $('<div />').attr('id', 'settings_container').addClass('row').appendTo(action_box))
+            core.parts.settings(data.settings, $('<div />').attr('id', 'settings_container').addClass('row').appendTo(action_box));
 
         if (data.status && data.clock)
             core.parts.status(data.status, data.clock, $('#persistent'));
         
         if (data.log)
-            core.parts.log(data.log,$('<div />').addClass('row log_box').appendTo(target))
+            core.parts.log(data.log,$('<div />').addClass('row log_box').appendTo(target));
 
         auto_tab.click();
-
     }
 };(function() {
     core.parts.admin = {};
@@ -1528,14 +1529,95 @@ core.popup = {
         }
     };
 
-    var fill_timesettings_stat = function(target) {
+    var fill_timesettings_stat = function(data, target, lock) {
+        var set_row, button;
         target.append($('<h3 />').text("Spiel pausieren"))
+            .append($('<p />').addClass('justify').text(game.i18n("Du kannst das Spiel jederzeit anhalten. Allerdings muss eine Pause mindestens :minutes1 dauern und du musst :minutes2 warten, bis du erneut pausieren kannst.", {':minutes1': core.snippets.timestr(data.duration),':minutes2': core.snippets.timestr(data.interval)})))
+            .append(set_row = $('<div />').addClass('row center'));
+
+        $('<div />').addClass('cell rw-12 padded').appendTo(set_row).append(
+            button = $('<div />').addClass('btn').addClass(lock ? 'disabled' : '').text("Pausieren").click(function() {
+                if (confirm("Bist du sicher, dass du das Spiel jetzt pausieren willst?"))
+                    core.command('player/pause', {set: 1});
+            })
+        );
+
+        if (lock) {
+            var ct = $('<p />').appendTo(target);
+            core.snippets.countdown(lock, function(s, v) {
+                if (v == 0) {
+                    button.removeClass('disabled');
+                    ct.remove();
+                    game.render.html.notify('success', "Die Sperre ist abgelaufen - du kannst das Spiel ab sofort wieder pausieren!");
+                    return false;
+                }
+
+                ct.html(game.i18n("N\u00e4chte Pause in <i> :time <\/i> m\u00f6glich.", {':time': s}));
+                return true;
+            })
+        }
+    };
+
+    var fill_battleai = function(target, data) {
+        target.append($('<h3 />').text("Kampfverhalten"));
+
+        var bhav_select, bhav = $('<div />').addClass('row').appendTo(target);
+        bhav.append($('<b />').text("Kampfstrategie"));
+        bhav.append($('<div />').addClass('cell rw-6 padded').append($('<label />').attr('title',"Der ausgew\u00e4hlte Kampfstil beeinflusst deine Waffen- und Gegnerauswahl. Offensive Spieler werden versuchen, so viel Schaden anzurichten wie m\u00f6glich. Defensive Spieler werden versuchen, Zombies so gut es geht auf Abstand zu halten.").qtip(game.render.html.qtip.ingame('top')).prepend(bhav_select = $('<select />'))));
+
+        bhav_select
+            .append($('<option />').text("Defensiv").attr('value','1'))
+            .append($('<option />').text("Ausgeglichen").attr('value','2'))
+            .append($('<option />').text("Offensiv").attr('value','3'))
+            .val(data.type).selectric();
+
+        var sw_energy, sw_breakable, sw_ammocache;
+        var sw = $('<div />').addClass('row').appendTo(target);
+        sw.append($('<b />').text("Verwendung einzelner Waffenarten sperren"));
+        sw
+            .append($('<div />').addClass('cell rw-6 padded').append($('<label />').attr('title',"Ist diese Option aktiviert, wirst du im Kampf keine Waffen einsetzen, die Energie verbrauchen.").qtip(game.render.html.qtip.ingame('top')).text("Energiewaffen").prepend(sw_energy = $('<input />').attr('type', 'checkbox').prop('checked', data.weapons.energy))))
+            .append($('<div />').addClass('cell rw-6 padded').append($('<label />').attr('title',"Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die beim Einsatz zerst\u00f6rt werden (z.B. Wasserbombe).").qtip(game.render.html.qtip.ingame('top')).text("Wurfgeschosse").prepend(sw_breakable = $('<input />').attr('type', 'checkbox').prop('checked', data.weapons.throw))))
+            .append($('<div />').addClass('cell rw-6 padded').append($('<label />').attr('title',"Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die einen internen Munitionsspeicher haben (z.B. Wasserpistole).").qtip(game.render.html.qtip.ingame('top')).text("Verbrauchswaffen").prepend(sw_ammocache = $('<input />').attr('type', 'checkbox').prop('checked', data.weapons.tank))));
+
+        var mun = $('<div />').addClass('row').appendTo(target);
+        mun.append($('<b />').text("Verwendung einzelner Munitionstypen sperren"));
+
+        var mun_elems = {};
+
+        $.each(data.ammo, function(k,v) {
+            mun.append($('<div />').addClass('cell rw-2 padded').append($('<label />').attr('title', game.i18n("Ist diese Option aktiviert, werden im Kampf keine Waffen verwendet, die diese Munition (:item) verwenden.", {':item': v.name})).qtip(game.render.html.qtip.ingame('top')).append($('<img />').attr('src', 'media/icons/'+ v.icon + '.gif')).prepend(mun_elems[k] = $('<input />').attr('type', 'checkbox').prop('checked', v.locked))))
+        });
+
+        target.find(':checkbox').customRadioCheck();
+
+        target.append($('<div />').addClass('row').append($('<div />').addClass('cell rw-6 ro-6').append(
+            $('<div />').addClass('btn btn-icon')
+                .append($('<span />').addClass('btn-icon-inner').append($('<i />').addClass('fa fa-check')))
+                .append($('<span />').text("Speichern"))
+                .click(function() {
+                    var ammo = {};
+                    $.each(mun_elems, function(k,v) {
+                        ammo[k] = v.prop('checked') ? 1 : 0;
+                    });
+                    core.command('player/ai', {
+                        'ai': bhav_select.val(),
+                        'wp_energy': sw_energy.prop('checked') ? 1 : 0,
+                        'wp_throw': sw_breakable.prop('checked') ? 1 : 0,
+                        'wp_tank': sw_ammocache.prop('checked') ? 1 : 0,
+                        'wp_ammo': ammo
+                    })
+                })
+        )));
+
     };
 
     core.parts.settings = function(data, target) {
         time_settings = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-5 padded').appendTo(target));
-        if (data.time_mode == 0) fill_timesettings_stat(time_settings);
-        if (data.time_mode == 1) fill_timesettings_var(data.time_settings, time_settings, data.locked);
+        if (data.clock.time_mode == 0) fill_timesettings_stat(data.clock.time_settings, time_settings, data.clock.locked);
+        if (data.clock.time_mode == 1) fill_timesettings_var(data.clock.time_settings, time_settings, data.clock.locked);
+
+        bai_settings = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-7 padded').appendTo(target));
+        fill_battleai(bai_settings, data.ai);
     };
 })();(function() {
     core.snippets.timestr = function(i) {

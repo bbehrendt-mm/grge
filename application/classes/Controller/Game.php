@@ -357,10 +357,33 @@ class Controller_Game extends Controller {
         $lock = (($game->timeflow() == 0) ? ($game->pauselock() + Kohana::$config->load('balancing.pause.min_interval')) : $player->vote_time(true)) - time();
         if ($lock < 0) $lock = false;
 
+        $battle_ai = $player->get_battle_settings();
+
+        $ammo_data = [];
+        foreach (Controller_Player::battle_ai_ammo_types() as $ammo) {
+            /** @var Model_Items_Abstract_Ammo|string $ammo */
+            $ammo_data[] = [
+                'icon' => $ammo::static_icon(),
+                'name' => __($ammo::static_name()),
+                'locked' => isset($battle_ai[$ammo]) ? (bool)$battle_ai[$ammo] : false
+            ];
+        }
+
         $this->add_data('settings', [
-            'time_mode' => $game->timeflow(),
-            'time_settings' => $tmp,
-            'locked' => $lock
+            'clock' => [
+                'time_mode' => $game->timeflow(),
+                'time_settings' => $tmp,
+                'locked' => $lock
+            ],
+            'ai' => [
+                'type' => $battle_ai[Model_Player::MP_SETTINGS_BATTLE_DISTANCE_DAMAGE_SHIFT],
+                'weapons' => [
+                    'energy' => $battle_ai[Model_Player::MP_SETTINGS_BATTLE_NOENERGY],
+                    'throw' => $battle_ai[Model_Player::MP_SETTINGS_BATTLE_NOSELFAMMO],
+                    'tank' => $battle_ai[Model_Player::MP_SETTINGS_BATTLE_NOTANKAMMO],
+                ],
+                'ammo' => $ammo_data
+            ]
         ]);
     }
 
@@ -409,12 +432,7 @@ class Controller_Game extends Controller {
             if ($game->paused())
                 // Load pause screen
                 //ToDo: Pause Page
-                $this->add_widget(View::factory('pages/noview')->render());
-            elseif (Tool_Events::is_april_fools())
-                // Aprils fools
-                //ToDo: Aprils Fools Page
-                $this->add_widget(View::factory('pages/noview')->render());
-
+                $this->add_widget(View::factory('pages/pause')->set('remaining', max(0,$game->pauselock() - (time() - Kohana::$config->load('balancing.pause.min_duration'))))->render());
             else
                 // Ingame View
                 $this->add_widget(View::factory('pages/ingame')->render());

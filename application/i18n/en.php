@@ -1965,7 +1965,7 @@ return array (
   'Die schwere Metalltür, die die Küche vom Kühlraum trennt, ist inzwischen startk verrostet. Nach einiger Anstrengung gelingt es dir aber doch, sie einen Spalt zu öffnen. Als du hineinschaust erlebst du jedoch eine böse überraschung: Die Arbeiter in diesem Restaurant scheinen sich beim Ausbruch der Epidemie im Kühlraum versteckt zu haben! Alle Vorräte sind aufgebraucht, nur ein paar magere Leichen und eine alte Matratze liegen noch herum!' =>
 	'The hinges of this heavy, metal door are rusted, making it hard to open it. After a huge effort however, you manage to pry it open a little. Expecting humongous amounts of food, you are more than surprised to find the room nearly empty. The only thing in there is a mattress with some bodies scattered around it. Seems like these are the remnants of the employees, who hid in here when the zombie outbreak started...!',
   'Fastfood-Küche' =>
-	'Fastfood-Küche',
+	'Fastfood-Kitchen',
   'Frittierte Leiche' =>
 	'Fried Body',
   'Blasenkaugummi' =>
@@ -2741,37 +2741,93 @@ return array (
   'Importieren' =>
 	'Import',
   'Gegenstände & Heldentaten' =>
-	'Gegenstände & Heldentaten',
+	'Items & Heroic Actions',
   'Zeitfluss & Verhalten' =>
-	'Zeitfluss & Verhalten',
+	'Time & Behaviour',
   'Spielgeschwindigkeit' =>
 	'Game Speed',
   'Spiel pausieren' =>
 	'Pause game',
-  'null' =>
-	'null',
   'Tag' =>
-	'Tag',
+	'Day',
   'Stunde' =>
-	'Stunde',
+	'Hour',
   'und' =>
-	'und',
+	'and',
   'Sekunde' =>
-	'Sekunde',
+	'Second',
   'Woche' =>
-	'Woche',
+	'Week',
   'Du kannst die Spielgeschwindigkeit jederzeit deinen Bedürfnissen anpassen. Bedenke jedoch, dass eine Änderung nur alle :minutes möglich ist.' =>
-	'Du kannst die Spielgeschwindigkeit jederzeit deinen Bedürfnissen anpassen. Bedenke jedoch, dass eine Änderung nur alle :minutes möglich ist.',
+	'If you want, you can adjust the game speed here. Remember that you need to wait :minutes until you can change it again.',
   'Aktuelle Geschwindigkeit' =>
-	'Aktuelle Geschwindigkeit',
+	'Current Speed',
   'Bist du sicher, dass du die Spielgeschwindigkeit ändern möchtest?' =>
-	'Bist du sicher, dass du die Spielgeschwindigkeit ändern möchtest?',
+	'Are you sure you want to change the game speed?',
   'Änderung in ::i:: :time ::/i:: wieder möglich.' =>
-	'Änderung in ::i:: :time ::/i:: wieder möglich.',
+	'Next change possible in ::i:: :time ::/i::.',
   'Deine Sperrzeit ist noch nicht abgelaufen.' =>
-	'Deine Sperrzeit ist noch nicht abgelaufen.',
+	'Sorry, you need to wait a bit before you can do this again.',
   'Die Spielgeschwindkeit wird nach Ablauf des aktuellen Ticks angepasst.' =>
-	'Die Spielgeschwindkeit wird nach Ablauf des aktuellen Ticks angepasst.',
+	'The game speed will be changed after the current tick.',
   'Die Sperre ist abgelaufen - ab sofort kannst du die Spielgeschwindigkeit wieder ändern!' =>
-	'Die Sperre ist abgelaufen - ab sofort kannst du die Spielgeschwindigkeit wieder ändern!',
+	'The game speed setting has been unlocked.',
+  'Spiel pausiert' =>
+	'Game paused',
+  'Spiel fortsetzen' =>
+	'Continue game',
+  'Pause' =>
+	'Pause',
+  'Beim klassischen Zeitfluss hast du jederzeit die Möglichkeit, das Spiel vollständig zu pausieren. Ist das Spiel pausiert, kannst du keinerlei Aktionen durchführen. Dafür werden auch die Ticks angehalten.' =>
+	'In classical timeflow, you have the option to completely pause the game at any time. If the game is paused, you can not perform any actions and the ticks are "frozen".',
+  'Hast du die Pause aktiviert, musst du eine bestimmte Zeit warten, bis du sie wieder deaktivieren kannst. Es gibt jedoch keine Maximaldauer für eine Pause - du kannst das spiel also so lange pausieren, wie du möchtest.' =>
+	'Once the pause has been engaged, you need to wait a certain time until you can start playing again. There is no limit for how long you can stop the game, thoug - you can pause it for as long as you like.',
+  'Die Sperre ist abgelaufen - du kannst deine Pause nun beenden!' =>
+	'If you\'d like, you can now unpause your game.',
+  'Du kannst diese Pause in ::i:: :time ::/i:: beenden.' =>
+	'You can continue playing in ::i:: :time ::/i::.',
+  'Möchtest du dein Spiel jetzt fortsetzen?' =>
+	'Do you want to continue playing?',
+  'Du kannst das Spiel jederzeit anhalten. Allerdings muss eine Pause mindestens :minutes1 dauern und du musst :minutes2 warten, bis du erneut pausieren kannst.' =>
+	'You can pause the game at any time, but it will need to stay paused for at least :minutes1. After unpausing, you\'ll need to wait :minutes2 to pause the game again.',
+  'Pausieren' =>
+	'Pause',
+  'Bist du sicher, dass du das Spiel jetzt pausieren willst?' =>
+	'Are you sure you want to pause the game?',
+  'Die Sperre ist abgelaufen - du kannst das Spiel ab sofort wieder pausieren!' =>
+	'You can now pause the game again.',
+  'Nächte Pause in ::i:: :time ::/i:: möglich.' =>
+	'Next pause possible in ::i:: :time ::/i::.',
+  'Kampfverhalten' =>
+	'Battle Behaviour',
+  'Kampfstrategie' =>
+	'Battle Strategy',
+  'Der ausgewählte Kampfstil beeinflusst deine Waffen- und Gegnerauswahl. Offensive Spieler werden versuchen, so viel Schaden anzurichten wie möglich. Defensive Spieler werden versuchen, Zombies so gut es geht auf Abstand zu halten.' =>
+	'The fighting style influences what weapons you use and what enemies you engage. Offensive players will attempt to cause as much damage as possible. Defensive players will attempt to keep all zombies at a distance.',
+  'Defensiv' =>
+	'Defensive',
+  'Ausgeglichen' =>
+	'Neutral',
+  'Offensiv' =>
+	'Offensive',
+  'Verwendung einzelner Waffenarten sperren' =>
+	'Prevent the use of weapon types',
+  'Ist diese Option aktiviert, wirst du im Kampf keine Waffen einsetzen, die Energie verbrauchen.' =>
+	'Use this option to prevent weapons that consume energy from being used in battle.',
+  'Energiewaffen' =>
+	'Energy Weapons',
+  'Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die beim Einsatz zerstört werden (z.B. Wasserbombe).' =>
+	'Use this option to prevent weapons that get destroyed after usage (e.g. water bomb) from being used in battle.',
+  'Wurfgeschosse' =>
+	'Throwing Weapons',
+  'Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die einen internen Munitionsspeicher haben (z.B. Wasserpistole).' =>
+	'Use this option to prevent weapons that have an internal ammunition depot (e.g. water pistols) from being used in battle.',
+  'Verbrauchswaffen' =>
+	'Consumable Weapons',
+  'Verwendung einzelner Munitionstypen sperren' =>
+	'Prevent the use of certain ammunition types',
+  'Ist diese Option aktiviert, werden im Kampf keine Waffen verwendet, die diese Munition (:item) verwenden.' =>
+	'Once activated, this type of ammunition (:item) will no longer be used in battle.',
+  'Speichern' =>
+	'Save',
 );

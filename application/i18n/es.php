@@ -2749,8 +2749,6 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
 	'Spielgeschwindigkeit',
   'Spiel pausieren' =>
 	'Spiel pausieren',
-  'null' =>
-	'null',
   'Tag' =>
 	'Tag',
   'Stunde' =>
@@ -2775,4 +2773,62 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
 	'Die Spielgeschwindkeit wird nach Ablauf des aktuellen Ticks angepasst.',
   'Die Sperre ist abgelaufen - ab sofort kannst du die Spielgeschwindigkeit wieder ändern!' =>
 	'Die Sperre ist abgelaufen - ab sofort kannst du die Spielgeschwindigkeit wieder ändern!',
+  'Spiel pausiert' =>
+	'Spiel pausiert',
+  'Spiel fortsetzen' =>
+	'Spiel fortsetzen',
+  'Pause' =>
+	'Pause',
+  'Beim klassischen Zeitfluss hast du jederzeit die Möglichkeit, das Spiel vollständig zu pausieren. Ist das Spiel pausiert, kannst du keinerlei Aktionen durchführen. Dafür werden auch die Ticks angehalten.' =>
+	'Beim klassischen Zeitfluss hast du jederzeit die Möglichkeit, das Spiel vollständig zu pausieren. Ist das Spiel pausiert, kannst du keinerlei Aktionen durchführen. Dafür werden auch die Ticks angehalten.',
+  'Hast du die Pause aktiviert, musst du eine bestimmte Zeit warten, bis du sie wieder deaktivieren kannst. Es gibt jedoch keine Maximaldauer für eine Pause - du kannst das spiel also so lange pausieren, wie du möchtest.' =>
+	'Hast du die Pause aktiviert, musst du eine bestimmte Zeit warten, bis du sie wieder deaktivieren kannst. Es gibt jedoch keine Maximaldauer für eine Pause - du kannst das spiel also so lange pausieren, wie du möchtest.',
+  'Die Sperre ist abgelaufen - du kannst deine Pause nun beenden!' =>
+	'Die Sperre ist abgelaufen - du kannst deine Pause nun beenden!',
+  'Du kannst diese Pause in ::i:: :time ::/i:: beenden.' =>
+	'Du kannst diese Pause in ::i:: :time ::/i:: beenden.',
+  'Möchtest du dein Spiel jetzt fortsetzen?' =>
+	'Möchtest du dein Spiel jetzt fortsetzen?',
+  'Du kannst das Spiel jederzeit anhalten. Allerdings muss eine Pause mindestens :minutes1 dauern und du musst :minutes2 warten, bis du erneut pausieren kannst.' =>
+	'Du kannst das Spiel jederzeit anhalten. Allerdings muss eine Pause mindestens :minutes1 dauern und du musst :minutes2 warten, bis du erneut pausieren kannst.',
+  'Pausieren' =>
+	'Pausieren',
+  'Bist du sicher, dass du das Spiel jetzt pausieren willst?' =>
+	'Bist du sicher, dass du das Spiel jetzt pausieren willst?',
+  'Die Sperre ist abgelaufen - du kannst das Spiel ab sofort wieder pausieren!' =>
+	'Die Sperre ist abgelaufen - du kannst das Spiel ab sofort wieder pausieren!',
+  'Nächte Pause in ::i:: :time ::/i:: möglich.' =>
+	'Nächte Pause in ::i:: :time ::/i:: möglich.',
+  'Kampfverhalten' =>
+	'Kampfverhalten',
+  'Kampfstrategie' =>
+	'Kampfstrategie',
+  'Der ausgewählte Kampfstil beeinflusst deine Waffen- und Gegnerauswahl. Offensive Spieler werden versuchen, so viel Schaden anzurichten wie möglich. Defensive Spieler werden versuchen, Zombies so gut es geht auf Abstand zu halten.' =>
+	'Der ausgewählte Kampfstil beeinflusst deine Waffen- und Gegnerauswahl. Offensive Spieler werden versuchen, so viel Schaden anzurichten wie möglich. Defensive Spieler werden versuchen, Zombies so gut es geht auf Abstand zu halten.',
+  'Defensiv' =>
+	'Defensiv',
+  'Ausgeglichen' =>
+	'Ausgeglichen',
+  'Offensiv' =>
+	'Offensiv',
+  'Verwendung einzelner Waffenarten sperren' =>
+	'Verwendung einzelner Waffenarten sperren',
+  'Ist diese Option aktiviert, wirst du im Kampf keine Waffen einsetzen, die Energie verbrauchen.' =>
+	'Ist diese Option aktiviert, wirst du im Kampf keine Waffen einsetzen, die Energie verbrauchen.',
+  'Energiewaffen' =>
+	'Energiewaffen',
+  'Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die beim Einsatz zerstört werden (z.B. Wasserbombe).' =>
+	'Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die beim Einsatz zerstört werden (z.B. Wasserbombe).',
+  'Wurfgeschosse' =>
+	'Wurfgeschosse',
+  'Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die einen internen Munitionsspeicher haben (z.B. Wasserpistole).' =>
+	'Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die einen internen Munitionsspeicher haben (z.B. Wasserpistole).',
+  'Verbrauchswaffen' =>
+	'Verbrauchswaffen',
+  'Verwendung einzelner Munitionstypen sperren' =>
+	'Verwendung einzelner Munitionstypen sperren',
+  'Ist diese Option aktiviert, werden im Kampf keine Waffen verwendet, die diese Munition (:item) verwenden.' =>
+	'Ist diese Option aktiviert, werden im Kampf keine Waffen verwendet, die diese Munition (:item) verwenden.',
+  'Speichern' =>
+	'Speichern',
 );

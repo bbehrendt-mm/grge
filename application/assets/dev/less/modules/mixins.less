@@ -11,3 +11,23 @@
 .incomplete-border-definition(@definition, @top: false, @left: false, @bottom: @top, @right: @left) when (@right = true)  {border-right: @definition};
 
 .small {font-size: 12px;}
+.noclick {-webkit-touch-callout: none;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;cursor: default;}
+.hidden {display: none;}
+.disabled,*[disabled] {pointer-events: none; cursor: default;}
+.pointer {cursor: pointer;}
+.link {text-decoration: underline; color: @zv-color-main; cursor: pointer;}
+.center {text-align: center;}
+.left {text-align: left;}
+.right {text-align: right;}
+.justify {text-align: justify;}
+.resize-v {resize: vertical;}
+.resize-h {resize: horizontal;}
+.resize-hv, .resize-vh, .resize-both, .resize, .resize-h.resize-v {resize: both;}
+.resize-none {resize: none;}
+
+.sleep-animation {
+  height: 64px;
+  width: 64px;
+  background: url('media/img/z-sleep.png') no-repeat;
+  position: absolute;
+}

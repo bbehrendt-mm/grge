@@ -65,15 +65,38 @@
     }
   }
 
-  &.outside {
+  &.outside:not(.custom) {
     background: @locationbox-outside-image, @locationbox-outside-background; padding-bottom: @locationbox-outside-bottom-padding; color: @locationbox-outside-color-text; text-shadow: 0 0 1px @locationbox-outside-color-shadow; border-bottom: 4px solid @locationbox-outside-finish;
     >h2 {border-bottom: solid 2px @locationbox-outside-color-head; color: @locationbox-outside-color-head; text-shadow: 0 0 10px fade(@locationbox-outside-color-text, @locationbox-outside-text-blur);}
     .widget {background: @locationbox-outside-widget-background}
   }
 
-  &.inside {
+  &.inside:not(.custom) {
     background: @locationbox-inside-image, @locationbox-inside-background; padding-bottom: @locationbox-inside-bottom-padding; color: @locationbox-inside-color-text; text-shadow: 0 0 1px @locationbox-inside-color-shadow; border-bottom: 4px solid @locationbox-inside-finish;
     >h2 {border-bottom: solid 2px @locationbox-inside-color-head; color: @locationbox-inside-color-head; text-shadow: 0 0 10px fade(@locationbox-inside-color-text, @locationbox-inside-text-blur);}
     .widget {background: @locationbox-inside-widget-background}
+  }
+
+  &.custom {
+    &.custom-colosseum {
+      background: url('media/img/locations/colosseum_top.jpg') bottom left no-repeat, black; padding-bottom: 0; color: white;
+      >h2 {border-bottom: solid 2px #F88E00; color: #F88E00;}
+      .widget {color: black; background: linear-gradient(to bottom, rgba(250, 250, 250, 0.75) 0%, rgba(250, 250, 250, 0.90) 100%); box-shadow: 0 0 4px rgba(255,255,255,0.8); .incomplete-border-definition(2px solid #d0d0d0, true, true, false, true);}
+    }
+  }
+
+
+}
+
+.action_box {
+  box-shadow: 0 0 4px black; padding: 5px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px;
+  &.inside:not(.custom) {border-bottom: 4px solid #462d21; background: url("media/img/actions_inside.png")}
+  &.outside:not(.custom) {border-bottom: 4px solid #b88452; background: url("media/img/actions_outside.png")}
+
+  &.custom {
+
+    &.custom-colosseum {
+      border-bottom: 4px solid black; background: url("media/img/locations/colosseum_bottom.jpg")
+    }
   }
 }

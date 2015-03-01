@@ -6,7 +6,7 @@ core = {
     parts: {},
     snippets: {},
 
-    version: '2.0.0-0-1-30',
+    version: '2.0.0-0-1-46',
 
     last: {},
 
@@ -53,6 +53,11 @@ core = {
         }
 
         var action_box = $('<div />').addClass('row action_box ' + (data.location.meta.outside ? 'outside' : 'inside')).appendTo(target);
+
+        if (data.location.meta.css) {
+            location_box.addClass('custom custom-' + data.location.meta.css);
+            action_box.addClass('custom custom-' + data.location.meta.css);
+        }
 
         var auto_tab = $('<ul />').addClass('tabline').appendTo(action_box)
             .append($('<li>').data('toggle', '#inv_container').text("Gegenst\u00e4nde & Heldentaten"))
@@ -388,7 +393,7 @@ core = {
                     if (actions.length) content.append('<span class="separator" />');
                     $.each(v.actions, function(k,v) {
                         content.append(
-                            core.snippets.button(v)
+                            core.snippets.button(v, false, 'nested')
                         )
                     });
 
@@ -458,6 +463,23 @@ core = {
         );
 
         render_block(data.player, iv_a, "Dein Rucksack", true);
+
+        iv_a.append(
+            $('<div />')
+                .addClass('row').append($('<div />').addClass('cell rw-12 padded').append($('<div />').addClass('weightbar').append($('<div />').css('width', (100*data.weight[0]/data.weight[1]) + '%'))))
+                .attr('title','-').qtip(game.render.html.qtip.ingame('bottom', {
+                    render: function(event,api) {
+                        var content = $(this).find('.qtip-content').empty();
+
+                        content
+                            .append($('<b />').addClass('header').text("Gewicht"))
+                            .append($('<span />').text("Du kannst nur so viel Zeug mit dir rumschleppen wie du tragen kannst. Wenn dein Rucksack voll ist musst du wohl oder \u00fcbel Gegenst\u00e4nde liegen lassen."))
+                            .append($('<span />').addClass('separator'))
+                            .append($('<div />').addClass('center').text("Aktueller Wert" + ': ' + Math.round10(data.weight[0],-2) + ' / ' + Math.round10(data.weight[1], -2)))
+                    }
+                }))
+        );
+
         render_block(data.location, iv_b, data.home ? "Deine Truhe" : "Items am Boden", false);
 
         if (data.action) {
@@ -513,6 +535,40 @@ core = {
 
     };
 })();(function() {
+    var colosseum = function(data, target) {
+        var round, rank, next_arena;
+        $(target).empty()
+            .append(
+            $('<div />').addClass('cell rw-6 padded').append(
+                round = $('<div />').addClass('widget')
+            )
+        ).append(
+            $('<div />').addClass('cell rw-6 padded').append(
+                rank = $('<div />').addClass('widget')
+            )
+        ).append(
+            $('<div />').addClass('cell rw-12 padded').append(
+                next_arena = $('<div />').addClass('widget')
+            )
+        );
+
+        var ranks = ["Neulingsk\u00e4mpfe","Tournament f\u00fcr Nachwuchsmetzler","Tournament f\u00fcr routinierte Schl\u00e4chter","Tournament f\u00fcr Profikiller","Master-Tournament"];
+        var arenas = ["Cagematch","Boxring","Freiluft-Arena","Hauptplatz des Kolosseums"];
+
+        round
+            .text(data.level == 0 ? "Qualifikationsrunde" : game.i18n("Runde :round",{':round': data.level}))
+            .attr('title', "F\u00fcr jeden gewonnenen Kampf steigst du im Kolosseum eine Ebene auf. Au\u00dferdem erh\u00e4lst du Seelenpunkte sowie n\u00fctzliche Gegenst\u00e4nde. Nat\u00fcrlich werden die K\u00e4mpfe mit jeder Runde gef\u00e4hrlicher...")
+            .qtip(game.render.html.qtip.ingame('top'));
+
+        rank.text(ranks[data.rank]);
+
+        next_arena
+            .append($('<b />').text("N\u00e4chster Kampf:")).append('<br />')
+            .append($('<span />').text(arenas[data.arena]))
+            .attr('title', "Jede Arena des Colosseums stellt dich vor andere Herausforderungen. Achte darauf wo der n\u00e4chste Kampf stattfindet, um dich optimal zu bewaffnen.")
+            .qtip(game.render.html.qtip.ingame('top'));
+    };
+
     var hideoutstats = function(data, target) {
         var repair, defense, deco;
         $(target).empty()
@@ -626,7 +682,7 @@ core = {
     };
 
     core.parts.location = function(data, target) {
-        var zradar, hideout, actions;
+        var zradar, hideout, actions, spc_colosseum;
 
         $(target).empty().addClass('row location_box ' + (data.meta.outside ? 'outside' : 'inside')).append(
             $('<h2 />').text(data.meta.name)
@@ -635,6 +691,8 @@ core = {
                 zradar = $('<div />').addClass('row')
             ).append(
                 hideout = data.hideout ? $('<div />').addClass('row') : null
+            ).append(
+                spc_colosseum = data.colosseum ? $('<div />').addClass('row') : null
             ).append(
                 actions = $('<div />').addClass('row')
             )
@@ -657,6 +715,8 @@ core = {
         zombieradar(data.radar, zradar);
         if (hideout)
             hideoutstats(data.hideout, hideout);
+        if (data.colosseum)
+            colosseum(data.colosseum, spc_colosseum)
     };
 })();(function() {
     var renderers = {};
@@ -869,14 +929,14 @@ core = {
                 last_summary = row;
 
                 $('<div />').appendTo(row).addClass('cell rw-3 player').addClass(data.killed ? 'killed' : '').text(player);
-                var stuff = $('<div />').appendTo(row).addClass('cell rw-3 stuff');
+                var stuff = $('<div />').appendTo(row).addClass('cell rw-4 stuff');
                 var injuries = $('<div />').appendTo(row).addClass('cell rw-2 injuries');
-                var items = $('<div />').appendTo(row).addClass('cell rw-4 items_lost');
+                var items = $('<div />').appendTo(row).addClass('cell rw-3 items_lost');
 
 
-                $('<span />').appendTo(stuff).addClass('damage_received').text(data.damage_received).attr('title', "Erlittener Schaden").qtip(game.render.html.qtip.ingame('top'));
-                $('<span />').appendTo(stuff).addClass('energy_lost').text(data.energy_lost).attr('title', "Verbrauchte Energie").qtip(game.render.html.qtip.ingame('top'));
-                $('<span />').appendTo(stuff).addClass('damage_dealt').text(data.damage_dealt).attr('title', "Angerichteter Schaden").qtip(game.render.html.qtip.ingame('top'));
+                $('<span />').appendTo(stuff).addClass('damage_received').text(Math.round10(data.damage_received,-2)).attr('title', "Erlittener Schaden").qtip(game.render.html.qtip.ingame('top'));
+                $('<span />').appendTo(stuff).addClass('energy_lost').text(Math.round10(data.energy_lost,-2)).attr('title', "Verbrauchte Energie").qtip(game.render.html.qtip.ingame('top'));
+                $('<span />').appendTo(stuff).addClass('damage_dealt').text(Math.round10(data.damage_dealt,-2)).attr('title', "Angerichteter Schaden").qtip(game.render.html.qtip.ingame('top'));
                 $('<span />').appendTo(stuff).addClass('zombies_killed').text(data.kills).attr('title', "Vernichtete Zombies").qtip(game.render.html.qtip.ingame('top'));
 
                 $.each(data.items_lost, function(k,item) {
@@ -985,12 +1045,12 @@ core = {
                     if (obj.missed)
                         calc.append($('<span />').addClass('fa fa-ban')).append($('<span />').text("Verfehlt!"));
                     else {
-                        calc.append($('<span />').addClass('calculation damage').append($('<span />').text(obj.damage)).append($('<img />').attr('src','media/icons/atk1.gif')));
+                        calc.append($('<span />').addClass('calculation damage').append($('<span />').text(Math.round10(obj.damage,-1))).append($('<img />').attr('src','media/icons/atk1.gif')));
                         if (obj.protection.value)
-                            calc.append($('<i />').addClass('fa fa-caret-right')).append($('<span />').addClass('calculation protection').append($('<span />').text(obj.protection.value)).append($('<img />').attr('src','media/icons/atk2.gif')));
+                            calc.append($('<i />').addClass('fa fa-caret-right')).append($('<span />').addClass('calculation protection').append($('<span />').text(Math.round10(obj.protection.value,-1))).append($('<img />').attr('src','media/icons/atk2.gif')));
                     }
 
-                    result.append($('<span />').addClass('final damage').append($('<span />').text(obj.damage - obj.protection.value)).append($('<img />').attr('src','media/icons/damage.gif')));
+                    result.append($('<span />').addClass('final damage').append($('<span />').text(Math.round10(obj.damage - obj.protection.value, -2))).append($('<img />').attr('src','media/icons/damage.gif')));
                     if (obj.kills > 0)
                         result.append($('<span />').addClass('final kills').append($('<span />').text(obj.attacker.is_zombie ? '' : obj.kills)).append($('<img />').attr('src',obj.attacker.is_zombie ? 'media/icons/killc.gif' : 'media/icons/killz.gif')));
                 }
@@ -1511,7 +1571,7 @@ core.popup = {
         set_row.find('input').customRadioCheck();
         set_row.find('>label').css('margin', 0);
 
-        target.append($('<p />').addClass('center').append($('<b />').text("Aktuelle Geschwindigkeit")).append($('<span />').text(core.snippets.timestr(data.game))));
+        target.append($('<div />').addClass('center row').append($('<b />').text("Aktuelle Geschwindigkeit")).append($('<span />').text(core.snippets.timestr(data.game))));
 
         if (lock) {
             var ct = $('<p />').appendTo(target);
@@ -1755,13 +1815,17 @@ core.popup = {
                 case 'static':
                     button.append(ext);
                     break;
-                case 'tooltip':
+                case 'tooltip':case 'nested':
                     if (!action.tooltip && action.remaining < 0 && !ext.children().size()) break;
 
-                    button.attr('title','-').qtip(game.render.html.qtip.ingame('bottom',{
+                    var template = (ext_mode == 'nested') ? game.render.html.qtip.help : game.render.html.qtip.ingame;
+
+                    button.attr('title','-').qtip(template((ext_mode == 'nested') ? 'right' : 'bottom',{
                         render: function(event,api) {
+                            $(this).css('width',$(this).css('max-width'));
+
                             var content = $(this).find('.qtip-content').empty().append(
-                                $('<b />').addClass('header').text(action.description)
+                                (ext_mode == 'nested') ? null : $('<b />').addClass('header').text(action.description)
                             );
 
                             if (action.tooltip)
@@ -1770,7 +1834,7 @@ core.popup = {
                                 content.append(ext).append('<span class="separator" />');
                             if (action.remaining >= 0)
                                 content.append($('<div />').addClass('note').text(game.i18n("Du kannst diese Aktion noch :num mal einsetzen.", {':num': action.remaining})));
-                        }})
+                        }},true)
                     );
                     break;
                 case 'extend':default:

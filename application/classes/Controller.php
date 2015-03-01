@@ -151,8 +151,9 @@ abstract class Controller extends Kohana_Controller {
      */
     protected function add_data($key, $data = null, $no_override = false) {
         if (is_array($key))
-            $this->data = array_merge($this->data, $key);
-        elseif (!$no_override || !isset($this->data[$key])) $this->data[$key] = $data;
+            $this->data = array_merge_recursive($this->data, $key);
+        elseif (!isset($this->data[$key])) $this->data[$key] = $data;
+        elseif (!$no_override) $this->data[$key] = array_merge_recursive($this->data[$key], $data);
     }
 
     /**

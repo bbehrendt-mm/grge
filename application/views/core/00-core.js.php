@@ -59,6 +59,11 @@ core = {
 
         var action_box = $('<div />').addClass('row action_box ' + (data.location.meta.outside ? 'outside' : 'inside')).appendTo(target);
 
+        if (data.location.meta.css) {
+            location_box.addClass('custom custom-' + data.location.meta.css);
+            action_box.addClass('custom custom-' + data.location.meta.css);
+        }
+
         var auto_tab = $('<ul />').addClass('tabline').appendTo(action_box)
             .append($('<li>').data('toggle', '#inv_container').text(<?=__j('Gegenstände & Heldentaten')?>))
             .append($('<li>').data('toggle', '#settings_container').text(<?=__j('Zeitfluss & Verhalten')?>))

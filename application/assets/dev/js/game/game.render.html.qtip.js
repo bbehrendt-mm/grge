@@ -52,8 +52,8 @@ game.render.html.qtip = {
         }
     },
 
-    help: function(pos) {
-        return game.render.html.qtip.generic(pos,'qtip-tipsy qtip-shadow qtip-rounded qtip-custom-help');
+    help: function(pos, events, smallpad) {
+        return game.render.html.qtip.generic(pos,'qtip-tipsy qtip-shadow qtip-rounded qtip-custom-help' + (smallpad ? '2' : ''),false,0,events);
     },
 
     player: function(pos) {

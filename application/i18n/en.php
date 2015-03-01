@@ -2830,4 +2830,62 @@ return array (
 	'Once activated, this type of ammunition (:item) will no longer be used in battle.',
   'Speichern' =>
 	'Save',
+  'Den nächsten Kampf austragen!' =>
+	'Fight the next wave!',
+  'Dieses alterwürdige Gebäude hat jahrhundertelang allen Kriegen und dem Zahn der Zeit widerstanden. Selbst die Zombieapokalypse konnte diesem Gebäude nichts anhaben. Heute wird es von einer geheimnissvollen Organisation als Austragungsort des Zombieturniers verwendet.' =>
+	'This reverend building managed to stand the test of time for several hundred years. Even the zombie apocalypse could not destroy it. Now it is being used as venue for a zombie tournament by some shadowy organisation.',
+  'Neulingskämpfe' =>
+	'Newbie Fights',
+  'Tournament für Nachwuchsmetzler' =>
+	'Tournament for rookie butchers',
+  'Tournament für routinierte Schlächter' =>
+	'Tournament for seasoned slaughterers',
+  'Tournament für Profikiller' =>
+	'Tournament for professional hitmen',
+  'Master-Tournament' =>
+	'Master-Tournament',
+  'Cagematch' =>
+	'Cage Fight',
+  'Boxring' =>
+	'Boxing Ring',
+  'Freiluft-Arena' =>
+	'Open Air Arena',
+  'Hauptplatz des Kolosseums' =>
+	'Main Arena',
+  'Qualifikationsrunde' =>
+	'Qualifying round',
+  'Für jeden gewonnenen Kampf steigst du im Kolosseum eine Ebene auf. Außerdem erhälst du Seelenpunkte sowie nützliche Gegenstände. Natürlich werden die Kämpfe mit jeder Runde gefährlicher...' =>
+	'For every battle you win, you\'ll advance one round. Also, you\'ll be awarded some useful items as well as soul points. Of course, the fights will get more dangerous as you move on...',
+  'Jede Arena des Colosseums stellt dich vor andere Herausforderungen. Achte darauf wo der nächste Kampf stattfindet, um dich optimal zu bewaffnen.' =>
+	'Each of the different fighting arenas will provide different challenges for you. Keep an eye on what the next arena will be, so you can choose the most useful weapons.',
+  'Nächster Kampf:' =>
+	'Next Fight:',
+  'Untotes Strahlenopfer' =>
+	'Undead Radiation Victim',
+  'Der Qualifikationskampf im Kolosseum beginnt!' =>
+	'The qualifying round for the collosseum tournament begins!',
+  'Kampf' =>
+	'Battle',
+  'Herzlichen Glückwunsch, du hast eine weitere Ebene des Kolosseums gemeistert! Weiter so! Als Belohnung für deinen triumphalen Sieg hast du einige Gegenstände erhalten.' =>
+	'Congratulations, you\'ve masteres another level of the colosseum! Keep going! As a reward for your victory, you receive a few useful items.',
+  'Du fühlst dich ohne dein Taschenmesser ziemlich nackt ... du solltest es wirklich nicht einfach ablegen!' =>
+	'Without your knive you feel pretty naked... better not leave it behind!',
+  'Die Vorbereitungen für dieses Match laufen noch. Komm frühestens an Tag :day wieder.' =>
+	'The next match is still being prepared. This will take at least until day :day.',
+  'Der Kampf auf Ebene :level des Kolosseums beginnt!' =>
+	'The epic battle on level :level begins!',
+  'Wahnsinnige Ghule' =>
+	'Insane Ghouls',
+  'Untote Fleischberge' =>
+	'Undead Fatso',
+  'Eine Übersicht über Bilder anderer Autoren findet sich hier:' =>
+	'You\'ll find an overview of licensed images here:',
+  'Bildmaterial' =>
+	'Licensed Images',
+  'Diese Seite dient der Nennung von Autoren und Lizenzen aller für das Design dieses Spiels verwendeten Grafiken, deren Lizenz eine solche Nennung verlangt. Nicht erfasst sind Grafiken von Motion Twin. Sind Sie der Autor einer solchen Grafik und mit der Nutzung nicht einverstanden, oder haben Sie eine Grafik gefunden die hier nicht aufgelistet ist, melden Sie sich bitte unter folgender E-Mail Adresse.' =>
+	'This page lists authors and licenses for images used in this game, whose licenses require listing. Graphics from Motion Twin are not included here. If you are the author of an image that is used in this game, of if you have found an image that is not listed here, please contact the following e-mail adress:',
+  'Du kannst nur so viel Zeug mit dir rumschleppen wie du tragen kannst. Wenn dein Rucksack voll ist musst du wohl oder übel Gegenstände liegen lassen.' =>
+	'The amount of things you can carry is somewhat limited. Once your rucksack is full, you will have to leave stuff behind.',
+  'Aktueller Wert' =>
+	'Current value',
 );

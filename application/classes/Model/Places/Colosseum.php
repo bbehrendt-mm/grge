@@ -4,7 +4,9 @@ class Model_Places_Colosseum extends Model_Places_Abstract_Place {
 	
 	protected static $name = 'Kolosseum';
 	protected static $description = 'Dieses alterwürdige Gebäude hat jahrhundertelang allen Kriegen und dem Zahn der Zeit widerstanden. Selbst die Zombieapokalypse konnte diesem Gebäude nichts anhaben. Heute wird es von einer geheimnissvollen Organisation als Austragungsort des Zombieturniers verwendet.';
-	
+
+	protected static $custom_style = 'colosseum';
+
 	private $stage = 0;
 
 	protected static $widget_list = Array(
@@ -129,7 +131,7 @@ class Model_Places_Colosseum extends Model_Places_Abstract_Place {
 			$player->log()->add(new Model_Log_Types_Text(null, null, 'Ohje, du hast die Qualifikationsphase des Spiels verpasst. Jetzt kannst du nicht mehr am Turnier teilnehmen...'));
 			return false;
 		} elseif ($this->stage > 0 && ($game->duration() < (288 * ceil($this->stage/2)))) {
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Die Vorbereitungen für dieses Match laufen noch. Komm frühestens an Tag :day wieder.', array(':day' => ceil($this->stage/2))));
+			$player->log()->add(new Model_Log_Types_Text(null, null, 'Die Vorbereitungen für dieses Match laufen noch. Komm frühestens an Tag :day wieder.', array(':day' => 1+ceil($this->stage/2))));
 			return false;
 		}	
 		return true;

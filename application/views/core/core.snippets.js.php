@@ -134,13 +134,17 @@
                 case 'static':
                     button.append(ext);
                     break;
-                case 'tooltip':
+                case 'tooltip':case 'nested':
                     if (!action.tooltip && action.remaining < 0 && !ext.children().size()) break;
 
-                    button.attr('title','-').qtip(game.render.html.qtip.ingame('bottom',{
+                    var template = (ext_mode == 'nested') ? game.render.html.qtip.help : game.render.html.qtip.ingame;
+
+                    button.attr('title','-').qtip(template((ext_mode == 'nested') ? 'right' : 'bottom',{
                         render: function(event,api) {
+                            $(this).css('width',$(this).css('max-width'));
+
                             var content = $(this).find('.qtip-content').empty().append(
-                                $('<b />').addClass('header').text(action.description)
+                                (ext_mode == 'nested') ? null : $('<b />').addClass('header').text(action.description)
                             );
 
                             if (action.tooltip)
@@ -149,7 +153,7 @@
                                 content.append(ext).append('<span class="separator" />');
                             if (action.remaining >= 0)
                                 content.append($('<div />').addClass('note').text(game.i18n(<?=__j('Du kannst diese Aktion noch :num mal einsetzen.')?>, {':num': action.remaining})));
-                        }})
+                        }},true)
                     );
                     break;
                 case 'extend':default:

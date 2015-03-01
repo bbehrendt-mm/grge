@@ -24,7 +24,7 @@
         set_row.find('input').customRadioCheck();
         set_row.find('>label').css('margin', 0);
 
-        target.append($('<p />').addClass('center').append($('<b />').text(<?=__j('Aktuelle Geschwindigkeit')?>)).append($('<span />').text(core.snippets.timestr(data.game))));
+        target.append($('<div />').addClass('center row').append($('<b />').text(<?=__j('Aktuelle Geschwindigkeit')?>)).append($('<span />').text(core.snippets.timestr(data.game))));
 
         if (lock) {
             var ct = $('<p />').appendTo(target);

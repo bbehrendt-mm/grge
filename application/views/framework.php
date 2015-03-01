@@ -38,7 +38,6 @@
 
 </head>
 <body>
-
     <div id="boot" style="display: none">
         <b>ZombVival Evolution</b>
         <i class="fa fa-spin fa-circle-o-notch"></i>

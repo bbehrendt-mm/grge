@@ -24,6 +24,17 @@ class Controller_Account extends Controller {
     }
 
     /**
+     * License View
+     * @throws Kohana_Exception
+     */
+    public function action_license() {
+        $this->add_widget(View::factory('pages/license')
+            ->set('data', Kohana::$config->load('licenses'))
+            ->render());
+        $this->render();
+    }
+
+    /**
      * Login API
      * @param bool $attempt_local Attempt to log in using only supplicant to avoid having to contact MT servers
      * @return bool

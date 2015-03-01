@@ -68,5 +68,4 @@ class Controller_Lobby extends Controller {
             'feeds' => $ret['threads']
         ]);
     }
-
 }

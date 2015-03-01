@@ -2831,4 +2831,62 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
 	'Ist diese Option aktiviert, werden im Kampf keine Waffen verwendet, die diese Munition (:item) verwenden.',
   'Speichern' =>
 	'Speichern',
+  'Den nächsten Kampf austragen!' =>
+	'Den nächsten Kampf austragen!',
+  'Dieses alterwürdige Gebäude hat jahrhundertelang allen Kriegen und dem Zahn der Zeit widerstanden. Selbst die Zombieapokalypse konnte diesem Gebäude nichts anhaben. Heute wird es von einer geheimnissvollen Organisation als Austragungsort des Zombieturniers verwendet.' =>
+	'Dieses alterwürdige Gebäude hat jahrhundertelang allen Kriegen und dem Zahn der Zeit widerstanden. Selbst die Zombieapokalypse konnte diesem Gebäude nichts anhaben. Heute wird es von einer geheimnissvollen Organisation als Austragungsort des Zombieturniers verwendet.',
+  'Neulingskämpfe' =>
+	'Neulingskämpfe',
+  'Tournament für Nachwuchsmetzler' =>
+	'Tournament für Nachwuchsmetzler',
+  'Tournament für routinierte Schlächter' =>
+	'Tournament für routinierte Schlächter',
+  'Tournament für Profikiller' =>
+	'Tournament für Profikiller',
+  'Master-Tournament' =>
+	'Master-Tournament',
+  'Cagematch' =>
+	'Cagematch',
+  'Boxring' =>
+	'Boxring',
+  'Freiluft-Arena' =>
+	'Freiluft-Arena',
+  'Hauptplatz des Kolosseums' =>
+	'Hauptplatz des Kolosseums',
+  'Qualifikationsrunde' =>
+	'Qualifikationsrunde',
+  'Für jeden gewonnenen Kampf steigst du im Kolosseum eine Ebene auf. Außerdem erhälst du Seelenpunkte sowie nützliche Gegenstände. Natürlich werden die Kämpfe mit jeder Runde gefährlicher...' =>
+	'Für jeden gewonnenen Kampf steigst du im Kolosseum eine Ebene auf. Außerdem erhälst du Seelenpunkte sowie nützliche Gegenstände. Natürlich werden die Kämpfe mit jeder Runde gefährlicher...',
+  'Jede Arena des Colosseums stellt dich vor andere Herausforderungen. Achte darauf wo der nächste Kampf stattfindet, um dich optimal zu bewaffnen.' =>
+	'Jede Arena des Colosseums stellt dich vor andere Herausforderungen. Achte darauf wo der nächste Kampf stattfindet, um dich optimal zu bewaffnen.',
+  'Nächster Kampf:' =>
+	'Nächster Kampf:',
+  'Untotes Strahlenopfer' =>
+	'Untotes Strahlenopfer',
+  'Der Qualifikationskampf im Kolosseum beginnt!' =>
+	'Der Qualifikationskampf im Kolosseum beginnt!',
+  'Kampf' =>
+	'Kampf',
+  'Herzlichen Glückwunsch, du hast eine weitere Ebene des Kolosseums gemeistert! Weiter so! Als Belohnung für deinen triumphalen Sieg hast du einige Gegenstände erhalten.' =>
+	'Herzlichen Glückwunsch, du hast eine weitere Ebene des Kolosseums gemeistert! Weiter so! Als Belohnung für deinen triumphalen Sieg hast du einige Gegenstände erhalten.',
+  'Du fühlst dich ohne dein Taschenmesser ziemlich nackt ... du solltest es wirklich nicht einfach ablegen!' =>
+	'Du fühlst dich ohne dein Taschenmesser ziemlich nackt ... du solltest es wirklich nicht einfach ablegen!',
+  'Die Vorbereitungen für dieses Match laufen noch. Komm frühestens an Tag :day wieder.' =>
+	'Die Vorbereitungen für dieses Match laufen noch. Komm frühestens an Tag :day wieder.',
+  'Der Kampf auf Ebene :level des Kolosseums beginnt!' =>
+	'Der Kampf auf Ebene :level des Kolosseums beginnt!',
+  'Wahnsinnige Ghule' =>
+	'Wahnsinnige Ghule',
+  'Untote Fleischberge' =>
+	'Untote Fleischberge',
+  'Eine Übersicht über Bilder anderer Autoren findet sich hier:' =>
+	'Eine Übersicht über Bilder anderer Autoren findet sich hier:',
+  'Bildmaterial' =>
+	'Bildmaterial',
+  'Diese Seite dient der Nennung von Autoren und Lizenzen aller für das Design dieses Spiels verwendeten Grafiken, deren Lizenz eine solche Nennung verlangt. Nicht erfasst sind Grafiken von Motion Twin. Sind Sie der Autor einer solchen Grafik und mit der Nutzung nicht einverstanden, oder haben Sie eine Grafik gefunden die hier nicht aufgelistet ist, melden Sie sich bitte unter folgender E-Mail Adresse.' =>
+	'Diese Seite dient der Nennung von Autoren und Lizenzen aller für das Design dieses Spiels verwendeten Grafiken, deren Lizenz eine solche Nennung verlangt. Nicht erfasst sind Grafiken von Motion Twin. Sind Sie der Autor einer solchen Grafik und mit der Nutzung nicht einverstanden, oder haben Sie eine Grafik gefunden die hier nicht aufgelistet ist, melden Sie sich bitte unter folgender E-Mail Adresse.',
+  'Du kannst nur so viel Zeug mit dir rumschleppen wie du tragen kannst. Wenn dein Rucksack voll ist musst du wohl oder übel Gegenstände liegen lassen.' =>
+	'Du kannst nur so viel Zeug mit dir rumschleppen wie du tragen kannst. Wenn dein Rucksack voll ist musst du wohl oder übel Gegenstände liegen lassen.',
+  'Aktueller Wert' =>
+	'Aktueller Wert',
 );

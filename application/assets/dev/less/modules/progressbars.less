@@ -1,0 +1,19 @@
+@import (once) "zombvival";
+
+.progress(@bg-color, @bar-color) {
+  width: 100%;
+  height: 9px;
+  background: @bg-color;
+  overflow: visible;
+  >div {
+    background: @bar-color;
+    border: 1px solid darken(@bar-color, 10%);
+    height: 100%;
+    box-shadow: 0 0 3px 1px fade(@bar-color,80%);
+  }
+}
+
+@weight-bg: #f0ceb6;
+@weight-color: #b05f05;
+
+.weightbar {.progress(@weight-bg, @weight-color)}

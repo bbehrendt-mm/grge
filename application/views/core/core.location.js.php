@@ -1,4 +1,38 @@
 (function() {
+    var colosseum = function(data, target) {
+        var round, rank, next_arena;
+        $(target).empty()
+            .append(
+            $('<div />').addClass('cell rw-6 padded').append(
+                round = $('<div />').addClass('widget')
+            )
+        ).append(
+            $('<div />').addClass('cell rw-6 padded').append(
+                rank = $('<div />').addClass('widget')
+            )
+        ).append(
+            $('<div />').addClass('cell rw-12 padded').append(
+                next_arena = $('<div />').addClass('widget')
+            )
+        );
+
+        var ranks = [<?=__j('Neulingskämpfe')?>,<?=__j('Tournament für Nachwuchsmetzler')?>,<?=__j('Tournament für routinierte Schlächter')?>,<?=__j('Tournament für Profikiller')?>,<?=__j('Master-Tournament')?>];
+        var arenas = [<?=__j('Cagematch')?>,<?=__j('Boxring')?>,<?=__j('Freiluft-Arena')?>,<?=__j('Hauptplatz des Kolosseums')?>];
+
+        round
+            .text(data.level == 0 ? <?=__j('Qualifikationsrunde')?> : game.i18n(<?=__j('Runde :round')?>,{':round': data.level}))
+            .attr('title', <?=__j('Für jeden gewonnenen Kampf steigst du im Kolosseum eine Ebene auf. Außerdem erhälst du Seelenpunkte sowie nützliche Gegenstände. Natürlich werden die Kämpfe mit jeder Runde gefährlicher...')?>)
+            .qtip(game.render.html.qtip.ingame('top'));
+
+        rank.text(ranks[data.rank]);
+
+        next_arena
+            .append($('<b />').text(<?=__j('Nächster Kampf:')?>)).append('<br />')
+            .append($('<span />').text(arenas[data.arena]))
+            .attr('title', <?=__j('Jede Arena des Colosseums stellt dich vor andere Herausforderungen. Achte darauf wo der nächste Kampf stattfindet, um dich optimal zu bewaffnen.')?>)
+            .qtip(game.render.html.qtip.ingame('top'));
+    };
+
     var hideoutstats = function(data, target) {
         var repair, defense, deco;
         $(target).empty()
@@ -112,7 +146,7 @@
     };
 
     core.parts.location = function(data, target) {
-        var zradar, hideout, actions;
+        var zradar, hideout, actions, spc_colosseum;
 
         $(target).empty().addClass('row location_box ' + (data.meta.outside ? 'outside' : 'inside')).append(
             $('<h2 />').text(data.meta.name)
@@ -121,6 +155,8 @@
                 zradar = $('<div />').addClass('row')
             ).append(
                 hideout = data.hideout ? $('<div />').addClass('row') : null
+            ).append(
+                spc_colosseum = data.colosseum ? $('<div />').addClass('row') : null
             ).append(
                 actions = $('<div />').addClass('row')
             )
@@ -143,5 +179,7 @@
         zombieradar(data.radar, zradar);
         if (hideout)
             hideoutstats(data.hideout, hideout);
+        if (data.colosseum)
+            colosseum(data.colosseum, spc_colosseum)
     };
 })();

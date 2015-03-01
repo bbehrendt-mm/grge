@@ -159,6 +159,12 @@ class Model_Factory_Zombies extends Model {
             $sums_max[] = $sum_max;
         }
 
+		if (empty($sum_min)) {
+			$sums_min = [0];
+			$sums_max = [0];
+			$config['chance'] = 0;
+		}
+
         return [
             min($sums_min), max($sums_max), $config['chance']/100, ($config['accum']/200) * $this->get_accumulation_multiplier()
         ];

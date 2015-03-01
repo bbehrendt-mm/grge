@@ -29,6 +29,7 @@
 
 
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/zombvival.base.min.css" />
     <link rel="stylesheet" type="text/css" href="css/zombvival.min.css" />
 
     <style type="text/css">
@@ -116,7 +117,7 @@
             <b>Here are some things you can do now:</b>
             <ul>
                 <li>Try <a href="#" onclick="document.location.href = 'index.php';">reloading</a> the page.</li>
-                <li><a href="#" onclick="document.cookie = 'session=; expires=Thu, 01 Jan 1970 00:00:00 UTC'; document.location.reload(true);">Log out</a> and back in.</li>
+                <li><a href="#" onclick="document.cookie = 'evolution=; expires=Thu, 01 Jan 1970 00:00:00 UTC'; document.location.reload(true);">Log out</a> and back in.</li>
                 <li>Try repeating your last action.</li>
                 <li>Check the forum for details about this problem. If there aren't any, post them yourself.</li>
             </ul>

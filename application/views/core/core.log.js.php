@@ -209,14 +209,14 @@
                 last_summary = row;
 
                 $('<div />').appendTo(row).addClass('cell rw-3 player').addClass(data.killed ? 'killed' : '').text(player);
-                var stuff = $('<div />').appendTo(row).addClass('cell rw-3 stuff');
+                var stuff = $('<div />').appendTo(row).addClass('cell rw-4 stuff');
                 var injuries = $('<div />').appendTo(row).addClass('cell rw-2 injuries');
-                var items = $('<div />').appendTo(row).addClass('cell rw-4 items_lost');
+                var items = $('<div />').appendTo(row).addClass('cell rw-3 items_lost');
 
 
-                $('<span />').appendTo(stuff).addClass('damage_received').text(data.damage_received).attr('title', <?=__j('Erlittener Schaden')?>).qtip(game.render.html.qtip.ingame('top'));
-                $('<span />').appendTo(stuff).addClass('energy_lost').text(data.energy_lost).attr('title', <?=__j('Verbrauchte Energie')?>).qtip(game.render.html.qtip.ingame('top'));
-                $('<span />').appendTo(stuff).addClass('damage_dealt').text(data.damage_dealt).attr('title', <?=__j('Angerichteter Schaden')?>).qtip(game.render.html.qtip.ingame('top'));
+                $('<span />').appendTo(stuff).addClass('damage_received').text(Math.round10(data.damage_received,-2)).attr('title', <?=__j('Erlittener Schaden')?>).qtip(game.render.html.qtip.ingame('top'));
+                $('<span />').appendTo(stuff).addClass('energy_lost').text(Math.round10(data.energy_lost,-2)).attr('title', <?=__j('Verbrauchte Energie')?>).qtip(game.render.html.qtip.ingame('top'));
+                $('<span />').appendTo(stuff).addClass('damage_dealt').text(Math.round10(data.damage_dealt,-2)).attr('title', <?=__j('Angerichteter Schaden')?>).qtip(game.render.html.qtip.ingame('top'));
                 $('<span />').appendTo(stuff).addClass('zombies_killed').text(data.kills).attr('title', <?=__j('Vernichtete Zombies')?>).qtip(game.render.html.qtip.ingame('top'));
 
                 $.each(data.items_lost, function(k,item) {
@@ -325,12 +325,12 @@
                     if (obj.missed)
                         calc.append($('<span />').addClass('fa fa-ban')).append($('<span />').text(<?=__j('Verfehlt!')?>));
                     else {
-                        calc.append($('<span />').addClass('calculation damage').append($('<span />').text(obj.damage)).append($('<img />').attr('src','media/icons/atk1.gif')));
+                        calc.append($('<span />').addClass('calculation damage').append($('<span />').text(Math.round10(obj.damage,-1))).append($('<img />').attr('src','media/icons/atk1.gif')));
                         if (obj.protection.value)
-                            calc.append($('<i />').addClass('fa fa-caret-right')).append($('<span />').addClass('calculation protection').append($('<span />').text(obj.protection.value)).append($('<img />').attr('src','media/icons/atk2.gif')));
+                            calc.append($('<i />').addClass('fa fa-caret-right')).append($('<span />').addClass('calculation protection').append($('<span />').text(Math.round10(obj.protection.value,-1))).append($('<img />').attr('src','media/icons/atk2.gif')));
                     }
 
-                    result.append($('<span />').addClass('final damage').append($('<span />').text(obj.damage - obj.protection.value)).append($('<img />').attr('src','media/icons/damage.gif')));
+                    result.append($('<span />').addClass('final damage').append($('<span />').text(Math.round10(obj.damage - obj.protection.value, -2))).append($('<img />').attr('src','media/icons/damage.gif')));
                     if (obj.kills > 0)
                         result.append($('<span />').addClass('final kills').append($('<span />').text(obj.attacker.is_zombie ? '' : obj.kills)).append($('<img />').attr('src',obj.attacker.is_zombie ? 'media/icons/killc.gif' : 'media/icons/killz.gif')));
                 }

@@ -188,7 +188,7 @@
                     if (actions.length) content.append('<span class="separator" />');
                     $.each(v.actions, function(k,v) {
                         content.append(
-                            core.snippets.button(v)
+                            core.snippets.button(v, false, 'nested')
                         )
                     });
 
@@ -258,6 +258,23 @@
         );
 
         render_block(data.player, iv_a, <?=__j('Dein Rucksack')?>, true);
+
+        iv_a.append(
+            $('<div />')
+                .addClass('row').append($('<div />').addClass('cell rw-12 padded').append($('<div />').addClass('weightbar').append($('<div />').css('width', (100*data.weight[0]/data.weight[1]) + '%'))))
+                .attr('title','-').qtip(game.render.html.qtip.ingame('bottom', {
+                    render: function(event,api) {
+                        var content = $(this).find('.qtip-content').empty();
+
+                        content
+                            .append($('<b />').addClass('header').text(<?=__j('Gewicht')?>))
+                            .append($('<span />').text(<?=__j('Du kannst nur so viel Zeug mit dir rumschleppen wie du tragen kannst. Wenn dein Rucksack voll ist musst du wohl oder übel Gegenstände liegen lassen.')?>))
+                            .append($('<span />').addClass('separator'))
+                            .append($('<div />').addClass('center').text(<?=__j('Aktueller Wert')?> + ': ' + Math.round10(data.weight[0],-2) + ' / ' + Math.round10(data.weight[1], -2)))
+                    }
+                }))
+        );
+
         render_block(data.location, iv_b, data.home ? <?=__j('Deine Truhe')?> : <?=__j('Items am Boden')?>, false);
 
         if (data.action) {

@@ -73,9 +73,9 @@ class Controller_Game extends Controller {
 
         // Calculate danger level
         $danger = ($radar_prop > 0) ? floor($radar_max/4) : 0;              // Base value: Max attack group size
-        if (!$protected_hideout && $radar_prop <= 1.5)     $danger += 2;    // Increase by 2 if we have a very high attack probability
-        elseif (!$protected_hideout && $radar_prop <= 3)   $danger += 1;    // Increase by 1 if we have a high attack probability
-        elseif ($radar_prop <= 15)  $danger -= 1;                           // Decrease by 1 if we have a very low attack probability
+        if (!$protected_hideout && $radar_prop <= 1.5 && $radar_prop > 0)     $danger += 2;    // Increase by 2 if we have a very high attack probability
+        elseif (!$protected_hideout && $radar_prop <= 3 && $radar_prop > 0)   $danger += 1;    // Increase by 1 if we have a high attack probability
+        elseif ($radar_prop <= 15  || $radar_prop == 0)  $danger -= 1;                           // Decrease by 1 if we have a very low attack probability
         if ($radar_increase != 0 && $radar_increase <= 3)   $danger += 1;   // Increase by 1 if we have a very high blocking speed
         $danger = min(5,max(($radar_prop > 0) ? 1 : 0,$danger));            // Confine danger to 0-5 range
 
@@ -91,7 +91,8 @@ class Controller_Game extends Controller {
             'meta' => [
                 'name' => __($player->location()->name()),
                 'desc' => __($player->location()->description()),
-                'outside' => $player->location()->is_outside()
+                'outside' => $player->location()->is_outside(),
+                'css' => $player->location()->getCustomStyle(),
             ],
             'actions' => $a,
             'hideout' => $hideout ? [
@@ -387,17 +388,53 @@ class Controller_Game extends Controller {
         ]);
     }
 
+    private function render_specials() {
+        /**
+         * @global $game Model_Game
+         * @global $player Model_Player
+         */
+        global $game, $player;
+
+        // Colosseum
+        if (Tool_System::instance_of($player->location(), 'Model_Places_Colosseum')) {
+            /** @var Model_Places_Colosseum $colosseum */
+            $colosseum = $player->location();
+            $cfg = $colosseum->get_config();
+            if ($cfg['distance'] < 10)		$arena = 0;
+            elseif ($cfg['distance'] < 30)	$arena = 1;
+            elseif ($cfg['distance'] < 60)	$arena = 2;
+            else							$arena = 3;
+
+            $this->add_data('location', ['colosseum' => [
+                'level' => $colosseum->level(),
+                'rank' => min(4,floor(($colosseum->level() - 1)/5) + 1),
+                'arena' => $arena
+            ]]);
+        }
+    }
+
     /**
      * Renderer API
      * @throws Kohana_Exception
      */
     public function japi_data() {
+        /**
+         * @global $player Model_Player
+         */
+        global $player;
+
+        if (!$player->alive()) {
+            $this->render_notifications();
+            return $this->render(['redirect' => 'game/redirect']);
+        }
+
         $this->render_location();
         $this->render_inventory();
         $this->render_status();
         $this->render_settings();
         $this->render_clock();
         $this->render_log();
+        $this->render_specials();
         $this->render_notifications();
 
         $version_data = Kohana::$config->load('build.version');

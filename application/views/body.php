@@ -48,7 +48,13 @@
             <img src="media/img/small.png" alt="Zombvival">
             <i id="main_backend" class="min pointer" style="cursor: pointer">[Back-End]</i>
         </div>
+
+        <div class="cell rw-10 ro-1 center">
+            <b><?=__('Eine Übersicht über Bilder anderer Autoren findet sich hier:')?></b> <a href="#" id="license_link"><?=__('Bildmaterial')?></a>
+        </div>
     </div>
+
+
 </div>
 
 <script type="application/javascript">
@@ -56,6 +62,10 @@
     $('#lang-select').find('> img').qtip(game.render.html.qtip.lang()).click(function() {
         game.lang($(this).attr('alt'));
         game.network.load('web/body');
+    });
+
+    $('#license_link').click(function() {
+        game.network.load('account/license');
     });
 
     $('#main_donate').click(function() {

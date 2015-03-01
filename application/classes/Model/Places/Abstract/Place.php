@@ -8,6 +8,8 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 	protected static $description;
     protected static $outside = true;
 
+    protected static $custom_style = null;
+
     protected static $perpetualDaytime = null;
 
 	protected static $widget_list = Array(
@@ -37,6 +39,10 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 	public function widget_list() {
 		return static::$widget_list;
 	}
+
+    public static function getCustomStyle() {
+        return static::$custom_style;
+    }
 
     protected function create_npcs() {
         return array();

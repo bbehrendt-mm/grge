@@ -1,13 +1,12 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Item implements Interface_Countable {
+abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label implements Interface_Countable {
 	protected static $cat = Model_Items_Abstract_Item::MIAI_CAT_BOTTLES;
 
 	protected static $capacity = 4;
 
 	private $fillrate;
 	public $toxicity;
-	private $label;
 
     protected function hid() {
         $php53pb = $this;
@@ -222,19 +221,6 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Item imp
 		$player->location()->inventory()->add(new Model_Items_Generic_Waterv($this->toxicity()));
 		$this->consume();
 	
-		return true;
-	}
-	
-	public function interaction_label($arg) {
-        /** @global Model_Player $player */
-        global $player;
-
-		$arg = substr(preg_replace('/[^0-9a-zA-ZäöüÄÖÜ\+\-&.,:% _]+/i', ' ', $arg), 0, 12);
-		$this->label = $arg;
-		
-		if ($this->label == '') $player->log()->add(new Model_Log_Types_Text(null, null, 'Du hast die alte Beschriftung weggewischt.'));
-		else $player->log()->add(new Model_Log_Types_Text(null, null, 'Du hast die alte Beschriftung weggewischt und ":label" auf die Flasche geschrieben.', array(':label' => $this->label)));
-		
 		return true;
 	}
 		

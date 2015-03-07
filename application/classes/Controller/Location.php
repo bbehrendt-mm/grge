@@ -33,6 +33,31 @@ class Controller_Location extends Controller_Game {
         $this->siege(false);
     }
 
+    public function japi_scout() {
+        /**
+         * @global $game Model_Game
+         * @global $player Model_Player
+         */
+        global $game, $player;
+
+        if ($player->buff_retr('fragile')) return;
+
+        if ($game->config('modules.mapping') && $player->inventory()->get('Model_Items_Maptool') && !Tool_System::instance_of($player->location(), 'Model_Places_Abstract_Xmas') && !Tool_System::instance_of($player->location(), 'Model_Places_Abstract_Hideout') && !Tool_System::instance_of($player->location(), 'Model_Places_Abstract_Node')) {
+            /** @var Model_Items_Maptool $mapper */
+            $mapper = $player->inventory()->get('Model_Items_Maptool'); $mapper = $mapper[0];
+
+            $mp_lv =  $this->request->post('speed');
+            if ($mp_lv == 'item') $mp_lv = true;
+            else {
+                $mp_lv = (int)$mp_lv;
+                if ($mp_lv < 1 || $mp_lv > 3) return;
+            }
+
+            $mapper->start_mapping($mp_lv);
+            $this->japi_data();
+        }
+    }
+
     /**
      * @param Model_Blueprints $blueprints
      * @return mixed
@@ -46,6 +71,8 @@ class Controller_Location extends Controller_Game {
         foreach ($data as &$blueprint) {
             foreach (['name','description'] as $key)
                 $blueprint[$key] = __($blueprint[$key]);
+            foreach ($blueprint['categories'] as &$cat)
+                $cat = __($cat);
             foreach (['material_in','material_out'] as $key)
                 foreach ($blueprint[$key] as &$material)
                     $material['name'] = __($material['name']);

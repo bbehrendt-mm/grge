@@ -6,7 +6,7 @@ core = {
     parts: {},
     snippets: {},
 
-    version: '2.0.0-0-1-46',
+    version: '2.0.0-0-1-47',
 
     last: {},
 
@@ -296,12 +296,30 @@ core = {
                     );
 
                     var subhead = $();
-                    if (v.label)  subhead = subhead.add($('<i />').addClass('note center').text(v.label));
+                    if (v.label && !v.custom_label)
+                        subhead = subhead.add($('<i />').addClass('note center').text(v.label));
                     if (v.count && !v.fill)  subhead = subhead.add($('<i />').addClass('note center').text(v.count + (v.capacity ? (' / ' + v.capacity + ' ') : ' ' ) + v.stack));
                     if (v.weight) subhead = subhead.add($('<i />').addClass('note center').text("Gewicht" + ': ' + v.weight));
 
                     if (subhead.size())
                         content.append(subhead).append('<span class="separator" />');
+
+                    if (v.custom_label) {
+                        content
+                            .append(
+                                $('<div />').addClass('row').append(
+                                    $('<div />').addClass('cell rw-12').append(
+                                        $('<input>').val(v.label ? v.label : '').attr('type','text').attr('placeholder', "Beschriften ...").addClass('form_input').attr('autocomplete','off').on('keydown', function(e) {
+                                            if (e.keyCode == 13) {
+                                                e.preventDefault();
+                                                core.command('act/inventory',{action: 'label', items: [v.uin], text: $(this).val()});
+                                            }
+                                        }))
+                                )
+                            )
+                            .append($('<i />').addClass('note center').text("Du kannst diesen Gegenstand beliebig beschriften. Best\u00e4tige deine Beschriftung mit der Eingabetaste."))
+                            .append('<span class="separator" />');
+                    }
 
                     if (v.is_chem) {
                         content.append(
@@ -380,6 +398,27 @@ core = {
                             $('<div />').addClass('note').text(v)
                         )
                     });
+
+                    if (v.ammobelt) {
+                        var ammo_slots;
+                        content.append('<span class="separator" />').append(
+                            ammo_slots = $('<div />').addClass('center')
+                        ).append($('<i />').addClass('note justify').text("Klicke Munition an, um sie abzulegen."));
+                        $.each(v.ammobelt, function(k,vin) {
+                            ammo_slots.append($('<div />').addClass('itembox pointer').append($('<img />').attr('src','media/icons/' + vin.icon + '.gif')).append($('<span />').text(vin.count)).click(function() {
+                                var ok = false;
+                                var num;
+                                while (!ok) {
+                                    num = prompt("Wie viel Munition m\u00f6chtest du ablegen?" + ' (1 - ' + (vin.count) + ')', vin.count);
+                                    if (num == null) break;
+                                    num = parseInt(num);
+                                    if (isFinite(num) && num > 1 && num <= vin.count) ok = true;
+                                }
+                                if (ok) core.command('act/inventory',{action: 'belt', items: [v.uin], count: num, addr: vin.addr});
+                            }))
+                        });
+
+                    }
 
                     if (v.static > 1) {
                         content.append('<span class="separator" />').append(core.snippets.button(rucksack ? "Alle ablegen" : "Alle mitnehmen", function() {
@@ -503,7 +542,7 @@ core = {
                     for (i = d; i >= 0; i--)
                         timerow.append($('<div />').addClass('cell rw-' + l).append(
                             $('<div />').append(
-                                $('<b />').text(elems[i])
+                                $('<h4 />').text(elems[i])
                             ).append(
                                 $('<span />').text(data.action.remaining[i])
                             )
@@ -567,6 +606,46 @@ core = {
             .append($('<span />').text(arenas[data.arena]))
             .attr('title', "Jede Arena des Colosseums stellt dich vor andere Herausforderungen. Achte darauf wo der n\u00e4chste Kampf stattfindet, um dich optimal zu bewaffnen.")
             .qtip(game.render.html.qtip.ingame('top'));
+    };
+
+    var scoutmode = function(data, target) {
+        console.log(data);
+        var level, tx;
+
+        $(target).empty()
+            .append(
+            $('<div />').addClass('cell rw-12 padded').append(
+                level = $('<div />').addClass('widget')
+            )
+        );
+
+        level.text("Detailgrad deiner Karte: ").append(tx = $('<b />').text(data.level + '%'));
+        level.attr('title','-').qtip(game.render.html.qtip.ingame('bottom', {
+            render: function() {
+                var content = $(this).find('.qtip-content').empty().append(
+                    $('<b />').addClass('header').text("Diesen Ort erkunden")
+                ).append(
+                    $('<span />').text("Um in diesem Spielmodus punkte zu sammeln, musst du so viele Ruinen wie m\u00f6glich kartographieren. Je gr\u00fcndlicher du arbeitest, desto schneller steigt der Detailgrad deiner Karte - aber du gehst auch ein gr\u00f6\u00dferes Risiko ein.")
+                ).append('<span class="separator" />')
+                .append(
+                    $('<div />').addClass('btn btn-zv').text("\u00dcberblicken").click(function() {
+                        core.command('location/scout', {speed: 1});
+                    })
+                ).append(
+                    $('<div />').addClass('btn btn-zv').text("Skizzieren").click(function() {
+                        core.command('location/scout', {speed: 2});
+                    })
+                ).append(
+                    $('<div />').addClass('btn btn-zv').text("Vermessen").click(function() {
+                        core.command('location/scout', {speed: 3});
+                    })
+                ).append(
+                    $('<div />').addClass('btn btn-zv ' + (data.laser ? '' : 'disabled')).text("Lasermessger\u00e4t einsetzen").click(function() {
+                        core.command('location/scout', {speed: 'item'});
+                    })
+                )
+            }
+        }))
     };
 
     var hideoutstats = function(data, target) {
@@ -682,7 +761,7 @@ core = {
     };
 
     core.parts.location = function(data, target) {
-        var zradar, hideout, actions, spc_colosseum;
+        var zradar, hideout, actions, spc_colosseum, spc_scout;
 
         $(target).empty().addClass('row location_box ' + (data.meta.outside ? 'outside' : 'inside')).append(
             $('<h2 />').text(data.meta.name)
@@ -693,6 +772,8 @@ core = {
                 hideout = data.hideout ? $('<div />').addClass('row') : null
             ).append(
                 spc_colosseum = data.colosseum ? $('<div />').addClass('row') : null
+            ).append(
+                spc_scout = data.scouting ? $('<div />').addClass('row') : null
             ).append(
                 actions = $('<div />').addClass('row')
             )
@@ -717,6 +798,8 @@ core = {
             hideoutstats(data.hideout, hideout);
         if (data.colosseum)
             colosseum(data.colosseum, spc_colosseum)
+        if (data.scouting)
+            scoutmode(data.scouting, spc_scout)
     };
 })();(function() {
     var renderers = {};
@@ -1131,41 +1214,42 @@ core.popup = {
                 width: '100%',
                 left: 0,
                 top: 0,
-                bottom: 26,
+                bottom: 36,
                 overflow: 'auto'
             }).appendTo(popup)
         );
 
-        var bottom = $('<div />').addClass('right').css({
+        var bottom = $('<div />').addClass('row').css({
             position: 'absolute',
             width: '100%',
             left: 0,
             bottom: 0,
-            height: 26,
+            height: 36,
             overflow: 'auto'
         }).appendTo(popup);
 
-        $('<div />').addClass('btn small').text("Abbrechen").appendTo(bottom).click(function() {
+        $('<div />').addClass('btn').text("Abbrechen").appendTo($('<div />').addClass('cell rw-4').appendTo(bottom)).click(function() {
             popup.trigger('unpop');
         });
-        $('<div />').addClass('btn small').text("Anwenden").appendTo(bottom).click(function() {
+        $('<div />').addClass('btn').text("Anwenden").appendTo($('<div />').addClass('cell ro-4 rw-4').appendTo(bottom)).click(function() {
             callback(typeFilterData);
             popup.trigger('unpop');
         });
 
-        var typefilters, classfilters;
+        var typefilters, classfilters, class_cell;
         frame.append(
             $('<div />').addClass('row').append(
-                typefilters = $('<div />').addClass('cell rw-6')
+                $('<div />').addClass('cell rw-12 padded').append($('<div />').addClass('flatbox').append($('<h3 />').text("Status")).append(typefilters = $('<div />').addClass('row')))
             ).append(
-                classfilters = $('<div />').addClass('cell rw-6')
+                class_cell = $('<div />').addClass('cell rw-12 padded').append($('<div />').addClass('flatbox').append($('<h3 />').text("Kategorie")).append(classfilters = $('<div />').addClass('row')))
             )
         );
 
         $.each(typeFilterData, function(id, obj) {
+            if (id == 'categories') return;
             var chk;
             typefilters.append(
-                $('<div />').append(
+                $('<div />').addClass('cell rw-6').append(
                     $('<label />').text(obj.name).prepend(
                         chk = $('<input />').attr('type', 'checkbox').data('tid', id).prop('checked', obj.active).click(function() {
                             typeFilterData[id].active = $(this).is(':checked');
@@ -1174,7 +1258,27 @@ core.popup = {
                 )
             );
             chk.customRadioCheck();
-        })
+        });
+
+        var has_cats = false;
+        $.each(typeFilterData.categories, function(name, active) {
+            var chk;
+            classfilters.append(
+                $('<div />').addClass('cell rw-4').append(
+                    $('<label />').text(name).prepend(
+                        chk = $('<input />').attr('type', 'checkbox').data('cid', name).prop('checked', active).click(function() {
+                            typeFilterData.categories[name] = $(this).is(':checked');
+                        })
+                    )
+                )
+            );
+            chk.customRadioCheck();
+            has_cats = true;
+        });
+
+        if (!has_cats)
+            class_cell.hide();
+        else class_cell.show();
     },
 
     genericBlueprintLoader: function(type, popup, data, frame, filters, close) {
@@ -1197,23 +1301,26 @@ core.popup = {
                     'locked': {active: true, name: "Gesperrte Projekte"},
                     'possible': {active: true, name: "Vorbereitete Projekte"},
                     'ready': {active: true, name: "M\u00f6gliche Projekte"},
-                    'done': {active: true, name: "Abgeschlossene Projekte"}
+                    'done': {active: true, name: "Abgeschlossene Projekte"},
+                    'categories': {}
             }).on('filter', function() {
                     var typefilters = $(this).data('type-filters');
-                    if (typefilters.impossible.active)  $(this).find('.blueprint.red').parent().show();
-                    else                                $(this).find('.blueprint.red').parent().hide();
 
-                    if (typefilters.locked.active)      $(this).find('.blueprint.plain').parent().show();
-                    else                                $(this).find('.blueprint.plain').parent().hide();
+                    if ($.objToArray(typefilters.categories).length)
+                        $(this).find('.blueprint').parent().hide();
+                    else $(this).find('.blueprint').parent().show();
 
-                    if (typefilters.possible.active)    $(this).find('.blueprint.green').parent().show();
-                    else                                $(this).find('.blueprint.green').parent().hide();
+                    var alias = $(this);
+                    $.each(typefilters.categories, function(name, active) {
+                        if (active)
+                            alias.find('.blueprint[data-cats*="|' + name + '|"]').parent().show();
+                    });
 
-                    if (typefilters.ready.active)       $(this).find('.blueprint.green.active').parent().show();
-                    else                                $(this).find('.blueprint.green.active').parent().hide();
-
-                    if (typefilters.done.active)        $(this).find('.blueprint.blue').parent().show();
-                    else                                $(this).find('.blueprint.blue').parent().hide();
+                    if (!typefilters.impossible.active)  $(this).find('.blueprint.red').parent().hide();
+                    if (!typefilters.locked.active)      $(this).find('.blueprint.plain').parent().hide();
+                    if (!typefilters.possible.active)    $(this).find('.blueprint.green').parent().hide();
+                    if (!typefilters.ready.active)       $(this).find('.blueprint.green.active').parent().hide();
+                    if (!typefilters.done.active)        $(this).find('.blueprint.blue').parent().hide();
             });
 
             $('<div />').addClass('row').append(
@@ -1234,9 +1341,12 @@ core.popup = {
 
         var build_func = function(bdata) {
             frame.empty();
+            var categories = {};
             $.each(bdata.blueprints, function(k,v) {
                 if (v.hidden) return;
-
+                $.each(v.categories, function(i,cat) {
+                    categories[cat] = true;
+                });
                 frame.append($('<div />').addClass('cell padded rw-4').append(core.snippets.blueprint(v, bdata.energy, bdata.zombies, bdata.blueprints, function() {
                     var prev_scroll = $('.popup').find('>*:first-child').scrollTop();
                     popup.addClass('disabled');
@@ -1252,7 +1362,13 @@ core.popup = {
                         })
                     }, true)
                 })));
-            })
+            });
+
+            var tf = frame.data('type-filters');
+            $.each(categories, function(name, t) {
+                tf.categories[name] = typeof tf.categories[name] !== "undefined" ? tf.categories[name] : true;
+            });
+            frame.data('type-filters', tf);
         };
 
         if (!data) {
@@ -1872,6 +1988,8 @@ core.popup = {
         var mt_in = $('<div />').addClass('cell rw-12').appendTo(ext);
         var mt_out = $('<div />').addClass('cell rw-12').appendTo(ext);
         var mt_zmb = $('<div />').addClass('cell rw-12').appendTo(ext);
+
+        button.attr('data-cats', '|' + $.objToArray(blueprint.categories, true).join('|') + '|');
 
         if (blueprint.build)
             button.addClass('blue');

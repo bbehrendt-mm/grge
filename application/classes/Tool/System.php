@@ -73,4 +73,12 @@ class Tool_System {
 
         return $accum;
     }
+
+    public static function getClassID($class) {
+        if (is_object($class)) $class = get_class($class);
+        $cache = Cache::instance();
+        $addr = $cache->get('classes.' . $class, substr(md5($class . '__salt'), 0, 5));
+        $cache->set('classes.' . $class, $addr);
+        return $addr;
+    }
 }

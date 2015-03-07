@@ -47,41 +47,42 @@ core.popup = {
                 width: '100%',
                 left: 0,
                 top: 0,
-                bottom: 26,
+                bottom: 36,
                 overflow: 'auto'
             }).appendTo(popup)
         );
 
-        var bottom = $('<div />').addClass('right').css({
+        var bottom = $('<div />').addClass('row').css({
             position: 'absolute',
             width: '100%',
             left: 0,
             bottom: 0,
-            height: 26,
+            height: 36,
             overflow: 'auto'
         }).appendTo(popup);
 
-        $('<div />').addClass('btn small').text(<?=__j('Abbrechen');?>).appendTo(bottom).click(function() {
+        $('<div />').addClass('btn').text(<?=__j('Abbrechen');?>).appendTo($('<div />').addClass('cell rw-4').appendTo(bottom)).click(function() {
             popup.trigger('unpop');
         });
-        $('<div />').addClass('btn small').text(<?=__j('Anwenden');?>).appendTo(bottom).click(function() {
+        $('<div />').addClass('btn').text(<?=__j('Anwenden');?>).appendTo($('<div />').addClass('cell ro-4 rw-4').appendTo(bottom)).click(function() {
             callback(typeFilterData);
             popup.trigger('unpop');
         });
 
-        var typefilters, classfilters;
+        var typefilters, classfilters, class_cell;
         frame.append(
             $('<div />').addClass('row').append(
-                typefilters = $('<div />').addClass('cell rw-6')
+                $('<div />').addClass('cell rw-12 padded').append($('<div />').addClass('flatbox').append($('<h3 />').text(<?=__j('Status')?>)).append(typefilters = $('<div />').addClass('row')))
             ).append(
-                classfilters = $('<div />').addClass('cell rw-6')
+                class_cell = $('<div />').addClass('cell rw-12 padded').append($('<div />').addClass('flatbox').append($('<h3 />').text(<?=__j('Kategorie')?>)).append(classfilters = $('<div />').addClass('row')))
             )
         );
 
         $.each(typeFilterData, function(id, obj) {
+            if (id == 'categories') return;
             var chk;
             typefilters.append(
-                $('<div />').append(
+                $('<div />').addClass('cell rw-6').append(
                     $('<label />').text(obj.name).prepend(
                         chk = $('<input />').attr('type', 'checkbox').data('tid', id).prop('checked', obj.active).click(function() {
                             typeFilterData[id].active = $(this).is(':checked');
@@ -90,7 +91,27 @@ core.popup = {
                 )
             );
             chk.customRadioCheck();
-        })
+        });
+
+        var has_cats = false;
+        $.each(typeFilterData.categories, function(name, active) {
+            var chk;
+            classfilters.append(
+                $('<div />').addClass('cell rw-4').append(
+                    $('<label />').text(name).prepend(
+                        chk = $('<input />').attr('type', 'checkbox').data('cid', name).prop('checked', active).click(function() {
+                            typeFilterData.categories[name] = $(this).is(':checked');
+                        })
+                    )
+                )
+            );
+            chk.customRadioCheck();
+            has_cats = true;
+        });
+
+        if (!has_cats)
+            class_cell.hide();
+        else class_cell.show();
     },
 
     genericBlueprintLoader: function(type, popup, data, frame, filters, close) {
@@ -113,23 +134,26 @@ core.popup = {
                     'locked': {active: true, name: <?=__j('Gesperrte Projekte')?>},
                     'possible': {active: true, name: <?=__j('Vorbereitete Projekte')?>},
                     'ready': {active: true, name: <?=__j('Mögliche Projekte')?>},
-                    'done': {active: true, name: <?=__j('Abgeschlossene Projekte')?>}
+                    'done': {active: true, name: <?=__j('Abgeschlossene Projekte')?>},
+                    'categories': {}
             }).on('filter', function() {
                     var typefilters = $(this).data('type-filters');
-                    if (typefilters.impossible.active)  $(this).find('.blueprint.red').parent().show();
-                    else                                $(this).find('.blueprint.red').parent().hide();
 
-                    if (typefilters.locked.active)      $(this).find('.blueprint.plain').parent().show();
-                    else                                $(this).find('.blueprint.plain').parent().hide();
+                    if ($.objToArray(typefilters.categories).length)
+                        $(this).find('.blueprint').parent().hide();
+                    else $(this).find('.blueprint').parent().show();
 
-                    if (typefilters.possible.active)    $(this).find('.blueprint.green').parent().show();
-                    else                                $(this).find('.blueprint.green').parent().hide();
+                    var alias = $(this);
+                    $.each(typefilters.categories, function(name, active) {
+                        if (active)
+                            alias.find('.blueprint[data-cats*="|' + name + '|"]').parent().show();
+                    });
 
-                    if (typefilters.ready.active)       $(this).find('.blueprint.green.active').parent().show();
-                    else                                $(this).find('.blueprint.green.active').parent().hide();
-
-                    if (typefilters.done.active)        $(this).find('.blueprint.blue').parent().show();
-                    else                                $(this).find('.blueprint.blue').parent().hide();
+                    if (!typefilters.impossible.active)  $(this).find('.blueprint.red').parent().hide();
+                    if (!typefilters.locked.active)      $(this).find('.blueprint.plain').parent().hide();
+                    if (!typefilters.possible.active)    $(this).find('.blueprint.green').parent().hide();
+                    if (!typefilters.ready.active)       $(this).find('.blueprint.green.active').parent().hide();
+                    if (!typefilters.done.active)        $(this).find('.blueprint.blue').parent().hide();
             });
 
             $('<div />').addClass('row').append(
@@ -150,9 +174,12 @@ core.popup = {
 
         var build_func = function(bdata) {
             frame.empty();
+            var categories = {};
             $.each(bdata.blueprints, function(k,v) {
                 if (v.hidden) return;
-
+                $.each(v.categories, function(i,cat) {
+                    categories[cat] = true;
+                });
                 frame.append($('<div />').addClass('cell padded rw-4').append(core.snippets.blueprint(v, bdata.energy, bdata.zombies, bdata.blueprints, function() {
                     var prev_scroll = $('.popup').find('>*:first-child').scrollTop();
                     popup.addClass('disabled');
@@ -168,7 +195,13 @@ core.popup = {
                         })
                     }, true)
                 })));
-            })
+            });
+
+            var tf = frame.data('type-filters');
+            $.each(categories, function(name, t) {
+                tf.categories[name] = typeof tf.categories[name] !== "undefined" ? tf.categories[name] : true;
+            });
+            frame.data('type-filters', tf);
         };
 
         if (!data) {

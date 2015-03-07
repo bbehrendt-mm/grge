@@ -159,7 +159,7 @@ class Controller_Game extends Controller {
                 'icon' => $item->icon(),
                 'weight' => $item->weight(),
                 'actions' => $this->prepare_actionlist($item->auto_actions()),
-                'addr' => substr(md5(get_class($item) . '__salt'), 0, 5),
+                'addr' => Tool_System::getClassID($item),
                 'flags' => $flags,
                 'uin' => $item->uin(),
                 'set' => [$item->uin()],
@@ -168,9 +168,28 @@ class Controller_Game extends Controller {
                 'label' => $item->label()
             ];
 
+            if (Tool_System::instance_of($item, 'Interface_Label'))
+                $data['custom_label'] = true;
+
             if (Tool_System::instance_of($item, 'Interface_Countable') && !Tool_System::instance_of($item, 'Model_Items_Abstract_Bottle')) {
                 $data['count'] = $item->count();
                 $data['capacity'] = $item->capacity();
+            }
+
+            if (Tool_System::instance_of($item, 'Model_Items_Ammobelt')) {
+                $tmp_ammo = [];
+
+                /** @var Model_Items_Ammobelt $item */
+                foreach ($item->contains() as $class => $value) {
+                    /** @var Model_Items_Abstract_Ammo $class */
+                    $tmp_ammo[] = [
+                        'addr' => Tool_System::getClassID($class),
+                        'icon' => $class::static_icon(),
+                        'count' => $value
+                    ];
+                }
+
+                $data['ammobelt'] = $tmp_ammo;
             }
 
             /** @var Interface_Fillable|Model_Items_Abstract_Bottle $item */
@@ -409,6 +428,17 @@ class Controller_Game extends Controller {
                 'level' => $colosseum->level(),
                 'rank' => min(4,floor(($colosseum->level() - 1)/5) + 1),
                 'arena' => $arena
+            ]]);
+        }
+
+        //Last Scout
+        if ($game->config('modules.mapping') && $player->inventory()->get('Model_Items_Maptool') && !Tool_System::instance_of($player->location(), 'Model_Places_Abstract_Xmas') && !Tool_System::instance_of($player->location(), 'Model_Places_Abstract_Hideout') && !Tool_System::instance_of($player->location(), 'Model_Places_Abstract_Node')) {
+            /** @var Model_Items_Maptool $mapper */
+            $mapper = $player->inventory()->get('Model_Items_Maptool'); $mapper = $mapper[0];
+
+            $this->add_data('location', ['scouting' => [
+                'level' => $mapper->get_map_details() * 33 + ($mapper->get_map_details() == 3 ? 1 : 0),
+                'laser' => Tool_Scripts::count_available_items('Model_Items_Generic_Lasermapper'),
             ]]);
         }
     }

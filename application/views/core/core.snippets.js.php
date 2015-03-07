@@ -192,6 +192,8 @@
         var mt_out = $('<div />').addClass('cell rw-12').appendTo(ext);
         var mt_zmb = $('<div />').addClass('cell rw-12').appendTo(ext);
 
+        button.attr('data-cats', '|' + $.objToArray(blueprint.categories, true).join('|') + '|');
+
         if (blueprint.build)
             button.addClass('blue');
         else if (blueprint.build_possible && blueprint.slot_open) {

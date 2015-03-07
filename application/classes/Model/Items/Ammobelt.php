@@ -71,9 +71,8 @@ class Model_Items_Ammobelt extends Model_Items_Abstract_Item {
 	public function contains() {
 		$ret = Array();
 		foreach ($this->content as $class => $value)
-            /** @var $class string|Model_Items_Abstract_Item */
             if ($value > 0)
-                $ret[$class::static_icon()] = $value;
+                $ret[$class] = $value;
 		
 		return $ret;
 	}
@@ -109,25 +108,4 @@ class Model_Items_Ammobelt extends Model_Items_Abstract_Item {
 			$ret[] = new $type($count);
 		return $ret;
 	}
-
-    public function interaction_ammodrop($arg) {
-        /**
-         * @global $player Model_Player
-         */
-        global $player;
-
-        if (!is_array($arg) || !isset($arg['type']) || !isset($arg['count']))
-            return;
-
-        if ((int)$arg['count'] <= 0) return;
-
-        foreach ($this->content as $class => $value)
-            if (md5($class::static_icon()) == $arg['type']) {
-                if ($this->get($class, (int)$arg['count']))
-                    $player->location()->inventory()->add(new $class((int)$arg['count']));
-                else $player->log()->add(new Model_Log_Types_Text(null, null, 'Soviele hast du nicht dabei.'));
-                break;
-            }
-
-    }
 }	

@@ -186,6 +186,40 @@ class Controller_Act extends Controller_Game {
         }
     }
 
+    private function inventory_belt($id, $addr, $count) {
+        /**
+         * @global Model_Game $game
+         * @global Model_Player $player
+         */
+        global $game, $player;
+        /** @var Model_Items_Ammobelt $belt */
+        $belt = $game->uin()->get($id, 'Model_Items_Ammobelt');
+        if (!$belt) return;
+
+        foreach ($belt->contains() as $class => $c)
+            if (Tool_System::getClassID($class) == $addr) {
+                if (!$belt->get($class, $count))
+                    $player->log()->add('Soviele hast du nicht dabei.');
+                else
+                    $player->location()->inventory()->add(new $class($count));
+                break;
+            }
+    }
+
+    private function inventory_label($id, $text) {
+        /**
+         * @global Model_Game $game
+         * @global Model_Player $player
+         */
+        global $game;
+        /** @var Model_Items_Ammobelt $belt */
+        $item = $game->uin()->get($id, 'Interface_Label');
+        if (!$item) return;
+
+        /** @var Interface_Label $item */
+        $item->set_label($text);
+    }
+
     public function japi_inventory() {
         /**
          * @global $game Model_Game
@@ -211,7 +245,7 @@ class Controller_Act extends Controller_Game {
         if (!$p->location()) return;
 
         //Check params
-        if (!in_array($action, ($p->id() != $player->id()) ? ['take'] : ['take','drop','fill','defill','spill','mix','pilldrop','pilltake']))
+        if (!in_array($action, ($p->id() != $player->id()) ? ['take'] : ['take','drop','fill','defill','spill','mix','pilldrop','pilltake','belt','label']))
             return;
 
         $lost = false;
@@ -220,6 +254,8 @@ class Controller_Act extends Controller_Game {
                 unset($items[$i]);
                 $lost = true;
             }
+
+        if (!count($items)) return;
 
         //Transfer items
         if (in_array($action, ['take','drop']))
@@ -234,6 +270,10 @@ class Controller_Act extends Controller_Game {
             $this->inventory_spill($items);
         elseif ($action == 'mix')
             $this->inventory_mix($items);
+        elseif ($action == 'belt')
+            $this->inventory_belt($items[0],$this->request->post('addr'),(int)$this->request->post('count'));
+        elseif ($action == 'label')
+            $this->inventory_label($items[0],$this->request->post('text'));
 
         //Message
         if ($lost) $player->log()->add('Die Aktion konnte nicht vollständig ausgeführt werden, da eines oder mehrere der ausgewählten Gegenstände nicht länger in deiner Reichweite sind.');

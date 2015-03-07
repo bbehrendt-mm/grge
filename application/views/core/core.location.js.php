@@ -33,6 +33,46 @@
             .qtip(game.render.html.qtip.ingame('top'));
     };
 
+    var scoutmode = function(data, target) {
+        console.log(data);
+        var level, tx;
+
+        $(target).empty()
+            .append(
+            $('<div />').addClass('cell rw-12 padded').append(
+                level = $('<div />').addClass('widget')
+            )
+        );
+
+        level.text(<?=__j('Detailgrad deiner Karte: ')?>).append(tx = $('<b />').text(data.level + '%'));
+        level.attr('title','-').qtip(game.render.html.qtip.ingame('bottom', {
+            render: function() {
+                var content = $(this).find('.qtip-content').empty().append(
+                    $('<b />').addClass('header').text(<?=__j('Diesen Ort erkunden')?>)
+                ).append(
+                    $('<span />').text(<?=__j('Um in diesem Spielmodus punkte zu sammeln, musst du so viele Ruinen wie möglich kartographieren. Je gründlicher du arbeitest, desto schneller steigt der Detailgrad deiner Karte - aber du gehst auch ein größeres Risiko ein.')?>)
+                ).append('<span class="separator" />')
+                .append(
+                    $('<div />').addClass('btn btn-zv').text(<?=__j('Überblicken')?>).click(function() {
+                        core.command('location/scout', {speed: 1});
+                    })
+                ).append(
+                    $('<div />').addClass('btn btn-zv').text(<?=__j('Skizzieren')?>).click(function() {
+                        core.command('location/scout', {speed: 2});
+                    })
+                ).append(
+                    $('<div />').addClass('btn btn-zv').text(<?=__j('Vermessen')?>).click(function() {
+                        core.command('location/scout', {speed: 3});
+                    })
+                ).append(
+                    $('<div />').addClass('btn btn-zv ' + (data.laser ? '' : 'disabled')).text(<?=__j('Lasermessgerät einsetzen')?>).click(function() {
+                        core.command('location/scout', {speed: 'item'});
+                    })
+                )
+            }
+        }))
+    };
+
     var hideoutstats = function(data, target) {
         var repair, defense, deco;
         $(target).empty()
@@ -146,7 +186,7 @@
     };
 
     core.parts.location = function(data, target) {
-        var zradar, hideout, actions, spc_colosseum;
+        var zradar, hideout, actions, spc_colosseum, spc_scout;
 
         $(target).empty().addClass('row location_box ' + (data.meta.outside ? 'outside' : 'inside')).append(
             $('<h2 />').text(data.meta.name)
@@ -157,6 +197,8 @@
                 hideout = data.hideout ? $('<div />').addClass('row') : null
             ).append(
                 spc_colosseum = data.colosseum ? $('<div />').addClass('row') : null
+            ).append(
+                spc_scout = data.scouting ? $('<div />').addClass('row') : null
             ).append(
                 actions = $('<div />').addClass('row')
             )
@@ -181,5 +223,7 @@
             hideoutstats(data.hideout, hideout);
         if (data.colosseum)
             colosseum(data.colosseum, spc_colosseum)
+        if (data.scouting)
+            scoutmode(data.scouting, spc_scout)
     };
 })();

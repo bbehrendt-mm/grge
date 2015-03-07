@@ -91,12 +91,30 @@
                     );
 
                     var subhead = $();
-                    if (v.label)  subhead = subhead.add($('<i />').addClass('note center').text(v.label));
+                    if (v.label && !v.custom_label)
+                        subhead = subhead.add($('<i />').addClass('note center').text(v.label));
                     if (v.count && !v.fill)  subhead = subhead.add($('<i />').addClass('note center').text(v.count + (v.capacity ? (' / ' + v.capacity + ' ') : ' ' ) + v.stack));
                     if (v.weight) subhead = subhead.add($('<i />').addClass('note center').text(<?=__j('Gewicht')?> + ': ' + v.weight));
 
                     if (subhead.size())
                         content.append(subhead).append('<span class="separator" />');
+
+                    if (v.custom_label) {
+                        content
+                            .append(
+                                $('<div />').addClass('row').append(
+                                    $('<div />').addClass('cell rw-12').append(
+                                        $('<input>').val(v.label ? v.label : '').attr('type','text').attr('placeholder', <?=__j('Beschriften ...')?>).addClass('form_input').attr('autocomplete','off').on('keydown', function(e) {
+                                            if (e.keyCode == 13) {
+                                                e.preventDefault();
+                                                core.command('act/inventory',{action: 'label', items: [v.uin], text: $(this).val()});
+                                            }
+                                        }))
+                                )
+                            )
+                            .append($('<i />').addClass('note center').text(<?=__j('Du kannst diesen Gegenstand beliebig beschriften. Bestätige deine Beschriftung mit der Eingabetaste.')?>))
+                            .append('<span class="separator" />');
+                    }
 
                     if (v.is_chem) {
                         content.append(
@@ -175,6 +193,27 @@
                             $('<div />').addClass('note').text(v)
                         )
                     });
+
+                    if (v.ammobelt) {
+                        var ammo_slots;
+                        content.append('<span class="separator" />').append(
+                            ammo_slots = $('<div />').addClass('center')
+                        ).append($('<i />').addClass('note justify').text(<?=__j('Klicke Munition an, um sie abzulegen.')?>));
+                        $.each(v.ammobelt, function(k,vin) {
+                            ammo_slots.append($('<div />').addClass('itembox pointer').append($('<img />').attr('src','media/icons/' + vin.icon + '.gif')).append($('<span />').text(vin.count)).click(function() {
+                                var ok = false;
+                                var num;
+                                while (!ok) {
+                                    num = prompt(<?=__j('Wie viel Munition möchtest du ablegen?')?> + ' (1 - ' + (vin.count) + ')', vin.count);
+                                    if (num == null) break;
+                                    num = parseInt(num);
+                                    if (isFinite(num) && num > 1 && num <= vin.count) ok = true;
+                                }
+                                if (ok) core.command('act/inventory',{action: 'belt', items: [v.uin], count: num, addr: vin.addr});
+                            }))
+                        });
+
+                    }
 
                     if (v.static > 1) {
                         content.append('<span class="separator" />').append(core.snippets.button(rucksack ? <?=__j('Alle ablegen')?> : <?=__j('Alle mitnehmen')?>, function() {
@@ -298,7 +337,7 @@
                     for (i = d; i >= 0; i--)
                         timerow.append($('<div />').addClass('cell rw-' + l).append(
                             $('<div />').append(
-                                $('<b />').text(elems[i])
+                                $('<h4 />').text(elems[i])
                             ).append(
                                 $('<span />').text(data.action.remaining[i])
                             )

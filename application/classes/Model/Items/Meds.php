@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Items_Meds extends Model_Items_Abstract_Stackable {
+class Model_Items_Meds extends Model_Items_Abstract_Stackable implements Interface_Label {
 
 	protected static $static_info = Array(
 			'name' => 'Glas mit bunten Pillen',
@@ -29,6 +29,7 @@ class Model_Items_Meds extends Model_Items_Abstract_Stackable {
     }
 
     private function create_action() {
+        /** @global Model_Player $player */
         global $player;
         $ret = Model_Action::factory();
         $eff = Model_Effect::factory()
@@ -75,7 +76,8 @@ class Model_Items_Meds extends Model_Items_Abstract_Stackable {
     }
 
     public function interaction_label($arg) {
-        global $game, $player;
+        /** @global Model_Player $player */
+        global $player;
 
         $arg = substr(preg_replace('/[^0-9a-zA-ZäöüÄÖÜ\+\-&.,:% _]+/i', ' ', $arg), 0, 24);
         $this->label = $arg;
@@ -89,4 +91,16 @@ class Model_Items_Meds extends Model_Items_Abstract_Stackable {
     public function label() {
         return $this->label;
     }
-}	
+
+    public function set_label($new_text) {
+        /** @global Model_Player $player */
+        global $player;
+
+        $new = (bool)$this->label;
+        $this->label = substr($new_text, 0, 20);
+
+        if ($this->label == '') $player->log()->add('Du hast die Beschriftung auf diesem Gegenstand weggewischt.');
+        elseif (!$new) $player->log()->add('Du hast diesen Gegenstand mit einer Beschriftung versehen.');
+        else $player->log()->add('Du hast die Beschriftung dieses Gegenstands geändert.');
+    }
+}

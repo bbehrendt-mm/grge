@@ -2888,4 +2888,64 @@ return array (
 	'The amount of things you can carry is somewhat limited. Once your rucksack is full, you will have to leave stuff behind.',
   'Aktueller Wert' =>
 	'Current value',
+  'Klicke Munition an, um sie abzulegen.' =>
+	'Klicke Munition an, um sie abzulegen.',
+  'Wie viel Munition möchtest du ablegen?' =>
+	'Wie viel Munition möchtest du ablegen?',
+  'Beschriften ...' =>
+	'Beschriften ...',
+  'Du hast diesen Gegenstand mit einer Beschriftung versehen.' =>
+	'Du hast diesen Gegenstand mit einer Beschriftung versehen.',
+  'Du hast die Beschriftung dieses Gegenstands geändert.' =>
+	'Du hast die Beschriftung dieses Gegenstands geändert.',
+  'Du hast die Beschriftung auf diesem Gegenstand weggewischt.' =>
+	'Du hast die Beschriftung auf diesem Gegenstand weggewischt.',
+  'Du kannst diesen gegenstand beliebig beschriften. Bestätige deine Beschriftung mit der Eingabetaste.' =>
+	'Du kannst diesen gegenstand beliebig beschriften. Bestätige deine Beschriftung mit der Eingabetaste.',
+  'Du kannst diesen Gegenstand beliebig beschriften. Bestätige deine Beschriftung mit der Eingabetaste.' =>
+	'Du kannst diesen Gegenstand beliebig beschriften. Bestätige deine Beschriftung mit der Eingabetaste.',
+  'Schlafzimmer' =>
+	'Schlafzimmer',
+  'Generator' =>
+	'Generator',
+  'Küche' =>
+	'Küche',
+  'Verteidigung' =>
+	'Defenses',
+  'Status' =>
+	'Status',
+  'Kategorie' =>
+	'Kategorie',
+  'Du hast leider keine neuen Informationen, die du an deine Stadt senden könntest...' =>
+	'You don\'t have any new information for your town...',
+  'Kleine Waffen-Reparaturwerkstatt' =>
+	'Kleine Waffen-Reparaturwerkstatt',
+  'Umfrangreiche Waffen-Reparaturwerkstatt' =>
+	'Umfrangreiche Waffen-Reparaturwerkstatt',
+  'Detailgrad deiner Karte: ' =>
+	'Detailgrad deiner Karte: ',
+  'Diesen Ort erkunden' =>
+	'Diesen Ort erkunden',
+  'Um in diesem Spielmodus punkte zu sammeln, musst du so viele Ruinen wie möglich kartographieren. Je gründlicher du arbeitest, desto schneller steigt der Detailgrad deiner Karte - aber du gehst auch ein größeres Risiko ein.' =>
+	'Um in diesem Spielmodus punkte zu sammeln, musst du so viele Ruinen wie möglich kartographieren. Je gründlicher du arbeitest, desto schneller steigt der Detailgrad deiner Karte - aber du gehst auch ein größeres Risiko ein.',
+  'Überblicken' =>
+	'Overlook',
+  'Skizzieren' =>
+	'Sketch',
+  'Vermessen' =>
+	'Measure',
+  'Lasermessgerät einsetzen' =>
+	'Use Laser Measuring Device',
+  ':zombiestr tauchen auf!' =>
+	':zombiestr appeared!',
+  'Kohana_Cache_File::_delete_file failed to delete file : :file' =>
+	'Kohana_Cache_File::_delete_file failed to delete file : :file',
+  'Baumarkt "EKEA"' =>
+	'Hardware Store "EKEA"',
+  'Karte zeichnen' =>
+	'Draw map',
+  'Du arbeitest gerade an einer Karte dieses Orts. Dies erfordert deine volle Konzentration - du kannst keine anderen Aktionen durchführen und diesen Ort nicht zwischendurch verlassen.' =>
+	'You are currently drawing a map of this place. This requires your undivided attention - you can not perform any other actions or leave this place until you are finished.',
+  'Du hast dein Kampfverhalten angepasst.' =>
+	'You have adjusted your battle behaviour.',
 );

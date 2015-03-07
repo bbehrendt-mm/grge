@@ -380,7 +380,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
                     }
             }
         } elseif ($battle_log = Tool_Scripts::battle($this->zombie_factory->spawn_zombies(), Tool_Scripts::at_location($this->uin), true, $battle, $zc)) {
-            $this->log->add(new Model_Log_Types_Battle(':zombiestr tauchen auf!', $battle_log, array(':zombiestr' => '<span class="value"><img src="/application/assets/icons/zombie.gif"></img>' . $zc . ' ' . __('Zombies') . '</span>')));
+            $this->log->add(new Model_Log_Types_Battle(':zombiestr tauchen auf!', $battle_log, array(':zombiestr' => $zc . ' ' . __('Zombies'))));
             return;
         }
 		

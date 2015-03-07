@@ -22,10 +22,14 @@ return Model_Blueprints::factory()
             ->energy(20)
             ->material('Model_Items_Generic_Wood',2)
             ->decay(-100)
+            ->category('Versteck')
     )
 
     // ++ STACK -> All blueprints below need the hideout
     ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires('hideout');})
+
+    // ++ STACK -> HIDEOUT category
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->category('Versteck');})
 
     ->add_blueprints(
         Model_Blueprint::factory()
@@ -60,6 +64,10 @@ return Model_Blueprints::factory()
             ->material(['Model_Items_Generic_Wood' => 1, 'Model_Items_Generic_Metal' => 1, 'Model_Items_Generic_Sum' => 3])
             ->decay(0, -0.10)
     )
+
+    // -- ++ STACK -> BEDROOM category
+    ->pop_stack()->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->category('Schlafzimmer');})
+
 
     // Bedroom
     ->add_blueprints(
@@ -111,6 +119,9 @@ return Model_Blueprints::factory()
             ->material(['Model_Items_Generic_Bed' => 1, 'Model_Items_Generic_Cloth' => 3])
     )
 
+    // -- ++ STACK -> SITTING category
+    ->pop_stack()->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->category('Sitzecke');})
+
     // Sitting area
     ->add_blueprints(
         Model_Blueprint::factory()
@@ -131,6 +142,9 @@ return Model_Blueprints::factory()
             ->energy(25)
             ->material(['Model_Items_Abstract_Chair' => 1, 'Model_Items_Generic_Bed' => 1, 'Model_Items_Generic_Cloth' => 4])
     )
+
+    // -- ++ STACK -> WORKBENCH category
+    ->pop_stack()->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->category('Werkbank');})
 
     // Workbench
     ->add_blueprints(
@@ -168,6 +182,9 @@ return Model_Blueprints::factory()
     // -- STACK -> All blueprints below NO LONGER need the workbench
     ->pop_stack()
 
+    // -- ++ STACK -> GENERATOR category
+    ->pop_stack()->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->category('Generator');})
+
     // Generator
     ->add_blueprints(
         Model_Blueprint::factory()
@@ -188,6 +205,9 @@ return Model_Blueprints::factory()
             ->energy(15)
             ->material(['Model_Items_Generic_Motor' => 1, 'Model_Items_Generic_Sum' => 5, 'Model_Items_Generic_Metal' => 2])
     )
+
+    // -- ++ STACK -> KITCHEN category
+    ->pop_stack()->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->category('Küche');})
 
     // Kitchen
     ->add_blueprints(
@@ -235,8 +255,10 @@ return Model_Blueprints::factory()
     // -- STACK -> All blueprints below NO LONGER need the kitchen
     ->pop_stack()
 
-    // Defense
+    // -- ++ STACK -> WORKBENCH category
+    ->pop_stack()->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->category('Verteidigung');})
 
+    // Defense
     ->add_blueprints(
         Model_Blueprint::factory()
             ->id('defwall1')
@@ -376,6 +398,7 @@ return Model_Blueprints::factory()
             ->material(['Model_Items_Generic_Sum' => 1, 'Model_Items_Generic_Tube' => 2, 'Model_Items_Generic_Metal' => 1])
     )
 
-
+    // -- STACK -> Categories
+    ->pop_stack()
 
     ->validate();

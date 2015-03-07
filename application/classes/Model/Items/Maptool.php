@@ -51,7 +51,7 @@ class Model_Items_Maptool extends Model_Items_Abstract_Item {
 	public function common_discovery($value) {
 		$this->information += $value;
 	}
-	
+
 	public function score($p) {
 		global $game, $player;
 		$location = $player->location_class();
@@ -76,7 +76,7 @@ class Model_Items_Maptool extends Model_Items_Abstract_Item {
 		}
 	}
 	
-	private function start_mapping($steps) {
+	public function start_mapping($steps) {
 		global $player, $game;
 		if ($player->buff_retr('fragile')) {
 			$player->log()->add(new Model_Log_Types_Text(null, null, 'Du bist momentan beschäftigt!'));
@@ -101,22 +101,6 @@ class Model_Items_Maptool extends Model_Items_Abstract_Item {
 			
 			$this->score($steps);
 		} else new Model_Buffs_Mapping($steps, $this->calc_duration($steps));
-	}
-
-	public function interaction_mapm() {
-		$this->start_mapping(true);
-	}
-	
-	public function interaction_map1() {
-		$this->start_mapping(1);
-	}
-	
-	public function interaction_map2() {
-		$this->start_mapping(2);
-	}
-	
-	public function interaction_map3() {
-		$this->start_mapping(3);
 	}
 	
 	public function drop() {

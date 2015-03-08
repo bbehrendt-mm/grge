@@ -28,8 +28,6 @@ return array (
 	'',
   'Du hast die Beschriftung auf diesem Gegenstand weggewischt.' =>
 	'',
-  'Du kannst diesen gegenstand beliebig beschriften. Bestätige deine Beschriftung mit der Eingabetaste.' =>
-	'',
   'Du kannst diesen Gegenstand beliebig beschriften. Bestätige deine Beschriftung mit der Eingabetaste.' =>
 	'',
   'Schlafzimmer' =>
@@ -53,7 +51,5 @@ return array (
   'Diesen Ort erkunden' =>
 	'',
   'Um in diesem Spielmodus punkte zu sammeln, musst du so viele Ruinen wie möglich kartographieren. Je gründlicher du arbeitest, desto schneller steigt der Detailgrad deiner Karte - aber du gehst auch ein größeres Risiko ein.' =>
-	'',
-  'Kohana_Cache_File::_delete_file failed to delete file : :file' =>
 	'',
 );

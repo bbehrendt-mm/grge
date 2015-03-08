@@ -2901,8 +2901,6 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
 	'Du hast die Beschriftung dieses Gegenstands geändert.',
   'Du hast die Beschriftung auf diesem Gegenstand weggewischt.' =>
 	'Du hast die Beschriftung auf diesem Gegenstand weggewischt.',
-  'Du kannst diesen gegenstand beliebig beschriften. Bestätige deine Beschriftung mit der Eingabetaste.' =>
-	'Du kannst diesen gegenstand beliebig beschriften. Bestätige deine Beschriftung mit der Eingabetaste.',
   'Du kannst diesen Gegenstand beliebig beschriften. Bestätige deine Beschriftung mit der Eingabetaste.' =>
 	'Du kannst diesen Gegenstand beliebig beschriften. Bestätige deine Beschriftung mit der Eingabetaste.',
   'Schlafzimmer' =>
@@ -2939,8 +2937,6 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
 	'Lasermessgerät einsetzen',
   ':zombiestr tauchen auf!' =>
 	':zombiestr tauchen auf!',
-  'Kohana_Cache_File::_delete_file failed to delete file : :file' =>
-	'Kohana_Cache_File::_delete_file failed to delete file : :file',
   'Baumarkt "EKEA"' =>
 	'Baumarkt "EKEA"',
   'Karte zeichnen' =>
@@ -2949,4 +2945,10 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
 	'Du arbeitest gerade an einer Karte dieses Orts. Dies erfordert deine volle Konzentration - du kannst keine anderen Aktionen durchführen und diesen Ort nicht zwischendurch verlassen.',
   'Du hast dein Kampfverhalten angepasst.' =>
 	'Du hast dein Kampfverhalten angepasst.',
+  'Feiges Huhn' =>
+	'Feiges Huhn',
+  'Faustkampf' =>
+	'Faustkampf',
+  '"ZombieKing" Restaurant' =>
+	'"ZombieKing" Restaurant',
 );

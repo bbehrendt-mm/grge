@@ -2889,45 +2889,43 @@ return array (
   'Aktueller Wert' =>
 	'Current value',
   'Klicke Munition an, um sie abzulegen.' =>
-	'Klicke Munition an, um sie abzulegen.',
+	'Click to drop ammunition.',
   'Wie viel Munition möchtest du ablegen?' =>
-	'Wie viel Munition möchtest du ablegen?',
+	'How many of those do you want to drop?',
   'Beschriften ...' =>
-	'Beschriften ...',
+	'Label ...',
   'Du hast diesen Gegenstand mit einer Beschriftung versehen.' =>
-	'Du hast diesen Gegenstand mit einer Beschriftung versehen.',
+	'You\'ve added a label to this item.',
   'Du hast die Beschriftung dieses Gegenstands geändert.' =>
-	'Du hast die Beschriftung dieses Gegenstands geändert.',
+	'You\'ve changed the label of this item.',
   'Du hast die Beschriftung auf diesem Gegenstand weggewischt.' =>
-	'Du hast die Beschriftung auf diesem Gegenstand weggewischt.',
-  'Du kannst diesen gegenstand beliebig beschriften. Bestätige deine Beschriftung mit der Eingabetaste.' =>
-	'Du kannst diesen gegenstand beliebig beschriften. Bestätige deine Beschriftung mit der Eingabetaste.',
+	'You\'ve removed the label from this item.',
   'Du kannst diesen Gegenstand beliebig beschriften. Bestätige deine Beschriftung mit der Eingabetaste.' =>
-	'Du kannst diesen Gegenstand beliebig beschriften. Bestätige deine Beschriftung mit der Eingabetaste.',
+	'You can add a custom label to this item. Confirm your label using the Enter key.',
   'Schlafzimmer' =>
-	'Schlafzimmer',
+	'Bedroom',
   'Generator' =>
 	'Generator',
   'Küche' =>
-	'Küche',
+	'Kitchen',
   'Verteidigung' =>
 	'Defenses',
   'Status' =>
 	'Status',
   'Kategorie' =>
-	'Kategorie',
+	'Category',
   'Du hast leider keine neuen Informationen, die du an deine Stadt senden könntest...' =>
 	'You don\'t have any new information for your town...',
   'Kleine Waffen-Reparaturwerkstatt' =>
-	'Kleine Waffen-Reparaturwerkstatt',
+	'Small Weapon Facility',
   'Umfrangreiche Waffen-Reparaturwerkstatt' =>
-	'Umfrangreiche Waffen-Reparaturwerkstatt',
+	'Extensive Weapon Facility',
   'Detailgrad deiner Karte: ' =>
-	'Detailgrad deiner Karte: ',
+	'Map Detail Level:',
   'Diesen Ort erkunden' =>
-	'Diesen Ort erkunden',
+	'Scout this location',
   'Um in diesem Spielmodus punkte zu sammeln, musst du so viele Ruinen wie möglich kartographieren. Je gründlicher du arbeitest, desto schneller steigt der Detailgrad deiner Karte - aber du gehst auch ein größeres Risiko ein.' =>
-	'Um in diesem Spielmodus punkte zu sammeln, musst du so viele Ruinen wie möglich kartographieren. Je gründlicher du arbeitest, desto schneller steigt der Detailgrad deiner Karte - aber du gehst auch ein größeres Risiko ein.',
+	'To collect points in this game mode, you have to map as many locations as possible. The more thoroughly you\'ll work on your map, the faster the level of detail will increase - but you\'ll also be taking a greater risk!',
   'Überblicken' =>
 	'Overlook',
   'Skizzieren' =>
@@ -2938,8 +2936,6 @@ return array (
 	'Use Laser Measuring Device',
   ':zombiestr tauchen auf!' =>
 	':zombiestr appeared!',
-  'Kohana_Cache_File::_delete_file failed to delete file : :file' =>
-	'Kohana_Cache_File::_delete_file failed to delete file : :file',
   'Baumarkt "EKEA"' =>
 	'Hardware Store "EKEA"',
   'Karte zeichnen' =>
@@ -2948,4 +2944,10 @@ return array (
 	'You are currently drawing a map of this place. This requires your undivided attention - you can not perform any other actions or leave this place until you are finished.',
   'Du hast dein Kampfverhalten angepasst.' =>
 	'You have adjusted your battle behaviour.',
+  'Feiges Huhn' =>
+	'Chicken',
+  'Faustkampf' =>
+	'Fistfight',
+  '"ZombieKing" Restaurant' =>
+	'"ZombieKing" Franchise',
 );

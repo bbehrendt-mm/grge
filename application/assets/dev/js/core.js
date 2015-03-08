@@ -1306,15 +1306,16 @@ core.popup = {
             }).on('filter', function() {
                     var typefilters = $(this).data('type-filters');
 
-                    if ($.objToArray(typefilters.categories).length)
-                        $(this).find('.blueprint').parent().hide();
-                    else $(this).find('.blueprint').parent().show();
+                    $(this).find('.blueprint').parent().hide();
 
                     var alias = $(this);
+                    var all_enabled = true;
                     $.each(typefilters.categories, function(name, active) {
                         if (active)
                             alias.find('.blueprint[data-cats*="|' + name + '|"]').parent().show();
+                        else all_enabled = false;
                     });
+                    if (all_enabled) alias.find('.blueprint[data-cats="||"]').parent().show();
 
                     if (!typefilters.impossible.active)  $(this).find('.blueprint.red').parent().hide();
                     if (!typefilters.locked.active)      $(this).find('.blueprint.plain').parent().hide();

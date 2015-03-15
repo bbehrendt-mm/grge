@@ -8,6 +8,10 @@ class Controller_Web extends Controller {
         $this->response->body(View::factory('framework'));
     }
 
+    public function action_chat() {
+        $this->response->body(View::factory('chat'));
+    }
+
     private function deploy_core() {
         $buffer = '';
         $version = Kohana::$config->load('build.version');

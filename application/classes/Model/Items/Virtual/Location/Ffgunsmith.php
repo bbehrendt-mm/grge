@@ -10,8 +10,7 @@ class Model_Items_Virtual_Location_Ffgunsmith extends Model_Items_Abstract_Virtu
         return parent::hid()->add_action('Hinterzimmer ...', Model_Action::factory()
             ->buttonskin('location')
             ->description('Im Hinterzimmer befinden sich allerlei Werkzeuge, die du zur Produktion von Waffen und Munition verwenden kannst.')
-            ->javascript(Model_Javascript::factory()
-                ->versa('maker'))
+            ->popup('maker')
         , 'mp_gunshop');
     }
 }	

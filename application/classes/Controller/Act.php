@@ -322,7 +322,7 @@ class Controller_Act extends Controller_Game {
             }
         } else $argument = $this->request->post('coarg');
 
-        if ($side_id = $this->request->post('side')) {
+        if ($side_id = $this->request->post('co')) {
             if (!Tool_Scripts::check_comrade($side_id)) {
                 $player->log()->add('Dieser Spieler befindet sich nicht in deiner Nähe.');
                 return $this->japi_data();

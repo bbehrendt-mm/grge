@@ -72,7 +72,9 @@
     };
 
     var fill_battleai = function(target, data) {
-        target.append($('<h3 />').text(<?=__j('Kampfverhalten')?>));
+        var button;
+
+        target.empty().append($('<h3 />').text(<?=__j('Kampfverhalten')?>));
 
         var bhav_select, bhav = $('<div />').addClass('row').appendTo(target);
         bhav.append($('<b />').text(<?=__j('Kampfstrategie')?>));
@@ -82,7 +84,9 @@
             .append($('<option />').text(<?=__j('Defensiv')?>).attr('value','1'))
             .append($('<option />').text(<?=__j('Ausgeglichen')?>).attr('value','2'))
             .append($('<option />').text(<?=__j('Offensiv')?>).attr('value','3'))
-            .val(data.type).selectric();
+            .val(data.type).on('change', function() {
+                button.removeClass('disabled')
+            }).selectric();
 
         var sw_energy, sw_breakable, sw_ammocache;
         var sw = $('<div />').addClass('row').appendTo(target);
@@ -101,10 +105,12 @@
             mun.append($('<div />').addClass('cell rw-2 padded').append($('<label />').attr('title', game.i18n(<?=__j('Ist diese Option aktiviert, werden im Kampf keine Waffen verwendet, die diese Munition (:item) verwenden.')?>, {':item': v.name})).qtip(game.render.html.qtip.ingame('top')).append($('<img />').attr('src', 'media/icons/'+ v.icon + '.gif')).prepend(mun_elems[k] = $('<input />').attr('type', 'checkbox').prop('checked', v.locked))))
         });
 
-        target.find(':checkbox').customRadioCheck();
+        target.find(':checkbox').click(function() {
+            button.removeClass('disabled')
+        }).customRadioCheck();
 
         target.append($('<div />').addClass('row').append($('<div />').addClass('cell rw-6 ro-6').append(
-            $('<div />').addClass('btn btn-icon')
+            button = $('<div />').addClass('btn btn-icon disabled')
                 .append($('<span />').addClass('btn-icon-inner').append($('<i />').addClass('fa fa-check')))
                 .append($('<span />').text(<?=__j('Speichern')?>))
                 .click(function() {
@@ -118,6 +124,11 @@
                         'wp_throw': sw_breakable.prop('checked') ? 1 : 0,
                         'wp_tank': sw_ammocache.prop('checked') ? 1 : 0,
                         'wp_ammo': ammo
+                    }, true, function(ret) {
+                        if (!ret.success) {
+                            game.render.html.notify('error', <?=__j('Beim Speichern der Einstellungen ist ein Fehler aufgetreten.')?>);
+                            fill_battleai(target, data);
+                        } else button.addClass('disabled')
                     })
                 })
         )));
@@ -125,11 +136,11 @@
     };
 
     core.parts.settings = function(data, target) {
-        time_settings = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-5 padded').appendTo(target));
+        var time_settings = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-5 padded').appendTo(target));
         if (data.clock.time_mode == 0) fill_timesettings_stat(data.clock.time_settings, time_settings, data.clock.locked);
         if (data.clock.time_mode == 1) fill_timesettings_var(data.clock.time_settings, time_settings, data.clock.locked);
 
-        bai_settings = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-7 padded').appendTo(target));
+        var bai_settings = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-7 padded').appendTo(target));
         fill_battleai(bai_settings, data.ai);
     };
 })();

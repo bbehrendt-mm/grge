@@ -157,8 +157,10 @@ class Controller_Map extends Controller_Game {
 
         $did = (int)$this->request->post('to');
         $companion = [];
-        if ($this->request->post('companion'))
-            foreach (explode(',', $this->request->post('companion')) as $comid)
+
+        $cc = $this->request->post('co');
+        if (is_array($cc))
+            foreach ($cc as $comid)
                 if ($tmp = Tool_Scripts::check_comrade((int)$comid))
                     $companion[$tmp->id()] = $tmp;
 

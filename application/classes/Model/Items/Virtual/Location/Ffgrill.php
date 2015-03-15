@@ -9,8 +9,7 @@ class Model_Items_Virtual_Location_Ffgrill extends Model_Items_Abstract_Virtual 
     protected function hid() {
         return parent::hid()->add_action('Grillen ...', Model_Action::factory()
             ->buttonskin('location')
-            ->javascript(Model_Javascript::factory()
-            ->versa('maker'))
+            ->popup('maker')
         , 'mp_grill');
     }
 }	

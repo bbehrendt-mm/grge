@@ -213,10 +213,18 @@
         });
 
         actions.append(
-            $('<div />').addClass('cell rw-12 padded justify').append(core.snippets.button(<?=__j('Karte');?>, function() {
+            $('<div />').addClass('cell padded justify rw-' + (data.doorways ? '10' : '12')).append(core.snippets.button(<?=__j('Karte');?>, function() {
                 core.popup.map();
             }))
         );
+
+        if (data.doorways) {
+            actions.append(
+                $('<div />').addClass('cell padded justify rw-2').append(
+                    $('<div />').addClass('btn').append($('<i>').addClass('fa fa-sign-in')).append('&nbsp;')
+                )
+            );
+        }
 
         zombieradar(data.radar, zradar);
         if (hideout)

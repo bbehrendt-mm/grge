@@ -53,8 +53,6 @@
             <b><?=__('Eine Übersicht über Bilder anderer Autoren findet sich hier:')?></b> <a href="#" id="license_link"><?=__('Bildmaterial')?></a>
         </div>
     </div>
-
-
 </div>
 
 <script type="application/javascript">

@@ -146,6 +146,15 @@
         return table;
     };
 
+    var make_small_bar = function(type, value) {
+        if (type === null) return $('<div />').addClass('cell rw-4').html('&nbsp;');
+        return $('<div />').addClass('cell rw-4 smallpad').append(
+            $('<div />').addClass('varbar').append(
+                $('<div />').css({width: value + '%', background: num_decode_color(type)})
+            )
+        );
+    };
+
     var make_bar = function(type, value, effects, inline) {
         var bar = $('<div />').addClass('cell rw-' + (inline ? 12 : 4)).append(
             $('<div />').addClass('bar').append(
@@ -177,10 +186,10 @@
         return bar;
     };
 
-    var make_buffbar = function(buffs, bars) {
+    var make_buffbar = function(buffs, bars, small) {
         var target;
-        var bar = $('<div />').addClass('cell rw-4').append(
-            target = $('<div />').addClass('bar')
+        var bar = $('<div />').addClass(small ? 'cell rw-12 padded' : 'cell rw-4').append(
+            target = $('<div />').addClass(small ? 'center' : 'bar')
         );
 
         var hidden = [];
@@ -194,7 +203,7 @@
 
             $.each(hidden,function(k,v) {
                 v = parseInt(v);
-                $('<img />').addClass('status').attr('src','media/icons/status_' + num_decode_str(v) + '.gif').attr('title','-').qtip(game.render.html.qtip.ingame('bottom', {
+                $('<img />').addClass('status').attr('src','media/icons/status_' + num_decode_str(v) + '.gif').attr('title',small ? '' : '-').qtip(game.render.html.qtip.ingame('bottom', {
                         render: function (event, api) {
                             var content = $(this).find('.qtip-content').empty().append(
                                 $('<b />').addClass('header').text(num_decode_title(v))
@@ -215,7 +224,7 @@
             });
 
             $.each(buffs, function(k,v) {
-                $('<img />').addClass('buff').attr('src','media/icons/' + v.icon + '.gif').attr('title','-').qtip(game.render.html.qtip.ingame('bottom', {
+                $('<img />').addClass('buff').attr('src','media/icons/' + v.icon + '.gif').attr('title',small ? '' : '-').qtip(game.render.html.qtip.ingame('bottom', {
                         render: function (event, api) {
                             var content = $(this).find('.qtip-content').empty().append(
                                 $('<b />').addClass('header').text(v.name)
@@ -231,8 +240,21 @@
         return bar;
     };
 
+    core.parts.status_bars = function(target, data, small) {
+        var order = [5,3,1,4,null,2];
+
+        if (small) {
+            $.each(order, function(k,v) {
+                target.append(make_small_bar(v,v ? data.bars[v].value : 0));
+            });
+            target.append(make_buffbar($.objToArray(data.buffs,true), data.bars, true));
+        } else $.each(order, function(k,v) {
+            target.append(v ? make_bar(v,data.bars[v].value,data.bars[v].buffs) : make_buffbar($.objToArray(data.buffs,true), data.bars, false));
+        });
+    };
+
     core.parts.status = function(data, data_clock, target) {
-        var main, inventory, clock;
+        var main, inventory, clock, bars;
 
         target.empty().append(
             main = $('<div />').addClass('row').append(
@@ -244,9 +266,7 @@
             )
         );
 
-        $.each([5,3,1,4,null,2], function(k,v) {
-            bars.append(v ? make_bar(v,data.bars[v].value,data.bars[v].buffs) : make_buffbar($.objToArray(data.buffs,true), data.bars));
-        });
+        core.parts.status_bars(bars, data, false);
 
         core.parts.clock(data_clock,clock);
     };

@@ -21,6 +21,18 @@
 //noinspection CssOverwrittenProperties
 .whitebox(@darkness: 0%; @border-darkness: @darkness) {border-radius: 4px; background: darken(@whitebox-color-bg, @darkness); border: 1px solid darken(@whitebox-color-border, @border-darkness); border-bottom: 4px solid darken(@whitebox-color-border, @border-darkness); box-shadow: 0 4px 8px rgba(0,0,0,0.3);}
 
+.impactbox(@border-color, @base-color) {border-radius: 5px; background: @base-color; border: 1px solid @border-color; border-bottom: 4px solid @border-color; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.8);}
+
+.playerbox {
+  &.escort {.impactbox(@zv-color-main, @zv-color-main-light)}
+  &.unknown {
+    .impactbox(@whitebox-color-border, @whitebox-color-bg);
+    > b {color: @zv-color-main}
+  }
+  &:not(.escort):not(.unknown) {.impactbox(@zv-color-main-dark, @zv-color-main)}
+  >b {display: block; font-size: 16px; color: @zv-color-secondary; text-align: center; padding: 5px;}
+}
+
 @mugshot-dimensions: 100px;
 @mugshot-color-hover-bg: #ffb797;
 @mugshot-color-hover-border: #d23c02;

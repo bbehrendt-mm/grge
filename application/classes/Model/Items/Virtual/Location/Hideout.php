@@ -30,8 +30,7 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
             $tmp->add_action('Versteck ausbauen ...', Model_Action::factory()
                 ->buttonskin('hideout')
                 ->description('Dein Versteck sieht etwas langweilig aus... du solltest es mit einigen nützlichen Erweiterungen etwas aufpeppen!')
-                ->javascript(Model_Javascript::factory()
-                        ->versa('builder'))
+                ->popup('builder')
             , 'hideout_builder');
 
         if (!$location->has_upgrade("hideout"))
@@ -40,16 +39,14 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
         $tmp->add_action('Gegenstände herstellen ...', Model_Action::factory()
             ->buttonskin('hideout')
             ->description('Warum lange nach neuem Zeug suchen, wenn du es einfach selbst herstellen kannst?')
-            ->javascript(Model_Javascript::factory()
-                ->versa('maker'))
+            ->popup('maker')
             , 'hideout_maker');
 
         if (!$location_driving)
             $tmp->add_action('Verteidigung ...', Model_Action::factory()
                 ->buttonskin('hideout')
                 ->description('Zombies oder Zeugen Jehovas stehen an deiner Tür? Nicht mehr lange...')
-                ->javascript(Model_Javascript::factory()
-                    ->versa('fighter'))
+                ->popup('fighter')
                 , 'hideout_defense');
 
         if ($location->has_upgrade("sofa1"))

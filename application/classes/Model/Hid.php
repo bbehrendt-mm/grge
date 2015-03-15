@@ -68,7 +68,7 @@ class Model_Hid {
      * @param $uid
      * @return array
      */
-    public function convert($uid = null, $include_js = true) {
+    public function convert($uid = null) {
         /**
          * @global Model_Player $player
          * @global Model_Game $game
@@ -89,31 +89,12 @@ class Model_Hid {
                 'description' => $action['desc'],
                 'tooltip'     => $a->description(),
                 'action' => $action['id'],
-                'javascript' => $include_js ? ($a->convert_javascript($a->has_side_effect() ? '' :
-                    Model_Javascript::factory()
-                        ->close_qtip()
-                        ->use_item($uid, $action['id'], $action['action']->argument() ? array('coarg' => '$arg') : null  )
-                )) : null,
+                'popup' => $a->popup(),
+                'target' => $uid,
+                'escort' => $a->has_side_effect(),
                 'requires' => $a->convert_requires(),
                 'skin' => $a->has_side_effect() ? ('multiplayer ' . $a->buttonskin()) : $a->buttonskin()
             ));
-
-            if ($a->has_side_effect())
-                if (count(Tool_Scripts::comrades()) == 0 )
-                    $current['form'] = array('note' => 'Hier ist niemand, auf den du diese Aktion anwenden könntest...');
-                else {
-                    $current['form'] = array('buttons' => array(), 'note' => 'Bitte wähle einen anderen Spieler aus:');
-                    foreach (Tool_Scripts::at_location() as $p) if ($p->id() != $player->id())
-                        $current['form']['buttons'][] = array(
-                            'text' => $p->name(),
-                            'javascript' => $include_js ?
-                                Model_Javascript::factory()
-                                    ->close_qtip()
-                                    ->use_item($uid, $action['id'], $action['action']->argument() ? array('coarg' => '$arg', 'side' => $p->id()) : array('side' => $p->id()))
-                                    ->compile()
-                                : null
-                        );
-                }
 
             $tmp[] = $current;
         }

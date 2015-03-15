@@ -16,7 +16,6 @@ class Model_Action {
     private $failmsg = null;
     private $requirements = array();
     private $show_as = null;
-    private $javascript = null;
     private $argument = null;
     private $description = null;
     private $skin = null;
@@ -24,6 +23,7 @@ class Model_Action {
     private $consume_by_grind = true;
 
     private $has_se = false;
+    private $popup = null;
 
     /**
      * @return Model_Action
@@ -150,12 +150,15 @@ class Model_Action {
     }
 
     /**
-     * @param Model_Javascript $js
-     * @return Model_Action
+     * @param string|null $pp
+     * @return string|Model_Action
      */
-    public function javascript($js) {
-        $this->javascript = $js;
-        return $this;
+    public function popup($pp = null) {
+        if ($pp === null) return $this->popup;
+        else {
+            $this->popup = $pp;
+            return $this;
+        }
     }
 
     /**
@@ -187,6 +190,8 @@ class Model_Action {
      * @return boolean
      */
     public function execute($player, $side_player = null, $argument = null) {
+
+        if ($this->popup) return false;
 
         if ($this->condition !== null) {
             /** @var callable $cf */
@@ -297,22 +302,5 @@ class Model_Action {
             /** @var Model_Items_Abstract_Item $class */
         $t[] = array('icon' => $class::static_icon(), 'value' => $value);
         return $t;
-    }
-
-    /**
-     * @param null|string|Model_Javascript $default
-     * @return null|string
-     */
-    public function convert_javascript($default = null) {
-        $tmp = null;
-        if ($this->javascript === null) {
-            if ($default === null) return null;
-            elseif (is_string($default)) return $default;
-            else $tmp = $default;
-        } else /** @noinspection PhpUndefinedMethodInspection */
-            $tmp = $this->javascript;
-
-        if (!$this->argument) return $tmp->compile();
-        else return $tmp->add_argument('arg', __($this->argument))->compile();
     }
 }

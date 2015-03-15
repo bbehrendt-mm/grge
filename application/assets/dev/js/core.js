@@ -6,7 +6,7 @@ core = {
     parts: {},
     snippets: {},
 
-    version: '2.0.0-0-1-47',
+    version: '2.0.0-0-1-51',
 
     last: {},
 
@@ -62,6 +62,7 @@ core = {
         var auto_tab = $('<ul />').addClass('tabline').appendTo(action_box)
             .append($('<li>').data('toggle', '#inv_container').text("Gegenst\u00e4nde & Heldentaten"))
             .append($('<li>').data('toggle', '#settings_container').text("Zeitfluss & Verhalten"))
+            .append(data.players ? $('<li>').data('toggle', '#mp_container').text("Spieler\u00fcbersicht") : false)
             .find('>li').click(function() {
                 var t = $($(this).data('toggle'));
                 $(this).addClass('active').siblings().removeClass('active');
@@ -74,6 +75,9 @@ core = {
 
         if (data.settings)
             core.parts.settings(data.settings, $('<div />').attr('id', 'settings_container').addClass('row').appendTo(action_box));
+
+        if (data.players)
+            core.parts.mp_players(data.players, $('<div />').attr('id', 'mp_container').addClass('row').appendTo(action_box));
 
         if (data.status && data.clock)
             core.parts.status(data.status, data.clock, $('#persistent'));
@@ -788,10 +792,18 @@ core = {
         });
 
         actions.append(
-            $('<div />').addClass('cell rw-12 padded justify').append(core.snippets.button("Karte", function() {
+            $('<div />').addClass('cell padded justify rw-' + (data.doorways ? '10' : '12')).append(core.snippets.button("Karte", function() {
                 core.popup.map();
             }))
         );
+
+        if (data.doorways) {
+            actions.append(
+                $('<div />').addClass('cell padded justify rw-2').append(
+                    $('<div />').addClass('btn').append($('<i>').addClass('fa fa-sign-in')).append('&nbsp;')
+                )
+            );
+        }
 
         zombieradar(data.radar, zradar);
         if (hideout)
@@ -1165,7 +1177,54 @@ core = {
         })
     };
 })();
-core.popup = {
+(function() {
+    var render_others = function(data, target) {
+        target.append($('<h3 />').text("Andere Spieler"));
+
+        var row = $('<div />').addClass('row').appendTo(target);
+        $.each(data, function(id, player) {
+            var box = $('<div />').addClass('playerbox' + (player.escort ? ' escort' : '') + (player.local ? '' : ' unknown')).appendTo($('<div />').addClass('cell rw-4 padded').appendTo(row));
+
+            box.append($('<b />').text(player.name));
+            var bars = $('<div />').addClass('row').appendTo(box);
+
+            if (player.stats)
+                core.parts.status_bars(bars, player.stats, true);
+        })
+    };
+
+    var render_self = function(data, target) {
+        var mpc_escort, mpc_ping;
+
+        target
+            .empty()
+            .append($('<h3 />').text("Du"))
+
+            .append($('<div />').append($('<label />').attr('title',"Ist diese Option aktiviert, erhalten andere Spieler begrenzte Kontrolle \u00fcber dich. Sie k\u00f6nnen dich bewegen, Gegenst\u00e4nde auf dich anwenden oder Gegenst\u00e4nde in deinen Rucksack legen.").qtip(game.render.html.qtip.ingame('right')).text("Befehle entgegennehmen").prepend(mpc_escort = $('<input />').attr('type', 'checkbox').prop('checked', data.escort))))
+            .append($('<div />').append($('<label />').attr('title',"Aktiviere diese Option um anderen Spielern mitzuteilen, dass sie in den Chat kommen sollen. Der Chat-Aufruf wird nach 15 Minuten automatisch deaktiviert.").qtip(game.render.html.qtip.ingame('right')).text("Chat-Aufruf").prepend(mpc_ping = $('<input />').attr('type', 'checkbox').prop('checked', data.ping))))
+
+            .find(':checkbox').customRadioCheck();
+
+        $(mpc_escort).add(mpc_ping).click(function() {
+            core.command('player/mp', {escort: mpc_escort.prop('checked') ? 1 : 0, ping: mpc_ping.prop('checked') ? 1 : 0}, true, function(ret) {
+                if (!ret.success) {
+                    game.render.html.notify('error', "Beim Speichern der Einstellungen ist ein Fehler aufgetreten.");
+                    render_self(data,target);
+                }
+            });
+        })
+    };
+
+    core.parts.mp_players = function(data, target) {
+
+        var player_info = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-4 padded').appendTo(target));
+        render_self(data.self, player_info);
+
+        var others_info = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-8 padded').appendTo(target));
+        render_others(data.others, others_info);
+
+    };
+})();core.popup = {
     spawn: function(dx,dy) {
         var popup = $('<div />').addClass('popup').css({
             height: dy,
@@ -1391,7 +1450,7 @@ core.popup = {
     map: function() {
         var dx = 800, dy = 602, border = 30, iconsize = 22;
         var gx = Math.floor(dx/iconsize), gy = Math.floor(dy/iconsize);
-        var bsize = 120;
+        var bsize = 64;
         var grid = {};
 
         for (var i = 0; i < gx; i++) {
@@ -1400,7 +1459,7 @@ core.popup = {
                 grid[i*iconsize][j*iconsize] = false;
         }
 
-        var popup = core.popup.spawn(dx+2,dy+2+bsize);
+        var popup = core.popup.spawn(dx+2, dy + bsize);
 
         popup.append(core.snippets.wait());
 
@@ -1419,13 +1478,7 @@ core.popup = {
             }).appendTo(popup);
 
             var infopanel = $('<div />').hide().addClass('map panel').appendTo(
-                $('<div />').addClass('cell rw-4').css({
-                    position: 'relative',
-                    height: '100%'
-                }).appendTo(bottom)
-            );
-            var doorways = $('<div />').addClass('map panel').appendTo(
-                $('<div />').addClass('cell rw-4').css({
+                $('<div />').addClass('cell rw-6 ro-3').css({
                     position: 'relative',
                     height: '100%'
                 }).appendTo(bottom)
@@ -1589,7 +1642,7 @@ core.popup = {
                                 $(this).addClass(!data.read_only && v.energy <= data.radius ? 'travel' : 'untravel');
                         });
 
-                        infopanel.empty().stop().fadeIn(200).append(
+                        infopanel.empty().stop().fadeIn(100).append(
                             $('<h3 />').text(v.name)
                         ).append(
                             $('<div />').addClass('row center').append(
@@ -1620,37 +1673,92 @@ core.popup = {
                         )
                     }).mouseleave(function() {
                         draw();
-                        infopanel.stop().fadeOut(600);
+                        infopanel.stop().fadeOut(100);
                         $(this).siblings('.travel, .untravel').removeClass('travel untravel');
                     }).click(function() {
                         if (data.read_only || v.energy > data.radius || k == data.current) return;
 
-                        popup.addClass('disabled');
-                        core.command('map/go', {to: k, follow: 1}, true, function(data) {
-                            popup.removeClass('disabled');
-                            if (data.success) {
-                                popup.trigger('unpop');
-                                core.command();
-                            }
-                        });
-                    })
-                )
-            });
+                        if (core.last.players) {
+                            var esc_popup = core.popup.spawn(400);
 
-            doorways.append(
-                $('<h3 />').text("Andere Orte")
-            );
-            $.each(data.doorways, function(k,v) {
-                doorways.append(
-                    $('<div />').addClass('btn small block').text(v.name + ' (' + v.location + ')').click(function() {
-                        popup.addClass('disabled');
-                        core.command('map/go', {to: k, follow: 1}, true, function(data) {
-                            popup.removeClass('disabled');
-                            if (data.success) {
-                                popup.trigger('unpop');
-                                core.command();
-                            }
-                        });
+                            var title;
+                            esc_popup.append($('<h2 />').addClass('center').text(v.name));
+
+                            esc_popup.append(
+                                $('<div />').addClass('row').append(title = $('<div />').addClass('cell rw-12 padded').text("Wenn du dich alleine f\u00fcrchtest, kannst du andere Spieler bitten, dich zu begleiten. Oder noch besser, schick sie am besten direkt vor, nicht dass noch jemand (z.B. du) verletzt wird!"))
+                            );
+
+                            var check_row = $('<form />').addClass('row').appendTo(esc_popup);
+
+                            if (core.last.players.others)
+                                $.each(core.last.players.others, function(id, player) {
+                                    if (player.escort)
+                                        check_row.append($('<div />').addClass('cell rw-6 padded').append(
+                                            $('<label />').text(player.name).prepend($('<input />').attr('type','checkbox').attr('data-id', player.id))
+                                        ))
+                                });
+
+
+                            if (check_row.children().length) {
+                                var bhav;
+
+                                check_row
+                                    .prepend($('<div />').addClass('cell rw-12 padded').append($('<b />').text("Wer soll alles mitkommen?")))
+                                    .append($('<div />').addClass('cell rw-12 padded').append($('<b />').text("Und wie siehts mit dir aus?")))
+                                    .append($('<div />').addClass('cell rw-12 padded').append(
+                                        bhav = $('<select />')
+                                            .append($('<option />').val('2').text("Mitgehen und helfen"))
+                                            .append($('<option />').val('1').text("Nur mitgehen"))
+                                            .append($('<option />').val('0').text("Die Stellung halten"))
+                                            .val('1')
+                                    ));
+
+                                bhav.selectric();
+                                check_row.find(':checkbox').customRadioCheck();
+
+                            } else title.text("Bist du sicher, dass du diesen Ort betreten m\u00f6chtest? Er ist weit weg, und riecht auch bestimmt nicht sehr gut...");
+
+                            esc_popup.append($('<div />').addClass('row')
+                                .append($('<div />').addClass('cell rw-8 padded').append(
+                                    $('<div />').addClass('btn').text("Los gehts!").click(function() {
+
+                                        var cfg = {to: k, follow: 1};
+                                        if (check_row.children().length) {
+                                            cfg.follow = parseInt(bhav.val()) > 0 ? 1 : 0;
+                                            cfg.support = parseInt(bhav.val()) == 2 ? 1 : 0;
+                                            cfg.co = [];
+                                            $.each(check_row.find(':checkbox:checked'), function() {
+                                                cfg.co.push($(this).attr('data-id'))
+                                            })
+                                        }
+
+                                        esc_popup.trigger('unpop');
+                                        popup.addClass('disabled');
+                                        core.command('map/go', cfg, true, function(data) {
+                                            popup.removeClass('disabled');
+                                            if (data.success) {
+                                                popup.trigger('unpop');
+                                                core.command();
+                                            }
+                                        });
+                                    })))
+                                .append($('<div />').addClass('cell rw-4 padded').append(
+                                    $('<div />').addClass('btn').text("Abbrechen").click(function() {
+                                        esc_popup.trigger('unpop');
+                                    })))
+                            );
+                        } else {
+                            popup.addClass('disabled');
+                            core.command('map/go', {to: k, follow: 1}, true, function(data) {
+                                popup.removeClass('disabled');
+                                if (data.success) {
+                                    popup.trigger('unpop');
+                                    core.command();
+                                }
+                            });
+                        }
+
+
                     })
                 )
             });
@@ -1736,7 +1844,9 @@ core.popup = {
     };
 
     var fill_battleai = function(target, data) {
-        target.append($('<h3 />').text("Kampfverhalten"));
+        var button;
+
+        target.empty().append($('<h3 />').text("Kampfverhalten"));
 
         var bhav_select, bhav = $('<div />').addClass('row').appendTo(target);
         bhav.append($('<b />').text("Kampfstrategie"));
@@ -1746,7 +1856,9 @@ core.popup = {
             .append($('<option />').text("Defensiv").attr('value','1'))
             .append($('<option />').text("Ausgeglichen").attr('value','2'))
             .append($('<option />').text("Offensiv").attr('value','3'))
-            .val(data.type).selectric();
+            .val(data.type).on('change', function() {
+                button.removeClass('disabled')
+            }).selectric();
 
         var sw_energy, sw_breakable, sw_ammocache;
         var sw = $('<div />').addClass('row').appendTo(target);
@@ -1765,10 +1877,12 @@ core.popup = {
             mun.append($('<div />').addClass('cell rw-2 padded').append($('<label />').attr('title', game.i18n("Ist diese Option aktiviert, werden im Kampf keine Waffen verwendet, die diese Munition (:item) verwenden.", {':item': v.name})).qtip(game.render.html.qtip.ingame('top')).append($('<img />').attr('src', 'media/icons/'+ v.icon + '.gif')).prepend(mun_elems[k] = $('<input />').attr('type', 'checkbox').prop('checked', v.locked))))
         });
 
-        target.find(':checkbox').customRadioCheck();
+        target.find(':checkbox').click(function() {
+            button.removeClass('disabled')
+        }).customRadioCheck();
 
         target.append($('<div />').addClass('row').append($('<div />').addClass('cell rw-6 ro-6').append(
-            $('<div />').addClass('btn btn-icon')
+            button = $('<div />').addClass('btn btn-icon disabled')
                 .append($('<span />').addClass('btn-icon-inner').append($('<i />').addClass('fa fa-check')))
                 .append($('<span />').text("Speichern"))
                 .click(function() {
@@ -1782,6 +1896,11 @@ core.popup = {
                         'wp_throw': sw_breakable.prop('checked') ? 1 : 0,
                         'wp_tank': sw_ammocache.prop('checked') ? 1 : 0,
                         'wp_ammo': ammo
+                    }, true, function(ret) {
+                        if (!ret.success) {
+                            game.render.html.notify('error', "Beim Speichern der Einstellungen ist ein Fehler aufgetreten.");
+                            fill_battleai(target, data);
+                        } else button.addClass('disabled')
                     })
                 })
         )));
@@ -1789,11 +1908,11 @@ core.popup = {
     };
 
     core.parts.settings = function(data, target) {
-        time_settings = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-5 padded').appendTo(target));
+        var time_settings = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-5 padded').appendTo(target));
         if (data.clock.time_mode == 0) fill_timesettings_stat(data.clock.time_settings, time_settings, data.clock.locked);
         if (data.clock.time_mode == 1) fill_timesettings_var(data.clock.time_settings, time_settings, data.clock.locked);
 
-        bai_settings = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-7 padded').appendTo(target));
+        var bai_settings = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-7 padded').appendTo(target));
         fill_battleai(bai_settings, data.ai);
     };
 })();(function() {
@@ -1924,8 +2043,44 @@ core.popup = {
                 .append(
                     $('<span />').text(action.description)
                 ).click(function () {
+                    // Hide all QTips
+                    $('.qtip').qtip('hide');
+
+                    if (action.popup) {
+                        core.popup[action.popup]();
+                        return;
+                    }
+
                     if (call && call() === false) return;
-                    eval(action.javascript);
+
+                    if (action.escort) {
+                        var popup = core.popup.spawn(400);
+
+                        popup.append($('<h2 />').addClass('center').text(action.description));
+
+                        popup.append(
+                            $('<div />').addClass('row').append($('<div />').addClass('cell rw-12 padded').text("Bitte w\u00e4hle einen Spieler aus, auf den du diese Aktion anwenden willst. Du kannst nur Spieler ausw\u00e4hlen, die sich am gleichen Ort befinden wie du und Befehle von dir entgegennehmen."))
+                        );
+
+                        if (core.last.players.others)
+                            $.each(core.last.players.others, function(id, player) {
+                                popup.append($('<div />').addClass('row').append($('<div />').addClass('cell rw-12 padded').append(
+                                    $('<div />').addClass('btn btn-zv' + (player.escort ? '' : ' disabled')).text(player.name).click(function() {
+                                        if (!player.escort || !confirm(game.i18n("Bist du sicher, dass du diese Aktion auf :name anwenden m\u00f6chtest?", {':name': player.name}))) return;
+
+                                        popup.trigger('unpop');
+                                        core.command('act/item', {action: action.action, item: action.target, co: player.id});
+                                    })
+                                )))
+                            });
+
+                        popup.append($('<div />').addClass('row').append($('<div />').addClass('cell rw-12 padded').append(
+                            $('<div />').addClass('btn').text("Abbrechen").click(function() {
+                                popup.trigger('unpop');
+                            }))
+                        ));
+
+                    } else core.command('act/item', {action: action.action, item: action.target});
                 });
 
             switch (ext_mode) {
@@ -2311,6 +2466,15 @@ core.popup = {
         return table;
     };
 
+    var make_small_bar = function(type, value) {
+        if (type === null) return $('<div />').addClass('cell rw-4').html('&nbsp;');
+        return $('<div />').addClass('cell rw-4 smallpad').append(
+            $('<div />').addClass('varbar').append(
+                $('<div />').css({width: value + '%', background: num_decode_color(type)})
+            )
+        );
+    };
+
     var make_bar = function(type, value, effects, inline) {
         var bar = $('<div />').addClass('cell rw-' + (inline ? 12 : 4)).append(
             $('<div />').addClass('bar').append(
@@ -2342,10 +2506,10 @@ core.popup = {
         return bar;
     };
 
-    var make_buffbar = function(buffs, bars) {
+    var make_buffbar = function(buffs, bars, small) {
         var target;
-        var bar = $('<div />').addClass('cell rw-4').append(
-            target = $('<div />').addClass('bar')
+        var bar = $('<div />').addClass(small ? 'cell rw-12 padded' : 'cell rw-4').append(
+            target = $('<div />').addClass(small ? 'center' : 'bar')
         );
 
         var hidden = [];
@@ -2359,7 +2523,7 @@ core.popup = {
 
             $.each(hidden,function(k,v) {
                 v = parseInt(v);
-                $('<img />').addClass('status').attr('src','media/icons/status_' + num_decode_str(v) + '.gif').attr('title','-').qtip(game.render.html.qtip.ingame('bottom', {
+                $('<img />').addClass('status').attr('src','media/icons/status_' + num_decode_str(v) + '.gif').attr('title',small ? '' : '-').qtip(game.render.html.qtip.ingame('bottom', {
                         render: function (event, api) {
                             var content = $(this).find('.qtip-content').empty().append(
                                 $('<b />').addClass('header').text(num_decode_title(v))
@@ -2380,7 +2544,7 @@ core.popup = {
             });
 
             $.each(buffs, function(k,v) {
-                $('<img />').addClass('buff').attr('src','media/icons/' + v.icon + '.gif').attr('title','-').qtip(game.render.html.qtip.ingame('bottom', {
+                $('<img />').addClass('buff').attr('src','media/icons/' + v.icon + '.gif').attr('title',small ? '' : '-').qtip(game.render.html.qtip.ingame('bottom', {
                         render: function (event, api) {
                             var content = $(this).find('.qtip-content').empty().append(
                                 $('<b />').addClass('header').text(v.name)
@@ -2396,8 +2560,21 @@ core.popup = {
         return bar;
     };
 
+    core.parts.status_bars = function(target, data, small) {
+        var order = [5,3,1,4,null,2];
+
+        if (small) {
+            $.each(order, function(k,v) {
+                target.append(make_small_bar(v,v ? data.bars[v].value : 0));
+            });
+            target.append(make_buffbar($.objToArray(data.buffs,true), data.bars, true));
+        } else $.each(order, function(k,v) {
+            target.append(v ? make_bar(v,data.bars[v].value,data.bars[v].buffs) : make_buffbar($.objToArray(data.buffs,true), data.bars, false));
+        });
+    };
+
     core.parts.status = function(data, data_clock, target) {
-        var main, inventory, clock;
+        var main, inventory, clock, bars;
 
         target.empty().append(
             main = $('<div />').addClass('row').append(
@@ -2409,9 +2586,7 @@ core.popup = {
             )
         );
 
-        $.each([5,3,1,4,null,2], function(k,v) {
-            bars.append(v ? make_bar(v,data.bars[v].value,data.bars[v].buffs) : make_buffbar($.objToArray(data.buffs,true), data.bars));
-        });
+        core.parts.status_bars(bars, data, false);
 
         core.parts.clock(data_clock,clock);
     };

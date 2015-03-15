@@ -126,8 +126,44 @@
                 .append(
                     $('<span />').text(action.description)
                 ).click(function () {
+                    // Hide all QTips
+                    $('.qtip').qtip('hide');
+
+                    if (action.popup) {
+                        core.popup[action.popup]();
+                        return;
+                    }
+
                     if (call && call() === false) return;
-                    eval(action.javascript);
+
+                    if (action.escort) {
+                        var popup = core.popup.spawn(400);
+
+                        popup.append($('<h2 />').addClass('center').text(action.description));
+
+                        popup.append(
+                            $('<div />').addClass('row').append($('<div />').addClass('cell rw-12 padded').text(<?=__j('Bitte wähle einen Spieler aus, auf den du diese Aktion anwenden willst. Du kannst nur Spieler auswählen, die sich am gleichen Ort befinden wie du und Befehle von dir entgegennehmen.')?>))
+                        );
+
+                        if (core.last.players.others)
+                            $.each(core.last.players.others, function(id, player) {
+                                popup.append($('<div />').addClass('row').append($('<div />').addClass('cell rw-12 padded').append(
+                                    $('<div />').addClass('btn btn-zv' + (player.escort ? '' : ' disabled')).text(player.name).click(function() {
+                                        if (!player.escort || !confirm(game.i18n(<?=__j('Bist du sicher, dass du diese Aktion auf :name anwenden möchtest?')?>, {':name': player.name}))) return;
+
+                                        popup.trigger('unpop');
+                                        core.command('act/item', {action: action.action, item: action.target, co: player.id});
+                                    })
+                                )))
+                            });
+
+                        popup.append($('<div />').addClass('row').append($('<div />').addClass('cell rw-12 padded').append(
+                            $('<div />').addClass('btn').text(<?=__j('Abbrechen')?>).click(function() {
+                                popup.trigger('unpop');
+                            }))
+                        ));
+
+                    } else core.command('act/item', {action: action.action, item: action.target});
                 });
 
             switch (ext_mode) {

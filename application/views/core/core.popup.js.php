@@ -224,7 +224,7 @@ core.popup = {
     map: function() {
         var dx = 800, dy = 602, border = 30, iconsize = 22;
         var gx = Math.floor(dx/iconsize), gy = Math.floor(dy/iconsize);
-        var bsize = 120;
+        var bsize = 64;
         var grid = {};
 
         for (var i = 0; i < gx; i++) {
@@ -233,7 +233,7 @@ core.popup = {
                 grid[i*iconsize][j*iconsize] = false;
         }
 
-        var popup = core.popup.spawn(dx+2,dy+2+bsize);
+        var popup = core.popup.spawn(dx+2, dy + bsize);
 
         popup.append(core.snippets.wait());
 
@@ -252,13 +252,7 @@ core.popup = {
             }).appendTo(popup);
 
             var infopanel = $('<div />').hide().addClass('map panel').appendTo(
-                $('<div />').addClass('cell rw-4').css({
-                    position: 'relative',
-                    height: '100%'
-                }).appendTo(bottom)
-            );
-            var doorways = $('<div />').addClass('map panel').appendTo(
-                $('<div />').addClass('cell rw-4').css({
+                $('<div />').addClass('cell rw-6 ro-3').css({
                     position: 'relative',
                     height: '100%'
                 }).appendTo(bottom)
@@ -422,7 +416,7 @@ core.popup = {
                                 $(this).addClass(!data.read_only && v.energy <= data.radius ? 'travel' : 'untravel');
                         });
 
-                        infopanel.empty().stop().fadeIn(200).append(
+                        infopanel.empty().stop().fadeIn(100).append(
                             $('<h3 />').text(v.name)
                         ).append(
                             $('<div />').addClass('row center').append(
@@ -453,37 +447,92 @@ core.popup = {
                         )
                     }).mouseleave(function() {
                         draw();
-                        infopanel.stop().fadeOut(600);
+                        infopanel.stop().fadeOut(100);
                         $(this).siblings('.travel, .untravel').removeClass('travel untravel');
                     }).click(function() {
                         if (data.read_only || v.energy > data.radius || k == data.current) return;
 
-                        popup.addClass('disabled');
-                        core.command('map/go', {to: k, follow: 1}, true, function(data) {
-                            popup.removeClass('disabled');
-                            if (data.success) {
-                                popup.trigger('unpop');
-                                core.command();
-                            }
-                        });
-                    })
-                )
-            });
+                        if (core.last.players) {
+                            var esc_popup = core.popup.spawn(400);
 
-            doorways.append(
-                $('<h3 />').text(<?=__j('Andere Orte');?>)
-            );
-            $.each(data.doorways, function(k,v) {
-                doorways.append(
-                    $('<div />').addClass('btn small block').text(v.name + ' (' + v.location + ')').click(function() {
-                        popup.addClass('disabled');
-                        core.command('map/go', {to: k, follow: 1}, true, function(data) {
-                            popup.removeClass('disabled');
-                            if (data.success) {
-                                popup.trigger('unpop');
-                                core.command();
-                            }
-                        });
+                            var title;
+                            esc_popup.append($('<h2 />').addClass('center').text(v.name));
+
+                            esc_popup.append(
+                                $('<div />').addClass('row').append(title = $('<div />').addClass('cell rw-12 padded').text(<?=__j('Wenn du dich alleine fürchtest, kannst du andere Spieler bitten, dich zu begleiten. Oder noch besser, schick sie am besten direkt vor, nicht dass noch jemand (z.B. du) verletzt wird!')?>))
+                            );
+
+                            var check_row = $('<form />').addClass('row').appendTo(esc_popup);
+
+                            if (core.last.players.others)
+                                $.each(core.last.players.others, function(id, player) {
+                                    if (player.escort)
+                                        check_row.append($('<div />').addClass('cell rw-6 padded').append(
+                                            $('<label />').text(player.name).prepend($('<input />').attr('type','checkbox').attr('data-id', player.id))
+                                        ))
+                                });
+
+
+                            if (check_row.children().length) {
+                                var bhav;
+
+                                check_row
+                                    .prepend($('<div />').addClass('cell rw-12 padded').append($('<b />').text(<?=__j('Wer soll alles mitkommen?')?>)))
+                                    .append($('<div />').addClass('cell rw-12 padded').append($('<b />').text(<?=__j('Und wie siehts mit dir aus?')?>)))
+                                    .append($('<div />').addClass('cell rw-12 padded').append(
+                                        bhav = $('<select />')
+                                            .append($('<option />').val('2').text(<?=__j('Mitgehen und helfen')?>))
+                                            .append($('<option />').val('1').text(<?=__j('Nur mitgehen')?>))
+                                            .append($('<option />').val('0').text(<?=__j('Die Stellung halten')?>))
+                                            .val('1')
+                                    ));
+
+                                bhav.selectric();
+                                check_row.find(':checkbox').customRadioCheck();
+
+                            } else title.text(<?=__j('Bist du sicher, dass du diesen Ort betreten möchtest? Er ist weit weg, und riecht auch bestimmt nicht sehr gut...')?>);
+
+                            esc_popup.append($('<div />').addClass('row')
+                                .append($('<div />').addClass('cell rw-8 padded').append(
+                                    $('<div />').addClass('btn').text(<?=__j('Los gehts!')?>).click(function() {
+
+                                        var cfg = {to: k, follow: 1};
+                                        if (check_row.children().length) {
+                                            cfg.follow = parseInt(bhav.val()) > 0 ? 1 : 0;
+                                            cfg.support = parseInt(bhav.val()) == 2 ? 1 : 0;
+                                            cfg.co = [];
+                                            $.each(check_row.find(':checkbox:checked'), function() {
+                                                cfg.co.push($(this).attr('data-id'))
+                                            })
+                                        }
+
+                                        esc_popup.trigger('unpop');
+                                        popup.addClass('disabled');
+                                        core.command('map/go', cfg, true, function(data) {
+                                            popup.removeClass('disabled');
+                                            if (data.success) {
+                                                popup.trigger('unpop');
+                                                core.command();
+                                            }
+                                        });
+                                    })))
+                                .append($('<div />').addClass('cell rw-4 padded').append(
+                                    $('<div />').addClass('btn').text(<?=__j('Abbrechen')?>).click(function() {
+                                        esc_popup.trigger('unpop');
+                                    })))
+                            );
+                        } else {
+                            popup.addClass('disabled');
+                            core.command('map/go', {to: k, follow: 1}, true, function(data) {
+                                popup.removeClass('disabled');
+                                if (data.success) {
+                                    popup.trigger('unpop');
+                                    core.command();
+                                }
+                            });
+                        }
+
+
                     })
                 )
             });

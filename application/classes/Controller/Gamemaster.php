@@ -111,7 +111,7 @@ class Controller_Gamemaster extends Controller {
             return $this->error(\grge\E_STARTER_INVALID_SETUP);
 
         // Create game
-        $game = new Model_Game(false);
+        $game = new Model_Game();
         if (($id = $game->start($mode, 1, 300, null, $name)) && DB::insert('multiplayer_lobby', array('gameid', 'lang', 'slots', 'name', 'timestamp', 'password'))->values(array($id, $lang, $slots, $name, time(), $pw ? hash('sha256', $pw, false) : null))->execute() ) {
 
             //Join game
@@ -254,7 +254,7 @@ class Controller_Gamemaster extends Controller {
             return false;
 
         //Check slots
-        if ($config['modes'][$mode]['type'] == 'multi_custom' && ($slots < $config['modes'][$mode]['slots'][0] || $slots > $config['modes'][$mode]['slots'][1]))
+        if ($startup && $config['modes'][$mode]['type'] == 'multi_custom' && ($slots < $config['modes'][$mode]['slots'][0] || $slots > $config['modes'][$mode]['slots'][1]))
             return false;
 
         //Check speed
@@ -262,7 +262,7 @@ class Controller_Gamemaster extends Controller {
             return false;
 
         //Check name
-        if ($config['modes'][$mode]['type'] == 'multi_custom' && (strlen($name) < 3 || strlen($name) > 96))
+        if ($startup && $config['modes'][$mode]['type'] == 'multi_custom' && (strlen($name) < 3 || strlen($name) > 96))
             return false;
 
         return max(1,(int)$config['jobs'][$job]['level']);
@@ -291,6 +291,7 @@ class Controller_Gamemaster extends Controller {
         $flow = (int)$this->request->current()->post('flow');
         $name = preg_replace('/[^\w &.,!?\-\+:\/@\(\)=;\|]/', ' ', $this->request->current()->post('name'));
         $slots = (int)$this->request->current()->post('slots');
+        $lang = $this->request->current()->post('lang');
 
         // Check if all that config stuff is valid
         if (!($level = $this->check_game_params($mode,$job,$flow,$slots,$id,$name)))
@@ -299,7 +300,7 @@ class Controller_Gamemaster extends Controller {
         // If an ID is given, we want to join a multiplayer game
         if ($id > 0) return $this->join_multiplayer($id,$job,$level,$pw);
         // If a name is given, we want to greate a multiplayer game
-        if ($name) return $this->start_multiplayer($mode,$job,$level,$name,'xx',$slots,$protect);
+        if ($name) return $this->start_multiplayer($mode,$job,$level,$name,$lang,$slots,$protect);
         // Otherwise, we probably want to create a single player game
         return $this->start_singleplayer($mode,$flow,$job,$level);
     }

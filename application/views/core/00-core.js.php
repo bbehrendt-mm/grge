@@ -67,6 +67,7 @@ core = {
         var auto_tab = $('<ul />').addClass('tabline').appendTo(action_box)
             .append($('<li>').data('toggle', '#inv_container').text(<?=__j('Gegenstände & Heldentaten')?>))
             .append($('<li>').data('toggle', '#settings_container').text(<?=__j('Zeitfluss & Verhalten')?>))
+            .append(data.players ? $('<li>').data('toggle', '#mp_container').text(<?=__j('Spielerübersicht')?>) : false)
             .find('>li').click(function() {
                 var t = $($(this).data('toggle'));
                 $(this).addClass('active').siblings().removeClass('active');
@@ -79,6 +80,9 @@ core = {
 
         if (data.settings)
             core.parts.settings(data.settings, $('<div />').attr('id', 'settings_container').addClass('row').appendTo(action_box));
+
+        if (data.players)
+            core.parts.mp_players(data.players, $('<div />').attr('id', 'mp_container').addClass('row').appendTo(action_box));
 
         if (data.status && data.clock)
             core.parts.status(data.status, data.clock, $('#persistent'));

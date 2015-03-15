@@ -72,12 +72,12 @@ class Controller_Player extends Controller_Game {
         $lock_tank = (int)$this->request->post('wp_tank');
         $aitype = (int)$this->request->post('ai');
 
-        if ($aitype < 1 || $aitype > 3) return false;
+        if ($aitype < 1 || $aitype > 3) return $this->render(['success' => 0]);
 
         $ammo_data = [];
         $wp_ammo = $this->request->post('wp_ammo');
 
-        if (!is_array($wp_ammo)) return false;
+        if (!is_array($wp_ammo)) return $this->render(['success' => 0]);
 
         foreach (Controller_Player::battle_ai_ammo_types() as $key => $ammo) {
             /** @var Model_Items_Abstract_Ammo|string $ammo */
@@ -88,6 +88,24 @@ class Controller_Player extends Controller_Game {
 
         $player->set_battle_settings((bool)$lock_energy, (bool)$lock_tank, (bool)$lock_throw, $aitype, $ammo_data);
         $player->log()->add('Du hast dein Kampfverhalten angepasst.');
-        return $this->japi_data();
+
+        $this->render_notifications();
+        return $this->render(['success' => 1]);
+    }
+
+    public function japi_mp() {
+        /**
+         * @global $player Model_Player
+         */
+        global $player;
+
+        $escort = (int)$this->request->post('escort');
+        $ping = (int)$this->request->post('ping');
+
+        if ($player->chat_beacon() && !$ping) $player->chat_beacon(0);
+        elseif (!$player->chat_beacon() && $ping) $player->chat_beacon(15);
+
+        $player->companion((bool)$escort);
+        return $this->render(['success' => 1]);
     }
 }

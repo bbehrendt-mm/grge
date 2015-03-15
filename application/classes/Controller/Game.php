@@ -35,15 +35,12 @@ class Controller_Game extends Controller {
     private function prepare_actionlist($actions, $v_item = null) {
         // Prepare actions
         foreach ($actions as &$action) {
-            // Check vitem
+            // Check item
             $action['remaining'] = $v_item ? ($v_item->remaining_actions($action['action']) < PHP_INT_MAX ? $v_item->remaining_actions($action['action']) : -1 ) : -1;
 
             // Translate
             foreach (['description', 'tooltip'] as $t)
                 if ($action[$t]) $action[$t] = __($action[$t]);
-            // Clean
-            foreach (['action'] as $t)
-                unset ($action[$t]);
         }
 
         return $actions;
@@ -54,8 +51,11 @@ class Controller_Game extends Controller {
      * @throws Exception
      */
     private function render_location() {
-        /** @global Model_Player $player */
-        global $player;
+        /**
+         * @global $game Model_Game
+         * @global $player Model_Player
+         */
+        global $game, $player;
 
         //ToDo: Radar effects
         // Get Radar data
@@ -86,6 +86,14 @@ class Controller_Game extends Controller {
                 /** @var  Model_Items_Abstract_Virtual $a_item */
                 $a = array_merge($a,$this->prepare_actionlist($a_item->auto_actions(), $a_item));
 
+        // Get doorways
+        $doorways = array();
+        foreach ($player->location()->get_doorways() as $did) {
+            $doorways[$did]['location'] = __($game->location($did)->name());
+            $doorways[$did]['name'] = __(Tool_Scripts::get_map_description($game->map($did)->get_sublocation()));
+        }
+        if (!count($doorways)) $doorways = false;
+
         // Add render data
         $this->add_data('location', [
             'meta' => [
@@ -95,6 +103,7 @@ class Controller_Game extends Controller {
                 'css' => $player->location()->getCustomStyle(),
             ],
             'actions' => $a,
+            'doorways' => $doorways,
             'hideout' => $hideout ? [
                 'state' => 100 * round(1 - $hideout->get_decay(), 2),
                 'max_defense' => $hideout->get_defense(true),
@@ -116,9 +125,10 @@ class Controller_Game extends Controller {
 
     /**
      * @param $itemlist Model_Items_Abstract_Item[]
+     * @param bool $short
      * @return array
      */
-    private function group_itemlist($itemlist) {
+    private function group_itemlist($itemlist, $short = false) {
         $grouping = Array();
         $cache = Array();
 
@@ -155,10 +165,10 @@ class Controller_Game extends Controller {
 
             $data = [
                 'name' => __($item->name()),
-                'description' => __($item->description()),
+                'description' => $short ? '' : __($item->description()),
                 'icon' => $item->icon(),
                 'weight' => $item->weight(),
-                'actions' => $this->prepare_actionlist($item->auto_actions()),
+                'actions' => $short ? [] : $this->prepare_actionlist($item->auto_actions()),
                 'addr' => Tool_System::getClassID($item),
                 'flags' => $flags,
                 'uin' => $item->uin(),
@@ -225,37 +235,47 @@ class Controller_Game extends Controller {
         return $grouping;
     }
 
-    private function render_inventory() {
+    /**
+     * @param bool|Model_Player $remote
+     * @return array|void
+     */
+    private function render_inventory($remote = false) {
         /**
          * @global $player Model_Player
          */
         global $player;
+        $p = $remote ? $remote : $player;
 
         // Get heroic actions
         $a = [];
         $action = false;
-        /** @var Model_Buffs_Abstract_Fragile $buff */
-        if (!($buff = $player->buff_retr('fragile')))
-            foreach (Tool_Scripts::available_items('Model_Items_Abstract_Virtual',true,false,false,$player) as $a_item)
-                /** @var  Model_Items_Abstract_Virtual $a_item */
-                $a = array_merge($a,$this->prepare_actionlist($a_item->auto_actions(), $a_item));
-        else $action = [
-            'name' => __($buff->name()),
-            'desc' => __($buff->description()),
-            'abort' => $buff->abortable(),
-            'remaining' => $buff->lifetime() > 0 ? Tool_Numerics::duration_to_split($buff->lifetime()) : false
-        ];
+        if (!$remote) {
+            /** @var Model_Buffs_Abstract_Fragile $buff */
+            if (!($buff = $p->buff_retr('fragile')))
+                foreach (Tool_Scripts::available_items('Model_Items_Abstract_Virtual',true,false,false,$p) as $a_item)
+                    /** @var  Model_Items_Abstract_Virtual $a_item */
+                    $a = array_merge($a,$this->prepare_actionlist($a_item->auto_actions(), $a_item));
+            else $action = [
+                'name' => __($buff->name()),
+                'desc' => __($buff->description()),
+                'abort' => $buff->abortable(),
+                'remaining' => $buff->lifetime() > 0 ? Tool_Numerics::duration_to_split($buff->lifetime()) : false
+            ];
+        }
 
         /** @noinspection PhpVoidFunctionResultUsedInspection */
         /** @noinspection PhpUndefinedMethodInspection */
-        $this->add_data('inventory', [
-            'player' => $this->group_itemlist($player->inventory()->get()),
-            'weight' => [$player->inventory()->weight(),$player->inventory()->limit()],
-            'location' => $this->group_itemlist($player->location()->inventory()->get()),
-            'home' => (bool)Tool_Scripts::current_location_hideout(),
+        $tmp = [
+            'player' => $this->group_itemlist($p->inventory()->get(), $remote ? true : false),
+            'weight' => [$p->inventory()->weight(),$p->inventory()->limit()],
+            'location' => $remote ? [] : $this->group_itemlist($p->location()->inventory()->get()),
+            'home' => $remote ? false : (bool)Tool_Scripts::current_location_hideout(),
             'heroics' => $a,
             'action' => $action
-        ]);
+        ];
+
+        if ($remote) return $tmp;
+        else return $this->add_data('inventory', $tmp);
     }
 
     private function condense_buff($bar) {
@@ -279,38 +299,52 @@ class Controller_Game extends Controller {
         return $ret;
     }
 
-    private function status($type) {
+    /**
+     * @param int $type
+     * @param bool|Model_Player $remote
+     * @return array
+     */
+    private function status($type, $remote = false) {
         /**
          * @global $player Model_Player
          */
         global $player;
+        $p = $remote ? $remote : $player;
+
 
         return [
-            'value' => round($player->stats_get($type),2),
-            'buffs' => $this->condense_buff($type)
+            'value' => round($p->stats_get($type),2),
+            'buffs' => $remote ? [] : $this->condense_buff($type)
         ];
     }
 
-    private function render_status() {
-        /**
-         * @global $player Model_Player
-         */
+    /**
+     * @param bool|Model_Player $remote
+     * @return array|void
+     */
+    private function render_status($remote = false) {
+        /** @global $player Model_Player */
         global $player;
+
+        $p = $remote ? $remote : $player;
 
         $cache = [];
         $tmp = 0;
         for ($type = 1; $type <= Model_Player::MP_STATUS_COUNT; $type++)
-            if ($type <= 5 || $player->stats_get($type))
-                $cache[$type] = $this->status($type);
+            if ($type <= 5 || $p->stats_get($type))
+                $cache[$type] = $this->status($type, $remote);
 
         $buffs = [];
-        foreach ($player->buff_get() as $buff) if ($buff->visible())
-            $buffs[] = ['icon' => $buff->icon(), 'name' => __($buff->name()), 'desc' => __($buff->description())];
+        foreach ($p->buff_get() as $buff) if ($buff->visible() && (!$remote || $buff->visible(true)))
+            $buffs[] = ['icon' => $buff->icon(), 'name' => __($buff->name()), 'desc' => $remote ? '' : __($buff->description())];
 
-        $this->add_data('status', [
+        $tmp = [
             'bars' => $cache,
             'buffs' => $buffs
-        ]);
+        ];
+
+        if ($remote) return $tmp;
+        else return $this->add_data('status', $tmp);
     }
 
     protected function render_notifications() {
@@ -443,6 +477,46 @@ class Controller_Game extends Controller {
         }
     }
 
+    private function render_mp() {
+        /**
+         * @global $game Model_Game
+         * @global $player Model_Player
+         */
+        global $game, $player;
+
+        if (!$game->config('modules.multiplayer')) return;
+
+        $players = [];
+        foreach ($game->players(false) as $p) {
+            if ($p->id() == $player->id()) continue;
+
+            $local = $p->alive() && $p->location_class() == $player->location_class();
+            $stats = [];
+            if ($local)
+                for ($type = 1; $type <= Model_Player::MP_STATUS_COUNT; $type++)
+                    if ($type <= 5 || $player->stats_get($type))
+                        $cache[$type] = $this->status($type);
+
+            $players[$p->id()] = [
+                'name' => $p->name(),
+                'id' => $p->id(),
+                'speed' => $p->vote_time(),
+                'local' => $local,
+                'stats' => $local ? $this->render_status($p) : false,
+                'inventory' => ($local && $p->companion()) ? $this->render_inventory($p) : false,
+                'escort' => $local ? $p->companion() : false,
+            ];
+        }
+
+        $this->add_data('players', [
+            'others' => $players,
+            'self' => [
+                'escort' => $player->companion(),
+                'ping' => $player->chat_beacon()
+            ]
+        ]);
+    }
+
     /**
      * Renderer API
      * @throws Kohana_Exception
@@ -464,6 +538,7 @@ class Controller_Game extends Controller {
         $this->render_settings();
         $this->render_clock();
         $this->render_log();
+        $this->render_mp();
         $this->render_specials();
         $this->render_notifications();
 

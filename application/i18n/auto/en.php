@@ -50,4 +50,20 @@ return array (
 	'',
   'Bist du sicher, dass du diesen Ort betreten möchtest? Er ist weit weg, und riecht auch bestimmt nicht sehr gut...' =>
 	'',
+  'Ort wechseln' =>
+	'',
+  'Du kannst von diesem Ort aus einen anderen Teil der Spielwelt betreten.' =>
+	'',
+  'Wo soll\'s denn hingehen?' =>
+	'',
+  'Hier siehst du Spieler, die sich momentan in deiner Nähe befinden. Um mehr Details zu erfahren, klicke "Spielerübersicht".' =>
+	'',
+  'Letzter Unterhosenwechsel' =>
+	'',
+  'Vor 12 Wochen' =>
+	'',
+  'Lieblingskünster' =>
+	'',
+  'Helene Fischer' =>
+	'',
 );

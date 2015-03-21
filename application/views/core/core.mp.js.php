@@ -9,6 +9,37 @@
             box.append($('<b />').text(player.name));
             var bars = $('<div />').addClass('row').appendTo(box);
 
+            box.attr('title', '-').qtip(game.render.html.qtip.ingame('bottom', {
+                render: function(event,api) {
+                    var content = $(this).find('.qtip-content').empty().css('width', 360);
+
+                    var table;
+                    content.append(
+                        $('<b />').addClass('header').text(player.name)
+                    ).append(table = $('<div />').addClass('row'));
+
+                    var date = new Date(player.last_seen * 1000);
+
+                    $('<div />').addClass('row')
+                        .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Beruf')?>))
+                        .append($('<div />').addClass('cell rw-6 padded left').text(player.job))
+                        .appendTo(content);
+
+                    $('<div />').addClass('row')
+                        .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Spielgeschwindigkeit')?>))
+                        .append($('<div />').addClass('cell rw-6 padded left').text(core.snippets.timestr(player.speed)))
+                        .appendTo(content);
+                    $('<div />').addClass('row')
+                        .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Letzte Aktivität')?>))
+                        .append($('<div />').addClass('cell rw-6 padded left').text(date.toLocaleString()))
+                        .appendTo(content);
+                    $('<div />').addClass('row')
+                        .append($('<div />').addClass('cell rw-6 padded b right').text(player.joke[0]))
+                        .append($('<div />').addClass('cell rw-6 padded left').text(player.joke[1]))
+                        .appendTo(content);
+                }
+            }));
+
             if (player.stats)
                 core.parts.status_bars(bars, player.stats, true);
         })

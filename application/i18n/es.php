@@ -3206,4 +3206,26 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
 	'Ihr macht euch auf den Weg zu/zur/zum :location.',
   'Bist du sicher, dass du diesen Ort betreten möchtest? Er ist weit weg, und riecht auch bestimmt nicht sehr gut...' =>
 	'Bist du sicher, dass du diesen Ort betreten möchtest? Er ist weit weg, und riecht auch bestimmt nicht sehr gut...',
+  'Ort wechseln' =>
+	'Ort wechseln',
+  'Mitgehen' =>
+	'Mitgehen',
+  'Du kannst von diesem Ort aus einen anderen Teil der Spielwelt betreten.' =>
+	'Du kannst von diesem Ort aus einen anderen Teil der Spielwelt betreten.',
+  'Wo soll\'s denn hingehen?' =>
+	'Wo soll\'s denn hingehen?',
+  'Aufgrund der mangelhaften Kletterfähigkeiten von Zombies gibt dieses Baumhaus ein überraschend gutes Versteck ab. Im Brandfall solltest du es jedoch lieber nicht verwenden...' =>
+	'Aufgrund der mangelhaften Kletterfähigkeiten von Zombies gibt dieses Baumhaus ein überraschend gutes Versteck ab. Im Brandfall solltest du es jedoch lieber nicht verwenden...',
+  'Hier siehst du Spieler, die sich momentan in deiner Nähe befinden. Um mehr Details zu erfahren, klicke "Spielerübersicht".' =>
+	'Hier siehst du Spieler, die sich momentan in deiner Nähe befinden. Um mehr Details zu erfahren, klicke "Spielerübersicht".',
+  'Letzte Aktivität' =>
+	'Letzte Aktivität',
+  'Letzter Unterhosenwechsel' =>
+	'Letzter Unterhosenwechsel',
+  'Vor 12 Wochen' =>
+	'Vor 12 Wochen',
+  'Lieblingskünster' =>
+	'Lieblingskünster',
+  'Helene Fischer' =>
+	'Helene Fischer',
 );

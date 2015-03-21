@@ -19,6 +19,47 @@ class Controller_Lobby extends Controller {
         $this->render();
     }
 
+    private function get_feed($fid, $length, $offset) {
+
+        $cacheable = ($length == 5 && $offset == 0);
+        $cache = $cacheable ? Cache::instance()->get("forum_default_$fid", null) : null;
+        $cached = !(!$cache || !$cache['time'] || !$cache['data']);
+
+        if (!$cached || $cache['time'] < (time() - 300)) {
+
+            $url = Kohana::$config->load('services.newsfeed.server');
+            $auth = Kohana::$config->load('services.newsfeed.token');
+
+            // Connect to forum, read threads
+            try {
+                $ret = json_decode(file_get_contents("{$url}/remote.php", false, stream_context_create([
+                    'http' => array(
+                        'timeout' => $cached ? 5 : 10,
+                        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                        'method'  => 'POST',
+                        'content' => http_build_query([
+                            'auth' => $auth,
+                            'f' => $fid,
+                            's' => 5,
+                            'o' => $offset
+                        ]),
+                    ),
+                ])), true);
+
+                if ($ret === null)
+                    throw new Exception('Failed to retrieve forum listing.');
+                else {
+                    if ($cacheable) Cache::instance()->set("forum_default_$fid", ['time' => time(), 'data' => $ret]);
+                    return $ret;
+                }
+            } catch (Exception $e) {
+                return ($cached) ? $cache['data'] : false;
+            }
+
+        } else return $cache['data'];
+
+    }
+
     /**
      * Forum Newsfeed API
      * @return bool
@@ -28,33 +69,14 @@ class Controller_Lobby extends Controller {
         // Get config
         $offset = max(0,(int)$this->request->current()->post('page') - 1) * 5;
         $url = Kohana::$config->load('services.newsfeed.server');
-        $auth = Kohana::$config->load('services.newsfeed.token');
         $fid = Kohana::$config->load('services.newsfeed.topics');
 
         // Get forum ID based on language, or use default if no specific ID is set
         if (isset($fid[I18n::$lang])) $fid = $fid[I18n::$lang];
         else $fid = $fid['default'];
 
-        // Connect to forum, read threads
-        try {
-            $ret = json_decode(file_get_contents("{$url}/remote.php", false, stream_context_create([
-                'http' => array(
-                    'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-                    'method'  => 'POST',
-                    'content' => http_build_query([
-                        'auth' => $auth,
-                        'f' => $fid,
-                        's' => 5,
-                        'o' => $offset
-                    ]),
-                ),
-            ])), true);
-
-            if ($ret === null)
-                throw new Exception('Failed to retrieve forum listing.');
-        } catch (Exception $e) {
-            return $this->error(\grge\E_EXT_SERVICE_UNAVAILABLE);
-        }
+        $ret = $this->get_feed($fid, 5, $offset);
+        if (!$ret) return $this->error(\grge\E_EXT_SERVICE_UNAVAILABLE);
 
         // Convert stuff
         foreach ($ret['threads'] as &$article) {

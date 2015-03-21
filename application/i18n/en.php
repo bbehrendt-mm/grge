@@ -3204,4 +3204,26 @@ return array (
 	'You\'re on your way to :location.',
   'Bist du sicher, dass du diesen Ort betreten möchtest? Er ist weit weg, und riecht auch bestimmt nicht sehr gut...' =>
 	'Bist du sicher, dass du diesen Ort betreten möchtest? Er ist weit weg, und riecht auch bestimmt nicht sehr gut...',
+  'Ort wechseln' =>
+	'Ort wechseln',
+  'Mitgehen' =>
+	'Go along',
+  'Du kannst von diesem Ort aus einen anderen Teil der Spielwelt betreten.' =>
+	'Du kannst von diesem Ort aus einen anderen Teil der Spielwelt betreten.',
+  'Wo soll\'s denn hingehen?' =>
+	'Wo soll\'s denn hingehen?',
+  'Aufgrund der mangelhaften Kletterfähigkeiten von Zombies gibt dieses Baumhaus ein überraschend gutes Versteck ab. Im Brandfall solltest du es jedoch lieber nicht verwenden...' =>
+	'Since zombies aren\'t good at climbing trees, this treehouse is actually a pretty good hideout. However, in case of a fire you should avoid using it...',
+  'Hier siehst du Spieler, die sich momentan in deiner Nähe befinden. Um mehr Details zu erfahren, klicke "Spielerübersicht".' =>
+	'Hier siehst du Spieler, die sich momentan in deiner Nähe befinden. Um mehr Details zu erfahren, klicke "Spielerübersicht".',
+  'Letzte Aktivität' =>
+	'Last activity',
+  'Letzter Unterhosenwechsel' =>
+	'Letzter Unterhosenwechsel',
+  'Vor 12 Wochen' =>
+	'Vor 12 Wochen',
+  'Lieblingskünster' =>
+	'Lieblingskünster',
+  'Helene Fischer' =>
+	'Helene Fischer',
 );

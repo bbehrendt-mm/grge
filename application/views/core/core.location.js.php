@@ -186,7 +186,7 @@
     };
 
     core.parts.location = function(data, target) {
-        var zradar, hideout, actions, spc_colosseum, spc_scout;
+        var zradar, hideout, actions, spc_colosseum, spc_scout, desc;
 
         $(target).empty().addClass('row location_box ' + (data.meta.outside ? 'outside' : 'inside')).append(
             $('<h2 />').text(data.meta.name)
@@ -203,8 +203,23 @@
                 actions = $('<div />').addClass('row')
             )
         ).append(
-            $('<div />').addClass('cell rw-6 padded justify').text(data.meta.desc)
+            desc = $('<div />').addClass('cell rw-6 padded justify').text(data.meta.desc)
         );
+
+        if (core.last.players) {
+            var area = [];
+            $.each(core.last.players.others, function(id, player) {
+                if (player.local) area.push(player.name);
+            });
+
+            if (area.length) {
+                var p = $('<p />').appendTo(desc).attr('title',<?=__j('Hier siehst du Spieler, die sich momentan in deiner Nähe befinden. Um mehr Details zu erfahren, klicke "Spielerübersicht".')?>).qtip(game.render.html.qtip.ingame('bottom'));
+                $.each(area, function(k,name) {
+                    p.append($('<span />').addClass('inline-player').text(name));
+                });
+
+            }
+        }
 
         $.each(data.actions, function(k,v) {
             actions.append(
@@ -221,7 +236,89 @@
         if (data.doorways) {
             actions.append(
                 $('<div />').addClass('cell padded justify rw-2').append(
-                    $('<div />').addClass('btn').append($('<i>').addClass('fa fa-sign-in')).append('&nbsp;')
+                    $('<div />').addClass('btn').append($('<i>').addClass('fa fa-sign-in')).append('&nbsp;').click(function() {
+                        var esc_popup = core.popup.spawn(400);
+
+                        var title;
+                        esc_popup.append($('<h2 />').addClass('center').text(<?=__j('Ort wechseln')?>));
+
+                        esc_popup.append(
+                            $('<div />').addClass('row').append(title = $('<div />').addClass('cell rw-12 padded').text(<?=__j('Du kannst von diesem Ort aus einen anderen Teil der Spielwelt betreten.')?>))
+                        );
+
+                        var destination = $('<select />');
+                        $.each(data.doorways, function(id, meta) {
+                            $('<option />').attr('value', id).text(meta.name + ' (' + meta.location + ')').appendTo(destination);
+                        });
+
+                        esc_popup.append(
+                            $('<div />').addClass('row').append($('<div />').addClass('cell rw-12 padded').append($('<b />').text(<?=__j("Wo soll's denn hingehen?")?>)))
+                        ).append(
+                            $('<div />').addClass('row').append($('<div />').addClass('cell rw-12 padded').append(destination))
+                        );
+                        destination.selectric();
+
+                        if (core.last.players) {
+
+                            var check_row = $('<form />').addClass('row').appendTo(esc_popup);
+
+                            if (core.last.players.others)
+                                $.each(core.last.players.others, function(id, player) {
+                                    if (player.escort)
+                                        check_row.append($('<div />').addClass('cell rw-6 padded').append(
+                                            $('<label />').text(player.name).prepend($('<input />').attr('type','checkbox').attr('data-id', player.id))
+                                        ))
+                                });
+
+
+                            if (check_row.children().length) {
+                                var bhav;
+
+                                check_row
+                                    .prepend($('<div />').addClass('cell rw-12 padded').append($('<b />').text(<?=__j('Wer soll alles mitkommen?')?>)))
+                                    .append($('<div />').addClass('cell rw-12 padded').append($('<b />').text(<?=__j('Und wie siehts mit dir aus?')?>)))
+                                    .append($('<div />').addClass('cell rw-12 padded').append(
+                                        bhav = $('<select />')
+                                            .append($('<option />').val('1').text(<?=__j('Mitgehen')?>))
+                                            .append($('<option />').val('0').text(<?=__j('Die Stellung halten')?>))
+                                            .val('1')
+                                    ));
+
+                                bhav.selectric();
+                                check_row.find(':checkbox').customRadioCheck();
+
+                            }
+
+                            esc_popup.append($('<div />').addClass('row')
+                                    .append($('<div />').addClass('cell rw-8 padded').append(
+                                        $('<div />').addClass('btn').text(<?=__j('Los gehts!')?>).addClass(data.radar.zombies > 0 ? 'disabled' : '').click(function() {
+
+                                            var cfg = {to: destination.val(), follow: 1};
+                                            if (check_row.children().length) {
+                                                cfg.follow = parseInt(bhav.val()) > 0 ? 1 : 0;
+                                                cfg.support = parseInt(bhav.val()) == 2 ? 1 : 0;
+                                                cfg.co = [];
+                                                $.each(check_row.find(':checkbox:checked'), function() {
+                                                    cfg.co.push($(this).attr('data-id'))
+                                                })
+                                            }
+
+                                            esc_popup.addClass('disabled');
+                                            core.command('map/go', cfg, true, function(data) {
+                                                esc_popup.removeClass('disabled');
+                                                if (data.success) {
+                                                    esc_popup.trigger('unpop');
+                                                    core.command();
+                                                }
+                                            });
+                                        })))
+                                    .append($('<div />').addClass('cell rw-4 padded').append(
+                                        $('<div />').addClass('btn').text(<?=__j('Abbrechen')?>).click(function() {
+                                            esc_popup.trigger('unpop');
+                                        })))
+                            );
+                        }
+                    })
                 )
             );
         }
@@ -230,7 +327,7 @@
         if (hideout)
             hideoutstats(data.hideout, hideout);
         if (data.colosseum)
-            colosseum(data.colosseum, spc_colosseum)
+            colosseum(data.colosseum, spc_colosseum);
         if (data.scouting)
             scoutmode(data.scouting, spc_scout)
     };

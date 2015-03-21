@@ -7,6 +7,9 @@ abstract class Model_Gamelayer_Storage extends Model {
 	protected $uin_cache = array();
     protected $read_only;
 
+    final public function id() {
+        return $this->set['gameid'];
+    }
 	
 	final public function __sleep() {		
 		//Check if game is properly initialized, and update DB	

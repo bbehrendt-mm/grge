@@ -432,7 +432,7 @@ class Controller_Game extends Controller {
             'ai' => [
                 'type' => $battle_ai[Model_Player::MP_SETTINGS_BATTLE_DISTANCE_DAMAGE_SHIFT],
                 'weapons' => [
-                    'energy' => $battle_ai[Model_Player::MP_SETTINGS_BATTLE_NOENERGY],
+                    'energy' => $player->job(1080) ? 'locked' : $battle_ai[Model_Player::MP_SETTINGS_BATTLE_NOENERGY],
                     'throw' => $battle_ai[Model_Player::MP_SETTINGS_BATTLE_NOSELFAMMO],
                     'tank' => $battle_ai[Model_Player::MP_SETTINGS_BATTLE_NOTANKAMMO],
                 ],
@@ -486,9 +486,23 @@ class Controller_Game extends Controller {
 
         if (!$game->config('modules.multiplayer')) return;
 
+        $speeds = [15,30,60,120,300,600,900];
+        $jokes = [
+            'Letzter Unterhosenwechsel' => 'Vor 12 Wochen',
+            'Höchster Schulabschluss' => 'Kindergarten',
+            'Geschlechtskrankheiten' => '[nt]4',
+            'Lieblingskünster' => 'Helene Fischer',
+            'Lieblings-Item' => 'Massagestab',
+            'Spieler-ID' => 'ID10T',
+            'Browser' => 'Internet Explorer 6',
+            'Betriebssystem' => 'MUTOS 1600',
+        ];
+
         $players = [];
         foreach ($game->players(false) as $p) {
             if ($p->id() == $player->id()) continue;
+
+            $joke = array_keys($jokes)[($game->id() + $p->id()) % count($jokes)];
 
             $local = $p->alive() && $p->location_class() == $player->location_class();
             $stats = [];
@@ -497,14 +511,21 @@ class Controller_Game extends Controller {
                     if ($type <= 5 || $player->stats_get($type))
                         $cache[$type] = $this->status($type);
 
+
             $players[$p->id()] = [
                 'name' => $p->name(),
                 'id' => $p->id(),
-                'speed' => $p->vote_time(),
+                'speed' => $speeds[$p->vote_time()],
                 'local' => $local,
                 'stats' => $local ? $this->render_status($p) : false,
                 'inventory' => ($local && $p->companion()) ? $this->render_inventory($p) : false,
                 'escort' => $local ? $p->companion() : false,
+                'last_seen' => $p->last_action(),
+                'job' => __(Tool_Gamemodes::get_job_by_id($p->job())),
+                'joke' => [
+                    0 => __($joke),
+                    1 => __($jokes[$joke])
+                ]
             ];
         }
 

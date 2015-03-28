@@ -3142,88 +3142,76 @@ return array (
 	'You are currently drawing a map of this place. This requires your undivided attention - you can not perform any other actions or leave this place until you are finished.',
   '"ZombieKing" Restaurant' =>
 	'"ZombieKing" Franchise',
-  'Kohana_Cache_File::_delete_file failed to delete file : :file' =>
-	'Kohana_Cache_File::_delete_file failed to delete file : :file',
   ':name ist soeben der Partie beigetreten.' =>
 	':name has joined the game.',
   'Spielerübersicht' =>
 	'Player Overview',
   'Andere Spieler' =>
-	'Andere Spieler',
+	'Other players',
   'Du' =>
-	'Du',
+	'You',
   'Wenn du mehr über die Statuseffekte anderer Spieler erfahren willst, musst du sie schon selbst fragen.' =>
-	'Wenn du mehr über die Statuseffekte anderer Spieler erfahren willst, musst du sie schon selbst fragen.',
+	'If you want to learn more about other people\'s status effects, you\'ll have to ask them personally.',
   'Ist diese Option aktiviert, erhalten andere Spieler begrenzte Kontrolle über dich. Sie können dich bewegen, Gegenstände auf dich anwenden oder Gegenstände in deinen Rucksack legen.' =>
-	'Ist diese Option aktiviert, erhalten andere Spieler begrenzte Kontrolle über dich. Sie können dich bewegen, Gegenstände auf dich anwenden oder Gegenstände in deinen Rucksack legen.',
+	'Once this option is enabled, other players gain limited control over you. They can move you to a different location, use certain items on you and make you pick up stuff from the ground.',
   'Befehle entgegennehmen' =>
 	'Take orders',
   'Aktiviere diese Option um anderen Spielern mitzuteilen, dass sie in den Chat kommen sollen. Der Chat-Aufruf wird nach 15 Minuten automatisch deaktiviert.' =>
-	'Aktiviere diese Option um anderen Spielern mitzuteilen, dass sie in den Chat kommen sollen. Der Chat-Aufruf wird nach 15 Minuten automatisch deaktiviert.',
+	'Use this option to tell other players to join you in the chat. After 15 minutes, the chat beacon will be automatically disabled.',
   'Chat-Aufruf' =>
 	'Call others to chat',
   'Beim Speichern der Einstellungen ist ein Fehler aufgetreten.' =>
-	'Beim Speichern der Einstellungen ist ein Fehler aufgetreten.',
+	'An error occured when trying to save these settings.',
   'Für die paar Kratzer willst du eine Bandage verwenden? Sei mal nicht so ein Schwächling, und warte zumindest bis deine Gesundheit auf 50 gefallen ist.' =>
 	'You want to use this bandage for that tiny scratch?  Stop being such a pussy, man up and only use bandages once you health has dropped below 50.',
   'Bitte wähle einen Spieler aus, auf den du diese Aktion anwenden willst. Du kannst nur Spieler auswählen, die sich am gleichen Ort befinden wie du und Befehle von dir entgegennehmen.' =>
-	'Bitte wähle einen Spieler aus, auf den du diese Aktion anwenden willst. Du kannst nur Spieler auswählen, die sich am gleichen Ort befinden wie du und Befehle von dir entgegennehmen.',
+	'Please select a player to use this action on. You can only target players close to you who will obey commands.',
   'Bist du sicher, dass du diese Aktion auf :name anwenden möchtest?' =>
-	'Bist du sicher, dass du diese Aktion auf :name anwenden möchtest?',
+	'Are you sure you want to use this action on :name?',
   'Du machst dir zuviel Sorgen... bei ein paar kleinen Kratzern wäre eine Bandage doch wohl etwas übertrieben. Warte bis die Gesundheit deines Freundes unter 50 gefallen ist.' =>
 	'You just worry to much... wasting a bandage on these tiny scratches would be a little excessive. You\'d better wait until your friends health has dropped below 50.',
-  'Wenn du dich alleine fürchtest, kannst du andere Spieler bitten, dich zu begleiten. Oder noch besser, schick sie am besten direkt vor, nicht dass noch jemand (du) verletzt wird!' =>
-	'Wenn du dich alleine fürchtest, kannst du andere Spieler bitten, dich zu begleiten. Oder noch besser, schick sie am besten direkt vor, nicht dass noch jemand (du) verletzt wird!',
   'Wer soll alles mitkommen?' =>
-	'Wer soll alles mitkommen?',
+	'Who do you want to take with you?',
   'Wenn du dich alleine fürchtest, kannst du andere Spieler bitten, dich zu begleiten. Oder noch besser, schick sie am besten direkt vor, nicht dass noch jemand (z.B. du) verletzt wird!' =>
-	'Wenn du dich alleine fürchtest, kannst du andere Spieler bitten, dich zu begleiten. Oder noch besser, schick sie am besten direkt vor, nicht dass noch jemand (z.B. du) verletzt wird!',
-  'Und willst du selbst mitgehen?' =>
-	'Und willst du selbst mitgehen?',
-  'Na klar!' =>
-	'Na klar!',
-  'Lieber nicht ...' =>
-	'Lieber nicht ...',
-  'Ich will schwächeren Spielern unter die Arme greifen!' =>
-	'Ich will schwächeren Spielern unter die Arme greifen!',
-  'Schwächeren Spielern unter die Arme greifen!' =>
-	'Schwächeren Spielern unter die Arme greifen!',
-  'Schwächeren Spielern helfen!' =>
-	'Schwächeren Spielern helfen!',
-  'Und wie siehts mit dir aus?' =>
-	'Und wie siehts mit dir aus?',
+	'If you\'re scared of going alone, just take someone with you. Or even better, tell them to go ahead; we wouldn\'t want anyone to get hurt (especially you).',
   'Mitgehen und helfen' =>
-	'Mitgehen und helfen',
+	'Go along and help others',
   'Nur mitgehen' =>
-	'Nur mitgehen',
+	'Just go along',
   'Die Stellung halten' =>
-	'Die Stellung halten',
+	'Stay here',
   'Los gehts!' =>
-	'Los gehts!',
+	'Let\'s go!',
   'Ihr macht euch auf den Weg zu/zur/zum :location.' =>
 	'You\'re on your way to :location.',
   'Bist du sicher, dass du diesen Ort betreten möchtest? Er ist weit weg, und riecht auch bestimmt nicht sehr gut...' =>
-	'Bist du sicher, dass du diesen Ort betreten möchtest? Er ist weit weg, und riecht auch bestimmt nicht sehr gut...',
+	'Are you sure you want to go to this place? It\'s awefully far away, and it probably smells bad...',
   'Ort wechseln' =>
-	'Ort wechseln',
+	'Change location',
   'Mitgehen' =>
 	'Go along',
   'Du kannst von diesem Ort aus einen anderen Teil der Spielwelt betreten.' =>
-	'Du kannst von diesem Ort aus einen anderen Teil der Spielwelt betreten.',
+	'You can move to a different part of the world from here.',
   'Wo soll\'s denn hingehen?' =>
-	'Wo soll\'s denn hingehen?',
+	'Where do you want to go?',
   'Aufgrund der mangelhaften Kletterfähigkeiten von Zombies gibt dieses Baumhaus ein überraschend gutes Versteck ab. Im Brandfall solltest du es jedoch lieber nicht verwenden...' =>
 	'Since zombies aren\'t good at climbing trees, this treehouse is actually a pretty good hideout. However, in case of a fire you should avoid using it...',
   'Hier siehst du Spieler, die sich momentan in deiner Nähe befinden. Um mehr Details zu erfahren, klicke "Spielerübersicht".' =>
-	'Hier siehst du Spieler, die sich momentan in deiner Nähe befinden. Um mehr Details zu erfahren, klicke "Spielerübersicht".',
+	'Here, you\'ll see all players at your current location. Switch to "Player Overview" for more information.',
   'Letzte Aktivität' =>
 	'Last activity',
   'Letzter Unterhosenwechsel' =>
-	'Letzter Unterhosenwechsel',
+	'Last change of underwear',
   'Vor 12 Wochen' =>
-	'Vor 12 Wochen',
+	'12 weeks ago',
   'Lieblingskünster' =>
-	'Lieblingskünster',
+	'Favorite Artist',
   'Helene Fischer' =>
-	'Helene Fischer',
+	'Justin Bieber',
+  'Und wie siehts mit dir aus?' =>
+	'And how about you?',
+  'Betriebssystem' =>
+	'Operating System',
+  'MUTOS 1600' =>
+	'MUTOS 1600',
 );

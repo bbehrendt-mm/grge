@@ -52,8 +52,6 @@ return array (
 	'',
   'Um in diesem Spielmodus punkte zu sammeln, musst du so viele Ruinen wie möglich kartographieren. Je gründlicher du arbeitest, desto schneller steigt der Detailgrad deiner Karte - aber du gehst auch ein größeres Risiko ein.' =>
 	'',
-  'Kohana_Cache_File::_delete_file failed to delete file : :file' =>
-	'',
   'Andere Spieler' =>
 	'',
   'Du' =>
@@ -70,25 +68,9 @@ return array (
 	'',
   'Bist du sicher, dass du diese Aktion auf :name anwenden möchtest?' =>
 	'',
-  'Wenn du dich alleine fürchtest, kannst du andere Spieler bitten, dich zu begleiten. Oder noch besser, schick sie am besten direkt vor, nicht dass noch jemand (du) verletzt wird!' =>
-	'',
   'Wer soll alles mitkommen?' =>
 	'',
   'Wenn du dich alleine fürchtest, kannst du andere Spieler bitten, dich zu begleiten. Oder noch besser, schick sie am besten direkt vor, nicht dass noch jemand (z.B. du) verletzt wird!' =>
-	'',
-  'Und willst du selbst mitgehen?' =>
-	'',
-  'Na klar!' =>
-	'',
-  'Lieber nicht ...' =>
-	'',
-  'Ich will schwächeren Spielern unter die Arme greifen!' =>
-	'',
-  'Schwächeren Spielern unter die Arme greifen!' =>
-	'',
-  'Schwächeren Spielern helfen!' =>
-	'',
-  'Und wie siehts mit dir aus?' =>
 	'',
   'Mitgehen und helfen' =>
 	'',
@@ -115,5 +97,11 @@ return array (
   'Lieblingskünster' =>
 	'',
   'Helene Fischer' =>
+	'',
+  'Und wie siehts mit dir aus?' =>
+	'',
+  'Betriebssystem' =>
+	'',
+  'MUTOS 1600' =>
 	'',
 );

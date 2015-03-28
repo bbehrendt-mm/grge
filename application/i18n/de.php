@@ -3142,8 +3142,6 @@ return array (
 	'Du arbeitest gerade an einer Karte dieses Orts. Dies erfordert deine volle Konzentration - du kannst keine anderen Aktionen durchführen und diesen Ort nicht zwischendurch verlassen.',
   '"ZombieKing" Restaurant' =>
 	'"ZombieKing" Restaurant',
-  'Kohana_Cache_File::_delete_file failed to delete file : :file' =>
-	'Kohana_Cache_File::_delete_file failed to delete file : :file',
   ':name ist soeben der Partie beigetreten.' =>
 	':name ist soeben der Partie beigetreten.',
   'Spielerübersicht' =>
@@ -3172,26 +3170,10 @@ return array (
 	'Bist du sicher, dass du diese Aktion auf :name anwenden möchtest?',
   'Du machst dir zuviel Sorgen... bei ein paar kleinen Kratzern wäre eine Bandage doch wohl etwas übertrieben. Warte bis die Gesundheit deines Freundes unter 50 gefallen ist.' =>
 	'Du machst dir zuviel Sorgen... bei ein paar kleinen Kratzern wäre eine Bandage doch wohl etwas übertrieben. Warte bis die Gesundheit deines Freundes unter 50 gefallen ist.',
-  'Wenn du dich alleine fürchtest, kannst du andere Spieler bitten, dich zu begleiten. Oder noch besser, schick sie am besten direkt vor, nicht dass noch jemand (du) verletzt wird!' =>
-	'Wenn du dich alleine fürchtest, kannst du andere Spieler bitten, dich zu begleiten. Oder noch besser, schick sie am besten direkt vor, nicht dass noch jemand (du) verletzt wird!',
   'Wer soll alles mitkommen?' =>
 	'Wer soll alles mitkommen?',
   'Wenn du dich alleine fürchtest, kannst du andere Spieler bitten, dich zu begleiten. Oder noch besser, schick sie am besten direkt vor, nicht dass noch jemand (z.B. du) verletzt wird!' =>
 	'Wenn du dich alleine fürchtest, kannst du andere Spieler bitten, dich zu begleiten. Oder noch besser, schick sie am besten direkt vor, nicht dass noch jemand (z.B. du) verletzt wird!',
-  'Und willst du selbst mitgehen?' =>
-	'Und willst du selbst mitgehen?',
-  'Na klar!' =>
-	'Na klar!',
-  'Lieber nicht ...' =>
-	'Lieber nicht ...',
-  'Ich will schwächeren Spielern unter die Arme greifen!' =>
-	'Ich will schwächeren Spielern unter die Arme greifen!',
-  'Schwächeren Spielern unter die Arme greifen!' =>
-	'Schwächeren Spielern unter die Arme greifen!',
-  'Schwächeren Spielern helfen!' =>
-	'Schwächeren Spielern helfen!',
-  'Und wie siehts mit dir aus?' =>
-	'Und wie siehts mit dir aus?',
   'Mitgehen und helfen' =>
 	'Mitgehen und helfen',
   'Nur mitgehen' =>
@@ -3226,4 +3208,10 @@ return array (
 	'Lieblingskünster',
   'Helene Fischer' =>
 	'Helene Fischer',
+  'Und wie siehts mit dir aus?' =>
+	'Und wie siehts mit dir aus?',
+  'Betriebssystem' =>
+	'Betriebssystem',
+  'MUTOS 1600' =>
+	'MUTOS 1600',
 );

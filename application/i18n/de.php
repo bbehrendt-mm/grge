@@ -3214,4 +3214,6 @@ return array (
 	'Betriebssystem',
   'MUTOS 1600' =>
 	'MUTOS 1600',
+  'Kohana_Cache_File::_delete_file failed to delete file : :file' =>
+	'Kohana_Cache_File::_delete_file failed to delete file : :file',
 );

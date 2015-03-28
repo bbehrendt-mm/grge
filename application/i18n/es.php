@@ -3216,4 +3216,6 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
 	'Betriebssystem',
   'MUTOS 1600' =>
 	'MUTOS 1600',
+  'Kohana_Cache_File::_delete_file failed to delete file : :file' =>
+	'Kohana_Cache_File::_delete_file failed to delete file : :file',
 );

@@ -6,9 +6,17 @@ core = {
     parts: {},
     snippets: {},
 
-    version: '2.0.0-0-1-51',
+    version: '2.0.0-0-1-55',
 
     last: {},
+
+    sessiondata: {},
+
+    session: function(key, data) {
+        return (typeof data == 'undefined')
+            ? core.sessiondata[key]
+            : (core.sessiondata[key] = data);
+    },
 
     command: function(url, args, background, callback, no_clean) {
         if (!url)
@@ -60,11 +68,12 @@ core = {
         }
 
         var auto_tab = $('<ul />').addClass('tabline').appendTo(action_box)
-            .append($('<li>').data('toggle', '#inv_container').text("Gegenst\u00e4nde & Heldentaten"))
-            .append($('<li>').data('toggle', '#settings_container').text("Zeitfluss & Verhalten"))
-            .append(data.players ? $('<li>').data('toggle', '#mp_container').text("Spieler\u00fcbersicht") : false)
+            .append($('<li>').attr('data-toggle', '#inv_container').text("Gegenst\u00e4nde & Heldentaten"))
+            .append($('<li>').attr('data-toggle', '#settings_container').text("Zeitfluss & Verhalten"))
+            .append(data.players ? $('<li>').attr('data-toggle', '#mp_container').text("Spieler\u00fcbersicht") : false)
             .find('>li').click(function() {
                 var t = $($(this).data('toggle'));
+                core.session('main.tabs.open', $(this).data('toggle'));
                 $(this).addClass('active').siblings().removeClass('active');
                 action_box.children('div').hide();
                 t.show();
@@ -85,7 +94,9 @@ core = {
         if (data.log)
             core.parts.log(data.log,$('<div />').addClass('row log_box').appendTo(target));
 
-        auto_tab.click();
+        var set_tab = auto_tab.parent().children().filter('[data-toggle=' + core.session('main.tabs.open') + ']');
+        if (set_tab.length == 1) set_tab.click();
+        else auto_tab.click();
     }
 };(function() {
     core.parts.admin = {};
@@ -208,53 +219,55 @@ core = {
     }
 })();
 (function() {
+    var cancel = function() {
+        $('.inventory_location, .inventory_player').find('li[data-id]').removeClass('disabled marked-target').data('click-override', false);
+        game.render.html.hint(false);
+    };
 
-    var render_box = function(data, target, rucksack) {
+    var render_box = function(data, target, rucksack, remote) {
         $(target).empty();
 
-        var cancel = function() {
-            $('.inventory_location, .inventory_player').find('li[data-id]').removeClass('disabled marked-target').data('click-override', false);
-            game.render.html.hint(false);
-        };
-
         $.each(data, function(k,v) {
-            var container = core.snippets.item(false, v.name, v.icon, v.static <= 1 ? v.count : v.static, v.static > 1, true);
+            var container = core.snippets.item(false, v.name, v.icon, v.static <= 1 ? v.count : v.static, v.static > 1, true).addClass(remote ? 'remote' : '');
             var flags = $.map(v.flags, function(m) {return m;});
             $(target).append(container);
 
-            if (!v.is_water)
-                container.click(function() {
-                    var o;
-                    if (o = $(this).data('click-override'))
-                        o(this);
-                    else core.command('act/inventory',{action: rucksack ? 'drop' : 'take', items: [v.uin]});
-                });
-            else
-                container.click(function() {
-                    var o;
-                    if (o = $(this).data('click-override'))
-                        return o(this);
+            if (!remote) {
+                if (!v.is_water)
+                    container.click(function() {
+                        var o;
+                        if (o = $(this).data('click-override'))
+                            o(this);
+                        else core.command('act/inventory',{action: rucksack ? 'drop' : 'take', items: [v.uin], player: rucksack ? 0 : $('.inventory_player[data-pid-selected=1]').data('pid')});
+                    });
+                else
+                    container.click(function() {
+                        var o;
+                        if (o = $(this).data('click-override'))
+                            return o(this);
 
-                    cancel();
-                    var items = $('.inventory_location, .inventory_player').find('li[data-id]');
-                    var hint = game.render.html.hint(true);
-                    hint.append(
-                        $('<span />').text("W\u00e4hle einen Wasserbeh\u00e4lter aus, in den du die gew\u00e4hlte Ration Wasser hineinsch\u00fctten willst.")
-                    ).append(
-                        $('<div />').addClass('btn').text("Abbrechen").click(cancel)
-                    );
+                        cancel();
+                        $('.inventory_self').click();
+                        var items = $('.inventory_location, .inventory_self').find('li[data-id]');
+                        var hint = game.render.html.hint(true);
+                        hint.append(
+                            $('<span />').text("W\u00e4hle einen Wasserbeh\u00e4lter aus, in den du die gew\u00e4hlte Ration Wasser hineinsch\u00fctten willst.")
+                        ).append(
+                            $('<div />').addClass('btn').text("Abbrechen").click(cancel)
+                        );
 
-                    items.each(function() {
-                        if ($(this).is('[data-is-fillable="true"]')) {
-                            $(this).addClass('marked-target');
-                            $(this).data('click-override', function(o) {
-                                core.command('act/inventory',{action: 'fill', items: [v.uin, $(o).data('id')]});
-                                cancel();
-                            });
+                        items.each(function() {
+                            if ($(this).is('[data-is-fillable="true"]')) {
+                                $(this).addClass('marked-target');
+                                $(this).data('click-override', function(o) {
+                                    core.command('act/inventory',{action: 'fill', items: [v.uin, $(o).data('id')]});
+                                    cancel();
+                                });
 
-                        } else $(this).addClass('disabled');
-                    })
-                });
+                            } else $(this).addClass('disabled');
+                        })
+                    });
+            }
 
             container.attr('data-id', v.uin);
             if (v.fill)
@@ -370,7 +383,8 @@ core = {
                                 container.qtip().hide();
 
                                 cancel();
-                                var items = $('.inventory_location, .inventory_player').find('li[data-id]');
+                                $('.inventory_self').click();
+                                var items = $('.inventory_location, .inventory_self').find('li[data-id]');
                                 var hint = game.render.html.hint(true);
                                 hint.append(
                                     $('<span />').text("W\u00e4hle eine Fl\u00fcssigkeit oder einen anderen Beh\u00e4lter aus, um diesen Beh\u00e4lter zu f\u00fcllen.")
@@ -394,9 +408,11 @@ core = {
                         content.append('<span class="separator" />');
                     }
 
-                    content.append(v.description);
+                    if (v.description)
+                        content.append(v.description);
+                    else notes.push("\u00dcber diesen Gegenstand stehen nur wenige Informationen zur Verf\u00fcgung ...");
 
-                    if (notes.length) content.append('<span class="separator" />');
+                    if (notes.length && v.description) content.append('<span class="separator" />');
                     $.each(notes, function(k,v) {
                         content.append(
                             $('<div />').addClass('note').text(v)
@@ -424,9 +440,9 @@ core = {
 
                     }
 
-                    if (v.static > 1) {
+                    if (v.static > 1 && !v.is_water) {
                         content.append('<span class="separator" />').append(core.snippets.button(rucksack ? "Alle ablegen" : "Alle mitnehmen", function() {
-                            core.command('act/inventory',{action: rucksack ? 'drop' : 'take', items: $.objToArray(v.set, true)});
+                            core.command('act/inventory',{action: rucksack ? 'drop' : 'take', items: $.objToArray(v.set, true), player: rucksack ? 0 : $('.inventory_player[data-pid-selected=1]').data('pid')});
                         }));
                     }
 
@@ -472,7 +488,7 @@ core = {
         })
     };
 
-    var render_block = function(data, target, headline, rucksack) {
+    var render_block = function(data, target, headline, rucksack, remote) {
         $(target).empty().append(
             $('<h3 />').text(headline)
         );
@@ -485,19 +501,27 @@ core = {
                     item_target = $('<ul />')
                 )
             );
-            render_box(v.items, item_target, rucksack);
+            render_box(v.items, item_target, rucksack, remote);
         });
+    };
+
+    var iv_switch = function() {
+        if (!$(this).is('.inventory_self')) cancel();
+        $(this).siblings('.inventory_player').css('cursor','pointer').attr('data-pid-selected', 0).children('.row').slideUp(200);
+        $(this).css('cursor','default').attr('data-pid-selected', 1).children('.row').slideDown(200);
+
+        core.session('main.mp.inventory.open', $(this).data('pid'));
     };
 
     core.parts.inventory = function(data, target) {
         var iv_a, iv_b;
         $(target).empty().append(
             $('<div />').addClass('cell rw-4 padded').append(
-                iv_a = $('<div />').addClass('row inventory flatbox inventory_location')
+                iv_a = $('<div />').addClass('row inventory flatbox inventory_player inventory_self')
             )
         ).append(
             $('<div />').addClass('cell rw-4 padded').append(
-                iv_b = $('<div />').addClass('row inventory flatbox inventory_player')
+                iv_b = $('<div />').addClass('row inventory flatbox inventory_location')
             )
         ).append(
             $('<div />').addClass('cell rw-4 padded').append(
@@ -526,7 +550,7 @@ core = {
         render_block(data.location, iv_b, data.home ? "Deine Truhe" : "Items am Boden", false);
 
         if (data.action) {
-            iv_a.addClass('disabled');
+            iv_a.parent.addClass('disabled');
             iv_b.addClass('disabled');
 
             iv_c.append($('<h3 />').text(data.action.name)).append($('<span />').text(data.action.desc));
@@ -571,6 +595,26 @@ core = {
                     }, 'tooltip'))
                 )
             });
+
+            if (core.last.players) {
+                $.each(core.last.players.others, function(k,v) {
+                    if (!v.escort) return;
+
+                    var remote_inv;
+                    iv_a.after(remote_inv = $('<div />').addClass('row inventory flatbox inventory_player'));
+
+                    render_block(v.inventory.player, remote_inv, game.i18n("Rucksack von :name", {':name': v.name}), true, true);
+
+                    remote_inv.append($('<div />').addClass('row').append($('<div />').addClass('cell rw-12 padded').append($('<div />').addClass('weightbar').append($('<div />').css('width', (100*v.inventory.weight[0]/v.inventory.weight[1]) + '%')))));
+                    remote_inv.attr('data-pid', v.id).attr('data-pid-selected', 0).click(iv_switch).children('.row').hide();
+                });
+                iv_a.attr('data-pid',0).click(iv_switch).children('.row').hide();
+
+                var opener = $('.inventory_player[data-pid=' + core.session('main.mp.inventory.open') + ']');
+                if (opener.length != 1) opener = iv_a;
+                opener.children('.row').show().click();
+            }
+
         }
 
 

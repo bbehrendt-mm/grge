@@ -14,15 +14,14 @@
     padding: 2px;
     margin: 2px;
     position: relative;
-    cursor: pointer;
     height: 22px;
 }
 
-.inventory ul li {
+.inventory ul li:not(.remote), div.item:not(.remote) {
     cursor: pointer;
 }
 
-.inventory ul li:hover {
+.inventory ul li:not(.remote):hover {
     background: rgba(0,0,0,0.1);
 }
 

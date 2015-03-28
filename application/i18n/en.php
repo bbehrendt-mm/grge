@@ -3216,4 +3216,10 @@ return array (
 	'MUTOS 1600',
   'Kohana_Cache_File::_delete_file failed to delete file : :file' =>
 	'Kohana_Cache_File::_delete_file failed to delete file : :file',
+  'Geschlechtskrankheiten' =>
+	'STDs',
+  'Rucksack von :name' =>
+	':name\'s Rucksack',
+  'Über diesen Gegenstand stehen nur wenige Informationen zur Verfügung ...' =>
+	'The information you have about this item is rather limited...',
 );

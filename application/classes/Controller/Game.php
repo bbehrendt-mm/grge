@@ -178,47 +178,51 @@ class Controller_Game extends Controller {
                 'label' => $item->label()
             ];
 
-            if (Tool_System::instance_of($item, 'Interface_Label'))
-                $data['custom_label'] = true;
+            // No item specifics for short
+            if (!$short) {
+                if (Tool_System::instance_of($item, 'Interface_Label'))
+                    $data['custom_label'] = true;
 
-            if (Tool_System::instance_of($item, 'Interface_Countable') && !Tool_System::instance_of($item, 'Model_Items_Abstract_Bottle')) {
-                $data['count'] = $item->count();
-                $data['capacity'] = $item->capacity();
-            }
+                if (Tool_System::instance_of($item, 'Interface_Countable') && !Tool_System::instance_of($item, 'Model_Items_Abstract_Bottle')) {
+                    $data['count'] = $item->count();
+                    $data['capacity'] = $item->capacity();
+                }
 
-            if (Tool_System::instance_of($item, 'Model_Items_Ammobelt')) {
-                $tmp_ammo = [];
+                if (Tool_System::instance_of($item, 'Model_Items_Ammobelt')) {
+                    $tmp_ammo = [];
 
-                /** @var Model_Items_Ammobelt $item */
-                foreach ($item->contains() as $class => $value) {
-                    /** @var Model_Items_Abstract_Ammo $class */
-                    $tmp_ammo[] = [
-                        'addr' => Tool_System::getClassID($class),
-                        'icon' => $class::static_icon(),
-                        'count' => $value
+                    /** @var Model_Items_Ammobelt $item */
+                    foreach ($item->contains() as $class => $value) {
+                        /** @var Model_Items_Abstract_Ammo $class */
+                        $tmp_ammo[] = [
+                            'addr' => Tool_System::getClassID($class),
+                            'icon' => $class::static_icon(),
+                            'count' => $value
+                        ];
+                    }
+
+                    $data['ammobelt'] = $tmp_ammo;
+                }
+
+                /** @var Interface_Fillable|Model_Items_Abstract_Bottle $item */
+                if (Tool_System::instance_of($item, 'Interface_Fillable') || Tool_System::instance_of($item, 'Model_Items_Abstract_Bottle')) {
+                    $data['count'] = (int)$item->fillrate();
+                    $data['fill'] = [
+                        'capacity' => $item->capacity(),
+                        'fixed' => !Tool_System::instance_of($item, 'Model_Items_Abstract_Bottle')
                     ];
                 }
 
-                $data['ammobelt'] = $tmp_ammo;
+                if (Tool_System::instance_of($item, 'Model_Items_Abstract_Liquid'))
+                    $data['is_water'] = true;
+
+                if (Tool_System::instance_of($item, 'Model_Items_Chem'))
+                    $data['is_chem'] = true;
+
+                if (Tool_System::instance_of($item, 'Model_Items_Abstract_Pillbox'))
+                    $data['is_pillbox'] = true;
             }
 
-            /** @var Interface_Fillable|Model_Items_Abstract_Bottle $item */
-            if (Tool_System::instance_of($item, 'Interface_Fillable') || Tool_System::instance_of($item, 'Model_Items_Abstract_Bottle')) {
-                $data['count'] = (int)$item->fillrate();
-                $data['fill'] = [
-                    'capacity' => $item->capacity(),
-                    'fixed' => !Tool_System::instance_of($item, 'Model_Items_Abstract_Bottle')
-                ];
-            }
-
-            if (Tool_System::instance_of($item, 'Model_Items_Abstract_Liquid'))
-                $data['is_water'] = true;
-
-            if (Tool_System::instance_of($item, 'Model_Items_Chem'))
-                $data['is_chem'] = true;
-
-            if (Tool_System::instance_of($item, 'Model_Items_Abstract_Pillbox'))
-                $data['is_pillbox'] = true;
 
             // Build final item object
             $grouping[$item->cat()]['items'][$item->uin()] = $data;

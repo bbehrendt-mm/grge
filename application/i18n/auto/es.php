@@ -106,4 +106,10 @@ return array (
 	'',
   'Kohana_Cache_File::_delete_file failed to delete file : :file' =>
 	'',
+  'Geschlechtskrankheiten' =>
+	'',
+  'Rucksack von :name' =>
+	'',
+  'Über diesen Gegenstand stehen nur wenige Informationen zur Verfügung ...' =>
+	'',
 );

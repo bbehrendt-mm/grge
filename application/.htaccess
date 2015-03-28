@@ -1,0 +1,10 @@
+Options -Indexes
+
+<Files *>
+	Order Deny,Allow
+	Deny From All
+</Files>
+
+<Files index.php>
+	Allow From All
+</Files>

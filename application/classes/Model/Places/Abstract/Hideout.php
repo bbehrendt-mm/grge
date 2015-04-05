@@ -4,13 +4,14 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
 
     protected static $outside = false;
 
+    protected static $base_deco_value = 0;
+    private $deco_value = 0;
+
     //Base: 15% per day
     protected static $decay_rate = 0.15;
 
     //Exp: 8% per day
     protected static $decay_exp = 0.08;
-
-    protected $deco = 0;
 
     protected $extensions = Array();
     protected $survival_find = true;
@@ -24,6 +25,26 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
 
         $this->inventory->add(new Model_Items_Virtual_Location_Hideout(!$this->has_upgrade('cursed_hideout')));
         return $t;
+    }
+
+    private function calculate_item_deco() {
+        $a = 0;
+        foreach ($this->inventory()->get() as $item)
+            $a += $item->deco();
+        return $a;
+    }
+
+    /**
+     * @param null $add
+     * @param bool $accum
+     * @return number|number[]
+     */
+    public function deco($add = null, $accum = true) {
+        if ($add === null) {
+            $tmp = [static::$base_deco_value, ceil($this->decay * -40), $this->deco_value, $this->calculate_item_deco()];
+            return $accum ? array_sum($tmp) : $tmp;
+        }
+        else return $this->deco_value += $add;
     }
 
     public function pretick() {
@@ -181,16 +202,6 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
 
     public function get_defense($actual = false) {
         return round($this->defense * ($actual ? 1 : (1 - $this->decay)));
-    }
-
-    public function get_deco($actual = false) {
-        return round($this->deco * ($actual ? 1 : (1 - $this->decay)));
-    }
-
-    public function set_deco($newval, $absolute = false) {
-        if ($absolute)
-            $this->deco = $newval;
-        else $this->deco += $newval;
     }
 
     public function get_decay() {

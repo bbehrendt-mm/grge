@@ -34,7 +34,6 @@
     };
 
     var scoutmode = function(data, target) {
-        console.log(data);
         var level, tx;
 
         $(target).empty()
@@ -73,6 +72,115 @@
         }))
     };
 
+    var roadtrip = function(data, target) {
+        $(target).empty();
+
+        var main_gauge, parts_gauge, data_space;
+
+        $(target)
+            .append($('<div />').addClass('cell rw-4 padded').append(main_gauge = $('<div />').addClass('widget')))
+            .append($('<div />').addClass('cell rw-4 padded').append(parts_gauge = $('<div />').addClass('widget')))
+            .append(data_space = $('<div />').addClass('cell rw-4 padded'))
+            .append($('<div />').addClass('cell rw-12 padded').append($('<div />').addClass('car-weightbar').append($('<div />').css('width', (100*data.weight[0]/data.weight[1]) + '%')).attr('title','-').qtip(game.render.html.qtip.ingame('bottom', {
+                render: function(event,api) {
+                    var content = $(this).find('.qtip-content').empty()
+                        .append($('<b />').addClass('header').text(<?=__j('Beladung')?>))
+                        .append($('<div />').text(<?=__j('Du fährst ein Wohnmobil, keinen LKW - wenn du mehr einlädst als der Motor ziehen kann, wirst du nicht vom Fleck kommen.')?>))
+                        .append('<span class="separator" />')
+                        .append($('<div />').addClass('center').text(data.weight[0] + ' / ' + data.weight[1]));
+                    }
+            }))));
+
+        $.each(data.parts, function(k,v) {
+            var canvas;
+            parts_gauge.append($('<div />').addClass('margin').css({position: 'relative', height: 32, width: 32, display: 'inline-block'})
+                .append($('<img />').attr('src','media/icons/' + v.icon + '.gif').css({position: 'absolute', top: 8, left: 8}))
+                .append(canvas = $('<canvas />').attr({height: 32, width: 32}))
+                    .attr('title','-').qtip(game.render.html.qtip.ingame('top', {
+                        render: function(event,api) {
+                            var content = $(this).find('.qtip-content').empty()
+                                .append($('<b />').addClass('header').text(v.name))
+                                .append($('<div />').text(<?=__j('Dein Wohnmobil ist schon etwas betagt... und war auch nie für eine wilde Flucht vor Zombies auf schlecht befestigten Straßen vorgesehen. Früher oder später wirst du anhalten und Reparaturen vornehmen müssen.')?>))
+                                .append('<span class="separator" />')
+                                .append($('<div />').addClass('center').text(<?=__j('Zustand')?> + ': ' + v.count + ' / ' + v.max));
+
+                            if (v.max == v.count) content.append($('<div />').text(<?=__j('Hier muss im Moment nichts repariert werden.')?>));
+                            else if (data.speed == 0) {
+                                var row;
+                                content.append(row = $('<div />').addClass('row'));
+                                $.each([1,2,5,10], function(k,i) {
+                                    row.append($('<div />').addClass('cell rw-3 smallpad').append(
+                                        $('<div />').addClass('btn').append($('<i />').addClass('fa fa-wrench')).append($('<span />').text(' x ' + i)).click(function() {
+                                            core.command('location/caravan', {'do': 'repair', addr: v.addr, count: i});
+                                        })
+                                    ))
+                                })
+                            } else content.append($('<div />').text(<?=__j('Während der Fahrt kannst du keine Reparaturen vornehmen!')?>))
+                        }
+                    }))
+            );
+
+            var status = v.count/v.max;
+            var color;
+
+            if (status >= 1) color = '#27A6F5';
+            else if (status > 0.9) color = '#56E314';
+            else if (status > 0.75) color = '#F0CC00';
+            else if (status > 0.5)  color = '#FF9100';
+            else if (status > 0) color = '#D60000';
+            else color = '#750000';
+
+            var gauge = new Donut(canvas[0]).setOptions({
+                lines: 12, angle: 0.1, lineWidth: 0.1, limitMax: 'false', colorStart: color, strokeColor: '#000000', generateGradient: true
+            });
+            gauge.maxValue = v.max;
+            gauge.animationSpeed = 1;
+            gauge.set(Math.max(0.00000001,v.count));
+        });
+
+        var canvas;
+        main_gauge.append($('<div />').addClass('margin').css({position: 'relative', height: 70, width: 110, display: 'inline-block'})
+                .append(canvas = $('<canvas />').attr({height: 70, width: 110}).css({position: 'absolute', left: 0, top: 0, 'z-index': 2}))
+                .append($('<div />').addClass('center b small').css({position: 'absolute', left: 0, top: 30, width: '100%', 'z-index': 1}).text(Math.round(data.speed) + ' km/h'))
+                .attr('title','-').qtip(game.render.html.qtip.ingame('top', {
+                    render: function(event,api) {
+                        var content = $(this).find('.qtip-content').empty()
+                            .append($('<b />').addClass('header').text(<?=__j('Amaturenbrett')?>))
+                            .append($('<div />').text(<?=__j('Hier siehst du, wie weit du schon gekommen bist. Um Punkte zu sammeln musst du so weit wie möglich fahren.')?>))
+                            .append('<span class="separator" />')
+                            .append($('<div />').text(game.i18n(<?=__j('Du bist bereits :distance km gefahren und hast :breaks Städte aufgesucht.')?>, {':distance': Math.round(data.distance), ':breaks': data.stops})));
+                    }
+                }))
+        );
+        var gauge = new Gauge(canvas[0]).setOptions({
+            lines: 12, angle: 0.1, lineWidth: 0.2, limitMax: 'false', percentColors: [[0.0, "#D60000" ], [0.61, "#56E314"], [1.0, "#27A6F5"]], strokeColor: '#000000', generateGradient: true,
+            pointer: {
+                length: 0.5,
+                strokeWidth: 0.035,
+                color: '#FFF6BF'
+            }
+        });
+        gauge.maxValue = 180;
+        gauge.animationSpeed = 1;
+        gauge.set(Math.max(0.00000001,data.speed));
+
+        if (data.speed == 0) {
+            data_space.append($('<div />').addClass('btn btn-zv btn-zv-skinned-hero').text(<?=__j('Losfahren')?>).click(function() {
+                if ((data.stops > 0 || confirm(<?=__j('Sobald du losgefahren bist, können keine weiteren Spieler deiner Partie beitreten. Fortfahren?')?>)) && confirm(<?=__j('Denk daran: Du kannst nicht wieder hierher zurückkehren. Wenn du jetzt losfährst verlierst du alle Gegenstände, die sich außerhalb des Wohnwagens befinden. Wenn du andere Spieler zurücklässt, werden sie einsam in der Wildniss sterben. Wirklich losfahren?')?>))
+                    core.command('location/caravan', {'do': 'go'});
+            }));
+        } else {
+            data_space.append($('<div />').addClass('btn btn-zv btn-zv-skinned-hero').text(<?=__j('Nächste Stadt suchen')?>).click(function() {
+                if (confirm(<?=__j('Möchtest du wirklich anhalten?')?>))
+                    core.command('location/caravan', {'do': 'stop'});
+            }));
+            data_space.append($('<div />').addClass('btn btn-zv btn-zv-skinned-hero').text(<?=__j('Zwischenstop einlegen')?>).click(function() {
+                if (confirm(<?=__j('Möchtest du wirklich anhalten?')?>))
+                    core.command('location/caravan', {'do': 'break'});
+            }));
+        }
+    };
+
     var hideoutstats = function(data, target) {
         var repair, defense, deco;
         $(target).empty()
@@ -92,9 +200,30 @@
 
         deco
             .append($('<img />').attr('src', 'media/icons/deco.gif'))
-            .append($('<span />').text(data.deco == data.max_deco ? data.deco : (data.deco + '/' + data.max_deco)))
-            .attr('title', <?=__j('Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. So fühlst du dich direkt viel wohler.')?>)
-            .qtip(game.render.html.qtip.ingame('top'));
+            .append($('<span />').text(data.deco[0] + data.deco[1] + data.deco[2] + data.deco[3]))
+            .attr('title', '-')
+            .qtip(game.render.html.qtip.ingame('top', {
+                render: function(event,api) {
+                    var content = $(this).find('.qtip-content').empty();
+
+                    content
+                        .append($('<span />').text(<?=__j('Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. So fühlst du dich direkt viel wohler.')?>))
+                        .append($('<div />').addClass('row')
+                            .append($('<div />').addClass('cell rw-9 padded right').text(<?=__j('Grundwert')?>))
+                            .append($('<div />').addClass('cell rw-1 padded center').append($('<img />').attr('src', 'media/icons/deco_' + (data.deco[0] < 0 ? 'negative' : (data.deco[0] > 0 ? 'positive' : 'neutral')) + '.gif')))
+                            .append($('<div />').addClass('cell rw-2 padded').text(data.deco[0]))
+                            .append($('<div />').addClass('cell rw-9 padded right').text(<?=__j('Zustand des Verstecks')?>))
+                            .append($('<div />').addClass('cell rw-1 padded center').append($('<img />').attr('src', 'media/icons/deco_' + (data.deco[1] < 0 ? 'negative' : (data.deco[1] > 0 ? 'positive' : 'neutral')) + '.gif')))
+                            .append($('<div />').addClass('cell rw-2 padded').text(data.deco[1]))
+                            .append($('<div />').addClass('cell rw-9 padded right').text(<?=__j('Verbesserungen')?>))
+                            .append($('<div />').addClass('cell rw-1 padded center').append($('<img />').attr('src', 'media/icons/deco_' + (data.deco[2] < 0 ? 'negative' : (data.deco[2] > 0 ? 'positive' : 'neutral')) + '.gif')))
+                            .append($('<div />').addClass('cell rw-2 padded').text(data.deco[2]))
+                            .append($('<div />').addClass('cell rw-9 padded right').text(<?=__j('Gegenstände')?>))
+                            .append($('<div />').addClass('cell rw-1 padded center').append($('<img />').attr('src', 'media/icons/deco_' + (data.deco[3] < 0 ? 'negative' : (data.deco[3] > 0 ? 'positive' : 'neutral')) + '.gif')))
+                            .append($('<div />').addClass('cell rw-2 padded').text(data.deco[3]))
+                        );
+                }
+            }));
 
         repair
             .append($('<img />').attr('src', 'media/icons/decay.gif'))
@@ -186,7 +315,7 @@
     };
 
     core.parts.location = function(data, target) {
-        var zradar, hideout, actions, spc_colosseum, spc_scout, desc;
+        var zradar, hideout, actions, spc_colosseum, spc_scout, spc_roadtrip, desc;
 
         $(target).empty().addClass('row location_box ' + (data.meta.outside ? 'outside' : 'inside')).append(
             $('<h2 />').text(data.meta.name)
@@ -199,6 +328,8 @@
                 spc_colosseum = data.colosseum ? $('<div />').addClass('row') : null
             ).append(
                 spc_scout = data.scouting ? $('<div />').addClass('row') : null
+            ).append(
+                spc_roadtrip = data.caravan ? $('<div />').addClass('row') : null
             ).append(
                 actions = $('<div />').addClass('row')
             )
@@ -248,7 +379,7 @@
 
                         var destination = $('<select />');
                         $.each(data.doorways, function(id, meta) {
-                            $('<option />').attr('value', id).text(meta.name + ' (' + meta.location + ')').appendTo(destination);
+                            $('<option />').attr('value', id).text(meta.name == meta.location ? meta.name : (meta.name + ' (' + meta.location + ')')).appendTo(destination);
                         });
 
                         esc_popup.append(
@@ -288,36 +419,36 @@
                                 check_row.find(':checkbox').customRadioCheck();
 
                             }
-
-                            esc_popup.append($('<div />').addClass('row')
-                                    .append($('<div />').addClass('cell rw-8 padded').append(
-                                        $('<div />').addClass('btn').text(<?=__j('Los gehts!')?>).addClass(data.radar.zombies > 0 ? 'disabled' : '').click(function() {
-
-                                            var cfg = {to: destination.val(), follow: 1};
-                                            if (check_row.children().length) {
-                                                cfg.follow = parseInt(bhav.val()) > 0 ? 1 : 0;
-                                                cfg.support = parseInt(bhav.val()) == 2 ? 1 : 0;
-                                                cfg.co = [];
-                                                $.each(check_row.find(':checkbox:checked'), function() {
-                                                    cfg.co.push($(this).attr('data-id'))
-                                                })
-                                            }
-
-                                            esc_popup.addClass('disabled');
-                                            core.command('map/go', cfg, true, function(data) {
-                                                esc_popup.removeClass('disabled');
-                                                if (data.success) {
-                                                    esc_popup.trigger('unpop');
-                                                    core.command();
-                                                }
-                                            });
-                                        })))
-                                    .append($('<div />').addClass('cell rw-4 padded').append(
-                                        $('<div />').addClass('btn').text(<?=__j('Abbrechen')?>).click(function() {
-                                            esc_popup.trigger('unpop');
-                                        })))
-                            );
                         }
+
+                        esc_popup.append($('<div />').addClass('row')
+                                .append($('<div />').addClass('cell rw-8 padded').append(
+                                    $('<div />').addClass('btn').text(<?=__j('Los gehts!')?>).addClass(data.radar.zombies > 0 ? 'disabled' : '').click(function() {
+
+                                        var cfg = {to: destination.val(), follow: 1};
+                                        if (core.last.players && check_row.children().length) {
+                                            cfg.follow = parseInt(bhav.val()) > 0 ? 1 : 0;
+                                            cfg.support = parseInt(bhav.val()) == 2 ? 1 : 0;
+                                            cfg.co = [];
+                                            $.each(check_row.find(':checkbox:checked'), function() {
+                                                cfg.co.push($(this).attr('data-id'))
+                                            })
+                                        }
+
+                                        esc_popup.addClass('disabled');
+                                        core.command('map/go', cfg, true, function(data) {
+                                            esc_popup.removeClass('disabled');
+                                            if (data.success) {
+                                                esc_popup.trigger('unpop');
+                                                core.command();
+                                            }
+                                        });
+                                    })))
+                                .append($('<div />').addClass('cell rw-4 padded').append(
+                                    $('<div />').addClass('btn').text(<?=__j('Abbrechen')?>).click(function() {
+                                        esc_popup.trigger('unpop');
+                                    })))
+                        );
                     })
                 )
             );
@@ -329,6 +460,8 @@
         if (data.colosseum)
             colosseum(data.colosseum, spc_colosseum);
         if (data.scouting)
-            scoutmode(data.scouting, spc_scout)
+            scoutmode(data.scouting, spc_scout);
+        if (data.caravan)
+            roadtrip(data.caravan, spc_roadtrip)
     };
 })();

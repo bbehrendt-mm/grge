@@ -7,6 +7,7 @@ class Model_Items_Generic_Mistletoe extends Model_Items_Abstract_Item implements
         'icon' => 'mistletoe',
         'description' => 'Willst du wirklich hier einen Mistelzweig aufhängen? Schau dir doch mal an, wer hier alles rumläuft... willst du wirklich einen von denen küssen müssen?',
         'category' => Model_Items_Abstract_Item::MIAI_CAT_RES,
+        'deco' => 5,
     );
 
 	protected static $weight = 15;

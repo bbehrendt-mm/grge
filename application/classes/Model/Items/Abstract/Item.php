@@ -31,6 +31,7 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 				'icon' => 'icon_name',
 				'description' => 'item_desc',
 				'category' => 'item_cat',
+                'deco' => 0,
 			);
 	protected static $instances_info = Array();
     protected static $carrier_item = false;
@@ -174,15 +175,23 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 	public static function static_description() {
 		return static::static_info('description');
 	}
-	
-	/**
-	 * Will return default view for this item
-	 * @return string
-	 */
-	public function view() {
-		return static::$associated_view;
-	}
-	
+
+    /**
+     * Will return item deco value
+     * @return int
+     */
+    public function deco() {
+        return $this->instance_info('deco');
+    }
+
+    /**
+     * Will return item static deco value
+     * @return int
+     */
+    public static function static_deco() {
+        return static::static_info('deco');
+    }
+
 	/**
 	 * Will return weigth of this item
 	 * @return int

@@ -19,7 +19,8 @@ class Model_Places_Hospital_Morgue extends Model_Places_Abstract_Place {
     }
 
     //Enter location
-    public function can_enter($pid = null) {
+    public function can_enter_map($pid = null) {
+        /** @global Model_Game $game */
         global $game;
 
         if ($pid === null)

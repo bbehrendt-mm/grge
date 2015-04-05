@@ -271,6 +271,15 @@
                 )
             );
 
+        if (blueprint.deco)
+            mt_out.append(
+                $('<div />').addClass('group').append(
+                    $('<img />').attr('src', 'media/icons/deco_' + (blueprint.deco > 0 ? 'positive' : 'negative') + '.gif')
+                ).append(
+                    $('<span />').append($('<span />').addClass(blueprint.deco > 0 ? 'green' : 'red').text((blueprint.deco > 0 ? '+' : '') + blueprint.deco))
+                )
+            );
+
         if (blueprint.repair)
             mt_out.append(
                 $('<div />').addClass('group').append(
@@ -337,6 +346,7 @@
 
                     content.append($('<span />').text(<?=__j('Vorraussetzungen')?>));
 
+                    var chk_rq = false;
                     $.each(blueprint.requires, function(k,v) {
                         var cache = [];
                         var ok = false;
@@ -348,8 +358,10 @@
                         });
                         if (cache.length)
                             content.append($('<div />').addClass('point').addClass(ok ? 'success' : 'failure').text(cache.join(', ')));
-                        else content.append($('<div />').addClass('point success').text(<?=__j('Keine besonderen Vorraussetzungen')?>));
+                        chk_rq = true;
                     });
+
+                    if (!chk_rq) content.append($('<div />').addClass('point success').text(<?=__j('Keine besonderen Vorraussetzungen')?>));
 
                     content.append('<span class="separator" />');
 

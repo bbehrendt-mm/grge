@@ -17,11 +17,28 @@
     height: 22px;
 }
 
+.inventory ul li.control {
+    color: #95d68b;
+    transition: color 0.4s ease;
+}
+
+.inventory.inventory_location ul li.control {
+    float: left;
+}
+
+.inventory.inventory_player ul li.control {
+    float: right;
+}
+
+.inventory ul li.control:hover {
+    color: #2ce524;
+}
+
 .inventory ul li:not(.remote), div.item:not(.remote) {
     cursor: pointer;
 }
 
-.inventory ul li:not(.remote):hover {
+.inventory ul li:not(.remote):not(.control):hover {
     background: rgba(0,0,0,0.1);
 }
 

@@ -16,10 +16,10 @@ class Model_Buffs_Home2 extends Model_Buffs_Abstract_Buff {
 					Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0.9,
 				),				
 				Model_Player::MP_STAT_THIRST => Array(
-						Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
-						Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
-						Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
-						Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0.6,
+                    Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
+                    Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
+                    Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
+                    Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0.6,
 				),				
 			);
 }

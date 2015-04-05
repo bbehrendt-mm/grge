@@ -1,3 +1,9 @@
+<?php
+    /**
+     * @var string[] $js
+     * @var string[] $css
+     */
+?>
 <html>
 <head>
     <!-- Meta -->
@@ -22,20 +28,10 @@
     <meta name="msapplication-TileImage" content="media/fav/ms_tile.png" />
 
     <!-- Let's get some scripting action -->
-    <script type="application/javascript" src="js/jquery.min.js" ></script>
-    <script type="application/javascript" src="js/jquery.qtip.min.js" ></script>
-    <script type="application/javascript" src="js/jquery.transform2d.js" ></script>
-    <script type="application/javascript" src="js/jquery.topzindex.min.js" ></script>
-    <script type="application/javascript" src="js/jquery.selectric.min.js" ></script>
-    <script type="application/javascript" src="js/rasterizeHTML.allinone.js" ></script>
-    <script type="application/javascript" src="js/framework.min.js" ></script>
-    <script type="application/javascript" src="js/jquery.ext.min.js" ></script>
+    <?php foreach ($js as $file) { ?><script type="application/javascript" src="js/<?=$file?>" ></script><?php } ?>
 
-    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/jquery.qtip.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/zombvival.base.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/zombvival.min.css" />
-
+    <!-- Load ALL the css! -->
+    <?php foreach ($css as $file) { ?><link rel="stylesheet" type="text/css" href="css/<?=$file?>" /><?php } ?>
 </head>
 <body>
     <div id="boot" style="display: none">

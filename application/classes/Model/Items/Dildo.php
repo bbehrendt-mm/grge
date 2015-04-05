@@ -7,6 +7,7 @@ class Model_Items_Dildo extends Model_Items_Abstract_Item implements Interface_S
 			'icon' => 'dildo',
 			'description' => 'Es ist ein Massagestab. NUR ein Massagestab. Für deinen verspannten Rücken! Und der ist auch nur deshalb so klebrig, weil du immer so schwitzige Hände bekommst, wenn du ihn benutzt!',
 			'category' => Model_Items_Abstract_Item::MIAI_CAT_GEAR,
+            'deco' => 1,
 	);
 
 	protected static $weight = 1;

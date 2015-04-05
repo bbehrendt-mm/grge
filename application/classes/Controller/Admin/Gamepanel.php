@@ -76,6 +76,9 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
 
             for ($i = 0; $i < min(100,$set['count']); $i++) {
                 if (!isset($set['params'])) $set['params'] = [];
+                foreach ($set['params'] as &$v)
+                    if ($v === 'null') $v = null;
+
                 try {
                     /** @var Model_Items_Abstract_Item $item */
                     $item = $reflector->newInstanceArgs($set['params']);

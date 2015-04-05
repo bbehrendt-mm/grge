@@ -71,6 +71,12 @@ class Controller_Map extends Controller_Game {
             //Get distance
             $distance = $route['distance'];
         } else {
+            foreach ($companion as $current)
+                if (!$location->can_leave_map($current->id()) || !$destination->can_enter_map($current->id())) {
+                    if ($current->id() != $player->id()) $player->log()->add(((count($companion) == 1) ? 'Du kannst diese Reise nicht antreten.' : 'Ihr könnt diese Reise nicht antreten.'));
+                    return false;
+                }
+
             $distance = 0;
             $route = [];
         }

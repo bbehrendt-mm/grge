@@ -1,11 +1,24 @@
 (function() {
     var cancel = function() {
-        $('.inventory_location, .inventory_player').find('li[data-id]').removeClass('disabled marked-target').data('click-override', false);
+        var inventories = $('.inventory_location, .inventory_self');
+        inventories.find('li[data-id]').removeClass('disabled marked-target').data('click-override', false);
+        inventories.find('li.control').removeClass('disabled');
+
         game.render.html.hint(false);
     };
 
     var render_box = function(data, target, rucksack, remote) {
         $(target).empty();
+
+        if (!remote)
+            $(target).append($('<li />').addClass('control').append($('<i />').addClass('fa fa-caret-square-o-' + (rucksack ? 'right' : 'left'))).attr('title', rucksack ? <?=__j('Alle ablegen')?> : <?=__j('Alle mitnehmen')?>).click(function() {
+                var cache = [];
+                $.each(data, function(k,v) {
+                    cache = cache.concat($.objToArray(v.set, true));
+                });
+                console.log(cache);
+                core.command('act/inventory',{action: rucksack ? 'drop' : 'take', items: cache, player: rucksack ? 0 : $('.inventory_player[data-pid-selected=1]').data('pid')});
+            }).qtip(game.render.html.qtip.ingame('top')));
 
         $.each(data, function(k,v) {
             var container = core.snippets.item(false, v.name, v.icon, v.static <= 1 ? v.count : v.static, v.static > 1, true).addClass(remote ? 'remote' : '');
@@ -28,7 +41,9 @@
 
                         cancel();
                         $('.inventory_self').click();
-                        var items = $('.inventory_location, .inventory_self').find('li[data-id]');
+                        var inventories = $('.inventory_location, .inventory_self');
+                        inventories.find('li.control').addClass('disabled');
+                        var items = inventories.find('li[data-id]');
                         var hint = game.render.html.hint(true);
                         hint.append(
                             $('<span />').text(<?=__j('Wähle einen Wasserbehälter aus, in den du die gewählte Ration Wasser hineinschütten willst.')?>)
@@ -126,7 +141,9 @@
                                 container.qtip().hide();
 
                                 cancel();
-                                var items = $('.inventory_location, .inventory_player').find('li[data-id]');
+                                var inventories = $('.inventory_location, .inventory_self');
+                                inventories.find('li.control').addClass('disabled');
+                                var items = inventories.find('li[data-id]');
                                 var hint = game.render.html.hint(true);
                                 hint.append(
                                     $('<span />').text(<?=__j('Wähle einen Gegenstand, mit dem du die Chemikalie verbinden möchtest.')?>)
@@ -198,6 +215,16 @@
                             $('<div />').addClass('note').text(v)
                         )
                     });
+
+
+                    if (v.deco) {
+                        content.append('<span class="separator" />');
+                        content.append($('<div />').addClass('row')
+                            .append($('<div />').addClass('cell rw-2 right').append($('<img />').attr('src','media/icons/deco_' + (v.deco > 0 ? 'positive' : 'negative') + '.gif')))
+                            .append($('<div />').addClass('cell rw-3 center').addClass(v.deco > 0 ? 'text-green' : 'text-red').text(v.deco > 0 ? ('+' + v.deco) : v.deco))
+                            .append($('<div />').addClass('cell rw-7 b').addClass(v.deco > 0 ? 'text-green' : 'text-red').text(v.deco > 0 ? <?=__j('Dekorativer Gegenstand')?> : <?=__j('Abstoßender Gegenstand')?>))
+                        );
+                    }
 
                     if (v.ammobelt) {
                         var ammo_slots;
@@ -330,7 +357,7 @@
         render_block(data.location, iv_b, data.home ? <?=__j('Deine Truhe')?> : <?=__j('Items am Boden')?>, false);
 
         if (data.action) {
-            iv_a.parent.addClass('disabled');
+            iv_a.addClass('disabled');
             iv_b.addClass('disabled');
 
             iv_c.append($('<h3 />').text(data.action.name)).append($('<span />').text(data.action.desc));

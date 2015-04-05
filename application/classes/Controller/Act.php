@@ -249,13 +249,12 @@ class Controller_Act extends Controller_Game {
             return;
 
         $lost = false;
+        if (!count($items)) return;
         foreach ($items as $i => $iid)
             if (!$game->item_available((int)$iid)) {
                 unset($items[$i]);
                 $lost = true;
             }
-
-        if (!count($items)) return;
 
         //Transfer items
         if (in_array($action, ['take','drop']))

@@ -3,10 +3,11 @@
 class Model_Items_Generic_Teddy extends Model_Items_Abstract_Item implements Interface_Static {
 
 	protected static $static_info = Array(
-			'name' => 'Teddy',
-			'icon' => 'teddy',
-			'description' => 'Dieser niedliche Teddy ist genau das richtige, um sich ein bisschen von der schlechten wirtschaftlichen Lage sowie der Zombieapokalypse abzulenken. Ihn nicht mitzunehmen wäre geradezu ein Verbrechen!',
-			'category' => Model_Items_Abstract_Item::MIAI_CAT_RES,
+        'name' => 'Teddy',
+        'icon' => 'teddy',
+        'description' => 'Dieser niedliche Teddy ist genau das richtige, um sich ein bisschen von der schlechten wirtschaftlichen Lage sowie der Zombieapokalypse abzulenken. Ihn nicht mitzunehmen wäre geradezu ein Verbrechen!',
+        'category' => Model_Items_Abstract_Item::MIAI_CAT_RES,
+        'deco' => 7,
 	);
 	
 	protected static $instances_info = Array(

@@ -6,6 +6,9 @@ class Model_Places_Motorhome extends Model_Places_Home {
     protected static $description = 'Als die Zombies kamen haben sich die meisten deiner Nachbarn einfach in ihren Häusern verbarrikadiert. Du hingegen bist mit deinem Wohnmobil geflohen, was sich im Nachhinein leider auch als nicht optimal erwiesen hat. Immerhin musst du regelmäßig Benzin für dieses Teil finden und es in Schuss halten, um weiterfahren zu können.';
     protected static $icon = 'motorhome';
 
+    //Base deco value
+    protected static $base_deco_value = -30;
+
     private $progress = 0;
     private $driving = false;
     private static $max_weight = 900;
@@ -56,6 +59,7 @@ class Model_Places_Motorhome extends Model_Places_Home {
     }
 
     private function mapcontrol($populate) {
+        /** @global Model_Game $game */
         global $game;
 
         foreach ($game->players(false) as $p) {
@@ -88,6 +92,10 @@ class Model_Places_Motorhome extends Model_Places_Home {
     }
 
     private function drivecontrol($start, $break = false) {
+        /**
+         * @global Model_Game $game
+         * @global Model_Player $player
+         */
         global $player, $game;
 
         if ($start == $this->driving)
@@ -129,6 +137,7 @@ class Model_Places_Motorhome extends Model_Places_Home {
     }
 
     public function weight() {
+        /** @global Model_Game $game */
         global $game;
         $w = $this->inventory()->weight();
         foreach ($game->players(false) as $p)
@@ -142,27 +151,29 @@ class Model_Places_Motorhome extends Model_Places_Home {
         return static::$max_weight;
     }
 
-    public function interaction_forced_break() {
+    public function stop_break() {
+        /** @global Model_Player $player */
         global $player;
         $player->log()->add('Du fährst deinen Wohnwagen auf den Standstreifen und hälst an. Eine kleine Pause tut gut...');
         $this->drivecontrol(false, true);
     }
 
-    public function interaction_forced_stop() {
+    public function stop() {
+        /** @global Model_Player $player */
         global $player;
         $player->log()->add('Du suchst einen geeigneten Parkplatz und hälst das Wohnmobil an. Tja, Zeit sich hier mal etwas umzusehen...');
         $this->drivecontrol(false);
     }
 
-    public function interaction_repair($arg) {
+    public function repair($addr, $count) {
+        /** @global Model_Player $player */
         global $player;
         if ($this->driving) return false;
         if ($player->buff_retr('fragile')) return false;
-        if (!isset($arg['action']) || !$arg['action'] || !isset($arg['num']) || $arg['num'] <= 0) return false;
 
         foreach ($this->parts as $part => &$data) {
-            if (md5($part) == $arg['action']) {
-                $num = min($arg['num'], $data[1] - $data[0]);
+            if (Tool_System::getClassID($part) == $addr) {
+                $num = min($count, $data[1] - $data[0]);
 
                 if ($num <= 0) {
                     $player->log()->add('Eigentlich sieht hier alles gut in Schuss aus... an diesen Teilen brauchst du nichts zu reparieren.');
@@ -181,7 +192,8 @@ class Model_Places_Motorhome extends Model_Places_Home {
         return true;
     }
 
-    public function interaction_start() {
+    public function start() {
+        /** @global Model_Player $player */
         global $player;
 
         if ($this->driving)
@@ -275,17 +287,5 @@ class Model_Places_Motorhome extends Model_Places_Home {
 
         if ($this->is_driving())
             $this->zombie_factory()->reset_zombie_population();
-    }
-
-    public function defense_actions() {
-        if ($this->is_driving())
-            return array();
-        else return parent::defense_actions();
-    }
-
-    public function interaction_build($project) {
-        if ($this->is_driving())
-            return false;
-        else return parent::interaction_build($project);
     }
 }	

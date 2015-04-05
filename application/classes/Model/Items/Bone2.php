@@ -7,6 +7,7 @@ class Model_Items_Bone2 extends Model_Battle_Weapon implements Interface_Static 
 			'icon' => 'bone2',
 			'description' => 'To be, or not to be... wobei die Frage eher ist: "Warum zur Hölle schleppst du einen Schädel mit dir rum?". Du könntest dich natürlich damit rausreden, dass du das Ding auf Zombies werfen willst...',
 			'category' => Model_Items_Abstract_Item::MIAI_CAT_FIGHT,
+            'deco' => -1,
 	);
 	
 	protected static $weight = 5;

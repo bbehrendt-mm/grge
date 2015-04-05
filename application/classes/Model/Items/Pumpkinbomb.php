@@ -7,6 +7,7 @@ class Model_Items_Pumpkinbomb extends Model_Battle_Weapon implements Interface_S
 			'icon' => 'pumpkinbomb',
 			'description' => 'Süßes sonst gibts Saures! Diese Kürbisbombe ist äußerst effektiv gegen in der Nähe herumstehende Zombies, die dir einfach keine Bonbons geben wollen.',
 			'category' => Model_Items_Abstract_Item::MIAI_CAT_FIGHT,
+            'deco' => 10,
 	);
 	
 	protected static $weight = 10;

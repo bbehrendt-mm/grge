@@ -7,6 +7,7 @@ class Model_Items_Body2 extends Model_Items_Abstract_Item implements Interface_S
 			'icon' => 'body2',
 			'description' => 'Dieses Ding riecht noch gammeliger als gewöhnliche Leichen. Vermutlich sind es die Überreste eines Zombies, allerdings kann man das bei dieser Fleischpampe schwer sagen. Na, macht das Teil nicht Appetit?',
 			'category' => Model_Items_Abstract_Item::MIAI_CAT_FOOD,
+            'deco' => -100,
 	);
 	
 	protected static $weight = 75;

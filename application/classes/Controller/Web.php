@@ -5,7 +5,12 @@ class Controller_Web extends Controller {
     protected static $force_ajax = false;
 
     public function action_framework() {
-        $this->response->body(View::factory('framework'));
+        $js = ['jquery.min.js'];
+        $css = [];
+        foreach (scandir(APPPATH . 'assets/js') as $f) if (!in_array($f, ['.','..','jquery.min.js'])) $js[] = $f;
+        foreach (scandir(APPPATH . 'assets/css') as $f) if (!in_array($f, ['.','..'])) $css[] = $f;
+
+        $this->response->body(View::factory('framework')->set('js',$js)->set('css',$css));
     }
 
     public function action_chat() {

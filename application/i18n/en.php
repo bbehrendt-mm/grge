@@ -3222,4 +3222,92 @@ return array (
 	':name\'s Rucksack',
   'Über diesen Gegenstand stehen nur wenige Informationen zur Verfügung ...' =>
 	'The information you have about this item is rather limited...',
+  'An der Tür dieses Baumhauses befindet sich ein Schild, auf dem in krakeliger Schrift geschrieben steht: "Führ Erwaksene ferboten!!!". So ein Ärger aber auch...' =>
+	'There is a sign on the door, written in scrawly letters : "No Adulds Alowwed!!!". Too bad, it seems you can\'t go in there...',
+  'Spieler-ID' =>
+	'Player ID',
+  'ID10T' =>
+	'ID10T',
+  'Ihr könnt diese Reise nicht antreten.' =>
+	'You can\'t travel there right now.',
+  'Du entsendest :name nach :location, um dort nach dem Rechten zu sehen.' =>
+	'You\'ve send :name to check out :location.',
+  'Forum' =>
+	'Forum',
+  'Fünf Batterien abfeuern' =>
+	'Shoot 5 batteries',
+  'Grundwert' =>
+	'Base Value',
+  'Zustand des Verstecks' =>
+	'Hideout condition',
+  'Verbesserungen' =>
+	'Improvements',
+  'Gegenstände' =>
+	'Items',
+  'Dekorativer Gegenstand' =>
+	'Decorative Item',
+  'Abstoßender Gegenstand' =>
+	'Revolting Item',
+  'Endlich mal ein bisschen ausruhen. Zuhause ist dein Wasser- und Nahrungsverbrauch leicht reduziert. Wenn du dein Versteck hübsch gestaltest, erhälst du sogar einen Bonus auf die Regeneration von Energie und Gesundheit.' =>
+	'Finally, you found some time to rest. While at home, your water and food consumption is reduced. If you decorate your hideout nicely, you might even get a bonus on energy and health recovery.',
+  'Du schlürfst deine Schale Kürbissuppe als sei sie das beste, was du in letzter Zeit gegessen hast. Moment.... sie IST das beste, was du in letzter Zeit gegessen hast!' =>
+	'You slurp your portion of soup as if it was the best food you had in weeks. Wait.... this IS the best food you\'ve had in weeks!',
+  'Spuren des Grauens' =>
+	'Traces of Horror',
+  'Prinzessin auf der Erbse' =>
+	'Princess on a Pea',
+  'Klappriger Wohnwagen' =>
+	'Rickety Caravan',
+  'Als die Zombies kamen haben sich die meisten deiner Nachbarn einfach in ihren Häusern verbarrikadiert. Du hingegen bist mit deinem Wohnmobil geflohen, was sich im Nachhinein leider auch als nicht optimal erwiesen hat. Immerhin musst du regelmäßig Benzin für dieses Teil finden und es in Schuss halten, um weiterfahren zu können.' =>
+	'When the zombies came, most of your neighbors have just barricaded themselves in their homes. You, instead, just drove away in your caravan. In retrospect, this wasn\'t the best of ideas, since you\'ll have to find a lot of spare parts to keep this thing going...',
+  'Dein Wohnmobil ist schon etwas betagt... und war auch nie für eine wilde Flucht vor Zombies auf schlecht befestigten Straßen vorgesehen. Früher oder später wirst du anhalten und Reparaturen vornehmen müssen.' =>
+	'This caravan is rickety and old... and was never made for a wild escape from zombies. Sooner or later, you\'ll have to stop and make some repairs...',
+  'Während der Fahrt kannst du keine Reparaturen vornehmen!' =>
+	'You can\'t repair stuff while driving!',
+  'Eigentlich sieht hier alles gut in Schuss aus... an diesen Teilen brauchst du nichts zu reparieren.' =>
+	'Looks pretty good... there is nothing to repair here.',
+  'Zustand' =>
+	'Condition',
+  'Hier muss im Moment nichts repariert werden.' =>
+	'There is nothing to repair here for now.',
+  'Amaturenbrett' =>
+	'Dashboard',
+  'Hier siehst du, wie weit du schon gekommen bist. Um Punkte zu sammeln musst du so weit wie möglich fahren.' =>
+	'This shows how far you\'ve managed to come. Try to drive further to get more points.',
+  'Du bist bereits :distance km gefahren und hast :breaks Städte aufgesucht.' =>
+	'You\'ve driven :distance km and visited :breaks towns.',
+  'Losfahren' =>
+	'Start driving',
+  'Sobald du losgefahren bist, können keine weiteren Spieler deiner Partie beitreten. Fortfahren?' =>
+	'As soon as you leave, no other players will be able to join this game. Proceed?',
+  'Denk daran: Du kannst nicht wieder hierher zurückkehren. Wenn du jetzt losfährst verlierst du alle Gegenstände, die sich außerhalb des Wohnwagens befinden. Wenn du andere Spieler zurücklässt, werden sie einsam in der Wildniss sterben. Wirklich losfahren?' =>
+	'Remember: You can never go back here. If you drive away, you will loose all the items that are not inside your caravan. If you leave another player behind, he will die a lonely and gruesome death. Proceed?',
+  'Nächste Stadt suchen' =>
+	'Find next town',
+  'Möchtest du wirklich anhalten?' =>
+	'Are you sure you want to stop?',
+  'Zwischenstop einlegen' =>
+	'Take a break',
+  'Fahrer' =>
+	'Driver',
+  'Du fährst das Wohnmobil - halte also immer ein Auge auf der Straße und vermeide Übermüdung oder extensiven Alkoholkonsum. Oder willst du dich und deine Mitfahrer umbringen?' =>
+	'You\'re the driver - keep an eye on the street, and keep your mouth away from any whiskey bottles. Also, take a break if you\'re starting to feel tired. Or do you want to kill your fellow players?',
+  'Du drehst den Zündschlüssel und trittst auf das Gaspedal. Mit beeindruckendem Tempo siehst du den Parkplatz im Rückspiegel verschwinden. Hier wirst du wohl nie wieder hinkommen.... gut so!' =>
+	'You turn the ignition on and kick the accelerator to the floor. Your parking space starts to disappear in your rearview mirror. You\'ll never see this place again... which is good!',
+  'Du fährst deinen Wohnwagen auf den Standstreifen und hälst an. Eine kleine Pause tut gut...' =>
+	'You drive to the side of the road and stop the car. It\'s good to take a small break...',
+  'Die Karte steht derzeit nicht zur Verfügung!' =>
+	'The map is unavailable at this moment.',
+  'Schließen' =>
+	'Close',
+  'Leider fehlen dir hierfür die Ersatzteile...' =>
+	'You don\'t have any spare parts to repair that...',
+  'Sehr gut, die Ersatzteile haben genau gepasst. Du hast den Wohnwagen repariert.' =>
+	'Great, the parts you have collected fit perfectly. You\'ve repaired your caravan.',
+  'Du suchst einen geeigneten Parkplatz und hälst das Wohnmobil an. Tja, Zeit sich hier mal etwas umzusehen...' =>
+	'After finding a good parking space, you stop the caravan. It\'s time to look around a bit...',
+  'Beladung' =>
+	'Load',
+  'Du fährst ein Wohnmobil, keinen LKW - wenn du mehr einlädst als der Motor ziehen kann, wirst du nicht vom Fleck kommen.' =>
+	'This is a caravan, not a truck - you can\'t carry that much stuff around in it if you don\'t want the motor to explode.',
 );

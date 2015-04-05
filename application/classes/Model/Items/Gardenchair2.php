@@ -7,6 +7,7 @@ class Model_Items_Gardenchair2 extends Model_Items_Abstract_Chair implements Int
 		'icon' => 'gardenchair2',
 		'description' => 'Stabil und aus einem Stück gegossen - dieser Stuhl ist zwar schwerer, dafür aber auch widerstandsfähiger als ein einfacher Plastikstuhl.',
 		'category' => Model_Items_Abstract_Item::MIAI_CAT_RES,
+        'deco' => 2,
 	);
 
 	protected static $weight = 30;

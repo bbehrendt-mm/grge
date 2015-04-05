@@ -112,4 +112,22 @@ return array (
 	'',
   'Über diesen Gegenstand stehen nur wenige Informationen zur Verfügung ...' =>
 	'',
+  'Spieler-ID' =>
+	'',
+  'ID10T' =>
+	'',
+  'Grundwert' =>
+	'',
+  'Verbesserungen' =>
+	'',
+  'Dekorativer Gegenstand' =>
+	'',
+  'Abstoßender Gegenstand' =>
+	'',
+  'Endlich mal ein bisschen ausruhen. Zuhause ist dein Wasser- und Nahrungsverbrauch leicht reduziert. Wenn du dein Versteck hübsch gestaltest, erhälst du sogar einen Bonus auf die Regeneration von Energie und Gesundheit.' =>
+	'',
+  'Hier muss im Moment nichts repariert werden.' =>
+	'',
+  'Die Karte steht derzeit nicht zur Verfügung!' =>
+	'',
 );

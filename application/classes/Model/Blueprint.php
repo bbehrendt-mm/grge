@@ -20,6 +20,7 @@ class Model_Blueprint {
     private $energy = 0;
     private $decay = 0;
     private $decay_speed = 0;
+    private $deco_value = 0;
     private $steps = 1;
     private $condition;
     private $show_condition;
@@ -336,6 +337,16 @@ class Model_Blueprint {
         return $this;
     }
 
+    /**
+     * Modifies the decoration value of the location; only has an effect if the location is a hideout, otherwise these variables will be discarded
+     * @param int $new Added deco value
+     * @return Model_Blueprint
+     */
+    public function deco($new) {
+        $this->deco_value = $new;
+        return $this;
+    }
+
     private function can_prod($preconditions) {
         if ($this->steps > 0) {
             foreach ($this->provides as $p)
@@ -415,6 +426,7 @@ class Model_Blueprint {
             $place->set_decay($this->decay, false);
             $place->set_patchup($this->decay_speed, false);
             $place->inc_defense($this->defense);
+            $place->deco($this->deco_value);
         }
         if ($this->effect)
             $this->effect->execute($player, null);
@@ -505,6 +517,7 @@ class Model_Blueprint {
             'repair' => -$this->decay,
             'decay_speed' => $this->decay_speed == 0 ? 0 : ($this->decay_speed > 0 ? 1 : -1),
             'defense' => $this->defense,
+            'deco' => $this->deco_value,
             'material_in' => $this->materialize($this->items),
             'material_out' => $this->materialize($this->produces),
             'build' => in_array($this->id,$preconditions),

@@ -7,6 +7,7 @@ class Model_Items_Gardenchair extends Model_Items_Abstract_Chair implements Inte
 		'icon' => 'gardenchair',
 		'description' => 'Dieser Stuhl sieht ziemlich unbequem und wenig stabil aus - und dreckig ist er auch noch. Dafür ist er aber wenigstens leicht genug, um damit Zombies auf Distanz zu halten.',
 		'category' => Model_Items_Abstract_Item::MIAI_CAT_RES,
+        'deco' => 1,
 	);
 
 	protected static $weight = 20;

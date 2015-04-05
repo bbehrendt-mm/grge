@@ -7,6 +7,7 @@ class Model_Items_Generic_Cd extends Model_Items_Abstract_Item implements Interf
         'icon' => 'cd/generic',
         'description' => '',
         'category' => Model_Items_Abstract_Item::MIAI_CAT_MISC,
+        'deco' => 1,
     );
 
     protected static $instances_info = Array(

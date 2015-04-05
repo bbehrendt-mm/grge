@@ -36,6 +36,15 @@ return Model_Blueprints::factory()
 
     ->add_blueprints(
         Model_Blueprint::factory()
+            ->id('z:batg4')
+            ->requires('defbat')
+            ->name('Fünf Batterien abfeuern')
+            ->material(['Model_Items_Battery' => 5])
+            ->zombies(false, 5)
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
             ->id('z:batg3')
             ->requires('defbat')
             ->name('Supercharger abfeuern')

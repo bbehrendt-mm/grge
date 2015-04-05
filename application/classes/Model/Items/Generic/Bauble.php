@@ -7,6 +7,7 @@ class Model_Items_Generic_Bauble extends Model_Battle_Weapon implements Interfac
         'icon' => 'bauble/generic',
         'description' => 'Diese wundervolle Christbaumkugel weckt weihnachtliche Gefühle in dir - und sie weckt mörderische Gefühle in dir, wenn du daran denkst, dass du sie auch auf einen Zombie werfen kannst.',
         'category' => Model_Items_Abstract_Item::MIAI_CAT_RES,
+        'deco' => 5,
     );
 
     protected static $instances_info = Array(

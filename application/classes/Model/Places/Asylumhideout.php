@@ -2,6 +2,9 @@
 
 class Model_Places_Asylumhideout extends Model_Places_Abstract_Hideout implements Interface_Singularity {
 
+    //Base deco value
+    protected static $base_deco_value = -500;
+
     protected static $name = 'Patientenzimmer';
     protected static $description = 'Dieses Zimmer befindet sich in einem abgelegenen Flügel der Irrenanstalt... du hättest es nie gefunden, wenn dir der Patient nicht den Weg gezeigt hätte. Es ist überraschend groß, und hat ein schönes Erkerfenster mit Blick auf einen überwucherten Garten. Man könnte es fast als schön bezeichnen... wären die Wände nicht mit schauderhaften Fingerzeichnungen aus Blut übersäht. Es hilft auch nicht, dass hier diverse Foltergeräte und Autopsiewerkzeuge herumstehen. Das grauenhafteste in diesem Raum ist jedoch ohne Frage der DVD-Spieler mit eingelegter Helene-Fischer-DVD. Der pure Horror...';
     protected static $icon = 'mental';

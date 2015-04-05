@@ -28,7 +28,7 @@ return array(
                     'items.pill.use_default_effect_proc'    => true,
                     'modules.mapping'                       => false,
                     'modules.armory'                        => true,
-                    'modules.additionalchems'               => false,
+                    'modules.additionalchems'               => true,
                     'modules.multiplayer'                   => false,
                     'game.bhav.infections'                  => false,
                     'game.config.map'                       => 'default',
@@ -306,8 +306,6 @@ return array(
                 'config' => array(
                     'game.config.map' => 'roadtrip_init',
                     'game.config.itemset' => 'roadtrip',
-
-                    'modules.additionalchems'  => true,
 
                     'ranking.points.zombie_kills.factor'=> 0,
                     'ranking.points.zombie_kills.offset'=> 0,

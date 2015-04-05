@@ -7,6 +7,7 @@ class Model_Items_Dildo2 extends Model_Items_Abstract_Item implements Interface_
 			'icon' => 'dildo2',
 			'description' => 'Dieser Massagestab wurde anscheinend etwas modifiziert. Um den Massageeffekt zu erhöhen. Am Rücken! Denn an anderen Körperstellen kann man dieses Teil nicht benutzen!',
 			'category' => Model_Items_Abstract_Item::MIAI_CAT_GEAR,
+            'deco' => 5,
 	);
 
 	protected static $weight = 1;

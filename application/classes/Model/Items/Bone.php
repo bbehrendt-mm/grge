@@ -7,6 +7,7 @@ class Model_Items_Bone extends Model_Battle_Weapon implements Interface_Static {
 			'icon' => 'bone1',
 			'description' => 'Häng dir einen Mammut-Mantel um und zieh den Lendenschurz stramm - dieses Accessoire komplettiert deinen stylischen Neandertal-Look. Wenn du Ärger mit einem Zombie hast, knall ihm einfach dieses Ding über die Rübe und zieh ihn dann in deine Höhle.',
 			'category' => Model_Items_Abstract_Item::MIAI_CAT_FIGHT,
+            'deco' => -1,
 	);
 	
 	protected static $weight = 5;

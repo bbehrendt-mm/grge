@@ -240,6 +240,14 @@ core.popup = {
         core.command('map/data', {}, true, function(data) {
             popup.empty();
 
+            if ($.objToArray(data.locations).length < 2) {
+                popup.append($('<div />').addClass('center').css('margin-top', 200).text(<?=__j('Die Karte steht derzeit nicht zur Verfügung!')?>));
+                popup.append($('<div />').addClass('center').append($('<div />').addClass('btn small').text(<?=__j('Schließen')?>).click(function() {
+                    popup.trigger('unpop');
+                })));
+                return;
+            }
+
             var canvas = $('<canvas />').attr({
                 'width':dx,
                 'height':dy

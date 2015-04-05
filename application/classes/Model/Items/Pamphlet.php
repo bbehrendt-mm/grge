@@ -16,6 +16,7 @@ class Model_Items_Pamphlet extends Model_Items_Abstract_Book {
         'icon' => 'books/bible',
         'description' => 'Dir ist langweilig und du würdest dich gerne uneingeladen in jemandes Leben einmischen, weißt aber nicht in wessen? Keine Sorge, mithilfe dieser Schrift wirst du Rechtfertigungen finden um gegen alle möglichen Minderheiten zu hetzen, um von deinem eigenen, völlig verkorksten Leben abzulenken.',
         'category' => Model_Items_Abstract_Item::MIAI_CAT_LITERATURE,
+        'deco' => 1,
     );
 
 }	

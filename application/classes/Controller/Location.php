@@ -163,4 +163,40 @@ class Controller_Location extends Controller_Game {
         $this->render(false);
         return true;
     }
+
+    public function japi_caravan() {
+        /**
+         * @global $game Model_Game
+         * @global $player Model_Player
+         */
+        global $game, $player;
+
+        if (Tool_System::instance_of($player->location(), 'Model_Places_Motorhome')) {
+            /** @var Model_Places_Motorhome $motorhome */
+            $motorhome = $player->location();
+
+            $action = $this->request->post('do');
+            switch ($action) {
+                case 'repair':
+                    $count = (int)$this->request->post('count');
+                    $addr = $this->request->post('addr');
+                    if (!$count || !$addr || $count <= 0) return;
+                    $motorhome->repair($addr,$count);
+                    break;
+                case 'go':
+                    $motorhome->start();
+                    break;
+                case 'stop':
+                    $motorhome->stop();
+                    break;
+                case 'break':
+                    $motorhome->stop_break();
+                    break;
+            }
+
+        }
+
+
+        $this->japi_data();
+    }
 }

@@ -7,6 +7,7 @@ class Model_Items_Bodycrisp extends Model_Items_Abstract_Item implements Interfa
 			'icon' => 'bodyf',
 			'description' => 'Wer sagt, dass man nur kleine Dinge frittieren kann? Diese Leiche kannst du jetzt fast ohne gesundheitliche Risiken essen, und sie schmeckt auch noch viel besser!',
 			'category' => Model_Items_Abstract_Item::MIAI_CAT_FOOD,
+            'deco' => -20,
 	);
 
 	protected static $weight = 80;

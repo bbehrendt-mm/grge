@@ -6,6 +6,9 @@ class Model_Places_House extends Model_Places_Abstract_Hideout {
     protected static $description = 'Es scheint, als wäre dieses kurz vor der Zombieapokalypse fertig geworden. Es ist zwar vollständig eingerichtet, aber gewohnt hat hier wohl niemand. Dies könnte der ideale Ort für ein Versteck sein... wenn es nicht gerade der Ort wäre, an dem Zombies zuerst nach dir suchen würden.';
     protected static $icon = 'home';
 
+    //Base deco value
+    protected static $base_deco_value = 5;
+
     //Base defense
     protected $defense = 15;
 

@@ -108,8 +108,7 @@ class Controller_Game extends Controller {
                 'state' => 100 * round(1 - $hideout->get_decay(), 2),
                 'max_defense' => $hideout->get_defense(true),
                 'defense' => $hideout->get_defense(false),
-                'deco' => $hideout->get_deco(false),
-                'max_deco' => $hideout->get_deco(true),
+                'deco' => $hideout->deco(null, false),
             ] : false,
             'radar' => [
                 'danger' => $danger,
@@ -175,7 +174,8 @@ class Controller_Game extends Controller {
                 'set' => [$item->uin()],
                 'static' => 1,
                 'stack' => __($item->stackname()),
-                'label' => $item->label()
+                'label' => $item->label(),
+                'deco' => $item->deco()
             ];
 
             // No item specifics for short
@@ -477,6 +477,32 @@ class Controller_Game extends Controller {
             $this->add_data('location', ['scouting' => [
                 'level' => $mapper->get_map_details() * 33 + ($mapper->get_map_details() == 3 ? 1 : 0),
                 'laser' => Tool_Scripts::count_available_items('Model_Items_Generic_Lasermapper'),
+            ]]);
+        }
+
+        // Roadtrip
+        if (Tool_System::instance_of($player->location(), 'Model_Places_Motorhome')) {
+            /** @var Model_Places_Motorhome $motorhome */
+            $motorhome = $player->location();
+
+            $parts = [];
+            foreach ($motorhome->get_parts() as $item => $status) {
+                /** @var Model_Items_Abstract_Item $item */
+                $parts[] = [
+                    'icon' => $item::static_icon(),
+                    'name' => $item::static_name(),
+                    'addr' => Tool_System::getClassID($item),
+                    'count' => $status[0],
+                    'max' => $status[1],
+                ];
+            }
+
+            $this->add_data('location', ['caravan' => [
+                'stops' => $motorhome->get_level_progress(),
+                'speed' => $motorhome->get_speed(true),
+                'distance' => $motorhome->get_distance(),
+                'parts' => $parts,
+                'weight' => [$motorhome->weight(), $motorhome->weight_max()]
             ]]);
         }
     }

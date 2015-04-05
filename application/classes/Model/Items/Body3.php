@@ -7,6 +7,7 @@ class Model_Items_Body3 extends Model_Items_Abstract_Item implements Interface_S
 			'icon' => 'body3',
 			'description' => 'Tja, Zombies ist es wohl ziemlich egal ob sie Jagd auf Menschen oder Tiere machen. Dieses Vieh war mal Zombiesfutter.... jetzt könnte es Futter für dich werden, sofern du ziemlich anspruchslos bist.',
 			'category' => Model_Items_Abstract_Item::MIAI_CAT_FOOD,
+            'deco' => -40,
 	);
 	
 	protected static $weight = 30;

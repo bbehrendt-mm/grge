@@ -121,13 +121,13 @@
             if (relative_p[i]) tmp.append(
                 $('<img />').attr('src', 'media/icons/' + relative_p[i].icon + '.gif')
             ).append(
-                $('<span />').text(relative_p[i].value * 100 + "%")
+                $('<span />').text(Math.round(relative_p[i].value * 100) + "%")
             );
             else tmp.append($('<img />').addClass('fake').attr('src', 'media/icons/fake_h.gif')).append($('<span />').text(" "));
 
             row.append(tmp = $('<div />').addClass('cell rw-6 left'));
             if (relative_n[i]) tmp.append(
-                $('<span />').text(relative_n[i].value * 100 + "%")
+                $('<span />').text(Math.round(relative_n[i].value * 100) + "%")
             ).append(
                 $('<img />').attr('src', 'media/icons/' + relative_n[i].icon + '.gif')
             );

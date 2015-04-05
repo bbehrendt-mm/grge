@@ -7,6 +7,7 @@ class Model_Items_Bodybag3 extends Model_Items_Abstract_Item implements Interfac
 			'icon' => 'bodybag3',
 			'description' => 'Da hast du ja einen dicken Fang an Land gezogen. Zum Glück kannst du ihn in diesem Leichensack gut transportieren.',
 			'category' => Model_Items_Abstract_Item::MIAI_CAT_GEAR,
+            'deco' => -10,
 	);
 	
 	protected static $weight = 56;

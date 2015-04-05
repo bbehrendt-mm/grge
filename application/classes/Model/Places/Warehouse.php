@@ -7,6 +7,9 @@ class Model_Places_Warehouse extends Model_Places_Abstract_Hideout {
     protected static $icon = 'home';
     protected static $outside = false;
 
+    //Base deco value
+    protected static $base_deco_value = -30;
+
     //Base defense
     protected $defense = 1;
 

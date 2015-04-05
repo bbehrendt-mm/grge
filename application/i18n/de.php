@@ -3222,4 +3222,92 @@ return array (
 	'Rucksack von :name',
   'Über diesen Gegenstand stehen nur wenige Informationen zur Verfügung ...' =>
 	'Über diesen Gegenstand stehen nur wenige Informationen zur Verfügung ...',
+  'An der Tür dieses Baumhauses befindet sich ein Schild, auf dem in krakeliger Schrift geschrieben steht: "Führ Erwaksene ferboten!!!". So ein Ärger aber auch...' =>
+	'An der Tür dieses Baumhauses befindet sich ein Schild, auf dem in krakeliger Schrift geschrieben steht: "Führ Erwaksene ferboten!!!". So ein Ärger aber auch...',
+  'Spieler-ID' =>
+	'Spieler-ID',
+  'ID10T' =>
+	'ID10T',
+  'Ihr könnt diese Reise nicht antreten.' =>
+	'Ihr könnt diese Reise nicht antreten.',
+  'Du entsendest :name nach :location, um dort nach dem Rechten zu sehen.' =>
+	'Du entsendest :name nach :location, um dort nach dem Rechten zu sehen.',
+  'Forum' =>
+	'Forum',
+  'Fünf Batterien abfeuern' =>
+	'Fünf Batterien abfeuern',
+  'Grundwert' =>
+	'Grundwert',
+  'Zustand des Verstecks' =>
+	'Zustand des Verstecks',
+  'Verbesserungen' =>
+	'Verbesserungen',
+  'Gegenstände' =>
+	'Gegenstände',
+  'Dekorativer Gegenstand' =>
+	'Dekorativer Gegenstand',
+  'Abstoßender Gegenstand' =>
+	'Abstoßender Gegenstand',
+  'Endlich mal ein bisschen ausruhen. Zuhause ist dein Wasser- und Nahrungsverbrauch leicht reduziert. Wenn du dein Versteck hübsch gestaltest, erhälst du sogar einen Bonus auf die Regeneration von Energie und Gesundheit.' =>
+	'Endlich mal ein bisschen ausruhen. Zuhause ist dein Wasser- und Nahrungsverbrauch leicht reduziert. Wenn du dein Versteck hübsch gestaltest, erhälst du sogar einen Bonus auf die Regeneration von Energie und Gesundheit.',
+  'Du schlürfst deine Schale Kürbissuppe als sei sie das beste, was du in letzter Zeit gegessen hast. Moment.... sie IST das beste, was du in letzter Zeit gegessen hast!' =>
+	'Du schlürfst deine Schale Kürbissuppe als sei sie das beste, was du in letzter Zeit gegessen hast. Moment.... sie IST das beste, was du in letzter Zeit gegessen hast!',
+  'Spuren des Grauens' =>
+	'Spuren des Grauens',
+  'Prinzessin auf der Erbse' =>
+	'Prinzessin auf der Erbse',
+  'Klappriger Wohnwagen' =>
+	'Klappriger Wohnwagen',
+  'Als die Zombies kamen haben sich die meisten deiner Nachbarn einfach in ihren Häusern verbarrikadiert. Du hingegen bist mit deinem Wohnmobil geflohen, was sich im Nachhinein leider auch als nicht optimal erwiesen hat. Immerhin musst du regelmäßig Benzin für dieses Teil finden und es in Schuss halten, um weiterfahren zu können.' =>
+	'Als die Zombies kamen haben sich die meisten deiner Nachbarn einfach in ihren Häusern verbarrikadiert. Du hingegen bist mit deinem Wohnmobil geflohen, was sich im Nachhinein leider auch als nicht optimal erwiesen hat. Immerhin musst du regelmäßig Benzin für dieses Teil finden und es in Schuss halten, um weiterfahren zu können.',
+  'Dein Wohnmobil ist schon etwas betagt... und war auch nie für eine wilde Flucht vor Zombies auf schlecht befestigten Straßen vorgesehen. Früher oder später wirst du anhalten und Reparaturen vornehmen müssen.' =>
+	'Dein Wohnmobil ist schon etwas betagt... und war auch nie für eine wilde Flucht vor Zombies auf schlecht befestigten Straßen vorgesehen. Früher oder später wirst du anhalten und Reparaturen vornehmen müssen.',
+  'Während der Fahrt kannst du keine Reparaturen vornehmen!' =>
+	'Während der Fahrt kannst du keine Reparaturen vornehmen!',
+  'Eigentlich sieht hier alles gut in Schuss aus... an diesen Teilen brauchst du nichts zu reparieren.' =>
+	'Eigentlich sieht hier alles gut in Schuss aus... an diesen Teilen brauchst du nichts zu reparieren.',
+  'Zustand' =>
+	'Zustand',
+  'Hier muss im Moment nichts repariert werden.' =>
+	'Hier muss im Moment nichts repariert werden.',
+  'Amaturenbrett' =>
+	'Amaturenbrett',
+  'Hier siehst du, wie weit du schon gekommen bist. Um Punkte zu sammeln musst du so weit wie möglich fahren.' =>
+	'Hier siehst du, wie weit du schon gekommen bist. Um Punkte zu sammeln musst du so weit wie möglich fahren.',
+  'Du bist bereits :distance km gefahren und hast :breaks Städte aufgesucht.' =>
+	'Du bist bereits :distance km gefahren und hast :breaks Städte aufgesucht.',
+  'Losfahren' =>
+	'Losfahren',
+  'Sobald du losgefahren bist, können keine weiteren Spieler deiner Partie beitreten. Fortfahren?' =>
+	'Sobald du losgefahren bist, können keine weiteren Spieler deiner Partie beitreten. Fortfahren?',
+  'Denk daran: Du kannst nicht wieder hierher zurückkehren. Wenn du jetzt losfährst verlierst du alle Gegenstände, die sich außerhalb des Wohnwagens befinden. Wenn du andere Spieler zurücklässt, werden sie einsam in der Wildniss sterben. Wirklich losfahren?' =>
+	'Denk daran: Du kannst nicht wieder hierher zurückkehren. Wenn du jetzt losfährst verlierst du alle Gegenstände, die sich außerhalb des Wohnwagens befinden. Wenn du andere Spieler zurücklässt, werden sie einsam in der Wildniss sterben. Wirklich losfahren?',
+  'Nächste Stadt suchen' =>
+	'Nächste Stadt suchen',
+  'Möchtest du wirklich anhalten?' =>
+	'Möchtest du wirklich anhalten?',
+  'Zwischenstop einlegen' =>
+	'Zwischenstop einlegen',
+  'Fahrer' =>
+	'Fahrer',
+  'Du fährst das Wohnmobil - halte also immer ein Auge auf der Straße und vermeide Übermüdung oder extensiven Alkoholkonsum. Oder willst du dich und deine Mitfahrer umbringen?' =>
+	'Du fährst das Wohnmobil - halte also immer ein Auge auf der Straße und vermeide Übermüdung oder extensiven Alkoholkonsum. Oder willst du dich und deine Mitfahrer umbringen?',
+  'Du drehst den Zündschlüssel und trittst auf das Gaspedal. Mit beeindruckendem Tempo siehst du den Parkplatz im Rückspiegel verschwinden. Hier wirst du wohl nie wieder hinkommen.... gut so!' =>
+	'Du drehst den Zündschlüssel und trittst auf das Gaspedal. Mit beeindruckendem Tempo siehst du den Parkplatz im Rückspiegel verschwinden. Hier wirst du wohl nie wieder hinkommen.... gut so!',
+  'Du fährst deinen Wohnwagen auf den Standstreifen und hälst an. Eine kleine Pause tut gut...' =>
+	'Du fährst deinen Wohnwagen auf den Standstreifen und hälst an. Eine kleine Pause tut gut...',
+  'Die Karte steht derzeit nicht zur Verfügung!' =>
+	'Die Karte steht derzeit nicht zur Verfügung!',
+  'Schließen' =>
+	'Schließen',
+  'Leider fehlen dir hierfür die Ersatzteile...' =>
+	'Leider fehlen dir hierfür die Ersatzteile...',
+  'Sehr gut, die Ersatzteile haben genau gepasst. Du hast den Wohnwagen repariert.' =>
+	'Sehr gut, die Ersatzteile haben genau gepasst. Du hast den Wohnwagen repariert.',
+  'Du suchst einen geeigneten Parkplatz und hälst das Wohnmobil an. Tja, Zeit sich hier mal etwas umzusehen...' =>
+	'Du suchst einen geeigneten Parkplatz und hälst das Wohnmobil an. Tja, Zeit sich hier mal etwas umzusehen...',
+  'Beladung' =>
+	'Beladung',
+  'Du fährst ein Wohnmobil, keinen LKW - wenn du mehr einlädst als der Motor ziehen kann, wirst du nicht vom Fleck kommen.' =>
+	'Du fährst ein Wohnmobil, keinen LKW - wenn du mehr einlädst als der Motor ziehen kann, wirst du nicht vom Fleck kommen.',
 );

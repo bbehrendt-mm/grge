@@ -18,7 +18,7 @@ abstract class Model_Buffs_Abstract_Job extends Model_Buffs_Abstract_Buff {
 	abstract protected function adjust();
 	
 	public function icon() {
-		return "/application/assets/icons/buffs/" . static::$bid . "/" . $this->level . ".gif";
+		return "buffs/" . static::$bid . "/" . $this->level;
 	}
 	
 	public function name() {

@@ -1,7 +1,7 @@
 <span id="main-menu-game"><?=__('Spielen')?></span>
 <span id="main-menu-main"><?=__('Neuigkeiten')?></span>
 <span id="main-menu-ranking"><?=__('Ranking')?></span>
-<span id="main-menu-classic"><?=__('Klassische Seite')?></span>
+<span id="main-menu-forum"><?=__('Forum')?></span>
 <span id="main-menu-logout"><?=__('Logout')?></span>
 <script type="application/javascript">
 // ## JS COMPRESS BEGIN ## //
@@ -14,8 +14,8 @@
     $('#main-menu-ranking').click(function() {
         game.network.load('ranking/lists');
     });
-    $('#main-menu-classic').click(function() {
-        document.location.href = '../';
+    $('#main-menu-forum').click(function() {
+        window.open('<?=Kohana::$config->load('services.forum')?>');
     });
     $('#main-menu-logout').click(function(){
         $(this).html('<i class="fa fa-spin fa-circle-o-notch"></i>');

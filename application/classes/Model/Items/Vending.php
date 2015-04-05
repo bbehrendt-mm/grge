@@ -10,6 +10,7 @@ class Model_Items_Vending extends Model_Items_Abstract_Item {
 			'icon' => 'vending',
 			'description' => 'Dieser Verkaufsautomat sieht ziemlich heruntergekommen aus. Die Scheibe ist verdreckt und die Beschriftungen der einzelnen Knöpfe sind nicht mehr lesbar. Vielleicht wirfst du einfach mal Geld ein und schaust, ob etwas heraus kommt?',
 			'category' => Model_Items_Abstract_Item::MIAI_CAT_MISC,
+            'deco' => 5,
 	);
 	
 	protected $basetype;

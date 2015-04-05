@@ -6,6 +6,9 @@ class Model_Places_Treehouse extends Model_Places_Abstract_Hideout {
     protected static $description = 'Aufgrund der mangelhaften Kletterfähigkeiten von Zombies gibt dieses Baumhaus ein überraschend gutes Versteck ab. Im Brandfall solltest du es jedoch lieber nicht verwenden...';
     protected static $icon = 'treehouse';
 
+    //Base deco value
+    protected static $base_deco_value = 15;
+
     //Base defense
     protected $defense = 10;
 
@@ -22,7 +25,8 @@ class Model_Places_Treehouse extends Model_Places_Abstract_Hideout {
         return parent::uin($new);
     }
 
-    public function can_enter($pid = null) {
+    public function can_enter_map($pid = null) {
+        /** @global Model_Game $game */
         global $game;
 
         if ($pid === null)

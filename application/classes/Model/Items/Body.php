@@ -7,6 +7,7 @@ class Model_Items_Body extends Model_Items_Abstract_Item implements Interface_St
 			'icon' => 'body',
 			'description' => 'Dieses Ding liegt hier schon eine Weile. Die Kleidung ist zerfetzt und der Körper übersäht mit Bisspuren. Nichtsdestotrotz ist da noch einiges an Fleisch übrig geblieben ... die Zombies scheinen nicht an restlose Verwertung zu glauben. Du könntest deine Zähne auch noch dort reinschlagen - wenn du wirklich so verzweifelt bist.',
 			'category' => Model_Items_Abstract_Item::MIAI_CAT_FOOD,
+            'deco' => -90,
 	);
 	
 	protected static $instances_info = Array(

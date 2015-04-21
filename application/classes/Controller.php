@@ -25,8 +25,13 @@ abstract class Controller extends Kohana_Controller {
      * This function will cause the script to abort when it was not called using AJAX
      */
     protected function force_ajax() {
-        if (!$this->is_ajax_request())
-            die(Error::m(\grge\E_HTTP_AJAX_REQUIRED));
+        if (!$this->is_ajax_request()) {
+            if ($this->request->action() == 'japi')
+                die(Error::m(\grge\E_HTTP_AJAX_REQUIRED));
+            $this->response->body(View::factory('redirect')->set('url',URL::base())->set('path',$this->request->uri()));
+            $this->request->action('noaction');
+        }
+
     }
 
     /**
@@ -60,7 +65,7 @@ abstract class Controller extends Kohana_Controller {
                 // Output error message as string
                 die(Error::m(\grge\E_SERVER_INVALID_SESSION));
             else {
-                // Create JSOn error output, then stop the action from being executed by redirecting to noaction
+                // Create JSON error output, then stop the action from being executed by redirecting to noaction
                 $this->error(\grge\E_SERVER_INVALID_SESSION);
                 $this->request->action('noaction');
             }
@@ -74,12 +79,18 @@ abstract class Controller extends Kohana_Controller {
         //Init error class
         Error::i();
 
+        //Load session
+        $this->session = Session::instance();
+
+        if (!$this->is_ajax_request())
+            // Preserve initial get/post parameters
+            $this->session->set('request',array_merge($_SERVER,["CLIENT_REQUEST" => $_REQUEST]));
+
         //Check AJAX
         if (static::$force_ajax)
             $this->force_ajax();
 
-        //Load session, perform session checks
-        $this->session = Session::instance();
+        // Perform session checks
         if (static::$force_login)
             $this->force_login();
 
@@ -111,15 +122,20 @@ abstract class Controller extends Kohana_Controller {
         // Call method, or fail if method does not exists
         if (method_exists($this, $method))
             return $this->$method();
-        else return $this->error(\grge\E_HTTP_REQUEST_INVALID);
+        else return $this->error(\grge\E_HTTP_REQUEST_INVALID, ['uri' => $this->request->uri()]);
     }
 
     /**
      * Add some default data to the output chain, i.e. menus
      */
     private function render_defaults() {
+        $this->add_data('current_url', $this->request->uri(), true);
         if (!isset($this->widgets['main-menu']) && static::$menu)
             $this->add_widget('main-menu', View::factory('menus/' . static::$menu)->render());
+    }
+
+    protected function modify_current_url($url) {
+        $this->add_data('current_url', $url);
     }
 
     /**

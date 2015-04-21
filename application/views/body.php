@@ -82,6 +82,11 @@
         else p.removeClass('float');
     });
 
+    $(window).on('popstate', function(e) {
+        if (e.originalEvent.state.curl)
+            game.network.load(e.originalEvent.state.curl);
+    });
+
     $.getScript('web/core/?l=' + game.lang(), function() {
         game.network.load('landing/redirect');
     }).fail(function( jqxhr, settings, exception ) {

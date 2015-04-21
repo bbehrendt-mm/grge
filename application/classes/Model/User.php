@@ -35,57 +35,22 @@ class Model_User extends Model {
 		if (!isset($set[0])) return NULL;
 		return ($set[0]['name']);
 	}
-	
-	public static function fromfs($fs,$lang) {
-		//Check if the key is stored in our DB
-		$set = DB::select('mtid', 'origin', 'name')->from('login_supplicant')->where('key', '=', $fs)->where('origin', '=', $lang)->execute()->as_array();
-		
-		//Return first MTID/Origin or false, if no data was found
-		if ($set && $set[0]) return Array('mtid' => (int)$set[0]['mtid'], 'origin' => $set[0]['origin'], 'name' => $set[0]['name']);
-		else return false;		
-	}
-	
-	public static function tofs($fs, $name, $mtid, $origin) {
-		//Check if the key is stored in our DB
-		$set = DB::select('key')->from('login_supplicant')->where('mtid', '=', $mtid)->where('origin', '=', $origin)->execute()->as_array();
-		$key = ($set && $set[0]) ? $set[0]['key'] : null;
 
-		if ($key === null) return DB::insert('login_supplicant', array('mtid', 'origin', 'name', 'key'))->values(array($mtid, $origin, $name, $fs))->execute();
-		elseif ($key != $fs) return DB::update('login_supplicant')->set(array('key' => $fs))->where('mtid', '=', $mtid)->where('origin', '=', $origin)->execute();
-		else return null;
-	}
-	
-	public static function mt2gr($mtid, $region) {
-		//Check if there is an MT ID and region matching the given values in our DB
-		$set = DB::select('uid')->from('users')->where('mtid', '=', $mtid)->where('origin', '=', $region)->execute()->as_array();
-		
-		//Return first UID or false, if no UID was found
-		if ($set && $set[0]) return (int)$set[0]['uid'];
-		else return false;				
-	}
-	
-	public static function register($mtid, $region, $name) {
-		list($insert_id, $affected_rows) = DB::insert('users', array('mtid', 'origin', 'name', 'session'))->values(array($mtid, $region, $name, 'new'))->execute();
-		return $insert_id;
-	}
-	
-	public static function is_banned($uid) {
-		$set = DB::select('ban')->from('users')->where('uid', '=', $uid)->execute()->as_array();
-		if ($set && $set[0]) return (int)$set[0]['ban'];
-		else return false;
-	}
+    public static function avatar_by_id($uid) {
+        $set = DB::select('avatar')->from('users')->where('uid', '=', $uid)->execute()->as_array();
+        if (!isset($set[0])) return NULL;
+        return ($set[0]['avatar']);
+    }
 	
 	public function read($uid) {
 		//Load from DB	
 		$set = DB::select()->from('users')->where('uid', '=', $uid)->execute()->as_array();
 		
 		//If request was successfull, import data from DB into local set
-		if ($set && $set[0] && $set[0]['ban'] != 1)
+		if ($set && $set[0])
 		{
 			$this->set = $set[0];
-			//Decode blob
-			$this->set['dataset'] = json_decode($this->set['dataset']);
-			
+
 			//Write session ID to DB
 			DB::update('users')->set(array('session' => $this->sid))->where('uid', '=', $uid)->execute();
 			

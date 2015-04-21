@@ -7,20 +7,137 @@ class Controller_Account extends Controller {
      * @throws Kohana_Exception
      */
     public function action_login() {
+        if ($this->session->get('user',NULL)) {
+            $this->redirect(URL::site('lobby/main', 'http'));
+            return;
+        }
+
+        $rq = $this->session->get('request',["CLIENT_REQUEST" => []]);
+        $key = isset($rq["CLIENT_REQUEST"]['key']) ? $rq["CLIENT_REQUEST"]['key'] : '';
+        $ref = isset($rq["HTTP_REFERER"]) ? $rq["HTTP_REFERER"] : '';
+        $pid = -1;
+
+        $pre_service = '';
+        $auth = '';
+
         // Read login services from config
         $services = [];
-        foreach (Kohana::$config->load('mt.links') as $v)
+        foreach (Kohana::$config->load('mt.links') as $v) {
             $services[] = $v['name'];
+            if ($key && $ref && strpos($ref,$v['url']) !== false) {
+                $pre_service = $v['name'];
+                $auth = $v['auth'];
+            }
+        }
+
+        /** @var Model_Auth_Legacy $auth */
+        if ($auth)
+            $pid = $auth::retrieve_user_id($key);
 
         // Render page
         $this->add_widget(View::factory('pages/login')
             ->set('services', $services)
+            ->set('preset_legacy_key', $key)
+            ->set('preset_legacy_service', $pre_service)
+            ->set('preset_zvid', $pid)
             ->render());
 
         // Render menu
         $this->add_widget('main-menu', View::factory('menus/login')->render());
 
         $this->render();
+    }
+
+    /**
+     * Merge View
+     * @throws Kohana_Exception
+     */
+    public function action_merge() {
+        global $user;
+
+        if (!$this->session->get('user',NULL)) {
+            $this->redirect(URL::site('account/login', 'http'));
+            return;
+        }
+
+        $rq = $this->session->get('request',["CLIENT_REQUEST" => []]);
+        $key = isset($rq["CLIENT_REQUEST"]['key']) ? $rq["CLIENT_REQUEST"]['key'] : '';
+        $ref = isset($rq["HTTP_REFERER"]) ? $rq["HTTP_REFERER"] : '';
+        $pid = -1;
+
+        $pre_service = '';
+        $auth = '';
+
+        // Read login services from config
+        $services = [];
+        foreach (Kohana::$config->load('mt.links') as $v) {
+            $services[] = $v['name'];
+            if ($key && $ref && strpos($ref,$v['url']) !== false) {
+                $pre_service = $v['name'];
+                $auth = $v['auth'];
+            }
+        }
+
+        /** @var Model_Auth_Legacy $auth */
+        if ($auth)
+            $pid = $auth::retrieve_user_id($key);
+        else $this->redirect(URL::site('lobby/main', 'http'));
+        /** @var Model_Auth_Legacy $authenticator */
+
+        $authenticator = new $auth($key);
+        $connected = !$authenticator->getLastError();
+
+        if ($pid > 0)
+            $allow = !Model_Euser::get_soulpoints($pid);
+        else $allow = true;
+
+        // Render page
+        $this->add_widget(View::factory('pages/merge')
+            ->set('username',$connected ? $authenticator->getRemoteName() : null)
+            ->set('pid',$pid)
+            ->set('allow', $allow)
+            ->set('key',$key)
+            ->set('service',$pre_service)
+            ->render());
+
+        // Render menu
+        $this->add_widget('main-menu', View::factory('menus/logout')->render());
+
+        $this->render();
+    }
+
+    /**
+     * Merge View
+     * @throws Kohana_Exception
+     */
+    public function japi_merge() {
+        /** @global Model_Euser $user */
+        global $user;
+
+        if (!$user) return $this->render();
+
+        $key = $this->request->post('key');
+        $service = $this->request->post('service');
+
+        if (!$key || !$service || !($cfg = Kohana::$config->load('mt.links.' . $service))) return $this->render();
+
+        /** @var Model_Auth_Legacy $authenticator */
+        $authenticator = new $cfg['auth']($key);
+        $connected = !$authenticator->getLastError();
+
+        if (!$connected) return $this->render(['success' => 0]);
+
+        $pid = $authenticator::retrieve_user_id($key);
+        if ($pid > 0)
+            $allow = !Model_Euser::get_soulpoints($pid);
+        else $allow = true;
+
+        if ($allow) {
+            $authenticator::user_unlink_all($pid);
+            $authenticator->connectToLocal($user->uid());
+        }
+
+        return $this->render(['success' => $allow ? 1 : 0]);
     }
 
     /**
@@ -36,11 +153,10 @@ class Controller_Account extends Controller {
 
     /**
      * Login API
-     * @param bool $attempt_local Attempt to log in using only supplicant to avoid having to contact MT servers
      * @return bool
      * @throws Kohana_Exception
      */
-    public function japi_login($attempt_local = false) {
+    public function japi_login() {
         //Get key
         $key = $this->request->current()->post('key');
         $host = $this->request->current()->post('service');
@@ -48,55 +164,31 @@ class Controller_Account extends Controller {
         if (!$key || !$host)
             return $this->error(\grge\E_AUTH_INCOMPLETE_REQUEST);
 
-        if (!Kohana::$config->load('mt.links.' . $host))
-            return $this->error(\grge\E_AUTH_INVALID_PROVIDER);
-
-        if (!Kohana::$config->load('mt.links.' . $host . '.token') && !$attempt_local)
-            return $this->japi_login(true);
-
-        if ($attempt_local) {
-            if (!$data = Model_Euser::fromfs($key, Kohana::$config->load('mt.links.' . $host . '.lang')))
-                return $this->error(\grge\E_AUTH_LOCAL_PROVIDER_FAILED);
-
-            $mtid = $data['mtid'];
-            $region = $data['origin'];
-            $name = $data['name'];
-            $avatar = null;
-
-        } else {
-            $sk = Kohana::$config->load('mt.links.' . $host . '.token');
-            $url = 'http://' . Kohana::$config->load('mt.links.' . $host . '.url') . "/xml/?k={$key};sk={$sk}";
-
-            //Load Data from remote server and store DOM
-            $xml = new DOMDocument( );
-            try {
-                if (!$xml->loadXML(file_get_contents($url)))
-                    return $this->error(\grge\E_AUTH_CONNECTION_FAILED);
-            } catch (Exception $e) {
-                return $this->error(\grge\E_AUTH_CONNECTION_FAILED);
-            }
-
-            //Generate XPath object
-            $xpath = new DOMXPath($xml);
-
-            //Let's check for errors first
-            if ($error = $xpath->evaluate('string(//error/@code)')) if ($error != 'not_in_game')
-                switch ($error) {
-                    case 'invalid_keys': return $this->error(\grge\E_AUTH_INVALID_KEY);
-                    default: return $this->error(\grge\E_AUTH_DOWNTIME, ['mt_error_passthrough' => $error]);
-                }
-
-            //Get MT ID and region (language) plus name
-            if (!($mtid = (int)$xpath->evaluate('string(//owner/citizen/@id)')) || !($region = $xpath->evaluate('string(//headers/@language)')) || !($name = $xpath->evaluate('string(//owner/citizen/@name)')))
-                return $this->error(\grge\E_AUTH_INVALID_CRED);
-
-            $avatar = $xpath->evaluate('string(//owner/citizen/@avatar)');
+        $authenticator = null;
+        switch ($host) {
+            case 'Die Verdammten':
+                $authenticator = new Model_Auth_Hordesde($key, true);
+                break;
+            case 'Die2Nite':
+                $authenticator = new Model_Auth_Hordesen($key, true);
+                break;
+            case 'Token':
+                $authenticator = new Model_Auth_Token($key);
+                break;
+            default: return $this->error(grge\E_AUTH_INVALID_PROVIDER);
         }
 
-        //Finally get a real UID from all the crap we just collected
-        if (!$uid = Model_Euser::mt2gr($mtid, $region))
-            //Register player, if he does not yet have an account
-            $uid = Model_Euser::register($mtid, $region, $name);
+        if (!$authenticator->connectToLocal() || !$authenticator->is_ready())
+            switch ($authenticator->getLastError()) {
+                case 'invalid_host': return $this->error(\grge\E_AUTH_INVALID_PROVIDER);
+                case 'connection_failed': return $this->error(\grge\E_AUTH_CONNECTION_FAILED);
+                case 'protocol_failed': return $this->error(\grge\E_AUTH_CONNECTION_FAILED);
+                case 'supplement_failed': return $this->error(\grge\E_AUTH_INVALID_CRED);
+                case 'invalid_keys': return $this->error(\grge\E_AUTH_INVALID_KEY);
+                default: return $this->error(\grge\E_AUTH_DOWNTIME, ['mt_error_passthrough' => $authenticator->getLastError()]);
+            }
+
+        $uid = $authenticator->getLocalID();
 
         //Get whitelisting entry
         $wl = DB::select('relation')->from('user_flags')->where('user','=',$uid)->and_where('relation','IN',['ALLOW','DENY'])->and_where('data','=','WHITELIST')->execute()->as_array();
@@ -115,9 +207,6 @@ class Controller_Account extends Controller {
         {
             //Append user object to session
             $this->session->set('user',$user);
-
-            //Create or update FS
-            Model_Euser::tofs($key, $user->name(), $mtid, $region);
 
             //Try to load current game
             if ($gameid = $user->get_current_game())
@@ -140,11 +229,8 @@ class Controller_Account extends Controller {
                 'login' => [
                     'user' => $user->uid(),
                     'name' => $user->name(),
-                    'region' => $region,
-                    'mtid' => $mtid,
-                    'avatar' => $avatar,
-                    'host' => $host,
-                    'key' => $key
+                    'avatar' => $authenticator->getRemoteAvatarUrl(),
+                    'token' => Model_Auth_Token::token($user->uid())
                     ]
                 ]);
         }

@@ -1,0 +1,44 @@
+@import (once) "zombvival";
+
+@navbar-height: 24px;
+@notification-background: #524d49;
+@notification-color: white;
+
+#navbar {
+  height: @navbar-height; width: 100%; position: fixed; top: 0; background-color: @zv-color-main; border-bottom: 2px solid @zv-color-main-dark; box-shadow: 0 0 5px black; z-index: 100; text-align: center;
+  >.navsection {
+    display: inline-block; color: @zv-color-secondary;
+    &.navtext {margin: 0 5px;}
+    &#main-menu {
+      font-family: "Exo 2",sans-serif; font-weight: bold; font-variant: small-caps;
+      >span {
+        transition: all 0.2s;
+        display:  inline-block; text-align: center; cursor: pointer; width: 150px;
+        &:hover {background: @zv-color-secondary; color: @zv-color-main}
+      }
+    }
+  }
+}
+
+
+#notifications {
+  position: fixed; width: 600px; z-index: 200; top: 30px; left: ~"calc(50% - 300px)"; text-align: center; overflow: visible; pointer-events: none;
+  > div {
+    background: @notification-background; position: relative; display: block; text-align: justify; color: @notification-color; overflow: hidden; pointer-events: auto; box-shadow: 0 0 2px black; cursor: pointer;
+    &+div {margin-top: 4px;}
+    >div:first-child {
+      height: 50000px; width: 96px; background: #0066CC; position: absolute; top: 0; left: 0; padding: 5px; text-align: center;
+      &::after {font-family: FontAwesome,serif; font-size: 76px;}
+    }
+    >div:last-child {
+      width: 600px; min-height: 96px; padding: 4px 4px 4px 100px;
+      >b.headline {display: block; font-weight: bold; margin-bottom: 4px; font-size: 18px; text-shadow: 0 0 2px #fffde6;}
+    }
+
+    /* Styles */
+    &.smile   > div:first-child {background: #ff6600;color: #100C0B; &::after {content: "\f118"}}
+    &.info    > div:first-child {background: #00d7ff;color: #FFFFFF; &::after {content: "\f05a"}}
+    &.error   > div:first-child {background: #ff6600;color: #100C0B; &::after {content: "\f057"}}
+    &.success > div:first-child {background: #00ff7f;color: #ffffff; &::after {content: "\f058"}}
+  }
+}

@@ -19,7 +19,7 @@
 @whitebox-color-border: #e9e9e9;
 
 //noinspection CssOverwrittenProperties
-.whitebox(@darkness: 0%; @border-darkness: @darkness) {border-radius: 4px; background: darken(@whitebox-color-bg, @darkness); border: 1px solid darken(@whitebox-color-border, @border-darkness); border-bottom: 4px solid darken(@whitebox-color-border, @border-darkness); box-shadow: 0 4px 8px rgba(0,0,0,0.3);}
+.whitebox(@darkness: 0%; @border-darkness: @darkness) {border-radius: 4px; background: darken(@whitebox-color-bg, @darkness); .incomplete-border-definition(1px solid darken(@whitebox-color-border, @border-darkness), true, true, false, true); border-bottom: 4px solid darken(@whitebox-color-border, @border-darkness); box-shadow: 0 4px 8px rgba(0,0,0,0.3);}
 
 .impactbox(@border-color, @base-color) {border-radius: 5px; background: @base-color; border: 1px solid @border-color; border-bottom: 4px solid @border-color; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.8);}
 
@@ -40,12 +40,8 @@
 
 .mugshot {
   .whitebox; display: inline-block; width: @mugshot-dimensions + 4; position: relative; cursor: pointer; margin: 3px; padding: 1px; transition: background 250ms ease, border-color 500ms ease;
-  .mugshot-head {position: absolute; top: 0; left: 0; width: 100%; background: fade(@whitebox-color-bg, 50%); font-family: "Strait",sans-serif; padding-top: 3px; border-top-left-radius: 2px; border-top-right-radius: 2px; transition: background 250ms ease;}
   //noinspection CssOverwrittenProperties
-  &:hover {
-    background: @mugshot-color-hover-bg; border: 1px solid @mugshot-color-hover-border; border-bottom: 4px solid @mugshot-color-hover-border;
-    .mugshot-head {background: fade(@mugshot-color-hover-bg, 50%);}
-  }
+  &:hover {background: @mugshot-color-hover-bg; border: 1px solid @mugshot-color-hover-border; border-bottom: 4px solid @mugshot-color-hover-border;}
   .mugshot-fill {position: absolute; top: 0; left: 0; height: 100%; width: 100%; background: fade(@whitebox-color-bg, 50%); color: @mugshot-color-animation; text-shadow: 0 0 2px black; font-size: 30px; padding-top: 30px;}
   .mugshot-append {font-weight: bold;}
   >img {height: @mugshot-dimensions; width:@mugshot-dimensions;}

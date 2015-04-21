@@ -49,6 +49,7 @@ class Controller_Web extends Controller {
     public function action_body() {
         $this->force_ajax();
         $this->add_widget(':body', View::factory('body')->render());
+        $this->modify_current_url('');
         $this->render();
     }
 

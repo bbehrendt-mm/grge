@@ -6,7 +6,7 @@ class Controller_Ranking extends Controller {
     protected static $menu = 'logout';
 
     private function get_ranking_data_sp(&$raw_count, $season = null, $mode = null, $job = null, $flow = null, $player = null, $offset = null, $count = null) {
-        $base_query = DB::select('season', 'gameid', 'points', 'ticks', 'job', 'board', 'start', 'end', 'name', 'ranking.uid')->from('ranking')->join('users')->on('ranking.uid', '=', 'users.uid')->where('users.ban', '=', '0');
+        $base_query = DB::select('season', 'gameid', 'points', 'ticks', 'job', 'board', 'start', 'end', 'name', 'ranking.uid')->from('ranking')->join('users')->on('ranking.uid', '=', 'users.uid')->where('users.uid', 'NOT IN', DB::select('user')->from('user_flags')->where('relation','=','DENY')->where('data','=','WHITELIST'));
 
         if ($season !== null) $base_query->where('season', '=', $season);
         if ($mode !== null) $base_query->where('board', '=', $mode);

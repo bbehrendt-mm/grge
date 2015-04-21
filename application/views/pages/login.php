@@ -3,6 +3,10 @@
  * @var array $services Available services as array
  */
 if (!isset($services)) $services = array();
+if (!isset($preset_legacy_key)) $preset_legacy_key = '';
+if (!isset($preset_legacy_service)) $preset_legacy_service = '';
+if (!isset($preset_zvid)) $preset_zvid = -1;
+
 ?>
 
 <h1 class="noclick"><i class="fa fa-arrow-circle-right"></i><?=__('Login')?></h1>
@@ -14,7 +18,34 @@ if (!isset($services)) $services = array();
             <?=__('ZombVival ist ein an Die Verdammten von MotionTwin angelehntes, kostenloses Browserspiel. Entwickelt wird es von einem Die Verdammten-Spieler namens Brainbox. In ZombVival kämpfst du als Überlebender einer Zombie-Apokalypse gegen Horden von Untoten, während du die Überreste der Zivilisation nach Nahrung, Waffen und anderen nützlichen Gegenständen durchsuchst. Dein Tod ist gewiss - aber es liegt an dir, ihn so lange wie möglich herauszuzögern! Nebenbei kannst du versuchen, Auszeichnungen zu sammeln und die Spitze diverser Rankings zu erobern!');?>
         </div>
     </div>
-    <div class="cell rw-6 padded">
+
+    <div class="cell rw-6 padded login_form" id="login_legacy_preset">
+        <h2><?=__('Gleich kanns losgehen!');?></h2>
+
+        <div id="preset_select">
+            <p><?=__('Es scheint, als ob du von ::i:: :service ::/i:: hierher gelangt bist. Du kannst ::b::ZombVival::/b:: daher ohne zusätzliche Registrierung mit deinem :service-Account spielen!', [':service' => $preset_legacy_service]);?></p>
+            <p><?=__('Möchtest du, dass deine Account-Daten auf diesem Rechner gespeichert werden? Dadurch kannst du dich in Zukunft direkt auf dieser Webseite anmelden, ohne den Umweg über :service gehen zu müssen. Wenn du ZombVival gerade von einem öffentlichen Computer oder dem Computer eines Freundes besuchst, solltest du "Nein" wählen.', [':service' => $preset_legacy_service]);?></p>
+
+            <div class="row iconize">
+                <div class="cell rw-4">
+                    <div id="preset_forget" class="btn"><?=__('Nein');?></div>
+                </div>
+                <div class="cell rw-4 ro-4">
+                    <div id="preset_remember" class="btn"><?=__('Ja');?></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="preset_auto">
+            <p class="center">
+                <b><?=__('Automatischer Login');?></b><br />
+                <i class="fa fa-spin fa-circle-o-notch"></i>
+            </p>
+        </div>
+
+    </div>
+
+    <div class="cell rw-6 padded login_form" id="login_legacy">
 
         <h2><?=__('Logge dich über deinen ::i::Twinoid::/i::-Account ein!');?></h2>
 
@@ -66,6 +97,9 @@ if (!isset($services)) $services = array();
 // ## JS COMPRESS BEGIN ## //
     $('#persistent').empty();
 
+    $('.login_form').hide();
+    $('<?=($preset_legacy_key && $preset_legacy_service) ? '#login_legacy_preset' : '#login_legacy'?>').show();
+
     var login = function(key, service,remember, fail_callback) {
         game.network.query('japi/account/login', {key: key, service: service}, function(data) {
             if (data.error) {
@@ -86,6 +120,35 @@ if (!isset($services)) $services = array();
         });
     };
 
+    <?php if ($preset_legacy_key && $preset_legacy_service) {?>
+        var ocp = game.storage.get('login','profiles',{});
+        $('#preset_auto, #preset_select').hide();
+
+        if (ocp[<?=$preset_zvid?>]) {
+            $('#preset_auto').show();
+
+            var ret = function() {
+                $('#preset_auto').hide();
+                $('#preset_select').show();
+            };
+
+            if (ocp[<?=$preset_zvid?>].key && ocp[<?=$preset_zvid?>].host)
+                login(ocp[<?=$preset_zvid?>].key, ocp[<?=$preset_zvid?>].host, true, ret);
+            else if (ocp[<?=$preset_zvid?>].token)
+                login(ocp[<?=$preset_zvid?>].token, 'Token', true, ret);
+            else ret();
+        } else $('#preset_select').show();
+    <?php } ?>
+
+    $('#preset_forget, #preset_remember').click(function() {
+        $(this).empty().append('<i class="fa fa-circle-o-notch fa-spin"></i><span>&nbsp;</span>');
+        $('#preset_forget, #preset_remember').addClass('disabled');
+        login('<?=$preset_legacy_key?>', '<?=$preset_legacy_service?>', $(this).attr('id') == 'preset_remember', function() {
+            $('#login_legacy_preset').hide();
+            $('#login_legacy').show();
+        });
+    });
+
     $('#delete').click(function() {
         if (!confirm('<?=__('Bist du sicher?');?>'))
             return;
@@ -103,11 +166,10 @@ if (!isset($services)) $services = array();
         $('#profiles, #custom').show();
         $('#custom_login').hide();
 
-        var mugshot = $('<div class="mugshot"><span class="mugshot-head" /><span class="mugshot-fill"><i class="fa fa-spin fa-circle-o-notch"></i></span><img alt="" /><span class="mugshot-append" /></div>');
-        mugshot.find('.mugshot-head').text(v.host).end().find('img').attr('src', v.avatar || 'media/img/mugshot.png').end().find('.mugshot-append').text(v.name);
+        var mugshot = $('<div class="mugshot"><span class="mugshot-fill"><i class="fa fa-spin fa-circle-o-notch"></i></span><img alt="" /><span class="mugshot-append" /></div>');
+        mugshot.find('img').attr('src', v.avatar || 'media/img/mugshot.png').end().find('.mugshot-append').text(v.name);
         mugshot.find('.mugshot-fill').hide();
         mugshot.find('img').error(function() {
-            alert('!');
             $(this).attr('src', 'media/img/mugshot.png').off('error');
         });
         mugshot.click(function() {
@@ -116,11 +178,16 @@ if (!isset($services)) $services = array();
             $('#custom').addClass('btn-disabled');
             alias.find('.mugshot-fill').show();
 
-            login(v.key, v.host, false, function() {
+            var ret = function() {
                 $('#custom').addClass('btn-disabled');
                 $('#content').find('.mugshot').removeClass('disabled');
                 alias.find('.mugshot-fill').hide();
-            });
+            };
+
+            if (v.key && v.host)
+                login(v.key, v.host, true, ret);
+            else if (v.token)
+                login(v.token, 'Token', true, ret);
         });
 
         $('#profiles').prepend(mugshot);

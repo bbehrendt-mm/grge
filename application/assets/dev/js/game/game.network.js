@@ -25,6 +25,10 @@ game.network = {
                 switch (data.error.code) {
                     case "GRGE-0002-0001":
                         return game.reset();
+                    case "GRGE-0000-0002":
+
+                        alert('REQUEST ERROR: 404 REQUEST HANDLER NOT FOUND!' + (data.error.details.uri ? ('\nURI: ' + data.error.details.uri) : ''));
+                        return game.reset();
                     default:
                         break;
                 }
@@ -76,6 +80,9 @@ game.network = {
                 alert(data.error.code + ' [' + data.error.name + ']: ' + data.error.message);
                 game.reset();
             } else {
+                if (data.current_url) {
+                    history.pushState({curl: data.current_url}, '', '?r=' + data.current_url);
+                }
                 if (data.profiling)
                     game.render.html.put(':footer',data.profiling.version + ' Path: <b>' + data.profiling.path + '</b> Execution Time: <b>' + data.profiling.time + '</b> Memory Usage: <b>' + data.profiling.memory + '</b>' + ' Compression: <b>' + data.profiling.compression + '</br>');
                 if (data.content)

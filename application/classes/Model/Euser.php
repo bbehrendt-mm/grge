@@ -23,6 +23,11 @@ class Model_Euser extends Model_User {
         $this->sid = $session_id;
     }
 
+    public static function register($name, $avatar) {
+        list($insert_id, $affected_rows) = DB::insert('users', array('name', 'avatar'))->values(array($name, $avatar))->execute();
+        return $insert_id;
+    }
+
     /**
      * Loads lockout data into cache
      */
@@ -66,6 +71,12 @@ class Model_Euser extends Model_User {
         return static::$cache['lockout']['count'];
     }
 
+    public static function user_update_avatar($id, $url) {
+        if (!$url) $url = null;
+        DB::update('users')->set(['avatar' => $url])->where('uid', '=', $id)->execute();
+    }
 
-
+    public function update_avatar($url) {
+        static::user_update_avatar($this->uid(), $url);
+    }
 }

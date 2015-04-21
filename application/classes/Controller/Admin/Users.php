@@ -87,17 +87,11 @@ class Controller_Admin_Users extends Controller_Admin_Admin {
         $query = explode(':', $this->request->post('query'));
         list($limit,$query) = (count($query) > 1) ? $query : ['n',$query[0]];
 
-        if (!in_array($limit,['o','m','i','n']))
+        if (!in_array($limit,['i','n']))
             $limit = 'n';
 
-        $result = DB::select('origin','mtid','uid','name')->from('users');
+        $result = DB::select('uid','name')->from('users');
         switch($limit) {
-            case 'o':
-                $result->where('origin','=',$query);
-                break;
-            case 'm':
-                $result->where('mtid','=',(int)$query);
-                break;
             case 'i':
                 $result->where('uid','=',(int)$query);
                 break;
@@ -106,6 +100,14 @@ class Controller_Admin_Users extends Controller_Admin_Admin {
                 break;
         }
         $result = $result->execute()->as_array();
+
+        foreach ($result as &$entry) {
+            $entry['auth'] = [];
+            foreach (Model_Auth_Interface::get_all_providers($entry['uid']) as $provider => $variables)
+                /** @var Model_Auth_Interface $provider */
+                $entry['auth'][$provider::get_service_name()] = [$variables['rid'],$variables['var1'],$variables['var2']];
+        }
+
 
         $this->render([
             'list' => $result

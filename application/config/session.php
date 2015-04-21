@@ -3,6 +3,6 @@
 return array(
     'native' => array(
         'name' => 'evolution',
-        'lifetime' => 3600,
+        'lifetime' => Date::YEAR,
     ),
 );

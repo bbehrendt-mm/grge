@@ -22,9 +22,8 @@
             <div class="row">
                 <div class="cell padded rw-1">&nbsp;</div>
                 <div class="cell padded rw-2"><b>UID</b></div>
-                <div class="cell padded rw-2"><b>Region</b></div>
-                <div class="cell padded rw-3"><b>MTID</b></div>
                 <div class="cell padded rw-4"><b>Name</b></div>
+                <div class="cell padded rw-5"><b>Konten</b></div>
             </div>
         </div>
     </div>
@@ -87,18 +86,36 @@
         var target = $('#target_list');
         target.find('.row:not(:first-child)').remove();
         $.each(list, function(k,v) {
+            var key_list;
             target.append(
                 $('<div />').addClass('row')
                     .append($('<div />').addClass('cell rw-1').append(
                         $('<label />').append($('<input type="checkbox" name="selection[]" />').val(v.uid).data('sel', v.uid))
                     ))
                     .append($('<div />').addClass('cell padded rw-2').text(v.uid))
-                    .append($('<div />').addClass('cell padded rw-2').text(v.origin))
-                    .append($('<div />').addClass('cell padded rw-3').text(v.mtid))
                     .append($('<div />').addClass('cell padded rw-4 pointer').text(v.name).click(function() {
                         info_loader(v.uid, v.name);
                     }))
+                    .append(key_list = $('<div />').addClass('cell padded rw-5'))
             );
+
+            $.each(v.auth, function(provider, data) {
+                key_list.append($('<div />').addClass('pointer').text(provider).click(function() {
+                    var pp = core.popup.spawn(600);
+
+                    pp.append($('<h3 />').text(v.name + ' via ' + provider));
+                    pp.append(
+                        $('<div />').addClass('row')
+                            .append($('<div />').addClass('cell rw-2').text('Remote ID'))
+                            .append($('<div />').addClass('cell rw-10').text(data[0]))
+                            .append($('<div />').addClass('cell rw-2').text('Variant 1'))
+                            .append($('<div />').addClass('cell rw-10').text(data[1] ? data[1] : '-').css('word-wrap','break-word'))
+                            .append($('<div />').addClass('cell rw-2').text('Variant 2'))
+                            .append($('<div />').addClass('cell rw-10').text(data[2] ? data[2] : '-').css('word-wrap','break-word'))
+                    )
+
+                }))
+            })
         });
         target.find(':checkbox').customRadioCheck();
     };

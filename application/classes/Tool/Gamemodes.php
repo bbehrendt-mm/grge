@@ -85,6 +85,32 @@ class Tool_Gamemodes {
         return $ret;
     }
 
+    public static function get_singleplayer_modes() {
+        $ret = (array)Kohana::$config->load('modes');
+
+        $r = [];
+
+        //Modes
+        foreach ($ret['modes'] as $id => $mode)
+            if ($mode['type'] == 'single')
+                $r[] = $id;
+
+        return $r;
+    }
+
+    public static function get_multiplayer_modes() {
+        $ret = (array)Kohana::$config->load('modes');
+
+        $r = [];
+
+        //Modes
+        foreach ($ret['modes'] as $id => $mode)
+            if ($mode['type'] == 'multi_auto' || $mode['type'] == 'multi_custom')
+                $r[] = $id;
+
+        return $r;
+    }
+
     public static function compile_mode_database($short = false) {
         global $user;
 

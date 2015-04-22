@@ -3354,4 +3354,46 @@ return array (
 	'Die Verknüpfung deines ZombVival-Accounts mit :service ist fehlgeschlagen...',
   'Fehlgeschlagen' =>
 	'Fehlgeschlagen',
+  'Meine Seele' =>
+	'Meine Seele',
+  'Seele von :name' =>
+	'Seele von :name',
+  'Seelen' =>
+	'Seelen',
+  'Rang' =>
+	'Rang',
+  'Karma' =>
+	'Karma',
+  'Unbefleckte Seele' =>
+	'Unbefleckte Seele',
+  'Neutral' =>
+	'Neutral',
+  'Diese Auszeichnung ist ::i:: :num ::/i:: Punkte wert.' =>
+	'Diese Auszeichnung ist ::i:: :num ::/i:: Punkte wert.',
+  'Diese Auszeichnung ist ::i:: :num  Punkte::/i:: wert.' =>
+	'Diese Auszeichnung ist ::i:: :num  Punkte::/i:: wert.',
+  'Eine andere Seele suchen...' =>
+	'Eine andere Seele suchen...',
+  'Gib den Namen eines Spielers ein, dessen Seele du suchen möchtest.' =>
+	'Gib den Namen eines Spielers ein, dessen Seele du suchen möchtest.',
+  'Profiseele' =>
+	'Profiseele',
+  'Spielmodus' =>
+	'Spielmodus',
+  'Bürger' =>
+	'Bürger',
+  'Du hast es in dieser Season nicht ins Ranking geschafft.' =>
+	'Du hast es in dieser Season nicht ins Ranking geschafft.',
+  'Meisterseele' =>
+	'Meisterseele',
+  ':name hat es in dieser Season nicht ins Ranking geschafft.' =>
+	':name hat es in dieser Season nicht ins Ranking geschafft.',
+  'Heimwerker' =>
+	'Heimwerker',
+  'Expertenseele' =>
+	'Expertenseele',
+  ':name\'s Ranking-Highlights' =>
+	':name\'s Ranking-Highlights',
+  'Deine Ranking-Highlights' =>
+	'Deine Ranking-Highlights',
 );

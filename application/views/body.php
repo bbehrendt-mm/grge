@@ -39,7 +39,7 @@
             <b><?=__('Programm und Design');?></b><br />
             Benjamin "<i>Brainbox</i>" Behrendt<br /><br />
             <b><?=__('Danke an');?></b><br />
-            <i>MisterD</i>, <i>Krummy</i>, <i>SinSniper</i>, <i>NobbZ</i>
+            <i>MisterD</i>, <i>Krummy</i>, <i>SinSniper</i>, <i>NobbZ</i>, <i>Mastertron</i>, <i>Storm</i>
         </div>
 
         <div class="cell rw-3">

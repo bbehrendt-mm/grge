@@ -1,5 +1,6 @@
 <span id="main-menu-game"><?=__('Spielen')?></span>
 <span id="main-menu-main"><?=__('Neuigkeiten')?></span>
+<span id="main-menu-souls"><?=__('Seelen')?></span>
 <span id="main-menu-ranking"><?=__('Ranking')?></span>
 <span id="main-menu-forum"><?=__('Forum')?></span>
 <span id="main-menu-logout"><?=__('Logout')?></span>
@@ -10,6 +11,9 @@
     });
     $('#main-menu-main').click(function() {
         game.network.load('lobby/main');
+    });
+    $('#main-menu-souls').click(function() {
+        game.network.load('ranking/soul');
     });
     $('#main-menu-ranking').click(function() {
         game.network.load('ranking/lists');

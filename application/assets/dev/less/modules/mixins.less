@@ -26,12 +26,19 @@
 .resize-none {resize: none;}
 .b {font-weight: bold}
 .margin {margin: 3px;}
+.inline-block {display: inline-block}
 
 .sleep-animation {
   height: 64px;
   width: 64px;
   background: url('media/img/z-sleep.png') no-repeat;
   position: absolute;
+}
+
+.framed {
+  border: 6px solid @zv-color-main-dark; box-shadow: 0 0 5px black, inset 0 0 5px black;border-radius: 5px; position: relative;
+  &::after {position: absolute; top: 0; left: 0; height: 100%; width: 100%; content: " "; background: none; border: 1px solid rgba(0,0,0,0.3);}
+  &.cream {border: 6px solid @zv-color-secondary;}
 }
 
 .text-red {color: #913d40}

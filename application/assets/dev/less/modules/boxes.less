@@ -53,9 +53,9 @@
 
 .value-box {
   background: @valrow-color-bg; margin: 10px; border: 2px solid @valrow-color-border; border-radius: 2px; box-shadow: 0 0 3px rgba(0,0,0,1); position: relative; color: @zv-color-secondary;
-  >.row {
+  .row {
     background: @valrow-color-bg; position: relative; z-index: 2;
-    >.cell > b:first-child {font-family: "Strait",sans-serif; font-size: 20px;}
+    .cell > b:first-child {font-family: "Strait",sans-serif; font-size: 20px;}
   }
   &::before, &::after {display: block; position: absolute; content: " "; height: 50%; width: 40%; bottom: 0; background: transparent; box-shadow: -10px 10px 50px black; z-index: 1}
   &::before {right: 0; transform: rotate( 5deg) translate(-10px,-15px) skew( 9deg, 0deg)}

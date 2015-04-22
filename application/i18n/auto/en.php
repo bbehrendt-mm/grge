@@ -46,4 +46,22 @@ return array (
 	'',
   'Fehlgeschlagen' =>
 	'',
+  'Diese Auszeichnung ist ::i:: :num ::/i:: Punkte wert.' =>
+	'',
+  'Diese Auszeichnung ist ::i:: :num  Punkte::/i:: wert.' =>
+	'',
+  'Eine andere Seele suchen...' =>
+	'',
+  'Gib den Namen eines Spielers ein, dessen Seele du suchen möchtest.' =>
+	'',
+  'Spielmodus' =>
+	'',
+  'Du hast es in dieser Season nicht ins Ranking geschafft.' =>
+	'',
+  ':name hat es in dieser Season nicht ins Ranking geschafft.' =>
+	'',
+  ':name\'s Ranking-Highlights' =>
+	'',
+  'Deine Ranking-Highlights' =>
+	'',
 );

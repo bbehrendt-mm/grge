@@ -49,21 +49,50 @@
 
     if ($authorized && !$gateway_control) return 0;
 
+    if ($authorized && $gateway_control && $gateway_control !== true)
+        switch ($gateway_control) {
+            // Installer
+            case 'i':
+                include 'install/index.php';
+                return 1;
+
+            // Log Out
+            case 'n':
+                setcookie('c_admin','',0);
+                $authorized = false;
+                $gateway_control = false;
+                break;
+
+            // Maintenance
+            case 'm_on':
+                file_put_contents('.maintenance','');
+                break;
+            case 'm_off':
+                unlink('.maintenance');
+                break;
+        }
+
     // Installer
     if ($gateway_control === 'i' && $authorized) {
-        include 'install/index.php';
-        return 1;
+
     }
 
     // Log out
+    if ($gateway_control === 'n' && $authorized) {
+
+    }
+
+    // Mainenance
     if ($gateway_control === 'n' && $authorized) {
         setcookie('c_admin','',0);
         $authorized = false;
         $gateway_control = false;
     }
 
+    $maintenance = file_exists('.maintenance');
+
     // Check for maintenance file
-    if (!file_exists('.maintenance.f')) return 0;
+    if (!$maintenance && !$gateway_control) return 0;
 ?>
 <html>
 <head>
@@ -95,26 +124,41 @@
     </div>
 
     <?php if ((!$gateway_control || $gateway_control === true) && !$authorized) { ?>
-        <div style="box-shadow: 0 0 8px black; margin: 10px auto; width: 810px; padding: 0px; border: 2px solid rgb(200,200,200); border-radius: 5px; background-color: rgb(230,230,230);">
-            <div style="background-color: rgb(160,40,40); font-size: 24px; color: rgb(230,230,230); font-variant: small-caps; font-family: sans-serif; padding: 4px; font-weight: bold; border-bottom: 2px solid rgb(140,20,20); box-shadow: 0 0 6px black;">
-                Wartungsarbeiten
-            </div>
-            <div style="padding: 10px; font-family: sans-serif; text-align: justify;">
-                Das Spiel wird momentan gewartet um ein Systemupdate aufzuspielen und/oder eine St&ouml;rung zu beheben. Der normale Spielbetrieb wird so bald wie m&ouml;glich wieder aufgenommen. Aktualisiere diese Seite, um einen neuen Verbindungsversuch zu starten.
-                Weitere Informationen findest du im <a href="http://forum.zombvival.de">Forum</a>. Bitte entschuldige die Unannehmlichkeiten.
-            </div>
-        </div>
 
+        <?php if ($maintenance) { ?>
 
-        <div style="box-shadow: 0 0 8px black; margin: 10px auto; width: 810px; padding: 0px; border: 2px solid rgb(200,200,200); border-radius: 5px; background-color: rgb(230,230,230);">
-            <div style="background-color: rgb(160,40,40); font-size: 24px; color: rgb(230,230,230); font-variant: small-caps; font-family: sans-serif; padding: 4px; font-weight: bold; border-bottom: 2px solid rgb(140,20,20); box-shadow: 0 0 6px black;">
-                General Maintenance
+            <div style="box-shadow: 0 0 8px black; margin: 10px auto; width: 810px; padding: 0px; border: 2px solid rgb(200,200,200); border-radius: 5px; background-color: rgb(230,230,230);">
+                <div style="background-color: rgb(160,40,40); font-size: 24px; color: rgb(230,230,230); font-variant: small-caps; font-family: sans-serif; padding: 4px; font-weight: bold; border-bottom: 2px solid rgb(140,20,20); box-shadow: 0 0 6px black;">
+                    Wartungsarbeiten
+                </div>
+                <div style="padding: 10px; font-family: sans-serif; text-align: justify;">
+                    Das Spiel wird momentan gewartet um ein Systemupdate aufzuspielen und/oder eine St&ouml;rung zu beheben. Der normale Spielbetrieb wird so bald wie m&ouml;glich wieder aufgenommen. Aktualisiere diese Seite, um einen neuen Verbindungsversuch zu starten.
+                    Weitere Informationen findest du im <a href="http://forum.zombvival.de">Forum</a>. Bitte entschuldige die Unannehmlichkeiten.
+                </div>
             </div>
-            <div style="padding: 10px; font-family: sans-serif; text-align: justify;">
-                The game is currently offline to apply an update or fix a critical issue. Normal gameplay will resume as soon as possible. Refresh this page to start a new connection attempt or check the <a href="http://forum.zombvival.de">Forum</a> for further information.
-                Please excuse the inconvienience.
+
+            <div style="box-shadow: 0 0 8px black; margin: 10px auto; width: 810px; padding: 0px; border: 2px solid rgb(200,200,200); border-radius: 5px; background-color: rgb(230,230,230);">
+                <div style="background-color: rgb(160,40,40); font-size: 24px; color: rgb(230,230,230); font-variant: small-caps; font-family: sans-serif; padding: 4px; font-weight: bold; border-bottom: 2px solid rgb(140,20,20); box-shadow: 0 0 6px black;">
+                    General Maintenance
+                </div>
+                <div style="padding: 10px; font-family: sans-serif; text-align: justify;">
+                    The game is currently offline to apply an update or fix a critical issue. Normal gameplay will resume as soon as possible. Refresh this page to start a new connection attempt or check the <a href="http://forum.zombvival.de">Forum</a> for further information.
+                    Please excuse the inconvienience.
+                </div>
             </div>
-        </div>
+
+        <?php } else { ?>
+
+            <div style="box-shadow: 0 0 8px black; margin: 10px auto; width: 810px; padding: 0px; border: 2px solid rgb(200,200,200); border-radius: 5px; background-color: rgb(230,230,230);">
+                <div style="background-color: rgb(160,40,40); font-size: 24px; color: rgb(230,230,230); font-variant: small-caps; font-family: sans-serif; padding: 4px; font-weight: bold; border-bottom: 2px solid rgb(140,20,20); box-shadow: 0 0 6px black;">
+                    ZombVival Service Gateway
+                </div>
+                <div style="padding: 10px; font-family: sans-serif; text-align: justify;">
+                    This is the ZombVival Service Gateway. If you're not an administrator, then there is nothing for you to see here; <a href="index.php">please return to the game.</a>
+                </div>
+            </div>
+
+        <?php } ?>
 
         <div style="margin: 10px auto; width: 810px; padding: 0; text-align: right; font-family: monospace">
             <a style="color: #FFF6BF; font-size: small; text-decoration: none" href="index.php?gw=f">[Admin]</a>
@@ -143,6 +187,11 @@
             <div style="padding: 10px; font-family: sans-serif; text-align: justify;">
                 You are authorized.<br />
                 <a style="color: #a34600; text-decoration: none; font-family: monospace" href="index.php">[Bypass Gateway]</a>
+                <?php if ($maintenance) { ?>
+                    <a style="color: #a34600; text-decoration: none; font-family: monospace" href="index.php?gw=m_off">[Disable Maintenance Mode]</a>
+                <?php } else { ?>
+                    <a style="color: #a34600; text-decoration: none; font-family: monospace" href="index.php?gw=m_on">[Enable Maintenance Mode]</a>
+                <?php } ?>
                 <a style="color: #a34600; text-decoration: none; font-family: monospace" href="index.php?gw=i">[Database Setup]</a>
                 <a style="color: #a34600; text-decoration: none; font-family: monospace" href="index.php?gw=n">[Logout]</a>
             </div>

@@ -2,7 +2,6 @@
     //Redirect
     defined('INDEX_CALL') or die('Gateway');
 
-    error_reporting(0);
     $users = [
         'Brainbox' => '0758397bf35982c7f07e467e074348730fdd6c80db7473f6d6bd144142731e7059406f62bf549c260ed4aa1b5454e6412f20fcbdd7411e3028310c314f457e1c',
     ];
@@ -38,10 +37,10 @@
         return $data;
     }
 
-    $gateway_control = isset($_REQUEST['gw']) ? $_REQUEST['gw'] : false;
+    $gateway_control = isset($_REQUEST['gw']) ? (empty($_REQUEST['gw']) ? true : $_REQUEST['gw']) : false;
 
     if ($gateway_control && isset($_REQUEST['u']) && isset($_REQUEST['p'])) {
-        if ($users[$_REQUEST['u']] === hash('sha256',$_REQUEST['p'])) {
+        if ($users[$_REQUEST['u']] === hash('sha512',$_REQUEST['p'])) {
             $stamp = time() + 1800;
             setcookie('c_admin',encrypt($stamp),$stamp);
             $authorized = true;
@@ -51,15 +50,16 @@
     if ($authorized && !$gateway_control) return 0;
 
     // Installer
-    if ($gateway_control == 'i' && $authorized) {
+    if ($gateway_control === 'i' && $authorized) {
         include 'install/index.php';
         return 1;
     }
 
     // Log out
-    if ($gateway_control == 'n' && $authorized) {
+    if ($gateway_control === 'n' && $authorized) {
         setcookie('c_admin','',0);
         $authorized = false;
+        $gateway_control = false;
     }
 
     // Check for maintenance file
@@ -94,7 +94,7 @@
         ZombVival
     </div>
 
-    <?php if (!$gateway_control && !$authorized) { ?>
+    <?php if ((!$gateway_control || $gateway_control === true) && !$authorized) { ?>
         <div style="box-shadow: 0 0 8px black; margin: 10px auto; width: 810px; padding: 0px; border: 2px solid rgb(200,200,200); border-radius: 5px; background-color: rgb(230,230,230);">
             <div style="background-color: rgb(160,40,40); font-size: 24px; color: rgb(230,230,230); font-variant: small-caps; font-family: sans-serif; padding: 4px; font-weight: bold; border-bottom: 2px solid rgb(140,20,20); box-shadow: 0 0 6px black;">
                 Wartungsarbeiten
@@ -117,17 +117,17 @@
         </div>
 
         <div style="margin: 10px auto; width: 810px; padding: 0; text-align: right; font-family: monospace">
-            <a style="color: #FFF6BF; font-size: small; text-decoration: none" href="index.php?gw=f">[Bypass]</a>
-            <a style="color: #FFF6BF; font-size: small; text-decoration: none" href="index.php?gw=i">[Setup]</a>
+            <a style="color: #FFF6BF; font-size: small; text-decoration: none" href="index.php?gw=f">[Admin]</a>
         </div>
 
-    <?php } elseif (!$authorized) { ?>
+    <?php } elseif (!$authorized && $gateway_control && $gateway_control !== true) { ?>
 
         <div style="box-shadow: 0 0 8px black; margin: 10px auto; width: 810px; padding: 0px; border: 2px solid rgb(200,200,200); border-radius: 5px; background-color: rgb(230,230,230);">
             <div style="background-color: rgb(160,40,40); font-size: 24px; color: rgb(230,230,230); font-variant: small-caps; font-family: sans-serif; padding: 4px; font-weight: bold; border-bottom: 2px solid rgb(140,20,20); box-shadow: 0 0 6px black;">
                 Login
             </div>
             <div style="padding: 10px; font-family: sans-serif; text-align: justify;">
+                <p>This form is for <b>administrative login only!</b> Please do not attempt to log in using your game credentials. </p>
                 <form action="index.php?gw=<?=$gateway_control?>" method="post" >
                     <input name="u" type="text" placeholder="Username" /><br />
                     <input name="p" type="password" placeholder="Password" /><br />
@@ -135,13 +135,16 @@
                 </form>
             </div>
         </div>
-    <?php } else { ?>
+    <?php } elseif ($authorized) { ?>
         <div style="box-shadow: 0 0 8px black; margin: 10px auto; width: 810px; padding: 0px; border: 2px solid rgb(200,200,200); border-radius: 5px; background-color: rgb(230,230,230);">
             <div style="background-color: rgb(160,40,40); font-size: 24px; color: rgb(230,230,230); font-variant: small-caps; font-family: sans-serif; padding: 4px; font-weight: bold; border-bottom: 2px solid rgb(140,20,20); box-shadow: 0 0 6px black;">
                 Authorized
             </div>
             <div style="padding: 10px; font-family: sans-serif; text-align: justify;">
-                You are authorized.
+                You are authorized.<br />
+                <a style="color: #a34600; text-decoration: none; font-family: monospace" href="index.php">[Bypass Gateway]</a>
+                <a style="color: #a34600; text-decoration: none; font-family: monospace" href="index.php?gw=i">[Database Setup]</a>
+                <a style="color: #a34600; text-decoration: none; font-family: monospace" href="index.php?gw=n">[Logout]</a>
             </div>
         </div>
     <?php } ?>

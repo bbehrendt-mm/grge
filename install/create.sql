@@ -1,7 +1,7 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
-CREATE TABLE IF NOT EXISTS grg_achievements (
+CREATE TABLE IF NOT EXISTS ___PREFIX___achievements (
   uid int(11) NOT NULL,
   gameid int(11) NOT NULL,
   season int(11) NOT NULL DEFAULT '-1',
@@ -9,44 +9,44 @@ CREATE TABLE IF NOT EXISTS grg_achievements (
   `value` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AVG_ROW_LENGTH=260;
 
-CREATE TABLE IF NOT EXISTS grg_contests (
+CREATE TABLE IF NOT EXISTS ___PREFIX___contests (
   contest_id varchar(16) NOT NULL,
   user_id int(11) NOT NULL,
   game_id int(11) NOT NULL,
   points int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AVG_ROW_LENGTH=256;
 
-CREATE TABLE IF NOT EXISTS grg_games (
+CREATE TABLE IF NOT EXISTS ___PREFIX___games (
   gameid int(11) NOT NULL COMMENT 'Local game ID',
   `timestamp` int(11) NOT NULL COMMENT 'Last access timestamp',
   `lock` int(11) NOT NULL DEFAULT '0',
   gamedata longblob NOT NULL COMMENT 'Game dataset'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AVG_ROW_LENGTH=158105;
 
-CREATE TABLE IF NOT EXISTS grg_games_cloud (
+CREATE TABLE IF NOT EXISTS ___PREFIX___games_cloud (
   gameid int(11) DEFAULT NULL,
   uin int(11) NOT NULL,
   `data` mediumblob
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 PACK_KEYS=0;
 
-CREATE TABLE IF NOT EXISTS grg_karma (
+CREATE TABLE IF NOT EXISTS ___PREFIX___karma (
   `subject` int(11) NOT NULL,
   rater int(11) NOT NULL,
   `value` int(11) NOT NULL,
   `timestamp` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE IF NOT EXISTS grg_mentor (
+CREATE TABLE IF NOT EXISTS ___PREFIX___mentor (
   uid int(11) NOT NULL,
   mentor int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE IF NOT EXISTS grg_mp_lockouts (
+CREATE TABLE IF NOT EXISTS ___PREFIX___mp_lockouts (
   uid int(11) NOT NULL,
   `timestamp` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE IF NOT EXISTS grg_multiplayer_lobby (
+CREATE TABLE IF NOT EXISTS ___PREFIX___multiplayer_lobby (
   gameid int(11) NOT NULL,
   lang varchar(2) NOT NULL DEFAULT 'de',
   slots int(11) NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS grg_multiplayer_lobby (
   `timestamp` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE IF NOT EXISTS grg_profiles_xref (
+CREATE TABLE IF NOT EXISTS ___PREFIX___profiles_xref (
   provider varchar(32) NOT NULL,
   rid int(11) NOT NULL,
   zvid int(11) NOT NULL,
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS grg_profiles_xref (
   var2 varchar(128) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE IF NOT EXISTS grg_ranking (
+CREATE TABLE IF NOT EXISTS ___PREFIX___ranking (
   season int(11) NOT NULL,
   uid int(11) NOT NULL,
   gameid int(11) NOT NULL,
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS grg_ranking (
   `end` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AVG_ROW_LENGTH=176;
 
-CREATE TABLE IF NOT EXISTS grg_ranking_mp (
+CREATE TABLE IF NOT EXISTS ___PREFIX___ranking_mp (
   season int(11) NOT NULL,
   board int(11) NOT NULL,
   gameid int(11) NOT NULL,
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS grg_ranking_mp (
   points int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE IF NOT EXISTS grg_users (
+CREATE TABLE IF NOT EXISTS ___PREFIX___users (
   uid int(11) NOT NULL COMMENT 'Local player ID',
   `name` varchar(24) CHARACTER SET utf8 NOT NULL COMMENT 'Username',
   avatar varchar(511) DEFAULT NULL,
@@ -92,67 +92,67 @@ CREATE TABLE IF NOT EXISTS grg_users (
   `session` varchar(32) COLLATE utf8_bin NOT NULL COMMENT 'Last active session ID'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AVG_ROW_LENGTH=682;
 
-CREATE TABLE IF NOT EXISTS grg_user_flags (
+CREATE TABLE IF NOT EXISTS ___PREFIX___user_flags (
   autoid int(11) NOT NULL,
   `user` int(11) NOT NULL,
   relation enum('LOGIN','ALLOW','DENY','DISABLE') NOT NULL,
   `data` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE IF NOT EXISTS grg_xref_game_player (
+CREATE TABLE IF NOT EXISTS ___PREFIX___xref_game_player (
   gameid int(11) NOT NULL,
   uid int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-ALTER TABLE grg_achievements
+ALTER TABLE ___PREFIX___achievements
   ADD PRIMARY KEY (uid,gameid,season,aid);
 
-ALTER TABLE grg_contests
+ALTER TABLE ___PREFIX___contests
   ADD PRIMARY KEY (contest_id,user_id) USING BTREE;
 
-ALTER TABLE grg_games
+ALTER TABLE ___PREFIX___games
   ADD PRIMARY KEY (gameid) USING BTREE;
 
-ALTER TABLE grg_games_cloud
+ALTER TABLE ___PREFIX___games_cloud
   ADD PRIMARY KEY (uin);
 
-ALTER TABLE grg_karma
+ALTER TABLE ___PREFIX___karma
   ADD PRIMARY KEY (`subject`,rater);
 
-ALTER TABLE grg_mentor
+ALTER TABLE ___PREFIX___mentor
   ADD PRIMARY KEY (uid);
 
-ALTER TABLE grg_multiplayer_lobby
+ALTER TABLE ___PREFIX___multiplayer_lobby
   ADD PRIMARY KEY (gameid);
 
-ALTER TABLE grg_profiles_xref
+ALTER TABLE ___PREFIX___profiles_xref
   ADD PRIMARY KEY (rid,provider);
 
-ALTER TABLE grg_ranking
+ALTER TABLE ___PREFIX___ranking
   ADD PRIMARY KEY (season,uid,gameid), ADD KEY uid (uid) USING BTREE;
 
-ALTER TABLE grg_ranking_mp
+ALTER TABLE ___PREFIX___ranking_mp
   ADD PRIMARY KEY (season,gameid);
 
-ALTER TABLE grg_users
+ALTER TABLE ___PREFIX___users
   ADD PRIMARY KEY (uid) USING BTREE;
 
-ALTER TABLE grg_user_flags
+ALTER TABLE ___PREFIX___user_flags
   ADD PRIMARY KEY (autoid);
 
-ALTER TABLE grg_xref_game_player
+ALTER TABLE ___PREFIX___xref_game_player
   ADD PRIMARY KEY (uid);
 
 
-ALTER TABLE grg_games
+ALTER TABLE ___PREFIX___games
   MODIFY gameid int(11) NOT NULL AUTO_INCREMENT COMMENT 'Local game ID';
-ALTER TABLE grg_games_cloud
+ALTER TABLE ___PREFIX___games_cloud
   MODIFY uin int(11) NOT NULL AUTO_INCREMENT;
-ALTER TABLE grg_users
+ALTER TABLE ___PREFIX___users
   MODIFY uid int(11) NOT NULL AUTO_INCREMENT COMMENT 'Local player ID';
-ALTER TABLE grg_user_flags
+ALTER TABLE ___PREFIX___user_flags
   MODIFY autoid int(11) NOT NULL AUTO_INCREMENT;
 
-ALTER TABLE grg_ranking
-ADD CONSTRAINT grg_ranking_ibfk_1 FOREIGN KEY (uid) REFERENCES grg_users (uid) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE ___PREFIX___ranking
+ADD CONSTRAINT ___PREFIX___ranking_ibfk_1 FOREIGN KEY (uid) REFERENCES ___PREFIX___users (uid) ON DELETE CASCADE ON UPDATE CASCADE;

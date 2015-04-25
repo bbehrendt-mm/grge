@@ -1,9 +1,6 @@
 <?php
-if (file_exists('syslock.f') && !isset($_COOKIE['syslock_admin_bypass']))
-{
-	require 'mnt.php';
-	die;
-}
+define('INDEX_CALL', true);
+if ((include 'gateway.php') !== 0) die;
 
 ignore_user_abort(true);
 set_time_limit(120);

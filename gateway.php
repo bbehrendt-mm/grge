@@ -1,0 +1,151 @@
+<?php
+    //Redirect
+    defined('INDEX_CALL') or die('Gateway');
+
+    error_reporting(0);
+    $users = [
+        'Brainbox' => '0758397bf35982c7f07e467e074348730fdd6c80db7473f6d6bd144142731e7059406f62bf549c260ed4aa1b5454e6412f20fcbdd7411e3028310c314f457e1c',
+    ];
+
+    const ENC = MCRYPT_RIJNDAEL_256;
+    const KEY = '169a3f7b4da04886085949edbe3d70ce204dd7e6c4a9503b1a14f84073a90168';
+
+    function encrypt($data) {
+        $key = pack('H*', KEY);
+
+        $data = serialize($data);
+        $data .= hash('sha512',$data,false);
+
+        $iv_size = mcrypt_get_iv_size(ENC, MCRYPT_MODE_CBC);
+        $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
+
+        return base64_encode($iv . mcrypt_encrypt(ENC,$key,$data,MCRYPT_MODE_CBC,$iv));
+    }
+
+    function decrypt($cipher) {
+        $key = pack('H*', KEY);
+
+        $cipher = base64_decode($cipher);
+        $iv_size = mcrypt_get_iv_size(ENC, MCRYPT_MODE_CBC);
+
+        $data = trim(mcrypt_decrypt(ENC,$key,substr($cipher, $iv_size),MCRYPT_MODE_CBC,substr($cipher, 0, $iv_size)));
+
+        $hash = substr($data,-128);
+        $data = substr($data,0,-128);
+
+        if (hash('sha512',$data,false) !== $hash) return false;
+        if (($data = unserialize($data)) == false) return false;
+        return $data;
+    }
+
+    $gateway_control = isset($_REQUEST['gw']) ? $_REQUEST['gw'] : false;
+
+    if ($gateway_control && isset($_REQUEST['u']) && isset($_REQUEST['p'])) {
+        if ($users[$_REQUEST['u']] === hash('sha256',$_REQUEST['p'])) {
+            $stamp = time() + 1800;
+            setcookie('c_admin',encrypt($stamp),$stamp);
+            $authorized = true;
+        } else $authorized = false;
+    } else $authorized = isset($_COOKIE['c_admin']) && ($ts = decrypt($_COOKIE['c_admin'])) && $ts > time();
+
+    if ($authorized && !$gateway_control) return 0;
+
+    // Installer
+    if ($gateway_control == 'i' && $authorized) {
+        include 'install/index.php';
+        return 1;
+    }
+
+    // Log out
+    if ($gateway_control == 'n' && $authorized) {
+        setcookie('c_admin','',0);
+        $authorized = false;
+    }
+
+    // Check for maintenance file
+    if (!file_exists('.maintenance.f')) return 0;
+?>
+<html>
+<head>
+    <!-- Meta -->
+    <meta content="text/html; charset=UTF-8" />
+    <meta http-equiv="content-language" content="de">
+    <meta name="robots" content="index,nofollow" />
+    <meta name="keywords" content="Zombie,Survival,Browsergame,Die Verdammten,Die2Nite,GRGE">
+    <meta name="description" content="Ein Single Player Survival Game. Könnte Spuren von Zombies enthalten..." />
+    <meta name="author" content="Benjamin 'Brainbox' Behrendt" />
+
+    <!-- Basics -->
+    <link rel="icon" href="media/fav/favicon.ico" sizes="16x16 24x24 32x32 48x48 256x256" />
+    <title>ZombVival Evolved!</title>
+
+    <!-- Make all the apple mindslaves happy -->
+    <link rel="apple-touch-icon" sizes="57x57" href="media/fav/apple_small.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="media/fav/apple_medium.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="media/fav/apple_big.png" />
+
+    <!-- Make all 5 people happy who realy use metro -->
+    <meta name="msapplication-TileColor" content="#660000" />
+    <meta name="msapplication-TileImage" content="media/fav/ms_tile.png" />
+</head>
+<body style="background-color: rgb(40,40,40); color: rgb(30,30,30); text-align: center;">
+
+    <div style="color: #FFF6BF; font-size: 45px; font-weight: bold; font-family: cursive; margin-top: 110px; text-shadow: 0 0 8px black;">
+        ZombVival
+    </div>
+
+    <?php if (!$gateway_control && !$authorized) { ?>
+        <div style="box-shadow: 0 0 8px black; margin: 10px auto; width: 810px; padding: 0px; border: 2px solid rgb(200,200,200); border-radius: 5px; background-color: rgb(230,230,230);">
+            <div style="background-color: rgb(160,40,40); font-size: 24px; color: rgb(230,230,230); font-variant: small-caps; font-family: sans-serif; padding: 4px; font-weight: bold; border-bottom: 2px solid rgb(140,20,20); box-shadow: 0 0 6px black;">
+                Wartungsarbeiten
+            </div>
+            <div style="padding: 10px; font-family: sans-serif; text-align: justify;">
+                Das Spiel wird momentan gewartet um ein Systemupdate aufzuspielen und/oder eine St&ouml;rung zu beheben. Der normale Spielbetrieb wird so bald wie m&ouml;glich wieder aufgenommen. Aktualisiere diese Seite, um einen neuen Verbindungsversuch zu starten.
+                Weitere Informationen findest du im <a href="http://forum.zombvival.de">Forum</a>. Bitte entschuldige die Unannehmlichkeiten.
+            </div>
+        </div>
+
+
+        <div style="box-shadow: 0 0 8px black; margin: 10px auto; width: 810px; padding: 0px; border: 2px solid rgb(200,200,200); border-radius: 5px; background-color: rgb(230,230,230);">
+            <div style="background-color: rgb(160,40,40); font-size: 24px; color: rgb(230,230,230); font-variant: small-caps; font-family: sans-serif; padding: 4px; font-weight: bold; border-bottom: 2px solid rgb(140,20,20); box-shadow: 0 0 6px black;">
+                General Maintenance
+            </div>
+            <div style="padding: 10px; font-family: sans-serif; text-align: justify;">
+                The game is currently offline to apply an update or fix a critical issue. Normal gameplay will resume as soon as possible. Refresh this page to start a new connection attempt or check the <a href="http://forum.zombvival.de">Forum</a> for further information.
+                Please excuse the inconvienience.
+            </div>
+        </div>
+
+        <div style="margin: 10px auto; width: 810px; padding: 0; text-align: right; font-family: monospace">
+            <a style="color: #FFF6BF; font-size: small; text-decoration: none" href="index.php?gw=f">[Bypass]</a>
+            <a style="color: #FFF6BF; font-size: small; text-decoration: none" href="index.php?gw=i">[Setup]</a>
+        </div>
+
+    <?php } elseif (!$authorized) { ?>
+
+        <div style="box-shadow: 0 0 8px black; margin: 10px auto; width: 810px; padding: 0px; border: 2px solid rgb(200,200,200); border-radius: 5px; background-color: rgb(230,230,230);">
+            <div style="background-color: rgb(160,40,40); font-size: 24px; color: rgb(230,230,230); font-variant: small-caps; font-family: sans-serif; padding: 4px; font-weight: bold; border-bottom: 2px solid rgb(140,20,20); box-shadow: 0 0 6px black;">
+                Login
+            </div>
+            <div style="padding: 10px; font-family: sans-serif; text-align: justify;">
+                <form action="index.php?gw=<?=$gateway_control?>" method="post" >
+                    <input name="u" type="text" placeholder="Username" /><br />
+                    <input name="p" type="password" placeholder="Password" /><br />
+                    <button type="submit">Confirm</button>
+                </form>
+            </div>
+        </div>
+    <?php } else { ?>
+        <div style="box-shadow: 0 0 8px black; margin: 10px auto; width: 810px; padding: 0px; border: 2px solid rgb(200,200,200); border-radius: 5px; background-color: rgb(230,230,230);">
+            <div style="background-color: rgb(160,40,40); font-size: 24px; color: rgb(230,230,230); font-variant: small-caps; font-family: sans-serif; padding: 4px; font-weight: bold; border-bottom: 2px solid rgb(140,20,20); box-shadow: 0 0 6px black;">
+                Authorized
+            </div>
+            <div style="padding: 10px; font-family: sans-serif; text-align: justify;">
+                You are authorized.
+            </div>
+        </div>
+    <?php } ?>
+
+</body>
+</html>
+<?php return 1; ?>

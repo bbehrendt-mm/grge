@@ -323,7 +323,7 @@ class Controller_Gamemaster extends Controller {
         $data = $data->order_by('password', 'ASC')->order_by('lang')->execute()->as_array();
 
         // Iterate over each entry
-        foreach ($data as &$entry) {
+        foreach ($data as $k => &$entry) {
             // Make sure ID and slots are stored as int
             foreach (['gameid','slots'] as $key)
                 $entry[$key] = (int)$entry[$key];
@@ -337,7 +337,7 @@ class Controller_Gamemaster extends Controller {
             $local_game_obj = new Model_Game();
             // If we can't load the game, lock it
             if (!$local_game_obj->read($entry['gameid'], false)) {
-                $entry['locked'] = true;
+                unset($data[$k]);
                 continue;
             }
 

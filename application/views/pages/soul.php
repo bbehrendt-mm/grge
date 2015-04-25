@@ -6,6 +6,7 @@
  * @var string $avatar owner avatar
  * @var int $soul_id
  * @var int $points_soul
+ * @var int $next_rank_points
  * @var int $points_ach
  * @var int $points_karma
  * @var string $rank_soul
@@ -34,11 +35,13 @@
                 </div>
                 <div class="cell rw-6 padded">
                     <b><?php echo __('Rang'); ?></b><br />
-                    <?=__($rank_soul);?>
+                    <?=__($rank_soul);?><br />
+                    <div class="soulpointbar"><div style="width: <?=round(100*$points_soul/$next_rank_points)?>%">&nbsp;</div></div>
                 </div>
                 <div class="cell rw-6 padded">
                     <b><?php echo __('Karma'); ?></b><br />
                     <?=__($rank_karma);?>
+                    <div class="karmabar <?=$points_karma < 0 ? 'bad' : 'good'?>"><div style="width: <?=abs(round($points_karma*100))?>%">&nbsp;</div></div>
                 </div>
             </div>
         </div>
@@ -116,13 +119,59 @@
                     $('<div class="cell padded rw-1"></div>').html(elem.pos).appendTo(entry);
                     $('<div class="cell padded rw-1"></div>').html(elem.score).appendTo(entry);
                     $('<div class="cell padded rw-2"></div>').html(elem.duration).appendTo(entry);
-                    $('<div class="cell padded rw-3"></div>').html(elem.mode).appendTo(entry);
+                    $('<div class="cell-small padded rw-5"></div>').html(elem.mode).appendTo(entry);
+                    $('<div class="cell-small padded rw-1"></div>').append($('<img />').attr('src','media/icons/flow' + elem.flow + '.gif').attr('title',elem.flow == 0 ? <?=__j('Klassischer Zeitfluss')?> : <?=__j('Variabler Zeitfluss')?>).qtip(game.render.html.qtip.player('left'))).appendTo(entry);
                     $('<div class="cell padded rw-4"></div>').html(elem.players["0"].job).appendTo(entry);
 
                     entry.appendTo(table);
                 });
+            }
 
-            } else $('<span><?=$own_soul ? __('Du hast es in dieser Season nicht ins Ranking geschafft.') : __(':name hat es in dieser Season nicht ins Ranking geschafft.',[':name' => $soul_owner])?></span>').appendTo('#ranking_target');
+            if (data.ranking_mp) {
+                var table_mp = $('<div class="row-table padded row-table-borders row-table-striped row-table-interact"></div>').appendTo('#ranking_target');
+                $('<div class="row"><div class="cell padded rw-2"><?=__('Platz')?></div><div class="cell padded rw-1"><?=__('Punkte')?></div><div class="cell padded rw-3"><?=__('Name')?></div><div class="cell padded rw-2"><?=__('Spielmodus')?></div><div class="cell padded rw-4"><?=__('Spieler')?></div></div>').appendTo(table_mp);
+
+                $.each(data.ranking_mp, function(p, elem) {
+                    var entry = $('<div class="row"></div>');
+
+                    var fst = $('<div class="cell padded rw-1"></div>').appendTo(entry);
+                    if (elem.pos == 1) fst.html('<img src="media/icons/superstar.gif" alt="rk-winner">');
+                    else if (elem.pos <= 3) fst.html('<img src="media/icons/silverstar.gif" alt="rk-silver">');
+                    else if (elem.pos <= 10) fst.html('<img src="media/icons/star.gif" alt="rk-topten">');
+                    else fst.html('<i class="fa fa-star-o"></i>');
+
+                    $('<div class="cell padded rw-1"></div>').html(elem.pos).appendTo(entry);
+                    $('<div class="cell padded rw-1"></div>').html(elem.score).appendTo(entry);
+                    $('<div class="cell padded rw-3"></div>').text(elem.name).appendTo(entry);
+                    $('<div class="cell padded rw-2"></div>').html(elem.mode).appendTo(entry);
+                    var pl = $('<div class="cell padded rw-4"></div>').appendTo(entry);
+
+                    var has_players = false;
+                    if (elem.players)
+                        $.each(elem.players, function(k,v) {
+                            has_players = true;
+                            var player = $('<span class="inline-player">' + v.name + '</span>').appendTo(pl);
+
+                            var qtmp = $('<div class="row"></div>');
+                            $('<div class="cell padded rw-4 right"><b><?=__('Beruf');?></b></div>').appendTo(qtmp);
+                            $('<div class="cell padded rw-8 center"></div>').html(v.job).appendTo(qtmp);
+                            $('<div class="cell padded rw-4 right"><b><?=__('Überlebt');?></b></div>').appendTo(qtmp);
+                            $('<div class="cell padded rw-8 center"></div>').html(v.life).appendTo(qtmp);
+                            $('<div class="cell padded rw-4 right"><b><?=__('Punkte');?></b></div>').appendTo(qtmp);
+                            $('<div class="cell padded rw-8 center"></div>').html(v.score).appendTo(qtmp);
+
+                            player.attr('title', $('<div>').append(qtmp).html()).qtip(game.render.html.qtip.player('top'));
+                        });
+                    if (!has_players)
+                        pl.html('--');
+
+
+                    entry.appendTo(table_mp);
+                });
+            }
+
+
+            if (!data.ranking && !data.ranking_mp) $('<span><?=$own_soul ? __('Du hast es in dieser Season nicht ins Ranking geschafft.') : __(':name hat es in dieser Season nicht ins Ranking geschafft.',[':name' => $soul_owner])?></span>').appendTo('#ranking_target');
 
         });
     };

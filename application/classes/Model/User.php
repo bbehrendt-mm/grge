@@ -227,7 +227,7 @@ class Model_User extends Model {
             $t = $name;
         }
 
-        return array($i, $sp);
+        return array($t, $sp);
     }
 
     public static function group_karma($k) {

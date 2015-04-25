@@ -6,10 +6,10 @@ class Controller_Ranking extends Controller {
     protected static $menu = 'logout';
 
     private function get_ranking_data_sp(&$raw_count, $season = null, $mode = null, $job = null, $flow = null, $player = null, $offset = null, $count = null) {
-        $base_query = DB::select('season', 'gameid', 'points', 'ticks', 'job', 'board', 'start', 'end', 'name', 'ranking.uid')->from('ranking')->join('users')->on('ranking.uid', '=', 'users.uid')->where('users.uid', 'NOT IN', DB::select('user')->from('user_flags')->where('relation','=','DENY')->where('data','=','WHITELIST'));
+        $base_query = DB::select('season', 'gameid', 'points', 'ticks', 'job', 'board', 'start', 'end', 'name', 'ranking.uid', 'ranking.flow')->from('ranking')->join('users')->on('ranking.uid', '=', 'users.uid')->where('users.uid', 'NOT IN', DB::select('user')->from('user_flags')->where('relation','=','DENY')->where('data','=','WHITELIST'));
 
         if ($season !== null) $base_query->where('season', '=', $season);
-        if ($mode !== null) $base_query->where('board', '=', $mode);
+        if ($mode !== null) $base_query->where('board', '=', $mode); else $base_query->where('board', 'IN', Tool_Gamemodes::get_singleplayer_modes());
         if ($job !== null) $base_query->where('job', '=', $mode);
         if ($flow !== null) $base_query->where('flow', '=', $flow);
         if ($player !== null) $base_query->where('users.uid', '=', $player);
@@ -21,12 +21,12 @@ class Controller_Ranking extends Controller {
     }
 
     private function get_ranking_data_mp(&$raw_count, $season = null, $mode = null, $offset = null, $count = null) {
-        $base_query = DB::select('ranking_mp.season','ranking_mp.gameid', 'ranking_mp.board', 'ranking_mp.name', 'ranking_mp.points', 'users.uid', array('ranking.ticks', 'pticks'),array('ranking.points', 'ppoints'), array('ranking.job', 'job'), array('users.name', 'player'))->from('ranking_mp')->join('ranking', 'LEFT')->on('ranking_mp.gameid', '=', 'ranking.gameid')->on('ranking_mp.season', '=', 'ranking.season')->join('users', 'LEFT')->on('ranking.uid', '=', 'users.uid');
+        $base_query = DB::select('ranking_mp.season','ranking_mp.gameid', ['ranking_mp.board','board'], 'ranking_mp.name', 'ranking_mp.points', 'users.uid', array('ranking.ticks', 'pticks'),array('ranking.points', 'ppoints'), array('ranking.job', 'job'), array('users.name', 'player'))->from('ranking_mp')->join('ranking', 'LEFT')->on('ranking_mp.gameid', '=', 'ranking.gameid')->on('ranking_mp.season', '=', 'ranking.season')->join('users', 'LEFT')->on('ranking.uid', '=', 'users.uid');
 
         if ($season !== null) $base_query->where('ranking_mp.season', '=', $season);
-        if ($mode !== null) $base_query->where('ranking_mp.board', '=', $mode);
+        if ($mode !== null) $base_query->where('ranking_mp.board', '=', $mode); else $base_query->where('ranking_mp.board', 'IN', Tool_Gamemodes::get_multiplayer_modes());
 
-        $data = $base_query->order_by('ranking_mp.points', 'DESC')->order_by('ranking_mp.points', 'DESC')->execute()->as_array();
+        $data = $base_query->order_by('ranking_mp.points', 'DESC')->execute()->as_array();
 
         $ranks = Array();
         foreach ($data as $line) {
@@ -49,6 +49,8 @@ class Controller_Ranking extends Controller {
                 'season'    => $element[0]['season'],
                 'id'        => $element[0]['gameid'],
                 'score'     => $element[0]['points'],
+                'pos'       => isset($element[0]['pos']) ? $element[0]['pos'] : 0,
+                'flow'      => 1,
                 'name'      => $element[0]['name'],
                 'duration'  => false,
                 'mode'      => __(Tool_Modes::get_mode_by_id($element[0]['board'])),
@@ -57,7 +59,7 @@ class Controller_Ranking extends Controller {
 
             if ($element[0]['uid'])
                 foreach ($element as $sub)
-                    $tmp['players'][] = [
+                    $tmp['players'][(int)$sub['uid']] = [
                         'name'  => $sub['player'],
                         'id'    => $sub['uid'],
                         'job'   => __(Tool_Modes::get_job_by_id($sub['job'])),
@@ -72,6 +74,7 @@ class Controller_Ranking extends Controller {
                 'id'        => $element['gameid'],
                 'score'     => $element['points'],
                 'pos'       => isset($element['pos']) ? $element['pos'] : 0,
+                'flow'      => isset($element['flow']) ? $element['flow'] : false,
                 'name'      => false,
                 'duration'  => Tool_Numerics::duration_to_string($element['ticks']),
                 'mode'      => __(Tool_Modes::get_mode_by_id($element['board'])),
@@ -130,21 +133,37 @@ class Controller_Ranking extends Controller {
         if (!$uid) return;
 
         $cache = [];
+        $cache_m = [];
 
         // Single Player
-        $full = DB::select()->from('ranking')->where('season','=',$season)->where('board','IN', Tool_Gamemodes::get_singleplayer_modes())->order_by('points','DESC')->execute()->as_array();
-        foreach ($full as $entry) {
+        foreach ($this->get_ranking_data_sp($r,$season) as $entry) {
             $s = "m{$entry['board']}_f{$entry['flow']}";
             if (!isset($cache[$s])) $cache[$s] = [];
             $entry['pos'] = count($cache[$s]) + 1;
             $cache[$s][] = $entry;
         }
 
+        // Multi Player
+        foreach ($this->get_ranking_data_mp($r,$season) as $entry) {
+            $s = "m{$entry[0]['board']}";
+            if (!isset($cache_m[$s])) $cache_m[$s] = [];
+            $entry[0]['pos'] = count($cache_m[$s]) + 1;
+            $cache_m[$s][] = $entry;
+        }
+
         $finalcache = [];
         foreach ($cache as $modecache)
             $finalcache = array_merge($finalcache,array_filter($modecache, function($e) use ($uid) {return $e['uid'] == $uid;}));
+        $finalcache_m = [];
+        foreach ($cache_m as $modecache)
+            $finalcache_m = array_merge($finalcache_m,array_filter($modecache, function($e) use ($uid) {
+                foreach ($e as $es)
+                    if ($es['uid'] == $uid) return true;
+                return false;
+            }));
 
         usort($finalcache, function($a,$b) {return $a['pos'] == $b['pos'] ? ($b['points'] - $a['points']) : ($a['pos'] - $b['pos']);});
+        usort($finalcache_m, function($a,$b) {return $a[0]['pos'] == $b[0]['pos'] ? ($b[0]['points'] - $a[0]['points']) : ($a[0]['pos'] - $b[0]['pos']);});
 
         $ret = [];
         $a = 0;
@@ -156,8 +175,19 @@ class Controller_Ranking extends Controller {
             $a++;
         }
 
+        $ret_m = [];
+        $a = 0;
+        foreach ($finalcache_m as $f) {
+            if ($a >= 10 && $f[0]['pos'] >= 11)
+                break;
+
+            $ret_m[] = $f;
+            $a++;
+        }
+
         $this->render([
             'ranking' => count($ret) ? $this->convert_data($ret) : false,
+            'ranking_mp' => count($ret_m) ? $this->convert_data($ret_m, true) : false,
         ]);
     }
 
@@ -238,6 +268,7 @@ class Controller_Ranking extends Controller {
             ->set('points_ach', $apoints)
             ->set('points_karma', $kpoints)
             ->set('rank_soul', $srank)
+            ->set('next_rank_points', $next_srank)
             ->set('rank_karma', $krank)
             ->set('achievements', $achievements)
 

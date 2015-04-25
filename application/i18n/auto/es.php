@@ -192,4 +192,6 @@ return array (
 	'',
   'Deine Ranking-Highlights' =>
 	'',
+  'Blutiger Clown' =>
+	'',
 );

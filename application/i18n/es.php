@@ -3398,4 +3398,56 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
 	':name\'s Ranking-Highlights',
   'Deine Ranking-Highlights' =>
 	'Deine Ranking-Highlights',
+  'Schleimer' =>
+	'Schleimer',
+  'Alpha & Omega' =>
+	'Alpha & Omega',
+  'Testsubjekt' =>
+	'Testsubjekt',
+  'Einer Für Alle!' =>
+	'Einer Für Alle!',
+  'Berühmter Überlebenskünstler' =>
+	'Berühmter Überlebenskünstler',
+  'Geduldiger Lehrmeister' =>
+	'Geduldiger Lehrmeister',
+  'Kapitalismus' =>
+	'Kapitalismus',
+  'Event-Teilnehmer' =>
+	'Event-Teilnehmer',
+  'Nichts haut mich um' =>
+	'Nichts haut mich um',
+  'MK II-Fetischist' =>
+	'MK II-Fetischist',
+  'Schlimmer als Zombies ...' =>
+	'Schlimmer als Zombies ...',
+  'Knapp entkommen' =>
+	'Knapp entkommen',
+  'Müllmann' =>
+	'Müllmann',
+  'Wrestling Extrem' =>
+	'Wrestling Extrem',
+  'Brieffreund' =>
+	'Brieffreund',
+  'Blutiger Clown' =>
+	'Blutiger Clown',
+  'Burgherr' =>
+	'Burgherr',
+  'Kalenderblatt-Verschwender' =>
+	'Kalenderblatt-Verschwender',
+  'Berühmter Autor' =>
+	'Berühmter Autor',
+  'Edler Spender' =>
+	'Edler Spender',
+  'Visagist von Pumpkinhead' =>
+	'Visagist von Pumpkinhead',
+  'Oster-Glückspilz' =>
+	'Oster-Glückspilz',
+  'Survival 24/7' =>
+	'Survival 24/7',
+  'April April' =>
+	'April April',
+  'Blutsauger' =>
+	'Blutsauger',
+  'Oster-Pechvogel' =>
+	'Oster-Pechvogel',
 );

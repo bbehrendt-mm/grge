@@ -3396,4 +3396,56 @@ return array (
 	':name\'s Ranking-Highlights',
   'Deine Ranking-Highlights' =>
 	'Deine Ranking-Highlights',
+  'Schleimer' =>
+	'Sycophant',
+  'Alpha & Omega' =>
+	'Alpha & Omega',
+  'Testsubjekt' =>
+	'Test Subject',
+  'Einer Für Alle!' =>
+	'Each for All!',
+  'Berühmter Überlebenskünstler' =>
+	'Master of Survival',
+  'Geduldiger Lehrmeister' =>
+	'Patient Master',
+  'Kapitalismus' =>
+	'Capitalism',
+  'Event-Teilnehmer' =>
+	'Event Participant',
+  'Nichts haut mich um' =>
+	'Steel Stomach',
+  'MK II-Fetischist' =>
+	'MK II Fetishist',
+  'Schlimmer als Zombies ...' =>
+	'Worse than Zombies ...',
+  'Knapp entkommen' =>
+	'Close Escapes',
+  'Müllmann' =>
+	'Garbage Day!',
+  'Wrestling Extrem' =>
+	'Wrestling Extreme',
+  'Brieffreund' =>
+	'Pen Pal',
+  'Blutiger Clown' =>
+	'Blutiger Clown',
+  'Burgherr' =>
+	'Lord and Master',
+  'Kalenderblatt-Verschwender' =>
+	'Calender Sheet Shredder',
+  'Berühmter Autor' =>
+	'Famous author',
+  'Edler Spender' =>
+	'Generous Donor',
+  'Visagist von Pumpkinhead' =>
+	'Pumpkinhead\'s Make-UP Artist',
+  'Oster-Glückspilz' =>
+	'Happy Bunny',
+  'Survival 24/7' =>
+	'Survival 24/7',
+  'April April' =>
+	'April Fools',
+  'Blutsauger' =>
+	'Bloodsucker',
+  'Oster-Pechvogel' =>
+	'Unhappy Bunny',
 );

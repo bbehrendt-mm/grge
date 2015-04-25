@@ -406,7 +406,7 @@ core.popup = {
 
                 var pos = p(v,iconsize,iconsize);
                 popup.append(
-                    $('<div />').addClass(k == data.current ? 'map location active' : (!data.read_only && v.energy <= data.radius ? 'map location' : 'map location unreachable')).attr({
+                    $('<div />').addClass(k == data.current ? 'map location active' : (!(data.read_only && !v.skip_ro) && v.energy <= data.radius ? 'map location' : 'map location unreachable')).attr({
                         'data-location':k,
                         'data-x': pos.x,
                         'data-y': pos.y
@@ -416,12 +416,12 @@ core.popup = {
                     }).append(
                         $('<img />').attr('src','media/icons/places/' + v.icon)
                     ).mouseenter(function() {
-                        draw($.objToArray(v.nodes,true), !data.read_only && v.energy <= data.radius ? '#39ACE5' : '#E3573B');
+                        draw($.objToArray(v.nodes,true), !(data.read_only && !v.skip_ro) && v.energy <= data.radius ? '#39ACE5' : '#E3573B');
 
                         $(this).siblings().each(function() {
                             var id = $(this).data('location');
                             if (id != v.current && id != k && ($.objToArray(v.route, true).indexOf(id) >= 0))
-                                $(this).addClass(!data.read_only && v.energy <= data.radius ? 'travel' : 'untravel');
+                                $(this).addClass(!(data.read_only && !v.skip_ro) && v.energy <= data.radius ? 'travel' : 'untravel');
                         });
 
                         infopanel.empty().stop().fadeIn(100).append(
@@ -458,7 +458,17 @@ core.popup = {
                         infopanel.stop().fadeOut(100);
                         $(this).siblings('.travel, .untravel').removeClass('travel untravel');
                     }).click(function() {
-                        if (data.read_only || v.energy > data.radius || k == data.current) return;
+                        if ((data.read_only && !v.skip_ro) || v.energy > data.radius || k == data.current) return;
+
+                        if (v.zombies && !confirm(game.i18n(<?=__j('Dieser Ort wird von :zombies Zombies belagert. Wenn du diesen Ort betrittst, wirst du kämpfen müssen. Weiter?')?>, {':zombies': v.zombies}))) return;
+
+                        var route_zombies = [];
+                        $.each(v.route, function(rkey, rval) {
+                            if (rval == v.id || rval == data.current) return;
+                            if (data.locations[rval].zombies > 0)
+                                route_zombies.push(data.locations[rval].name);
+                        });
+                        if (route_zombies.length && !confirm(game.i18n(<?=__j('Auf dem Weg zu diesem Ort befinden sich Zombies (:locations). Du wirst gegen sie kämpfen müssen, wenn du dorthin möchtest. Weiter?')?>,{':locations': route_zombies.join(', ')}))) return;
 
                         if (core.last.players) {
                             var esc_popup = core.popup.spawn(400);

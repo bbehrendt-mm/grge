@@ -12,7 +12,6 @@ class Model_Log_Types_Movement extends Model_Log_Message {
      * Creates a message that a player has entered or left the place
      * @param number $type
      * @param null|number|String $pid PID or translatable name
-     * @internal param \Model_Places_Abstract_Place $ruin Short message title
      */
 	public function __construct($type, $pid = null) {
         /** @global Model_Player $player */

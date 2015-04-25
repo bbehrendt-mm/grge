@@ -3,6 +3,7 @@
 class Model_Map {
 
     private $mapname = 'default';
+    private $mucfg = [];
 
     private $paths = Array();
     private $sublocation = null;
@@ -73,6 +74,12 @@ class Model_Map {
         return (array)(($type === null) ? Kohana::$config->load("maps/{$this->mapname}") : Tool_System::config_tree("maps/{$this->mapname}", $type));
     }
 
+    private function &get_mutable_config($type) {
+        $addr = is_object($type) ? get_class($type) : $type;
+        if (!isset($this->mucfg[$addr])) $this->mucfg[$addr] = Tool_System::config_tree("maps/{$this->mapname}", $type);
+        return $this->mucfg[$addr];
+    }
+
     public function has_location($id) {
         return isset($this->loc_assoc[$id]);
     }
@@ -113,15 +120,20 @@ class Model_Map {
         if (!$ret_as_array)
             $target = Array($target);
 
-        $ret = array();
+        $target = array_filter($target,function($element) use ($class,$cfg) {
+            return (!isset($this->assoc_cache[$element]) || !isset($this->assoc_cache[$element][$class]) || ($this->assoc_cache[$element][$class] < $cfg['max_local']));
+        });
 
-        foreach ($target as $element)
-            if (!isset($this->assoc_cache[$element]) || !isset($this->assoc_cache[$element][$class]) || ($this->assoc_cache[$element][$class] < $cfg['max_local']))
-                $ret[] = $element;
+        $target_priority = array_filter($target,function($element) use ($class,$cfg) {
+            return (!isset($this->assoc_cache[$element]) || array_sum($this->assoc_cache[$element]) < 3);
+        });
 
-        if (count($ret) == 0)
+        if ($target_priority)
+            $target = $target_priority;
+
+        if (count($target) == 0)
             return false;
-        else return $ret_as_array ? $ret : true;
+        else return $ret_as_array ? array_values($target) : true;
     }
 
     /**
@@ -157,9 +169,9 @@ class Model_Map {
             return false;
         }
 
+        $root_location_id = null;
         if ($root === null) {
             $data = array('type' => null, 'x' => 0, 'y' => 0, 'direction' => null);
-            $root_location_id = null;
         } elseif (is_int($root) && isset($this->loc_assoc[$root]))
             $data = $this->loc_assoc[$root];
         elseif ((is_int($root) && !isset($this->loc_assoc[$root])) || (!is_int($root) && !isset($this->id_assoc[$root])))
@@ -243,6 +255,7 @@ class Model_Map {
      * @param int $dry
      * @param null|int $fixed_id Fixed ID
      * @return bool
+     * @throws Exception
      */
     public function place_location($location, $visible, $dry = 0, $fixed_id = null) {
         /**
@@ -254,8 +267,39 @@ class Model_Map {
             $location = new $location;
 
         if (!(Tool_System::instance_of($location, 'Model_Places_Abstract_Place'))
-            || !($cfg = $this->get_config($location))
-            || !($pos = $this->get_random_location($cfg['distance'], is_string($location) ? $location : get_class($location), $cfg['root']))) return false;
+            || !($cfg = &$this->get_mutable_config($location))
+            || !($pos = $this->get_random_location($cfg['distance'], is_string($location) ? $location : get_class($location), empty($cfg['force_root']) ? $cfg['root'] : array_pop($cfg['force_root'])))) return false;
+
+        $this->implant_location($location, $pos['x'], $pos['y'], false, $pos['direction'],$cfg['branchable'],$pos['root'],$visible,$dry,$fixed_id);
+
+        $this->update_placement_limits(is_string($location) ? $location : get_class($location), $pos['root']);
+
+        return true;
+    }
+
+    /**
+     * @param Model_Places_Abstract_Place|string $location
+     * @param $x
+     * @param $y
+     * @param $direction
+     * @param $branchable
+     * @param $root
+     * @param $visible
+     * @param $dry
+     * @param $fixed_id
+     * @return int
+     * @throws Exception
+     */
+    public function implant_location($location,$x, $y, $relative, $direction, $branchable, $root, $visible, $dry, $fixed_id) {
+        /**
+         * @global $game Model_Game
+         */
+        global $game;
+
+        if ($relative) {
+            $x += $this->loc_assoc[$root]['x'];
+            $y += $this->loc_assoc[$root]['y'];
+        }
 
         $is_reserved = is_string($location);
         if (is_string($location))
@@ -263,20 +307,18 @@ class Model_Map {
         elseif (!$location->uin()) $uin = $game->uin()->set($location);
         else $uin = $location->uin();
 
-        $this->catalog_location($uin, is_string($location) ? $location : get_class($location), $pos['x'], $pos['y'], $pos['direction'], $visible, $dry, $is_reserved, $fixed_id);
-        $node = $this->sub_routing->add_node($pos['x'], $pos['y'], !$cfg['branchable']);
+        $this->catalog_location($uin, is_string($location) ? $location : get_class($location), $x, $y, $direction, $visible, $dry, $is_reserved, $fixed_id);
+        $node = $this->sub_routing->add_node($x, $y, !$branchable);
         $this->lib_routing[$uin] = $node;
         if (!isset($this->lib_routing_reverse[$node])) $this->lib_routing_reverse[$node] = Array($uin);
         else $this->lib_routing_reverse[$node][] = $uin;
 
-        if ($pos['root'] !== null) {
-            $this->add_route($uin, $pos['root'], true);
-            $this->sub_routing->link_nodes($node, $this->lib_routing[$pos['root']]);
+        if ($root !== null) {
+            $this->add_route($uin, $root, true);
+            $this->sub_routing->link_nodes($node, $this->lib_routing[$root]);
         }
 
-        $this->update_placement_limits(is_string($location) ? $location : get_class($location), $pos['root']);
-
-        return true;
+        return $uin;
     }
 
     /**
@@ -372,6 +414,7 @@ class Model_Map {
     }
 
     public function uncover_all() {
+        /** @global Model_Game $game */
         global $game;
         foreach ($this->loc_assoc as $lid => &$data) if (!$data['visible']) {
             $data['visible'] = true;
@@ -456,6 +499,7 @@ class Model_Map {
         foreach ($map as $data) {
 
             $final = array();
+            $locals = false;
             foreach ($data['tail'] as $node) {
                 $locals = $this->node_to_uin($node);
                 foreach ($locals as $to)

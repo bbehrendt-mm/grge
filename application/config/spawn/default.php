@@ -184,6 +184,16 @@ return array(
             Array('type' => 'Model_Battle_Shambler',	'num' => Array(   1,   5), 'distance' => Array(   3,  5)),
         ),
     )),
+    'Model_Places_Tentkit'					=> Array('chance' =>   20, 'accum' =>  5, 'range' =>   0, 'groups' => Array(
+        Array(
+            Array('type' => 'Model_Battle_Shambler',	'num' => Array(   1,   6), 'distance' => Array(   1,  1)),
+        ),
+    )),
+    'Model_Places_Tentkit2'					=> Array('chance' =>   20, 'accum' =>  5, 'range' =>   0, 'groups' => Array(
+        Array(
+            Array('type' => 'Model_Battle_Shambler',	'num' => Array(   1,   6), 'distance' => Array(   1,  1)),
+        ),
+    )),
     'Model_Places_Hotel'				=> Array('chance' =>   15, 'accum' =>  15, 'range' =>   0, 'groups' => Array(
         Array(
             Array('type' => 'Model_Battle_Shambler',	'num' => Array(   1,   1), 'distance' => Array(   1,  3)),

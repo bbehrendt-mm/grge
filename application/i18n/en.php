@@ -3311,49 +3311,49 @@ return array (
   'Du fährst ein Wohnmobil, keinen LKW - wenn du mehr einlädst als der Motor ziehen kann, wirst du nicht vom Fleck kommen.' =>
 	'This is a caravan, not a truck - you can\'t carry that much stuff around in it if you don\'t want the motor to explode.',
   'Gleich kanns losgehen!' =>
-	'Gleich kanns losgehen!',
+	'Almost done!',
   'Es scheint, als ob du von ::i:: :service ::/i:: hierher gelangt bist. Du kannst ::b::ZombVival::/b:: daher ohne zusätzliche Registrierung mit deinem :service-Account spielen!' =>
-	'Es scheint, als ob du von ::i:: :service ::/i:: hierher gelangt bist. Du kannst ::b::ZombVival::/b:: daher ohne zusätzliche Registrierung mit deinem :service-Account spielen!',
+	'It seems you\'re coming from ::i:: :service ::/i::. Therefore, you can play ::b::ZombVival::/b:: without having to register by using your :service account!',
   'Möchtest du, dass deine Account-Daten auf diesem Rechner gespeichert werden? Dadurch kannst du dich in Zukunft direkt auf dieser Webseite anmelden, ohne den Umweg über :service gehen zu müssen. Wenn du ZombVival gerade von einem öffentlichen Computer oder dem Computer eines Freundes besuchst, solltest du "Nein" wählen.' =>
-	'Möchtest du, dass deine Account-Daten auf diesem Rechner gespeichert werden? Dadurch kannst du dich in Zukunft direkt auf dieser Webseite anmelden, ohne den Umweg über :service gehen zu müssen. Wenn du ZombVival gerade von einem öffentlichen Computer oder dem Computer eines Freundes besuchst, solltest du "Nein" wählen.',
+	'Do you want to store authentication information on this computer? By doing this, you can log into ZombVival without having to use :service. If you\'re currently on a public computer or a computer from one of your friends, you should click "No".',
   'Nein' =>
-	'Nein',
+	'No',
   'Ja' =>
-	'Ja',
+	'Yes',
   'Automatischer Login' =>
-	'Automatischer Login',
+	'Automatic login',
   'Seite nicht gefunden' =>
-	'Seite nicht gefunden',
+	'Page not found',
   'Diese Seite wurde von Zombies gefressen!' =>
-	'Diese Seite wurde von Zombies gefressen!',
+	'This page has been eaten by zombies!',
   'Offensichtlich ist das aber noch niemandem aufgefallen.' =>
-	'Offensichtlich ist das aber noch niemandem aufgefallen.',
+	'But nobody seems to have noticed.',
   'Hier sind ein paar Sachen, die du jetzt tun kannst:' =>
-	'Hier sind ein paar Sachen, die du jetzt tun kannst:',
+	'Here are a few things you can do now:',
   'Falls du von einer fremden Seite hierher gelangt bist, informiere dessen Betreiber, dass der Link offenbar nicht mehr aktuell ist.' =>
-	'Falls du von einer fremden Seite hierher gelangt bist, informiere dessen Betreiber, dass der Link offenbar nicht mehr aktuell ist.',
+	'If you\'ve come from another site, inform that site\'s webmaster that this link is probably outdated.',
   'Bist du über einen Link auf ZombVival hierher gekommen, melde das bitte im Forum!' =>
-	'Bist du über einen Link auf ZombVival hierher gekommen, melde das bitte im Forum!',
+	'If you\'ve followed a link on ZombVival, please post this in the forum.',
   'Bringe dem Internet ein Tieropfer dar und hoffe, dass dies die Seite zurückbringt, die du suchst.' =>
-	'Bringe dem Internet ein Tieropfer dar und hoffe, dass dies die Seite zurückbringt, die du suchst.',
+	'You may also offer an animal sacrifice to the internet and hope that this somehow brings back the site you\'re searching for.',
   'Zur Hauptseite' =>
-	'Zur Hauptseite',
+	'Back to Main Page',
   'Spieleraccounts verschmelzen' =>
-	'Spieleraccounts verschmelzen',
+	'Merge Player Accounts',
   'Du kannst diesen :service-Account leider nicht automatisch mit deinem ZombVival-Account verknüpfen, da er bereits mit einem anderen ZV-Account verknüpft ist.' =>
-	'Du kannst diesen :service-Account leider nicht automatisch mit deinem ZombVival-Account verknüpfen, da er bereits mit einem anderen ZV-Account verknüpft ist.',
+	'Unfortunately, this :service account is already fused to another ZombVival account, so you cannot merge it with yours. If you believe this to be an error, contact an Administrator.',
   'Möchtest du deinen :service-Account verwenden können, um dich in Zukunft bei ZombVival einzuloggen? Andere Login-Methoden in deinen ZV-Account bleiben weiterhin gültig.' =>
-	'Möchtest du deinen :service-Account verwenden können, um dich in Zukunft bei ZombVival einzuloggen? Andere Login-Methoden in deinen ZV-Account bleiben weiterhin gültig.',
+	'Would you like to use your :service account to sign into ZombVival in the future? You other ways to log in will not be affected by this.',
   '::b::Ja::/b::, ich möchte mich in Zukunft auch über :service einloggen können!' =>
-	'::b::Ja::/b::, ich möchte mich in Zukunft auch über :service einloggen können!',
+	'::b::Yes::/b::, I\'d like to be able to log in using :service!',
   'Herzlichen Glückwunsch! Du kannst dich jetzt auch über :service in deinen ZombVival-Account einloggen.' =>
-	'Herzlichen Glückwunsch! Du kannst dich jetzt auch über :service in deinen ZombVival-Account einloggen.',
+	'Congratulations! You can now sign in to you ZombVival account using :service.',
   'Verknüpfung erfolgreich!' =>
-	'Verknüpfung erfolgreich!',
+	'Link successful!',
   'Die Verknüpfung deines ZombVival-Accounts mit :service ist fehlgeschlagen...' =>
-	'Die Verknüpfung deines ZombVival-Accounts mit :service ist fehlgeschlagen...',
+	'Linking this :service account to ZombVival failed...',
   'Fehlgeschlagen' =>
-	'Fehlgeschlagen',
+	'Failure',
   'Meine Seele' =>
 	'My Soul',
   'Seele von :name' =>
@@ -3368,34 +3368,32 @@ return array (
 	'Untouched Soul',
   'Neutral' =>
 	'Neutral',
-  'Diese Auszeichnung ist ::i:: :num ::/i:: Punkte wert.' =>
-	'Diese Auszeichnung ist ::i:: :num ::/i:: Punkte wert.',
   'Diese Auszeichnung ist ::i:: :num  Punkte::/i:: wert.' =>
-	'Diese Auszeichnung ist ::i:: :num  Punkte::/i:: wert.',
+	'This achievement is worth ::i:: :num points::/i::.',
   'Eine andere Seele suchen...' =>
-	'Eine andere Seele suchen...',
+	'Search for a soul...',
   'Gib den Namen eines Spielers ein, dessen Seele du suchen möchtest.' =>
-	'Gib den Namen eines Spielers ein, dessen Seele du suchen möchtest.',
+	'Please enter the name of the player you wish to visit.',
   'Profiseele' =>
 	'Pro Soul',
   'Spielmodus' =>
-	'Spielmodus',
+	'Game Mode',
   'Bürger' =>
 	'Citizen',
   'Du hast es in dieser Season nicht ins Ranking geschafft.' =>
-	'Du hast es in dieser Season nicht ins Ranking geschafft.',
+	'You did not manage to get a ranking position in this season.',
   'Meisterseele' =>
 	'Soul of a Master',
   ':name hat es in dieser Season nicht ins Ranking geschafft.' =>
-	':name hat es in dieser Season nicht ins Ranking geschafft.',
+	':name did not manage to get a ranking position in this season.',
   'Heimwerker' =>
 	'Handyman',
   'Expertenseele' =>
 	'Expert Soul',
   ':name\'s Ranking-Highlights' =>
-	':name\'s Ranking-Highlights',
+	':name\'s Ranking Highlights',
   'Deine Ranking-Highlights' =>
-	'Deine Ranking-Highlights',
+	'Your Ranking-Highlights',
   'Schleimer' =>
 	'Sycophant',
   'Alpha & Omega' =>
@@ -3427,7 +3425,7 @@ return array (
   'Brieffreund' =>
 	'Pen Pal',
   'Blutiger Clown' =>
-	'Blutiger Clown',
+	'Bloody Clown',
   'Burgherr' =>
 	'Lord and Master',
   'Kalenderblatt-Verschwender' =>
@@ -3448,4 +3446,38 @@ return array (
 	'Bloodsucker',
   'Oster-Pechvogel' =>
 	'Unhappy Bunny',
+  'InstaZELT™-Kit' =>
+	'InstaTENT™ Kit',
+  'Mit dem InstaZELT™-Kit kannst du dir in sekundenschnelle und an jedem beliebigen Ort ein Zelt aufschlagen, dass dir Gelegenheit zum Ausruhen gibt und dich vor Zombies schützt.' =>
+	'This InstaTENT™ Kit allows you to build a tent on a moments notice at nearly every location, allowing you to rest and offering protection from zombies.',
+  'DELUXE InstaZELT™-Kit' =>
+	'DELUXE InstaTENT™ Kit',
+  'Warum solltest du ein gewöhnliches InstaZELT™ aufbauen, wenn du auch ein InstaZELT™ Deluxe bekommen kannst? Dieses verbesserte InstaZELT™ bietet mehr Platz, ist gemütlicher eingerichtet und kommt mit doppelt so vielen Warnhinweisen in der Bedienungsanleitung wie ein gewöhnliches InstaZELT™!' =>
+	'Why would you use a regular InstaTENT™, when you could use an InstaTENT™ Deluxe? This improved InstaTENT™ has more room, is more comfortable and has TWICE the amount of caution notes in its manual!',
+  'InstaZELT™ aufstellen' =>
+	'Build InstaTENT™',
+  'Du kannst an dieser Stelle kein InstaZELT™ aufstellen.' =>
+	'You can not build an InstaTENT™ at this location.',
+  'Einfach diesen Nippel durch die Lasche ziehen .... PUFF, mit einem Schlag stehst du in einem InstaZELT™!' =>
+	'Just put A into B, pull this rope and ... POOF! You\'re standing inside your brand new InstaTENT™!',
+  'InstaZELT™' =>
+	'InstaTENT™',
+  'Das InstaZELT™ ist die perfekte mobile Unterkunft für Campingtrips, mehrtägige Open-Air-Konzerte und iPhone-Releases. Leider stellen die meisten Käufer eines InstaZELT™s relativ schnell fest, dass sich dieses Zelt zwar kinderleicht aufbauen, danach aber nicht mehr abbauen lässt. Manche würde das als einen Designfehler bezeichnen... ' =>
+	'The InstaTENT™ is a perfect mobile home for friends of camping trips, open air concerts and iPhone releases. Unfortunately, after setting the InstaTENT™s up, you may notice that is is virtually impossible to disassemble it again. Some people would probably call this a design flaw... ',
+  'Ein mobiles Zuhause für jede Situation!' =>
+	'A mobile home for every situation!',
+  'Dieser Ort wird von :zombies Zombies belagert. Wenn du diesen Ort betrittst, wirst du kämpfen müssen. Weiter?' =>
+	'There are :zombies zombies blocking your exit. You will have to battle them if you want to leave this place. Continue?',
+  'Auf dem Weg zu diesem Ort (:locations) befinden sich Zombies. Du wirst gegen sie kämpfen müssen, wenn du dorthin möchtest. Weiter?' =>
+	'There are zombies on your way (at :locations). If you wish to travel on this road, you\'ll most likely run into them and have to fight. Continue?',
+  'Auf dem Weg zu diesem Ort befinden sich Zombies (:locations). Du wirst gegen sie kämpfen müssen, wenn du dorthin möchtest. Weiter?' =>
+	'There are zombies on your way (at :locations). If you wish to travel on this road, you\'ll most likely run into them and have to fight. Continue?',
+  'InstaZELT™ Deluxe' =>
+	'InstaTENT™ Deluxe',
+  'Vor langer Zeit war dieses Gebäude mal ein normales Krankenhaus. Irgendwann wurde es zu einer "Heilanstalt für Geisteskranke" umfunktioniert. Gerüchte besagen, dass niemand, der dort eingeliefert wurde, jemals wieder herausgekommen ist. Natürlich ist das Gebäude längst verlassen, es gibt also überhaupt keinen Grund vor irgendwas dort drin Angst zu haben. Obwohl es so scheint als würden selbst die Zombies dieses Gebäude meiden ...' =>
+	'Before it was turned into an insane asylum, this used to be an ordinary hospital. As rumors go, no one who was hospitalized here ever returned... This place has been abandoned for years, however, so there should be nothing to be afraid of. Especially since even zombies seem to avoid this place...',
+  'Gerade hast du es dir bequem gemacht, da hörst du hinter dir plötzlich die Zeltplane reißen. Noch bevor du dich umdrehen kannst spürst du einen stechenden Schmerz im Rücken - herzlichen Glückwunsch, du bist tot.' =>
+	'Gerade hast du es dir bequem gemacht, da hörst du hinter dir plötzlich die Zeltplane reißen. Noch bevor du dich umdrehen kannst spürst du einen stechenden Schmerz im Rücken - herzlichen Glückwunsch, du bist tot.',
+  'Serienkiller-Opfer' =>
+	'Victim of a serial killer',
 );

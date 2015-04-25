@@ -3370,8 +3370,6 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
 	'Unbefleckte Seele',
   'Neutral' =>
 	'Neutral',
-  'Diese Auszeichnung ist ::i:: :num ::/i:: Punkte wert.' =>
-	'Diese Auszeichnung ist ::i:: :num ::/i:: Punkte wert.',
   'Diese Auszeichnung ist ::i:: :num  Punkte::/i:: wert.' =>
 	'Diese Auszeichnung ist ::i:: :num  Punkte::/i:: wert.',
   'Eine andere Seele suchen...' =>
@@ -3450,4 +3448,38 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
 	'Blutsauger',
   'Oster-Pechvogel' =>
 	'Oster-Pechvogel',
+  'InstaZELT™-Kit' =>
+	'InstaZELT™-Kit',
+  'Mit dem InstaZELT™-Kit kannst du dir in sekundenschnelle und an jedem beliebigen Ort ein Zelt aufschlagen, dass dir Gelegenheit zum Ausruhen gibt und dich vor Zombies schützt.' =>
+	'Mit dem InstaZELT™-Kit kannst du dir in sekundenschnelle und an jedem beliebigen Ort ein Zelt aufschlagen, dass dir Gelegenheit zum Ausruhen gibt und dich vor Zombies schützt.',
+  'DELUXE InstaZELT™-Kit' =>
+	'DELUXE InstaZELT™-Kit',
+  'Warum solltest du ein gewöhnliches InstaZELT™ aufbauen, wenn du auch ein InstaZELT™ Deluxe bekommen kannst? Dieses verbesserte InstaZELT™ bietet mehr Platz, ist gemütlicher eingerichtet und kommt mit doppelt so vielen Warnhinweisen in der Bedienungsanleitung wie ein gewöhnliches InstaZELT™!' =>
+	'Warum solltest du ein gewöhnliches InstaZELT™ aufbauen, wenn du auch ein InstaZELT™ Deluxe bekommen kannst? Dieses verbesserte InstaZELT™ bietet mehr Platz, ist gemütlicher eingerichtet und kommt mit doppelt so vielen Warnhinweisen in der Bedienungsanleitung wie ein gewöhnliches InstaZELT™!',
+  'InstaZELT™ aufstellen' =>
+	'InstaZELT™ aufstellen',
+  'Du kannst an dieser Stelle kein InstaZELT™ aufstellen.' =>
+	'Du kannst an dieser Stelle kein InstaZELT™ aufstellen.',
+  'Einfach diesen Nippel durch die Lasche ziehen .... PUFF, mit einem Schlag stehst du in einem InstaZELT™!' =>
+	'Einfach diesen Nippel durch die Lasche ziehen .... PUFF, mit einem Schlag stehst du in einem InstaZELT™!',
+  'InstaZELT™' =>
+	'InstaZELT™',
+  'Das InstaZELT™ ist die perfekte mobile Unterkunft für Campingtrips, mehrtägige Open-Air-Konzerte und iPhone-Releases. Leider stellen die meisten Käufer eines InstaZELT™s relativ schnell fest, dass sich dieses Zelt zwar kinderleicht aufbauen, danach aber nicht mehr abbauen lässt. Manche würde das als einen Designfehler bezeichnen... ' =>
+	'Das InstaZELT™ ist die perfekte mobile Unterkunft für Campingtrips, mehrtägige Open-Air-Konzerte und iPhone-Releases. Leider stellen die meisten Käufer eines InstaZELT™s relativ schnell fest, dass sich dieses Zelt zwar kinderleicht aufbauen, danach aber nicht mehr abbauen lässt. Manche würde das als einen Designfehler bezeichnen... ',
+  'Ein mobiles Zuhause für jede Situation!' =>
+	'Ein mobiles Zuhause für jede Situation!',
+  'Dieser Ort wird von :zombies Zombies belagert. Wenn du diesen Ort betrittst, wirst du kämpfen müssen. Weiter?' =>
+	'Dieser Ort wird von :zombies Zombies belagert. Wenn du diesen Ort betrittst, wirst du kämpfen müssen. Weiter?',
+  'Auf dem Weg zu diesem Ort (:locations) befinden sich Zombies. Du wirst gegen sie kämpfen müssen, wenn du dorthin möchtest. Weiter?' =>
+	'Auf dem Weg zu diesem Ort (:locations) befinden sich Zombies. Du wirst gegen sie kämpfen müssen, wenn du dorthin möchtest. Weiter?',
+  'Auf dem Weg zu diesem Ort befinden sich Zombies (:locations). Du wirst gegen sie kämpfen müssen, wenn du dorthin möchtest. Weiter?' =>
+	'Auf dem Weg zu diesem Ort befinden sich Zombies (:locations). Du wirst gegen sie kämpfen müssen, wenn du dorthin möchtest. Weiter?',
+  'InstaZELT™ Deluxe' =>
+	'InstaZELT™ Deluxe',
+  'Vor langer Zeit war dieses Gebäude mal ein normales Krankenhaus. Irgendwann wurde es zu einer "Heilanstalt für Geisteskranke" umfunktioniert. Gerüchte besagen, dass niemand, der dort eingeliefert wurde, jemals wieder herausgekommen ist. Natürlich ist das Gebäude längst verlassen, es gibt also überhaupt keinen Grund vor irgendwas dort drin Angst zu haben. Obwohl es so scheint als würden selbst die Zombies dieses Gebäude meiden ...' =>
+	'Vor langer Zeit war dieses Gebäude mal ein normales Krankenhaus. Irgendwann wurde es zu einer "Heilanstalt für Geisteskranke" umfunktioniert. Gerüchte besagen, dass niemand, der dort eingeliefert wurde, jemals wieder herausgekommen ist. Natürlich ist das Gebäude längst verlassen, es gibt also überhaupt keinen Grund vor irgendwas dort drin Angst zu haben. Obwohl es so scheint als würden selbst die Zombies dieses Gebäude meiden ...',
+  'Gerade hast du es dir bequem gemacht, da hörst du hinter dir plötzlich die Zeltplane reißen. Noch bevor du dich umdrehen kannst spürst du einen stechenden Schmerz im Rücken - herzlichen Glückwunsch, du bist tot.' =>
+	'Gerade hast du es dir bequem gemacht, da hörst du hinter dir plötzlich die Zeltplane reißen. Noch bevor du dich umdrehen kannst spürst du einen stechenden Schmerz im Rücken - herzlichen Glückwunsch, du bist tot.',
+  'Serienkiller-Opfer' =>
+	'Serienkiller-Opfer',
 );

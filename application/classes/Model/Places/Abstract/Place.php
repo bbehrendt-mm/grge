@@ -189,12 +189,12 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 	}
 	
 	//Leave location
-	public function can_leave($pid = null) {
+	public function can_leave($pid = null, $ignore_zombies = false) {
         /**
          * @global $game Model_Game
          */
         global $game;
-        return ($game->get_player($pid)->can_escape() || $this->zombie_factory->get_zombie_accumulation() <= 0);
+        return ($ignore_zombies || $game->get_player($pid)->can_escape() || $this->zombie_factory->get_zombie_accumulation() <= 0);
 	}
 
     //Enter map

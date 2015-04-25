@@ -282,11 +282,10 @@ class Controller_Act extends Controller_Game {
 
     public function japi_cancel() {
         /**
-         * @global $game Model_Game
          * @global $player Model_Player
          * @var $item Model_Items_Abstract_Item
          */
-        global $game, $player;
+        global $player;
 
         //Block sleeping
         /** @var Model_Buffs_Abstract_Fragile $buff */

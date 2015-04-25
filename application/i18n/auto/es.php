@@ -174,8 +174,6 @@ return array (
 	'',
   'Fehlgeschlagen' =>
 	'',
-  'Diese Auszeichnung ist ::i:: :num ::/i:: Punkte wert.' =>
-	'',
   'Diese Auszeichnung ist ::i:: :num  Punkte::/i:: wert.' =>
 	'',
   'Eine andere Seele suchen...' =>
@@ -193,5 +191,35 @@ return array (
   'Deine Ranking-Highlights' =>
 	'',
   'Blutiger Clown' =>
+	'',
+  'InstaZELT™-Kit' =>
+	'',
+  'Mit dem InstaZELT™-Kit kannst du dir in sekundenschnelle und an jedem beliebigen Ort ein Zelt aufschlagen, dass dir Gelegenheit zum Ausruhen gibt und dich vor Zombies schützt.' =>
+	'',
+  'DELUXE InstaZELT™-Kit' =>
+	'',
+  'Warum solltest du ein gewöhnliches InstaZELT™ aufbauen, wenn du auch ein InstaZELT™ Deluxe bekommen kannst? Dieses verbesserte InstaZELT™ bietet mehr Platz, ist gemütlicher eingerichtet und kommt mit doppelt so vielen Warnhinweisen in der Bedienungsanleitung wie ein gewöhnliches InstaZELT™!' =>
+	'',
+  'InstaZELT™ aufstellen' =>
+	'',
+  'Du kannst an dieser Stelle kein InstaZELT™ aufstellen.' =>
+	'',
+  'Einfach diesen Nippel durch die Lasche ziehen .... PUFF, mit einem Schlag stehst du in einem InstaZELT™!' =>
+	'',
+  'InstaZELT™' =>
+	'',
+  'Das InstaZELT™ ist die perfekte mobile Unterkunft für Campingtrips, mehrtägige Open-Air-Konzerte und iPhone-Releases. Leider stellen die meisten Käufer eines InstaZELT™s relativ schnell fest, dass sich dieses Zelt zwar kinderleicht aufbauen, danach aber nicht mehr abbauen lässt. Manche würde das als einen Designfehler bezeichnen... ' =>
+	'',
+  'Ein mobiles Zuhause für jede Situation!' =>
+	'',
+  'Dieser Ort wird von :zombies Zombies belagert. Wenn du diesen Ort betrittst, wirst du kämpfen müssen. Weiter?' =>
+	'',
+  'Auf dem Weg zu diesem Ort (:locations) befinden sich Zombies. Du wirst gegen sie kämpfen müssen, wenn du dorthin möchtest. Weiter?' =>
+	'',
+  'Auf dem Weg zu diesem Ort befinden sich Zombies (:locations). Du wirst gegen sie kämpfen müssen, wenn du dorthin möchtest. Weiter?' =>
+	'',
+  'InstaZELT™ Deluxe' =>
+	'',
+  'Gerade hast du es dir bequem gemacht, da hörst du hinter dir plötzlich die Zeltplane reißen. Noch bevor du dich umdrehen kannst spürst du einen stechenden Schmerz im Rücken - herzlichen Glückwunsch, du bist tot.' =>
 	'',
 );

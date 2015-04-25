@@ -49,7 +49,7 @@ class Controller_Map extends Controller_Game {
                 if (!($lp = $game->location($pass)))
                     break;
                 foreach ($companion as $current)
-                    if (!$last_pass->can_leave($current->id()) || !$lp->can_enter($current->id()))
+                    if (!$last_pass->can_leave($current->id(), Tool_System::instance_of($lp,'Model_Places_Tentkit')) || !$lp->can_enter($current->id()))
                         break 2;
                 $last_pass = $lp;
                 foreach ($companion as $current)
@@ -155,11 +155,10 @@ class Controller_Map extends Controller_Game {
     public function japi_go() {
 
         /**
-         * @global $game Model_Game
          * @global $player Model_Player
          * @var $current Model_Player
          */
-        global $game, $player;
+        global $player;
 
         $did = (int)$this->request->post('to');
         $companion = [];
@@ -190,9 +189,12 @@ class Controller_Map extends Controller_Game {
         global $game, $player;
 
         $read_only = false;
+        $allow_skip_ro = true;
 
-        if ($player->buff_retr('passout') || $player->buff_retr('fragile'))
+        if ($player->buff_retr('passout') || $player->buff_retr('fragile')) {
             $read_only = true;
+            $allow_skip_ro = false;
+        }
 
         $rmp = Tool_Scripts::check_comrade((int)$this->request->param('id'));
 
@@ -226,6 +228,8 @@ class Controller_Map extends Controller_Game {
             $pass[$id]['zombies'] = $location->zombie_pop();
             $pass[$id]['name'] = __($location->name());
             $pass[$id]['icon'] = $location->icon();
+
+            $pass[$id]['skip_ro'] = (count($data['tail']) == 2) && Tool_System::instance_of($location,'Model_Places_Tentkit');
 
             $pass[$id]['classes'] = array();
             if (Tool_System::instance_of($location, 'Model_Places_Abstract_Hideout')) $pass[$id]['classes'][] = 'hideout';

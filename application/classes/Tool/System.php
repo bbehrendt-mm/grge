@@ -6,11 +6,17 @@ class Tool_System {
 
     /**
      * @param string|object $class Class to test
-     * @param string|object $super Super class
+     * @param string|object|array $super Super class
      * @return bool True, when $class is an instance of or derived from $super
      */
     public static function instance_of($class, $super) {
-		$class = (is_object($class)) ? get_class($class) : $class;
+		if (is_array($super)) {
+            foreach ($super as $elem)
+                if (static::instance_of($class,$elem)) return true;
+            return false;
+        }
+
+        $class = (is_object($class)) ? get_class($class) : $class;
 		$super = (is_object($super)) ? get_class($super) : $super;
 		
 		return ($class === $super || is_subclass_of($class, $super) || in_array($super, class_implements($class)));

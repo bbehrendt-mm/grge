@@ -56,11 +56,15 @@
 
                 line('Checking for old profile data...');
 
-                if ($result = db($mysqli, 'DESCRIBE grg_users;', false)) {
-                    $struct = flat($result->fetch_all());
+                if ($result = db($mysqli, 'DESCRIBE ___PREFIX___users;', false)) {
+                    
+					$struct = [];
+					while ($struct[] = $result->fetch_array());
+
+					$struct = flat($struct);
                     if (!in_array('avatar', $struct)) {
                         line('AVATAR data missing. Creating...');
-                        if (!db($mysqli, 'ALTER TABLE grg_users ADD avatar VARCHAR(511) NULL DEFAULT NULL AFTER name;')) return false;
+                        if (!db($mysqli, 'ALTER TABLE ___PREFIX___users ADD avatar VARCHAR(511) NULL DEFAULT NULL AFTER name;')) return false;
                         line('AVATAR data created.');
                     }
 
@@ -78,7 +82,7 @@
 
                     if (in_array('dataset', $struct)) {
                         line('Depricated DATASET blob found in profile. Removing...');
-                        if (!db($mysqli, 'ALTER TABLE grg_users DROP dataset')) return false;
+                        if (!db($mysqli, 'ALTER TABLE ___PREFIX___users DROP dataset')) return false;
                         line('DATASET blob removed.');
                     }
 

@@ -83,6 +83,7 @@ return array(
                 'Model_Items_Phone'             =>      1,
                 'Model_Items_Flashlight'        =>      1,
                 'Model_Items_Generic_Bike'      =>      1,
+                'Model_Items_Tentkit'           =>      1,
         ),
         'hideout' => array(
                 'Model_Items_Generic_Bed'		=>		1,
@@ -115,6 +116,7 @@ return array(
                 'Model_Items_Jacket'            =>      1,
                 'Model_Items_Phone'             =>      1,
                 'Model_Items_Flashlight'        =>      2,
+                'Model_Items_Tentkit'           =>      1,
         ),
         'water' => array(
                 'Model_Items_Generic_Water0'	=>		1,
@@ -336,7 +338,7 @@ return array(
                 'content' => Array('swater' => 4, 'water' => 2, 'diy' => 1, 'hideout' => 1, 'Model_Items_Generic_Plasma' => 1),
         ),
         'Model_Places_Camping_Tent'			=> Array(	'size' =>  2,
-            'content' => Array('swater' => 1, 'hideout' => 5),
+            'content' => Array('swater' => 3, 'hideout' => 15, 'Model_Items_Tentkit2'  =>  1,),
         ),
         'Model_Places_Camping_Grill'		=> Array(	'size' =>  10,
             'content' => Array('useless' => 5, 'alcohol' => 2, 'hideout' => 1, 'diy' => 1, 'gardening' => 1),

@@ -21,6 +21,7 @@ class Model_Places_Outworld extends Model_Places_Abstract_Node {
             $this->inventory->add(new Model_Items_Machete);
             $this->inventory->add(new Model_Items_Ammobelt);
             $this->inventory->add(new Model_Items_Batgun);
+            $this->inventory->add(new Model_Items_Tentkit);
 
             //Water bottle
             $bottle = new Model_Items_Bottle;
@@ -36,6 +37,7 @@ class Model_Places_Outworld extends Model_Places_Abstract_Node {
             $this->inventory->add(new Model_Items_Paracetin);
             $this->inventory->add(new Model_Items_Lunchbox());
             $this->inventory->add(new Model_Items_Sportsdrink());
+            $this->inventory->add(new Model_Items_Tentkit);
 
             $this->log->add(new Model_Log_Types_Text('Verschiedene Gegenstände gefunden', 'Ein hilfreicher Fund', 'Nach nur ein paar Metern findest du ein notdürftig aufgeschlagenes Lager - der Besitzer ist wohl im Schlaf überrascht worden. Naja, wenigstens wird er dann wohl nichts mehr dagegen haben wenn du dich an seiner Ausrüstung bedienst ...'));
         }

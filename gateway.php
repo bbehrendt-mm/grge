@@ -1,98 +1,93 @@
 <?php
-    //Redirect
-    defined('INDEX_CALL') or die('Gateway');
-
-    $users = [
-        'Brainbox' => '0758397bf35982c7f07e467e074348730fdd6c80db7473f6d6bd144142731e7059406f62bf549c260ed4aa1b5454e6412f20fcbdd7411e3028310c314f457e1c',
-    ];
-
-    const ENC = MCRYPT_RIJNDAEL_256;
-    const KEY = '169a3f7b4da04886085949edbe3d70ce204dd7e6c4a9503b1a14f84073a90168';
-
-    function encrypt($data) {
-        $key = pack('H*', KEY);
-
-        $data = serialize($data);
-        $data .= hash('sha512',$data,false);
-
-        $iv_size = mcrypt_get_iv_size(ENC, MCRYPT_MODE_CBC);
-        $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-
-        return base64_encode($iv . mcrypt_encrypt(ENC,$key,$data,MCRYPT_MODE_CBC,$iv));
+    namespace {
+        //Redirect
+        defined('INDEX_CALL') or die('Gateway');
     }
 
-    function decrypt($cipher) {
-        $key = pack('H*', KEY);
+    namespace Gateway {
+        $users = [
+            'Brainbox' => '0758397bf35982c7f07e467e074348730fdd6c80db7473f6d6bd144142731e7059406f62bf549c260ed4aa1b5454e6412f20fcbdd7411e3028310c314f457e1c',
+        ];
 
-        $cipher = base64_decode($cipher);
-        $iv_size = mcrypt_get_iv_size(ENC, MCRYPT_MODE_CBC);
+        $encryption_mode = MCRYPT_RIJNDAEL_256;
+        $encryption_key = '169a3f7b4da04886085949edbe3d70ce204dd7e6c4a9503b1a14f84073a90168';
 
-        $data = trim(mcrypt_decrypt(ENC,$key,substr($cipher, $iv_size),MCRYPT_MODE_CBC,substr($cipher, 0, $iv_size)));
+        function encrypt($data) {
+            global $encryption_mode,$encryption_key;
+            $key = pack('H*', $encryption_key);
 
-        $hash = substr($data,-128);
-        $data = substr($data,0,-128);
+            $data = serialize($data);
+            $data .= hash('sha512',$data,false);
 
-        if (hash('sha512',$data,false) !== $hash) return false;
-        if (($data = unserialize($data)) == false) return false;
-        return $data;
-    }
+            $iv_size = mcrypt_get_iv_size($encryption_mode, MCRYPT_MODE_CBC);
+            $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
 
-    $gateway_control = isset($_REQUEST['gw']) ? (empty($_REQUEST['gw']) ? true : $_REQUEST['gw']) : false;
-
-    if ($gateway_control && isset($_REQUEST['u']) && isset($_REQUEST['p'])) {
-        if ($users[$_REQUEST['u']] === hash('sha512',$_REQUEST['p'])) {
-            $stamp = time() + 1800;
-            setcookie('c_admin',encrypt($stamp),$stamp);
-            $authorized = true;
-        } else $authorized = false;
-    } else $authorized = isset($_COOKIE['c_admin']) && ($ts = decrypt($_COOKIE['c_admin'])) && $ts > time();
-
-    if ($authorized && !$gateway_control) return 0;
-
-    if ($authorized && $gateway_control && $gateway_control !== true)
-        switch ($gateway_control) {
-            // Installer
-            case 'i':
-                include 'install/index.php';
-                return 1;
-
-            // Log Out
-            case 'n':
-                setcookie('c_admin','',0);
-                $authorized = false;
-                $gateway_control = false;
-                break;
-
-            // Maintenance
-            case 'm_on':
-                file_put_contents('.maintenance','');
-                break;
-            case 'm_off':
-                unlink('.maintenance');
-                break;
+            return base64_encode($iv . mcrypt_encrypt($encryption_mode,$key,$data,MCRYPT_MODE_CBC,$iv));
         }
 
-    // Installer
-    if ($gateway_control === 'i' && $authorized) {
+        function decrypt($cipher) {
+            global $encryption_mode,$encryption_key;
+            $key = pack('H*', $encryption_key);
 
-    }
+            $cipher = base64_decode($cipher);
+            $iv_size = mcrypt_get_iv_size($encryption_mode, MCRYPT_MODE_CBC);
 
-    // Log out
-    if ($gateway_control === 'n' && $authorized) {
+            $data = trim(mcrypt_decrypt($encryption_mode,$key,substr($cipher, $iv_size),MCRYPT_MODE_CBC,substr($cipher, 0, $iv_size)));
 
-    }
+            $hash = substr($data,-128);
+            $data = substr($data,0,-128);
 
-    // Mainenance
-    if ($gateway_control === 'n' && $authorized) {
-        setcookie('c_admin','',0);
-        $authorized = false;
-        $gateway_control = false;
-    }
+            if (hash('sha512',$data,false) !== $hash) return false;
+            if (($data = unserialize($data)) == false) return false;
+            return $data;
+        }
 
-    $maintenance = file_exists('.maintenance');
+        $gateway_control = isset($_REQUEST['gw']) ? (empty($_REQUEST['gw']) ? true : $_REQUEST['gw']) : false;
 
-    // Check for maintenance file
-    if (!$maintenance && !$gateway_control) return 0;
+        if ($gateway_control && isset($_REQUEST['u']) && isset($_REQUEST['p'])) {
+            if (isset($users[$_REQUEST['u']]) && $users[$_REQUEST['u']] === hash('sha512',$_REQUEST['p'])) {
+                $stamp = time() + 1800;
+                setcookie('c_admin',encrypt($stamp),$stamp);
+                $authorized = true;
+            } else $authorized = false;
+        } else $authorized = isset($_COOKIE['c_admin']) && ($ts = decrypt($_COOKIE['c_admin'])) && $ts > time();
+
+        if ($authorized && !$gateway_control) return 0;
+
+        if ($authorized && $gateway_control && $gateway_control !== true)
+            switch ($gateway_control) {
+                // Installer
+                case 'i':
+                    include 'install/index.php';
+                    return 1;
+
+                // Log Out
+                case 'n':
+                    setcookie('c_admin','',0);
+                    $authorized = false;
+                    $gateway_control = false;
+                    break;
+
+                // Maintenance
+                case 'm_on':
+                    file_put_contents('.maintenance','');
+                    break;
+                case 'm_off':
+                    unlink('.maintenance');
+                    break;
+            }
+
+        // Mainenance
+        if ($gateway_control === 'n' && $authorized) {
+            setcookie('c_admin','',0);
+            $authorized = false;
+            $gateway_control = false;
+        }
+
+        $maintenance = file_exists('.maintenance');
+
+        // Check for maintenance file
+        if (!$maintenance && !$gateway_control) return 0;
 ?>
 <html>
 <head>
@@ -116,6 +111,10 @@
     <!-- Make all 5 people happy who realy use metro -->
     <meta name="msapplication-TileColor" content="#660000" />
     <meta name="msapplication-TileImage" content="media/fav/ms_tile.png" />
+
+    <style>
+
+    </style>
 </head>
 <body style="background-color: rgb(40,40,40); color: rgb(30,30,30); text-align: center;">
 
@@ -127,7 +126,7 @@
 
         <?php if ($maintenance) { ?>
 
-            <div style="box-shadow: 0 0 8px black; margin: 10px auto; width: 810px; padding: 0px; border: 2px solid rgb(200,200,200); border-radius: 5px; background-color: rgb(230,230,230);">
+            <div style="box-shadow: 0 0 8px black; margin: 10px auto; width: 810px; padding: 0; border: 2px solid rgb(200,200,200); border-radius: 5px; background-color: rgb(230,230,230);">
                 <div style="background-color: rgb(160,40,40); font-size: 24px; color: rgb(230,230,230); font-variant: small-caps; font-family: sans-serif; padding: 4px; font-weight: bold; border-bottom: 2px solid rgb(140,20,20); box-shadow: 0 0 6px black;">
                     Wartungsarbeiten
                 </div>
@@ -137,7 +136,7 @@
                 </div>
             </div>
 
-            <div style="box-shadow: 0 0 8px black; margin: 10px auto; width: 810px; padding: 0px; border: 2px solid rgb(200,200,200); border-radius: 5px; background-color: rgb(230,230,230);">
+            <div style="box-shadow: 0 0 8px black; margin: 10px auto; width: 810px; padding: 0; border: 2px solid rgb(200,200,200); border-radius: 5px; background-color: rgb(230,230,230);">
                 <div style="background-color: rgb(160,40,40); font-size: 24px; color: rgb(230,230,230); font-variant: small-caps; font-family: sans-serif; padding: 4px; font-weight: bold; border-bottom: 2px solid rgb(140,20,20); box-shadow: 0 0 6px black;">
                     General Maintenance
                 </div>
@@ -149,7 +148,7 @@
 
         <?php } else { ?>
 
-            <div style="box-shadow: 0 0 8px black; margin: 10px auto; width: 810px; padding: 0px; border: 2px solid rgb(200,200,200); border-radius: 5px; background-color: rgb(230,230,230);">
+            <div style="box-shadow: 0 0 8px black; margin: 10px auto; width: 810px; padding: 0; border: 2px solid rgb(200,200,200); border-radius: 5px; background-color: rgb(230,230,230);">
                 <div style="background-color: rgb(160,40,40); font-size: 24px; color: rgb(230,230,230); font-variant: small-caps; font-family: sans-serif; padding: 4px; font-weight: bold; border-bottom: 2px solid rgb(140,20,20); box-shadow: 0 0 6px black;">
                     ZombVival Service Gateway
                 </div>
@@ -166,7 +165,7 @@
 
     <?php } elseif (!$authorized && $gateway_control && $gateway_control !== true) { ?>
 
-        <div style="box-shadow: 0 0 8px black; margin: 10px auto; width: 810px; padding: 0px; border: 2px solid rgb(200,200,200); border-radius: 5px; background-color: rgb(230,230,230);">
+        <div style="box-shadow: 0 0 8px black; margin: 10px auto; width: 810px; padding: 0; border: 2px solid rgb(200,200,200); border-radius: 5px; background-color: rgb(230,230,230);">
             <div style="background-color: rgb(160,40,40); font-size: 24px; color: rgb(230,230,230); font-variant: small-caps; font-family: sans-serif; padding: 4px; font-weight: bold; border-bottom: 2px solid rgb(140,20,20); box-shadow: 0 0 6px black;">
                 Login
             </div>
@@ -180,7 +179,7 @@
             </div>
         </div>
     <?php } elseif ($authorized) { ?>
-        <div style="box-shadow: 0 0 8px black; margin: 10px auto; width: 810px; padding: 0px; border: 2px solid rgb(200,200,200); border-radius: 5px; background-color: rgb(230,230,230);">
+        <div style="box-shadow: 0 0 8px black; margin: 10px auto; width: 810px; padding: 0; border: 2px solid rgb(200,200,200); border-radius: 5px; background-color: rgb(230,230,230);">
             <div style="background-color: rgb(160,40,40); font-size: 24px; color: rgb(230,230,230); font-variant: small-caps; font-family: sans-serif; padding: 4px; font-weight: bold; border-bottom: 2px solid rgb(140,20,20); box-shadow: 0 0 6px black;">
                 Authorized
             </div>
@@ -200,4 +199,4 @@
 
 </body>
 </html>
-<?php return 1; ?>
+<?php return 1; } ?>

@@ -1,5 +1,5 @@
 # Ban
-INSERT INTO grg_user_flags (user,relation,data) SELECT uid AS user, 'DENY' as relation, 'WHITELIST' as data FROM grg_users WHERE ban = 1;
+INSERT INTO ___PREFIX___user_flags (user,relation,data) SELECT uid AS user, 'DENY' as relation, 'WHITELIST' as data FROM ___PREFIX___users WHERE ban = 1;
 
 # Drop old stuff
-ALTER TABLE grg_users DROP ban;
+ALTER TABLE ___PREFIX___users DROP ban;

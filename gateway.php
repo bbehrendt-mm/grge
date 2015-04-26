@@ -88,6 +88,20 @@
 
         // Check for maintenance file
         if (!$maintenance && !$gateway_control) return 0;
+        else foreach (apache_request_headers() as $header => $value) {
+            if (strtolower($header) == 'x-requested-with' && strtolower($value) == 'xmlhttprequest') {
+                header('Content-Type: application/json');
+                echo json_encode([
+                    'error' => [
+                        'code' => 'GRGE-0002-0004',
+                        'name' => 'E_SERVER_MAINTENANCE',
+                        'message' => 'The server is currently under maintenance.',
+                        'details' => null,
+                    ]
+                ], JSON_FORCE_OBJECT);
+                die;
+            }
+        }
 ?>
 <html>
 <head>

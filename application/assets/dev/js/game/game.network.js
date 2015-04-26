@@ -23,10 +23,9 @@ game.network = {
         }).done(function(data) {
             if (data && data.error)
                 switch (data.error.code) {
-                    case "GRGE-0002-0001":
+                    case "GRGE-0002-0001": case "GRGE-0002-0004":
                         return game.reset();
                     case "GRGE-0000-0002":
-
                         alert('REQUEST ERROR: 404 REQUEST HANDLER NOT FOUND!' + (data.error.details.uri ? ('\nURI: ' + data.error.details.uri) : ''));
                         return game.reset();
                     default:

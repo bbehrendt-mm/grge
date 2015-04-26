@@ -127,7 +127,7 @@ ALTER TABLE ___PREFIX___multiplayer_lobby
   ADD PRIMARY KEY (gameid);
 
 ALTER TABLE ___PREFIX___profiles_xref
-  ADD PRIMARY KEY (rid,provider);
+  ADD UNIQUE KEY (`provider`,`rid`);
 
 ALTER TABLE ___PREFIX___ranking
   ADD PRIMARY KEY (season,uid,gameid), ADD KEY uid (uid) USING BTREE;

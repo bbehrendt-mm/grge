@@ -2,7 +2,7 @@
 /**
  * @var string[] $permissions List of basic permissions
  */
-
+/** @var array $achievements */
 ?>
 
 <h1 class="noclick"><i class="fa fa-arrow-circle-right"></i>Benutzerverwaltung</h1>
@@ -23,7 +23,7 @@
                 <div class="cell padded rw-1">&nbsp;</div>
                 <div class="cell padded rw-2"><b>UID</b></div>
                 <div class="cell padded rw-4"><b>Name</b></div>
-                <div class="cell padded rw-5"><b>Konten</b></div>
+                <div class="cell padded rw-5"><b>Accounts</b></div>
             </div>
         </div>
     </div>
@@ -43,6 +43,34 @@
         </div>
 
         <h2><?=__('Aktionen');?></h2>
+        <div class="row">
+            <div class="cell rw-6">Account Listing</div>
+            <div class="cell rw-6">
+                <label for="account_listing_status"></label><select class="form_input" id="account_listing_status" data-container="body">
+                    <option value="-1">Blacklist</option>
+                    <option value="0">Neutral</option>
+                    <option value="1">Whitelist</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell-small rw-7">Achievements</div>
+            <div class="cell-small rw-11">
+                <label for="account_achievements"></label><select class="form_input" id="account_achievements" data-container="body">
+                    <?php foreach ($achievements as $aid => $name) { ?>
+                        <option value="<?=$aid?>"><?=__($name)?></option>
+                    <?php } ?>
+                </select>
+            </div>
+            <div class="cell rw-2">
+                <input type="number" placeholder="x" id="account_achievements_count" class="form_input" />
+            </div>
+            <div class="cell rw-1">
+                <div class="btn" id="account_achievements_confirm"><i class="fa fa-check-circle"></i></div>
+            </div>
+        </div>
+
+        <h2><?=__('Rechteverwaltung');?></h2>
         <div class="row-table padded row-table-borders row-table-striped row-table-interact" id="permission_list">
             <div class="row">
                 <div class="cell padded rw-8"><b>Flag</b></div>
@@ -76,6 +104,8 @@
 
 <script type="application/javascript">
 // ## JS COMPRESS BEGIN ## //
+    $('#content').find('select').selectric();
+
     var get_selected = function() {
         return $.map($('#target_list').find(':checked'), function(k) {
             return $(k).val();
@@ -94,8 +124,47 @@
                     ))
                     .append($('<div />').addClass('cell padded rw-2').text(v.uid))
                     .append($('<div />').addClass('cell padded rw-4 pointer').text(v.name).click(function() {
+                        $('#account_listing_status').val(v.access).off('change').change(function() {
+                            var value = $(this).val();
+                            var users = get_selected();
+                            if (users.length == 0) users = [v.uid];
+
+                            $('#wrapper').addClass('disabled');
+                            game.network.query('admin/japi/users/flag', {users: users, 'set': {'WHITELIST': value}}, function(data) {
+                                if (data.error) {
+                                    alert(data.error.code + ' [' + data.error.name + ']: ' + data.error.message);
+                                    return;
+                                }
+
+                                if (!data.success || data.success != "1") game.render.html.notify('error', <?=__j('Ein Fehler ist aufgetreten...');?>, <?=__j('Oops');?>);
+                                else game.render.html.notify('success', 'OK');
+                            }, function() {
+                                $('#wrapper').removeClass('disabled');
+                            })
+                        }).selectric();
+
+                        $('#account_achievements_confirm').off('click').on('click',function() {
+                            var users = get_selected();
+                            if (users.length == 0) users = [v.uid];
+
+                            var aid = $('#account_achievements').val();
+                            var count = $('#account_achievements_count').val();
+
+                            game.network.query('admin/japi/users/achievements', {users: users, aid: aid, count: count}, function(data) {
+                                if (data.error) {
+                                    alert(data.error.code + ' [' + data.error.name + ']: ' + data.error.message);
+                                    return;
+                                }
+
+                                if (!data.success || data.success != "1") game.render.html.notify('error', <?=__j('Ein Fehler ist aufgetreten...');?>, <?=__j('Oops');?>);
+                                else game.render.html.notify('success', 'OK');
+                            }, function() {
+                                $('#wrapper').removeClass('disabled');
+                            })
+                        });
+
                         info_loader(v.uid, v.name);
-                    }))
+                    }).css(v.access != 0 ? {'font-weight': 'bold', 'color': v.access < 0 ? '#AA0000' : '#00AA00'} : {}))
                     .append(key_list = $('<div />').addClass('cell padded rw-5'))
             );
 

@@ -4,8 +4,12 @@
      * @var array $database An array containing the game mode and profession database: [modes => [jobs (a), locked (b), meta => [name (s), caption (s), body (s), headline (s)], requirements => [ext (a), ext_note (a), job (a), mode (a)], type (s)], jobs => [level (i), levels (a), meta => [name (s), caption (s)], locked (b), next_level (i|NULL), points (i), requirements => [ext (a), ext_note (a), job (a), mode (a)]]]
      * @var bool $lock True, if the player is blocked from accessing public games
      * @var int $lock_count Number of active complaints
+     * @var int $lock_max Max number of allowed complaints
      * @var int[] $lock_timerange Array, the first element contains the timestamp where the next complaint will be lifted, the second element contains the timestamp where the last complaint will be lifted
      * @var string[] $languages List of language flags
+     * @var array $store
+     * @var int $freecoins
+     * @var int $braincoins
      */
 
     //ToDo: Unstartable Jobs
@@ -228,6 +232,45 @@
             </div>
 
             <div class="row" data-conditional="1" data-provide='["estore"]' data-rely='["mode","id","password","protect","job","flow","name","slots"]'>
+                <h2><?=__('Kaufrausch in letzter Minute!');?></h2>
+
+                <div class="row">
+                    <div class="cell rw-5 padded">
+                        <div class="help noclick">
+                            <h4><?=__('Der Shop');?></h4>
+                            <?=__('Vor jedem Spielstart hast du Gelegenheit, nützliche Dinge für den einmaligen Gebrauch zu erwerben. Du erhälst einen Freibetrag von :free Münzen - möchtest du mehr ausgeben, musst du die Differenz aus deinem privaten Fundus ("BrainCoins") bezahlen. BrainCoins kannst du während bestimmten Events erhalten und, wenn auch selten, im Spiel finden.', [':free' => $freecoins]);?>
+                            <br /><i><?=__('ZombVival ist komplett kostenlos - BrainCoins können ::b::nicht::/b:: käuflich erworben werden!')?></i>
+                        </div>
+                    </div>
+                    <div class="cell rw-7 padded">
+                        <div class="store">
+                            <div class="store-header"><span class="bc-free"><?=$freecoins?></span><span class="bc"><?=$braincoins?></span></div>
+                            <div class="store-content">
+                                <?php foreach ($store as $sentry) { ?>
+                                    <div title="-" data-article="<?=$sentry['id']?>" data-cost="<?=$sentry['cost']?>" data-checkout="0">
+                                        <span class="confirm"><i class="fa fa-shopping-cart "></i></span>
+                                        <img src="media/icons/store/<?=$sentry['icon']?>.gif" alt="<?=__($sentry['name'])?>" />
+                                        <span class="bc"><?=$sentry['cost']?></span>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                            <div class="store-checkout">
+                                <div class="row">
+                                    <div class="cell rw-4 right padded"><?=__('Verbl. Freibetrag');?></div>
+                                    <div class="cell rw-2 left padded"><span class="bc-free" id="store-checkout-free"><?=$freecoins?></span></div>
+                                    <div class="cell rw-4 right padded"><?=__('Kosten');?></div>
+                                    <div class="cell rw-2 left padded"><span class="bc" id="store-checkout-payment">0</span></div>
+                                </div>
+                                <div class="store-note">
+                                    <?=__('Der Kauf wird abgeschlossen, indem du das Spiel startest.');?>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
                 <h2><?=__('Kanns losgehen?');?></h2>
                 <?php
                 $question = Tool_Gambling::select([
@@ -266,6 +309,38 @@
 </div>
 <script type="application/javascript">
 // ## JS COMPRESS BEGIN ## //
+    <?php foreach ($store as $sentry) { ?>
+        $('[data-article=<?=$sentry['id']?>]').qtip(game.render.html.qtip.store('top',<?=__j($sentry['name'])?>,<?=__j($sentry['desc'])?>));
+    <?php } ?>
+
+    var update_purchase = function() {
+        var free = <?=$freecoins?>;
+
+        var accum = 0;
+        $('[data-article]').each(function() {
+            if ($(this).attr('data-checkout') == '1')
+                accum += parseInt($(this).attr('data-cost'));
+        });
+
+        var payment = Math.max(0,accum-free);
+        var payment_box = $('#store-checkout-payment');
+
+        $('#store-checkout-free').text(Math.max(0,free-accum));
+        payment_box.text(payment);
+
+        if (payment > <?=$braincoins?>) {
+            payment_box.addClass('red');
+            $('#btn_confirm').addClass('disabled');
+        } else {
+            payment_box.removeClass('red');
+            $('#btn_confirm').removeClass('disabled');
+        }
+    };
+
+    $('[data-article]').click(function() {
+        $(this).attr('data-checkout',$(this).attr('data-checkout') == '0' ? '1' : '0');
+        update_purchase();
+    });
 
     $('#persistent').empty();
     $('[data-conditional=1]').hide();
@@ -434,6 +509,25 @@
         $.each($('#data-container').serializeArray(), function(k,v) {
             tmp_obj[v.name] = v.value;
         });
+
+        tmp_obj['store'] = {purchase: [], authorized_payment: 0};
+        var accum = 0; var min_payment = <?=$freecoins + 1?>;
+        $('[data-article]').each(function() {
+            var cost = parseInt($(this).attr('data-cost'));
+            if ($(this).attr('data-checkout') == '1') {
+                accum += cost;
+                tmp_obj.store.purchase.push($(this).attr('data-article'))
+            } else if (cost >= 0)
+                min_payment = Math.min(min_payment, cost);
+        });
+        tmp_obj.store.authorized_payment = Math.max(0,accum - <?=$freecoins?>);
+
+        if (Math.max(0,<?=$freecoins?> - accum) >= min_payment) {
+            if (!confirm(<?=__j('Du hast deinen Freibetrag im Shop noch nicht ausgeschöpft und könntest deinem Spiel noch weitere nützliche Dinge hinzufügen, ohne dafür bezahlen zu müssen. Bist du sicher, dass du das Spiel jetzt starten und den restlichen Freibetrag damit verfallen lassen möchtest?')?>)) return;
+        } else if (tmp_obj.store.authorized_payment > 0) {
+            if (!confirm(game.i18n(<?=__j('Möchtest du das Spiel jetzt starten und :payment BrainCoins für die Gegenstände ausgeben, die du im Shop erworben hast?')?>,{':payment': tmp_obj.store.authorized_payment}))) return;
+        }
+
 
         var layer = $('<div />');
 

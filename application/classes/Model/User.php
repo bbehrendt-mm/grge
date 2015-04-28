@@ -160,39 +160,41 @@ class Model_User extends Model {
 		return $ret;
 	}
 
-    public function universal_soulpoints($uid = NULL) {
+    public function coins($uid = NULL) {
         $userid = ($uid === NULL) ? $this->set['uid'] : $uid;
-        return static::get_universal_soulpoints($userid);
+        return static::get_coins($userid);
     }
 
-    public static function get_universal_soulpoints($userid) {
-        $usp = DB::select('univsp')->from('users')->where('uid', '=', $userid)->execute()->as_array();
-        return (int)$usp[0]['univsp'];
+    public static function get_coins($userid) {
+        $usp = DB::select('coins')->from('users')->where('uid', '=', $userid)->execute()->as_array();
+        return (int)$usp[0]['coins'];
     }
 
-    public function award_universal_soulpoints($uid = NULL, $points) {
+    public function award_coins($uid = NULL, $points) {
         $userid = ($uid === NULL) ? $this->set['uid'] : $uid;
-        return DB::update('users')->set(array('univsp' => $this->universal_soulpoints($userid) + $points))->where('uid', '=', $userid)->execute();
+        return DB::update('users')->set(array('coins' => $this->coins($userid) + $points))->where('uid', '=', $userid)->execute();
     }
 
-    public static function get_soulpoints($userid, $job = NULL, $board = NULL, $include_univsp = true) {
+    public static function remove_coins($uid, $coins) {
+        if (($c = static::get_coins($uid)) < $coins) return false;
+        return DB::update('users')->set(array('coins' => $c - $coins))->where('uid', '=', $uid)->execute();
+    }
+
+    public static function get_soulpoints($userid, $job = NULL, $board = NULL) {
         $rq = DB::select( array(DB::expr('SUM(`points`)'), 'points'))->from('ranking')->where('uid', '=', $userid);
         if ($job !== NULL && $job !== TRUE) $rq = $rq->where('job', '=', $job);
         if ($board !== NULL) $rq = $rq->where('board', '=', $board);
         if ($job === TRUE) $rq = $rq->select('job')->group_by('job');
 
         $sp = $rq->execute()->as_array();
-
-        $usp = ($include_univsp) ? static::get_universal_soulpoints($userid) : 0;
-        if ($job !== TRUE) $sp = (int)$sp[0]['points'] + $usp;
-        else foreach ($sp as &$data) $data['points'] += $usp;
+        if ($job !== TRUE) $sp = (int)$sp[0]['points'];
 
         return $sp;
     }
 
-	public function soulpoints($uid = NULL, $job = NULL, $board = NULL, $include_univsp = true) {
+	public function soulpoints($uid = NULL, $job = NULL, $board = NULL) {
 		$userid = ($uid === NULL) ? $this->set['uid'] : $uid;
-		return static::get_soulpoints($userid, $job, $board, $include_univsp);
+		return static::get_soulpoints($userid, $job, $board);
 	}
 	
 	public function contest_points() {

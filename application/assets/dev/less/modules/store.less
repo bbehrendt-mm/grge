@@ -1,0 +1,48 @@
+@import (once) "zombvival";
+
+@store-style-color: #b13e18;
+@store-bg-color: #292929;
+
+div.store {
+  background: url('media/img/store.png'); border-radius: 7px; border: 3px solid @store-style-color; box-shadow: 0 0 4px rgba(0,0,0,0.5);
+  >.store-header {
+    background: @store-style-color; padding: 4px; text-align: right;
+    >.bc-free, >.bc {
+      display: inline-block; padding: 2px 15px 2px 30px; font-weight: bold; font-size: small; font-family: "Exo 2",sans-serif; color: white;
+      border: 2px solid mix(@store-bg-color,@store-style-color,50%); margin-left: 15px; border-radius: 15px;
+      &.bc {background: url('media/icons/coin.gif') no-repeat left center, @store-bg-color}
+      &.bc-free {background: url('media/icons/coin_free.gif') no-repeat left center, @store-bg-color}
+    }
+  }
+  >.store-content {
+    padding: 15px;
+    >div {
+      .impactbox(@store-style-color,@store-bg-color);
+      transition: all 0.2s;
+      &:hover, &[data-checkout='1'] {.impactbox(@store-style-color,mix(@store-style-color,@store-bg-color,10%)); box-shadow: inset 0 0 4px black;}
+      margin: 6px;
+      padding: 8px 8px 15px;
+      display: inline-block; box-shadow: inset 0 0 4px black;
+      position: relative;
+      >span.confirm {overflow: hidden; transition: height 0.3s; background: fade(@store-style-color,50%); color: white; position: absolute; top: 0; left: 0; right: 0; height: 0; text-align: center; font-size: small;}
+      &[data-checkout='1']>span.confirm {height: 12px}
+      >span.bc {
+        display: block; position: absolute; bottom: 0; left: 0; right: 0; text-align: center; font-weight: bold; font-size: small; font-family: "Exo 2",sans-serif; color: white;
+        background: fade(@store-style-color,50%)
+      }
+    }
+  }
+  >.store-checkout {
+    background: fade(@store-style-color,50%); font-size: small; color: #ffffff;
+    .bc,.bc-free {
+      font-weight: bold; padding-left: 12px;
+      &.bc {background: url('media/icons/coin_small.gif') no-repeat left center; &.red {color: #FF0000}}
+      &.bc-free {background: url('media/icons/coin_free_small.gif') no-repeat left center}
+    }
+  }
+}
+
+.qtip-custom-store {
+  padding: 5px; background: @store-bg-color; border: 6px solid mix(@store-bg-color,@store-style-color,50%); box-shadow: 0 0 5px black;
+  b.header {display: block; color: @store-style-color; font-weight: bold; text-align: center; font-size: larger}
+}

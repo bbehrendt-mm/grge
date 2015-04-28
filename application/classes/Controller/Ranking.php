@@ -238,7 +238,7 @@ class Controller_Ranking extends Controller {
         uasort($achievements, function($a, $b) {return (Model_Achievement::points_aid($b['aid']) != Model_Achievement::points_aid($a['aid'])) ? (Model_Achievement::points_aid($b['aid']) - Model_Achievement::points_aid($a['aid'])) : $b['aid'] - $a['aid'];});
 
         // Get Ranks
-        $spoints = Model_Euser::get_soulpoints($uid, null, null, false);
+        $spoints = Model_Euser::get_soulpoints($uid, null, null);
         list($srank, $next_srank) = Model_Euser::group_soulpoints($spoints);
 
         $kpoints = min(100,max(-100,Model_User::get_karma($uid)))/100;

@@ -117,7 +117,7 @@ class Model_Places_Outworld extends Model_Places_Abstract_Node {
                                     Tool_Scripts::consume_available_items(array('Model_Items_Soul' => $ws, 'Model_Items_Soul2' => $ss), true, false, false, $p);
                                     $points = $ws + 5 * $ss;
 
-                                    $user->award_universal_soulpoints($p->user_id(), $points);
+                                    $user->award_coins($p->user_id(), $points);
                                     $p->log()->add(new Model_Log_Types_Text(null, null, 'Du hast :total Seelen die Freiheit geschenkt und wirst dafür mit :usp Universal-Seelenpunkten belohnt!', array(':total' => $ws + $ss, ':usp' => $points)));
                                 })
                         )

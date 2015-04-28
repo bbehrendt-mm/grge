@@ -60,6 +60,17 @@ game.render.html.qtip = {
         return game.render.html.qtip.generic(pos,'qtip-tipsy qtip-shadow qtip-rounded');
     },
 
+    store: function(pos, title, description) {
+        return game.render.html.qtip.generic(pos,'qtip-tipsy qtip-custom-store', false, 0, {
+            render: function(event,api) {
+                $(this).find('.qtip-content')
+                    .empty()
+                    .append($('<b />').addClass('header').text(title))
+                    .append($('<p />').text(description))
+            }
+        });
+    },
+
     ingame: function(pos, events) {
         return game.render.html.qtip.generic(pos,'qtip-default qtip-shadow qtip-custom-ingame',true, 0, events);
     },

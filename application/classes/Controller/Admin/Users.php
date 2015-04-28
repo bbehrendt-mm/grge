@@ -5,11 +5,42 @@ class Controller_Admin_Users extends Controller_Admin_Admin {
     protected static $auto_require = ['USERLIST'];
 
     public function action_main() {
+        //Cache achievements
+        $ach = [];
+        foreach ((new ReflectionClass('Model_Achievement'))->getConstants() as $aid)
+            $ach[$aid] = Model_Achievement::decode_aid($aid);
+
         $this->add_widget(View::factory('admin/users')
-            ->set('permissions',['ROOT','TRANSLATE','TRANSLATE_MOD','USERLIST','WHITELIST','CHEAT'])
+            ->set('permissions',['ROOT','TRANSLATE','TRANSLATE_MOD','USERLIST','GAMELIST','WHITELIST','CHEAT'])
+            ->set('achievements', $ach)
             ->render());
 
         $this->render();
+    }
+
+    public function japi_achievements() {
+        $users = $this->request->post('users');
+        $aid = (int)$this->request->post('aid');
+        $count = (int)$this->request->post('count');
+        if (!$users || !$aid || !$count || !is_array($users))
+            return $this->render([
+                'success' => 0
+            ]);
+
+        foreach ($users as $user) {
+            $local_count = $count;
+            $res = DB::select('value')->from('achievements')->where('gameid', '=', 0)->and_where('uid', '=', $user)->and_where('aid', '=', $aid)->execute()->as_array();
+            if (count($res) > 0) {
+                $local_count += (int)$res[0]['value'];
+                DB::delete('achievements')->where('gameid', '=', 0)->and_where('uid', '=', $user)->and_where('aid', '=', $aid)->execute();
+            }
+            if ($local_count > 0)
+                DB::insert('achievements', ['uid', 'gameid', 'aid', 'value'])->values([$user, 0, $aid, $local_count])->execute();
+        }
+
+        return $this->render([
+            'success' => 1
+        ]);
     }
 
     public function japi_flag() {
@@ -25,6 +56,9 @@ class Controller_Admin_Users extends Controller_Admin_Admin {
                     'success' => 0
                 ]);
             }
+
+        // Reset
+        DB::update('users')->set(['session' => null])->where('uid','IN',$users)->execute();
 
         //Clear
         DB::delete('user_flags')->where('user', 'IN', $users)->and_where('relation', 'IN', ['ALLOW','DENY'])->and_where('data','IN',array_keys($changes))->execute();
@@ -87,13 +121,16 @@ class Controller_Admin_Users extends Controller_Admin_Admin {
         $query = explode(':', $this->request->post('query'));
         list($limit,$query) = (count($query) > 1) ? $query : ['n',$query[0]];
 
-        if (!in_array($limit,['i','n']))
+        if (!in_array($limit,['i','n','r']))
             $limit = 'n';
 
-        $result = DB::select('uid','name')->from('users');
+        $result = DB::select('uid','name','flags.access')->from('users')->join([DB::select('user',['relation','access'])->from('user_flags')->where('data','=','WHITELIST'),'flags'],'LEFT')->on('users.uid','=','flags.user');
         switch($limit) {
             case 'i':
                 $result->where('uid','=',(int)$query);
+                break;
+            case 'r':
+                $result->where('uid','IN',DB::select(['zvid','uid'])->distinct(true)->from('profiles_xref')->where('rid','=',(int)$query));
                 break;
             case 'n': default:
                 $result->where('name','LIKE',"%{$query}%");
@@ -103,6 +140,7 @@ class Controller_Admin_Users extends Controller_Admin_Admin {
 
         foreach ($result as &$entry) {
             $entry['auth'] = [];
+            $entry['access'] = $entry['access'] ? ($entry['access'] == 'ALLOW' ? 1 : -1) : 0;
             foreach (Model_Auth_Interface::get_all_providers($entry['uid']) as $provider => $variables)
                 /** @var Model_Auth_Interface $provider */
                 $entry['auth'][$provider::get_service_name()] = [$variables['rid'],$variables['var1'],$variables['var2']];

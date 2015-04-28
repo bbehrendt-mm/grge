@@ -42,7 +42,7 @@ class Model_Places_Abstract_Xmas extends Model_Places_Abstract_Place {
 
         $deco = $game->location($game->map($this->uin)->resolve_fixed_id(1))->get_decoration_value();
         if ($deco > 0) {
-            $user->award_universal_soulpoints($player->id(), $deco);
+            $user->award_coins($player->id(), $deco);
             $player->log()->add(new Model_Log_Types_Text(null, null, 'Da du den Weihnachtsbaum so hübsch geschmückt hast, erhälst du als Belohnung :num universelle Seelenpunkte sowie ein paar Geschenke. Herzlichen Glückwunsch und Frohe Weihnachten!', array(':num' => $deco)));
 
             $n2 = floor($deco/5);

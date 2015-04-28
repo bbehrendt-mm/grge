@@ -86,6 +86,12 @@
                         line('DATASET blob removed.');
                     }
 
+                    if (in_array('univsp', $struct)) {
+                        line('Universal soulpoint column found in profile. Converting...');
+                        if (!db($mysqli, "ALTER TABLE ___PREFIX___users CHANGE univsp coins INT(11) NOT NULL DEFAULT '0'")) return false;
+                        line('USP converted to coin storage.');
+                    }
+
                 } else return false;
                 line('Profile data is up to date.');
 

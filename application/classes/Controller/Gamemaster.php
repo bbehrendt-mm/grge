@@ -74,17 +74,29 @@ class Controller_Gamemaster extends Controller {
      * @param int $speed Game flow setting; duration of ticks in seconds, or -1 to use variable flow
      * @param int $job Profession
      * @param int $level Profession level
+     * @param Model_Store_Interface[] $store
      * @return bool Always returns true
+     * @throws Exception
      */
-    private function start_singleplayer($mode,$speed,$job,$level) {
+    private function start_singleplayer($mode,$speed,$job,$level,$store) {
+        global $player;
+
         // Make a new game
         $game = new Model_Game();
         if (!$game->start($mode, ($speed < 0) ? 1 : 0, ($speed < 0) ? 300 : $speed, null))
             return $this->error(\grge\E_STARTER_CREATION_FAILED);
 
+        foreach ($store as $elem)
+            $elem::trigger_player_before_init($job,$level);
+
         // Join newly created game
         if (!$game->join($job, $level, null))
             return $this->error(\grge\E_STARTER_JOIN_FAILED);
+
+        foreach ($store as $elem) {
+            $elem::trigger_game_after_init($game);
+            $elem::trigger_player_after_init($player);
+        }
 
         // Update session and redirect
         $this->session->set('game',$game);
@@ -101,11 +113,14 @@ class Controller_Gamemaster extends Controller {
      * @param string $lang Language name
      * @param int $slots Number of open slots
      * @param string|bool $pw Password, or anything that equals false to disable password protection
+     * @param Model_Store_Interface[] $store
      * @return bool
      * @throws Exception
      * @throws Kohana_Exception
      */
-    private function start_multiplayer($mode,$job,$level,$name,$lang,$slots,$pw) {
+    private function start_multiplayer($mode,$job,$level,$name,$lang,$slots,$pw,$store) {
+        global $player;
+
         // Check if lang is valid
         if (!in_array($lang, array_keys(static::get_lang_flags())))
             return $this->error(\grge\E_STARTER_INVALID_SETUP);
@@ -114,9 +129,17 @@ class Controller_Gamemaster extends Controller {
         $game = new Model_Game();
         if (($id = $game->start($mode, 1, 300, null, $name)) && DB::insert('multiplayer_lobby', array('gameid', 'lang', 'slots', 'name', 'timestamp', 'password'))->values(array($id, $lang, $slots, $name, time(), $pw ? hash('sha256', $pw, false) : null))->execute() ) {
 
+            foreach ($store as $elem)
+                $elem::trigger_player_before_init($job,$level);
+
             //Join game
             if (!$game->join($job, $level, null))
                 return $this->error(\grge\E_STARTER_JOIN_FAILED);
+
+            foreach ($store as $elem) {
+                $elem::trigger_game_after_init($game);
+                $elem::trigger_player_after_init($player);
+            }
 
             DB::update('multiplayer_lobby')->set(array('slots' => $slots - 1))->where('gameid', '=', $id)->execute();
         } else return $this->error(\grge\E_STARTER_CREATION_FAILED);
@@ -129,18 +152,19 @@ class Controller_Gamemaster extends Controller {
 
     /**
      * Join an existing multi player game. Note that this function does NOT attempt to validate the configuration!
+     * @param $id
      * @param int $job Player profession
      * @param int $level Player Profession level
      * @param string|bool $pw Password, can be empty if the game is not password protected
+     * @param Model_Store_Interface[] $store
      * @return bool
      * @throws Exception
-     * @throws Kohana_Exception
      */
-    private function join_multiplayer($id,$job,$level,$pw) {
+    private function join_multiplayer($id,$job,$level,$pw,$store = []) {
         /**
          * @global Model_EUser $user
          */
-        global $user;
+        global $user, $player;
 
         // Check password
         if (!$this->check_password($id,$pw,false))
@@ -154,6 +178,10 @@ class Controller_Gamemaster extends Controller {
         if (!static::fill_lobby_slot($id))
             return $this->error(\grge\E_STARTER_LOBBY_UPDATE_FAILURE);
 
+        //Apply player mods
+        foreach ($store as $elem)
+            $elem::trigger_player_before_init($job,$level);
+
         // Load game
         $game = new Model_Game;
         if (!$game->read($id))
@@ -162,6 +190,11 @@ class Controller_Gamemaster extends Controller {
         // Join player
         if (!$game->join($job, $level, null))
             return $this->error(\grge\E_STARTER_JOIN_FAILED);
+
+        foreach ($store as $elem) {
+            $elem::trigger_game_after_init($game);
+            $elem::trigger_player_after_init($player);
+        }
 
         // Update session and redirect
         $this->session->set('game',$game);
@@ -282,6 +315,11 @@ class Controller_Gamemaster extends Controller {
      * @return bool
      */
     public function japi_start() {
+        /**
+         * @global Model_EUser $user
+         */
+        global $user;
+
         // Get POST stuff
         $mode = (int)$this->request->current()->post('mode');
         $job = (int)$this->request->current()->post('job');
@@ -293,16 +331,42 @@ class Controller_Gamemaster extends Controller {
         $slots = (int)$this->request->current()->post('slots');
         $lang = $this->request->current()->post('lang');
 
+        $store = $this->request->current()->post('store');
+
         // Check if all that config stuff is valid
         if (!($level = $this->check_game_params($mode,$job,$flow,$slots,$id,$name)))
             return $this->error(\grge\E_STARTER_INVALID_SETUP);
 
+        $list = [];
+        $current_payment = -100;
+        if (is_array($store) && isset($store['purchase']) && isset($store['authorized_payment']) && is_array($store['purchase'])) {
+            $max_payment = (int)$store['authorized_payment'];
+            foreach (Tool_Gamemodes::get_store_classes() as $store_element)
+                if (in_array(Tool_System::getClassID($store_element), $store['purchase'])) {
+                    $list[] = $store_element;
+                    $current_payment += $store_element::get_cost();
+                }
+
+            $current_payment = max(0,$current_payment);
+            if ($current_payment > $max_payment || $current_payment > $user->coins()) return $this->error(\grge\E_STARTER_INVALID_SETUP);
+        } else return $this->error(\grge\E_STARTER_INVALID_SETUP);
+
         // If an ID is given, we want to join a multiplayer game
-        if ($id > 0) return $this->join_multiplayer($id,$job,$level,$pw);
+        if ($id > 0) {
+            if ($this->join_multiplayer($id,$job,$level,$pw,$list))
+                return $user->remove_coins($user->uid(),$current_payment);
+            else return false;
+        }
         // If a name is given, we want to greate a multiplayer game
-        if ($name) return $this->start_multiplayer($mode,$job,$level,$name,$lang,$slots,$protect);
+        if ($name) {
+            if ($this->start_multiplayer($mode,$job,$level,$name,$lang,$slots,$protect,$list))
+                return $user->remove_coins($user->uid(),$current_payment);
+            else return false;
+        }
         // Otherwise, we probably want to create a single player game
-        return $this->start_singleplayer($mode,$flow,$job,$level);
+        if ($this->start_singleplayer($mode,$flow,$job,$level,$list))
+            return $user->remove_coins($user->uid(),$current_payment);
+        else return false;
     }
 
     /**
@@ -354,6 +418,16 @@ class Controller_Gamemaster extends Controller {
         }
         $game = null;
 
+        $store = [];
+        foreach (Tool_Gamemodes::get_store_classes() as $store_element)
+            $store[] = [
+                'id' => Tool_System::getClassID($store_element),
+                'cost' => $store_element::get_cost(),
+                'name' => $store_element::get_name(),
+                'desc' => $store_element::get_description(),
+                'icon' => $store_element::get_icon(),
+            ];
+
         // Render
         $this->add_widget(View::factory('pages/gameselect')
                 ->set('database', Tool_Gamemodes::compile_mode_database(true))
@@ -363,6 +437,9 @@ class Controller_Gamemaster extends Controller {
                 ->set('lock_max', Kohana::$config->load('basic.multiplayer.mp_lockouts.max_count'))
                 ->set('lock', $user->lockouts_is_locked())
                 ->set('lock_timerange', $user->lockouts_get_time_range())
+                ->set('store',$store)
+                ->set('freecoins',100)
+                ->set('braincoins', $user->coins())
                 ->render()
         );
         $this->render();

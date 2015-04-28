@@ -11,7 +11,7 @@ class Tool_Gamemodes {
         $accum = 0;
         foreach (explode(',', $mode) as $imode) {
             if (!isset(static::$usp_cache['mode'][$imode]))
-                static::$usp_cache['mode'][$imode] = (int)$user->soulpoints(null, null, $imode, true);
+                static::$usp_cache['mode'][$imode] = (int)$user->soulpoints(null, null, $imode);
             $accum += static::$usp_cache['mode'][$imode];
         }
 
@@ -25,7 +25,7 @@ class Tool_Gamemodes {
         $accum = 0;
         foreach (explode(',', $job) as $ijob) {
             if (!isset(static::$usp_cache['job'][$ijob]))
-                static::$usp_cache['job'][$ijob] = (int)$user->soulpoints(null, $ijob, null, true);
+                static::$usp_cache['job'][$ijob] = (int)$user->soulpoints(null, $ijob, null);
             $accum += static::$usp_cache['job'][$ijob];
         }
         return $accum;
@@ -171,5 +171,24 @@ class Tool_Gamemodes {
 
     public static function get_board_by_id($bid) {
         return Kohana::$config->load("modes.modes.$bid.meta.name");
+    }
+
+    /**
+     * @return Model_Store_Interface[]
+     */
+    public static function get_store_classes() {
+        $accum = [];
+        foreach (scandir(APPPATH . 'classes/Model/Store/') as $filename) {
+            if (substr($filename,-4) !== '.php') continue;
+            $filename = 'Model_Store_' . substr($filename,0,-4);
+            if (!class_exists($filename)) continue;
+
+            $reflection = new ReflectionClass($filename);
+            if ($reflection->isAbstract()) continue;
+
+            /** @var Model_Store_Interface $filename */
+            $accum[] = $filename;
+        }
+        return $accum;
     }
 }

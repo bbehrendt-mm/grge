@@ -30,6 +30,6 @@ game = {
     },
 
     reset: function() {
-        window.location.reload();
+        window.location.href = 'index.php';
     }
 };

@@ -29,5 +29,32 @@ return array(
             'url' => 'http://creativecommons.org/licenses/by/3.0/'
         ]
     ],
-
+    [
+        'title' => 'Spinning Gold Coin',
+        'url' => 'http://opengameart.org/content/spinning-gold-coin',
+        'local' => 'media/icons/coin.gif',
+        'author' => [
+            'name' => 'morgan3d',
+            'url' => 'http://opengameart.org/users/morgan3d',
+        ],
+        'license' => [
+            'short' => 'CC BY 3.0',
+            'long' => 'Creative Commons Attribution 3.0 Unported',
+            'url' => 'http://creativecommons.org/licenses/by/3.0/'
+        ]
+    ],
+    [
+        'title' => 'Gold Treasure icons',
+        'url' => 'http://opengameart.org/content/gold-treasure-icons',
+        'local' => 'media/icons/coin_small.gif',
+        'author' => [
+            'name' => 'Clint Bellanger',
+            'url' => 'http://opengameart.org/users/clint-bellanger',
+        ],
+        'license' => [
+            'short' => 'CC BY-SA 3.0',
+            'long' => 'Creative Commons Attribution-ShareAlike 3.0 Unported',
+            'url' => 'http://creativecommons.org/licenses/by-sa/3.0/'
+        ]
+    ],
 );

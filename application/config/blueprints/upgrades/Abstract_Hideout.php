@@ -2,13 +2,18 @@
 
 return Model_Blueprints::factory()
     // External stuff
+    ->add_blueprints(Model_Blueprint::factory()->id('hideout_slot')->name('Sicheres Versteck'), true)
     ->add_blueprints(Model_Blueprint::factory()->id('outside')->name('Bebaubarer Aussenbereich'), true)
     ->add_blueprints(Model_Blueprint::factory()->id('outside_space')->name('Großflächiger Aussenbereich'), true)
     ->add_blueprints(Model_Blueprint::factory()->id('impaler')->name('Vorbereitete Fallgruben'), true)
 
-    // ++ STACK -> All blueprints below benefit from daytime bonus
-    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->add_modifier(Model_Blueprint::BP_MOD_ENERGY, function($pl,$pre,$e) {
-        return (Tool_Scripts::get_timeofday($pl) == 'morning') ? max(min(1,$e),floor($e*0.75)) : $e;
+    // ++ STACK -> All blueprints below benefit from daytime and handyman bonus
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->add_modifier(Model_Blueprint::BP_MOD_ENERGY, function($pl,$pre,$e) { /** @var Model_Player $pl */
+        $mod = 1;
+        if (Tool_Scripts::get_timeofday($pl) == 'morning') $mod -= 0.25;    // Daytime bonus
+        if ($pl->buff_retr('tr_handyman')) $mod -= 0.1;                     // Handyman Bonus
+
+        return max(min(1,$e),floor($e*$mod));
     });})
 
     // Hideout repair stuff

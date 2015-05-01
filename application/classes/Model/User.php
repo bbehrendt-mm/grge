@@ -25,9 +25,8 @@ class Model_User extends Model {
 	}
 	
 	public function valid() {
-		$ret = DB::select('session')->from('users')->where('uid', '=', $this->set['uid'])->execute()->as_array();
-		if ($ret && $ret[0] && ($ret[0]['session'] == $this->sid)) return true;
-		else return false;
+		$ret = DB::select('session')->from('users')->where('uid', '=', $this->set['uid'])->execute()->get('session',null);
+		return ($ret && ($ret == $this->sid));
 	}
 	
 	public static function name_by_id($uid) {

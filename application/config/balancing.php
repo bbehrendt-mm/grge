@@ -8,13 +8,8 @@ return array(
         'min_duration' => 120,
         'min_interval' => 120,
 	),
-    'names' => array(
-        'main'      => 'Weltkarte',
-        'bhouse'    => 'Verbranntes Haus',
-        'hospital'  => 'Krankenhaus',
-        'camping'   => 'Campingplatz',
-        'thouse'    => 'Baumhaus',
-        'ashide'    => 'Versteckter Flügel der Irrenanstalt',
-        'xmas'      => 'Event'
-    ),
+    'shop' => array(
+        'enabled' => true,
+        'free_coins' => 100
+    )
 );

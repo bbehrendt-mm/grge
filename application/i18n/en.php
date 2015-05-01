@@ -3477,11 +3477,11 @@ return array (
   'Vor langer Zeit war dieses Gebäude mal ein normales Krankenhaus. Irgendwann wurde es zu einer "Heilanstalt für Geisteskranke" umfunktioniert. Gerüchte besagen, dass niemand, der dort eingeliefert wurde, jemals wieder herausgekommen ist. Natürlich ist das Gebäude längst verlassen, es gibt also überhaupt keinen Grund vor irgendwas dort drin Angst zu haben. Obwohl es so scheint als würden selbst die Zombies dieses Gebäude meiden ...' =>
 	'Before it was turned into an insane asylum, this used to be an ordinary hospital. As rumors go, no one who was hospitalized here ever returned... This place has been abandoned for years, however, so there should be nothing to be afraid of. Especially since even zombies seem to avoid this place...',
   'Gerade hast du es dir bequem gemacht, da hörst du hinter dir plötzlich die Zeltplane reißen. Noch bevor du dich umdrehen kannst spürst du einen stechenden Schmerz im Rücken - herzlichen Glückwunsch, du bist tot.' =>
-	'Gerade hast du es dir bequem gemacht, da hörst du hinter dir plötzlich die Zeltplane reißen. Noch bevor du dich umdrehen kannst spürst du einen stechenden Schmerz im Rücken - herzlichen Glückwunsch, du bist tot.',
+	'You were just getting comfy in your tent when suddenly, the flysheet behind you rips open. Before you can turn around, you feel a stabbing pain in your back - congratulations, you are dead.',
   'Serienkiller-Opfer' =>
 	'Victim of a serial killer',
   'Rechteverwaltung' =>
-	'Rechteverwaltung',
+	'Permission Management',
   'Kreativer Input' =>
 	'Creative Input',
   'Entomologe' =>
@@ -3495,7 +3495,7 @@ return array (
   'Trostpreis' =>
 	'Booby Price',
   'Gnadenstoß' =>
-	'Gnadenstoß',
+	'Coup de Grâce',
   'Opfer der Raben' =>
 	'Raven\'s Victim',
   'Berühmter Hardcore-Überlebenskünstler' =>
@@ -3507,27 +3507,111 @@ return array (
   'Titan' =>
 	'Titan',
   'Kaufrausch in letzter Minute!' =>
-	'Kaufrausch in letzter Minute!',
+	'Last Minute Shopping Spree!',
   'Der Shop' =>
-	'Der Shop',
+	'The Shop',
   'Vor jedem Spielstart hast du Gelegenheit, nützliche Dinge für den einmaligen Gebrauch zu erwerben. Du erhälst einen Freibetrag von :free Münzen - möchtest du mehr ausgeben, musst du die Differenz aus deinem privaten Fundus ("BrainCoins") bezahlen. BrainCoins kannst du während bestimmten Events erhalten und, wenn auch selten, im Spiel finden.' =>
-	'Vor jedem Spielstart hast du Gelegenheit, nützliche Dinge für den einmaligen Gebrauch zu erwerben. Du erhälst einen Freibetrag von :free Münzen - möchtest du mehr ausgeben, musst du die Differenz aus deinem privaten Fundus ("BrainCoins") bezahlen. BrainCoins kannst du während bestimmten Events erhalten und, wenn auch selten, im Spiel finden.',
+	'Before starting a game, you have the chance to buy various useful items. You\'ll receive an allowance of :free coins - if you want to spend more, you\'ll have to pay the difference. The currency used in this shop is called "BrainCoins" - you can get them during different events or find them in games (rarely).',
   'ZombVival ist komplett kostenlos - BrainCoins können ::b::nicht::/b:: käuflich erworben werden!' =>
-	'ZombVival ist komplett kostenlos - BrainCoins können ::b::nicht::/b:: käuflich erworben werden!',
+	'ZombVival is completely free - You can ::b::not::/b:: buy BrainCoins for money!',
   'Schwermetall-Paket' =>
-	'Schwermetall-Paket',
+	'Heavy Metal Package',
   'Morgenlatte-Paket' =>
-	'Morgenlatte-Paket',
+	'Morning Wood Package',
   'Verbl. Freibetrag' =>
-	'Verbl. Freibetrag',
+	'Rem. allowance',
   'Kosten' =>
-	'Kosten',
+	'Costs',
   'Der Kauf wird abgeschlossen, indem du das Spiel startest.' =>
-	'Der Kauf wird abgeschlossen, indem du das Spiel startest.',
+	'Your purchase will be completed once you start the game.',
   'Feierabend-Bier' =>
-	'Feierabend-Bier',
+	'Beer O\'Clock Package',
   'Du hast deinen Freibetrag im Shop noch nicht ausgeschöpft und könntest deinem Spiel noch weitere nützliche Dinge hinzufügen, ohne dafür bezahlen zu müssen. Bist du sicher, dass du das Spiel jetzt starten und den restlichen Freibetrag damit verfallen lassen möchtest?' =>
-	'Du hast deinen Freibetrag im Shop noch nicht ausgeschöpft und könntest deinem Spiel noch weitere nützliche Dinge hinzufügen, ohne dafür bezahlen zu müssen. Bist du sicher, dass du das Spiel jetzt starten und den restlichen Freibetrag damit verfallen lassen möchtest?',
+	'You didn\'t fully spend your allowance in the shop - why not add more useful stuff to your game without paying anything? Are you sure you want to start the game now and therefore waste the remaining allowance?',
   'Möchtest du das Spiel jetzt starten und :payment BrainCoins für die Gegenstände ausgeben, die du im Shop erworben hast?' =>
-	'Möchtest du das Spiel jetzt starten und :payment BrainCoins für die Gegenstände ausgeben, die du im Shop erworben hast?',
+	'Would you like to start the game and pay :payment BrainCoins for the items you have selected?',
+  'Mit diesem Paket werden folgende Gegenstände in deinem Versteck abgelegt:' =>
+	'This package will add the following items to your hideout:',
+  'Der Shop ist derzeit leider ausverkauft ...' =>
+	'The shop is sold out right now...',
+  'Lade aktuelle Angebote ...' =>
+	'Checking store supplies...',
+  'So ein ZombVival-Spiel zu starten ist schon ziemlich harte Arbeit... Belohne dich selbst, indem du dir ein Feierabend-Bier genehmigst - oder direkt mehrere!' =>
+	'Starting on of those ZombVival games is pretty hard work... Why not reward yourself with a beer .... and after that maybe a few more beers.',
+  'Wer auf alles vorbereitet sein will, der sollte immer einen Vorrat an Baumaterialien bereit halten. Leider warst du richtig scheiße auf die Zombieapokalypse vorbereitet, daher musst du dein Baumaterial jetzt hier kaufen.' =>
+	'To be prepared for everything, you always need to stash some supplies. Unfortunately, you idiot didn\'t prepare at all for the zombie apocalypse, so now you have to waste precious money buying this stuff here.',
+  'NRA-Waffenlizenz' =>
+	'NRA-sponsored Gun Permit',
+  'Sturmgewehr' =>
+	'Assault Rifle',
+  'Die NRA-Waffenlizenz wird nur den ehrbarsten Bürger der Vereinigten Staaten verliehen; außerdem Drogendealern, Tierquälern, gewalttätigen Schwerverbrechern, Vergewaltigern, Drogenabhängigen, Terroristen, psychisch gestörte Veteranen und Politikern.' =>
+	'Only the most honorable American citizens can optain this NRA-sponsored Gun Permit; also drug dealers, animal tormentors, violent criminals, rapists, meth addicts, terrorists, psychopaths and politicians.',
+  'Mit diesem Paket werden folgende Gegenstände in deinem Inventar abgelegt:' =>
+	'This package will add the following items to your inventory:',
+  'Ein Fehler ist aufgetreten!' =>
+	'An error occured!',
+  'Dein aktueller Spielstand ist beschädigt!' =>
+	'Your current savegame has been damaged!',
+  'Aufgrund eines Fehlers wurde dein aktueller Spielstand beschädigt. Keine Angst, deine Seelenpunkte, Auszeichnungen oder Ranking-Plätze sind nicht betroffen. Allerdings kannst du dein aktuelles Spiel möglicherweise nicht fortsetzen.' =>
+	'Due to an error, your current savegame has been damaged. Don\'t worry, your soul points, achievements and ranking positions are not affected. However, you might not be able to resume your current game.',
+  'Um dieses Problem zu beheben, stehen dir mehrere Möglichkeiten offen.' =>
+	'Here are some suggestions to solve this problem:',
+  'Logge dich aus und wieder ein.' =>
+	'Log out and in again.',
+  'Die einfachsten Lösungen sind manchmal die effektivsten, und einen Versuch ist es allemal wert.' =>
+	'Sometimes, this simple solution is the most effective one. It\'s worth a try at least!',
+  'Versuche es später erneut.' =>
+	'Try again later.',
+  'Möglicherweise resultiert der Fehler aus einer Überlastung des Servers. Wenn die Seite gerade allgemein langsam reagiert, oder du zuvor eine Meldung mit dem Fehler "Unable to obtain database lock" erhalten hast, solltest du es in ein paar Minuten einfach erneut versuchen.' =>
+	'This problem might be a result of the server being overloaded. If the site is generally slow, or you\'ve received the error "Unable to obtain database lock" before, it\'s best to wait a few minutes and then try again.',
+  'Lasse den Server das Problem automatisch beheben.' =>
+	'Let the server sort this out for you.',
+  'Wenn du diese Option wählst, wird der beschädigte Spielstand einfach gelöscht, sodass du sofort ein neues Spiel beginnen kannst. Handelt es sich bei dem Spielstand um eine Mehrspieler-Partie betrifft diese Aktion nur dich, nicht jedoch die anderen Teilnehmer der Partie. Deine gesammelten Seelenpunkte, Auszeichnungen und Ranking-Plätze sind von dieser Aktion ebenfalls nicht betroffen.' =>
+	'By using this option, you\'ll instruct the server to just discard the damaged savegame. If this was a multiplayer game, all the other players will be able to continue playing normally despite of this. Your soul points, achievements and ranking positions will not be affected.',
+  'Automatisch beheben' =>
+	'Fix automatically',
+  'Informiere den Administrator.' =>
+	'Inform an Admin',
+  'hier' =>
+	'here',
+  'Ein Administrator ist in jedem Fall in der Lage, zu helfen. Melde dich im Forum oder klicke :hier, um eine E-Mail an den Administrator zu senden.' =>
+	'The admin is usually capable of solving your problems. Please post a message on the forum or click :hier to write a mail to the administrator.',
+  'Bitte entschuldige diesen Fehler.' =>
+	'Please excuse this problem.',
+  'Dein Spielstand wurde gelöscht. Du kannst nun ein neues Spiel beginnen.' =>
+	'Your savegame has been deleted. Feel free to start a new game.',
+  'Die automatische Reparatur ist fehlgeschlagen. Bitte kontaktiere einen Administrator!' =>
+	'The automatic repair has failed. Please contact an administrator.',
+  'Dieses Sturmgewehr erhält jeder, der eine lebenslange NRA-Mitgliedschaft abschließt. Achtung: Darf nur gegen Kriminelle, Auslänger, Nicht-Christen und Liberale verwendet werden.' =>
+	'This Assault Rifle is a special gift for every NRA member. Disclaimer: Must only be used to shoot criminals, foreigners, non-christians and liberals.',
+  'Drogendealer' =>
+	'Drug Dealer',
+  'Fähigkeit ":trait"' =>
+	'Trait ":trait"',
+  'Dank deiner jahrelangen Erfahrung weist du genau, wie du welche Medikamente dosieren musst, um die optimale Wirkung zu erhalten. Der Effekt aller Pillenschachteln wird um 20% gesteigert.' =>
+	'Thanks to your prior endeavors in "advanced pharmaceutical marketing", you know exactly how to dose certain drugs to gain maximum effect. The effects of all pill boxes will increase by 20%.',
+  'Aussenseiter' =>
+	'Misfit',
+  'Du bist der Typ, der irgendwie immer da ist, aber den niemand so richtig wahrnimmt. Das hat sich auch in der Zombieapokalypse nicht geändert. Deine Chance, Zombies bei einem Kampf zu entkommen, steigt um 15%. Außerdem wird anderen Spielern im Mehrspielermodus deine Präsenz weniger deutlich angezeigt.' =>
+	'You\'re that one guy that\'s always around, but nobody ever notices. This kinda didn\'t change during the zombie apocalypse, which makes it more easy for you to escape the zombies. Your chances to escape rise by 15%. Also, in multiplayer modes, it\'s harder for other people to notice your presence.',
+  'Handwerker' =>
+	'Handyman',
+  'Du bist der König der Handwerker (zumindest seit Tim Allen von Zombies gefressen wurde). Durch deine Erfahrung kannst du Reparaturen und Versteck-Upgrades wesentlich effizienter durchführen und sparst dabei 10% Energie.' =>
+	'You\'re the Tool Man (at least since the zombies got Tim Allen). Thanks to your knowledge and dexterity, you can upgrade your hideout and work on the workbench more efficiently and use 10% less energy.',
+  'Du hast dich :days Tage in Folge eingeloggt. Als kleine Belohnung erhälst du dafür :num BrainCoins. Viel Vergnügen damit!' =>
+	'You\'ve logged in :days in a row. Take these :num BrainCoins as a small reward and go on a shopping spree!',
+  'Täglicher Login' =>
+	'Daily Login Bonus',
+  'Du hast dich bereits :days Tage in Folge eingeloggt. Als Belohnung erhälst du dafür :num BrainCoins. Viel Vergnügen damit!' =>
+	'You\'ve managed to log in :days in a row. Take these :num BrainCoins as a reward and go on a shopping spree!',
+  'Du hast dich mittlerweise :days Tage in Folge eingeloggt. Als Dankeschön erhälst du dafür :num BrainCoins. Viel Vergnügen damit!' =>
+	'You\'ve managed to log in :days in a row now. Please take these :num BrainCoins as a Thank You for your loyalty.',
+  'Wow, seit :days Tagen bist du täglich hier. Als Dankeschön für deine Treue erhälst du :num BrainCoins. Viel Vergnügen damit!' =>
+	'Wow, for :days days you\'ve been coming here every day. Please take these :num BrainCoins as a Thank You for your continued loyalty.',
+  'Seit nunmehr :days Tagen kommst du täglich vorbei - wirklich beeindruckend! Damit hast du dir :num BrainCoins redlich verdient. Viel Vergnügen damit!' =>
+	'For :days days you\'ve been coming here every day. This is truly remarkable. Thank you for being an incredibly active player! Please take these :num BrainCoins, you truly have earned them.',
+  'Du hast dich seit :mdays Tagen nicht mehr eingeloggt. Das bedeutet leider, dass dein seit :days Tagen laufender Login-Bonus abgebrochen wird...' =>
+	'It\'s been :mdays days since you were here last. Unfortunately, this means the daily login bonus you\'ve kept going for :days days has been cancled...',
+  'Sicheres Versteck' =>
+	'Secured Hideout',
 );

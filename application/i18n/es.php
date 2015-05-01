@@ -3532,4 +3532,88 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
 	'Du hast deinen Freibetrag im Shop noch nicht ausgeschöpft und könntest deinem Spiel noch weitere nützliche Dinge hinzufügen, ohne dafür bezahlen zu müssen. Bist du sicher, dass du das Spiel jetzt starten und den restlichen Freibetrag damit verfallen lassen möchtest?',
   'Möchtest du das Spiel jetzt starten und :payment BrainCoins für die Gegenstände ausgeben, die du im Shop erworben hast?' =>
 	'Möchtest du das Spiel jetzt starten und :payment BrainCoins für die Gegenstände ausgeben, die du im Shop erworben hast?',
+  'Mit diesem Paket werden folgende Gegenstände in deinem Versteck abgelegt:' =>
+	'Mit diesem Paket werden folgende Gegenstände in deinem Versteck abgelegt:',
+  'Der Shop ist derzeit leider ausverkauft ...' =>
+	'Der Shop ist derzeit leider ausverkauft ...',
+  'Lade aktuelle Angebote ...' =>
+	'Lade aktuelle Angebote ...',
+  'So ein ZombVival-Spiel zu starten ist schon ziemlich harte Arbeit... Belohne dich selbst, indem du dir ein Feierabend-Bier genehmigst - oder direkt mehrere!' =>
+	'So ein ZombVival-Spiel zu starten ist schon ziemlich harte Arbeit... Belohne dich selbst, indem du dir ein Feierabend-Bier genehmigst - oder direkt mehrere!',
+  'Wer auf alles vorbereitet sein will, der sollte immer einen Vorrat an Baumaterialien bereit halten. Leider warst du richtig scheiße auf die Zombieapokalypse vorbereitet, daher musst du dein Baumaterial jetzt hier kaufen.' =>
+	'Wer auf alles vorbereitet sein will, der sollte immer einen Vorrat an Baumaterialien bereit halten. Leider warst du richtig scheiße auf die Zombieapokalypse vorbereitet, daher musst du dein Baumaterial jetzt hier kaufen.',
+  'NRA-Waffenlizenz' =>
+	'NRA-Waffenlizenz',
+  'Sturmgewehr' =>
+	'Sturmgewehr',
+  'Die NRA-Waffenlizenz wird nur den ehrbarsten Bürger der Vereinigten Staaten verliehen; außerdem Drogendealern, Tierquälern, gewalttätigen Schwerverbrechern, Vergewaltigern, Drogenabhängigen, Terroristen, psychisch gestörte Veteranen und Politikern.' =>
+	'Die NRA-Waffenlizenz wird nur den ehrbarsten Bürger der Vereinigten Staaten verliehen; außerdem Drogendealern, Tierquälern, gewalttätigen Schwerverbrechern, Vergewaltigern, Drogenabhängigen, Terroristen, psychisch gestörte Veteranen und Politikern.',
+  'Mit diesem Paket werden folgende Gegenstände in deinem Inventar abgelegt:' =>
+	'Mit diesem Paket werden folgende Gegenstände in deinem Inventar abgelegt:',
+  'Ein Fehler ist aufgetreten!' =>
+	'Ein Fehler ist aufgetreten!',
+  'Dein aktueller Spielstand ist beschädigt!' =>
+	'Dein aktueller Spielstand ist beschädigt!',
+  'Aufgrund eines Fehlers wurde dein aktueller Spielstand beschädigt. Keine Angst, deine Seelenpunkte, Auszeichnungen oder Ranking-Plätze sind nicht betroffen. Allerdings kannst du dein aktuelles Spiel möglicherweise nicht fortsetzen.' =>
+	'Aufgrund eines Fehlers wurde dein aktueller Spielstand beschädigt. Keine Angst, deine Seelenpunkte, Auszeichnungen oder Ranking-Plätze sind nicht betroffen. Allerdings kannst du dein aktuelles Spiel möglicherweise nicht fortsetzen.',
+  'Um dieses Problem zu beheben, stehen dir mehrere Möglichkeiten offen.' =>
+	'Um dieses Problem zu beheben, stehen dir mehrere Möglichkeiten offen.',
+  'Logge dich aus und wieder ein.' =>
+	'Logge dich aus und wieder ein.',
+  'Die einfachsten Lösungen sind manchmal die effektivsten, und einen Versuch ist es allemal wert.' =>
+	'Die einfachsten Lösungen sind manchmal die effektivsten, und einen Versuch ist es allemal wert.',
+  'Versuche es später erneut.' =>
+	'Versuche es später erneut.',
+  'Möglicherweise resultiert der Fehler aus einer Überlastung des Servers. Wenn die Seite gerade allgemein langsam reagiert, oder du zuvor eine Meldung mit dem Fehler "Unable to obtain database lock" erhalten hast, solltest du es in ein paar Minuten einfach erneut versuchen.' =>
+	'Möglicherweise resultiert der Fehler aus einer Überlastung des Servers. Wenn die Seite gerade allgemein langsam reagiert, oder du zuvor eine Meldung mit dem Fehler "Unable to obtain database lock" erhalten hast, solltest du es in ein paar Minuten einfach erneut versuchen.',
+  'Lasse den Server das Problem automatisch beheben.' =>
+	'Lasse den Server das Problem automatisch beheben.',
+  'Wenn du diese Option wählst, wird der beschädigte Spielstand einfach gelöscht, sodass du sofort ein neues Spiel beginnen kannst. Handelt es sich bei dem Spielstand um eine Mehrspieler-Partie betrifft diese Aktion nur dich, nicht jedoch die anderen Teilnehmer der Partie. Deine gesammelten Seelenpunkte, Auszeichnungen und Ranking-Plätze sind von dieser Aktion ebenfalls nicht betroffen.' =>
+	'Wenn du diese Option wählst, wird der beschädigte Spielstand einfach gelöscht, sodass du sofort ein neues Spiel beginnen kannst. Handelt es sich bei dem Spielstand um eine Mehrspieler-Partie betrifft diese Aktion nur dich, nicht jedoch die anderen Teilnehmer der Partie. Deine gesammelten Seelenpunkte, Auszeichnungen und Ranking-Plätze sind von dieser Aktion ebenfalls nicht betroffen.',
+  'Automatisch beheben' =>
+	'Automatisch beheben',
+  'Informiere den Administrator.' =>
+	'Informiere den Administrator.',
+  'hier' =>
+	'hier',
+  'Ein Administrator ist in jedem Fall in der Lage, zu helfen. Melde dich im Forum oder klicke :hier, um eine E-Mail an den Administrator zu senden.' =>
+	'Ein Administrator ist in jedem Fall in der Lage, zu helfen. Melde dich im Forum oder klicke :hier, um eine E-Mail an den Administrator zu senden.',
+  'Bitte entschuldige diesen Fehler.' =>
+	'Bitte entschuldige diesen Fehler.',
+  'Dein Spielstand wurde gelöscht. Du kannst nun ein neues Spiel beginnen.' =>
+	'Dein Spielstand wurde gelöscht. Du kannst nun ein neues Spiel beginnen.',
+  'Die automatische Reparatur ist fehlgeschlagen. Bitte kontaktiere einen Administrator!' =>
+	'Die automatische Reparatur ist fehlgeschlagen. Bitte kontaktiere einen Administrator!',
+  'Dieses Sturmgewehr erhält jeder, der eine lebenslange NRA-Mitgliedschaft abschließt. Achtung: Darf nur gegen Kriminelle, Auslänger, Nicht-Christen und Liberale verwendet werden.' =>
+	'Dieses Sturmgewehr erhält jeder, der eine lebenslange NRA-Mitgliedschaft abschließt. Achtung: Darf nur gegen Kriminelle, Auslänger, Nicht-Christen und Liberale verwendet werden.',
+  'Drogendealer' =>
+	'Drogendealer',
+  'Fähigkeit ":trait"' =>
+	'Fähigkeit ":trait"',
+  'Dank deiner jahrelangen Erfahrung weist du genau, wie du welche Medikamente dosieren musst, um die optimale Wirkung zu erhalten. Der Effekt aller Pillenschachteln wird um 20% gesteigert.' =>
+	'Dank deiner jahrelangen Erfahrung weist du genau, wie du welche Medikamente dosieren musst, um die optimale Wirkung zu erhalten. Der Effekt aller Pillenschachteln wird um 20% gesteigert.',
+  'Aussenseiter' =>
+	'Aussenseiter',
+  'Du bist der Typ, der irgendwie immer da ist, aber den niemand so richtig wahrnimmt. Das hat sich auch in der Zombieapokalypse nicht geändert. Deine Chance, Zombies bei einem Kampf zu entkommen, steigt um 15%. Außerdem wird anderen Spielern im Mehrspielermodus deine Präsenz weniger deutlich angezeigt.' =>
+	'Du bist der Typ, der irgendwie immer da ist, aber den niemand so richtig wahrnimmt. Das hat sich auch in der Zombieapokalypse nicht geändert. Deine Chance, Zombies bei einem Kampf zu entkommen, steigt um 15%. Außerdem wird anderen Spielern im Mehrspielermodus deine Präsenz weniger deutlich angezeigt.',
+  'Handwerker' =>
+	'Handwerker',
+  'Du bist der König der Handwerker (zumindest seit Tim Allen von Zombies gefressen wurde). Durch deine Erfahrung kannst du Reparaturen und Versteck-Upgrades wesentlich effizienter durchführen und sparst dabei 10% Energie.' =>
+	'Du bist der König der Handwerker (zumindest seit Tim Allen von Zombies gefressen wurde). Durch deine Erfahrung kannst du Reparaturen und Versteck-Upgrades wesentlich effizienter durchführen und sparst dabei 10% Energie.',
+  'Du hast dich :days Tage in Folge eingeloggt. Als kleine Belohnung erhälst du dafür :num BrainCoins. Viel Vergnügen damit!' =>
+	'Du hast dich :days Tage in Folge eingeloggt. Als kleine Belohnung erhälst du dafür :num BrainCoins. Viel Vergnügen damit!',
+  'Täglicher Login' =>
+	'Täglicher Login',
+  'Du hast dich bereits :days Tage in Folge eingeloggt. Als Belohnung erhälst du dafür :num BrainCoins. Viel Vergnügen damit!' =>
+	'Du hast dich bereits :days Tage in Folge eingeloggt. Als Belohnung erhälst du dafür :num BrainCoins. Viel Vergnügen damit!',
+  'Du hast dich mittlerweise :days Tage in Folge eingeloggt. Als Dankeschön erhälst du dafür :num BrainCoins. Viel Vergnügen damit!' =>
+	'Du hast dich mittlerweise :days Tage in Folge eingeloggt. Als Dankeschön erhälst du dafür :num BrainCoins. Viel Vergnügen damit!',
+  'Wow, seit :days Tagen bist du täglich hier. Als Dankeschön für deine Treue erhälst du :num BrainCoins. Viel Vergnügen damit!' =>
+	'Wow, seit :days Tagen bist du täglich hier. Als Dankeschön für deine Treue erhälst du :num BrainCoins. Viel Vergnügen damit!',
+  'Seit nunmehr :days Tagen kommst du täglich vorbei - wirklich beeindruckend! Damit hast du dir :num BrainCoins redlich verdient. Viel Vergnügen damit!' =>
+	'Seit nunmehr :days Tagen kommst du täglich vorbei - wirklich beeindruckend! Damit hast du dir :num BrainCoins redlich verdient. Viel Vergnügen damit!',
+  'Du hast dich seit :mdays Tagen nicht mehr eingeloggt. Das bedeutet leider, dass dein seit :days Tagen laufender Login-Bonus abgebrochen wird...' =>
+	'Du hast dich seit :mdays Tagen nicht mehr eingeloggt. Das bedeutet leider, dass dein seit :days Tagen laufender Login-Bonus abgebrochen wird...',
+  'Sicheres Versteck' =>
+	'Sicheres Versteck',
 );

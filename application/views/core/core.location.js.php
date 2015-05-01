@@ -340,7 +340,7 @@
         if (core.last.players) {
             var area = [];
             $.each(core.last.players.others, function(id, player) {
-                if (player.local) area.push(player.name);
+                if (player.local && !player.loner) area.push(player.name);
             });
 
             if (area.length) {

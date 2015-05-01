@@ -33,7 +33,7 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
                 ->popup('builder')
             , 'hideout_builder');
 
-        if (!$location->has_upgrade("hideout"))
+        if (!$location->has_upgrade("hideout_slot"))
             return $tmp;
 
         $tmp->add_action('Gegenstände herstellen ...', Model_Action::factory()

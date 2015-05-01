@@ -100,6 +100,23 @@ class Tool_Scripts
 
         return $proto;
     }
+    /**
+     * Returns the first available item from a list
+     * @param string $classname Restrict items to a specific class and its descendants
+     * @param bool $active_player Include active players inventory
+     * @param bool $active_location Include active locations inventory
+     * @param bool $other_players Include inventory of other players at the active location
+     * @param null|Model_Player $perspective
+     * @return Model_Items_Abstract_Item
+     */
+
+    public static function first_available_item($classname, $active_player = true, $active_location = true, $other_players = false, $perspective = null)
+    {
+        $l = static::available_items($classname, $active_player, $active_location, $other_players, $perspective);
+        if (count($l) > 0) return $l[0];
+        else return null;
+    }
+
 
     /**
      * Returns a list of players, who currently stay at the location specified by $lid
@@ -386,13 +403,8 @@ class Tool_Scripts
         }
     }
 
-    public static function get_map_description($mapid) {
-        if ($mapid === null) $mapid = 'main';
-        $c = Kohana::$config->load("balancing.names");
-        return (isset($c[$mapid])) ? $c[$mapid] : 'Unbekannte Karte';
-    }
-
     public static function calculate_find_chances($pid = null) {
+        /** @global Model_Game $game */
         global $game;
         if ($pid === null)
             global $player;
@@ -439,6 +451,7 @@ class Tool_Scripts
      * @param number|null $p Player ID
      */
     public static function chem_reaction($message, $cv, $item, $results = array(), $p = null) {
+        /** @global Model_Game $game */
         global $game;
 
         if ($p === null)

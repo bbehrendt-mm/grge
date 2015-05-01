@@ -68,6 +68,24 @@
                         line('AVATAR data created.');
                     }
 
+                    if (in_array('univsp', $struct)) {
+                        line('Universal soulpoint column found in profile. Converting...');
+                        if (!db($mysqli, "ALTER TABLE ___PREFIX___users CHANGE univsp coins INT(11) NOT NULL DEFAULT '0'")) return false;
+                        line('USP converted to coin storage.');
+                    }
+
+                    if (!in_array('dailylogin', $struct)) {
+                        line('DAILY LOGIN data missing. Creating...');
+                        if (!db($mysqli, "ALTER TABLE ___PREFIX___users ADD dailylogin INT NOT NULL DEFAULT '0' AFTER coins;")) return false;
+                        line('DAILY LOGIN data created.');
+                    }
+
+                    if (!in_array('logincount', $struct)) {
+                        line('CONSECUTIVE LOGIN COUNT missing. Creating...');
+                        if (!db($mysqli, "ALTER TABLE ___PREFIX___users ADD logincount INT NOT NULL DEFAULT '0' AFTER dailylogin;")) return false;
+                        line('CONSECUTIVE LOGIN COUNT created.');
+                    }
+
                     if (in_array('ban', $struct)) {
                         line('BANN data found in profile. Moving to USER FLAGS...');
                         if (!db($mysqli, file_get_contents('install/move_ban_s7.sql'))) return false;
@@ -84,12 +102,6 @@
                         line('Depricated DATASET blob found in profile. Removing...');
                         if (!db($mysqli, 'ALTER TABLE ___PREFIX___users DROP dataset')) return false;
                         line('DATASET blob removed.');
-                    }
-
-                    if (in_array('univsp', $struct)) {
-                        line('Universal soulpoint column found in profile. Converting...');
-                        if (!db($mysqli, "ALTER TABLE ___PREFIX___users CHANGE univsp coins INT(11) NOT NULL DEFAULT '0'")) return false;
-                        line('USP converted to coin storage.');
                     }
 
                 } else return false;

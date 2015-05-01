@@ -250,4 +250,56 @@ return array (
 	'',
   'Möchtest du das Spiel jetzt starten und :payment BrainCoins für die Gegenstände ausgeben, die du im Shop erworben hast?' =>
 	'',
+  'Mit diesem Paket werden folgende Gegenstände in deinem Versteck abgelegt:' =>
+	'',
+  'Der Shop ist derzeit leider ausverkauft ...' =>
+	'',
+  'Lade aktuelle Angebote ...' =>
+	'',
+  'So ein ZombVival-Spiel zu starten ist schon ziemlich harte Arbeit... Belohne dich selbst, indem du dir ein Feierabend-Bier genehmigst - oder direkt mehrere!' =>
+	'',
+  'Wer auf alles vorbereitet sein will, der sollte immer einen Vorrat an Baumaterialien bereit halten. Leider warst du richtig scheiße auf die Zombieapokalypse vorbereitet, daher musst du dein Baumaterial jetzt hier kaufen.' =>
+	'',
+  'NRA-Waffenlizenz' =>
+	'',
+  'Sturmgewehr' =>
+	'',
+  'Die NRA-Waffenlizenz wird nur den ehrbarsten Bürger der Vereinigten Staaten verliehen; außerdem Drogendealern, Tierquälern, gewalttätigen Schwerverbrechern, Vergewaltigern, Drogenabhängigen, Terroristen, psychisch gestörte Veteranen und Politikern.' =>
+	'',
+  'Mit diesem Paket werden folgende Gegenstände in deinem Inventar abgelegt:' =>
+	'',
+  'Dein Spielstand wurde gelöscht. Du kannst nun ein neues Spiel beginnen.' =>
+	'',
+  'Die automatische Reparatur ist fehlgeschlagen. Bitte kontaktiere einen Administrator!' =>
+	'',
+  'Dieses Sturmgewehr erhält jeder, der eine lebenslange NRA-Mitgliedschaft abschließt. Achtung: Darf nur gegen Kriminelle, Auslänger, Nicht-Christen und Liberale verwendet werden.' =>
+	'',
+  'Drogendealer' =>
+	'',
+  'Fähigkeit ":trait"' =>
+	'',
+  'Dank deiner jahrelangen Erfahrung weist du genau, wie du welche Medikamente dosieren musst, um die optimale Wirkung zu erhalten. Der Effekt aller Pillenschachteln wird um 20% gesteigert.' =>
+	'',
+  'Du bist der Typ, der irgendwie immer da ist, aber den niemand so richtig wahrnimmt. Das hat sich auch in der Zombieapokalypse nicht geändert. Deine Chance, Zombies bei einem Kampf zu entkommen, steigt um 15%. Außerdem wird anderen Spielern im Mehrspielermodus deine Präsenz weniger deutlich angezeigt.' =>
+	'',
+  'Handwerker' =>
+	'',
+  'Du bist der König der Handwerker (zumindest seit Tim Allen von Zombies gefressen wurde). Durch deine Erfahrung kannst du Reparaturen und Versteck-Upgrades wesentlich effizienter durchführen und sparst dabei 10% Energie.' =>
+	'',
+  'Du hast dich :days Tage in Folge eingeloggt. Als kleine Belohnung erhälst du dafür :num BrainCoins. Viel Vergnügen damit!' =>
+	'',
+  'Täglicher Login' =>
+	'',
+  'Du hast dich bereits :days Tage in Folge eingeloggt. Als Belohnung erhälst du dafür :num BrainCoins. Viel Vergnügen damit!' =>
+	'',
+  'Du hast dich mittlerweise :days Tage in Folge eingeloggt. Als Dankeschön erhälst du dafür :num BrainCoins. Viel Vergnügen damit!' =>
+	'',
+  'Wow, seit :days Tagen bist du täglich hier. Als Dankeschön für deine Treue erhälst du :num BrainCoins. Viel Vergnügen damit!' =>
+	'',
+  'Seit nunmehr :days Tagen kommst du täglich vorbei - wirklich beeindruckend! Damit hast du dir :num BrainCoins redlich verdient. Viel Vergnügen damit!' =>
+	'',
+  'Du hast dich seit :mdays Tagen nicht mehr eingeloggt. Das bedeutet leider, dass dein seit :days Tagen laufender Login-Bonus abgebrochen wird...' =>
+	'',
+  'Sicheres Versteck' =>
+	'',
 );

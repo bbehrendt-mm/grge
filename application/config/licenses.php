@@ -57,4 +57,32 @@ return array(
             'url' => 'http://creativecommons.org/licenses/by-sa/3.0/'
         ]
     ],
+    [
+        'title' => 'Kopf eines Weisskopfseeadlers',
+        'url' => 'https://commons.wikimedia.org/wiki/File:Weisskopfseeadler.JPG',
+        'local' => 'media/icons/store/nra.gif',
+        'author' => [
+            'name' => 'Clement Dominik',
+            'url' => 'https://de.wikipedia.org/wiki/User:Chlempi',
+        ],
+        'license' => [
+            'short' => 'CC BY-SA 3.0',
+            'long' => 'Creative Commons Attribution-ShareAlike 3.0 Unported',
+            'url' => 'http://creativecommons.org/licenses/by-sa/3.0/'
+        ]
+    ],
+    [
+        'title' => 'Pixel Icons available for use',
+        'url' => 'http://oceansdream.deviantart.com/art/Pixel-Icons-available-for-use-121152370',
+        'local' => 'media/icons/store/drugdealer.gif',
+        'author' => [
+            'name' => 'OceansDream',
+            'url' => 'http://oceansdream.deviantart.com/art/Pixel-Icons-available-for-use-121152370',
+        ],
+        'license' => [
+            'short' => 'CC BY-SA 3.0',
+            'long' => 'Creative Commons Attribution-ShareAlike 3.0 Unported',
+            'url' => 'http://creativecommons.org/licenses/by-sa/3.0/'
+        ]
+    ],
 );

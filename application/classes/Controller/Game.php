@@ -18,6 +18,8 @@ class Controller_Game extends Controller {
          */
         global $game, $player;
 
+        if ($this->request->param('jaction') == 'fixlink') return parent::action_japi();
+
         if (!$game || !$player) return $this->render(['redirect' => 'landing/redirect']);
         if (!$player->alive() && !in_array($this->request->param('jaction'), static::$death_allowed_actions)) {
             $this->render_notifications();
@@ -90,7 +92,7 @@ class Controller_Game extends Controller {
         $doorways = array();
         foreach ($player->location()->get_doorways() as $did) {
             $doorways[$did]['location'] = __($game->location($did)->name());
-            $doorways[$did]['name'] = __(Tool_Scripts::get_map_description($game->map($did)->get_sublocation()));
+            $doorways[$did]['name'] = __($game->map($did)->get_sublocation_description());
         }
         if (!count($doorways)) $doorways = false;
 
@@ -547,6 +549,7 @@ class Controller_Game extends Controller {
                 'id' => $p->id(),
                 'speed' => $speeds[$p->vote_time()],
                 'local' => $local,
+                'loner' => (bool)$p->buff_retr('tr_loner'),
                 'stats' => $local ? $this->render_status($p) : false,
                 'inventory' => ($local && $p->companion()) ? $this->render_inventory($p) : false,
                 'escort' => $local ? $p->companion() : false,
@@ -600,6 +603,18 @@ class Controller_Game extends Controller {
         return true;
     }
 
+    public function japi_fixlink() {
+        /**
+         * @global Model_Game $game
+         * @global Model_Euser $user
+         */
+        global $game, $user;
+
+        if (!$game && $user->get_current_game())
+            return $this->render(['success' => DB::delete('xref_game_player')->where('uid','=',$user->uid())->execute() ? 1 : 0]);
+        else return $this->render(['success' => 0]);
+    }
+
     /**
      * Load appropriate game interface (in-game/death/pause/aprils fools)
      */
@@ -607,12 +622,17 @@ class Controller_Game extends Controller {
         /**
          * @global Model_Game $game
          * @global Model_Player $player
+         * @global Model_Euser $user
          */
-        global $game, $player;
+        global $game, $player, $user;
 
         //Redirect
-        if (!$game)
+        if (!$game && !$user->get_current_game())
             $this->redirect(URL::site('gamemaster/lobby', 'http'));
+        elseif (!$game && $user->get_current_game()) {
+            $this->add_widget(View::factory('pages/game_error')->render());
+            return $this->render();
+        }
         if (!$player) {
             $this->session->delete('game');
             $this->redirect(URL::site('landing/redirect', 'http'));
@@ -624,7 +644,6 @@ class Controller_Game extends Controller {
 
             if ($game->paused())
                 // Load pause screen
-                //ToDo: Pause Page
                 $this->add_widget(View::factory('pages/pause')->set('remaining', max(0,$game->pauselock() - (time() - Kohana::$config->load('balancing.pause.min_duration'))))->render());
             else
                 // Ingame View

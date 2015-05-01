@@ -7,9 +7,9 @@
      * @var int $lock_max Max number of allowed complaints
      * @var int[] $lock_timerange Array, the first element contains the timestamp where the next complaint will be lifted, the second element contains the timestamp where the last complaint will be lifted
      * @var string[] $languages List of language flags
-     * @var array $store
      * @var int $freecoins
      * @var int $braincoins
+     * @var bool $show_shop
      */
 
     //ToDo: Unstartable Jobs
@@ -30,7 +30,7 @@
         <div class="cell rw-12 padded">
 
             <!-- Game Select  -->
-            <div class="row" data-conditional="1" data-provide='["mode","id","password","protect","name","slots"]' data-rely='[]'>
+            <div class="row" data-conditional="1" data-provide='["mode","id","password","protect","name","slots","init"]' data-rely='[]'>
                 <h2><?=__('Tritt einer Mehrspieler-Partie bei...');?></h2>
 
                 <div class="cell rw-12 padded">
@@ -60,7 +60,7 @@
 
                     <?php foreach($games as $game) { ?>
                         <div class="cell rw-6 padded">
-                            <div data-modeset="<?=$game['mode']?>" data-set='{"mode":<?=$game['mode']?>,"id":<?=$game['gameid']?>,"protect":"","name":"","slots":"0","password":<?=$game['password'] ? 'false' : '""'?>,"flow":-1}' data-caption="<?=__($database['modes'][$game['mode']]['meta']['name'])?> (<?=$game['name']?>)" class="<?=$game['locked'] ? 'hotbox disabled' : 'hotbox' ?>">
+                            <div data-modeset="<?=$game['mode']?>" data-set='{"mode":<?=$game['mode']?>,"id":<?=$game['gameid']?>,"protect":"","name":"","slots":"0","password":<?=$game['password'] ? 'false' : '""'?>,"flow":-1,"init":0}' data-caption="<?=__($database['modes'][$game['mode']]['meta']['name'])?> (<?=$game['name']?>)" class="<?=$game['locked'] ? 'hotbox disabled' : 'hotbox' ?>">
                                 <b class="head"><?=$game['name']?></b>
                                 <i class="subtitle">
                                     <img src="media/icons/<?=$game['locked'] ? 'lock.gif' : "lang/{$game['lang']}.png" ?>" alt="<?=$game['locked'] ? 'locked' : $game['lang'] ?>" />
@@ -81,7 +81,7 @@
                         <div class="row">
                             <?php foreach ($database['modes'] as $mid => $data) if ($data['type'] == 'single') { ?>
                                 <div class="cell rw-6 padded">
-                                    <div data-modeset="<?=$mid?>" data-set='{"mode":<?=$mid?>,"id":-1,"protect":"","password":"","name":"","slots":"1"}' data-caption="<?=__($data['meta']['name'])?>" class="<?=$data['locked'] ? 'hotbox disabled' : 'hotbox' ?>">
+                                    <div data-modeset="<?=$mid?>" data-set='{"mode":<?=$mid?>,"id":-1,"protect":"","password":"","name":"","slots":"1","init":1}' data-caption="<?=__($data['meta']['name'])?>" class="<?=$data['locked'] ? 'hotbox disabled' : 'hotbox' ?>">
                                         <b class="head"><?=__($data['meta']['name'])?></b>
                                         <i class="subtitle"><?=__('Einzelspieler-Modus');?></i>
                                         <?=__($data['meta']['caption'])?>
@@ -94,7 +94,7 @@
                         <div class="row">
                             <?php foreach ($database['modes'] as $mid => $data) if ($data['type'] == 'multi_custom') { ?>
                                 <div class="cell rw-6 padded">
-                                    <div data-modeset="<?=$mid?>" data-set='{"mode":<?=$mid?>,"id":-1,"password":"","flow":-1}' data-caption="<?=__($data['meta']['name'])?>" class="<?=$data['locked'] ? 'hotbox disabled' : 'hotbox' ?>">
+                                    <div data-modeset="<?=$mid?>" data-set='{"mode":<?=$mid?>,"id":-1,"password":"","flow":-1,"init":1}' data-caption="<?=__($data['meta']['name'])?>" class="<?=$data['locked'] ? 'hotbox disabled' : 'hotbox' ?>">
                                         <b class="head"><?=__($data['meta']['name'])?></b>
                                         <i class="subtitle"><?=__(':min bis :max Spieler', array(':min' => $data['slots'][0], ':max' => $data['slots'][1]))?></i>
                                         <?=__($data['meta']['caption'])?>
@@ -231,45 +231,37 @@
                 </div>
             </div>
 
-            <div class="row" data-conditional="1" data-provide='["estore"]' data-rely='["mode","id","password","protect","job","flow","name","slots"]'>
-                <h2><?=__('Kaufrausch in letzter Minute!');?></h2>
+            <div class="row" data-final="1" data-conditional="1" data-provide='["estore"]' data-rely='["mode","id","password","protect","job","flow","name","slots"]'>
+                <?php if ($show_shop) { ?>
+                    <h2><?=__('Kaufrausch in letzter Minute!');?></h2>
 
-                <div class="row">
-                    <div class="cell rw-5 padded">
-                        <div class="help noclick">
-                            <h4><?=__('Der Shop');?></h4>
-                            <?=__('Vor jedem Spielstart hast du Gelegenheit, nützliche Dinge für den einmaligen Gebrauch zu erwerben. Du erhälst einen Freibetrag von :free Münzen - möchtest du mehr ausgeben, musst du die Differenz aus deinem privaten Fundus ("BrainCoins") bezahlen. BrainCoins kannst du während bestimmten Events erhalten und, wenn auch selten, im Spiel finden.', [':free' => $freecoins]);?>
-                            <br /><i><?=__('ZombVival ist komplett kostenlos - BrainCoins können ::b::nicht::/b:: käuflich erworben werden!')?></i>
+                    <div class="row">
+                        <div class="cell rw-5 padded">
+                            <div class="help noclick">
+                                <h4><?=__('Der Shop');?></h4>
+                                <?=__('Vor jedem Spielstart hast du Gelegenheit, nützliche Dinge für den einmaligen Gebrauch zu erwerben. Du erhälst einen Freibetrag von :free Münzen - möchtest du mehr ausgeben, musst du die Differenz aus deinem privaten Fundus ("BrainCoins") bezahlen. BrainCoins kannst du während bestimmten Events erhalten und, wenn auch selten, im Spiel finden.', [':free' => $freecoins]);?>
+                                <br /><i><?=__('ZombVival ist komplett kostenlos - BrainCoins können ::b::nicht::/b:: käuflich erworben werden!')?></i>
+                            </div>
                         </div>
-                    </div>
-                    <div class="cell rw-7 padded">
-                        <div class="store">
-                            <div class="store-header"><span class="bc-free"><?=$freecoins?></span><span class="bc"><?=$braincoins?></span></div>
-                            <div class="store-content">
-                                <?php foreach ($store as $sentry) { ?>
-                                    <div title="-" data-article="<?=$sentry['id']?>" data-cost="<?=$sentry['cost']?>" data-checkout="0">
-                                        <span class="confirm"><i class="fa fa-shopping-cart "></i></span>
-                                        <img src="media/icons/store/<?=$sentry['icon']?>.gif" alt="<?=__($sentry['name'])?>" />
-                                        <span class="bc"><?=$sentry['cost']?></span>
+                        <div class="cell rw-7 padded">
+                            <div class="store">
+                                <div class="store-header"><span class="store-title">zombvivalShop</span><span class="bc-free"><?=$freecoins?></span><span class="bc"><?=$braincoins?></span></div>
+                                <div class="store-content"></div>
+                                <div class="store-checkout">
+                                    <div class="row">
+                                        <div class="cell rw-4 right padded"><?=__('Verbl. Freibetrag');?></div>
+                                        <div class="cell rw-2 left padded"><span class="bc-free" id="store-checkout-free"><?=$freecoins?></span></div>
+                                        <div class="cell rw-4 right padded"><?=__('Kosten');?></div>
+                                        <div class="cell rw-2 left padded"><span class="bc" id="store-checkout-payment">0</span></div>
                                     </div>
-                                <?php } ?>
-                            </div>
-                            <div class="store-checkout">
-                                <div class="row">
-                                    <div class="cell rw-4 right padded"><?=__('Verbl. Freibetrag');?></div>
-                                    <div class="cell rw-2 left padded"><span class="bc-free" id="store-checkout-free"><?=$freecoins?></span></div>
-                                    <div class="cell rw-4 right padded"><?=__('Kosten');?></div>
-                                    <div class="cell rw-2 left padded"><span class="bc" id="store-checkout-payment">0</span></div>
-                                </div>
-                                <div class="store-note">
-                                    <?=__('Der Kauf wird abgeschlossen, indem du das Spiel startest.');?>
+                                    <div class="store-note">
+                                        <?=__('Der Kauf wird abgeschlossen, indem du das Spiel startest.');?>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
-                </div>
-
+                <?php } ?>
 
                 <h2><?=__('Kanns losgehen?');?></h2>
                 <?php
@@ -309,10 +301,6 @@
 </div>
 <script type="application/javascript">
 // ## JS COMPRESS BEGIN ## //
-    <?php foreach ($store as $sentry) { ?>
-        $('[data-article=<?=$sentry['id']?>]').qtip(game.render.html.qtip.store('top',<?=__j($sentry['name'])?>,<?=__j($sentry['desc'])?>));
-    <?php } ?>
-
     var update_purchase = function() {
         var free = <?=$freecoins?>;
 
@@ -336,11 +324,6 @@
             $('#btn_confirm').removeClass('disabled');
         }
     };
-
-    $('[data-article]').click(function() {
-        $(this).attr('data-checkout',$(this).attr('data-checkout') == '0' ? '1' : '0');
-        update_purchase();
-    });
 
     $('#persistent').empty();
     $('[data-conditional=1]').hide();
@@ -378,7 +361,67 @@
 
             if (!meets_condition || is_fulfilled)
                 $(this).hide();
-            else $(this).show();
+            else {
+                $(this).show();
+                if ($(this).data('final')) {
+                    <?php if ($show_shop) { ?>
+                        var content = $(this).find('.store-content').empty().append(
+                            $('<span />').addClass('center').text(<?=__j('Lade aktuelle Angebote ...')?>).append($('<br />')).append(
+                                $('<span />').addClass('fa-stack fa-lg').append(
+                                    $('<i />').addClass('fa fa-circle fa-stack-2x')
+                                ).append(
+                                    $('<i />').addClass('fa fa-spinner fa-pulse fa-stack-1x')
+                                )
+                            )
+                        );
+
+                        var tmp_obj = {};
+                        $.each($('#data-container').serializeArray(), function(k,v) {
+                            tmp_obj[v.name] = v.value;
+                        });
+
+                        game.network.query('japi/gamemaster/eshop', tmp_obj, function(data) {
+                            if (data.error) {
+                                alert(data.error.code + ' [' + data.error.name + ']: ' + data.error.message);
+                                return;
+                            }
+
+                            var ec = 0;
+                            content.empty();
+                            if (data.store) {
+                                $.each(data.store, function(key,value) {
+                                    ec++;
+                                    content.append(
+                                        $('<div />').attr({
+                                            title: '-' ,
+                                            'data-article': value.id,
+                                            'data-cost': value.cost,
+                                            'data-checkout': 0
+                                        }).append(
+                                            $('<span />').addClass('confirm').append($('<i />').addClass('fa fa-shopping-cart fa-lg'))
+                                        ).append(
+                                            $('<img />').attr('src','media/icons/store/' + value.icon + '.gif')
+                                        ).append(
+                                            $('<span />').addClass('bc').text(value.cost)
+                                        ).click(function() {
+                                                $(this).attr('data-checkout',$(this).attr('data-checkout') == '0' ? '1' : '0');
+                                                update_purchase();
+                                            }).qtip(game.render.html.qtip.store('top',value.name,value.desc))
+                                    );
+
+                                })
+                            }
+
+                            if (ec == 0)
+                                content.append(
+                                    $('<span />').addClass('center').text(<?=__j('Der Shop ist derzeit leider ausverkauft ...')?>)
+                                );
+
+                            update_purchase();
+                        });
+                    <?php } ?>
+                }
+            }
         });
     };
 

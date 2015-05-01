@@ -82,6 +82,9 @@ abstract class Controller extends Kohana_Controller {
         //Load session
         $this->session = Session::instance();
 
+        // Virtual login
+        $this->perform_virtual_login();
+
         if (!$this->is_ajax_request())
             // Preserve initial get/post parameters
             $this->session->set('request',array_merge($_SERVER,["CLIENT_REQUEST" => $_REQUEST]));
@@ -99,6 +102,60 @@ abstract class Controller extends Kohana_Controller {
         $this->response->headers("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
 
         //TODO: Maintenance Mode
+    }
+
+    private function daily_login_bonus() {
+        /** @global  Model_Euser $user */
+        global $user;
+
+        $last = (int)DB::select('dailylogin')->from('users')->where('uid','=',$user->uid())->execute()->get('dailylogin',0);
+        $num = (int)DB::select('logincount')->from('users')->where('uid','=',$user->uid())->execute()->get('logincount',0);
+        $today = floor(time()/86400);
+
+        if ($last == $today) return;
+        elseif ($last == ($today - 1)) {
+            DB::update('users')->set(['dailylogin' => $today, 'logincount' => $num+1])->where('uid','=',$user->uid())->execute();
+            $lv = ceil($num/7);
+
+            $n = 0;
+            if ($lv <= 0) {
+
+            } elseif ($lv == 1) {
+                $n = 5;
+                $this->add_note('daily-login',__('Du hast dich :days Tage in Folge eingeloggt. Als kleine Belohnung erhälst du dafür :num BrainCoins. Viel Vergnügen damit!', [':days' => $num+1,':num' => $n]),__('Täglicher Login'));
+            } elseif ($lv == 2) {
+                $n = 10;
+                $this->add_note('daily-login',__('Du hast dich bereits :days Tage in Folge eingeloggt. Als Belohnung erhälst du dafür :num BrainCoins. Viel Vergnügen damit!', [':days' => $num+1,':num' => $n]),__('Täglicher Login'));
+            } elseif ($lv <= 4) {
+                $n = 15;
+                $this->add_note('daily-login',__('Du hast dich mittlerweise :days Tage in Folge eingeloggt. Als Dankeschön erhälst du dafür :num BrainCoins. Viel Vergnügen damit!', [':days' => $num+1,':num' => $n]),__('Täglicher Login'));
+            } elseif ($lv <= 12) {
+                $n = 25;
+                $this->add_note('daily-login',__('Wow, seit :days Tagen bist du täglich hier. Als Dankeschön für deine Treue erhälst du :num BrainCoins. Viel Vergnügen damit!', [':days' => $num+1,':num' => $n]),__('Täglicher Login'));
+            } else {
+                $n = 35;
+                $this->add_note('daily-login',__('Seit nunmehr :days Tagen kommst du täglich vorbei - wirklich beeindruckend! Damit hast du dir :num BrainCoins redlich verdient. Viel Vergnügen damit!', [':days' => $num+1,':num' => $n]),__('Täglicher Login'));
+            }
+
+            $user->award_coins($user->uid(),$n);
+        } else {
+            DB::update('users')->set(['dailylogin' => $today, 'logincount' => 0])->where('uid','=',$user->uid())->execute();
+            if ($num > 1)
+                $this->add_note('daily-login-fail',__('Du hast dich seit :mdays Tagen nicht mehr eingeloggt. Das bedeutet leider, dass dein seit :days Tagen laufender Login-Bonus abgebrochen wird...', [':mdays' => $today - $last, ':days' => $num]),__('Täglicher Login abgebrochen...'));
+        }
+    }
+
+    public function perform_virtual_login() {
+        /** @global Model_Euser $user */
+        global $user;
+
+        if (!$this->get_user_obj()) return;
+        $last_update = $this->session->get('last_virtual_login',0);
+
+        if ($last_update < (time()-1)) {
+            $this->session->set('last_virtual_login',time());
+            $this->daily_login_bonus();
+        }
     }
 
     /**
@@ -157,6 +214,7 @@ abstract class Controller extends Kohana_Controller {
     protected function add_note($type, $content = null, $title = false) {
         if ($content === null) $this->notifications[] = array('type' => 'info', 'content' => $title, 'title' => false);
         else $this->notifications[] = array('type' => $type, 'content' => $content, 'title' => $title);
+        $this->session->set('notifications',$this->notifications);
     }
 
     /**
@@ -179,6 +237,9 @@ abstract class Controller extends Kohana_Controller {
      * @throws Kohana_Exception
      */
     protected function render($obj = null) {
+        /** @global Model_Euser $user */
+        global $user;
+
         $this->response->headers('Content-Type', 'application/json');
 
         // Invoke render_defaults() or add_data() depending on the object parameter
@@ -202,7 +263,8 @@ abstract class Controller extends Kohana_Controller {
 
         // Add other content in out data chain
         $this->add_data('content', $this->widgets, true);
-        $this->add_data('notifications', $this->notifications, true);
+        $this->add_data('notifications', $this->session->get('notifications',[]), true);
+        $this->session->delete('notifications');
 
         // Render
         $this->response->body(json_encode($this->data, JSON_FORCE_OBJECT));

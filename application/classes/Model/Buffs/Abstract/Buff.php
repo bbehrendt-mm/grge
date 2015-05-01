@@ -47,6 +47,14 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
 	}
 
     /**
+     * Returns the buff name
+     * @return string
+     */
+    public static function static_name() {
+        return static::$name;
+    }
+
+    /**
      * Returns the buff icon path
      * @return string
      */

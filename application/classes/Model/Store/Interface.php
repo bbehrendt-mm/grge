@@ -13,6 +13,7 @@ abstract class Model_Store_Interface extends Model {
     public static function get_description() {return static::$description;}
     public static function get_icon() {return static::$icon;}
     public static function get_type() {return static::$type;}
+    public static function is_valid_for($mode,$job,$init,$id,$flow) {return true;}
 
     /**
      * @param int $job

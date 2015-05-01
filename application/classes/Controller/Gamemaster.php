@@ -337,19 +337,21 @@ class Controller_Gamemaster extends Controller {
         if (!($level = $this->check_game_params($mode,$job,$flow,$slots,$id,$name)))
             return $this->error(\grge\E_STARTER_INVALID_SETUP);
 
-        $list = [];
-        $current_payment = -100;
-        if (is_array($store) && isset($store['purchase']) && isset($store['authorized_payment']) && is_array($store['purchase'])) {
-            $max_payment = (int)$store['authorized_payment'];
-            foreach (Tool_Gamemodes::get_store_classes() as $store_element)
-                if (in_array(Tool_System::getClassID($store_element), $store['purchase'])) {
-                    $list[] = $store_element;
-                    $current_payment += $store_element::get_cost();
-                }
+        $list = []; $current_payment = 0;
+        if (Kohana::$config->load('balancing.shop.enabled')) {
+            $current_payment = -Kohana::$config->load('balancing.shop.free_coins');
+            if (is_array($store) && isset($store['purchase']) && isset($store['authorized_payment']) && is_array($store['purchase'])) {
+                $max_payment = (int)$store['authorized_payment'];
+                foreach (Tool_Gamemodes::get_store_classes() as $store_element)
+                    if ($store_element::is_valid_for($mode,$job,($id <= 0),$id,$flow) && in_array(Tool_System::getClassID($store_element), $store['purchase'])) {
+                        $list[] = $store_element;
+                        $current_payment += $store_element::get_cost();
+                    }
 
-            $current_payment = max(0,$current_payment);
-            if ($current_payment > $max_payment || $current_payment > $user->coins()) return $this->error(\grge\E_STARTER_INVALID_SETUP);
-        } else return $this->error(\grge\E_STARTER_INVALID_SETUP);
+                $current_payment = max(0,$current_payment);
+                if ($current_payment > $max_payment || $current_payment > $user->coins()) return $this->error(\grge\E_STARTER_INVALID_SETUP);
+            } else return $this->error(\grge\E_STARTER_INVALID_SETUP);
+        }
 
         // If an ID is given, we want to join a multiplayer game
         if ($id > 0) {
@@ -357,7 +359,7 @@ class Controller_Gamemaster extends Controller {
                 return $user->remove_coins($user->uid(),$current_payment);
             else return false;
         }
-        // If a name is given, we want to greate a multiplayer game
+        // If a name is given, we want to create a multiplayer game
         if ($name) {
             if ($this->start_multiplayer($mode,$job,$level,$name,$lang,$slots,$protect,$list))
                 return $user->remove_coins($user->uid(),$current_payment);
@@ -367,6 +369,29 @@ class Controller_Gamemaster extends Controller {
         if ($this->start_singleplayer($mode,$flow,$job,$level,$list))
             return $user->remove_coins($user->uid(),$current_payment);
         else return false;
+    }
+
+    public function japi_eshop() {
+        // Get POST stuff
+        if (!Kohana::$config->load('balancing.shop.enabled')) return;
+
+        $mode = (int)$this->request->current()->post('mode');
+        $job = (int)$this->request->current()->post('job');
+        $id = (int)$this->request->current()->post('id');
+        $flow = (int)$this->request->current()->post('flow');
+        $init = $this->request->current()->post('init') == '1';
+
+        $store = [];
+        foreach (Tool_Gamemodes::get_store_classes() as $store_element)
+            if ($store_element::is_valid_for($mode,$job,$init,$id,$flow))
+                $store[] = [
+                    'id' => Tool_System::getClassID($store_element),
+                    'cost' => $store_element::get_cost(),
+                    'name' => __($store_element::get_name()),
+                    'desc' => __($store_element::get_description()),
+                    'icon' => $store_element::get_icon(),
+                ];
+        $this->render(['store' => $store]);
     }
 
     /**
@@ -418,16 +443,6 @@ class Controller_Gamemaster extends Controller {
         }
         $game = null;
 
-        $store = [];
-        foreach (Tool_Gamemodes::get_store_classes() as $store_element)
-            $store[] = [
-                'id' => Tool_System::getClassID($store_element),
-                'cost' => $store_element::get_cost(),
-                'name' => $store_element::get_name(),
-                'desc' => $store_element::get_description(),
-                'icon' => $store_element::get_icon(),
-            ];
-
         // Render
         $this->add_widget(View::factory('pages/gameselect')
                 ->set('database', Tool_Gamemodes::compile_mode_database(true))
@@ -437,8 +452,8 @@ class Controller_Gamemaster extends Controller {
                 ->set('lock_max', Kohana::$config->load('basic.multiplayer.mp_lockouts.max_count'))
                 ->set('lock', $user->lockouts_is_locked())
                 ->set('lock_timerange', $user->lockouts_get_time_range())
-                ->set('store',$store)
-                ->set('freecoins',100)
+                ->set('show_shop', Kohana::$config->load('balancing.shop.enabled'))
+                ->set('freecoins',Kohana::$config->load('balancing.shop.free_coins'))
                 ->set('braincoins', $user->coins())
                 ->render()
         );

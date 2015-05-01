@@ -30,10 +30,11 @@ class Model_Log_Message extends Model {
     public function __construct($data, $uid = null) {
         /** @global Model_Game $game */
         /** @global Model_Player $player */
-        global $game, $player;
+        /** @global Model_Euser $user */
+        global $game, $player, $user;
         $this->data = $data;
-        $this->uid = $uid !== null ? $uid : ($player ? $player->id() : -1);
-        $this->timestamp = $game->now();
+        $this->uid = $uid !== null ? $uid : ($player ? $player->id() : ($user ? $user->uid() : -1));
+        $this->timestamp = $game ? $game->now() : time();
     }
 
     protected function postprocess($data) {
@@ -46,14 +47,15 @@ class Model_Log_Message extends Model {
      */
     public function render($plain_data = false) {
         /** @global Model_Player $player */
-        global $player;
+        /** @global Model_Euser $user */
+        global $player, $user;
 
         $tmpd = $this->postprocess($this->data);
         if ($plain_data)
             return $tmpd;
 
         if (is_array($tmpd) && !isset($tmpd['self']))
-            $tmpd['self'] = $player->id() === $this->uid;
+            $tmpd['self'] = ($player->id() === $this->uid || $user->uid() === $this->uid);
 
         return [
             'type' => static::$type,

@@ -155,6 +155,11 @@ core.popup = {
                     if (!typefilters.possible.active)    $(this).find('.blueprint.green').parent().hide();
                     if (!typefilters.ready.active)       $(this).find('.blueprint.green.active').parent().hide();
                     if (!typefilters.done.active)        $(this).find('.blueprint.blue').parent().hide();
+
+                    $(this).find('.blueprint-group').each(function() {
+                        $(this).show();
+                        if (!$(this).find('.blueprint:visible').length) $(this).hide();
+                    });
             });
 
             $('<div />').addClass('row').append(
@@ -175,13 +180,30 @@ core.popup = {
 
         var build_func = function(bdata) {
             frame.empty();
-            var categories = {};
+            var categories = {}; var cat_count = 0;
             $.each(bdata.blueprints, function(k,v) {
                 if (v.hidden) return;
+
+                if (!$.objToArray(v.categories).length) v.categories = [<?=__j('Sonstiges')?>];
                 $.each(v.categories, function(i,cat) {
+                    if (!categories[cat]) cat_count++;
                     categories[cat] = true;
                 });
-                frame.append($('<div />').addClass('cell padded rw-4').append(core.snippets.blueprint(v, bdata.energy, bdata.zombies, bdata.blueprints, function() {
+            });
+
+            if (cat_count > 1)
+                $.each(categories, function(n,t) {
+                    frame.append($('<div />').attr('data-group-cat',n).addClass('blueprint-group').append($('<b />').addClass('header').text(n)).append($('<div />').addClass('blueprint-group-target row')));
+                });
+
+            $.each(bdata.blueprints, function(k,v) {
+                if (v.hidden) return;
+                if (!$.objToArray(v.categories).length) v.categories = [<?=__j('Sonstiges')?>];
+                var targets = $();
+                if (cat_count > 1) $.each(v.categories, function(i,cat) {targets = targets.add(frame.find('div[data-group-cat=' + cat + ']').find('.blueprint-group-target'));});
+                else targets = frame;
+
+                targets.append($('<div />').addClass('cell padded rw-4').append(core.snippets.blueprint(v, bdata.energy, bdata.zombies, bdata.blueprints, function() {
                     var prev_scroll = $('.popup').find('>*:first-child').scrollTop();
                     popup.addClass('disabled');
                     core.command('location/' + type, {build: k}, true, function(new_data) {

@@ -186,7 +186,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
 
     /**
      * @param null $lid Location ID to determine map, null to get main map
-     * @return Model_Map|null
+     * @return Model_Map_Abstract|null
      */
     final public function map($lid = null) {
         if (!($key = $this->mapid($lid)))
@@ -202,7 +202,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
         if ($lid === null)
             return 'main';
         else foreach ($this->set['gamedata']->maps as $id => $map)
-            /** @var $map Model_Map */
+            /** @var $map Model_Map_Abstract */
             if ($map->has_location($lid))
                 return $id;
         return null;
@@ -210,7 +210,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
 
     /**
      * Returns the main map
-     * @return Model_Map
+     * @return Model_Map_Abstract
      */
     final public function map_main() {
         return $this->set['gamedata']->maps['main'];
@@ -223,7 +223,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
     final public function locations() {
         $ret = array();
         foreach ($this->set['gamedata']->maps as $map)
-            /** @var $map Model_Map */
+            /** @var $map Model_Map_Abstract */
             $ret = array_merge_recursive($map->get_locations(null, true),$ret);
 
         return $ret;
@@ -235,12 +235,12 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
     final public function reset_maps($map_cfg) {
         $this->config('game.config.map', $map_cfg);
         $this->set['gamedata']->maps = array();
-        $this->set['gamedata']->maps['main'] = new Model_Map($map_cfg);
+        $this->set['gamedata']->maps['main'] = Model_Map_Abstract::factory($map_cfg);
         $this->set['gamedata']->maps['main']->auto_init();
     }
 
     /**
-     * @return Model_Map[]
+     * @return Model_Map_Abstract[]
      */
     final public function maps() {
         return array_values($this->set['gamedata']->maps);
@@ -274,8 +274,8 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
         if (isset($this->set['gamedata']->maps[$mapid]))
             return false;
 
-        $this->set['gamedata']->maps[$mapid] = new Model_Map(($map_cfg == null) ? $this->config('game.config.map') : $map_cfg);
-        $this->set['gamedata']->maps[$mapid]->auto_init($sublocation);
+        $this->set['gamedata']->maps[$mapid] = Model_Map_Abstract::factory(($map_cfg == null) ? $this->config('game.config.map') : $map_cfg, $sublocation);
+        $this->set['gamedata']->maps[$mapid]->auto_init();
         return $this->set['gamedata']->maps[$mapid]->resolve_fixed_id(1);
     }
 

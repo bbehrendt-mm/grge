@@ -1,47 +1,59 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Map {
+abstract class Model_Map_Abstract {
 
-    private $mapname = 'default';
-    private $mucfg = [];
+    protected $mapname = 'default';
+    protected $mucfg = [];
 
-    private $paths = Array();
-    private $sublocation = null;
+    protected $paths = Array();
+    protected $sublocation = null;
 
-    private $loc_assoc = Array(
+    protected $loc_assoc = Array(
          /* 15 => Array('class' => 'Model_Places_Someplace', 'x' => 1, 'y' => 12, 'direction' => 12, 'visible' => false, 'dry' => 2) */
     );
-    private $id_assoc = Array(
+    protected $id_assoc = Array(
         /* 'Model_Places_Someplace' => array(15,20) */
     );
 
-    private $assoc_cache = Array(
+    protected $assoc_cache = Array(
         /* 12 => Array('Model_Places_Someplace' => 3) */
     );
 
-    private $pos_cache = Array(
+    protected $pos_cache = Array(
         'x' => array(),
         'y' => array(),
     );
 
-    private $fixed_id_assoc = Array();
+    protected $fixed_id_assoc = Array();
 
-    private $sub_routing;
+    protected $sub_routing;
 
     /**
      * @var array [map id => routing node id]
      */
-    private $lib_routing = Array();
+    protected $lib_routing = Array();
 
     /**
      * @var array [routing node id => map id]
      */
-    private $lib_routing_reverse = Array();
+    protected $lib_routing_reverse = Array();
 
-    private $movement_cost_modifier = 1;
+    protected $movement_cost_modifier = 1;
 
-    public function __construct($map) {
+    /**
+     * @param $map
+     * @param null $sub
+     * @return Model_Map_Abstract
+     */
+    public static function factory($map, $sub = null) {
+        $cls = static::meta($map,$sub)['engine'];
+        /** @var Model_Map_Abstract $cls */
+        return new $cls($map,$sub);
+    }
+
+    public function __construct($map, $sub) {
         $this->mapname = $map;
+        $this->sublocation = $sub;
         $this->sub_routing = new Model_Routing();
     }
 
@@ -65,18 +77,33 @@ class Model_Map {
         return $t;
     }
 
+    protected static function meta($map,$sub = null) {
+        $cfg = (array)Kohana::$config->load("maps/{$map}.submeta");
+        $type = $sub ? $sub : '.';
+        return array_merge($cfg['..'],isset($cfg[$type]) ? $cfg[$type] : []);
+    }
+
+    /**
+     * Returns the meta configuration object
+     * @param String|null $type
+     * @return array
+     */
+    protected function get_local_meta($type) {
+        return static::meta($this->mapname,$type);
+    }
+
     /**
      * Returns the configuration object
      * @param String|object|null $type
      * @return array
      */
-    private function get_config($type = null) {
-        return (array)(($type === null) ? Kohana::$config->load("maps/{$this->mapname}") : Tool_System::config_tree("maps/{$this->mapname}", $type));
+    protected function get_config($type = null) {
+        return (array)(($type === null) ? Kohana::$config->load("maps/{$this->mapname}.locations") : Tool_System::config_tree("maps/{$this->mapname}.locations", $type));
     }
 
-    private function &get_mutable_config($type) {
+    protected function &get_mutable_config($type) {
         $addr = is_object($type) ? get_class($type) : $type;
-        if (!isset($this->mucfg[$addr])) $this->mucfg[$addr] = Tool_System::config_tree("maps/{$this->mapname}", $type);
+        if (!isset($this->mucfg[$addr])) $this->mucfg[$addr] = Tool_System::config_tree("maps/{$this->mapname}.locations", $type);
         return $this->mucfg[$addr];
     }
 
@@ -88,12 +115,16 @@ class Model_Map {
         return $this->sublocation;
     }
 
+    public function get_sublocation_description() {
+        return $this->get_local_meta($this->sublocation)['name'];
+    }
+
     /**
      * Adds a route
      * @param $from
      * @param $to
      */
-    private function push_route($from, $to) {
+    protected function push_route($from, $to) {
         if (!isset($this->paths[$from]))
             $this->paths[$from] = array();
         if (!in_array($to, $this->paths[$from]))
@@ -106,7 +137,7 @@ class Model_Map {
      * @param null|int|array $target Target location
      * @return array|bool True, when a single target location was given and $class can be connected to that location; an array, when a target array was given, the array will contain all possible targets; false, when $class can not be connected to any locations in $target
      */
-    private function check_placement_limits($class, $target = null) {
+    protected function check_placement_limits($class, $target = null) {
         if (!($cfg = $this->get_config($class)))
             return false;
 
@@ -141,7 +172,7 @@ class Model_Map {
      * @param string $class
      * @param int $target
      */
-    private function update_placement_limits($class, $target) {
+    protected function update_placement_limits($class, $target) {
         if (!$target) return;
 
         if (!isset($this->assoc_cache[$target]))
@@ -152,55 +183,11 @@ class Model_Map {
     }
 
     /**
-     * Produces a position within $distance from $root
-     * @param int|array $distance Distance; can be a single int value to use as fixed distance, or an array with 2 elements containing boundaries [min,max]
-     * @param string $spawn Spawn class
-     * @param null|int|string|array $root Root position; When omitted, 0/0 is used as position; when given as int, $root is treated as location id; when given as String, $root is interpreted as location classname, if more locations with this classname exist, one will be randomly selected; when given as array, the function will select one of the elements (that can be used to produce a location) randomly or return false when it can't find one
-     * @internal param string $spawncfg Spawn object class
-     * @return array|bool false, if no position could be determined; otherwise an array in the format ['x' => x, 'y' => y, 'root' => root location id|null]
-     */
-    private function get_random_location($distance, $spawn, $root = null) {
-
-        if (is_array($root)) {
-            shuffle($root);
-            foreach ($root as $elem)
-                if ($tmp = $this->get_random_location($distance, $spawn, $elem))
-                    return $tmp;
-            return false;
-        }
-
-        $root_location_id = null;
-        if ($root === null) {
-            $data = array('type' => null, 'x' => 0, 'y' => 0, 'direction' => null);
-        } elseif (is_int($root) && isset($this->loc_assoc[$root]))
-            $data = $this->loc_assoc[$root];
-        elseif ((is_int($root) && !isset($this->loc_assoc[$root])) || (!is_int($root) && !isset($this->id_assoc[$root])))
-            return false;
-        else {
-            if (!($list = $this->check_placement_limits($spawn, Tool_System::config_tree($this->id_assoc, $root))))
-                return false;
-            $root_location_id = $list[mt_rand(0, count($list) - 1)];
-            $data = $this->loc_assoc[$root_location_id];
-        }
-
-        $limit = ($distance <= 10) ? 90 : 45;
-        $grad = ($data['direction'] === null) ? mt_rand(0,359) : mt_rand($data['direction'] - $limit, $data['direction'] + $limit);
-        while ($grad > 359) $grad -= 360;
-        while ($grad < 0) $grad += 360;
-
-        $rad = ($grad * M_PI / 180);
-        if (is_array($distance))
-            $distance = mt_rand($distance[0], $distance[1]);
-
-        return array('x' => $distance * cos($rad) + $data['x'], 'y' => $distance * sin($rad) + $data['y'], 'root' => $root_location_id, 'direction' => ($root_location_id === null) ? null : $grad);
-    }
-
-    /**
      * Updates position cache
      * @param number $x
      * @param number $y
      */
-    private function update_pos_cache($x, $y) {
+    protected function update_pos_cache($x, $y) {
         $this->pos_cache['x'][] = $x;
         $this->pos_cache['y'][] = $y;
 
@@ -220,7 +207,7 @@ class Model_Map {
      * @param bool $reserved
      * @param null|int $fixed_id
      */
-    private function catalog_location($location_id, $location_class, $x, $y, $direction, $visible, $dry = 0, $reserved = false, $fixed_id = null) {
+    protected function catalog_location($location_id, $location_class, $x, $y, $direction, $visible, $dry = 0, $reserved = false, $fixed_id = null) {
         $this->loc_assoc[$location_id] = Array('class' => $location_class, 'x' => $x, 'y' => $y, 'direction' => $direction, 'visible' => $visible, 'dry' => $dry, 'reserved' => $reserved);
         if (!isset($this->id_assoc[$location_class]))
             $this->id_assoc[$location_class] = array($location_id);
@@ -257,25 +244,7 @@ class Model_Map {
      * @return bool
      * @throws Exception
      */
-    public function place_location($location, $visible, $dry = 0, $fixed_id = null) {
-        /**
-         * @global $game Model_Game
-         */
-        global $game;
-
-        if (is_string($location) && $visible)
-            $location = new $location;
-
-        if (!(Tool_System::instance_of($location, 'Model_Places_Abstract_Place'))
-            || !($cfg = &$this->get_mutable_config($location))
-            || !($pos = $this->get_random_location($cfg['distance'], is_string($location) ? $location : get_class($location), empty($cfg['force_root']) ? $cfg['root'] : array_pop($cfg['force_root'])))) return false;
-
-        $this->implant_location($location, $pos['x'], $pos['y'], false, $pos['direction'],$cfg['branchable'],$pos['root'],$visible,$dry,$fixed_id);
-
-        $this->update_placement_limits(is_string($location) ? $location : get_class($location), $pos['root']);
-
-        return true;
-    }
+    abstract public function place_location($location, $visible, $dry = 0, $fixed_id = null);
 
     /**
      * @param Model_Places_Abstract_Place|string $location
@@ -367,40 +336,7 @@ class Model_Map {
         return true;
     }
 
-    public function auto_init($submapid = null) {
-        $config = $this->get_config();
-        $this->sublocation = $submapid;
-
-        $smart_routing = true;
-
-        //Place locations
-        $keep_going = true;
-        $iteration = 0;
-        while ($keep_going) {
-            $keep_going = false;
-            foreach ($config as $class => $data) if ($data['auto'] && ($data['sub'] === $submapid || (is_array($data['sub']) && in_array($submapid, $data['sub'])))) {
-
-                if ($data['iteration'] > $iteration) {
-                    $keep_going = true;
-                    continue;
-                }
-
-                if (isset($data['nosmartrouting']) && $data['nosmartrouting'])
-                    $smart_routing = false;
-
-                if ($this->place_location($class, $data['obvious'], $data['contortion'], isset($data['fixed']) ? $data['fixed'] : null))
-                    /** @noinspection PhpUnusedLocalVariableInspection */
-                    $keep_going = true;
-
-                if (!$this->check_placement_limits($class))
-                    unset($config[$class]);
-            }
-            $iteration++;
-
-        }
-
-        if ($smart_routing) $this->sub_routing->compile();
-    }
+    abstract public function auto_init();
 
     /**
      * Resolves a fixed ID to an actual ID
@@ -474,7 +410,7 @@ class Model_Map {
         } else return null;
     }
 
-    private function node_to_uin($node, $force = false) {
+    protected function node_to_uin($node, $force = false) {
         if (!isset($this->lib_routing_reverse[$node]))
             return array();
         elseif ($force) return $this->lib_routing_reverse[$node];

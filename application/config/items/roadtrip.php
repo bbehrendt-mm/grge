@@ -371,5 +371,8 @@ return array(
         'Model_Places_Asylumhideout'		=> Array(	'size' =>   0,
             'content' => Array()
         ),
+        'Model_Places_Hospital_Korridor'		=> Array(	'size' =>   0,
+            'content' => Array()
+        ),
     ),
 );

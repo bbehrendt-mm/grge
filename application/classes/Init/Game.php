@@ -52,7 +52,7 @@ class Init_Game {
         $set->ghuls = Array();
 
 		//Map
-		$set->maps['main'] = new Model_Map($config_data['config']['game.config.map']);
+		$set->maps['main'] = Model_Map_Abstract::factory($config_data['config']['game.config.map']);
         $set->maps['main']->auto_init();
 
 		//Log

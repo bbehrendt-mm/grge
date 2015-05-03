@@ -242,7 +242,7 @@ class Controller_Map extends Controller_Game {
         $doorways = array();
         foreach ($game->location($lid)->get_doorways() as $did) {
             $doorways[$did]['location'] = __($game->location($did)->name());
-            $doorways[$did]['name'] = __(Tool_Scripts::get_map_description($game->map($did)->get_sublocation()));
+            $doorways[$did]['name'] = __($game->map($did)->get_sublocation_description());
         }
 
         uasort($pass, function($a, $b) {
@@ -259,7 +259,7 @@ class Controller_Map extends Controller_Game {
 
         return $this->render([
             'read_only' => $read_only,
-            'mapname' => __(Tool_Scripts::get_map_description($game->map($lid)->get_sublocation())),
+            'mapname' => __($game->map($lid)->get_sublocation_description()),
             'nodes' => $nodes,
             'network' => $game->map($lid)->get_network(),
             'locations' => $pass,

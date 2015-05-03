@@ -1,0 +1,52 @@
+@import (once) "zombvival";
+
+@zv-bp-ribbon-size: 32px;
+
+@zv-bp-white-bg: #fff9f6;
+@zv-bp-white-border: #f1ebe8;
+@zv-bp-white-icon: black;
+
+@zv-bp-red-bg: #ffddd8;
+@zv-bp-red-border: #f1b6c0;
+@zv-bp-red-icon: white;
+
+@zv-bp-blue-bg: #c5faff;
+@zv-bp-blue-border: #72aef1;
+@zv-bp-blue-icon: white;
+
+@zv-bp-green-bg: @zv-bp-white-bg;
+@zv-bp-green-border: #79f190;
+@zv-bp-green-icon: white;
+
+@zv-bp-green-active-bg: #ddffe2;
+@zv-bp-green-active-border: @zv-bp-green-border;
+@zv-bp-green-active-icon: @zv-bp-green-icon;
+
+div.blueprint {
+  .impactbox(@zv-bp-white-border,@zv-bp-white-bg); box-shadow: 0 4px 8px rgba(0,0,0,0.3); position: relative; overflow: hidden; margin: 3px; padding: 5px; transition: background 0.5s ease;
+  >.ribbon {
+    position: absolute; height: 0; width: 0; right: 0; top: 0; border-top: @zv-bp-ribbon-size solid @zv-bp-white-border; border-left: @zv-bp-ribbon-size solid transparent; overflow: visible;
+    &::before {position: absolute; height: @zv-bp-ribbon-size; width: @zv-bp-ribbon-size; right: 0; top: -@zv-bp-ribbon-size; content: "\f023"; font-family: FontAwesome; padding: 5px; font-size: 10px; text-align: right;}
+  }
+
+  >span:first-child {
+    font-weight: bold; font-size: 12px;
+    >i {margin-right: 8px; margin-left: 8px; font-weight: normal; opacity: 0.8;}
+  }
+
+
+  &.red {background: @zv-bp-red-bg; border-color: @zv-bp-red-border;>.ribbon {border-top: @zv-bp-ribbon-size solid @zv-bp-red-border; &::before{color: @zv-bp-red-icon; content: "\f05e";}}}
+  &.blue {background: @zv-bp-blue-bg; border-color: @zv-bp-blue-border;>.ribbon {border-top: @zv-bp-ribbon-size solid @zv-bp-blue-border; &::before{color: @zv-bp-blue-icon; content: "\f14a";}}}
+  &.green {background: @zv-bp-green-bg; border-color: @zv-bp-green-border;>.ribbon {border-top: @zv-bp-ribbon-size solid @zv-bp-green-border; &::before{color: @zv-bp-green-icon; content: "\f0a9";}}}
+  &.green.active {cursor: pointer;background: @zv-bp-green-active-bg; border-color: @zv-bp-green-active-border;
+    &:hover {background: mix(@zv-bp-green-active-bg,@zv-bp-green-active-border,50%)}
+    &:active {background: @zv-bp-green-active-border}
+    >.ribbon {border-top: @zv-bp-ribbon-size solid @zv-bp-green-active-border; &::before{color: @zv-bp-green-active-icon; content: "\f0a9";}}
+  }
+}
+
+div.blueprint-group {
+  .incomplete-border-definition(1px solid fade(@zv-color-main,20%), true,false); margin: 3px; border-radius: 10px; padding: 5px 0;
+  >b.header {display: block; text-align: center; font-family: "Exo 2",sans-serif; color: @zv-color-main}
+  &+div.blueprint-group {margin-top: 10px;}
+}

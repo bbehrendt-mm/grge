@@ -30,10 +30,10 @@ class Tool_Gambling {
      * @param array $array The array
      * @return mixed|null
      */
-    public static function select( $array ) {
+    public static function select(array $array) {
         if (!is_array($array) || count($array) == 0)
             return null;
-        return $array[mt_rand(0,count($array) - 1)];
+        return array_values($array)[mt_rand(0,count($array) - 1)];
     }
 		
 }	

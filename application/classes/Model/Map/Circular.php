@@ -2,6 +2,8 @@
 
 class Model_Map_Circular extends Model_Map_Abstract {
 
+    protected static $map_type = Model_Map_Abstract::MMA_TYPE_OVERVIEW;
+
     /**
      * Produces a position within $distance from $root
      * @param int|array $distance Distance; can be a single int value to use as fixed distance, or an array with 2 elements containing boundaries [min,max]

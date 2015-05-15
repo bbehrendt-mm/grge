@@ -3614,4 +3614,26 @@ return array (
 	'It\'s been :mdays days since you were here last. Unfortunately, this means the daily login bonus you\'ve kept going for :days days has been cancled...',
   'Sicheres Versteck' =>
 	'Secured Hideout',
+  ':error' =>
+	':error',
+  'Patientenzimmer' =>
+	'Patient\'s Rooms',
+  'Einzelzimmer' =>
+	'Single Bedroom',
+  'Diesen Ort kannst du von hier aus nicht erreichen ...' =>
+	'You can not reach this place from here ...',
+  'In diesem Flügel des Krankenhauses lagen die stationär aufgenommenen Patienten. Eine provisorische Barrikade blockierte den Eingang zu diesem Flügel des Krankenhauses - sie stellte jedoch genau wie die größtenteil bettlägrigen Patienten kein allzu großes Hindernis für die Zombiemassen dar.' =>
+	'This part of the hospital is filled with rooms for in-patients. A makeshift barricade was supposed to keep zombies out - but just like all bedridden patients, it did not manage to hold back anything.',
+  'Du tastest dich ein Stück vorran und und befindest dich jetzt in/im :location.' =>
+	'Du tastest dich ein Stück vorran und und befindest dich jetzt in/im :location.',
+  'Ein übliches Patientenzimmer... klein, muffig, ein billiger Fernseher an der Wand. Auf dessen Fernbedienungen ist die MDR-Taste ziemlich abgenutzt. Überall auf dem Boden und an den Wänden ist Blut. Alles in allem sieht es hier wie in jedem anderen Krankenhaus aus...' =>
+	'A room for common patients... small, musty, and a small CRT TV mounted to the wall. The floor and walls are covered in blood, but that has nothing to do with the zombie apocalypse - the blood was probably there way before that happened.',
+  'Du hast nicht genug Energie, um diesen Ort zu erreichen ...' =>
+	'You don\'t have enough energy to reach this place ...',
+  'Lebloser Körper' =>
+	'Lifeless Body',
+  'Untote sexy Krankenschwester' =>
+	'Undead sexy nurse',
+  'Täglicher Login abgebrochen...' =>
+	'Täglicher Login abgebrochen...',
 );

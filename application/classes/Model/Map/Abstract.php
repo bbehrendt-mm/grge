@@ -2,6 +2,11 @@
 
 abstract class Model_Map_Abstract {
 
+    const MMA_TYPE_OVERVIEW = 1;
+    const MMA_TYPE_LABYRINTH = 2;
+
+    protected static $map_type;
+
     protected $mapname = 'default';
     protected $mucfg = [];
 
@@ -39,6 +44,10 @@ abstract class Model_Map_Abstract {
     protected $lib_routing_reverse = Array();
 
     protected $movement_cost_modifier = 1;
+
+    public static function get_map_type() {
+        return static::$map_type;
+    }
 
     /**
      * @param $map
@@ -250,6 +259,7 @@ abstract class Model_Map_Abstract {
      * @param Model_Places_Abstract_Place|string $location
      * @param $x
      * @param $y
+     * @param $relative
      * @param $direction
      * @param $branchable
      * @param $root
@@ -426,13 +436,16 @@ abstract class Model_Map_Abstract {
     /**
      * Returns a list of places you can go to from $id
      * @param int $id Start node ID
+     * @param int $max_nodes Maximum number of nodes
      * @return array Format [destination => ['distance' => distance, 'tail' => array containing nodes to cross (without start and end node)],...]
      */
-    public function build_route_array($id) {
+    public function build_route_array($id, $max_nodes = null) {
         $map = $this->sub_routing->build_route_array($this->lib_routing[$id]);
 
         $ret = array();
         foreach ($map as $data) {
+
+            if ($max_nodes && count($data['tail']) > $max_nodes) continue;
 
             $final = array();
             $locals = false;
@@ -478,10 +491,11 @@ abstract class Model_Map_Abstract {
      * Returns the best route to go $from $to
      * @param int $from
      * @param int $to
-     * @return null|array Null, when there is no such route
+     * @param null $max_nodes
+     * @return array|null Null, when there is no such route
      */
-    public function get_route($from, $to) {
-        $map = $this->build_route_array($from);
+    public function get_route($from, $to, $max_nodes = null) {
+        $map = $this->build_route_array($from, $max_nodes);
         return (isset($map[$to])) ? $map[$to] : null;
     }
 

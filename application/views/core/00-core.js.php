@@ -14,8 +14,29 @@ core = {
     version: '<?="{$version_data['major']}.{$version_data['minor']}.{$version_data['service']}-{$version_data['stage']}-{$version_data['maintenance']}-{$version_data['build']}"?>',
 
     last: {},
+    plugins: {},
+
+    cache: {},
 
     sessiondata: {},
+
+
+    /**
+     * Retrieves an object from cache
+     * @param id {string} Identifier
+     * @param [initalization] {object|function} Default return value.
+     * @returns {*}
+     */
+    cache_get: function(id, initalization) {
+        if (typeof this.cache[id] !== 'undefined') return this.cache[id];
+        else if (!initalization) return null;
+        else if (typeof initalization === 'function') return initalization(id);
+        else return initalization;
+    },
+
+    cache_put: function(id, data) {
+        this.cache[id] = data;
+    },
 
     session: function(key, data) {
         return (typeof data == 'undefined')
@@ -23,7 +44,7 @@ core = {
             : (core.sessiondata[key] = data);
     },
 
-    command: function(url, args, background, callback, no_clean) {
+    command: function(url, args, background, callback, no_clean, finished) {
         if (!url)
             url = 'japi/game/data';
         else url = 'japi/' + url;
@@ -50,6 +71,8 @@ core = {
             } if (callback)
                 callback(data);
             else if (data) core.render(data, $('#content').empty());
+
+            if (finished) finished(data);
         });
     },
 

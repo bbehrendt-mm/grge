@@ -302,4 +302,8 @@ return array (
 	'',
   'Sicheres Versteck' =>
 	'',
+  'Du tastest dich ein Stück vorran und und befindest dich jetzt in/im :location.' =>
+	'',
+  'Täglicher Login abgebrochen...' =>
+	'',
 );

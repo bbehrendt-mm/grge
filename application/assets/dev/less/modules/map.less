@@ -18,3 +18,25 @@ div.map {
     img + * {margin-left: 3px;}
   }
 }
+
+div.lomap {
+  border-radius: 10px; position: relative; overflow: hidden; border: 2px solid @locationbox-inside-color-head;
+  >canvas {position: absolute; height: 100%; width: 100%; top: 0; left: 0}
+  >.navbtn {
+    background: none; position: absolute; cursor: pointer;
+    &::before {color: @zv-color-main; position: absolute; height: 16px; width: 16px; left: ~"calc(50% - 8px)"; top: ~"calc(50% - 8px)"; font-family: FontAwesome; content: "\f054";}
+    &.nav-left::before {transform: rotate(180deg);}
+    &.nav-right::before {transform: rotate(0deg);}
+    &.nav-top::before {transform: rotate(270deg);}
+    &.nav-bottom::before {transform: rotate(90deg);}
+    &:hover {text-shadow: 0 0 3px @zv-color-main-dark;}
+  }
+  >.nav-center {
+    position: absolute;
+    >.navbtn {
+      margin-bottom: 2px; position: relative; display: block; font-family: "Exo 2",sans-serif; font-variant: small-caps; font-size: 12px; border: 1px solid @zv-color-main; background: fade(@zv-color-main, 30%); padding: 1px 1px 1px 24px; cursor: pointer;
+      &::before {font-family: FontAwesome; content: "\f054"; position: absolute; left: 2px; top: 3px;}
+      &:hover {background: fade(@zv-color-main, 50%);}
+    }
+  }
+}

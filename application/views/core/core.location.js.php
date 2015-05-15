@@ -319,8 +319,76 @@
 
         $(target).empty().addClass('row location_box ' + (data.meta.outside ? 'outside' : 'inside')).append(
             $('<h2 />').text(data.meta.name)
-        ).append(
-            $('<div />').addClass('cell rw-6 padded').append(
+        );
+
+        if (data.lomap) {
+
+            var lomap,mapbg;
+
+            $(target).append(
+                lomap = $('<div />').addClass('cell padded rw-4')
+            );
+
+            var d = lomap.width();
+            var sc = 6;
+
+            lomap.append(mapbg = $('<div />').addClass('lomap').css({height: d, width: d}));
+            mapbg.append($('<canvas />').attr({height: d, width: d}));
+
+            var renderer = core.cache_get('minimap_stage');
+            if (renderer) {
+                renderer.reset(mapbg.find('canvas').get(0));
+                core.cache_put('minimap_stage', undefined);
+            } else {
+                renderer = new core.plugins.Minimap(mapbg.find('canvas').get(0));
+                renderer.addEnvironment(0,0, data.lomap.top ? data.lomap.top.id : 0, data.lomap.bottom ? data.lomap.bottom.id : 0, data.lomap.left ? data.lomap.left.id : 0, data.lomap.right ? data.lomap.right.id : 0, data.lomap.current.zombies,  data.lomap.current.players);
+            }
+
+            var go = function(lid, slidex, slidey) {
+                return function() {
+                    lomap.find('.navbtn').fadeOut(200);
+                    $('#content').addClass('disabled');
+                    core.command('map/go', {to: lid, follow: 1}, true, function(data) {
+                        if (data.success) {
+                            if (data.preview && (slidex != 0 || slidey != 0)) {
+                                core.cache_put('minimap_stage', renderer);
+                                renderer
+                                    .addEnvironment(slidex, slidey, data.preview.top ? data.preview.top.id : 0, data.preview.bottom ? data.preview.bottom.id : 0, data.preview.left ? data.preview.left.id : 0, data.preview.right ? data.preview.right.id : 0, data.preview.current.zombies,  data.preview.current.players)
+                                    .shift(slidex, slidey, 1000, function () {
+                                        core.command(null, null, true, null, false, function() {$('#content').removeClass('disabled');});
+                                    });
+                            }
+                            else {
+                                $('#content').removeClass('disabled');
+                                core.command();
+                            }
+                        } else {
+                            $('#content').removeClass('disabled');
+                            lomap.find('.navbtn').fadeIn(200);
+                        }
+                    });
+                }
+            };
+
+            if (data.lomap.left)    mapbg.append($('<div />').click(go(data.lomap.left.id, -1, 0)).addClass('navbtn nav-left').css({top: d/sc, bottom: d/sc, left: 0, width: d/sc}));
+            if (data.lomap.top)     mapbg.append($('<div />').click(go(data.lomap.top.id, 0, -1)).addClass('navbtn nav-top').css({top: 0, right: d/sc, left: d/sc, height: d/sc}));
+            if (data.lomap.bottom)  mapbg.append($('<div />').click(go(data.lomap.bottom.id, 0, 1)).addClass('navbtn nav-bottom').css({right: d/sc, bottom: 0, left: d/sc, height: d/sc}));
+            if (data.lomap.right)   mapbg.append($('<div />').click(go(data.lomap.right.id, 1, 0)).addClass('navbtn nav-right').css({top: d/sc, right: 0, bottom: d/sc, width: d/sc}));
+
+            if (data.lomap.others) {
+                var center;
+                mapbg.append(center = $('<div />').addClass('nav-center').css({top: d/sc, right: d/sc, bottom: d/sc, left: d/sc}));
+                $.each(data.lomap.others, function(k,v) {
+                    center.append($('<div />').click(go(v.id, 0, 0)).addClass('navbtn').text(v.name));
+                });
+            }
+
+
+            lomap.find('.navbtn').hide().fadeIn(200);
+        }
+
+        $(target).append(
+            $('<div />').addClass('cell padded').addClass(data.lomap ? 'rw-4' : 'rw-6').append(
                 zradar = $('<div />').addClass('row')
             ).append(
                 hideout = data.hideout ? $('<div />').addClass('row') : null
@@ -334,7 +402,7 @@
                 actions = $('<div />').addClass('row')
             )
         ).append(
-            desc = $('<div />').addClass('cell rw-6 padded justify').text(data.meta.desc)
+            desc = $('<div />').addClass('cell padded justify').addClass(data.lomap ? 'rw-4' : 'rw-6').text(data.meta.desc)
         );
 
         if (core.last.players) {
@@ -359,14 +427,14 @@
         });
 
         actions.append(
-            $('<div />').addClass('cell padded justify rw-' + (data.doorways ? '10' : '12')).append(core.snippets.button(<?=__j('Karte');?>, function() {
+            $('<div />').addClass('cell padded justify rw-' + (data.doorways ? (data.lomap ? '8' : '10') : '12')).append(core.snippets.button(<?=__j('Karte');?>, function() {
                 core.popup.map();
-            }))
+            })).addClass(data.lomap ? 'disabled' : '')
         );
 
         if (data.doorways) {
             actions.append(
-                $('<div />').addClass('cell padded justify rw-2').append(
+                $('<div />').addClass('cell padded justify').addClass(data.lomap ? 'rw-4' : 'rw-2').append(
                     $('<div />').addClass('btn').append($('<i>').addClass('fa fa-sign-in')).append('&nbsp;').click(function() {
                         var esc_popup = core.popup.spawn(400);
 

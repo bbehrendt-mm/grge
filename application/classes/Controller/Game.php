@@ -48,6 +48,70 @@ class Controller_Game extends Controller {
         return $actions;
     }
 
+    protected function get_labyrinth() {
+        /**
+         * @global $game Model_Game
+         * @global $player Model_Player
+         */
+        global $game, $player;
+
+        if ($game->map($player->location_class())->get_map_type() == Model_Map_Abstract::MMA_TYPE_LABYRINTH) {
+
+            $lid = $player->location_class();
+            $map = $game->map($lid);
+            $locations = $map->build_route_array($lid, 2);
+
+            $mp_top = null; $mp_left = null; $mp_bottom = null; $mp_right = null;
+            $mp_others = []; $mp_current = null;
+
+            $master = $map->get_position($lid);
+            $modifier = $game->map($lid)->movement_modifier();
+
+            $in_corridor = Tool_System::instance_of($game->location($lid), 'Interface_Corridor');
+
+            foreach ($locations as $id => $data) {
+                if (!($pos = $map->get_position($id)))
+                    continue;
+
+                $location = $game->location($id);
+                $is_corridor = Tool_System::instance_of($location, 'Interface_Corridor');
+
+                if (!$in_corridor && $id != $lid && !Tool_System::instance_of($location, 'Interface_Corridor')) continue;
+
+                $tmp = [
+                    'id' => $id,
+                    'energy' => floor($data['distance'] * $player->stats_get(Model_Player::MP_CHAR_DISTANCING) * $modifier),
+                    'weight' => $location->weight_limit(),
+                    'name' => __($location->name()),
+                    'icon' => $location->icon(),
+                ];
+                if ($id == $lid) {
+                    $mp_current = $tmp;
+                    $mp_current['zombies'] = $location->zombie_pop();
+                    $mp_current['players'] = max(0,count(Tool_Scripts::at_location($lid)) - 1);
+                } elseif ($pos['x'] == $master['x'] && $pos['y'] == $master['y'] && (!$in_corridor || !$is_corridor))
+                    $mp_others[] = $tmp;
+                elseif ($is_corridor && $pos['x'] == $master['x'] && $pos['y'] > $master['y'])
+                    $mp_top = $tmp;
+                elseif ($is_corridor && $pos['x'] == $master['x'] && $pos['y'] < $master['y'])
+                    $mp_bottom = $tmp;
+                elseif ($is_corridor && $pos['x'] > $master['x'] && $pos['y'] == $master['y'])
+                    $mp_right = $tmp;
+                elseif ($is_corridor && $pos['x'] < $master['x'] && $pos['y'] == $master['y'])
+                    $mp_left = $tmp;
+            }
+
+            return [
+                    'current' => $mp_current,
+                    'top' => $in_corridor ? $mp_top : null,
+                    'left' => $in_corridor ? $mp_left : null,
+                    'bottom' => $in_corridor ? $mp_bottom : null,
+                    'right' => $in_corridor ? $mp_right : null,
+                    'others' => $mp_others
+                ];
+        } else return null;
+    }
+
     /**
      * Renderer Subroutine; Render Location Box
      * @throws Exception
@@ -122,6 +186,12 @@ class Controller_Game extends Controller {
                 'zombies' => $player->location()->zombie_pop()
             ]
         ]);
+
+        // Get ruin radar
+        if ($lomap = $this->get_labyrinth())
+            $this->add_data('location', [
+                'lomap' => $lomap
+            ]);
     }
 
     /**

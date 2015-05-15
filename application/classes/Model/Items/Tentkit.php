@@ -17,8 +17,8 @@ class Model_Items_Tentkit extends Model_Items_Abstract_Item implements Interface
                     ->condition(function($p) {
                         /** @var Model_Player $p */
                         /** @global Model_Game $game */
-
-                        return Tool_Scripts::current_location_hideout($p) == null;
+                        global $game;
+                        return (Tool_Scripts::current_location_hideout($p) == null && $game->map($p->location_class())->get_map_type() == Model_Map_Abstract::MMA_TYPE_OVERVIEW);
                     })
                     ->fail_message('Du kannst an dieser Stelle kein InstaZELT™ aufstellen.')
                     ->effect(

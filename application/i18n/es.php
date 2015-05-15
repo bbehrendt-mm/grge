@@ -3616,4 +3616,26 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
 	'Du hast dich seit :mdays Tagen nicht mehr eingeloggt. Das bedeutet leider, dass dein seit :days Tagen laufender Login-Bonus abgebrochen wird...',
   'Sicheres Versteck' =>
 	'Sicheres Versteck',
+  ':error' =>
+	':error',
+  'Patientenzimmer' =>
+	'Patientenzimmer',
+  'Einzelzimmer' =>
+	'Einzelzimmer',
+  'Diesen Ort kannst du von hier aus nicht erreichen ...' =>
+	'Diesen Ort kannst du von hier aus nicht erreichen ...',
+  'In diesem Flügel des Krankenhauses lagen die stationär aufgenommenen Patienten. Eine provisorische Barrikade blockierte den Eingang zu diesem Flügel des Krankenhauses - sie stellte jedoch genau wie die größtenteil bettlägrigen Patienten kein allzu großes Hindernis für die Zombiemassen dar.' =>
+	'In diesem Flügel des Krankenhauses lagen die stationär aufgenommenen Patienten. Eine provisorische Barrikade blockierte den Eingang zu diesem Flügel des Krankenhauses - sie stellte jedoch genau wie die größtenteil bettlägrigen Patienten kein allzu großes Hindernis für die Zombiemassen dar.',
+  'Du tastest dich ein Stück vorran und und befindest dich jetzt in/im :location.' =>
+	'Du tastest dich ein Stück vorran und und befindest dich jetzt in/im :location.',
+  'Ein übliches Patientenzimmer... klein, muffig, ein billiger Fernseher an der Wand. Auf dessen Fernbedienungen ist die MDR-Taste ziemlich abgenutzt. Überall auf dem Boden und an den Wänden ist Blut. Alles in allem sieht es hier wie in jedem anderen Krankenhaus aus...' =>
+	'Ein übliches Patientenzimmer... klein, muffig, ein billiger Fernseher an der Wand. Auf dessen Fernbedienungen ist die MDR-Taste ziemlich abgenutzt. Überall auf dem Boden und an den Wänden ist Blut. Alles in allem sieht es hier wie in jedem anderen Krankenhaus aus...',
+  'Du hast nicht genug Energie, um diesen Ort zu erreichen ...' =>
+	'Du hast nicht genug Energie, um diesen Ort zu erreichen ...',
+  'Lebloser Körper' =>
+	'Lebloser Körper',
+  'Untote sexy Krankenschwester' =>
+	'Untote sexy Krankenschwester',
+  'Täglicher Login abgebrochen...' =>
+	'Täglicher Login abgebrochen...',
 );

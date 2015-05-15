@@ -36,9 +36,14 @@ class Controller_Map extends Controller_Game {
         if (!($destination = $game->location($did))) return false;
         if ($sub && !in_array($did, $location->get_doorways())) return false;
 
+        //Get map type
+        $map_type = $game->map($lid)->get_map_type();
+
         if (!$sub) {
+            if ($map_type == Model_Map_Abstract::MMA_TYPE_LABYRINTH) $companion = [$player->id() => $player];
+
             //Check route
-            if (!($route = $game->map($lid)->get_route($lid, $did))) {
+            if (!($route = $game->map($lid)->get_route($lid, $did, $map_type == Model_Map_Abstract::MMA_TYPE_LABYRINTH ? 2 : null))) {
                 $player->log()->add('Diesen Ort kannst du von hier aus nicht erreichen ...');
                 return false;
             }
@@ -129,7 +134,10 @@ class Controller_Map extends Controller_Game {
             $current->buff_remove('move');
 
             //Messages
-            if (count($companion) == 1 && $current == $player)
+            if (!$sub && $map_type == $game->map($lid)->get_map_type()) {
+                if (!Tool_System::instance_of($destination, 'Interface_Corridor'))
+                    $current->log()->add('Du tastest dich ein Stück vorran und und befindest dich jetzt in/im :location.', array(), array(':location' => $destination->name()));
+            } elseif (count($companion) == 1 && $current == $player)
                 $current->log()->add('Du machst dich auf den Weg zu/zur/zum :location.', array(), array(':location' => $destination->name()));
             elseif (count($companion) > 1 && $current == $player)
                 $current->log()->add('Ihr macht euch auf den Weg zu/zur/zum :location.', array(), array(':location' => $destination->name()));
@@ -146,7 +154,7 @@ class Controller_Map extends Controller_Game {
         $player->stats_modify(Model_Player::MP_STAT_ENERGY, -$overhead * 1.2);
 
         //Battle
-        if ($destination->zombie_pop() > 0)
+        if ($destination->zombie_pop() > 0 && !Tool_System::instance_of($destination, 'Model_Places_Abstract_Trap'))
             $destination->break_out(true);
 
         return true;
@@ -176,12 +184,15 @@ class Controller_Map extends Controller_Game {
 
         //redirect
         $this->render_notifications();
+
+        $lomap = $this->get_labyrinth();
         return $this->render([
             'success' => $ret,
+            'preview' => $lomap
         ]);
     }
 
-    public function japi_data() {
+    private function mapdata_classic($limit_view = null) {
         /**
          * @global $game Model_Game
          * @global $player Model_Player
@@ -203,7 +214,7 @@ class Controller_Map extends Controller_Game {
 
         if ($lid === null) return false;
 
-        $locations = $game->map($lid)->build_route_array($lid);
+        $locations = $game->map($lid)->build_route_array($lid, $limit_view);
         $nodes = $game->map($lid)->get_nodes();
         if ($player->location()->zombie_pop() > 0 && !$player->can_escape())
             $read_only = true;
@@ -269,5 +280,18 @@ class Controller_Map extends Controller_Game {
             'companions' => $companions,
             'radius' => $player->stats_get(Model_Player::MP_STAT_ENERGY)
         ]);
+    }
+
+    public function japi_data() {
+        /**
+         * @global $game Model_Game
+         * @global $player Model_Player
+         */
+        global $game, $player;
+
+        switch ($game->map($player->location_class())->get_map_type()) {
+            case Model_Map_Abstract::MMA_TYPE_OVERVIEW: return $this->mapdata_classic();
+            case Model_Map_Abstract::MMA_TYPE_LABYRINTH: return $this->mapdata_classic(2);
+        }
     }
 }

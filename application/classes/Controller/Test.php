@@ -55,5 +55,9 @@ class Controller_Test extends Controller {
             echo "</tr>";
         }
         echo "</table>";
+
+        echo "<pre>";
+        var_dump($m->build_route_array($m->resolve_fixed_id(1)));
+        echo "</pre>";
     }
 }

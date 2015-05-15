@@ -2,9 +2,19 @@
 
 class Model_Map_Labyrinth extends Model_Map_Abstract {
 
+    protected static $map_type = Model_Map_Abstract::MMA_TYPE_LABYRINTH;
+
     private $mapscheme = [];
     private $grid;
+    private $distance;
+    private $neutral_class;
+    private $entry_class;
     private $entry = [0,0];
+
+    protected $movement_cost_modifier = 0.25;
+
+    private $location_directory = [];
+    private $placement_directory = [];
 
     const MML_WALL = 0;
     const MML_CORRIDOR = 1;
@@ -75,8 +85,6 @@ class Model_Map_Labyrinth extends Model_Map_Abstract {
         $this->mapscheme[$this->entry[0]][$this->entry[1]] = static::MML_ENTRYPOINT;
         $walker_points = [[$this->entry[0],$this->entry[1]]];
 
-        $config = $this->get_config();
-
         $bias = 10;
         while ($limit > 0 && count($walker_points) > 0) {
             $s = [];
@@ -134,17 +142,46 @@ class Model_Map_Labyrinth extends Model_Map_Abstract {
 
     }
 
+    private function place_rec($x, $y, $root = null) {
+        if (!$this->valid($x,$y) || !$this->get($x,$y) || in_array([$x,$y],array_values($this->placement_directory))) return;
+
+        $cls = !$root ? $this->entry_class : $this->neutral_class;
+        $location = new $cls();
+
+        $new = $this->implant_location($location, $x * $this->distance, $y * $this->distance, false, null,true,$root,true,0,!$root ? 1 : null);
+        $this->update_placement_limits($cls, $root);
+
+        $this->location_directory[$new] = $this->get($x,$y);
+        $this->placement_directory[$new] = [$x,$y];
+
+        foreach ([[1,0],[-1,0],[0,1],[0,-1]] as $direction)
+            $this->place_rec($x + $direction[0], $y + $direction[1], $new);
+    }
+
     public function auto_init() {
         $this->grid = (int)$this->get_local_meta($this->sublocation)['grid'];
+        $this->distance = (int)$this->get_local_meta($this->sublocation)['distance'];
+
+        $this->neutral_class = $this->get_local_meta($this->sublocation)['neutral_class'];
+        $this->entry_class = $this->get_local_meta($this->sublocation)['entry_class'];
 
         $this->build_space();
         $this->build_corridors((int)$this->get_local_meta($this->sublocation)['size']);
         $this->build_intersections();
         $this->build_distances();
-    }
 
-    public function scheme() {
-        return $this->mapscheme;
+        $this->place_rec($this->entry[0],$this->entry[1]);
+
+
+        $config = $this->get_config();
+
+        //Place locations
+        foreach ($config as $class => $data) if ($data['auto'] && ($data['sub'] === $this->sublocation || (is_array($data['sub']) && in_array($this->sublocation, $data['sub']))))
+            for ($i = 0; $i < $data['num']; $i++)
+                $this->place_location($class, true, $data['contortion'], isset($data['fixed']) ? $data['fixed'] : null);
+
+
+        $this->sub_routing->compile();
     }
 
     /**
@@ -157,7 +194,33 @@ class Model_Map_Labyrinth extends Model_Map_Abstract {
      * @throws Exception
      */
     public function place_location($location, $visible, $dry = 0, $fixed_id = null) {
+        $class = is_string($location) ? $location : get_class($location);
 
+        if (!($cfg = $this->get_config($class)))
+            return false;
+
+        if (is_string($location) && $visible)
+            $location = new $location;
+
+        if (!(Tool_System::instance_of($location, 'Model_Places_Abstract_Place'))
+            || !($cfg = &$this->get_mutable_config($location))) return false;
+
+        $possible_targets = [];
+        foreach ($this->location_directory as $id => $type)
+            if (in_array($type, $cfg['root'])) $possible_targets[] = $id;
+
+        if (empty($possible_targets)) return false;
+        $list = $this->check_placement_limits($class,$possible_targets);
+        if (!$list) return false;
+        shuffle($list);
+
+        $this->implant_location($location, 0, 0, true, null, true, $list[0], $visible,$dry,$fixed_id);
+        $this->update_placement_limits($class, $list[0]);
+
+        return true;
     }
 
+    public function scheme() {
+        return $this->mapscheme;
+    }
 }

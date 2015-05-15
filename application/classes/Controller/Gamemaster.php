@@ -350,7 +350,7 @@ class Controller_Gamemaster extends Controller {
 
                 $current_payment = max(0,$current_payment);
                 if ($current_payment > $max_payment || $current_payment > $user->coins()) return $this->error(\grge\E_STARTER_INVALID_SETUP);
-            } else return $this->error(\grge\E_STARTER_INVALID_SETUP);
+            }
         }
 
         // If an ID is given, we want to join a multiplayer game

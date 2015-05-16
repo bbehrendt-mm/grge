@@ -283,16 +283,16 @@ return array(
         'Model_Places_Hospital'				=> Array(	'size' =>  1,
                 'content' => Array('hideout' => 1, 'meds' => 1)
         ),
-        'Model_Places_Hospital_Er'			=> Array(	'size' =>  20,
+        'Model_Places_Hospital_Er'			=> Array(	'size' =>  30,
                 'content' => Array('hideout' => 1, 'bedroom' => 1, 'smeds' => 1)
         ),
-        'Model_Places_Hospital_Patients'	=> Array(	'size' =>  5,
+        'Model_Places_Hospital_Patients'	=> Array(	'size' =>  10,
                 'content' => Array('hideout' => 2, 'bedroom' => 4, 'meds' => 1)
         ),
-        'Model_Places_Hospital_Pharmacy'	=> Array(	'size' =>  15,
+        'Model_Places_Hospital_Pharmacy'	=> Array(	'size' =>  25,
                 'content' => Array('smeds' => 3, 'druglab' => 1, 'Model_Items_Chem' => 1)
         ),
-        'Model_Places_Hospital_Morgue'	=> Array(	'size' =>  20,
+        'Model_Places_Hospital_Morgue'	=> Array(	'size' =>  30,
             'content' => Array('smeds' => 5, 'druglab' => 1, 'Model_Items_Chem' => 2)
         ),
         'Model_Places_Hospital_Cantina'			=> Array(	'size' =>   10,

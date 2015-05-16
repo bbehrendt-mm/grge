@@ -6,7 +6,12 @@ return [
         '..' =>     ['name' => '', 'engine' => 'Model_Map_Circular'],
 
         'bhouse'    => ['name' => 'Verbranntes Haus'],
-        'hospital'  => ['name' => 'Krankenhaus'],
+        'hospital'  => [
+            'name' => 'Krankenhaus',
+            'engine' => 'Model_Map_Labyrinth',
+            'grid' => 6, 'size' => 75, 'distance' => 2,
+            'neutral_class' => 'Model_Places_Hospital_Korridor', 'entry_class' => 'Model_Places_Hospital_Lobby',
+        ],
         'camping'   => ['name' => 'Campingplatz'],
         'thouse'    => ['name' => 'Baumhaus'],
         'ashide'    => ['name' => 'Versteckter Flügel der Irrenanstalt']
@@ -29,13 +34,14 @@ return [
         'Model_Places_Treehouse'            => Array('auto' => true, 'sub' => 'thouse', 'iteration' => 0, 'distance' => array( 0, 0), 'num' =>  1, 'max_local' =>  1, 'contortion' =>  0, 'chance' =>   2, 'obvious' => true,  'branchable' => true, 'root' => null, 'fixed' => 1),
 
         'Model_Places_Hospital'				=> Array('auto' => true, 'sub' => null, 'iteration' => 10, 'distance' => array(30,50), 'num' =>  1, 'max_local' =>  1, 'contortion' =>  3, 'chance' =>   3, 'obvious' => false, 'branchable' => true,  'root' => 'Model_Places_Outworld'),
-        'Model_Places_Hospital_Lobby'	    => Array('auto' => true, 'sub' => 'hospital', 'iteration' => 0, 'distance' => array( 0, 0), 'num' =>   1, 'max_local' =>   1, 'contortion' =>  0, 'chance' =>   3, 'obvious' => true, 'branchable' => true, 'root' => null, 'fixed' => 1),
-        'Model_Places_Hospital_Er'			=> Array('auto' => true, 'sub' => 'hospital', 'iteration' => 0, 'distance' => array(10,15), 'num' =>   1, 'max_local' =>   1, 'contortion' =>  0, 'chance' =>   3, 'obvious' => true, 'branchable' => true, 'root' => 'Model_Places_Hospital_Lobby'),
-        'Model_Places_Hospital_Morgue'		=> Array('auto' => true, 'sub' => 'hospital', 'iteration' => 0, 'distance' => array(10,15), 'num' =>   1, 'max_local' =>   1, 'contortion' =>  0, 'chance' =>   3, 'obvious' => false, 'branchable' => true, 'root' => 'Model_Places_Hospital_Lobby'),
-        'Model_Places_Hospital_Pharmacy'	=> Array('auto' => true, 'sub' => 'hospital', 'iteration' => 0, 'distance' => array( 5,10), 'num' =>   1, 'max_local' =>   1, 'contortion' =>  0, 'chance' =>   3, 'obvious' => false, 'branchable' => true, 'root' => 'Model_Places_Hospital_Lobby'),
-        'Model_Places_Hospital_Patients'	=> Array('auto' => true, 'sub' => 'hospital', 'iteration' => 0, 'distance' => array( 3,5), 'num' =>  20, 'max_local' =>  10, 'contortion' =>  0, 'chance' =>   3, 'obvious' => false, 'branchable' => true, 'root' => 'Model_Places_Hospital_Korridor'),
-        'Model_Places_Hospital_Private'	    => Array('auto' => true, 'sub' => 'hospital', 'iteration' => 0, 'distance' => array( 3,6), 'num' =>   3, 'max_local' =>   1, 'contortion' =>  0, 'chance' =>   3, 'obvious' => false, 'branchable' => true, 'root' => 'Model_Places_Hospital_Korridor'),
-        'Model_Places_Hospital_Korridor'	=> Array('auto' => true, 'sub' => 'hospital', 'iteration' => 0, 'distance' => array( 5,10), 'num' =>  10, 'max_local' =>   2, 'contortion' =>  0, 'chance' =>   3, 'obvious' => false, 'branchable' => true, 'root' => array('Model_Places_Hospital_Lobby','Model_Places_Hospital_Korridor')),
+        'Model_Places_Hospital_Lobby'	    => Array('auto' => false,'sub' => 'hospital', 'num' =>   1, 'max_local' => 0, 'contortion' =>  0, 'obvious' => true, 'root' => [], 'fixed' => 1),
+        'Model_Places_Hospital_Er'			=> Array('auto' => true, 'sub' => 'hospital', 'num' =>   1, 'max_local' => 1, 'contortion' =>  0, 'obvious' => true, 'root' => [Model_Map_Labyrinth::MML_FAR]),
+        'Model_Places_Hospital_Morgue'		=> Array('auto' => true, 'sub' => 'hospital', 'num' =>   1, 'max_local' => 1, 'contortion' =>  0, 'obvious' => true, 'root' => [Model_Map_Labyrinth::MML_FAR]),
+        'Model_Places_Hospital_Pharmacy'	=> Array('auto' => true, 'sub' => 'hospital', 'num' =>   1, 'max_local' => 1, 'contortion' =>  0, 'obvious' => true, 'root' => [Model_Map_Labyrinth::MML_FAR,Model_Map_Labyrinth::MML_CORRIDOR]),
+        'Model_Places_Hospital_Patients'	=> Array('auto' => true, 'sub' => 'hospital', 'num' =>  20, 'max_local' => 1, 'contortion' =>  0, 'obvious' => true, 'root' => [Model_Map_Labyrinth::MML_FAR,Model_Map_Labyrinth::MML_CORRIDOR]),
+        'Model_Places_Hospital_Private'	    => Array('auto' => true, 'sub' => 'hospital', 'num' =>   4, 'max_local' => 1, 'contortion' =>  0, 'obvious' => true, 'root' => [Model_Map_Labyrinth::MML_FAR,Model_Map_Labyrinth::MML_CORRIDOR]),
+        'Model_Places_Hospital_Cantina'	    => Array('auto' => true, 'sub' => 'hospital', 'num' =>   2, 'max_local' => 1, 'contortion' =>  0, 'obvious' => true, 'root' => [Model_Map_Labyrinth::MML_FAR,Model_Map_Labyrinth::MML_CORRIDOR]),
+        'Model_Places_Hospital_Korridor'	=> Array('auto' => false,'sub' => 'hospital', 'num' =>   0, 'max_local' => 0, 'contortion' =>  0, 'obvious' => true, 'root' => []),
 
         'Model_Places_Bar'			        => Array('auto' => true, 'sub' => null, 'iteration' => 10, 'distance' => array( 3,10), 'num' =>  1, 'max_local' =>  1, 'contortion' =>  0, 'chance' =>   2, 'obvious' => false, 'branchable' => true,  'root' => array('Model_Places_Outworld', 'Model_Places_Plaza')),
         'Model_Places_Burgerjoint'			=> Array('auto' => true, 'sub' => null, 'iteration' => 10, 'distance' => array( 2, 5), 'num' =>  2, 'max_local' =>  1, 'contortion' =>  0, 'chance' =>   7, 'obvious' => false, 'branchable' => true,  'root' => array('Model_Places_Outworld', 'Model_Places_Plaza'), 'force_root' => array('Model_Places_Outworld')),

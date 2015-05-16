@@ -51,6 +51,11 @@
 @buttons-blue-font-color: @zv-color-secondary;
 @buttons-blue-icon-mask: #BABABA;
 
+@buttons-green-background-color: #00944f;
+@buttons-green-border-color: #00522a;
+@buttons-green-font-color: @zv-color-secondary;
+@buttons-green-icon-mask: #BABABA;
+
 @buttons-disabled-background-color:  #c8bcbd;
 @buttons-disabled-border-color: #797979;
 @buttons-disabled-font-color: #797979;
@@ -64,6 +69,7 @@
 .btn {
   .generic-button(@buttons-main-background-color, @buttons-main-border-color, @buttons-main-font-color, @buttons-main-icon-mask, 1.2em, 3px 10px);
   &.blue, &.btn-zv.btn-zv-skinned-hero {.generic-button-color(@buttons-blue-background-color, @buttons-blue-border-color, @buttons-blue-font-color, @buttons-blue-icon-mask)}
+  &.green, &.btn-zv.btn-zv-skinned-context {.generic-button-color(@buttons-green-background-color, @buttons-green-border-color, @buttons-green-font-color, @buttons-green-icon-mask)}
 
   &.btn-zv {
     padding-bottom: 0; font-size: 12px;

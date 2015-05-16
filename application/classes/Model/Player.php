@@ -46,6 +46,8 @@ class Model_Player extends Model_Cloudshard {
 	private $cod = null;
     private $points = null;
 
+    private $escape_target_location = null;
+
     private $messages = array();
 	
 	private $achievements;
@@ -93,6 +95,14 @@ class Model_Player extends Model_Cloudshard {
 		if ($this->alive())
 			$this->cod = null;
 	}
+
+    public function set_escape_target($e = null) {
+        $this->escape_target_location = $e;
+    }
+
+    public function get_escape_target() {
+        return $this->escape_target_location;
+    }
 
     public function register_temp($type) {
         if (isset($this->temp_registry[$type]))

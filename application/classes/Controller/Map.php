@@ -82,6 +82,14 @@ class Controller_Map extends Controller_Game {
                     return false;
                 }
 
+            // If we're switching between labyrinth and other map types, update escape ID
+            if ($game->map($did)->get_map_type() == Model_Map_Abstract::MMA_TYPE_LABYRINTH && $game->map($lid)->get_map_type() != Model_Map_Abstract::MMA_TYPE_LABYRINTH)
+                foreach ($companion as $current)
+                    $current->set_escape_target($did);
+            elseif ($game->map($did)->get_map_type() != Model_Map_Abstract::MMA_TYPE_LABYRINTH && $game->map($lid)->get_map_type() == Model_Map_Abstract::MMA_TYPE_LABYRINTH)
+                foreach ($companion as $current)
+                    $current->set_escape_target(null);
+
             $distance = 0;
             $route = [];
         }

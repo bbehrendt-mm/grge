@@ -7,6 +7,7 @@ class Model_Items_Virtual_Hero_Common extends Model_Items_Abstract_Virtual {
         'hero_wof' => 1,
         'hero_sleep' => 1,
         'hero_unaddict' => 1,
+        'context_escape' => PHP_INT_MAX,
     );
 
 	protected static $static_info = Array(
@@ -14,8 +15,9 @@ class Model_Items_Virtual_Hero_Common extends Model_Items_Abstract_Virtual {
 	);
 
     protected function hid() {
+        /** @global $player Model_Player */
         global $player;
-        return parent::hid()
+        $tmp = parent::hid()
             ->add_action('Kraft sammeln', Model_Action::factory()
                     ->buttonskin('hero')
                     ->description('Reduziert jede deiner Statusleisten um 15% und fügt die abgezogenen Punkte deiner Energie hinzu.')
@@ -80,5 +82,44 @@ class Model_Items_Virtual_Hero_Common extends Model_Items_Abstract_Virtual {
                     )
                 , 'hero_unaddict')
             ;
+
+        if ($player->get_escape_target() && $player->get_escape_target() != $player->location_class())
+            $tmp->add_action('Überstürzte Flucht', Model_Action::factory()
+                ->buttonskin('context')
+                ->description('Hast du dich in einer Ruine verlaufen, dann verwende diese Aktion um aus deiner misslichen Lage zu befreien und zum Eingang zurückzukehren. ACHTUNG: Du wirst während der Flucht die meisten deiner Gegenstände verlieren und dir sehr wahrscheinlich eine Verletzung zuziehen. Wird der Fluchtweg von Zombies blockiert, verlierst du 20 Gesundheit für jeden Zombie - du behälst jedoch mindestens 1 Gesundheitspunkt nach der Flucht. Die Zombies werden durch diese Aktion nicht getötet!')
+                ->effect(Model_Effect::factory()
+                    ->custom(function($p) {
+                        /** @var Model_Player $p */
+                        /** @global Model_Game $game */
+                        global $game;
+                        if (!($did = $p->get_escape_target())) return;
+                        if ($did == $p->location_class() || !$p->location()->can_leave($p->id(), true) || !$game->location($did)->can_enter($p->id())) {
+                            $p->log()->add('Eine Flucht scheint im Moment aussichtslos...');
+                            return;
+                        }
+
+                        $damage = min($p->stats_get(Model_Player::MP_STAT_HEALTH) - 1, $p->location()->zombie_pop() * 20);
+                        $injury = mt_rand(0,100) < (50 + $damage);
+
+                        foreach ($p->inventory()->get() as $item)
+                            if (!$item->is_essential() && $item->drop()) {
+                                $p->inventory()->remove($item->uin());
+                                $p->location()->inventory()->add($item);
+                            }
+
+                        $p->stats_modify(Model_Player::MP_STAT_HEALTH, -$damage);
+                        if ($injury) new Model_Buffs_Blood($p->id());
+
+                        $p->location()->leave($p->id());
+                        $game->location($did)->enter($p->id());
+                        $p->location_class($did);
+
+                        $p->log()->add('Puuh, das war eine ganz schön wilde Flucht... aber jetzt scheinst du erst einmal in Sicherheit zu sein.');
+                    })
+                )
+                , 'context_escape'
+            );
+
+        return $tmp;
     }
 }	

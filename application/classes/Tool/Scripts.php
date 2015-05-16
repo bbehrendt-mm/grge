@@ -68,6 +68,45 @@ class Tool_Scripts
         return true;
     }
 
+    public static function getBrainCoinLikelinessLevel($lid = null) {
+        /**
+         * @global Model_Game $game
+         * @global Model_Player $player
+         */
+        global $game, $player;
+
+        // Get Radar data
+        list($radar_min, $radar_max, $radar_prop, $radar_increase) = $lid ? $game->location($lid)->zombie_factory()->get_radar_data() : $player->location()->zombie_factory()->get_radar_data();
+
+        // Check if we're at a hideout with active defenses
+        $hideout = Tool_Scripts::current_location_hideout();
+        $protected_hideout = $hideout && $hideout->get_defense() > 0;
+
+        // Calculate approx. number of ticks between each blockade increase and random attack; set random attack value to zero if we're at a hideout
+        if ($protected_hideout)
+            $radar_prop = 0;
+        else $radar_prop = ($radar_prop > 0) ? ceil(pow($radar_prop,-1)) : 0;
+        $radar_increase = ($radar_increase > 0) ? ceil(pow($radar_increase,-1)) : 0;
+
+        // Calculate danger level
+        $danger = ($radar_prop > 0) ? floor($radar_max/4) : 0;              // Base value: Max attack group size
+        if (!$protected_hideout && $radar_prop <= 1.5 && $radar_prop > 0)     $danger += 2;    // Increase by 2 if we have a very high attack probability
+        elseif (!$protected_hideout && $radar_prop <= 3 && $radar_prop > 0)   $danger += 1;    // Increase by 1 if we have a high attack probability
+        elseif ($radar_prop <= 15  || $radar_prop == 0)  $danger -= 1;                           // Decrease by 1 if we have a very low attack probability
+        if ($radar_increase != 0 && $radar_increase <= 3)   $danger += 1;   // Increase by 1 if we have a very high blocking speed
+        $danger = min(5,max(($radar_prop > 0) ? 1 : 0,$danger));            // Confine danger to 0-5 range
+
+        switch ($danger) {
+            case 0: return 0;
+            case 1: return 0.003;
+            case 2: return 0.01;
+            case 3: return 0.04;
+            case 4: return 0.08;
+            case 5: return 0.15;
+            default: return 0;
+        }
+    }
+
     /**
      * Returns a list of available items
      * @param string $classname Restrict items to a specific class and its descendants

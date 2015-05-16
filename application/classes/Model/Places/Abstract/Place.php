@@ -293,6 +293,11 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
             $player->golden_ticket(true);
         }
 
+        // Spawn BrainCoins
+        if (Tool_Gambling::random(Tool_Scripts::getBrainCoinLikelinessLevel($this->uin())))
+            Tool_Scripts::place_new_item(new Model_Items_Braincoin());
+
+
 		if ($player->buff_retr('fragile') || $player->buff_retr('passout')) return true;
 		if ($item = $this->item_factory->spawn($force, 1, Tool_Scripts::calculate_find_chances($player->id())))
 			Tool_Scripts::place_new_item($item);

@@ -133,7 +133,7 @@ class Controller_Map extends Controller_Game {
                     $game->location($pass)->pass($current->id());
 
             //Tumbles
-            if ($game->tumble($current->id())) {
+            if (($sub || $map_type != Model_Map_Abstract::MMA_TYPE_LABYRINTH) && $game->tumble($current->id())) {
                 $current->log()->add('Du bist gestolpert und hast dir das Knie aufgeschlagen! Vielleicht solltest du deinen Alkoholkonsum zügeln ...');
                 $current->stats_modify(Model_Player::MP_STAT_HEALTH, -mt_rand(3, 10));
             }
@@ -142,7 +142,7 @@ class Controller_Map extends Controller_Game {
             $current->buff_remove('move');
 
             //Messages
-            if (!$sub && $map_type == $game->map($lid)->get_map_type()) {
+            if (!$sub && $map_type == Model_Map_Abstract::MMA_TYPE_LABYRINTH) {
                 if (!Tool_System::instance_of($destination, 'Interface_Corridor'))
                     $current->log()->add('Du tastest dich ein Stück vorran und und befindest dich jetzt in/im :location.', array(), array(':location' => $destination->name()));
             } elseif (count($companion) == 1 && $current == $player)

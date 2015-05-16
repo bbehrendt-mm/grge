@@ -742,6 +742,8 @@ class Controller_Game extends Controller {
                 ->set('time', Tool_Numerics::duration_to_string($game->get_player($player->id())->get_lifetime()))
                 ->set('split_time', Tool_Numerics::duration_to_split($game->get_player($player->id())->get_lifetime()))
                 ->set('cause_of_death', $player->get_cod())
+                ->set('braincoins', $player->get_braincoins() * ($player->get_lifetime() >= 288 ? 1 : -1))
+                ->set('braincoins_account', Model_User::get_coins($player->id()))
                 ->render());
         }
 

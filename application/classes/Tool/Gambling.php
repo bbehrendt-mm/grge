@@ -35,5 +35,9 @@ class Tool_Gambling {
             return null;
         return array_values($array)[mt_rand(0,count($array) - 1)];
     }
+
+    public static function random($chance) {
+        return $chance <= 0 ? false : (mt_rand()/mt_getrandmax() < $chance);
+    }
 		
 }	

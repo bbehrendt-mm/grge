@@ -169,9 +169,8 @@ class Model_User extends Model {
         return (int)$usp[0]['coins'];
     }
 
-    public function award_coins($uid = NULL, $points) {
-        $userid = ($uid === NULL) ? $this->set['uid'] : $uid;
-        return DB::update('users')->set(array('coins' => $this->coins($userid) + $points))->where('uid', '=', $userid)->execute();
+    public static function award_coins($userid, $points) {
+        return DB::update('users')->set(array('coins' => static::get_coins($userid) + $points))->where('uid', '=', $userid)->execute();
     }
 
     public static function remove_coins($uid, $coins) {

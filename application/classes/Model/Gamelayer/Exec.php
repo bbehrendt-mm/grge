@@ -122,6 +122,9 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
         if (count($lobby_data) > 0 && $this->get_player($uid)->get_lifetime() < 288 && Kohana::$config->load('server.version.type') == 's')
             DB::insert('mp_lockouts', array('uid', 'timestamp'))->values(array($uid, time()))->execute();
 
+        if ($this->get_player($uid)->get_lifetime() >= 288 && $this->get_player($uid)->get_braincoins())
+            Model_User::award_coins($uid, $this->get_player($uid)->get_braincoins());
+
         if (!$as_batch) {
             $this->check_players();
             $this->write();

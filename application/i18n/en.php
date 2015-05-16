@@ -3644,4 +3644,14 @@ return array (
 	'Eine Flucht scheint im Moment aussichtslos...',
   'Puuh, das war eine ganz schön wilde Flucht... aber jetzt scheinst du erst einmal in Sicherheit zu sein.' =>
 	'Puuh, das war eine ganz schön wilde Flucht... aber jetzt scheinst du erst einmal in Sicherheit zu sein.',
+  'BrainCoin' =>
+	'BrainCoin',
+  'Diese BrainCoins kannst du im ZombVival-Shop gegen nützliche Spielboni eintauschen. Im Spiel gefundene BrainCoins werden dir nur dann angerechnet, wenn du mindestens 24 Stunden überlebt hast und sich die BrainCoins zum Zeitpunkt deines Todes in deinem Munitionsgürtel befinden.' =>
+	'Diese BrainCoins kannst du im ZombVival-Shop gegen nützliche Spielboni eintauschen. Im Spiel gefundene BrainCoins werden dir nur dann angerechnet, wenn du mindestens 24 Stunden überlebt hast und sich die BrainCoins zum Zeitpunkt deines Todes in deinem Munitionsgürtel befinden.',
+  'BrainCoins' =>
+	'BrainCoins',
+  'Leider kannst du dir die gefundenen BrainCoins nicht anrechnen lassen, da du nicht lange genug überlebt hast...' =>
+	'Leider kannst du dir die gefundenen BrainCoins nicht anrechnen lassen, da du nicht lange genug überlebt hast...',
+  'Herzlichen Glückwunsch! Du hast einige BrainCoins im Spiel gefunden, die deinem Konto nun angerechnet werden!' =>
+	'Herzlichen Glückwunsch! Du hast einige BrainCoins im Spiel gefunden, die deinem Konto nun angerechnet werden!',
 );

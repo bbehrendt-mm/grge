@@ -105,7 +105,8 @@ class Model_Items_Ammobelt extends Model_Items_Abstract_Item {
 	public function drop_dead() {
 		$ret = array();
 		foreach ($this->content as $type => $count)
-			$ret[] = new $type($count);
+            if ($type != 'Model_Items_Braincoin')
+			    $ret[] = new $type($count);
 		return $ret;
 	}
 }	

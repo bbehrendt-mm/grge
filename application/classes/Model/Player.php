@@ -45,6 +45,7 @@ class Model_Player extends Model_Cloudshard {
 	private $inventory;
 	private $cod = null;
     private $points = null;
+    private $braincoins = 0;
 
     private $escape_target_location = null;
 
@@ -277,7 +278,11 @@ class Model_Player extends Model_Cloudshard {
      */
 	final public function alive() {
 		return $this->alive;
-	} 
+	}
+
+    final public function get_braincoins() {
+        return $this->braincoins;
+    }
 	
 	/**
 	 * Kills player
@@ -292,6 +297,7 @@ class Model_Player extends Model_Cloudshard {
 		$this->alive = false;
 
         $this->points = $game->points($this->user_id);
+        $this->braincoins = Tool_Scripts::count_available_items('Model_Items_Braincoin', true, false, false, $this->id());
 
 		if ($game->config('modules.multiplayer')) {
 			$drop = array();

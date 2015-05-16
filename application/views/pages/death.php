@@ -6,6 +6,8 @@
  * @var int $soul_points Amount of soul points the player has earned
  * @var int $ach_points Amount of achievement points the player has earned
  * @var bool $rankable True, if the game is rankable
+ * @var int $braincoins Number of earned braincoins
+ * @var int $braincoins_account Number of braincoins in the users account
  * @var array $achievements Achievements
  */
 if (!isset($services)) $services = array();
@@ -86,6 +88,7 @@ if (!isset($services)) $services = array();
             <?=__('Leider hast du es nicht geschafft, Auszeichnungen bei diesem Spiel zu sammeln ...');?>
         <?php } ?>
     </div>
+
     <div class="cell rw-5 padded">
         <div class="help noclick">
             <h4><?=__('Der Tod')?></h4>
@@ -94,6 +97,34 @@ if (!isset($services)) $services = array();
             <?=__('Wenn du deinen Tod durch einen Klick auf "Das Spiel beenden" bestätigst, wird dein Spiel ins Ranking aufgenommen (sofern du mindestens einen Seelenpunkt erspielt hast). Du wirst daraufhin zur Startseite von ZombVival weitergeleitet.');?>
         </div>
     </div>
+
+    <?php if ($braincoins != 0) { ?>
+        <div class="cell-small rw-14 ro-5">
+            <div class="value-box">
+                <div class="row">
+                    <div class="cell rw-3 padded" style="opacity: <?=$braincoins>0 ? 1 : 0.5?>">
+
+                        <div class="row">
+                            <div class="cell rw-2 ro-2"><img src="media/icons/coin.gif" alt="bc" /></div>
+                            <div class="cell rw-8 right"><?=(int)$braincoins_account?></div>
+
+                            <div class="cell rw-2">+</div>
+                            <div class="cell rw-2"><img src="media/icons/items/braincoin.gif" alt="bc" /></div>
+                            <div class="cell rw-8 right"><?=abs($braincoins)?></div>
+
+                            <div class="cell rw-2">=</div>
+                            <div class="cell rw-2"><img src="media/icons/coin.gif" alt="bc" /></div>
+                            <div class="cell rw-8 right"><b><?=abs($braincoins)+$braincoins_account?></b></div>
+
+                        </div>
+                    </div>
+                    <div class="cell rw-8 ro-1 padded">
+                        <?=($braincoins > 0) ? __('Herzlichen Glückwunsch! Du hast einige BrainCoins im Spiel gefunden, die deinem Konto nun angerechnet werden!') : __('Leider kannst du dir die gefundenen BrainCoins nicht anrechnen lassen, da du nicht lange genug überlebt hast...')?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
 </div>
 
 <div class="row">

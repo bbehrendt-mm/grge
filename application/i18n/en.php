@@ -3625,7 +3625,7 @@ return array (
   'In diesem Flügel des Krankenhauses lagen die stationär aufgenommenen Patienten. Eine provisorische Barrikade blockierte den Eingang zu diesem Flügel des Krankenhauses - sie stellte jedoch genau wie die größtenteil bettlägrigen Patienten kein allzu großes Hindernis für die Zombiemassen dar.' =>
 	'This part of the hospital is filled with rooms for in-patients. A makeshift barricade was supposed to keep zombies out - but just like all bedridden patients, it did not manage to hold back anything.',
   'Du tastest dich ein Stück vorran und und befindest dich jetzt in/im :location.' =>
-	'Du tastest dich ein Stück vorran und und befindest dich jetzt in/im :location.',
+	'You\'re slowly walking through this darkly lit area. It seems you\'ve reached :location.',
   'Ein übliches Patientenzimmer... klein, muffig, ein billiger Fernseher an der Wand. Auf dessen Fernbedienungen ist die MDR-Taste ziemlich abgenutzt. Überall auf dem Boden und an den Wänden ist Blut. Alles in allem sieht es hier wie in jedem anderen Krankenhaus aus...' =>
 	'A room for common patients... small, musty, and a small CRT TV mounted to the wall. The floor and walls are covered in blood, but that has nothing to do with the zombie apocalypse - the blood was probably there way before that happened.',
   'Du hast nicht genug Energie, um diesen Ort zu erreichen ...' =>
@@ -3635,41 +3635,39 @@ return array (
   'Untote sexy Krankenschwester' =>
 	'Undead sexy nurse',
   'Täglicher Login abgebrochen...' =>
-	'Täglicher Login abgebrochen...',
+	'Daily Login canceled...',
   'Überstürzte Flucht' =>
-	'Überstürzte Flucht',
+	'Hasty Escape',
   'Hast du dich in einer Ruine verlaufen, dann verwende diese Aktion um aus deiner misslichen Lage zu befreien und zum Eingang zurückzukehren. ACHTUNG: Du wirst während der Flucht die meisten deiner Gegenstände verlieren und dir sehr wahrscheinlich eine Verletzung zuziehen. Wird der Fluchtweg von Zombies blockiert, verlierst du 20 Gesundheit für jeden Zombie - du behälst jedoch mindestens 1 Gesundheitspunkt nach der Flucht. Die Zombies werden durch diese Aktion nicht getötet!' =>
-	'Hast du dich in einer Ruine verlaufen, dann verwende diese Aktion um aus deiner misslichen Lage zu befreien und zum Eingang zurückzukehren. ACHTUNG: Du wirst während der Flucht die meisten deiner Gegenstände verlieren und dir sehr wahrscheinlich eine Verletzung zuziehen. Wird der Fluchtweg von Zombies blockiert, verlierst du 20 Gesundheit für jeden Zombie - du behälst jedoch mindestens 1 Gesundheitspunkt nach der Flucht. Die Zombies werden durch diese Aktion nicht getötet!',
+	'If you\'re lost in a ruin, use this action to free yourself from this predicament by jumping back to the exit. WARNING: You will lose most of you items during the escape and will likely be injured. If your escape route is blocked by zombies, each of them will cost you 20 health points - though you will always get away with at least 1 health point left. This action will not kill any zombies.',
   'Eine Flucht scheint im Moment aussichtslos...' =>
-	'Eine Flucht scheint im Moment aussichtslos...',
+	'It seems there is no escape right now...',
   'Puuh, das war eine ganz schön wilde Flucht... aber jetzt scheinst du erst einmal in Sicherheit zu sein.' =>
-	'Puuh, das war eine ganz schön wilde Flucht... aber jetzt scheinst du erst einmal in Sicherheit zu sein.',
+	'Phew, that was close. It seems you\'ve managed to get to safety just in time.',
   'BrainCoin' =>
 	'BrainCoin',
   'Diese BrainCoins kannst du im ZombVival-Shop gegen nützliche Spielboni eintauschen. Im Spiel gefundene BrainCoins werden dir nur dann angerechnet, wenn du mindestens 24 Stunden überlebt hast und sich die BrainCoins zum Zeitpunkt deines Todes in deinem Munitionsgürtel befinden.' =>
-	'Diese BrainCoins kannst du im ZombVival-Shop gegen nützliche Spielboni eintauschen. Im Spiel gefundene BrainCoins werden dir nur dann angerechnet, wenn du mindestens 24 Stunden überlebt hast und sich die BrainCoins zum Zeitpunkt deines Todes in deinem Munitionsgürtel befinden.',
+	'You can exchange these BrainCoins at the ZombVival Store before starting a new game. Unfortunately, you will only get to keep these BrainCoins if you survive at least 24 hours and have them in your ammobelt when you die.',
   'BrainCoins' =>
 	'BrainCoins',
   'Leider kannst du dir die gefundenen BrainCoins nicht anrechnen lassen, da du nicht lange genug überlebt hast...' =>
-	'Leider kannst du dir die gefundenen BrainCoins nicht anrechnen lassen, da du nicht lange genug überlebt hast...',
+	'You didn\'t manage to life long enough to keep these BrainCoins...',
   'Herzlichen Glückwunsch! Du hast einige BrainCoins im Spiel gefunden, die deinem Konto nun angerechnet werden!' =>
-	'Herzlichen Glückwunsch! Du hast einige BrainCoins im Spiel gefunden, die deinem Konto nun angerechnet werden!',
+	'Congratulations! The BrainCoins you\'ve found in this game will be added to your account as soon as you confirm your death.',
   'Tägliche Wartung' =>
-	'Tägliche Wartung',
+	'Daily Maintenance',
   'Im Moment wird die tägliche Wartung duchgeführt.' =>
-	'Im Moment wird die tägliche Wartung duchgeführt.',
+	'The daily maintenance script is running right now.',
   'Für die Dauer der Wartung ist der Spielserver nicht erreichbar!' =>
-	'Für die Dauer der Wartung ist der Spielserver nicht erreichbar!',
+	'During this, the game is offline.',
   'Hier ist alles, was du über die tägliche Wartung wissen musst:' =>
-	'Hier ist alles, was du über die tägliche Wartung wissen musst:',
-  'Sie findet täglich zwischen :utcbegin und :utcend deutscher Zeit (:localbegin und :localend in deiner Zeitzone) statt.' =>
-	'Sie findet täglich zwischen :utcbegin und :utcend deutscher Zeit (:localbegin und :localend in deiner Zeitzone) statt.',
+	'Here\'s what you need to know about this maintenance:',
   'Während der Wartung werden alle Spiele angehalten - du brauchst alo keine Angst haben, etwas zu verpassen.' =>
-	'Während der Wartung werden alle Spiele angehalten - du brauchst alo keine Angst haben, etwas zu verpassen.',
+	'During the maintenance, all game progress is frozen - so you won\'t miss anything until the game comes back online.',
   'Die tägliche Wartung ist nötig, um einige automatisierte Scripte zur Optimierung des Servers durchzuführen.' =>
-	'Die tägliche Wartung ist nötig, um einige automatisierte Scripte zur Optimierung des Servers durchzuführen.',
+	'This maintenance period is needed in order to allow some automated scripts to optimize server performance.',
   'Seite neu laden' =>
-	'Seite neu laden',
+	'Reload page',
   'Sie findet täglich zwischen :utcbegin und :utcend Uhr deutscher Zeit (:localbegin und :localend Uhr in deiner Zeitzone) statt.' =>
-	'Sie findet täglich zwischen :utcbegin und :utcend Uhr deutscher Zeit (:localbegin und :localend Uhr in deiner Zeitzone) statt.',
+	'It happens daily between :utcbegin and :utcend (German time) or :localbegin and :localend in your time zone.',
 );

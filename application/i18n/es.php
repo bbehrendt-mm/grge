@@ -3664,8 +3664,6 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
 	'Für die Dauer der Wartung ist der Spielserver nicht erreichbar!',
   'Hier ist alles, was du über die tägliche Wartung wissen musst:' =>
 	'Hier ist alles, was du über die tägliche Wartung wissen musst:',
-  'Sie findet täglich zwischen :utcbegin und :utcend deutscher Zeit (:localbegin und :localend in deiner Zeitzone) statt.' =>
-	'Sie findet täglich zwischen :utcbegin und :utcend deutscher Zeit (:localbegin und :localend in deiner Zeitzone) statt.',
   'Während der Wartung werden alle Spiele angehalten - du brauchst alo keine Angst haben, etwas zu verpassen.' =>
 	'Während der Wartung werden alle Spiele angehalten - du brauchst alo keine Angst haben, etwas zu verpassen.',
   'Die tägliche Wartung ist nötig, um einige automatisierte Scripte zur Optimierung des Servers durchzuführen.' =>

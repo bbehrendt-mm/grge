@@ -51,7 +51,16 @@ class Tool_Events {
     }
 
     public static function maintenance($time = null) {
-        $data = Kohana::$config->load('server.downtime');
-        return ($data['h'] == static::get(static::TE_HOUR, $time) && $data['start'] <= static::get(static::TE_MINUTE, $time) && $data['finish'] > static::get(static::TE_MINUTE, $time));
+        return (bool)static::active_maintenance_period($time);
+    }
+
+    public static function active_maintenance_period($time = null) {
+        $time = $time ? $time : time();
+        $current = ($time - strtotime(date('Y-m-d'), $time))/60;
+
+        foreach (Kohana::$config->load('server.downtime') as $period)
+            if ($period[0] <= $current && $period[1] > $current)
+                return $period;
+        return null;
     }
 }

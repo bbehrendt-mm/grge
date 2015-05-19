@@ -8,11 +8,9 @@ return array(
 		'type' 	   => 'n',
 		'date'	   => '?',
 	),
-    'downtime' => array(
-        'h' => 0,
-        'start' => 10,
-        'finish' => 15,
-    ),
+
+    'downtime' => [[10,15]],        // ONE downtime, starting 10 minutes after midnight, lasting until 15 minutes after midnight
+
     'externals' => array(
         'chat' => array(
             'url' => 'http://localhost:8081/subsidiary/chat/live.php',

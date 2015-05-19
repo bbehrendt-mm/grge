@@ -12,6 +12,7 @@ define('grge\E_SERVER_INVALID_SESSION', 'GRGE-0002-0001');
 define('grge\E_SERVER_ACCESS_DENIED', 'GRGE-0002-0002');
 define('grge\E_SERVER_LOGIN_REJECTED', 'GRGE-0002-0003');
 define('grge\E_SERVER_MAINTENANCE', 'GRGE-0002-0004');
+define('grge\E_SERVER_LIMITED_MAINTENANCE', 'GRGE-0002-0005');
 
 define('grge\E_AUTH_INVALID_PROVIDER', 'GRGE-0003-0000');
 define('grge\E_AUTH_CONNECTION_FAILED', 'GRGE-0003-0001');
@@ -71,6 +72,7 @@ class Error {
             case grge\E_SERVER_ACCESS_DENIED:           return "You do not possess the rights to access this resource.";
             case grge\E_SERVER_LOGIN_REJECTED:          return "The authentication process has failed.";
             case grge\E_SERVER_MAINTENANCE:             return "The server is currently under maintenance.";
+            case grge\E_SERVER_LIMITED_MAINTENANCE:     return "The servers functionality is limited due to a scheduled maintenance process.";
 
             case grge\E_AUTH_INVALID_PROVIDER:          return "Remote authentication provider is invalid.";
             case grge\E_AUTH_CONNECTION_FAILED:         return "Connection to remote authentication provider failed.";

@@ -31,7 +31,6 @@ abstract class Controller extends Kohana_Controller {
             $this->response->body(View::factory('redirect')->set('url',URL::base())->set('path',$this->request->uri()));
             $this->request->action('noaction');
         }
-
     }
 
     /**
@@ -101,7 +100,10 @@ abstract class Controller extends Kohana_Controller {
         $this->response->headers("Cache-Control: no-cache, must-revalidate");
         $this->response->headers("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
 
-        //TODO: Maintenance Mode
+        if (!(in_array(strtolower($this->request->directory()),['admin']) || in_array(strtolower($this->request->controller()),['web','landing'])) && Tool_Events::maintenance()) {
+            $this->request->action('noaction');
+            if ($this->is_ajax_request()) $this->error(\grge\E_SERVER_LIMITED_MAINTENANCE);
+        }
     }
 
     private function daily_login_bonus() {
@@ -162,6 +164,17 @@ abstract class Controller extends Kohana_Controller {
      * Dummy action; used as a replacement for the actual action when the before-method needs to cancel execution, but can't completely kill the script by dieing
      */
     public function action_noaction() {}
+
+    public function action_maintenance() {
+        if (!Tool_Events::maintenance())
+            $this->redirect(URL::site('landing/redirect', 'http'));
+        else {
+            $this->add_widget(View::factory('pages/maintenance')->set('slot', Tool_Events::active_maintenance_period())->render());
+            $this->render();
+        }
+
+
+    }
 
     /**
      * Hook for AJAX calls using JAPI
@@ -236,7 +249,7 @@ abstract class Controller extends Kohana_Controller {
      * @return bool Always returns true
      * @throws Kohana_Exception
      */
-    protected function render($obj = null) {
+    protected function render($obj = null, $skip_notifications = false) {
         /** @global Model_Euser $user */
         global $user;
 
@@ -263,8 +276,10 @@ abstract class Controller extends Kohana_Controller {
 
         // Add other content in out data chain
         $this->add_data('content', $this->widgets, true);
-        $this->add_data('notifications', $this->session->get('notifications',[]), true);
-        $this->session->delete('notifications');
+        if (!$skip_notifications) {
+            $this->add_data('notifications', $this->session->get('notifications',[]), true);
+            $this->session->delete('notifications');
+        }
 
         // Render
         $this->response->body(json_encode($this->data, JSON_FORCE_OBJECT));

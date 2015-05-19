@@ -3654,4 +3654,22 @@ return array (
 	'Leider kannst du dir die gefundenen BrainCoins nicht anrechnen lassen, da du nicht lange genug überlebt hast...',
   'Herzlichen Glückwunsch! Du hast einige BrainCoins im Spiel gefunden, die deinem Konto nun angerechnet werden!' =>
 	'Herzlichen Glückwunsch! Du hast einige BrainCoins im Spiel gefunden, die deinem Konto nun angerechnet werden!',
+  'Tägliche Wartung' =>
+	'Tägliche Wartung',
+  'Im Moment wird die tägliche Wartung duchgeführt.' =>
+	'Im Moment wird die tägliche Wartung duchgeführt.',
+  'Für die Dauer der Wartung ist der Spielserver nicht erreichbar!' =>
+	'Für die Dauer der Wartung ist der Spielserver nicht erreichbar!',
+  'Hier ist alles, was du über die tägliche Wartung wissen musst:' =>
+	'Hier ist alles, was du über die tägliche Wartung wissen musst:',
+  'Sie findet täglich zwischen :utcbegin und :utcend deutscher Zeit (:localbegin und :localend in deiner Zeitzone) statt.' =>
+	'Sie findet täglich zwischen :utcbegin und :utcend deutscher Zeit (:localbegin und :localend in deiner Zeitzone) statt.',
+  'Während der Wartung werden alle Spiele angehalten - du brauchst alo keine Angst haben, etwas zu verpassen.' =>
+	'Während der Wartung werden alle Spiele angehalten - du brauchst alo keine Angst haben, etwas zu verpassen.',
+  'Die tägliche Wartung ist nötig, um einige automatisierte Scripte zur Optimierung des Servers durchzuführen.' =>
+	'Die tägliche Wartung ist nötig, um einige automatisierte Scripte zur Optimierung des Servers durchzuführen.',
+  'Seite neu laden' =>
+	'Seite neu laden',
+  'Sie findet täglich zwischen :utcbegin und :utcend Uhr deutscher Zeit (:localbegin und :localend Uhr in deiner Zeitzone) statt.' =>
+	'Sie findet täglich zwischen :utcbegin und :utcend Uhr deutscher Zeit (:localbegin und :localend Uhr in deiner Zeitzone) statt.',
 );

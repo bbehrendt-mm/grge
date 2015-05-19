@@ -50,7 +50,6 @@ class Controller_Web extends Controller {
         $this->force_ajax();
         $this->add_widget(':body', View::factory('body')->render());
         $this->modify_current_url('');
-        $this->render();
+        $this->render(null, true);
     }
-
 }

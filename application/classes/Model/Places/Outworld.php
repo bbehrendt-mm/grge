@@ -37,7 +37,7 @@ class Model_Places_Outworld extends Model_Places_Abstract_Node {
             $this->inventory->add(new Model_Items_Paracetin);
             $this->inventory->add(new Model_Items_Lunchbox());
             $this->inventory->add(new Model_Items_Sportsdrink());
-            $this->inventory->add(new Model_Items_Tentkit);
+            $this->inventory->add(new Model_Items_Tentkit2);
 
             $this->log->add(new Model_Log_Types_Text('Verschiedene Gegenstände gefunden', 'Ein hilfreicher Fund', 'Nach nur ein paar Metern findest du ein notdürftig aufgeschlagenes Lager - der Besitzer ist wohl im Schlaf überrascht worden. Naja, wenigstens wird er dann wohl nichts mehr dagegen haben wenn du dich an seiner Ausrüstung bedienst ...'));
         }

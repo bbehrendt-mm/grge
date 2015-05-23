@@ -63,7 +63,7 @@ class Tool_Gamemodes {
     private static function compile_requirements(&$rqdb) {
         $ret = true;
 
-        if (Kohana::$config->load('server.version.type') != 's' || Tool_Events::is_october_midness())
+        if (Kohana::$config->load('build.version.stage') < 3 || Tool_Events::is_october_midness())
             return true;
 
         foreach ($rqdb['mode'] as $key => &$requirement) {
@@ -148,7 +148,7 @@ class Tool_Gamemodes {
             $job['level'] = 0;
             $job['locked'] = !static::compile_requirements($job['requirements']);
             $job['points'] = static::get_sp_job($jid);
-            if (Kohana::$config->load('server.version.type') != 's' || Tool_Events::is_october_midness()) {
+            if (Kohana::$config->load('build.version.stage') < 3 || Tool_Events::is_october_midness()) {
                 $job['level'] = count($job['levels']) + 1;
                 $job['next_level'] = null;
             } elseif (!$job['locked']) {

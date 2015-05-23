@@ -2,12 +2,6 @@
 
 return array(
 	'season' => 7,
-	//ToDo: Integrate new version system
-    'version' => array(
-		'revision' => 0,
-		'type' 	   => 'n',
-		'date'	   => '?',
-	),
 
     'downtime' => [[10,15]],        // ONE downtime, starting 10 minutes after midnight, lasting until 15 minutes after midnight
 

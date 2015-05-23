@@ -3694,4 +3694,18 @@ return array (
 	'Starver',
   'Knöcherne Klaue' =>
 	'Boneclaw',
+  'Level +1' =>
+	'Level +1',
+  'Dieses Paket erhöht deinen Berufslevel ausschließlich für das aktuelle Spiel um 1. Dir stehen also alle Boni des nächsten Berufslevels zur Verfügung.' =>
+	'Dieses Paket erhöht deinen Berufslevel ausschließlich für das aktuelle Spiel um 1. Dir stehen also alle Boni des nächsten Berufslevels zur Verfügung.',
+  'Max. Level' =>
+	'Max. Level',
+  'Dieses Paket erhöht deinen Berufslevel ausschließlich für das aktuelle Spiel auf den Maximalwert. Selbst hochleveln? Pff, das ist für arme Leute!' =>
+	'Dieses Paket erhöht deinen Berufslevel ausschließlich für das aktuelle Spiel auf den Maximalwert. Selbst hochleveln? Pff, das ist für arme Leute!',
+  'Item-Pakete' =>
+	'Item-Pakete',
+  'Fähigkeiten' =>
+	'Fähigkeiten',
+  'Spielmodifikatoren' =>
+	'Spielmodifikatoren',
 );

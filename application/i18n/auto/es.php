@@ -360,4 +360,18 @@ return array (
 	'',
   'Verkaufsautomat (OmNomNutria)' =>
 	'',
+  'Level +1' =>
+	'',
+  'Dieses Paket erhöht deinen Berufslevel ausschließlich für das aktuelle Spiel um 1. Dir stehen also alle Boni des nächsten Berufslevels zur Verfügung.' =>
+	'',
+  'Max. Level' =>
+	'',
+  'Dieses Paket erhöht deinen Berufslevel ausschließlich für das aktuelle Spiel auf den Maximalwert. Selbst hochleveln? Pff, das ist für arme Leute!' =>
+	'',
+  'Item-Pakete' =>
+	'',
+  'Fähigkeiten' =>
+	'',
+  'Spielmodifikatoren' =>
+	'',
 );

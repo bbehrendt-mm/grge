@@ -389,8 +389,14 @@ class Controller_Gamemaster extends Controller {
                     'cost' => $store_element::get_cost(),
                     'name' => __($store_element::get_name()),
                     'desc' => __($store_element::get_description()),
+                    'cat' => __($store_element::get_type()),
                     'icon' => $store_element::get_icon(),
                 ];
+
+        usort($store, function($a,$b) {
+            return ($a['cat'] == $b['cat']) ? ($a['cost'] - $b['cost']) : strcmp($a['cat'],$b['cat']);
+        });
+
         $this->render(['store' => $store]);
     }
 

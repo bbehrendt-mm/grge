@@ -130,7 +130,8 @@ class Model_Factory_Zombies extends Model {
 		if ($number === null && $config['chance'] < mt_rand(0, 100)) return null;
 		
 		//Spawn fixed number of zombies
-		if ($number !== null) return Array(new Model_Battle_Shambler($number, $config['range']));
+        $ztype = empty($config["siege"]) ? 'Model_Battle_Shambler' : $config["siege"];
+		if ($number !== null) return Array(new $ztype($number, $config['range']));
 		
 		if (count($config["groups"]) == 0) return null;
 		

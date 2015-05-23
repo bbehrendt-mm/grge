@@ -3708,4 +3708,36 @@ return array (
 	'Fähigkeiten',
   'Spielmodifikatoren' =>
 	'Spielmodifikatoren',
+  'Faulende Patienten' =>
+	'Faulende Patienten',
+  'Bücherregal' =>
+	'Bücherregal',
+  'Kann mit Büchern gefüllt werden, um den Dekorationswert des Verstecks zu verbessern.' =>
+	'Kann mit Büchern gefüllt werden, um den Dekorationswert des Verstecks zu verbessern.',
+  'Dekoration' =>
+	'Dekoration',
+  'Buch einlagern' =>
+	'Buch einlagern',
+  'Legt ein Buch ins Bücherregal.' =>
+	'Legt ein Buch ins Bücherregal.',
+  'Vorhänge' =>
+	'Vorhänge',
+  'Stattet dein Versteck mit hübschen Vorhängen aus und verbessert so den Dekorationswert.' =>
+	'Stattet dein Versteck mit hübschen Vorhängen aus und verbessert so den Dekorationswert.',
+  'Flaschensammlung' =>
+	'Flaschensammlung',
+  'Nichts schmückt eine Wohnung mehr als ein riesiger Haufen leerer Bierflaschen.' =>
+	'Nichts schmückt eine Wohnung mehr als ein riesiger Haufen leerer Bierflaschen.',
+  'Kapitalistische Girlande' =>
+	'Kapitalistische Girlande',
+  'Stelle deinen Reichtum mit dieser dekorativen Girlande zur Schau.' =>
+	'Stelle deinen Reichtum mit dieser dekorativen Girlande zur Schau.',
+  'Makabere Girlande' =>
+	'Makabere Girlande',
+  'Es gibt nichts, aus dem man besser eine dekorative Girlande bauen kann als abgenagte Knochen! ... moment ...' =>
+	'Es gibt nichts, aus dem man besser eine dekorative Girlande bauen kann als abgenagte Knochen! ... moment ...',
+  'Elektrisierende Girlande' =>
+	'Elektrisierende Girlande',
+  'Diese hübsch glitzernde Girlande wertet dein Versteck dekorativ auf. Pass nur auf, dass dir keine Batteriesäure auf den Kopf tropft...' =>
+	'Diese hübsch glitzernde Girlande wertet dein Versteck dekorativ auf. Pass nur auf, dass dir keine Batteriesäure auf den Kopf tropft...',
 );

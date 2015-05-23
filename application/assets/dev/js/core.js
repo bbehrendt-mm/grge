@@ -2178,6 +2178,8 @@ core = {
                 return;
             }
 
+            var header = $('<div />').addClass('map-header').text(data.mapname).appendTo(popup);;
+
             var canvas = $('<canvas />').attr({
                 'width':dx,
                 'height':dy

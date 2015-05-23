@@ -36,4 +36,36 @@ return array (
 	'',
   'Spielmodifikatoren' =>
 	'',
+  'Faulende Patienten' =>
+	'',
+  'Bücherregal' =>
+	'',
+  'Kann mit Büchern gefüllt werden, um den Dekorationswert des Verstecks zu verbessern.' =>
+	'',
+  'Dekoration' =>
+	'',
+  'Buch einlagern' =>
+	'',
+  'Legt ein Buch ins Bücherregal.' =>
+	'',
+  'Vorhänge' =>
+	'',
+  'Stattet dein Versteck mit hübschen Vorhängen aus und verbessert so den Dekorationswert.' =>
+	'',
+  'Flaschensammlung' =>
+	'',
+  'Nichts schmückt eine Wohnung mehr als ein riesiger Haufen leerer Bierflaschen.' =>
+	'',
+  'Kapitalistische Girlande' =>
+	'',
+  'Stelle deinen Reichtum mit dieser dekorativen Girlande zur Schau.' =>
+	'',
+  'Makabere Girlande' =>
+	'',
+  'Es gibt nichts, aus dem man besser eine dekorative Girlande bauen kann als abgenagte Knochen! ... moment ...' =>
+	'',
+  'Elektrisierende Girlande' =>
+	'',
+  'Diese hübsch glitzernde Girlande wertet dein Versteck dekorativ auf. Pass nur auf, dass dir keine Batteriesäure auf den Kopf tropft...' =>
+	'',
 );

@@ -10,6 +10,12 @@ game = {
         game.render.html.modal.unblend(0, true);
     },
 
+    init: function() {
+        $(window).on('resize', function() {
+            $('.popup').trigger('reposition');
+        });
+    },
+
     lang: function(set) {
         var cfg = game.storage.get('settings','language',false);
 

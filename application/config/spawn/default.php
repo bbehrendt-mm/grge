@@ -309,6 +309,20 @@ return array(
             Array('type' => 'Model_Battle_Starver',		'num' => Array(   1,    10), 'distance' => Array(  5, 15)),
         ),
     )),
+    'Model_Places_Hospital_Cantina'		    => Array('chance' =>  30, 'accum' =>  20, 'range' =>  30, 'groups' => Array(
+        Array(
+            Array('type' => 'Model_Battle_Starver',	    'num' => Array(   1,   2), 'distance' => Array(   5,  10)),
+            Array('type' => 'Model_Battle_Shambler',	'num' => Array(   1,   2), 'distance' => Array(   5,  10)),
+            Array('type' => 'Model_Battle_Fatass',		'num' => Array(   1,   1), 'distance' => Array(  10,  15)),
+        ),
+        Array(
+            Array('type' => 'Model_Battle_Fatass',		'num' => Array(   1,   1), 'distance' => Array(  10,  15)),
+            Array('type' => 'Model_Battle_Runner',		'num' => Array(   1,   1), 'distance' => Array(  10,  15)),
+        ),
+        Array(
+            Array('type' => 'Model_Battle_Fatass',		'num' => Array(   2,   3), 'distance' => Array(  30,  30)),
+        ),
+    )),
     'Model_Places_Hospital_Patients'	=> Array('chance' =>  10, 'accum' => 200, 'range' =>  5, 'groups' => Array(
         Array(
                 Array('type' => 'Model_Battle_Shambler',	'num' => Array(  5,   25), 'distance' => Array(  50, 90)),

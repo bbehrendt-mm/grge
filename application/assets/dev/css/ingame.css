@@ -150,15 +150,26 @@ div.consequence .group > img.fake + span {
     margin: 0 3px;
 }
 
-div.popup {
+div.popup-wrapper {
     position: fixed;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    overflow: auto;
+}
+
+div.popup-wrapper > div.popup {
+    position: relative;
+    pointer-events: all;
     background: #ffeba5;
     border: 2px solid #e7d395;
     box-shadow: 0 0 15px black;
 }
 
 /*noinspection ALL*/
-div.popup.disabled {
+div.popup-wrapper > div.popup.disabled {
     filter: blur(2px) sepia(100%);
     -webkit-filter: filter: blur(2px) sepia(100%);
 }

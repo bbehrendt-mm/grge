@@ -55,6 +55,7 @@
         document.getElementById('boot').style.display = 'block';
         document.getElementById('nojs').style.display = 'none';
         window.addEventListener('load',function(){
+            game.init();
             game.network.load('web/body',{},true);
         });
     // ## JS COMPRESS END ## //

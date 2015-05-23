@@ -123,7 +123,8 @@ class Controller_Game extends Controller {
          */
         global $game, $player;
 
-        //ToDo: Radar effects
+        $radar_scale = $player->buff_retr('tr_danger') ? 2 : 8;
+
         // Get Radar data
         list($radar_min, $radar_max, $radar_prop, $radar_increase) = $player->location()->zombie_factory()->get_radar_data();
 
@@ -179,7 +180,7 @@ class Controller_Game extends Controller {
             'radar' => [
                 'danger' => $danger,
                 'min' => 0,
-                'max' => ceil($radar_max/8)*8,
+                'max' => ceil($radar_max/$radar_scale)*$radar_scale,
                 'prop' => $radar_prop * 5,
                 'inc' => $radar_increase * 5,
                 'hideout' => (bool)$hideout,

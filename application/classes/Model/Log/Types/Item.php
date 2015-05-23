@@ -13,6 +13,12 @@ class Model_Log_Types_Item extends Model_Log_Message {
 
     protected static $type = Model_Log_Message::MLM_ITEM_LOG;
 
+
+    /**
+     * @param mixed $type
+     * @param Model_Items_Abstract_Item|Model_Items_Abstract_Item[] $item
+     * @param int|null $uin
+     */
     public function __construct($type, $item, $uin = null) {
         /**
          * @global Model_Game $game

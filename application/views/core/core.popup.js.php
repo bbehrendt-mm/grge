@@ -1,11 +1,16 @@
 core.popup = {
     spawn: function(dx,dy) {
+        var wrapper = $('<div />').addClass('popup-wrapper').appendTo('body');
+
         var popup = $('<div />').addClass('popup').css({
             height: dy,
-            width: dx,
-            top: 60,
-            left: $(window).width()/2 - dx/2
-        });
+            width: dx
+        }).on('reposition', function() {
+            $(this).css({
+                top: ((dy + 60) > window.innerHeight) ? 0 : 60,
+                left: $(window).width()/2 - dx/2
+            });
+        }).trigger('reposition').appendTo(wrapper);
 
         var z = game.render.html.modal.blend(function() {
             popup.addClass('disabled').css({
@@ -15,13 +20,15 @@ core.popup = {
                 opacity: 0,
                 transform: 'scale(1.5)'
             }, 400, 'swing', function() {
-                $(this).remove();
+                $(this).parent().remove();
             });
         }, true, true);
 
-        popup.css('z-index',z+1).on('unpop', function() {
+        wrapper.css('z-index',z+1);
+
+        popup.on('unpop', function() {
             game.render.html.modal.unblend(z,true)
-        }).appendTo('body').css({
+        }).css({
             opacity: 0,
             transform: 'scale(0.5)',
             'transition': 'filter 0.4s ease, -webkit-filter 0.4s ease',
@@ -200,7 +207,7 @@ core.popup = {
                 if (v.hidden) return;
                 if (!$.objToArray(v.categories).length) v.categories = [<?=__j('Sonstiges')?>];
                 var targets = $();
-                if (cat_count > 1) $.each(v.categories, function(i,cat) {targets = targets.add(frame.find('div[data-group-cat=' + cat + ']').find('.blueprint-group-target'));});
+                if (cat_count > 1) $.each(v.categories, function(i,cat) {targets = targets.add(frame.find('div[data-group-cat="' + cat + '"]').find('.blueprint-group-target'));});
                 else targets = frame;
 
                 targets.append($('<div />').addClass('cell padded rw-4').append(core.snippets.blueprint(v, bdata.energy, bdata.zombies, bdata.blueprints, function() {

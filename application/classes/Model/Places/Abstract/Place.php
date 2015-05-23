@@ -222,10 +222,14 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 			$findings = min(2,max(0,$player->job(false) - 2));
 			
 			if ($findings > 0) {
-				$items = Array();
-				for ($i = 0; $i < $findings; $i++) $items[] = $this->item_factory->spawn(true);
-				Tool_Scripts::place_new_item($items, false, $this);
-				$this->log->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_EAGLE, $items));
+				$items = [];
+				for ($i = 0; $i < $findings; $i++)
+                    if ($find = $this->item_factory->spawn(true))
+                        $items[] = $find;
+				if ($items) {
+                    Tool_Scripts::place_new_item($items, false, $this);
+                    $this->log->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_EAGLE, $items));
+                }
 			}
 		}
 		

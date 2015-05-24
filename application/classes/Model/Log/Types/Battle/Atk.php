@@ -64,8 +64,8 @@ class Model_Log_Types_Battle_Atk extends Model_Log_Message {
 		$weapon_destroyed = false;
 		foreach ($weapon::ammo() as $a => $c) {
 			/** @var Model_Items_Abstract_Item|string $a */
-			if ($c === 'self') $weapon_destroyed = true;
-			elseif ($c === 'custom') $ammo[] = $weapon::custom_ammo_icon();
+			if ($a === 'self') $weapon_destroyed = true;
+			elseif ($a === 'custom') $ammo[] = $weapon::custom_ammo_icon();
 			else for ($i = 0; $i < $c; $i++) $ammo[] = $a::static_icon();
 		}
 

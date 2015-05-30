@@ -2,6 +2,7 @@
     /**
      * @var string $url
      * @var string $path
+     * @var string $sid
      */
 ?>
 <html>
@@ -20,7 +21,7 @@
 <body>
     Redirecting ...
 
-    <form action="<?=$url?>" method="post" style="display: none">
+    <form action="<?=$url?>" method="get" style="display: none">
         <input type="hidden" name="r" value="<?=$path?>">
     </form>
 

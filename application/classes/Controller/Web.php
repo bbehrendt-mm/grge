@@ -10,11 +10,8 @@ class Controller_Web extends Controller {
         foreach (scandir(APPPATH . 'assets/js') as $f) if (!in_array($f, ['.','..','jquery.min.js'])) $js[] = $f;
         foreach (scandir(APPPATH . 'assets/css') as $f) if (!in_array($f, ['.','..'])) $css[] = $f;
 
-        $this->response->body(View::factory('framework')->set('js',$js)->set('css',$css));
-    }
-
-    public function action_chat() {
-        $this->response->body(View::factory('chat'));
+        $sid = $this->request->post('vcsid') ? $this->request->post('vcsid') : $this->session->id();
+        $this->response->body(View::factory('framework')->set('js',$js)->set('css',$css)->set('sid', $sid));
     }
 
     private function deploy_core() {

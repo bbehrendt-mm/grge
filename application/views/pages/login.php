@@ -12,25 +12,25 @@ if (!isset($preset_zvid)) $preset_zvid = -1;
 <h1 class="noclick"><i class="fa fa-arrow-circle-right"></i><?=__('Login')?></h1>
 
 <div class="row">
-    <div class="cell rw-6 padded">
+    <div class="cell rw-6 padded rw-md-0 nopad-md">
         <div class="help noclick">
             <h4><?=__('Willkommen bei ZombVival')?></h4>
             <?=__('ZombVival ist ein an Die Verdammten von MotionTwin angelehntes, kostenloses Browserspiel. Entwickelt wird es von einem Die Verdammten-Spieler namens Brainbox. In ZombVival kämpfst du als Überlebender einer Zombie-Apokalypse gegen Horden von Untoten, während du die Überreste der Zivilisation nach Nahrung, Waffen und anderen nützlichen Gegenständen durchsuchst. Dein Tod ist gewiss - aber es liegt an dir, ihn so lange wie möglich herauszuzögern! Nebenbei kannst du versuchen, Auszeichnungen zu sammeln und die Spitze diverser Rankings zu erobern!');?>
         </div>
     </div>
 
-    <div class="cell rw-6 padded login_form" id="login_legacy_preset">
+    <div class="cell rw-6 rw-md-12 padded login_form" id="login_legacy_preset">
         <h2><?=__('Gleich kanns losgehen!');?></h2>
 
         <div id="preset_select">
-            <p><?=__('Es scheint, als ob du von ::i:: :service ::/i:: hierher gelangt bist. Du kannst ::b::ZombVival::/b:: daher ohne zusätzliche Registrierung mit deinem :service-Account spielen!', [':service' => $preset_legacy_service]);?></p>
+            <div class="note"><?=__('Es scheint, als ob du von ::i:: :service ::/i:: hierher gelangt bist. Du kannst ::b::ZombVival::/b:: daher ohne zusätzliche Registrierung mit deinem :service-Account spielen!', [':service' => $preset_legacy_service]);?></div>
             <p><?=__('Möchtest du, dass deine Account-Daten auf diesem Rechner gespeichert werden? Dadurch kannst du dich in Zukunft direkt auf dieser Webseite anmelden, ohne den Umweg über :service gehen zu müssen. Wenn du ZombVival gerade von einem öffentlichen Computer oder dem Computer eines Freundes besuchst, solltest du "Nein" wählen.', [':service' => $preset_legacy_service]);?></p>
 
             <div class="row iconize">
-                <div class="cell rw-4">
+                <div class="cell rw-4 rw-lg-5">
                     <div id="preset_forget" class="btn"><?=__('Nein');?></div>
                 </div>
-                <div class="cell rw-4 ro-4">
+                <div class="cell rw-4 ro-4 rw-lg-5 ro-lg-2">
                     <div id="preset_remember" class="btn"><?=__('Ja');?></div>
                 </div>
             </div>
@@ -45,7 +45,7 @@ if (!isset($preset_zvid)) $preset_zvid = -1;
 
     </div>
 
-    <div class="cell rw-6 padded login_form" id="login_legacy">
+    <div class="cell rw-6 rw-md-12 padded login_form" id="login_legacy">
 
         <h2><?=__('Logge dich über deinen ::i::Twinoid::/i::-Account ein!');?></h2>
 
@@ -67,12 +67,16 @@ if (!isset($preset_zvid)) $preset_zvid = -1;
                 </div><br />
 
                 <div class="row">
-                    <div class="cell rw-6"><label title="<?=__('Aktiviere diese Option, wenn du möchtest, dass deine Daten beim nächsten Besuch von ZombVival automatisch eingetragen werden. ::b::Aktiviere diese Option nicht, wenn du einen öffentlichen Computer verwendest!::/b::');?>"><input type="checkbox" class="form_input" id="remember"><?=__('Daten merken');?></label></div>
-                    <div class="cell rw-6"></div>
+                    <div class="cell rw-6 rw-lg-12"><label title="<?=__('Aktiviere diese Option, wenn du möchtest, dass deine Daten beim nächsten Besuch von ZombVival automatisch eingetragen werden. ::b::Aktiviere diese Option nicht, wenn du einen öffentlichen Computer verwendest!::/b::');?>"><input type="checkbox" class="form_input" id="remember"><?=__('Daten merken');?></label></div>
                 </div>
 
-                <div class="row iconize">
-                    <div class="cell rw-6 ro-6">
+                <div class="row">
+                    <div class="cell hide-desktop rw-12 padded">
+                        <div class="note noclick">
+                            <?=__('Du kannst dich auch auf einem PC einloggen und deine Login-Informationen von dort bequem auf dein mobiles Gerät übertragen lassen!');?>
+                        </div>
+                    </div>
+                    <div class="cell rw-6 ro-6 rw-lg-7 ro-lg-5 rw-sm-12 ro-sm-0">
                         <div id="confirm" class="btn btn-icon"><span class="btn-icon-inner"><i class="fa fa-arrow-right"></i></span><span id="confirm-content"><?=__('Einloggen');?></span></div>
                     </div>
                 </div>
@@ -81,11 +85,11 @@ if (!isset($preset_zvid)) $preset_zvid = -1;
             <div id="profiles">
 
                 <div class="row iconize">
-                    <div class="cell rw-6">
+                    <div class="cell rw-6 rw-sm-12">
                         <br />
                         <span id="delete" class="link small"><i class="fa fa-trash-o"></i> <?=__('Gespeicherte Daten löschen');?></span>
                     </div>
-                    <div class="cell rw-6">
+                    <div class="cell rw-6 rw-sm-12">
                         <div id="custom" class="btn"><?=__('Anderer Account');?></div>
                     </div>
                 </div>
@@ -93,6 +97,15 @@ if (!isset($preset_zvid)) $preset_zvid = -1;
         </div>
     </div>
 </div>
+
+<div class="row hide-mobile">
+    <div class="cell rw-12 padded">
+        <div class="note noclick">
+            <?=__('Du kannst ZombVival auch auf mobilen Geräten wie Smartphones und Tablets mit einer angepassten Benutzeroberfläche spielen! Nach dem Login kannst du dir unter "Seelen -> Profileeinstellungen" einen QR-Code generieren lassen, der deine Login-Daten automatisch auf dein mobiles Gerät kopiert.');?>
+        </div>
+    </div>
+</div>
+
 <script type="application/javascript">
 // ## JS COMPRESS BEGIN ## //
     $('#persistent').empty();
@@ -103,10 +116,8 @@ if (!isset($preset_zvid)) $preset_zvid = -1;
     var login = function(key, service,remember, fail_callback) {
         game.network.query('japi/account/login', {key: key, service: service}, function(data) {
             if (data.error) {
-                alert(data.error.code + ' [' + data.error.name + ']: ' + data.error.message);
-
-                fail_callback();
-
+                if (fail_callback && !fail_callback(data.error.code))
+                    alert(data.error.code + ' [' + data.error.name + ']: ' + data.error.message);
             } else {
                 game.network.load(data.redirect);
                 game.render.html.notify('smile', '<?=__('Die Zombies freuen sich schon darauf, dich zu sehen...');?>', game.i18n('<?=__('Willkommen, :name!');?>', {':name': data.login.name}), 4000);
@@ -158,7 +169,7 @@ if (!isset($preset_zvid)) $preset_zvid = -1;
 
     });
 
-    $('#content').find('.row.iconize, label').qtip(game.render.html.qtip.help('left'));
+    $('#content').find('.row.iconize, label').qtip(game.render.html.qtip.help({desktop: 'left', lg: 'top'}));
 
     $('#profiles').hide();
 
@@ -178,10 +189,22 @@ if (!isset($preset_zvid)) $preset_zvid = -1;
             $('#custom').addClass('btn-disabled');
             alias.find('.mugshot-fill').show();
 
-            var ret = function() {
-                $('#custom').addClass('btn-disabled');
+            var ret = function(code) {
+                $('#custom').removeClass('btn-disabled');
                 $('#content').find('.mugshot').removeClass('disabled');
                 alias.find('.mugshot-fill').hide();
+
+                if (code == 'GRGE-0003-0003') {
+                    game.render.html.notify('error',<?=__j('Die gespeicherten Login-Daten dieses Profils sind ungültig, daher wird das Icon aus dem Schnell-Login entfernt. Bitte versuche, dich über DV oder D2N einzuloggen.')?>,<?=__j('Ungültige Login-Daten')?>);
+                    alias.remove();
+
+                    var d = game.storage.get('login','profiles',{});
+                    delete d[k];
+                    game.storage.set('login','profiles',d);
+
+                    if (!$.objToArray(d).length) $('#custom').click();
+                    return true;
+                }
             };
 
             if (v.key && v.host)

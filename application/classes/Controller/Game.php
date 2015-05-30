@@ -5,7 +5,7 @@ class Controller_Game extends Controller {
     protected static $force_login = true;
     protected static $menu = 'logout';
 
-    protected static $death_allowed_actions = ['end'];
+    protected static $death_allowed_actions = ['end','logs'];
 
     /**
      * Hook for AJAX calls using JAPI
@@ -778,6 +778,17 @@ class Controller_Game extends Controller {
         $this->render([
             'redirect' => 'lobby/main',
         ]);
+    }
+
+    public function japi_logs() {
+        $this->render_log();
+        $this->render_notifications();
+
+        $version_data = Kohana::$config->load('build.version');
+        $this->add_data('version', "{$version_data['major']}.{$version_data['minor']}.{$version_data['service']}-{$version_data['stage']}-{$version_data['maintenance']}-{$version_data['build']}");
+
+        $this->render(false);
+        return true;
     }
 
 }

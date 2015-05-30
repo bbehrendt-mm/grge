@@ -13,7 +13,7 @@
 if (!isset($services)) $services = array();
 ?>
 
-<h1 class="noclick"><i class="fa fa-arrow-circle-right"></i><?=__('Herzlichen Glückwunsch, du bist tot!')?></h1>
+<h1 class="noclick"><i class="fa fa-arrow-circle-right"></i><span class="hide-desktop"><?=__('Das wars!')?></span><span class="hide-mobile"><?=__('Herzlichen Glückwunsch, du bist tot!')?></span></h1>
 
 <div class="value-box">
     <div class="row center">
@@ -41,7 +41,7 @@ if (!isset($services)) $services = array();
             <?= $soul_points ? $soul_points : __('Keine');?>
         </div>
         <div class="cell rw-6 padded">
-            <b><?=__('Auszeichnungspunkte');?></b><br />
+            <b><span class="hide-sm"><?=__('Auszeichnungspunkte');?></span><span class="hide-md hide-lg hide-desktop"><?=__('AP');?></span></b><br />
             <?= $ach_points ? $ach_points : __('Keine');?>
         </div>
     </div>
@@ -49,7 +49,7 @@ if (!isset($services)) $services = array();
 
 
 <div class="row">
-    <div class="cell rw-7 padded justify">
+    <div class="cell rw-7 rw-md-12 padded justify">
         <h2><?=__('Nach qualvollen :time hast du nun endlich ins Gras gebissen!', array(':time' => $time)); ?></h2>
 
         <?php if ($cause_of_death) { ?>
@@ -89,7 +89,7 @@ if (!isset($services)) $services = array();
         <?php } ?>
     </div>
 
-    <div class="cell rw-5 padded">
+    <div class="cell rw-5 rw-md-0 padded">
         <div class="help noclick">
             <h4><?=__('Der Tod')?></h4>
             <?=__('Wenn deine Gesundheit auf 0 sinkt, stirbst du. Das Spiel endet dann. Aber keine Angst, du kannst sofort ein neues Spiel starten wenn du gestorben bist.');?><br /><br />
@@ -99,10 +99,10 @@ if (!isset($services)) $services = array();
     </div>
 
     <?php if ($braincoins != 0) { ?>
-        <div class="cell-small rw-14 ro-5">
+        <div class="cell-small rw-14 ro-5 rw-lg-20 ro-lg-2 rw-md-24 ro-md-0">
             <div class="value-box">
                 <div class="row">
-                    <div class="cell rw-3 padded" style="opacity: <?=$braincoins>0 ? 1 : 0.5?>">
+                    <div class="cell rw-3 rw-sm-4 padded" style="opacity: <?=$braincoins>0 ? 1 : 0.5?>">
 
                         <div class="row">
                             <div class="cell rw-2 ro-2"><img src="media/icons/coin.gif" alt="bc" /></div>
@@ -118,7 +118,7 @@ if (!isset($services)) $services = array();
 
                         </div>
                     </div>
-                    <div class="cell rw-8 ro-1 padded">
+                    <div class="cell rw-8 ro-1 ro-sm-0 padded">
                         <?=($braincoins > 0) ? __('Herzlichen Glückwunsch! Du hast einige BrainCoins im Spiel gefunden, die deinem Konto nun angerechnet werden!') : __('Leider kannst du dir die gefundenen BrainCoins nicht anrechnen lassen, da du nicht lange genug überlebt hast...')?>
                     </div>
                 </div>
@@ -131,6 +131,10 @@ if (!isset($services)) $services = array();
     <div class="cell rw-12">
         <div id="finalizebtn" class="btn btn-icon"><span class="btn-icon-inner"><i class="fa fa-arrow-right"></i></span><span id="finalizebtn-content"><?=__('Das Spiel beenden');?></span></div>
     </div>
+</div>
+
+<div class="row" id="logtarget">
+
 </div>
 
 <script type="application/javascript">
@@ -160,6 +164,8 @@ if (!isset($services)) $services = array();
                 game.network.load(data.redirect);
         });
     });
+
+    core.renderLog($('#logtarget'));
 // ## JS COMPRESS END ## //
 </script>
 

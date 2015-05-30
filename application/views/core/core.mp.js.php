@@ -4,7 +4,7 @@
 
         var row = $('<div />').addClass('row').appendTo(target);
         $.each(data, function(id, player) {
-            var box = $('<div />').addClass('playerbox' + (player.escort ? ' escort' : '') + (player.local ? '' : ' unknown')).appendTo($('<div />').addClass('cell rw-4 padded').appendTo(row));
+            var box = $('<div />').addClass('playerbox' + (player.escort ? ' escort' : '') + (player.local ? '' : ' unknown')).appendTo($('<div />').addClass('cell rw-4 rw-lg-6 rw-md-4 rw-sm-12 padded').appendTo(row));
 
             box.append($('<b />').text(player.name));
             var bars = $('<div />').addClass('row').appendTo(box);
@@ -69,10 +69,10 @@
 
     core.parts.mp_players = function(data, target) {
 
-        var player_info = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-4 padded').appendTo(target));
+        var player_info = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-4 rw-lg-6 rw-md-12 padded').appendTo(target));
         render_self(data.self, player_info);
 
-        var others_info = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-8 padded').appendTo(target));
+        var others_info = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-8 rw-lg-6 rw-md-12 padded').appendTo(target));
         render_others(data.others, others_info);
 
     };

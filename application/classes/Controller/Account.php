@@ -48,6 +48,93 @@ class Controller_Account extends Controller {
         $this->render();
     }
 
+    public function action_qr() {
+        if ($this->session->get('user',NULL)) {
+            $this->redirect(URL::site('lobby/main', 'http'));
+            return;
+        }
+
+        $key = $this->request->param('key') ? trim($this->request->param('key')) : null;
+        if (strlen($key) != 4) $key = null;
+
+        // Render page
+        $this->add_widget(View::factory('pages/qr')
+            ->set('fill_key', $this->request->param('key'))
+            ->render());
+
+        // Render menu
+        $this->add_widget('main-menu', View::factory('menus/login')->render());
+
+        $this->render();
+    }
+
+    public function japi_mkqr() {
+        /** @global Model_Euser $user */
+        global $user;
+        if (!$user) return;
+
+        $pin = DB::select('pin')->from('qr')->where('uid','=',$user->uid())->where('timestamp', '>', time() - 300)->execute()->get('pin', false);
+
+        while (!$pin) {
+            $pin = '';
+            for ($i = 0; $i < 4; $i++) {
+                $c = mt_rand(0,61);
+                if ($c >= 36) $c += 61;
+                elseif ($c >= 10) $c += 55;
+                else $c += 48;
+
+                usleep(10000);
+                $pin .= chr($c);
+            }
+
+            $chk = DB::select('pin')->from('qr')->where('pin','=',$pin)->where('timestamp', '>', time() - 604800)->execute()->get('pin', false);
+            if ($chk) $pin = null;
+            else {
+                DB::delete('qr')->where('pin','=',$pin)->or_where('uid','=',$user->uid())->execute();
+                DB::insert('qr', ['uid','pin','timestamp'])->values([$user->uid(),$pin,time()])->execute();
+            }
+        }
+
+        $this->render(['pin' => $pin]);
+    }
+
+    public function action_settings() {
+        // Render page
+        $this->add_widget(View::factory('pages/settings')->set('url', URL::base(true))->render());
+
+        // Render menu
+        $this->add_widget('main-menu', View::factory('menus/logout')->render());
+
+        $this->render();
+    }
+
+    public function japi_qr() {
+        sleep(5);
+        $pin = trim($this->request->current()->post('key'));
+
+        if (!$pin || strlen($pin) != 4)
+            return $this->error(\grge\E_AUTH_INCOMPLETE_REQUEST);
+
+        $uid = DB::select('uid')->from('qr')->where('pin','=',$pin)->where('timestamp', '>', time() - 300)->execute()->get('uid', 0);
+
+        if ($uid) {
+            DB::delete('qr')->where('pin','=',$pin)->or_where('uid','=',$uid)->execute();
+            return $this->japi_login($uid);
+        }
+
+        else return $this->error(\grge\E_AUTH_INVALID_KEY);
+    }
+
+    public function japi_remove_tokens() {
+        /** @global Model_Euser $user */
+        global $user;
+        if (!$user) return false;
+
+        Model_Auth_Token::user_unlink($user->uid());
+
+        return $this->japi_logout();
+    }
+
     /**
      * Merge View
      * @throws Kohana_Exception
@@ -156,39 +243,43 @@ class Controller_Account extends Controller {
      * @return bool
      * @throws Kohana_Exception
      */
-    public function japi_login() {
-        //Get key
-        $key = $this->request->current()->post('key');
-        $host = $this->request->current()->post('service');
+    public function japi_login($uid = null) {
+        if ($uid == null) {
+            //Get key
+            $key = $this->request->current()->post('key');
+            $host = $this->request->current()->post('service');
 
-        if (!$key || !$host)
-            return $this->error(\grge\E_AUTH_INCOMPLETE_REQUEST);
+            if (!$key || !$host)
+                return $this->error(\grge\E_AUTH_INCOMPLETE_REQUEST);
 
-        $authenticator = null;
-        switch ($host) {
-            case 'Die Verdammten':
-                $authenticator = new Model_Auth_Hordesde($key, true);
-                break;
-            case 'Die2Nite':
-                $authenticator = new Model_Auth_Hordesen($key, true);
-                break;
-            case 'Token':
-                $authenticator = new Model_Auth_Token($key);
-                break;
-            default: return $this->error(grge\E_AUTH_INVALID_PROVIDER);
-        }
-
-        if (!$authenticator->connectToLocal() || !$authenticator->is_ready())
-            switch ($authenticator->getLastError()) {
-                case 'invalid_host': return $this->error(\grge\E_AUTH_INVALID_PROVIDER);
-                case 'connection_failed': return $this->error(\grge\E_AUTH_CONNECTION_FAILED);
-                case 'protocol_failed': return $this->error(\grge\E_AUTH_CONNECTION_FAILED);
-                case 'supplement_failed': return $this->error(\grge\E_AUTH_INVALID_CRED);
-                case 'invalid_keys': return $this->error(\grge\E_AUTH_INVALID_KEY);
-                default: return $this->error(\grge\E_AUTH_DOWNTIME, ['mt_error_passthrough' => $authenticator->getLastError()]);
+            $authenticator = null;
+            switch ($host) {
+                case 'Die Verdammten':
+                    $authenticator = new Model_Auth_Hordesde($key, true);
+                    break;
+                case 'Die2Nite':
+                    $authenticator = new Model_Auth_Hordesen($key, true);
+                    break;
+                case 'Token':
+                    $authenticator = new Model_Auth_Token($key);
+                    break;
+                default: return $this->error(grge\E_AUTH_INVALID_PROVIDER);
             }
 
-        $uid = $authenticator->getLocalID();
+            if (!$authenticator->connectToLocal() || !$authenticator->is_ready())
+                switch ($authenticator->getLastError()) {
+                    case 'invalid_host': return $this->error(\grge\E_AUTH_INVALID_PROVIDER);
+                    case 'connection_failed': return $this->error(\grge\E_AUTH_CONNECTION_FAILED);
+                    case 'protocol_failed': return $this->error(\grge\E_AUTH_CONNECTION_FAILED);
+                    case 'supplement_failed': return $this->error(\grge\E_AUTH_INVALID_CRED);
+                    case 'invalid_keys': return $this->error(\grge\E_AUTH_INVALID_KEY);
+                    default: return $this->error(\grge\E_AUTH_DOWNTIME, ['mt_error_passthrough' => $authenticator->getLastError()]);
+                }
+
+            $uid = $authenticator->getLocalID();
+        } else
+            $authenticator =  $authenticator = new Model_Auth_Token(Model_Auth_Token::token($uid));
+
 
         //Get whitelisting entry
         $wl = DB::select('relation')->from('user_flags')->where('user','=',$uid)->and_where('relation','IN',['ALLOW','DENY'])->and_where('data','=','WHITELIST')->execute()->as_array();

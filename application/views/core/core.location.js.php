@@ -388,7 +388,9 @@
         }
 
         $(target).append(
-            $('<div />').addClass('cell padded').addClass(data.lomap ? 'rw-4' : 'rw-6').append(
+            $('<div />').addClass('rw-12 padded hide-desktop hide-sm').text(data.meta.desc)
+        ).append(
+            $('<div />').addClass('cell padded').addClass(data.lomap ? 'rw-4 rw-lg-6' : 'rw-6 rw-lg-12').append(
                 zradar = $('<div />').addClass('row')
             ).append(
                 hideout = data.hideout ? $('<div />').addClass('row') : null
@@ -402,7 +404,7 @@
                 actions = $('<div />').addClass('row')
             )
         ).append(
-            desc = $('<div />').addClass('cell padded justify').addClass(data.lomap ? 'rw-4' : 'rw-6').text(data.meta.desc)
+            desc = $('<div />').addClass('cell padded justify').addClass(data.lomap ? 'rw-4' : 'rw-6').append($('<span />').addClass('hide-mobile').text(data.meta.desc))
         );
 
         if (core.last.players) {
@@ -422,7 +424,7 @@
 
         $.each(data.actions, function(k,v) {
             actions.append(
-                $('<div />').addClass('cell rw-6 padded justify').append(core.snippets.button(v, null, 'tooltip'))
+                $('<div />').addClass(game.touch() ? 'cell rw-12 padded justify' : 'cell rw-6 rw-sm-12 padded justify').append(core.snippets.button(v, null, 'tooltip'))
             )
         });
 
@@ -436,7 +438,7 @@
             actions.append(
                 $('<div />').addClass('cell padded justify').addClass(data.lomap ? 'rw-4' : 'rw-2').append(
                     $('<div />').addClass('btn').append($('<i>').addClass('fa fa-sign-in')).append('&nbsp;').click(function() {
-                        var esc_popup = core.popup.spawn(400);
+                        var esc_popup = core.popup.spawn({desktop: 400, sm: '100%'});
 
                         var title;
                         esc_popup.append($('<h2 />').addClass('center').text(<?=__j('Ort wechseln')?>));

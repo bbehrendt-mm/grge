@@ -39,6 +39,13 @@ core = {
             : (core.sessiondata[key] = data);
     },
 
+    renderLog: function(target) {
+        this.command('game/logs',{}, true, function(data) {
+            if (data.log)
+                core.parts.log(data.log,$('<div />').addClass('row log_box').appendTo(target.empty()));
+        }, true)
+    },
+
     command: function(url, args, background, callback, no_clean, finished) {
         if (!url)
             url = 'japi/game/data';
@@ -90,15 +97,25 @@ core = {
             action_box.addClass('custom custom-' + data.location.meta.css);
         }
 
-        var auto_tab = $('<ul />').addClass('tabline').appendTo(action_box)
+        var auto_select = $('<select />').appendTo($('<div />').addClass('hide-desktop control').appendTo(action_box))
+            .append($('<option />').val('#inv_container').text("Gegenst\u00e4nde & Heldentaten"))
+            .append($('<option />').val('#settings_container').text("Zeitfluss & Verhalten"))
+            .append(data.players ? $('<option />').val('#mp_container').text("Spieler\u00fcbersicht") : false)
+            .change(function() {
+                $('[data-toggle="' + $(this).val() + '"]').click();
+            })
+            .selectric();
+
+        var auto_tab = $('<ul />').addClass('tabline hide-mobile').appendTo(action_box)
             .append($('<li>').attr('data-toggle', '#inv_container').text("Gegenst\u00e4nde & Heldentaten"))
             .append($('<li>').attr('data-toggle', '#settings_container').text("Zeitfluss & Verhalten"))
             .append(data.players ? $('<li>').attr('data-toggle', '#mp_container').text("Spieler\u00fcbersicht") : false)
             .find('>li').click(function() {
                 var t = $($(this).data('toggle'));
+                auto_select.val($(this).data('toggle')).selectric();
                 core.session('main.tabs.open', $(this).data('toggle'));
                 $(this).addClass('active').siblings().removeClass('active');
-                action_box.children('div').hide();
+                action_box.children('div:not(.control)').hide();
                 t.show();
             }).first();
 
@@ -259,7 +276,6 @@ core = {
                 $.each(data, function(k,v) {
                     cache = cache.concat($.objToArray(v.set, true));
                 });
-                console.log(cache);
                 core.command('act/inventory',{action: rucksack ? 'drop' : 'take', items: cache, player: rucksack ? 0 : $('.inventory_player[data-pid-selected=1]').data('pid')});
             }).qtip(game.render.html.qtip.ingame('top')));
 
@@ -270,11 +286,11 @@ core = {
 
             if (!remote) {
                 if (!v.is_water)
-                    container.click(function() {
+                    container.click(function(e, force) {
                         var o;
                         if (o = $(this).data('click-override'))
                             o(this);
-                        else core.command('act/inventory',{action: rucksack ? 'drop' : 'take', items: [v.uin], player: rucksack ? 0 : $('.inventory_player[data-pid-selected=1]').data('pid')});
+                        else if (!game.touch() || force) core.command('act/inventory',{action: rucksack ? 'drop' : 'take', items: [v.uin], player: rucksack ? 0 : $('.inventory_player[data-pid-selected=1]').data('pid')});
                     });
                 else
                     container.click(function() {
@@ -352,9 +368,9 @@ core = {
 
                     var subhead = $();
                     if (v.label && !v.custom_label)
-                        subhead = subhead.add($('<i />').addClass('note center').text(v.label));
-                    if (v.count && !v.fill)  subhead = subhead.add($('<i />').addClass('note center').text(v.count + (v.capacity ? (' / ' + v.capacity + ' ') : ' ' ) + v.stack));
-                    if (v.weight) subhead = subhead.add($('<i />').addClass('note center').text("Gewicht" + ': ' + v.weight));
+                        subhead = subhead.add($('<i />').addClass('info center').text(v.label));
+                    if (v.count && !v.fill)  subhead = subhead.add($('<i />').addClass('info center').text(v.count + (v.capacity ? (' / ' + v.capacity + ' ') : ' ' ) + v.stack));
+                    if (v.weight) subhead = subhead.add($('<i />').addClass('info center').text("Gewicht" + ': ' + v.weight));
 
                     if (subhead.size())
                         content.append(subhead).append('<span class="separator" />');
@@ -372,13 +388,13 @@ core = {
                                         }))
                                 )
                             )
-                            .append($('<i />').addClass('note center').text("Du kannst diesen Gegenstand beliebig beschriften. Best\u00e4tige deine Beschriftung mit der Eingabetaste."))
+                            .append($('<div />').addClass('note').text("Du kannst diesen Gegenstand beliebig beschriften. Best\u00e4tige deine Beschriftung mit der Eingabetaste."))
                             .append('<span class="separator" />');
                     }
 
                     if (v.is_chem) {
                         content.append(
-                            $('<i />').addClass('note justify').text("Du kannst diese Chemikalie mit beliebigen anderen Gegenst\u00e4nden kombinieren. Welchen Effekt das hat... das wirst du selbst herausfinden m\u00fcssen.")
+                            $('<div />').addClass('note').text("Du kannst diese Chemikalie mit beliebigen anderen Gegenst\u00e4nden kombinieren. Welchen Effekt das hat... das wirst du selbst herausfinden m\u00fcssen.")
                         ).append(
                             $('<div />').addClass('btn').text("Experimentieren ...").click(function() {
                                 container.qtip().hide();
@@ -412,7 +428,7 @@ core = {
                         var fillbox, i;
                         content.append(
                             fillbox = $('<div />').addClass('center')
-                        ).append($('<i />').addClass('note justify').text("Klicke einen leeren Slot an, um Wasser aus einer anderen Quelle hinzuzugeben. Klicke einen gef\u00fcllten Slot an, um Wasser auszusch\u00fctten. Schwarz gef\u00e4rbte Slots k\u00f6nnen nicht ausgeleert werden."));
+                        ).append($('<div />').addClass('note').text("Klicke einen leeren Slot an, um Wasser aus einer anderen Quelle hinzuzugeben. Klicke einen gef\u00fcllten Slot an, um Wasser auszusch\u00fctten. Schwarz gef\u00e4rbte Slots k\u00f6nnen nicht ausgeleert werden."));
                         for (i = 0; i < v.count; i++)
                             fillbox.append($('<div />').addClass('fillbox fillbox-filled ' + (v.fill.fixed ? 'fillbox-fixed' : '')).click(function() {
                                 if (!v.fill.fixed)
@@ -473,7 +489,7 @@ core = {
                         var ammo_slots;
                         content.append('<span class="separator" />').append(
                             ammo_slots = $('<div />').addClass('center')
-                        ).append($('<i />').addClass('note justify').text("Klicke Munition an, um sie abzulegen."));
+                        ).append($('<div />').addClass('note').text("Klicke Munition an, um sie abzulegen."));
                         $.each(v.ammobelt, function(k,vin) {
                             ammo_slots.append($('<div />').addClass('itembox pointer').append($('<img />').attr('src','media/icons/' + vin.icon + '.gif')).append($('<span />').text(vin.count)).click(function() {
                                 var ok = false;
@@ -532,6 +548,12 @@ core = {
                             })
                         ).appendTo(pillrow);
                     }
+
+                    if (game.touch()) {
+                        $('<div />').addClass('btn green').text("Aufnehmen \/ Ablegen").click(function() {
+                            container.trigger('click', [true]);
+                        }).css('margin-top', 10).appendTo(content)
+                    }
                 }
             }));
 
@@ -566,15 +588,15 @@ core = {
     core.parts.inventory = function(data, target) {
         var iv_a, iv_b;
         $(target).empty().append(
-            $('<div />').addClass('cell rw-4 padded').append(
+            $('<div />').addClass('cell rw-4 rw-lg-6 padded ').append(
                 iv_a = $('<div />').addClass('row inventory flatbox inventory_player inventory_self')
             )
         ).append(
-            $('<div />').addClass('cell rw-4 padded').append(
+            $('<div />').addClass('cell rw-4 rw-lg-6 padded').append(
                 iv_b = $('<div />').addClass('row inventory flatbox inventory_location')
             )
         ).append(
-            $('<div />').addClass('cell rw-4 padded').append(
+            $('<div />').addClass('cell rw-4 rw-lg-12 padded').append(
                 iv_c = $('<div />').addClass('row inventory flatbox').addClass(data.action ? 'inventory_action' : 'inventory_hero')
             )
         );
@@ -640,7 +662,7 @@ core = {
             iv_c.append($('<h3 />').text("Heldentaten"));
             $.each(data.heroics, function(k,v) {
                 iv_c.append(
-                    $('<div />').addClass('cell rw-6 padded').append(core.snippets.button(v, function() {
+                    $('<div />').addClass(game.touch() ? 'cell rw-12 padded' : 'cell rw-6 rw-sm-12 padded').append(core.snippets.button(v, function() {
                         return confirm("Bist du sicher, dass du diese Heldentat ausf\u00fchren m\u00f6chtest?")
                     }, 'tooltip'))
                 )
@@ -1061,7 +1083,9 @@ core = {
         }
 
         $(target).append(
-            $('<div />').addClass('cell padded').addClass(data.lomap ? 'rw-4' : 'rw-6').append(
+            $('<div />').addClass('rw-12 padded hide-desktop hide-sm').text(data.meta.desc)
+        ).append(
+            $('<div />').addClass('cell padded').addClass(data.lomap ? 'rw-4 rw-lg-6' : 'rw-6 rw-lg-12').append(
                 zradar = $('<div />').addClass('row')
             ).append(
                 hideout = data.hideout ? $('<div />').addClass('row') : null
@@ -1075,7 +1099,7 @@ core = {
                 actions = $('<div />').addClass('row')
             )
         ).append(
-            desc = $('<div />').addClass('cell padded justify').addClass(data.lomap ? 'rw-4' : 'rw-6').text(data.meta.desc)
+            desc = $('<div />').addClass('cell padded justify').addClass(data.lomap ? 'rw-4' : 'rw-6').append($('<span />').addClass('hide-mobile').text(data.meta.desc))
         );
 
         if (core.last.players) {
@@ -1095,7 +1119,7 @@ core = {
 
         $.each(data.actions, function(k,v) {
             actions.append(
-                $('<div />').addClass('cell rw-6 padded justify').append(core.snippets.button(v, null, 'tooltip'))
+                $('<div />').addClass(game.touch() ? 'cell rw-12 padded justify' : 'cell rw-6 rw-sm-12 padded justify').append(core.snippets.button(v, null, 'tooltip'))
             )
         });
 
@@ -1109,7 +1133,7 @@ core = {
             actions.append(
                 $('<div />').addClass('cell padded justify').addClass(data.lomap ? 'rw-4' : 'rw-2').append(
                     $('<div />').addClass('btn').append($('<i>').addClass('fa fa-sign-in')).append('&nbsp;').click(function() {
-                        var esc_popup = core.popup.spawn(400);
+                        var esc_popup = core.popup.spawn({desktop: 400, sm: '100%'});
 
                         var title;
                         esc_popup.append($('<h2 />').addClass('center').text("Ort wechseln"));
@@ -1423,8 +1447,8 @@ core = {
 
 
                     $('<span />').appendTo(stuff).addClass('damage_received').text(Math.round10(data.damage_received,-2)).attr('title', "Erlittener Schaden").qtip(game.render.html.qtip.ingame('top'));
-                    $('<span />').appendTo(stuff).addClass('energy_lost').text(Math.round10(data.energy_lost,-2)).attr('title', "Verbrauchte Energie").qtip(game.render.html.qtip.ingame('top'));
-                    $('<span />').appendTo(stuff).addClass('damage_dealt').text(Math.round10(data.damage_dealt,-2)).attr('title', "Angerichteter Schaden").qtip(game.render.html.qtip.ingame('top'));
+                    $('<span />').appendTo(stuff).addClass('energy_lost hide-sm').text(Math.round10(data.energy_lost,-2)).attr('title', "Verbrauchte Energie").qtip(game.render.html.qtip.ingame('top'));
+                    $('<span />').appendTo(stuff).addClass('damage_dealt hide-md hide-sm').text(Math.round10(data.damage_dealt,-2)).attr('title', "Angerichteter Schaden").qtip(game.render.html.qtip.ingame('top'));
                     $('<span />').appendTo(stuff).addClass('zombies_killed').text(data.kills).attr('title', "Vernichtete Zombies").qtip(game.render.html.qtip.ingame('top'));
 
                     $.each(data.items_lost, function(k,item) {
@@ -1496,37 +1520,46 @@ core = {
 
                         var msg_destroyed = "Wurde beim Angriff zerst\u00f6rt!";
 
-                        var desc = $('<div />').addClass('cell rw-6').appendTo(row);
-                        var damage = $('<div />').addClass('row').appendTo($('<div />').addClass('cell rw-6').appendTo(row));
-                        var items = $('<div />').addClass('cell-small rw-9').appendTo(damage);
-                        $('<div />').addClass('cell-small rw-1').append($('<i />').addClass('fa fa-chevron-right')).appendTo(damage);
-                        var calc = $('<div />').addClass('cell-small rw-6').appendTo(damage);
-                        $('<div />').addClass('cell-small rw-1').append($('<i />').addClass('fa fa-chevron-right')).appendTo(damage);
-                        var result = $('<div />').addClass('cell-small rw-7').appendTo(damage);
+                        var desc = $('<div />').addClass('cell rw-6 rw-md-7').appendTo(row);
+                        var damage = $('<div />').addClass('row').appendTo($('<div />').addClass('cell rw-6 rw-md-5').appendTo(row));
+
+                        var items = $('<div />').addClass('cell-small rw-9 rw-md-4').appendTo(damage);
+                        $('<div />').addClass('cell-small rw-1 rw-md-0').append($('<i />').addClass('fa fa-chevron-right')).appendTo(damage);
+                        var calc = $('<div />').addClass('cell-small rw-6 rw-md-0').appendTo(damage);
+                        $('<div />').addClass('cell-small rw-1 rw-md-2').append($('<i />').addClass('fa fa-chevron-right')).appendTo(damage);
+                        var result = $('<div />').addClass('cell-small rw-7 rw-md-18').appendTo(damage);
 
                         if (obj.attacker.is_zombie) desc
-                            .append($('<span />').addClass('zombie').text(obj.attacker.count + ' ' + obj.attacker.name))
-                            .append($('<span />').text(obj.attacker.count == 1 ? "st\u00fcrzt sich auf" : "st\u00fcrzen sich auf"))
-                            .append($('<span />').addClass('player').text(obj.defender.name));
+                            .append($('<span class="hide-mobile" />').addClass('zombie').text(obj.attacker.count + ' ' + obj.attacker.name))
+                            .append($('<span class="hide-mobile" />').text(obj.attacker.count == 1 ? "st\u00fcrzt sich auf" : "st\u00fcrzen sich auf"))
+                            .append($('<span class="hide-mobile" />').addClass('player').text(obj.defender.name))
+
+                            .append($('<span class="hide-desktop" />').addClass('zombie').text(obj.attacker.count + ' ' + game.short(obj.attacker.name,4)))
+                            .append($('<span class="hide-desktop" />').html('<i class="fa fa-angle-double-right"></i>'))
+                            .append($('<span class="hide-desktop" />').addClass('player').text(obj.defender.name));
                         else desc
-                            .append($('<span />').addClass('player').text(obj.attacker.name))
-                            .append($('<span />').text("attackiert"))
-                            .append($('<span />').addClass('zombie').text(obj.defender.count + ' ' + obj.defender.name));
+                            .append($('<span class="hide-mobile" />').addClass('player').text(obj.attacker.name))
+                            .append($('<span class="hide-mobile" />').text("attackiert"))
+                            .append($('<span class="hide-mobile" />').addClass('zombie').text(obj.defender.count + ' ' + obj.defender.name))
+
+                            .append($('<span class="hide-desktop" />').addClass('player').text(obj.attacker.name))
+                            .append($('<span class="hide-desktop" />').html('<i class="fa fa-angle-double-right"></i>'))
+                            .append($('<span class="hide-desktop" />').addClass('zombie').text(obj.defender.count + ' ' + game.short(obj.defender.name,4)));
 
                         items.append(core.snippets.item(true,obj.weapon.name,obj.weapon.icon,1,true,false).addClass(obj.weapon.destroyed ? 'destroyed' : ''));
                         if (obj.weapon.energy)
-                            items.append($('<span />').addClass('energy').text(obj.weapon.energy));
+                            items.append($('<span />').addClass('energy hide-md hide-sm').text(obj.weapon.energy));
                         $.each(obj.weapon.ammo, function(k,icon) {
-                            items.append(core.snippets.item(false,'',icon,1,true,false));
+                            items.append(core.snippets.item(false,'',icon,1,true,false).addClass('hide-md hide-sm'));
                         });
 
                         if (obj.protection.value) {
-                            items.append($('<i />').addClass('fa fa-caret-right'));
+                            items.append($('<i />').addClass('fa fa-caret-right hide-md hide-sm'));
                             $.each(obj.protection.covers,function(k,item) {
-                                items.append(core.snippets.item(!item.stable ? msg_destroyed : true,item.name,item.icon,1,true,false).addClass(!item.stable ? 'destroyed' : ''));
+                                items.append(core.snippets.item(!item.stable ? msg_destroyed : true,item.name,item.icon,1,true,false).addClass('hide-md hide-sm').addClass(!item.stable ? 'destroyed' : ''));
                             });
                             $.each(obj.protection.armor,function(k,item) {
-                                items.append(core.snippets.item(!item.stable ? msg_destroyed : true,item.name,item.icon,1,true,false).addClass(!item.stable ? 'destroyed' : ''));
+                                items.append(core.snippets.item(!item.stable ? msg_destroyed : true,item.name,item.icon,1,true,false).addClass('hide-md hide-sm').addClass(!item.stable ? 'destroyed' : ''));
                             });
                         }
 
@@ -1559,7 +1592,8 @@ core = {
             target.append(
                 $('<div />').addClass('col rw-12 message' + (expandable ? ' pointer' : '')).append(
                     $('<div />').addClass(v.new ? 'timestamp new' : 'timestamp').text((new Date(v.time * 1000)).toLocaleTimeString())
-                ).append(
+                ).append($('<br />').addClass('hide-desktop'))
+                .append(
                     content = $('<div />').addClass('content').append(rendered)
                 ).click(function() {
                     if (!expandable) return;
@@ -1577,7 +1611,7 @@ core = {
 
         var row = $('<div />').addClass('row').appendTo(target);
         $.each(data, function(id, player) {
-            var box = $('<div />').addClass('playerbox' + (player.escort ? ' escort' : '') + (player.local ? '' : ' unknown')).appendTo($('<div />').addClass('cell rw-4 padded').appendTo(row));
+            var box = $('<div />').addClass('playerbox' + (player.escort ? ' escort' : '') + (player.local ? '' : ' unknown')).appendTo($('<div />').addClass('cell rw-4 rw-lg-6 rw-md-4 rw-sm-12 padded').appendTo(row));
 
             box.append($('<b />').text(player.name));
             var bars = $('<div />').addClass('row').appendTo(box);
@@ -1642,10 +1676,10 @@ core = {
 
     core.parts.mp_players = function(data, target) {
 
-        var player_info = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-4 padded').appendTo(target));
+        var player_info = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-4 rw-lg-6 rw-md-12 padded').appendTo(target));
         render_self(data.self, player_info);
 
-        var others_info = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-8 padded').appendTo(target));
+        var others_info = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-8 rw-lg-6 rw-md-12 padded').appendTo(target));
         render_others(data.others, others_info);
 
     };
@@ -1901,22 +1935,61 @@ core = {
     }
 })();core.popup = {
     spawn: function(dx,dy) {
+
+        var exp = function(w) {
+            if (typeof w == 'undefined')
+                w = 'auto';
+            if (typeof w !== 'object')
+                w = {desktop: w, lg: w, md: w, sm: w};
+
+            w.desktop = w.desktop || w.lg || w.md || w.sm;
+            w.lg = w.lg || w.desktop || w.md || w.sm;
+            w.md = w.md || w.lg || w.sm || w.desktop;
+            w.sm = w.sm || w.md || w.lg || w.desktop;
+            return w;
+        };
+
+        var gt = function(w, ref) {
+            var decoded;
+            if (typeof w !== 'object') decoded = w;
+            else if (!game.mobile) decoded = w.desktop;
+            else decoded = w[game.mobile];
+
+            if (typeof decoded == "string") {
+
+                if (decoded == 'auto') {}
+                else if (decoded[decoded.length-1] == '%')
+                    decoded = ref * (parseFloat(decoded.substr(0,decoded.length-1)/100));
+                else decoded = parseFloat(decoded);
+
+            }
+
+            return decoded;
+        };
+
+        dx = exp(dx);
+        dy = exp(dy);
+
         var wrapper = $('<div />').addClass('popup-wrapper').appendTo('body');
 
-        var popup = $('<div />').addClass('popup').css({
-            height: dy,
-            width: dx
-        }).on('reposition', function() {
-            $(this).css({
-                top: ((dy + 60) > window.innerHeight) ? 0 : 60,
-                left: $(window).width()/2 - dx/2
-            });
-        }).trigger('reposition').appendTo(wrapper);
+        var popup = $('<div />').addClass('popup')
+            .on('reposition', function() {
+
+                var ldx = gt(dx, $(window).width());
+                var ldy = gt(dy, window.innerHeight);
+
+                $(this).css({
+                    top: ldy == 'auto' ? 30 : (((ldy + 60) > window.innerHeight) ? 0 : 60),
+                    left: ldx == 'auto' ? 0 : Math.max(0,$(window).width()/2 - ldx/2),
+                    height: ldy,
+                    width: ldx
+                });
+            }).trigger('reposition').appendTo(wrapper);
 
         var z = game.render.html.modal.blend(function() {
             popup.addClass('disabled').css({
-                '-webkit-filter': 'blur(5px)',
-                'filter': 'blur(5px)'
+                '-webkit-filter': game.mobile ? '' : 'blur(5px)',
+                'filter': game.mobile ? '' : 'blur(5px)'
             }).animate({
                 opacity: 0,
                 transform: 'scale(1.5)'
@@ -1933,8 +2006,8 @@ core = {
             opacity: 0,
             transform: 'scale(0.5)',
             'transition': 'filter 0.4s ease, -webkit-filter 0.4s ease',
-            '-webkit-filter': 'blur(5px)',
-            'filter': 'blur(5px)'
+            '-webkit-filter': game.mobile ? '' : 'blur(5px)',
+            'filter': game.mobile ? '' : 'blur(5px)'
         }).animate({
             opacity: 1,
             transform: 'scale(1)'
@@ -1947,7 +2020,7 @@ core = {
     },
 
     genericFilterLoader: function(callback, typeFilterData) {
-        var popup = core.popup.spawn(500,300);
+        var popup = core.popup.spawn({desktop: 500, md: '100%'},{desktop: 300, md: '100%'});
 
         var frame = $('<div />').addClass('row').appendTo(
             $('<div />').css({
@@ -1969,10 +2042,10 @@ core = {
             overflow: 'auto'
         }).appendTo(popup);
 
-        $('<div />').addClass('btn').text("Abbrechen").appendTo($('<div />').addClass('cell rw-4').appendTo(bottom)).click(function() {
+        $('<div />').addClass('btn').text("Abbrechen").appendTo($('<div />').addClass('cell rw-4 rw-sm-6').appendTo(bottom)).click(function() {
             popup.trigger('unpop');
         });
-        $('<div />').addClass('btn').text("Anwenden").appendTo($('<div />').addClass('cell ro-4 rw-4').appendTo(bottom)).click(function() {
+        $('<div />').addClass('btn').text("Anwenden").appendTo($('<div />').addClass('cell ro-4 rw-4 rw-sm-6 ro-sm-0').appendTo(bottom)).click(function() {
             callback(typeFilterData);
             popup.trigger('unpop');
         });
@@ -1990,7 +2063,7 @@ core = {
             if (id == 'categories') return;
             var chk;
             typefilters.append(
-                $('<div />').addClass('cell rw-6').append(
+                $('<div />').addClass('cell rw-6 rw-sm-12').append(
                     $('<label />').text(obj.name).prepend(
                         chk = $('<input />').attr('type', 'checkbox').data('tid', id).prop('checked', obj.active).click(function() {
                             typeFilterData[id].active = $(this).is(':checked');
@@ -2005,7 +2078,7 @@ core = {
         $.each(typeFilterData.categories, function(name, active) {
             var chk;
             classfilters.append(
-                $('<div />').addClass('cell rw-4').append(
+                $('<div />').addClass('cell rw-4 rw-sm-6').append(
                     $('<label />').text(name).prepend(
                         chk = $('<input />').attr('type', 'checkbox').data('cid', name).prop('checked', active).click(function() {
                             typeFilterData.categories[name] = $(this).is(':checked');
@@ -2023,7 +2096,7 @@ core = {
     },
 
     genericBlueprintLoader: function(type, popup, data, frame, filters, close) {
-        if (!popup) popup = core.popup.spawn(700,450);
+        if (!popup) popup = core.popup.spawn({desktop: 700, lg: '100%'},{desktop: 450, lg: '100%'});
 
         if (!frame || !filters || !close) {
             popup.empty();
@@ -2038,7 +2111,7 @@ core = {
                     overflow: 'auto'
                 }).appendTo(popup)
             ).data('type-filters', {
-                    'impossible': {active: true, name: "Unm\u00f6gliche Projekte"},
+                    'impossible': {active: false, name: "Unm\u00f6gliche Projekte"},
                     'locked': {active: true, name: "Gesperrte Projekte"},
                     'possible': {active: true, name: "Vorbereitete Projekte"},
                     'ready': {active: true, name: "M\u00f6gliche Projekte"},
@@ -2111,7 +2184,7 @@ core = {
                 if (cat_count > 1) $.each(v.categories, function(i,cat) {targets = targets.add(frame.find('div[data-group-cat="' + cat + '"]').find('.blueprint-group-target'));});
                 else targets = frame;
 
-                targets.append($('<div />').addClass('cell padded rw-4').append(core.snippets.blueprint(v, bdata.energy, bdata.zombies, bdata.blueprints, function() {
+                targets.append($('<div />').addClass('cell padded rw-4 rw-md-6').append(core.snippets.blueprint(v, bdata.energy, bdata.zombies, bdata.blueprints, function() {
                     var prev_scroll = $('.popup').find('>*:first-child').scrollTop();
                     popup.addClass('disabled');
                     core.command('location/' + type, {build: k}, true, function(new_data) {
@@ -2132,7 +2205,7 @@ core = {
             $.each(categories, function(name, t) {
                 tf.categories[name] = typeof tf.categories[name] !== "undefined" ? tf.categories[name] : true;
             });
-            frame.data('type-filters', tf);
+            frame.data('type-filters', tf).trigger('filter');
         };
 
         if (!data) {
@@ -2403,7 +2476,7 @@ core = {
                         if (route_zombies.length && !confirm(game.i18n("Auf dem Weg zu diesem Ort befinden sich Zombies (:locations). Du wirst gegen sie k\u00e4mpfen m\u00fcssen, wenn du dorthin m\u00f6chtest. Weiter?",{':locations': route_zombies.join(', ')}))) return;
 
                         if (core.last.players) {
-                            var esc_popup = core.popup.spawn(400);
+                            var esc_popup = core.popup.spawn({desktop: 400, sm: '100%'});
 
                             var title;
                             esc_popup.append($('<h2 />').addClass('center').text(v.name));
@@ -2443,7 +2516,7 @@ core = {
                             } else title.text("Bist du sicher, dass du diesen Ort betreten m\u00f6chtest? Er ist weit weg, und riecht auch bestimmt nicht sehr gut...");
 
                             esc_popup.append($('<div />').addClass('row')
-                                .append($('<div />').addClass('cell rw-8 padded').append(
+                                .append($('<div />').addClass('cell rw-8 rw-sm-12 padded').append(
                                     $('<div />').addClass('btn').text("Los gehts!").click(function() {
 
                                         var cfg = {to: k, follow: 1};
@@ -2466,7 +2539,7 @@ core = {
                                             }
                                         });
                                     })))
-                                .append($('<div />').addClass('cell rw-4 padded').append(
+                                .append($('<div />').addClass('cell rw-4 rw-sm-12 padded').append(
                                     $('<div />').addClass('btn').text("Abbrechen").click(function() {
                                         esc_popup.trigger('unpop');
                                     })))
@@ -2574,7 +2647,7 @@ core = {
 
         var bhav_select, bhav = $('<div />').addClass('row').appendTo(target);
         bhav.append($('<b />').text("Kampfstrategie"));
-        bhav.append($('<div />').addClass('cell rw-6 padded').append($('<label />').attr('title',"Der ausgew\u00e4hlte Kampfstil beeinflusst deine Waffen- und Gegnerauswahl. Offensive Spieler werden versuchen, so viel Schaden anzurichten wie m\u00f6glich. Defensive Spieler werden versuchen, Zombies so gut es geht auf Abstand zu halten.").qtip(game.render.html.qtip.ingame('top')).prepend(bhav_select = $('<select />'))));
+        bhav.append($('<div />').addClass('cell rw-6 rw-lg-8 rw-md-6 rw-sm-12 padded').append($('<label />').attr('title',"Der ausgew\u00e4hlte Kampfstil beeinflusst deine Waffen- und Gegnerauswahl. Offensive Spieler werden versuchen, so viel Schaden anzurichten wie m\u00f6glich. Defensive Spieler werden versuchen, Zombies so gut es geht auf Abstand zu halten.").qtip(game.render.html.qtip.ingame('top')).prepend(bhav_select = $('<select />'))));
 
         bhav_select
             .append($('<option />').text("Defensiv").attr('value','1'))
@@ -2588,9 +2661,9 @@ core = {
         var sw = $('<div />').addClass('row').appendTo(target);
         sw.append($('<b />').text("Verwendung einzelner Waffenarten sperren"));
         sw
-            .append($('<div />').addClass('cell rw-6 padded').append($('<label />').attr('title',"Ist diese Option aktiviert, wirst du im Kampf keine Waffen einsetzen, die Energie verbrauchen.").qtip(game.render.html.qtip.ingame('top')).text("Energiewaffen").prepend(sw_energy = $('<input />').attr('type', 'checkbox').prop('checked', data.weapons.energy).prop('disabled', (data.weapons.energy === 'locked')))))
-            .append($('<div />').addClass('cell rw-6 padded').append($('<label />').attr('title',"Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die beim Einsatz zerst\u00f6rt werden (z.B. Wasserbombe).").qtip(game.render.html.qtip.ingame('top')).text("Wurfgeschosse").prepend(sw_breakable = $('<input />').attr('type', 'checkbox').prop('checked', data.weapons.throw))))
-            .append($('<div />').addClass('cell rw-6 padded').append($('<label />').attr('title',"Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die einen internen Munitionsspeicher haben (z.B. Wasserpistole).").qtip(game.render.html.qtip.ingame('top')).text("Verbrauchswaffen").prepend(sw_ammocache = $('<input />').attr('type', 'checkbox').prop('checked', data.weapons.tank))));
+            .append($('<div />').addClass('cell rw-6 rw-sm-12 padded').append($('<label />').attr('title',"Ist diese Option aktiviert, wirst du im Kampf keine Waffen einsetzen, die Energie verbrauchen.").qtip(game.render.html.qtip.ingame('top')).text("Energiewaffen").prepend(sw_energy = $('<input />').attr('type', 'checkbox').prop('checked', data.weapons.energy).prop('disabled', (data.weapons.energy === 'locked')))))
+            .append($('<div />').addClass('cell rw-6 rw-sm-12 padded').append($('<label />').attr('title',"Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die beim Einsatz zerst\u00f6rt werden (z.B. Wasserbombe).").qtip(game.render.html.qtip.ingame('top')).text("Wurfgeschosse").prepend(sw_breakable = $('<input />').attr('type', 'checkbox').prop('checked', data.weapons.throw))))
+            .append($('<div />').addClass('cell rw-6 rw-sm-12 padded').append($('<label />').attr('title',"Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die einen internen Munitionsspeicher haben (z.B. Wasserpistole).").qtip(game.render.html.qtip.ingame('top')).text("Verbrauchswaffen").prepend(sw_ammocache = $('<input />').attr('type', 'checkbox').prop('checked', data.weapons.tank))));
 
         var mun = $('<div />').addClass('row').appendTo(target);
         mun.append($('<b />').text("Verwendung einzelner Munitionstypen sperren"));
@@ -2598,7 +2671,7 @@ core = {
         var mun_elems = {};
 
         $.each(data.ammo, function(k,v) {
-            mun.append($('<div />').addClass('cell rw-2 padded').append($('<label />').attr('title', game.i18n("Ist diese Option aktiviert, werden im Kampf keine Waffen verwendet, die diese Munition (:item) verwenden.", {':item': v.name})).qtip(game.render.html.qtip.ingame('top')).append($('<img />').attr('src', 'media/icons/'+ v.icon + '.gif')).prepend(mun_elems[k] = $('<input />').attr('type', 'checkbox').prop('checked', v.locked))))
+            mun.append($('<div />').addClass('cell rw-2 padded rw-lg-4 rw-md-2 rw-sm-4').append($('<label />').attr('title', game.i18n("Ist diese Option aktiviert, werden im Kampf keine Waffen verwendet, die diese Munition (:item) verwenden.", {':item': v.name})).qtip(game.render.html.qtip.ingame('top')).append($('<img />').attr('src', 'media/icons/'+ v.icon + '.gif')).prepend(mun_elems[k] = $('<input />').attr('type', 'checkbox').prop('checked', v.locked))))
         });
 
         target.find(':checkbox').click(function() {
@@ -2632,11 +2705,11 @@ core = {
     };
 
     core.parts.settings = function(data, target) {
-        var time_settings = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-5 padded').appendTo(target));
+        var time_settings = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-5 rw-lg-6 rw-md-12 padded').appendTo(target));
         if (data.clock.time_mode == 0) fill_timesettings_stat(data.clock.time_settings, time_settings, data.clock.locked);
         if (data.clock.time_mode == 1) fill_timesettings_var(data.clock.time_settings, time_settings, data.clock.locked);
 
-        var bai_settings = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-7 padded').appendTo(target));
+        var bai_settings = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-7 rw-lg-6 rw-md-12 padded').appendTo(target));
         fill_battleai(bai_settings, data.ai);
     };
 })();(function() {
@@ -2778,7 +2851,7 @@ core = {
                     if (call && call() === false) return;
 
                     if (action.escort) {
-                        var popup = core.popup.spawn(400);
+                        var popup = core.popup.spawn({desktop: 400, sm: '100%'});
 
                         popup.append($('<h2 />').addClass('center').text(action.description));
 
@@ -2807,16 +2880,18 @@ core = {
                     } else core.command('act/item', {action: action.action, item: action.target});
                 });
 
+            if (game.touch()) ext_mode = 'static';
+
             switch (ext_mode) {
                 case 'static':
-                    button.append(ext);
+                    if (ext.children().size()) button.append(ext);
                     break;
                 case 'tooltip':case 'nested':
                     if (!action.tooltip && action.remaining < 0 && !ext.children().size()) break;
 
                     var template = (ext_mode == 'nested') ? game.render.html.qtip.help : game.render.html.qtip.ingame;
 
-                    button.attr('title','-').qtip(template((ext_mode == 'nested') ? 'right' : 'bottom',{
+                    button.attr('title','-').qtip(template((ext_mode == 'nested') ? {desktop: 'right', lg: 'top'} : 'bottom',{
                         render: function(event,api) {
                             $(this).css('width',$(this).css('max-width'));
 
@@ -2869,23 +2944,42 @@ core = {
         var mt_out = $('<div />').addClass('cell rw-12').appendTo(ext);
         var mt_zmb = $('<div />').addClass('cell rw-12').appendTo(ext);
 
+        var active = false;
+
         button.attr('data-cats', '|' + $.objToArray(blueprint.categories, true).join('|') + '|');
+
+        var all_rq_ok = true;
+        $.each(blueprint.requires, function(k,v) {
+            var cache = [];
+            var ok = false;
+            $.each(v, function(ki,vi) {
+                if (lib[vi]) {
+                    cache.push(lib[vi].name);
+                    if (lib[vi].build || lib[vi].slot_open) ok = true;
+                }
+            });
+            if (!ok)
+                return all_rq_ok = false;
+        });
 
         if (blueprint.build)
             button.addClass('blue');
         else if (blueprint.build_possible && blueprint.slot_open) {
             button.addClass('green');
-            var active = true;
+            active = true;
             $.each(blueprint.material_in, function(k,v) {
                 active = active && (v.have >= v.count);
             });
             if (active) {
                 button.addClass('active');
                 if (typeof callback == "function")
-                    button.click(callback);
+                    button.click(function(e,force) {
+                        if (!game.touch() || force)
+                        callback();
+                    });
             }
         }
-        else if (!blueprint.slot_open)
+        else if (!blueprint.slot_open || !all_rq_ok)
             button.addClass('red');
         else button.addClass('plain');
 
@@ -2974,11 +3068,19 @@ core = {
                 if (blueprint.description)
                     content.append($('<span />').text(blueprint.description)).append('<span class="separator" />');
 
+                if (active && game.touch()) {
+                    content.append($('<div />').addClass('btn green').text("Bauen").click(function() {
+                        button.trigger('click',[true]);
+                    }))
+                }
+
                 if (blueprint.build)
                     content.append($('<div />').addClass(blueprint.zombies ? 'point failure' : 'point success').text(blueprint.zombies ? "Diese Verteidigungsm\u00f6glichkeit wurde bereits eingesetzt." : "Dieses Projekt wurde bereits gebaut."));
-                else if (!blueprint.slot_open) {
+                else if (!blueprint.slot_open)
                     content.append($('<div />').addClass('point failure').text("Du hast bereits ein \u00e4hnliches Projekt gebaut."));
-                } else {
+                else if (!all_rq_ok)
+                        content.append($('<div />').addClass('point failure').text("Mindestens eine Vorraussetzung f\u00fcr dieses Projekt kann nicht gebaut werden."));
+                else {
 
                     if (blueprint.steps_max > 1)
                         content.append($('<span />').text(game.i18n(blueprint.zombies ? "Hiermit kannst du :num mal Zombies angreifen." : "Du kannst dieses Projekt :num mal bauen.",{':num': blueprint.steps_max}))).append('<span class="separator" />');
@@ -3227,7 +3329,7 @@ core = {
                     var content = $(this).find('.qtip-content').empty().append(
                         $('<b />').addClass('header').text(num_decode_title(type))
                     ).append(
-                        $('<div />').addClass('note center').text(game.i18n("Aktueller Wert: :num", {':num': value}))
+                        $('<div />').addClass('info center').text(game.i18n("Aktueller Wert: :num", {':num': value}))
                     ).append(
                         $('<span />').addClass('separator')
                     ).append(
@@ -3334,15 +3436,15 @@ core = {
 
         var timestr, datestr;
         $('<div />').addClass('datebox').append(
-            $('<div />').addClass('row').append(
+            $('<div />').addClass('row hide-sm').append(
                 $('<div />').addClass('cell rw-4').append(
-                    $('<i />').addClass('fa fa-clock-o')
+                    $('<i />').addClass('fa fa-clock-o hide-mobile')
                 ).append(
                     timestr = $('<span />')
                 )
             ).append(
                 $('<div />').addClass('cell rw-8').append(
-                    $('<i />').addClass('fa fa-calendar')
+                    $('<i />').addClass('fa fa-calendar hide-mobile')
                 ).append(
                     datestr = $('<span />')
                 )
@@ -3358,7 +3460,7 @@ core = {
             var left = next_tick - ((new Date()).getTime() + current_offset);
 
             if (left < 0) {
-                countdown.text("Weiter");
+                countdown.html('<span class="hide-sm">' + "Weiter" + '</span><span class="hide-md hide-lg hide-desktop"><i class="fa fa-angle-double-right"><i></span>');
                 clockbox.addClass('pointer').click(function() {
                     core.command();
                 });
@@ -3392,7 +3494,7 @@ core = {
             });
             if (i < scm.length)
                 for (i; i < scm.length; i++)
-                    $('<div />').text(scm[i] < 10 ? '0' + scm[i] : scm[i]).appendTo(countdown);
+                    $('<div />').addClass(i ==  (scm.length -1) ? 'hide-md hide-sm' : '').text(scm[i] < 10 ? '0' + scm[i] : scm[i]).appendTo(countdown);
 
             window.requestAnimationFrame(updater);
         };

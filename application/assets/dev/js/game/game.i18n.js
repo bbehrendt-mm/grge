@@ -8,3 +8,7 @@ game.i18n = function(str, replace) {
         });
     return str;
 };
+
+game.short = function(str, breakAt) {
+    return (str.length > (breakAt + 1)) ? (str.substring(0,breakAt) + '…') : str;
+};

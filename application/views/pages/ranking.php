@@ -11,22 +11,22 @@
 <div class="row">
     <h2>Bitte wähle, welches Ranking du sehen möchtest.</h2>
 
-    <div class="cell rw-3 padded">
+    <div class="cell rw-3 rw-md-6 padded">
         <label for="game_type"></label><select class="form_input" id="game_type" data-container="body">
             <option value="1"><?=__('Einzelspieler');?></option>
             <option value="2"><?=__('Mehrspieler');?></option>
         </select>
     </div>
 
-    <div class="cell rw-3 padded">
+    <div class="cell rw-3 rw-md-6 padded">
         <label for="game_season"></label><select class="form_input" id="game_season" data-container="body">
             <option value="<?=$season;?>"><?=__('Season :num', [':num' => $season]);?></option>
         </select>
     </div>
-    <div class="cell rw-3 padded">
+    <div class="cell rw-3 rw-md-6 padded">
         <label for="game_mode"></label><select class="form_input" id="game_mode" data-container="body"></select>
     </div>
-    <div class="cell rw-3 padded">
+    <div class="cell rw-3 rw-md-6 padded">
         <label for="game_time"></label><select class="form_input" id="game_time" data-container="body"></select>
     </div>
 </div>
@@ -102,26 +102,27 @@
                 var table = $('<div class="row-table padded row-table-borders row-table-striped row-table-interact"></div>').appendTo('#ranking_target');
 
                 if (is_mp)
-                    $('<div class="row"><div class="cell padded rw-2"><?=__('Platz')?></div><div class="cell padded rw-1"><?=__('Punkte')?></div><div class="cell padded rw-3"><?=__('Name')?></div><div class="cell padded rw-6"><?=__('Spieler')?></div></div>').appendTo(table);
-                else $('<div class="row"><div class="cell padded rw-2"><?=__('Platz')?></div><div class="cell padded rw-1"><?=__('Punkte')?></div><div class="cell padded rw-2"><?=__('Spieldauer')?></div><div class="cell padded rw-3"><?=__('Spieler')?></div><div class="cell padded rw-4"><?=__('Beruf')?></div></div>').appendTo(table);
+                    $('<div class="row"><div class="cell padded rw-2 rw-lg-1"><span class="hide-md hide-sm"><?=__('Platz')?></span><span class="hide-desktop hide-lg">#</span></div><div class="cell padded rw-1"><?=__('Punkte')?></div><div class="cell padded rw-3 rw-lg-4 rw-sm-0"><?=__('Name')?></div><div class="cell padded rw-6 rw-sm-10"><?=__('Spieler')?></div></div>').appendTo(table);
+                else $('<div class="row"><div class="cell padded rw-2 rw-lg-1"><span class="hide-md hide-sm"><?=__('Platz')?></span><span class="hide-desktop hide-lg">#</span></div><div class="cell padded rw-1"><?=__('Punkte')?></div><div class="cell padded rw-2 rw-lg-3 rw-md-0"><?=__('Spieldauer')?></div><div class="cell padded rw-3 rw-md-4"><?=__('Spieler')?></div><div class="cell padded rw-4 rw-md-6"><?=__('Beruf')?></div></div>').appendTo(table);
 
             } else $('<span><?=__('Es wurden keine Spiele im Ranking gefunden, die deinen Suchkriterien entsprechen.')?></span>').appendTo('#ranking_target');
 
             $.each(data.ranking, function(p, elem) {
                 var entry = $('<div class="row"></div>');
 
-                var fst = $('<div class="cell padded rw-1"></div>').appendTo(entry);
-                if (p == 1) fst.html('<img src="media/icons/superstar.gif" alt="rk-winner">');
-                else if (p <= 3) fst.html('<img src="media/icons/silverstar.gif" alt="rk-silver">');
-                else if (p <= 10) fst.html('<img src="media/icons/star.gif" alt="rk-topten">');
-                else fst.html('<i class="fa fa-star-o"></i>');
+                var icon = null;
+                if (p == 1)         icon = '<img src="media/icons/superstar.gif" alt="rk-winner">';
+                else if (p <= 3)    icon = '<img src="media/icons/silverstar.gif" alt="rk-silver">';
+                else if (p <= 10)   icon = '<img src="media/icons/star.gif" alt="rk-topten">';
+                else                icon = '<i class="fa fa-star-o"></i>';
 
-                $('<div class="cell padded rw-1"></div>').html(p).appendTo(entry);
-                $('<div class="cell padded rw-1"></div>').html(elem.score).appendTo(entry);
+                $('<div class="cell padded rw-1 rw-lg-0"></div>').html(icon).appendTo(entry);
+                $('<div class="cell padded rw-1"></div>').text(p).appendTo(entry);
+                $('<div class="cell padded rw-1"></div>').text(elem.score).appendTo(entry);
 
                 if (is_mp) {
-                    $('<div class="cell padded rw-3"></div>').html(elem.name).appendTo(entry);
-                    var pl = $('<div class="cell padded rw-6"></div>').appendTo(entry);
+                    $('<div class="cell padded rw-3 rw-lg-4 rw-sm-0"></div>').text(elem.name).appendTo(entry);
+                    var pl = $('<div class="cell padded rw-6 rw-sm-10"></div>').appendTo(entry);
                     var has_players = false;
                     if (elem.players)
                         $.each(elem.players, function(k,v) {
@@ -141,9 +142,9 @@
                     if (!has_players)
                         pl.html('--');
                 } else {
-                    $('<div class="cell padded rw-2"></div>').html(elem.duration).appendTo(entry);
-                    $('<div class="cell padded rw-3"></div>').html('<span class="inline-player">' + elem.players["0"].name + '</span>').appendTo(entry);
-                    $('<div class="cell padded rw-4"></div>').html(elem.players["0"].job).appendTo(entry);
+                    $('<div class="cell padded rw-2 rw-lg-3 rw-md-0"></div>').html(elem.duration).appendTo(entry);
+                    $('<div class="cell padded rw-3 rw-md-4"></div>').html('<span class="inline-player">' + elem.players["0"].name + '</span>').appendTo(entry);
+                    $('<div class="cell padded rw-4 rw-md-6"></div>').html(elem.players["0"].job).appendTo(entry);
                 }
 
                 entry.appendTo(table);

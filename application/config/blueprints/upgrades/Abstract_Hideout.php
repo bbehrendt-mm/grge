@@ -6,6 +6,7 @@ return Model_Blueprints::factory()
     ->add_blueprints(Model_Blueprint::factory()->id('outside')->name('Bebaubarer Aussenbereich'), true)
     ->add_blueprints(Model_Blueprint::factory()->id('outside_space')->name('Großflächiger Aussenbereich'), true)
     ->add_blueprints(Model_Blueprint::factory()->id('impaler')->name('Vorbereitete Fallgruben'), true)
+    ->add_blueprints(Model_Blueprint::factory()->id('slot_epic')->name('Bauplatz für epische Projekte'), true)
 
     // ++ STACK -> All blueprints below benefit from daytime and handyman bonus
     ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->add_modifier(Model_Blueprint::BP_MOD_ENERGY, function($pl,$pre,$e) { /** @var Model_Player $pl */
@@ -422,7 +423,7 @@ return Model_Blueprints::factory()
     // -- STACK -> Categories
     ->pop_stack()
 
-    // -- ++ STACK -> DECO category
+    // ++ STACK -> DECO category
     ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->category('Dekoration');})
 
     ->add_blueprints(
@@ -493,6 +494,40 @@ return Model_Blueprints::factory()
             ->description('Diese hübsch glitzernde Girlande wertet dein Versteck dekorativ auf. Pass nur auf, dass dir keine Batteriesäure auf den Kopf tropft...')
             ->deco(15)
             ->material(['Model_Items_Battery' => 15, 'Model_Items_Generic_Wire' => 1])
+    )
+
+    // -- STACK -> Categories
+    ->pop_stack()
+
+    //++ STACK -> EPIC FOUNDATIONS
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->provide('epic')->requires('slot_epic')->category('Epische Projekte')->message('Du hast die Arbeiten an einem epischen Projekt in deinem Versteck begonnen. Viel Erfolg!');})
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('epc_garden')
+            ->name('Kleines Gewächshaus')
+            ->description('Wie Millionen von Pot-Farmern vor dir kannst auch du mit diesem patentierten Gewächshaus-Bausatz deinen grünen Daumen entdecken und verschiedene nützliche Gewächse anpflanzen. Aber Achtung: Ein solcher Garten benötigt viel Aufmerksamkeit und Zeit, bevor du etwas ernten kannst!')
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('epc_drill')
+            ->name('Grundwasserversorgung')
+            ->description('Warum gammliges Kondenswasser von alten Bahnhofstoiletten ablecken, wenn du dir frisches Wasser aus dem Boden besorgen kannst? Zwar wird der Bau dieses Projektes dich sehr viel Energie kosten, dafür verfügst du danach über eine (zumindest halbwegs) stetige Wasserversorgung.')
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('epc_ravens')
+            ->name('Raben-Bootcamp')
+            ->description('Raben sind intelligente (und boshafte) Tiere - aber mit ein bisschen Geschick könntest du sie vielleicht dazu trainieren, für dich nach Gegenständen zu suchen. Du müsstest sie dafür natürlich mit etwas Futter belohnen...')
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('epc_fence')
+            ->name('Laserzaun')
+            ->description('Zombies sind nicht gerade für ihre Geschicklichkeit bekannt - daher kannst du sie mit ein paar Laserbarrieren bestimmt recht zuverlässig von deinem Versteck fernhalten. Vorrausgesetzt natürlich, dir gehen nicht die Batterien aus...')
     )
 
     ->validate();

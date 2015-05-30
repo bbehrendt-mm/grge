@@ -33,7 +33,7 @@
             <div class="row" data-conditional="1" data-provide='["mode","id","password","protect","name","slots","init"]' data-rely='[]'>
                 <h2><?=__('Tritt einer Mehrspieler-Partie bei...');?></h2>
 
-                <div class="cell rw-12 padded">
+                <div class="cell rw-12 rw-md-0 padded">
                     <div class="help noclick">
                         <h4><?=__('Mehrspieler-Lobby');?></h4>
                         <?=__('Hier findest du offene Mehrspieler-Partien, denen du beitreten kannst. Ist eine Partie voll, so wird sie automatisch aus dieser Liste entfernt.');?><br />
@@ -43,7 +43,7 @@
 
                 <div class="row">
                     <?php if ($lock_count > 0) { ?>
-                        <div class="cell rw-6 padded">
+                        <div class="cell rw-6 rw-lg-12 padded">
                             <div class="help noclick">
                                 <h4><?=__('Beschwerden');?></h4>
                                 <?=__('Beschwerden sind eine automatisierte Maßnahme, um gegen Griefer im Spiel vorzugehen. Wenn du in einer Mehrspieler-Partie frühzeitig stirbst erhälst du eine Beschwerde, die nach einer gewissen Zeit wieder verschwindet. Hast du mehr als :max aktive Beschwerden angehäuft, kannst du öffentlichen Partien nicht mehr beitreten. Du kannst allerdings weiterhin eigene Spiele starten und passwortgeschützten Partien beitreten.', [':max' => $lock_max]);?><br /><br />
@@ -59,7 +59,7 @@
                     <?php } ?>
 
                     <?php foreach($games as $game) { ?>
-                        <div class="cell rw-6 padded">
+                        <div class="cell rw-6 rw-sm-12 padded">
                             <div data-modeset="<?=$game['mode']?>" data-set='{"mode":<?=$game['mode']?>,"id":<?=$game['gameid']?>,"protect":"","name":"","slots":"0","password":<?=$game['password'] ? 'false' : '""'?>,"flow":-1,"init":0}' data-caption="<?=__($database['modes'][$game['mode']]['meta']['name'])?> (<?=$game['name']?>)" class="<?=$game['locked'] ? 'hotbox disabled' : 'hotbox' ?>">
                                 <b class="head"><?=$game['name']?></b>
                                 <i class="subtitle">
@@ -77,10 +77,10 @@
 
                 <h2><?=__('...  oder eröffne eine eigene Einzel- oder Mehrspieler-Partie!');?></h2>
                 <div class="row">
-                    <div class="cell rw-6">
+                    <div class="cell rw-6 rw-sm-12">
                         <div class="row">
                             <?php foreach ($database['modes'] as $mid => $data) if ($data['type'] == 'single') { ?>
-                                <div class="cell rw-6 padded">
+                                <div class="cell rw-6 rw-lg-12 padded">
                                     <div data-modeset="<?=$mid?>" data-set='{"mode":<?=$mid?>,"id":-1,"protect":"","password":"","name":"","slots":"1","init":1}' data-caption="<?=__($data['meta']['name'])?>" class="<?=$data['locked'] ? 'hotbox disabled' : 'hotbox' ?>">
                                         <b class="head"><?=__($data['meta']['name'])?></b>
                                         <i class="subtitle"><?=__('Einzelspieler-Modus');?></i>
@@ -90,10 +90,10 @@
                             <?php } ?>
                         </div>
                     </div>
-                    <div class="cell rw-6">
+                    <div class="cell rw-6 rw-sm-12">
                         <div class="row">
                             <?php foreach ($database['modes'] as $mid => $data) if ($data['type'] == 'multi_custom') { ?>
-                                <div class="cell rw-6 padded">
+                                <div class="cell rw-6 rw-lg-12 padded">
                                     <div data-modeset="<?=$mid?>" data-set='{"mode":<?=$mid?>,"id":-1,"password":"","flow":-1,"init":1}' data-caption="<?=__($data['meta']['name'])?>" class="<?=$data['locked'] ? 'hotbox disabled' : 'hotbox' ?>">
                                         <b class="head"><?=__($data['meta']['name'])?></b>
                                         <i class="subtitle"><?=__(':min bis :max Spieler', array(':min' => $data['slots'][0], ':max' => $data['slots'][1]))?></i>
@@ -109,10 +109,10 @@
             <!-- Enter Password -->
             <div class="row" data-conditional="1" data-provide='["password"]' data-rely='["mode","id","name"]'>
                 <h2><?=__('Dieses Spiel erfordert ein Passwort.');?></h2>
-                <div class="cell rw-6 ro-1 padded">
+                <div class="cell rw-6 ro-1 rw-lg-7 ro-lg-0 rw-sm-12 padded">
                     <input type="text" class="form_input" id="password_in" maxlength="10" placeholder="<?=__('Passwort eingeben');?>" />
                 </div>
-                <div class="cell rw-4 padded">
+                <div class="cell rw-4 rw-lg-5 rw-sm-12 padded">
                     <div class="btn" id="password_ok"><?=__('Weiter');?></div>
                 </div>
             </div>
@@ -120,43 +120,51 @@
             <!-- Startup Settings -->
             <div class="row" data-conditional="1" data-provide='["protect","name","slots","lang"]' data-rely='["mode","id"]'>
                 <h2><?=__('Spieleinstellungen');?></h2>
-                <div class="cell rw-2 ro-1  padded">
-                    <label for="lang_in"></label>
-                    <select class="form_input" id="lang_in">
-                        <?php foreach ($languages as $lang_id => $language) { ?>
-                            <option value="<?=$lang_id?>">
-                                <?=$language?>
-                            </option>
-                        <?php } ?>
-                    </select>
-                </div>
-                <div class="cell rw-6 padded">
-                    <input type="text" class="form_input" id="name_in" maxlength="96" placeholder="<?=__('Spielnamen eingeben');?>" />
-                </div>
-                <div class="cell rw-2 padded">
-                    <label for="slots_in"></label><select class="form_input" id="slots_in"></select>
-                </div>
-                <div class="cell rw-6 ro-1 padded">
-                    <input type="text" class="form_input" id="protect_in" maxlength="10" placeholder="<?=__('Passwort eingeben');?>" />
-                    <label><input type="checkbox" id="protect_no" /><?=__('Kein Passwort verwenden');?></label>
-                </div>
-                <div class="cell rw-4 padded">
-                    <div class="btn" id="protect_rnd"><?=__('Passwort generieren');?></div>
-                    <div class="btn" id="protect_ok"><?=__('Weiter');?></div>
-                </div>
-                <div class="cell rw-10 ro-1 padded">
-                    <div class="help noclick">
-                        <h4><?=__('Über den Passwortschutz');?></h4>
-                        <?=__('Wenn du dein Spiel mit einem Passwort schützt, können nur Spieler beitreten, die dieses Passwort kennen. Denk daran, dir das Passwort zu notieren, denn nach der Erzeugung des Spiels kannst du es nicht mehr einsehen! Entscheidest du dich gegen die Verwendung eines Passworts, wird dein Spiel öffentlich zugänglich. Spieler, die aufgrund von Beschwerden nicht mehr an öffentlichen Spielen teilnehmen können, dürfen deinem Spiel dann nicht mehr beitreten.');?>
+
+                <div class="cell rw-10 ro-1 rw-lg-12 ro-lg-0">
+                    <div class="row">
+                        <div class="cell rw-2 rw-sm-5 padded">
+                            <label for="lang_in"></label>
+                            <select class="form_input" id="lang_in">
+                                <?php foreach ($languages as $lang_id => $language) { ?>
+                                    <option value="<?=$lang_id?>">
+                                        <?=$language?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="cell rw-7 padded">
+                            <input type="text" class="form_input" id="name_in" maxlength="96" placeholder="<?=__('Spielnamen eingeben');?>" />
+                        </div>
+                        <div class="cell rw-3 rw-sm-4 padded">
+                            <label for="slots_in"></label><select class="form_input" id="slots_in"></select>
+                        </div>
+                        <div class="cell rw-7 rw-sm-8 padded">
+                            <input type="text" class="form_input" id="protect_in" maxlength="10" placeholder="<?=__('Passwort eingeben');?>" />
+                            <label><input type="checkbox" id="protect_no" /><?=__('Kein Passwort verwenden');?></label>
+                        </div>
+                        <div class="cell rw-5 rw-sm-12 padded">
+                            <div class="btn" id="protect_rnd"><?=__('Passwort generieren');?></div>
+                            <div class="btn" id="protect_ok"><?=__('Weiter');?></div>
+                        </div>
+                        <div class="cell rw-12 padded">
+                            <div class="help noclick">
+                                <h4><?=__('Über den Passwortschutz');?></h4>
+                                <?=__('Wenn du dein Spiel mit einem Passwort schützt, können nur Spieler beitreten, die dieses Passwort kennen. Denk daran, dir das Passwort zu notieren, denn nach der Erzeugung des Spiels kannst du es nicht mehr einsehen! Entscheidest du dich gegen die Verwendung eines Passworts, wird dein Spiel öffentlich zugänglich. Spieler, die aufgrund von Beschwerden nicht mehr an öffentlichen Spielen teilnehmen können, dürfen deinem Spiel dann nicht mehr beitreten.');?>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
+
+
             </div>
 
             <!-- Select Profession -->
             <div class="row" data-conditional="1" data-provide='["job"]' data-rely='["mode","id","password","protect","slots","name"]'>
                 <h2><?=__('Wähle deinen Beruf!');?></h2>
                 <?php foreach ($database['jobs'] as $jid => $data) { ?>
-                    <div class="cell rw-3 padded">
+                    <div class="cell rw-3 rw-lg-6 rw-sm-12 padded">
                         <div data-jobset="<?=$jid?>" data-set='{"job":<?=$jid?>}' data-caption="<?=__($data['meta']['name'])?>" class="<?=$data['locked'] ? 'hotbox disabled' : 'hotbox' ?>">
                             <b class="head"><?=__($data['meta']['name'])?></b>
                             <i class="subtitle"><?=__(':num Seelenpunkte', [':num' => $data['points']])?></i>
@@ -180,49 +188,49 @@
             <div class="row" data-conditional="1" data-provide='["flow"]' data-rely='["mode","id","password","protect","job","slots","name"]'>
                 <h2><?=__('Wähle eine Spielgeschwindigkeit!');?></h2>
                 <!-- Variable -->
-                <div class="cell rw-3 padded"><div data-set='{"flow":-1}' data-caption="<?=__('Variabler Zeitfluss')?>" class="hotbox">
+                <div class="cell rw-3 rw-lg-6 rw-sm-12 padded"><div data-set='{"flow":-1}' data-caption="<?=__('Variabler Zeitfluss')?>" class="hotbox">
                     <b class="head"><?=__('Variabler Zeitfluss')?></b>
                     <i class="subtitle"><?=__('Jaja, ihr habt mich überredet.')?></i>
                 </div></div>
 
                 <!-- Classic -->
-                <div class="cell rw-3 padded"><div data-set='{"flow":900}' data-caption="15 <?=__('Minuten')?>" class="hotbox">
+                <div class="cell rw-3 rw-lg-6 rw-sm-12 padded"><div data-set='{"flow":900}' data-caption="15 <?=__('Minuten')?>" class="hotbox">
                     <b class="head"><?=__('Super-Zeitlupe')?></b>
                     <b class="head">15 <?=__('Minuten')?></b>
                     <i class="subtitle"><?=__('Slow and steady wins the race!')?></i>
                 </div></div>
-                <div class="cell rw-3 padded"><div data-set='{"flow":600}' data-caption="10 <?=__('Minuten')?>" class="hotbox">
+                <div class="cell rw-3 rw-lg-6 rw-sm-12 padded"><div data-set='{"flow":600}' data-caption="10 <?=__('Minuten')?>" class="hotbox">
                     <b class="head"><?=__('Zeitlupe')?></b>
                     <b class="head">10 <?=__('Minuten')?></b>
                     <i class="subtitle"><?=__('Hol dir erstmal \'nen Kaffee.')?></i>
                 </div></div>
-                <div class="cell rw-3 padded"><div data-set='{"flow":300}' data-caption="5 <?=__('Minuten')?>" class="hotbox">
+                <div class="cell rw-3 rw-lg-6 rw-sm-12 padded"><div data-set='{"flow":300}' data-caption="5 <?=__('Minuten')?>" class="hotbox">
                     <b class="head"><?=__('Echtzeit')?></b>
                     <b class="head">5 <?=__('Minuten')?></b>
                     <i class="subtitle"><?=__('Zeitmanipulation gibt\'s nicht!')?></i>
                 </div></div>
-                <div class="cell rw-3 padded"><div data-set='{"flow":120}' data-caption="2 <?=__('Minuten')?>" class="hotbox">
+                <div class="cell rw-3 rw-lg-6 rw-sm-12 padded"><div data-set='{"flow":120}' data-caption="2 <?=__('Minuten')?>" class="hotbox">
                     <b class="head"><?=__('Zeitraffer')?></b>
                     <b class="head">2 <?=__('Minuten')?></b>
                     <i class="subtitle"><?=__('Entspannt und doch fordernd.')?></i>
                 </div></div>
-                <div class="cell rw-3 padded"><div data-set='{"flow":60}' data-caption="1 <?=__('Minute')?>" class="hotbox">
+                <div class="cell rw-3 rw-lg-6 rw-sm-12 padded"><div data-set='{"flow":60}' data-caption="1 <?=__('Minute')?>" class="hotbox">
                     <b class="head"><?=__('Super-Zeitraffer')?></b>
                     <b class="head">1 <?=__('Minute')?></b>
                     <i class="subtitle"><?=__('Für die Eiligen unter uns.')?></i>
                 </div></div>
-                <div class="cell rw-3 padded"><div data-set='{"flow":30}' data-caption="30 <?=__('Sekunden')?>" class="hotbox">
+                <div class="cell rw-3 rw-lg-6 rw-sm-12 padded"><div data-set='{"flow":30}' data-caption="30 <?=__('Sekunden')?>" class="hotbox">
                     <b class="head"><?=__('High Speed')?></b>
                     <b class="head">30 <?=__('Sekunden')?></b>
                     <i class="subtitle"><?=__('Darf etwas weniger Reallife sein?')?></i>
                 </div></div>
-                <div class="cell rw-3 padded"><div data-set='{"flow":15}' data-caption="15 <?=__('Sekunden')?>" class="hotbox">
+                <div class="cell rw-3 rw-lg-6 rw-sm-12 padded"><div data-set='{"flow":15}' data-caption="15 <?=__('Sekunden')?>" class="hotbox">
                     <b class="head"><?=__('Ultra High Speed')?></b>
                     <b class="head">15 <?=__('Sekunden')?></b>
                     <i class="subtitle"><?=__('Ohmeingottwokam dasdennjetzther???')?></i>
                 </div></div>
 
-                <div class="cell rw-10 ro-1 padded">
+                <div class="cell rw-10 ro-1 padded rw-lg-12 ro-lg-0">
                     <div class="help noclick">
                         <h4><?=__('Der Fluss der Zeit');?></h4>
                         <?=__('Der Lauf der Zeit ist in ZombVival in sog. "Ticks" organisiert. Oben rechts auf der Seite wird ein Countdown bis zum nächsten Tick eingeblendet. Bei jedem Tick wird dein Status neu berechnet, außerdem gibt es eine Chance das Dinge geschehen. Wenn du beispielsweise in der Umgebung deines Verstecks stehst, hast du bei jedem Tick die Chance eine Ruine aufzudecken. Bist du in einer Ruine, hast du die Chance einen Gegenstand zu finden und/oder von Zombies attackiert zu werden.');?><br /><br />
@@ -236,16 +244,16 @@
                     <h2><?=__('Kaufrausch in letzter Minute!');?></h2>
 
                     <div class="row">
-                        <div class="cell rw-5 padded">
+                        <div class="cell rw-5 rw-lg-12 padded">
                             <div class="help noclick">
                                 <h4><?=__('Der Shop');?></h4>
                                 <?=__('Vor jedem Spielstart hast du Gelegenheit, nützliche Dinge für den einmaligen Gebrauch zu erwerben. Du erhälst einen Freibetrag von :free Münzen - möchtest du mehr ausgeben, musst du die Differenz aus deinem privaten Fundus ("BrainCoins") bezahlen. BrainCoins kannst du während bestimmten Events erhalten und, wenn auch selten, im Spiel finden.', [':free' => $freecoins]);?>
                                 <br /><i><?=__('ZombVival ist komplett kostenlos - BrainCoins können ::b::nicht::/b:: käuflich erworben werden!')?></i>
                             </div>
                         </div>
-                        <div class="cell rw-7 padded">
+                        <div class="cell rw-7 rw-lg-12 padded">
                             <div class="store">
-                                <div class="store-header"><span class="store-title">zombvivalShop</span><span class="bc-free"><?=$freecoins?></span><span class="bc"><?=$braincoins?></span></div>
+                                <div class="store-header"><span class="store-title hide-sm">zombvivalShop</span><span class="bc-free"><?=$freecoins?></span><span class="bc"><?=$braincoins?></span></div>
                                 <div class="store-content"></div>
                                 <div class="store-checkout">
                                     <div class="row">
@@ -279,16 +287,19 @@
                     'Mir fällt gerade ein, ich hab den Ofen angelassen...','Nein, danke','Öhm... ich spiele doch lieber weiter WoW','Jetzt, wo ich so drüber nachdenke...'
                 ]);
                 ?>
-                <i><?=__($question);?></i> <?=__($tease);?><br /><br />
-                <b><?=__('Letzt liegt es an dir: Bist du bereit, in die furchterregende Welt von ZombVival einzutauchen?');?></b>
 
-                <div class="cell rw-8 padded">
+                <div class="cell rw-12 padded">
+                    <i><?=__($question);?></i> <?=__($tease);?><br /><br />
+                    <b><?=__('Letzt liegt es an dir: Bist du bereit, in die furchterregende Welt von ZombVival einzutauchen?');?></b>
+                </div>
+
+                <div class="cell rw-8 rw-sm-12 padded">
                     <div class="btn btn-icon" id="btn_cancel">
                         <span class="btn-icon-inner"><i class="fa fa-times"></i></span>
-                        <?=__($retreat)?>
+                        </span><?=__($retreat)?>
                     </div>
                 </div>
-                <div class="cell rw-4 padded">
+                <div class="cell rw-4 rw-sm-12 padded">
                     <div class="btn btn-icon" id="btn_confirm">
                         <span class="btn-icon-inner"><i class="fa fa-arrow-right"></i></span>
                         <?=__('Auf geht\'s!')?>
@@ -537,10 +548,13 @@
                 ssel.append($('<option />').attr('value', i).text(game.i18n(<?=__j(':n Spieler');?>, {':n': i})));
             ssel.selectric();
         }
+
+        window.scrollTo(0,0);
     });
 
     $('[data-set]').click(function() {
         write_set($(this).data('set'),$(this).data('caption'));
+        window.scrollTo(0,0);
     });
 
     $('#btn_cancel').click(function() {

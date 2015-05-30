@@ -2,6 +2,7 @@
     /**
      * @var string[] $js
      * @var string[] $css
+     * @var string $sid
      */
 ?>
 <html>
@@ -13,6 +14,9 @@
     <meta name="keywords" content="Zombie,Survival,Browsergame,Die Verdammten,Die2Nite,GRGE">
     <meta name="description" content="Ein Single Player Survival Game. Könnte Spuren von Zombies enthalten..." />
     <meta name="author" content="Benjamin 'Brainbox' Behrendt" />
+
+    <!-- Viewport tag to disable virtual screens on mobile devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1,  maximum-scale=1, minimum-scale=1">
 
     <!-- Basics -->
     <link rel="icon" href="media/fav/favicon.ico" sizes="16x16 24x24 32x32 48x48 256x256" />
@@ -56,6 +60,7 @@
         document.getElementById('nojs').style.display = 'none';
         window.addEventListener('load',function(){
             game.init();
+            game.registerVirtualCookie('<?=$sid?>');
             game.network.load('web/body',{},true);
         });
     // ## JS COMPRESS END ## //

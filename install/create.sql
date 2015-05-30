@@ -76,6 +76,12 @@ CREATE TABLE IF NOT EXISTS ___PREFIX___ranking (
   `end` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AVG_ROW_LENGTH=176;
 
+CREATE TABLE IF NOT EXISTS ___PREFIX___qr (
+  uid int(11) NOT NULL,
+  pin varchar(4) NOT NULL,
+  `timestamp` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 CREATE TABLE IF NOT EXISTS ___PREFIX___ranking_mp (
   season int(11) NOT NULL,
   board int(11) NOT NULL,
@@ -128,6 +134,9 @@ ALTER TABLE ___PREFIX___multiplayer_lobby
 
 ALTER TABLE ___PREFIX___profiles_xref
   ADD UNIQUE KEY (`provider`,`rid`);
+
+ALTER TABLE ___PREFIX___qr
+ADD PRIMARY KEY (uid), ADD UNIQUE KEY pin (pin);
 
 ALTER TABLE ___PREFIX___ranking
   ADD PRIMARY KEY (season,uid,gameid), ADD KEY uid (uid) USING BTREE;

@@ -346,15 +346,11 @@ return array (
 	'',
   'Spritztour-Paket' =>
 	'',
-  'Es gibt keine bessere Art, von A nach B zu kommen, als mit dem Fahrra - wenn man mal von all den Arten absieht, die besser sind als ein Fahrrad. Apropos Fahrrad: Wie wärs, wenn du hier etwas Geld für ein Item ausgeben würdest, dass du ohnehin im Spiel finden kannst?' =>
-	'',
   'Investitions-Paket' =>
 	'',
   'Willst du ein bisschen Extrakohle machen? Dann kaufe dieses Investitions-Paket (vorzugsweise von deinem Freibetrag) und erhalte direkt beim Spielstart BrainCoins!' =>
 	'',
   'Krankenhauskantine' =>
-	'',
-  'Diese Krankenhauskantine war früher mal ein echter Geheimtipp in der Stadt, denn hier konnte man vergleichsweise billig eine leckere Mahlzeit bekommen. Der günstige Preis ist auch kein Wunder - man kann Nahrungsmittel ziemlich billig produzieren, wenn sich im selben Gebäude eine leichenhalle befindet...' =>
 	'',
   'Verkaufsautomat (Cholera Cola)' =>
 	'',
@@ -405,5 +401,93 @@ return array (
   'Elektrisierende Girlande' =>
 	'',
   'Diese hübsch glitzernde Girlande wertet dein Versteck dekorativ auf. Pass nur auf, dass dir keine Batteriesäure auf den Kopf tropft...' =>
+	'',
+  'Bauplatz für epische Projekte' =>
+	'',
+  'Kleines Gewächshaus' =>
+	'',
+  'Wie Millionen von Pot-Farmern vor dir kannst auch du mit diesem patentierten Gewächshaus-Bausatz deinen grünen Daumen entdecken und verschiedene nützliche Gewächse anpflanzen. Aber Achtung: Ein solcher Garten benötigt viel Aufmerksamkeit und Zeit, bevor du etwas ernten kannst!' =>
+	'',
+  'Epische Projekte' =>
+	'',
+  'Grundwasserversorgung' =>
+	'',
+  'Warum gammliges Kondenswasser von alten Bahnhofstoiletten ablecken, wenn du dir frisches Wasser aus dem Boden besorgen kannst? Zwar wird der Bau dieses Projektes dich sehr viel Energie kosten, dafür verfügst du danach über eine (zumindest halbwegs) stetige Wasserversorgung.' =>
+	'',
+  'Raben-Bootcamp' =>
+	'',
+  'Raben sind intelligente (und boshafte) Tiere - aber mit ein bisschen Geschick könntest du sie vielleicht dazu trainieren, für dich nach Gegenständen zu suchen. Du müsstest sie dafür natürlich mit etwas Futter belohnen...' =>
+	'',
+  'Laserzaun' =>
+	'',
+  'Zombies sind nicht gerade für ihre Geschicklichkeit bekannt - daher kannst du sie mit ein paar Laserbarrieren bestimmt recht zuverlässig von deinem Versteck fernhalten. Vorrausgesetzt natürlich, dir gehen nicht die Batterien aus...' =>
+	'',
+  'Mindestens eine Vorraussetzung für dieses Projekt kann nicht gebaut werden.' =>
+	'',
+  'AP' =>
+	'',
+  'Das wars!' =>
+	'',
+  'Du hast momentan ::b::eine::/b:: aktive Beschwerde!' =>
+	'',
+  'Browser' =>
+	'',
+  'Internet Explorer 6' =>
+	'',
+  'Höchster Schulabschluss' =>
+	'',
+  'Kindergarten' =>
+	'',
+  'Du kannst dich auch auf einem PC einloggen und deine Login-Informationen von dort bequem auf dein mobiles Gerät übertragen lassen!' =>
+	'',
+  'QR-Code' =>
+	'',
+  'PIN' =>
+	'',
+  'Bitte trage den PIN ein, den du auf dem PC erhalten hast.' =>
+	'',
+  'Profileinstellungen' =>
+	'',
+  'Hier kannst du einige Einstellungen für dein ZombVival-Profil vornehmen.' =>
+	'',
+  'Gespeicherte Logins zurücksetzen' =>
+	'',
+  'Hierdurch werden Login-Daten zu deinem Profil auf diesem sowie allen anderen PCs, auf denen sie gespeichert sind, unbrauchbar gemacht. Um dich nach Anwenden dieser Option wieder einzuloggen, musst du deinen DV oder D2N Schlüssel verwenden.' =>
+	'',
+  'Smartphone oder Tablet verknüpfen' =>
+	'',
+  'Einstellungen' =>
+	'',
+  'Alle gespeicherten Login-Informationen wurden entwertet. Du kannst dich weiterhin über DV/D2N in dein ZV-Profil einloggen.' =>
+	'',
+  'Du kannst ZombVival auch auf mobilen Geräten wie Smartphones und Tablets mit einer angepassten Benutzeroberfläche spielen! Nach dem Login kannst du dir unter "Seelen -> Profileeinstellungen" einen QR-Code generieren lassen, der deine Login-Daten automatisch auf dein mobiles Gerät kopiert.' =>
+	'',
+  'Ungültige Login-Daten' =>
+	'',
+  'Die gespeicherten Login-Daten dieses Profils sind ungültig, daher wird das Icon aus dem Schnell-Login entfernt. Bitte versuche, dich über DV oder D2N einzuloggen.' =>
+	'',
+  'Scanne den folgenden QR-Code oder gib die darunter stehende URL auf deinem mobilen Gerät ein. Deine Login-Daten werden dadurch auf dem Gerät gespeichert und du kannst dich zukünftig ohne die Hilfe deines PCs einloggen.' =>
+	'',
+  'Login via QR' =>
+	'',
+  'Abrufen des QR-Codes ist fehlgeschlagen!' =>
+	'',
+  'URL' =>
+	'',
+  'Deine Login-Daten wurden erfolgreich auf diesem Gerät hinterlegt. In Zukunft kannst du dich ohne QR-Codes, Pins oder Keys auf diesem gerät einloggen.' =>
+	'',
+  'Der eingegebene PIN ist ungültig. Möglicherweise hast du den PIN bereits verwendet um ein anderes Gerät zu koppeln, oder die Gültigkeitsdauer des PINs ist abgelaufen. Bitte überprüfe deine Eingabe und erstelle ggf. einen neuen Code.' =>
+	'',
+  'Der QR-Code kann nur einmalig verwendet werden und ist für 5 Minuten gültig. Möchtest du mehrere Geräte verbinden, schließe dieses Popup und öffne es erneut, um einen neuen Code zu generieren.' =>
+	'',
+  'Bitte gib deinen PIN ein.' =>
+	'',
+  'Es gibt keine bessere Art, von A nach B zu kommen, als mit dem Fahrrad - wenn man mal von all den Arten absieht, die besser sind als ein Fahrrad. Apropos Fahrrad: Wie wärs, wenn du hier etwas Geld für ein Item ausgeben würdest, dass du ohnehin im Spiel finden kannst?' =>
+	'',
+  'Aufnehmen / Ablegen' =>
+	'',
+  'Du hast die Arbeiten an einem epischen Projekt in deinem Versteck begonnen. Viel Erfolg!' =>
+	'',
+  'Bauen' =>
 	'',
 );

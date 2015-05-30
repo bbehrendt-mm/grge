@@ -19,4 +19,11 @@ class Model_Places_Warehouse extends Model_Places_Abstract_Hideout {
     //Exp: 8% per day
     protected static $decay_exp = 0.10;
 
+    public function uin($new = null) {
+        if ($new !== null)
+            $this->add_upgrades(['slot_epic']);
+
+        return parent::uin($new);
+    }
+
 }	

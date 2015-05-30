@@ -16,7 +16,6 @@
                 $.each(data, function(k,v) {
                     cache = cache.concat($.objToArray(v.set, true));
                 });
-                console.log(cache);
                 core.command('act/inventory',{action: rucksack ? 'drop' : 'take', items: cache, player: rucksack ? 0 : $('.inventory_player[data-pid-selected=1]').data('pid')});
             }).qtip(game.render.html.qtip.ingame('top')));
 
@@ -27,11 +26,11 @@
 
             if (!remote) {
                 if (!v.is_water)
-                    container.click(function() {
+                    container.click(function(e, force) {
                         var o;
                         if (o = $(this).data('click-override'))
                             o(this);
-                        else core.command('act/inventory',{action: rucksack ? 'drop' : 'take', items: [v.uin], player: rucksack ? 0 : $('.inventory_player[data-pid-selected=1]').data('pid')});
+                        else if (!game.touch() || force) core.command('act/inventory',{action: rucksack ? 'drop' : 'take', items: [v.uin], player: rucksack ? 0 : $('.inventory_player[data-pid-selected=1]').data('pid')});
                     });
                 else
                     container.click(function() {
@@ -109,9 +108,9 @@
 
                     var subhead = $();
                     if (v.label && !v.custom_label)
-                        subhead = subhead.add($('<i />').addClass('note center').text(v.label));
-                    if (v.count && !v.fill)  subhead = subhead.add($('<i />').addClass('note center').text(v.count + (v.capacity ? (' / ' + v.capacity + ' ') : ' ' ) + v.stack));
-                    if (v.weight) subhead = subhead.add($('<i />').addClass('note center').text(<?=__j('Gewicht')?> + ': ' + v.weight));
+                        subhead = subhead.add($('<i />').addClass('info center').text(v.label));
+                    if (v.count && !v.fill)  subhead = subhead.add($('<i />').addClass('info center').text(v.count + (v.capacity ? (' / ' + v.capacity + ' ') : ' ' ) + v.stack));
+                    if (v.weight) subhead = subhead.add($('<i />').addClass('info center').text(<?=__j('Gewicht')?> + ': ' + v.weight));
 
                     if (subhead.size())
                         content.append(subhead).append('<span class="separator" />');
@@ -129,13 +128,13 @@
                                         }))
                                 )
                             )
-                            .append($('<i />').addClass('note center').text(<?=__j('Du kannst diesen Gegenstand beliebig beschriften. Bestätige deine Beschriftung mit der Eingabetaste.')?>))
+                            .append($('<div />').addClass('note').text(<?=__j('Du kannst diesen Gegenstand beliebig beschriften. Bestätige deine Beschriftung mit der Eingabetaste.')?>))
                             .append('<span class="separator" />');
                     }
 
                     if (v.is_chem) {
                         content.append(
-                            $('<i />').addClass('note justify').text(<?=__j('Du kannst diese Chemikalie mit beliebigen anderen Gegenständen kombinieren. Welchen Effekt das hat... das wirst du selbst herausfinden müssen.')?>)
+                            $('<div />').addClass('note').text(<?=__j('Du kannst diese Chemikalie mit beliebigen anderen Gegenständen kombinieren. Welchen Effekt das hat... das wirst du selbst herausfinden müssen.')?>)
                         ).append(
                             $('<div />').addClass('btn').text(<?=__j('Experimentieren ...')?>).click(function() {
                                 container.qtip().hide();
@@ -169,7 +168,7 @@
                         var fillbox, i;
                         content.append(
                             fillbox = $('<div />').addClass('center')
-                        ).append($('<i />').addClass('note justify').text(<?=__j('Klicke einen leeren Slot an, um Wasser aus einer anderen Quelle hinzuzugeben. Klicke einen gefüllten Slot an, um Wasser auszuschütten. Schwarz gefärbte Slots können nicht ausgeleert werden.')?>));
+                        ).append($('<div />').addClass('note').text(<?=__j('Klicke einen leeren Slot an, um Wasser aus einer anderen Quelle hinzuzugeben. Klicke einen gefüllten Slot an, um Wasser auszuschütten. Schwarz gefärbte Slots können nicht ausgeleert werden.')?>));
                         for (i = 0; i < v.count; i++)
                             fillbox.append($('<div />').addClass('fillbox fillbox-filled ' + (v.fill.fixed ? 'fillbox-fixed' : '')).click(function() {
                                 if (!v.fill.fixed)
@@ -230,7 +229,7 @@
                         var ammo_slots;
                         content.append('<span class="separator" />').append(
                             ammo_slots = $('<div />').addClass('center')
-                        ).append($('<i />').addClass('note justify').text(<?=__j('Klicke Munition an, um sie abzulegen.')?>));
+                        ).append($('<div />').addClass('note').text(<?=__j('Klicke Munition an, um sie abzulegen.')?>));
                         $.each(v.ammobelt, function(k,vin) {
                             ammo_slots.append($('<div />').addClass('itembox pointer').append($('<img />').attr('src','media/icons/' + vin.icon + '.gif')).append($('<span />').text(vin.count)).click(function() {
                                 var ok = false;
@@ -289,6 +288,12 @@
                             })
                         ).appendTo(pillrow);
                     }
+
+                    if (game.touch()) {
+                        $('<div />').addClass('btn green').text(<?=__j('Aufnehmen / Ablegen')?>).click(function() {
+                            container.trigger('click', [true]);
+                        }).css('margin-top', 10).appendTo(content)
+                    }
                 }
             }));
 
@@ -323,15 +328,15 @@
     core.parts.inventory = function(data, target) {
         var iv_a, iv_b;
         $(target).empty().append(
-            $('<div />').addClass('cell rw-4 padded').append(
+            $('<div />').addClass('cell rw-4 rw-lg-6 padded ').append(
                 iv_a = $('<div />').addClass('row inventory flatbox inventory_player inventory_self')
             )
         ).append(
-            $('<div />').addClass('cell rw-4 padded').append(
+            $('<div />').addClass('cell rw-4 rw-lg-6 padded').append(
                 iv_b = $('<div />').addClass('row inventory flatbox inventory_location')
             )
         ).append(
-            $('<div />').addClass('cell rw-4 padded').append(
+            $('<div />').addClass('cell rw-4 rw-lg-12 padded').append(
                 iv_c = $('<div />').addClass('row inventory flatbox').addClass(data.action ? 'inventory_action' : 'inventory_hero')
             )
         );
@@ -397,7 +402,7 @@
             iv_c.append($('<h3 />').text(<?=__j('Heldentaten')?>));
             $.each(data.heroics, function(k,v) {
                 iv_c.append(
-                    $('<div />').addClass('cell rw-6 padded').append(core.snippets.button(v, function() {
+                    $('<div />').addClass(game.touch() ? 'cell rw-12 padded' : 'cell rw-6 rw-sm-12 padded').append(core.snippets.button(v, function() {
                         return confirm(<?=__j('Bist du sicher, dass du diese Heldentat ausführen möchtest?')?>)
                     }, 'tooltip'))
                 )

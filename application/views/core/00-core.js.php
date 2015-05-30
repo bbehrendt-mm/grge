@@ -44,6 +44,13 @@ core = {
             : (core.sessiondata[key] = data);
     },
 
+    renderLog: function(target) {
+        this.command('game/logs',{}, true, function(data) {
+            if (data.log)
+                core.parts.log(data.log,$('<div />').addClass('row log_box').appendTo(target.empty()));
+        }, true)
+    },
+
     command: function(url, args, background, callback, no_clean, finished) {
         if (!url)
             url = 'japi/game/data';
@@ -95,15 +102,25 @@ core = {
             action_box.addClass('custom custom-' + data.location.meta.css);
         }
 
-        var auto_tab = $('<ul />').addClass('tabline').appendTo(action_box)
+        var auto_select = $('<select />').appendTo($('<div />').addClass('hide-desktop control').appendTo(action_box))
+            .append($('<option />').val('#inv_container').text(<?=__j('Gegenstände & Heldentaten')?>))
+            .append($('<option />').val('#settings_container').text(<?=__j('Zeitfluss & Verhalten')?>))
+            .append(data.players ? $('<option />').val('#mp_container').text(<?=__j('Spielerübersicht')?>) : false)
+            .change(function() {
+                $('[data-toggle="' + $(this).val() + '"]').click();
+            })
+            .selectric();
+
+        var auto_tab = $('<ul />').addClass('tabline hide-mobile').appendTo(action_box)
             .append($('<li>').attr('data-toggle', '#inv_container').text(<?=__j('Gegenstände & Heldentaten')?>))
             .append($('<li>').attr('data-toggle', '#settings_container').text(<?=__j('Zeitfluss & Verhalten')?>))
             .append(data.players ? $('<li>').attr('data-toggle', '#mp_container').text(<?=__j('Spielerübersicht')?>) : false)
             .find('>li').click(function() {
                 var t = $($(this).data('toggle'));
+                auto_select.val($(this).data('toggle')).selectric();
                 core.session('main.tabs.open', $(this).data('toggle'));
                 $(this).addClass('active').siblings().removeClass('active');
-                action_box.children('div').hide();
+                action_box.children('div:not(.control)').hide();
                 t.show();
             }).first();
 

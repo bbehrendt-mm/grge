@@ -6,7 +6,9 @@
             <img class="pointer" src="media/icons/lang/es.png" alt="es" title="<b>Español</b><br />Sin terminar! Si usted desea ayudar, por favor póngase en contacto con Brainbox." />
         </div>
 
-        <div class="navsection navtext" id="main-menu"></div>
+        <div class="navsection navtext" id="main-menu" data-toggle="0"></div>
+
+        <div class="navsection navtext hide-desktop" id="nav-toggle"><i class="fa fa-bars"></i> </div>
     </div>
 
     <div id="notifications"></div>
@@ -24,9 +26,10 @@
     </div>
 
     <div id="disclaimer" class="row">
-        <div class="cell rw-6">
+        <div class="cell rw-6 rw-lg-12 padded-lg">
             <b><?=__('ZombVival');?></b><br />
             <i class="min"><?=__('Ein postapokalyptisches Survival-Spiel. Könnte Spuren von Zombies enthalten...');?></i><br />
+            <div class="hide-desktop"><img src="media/img/small.png" alt="Zombvival"></div>
             <?=__('Dieses Spiel ist ein Fanprojekt zum Browsergame ":url" von :mt. Alle Grafiken stammen, wenn nicht ausdrücklich anders angegeben, ebenfalls aus dem Spiel und sind damit Eigentum von :mt.',
                 array(
                     ':url' => '<a href="http://dieverdammten.de">Die Verdammten</a>',
@@ -35,17 +38,17 @@
             <?=__('Unterstütze ZombVival!')?> <a href="#" id="main_donate"><?=__('Spenden')?> </a>
         </div>
 
-        <div class="cell rw-3">
+        <div class="cell rw-3 rw-lg-6 padded-lg">
             <b><?=__('Programm und Design');?></b><br />
             Benjamin "<i>Brainbox</i>" Behrendt<br /><br />
             <b><?=__('Danke an');?></b><br />
             <i>MisterD</i>, <i>Krummy</i>, <i>SinSniper</i>, <i>NobbZ</i>, <i>Mastertron</i>, <i>Storm</i>
         </div>
 
-        <div class="cell rw-3">
+        <div class="cell rw-3 rw-lg-6 padded-lg">
             <b><?=__('Kontakt'); ?></b><br />
             <a href="mailto: kontakt@ruine.dvspot.de">kontakt@ruine.dvspot.de</a><br />
-            <img src="media/img/small.png" alt="Zombvival">
+            <div class="hide-mobile"><img src="media/img/small.png" alt="Zombvival"></div>
             <i id="main_backend" class="min pointer" style="cursor: pointer">[Back-End]</i>
         </div>
 
@@ -60,6 +63,11 @@
     $('#lang-select').find('> img').qtip(game.render.html.qtip.lang()).click(function() {
         game.lang($(this).attr('alt'));
         game.network.load('web/body');
+    });
+
+    $('#nav-toggle').add('#main-menu').click(function() {
+        var t = $('#main-menu');
+        t.attr('data-toggle', t.attr('data-toggle') == '0' ? '1' : '0');
     });
 
     $('#license_link').click(function() {

@@ -6,10 +6,25 @@
   &::before,&::after {box-sizing: border-box;}
 }
 
-.grid(@n;@i:0) when (@i <= @n) {
+.grid(@n;@class:'';@i:0) when (@i = 0) and (@class = '') {
+  &.rw-@{i} {display: none}
+  &.ro-@{i} {margin-left: 0;}
+  .grid(@n, @class, (@i + 1))
+}
+.grid(@n;@class:'';@i:0) when (@i <= @n) and (@class = '') {
   &.rw-@{i} {width: (@i * 100% / @n);}
   &.ro-@{i} {margin-left: (@i * 100% / @n);}
-  .grid(@n, (@i + 1))
+  .grid(@n, @class, (@i + 1))
+}
+.grid(@n;@class:'';@i:0) when (@i = 0) and not (@class = '') {
+  &.rw-@{class}-@{i} {display: none}
+  &.ro-@{class}-@{i} {margin-left: 0;}
+  .grid(@n, @class, (@i + 1))
+}
+.grid(@n;@class:'';@i:0) when (@i <= @n) and not (@class = '') {
+  &.rw-@{class}-@{i} {width: (@i * 100% / @n);}
+  &.ro-@{class}-@{i} {margin-left: (@i * 100% / @n);}
+  .grid(@n, @class, (@i + 1))
 }
 
 .row {
@@ -20,6 +35,7 @@
     display: inline-block; float: left;
     &.padded {padding: 5px;}
     &.smallpad {padding: 2px;}
+    &.nopad {padding: 0}
     &::before, &::after {clear: both;}
     &::before {content: " "; display: table;}
   }

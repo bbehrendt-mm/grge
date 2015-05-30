@@ -28,7 +28,7 @@ abstract class Controller extends Kohana_Controller {
         if (!$this->is_ajax_request()) {
             if ($this->request->action() == 'japi')
                 die(Error::m(\grge\E_HTTP_AJAX_REQUIRED));
-            $this->response->body(View::factory('redirect')->set('url',URL::base())->set('path',$this->request->uri()));
+            $this->response->body(View::factory('redirect')->set('url',URL::base())->set('path',$this->request->uri())->set('sid', $this->session->id()));
             $this->request->action('noaction');
         }
     }
@@ -79,7 +79,8 @@ abstract class Controller extends Kohana_Controller {
         Error::i();
 
         //Load session
-        $this->session = Session::instance();
+        $vcsid = $this->request->headers('X-Virtual-Cookie');
+        $this->session = Session::instance(null, $vcsid ? $vcsid : null);
 
         // Virtual login
         $this->perform_virtual_login();

@@ -2,6 +2,14 @@ goog.provide('game');
 
 game = { 
     temp: {},
+
+    mobile: false,
+    vcsid: null,
+
+    touch: function() {
+        return typeof window.ontouchstart != "undefined";
+    },
+
     clean: function(skip_temp) {
         if (!skip_temp) {
             game.temp = {};
@@ -12,8 +20,34 @@ game = {
 
     init: function() {
         $(window).on('resize', function() {
+            var w = $(window).width();
+            if (w >= 900)       game.mobile = false;
+            else if (w >= 600)  game.mobile = 'lg';
+            else if (w >= 480)  game.mobile = 'md';
+            else                game.mobile = 'sm';
             $('.popup').trigger('reposition');
-        });
+        }).trigger('resize');
+    },
+
+    registerVirtualCookie: function(sid) {
+        // Check if the site has accepted our cookie
+        var name = 'evolution='; var csid = '';
+        var ca = document.cookie.split(';');
+        for(var i=0; i<ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1);
+            if (c.indexOf(name) == 0) {
+                csid = c.substring(name.length,c.length);
+                break;
+            }
+        }
+
+        // If not, create a virtual cookie using the JS environment
+        if (csid != sid) {
+            this.vcsid = sid;
+            console.warn('Cookie support of your browser seems to be broken. We\'ll have to work around that...', csid, sid);
+        }
+
     },
 
     lang: function(set) {

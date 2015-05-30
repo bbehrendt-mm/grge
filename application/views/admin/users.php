@@ -170,7 +170,7 @@
 
             $.each(v.auth, function(provider, data) {
                 key_list.append($('<div />').addClass('pointer').text(provider).click(function() {
-                    var pp = core.popup.spawn(600);
+                    var pp = core.popup.spawn({desktop: 600, md: '100%'});
 
                     pp.append($('<h3 />').text(v.name + ' via ' + provider));
                     pp.append(

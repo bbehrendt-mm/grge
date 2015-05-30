@@ -137,7 +137,7 @@
                     if (call && call() === false) return;
 
                     if (action.escort) {
-                        var popup = core.popup.spawn(400);
+                        var popup = core.popup.spawn({desktop: 400, sm: '100%'});
 
                         popup.append($('<h2 />').addClass('center').text(action.description));
 
@@ -166,16 +166,18 @@
                     } else core.command('act/item', {action: action.action, item: action.target});
                 });
 
+            if (game.touch()) ext_mode = 'static';
+
             switch (ext_mode) {
                 case 'static':
-                    button.append(ext);
+                    if (ext.children().size()) button.append(ext);
                     break;
                 case 'tooltip':case 'nested':
                     if (!action.tooltip && action.remaining < 0 && !ext.children().size()) break;
 
                     var template = (ext_mode == 'nested') ? game.render.html.qtip.help : game.render.html.qtip.ingame;
 
-                    button.attr('title','-').qtip(template((ext_mode == 'nested') ? 'right' : 'bottom',{
+                    button.attr('title','-').qtip(template((ext_mode == 'nested') ? {desktop: 'right', lg: 'top'} : 'bottom',{
                         render: function(event,api) {
                             $(this).css('width',$(this).css('max-width'));
 
@@ -228,23 +230,42 @@
         var mt_out = $('<div />').addClass('cell rw-12').appendTo(ext);
         var mt_zmb = $('<div />').addClass('cell rw-12').appendTo(ext);
 
+        var active = false;
+
         button.attr('data-cats', '|' + $.objToArray(blueprint.categories, true).join('|') + '|');
+
+        var all_rq_ok = true;
+        $.each(blueprint.requires, function(k,v) {
+            var cache = [];
+            var ok = false;
+            $.each(v, function(ki,vi) {
+                if (lib[vi]) {
+                    cache.push(lib[vi].name);
+                    if (lib[vi].build || lib[vi].slot_open) ok = true;
+                }
+            });
+            if (!ok)
+                return all_rq_ok = false;
+        });
 
         if (blueprint.build)
             button.addClass('blue');
         else if (blueprint.build_possible && blueprint.slot_open) {
             button.addClass('green');
-            var active = true;
+            active = true;
             $.each(blueprint.material_in, function(k,v) {
                 active = active && (v.have >= v.count);
             });
             if (active) {
                 button.addClass('active');
                 if (typeof callback == "function")
-                    button.click(callback);
+                    button.click(function(e,force) {
+                        if (!game.touch() || force)
+                        callback();
+                    });
             }
         }
-        else if (!blueprint.slot_open)
+        else if (!blueprint.slot_open || !all_rq_ok)
             button.addClass('red');
         else button.addClass('plain');
 
@@ -333,11 +354,19 @@
                 if (blueprint.description)
                     content.append($('<span />').text(blueprint.description)).append('<span class="separator" />');
 
+                if (active && game.touch()) {
+                    content.append($('<div />').addClass('btn green').text(<?=__j('Bauen')?>).click(function() {
+                        button.trigger('click',[true]);
+                    }))
+                }
+
                 if (blueprint.build)
                     content.append($('<div />').addClass(blueprint.zombies ? 'point failure' : 'point success').text(blueprint.zombies ? <?=__j('Diese Verteidigungsmöglichkeit wurde bereits eingesetzt.')?> : <?=__j('Dieses Projekt wurde bereits gebaut.')?>));
-                else if (!blueprint.slot_open) {
+                else if (!blueprint.slot_open)
                     content.append($('<div />').addClass('point failure').text(<?=__j('Du hast bereits ein ähnliches Projekt gebaut.')?>));
-                } else {
+                else if (!all_rq_ok)
+                        content.append($('<div />').addClass('point failure').text(<?=__j('Mindestens eine Vorraussetzung für dieses Projekt kann nicht gebaut werden.')?>));
+                else {
 
                     if (blueprint.steps_max > 1)
                         content.append($('<span />').text(game.i18n(blueprint.zombies ? <?=__j('Hiermit kannst du :num mal Zombies angreifen.')?> : <?=__j('Du kannst dieses Projekt :num mal bauen.')?>,{':num': blueprint.steps_max}))).append('<span class="separator" />');

@@ -3,7 +3,7 @@
 class Model_Places_Hospital_Cantina extends Model_Places_Abstract_Place {
 	
 	protected static $name = 'Krankenhauskantine';
-	protected static $description = 'Diese Krankenhauskantine war früher mal ein echter Geheimtipp in der Stadt, denn hier konnte man vergleichsweise billig eine leckere Mahlzeit bekommen. Der günstige Preis ist auch kein Wunder - man kann Nahrungsmittel ziemlich billig produzieren, wenn sich im selben Gebäude eine leichenhalle befindet...';
+	protected static $description = 'Diese Krankenhauskantine war früher mal ein echter Geheimtipp in der Stadt, denn hier konnte man vergleichsweise billig eine leckere Mahlzeit bekommen. Der günstige Preis ist auch kein Wunder - man kann Nahrungsmittel ziemlich billig produzieren, wenn sich im selben Gebäude eine Leichenhalle befindet...';
     protected static $icon = 'restaurant';
     protected static $outside = false;
 

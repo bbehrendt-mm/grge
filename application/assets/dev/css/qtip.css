@@ -48,7 +48,12 @@
     display: none;
 }
 
-.qtip-custom-ingame .qtip-content .note {
+.qtip-custom-ingame .qtip-content .note  {
+    font-size: 12px;
+    line-height: 12px;
+}
+
+.qtip-custom-ingame .qtip-content .info {
     font-size: 12px;
     color: #878b93;
     line-height: 12px;
@@ -57,7 +62,7 @@
     display: block;
 }
 
-.qtip-custom-ingame .qtip-content .note + .btn {
+.qtip-custom-ingame .qtip-content .info + .btn {
     margin-top: 6px;
 }
 

@@ -98,11 +98,10 @@
         }
     })();
 
-
     //IE FIXES
     if (window.navigator.userAgent.toUpperCase().indexOf('MSIE') >= 0 || window.navigator.userAgent.toUpperCase().indexOf('TRIDENT') >= 0) {
 
-        console.error('Internet Explorer or Trident Browser Engine detected. We need to be careful not to scare him with our space age web technology, so let\'s disable some of it. Please consider using a better browser for this game.');
+        console.warn('Internet Explorer or Trident Browser Engine detected. We need to be careful not to scare him with our space age web technology, so let\'s disable some of it. Please consider using a better browser for this game.');
 
         var old_animate = $.fn.animate;
         $.fn.animate = function(properties) {

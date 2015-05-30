@@ -74,7 +74,7 @@ footer {
 #wrapper > *:first-child {
     height: 111px;
     width: 100%;
-    background: url('media/img/head.jpg');
+    background: url('media/img/head.jpg') center top;
     background-size: cover;
 }
 

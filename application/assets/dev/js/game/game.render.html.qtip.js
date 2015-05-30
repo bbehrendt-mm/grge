@@ -18,7 +18,16 @@ game.render.html.qtip = {
     },
 
     posify: function(pos) {
+        if (typeof pos == 'object')
+            switch (game.mobile) {
+                case 'lg':  pos = pos['lg'] || pos['desktop'] || pos['md'] || pos['sm']; break;
+                case 'md':  pos = pos['md'] || pos['lg'] || pos['sm'] || pos['desktop']; break;
+                case 'sm':  pos = pos['sm'] || pos['md'] || pos['lg'] || pos['desktop']; break;
+                default:    pos = pos['desktop'] || pos['lg'] || pos['md'] || pos['sm']; break;
+            }
+
         switch (pos) {
+            case 'none': return false;
             case 'left': return {my: 'right center', at: 'left center'};
             case 'right':return {my: 'left center', at: 'right center'}; break;
             case 'top': return {my: 'bottom center', at: 'top center'}; break;
@@ -28,6 +37,19 @@ game.render.html.qtip = {
 
     generic: function(pos, classes,interactable, delay, events) {
         var m = game.render.html.qtip.posify(pos);
+
+        if (!events) events = {};
+
+        if (!events.show)
+            events.show = function(event,api) {
+                var m_live = game.render.html.qtip.posify(pos);
+                if (!m_live) event.preventDefault();
+                else api.set({
+                    'position.my': m_live.my,
+                    'position.at': m_live.at
+                });
+            };
+
         return {
             style: {
                 classes: classes
@@ -40,8 +62,8 @@ game.render.html.qtip = {
                 delay: interactable ? 100 : 0
             },
             position: {
-                my: m.my,
-                at: m.at,
+                my: m ? m.my : 'bottom center',
+                at: m ? m.at : 'top center',
                 viewport: $(window),
                 container: $('body'),
                 adjust: {

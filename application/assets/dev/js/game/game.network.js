@@ -11,14 +11,17 @@ game.network = {
 
     query: function(url,args,callback, always_callback) {
         var ajax_id = game.network.ai;
+
+        var send_headers = {'X-Request-Lang' : game.lang()};
+        if (game.vcsid)
+            send_headers['X-Virtual-Cookie'] = game.vcsid;
+
         game.network.ai++;
         game.network.queries[ajax_id] = $.ajax(url, {
             cache: false,
             type: 'POST',
             data: args,
-            headers: {
-                'X-Request-Lang' : game.lang()
-            },
+            headers: send_headers,
             timeout: 45000
         }).done(function(data) {
             if (data && data.error)
@@ -89,6 +92,7 @@ game.network = {
                 if (data.content)
                     $.each(data.content, function(k,v) {
                         game.clean(true);
+                        if (!silent) window.scrollTo(0,0);
                         game.render.html.put(k,v);
                     });
             }

@@ -171,7 +171,7 @@
                     var content = $(this).find('.qtip-content').empty().append(
                         $('<b />').addClass('header').text(num_decode_title(type))
                     ).append(
-                        $('<div />').addClass('note center').text(game.i18n(<?=__j('Aktueller Wert: :num')?>, {':num': value}))
+                        $('<div />').addClass('info center').text(game.i18n(<?=__j('Aktueller Wert: :num')?>, {':num': value}))
                     ).append(
                         $('<span />').addClass('separator')
                     ).append(
@@ -278,15 +278,15 @@
 
         var timestr, datestr;
         $('<div />').addClass('datebox').append(
-            $('<div />').addClass('row').append(
+            $('<div />').addClass('row hide-sm').append(
                 $('<div />').addClass('cell rw-4').append(
-                    $('<i />').addClass('fa fa-clock-o')
+                    $('<i />').addClass('fa fa-clock-o hide-mobile')
                 ).append(
                     timestr = $('<span />')
                 )
             ).append(
                 $('<div />').addClass('cell rw-8').append(
-                    $('<i />').addClass('fa fa-calendar')
+                    $('<i />').addClass('fa fa-calendar hide-mobile')
                 ).append(
                     datestr = $('<span />')
                 )
@@ -302,7 +302,7 @@
             var left = next_tick - ((new Date()).getTime() + current_offset);
 
             if (left < 0) {
-                countdown.text(<?=__j('Weiter');?>);
+                countdown.html('<span class="hide-sm">' + <?=__j('Weiter');?> + '</span><span class="hide-md hide-lg hide-desktop"><i class="fa fa-angle-double-right"><i></span>');
                 clockbox.addClass('pointer').click(function() {
                     core.command();
                 });
@@ -336,7 +336,7 @@
             });
             if (i < scm.length)
                 for (i; i < scm.length; i++)
-                    $('<div />').text(scm[i] < 10 ? '0' + scm[i] : scm[i]).appendTo(countdown);
+                    $('<div />').addClass(i ==  (scm.length -1) ? 'hide-md hide-sm' : '').text(scm[i] < 10 ? '0' + scm[i] : scm[i]).appendTo(countdown);
 
             window.requestAnimationFrame(updater);
         };

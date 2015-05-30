@@ -34,8 +34,7 @@ return array(
                 'Model_Items_Generic_Plasticbag'=>		1,
                 'Model_Items_Generic_Mixer'		=>		1,
                 'Model_Items_Generic_Oven'		=>		1,
-                'Model_Items_Knife'				=>		1,
-                'Model_Items_Clock'             =>      1
+                'Model_Items_Knife'				=>		1
         ),
         'kitchenfood' => array(
                 'Model_Items_Basefood'			=>		3,
@@ -84,7 +83,6 @@ return array(
                 'Model_Items_Booklet'           =>      2,
                 'Model_Items_Shield'	        =>		2,
                 'Model_Items_Helmet'            =>      2,
-                'Model_Items_Clock'             =>      1,
                 'Model_Items_Bat'               =>      1,
                 'Model_Items_Shield3'           =>      1,
                 'Model_Items_Phone'             =>      1,
@@ -117,7 +115,6 @@ return array(
                 'literature'                    =>      1,
                 'Model_Items_Shield'	        =>		1,
                 'Model_Items_Vest'              =>      1,
-                'Model_Items_Clock'             =>      1,
                 'Model_Items_Bat'               =>      2,
                 'Model_Items_Jacket'            =>      1,
                 'Model_Items_Phone'             =>      1,
@@ -143,7 +140,6 @@ return array(
                 'Model_Items_Dildo'             =>      3,
                 'literature'                    =>      2,
                 'Model_Items_Helmet'            =>      1,
-                'Model_Items_Clock'             =>      2,
                 'Model_Items_Jacket'              =>    1,
         ),
         'meds' => array(

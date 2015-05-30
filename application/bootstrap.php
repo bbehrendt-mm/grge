@@ -146,6 +146,12 @@ Route::set('japi', 'japi/<controller>/<jaction>')
     ->defaults(array(
         'action'     => 'japi',
     ));
+Route::set('qr_short', 'm(/(<key>))')
+    ->defaults(array(
+        'controller' => 'account',
+        'action'     => 'qr',
+        'key'        => ''
+    ));
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
 		'controller' => 'web',

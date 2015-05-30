@@ -216,8 +216,8 @@
 
 
                     $('<span />').appendTo(stuff).addClass('damage_received').text(Math.round10(data.damage_received,-2)).attr('title', <?=__j('Erlittener Schaden')?>).qtip(game.render.html.qtip.ingame('top'));
-                    $('<span />').appendTo(stuff).addClass('energy_lost').text(Math.round10(data.energy_lost,-2)).attr('title', <?=__j('Verbrauchte Energie')?>).qtip(game.render.html.qtip.ingame('top'));
-                    $('<span />').appendTo(stuff).addClass('damage_dealt').text(Math.round10(data.damage_dealt,-2)).attr('title', <?=__j('Angerichteter Schaden')?>).qtip(game.render.html.qtip.ingame('top'));
+                    $('<span />').appendTo(stuff).addClass('energy_lost hide-sm').text(Math.round10(data.energy_lost,-2)).attr('title', <?=__j('Verbrauchte Energie')?>).qtip(game.render.html.qtip.ingame('top'));
+                    $('<span />').appendTo(stuff).addClass('damage_dealt hide-md hide-sm').text(Math.round10(data.damage_dealt,-2)).attr('title', <?=__j('Angerichteter Schaden')?>).qtip(game.render.html.qtip.ingame('top'));
                     $('<span />').appendTo(stuff).addClass('zombies_killed').text(data.kills).attr('title', <?=__j('Vernichtete Zombies')?>).qtip(game.render.html.qtip.ingame('top'));
 
                     $.each(data.items_lost, function(k,item) {
@@ -289,37 +289,46 @@
 
                         var msg_destroyed = <?=__j('Wurde beim Angriff zerstört!');?>;
 
-                        var desc = $('<div />').addClass('cell rw-6').appendTo(row);
-                        var damage = $('<div />').addClass('row').appendTo($('<div />').addClass('cell rw-6').appendTo(row));
-                        var items = $('<div />').addClass('cell-small rw-9').appendTo(damage);
-                        $('<div />').addClass('cell-small rw-1').append($('<i />').addClass('fa fa-chevron-right')).appendTo(damage);
-                        var calc = $('<div />').addClass('cell-small rw-6').appendTo(damage);
-                        $('<div />').addClass('cell-small rw-1').append($('<i />').addClass('fa fa-chevron-right')).appendTo(damage);
-                        var result = $('<div />').addClass('cell-small rw-7').appendTo(damage);
+                        var desc = $('<div />').addClass('cell rw-6 rw-md-7').appendTo(row);
+                        var damage = $('<div />').addClass('row').appendTo($('<div />').addClass('cell rw-6 rw-md-5').appendTo(row));
+
+                        var items = $('<div />').addClass('cell-small rw-9 rw-md-4').appendTo(damage);
+                        $('<div />').addClass('cell-small rw-1 rw-md-0').append($('<i />').addClass('fa fa-chevron-right')).appendTo(damage);
+                        var calc = $('<div />').addClass('cell-small rw-6 rw-md-0').appendTo(damage);
+                        $('<div />').addClass('cell-small rw-1 rw-md-2').append($('<i />').addClass('fa fa-chevron-right')).appendTo(damage);
+                        var result = $('<div />').addClass('cell-small rw-7 rw-md-18').appendTo(damage);
 
                         if (obj.attacker.is_zombie) desc
-                            .append($('<span />').addClass('zombie').text(obj.attacker.count + ' ' + obj.attacker.name))
-                            .append($('<span />').text(obj.attacker.count == 1 ? <?=__j('stürzt sich auf')?> : <?=__j('stürzen sich auf')?>))
-                            .append($('<span />').addClass('player').text(obj.defender.name));
+                            .append($('<span class="hide-mobile" />').addClass('zombie').text(obj.attacker.count + ' ' + obj.attacker.name))
+                            .append($('<span class="hide-mobile" />').text(obj.attacker.count == 1 ? <?=__j('stürzt sich auf')?> : <?=__j('stürzen sich auf')?>))
+                            .append($('<span class="hide-mobile" />').addClass('player').text(obj.defender.name))
+
+                            .append($('<span class="hide-desktop" />').addClass('zombie').text(obj.attacker.count + ' ' + game.short(obj.attacker.name,4)))
+                            .append($('<span class="hide-desktop" />').html('<i class="fa fa-angle-double-right"></i>'))
+                            .append($('<span class="hide-desktop" />').addClass('player').text(obj.defender.name));
                         else desc
-                            .append($('<span />').addClass('player').text(obj.attacker.name))
-                            .append($('<span />').text(<?=__j('attackiert')?>))
-                            .append($('<span />').addClass('zombie').text(obj.defender.count + ' ' + obj.defender.name));
+                            .append($('<span class="hide-mobile" />').addClass('player').text(obj.attacker.name))
+                            .append($('<span class="hide-mobile" />').text(<?=__j('attackiert')?>))
+                            .append($('<span class="hide-mobile" />').addClass('zombie').text(obj.defender.count + ' ' + obj.defender.name))
+
+                            .append($('<span class="hide-desktop" />').addClass('player').text(obj.attacker.name))
+                            .append($('<span class="hide-desktop" />').html('<i class="fa fa-angle-double-right"></i>'))
+                            .append($('<span class="hide-desktop" />').addClass('zombie').text(obj.defender.count + ' ' + game.short(obj.defender.name,4)));
 
                         items.append(core.snippets.item(true,obj.weapon.name,obj.weapon.icon,1,true,false).addClass(obj.weapon.destroyed ? 'destroyed' : ''));
                         if (obj.weapon.energy)
-                            items.append($('<span />').addClass('energy').text(obj.weapon.energy));
+                            items.append($('<span />').addClass('energy hide-md hide-sm').text(obj.weapon.energy));
                         $.each(obj.weapon.ammo, function(k,icon) {
-                            items.append(core.snippets.item(false,'',icon,1,true,false));
+                            items.append(core.snippets.item(false,'',icon,1,true,false).addClass('hide-md hide-sm'));
                         });
 
                         if (obj.protection.value) {
-                            items.append($('<i />').addClass('fa fa-caret-right'));
+                            items.append($('<i />').addClass('fa fa-caret-right hide-md hide-sm'));
                             $.each(obj.protection.covers,function(k,item) {
-                                items.append(core.snippets.item(!item.stable ? msg_destroyed : true,item.name,item.icon,1,true,false).addClass(!item.stable ? 'destroyed' : ''));
+                                items.append(core.snippets.item(!item.stable ? msg_destroyed : true,item.name,item.icon,1,true,false).addClass('hide-md hide-sm').addClass(!item.stable ? 'destroyed' : ''));
                             });
                             $.each(obj.protection.armor,function(k,item) {
-                                items.append(core.snippets.item(!item.stable ? msg_destroyed : true,item.name,item.icon,1,true,false).addClass(!item.stable ? 'destroyed' : ''));
+                                items.append(core.snippets.item(!item.stable ? msg_destroyed : true,item.name,item.icon,1,true,false).addClass('hide-md hide-sm').addClass(!item.stable ? 'destroyed' : ''));
                             });
                         }
 
@@ -352,7 +361,8 @@
             target.append(
                 $('<div />').addClass('col rw-12 message' + (expandable ? ' pointer' : '')).append(
                     $('<div />').addClass(v.new ? 'timestamp new' : 'timestamp').text((new Date(v.time * 1000)).toLocaleTimeString())
-                ).append(
+                ).append($('<br />').addClass('hide-desktop'))
+                .append(
                     content = $('<div />').addClass('content').append(rendered)
                 ).click(function() {
                     if (!expandable) return;

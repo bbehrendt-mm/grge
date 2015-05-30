@@ -39,7 +39,7 @@ class Model_Items_Flashlight extends Model_Items_Abstract_Item implements Interf
 	}
 
     public function icon() {
-        return "/application/assets/icons/items/flashlight_" . ($this->fillrate > 0 ? 'on' : 'off') . ".gif";
+        return "items/flashlight_" . ($this->fillrate > 0 ? 'on' : 'off');
     }
 
     public function active() {

@@ -1,21 +1,60 @@
 core.popup = {
     spawn: function(dx,dy) {
+
+        var exp = function(w) {
+            if (typeof w == 'undefined')
+                w = 'auto';
+            if (typeof w !== 'object')
+                w = {desktop: w, lg: w, md: w, sm: w};
+
+            w.desktop = w.desktop || w.lg || w.md || w.sm;
+            w.lg = w.lg || w.desktop || w.md || w.sm;
+            w.md = w.md || w.lg || w.sm || w.desktop;
+            w.sm = w.sm || w.md || w.lg || w.desktop;
+            return w;
+        };
+
+        var gt = function(w, ref) {
+            var decoded;
+            if (typeof w !== 'object') decoded = w;
+            else if (!game.mobile) decoded = w.desktop;
+            else decoded = w[game.mobile];
+
+            if (typeof decoded == "string") {
+
+                if (decoded == 'auto') {}
+                else if (decoded[decoded.length-1] == '%')
+                    decoded = ref * (parseFloat(decoded.substr(0,decoded.length-1)/100));
+                else decoded = parseFloat(decoded);
+
+            }
+
+            return decoded;
+        };
+
+        dx = exp(dx);
+        dy = exp(dy);
+
         var wrapper = $('<div />').addClass('popup-wrapper').appendTo('body');
 
-        var popup = $('<div />').addClass('popup').css({
-            height: dy,
-            width: dx
-        }).on('reposition', function() {
-            $(this).css({
-                top: ((dy + 60) > window.innerHeight) ? 0 : 60,
-                left: $(window).width()/2 - dx/2
-            });
-        }).trigger('reposition').appendTo(wrapper);
+        var popup = $('<div />').addClass('popup')
+            .on('reposition', function() {
+
+                var ldx = gt(dx, $(window).width());
+                var ldy = gt(dy, window.innerHeight);
+
+                $(this).css({
+                    top: ldy == 'auto' ? 30 : (((ldy + 60) > window.innerHeight) ? 0 : 60),
+                    left: ldx == 'auto' ? 0 : Math.max(0,$(window).width()/2 - ldx/2),
+                    height: ldy,
+                    width: ldx
+                });
+            }).trigger('reposition').appendTo(wrapper);
 
         var z = game.render.html.modal.blend(function() {
             popup.addClass('disabled').css({
-                '-webkit-filter': 'blur(5px)',
-                'filter': 'blur(5px)'
+                '-webkit-filter': game.mobile ? '' : 'blur(5px)',
+                'filter': game.mobile ? '' : 'blur(5px)'
             }).animate({
                 opacity: 0,
                 transform: 'scale(1.5)'
@@ -32,8 +71,8 @@ core.popup = {
             opacity: 0,
             transform: 'scale(0.5)',
             'transition': 'filter 0.4s ease, -webkit-filter 0.4s ease',
-            '-webkit-filter': 'blur(5px)',
-            'filter': 'blur(5px)'
+            '-webkit-filter': game.mobile ? '' : 'blur(5px)',
+            'filter': game.mobile ? '' : 'blur(5px)'
         }).animate({
             opacity: 1,
             transform: 'scale(1)'
@@ -46,7 +85,7 @@ core.popup = {
     },
 
     genericFilterLoader: function(callback, typeFilterData) {
-        var popup = core.popup.spawn(500,300);
+        var popup = core.popup.spawn({desktop: 500, md: '100%'},{desktop: 300, md: '100%'});
 
         var frame = $('<div />').addClass('row').appendTo(
             $('<div />').css({
@@ -68,10 +107,10 @@ core.popup = {
             overflow: 'auto'
         }).appendTo(popup);
 
-        $('<div />').addClass('btn').text(<?=__j('Abbrechen');?>).appendTo($('<div />').addClass('cell rw-4').appendTo(bottom)).click(function() {
+        $('<div />').addClass('btn').text(<?=__j('Abbrechen');?>).appendTo($('<div />').addClass('cell rw-4 rw-sm-6').appendTo(bottom)).click(function() {
             popup.trigger('unpop');
         });
-        $('<div />').addClass('btn').text(<?=__j('Anwenden');?>).appendTo($('<div />').addClass('cell ro-4 rw-4').appendTo(bottom)).click(function() {
+        $('<div />').addClass('btn').text(<?=__j('Anwenden');?>).appendTo($('<div />').addClass('cell ro-4 rw-4 rw-sm-6 ro-sm-0').appendTo(bottom)).click(function() {
             callback(typeFilterData);
             popup.trigger('unpop');
         });
@@ -89,7 +128,7 @@ core.popup = {
             if (id == 'categories') return;
             var chk;
             typefilters.append(
-                $('<div />').addClass('cell rw-6').append(
+                $('<div />').addClass('cell rw-6 rw-sm-12').append(
                     $('<label />').text(obj.name).prepend(
                         chk = $('<input />').attr('type', 'checkbox').data('tid', id).prop('checked', obj.active).click(function() {
                             typeFilterData[id].active = $(this).is(':checked');
@@ -104,7 +143,7 @@ core.popup = {
         $.each(typeFilterData.categories, function(name, active) {
             var chk;
             classfilters.append(
-                $('<div />').addClass('cell rw-4').append(
+                $('<div />').addClass('cell rw-4 rw-sm-6').append(
                     $('<label />').text(name).prepend(
                         chk = $('<input />').attr('type', 'checkbox').data('cid', name).prop('checked', active).click(function() {
                             typeFilterData.categories[name] = $(this).is(':checked');
@@ -122,7 +161,7 @@ core.popup = {
     },
 
     genericBlueprintLoader: function(type, popup, data, frame, filters, close) {
-        if (!popup) popup = core.popup.spawn(700,450);
+        if (!popup) popup = core.popup.spawn({desktop: 700, lg: '100%'},{desktop: 450, lg: '100%'});
 
         if (!frame || !filters || !close) {
             popup.empty();
@@ -137,7 +176,7 @@ core.popup = {
                     overflow: 'auto'
                 }).appendTo(popup)
             ).data('type-filters', {
-                    'impossible': {active: true, name: <?=__j('Unmögliche Projekte')?>},
+                    'impossible': {active: false, name: <?=__j('Unmögliche Projekte')?>},
                     'locked': {active: true, name: <?=__j('Gesperrte Projekte')?>},
                     'possible': {active: true, name: <?=__j('Vorbereitete Projekte')?>},
                     'ready': {active: true, name: <?=__j('Mögliche Projekte')?>},
@@ -210,7 +249,7 @@ core.popup = {
                 if (cat_count > 1) $.each(v.categories, function(i,cat) {targets = targets.add(frame.find('div[data-group-cat="' + cat + '"]').find('.blueprint-group-target'));});
                 else targets = frame;
 
-                targets.append($('<div />').addClass('cell padded rw-4').append(core.snippets.blueprint(v, bdata.energy, bdata.zombies, bdata.blueprints, function() {
+                targets.append($('<div />').addClass('cell padded rw-4 rw-md-6').append(core.snippets.blueprint(v, bdata.energy, bdata.zombies, bdata.blueprints, function() {
                     var prev_scroll = $('.popup').find('>*:first-child').scrollTop();
                     popup.addClass('disabled');
                     core.command('location/' + type, {build: k}, true, function(new_data) {
@@ -231,7 +270,7 @@ core.popup = {
             $.each(categories, function(name, t) {
                 tf.categories[name] = typeof tf.categories[name] !== "undefined" ? tf.categories[name] : true;
             });
-            frame.data('type-filters', tf);
+            frame.data('type-filters', tf).trigger('filter');
         };
 
         if (!data) {
@@ -502,7 +541,7 @@ core.popup = {
                         if (route_zombies.length && !confirm(game.i18n(<?=__j('Auf dem Weg zu diesem Ort befinden sich Zombies (:locations). Du wirst gegen sie kämpfen müssen, wenn du dorthin möchtest. Weiter?')?>,{':locations': route_zombies.join(', ')}))) return;
 
                         if (core.last.players) {
-                            var esc_popup = core.popup.spawn(400);
+                            var esc_popup = core.popup.spawn({desktop: 400, sm: '100%'});
 
                             var title;
                             esc_popup.append($('<h2 />').addClass('center').text(v.name));
@@ -542,7 +581,7 @@ core.popup = {
                             } else title.text(<?=__j('Bist du sicher, dass du diesen Ort betreten möchtest? Er ist weit weg, und riecht auch bestimmt nicht sehr gut...')?>);
 
                             esc_popup.append($('<div />').addClass('row')
-                                .append($('<div />').addClass('cell rw-8 padded').append(
+                                .append($('<div />').addClass('cell rw-8 rw-sm-12 padded').append(
                                     $('<div />').addClass('btn').text(<?=__j('Los gehts!')?>).click(function() {
 
                                         var cfg = {to: k, follow: 1};
@@ -565,7 +604,7 @@ core.popup = {
                                             }
                                         });
                                     })))
-                                .append($('<div />').addClass('cell rw-4 padded').append(
+                                .append($('<div />').addClass('cell rw-4 rw-sm-12 padded').append(
                                     $('<div />').addClass('btn').text(<?=__j('Abbrechen')?>).click(function() {
                                         esc_popup.trigger('unpop');
                                     })))

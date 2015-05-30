@@ -1,0 +1,95 @@
+@import (once) "zombvival";
+
+@screen-large: lg;    @screen-large-threshold: 900px;
+@screen-medium: md;   @screen-medium-threshold: 600px;
+@screen-small: sm;    @screen-small-threshold: 480px;
+
+// Visual Controls
+@media (min-width: @screen-large-threshold) {
+  .hide-desktop {display: none !important;};
+}
+@media (max-width: (@screen-large-threshold - 1)) {
+  .hide-mobile {display: none !important;};
+}
+@media (max-width: (@screen-large-threshold - 1)) and (min-width: @screen-medium-threshold) {
+  .hide-@{screen-large} {display: none !important;};
+}
+@media (max-width: (@screen-medium-threshold - 1)) and (min-width: @screen-small-threshold) {
+  .hide-@{screen-medium} {display: none !important;};
+}
+@media (max-width: (@screen-small-threshold - 1)) {
+  .hide-@{screen-small} {display: none !important;};
+}
+
+
+@media (max-width: (@screen-large-threshold - 1)) {
+  .hide-mobile {display: none !important;};
+
+  body {background: #100C0B;}
+
+  #boot,#nojs {border: none; background: none; width: 100%; margin: auto}
+
+  #navbar {
+    height: 36px;
+    >.navsection {
+      &#lang-select > img {height: 22px; width: 32px; margin-top: 5px; margin-right: 6px;}
+      &#nav-toggle {font-size: 28px; margin-top: 3px;}
+      &#main-menu[data-toggle="0"] {display: none}
+      &#main-menu[data-toggle="1"] {
+        position: absolute; top: 36px; left: 0; width: 100%; background: @zv-color-main; margin: 0; border-bottom: 2px solid @zv-color-main-dark;
+        >span {display: block; font-size: 18px; width: 100%; margin: 9px 0; padding: 4px 0;}
+      }
+    }
+  }
+
+  #wrapper {
+    width: 100%;
+    >:first-child::after {display:none;}
+  }
+
+  #persistent {padding: 0; width: 100%; left: 0;}
+
+  #disclaimer {width: 100%;}
+
+  #content {
+    padding: 0;
+    > h1:first-child {
+      position: absolute; top: 55px; background: none;
+      &::after {display: none;}
+    }
+    > .row {margin: 3px 10px;}
+  }
+
+  div.log_box>.message>.content {width: 100%}
+
+  div.popup-wrapper > div.popup.disabled {
+    filter: sepia(100%);
+    -webkit-filter: sepia(100%);
+  }
+}
+
+@media (max-width: (@screen-medium-threshold - 1)) {
+  #notifications {
+    width: 100%; left: 0;
+    &>div>div:first-child {display: none}
+    &>div>div:last-child {width: 100%; min-height: 0; padding: 4px;}
+  }
+}
+
+
+.postfix(@threshold, @postfix) {
+  @media (max-width: (@threshold - 1)) {
+    .row {
+      >.cell{.grid(12,@postfix)}>.cell-small{.grid(24,@postfix)}
+      >.cell, >.cell-small {
+        &.padded-@{postfix} {padding: 5px;}
+        &.smallpad-@{postfix} {padding: 2px;}
+        &.nopad-@{postfix} {padding: 0}
+      }
+    }
+  }
+}
+
+.postfix(@screen-large-threshold, @screen-large);
+.postfix(@screen-medium-threshold, @screen-medium);
+.postfix(@screen-small-threshold, @screen-small);

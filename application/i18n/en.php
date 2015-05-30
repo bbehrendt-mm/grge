@@ -3671,25 +3671,21 @@ return array (
   'Sie findet täglich zwischen :utcbegin und :utcend Uhr deutscher Zeit (:localbegin und :localend Uhr in deiner Zeitzone) statt.' =>
 	'It happens daily between :utcbegin and :utcend (German time) or :localbegin and :localend in your time zone.',
   'Zombiekundschafter' =>
-	'Zombiekundschafter',
+	'Zombie Scout',
   'Die Präsenz von Zombies hinterlässt Spuren: Blutflecke, abgerissene Körperteile, CSU Wahlplakate.... Nur wenige Menschen verstehen jedoch so gut wie du, aus diesen Spuren Rückschlüsse auf die Zahl der Zombies zu ziehen! (Du kannst auch Geschlecht, Alter, Körpergröße und Lieblingsschokolade der Zombies bestimmen, aber das bringt leider überhaupt keinen Nutzen...). Dein Zombie-Radar zeigt somit wesentlich genauere Zombie-Abschätzungen an.' =>
-	'Die Präsenz von Zombies hinterlässt Spuren: Blutflecke, abgerissene Körperteile, CSU Wahlplakate.... Nur wenige Menschen verstehen jedoch so gut wie du, aus diesen Spuren Rückschlüsse auf die Zahl der Zombies zu ziehen! (Du kannst auch Geschlecht, Alter, Körpergröße und Lieblingsschokolade der Zombies bestimmen, aber das bringt leider überhaupt keinen Nutzen...). Dein Zombie-Radar zeigt somit wesentlich genauere Zombie-Abschätzungen an.',
+	'One can easily find traces of zombies: Spilled blood, torn body parts, TVs switched to FOX News... but only people like you truly understand how to interpret those! Not only can you tell how many zombies are in the area, but you can also determine their sex, age, body height and favourite type of chocolate (although most of these information are pretty useless). You zombie radar will show more exact estimations about zombie group sizes.',
   'Spritztour-Paket' =>
-	'Spritztour-Paket',
-  'Es gibt keine bessere Art, von A nach B zu kommen, als mit dem Fahrra - wenn man mal von all den Arten absieht, die besser sind als ein Fahrrad. Apropos Fahrrad: Wie wärs, wenn du hier etwas Geld für ein Item ausgeben würdest, dass du ohnehin im Spiel finden kannst?' =>
-	'Es gibt keine bessere Art, von A nach B zu kommen, als mit dem Fahrra - wenn man mal von all den Arten absieht, die besser sind als ein Fahrrad. Apropos Fahrrad: Wie wärs, wenn du hier etwas Geld für ein Item ausgeben würdest, dass du ohnehin im Spiel finden kannst?',
+	'Joyride Package',
   'Investitions-Paket' =>
-	'Investitions-Paket',
+	'Investment Package',
   'Willst du ein bisschen Extrakohle machen? Dann kaufe dieses Investitions-Paket (vorzugsweise von deinem Freibetrag) und erhalte direkt beim Spielstart BrainCoins!' =>
-	'Willst du ein bisschen Extrakohle machen? Dann kaufe dieses Investitions-Paket (vorzugsweise von deinem Freibetrag) und erhalte direkt beim Spielstart BrainCoins!',
+	'Need some extra ca$h? Then buy this package (preferably using your allowance) and receive some fresh new BrainCoins right at the start of your game!',
   'Krankenhauskantine' =>
-	'Krankenhauskantine',
-  'Diese Krankenhauskantine war früher mal ein echter Geheimtipp in der Stadt, denn hier konnte man vergleichsweise billig eine leckere Mahlzeit bekommen. Der günstige Preis ist auch kein Wunder - man kann Nahrungsmittel ziemlich billig produzieren, wenn sich im selben Gebäude eine leichenhalle befindet...' =>
-	'Diese Krankenhauskantine war früher mal ein echter Geheimtipp in der Stadt, denn hier konnte man vergleichsweise billig eine leckere Mahlzeit bekommen. Der günstige Preis ist auch kein Wunder - man kann Nahrungsmittel ziemlich billig produzieren, wenn sich im selben Gebäude eine leichenhalle befindet...',
+	'Hospital Canteen',
   'Verkaufsautomat (Cholera Cola)' =>
-	'Verkaufsautomat (Cholera Cola)',
+	'Vending Machine (Ebola Cola)',
   'Verkaufsautomat (OmNomNutria)' =>
-	'Verkaufsautomat (OmNomNutria)',
+	'Vending Machine (Nutrimat 5000)',
   'Hungerer' =>
 	'Starver',
   'Knöcherne Klaue' =>
@@ -3697,47 +3693,139 @@ return array (
   'Level +1' =>
 	'Level +1',
   'Dieses Paket erhöht deinen Berufslevel ausschließlich für das aktuelle Spiel um 1. Dir stehen also alle Boni des nächsten Berufslevels zur Verfügung.' =>
-	'Dieses Paket erhöht deinen Berufslevel ausschließlich für das aktuelle Spiel um 1. Dir stehen also alle Boni des nächsten Berufslevels zur Verfügung.',
+	'This package increases your profession level by 1 for the next game.',
   'Max. Level' =>
 	'Max. Level',
   'Dieses Paket erhöht deinen Berufslevel ausschließlich für das aktuelle Spiel auf den Maximalwert. Selbst hochleveln? Pff, das ist für arme Leute!' =>
-	'Dieses Paket erhöht deinen Berufslevel ausschließlich für das aktuelle Spiel auf den Maximalwert. Selbst hochleveln? Pff, das ist für arme Leute!',
+	'This package raises you profession level to the maximum for the next game. Level up yourself? Ain\'t nobody got time for dat!',
   'Item-Pakete' =>
-	'Item-Pakete',
+	'Item Packages',
   'Fähigkeiten' =>
-	'Fähigkeiten',
+	'Abillities',
   'Spielmodifikatoren' =>
-	'Spielmodifikatoren',
+	'Game Modifications',
   'Faulende Patienten' =>
-	'Faulende Patienten',
+	'Rotten Patients',
   'Bücherregal' =>
-	'Bücherregal',
+	'Bookcase',
   'Kann mit Büchern gefüllt werden, um den Dekorationswert des Verstecks zu verbessern.' =>
-	'Kann mit Büchern gefüllt werden, um den Dekorationswert des Verstecks zu verbessern.',
+	'Can be filled with books to raise your decoration value.',
   'Dekoration' =>
-	'Dekoration',
+	'Decoration',
   'Buch einlagern' =>
-	'Buch einlagern',
+	'Store book',
   'Legt ein Buch ins Bücherregal.' =>
-	'Legt ein Buch ins Bücherregal.',
+	'Puts one of your books into the bookcase.',
   'Vorhänge' =>
-	'Vorhänge',
+	'Nice Curtains',
   'Stattet dein Versteck mit hübschen Vorhängen aus und verbessert so den Dekorationswert.' =>
-	'Stattet dein Versteck mit hübschen Vorhängen aus und verbessert so den Dekorationswert.',
+	'Adds some nice curtains to your hideout to push its decoration value.',
   'Flaschensammlung' =>
-	'Flaschensammlung',
+	'Bottle Collection',
   'Nichts schmückt eine Wohnung mehr als ein riesiger Haufen leerer Bierflaschen.' =>
-	'Nichts schmückt eine Wohnung mehr als ein riesiger Haufen leerer Bierflaschen.',
+	'Nothing classes up your hideout like a bunch of empty beer bottles!',
   'Kapitalistische Girlande' =>
-	'Kapitalistische Girlande',
+	'Capitalist Garland',
   'Stelle deinen Reichtum mit dieser dekorativen Girlande zur Schau.' =>
-	'Stelle deinen Reichtum mit dieser dekorativen Girlande zur Schau.',
+	'Show your wealth with this decorative garland.',
   'Makabere Girlande' =>
-	'Makabere Girlande',
+	'Ghoulish Garland',
   'Es gibt nichts, aus dem man besser eine dekorative Girlande bauen kann als abgenagte Knochen! ... moment ...' =>
-	'Es gibt nichts, aus dem man besser eine dekorative Girlande bauen kann als abgenagte Knochen! ... moment ...',
+	'Nothing makes a better garland than a bunch of bones with rotting meat! .... wait, what???',
   'Elektrisierende Girlande' =>
-	'Elektrisierende Girlande',
+	'Galvanic Garland',
   'Diese hübsch glitzernde Girlande wertet dein Versteck dekorativ auf. Pass nur auf, dass dir keine Batteriesäure auf den Kopf tropft...' =>
-	'Diese hübsch glitzernde Girlande wertet dein Versteck dekorativ auf. Pass nur auf, dass dir keine Batteriesäure auf den Kopf tropft...',
+	'It sparkles! What more do you need? It may also drop battery acid on your head....',
+  'Bauplatz für epische Projekte' =>
+	'Building slot for Epic Projects',
+  'Kleines Gewächshaus' =>
+	'Small Greenhouse',
+  'Wie Millionen von Pot-Farmern vor dir kannst auch du mit diesem patentierten Gewächshaus-Bausatz deinen grünen Daumen entdecken und verschiedene nützliche Gewächse anpflanzen. Aber Achtung: Ein solcher Garten benötigt viel Aufmerksamkeit und Zeit, bevor du etwas ernten kannst!' =>
+	'Discover your inner gardener and raise some beatuiful and useful plants - like millions of pot farmers before you. But beware: Every garden needs a lot of time and attention before you can finally harvest the fruits of your work!',
+  'Epische Projekte' =>
+	'Epic Projects',
+  'Grundwasserversorgung' =>
+	'Groundwater Pump',
+  'Warum gammliges Kondenswasser von alten Bahnhofstoiletten ablecken, wenn du dir frisches Wasser aus dem Boden besorgen kannst? Zwar wird der Bau dieses Projektes dich sehr viel Energie kosten, dafür verfügst du danach über eine (zumindest halbwegs) stetige Wasserversorgung.' =>
+	'Are you (literally) sick from licking dirty water from train station toilets? Then you may want to invest some (or a lot of) energy into this groundwater pump, which will provide a more or less steady supply of water.',
+  'Raben-Bootcamp' =>
+	'Raven Bootcamp',
+  'Raben sind intelligente (und boshafte) Tiere - aber mit ein bisschen Geschick könntest du sie vielleicht dazu trainieren, für dich nach Gegenständen zu suchen. Du müsstest sie dafür natürlich mit etwas Futter belohnen...' =>
+	'Ravens are intelligent and vicious - but also highly trainable. So why not train them to search for items in exchange for a little food?',
+  'Laserzaun' =>
+	'Laser Fence',
+  'Zombies sind nicht gerade für ihre Geschicklichkeit bekannt - daher kannst du sie mit ein paar Laserbarrieren bestimmt recht zuverlässig von deinem Versteck fernhalten. Vorrausgesetzt natürlich, dir gehen nicht die Batterien aus...' =>
+	'Zombies aren\'t really known for their dexterity - so a few laser barriers should keep them out pretty relieably. Of course, you\'d better not run out of batteries...',
+  'Mindestens eine Vorraussetzung für dieses Projekt kann nicht gebaut werden.' =>
+	'At least one prerequisite for this project can not be built.',
+  'Du hast eine neue Batterie in deine Taschenlampe eingelegt. Sie leuchtet nun wieder mit voller Kraft.' =>
+	'You\'ve put a new battery in your flashlight. It\'s full power has been restored.',
+  'AP' =>
+	'AP',
+  'Das wars!' =>
+	'That\'s it!',
+  'Du hast momentan ::b::eine::/b:: aktive Beschwerde!' =>
+	'You have ::b::one::/b:: active complaint!',
+  'Browser' =>
+	'Browser',
+  'Internet Explorer 6' =>
+	'Internet Explorer 6',
+  'Höchster Schulabschluss' =>
+	'Graduation',
+  'Kindergarten' =>
+	'Kindergarten',
+  'Du kannst dich auch auf einem PC einloggen und deine Login-Informationen von dort bequem auf dein mobiles Gerät übertragen lassen!' =>
+	'You can also use a PC to log in and then transfer your login information to your mobile device.',
+  'QR-Code' =>
+	'QR Code',
+  'PIN' =>
+	'PIN',
+  'OK' =>
+	'OK',
+  'Bitte trage den PIN ein, den du auf dem PC erhalten hast.' =>
+	'Please enter the PIN you\'ve got from your other device.',
+  'Profileinstellungen' =>
+	'Profile Settings',
+  'Hier kannst du einige Einstellungen für dein ZombVival-Profil vornehmen.' =>
+	'Here, you can adjust some settings for your ZombVival profile.',
+  'Gespeicherte Logins zurücksetzen' =>
+	'Reset stored logins',
+  'Hierdurch werden Login-Daten zu deinem Profil auf diesem sowie allen anderen PCs, auf denen sie gespeichert sind, unbrauchbar gemacht. Um dich nach Anwenden dieser Option wieder einzuloggen, musst du deinen DV oder D2N Schlüssel verwenden.' =>
+	'This will invalidate any login information for your profile that is locally stored on this or any other device. To log in after activating this option, please use your D2N or DV account.',
+  'Smartphone oder Tablet verknüpfen' =>
+	'Connect mobile device',
+  'Einstellungen' =>
+	'Settings',
+  'Alle gespeicherten Login-Informationen wurden entwertet. Du kannst dich weiterhin über DV/D2N in dein ZV-Profil einloggen.' =>
+	'All locally stored login information for your profile has been invalidated. Please use D2N or DV for your next login.',
+  'Du kannst ZombVival auch auf mobilen Geräten wie Smartphones und Tablets mit einer angepassten Benutzeroberfläche spielen! Nach dem Login kannst du dir unter "Seelen -> Profileeinstellungen" einen QR-Code generieren lassen, der deine Login-Daten automatisch auf dein mobiles Gerät kopiert.' =>
+	'Did you know that ZombVival features a user interface dedicated to mobile devices? After logging in, you can access a QR code via "Souls -> Profile Settings" that will copy all necessary login information directly to your mobile device.',
+  'Ungültige Login-Daten' =>
+	'Login Data invalid',
+  'Die gespeicherten Login-Daten dieses Profils sind ungültig, daher wird das Icon aus dem Schnell-Login entfernt. Bitte versuche, dich über DV oder D2N einzuloggen.' =>
+	'The login information stored for that profile is invalid. Please try logging in using D2N or DV. The quick login icon for this profile has been removed.',
+  'Scanne den folgenden QR-Code oder gib die darunter stehende URL auf deinem mobilen Gerät ein. Deine Login-Daten werden dadurch auf dem Gerät gespeichert und du kannst dich zukünftig ohne die Hilfe deines PCs einloggen.' =>
+	'Scan this QR code or manually enter the URL below into your mobile device. This will store your login information on that device, so you can easily access ZombVival without having to bother with login keys.',
+  'Login via QR' =>
+	'Login using QR',
+  'Abrufen des QR-Codes ist fehlgeschlagen!' =>
+	'Unable to load QR code!',
+  'URL' =>
+	'URL',
+  'Deine Login-Daten wurden erfolgreich auf diesem Gerät hinterlegt. In Zukunft kannst du dich ohne QR-Codes, Pins oder Keys auf diesem gerät einloggen.' =>
+	'Your login information was successfully stored on this device. You can now use the quick login feature from this device.',
+  'Der eingegebene PIN ist ungültig. Möglicherweise hast du den PIN bereits verwendet um ein anderes Gerät zu koppeln, oder die Gültigkeitsdauer des PINs ist abgelaufen. Bitte überprüfe deine Eingabe und erstelle ggf. einen neuen Code.' =>
+	'The PIN you have entered is invalid. Maybe you\'ve already used it for another device, or its validity period has ended. Please check the code for typos or simply create a new one on your other device.',
+  'Der QR-Code kann nur einmalig verwendet werden und ist für 5 Minuten gültig. Möchtest du mehrere Geräte verbinden, schließe dieses Popup und öffne es erneut, um einen neuen Code zu generieren.' =>
+	'This QR code can only be used once and is valid for 5 minutes. If you want to connect multiple devices, simply close this popup after pairing each device and open it again to generate a new code.',
+  'Bitte gib deinen PIN ein.' =>
+	'Bitte gib deinen PIN ein.',
+  'Es gibt keine bessere Art, von A nach B zu kommen, als mit dem Fahrrad - wenn man mal von all den Arten absieht, die besser sind als ein Fahrrad. Apropos Fahrrad: Wie wärs, wenn du hier etwas Geld für ein Item ausgeben würdest, dass du ohnehin im Spiel finden kannst?' =>
+	'Es gibt keine bessere Art, von A nach B zu kommen, als mit dem Fahrrad - wenn man mal von all den Arten absieht, die besser sind als ein Fahrrad. Apropos Fahrrad: Wie wärs, wenn du hier etwas Geld für ein Item ausgeben würdest, dass du ohnehin im Spiel finden kannst?',
+  'Aufnehmen / Ablegen' =>
+	'Aufnehmen / Ablegen',
+  'Du hast die Arbeiten an einem epischen Projekt in deinem Versteck begonnen. Viel Erfolg!' =>
+	'Du hast die Arbeiten an einem epischen Projekt in deinem Versteck begonnen. Viel Erfolg!',
+  'Bauen' =>
+	'Bauen',
 );

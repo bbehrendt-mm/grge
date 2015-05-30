@@ -171,7 +171,7 @@ div.popup-wrapper > div.popup {
 /*noinspection ALL*/
 div.popup-wrapper > div.popup.disabled {
     filter: blur(2px) sepia(100%);
-    -webkit-filter: filter: blur(2px) sepia(100%);
+    -webkit-filter: blur(2px) sepia(100%);
 }
 
 div.details .cell > i:first-child {

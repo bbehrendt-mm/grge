@@ -3676,16 +3676,12 @@ return array (
 	'Die Präsenz von Zombies hinterlässt Spuren: Blutflecke, abgerissene Körperteile, CSU Wahlplakate.... Nur wenige Menschen verstehen jedoch so gut wie du, aus diesen Spuren Rückschlüsse auf die Zahl der Zombies zu ziehen! (Du kannst auch Geschlecht, Alter, Körpergröße und Lieblingsschokolade der Zombies bestimmen, aber das bringt leider überhaupt keinen Nutzen...). Dein Zombie-Radar zeigt somit wesentlich genauere Zombie-Abschätzungen an.',
   'Spritztour-Paket' =>
 	'Spritztour-Paket',
-  'Es gibt keine bessere Art, von A nach B zu kommen, als mit dem Fahrra - wenn man mal von all den Arten absieht, die besser sind als ein Fahrrad. Apropos Fahrrad: Wie wärs, wenn du hier etwas Geld für ein Item ausgeben würdest, dass du ohnehin im Spiel finden kannst?' =>
-	'Es gibt keine bessere Art, von A nach B zu kommen, als mit dem Fahrra - wenn man mal von all den Arten absieht, die besser sind als ein Fahrrad. Apropos Fahrrad: Wie wärs, wenn du hier etwas Geld für ein Item ausgeben würdest, dass du ohnehin im Spiel finden kannst?',
   'Investitions-Paket' =>
 	'Investitions-Paket',
   'Willst du ein bisschen Extrakohle machen? Dann kaufe dieses Investitions-Paket (vorzugsweise von deinem Freibetrag) und erhalte direkt beim Spielstart BrainCoins!' =>
 	'Willst du ein bisschen Extrakohle machen? Dann kaufe dieses Investitions-Paket (vorzugsweise von deinem Freibetrag) und erhalte direkt beim Spielstart BrainCoins!',
   'Krankenhauskantine' =>
 	'Krankenhauskantine',
-  'Diese Krankenhauskantine war früher mal ein echter Geheimtipp in der Stadt, denn hier konnte man vergleichsweise billig eine leckere Mahlzeit bekommen. Der günstige Preis ist auch kein Wunder - man kann Nahrungsmittel ziemlich billig produzieren, wenn sich im selben Gebäude eine leichenhalle befindet...' =>
-	'Diese Krankenhauskantine war früher mal ein echter Geheimtipp in der Stadt, denn hier konnte man vergleichsweise billig eine leckere Mahlzeit bekommen. Der günstige Preis ist auch kein Wunder - man kann Nahrungsmittel ziemlich billig produzieren, wenn sich im selben Gebäude eine leichenhalle befindet...',
   'Verkaufsautomat (Cholera Cola)' =>
 	'Verkaufsautomat (Cholera Cola)',
   'Verkaufsautomat (OmNomNutria)' =>
@@ -3740,4 +3736,96 @@ return array (
 	'Elektrisierende Girlande',
   'Diese hübsch glitzernde Girlande wertet dein Versteck dekorativ auf. Pass nur auf, dass dir keine Batteriesäure auf den Kopf tropft...' =>
 	'Diese hübsch glitzernde Girlande wertet dein Versteck dekorativ auf. Pass nur auf, dass dir keine Batteriesäure auf den Kopf tropft...',
+  'Bauplatz für epische Projekte' =>
+	'Bauplatz für epische Projekte',
+  'Kleines Gewächshaus' =>
+	'Kleines Gewächshaus',
+  'Wie Millionen von Pot-Farmern vor dir kannst auch du mit diesem patentierten Gewächshaus-Bausatz deinen grünen Daumen entdecken und verschiedene nützliche Gewächse anpflanzen. Aber Achtung: Ein solcher Garten benötigt viel Aufmerksamkeit und Zeit, bevor du etwas ernten kannst!' =>
+	'Wie Millionen von Pot-Farmern vor dir kannst auch du mit diesem patentierten Gewächshaus-Bausatz deinen grünen Daumen entdecken und verschiedene nützliche Gewächse anpflanzen. Aber Achtung: Ein solcher Garten benötigt viel Aufmerksamkeit und Zeit, bevor du etwas ernten kannst!',
+  'Epische Projekte' =>
+	'Epische Projekte',
+  'Grundwasserversorgung' =>
+	'Grundwasserversorgung',
+  'Warum gammliges Kondenswasser von alten Bahnhofstoiletten ablecken, wenn du dir frisches Wasser aus dem Boden besorgen kannst? Zwar wird der Bau dieses Projektes dich sehr viel Energie kosten, dafür verfügst du danach über eine (zumindest halbwegs) stetige Wasserversorgung.' =>
+	'Warum gammliges Kondenswasser von alten Bahnhofstoiletten ablecken, wenn du dir frisches Wasser aus dem Boden besorgen kannst? Zwar wird der Bau dieses Projektes dich sehr viel Energie kosten, dafür verfügst du danach über eine (zumindest halbwegs) stetige Wasserversorgung.',
+  'Raben-Bootcamp' =>
+	'Raben-Bootcamp',
+  'Raben sind intelligente (und boshafte) Tiere - aber mit ein bisschen Geschick könntest du sie vielleicht dazu trainieren, für dich nach Gegenständen zu suchen. Du müsstest sie dafür natürlich mit etwas Futter belohnen...' =>
+	'Raben sind intelligente (und boshafte) Tiere - aber mit ein bisschen Geschick könntest du sie vielleicht dazu trainieren, für dich nach Gegenständen zu suchen. Du müsstest sie dafür natürlich mit etwas Futter belohnen...',
+  'Laserzaun' =>
+	'Laserzaun',
+  'Zombies sind nicht gerade für ihre Geschicklichkeit bekannt - daher kannst du sie mit ein paar Laserbarrieren bestimmt recht zuverlässig von deinem Versteck fernhalten. Vorrausgesetzt natürlich, dir gehen nicht die Batterien aus...' =>
+	'Zombies sind nicht gerade für ihre Geschicklichkeit bekannt - daher kannst du sie mit ein paar Laserbarrieren bestimmt recht zuverlässig von deinem Versteck fernhalten. Vorrausgesetzt natürlich, dir gehen nicht die Batterien aus...',
+  'Mindestens eine Vorraussetzung für dieses Projekt kann nicht gebaut werden.' =>
+	'Mindestens eine Vorraussetzung für dieses Projekt kann nicht gebaut werden.',
+  'Du hast eine neue Batterie in deine Taschenlampe eingelegt. Sie leuchtet nun wieder mit voller Kraft.' =>
+	'Du hast eine neue Batterie in deine Taschenlampe eingelegt. Sie leuchtet nun wieder mit voller Kraft.',
+  'AP' =>
+	'AP',
+  'Das wars!' =>
+	'Das wars!',
+  'Du hast momentan ::b::eine::/b:: aktive Beschwerde!' =>
+	'Du hast momentan ::b::eine::/b:: aktive Beschwerde!',
+  'Browser' =>
+	'Browser',
+  'Internet Explorer 6' =>
+	'Internet Explorer 6',
+  'Höchster Schulabschluss' =>
+	'Höchster Schulabschluss',
+  'Kindergarten' =>
+	'Kindergarten',
+  'Du kannst dich auch auf einem PC einloggen und deine Login-Informationen von dort bequem auf dein mobiles Gerät übertragen lassen!' =>
+	'Du kannst dich auch auf einem PC einloggen und deine Login-Informationen von dort bequem auf dein mobiles Gerät übertragen lassen!',
+  'QR-Code' =>
+	'QR-Code',
+  'PIN' =>
+	'PIN',
+  'OK' =>
+	'OK',
+  'Bitte trage den PIN ein, den du auf dem PC erhalten hast.' =>
+	'Bitte trage den PIN ein, den du auf dem PC erhalten hast.',
+  'Profileinstellungen' =>
+	'Profileinstellungen',
+  'Hier kannst du einige Einstellungen für dein ZombVival-Profil vornehmen.' =>
+	'Hier kannst du einige Einstellungen für dein ZombVival-Profil vornehmen.',
+  'Gespeicherte Logins zurücksetzen' =>
+	'Gespeicherte Logins zurücksetzen',
+  'Hierdurch werden Login-Daten zu deinem Profil auf diesem sowie allen anderen PCs, auf denen sie gespeichert sind, unbrauchbar gemacht. Um dich nach Anwenden dieser Option wieder einzuloggen, musst du deinen DV oder D2N Schlüssel verwenden.' =>
+	'Hierdurch werden Login-Daten zu deinem Profil auf diesem sowie allen anderen PCs, auf denen sie gespeichert sind, unbrauchbar gemacht. Um dich nach Anwenden dieser Option wieder einzuloggen, musst du deinen DV oder D2N Schlüssel verwenden.',
+  'Smartphone oder Tablet verknüpfen' =>
+	'Smartphone oder Tablet verknüpfen',
+  'Einstellungen' =>
+	'Einstellungen',
+  'Alle gespeicherten Login-Informationen wurden entwertet. Du kannst dich weiterhin über DV/D2N in dein ZV-Profil einloggen.' =>
+	'Alle gespeicherten Login-Informationen wurden entwertet. Du kannst dich weiterhin über DV/D2N in dein ZV-Profil einloggen.',
+  'Du kannst ZombVival auch auf mobilen Geräten wie Smartphones und Tablets mit einer angepassten Benutzeroberfläche spielen! Nach dem Login kannst du dir unter "Seelen -> Profileeinstellungen" einen QR-Code generieren lassen, der deine Login-Daten automatisch auf dein mobiles Gerät kopiert.' =>
+	'Du kannst ZombVival auch auf mobilen Geräten wie Smartphones und Tablets mit einer angepassten Benutzeroberfläche spielen! Nach dem Login kannst du dir unter "Seelen -> Profileeinstellungen" einen QR-Code generieren lassen, der deine Login-Daten automatisch auf dein mobiles Gerät kopiert.',
+  'Ungültige Login-Daten' =>
+	'Ungültige Login-Daten',
+  'Die gespeicherten Login-Daten dieses Profils sind ungültig, daher wird das Icon aus dem Schnell-Login entfernt. Bitte versuche, dich über DV oder D2N einzuloggen.' =>
+	'Die gespeicherten Login-Daten dieses Profils sind ungültig, daher wird das Icon aus dem Schnell-Login entfernt. Bitte versuche, dich über DV oder D2N einzuloggen.',
+  'Scanne den folgenden QR-Code oder gib die darunter stehende URL auf deinem mobilen Gerät ein. Deine Login-Daten werden dadurch auf dem Gerät gespeichert und du kannst dich zukünftig ohne die Hilfe deines PCs einloggen.' =>
+	'Scanne den folgenden QR-Code oder gib die darunter stehende URL auf deinem mobilen Gerät ein. Deine Login-Daten werden dadurch auf dem Gerät gespeichert und du kannst dich zukünftig ohne die Hilfe deines PCs einloggen.',
+  'Login via QR' =>
+	'Login via QR',
+  'Abrufen des QR-Codes ist fehlgeschlagen!' =>
+	'Abrufen des QR-Codes ist fehlgeschlagen!',
+  'URL' =>
+	'URL',
+  'Deine Login-Daten wurden erfolgreich auf diesem Gerät hinterlegt. In Zukunft kannst du dich ohne QR-Codes, Pins oder Keys auf diesem gerät einloggen.' =>
+	'Deine Login-Daten wurden erfolgreich auf diesem Gerät hinterlegt. In Zukunft kannst du dich ohne QR-Codes, Pins oder Keys auf diesem gerät einloggen.',
+  'Der eingegebene PIN ist ungültig. Möglicherweise hast du den PIN bereits verwendet um ein anderes Gerät zu koppeln, oder die Gültigkeitsdauer des PINs ist abgelaufen. Bitte überprüfe deine Eingabe und erstelle ggf. einen neuen Code.' =>
+	'Der eingegebene PIN ist ungültig. Möglicherweise hast du den PIN bereits verwendet um ein anderes Gerät zu koppeln, oder die Gültigkeitsdauer des PINs ist abgelaufen. Bitte überprüfe deine Eingabe und erstelle ggf. einen neuen Code.',
+  'Der QR-Code kann nur einmalig verwendet werden und ist für 5 Minuten gültig. Möchtest du mehrere Geräte verbinden, schließe dieses Popup und öffne es erneut, um einen neuen Code zu generieren.' =>
+	'Der QR-Code kann nur einmalig verwendet werden und ist für 5 Minuten gültig. Möchtest du mehrere Geräte verbinden, schließe dieses Popup und öffne es erneut, um einen neuen Code zu generieren.',
+  'Bitte gib deinen PIN ein.' =>
+	'Bitte gib deinen PIN ein.',
+  'Es gibt keine bessere Art, von A nach B zu kommen, als mit dem Fahrrad - wenn man mal von all den Arten absieht, die besser sind als ein Fahrrad. Apropos Fahrrad: Wie wärs, wenn du hier etwas Geld für ein Item ausgeben würdest, dass du ohnehin im Spiel finden kannst?' =>
+	'Es gibt keine bessere Art, von A nach B zu kommen, als mit dem Fahrrad - wenn man mal von all den Arten absieht, die besser sind als ein Fahrrad. Apropos Fahrrad: Wie wärs, wenn du hier etwas Geld für ein Item ausgeben würdest, dass du ohnehin im Spiel finden kannst?',
+  'Aufnehmen / Ablegen' =>
+	'Aufnehmen / Ablegen',
+  'Du hast die Arbeiten an einem epischen Projekt in deinem Versteck begonnen. Viel Erfolg!' =>
+	'Du hast die Arbeiten an einem epischen Projekt in deinem Versteck begonnen. Viel Erfolg!',
+  'Bauen' =>
+	'Bauen',
 );

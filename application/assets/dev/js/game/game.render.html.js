@@ -44,38 +44,34 @@ game.render.html = {
         if (title)
             notification.find('> div:last-child').prepend('<b class="headline">' + title + '</b>');
 
-        notification.appendTo(target).css({
-            width: 96,
-            'margin-left': 252,
-            opacity: 0,
-            transform: 'scale(0.5)'
-        }).animate({
-            opacity: 1,
-            transform: 'scale(1)'
-        }, 200, 'swing', function() {
-            notification.animate({
-                width: 600,
-                'margin-left': 0
-            }, 300, 'swing');
-        }).click(function() {
-            notification.animate({
-                width: 96,
-                'margin-left': 252
-            }, 200, 'swing', function() {
+        notification.appendTo(target).click(function() {
+
+            if (!game.mobile)
+                notification.animate({
+                    width: 96,
+                    'margin-left': 252
+                }, 200, 'swing', function() {
+                    notification.animate({
+                        opacity: 0,
+                        transform: 'scale(0.5)'
+                    }, 100, 'swing', function() {
+                        notification.css({
+                            transform: 'scale(1)',
+                            'min-height': 0
+                        }).animate({
+                            height: 0
+                        }, 100, 'swing', function() {
+                            notification.remove();
+                        })
+                    })
+                });
+            else
                 notification.animate({
                     opacity: 0,
                     transform: 'scale(0.5)'
-                }, 100, 'swing', function() {
-                    notification.css({
-                        transform: 'scale(1)',
-                        'min-height': 0
-                    }).animate({
-                        height: 0
-                    }, 100, 'swing', function() {
-                        notification.remove();
-                    })
-                })
-            })
+                }, 200, 'swing', function() {
+                    notification.remove();
+                });
         }).mouseleave(function() {
             var timeout_id = window.setTimeout(function() {
                 notification.trigger('click');
@@ -84,5 +80,29 @@ game.render.html = {
                 window.clearTimeout(timeout_id);
             })
         }).trigger('mouseleave');
+
+        if (!game.mobile)
+            notification.css({
+                width: 96,
+                'margin-left': 252,
+                opacity: 0,
+                transform: 'scale(0.5)'
+            }).animate({
+                opacity: 1,
+                transform: 'scale(1)'
+            }, 200, 'swing', function() {
+                notification.animate({
+                    width: 600,
+                    'margin-left': 0
+                }, 300, 'swing');
+            });
+        else
+            notification.css({
+                opacity: 0,
+                transform: 'scale(0.5)'
+            }).animate({
+                opacity: 1,
+                transform: 'scale(1)'
+            });
     }
 };

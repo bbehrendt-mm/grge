@@ -3830,4 +3830,24 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
 	'Du hast die Arbeiten an einem epischen Projekt in deinem Versteck begonnen. Viel Erfolg!',
   'Bauen' =>
 	'Bauen',
+  'Boden aufreißen' =>
+	'Boden aufreißen',
+  'Bevor du hier etwas pflanzen kannst, muss erstmal der Bodenbelag weg.' =>
+	'Bevor du hier etwas pflanzen kannst, muss erstmal der Bodenbelag weg.',
+  'Epische Projekte: Kleines Gewächshaus' =>
+	'Epische Projekte: Kleines Gewächshaus',
+  'Abschließen: Kleines Gewächshaus' =>
+	'Abschließen: Kleines Gewächshaus',
+  'Beet' =>
+	'Beet',
+  'Umgraben, abgrenzen, Hundehaufen platzieren - fertig!' =>
+	'Umgraben, abgrenzen, Hundehaufen platzieren - fertig!',
+  'Beleuchtung' =>
+	'Beleuchtung',
+  'Ohne ein bisschen Licht wird hier nichts wachsen...' =>
+	'Ohne ein bisschen Licht wird hier nichts wachsen...',
+  'Bewässerungssystem' =>
+	'Bewässerungssystem',
+  'Damit du auch etwas anderes ernten kannst als Staub.' =>
+	'Damit du auch etwas anderes ernten kannst als Staub.',
 );

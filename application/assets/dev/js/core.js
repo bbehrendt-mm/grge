@@ -6,7 +6,7 @@ core = {
     parts: {},
     snippets: {},
 
-    version: '2.0.0-0-1-84',
+    version: '2.0.0-0-1-92',
 
     last: {},
     plugins: {},
@@ -2985,7 +2985,7 @@ core = {
 
         if (blueprint.energy || $.objToArray(blueprint.material_in).length)
             mt_in.append($('<i/>').text("Erfordert"));
-        if (blueprint.decay_speed || blueprint.repair || blueprint.defense || $.objToArray(blueprint.material_out).length)
+        if (blueprint.decay_speed || blueprint.repair || blueprint.defense || blueprint.deco || $.objToArray(blueprint.material_out).length)
             mt_out.append($('<i/>').text("Produziert"));
 
         if (blueprint.energy)

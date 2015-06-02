@@ -490,4 +490,24 @@ return array (
 	'',
   'Bauen' =>
 	'',
+  'Boden aufreißen' =>
+	'',
+  'Bevor du hier etwas pflanzen kannst, muss erstmal der Bodenbelag weg.' =>
+	'',
+  'Epische Projekte: Kleines Gewächshaus' =>
+	'',
+  'Abschließen: Kleines Gewächshaus' =>
+	'',
+  'Beet' =>
+	'',
+  'Umgraben, abgrenzen, Hundehaufen platzieren - fertig!' =>
+	'',
+  'Beleuchtung' =>
+	'',
+  'Ohne ein bisschen Licht wird hier nichts wachsen...' =>
+	'',
+  'Bewässerungssystem' =>
+	'',
+  'Damit du auch etwas anderes ernten kannst als Staub.' =>
+	'',
 );

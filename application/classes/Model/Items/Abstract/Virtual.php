@@ -3,8 +3,13 @@
 abstract class Model_Items_Abstract_Virtual extends Model_Items_Abstract_Item {
 	protected static $weight = 0;
     protected static $graceful_fail = false;
+    protected static $manual_ui = false;
 
     protected $remaining = array();
+
+    public function use_manual_ui() {
+        return static::$manual_ui;
+    }
 
     public function remaining_actions($action = null) {
         if ($action === null)

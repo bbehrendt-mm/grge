@@ -38,14 +38,14 @@
             <?=__('Unterstütze ZombVival!')?> <a href="#" id="main_donate"><?=__('Spenden')?> </a>
         </div>
 
-        <div class="cell rw-3 rw-lg-6 padded-lg">
+        <div class="cell rw-3 rw-lg-6 rw-sm-12 padded-lg">
             <b><?=__('Programm und Design');?></b><br />
             Benjamin "<i>Brainbox</i>" Behrendt<br /><br />
             <b><?=__('Danke an');?></b><br />
             <i>MisterD</i>, <i>Krummy</i>, <i>SinSniper</i>, <i>NobbZ</i>, <i>Mastertron</i>, <i>Storm</i>
         </div>
 
-        <div class="cell rw-3 rw-lg-6 padded-lg">
+        <div class="cell rw-3 rw-lg-6 rw-sm-12 padded-lg">
             <b><?=__('Kontakt'); ?></b><br />
             <a href="mailto: kontakt@ruine.dvspot.de">kontakt@ruine.dvspot.de</a><br />
             <div class="hide-mobile"><img src="media/img/small.png" alt="Zombvival"></div>

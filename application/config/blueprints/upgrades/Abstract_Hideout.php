@@ -530,4 +530,62 @@ return Model_Blueprints::factory()
             ->description('Zombies sind nicht gerade für ihre Geschicklichkeit bekannt - daher kannst du sie mit ein paar Laserbarrieren bestimmt recht zuverlässig von deinem Versteck fernhalten. Vorrausgesetzt natürlich, dir gehen nicht die Batterien aus...')
     )
 
+    // -- STACK -> Categories
+    ->pop_stack()
+
+    //++ STACK -> EPIC FOUNDATIONS / GARDEN
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires('epc_garden')->category('Epische Projekte: Kleines Gewächshaus');})
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('epc_garden_final')
+            ->requires('epc_garden_floor')->requires('epc_garden_patch')->requires('epc_garden_lights')->requires('epc_garden_water')
+            ->name('Abschließen: Kleines Gewächshaus')
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('epc_garden_floor')
+            ->name('Boden aufreißen')
+            ->description('Bevor du hier etwas pflanzen kannst, muss erstmal der Bodenbelag weg.')
+            ->deco(-20)
+            ->energy(50)
+            ->produces(['Model_Items_Generic_Wood' => 6])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('epc_garden_patch')
+            ->requires('epc_garden_floor')
+            ->name('Beet')
+            ->description('Umgraben, abgrenzen, Hundehaufen platzieren - fertig!')
+            ->deco(2)
+            ->material(['Model_Items_Generic_Wood' => 4, 'Model_Items_Generic_Wire' => 2])
+            ->energy(20)
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('epc_garden_lights')
+            ->name('Beleuchtung')
+            ->description('Ohne ein bisschen Licht wird hier nichts wachsen...')
+            ->deco(5)
+            ->energy(10)
+            ->material(['Model_Items_Flashlight' => 3, 'Model_Items_Generic_Wire' => 1, 'Model_Items_Energy' => 6])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('epc_garden_water')
+            ->name('Bewässerungssystem')
+            ->description('Damit du auch etwas anderes ernten kannst als Staub.')
+            ->energy(12)
+            ->material(['Model_Items_Generic_Tube' => 4, 'Model_Items_Generic_Pressure' => 1, 'Model_Items_Generic_Sum' => 2])
+    )
+
+    // -- STACK -> EPIC FOUNDATIONS / GARDEN
+    ->pop_stack()
+
+
+
     ->validate();

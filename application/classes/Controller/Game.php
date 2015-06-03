@@ -151,7 +151,8 @@ class Controller_Game extends Controller {
         if (!$player->buff_retr('fragile'))
             foreach (Tool_Scripts::available_items('Model_Items_Abstract_Virtual',false,true,false,$player) as $a_item)
                 /** @var  Model_Items_Abstract_Virtual $a_item */
-                $a = array_merge($a,$this->prepare_actionlist($a_item->auto_actions(), $a_item));
+                if (!$a_item->use_manual_ui())
+                    $a = array_merge($a,$this->prepare_actionlist($a_item->auto_actions(), $a_item));
 
         // Get doorways
         $doorways = array();

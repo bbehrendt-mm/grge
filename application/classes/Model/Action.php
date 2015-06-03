@@ -300,7 +300,8 @@ class Model_Action {
             $t[] = array('icon' => Model_Effect::translate($stat), 'value' => $value);
         foreach ($this->get_item_requirements() as $class => $value)
             /** @var Model_Items_Abstract_Item $class */
-        $t[] = array('icon' => $class::static_icon(), 'value' => $value);
+            if (!Tool_System::instance_of($class,'Model_Items_Abstract_Virtual'))
+                $t[] = array('icon' => $class::static_icon(), 'value' => $value);
         return $t;
     }
 }

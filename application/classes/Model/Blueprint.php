@@ -464,12 +464,13 @@ class Model_Blueprint {
         $tmp = [];
         foreach ($data as $class => $count)
             /** @var Model_Items_Abstract_Item $class */
-            $tmp[] = [
-                'name' => $class::static_name(),
-                'icon' => $class::static_icon(),
-                'count' => $count,
-                'have' => Tool_Scripts::count_available_items($class)
-            ];
+            if (!Tool_System::instance_of($class,'Model_Items_Abstract_Virtual'))
+                $tmp[] = [
+                    'name' => $class::static_name(),
+                    'icon' => $class::static_icon(),
+                    'count' => $count,
+                    'have' => Tool_Scripts::count_available_items($class)
+                ];
         return $tmp;
     }
 

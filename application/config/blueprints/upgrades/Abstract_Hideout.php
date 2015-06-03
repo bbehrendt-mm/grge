@@ -540,6 +540,7 @@ return Model_Blueprints::factory()
         Model_Blueprint::factory()
             ->id('epc_garden_final')
             ->requires('epc_garden_floor')->requires('epc_garden_patch')->requires('epc_garden_lights')->requires('epc_garden_water')
+            ->produces(['Model_Items_Virtual_Epic_Garden' => 1])
             ->name('Abschließen: Kleines Gewächshaus')
     )
 

@@ -85,7 +85,7 @@ class Model_Hid {
             if ($a->has_side_effect() && !$game->config('modules.multiplayer'))
                 continue;
 
-            $current = array_merge($a->convert_effects(), array(
+            $tmp[] = array_merge($a->convert_effects(), array(
                 'description' => $action['desc'],
                 'tooltip'     => $a->description(),
                 'action' => $action['id'],
@@ -95,8 +95,6 @@ class Model_Hid {
                 'requires' => $a->convert_requires(),
                 'skin' => $a->has_side_effect() ? ('multiplayer ' . $a->buttonskin()) : $a->buttonskin()
             ));
-
-            $tmp[] = $current;
         }
         return $tmp;
     }

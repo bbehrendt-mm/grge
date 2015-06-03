@@ -20,6 +20,16 @@ class Model_Items_Virtual_Epic_Garden extends Model_Items_Abstract_Virtual {
     private $next_watering_end;
     private $harvest_at;
 
+    public function get_planted_state() {
+        return $this->planted;
+    }
+
+    public function get_times() {
+        /** @global Model_Game $game */
+        global $game;
+
+        return $this->planted ? (($game->duration() > $this->harvest_at || $this->next_watering_begin > $this->harvest_at) ? [false,false,] : []) : [false,false,false];
+    }
 
     protected function hid() {
         /** @global Model_Game $game */

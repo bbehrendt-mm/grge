@@ -38,7 +38,7 @@
 
                 ct.html(game.i18n(<?=__j('Änderung in ::i:: :time ::/i:: wieder möglich.')?>, {':time': s}));
                 return true;
-            })
+            }, 'time_lock')
         }
     };
 
@@ -67,7 +67,7 @@
 
                 ct.html(game.i18n(<?=__j('Nächte Pause in ::i:: :time ::/i:: möglich.')?>, {':time': s}));
                 return true;
-            })
+            }, 'time_lock')
         }
     };
 

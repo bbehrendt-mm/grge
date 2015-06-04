@@ -93,7 +93,8 @@ class Model_Hid {
                 'target' => $uid,
                 'escort' => $a->has_side_effect(),
                 'requires' => $a->convert_requires(),
-                'skin' => $a->has_side_effect() ? ('multiplayer ' . $a->buttonskin()) : $a->buttonskin()
+                'skin' => $a->has_side_effect() ? ('multiplayer ' . $a->buttonskin()) : $a->buttonskin(),
+                'flags' => $a->flag()
             ));
         }
         return $tmp;

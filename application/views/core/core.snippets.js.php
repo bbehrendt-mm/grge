@@ -24,9 +24,17 @@
         }
     };
 
-    core.snippets.countdown = function(initial, callback) {
-        if (callback(core.snippets.timestr(initial), initial) && initial >= 0)
-            window.setTimeout(function() {core.snippets.countdown(initial - 1, callback)}, 1000);
+    core.snippets.countdown_pipe = {};
+
+    core.snippets.countdown = function(initial, callback, pipe) {
+        if (callback(core.snippets.timestr(initial), initial) && initial >= 0) {
+            var tid = window.setTimeout(function() {core.snippets.countdown(initial - 1, callback, pipe)}, 1000);
+            if (pipe) {
+                if (core.snippets.countdown_pipe[pipe]) window.clearTimeout(core.snippets.countdown_pipe[pipe]);
+                core.snippets.countdown_pipe[pipe] = tid;
+            }
+        }
+
     };
 
     core.snippets.item = function(show_title, name, icon, count, is_static, in_inventory) {

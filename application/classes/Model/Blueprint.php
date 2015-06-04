@@ -447,7 +447,7 @@ class Model_Blueprint {
                 $player->achievements()->achieve(Model_Achievement::MA_KILLED_ZOMBIES, $z);
                 $player->location()->zombie_factory()->destroy_zombie_population($z);
             }
-        } else $player->log()->add($this->message);
+        } elseif ($this->message) $player->log()->add($this->message);
 
         if ($this->steps <= 0)
             return [];

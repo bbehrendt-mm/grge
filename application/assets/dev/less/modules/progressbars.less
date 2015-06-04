@@ -30,3 +30,15 @@
 .soulpointbar {.progress(@zv-color-main-dark,@soulbar-color)}
 .karmabar.good {.progress(@zv-color-main-dark,@karmabar-green-color)}
 .karmabar.bad {.progress(@zv-color-main-dark,@karmabar-red-color)}
+
+@gardenbar-green-color: #63d100;
+@gardenbar-blue-color: #00d1c7;
+@gardenbar-brown-color: #ce8927;
+@gardenbar-pink-color: #ce717c;
+@gardenbar-red-color: #ff3f00;
+
+.gardenbar.quality {.progress(@zv-color-main-dark,@gardenbar-green-color)}
+.gardenbar.water {.progress(@zv-color-main-dark,@gardenbar-blue-color)}
+.gardenbar.water.dry {.progress(@zv-color-main-dark,@gardenbar-red-color)}
+.gardenbar.growth {.progress(@zv-color-main-dark,@gardenbar-brown-color)}
+.gardenbar.fertilizer {.progress(@zv-color-main-dark,@gardenbar-pink-color)}

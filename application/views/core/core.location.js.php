@@ -314,8 +314,71 @@
         }));
     };
 
+    var garden = function(data, target) {
+        var content;
+        target.append($('<div />').addClass('cell rw-12 widget epic padded').append(content = $('<div />').addClass('row').append($('<h3 />').text(<?=__j('Kleines Gewächshaus')?>))));
+
+        if (!data.planted)
+            content.append($('<div />').addClass('cell rw-12 padded').append($('<b />').text(<?=__j('Das Beet ist momentan leer.')?>)));
+        else {
+
+            var bar_growth, bar_quality, bar_water, bar_fert;
+
+            content
+                .append($('<div />').addClass('cell rw-3 padded').append($('<b />').text(<?=__j('Fortschritt')?>)).append($('<br />')).append(bar_growth = $('<div />').addClass('gardenbar growth').append($('<div />').css('width', (data.harvest * 100) + '%'))))
+                .append($('<div />').addClass('cell rw-3 padded').append($('<b />').text(<?=__j('Qualität')?>)).append($('<br />')).append(bar_quality = $('<div />').addClass('gardenbar quality').append($('<div />').css('width', (data.quality * 100) + '%'))))
+                .append($('<div />').addClass('cell rw-3 padded').append($('<b />').text(<?=__j('Wasser')?>)).append($('<br />')).append(bar_water = $('<div />').addClass('gardenbar water').addClass(data.time_water ? '' : 'dry').append($('<div />').css('width', (data.water * 100) + '%'))))
+                .append($('<div />').addClass('cell rw-3 padded').append($('<b />').text(<?=__j('Dünger')?>)).append($('<br />')).append(bar_fert = $('<div />').addClass('gardenbar fertilizer').append($('<div />').css('width', (data.fertilizer * 100) + '%'))))
+            ;
+
+            var q;
+            if          (data.quality >= 1.00)  q = <?=__j('Excellent')?>;
+            else if     (data.quality >= 0.90)  q = <?=__j('Ausgezeichnet')?>;
+            else if     (data.quality >= 0.80)  q = <?=__j('Sehr gut')?>;
+            else if     (data.quality >= 0.65)  q = <?=__j('Gut')?>;
+            else if     (data.quality >= 0.50)  q = <?=__j('Durchschnittlich')?>;
+            else if     (data.quality >= 0.35)  q = <?=__j('Verbesserungswürdig')?>;
+            else if     (data.quality >= 0.20)  q = <?=__j('Schlecht')?>;
+            else if     (data.quality >= 0.10)  q = <?=__j('Sehr schlecht')?>;
+            else                                q = <?=__j('Unbrauchbar')?>;
+
+            bar_growth.attr('title', game.i18n(<?=__j('Deine Pflanzen sind in :time erntebereit!')?>, {':time': '<b>' + data.time + '</b>'})).qtip(game.render.html.qtip.ingame('top'));
+            bar_quality.attr('title', game.i18n(<?=__j('Die Qualität bestimmt die Anzahl der Früche, die du bei der Ernte erhalten wirst. Derzeit zeichnet sich folgende Qualität ab: :quality')?>, {':quality': '<b>' + q + '</b>'})).qtip(game.render.html.qtip.ingame('top'));
+            bar_water.attr('title', <?=__j('Wenn der Wasservorrat deiner Pflanzen aufgebraucht ist, musst du neues nachfüllen. Warte damit nicht zu lange, andernfalls sinkt die Erntequalität.')?> + ' ' + game.i18n(data.time_water ? <?=__j('Du kannst in :time neues Wasser hinzufügen.')?> : (data.time_water2 ? <?=__j('Wenn du bis in :time kein neues Wasser hinzugefügt hast, wird die Erntequalität abnehmen!')?> : ('<b>' + <?=__j('Deine Pflanzen verdorren! Füge schnell neues Wasser hinzu!')?> + '</b>')), {':time': '<b>' + (data.time_water || data.time_water2) + '</b>'})).qtip(game.render.html.qtip.ingame('top'));
+            bar_fert.attr('title', <?=__j('Die Stärke deiner Düngung bestimmt die Höhe der Effekte der geernteten Pflanzen. Wenn du nach Erreichen der maximalen Düngestärke noch weiter düngst, hat dies nur noch Einfluss auf die Art der Effekte, nicht jedoch deren Höhe.')?>).qtip(game.render.html.qtip.ingame('top'));
+        }
+
+        $.each(data.actions, function(k,v) {
+            if (v.flags.as !== 'fertilize')
+                content.append(
+                    $('<div />').addClass(game.touch() ? 'cell rw-12 padded justify' : 'cell rw-6 rw-sm-12 padded justify').append(core.snippets.button(v, null, 'tooltip'))
+                )
+        });
+
+        var ft_row;
+        content.append(ft_row = $('<div />').addClass('cell rw-12 padded center'));
+
+        $.each(data.actions, function(k,v) {
+            if (v.flags.as === 'fertilize') {
+                var f_btn;
+                ft_row.append(
+                    f_btn = $('<div />').addClass('btn btn-zv btn-zv-skinned-epic small')
+                );
+
+                $.each(v.requires, function(rid, rq) {
+                    f_btn.append($('<span />').addClass('group').append($('<img />').attr('src','media/icons/' + rq.icon + '.gif')).append(rq.value != 1 ? $('<span />').text(rq.value) : null))
+                });
+
+                f_btn.click(function() {
+                    if (confirm(<?=__j('Bist du sicher, dass du diese Gegenstände einsetzen möchtest, um die Pflanzen zu düngen?')?>))
+                        core.command('act/item', {action: v.action, item: v.target});
+                }).attr('title', <?=__j('Welchen Effekt deine geernteten Pflanzen haben hängt davon ab, womit du sie düngst. Nahrung macht sie saftiger, Drogen geben ihnen einen heilenden Effekt und Chemikalien lassen sie aufputschend wirken.')?> + '<br /><br />' + v.tooltip).qtip(game.render.html.qtip.ingame('bottom'));
+            }
+        });
+    };
+
     core.parts.location = function(data, target) {
-        var zradar, hideout, actions, spc_colosseum, spc_scout, spc_roadtrip, desc;
+        var zradar, hideout, actions, spc_colosseum, spc_scout, spc_roadtrip, desc, epc_garden;
 
         $(target).empty().addClass('row location_box ' + (data.meta.outside ? 'outside' : 'inside')).append(
             $('<h2 />').text(data.meta.name)
@@ -402,6 +465,8 @@
                 spc_roadtrip = data.caravan ? $('<div />').addClass('row') : null
             ).append(
                 actions = $('<div />').addClass('row')
+            ).append(
+                epc_garden = data.epc_garden ? $('<div />').addClass('row') : null
             )
         ).append(
             desc = $('<div />').addClass('cell padded justify').addClass(data.lomap ? 'rw-4' : 'rw-6').append($('<span />').addClass('hide-mobile').text(data.meta.desc))
@@ -532,6 +597,9 @@
         if (data.scouting)
             scoutmode(data.scouting, spc_scout);
         if (data.caravan)
-            roadtrip(data.caravan, spc_roadtrip)
+            roadtrip(data.caravan, spc_roadtrip);
+
+        if (data.epc_garden)
+            garden(data.epc_garden, epc_garden);
     };
 })();

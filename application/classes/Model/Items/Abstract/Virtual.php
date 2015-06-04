@@ -5,13 +5,16 @@ abstract class Model_Items_Abstract_Virtual extends Model_Items_Abstract_Item {
     protected static $graceful_fail = false;
     protected static $manual_ui = false;
 
-    protected $remaining = array();
+    protected $remaining = false;
 
     public function use_manual_ui() {
         return static::$manual_ui;
     }
 
     public function remaining_actions($action = null) {
+        if ($this->remaining === false)
+            return PHP_INT_MAX;
+
         if ($action === null)
             return array_sum($this->remaining);
 
@@ -23,7 +26,7 @@ abstract class Model_Items_Abstract_Virtual extends Model_Items_Abstract_Item {
     public function interact($action, $argument = NULL, $side_player = null) {
         if ($this->remaining_actions($action)) {
             $preserve = !parent::interact($action, $argument, $side_player) && static::$graceful_fail;
-            if (!$preserve && $this->remaining[$action] < PHP_INT_MAX)
+            if ($this->remaining !== false && !$preserve && $this->remaining[$action] < PHP_INT_MAX)
                 $this->remaining[$action]--;
         }
     }

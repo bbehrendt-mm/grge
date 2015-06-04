@@ -19,7 +19,12 @@ game.render.html.modal = {
     },
 
     blend: function(callback, clickable, ignore_qtip) {
-        var targetZ = $.topZIndex(ignore_qtip ? '*:not(.qtip)' : '*') + 1;
+        if (ignore_qtip === undefined) ignore_qtip = true;
+
+        var targetZ = $.topZIndex(ignore_qtip ? ':not(.qtip):not(#notifications)' : ':not(#notifications)') + 1;
+
+        if (ignore_qtip) console.log('Z LAYER IS AT ' + targetZ);
+
         var blend = $('<div class="doc-blend" id="doc-blend-' + targetZ + '"></div>').css('z-index', targetZ).appendTo('body')
             .css('opacity', 0).animate({
                 opacity: 1

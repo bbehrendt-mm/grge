@@ -20,6 +20,8 @@ class Model_Action {
     private $description = null;
     private $skin = null;
 
+    private $additional_flags = [];
+
     private $consume_by_grind = true;
 
     private $has_se = false;
@@ -66,6 +68,18 @@ class Model_Action {
             $this->skin = $skin;
             return $this;
         } else return $this->skin;
+    }
+
+    /**
+     * @param string|null $flag
+     * @param mixed|null $value
+     * @return Model_Action|mixed|null
+     */
+    public function flag($flag = null, $value = null) {
+        if ($flag === null) return $this->additional_flags;
+        elseif ($value === null) return isset($this->additional_flags[$flag]) ? $this->additional_flags[$flag] : null;
+        else $this->additional_flags[$flag] = $value;
+        return $this;
     }
 
 

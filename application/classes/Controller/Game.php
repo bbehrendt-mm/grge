@@ -581,6 +581,27 @@ class Controller_Game extends Controller {
         }
     }
 
+    private function render_epics() {
+        /**
+         * @global $player Model_Player
+         */
+        global $player;
+
+        /** @var Model_Items_Virtual_Epic_Garden $garden */
+        if ($garden = Tool_Scripts::first_available_item('Model_Items_Virtual_Epic_Garden',false,true,false))
+            $this->add_data('location', ['epc_garden' => [
+                'planted' => $garden->get_planted_state(),
+                'harvest' => $garden->get_harvest_prc(),
+                'time' => (!$garden->get_planted_state() || $garden->get_harvest_state()) ? false : Tool_Numerics::duration_to_string($garden->get_time_to_harvest()),
+                'time_water' => (!$garden->get_planted_state() || $garden->get_harvest_state() || $garden->get_time_to_water() <= 0) ? false : Tool_Numerics::duration_to_string($garden->get_time_to_water()),
+                'time_water2' => (!$garden->get_planted_state() || $garden->get_time_to_water(false) <= 0) ? false : Tool_Numerics::duration_to_string($garden->get_time_to_water(false)),
+                'water' => $garden->get_water_prc(),
+                'quality' => !$garden->get_planted_state() ? false : $garden->get_quality(),
+                'fertilizer' => $garden->get_fertilizer_status(),
+                'actions' => $this->prepare_actionlist($garden->auto_actions()),
+            ]]);
+    }
+
     private function render_mp() {
         /**
          * @global $game Model_Game
@@ -666,6 +687,7 @@ class Controller_Game extends Controller {
         $this->render_log();
         $this->render_mp();
         $this->render_specials();
+        $this->render_epics();
         $this->render_notifications();
 
         $version_data = Kohana::$config->load('build.version');

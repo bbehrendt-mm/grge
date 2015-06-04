@@ -5,9 +5,9 @@
   overflow: hidden; text-decoration: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
   cursor: pointer; text-align: center; border-radius: 3px;
   &.small {
-    height: 22px; font-size: 12px;
+    height: 22px; font-size: 12px; margin: 1px;
     &:not(.block) {display: inline-block;}
-    &:active {margin-bottom: -1px}
+    &:active {margin-bottom: 0}
     >.fa {font-size: 14px;}
   }
   +.btn {
@@ -56,6 +56,11 @@
 @buttons-green-font-color: @zv-color-secondary;
 @buttons-green-icon-mask: #BABABA;
 
+@buttons-purple-background-color: #9e0c98;
+@buttons-purple-border-color: #53094e;
+@buttons-purple-font-color: @zv-color-secondary;
+@buttons-purple-icon-mask: #BABABA;
+
 @buttons-disabled-background-color:  #c8bcbd;
 @buttons-disabled-border-color: #797979;
 @buttons-disabled-font-color: #797979;
@@ -70,6 +75,7 @@
   .generic-button(@buttons-main-background-color, @buttons-main-border-color, @buttons-main-font-color, @buttons-main-icon-mask, 1.2em, 3px 10px);
   &.blue, &.btn-zv.btn-zv-skinned-hero {.generic-button-color(@buttons-blue-background-color, @buttons-blue-border-color, @buttons-blue-font-color, @buttons-blue-icon-mask)}
   &.green, &.btn-zv.btn-zv-skinned-context {.generic-button-color(@buttons-green-background-color, @buttons-green-border-color, @buttons-green-font-color, @buttons-green-icon-mask)}
+  &.purple, &.btn-zv.btn-zv-skinned-epic {.generic-button-color(@buttons-purple-background-color, @buttons-purple-border-color, @buttons-purple-font-color, @buttons-purple-icon-mask)}
 
   &.btn-zv {
     padding-bottom: 0; font-size: 12px;

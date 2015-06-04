@@ -7,8 +7,11 @@ class Model_Places_Greenhouse extends Model_Places_Abstract_Place {
     protected static $icon = 'green';
 
     public function uin($uin = NULL) {
-        if ($uin !== null)
+        if ($uin !== null) {
             $this->inventory->add(new Model_Items_Virtual_Location_Greenhouse());
+            $this->inventory->add(new Model_Items_Virtual_Epic_Garden());
+        }
+
 
         return parent::uin($uin);
     }

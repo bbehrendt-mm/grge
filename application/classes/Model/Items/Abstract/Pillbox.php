@@ -8,6 +8,13 @@ abstract class Model_Items_Abstract_Pillbox extends Model_Items_Abstract_Stackab
     protected static $take_msg = '';
     protected static $singular_name = '';
 
+    protected static $static_info = Array(
+        'name' => 'Schachtel mit Pillen',
+        'icon' => 'paralaxium',
+        'description' => '',
+        'category' => Model_Items_Abstract_Item::MIAI_CAT_DRUG,
+    );
+
     protected static $pill_effects = Array();
 
     protected function hid() {

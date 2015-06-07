@@ -52,6 +52,9 @@
                 case <?=Model_Log_Types_Item::MLTI_VENDING?>:
                     header = <?=__j(':itemdef erworben!')?>;
                     break;
+                case <?=Model_Log_Types_Item::MLTI_RAVEN?>:
+                    header = <?=__j('Der Rabe hat :itemdef gebracht!')?>;
+                    break;
                 default:
                     header = <?=__j(':itemdef erhalten!')?>;
                     break;

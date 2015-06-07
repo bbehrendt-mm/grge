@@ -85,7 +85,7 @@
                     );
                     $.each(action.requires, function(k,v) {
                         block.append(
-                            $('<div />').addClass('group').append(
+                            $('<div />').addClass('group default').append(
                                 v.icon ? $('<img />').attr('src', 'media/icons/' + v.icon + '.gif') : $('<img />').addClass('fake').attr('src', 'media/icons/fake_h.gif')
                             ).append(
                                 $('<span />').text(v.value)
@@ -133,7 +133,7 @@
                 .addClass('btn btn-zv ' + (action.skin ? 'btn-zv-skinned-' + action.skin : '') )
                 .append(
                     $('<span />').text(action.description)
-                ).click(function () {
+                ).click(function (e,arg) {
                     // Hide all QTips
                     $('.qtip').qtip('hide');
 
@@ -160,7 +160,7 @@
                                         if (!player.escort || !confirm(game.i18n(<?=__j('Bist du sicher, dass du diese Aktion auf :name anwenden möchtest?')?>, {':name': player.name}))) return;
 
                                         popup.trigger('unpop');
-                                        core.command('act/item', {action: action.action, item: action.target, co: player.id});
+                                        core.command('act/item', {action: action.action, item: action.target, co: player.id, coarg: arg});
                                     })
                                 )))
                             });
@@ -171,12 +171,14 @@
                             }))
                         ));
 
-                    } else core.command('act/item', {action: action.action, item: action.target});
+                    } else core.command('act/item', {action: action.action, item: action.target, coarg: arg});
                 });
 
             if (game.touch()) ext_mode = 'static';
 
             switch (ext_mode) {
+                case 'none':
+                    break;
                 case 'static':
                     if (ext.children().size()) button.append(ext);
                     break;

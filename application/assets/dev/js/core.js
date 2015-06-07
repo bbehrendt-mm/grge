@@ -1072,8 +1072,79 @@ core = {
         });
     };
 
+    var raven = function(data, target) {
+        var content;
+        target.append($('<div />').addClass('cell rw-12 widget epic padded').append(content = $('<div />').addClass('row').append($('<h3 />').text("Raben-Bootcamp"))));
+
+        if (data.time)
+            content.append($('<div />').addClass('cell rw-12 padded').append($('<b />').text(game.i18n("Der Rabe muss sich noch :time ausruhen.",{':time': data.time}))));
+
+        var fetch_btn;
+        $.each(data.actions, function(k,v) {
+            if (v.flags.as !== 'fetch')
+                content.append(
+                    $('<div />').addClass(game.touch() ? 'cell rw-12 padded justify' : 'cell rw-6 rw-sm-12 padded justify').append(core.snippets.button(v, null, 'tooltip'))
+                );
+            else fetch_btn = core.snippets.button(v, null, 'none');
+        });
+
+        if (fetch_btn) content.append($('<div />').addClass(game.touch() ? 'cell rw-12 padded justify' : 'cell rw-6 rw-sm-12 padded justify').append(fetch_btn.clone(false).click(function() {
+
+            var popup = core.popup.spawn({desktop: 600, md: '100%'});
+            var select, food;
+
+            popup.append(
+                $('<h2 />').addClass('center').text("Zielgebiet ausw\u00e4hlen")
+            ).append(
+                $('<div />').addClass('row').append($('<div />').addClass('cell rw-12 padded').append(
+                    $('<div />').addClass('note').text(game.i18n("Hier kannst du ausw\u00e4hlen, wie weit der Rabe fliegen soll, um eine Ruine auszuw\u00e4hlen. F\u00fcr eine gr\u00f6\u00dfere Distanz musst du selbstverst\u00e4ndlich mehr Futter springen lassen. Der Rabe wird zuf\u00e4llig eine Ruine (die kein Aussichtspunkt und auch kein Versteck ist) in dem gew\u00e4hlten Bereich ausw\u00e4hlen und dort dreimal nach Gegenst\u00e4nden suchen. Gefundene Gegenst\u00e4nde wird er zu dir bringen, zumindest so lange er sie tragen kann. Falls er nichts findet oder die gefundenen Gegenst\u00e4nde ihn nicht auslasten, wird er Gegenst\u00e4nde vom Boden aufheben. Der Rabe kann nicht mehr als :capacity Gegenst\u00e4nde mit einem Gesamtgewicht von :size tragen!",{':size': data.size, ':capacity': data.capacity}))
+                )).append($('<div />').addClass('cell rw-12 padded').append(
+                    select = $('<select />').addClass('form_input').change(function() {
+                        food.empty().attr('title', "Gew\u00f6hnliche Nahrung").append($('<img />').attr('src','media/icons/items/basefood/generic.gif')).append($('<span />').text(' x ' + Math.max(1,$(this).val() * 2))).qtip(game.render.html.qtip.ingame('bottom'));
+                    })
+                        .append($('<option />').attr('value',0).text(game.i18n("N\u00e4here Umgebung (Distanz bis :m2)",{':m1': 0, ':m2': 15})))
+                        .append($('<option />').attr('value',1).text(game.i18n("Entfernte Regionen (Distanz zwischen :m1 und :m2)",{':m1': 16, ':m2': 50})))
+                        .append($('<option />').attr('value',2).text(game.i18n("Arsch der Welt (Distanz \u00fcber :m1)",{':m1': 51, ':m2': 900})))
+                ))
+            ).append(
+                $('<div />').addClass('row')
+                    .append($('<div />').addClass('cell rw-10 rw-sm-12 padded').text("F\u00fcr die gew\u00e4hlte Distanz ben\u00f6tigt der Rabe folgendes Futter:"))
+                    .append(food = $('<div />').addClass('cell rw-2 rw-sm-12 padded'))
+            ).append(
+                $('<div />').addClass('row')
+                    .append($('<div />').addClass('cell rw-6 rw-sm-12 padded').append($('<div />').addClass('btn').text("Abbrechen").click(function() {
+                        popup.trigger('unpop');
+                    })))
+                    .append($('<div />').addClass('cell rw-6 rw-sm-12 padded').append($('<div />').addClass('btn').text("Raben aussenden").click(function() {
+                        popup.trigger('unpop');
+                        fetch_btn.trigger('click', [select.val()]);
+                    })))
+            );
+
+            select.trigger('change').selectric();
+
+        })));
+    };
+
+    var fence = function(data, target) {
+        var content;
+        target.append($('<div />').addClass('cell rw-12 widget epic padded').append(content = $('<div />').addClass('row').append($('<h3 />').text("Laserzaun"))));
+
+        content.append($('<div />').addClass('row')
+                .append($('<div />').addClass('cell rw-4 rw-sm-12 padded center').append($('<img />').attr('src', 'media/icons/defense.gif')).append($('<span />').addClass('margin-left').text(data.status ? '�^z' : '0')).attr('title', "Die durch den Laserzaun zus\u00e4tzlich generierte Verteidigung wird auf die Hausverteidigung addiert.").qtip(game.render.html.qtip.ingame('top')))
+                .append($('<div />').addClass('cell rw-4 rw-sm-12 padded center').append($('<img />').attr('src', 'media/icons/items/energy.gif')).append($('<span />').addClass('margin-left').text(data.energy)).attr('title', "Zeigt die Menge an Energie an, die deinem Versteck momentan zur Verf\u00fcgung steht. Geht die Energie zur Neige, solltest du mit dem Generator neue erzeugen.").qtip(game.render.html.qtip.ingame('top')))
+                .append($('<div />').addClass('cell rw-4 rw-sm-12 padded center').append($('<img />').attr('src', 'media/icons/clock.gif')).append($('<span />').addClass('margin-left').text(data.time ? data.time : '---')).attr('title', "Dies ist die Zeit, die der Laserzaun mit deinem aktuellen Energievorrat noch laufen kann, bevor er wegen Energiemangel automatisch heruntergefahren wird.").qtip(game.render.html.qtip.ingame('top')))
+        );
+
+        $.each(data.actions, function(k,v) {
+            content.append(
+                $('<div />').addClass(game.touch() ? 'cell rw-12 padded justify' : 'cell rw-6 rw-sm-12 padded justify').append(core.snippets.button(v, null, 'tooltip'))
+            );
+        });
+    };
+
     core.parts.location = function(data, target) {
-        var zradar, hideout, actions, spc_colosseum, spc_scout, spc_roadtrip, desc, epc_garden;
+        var zradar, hideout, actions, spc_colosseum, spc_scout, spc_roadtrip, desc, epic;
 
         $(target).empty().addClass('row location_box ' + (data.meta.outside ? 'outside' : 'inside')).append(
             $('<h2 />').text(data.meta.name)
@@ -1161,7 +1232,7 @@ core = {
             ).append(
                 actions = $('<div />').addClass('row')
             ).append(
-                epc_garden = data.epc_garden ? $('<div />').addClass('row') : null
+                epic = (data.epc_garden || data.epc_raven || data.epc_fence) ? $('<div />').addClass('row') : null
             )
         ).append(
             desc = $('<div />').addClass('cell padded justify').addClass(data.lomap ? 'rw-4' : 'rw-6').append($('<span />').addClass('hide-mobile').text(data.meta.desc))
@@ -1295,7 +1366,11 @@ core = {
             roadtrip(data.caravan, spc_roadtrip);
 
         if (data.epc_garden)
-            garden(data.epc_garden, epc_garden);
+            garden(data.epc_garden, epic);
+        else if (data.epc_raven)
+            raven(data.epc_raven, epic);
+        else if (data.epc_fence)
+            fence(data.epc_fence, epic);
     };
 })();(function() {
     var renderers = {};
@@ -1350,6 +1425,9 @@ core = {
                     break;
                 case 7:
                     header = ":itemdef erworben!";
+                    break;
+                case 8:
+                    header = "Der Rabe hat :itemdef gebracht!";
                     break;
                 default:
                     header = ":itemdef erhalten!";
@@ -1678,7 +1756,9 @@ core = {
         target.append($('<h3 />').text("Andere Spieler"));
 
         var row = $('<div />').addClass('row').appendTo(target);
+        var found = false;
         $.each(data, function(id, player) {
+            found = true;
             var box = $('<div />').addClass('playerbox' + (player.escort ? ' escort' : '') + (player.local ? '' : ' unknown')).appendTo($('<div />').addClass('cell rw-4 rw-lg-6 rw-md-4 rw-sm-12 padded').appendTo(row));
 
             box.append($('<b />').text(player.name));
@@ -1717,7 +1797,16 @@ core = {
 
             if (player.stats)
                 core.parts.status_bars(bars, player.stats, true);
-        })
+        });
+
+        if (!found) row.append($('<div />').addClass('cell rw-12 padded center').text("Hier scheint niemand zu sein ..."));
+
+        row.append($('<div />').addClass('cell rw-12 padded').append(
+            $('<div />').addClass('row')
+                .append($('<div />').addClass('cell rw-4 rw-md-5 rw-sm-12 padded').append($('<div />').addClass('btn btn-zv').text("Post").click(function() {
+                    game.network.load('game/pm');
+                })))
+        ));
     };
 
     var render_self = function(data, target) {
@@ -2867,7 +2956,7 @@ core = {
                     );
                     $.each(action.requires, function(k,v) {
                         block.append(
-                            $('<div />').addClass('group').append(
+                            $('<div />').addClass('group default').append(
                                 v.icon ? $('<img />').attr('src', 'media/icons/' + v.icon + '.gif') : $('<img />').addClass('fake').attr('src', 'media/icons/fake_h.gif')
                             ).append(
                                 $('<span />').text(v.value)
@@ -2915,7 +3004,7 @@ core = {
                 .addClass('btn btn-zv ' + (action.skin ? 'btn-zv-skinned-' + action.skin : '') )
                 .append(
                     $('<span />').text(action.description)
-                ).click(function () {
+                ).click(function (e,arg) {
                     // Hide all QTips
                     $('.qtip').qtip('hide');
 
@@ -2942,7 +3031,7 @@ core = {
                                         if (!player.escort || !confirm(game.i18n("Bist du sicher, dass du diese Aktion auf :name anwenden m\u00f6chtest?", {':name': player.name}))) return;
 
                                         popup.trigger('unpop');
-                                        core.command('act/item', {action: action.action, item: action.target, co: player.id});
+                                        core.command('act/item', {action: action.action, item: action.target, co: player.id, coarg: arg});
                                     })
                                 )))
                             });
@@ -2953,12 +3042,14 @@ core = {
                             }))
                         ));
 
-                    } else core.command('act/item', {action: action.action, item: action.target});
+                    } else core.command('act/item', {action: action.action, item: action.target, coarg: arg});
                 });
 
             if (game.touch()) ext_mode = 'static';
 
             switch (ext_mode) {
+                case 'none':
+                    break;
                 case 'static':
                     if (ext.children().size()) button.append(ext);
                     break;

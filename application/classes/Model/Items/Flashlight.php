@@ -46,7 +46,8 @@ class Model_Items_Flashlight extends Model_Items_Abstract_Item implements Interf
         return ($this->fillrate > 0);
     }
 
-    public function tick($pid) {
+    public function tick($pid, $player_tick = true) {
+        /** @global Model_Game $game */
         global $game;
 
         if ($this->fillrate <= 0)
@@ -57,6 +58,7 @@ class Model_Items_Flashlight extends Model_Items_Abstract_Item implements Interf
     }
 
     public function render($pid) {
+        /** @global Model_Game $game */
         global $game;
 
         if ($player = $game->get_player($pid)) {

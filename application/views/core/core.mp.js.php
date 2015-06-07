@@ -3,7 +3,9 @@
         target.append($('<h3 />').text(<?=__j('Andere Spieler')?>));
 
         var row = $('<div />').addClass('row').appendTo(target);
+        var found = false;
         $.each(data, function(id, player) {
+            found = true;
             var box = $('<div />').addClass('playerbox' + (player.escort ? ' escort' : '') + (player.local ? '' : ' unknown')).appendTo($('<div />').addClass('cell rw-4 rw-lg-6 rw-md-4 rw-sm-12 padded').appendTo(row));
 
             box.append($('<b />').text(player.name));
@@ -42,7 +44,16 @@
 
             if (player.stats)
                 core.parts.status_bars(bars, player.stats, true);
-        })
+        });
+
+        if (!found) row.append($('<div />').addClass('cell rw-12 padded center').text(<?=__j('Hier scheint niemand zu sein ...')?>));
+
+        row.append($('<div />').addClass('cell rw-12 padded').append(
+            $('<div />').addClass('row')
+                .append($('<div />').addClass('cell rw-4 rw-md-5 rw-sm-12 padded').append($('<div />').addClass('btn btn-zv').text(<?=__j('Post')?>).click(function() {
+                    game.network.load('game/pm');
+                })))
+        ));
     };
 
     var render_self = function(data, target) {

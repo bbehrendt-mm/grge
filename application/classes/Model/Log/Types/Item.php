@@ -10,14 +10,14 @@ class Model_Log_Types_Item extends Model_Log_Message {
     const MLTI_GHULKILL = 5;
     const MLTI_SOUL = 6;
     const MLTI_VENDING = 7;
+    const MLTI_RAVEN = 8;
 
     protected static $type = Model_Log_Message::MLM_ITEM_LOG;
-
 
     /**
      * @param mixed $type
      * @param Model_Items_Abstract_Item|Model_Items_Abstract_Item[] $item
-     * @param int|null $uin
+     * @param int|null|string $uin
      */
     public function __construct($type, $item, $uin = null) {
         /**
@@ -38,14 +38,9 @@ class Model_Log_Types_Item extends Model_Log_Message {
         $time = $game->now();
 
         parent::__construct([
-            'primary' => $game->get_player($uin)->name(),
+            'primary' => !is_numeric($uin) ? $uin : $game->get_player($uin)->name(),
             'class' => $type,
-            'content' => [
-                $time =>[
-                    $uin => $tmp
-                ]
-            ]
-
+            'content' => [$time =>[$uin => $tmp]]
         ], $uin);
     }
 
@@ -66,8 +61,8 @@ class Model_Log_Types_Item extends Model_Log_Message {
                         'count' => $item->getCount()
                     ];
                 $lists = [
-                    'player' => $game->get_player($uin)->name(),
-                    'self' => $uin == $player->id(),
+                    'player' => !is_numeric($uin) ? __($uin) : $game->get_player($uin)->name(),
+                    'self' => !is_numeric($uin) ? false : ($uin == $player->id()),
                     'items' => $lists
                 ];
             }

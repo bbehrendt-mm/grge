@@ -2,6 +2,6 @@
 
 interface Interface_Tickable {
 
-    public function tick($id);
+    public function tick($id, $player_tick = true);
 
 }

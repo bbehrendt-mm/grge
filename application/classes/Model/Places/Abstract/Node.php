@@ -3,7 +3,7 @@
 abstract class Model_Places_Abstract_Node extends Model_Places_Abstract_Place {
     protected static $icon = 'desert';
 
-    public function find_item($force = false) {
+    public function find_item($force = false, $return = false) {
         /**
          * @global $game Model_Game
          * @global $player Model_Player

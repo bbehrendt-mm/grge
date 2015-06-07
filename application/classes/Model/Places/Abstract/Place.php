@@ -279,15 +279,15 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
         return static::$icon . ".gif";
     }
 	
-	public function find_item($force = false) {
+	public function find_item($force = false, $return = false) {
         /**
          * @global $game Model_Game
          * @global $player Model_Player
          */
 		global $game, $player;
 
-        // Spwan ticket
-        if (Tool_Events::ticket_event($game->next_tick()) && !$player->golden_ticket()) {
+        // Spawn ticket
+        if (!$return && Tool_Events::ticket_event($game->next_tick()) && !$player->golden_ticket()) {
             $num = max(1,mt_rand(1,3) - mt_rand(0,2));
             $tmp = array();
             for ($i = 0; $i < $num; $i++)
@@ -298,15 +298,19 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
         }
 
         // Spawn BrainCoins
-        if (Tool_Gambling::random(Tool_Scripts::getBrainCoinLikelinessLevel($this->uin())))
+        if (!$return && Tool_Gambling::random(Tool_Scripts::getBrainCoinLikelinessLevel($this->uin())))
             Tool_Scripts::place_new_item(new Model_Items_Braincoin());
 
 
-		if ($player->buff_retr('fragile') || $player->buff_retr('passout')) return true;
-		if ($item = $this->item_factory->spawn($force, 1, Tool_Scripts::calculate_find_chances($player->id())))
-			Tool_Scripts::place_new_item($item);
+		if (!$return && ($player->buff_retr('fragile') || $player->buff_retr('passout'))) return true;
+		$item = $this->item_factory->spawn($force, 1, Tool_Scripts::calculate_find_chances($player->id()));
+        if ($item && !$return) {
+            Tool_Scripts::place_new_item($item);
+            return true;
+        }
+        elseif ($item && $return) return $item;
+        elseif (!$item && $return) return null;
         else return true;
-		return 1;
 	}
 
     public function hero_replensish() {

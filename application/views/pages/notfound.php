@@ -4,10 +4,10 @@
  */
 ?>
 
-<h1 class="noclick"><i class="fa fa-arrow-circle-right"></i><?=__('Seite nicht gefunden')?></h1>
+<h1 class="noclick"><i class="fa fa-arrow-circle-right"></i><span class="hide-sm"><?=__('Seite nicht gefunden')?></span><span class="hide-md hide-lg hide-desktop">404</span></h1>
 
 <div class="row">
-    <div class="cell rw-8 ro-2 padded">
+    <div class="cell rw-8 ro-2 rw-lg-10 ro-lg-1 rw-md-12 ro-md-0 padded">
         <h2><?=__('Diese Seite wurde von Zombies gefressen!');?></h2>
         <span><?=__('Offensichtlich ist das aber noch niemandem aufgefallen.');?></span><br /><br />
 
@@ -19,7 +19,7 @@
         </ul>
 
         <div class="row">
-            <div class="cell rw-4 ro-8">
+            <div class="cell rw-4 ro-8 rw-lg-6 ro-lg-6 rw-sm-12 ro-sm-0 padded">
                 <div id="return_to_page" class="btn"><?=__('Zur Hauptseite');?></div>
             </div>
         </div>

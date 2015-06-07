@@ -465,6 +465,7 @@ abstract class Model_Map_Abstract {
                 $tail[] = $local;
 
                 $ret[$local] = array(
+                    'id' => $local,
                     'distance' => $data['distance'],
                     'nodes' => $data['tail'],
                     'tail' => $tail,

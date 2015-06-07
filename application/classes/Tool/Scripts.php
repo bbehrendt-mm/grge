@@ -23,6 +23,10 @@ class Tool_Scripts
         if (Tool_System::instance_of($classname, 'Model_Items_Abstract_Ammo'))
             foreach (Tool_Scripts::available_items('Model_Items_Ammobelt', $active_player, $active_location, $other_players) as $belt)
                 $d += $belt->has($classname);
+        // Add stackable items
+        elseif (Tool_System::instance_of($classname, 'Model_Items_Abstract_Stackable'))
+            foreach (Tool_Scripts::available_items($classname, $active_player, $active_location, $other_players) as $instance)
+                $d += $instance->count();
         else return count(Tool_Scripts::available_items($classname, $active_player, $active_location, $other_players, $perspective));
 
         return $d;
@@ -54,6 +58,17 @@ class Tool_Scripts
                     else {
                         $count -= $belt->has($classname);
                         $belt->get($classname, $belt->has($classname));
+                    }
+            } elseif (Tool_System::instance_of($classname, 'Model_Items_Abstract_Stackable')) {
+                foreach (Tool_Scripts::available_items($classname, $active_player, $active_location, $other_players) as $instance)
+                    if ($instance->count() > $count)
+                        for ($i = 0; $i < $count; $i++) $instance->consume();
+                    elseif ($instance->count() == $count) {
+                        $instance->grind();
+                        break;
+                    } else {
+                        $count -= $instance->count();
+                        $instance->grind();
                     }
             } else {
                 foreach (static::available_items($classname, $active_player, $active_location, $other_players, $perspective) as $item) {

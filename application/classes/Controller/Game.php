@@ -600,6 +600,25 @@ class Controller_Game extends Controller {
                 'fertilizer' => $garden->get_fertilizer_status(),
                 'actions' => $this->prepare_actionlist($garden->auto_actions()),
             ]]);
+
+        /** @var Model_Items_Virtual_Epic_Raven $raven */
+        if ($raven = Tool_Scripts::first_available_item('Model_Items_Virtual_Epic_Raven',false,true,false))
+            $this->add_data('location', ['epc_raven' => [
+                'doped' => $raven->is_doped(),
+                'time' => !$raven->get_rest() ? false : Tool_Numerics::duration_to_string($raven->get_rest()),
+                'size' => $raven->get_inventory_size(),
+                'capacity' => $raven->get_inventory_capacity(),
+                'actions' => $this->prepare_actionlist($raven->auto_actions()),
+            ]]);
+
+        /** @var Model_Items_Virtual_Epic_Fence $fence */
+        if ($fence = Tool_Scripts::first_available_item('Model_Items_Virtual_Epic_Fence',false,true,false))
+            $this->add_data('location', ['epc_fence' => [
+                'status' => $fence->get_status(),
+                'time' => (!$fence->get_remaining_power() && !$fence->get_status()) ? false : Tool_Numerics::duration_to_string($fence->get_remaining_power()),
+                'energy' => Tool_Scripts::count_available_items('Model_Items_Energy', false),
+                'actions' => $this->prepare_actionlist($fence->auto_actions()),
+            ]]);
     }
 
     private function render_mp() {
@@ -771,7 +790,29 @@ class Controller_Game extends Controller {
                 ->render());
         }
 
-        $this->render();
+        return $this->render();
+    }
+
+    public function action_pm() {
+        /**
+         * @global Model_Game $game
+         * @global Model_Player $player
+         * @global Model_Euser $user
+         */
+        global $game, $player, $user;
+
+        //Redirect
+        if (!$game || !$user->get_current_game() || !$player || !$player->alive() || !$game->config('modules.multiplayer'))
+            $this->redirect(URL::site('game/redirect', 'http'));
+
+        $players = [];
+        foreach ($game->players(false) as $p)
+            if ($p->id() != $player->id())
+                $players[$p->id()] = $p->name();
+
+        $this->add_widget(View::factory('pages/pm')->set('messages', $player->get_messages())->set('players', $players)->render());
+
+        return $this->render();
     }
 
     public function japi_end() {

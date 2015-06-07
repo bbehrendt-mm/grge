@@ -377,8 +377,79 @@
         });
     };
 
+    var raven = function(data, target) {
+        var content;
+        target.append($('<div />').addClass('cell rw-12 widget epic padded').append(content = $('<div />').addClass('row').append($('<h3 />').text(<?=__j('Raben-Bootcamp')?>))));
+
+        if (data.time)
+            content.append($('<div />').addClass('cell rw-12 padded').append($('<b />').text(game.i18n(<?=__j('Der Rabe muss sich noch :time ausruhen.')?>,{':time': data.time}))));
+
+        var fetch_btn;
+        $.each(data.actions, function(k,v) {
+            if (v.flags.as !== 'fetch')
+                content.append(
+                    $('<div />').addClass(game.touch() ? 'cell rw-12 padded justify' : 'cell rw-6 rw-sm-12 padded justify').append(core.snippets.button(v, null, 'tooltip'))
+                );
+            else fetch_btn = core.snippets.button(v, null, 'none');
+        });
+
+        if (fetch_btn) content.append($('<div />').addClass(game.touch() ? 'cell rw-12 padded justify' : 'cell rw-6 rw-sm-12 padded justify').append(fetch_btn.clone(false).click(function() {
+
+            var popup = core.popup.spawn({desktop: 600, md: '100%'});
+            var select, food;
+
+            popup.append(
+                $('<h2 />').addClass('center').text(<?=__j('Zielgebiet auswählen')?>)
+            ).append(
+                $('<div />').addClass('row').append($('<div />').addClass('cell rw-12 padded').append(
+                    $('<div />').addClass('note').text(game.i18n(<?=__j('Hier kannst du auswählen, wie weit der Rabe fliegen soll, um eine Ruine auszuwählen. Für eine größere Distanz musst du selbstverständlich mehr Futter springen lassen. Der Rabe wird zufällig eine Ruine (die kein Aussichtspunkt und auch kein Versteck ist) in dem gewählten Bereich auswählen und dort dreimal nach Gegenständen suchen. Gefundene Gegenstände wird er zu dir bringen, zumindest so lange er sie tragen kann. Falls er nichts findet oder die gefundenen Gegenstände ihn nicht auslasten, wird er Gegenstände vom Boden aufheben. Der Rabe kann nicht mehr als :capacity Gegenstände mit einem Gesamtgewicht von :size tragen!')?>,{':size': data.size, ':capacity': data.capacity}))
+                )).append($('<div />').addClass('cell rw-12 padded').append(
+                    select = $('<select />').addClass('form_input').change(function() {
+                        food.empty().attr('title', <?=__j('Gewöhnliche Nahrung')?>).append($('<img />').attr('src','media/icons/items/basefood/generic.gif')).append($('<span />').text(' x ' + Math.max(1,$(this).val() * 2))).qtip(game.render.html.qtip.ingame('bottom'));
+                    })
+                        .append($('<option />').attr('value',0).text(game.i18n(<?=__j('Nähere Umgebung (Distanz bis :m2)')?>,{':m1': 0, ':m2': 15})))
+                        .append($('<option />').attr('value',1).text(game.i18n(<?=__j('Entfernte Regionen (Distanz zwischen :m1 und :m2)')?>,{':m1': 16, ':m2': 50})))
+                        .append($('<option />').attr('value',2).text(game.i18n(<?=__j('Arsch der Welt (Distanz über :m1)')?>,{':m1': 51, ':m2': 900})))
+                ))
+            ).append(
+                $('<div />').addClass('row')
+                    .append($('<div />').addClass('cell rw-10 rw-sm-12 padded').text(<?=__j('Für die gewählte Distanz benötigt der Rabe folgendes Futter:')?>))
+                    .append(food = $('<div />').addClass('cell rw-2 rw-sm-12 padded'))
+            ).append(
+                $('<div />').addClass('row')
+                    .append($('<div />').addClass('cell rw-6 rw-sm-12 padded').append($('<div />').addClass('btn').text(<?=__j('Abbrechen')?>).click(function() {
+                        popup.trigger('unpop');
+                    })))
+                    .append($('<div />').addClass('cell rw-6 rw-sm-12 padded').append($('<div />').addClass('btn').text(<?=__j('Raben aussenden')?>).click(function() {
+                        popup.trigger('unpop');
+                        fetch_btn.trigger('click', [select.val()]);
+                    })))
+            );
+
+            select.trigger('change').selectric();
+
+        })));
+    };
+
+    var fence = function(data, target) {
+        var content;
+        target.append($('<div />').addClass('cell rw-12 widget epic padded').append(content = $('<div />').addClass('row').append($('<h3 />').text(<?=__j('Laserzaun')?>))));
+
+        content.append($('<div />').addClass('row')
+                .append($('<div />').addClass('cell rw-4 rw-sm-12 padded center').append($('<img />').attr('src', 'media/icons/defense.gif')).append($('<span />').addClass('margin-left').text(data.status ? '∞' : '0')).attr('title', <?=__j('Die durch den Laserzaun zusätzlich generierte Verteidigung wird auf die Hausverteidigung addiert.')?>).qtip(game.render.html.qtip.ingame('top')))
+                .append($('<div />').addClass('cell rw-4 rw-sm-12 padded center').append($('<img />').attr('src', 'media/icons/items/energy.gif')).append($('<span />').addClass('margin-left').text(data.energy)).attr('title', <?=__j('Zeigt die Menge an Energie an, die deinem Versteck momentan zur Verfügung steht. Geht die Energie zur Neige, solltest du mit dem Generator neue erzeugen.')?>).qtip(game.render.html.qtip.ingame('top')))
+                .append($('<div />').addClass('cell rw-4 rw-sm-12 padded center').append($('<img />').attr('src', 'media/icons/clock.gif')).append($('<span />').addClass('margin-left').text(data.time ? data.time : '---')).attr('title', <?=__j('Dies ist die Zeit, die der Laserzaun mit deinem aktuellen Energievorrat noch laufen kann, bevor er wegen Energiemangel automatisch heruntergefahren wird.')?>).qtip(game.render.html.qtip.ingame('top')))
+        );
+
+        $.each(data.actions, function(k,v) {
+            content.append(
+                $('<div />').addClass(game.touch() ? 'cell rw-12 padded justify' : 'cell rw-6 rw-sm-12 padded justify').append(core.snippets.button(v, null, 'tooltip'))
+            );
+        });
+    };
+
     core.parts.location = function(data, target) {
-        var zradar, hideout, actions, spc_colosseum, spc_scout, spc_roadtrip, desc, epc_garden;
+        var zradar, hideout, actions, spc_colosseum, spc_scout, spc_roadtrip, desc, epic;
 
         $(target).empty().addClass('row location_box ' + (data.meta.outside ? 'outside' : 'inside')).append(
             $('<h2 />').text(data.meta.name)
@@ -466,7 +537,7 @@
             ).append(
                 actions = $('<div />').addClass('row')
             ).append(
-                epc_garden = data.epc_garden ? $('<div />').addClass('row') : null
+                epic = (data.epc_garden || data.epc_raven || data.epc_fence) ? $('<div />').addClass('row') : null
             )
         ).append(
             desc = $('<div />').addClass('cell padded justify').addClass(data.lomap ? 'rw-4' : 'rw-6').append($('<span />').addClass('hide-mobile').text(data.meta.desc))
@@ -600,6 +671,10 @@
             roadtrip(data.caravan, spc_roadtrip);
 
         if (data.epc_garden)
-            garden(data.epc_garden, epc_garden);
+            garden(data.epc_garden, epic);
+        else if (data.epc_raven)
+            raven(data.epc_raven, epic);
+        else if (data.epc_fence)
+            fence(data.epc_fence, epic);
     };
 })();

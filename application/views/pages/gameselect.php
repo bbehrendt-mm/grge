@@ -289,8 +289,8 @@
                 ?>
 
                 <div class="cell rw-12 padded">
-                    <i><?=__($question);?></i> <?=__($tease);?><br /><br />
-                    <b><?=__('Letzt liegt es an dir: Bist du bereit, in die furchterregende Welt von ZombVival einzutauchen?');?></b>
+                    <i><?=__($question);?></i><br /><br />
+                    <b><?=__('Letzt liegt es an dir: Bist du bereit, in die furchterregende Welt von ZombVival einzutauchen?');?></b> <?=__($tease);?>
                 </div>
 
                 <div class="cell rw-8 rw-sm-12 padded">

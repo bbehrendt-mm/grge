@@ -28,6 +28,43 @@ class Controller_Player extends Controller_Game {
         return $this->japi_data();
     }
 
+    public function japi_message() {
+        /**
+         * @global $game Model_Game
+         * @global $player Model_Player
+         */
+        global $game, $player;
+        if (!$player->alive() || !$game->config('modules.multiplayer'))
+            return $this->render(['success' => 0]);
+
+        $action = $this->request->post('action');
+
+        switch ($action) {
+            case 'new':
+                $title = $this->request->post('title');
+                $message = $this->request->post('body');
+                $to = $this->request->post('to');
+
+                if (strlen($title) < 2 || strlen($title) > 64 || strlen($message) < 5 || strlen($message) > 2048)
+                    return $this->render(['success' => 0]);
+
+                if ($to == -1)
+                    foreach ($game->players() as $p) if ($p->id() != $player->id()) $p->add_message($player->id(),$message, $title);
+                else {
+                    if (!($p = $game->get_player($to)) || $p->id() == $player->id())
+                        return $this->render(['success' => 0]);
+                    $p->add_message($player->id(),$message, $title);
+                }
+
+                $player->achievements()->achieve(Model_Achievement::MA_LETTERS);
+                return $this->render(['success' => 1]);
+            case 'delete':
+                $player->delete_message($this->request->post('mid'));
+                return $this->render(['success' => 1]);
+            default: return $this->render(['success' => 0]);
+        }
+    }
+
     public function japi_pause() {
         /**
          * @global $game Model_Game

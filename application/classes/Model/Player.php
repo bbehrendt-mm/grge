@@ -545,10 +545,6 @@ class Model_Player extends Model_Cloudshard {
         if ($this->escape > 0)
             $this->escape--;
 
-        foreach ($this->inventory()->get('Interface_Tickable') as $item)
-            /** @var $item Interface_Tickable */
-            $item->tick($this->id());
-
 		foreach (array_keys($this->status_bars) as $stat) {
 			$tmp[] = $stat;
 			$tmp[] = $this->stats_buffs($stat);
@@ -725,6 +721,7 @@ class Model_Player extends Model_Cloudshard {
      * @param $id
      */
     public function delete_message($id) {
+
         unset($this->messages[$id]);
     }
 

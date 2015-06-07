@@ -3932,4 +3932,136 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
 	'Na, da hat sich das warten doch gelohnt. Du hast soeben :num Pflanzen ernten können.',
   'Du hast diese Pflanze selbst angebaut und gerade frisch geerntet. Jetzt musst du nur noch hoffen, dass sie zufällig nicht giftig ist.' =>
 	'Du hast diese Pflanze selbst angebaut und gerade frisch geerntet. Jetzt musst du nur noch hoffen, dass sie zufällig nicht giftig ist.',
+  'Dopen' =>
+	'Dopen',
+  'Mit ein paar Steroiden (und einer Luftpumpe) kannst du deinen Raben zu einem mächtigen Greifen aufpumpen, der auch schwere Gegenstände transportieren kann. Dies erhöht allerdings auch die Erhohlungszeit.' =>
+	'Mit ein paar Steroiden (und einer Luftpumpe) kannst du deinen Raben zu einem mächtigen Greifen aufpumpen, der auch schwere Gegenstände transportieren kann. Dies erhöht allerdings auch die Erhohlungszeit.',
+  'Raben aussenden' =>
+	'Raben aussenden',
+  'Der Rabe muss sich noch :time ausruhen.' =>
+	'Der Rabe muss sich noch :time ausruhen.',
+  'Zielgebiet auswählen' =>
+	'Zielgebiet auswählen',
+  'Hier kannst du auswählen, wie weit der Rabe fliegen soll, um eine Ruine auszuwählen. Für eine größere Distanz musst du selbstverständlich mehr Futter springen lassen. Der Rabe wird zufällig eine Ruine (die kein Aussichtspunkt und auch kein Versteck ist) in dem gewählten Bereich auswählen und dort dreimal nach Gegenständen suchen. Gefundene Gegenstände wird er zu dir bringen, zumindest so lange er sie tragen kann. Falls er nichts findet oder die gefundenen Gegenstände ihn nicht auslasten, wird er Gegenstände vom Boden aufheben. Der Rabe kann nicht mehr als :capacity Gegenstände mit einem Gesamtgewicht von :size tragen!' =>
+	'Hier kannst du auswählen, wie weit der Rabe fliegen soll, um eine Ruine auszuwählen. Für eine größere Distanz musst du selbstverständlich mehr Futter springen lassen. Der Rabe wird zufällig eine Ruine (die kein Aussichtspunkt und auch kein Versteck ist) in dem gewählten Bereich auswählen und dort dreimal nach Gegenständen suchen. Gefundene Gegenstände wird er zu dir bringen, zumindest so lange er sie tragen kann. Falls er nichts findet oder die gefundenen Gegenstände ihn nicht auslasten, wird er Gegenstände vom Boden aufheben. Der Rabe kann nicht mehr als :capacity Gegenstände mit einem Gesamtgewicht von :size tragen!',
+  'Nähere Umgebung (Distanz bis :m2)' =>
+	'Nähere Umgebung (Distanz bis :m2)',
+  'Entfernte Regionen (Distanz zwischen :m1 und :m2)' =>
+	'Entfernte Regionen (Distanz zwischen :m1 und :m2)',
+  'Arsch der Welt (Distanz über :m1)' =>
+	'Arsch der Welt (Distanz über :m1)',
+  'Der Rabe hat :itemdef gebracht!' =>
+	'Der Rabe hat :itemdef gebracht!',
+  'In dem gewählten Gebiet scheint es keine Ziele für den Raben zu geben...' =>
+	'In dem gewählten Gebiet scheint es keine Ziele für den Raben zu geben...',
+  'Corax der Rabe' =>
+	'Corax der Rabe',
+  'Der Ausflug deines Raben scheint erfolgreich verlaufen zu sein! Er hat :location besucht und dir sogar etwas mitgebracht.' =>
+	'Der Ausflug deines Raben scheint erfolgreich verlaufen zu sein! Er hat :location besucht und dir sogar etwas mitgebracht.',
+  'Dein Rabe hat :location besucht, ist jedoch mit leeren Krallen zurückgekehrt...' =>
+	'Dein Rabe hat :location besucht, ist jedoch mit leeren Krallen zurückgekehrt...',
+  'Du hast deinem Raben ein paar Pillen in seine Körner gemischt.' =>
+	'Du hast deinem Raben ein paar Pillen in seine Körner gemischt.',
+  'Raben sind keine sonderlich altruistisch eingestellten Tiere... du musst ihn schon ausreichend füttern, wenn du Gegenstände von ihm bekommen möchtest.' =>
+	'Raben sind keine sonderlich altruistisch eingestellten Tiere... du musst ihn schon ausreichend füttern, wenn du Gegenstände von ihm bekommen möchtest.',
+  'Abschließen: Raben-Bootcamp' =>
+	'Abschließen: Raben-Bootcamp',
+  'Epische Projekte: Raben-Bootcamp' =>
+	'Epische Projekte: Raben-Bootcamp',
+  'Wandöffnung' =>
+	'Wandöffnung',
+  'Dein Rabe kann keine Türen benutzen - wenn er hier rein- und rauskommen soll, musst du wohl oder übel ein kleines Loch in die Wand schlagen.' =>
+	'Dein Rabe kann keine Türen benutzen - wenn er hier rein- und rauskommen soll, musst du wohl oder übel ein kleines Loch in die Wand schlagen.',
+  'Rabenkäfig' =>
+	'Rabenkäfig',
+  'Baue deinem Raben lieber einen Käfig... sonst wirst du eines Nachts seine Krallen an deiner Kehle spüren.' =>
+	'Baue deinem Raben lieber einen Käfig... sonst wirst du eines Nachts seine Krallen an deiner Kehle spüren.',
+  'Futterschale' =>
+	'Futterschale',
+  'Der Rabe kann sich entweder aus einer Futterschale oder deiner Leber bedienen... deine Entscheidung.' =>
+	'Der Rabe kann sich entweder aus einer Futterschale oder deiner Leber bedienen... deine Entscheidung.',
+  'Raben anlocken' =>
+	'Raben anlocken',
+  'Locke einen Raben an, damit du ihn trainieren kannst.' =>
+	'Locke einen Raben an, damit du ihn trainieren kannst.',
+  'Raben trainieren' =>
+	'Raben trainieren',
+  'Ist zumindest angenehmer, als einen bengalischen Tiger zu trainieren.' =>
+	'Ist zumindest angenehmer, als einen bengalischen Tiger zu trainieren.',
+  'Verkabelungen' =>
+	'Verkabelungen',
+  'So ein hochentwickelter Laserzaun muss korrekt verkabelt sein!' =>
+	'So ein hochentwickelter Laserzaun muss korrekt verkabelt sein!',
+  'Sicherungskasten' =>
+	'Sicherungskasten',
+  'Der Sicherungskasten sorgt dafür, dass in deinem Versteck nicht jedes mal der Strom ausfällt, wenn ein Zombie in den Laserzaun läuft.' =>
+	'Der Sicherungskasten sorgt dafür, dass in deinem Versteck nicht jedes mal der Strom ausfällt, wenn ein Zombie in den Laserzaun läuft.',
+  'Rückstrombeständiger Fluktuationskompensator mit vierfachen Elektronenfokus-Strahlern' =>
+	'Rückstrombeständiger Fluktuationskompensator mit vierfachen Elektronenfokus-Strahlern',
+  'Jedes Kind weis, dass man so etwas für einen Laserzaun benötigt!' =>
+	'Jedes Kind weis, dass man so etwas für einen Laserzaun benötigt!',
+  'Epische Projekte: Laserzaun' =>
+	'Epische Projekte: Laserzaun',
+  'Laser-Emittent' =>
+	'Laser-Emittent',
+  'Vorsicht: Wiederholte Bestrahlung durch selbstgebaute Laser-Emittenten kann zur Ausbildung von Superkräften führen.' =>
+	'Vorsicht: Wiederholte Bestrahlung durch selbstgebaute Laser-Emittenten kann zur Ausbildung von Superkräften führen.',
+  'Abschließen: Laserzaun' =>
+	'Abschließen: Laserzaun',
+  'Für die gewählte Distanz benötigt der Rabe folgendes Futter:' =>
+	'Für die gewählte Distanz benötigt der Rabe folgendes Futter:',
+  'Einschalten' =>
+	'Einschalten',
+  'Aktiviert den Laserzaun. Während der eingeschaltet ist konsumiert er Energie, dafür können Zombies unmöglich in dein Versteck einbrechen.' =>
+	'Aktiviert den Laserzaun. Während der eingeschaltet ist konsumiert er Energie, dafür können Zombies unmöglich in dein Versteck einbrechen.',
+  'Die durch den Laserzaun zusätzlich generierte Verteidigung wird auf die Hausverteidigung addiert.' =>
+	'Die durch den Laserzaun zusätzlich generierte Verteidigung wird auf die Hausverteidigung addiert.',
+  'Zeigt die Menge an Energie an, die deinem Versteck momentan zur Verfügung steht. Geht die Energie zur Neige, solltest du mit dem Generator neue erzeugen.' =>
+	'Zeigt die Menge an Energie an, die deinem Versteck momentan zur Verfügung steht. Geht die Energie zur Neige, solltest du mit dem Generator neue erzeugen.',
+  'Dies ist die Zeit, die der Laserzaun mit deinem aktuellen Energievorrat noch laufen kann, bevor er wegen Energiemangel automatisch heruntergefahren wird.' =>
+	'Dies ist die Zeit, die der Laserzaun mit deinem aktuellen Energievorrat noch laufen kann, bevor er wegen Energiemangel automatisch heruntergefahren wird.',
+  'Ausschalten' =>
+	'Ausschalten',
+  'Deaktiviert den Laserzaun. Es wird keine Energie mehr verbraucht, aber dafür können die Zombies wieder eindringen.' =>
+	'Deaktiviert den Laserzaun. Es wird keine Energie mehr verbraucht, aber dafür können die Zombies wieder eindringen.',
+  'Du hast den Laserzaun aktiviert.' =>
+	'Du hast den Laserzaun aktiviert.',
+  'Du hast den Laserzaun aufgeladen.' =>
+	'Du hast den Laserzaun aufgeladen.',
+  'Hier scheint niemand zu sein ...' =>
+	'Hier scheint niemand zu sein ...',
+  'Post' =>
+	'Post',
+  'Nachricht verfassen' =>
+	'Nachricht verfassen',
+  'An:' =>
+	'An:',
+  'Titel' =>
+	'Titel',
+  'Senden' =>
+	'Senden',
+  'Nachrichtentext' =>
+	'Nachrichtentext',
+  'Dein Posteingang ist leer...' =>
+	'Dein Posteingang ist leer...',
+  'Möchtest du diese Nachricht wirklich senden?' =>
+	'Möchtest du diese Nachricht wirklich senden?',
+  'Deine Nachricht wurde erfolgreich versandt.' =>
+	'Deine Nachricht wurde erfolgreich versandt.',
+  'Löschen' =>
+	'Löschen',
+  'Antworten' =>
+	'Antworten',
+  'Nachrichtentext oder Titel sind zu kurz. Bitte verwende mindestens 2 Zeichen im Titel und 5 Zeichen im Text.' =>
+	'Nachrichtentext oder Titel sind zu kurz. Bitte verwende mindestens 2 Zeichen im Titel und 5 Zeichen im Text.',
+  'Nachrichtentext oder Titel sind zu lang. Bitte verwende nicht mehr als 64 Zeichen im Titel und 2048 Zeichen im Text.' =>
+	'Nachrichtentext oder Titel sind zu lang. Bitte verwende nicht mehr als 64 Zeichen im Titel und 2048 Zeichen im Text.',
+  'Beim Senden der Nachricht ist ein Fehler aufgetreten.' =>
+	'Beim Senden der Nachricht ist ein Fehler aufgetreten.',
+  'Bist du sicher, dass du diese Nachricht löschen möchtest?' =>
+	'Bist du sicher, dass du diese Nachricht löschen möchtest?',
+  'Die ausgewählte Nachricht wurde gelöscht.' =>
+	'Die ausgewählte Nachricht wurde gelöscht.',
+  'Beim Löschen der Nachricht ist ein Fehler aufgetreten.' =>
+	'Beim Löschen der Nachricht ist ein Fehler aufgetreten.',
 );

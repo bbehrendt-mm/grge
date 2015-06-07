@@ -63,7 +63,8 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         //Accumulate zombies
         $this->zombie_factory->accumulate_zombies();
 
-        if (($this->get_defense() > 0) && floor($this->zombie_factory->get_zombie_accumulation()) > $this->get_defense()) {
+        /** @var Model_Items_Virtual_Epic_Fence $fence */
+        if (($this->get_defense() > 0) && floor($this->zombie_factory->get_zombie_accumulation()) > $this->get_defense() && (!($fence = Tool_Scripts::first_available_item('Model_Items_Virtual_Epic_Fence', false)) || !$fence->get_status())) {
             if ($this->has_upgrade("bedrwake")) {
                 $this->remove_upgrades("bedrwake");
                 foreach (Tool_Scripts::at_location($this->uin) as $s_player)
@@ -231,5 +232,6 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
 
     public function inc_defense($val) {
         $this->defense += $val;
+        if ($this->defense < 1) $this->defense = 1;
     }
 }	

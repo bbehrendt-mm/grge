@@ -509,16 +509,16 @@ return Model_Blueprints::factory()
             ->description('Wie Millionen von Pot-Farmern vor dir kannst auch du mit diesem patentierten Gewächshaus-Bausatz deinen grünen Daumen entdecken und verschiedene nützliche Gewächse anpflanzen. Aber Achtung: Ein solcher Garten benötigt viel Aufmerksamkeit und Zeit, bevor du etwas ernten kannst!')
     )
 
-    ->add_blueprints(
+    /*->add_blueprints(
         Model_Blueprint::factory()
             ->id('epc_drill')
             ->name('Grundwasserversorgung')
             ->description('Warum gammliges Kondenswasser von alten Bahnhofstoiletten ablecken, wenn du dir frisches Wasser aus dem Boden besorgen kannst? Zwar wird der Bau dieses Projektes dich sehr viel Energie kosten, dafür verfügst du danach über eine (zumindest halbwegs) stetige Wasserversorgung.')
-    )
+    )*/
 
     ->add_blueprints(
         Model_Blueprint::factory()
-            ->id('epc_ravens')
+            ->id('epc_raven')
             ->name('Raben-Bootcamp')
             ->description('Raben sind intelligente (und boshafte) Tiere - aber mit ein bisschen Geschick könntest du sie vielleicht dazu trainieren, für dich nach Gegenständen zu suchen. Du müsstest sie dafür natürlich mit etwas Futter belohnen...')
     )
@@ -535,14 +535,6 @@ return Model_Blueprints::factory()
 
     //++ STACK -> EPIC FOUNDATIONS / GARDEN
     ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires('epc_garden')->category('Epische Projekte: Kleines Gewächshaus');})
-
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('epc_garden_final')
-            ->requires('epc_garden_floor')->requires('epc_garden_patch')->requires('epc_garden_lights')->requires('epc_garden_water')
-            ->produces(['Model_Items_Virtual_Epic_Garden' => 1])
-            ->name('Abschließen: Kleines Gewächshaus')
-    )
 
     ->add_blueprints(
         Model_Blueprint::factory()
@@ -584,9 +576,131 @@ return Model_Blueprints::factory()
             ->material(['Model_Items_Generic_Tube' => 4, 'Model_Items_Generic_Pressure' => 1, 'Model_Items_Generic_Sum' => 2])
     )
 
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('epc_garden_final')
+            ->requires('epc_garden_floor')->requires('epc_garden_patch')->requires('epc_garden_lights')->requires('epc_garden_water')
+            ->produces(['Model_Items_Virtual_Epic_Garden' => 1])
+            ->name('Abschließen: Kleines Gewächshaus')
+    )
+
     // -- STACK -> EPIC FOUNDATIONS / GARDEN
     ->pop_stack()
 
+    //++ STACK -> EPIC FOUNDATIONS / RAVEN
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires('epc_raven')->category('Epische Projekte: Raben-Bootcamp');})
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('epc_raven_hole')
+            ->name('Wandöffnung')
+            ->description('Dein Rabe kann keine Türen benutzen - wenn er hier rein- und rauskommen soll, musst du wohl oder übel ein kleines Loch in die Wand schlagen.')
+            ->defense(-5)
+            ->energy(10)
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('epc_raven_cage')
+            ->name('Rabenkäfig')
+            ->description('Baue deinem Raben lieber einen Käfig... sonst wirst du eines Nachts seine Krallen an deiner Kehle spüren.')
+            ->deco(3)
+            ->material(['Model_Items_Generic_Sum' => 4, 'Model_Items_Generic_Tube' => 5, 'Model_Items_Generic_Cloth' => 4])
+            ->energy(10)
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('epc_raven_foodbin')
+            ->name('Futterschale')
+            ->description('Der Rabe kann sich entweder aus einer Futterschale oder deiner Leber bedienen... deine Entscheidung.')
+            ->energy(5)
+            ->material(['Model_Items_Generic_Metal' => 2, 'Model_Items_Generic_Wire' => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('epc_raven_lure')
+            ->requires('epc_raven_cage')->requires('epc_raven_foodbin')
+            ->name('Raben anlocken')
+            ->description('Locke einen Raben an, damit du ihn trainieren kannst.')
+            ->material(['Model_Items_Rawmeat' => 6, 'Model_Items_Basefood' => 3])
+    )
+
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('epc_raven_training')
+            ->requires('epc_raven_lure')
+            ->steps(3)
+            ->name('Raben trainieren')
+            ->description('Ist zumindest angenehmer, als einen bengalischen Tiger zu trainieren.')
+            ->energy(60)
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('epc_raven_final')
+            ->requires('epc_raven_hole')->requires('epc_raven_lure')->requires('epc_raven_cage')->requires('epc_raven_foodbin')->requires('epc_raven_training')
+            ->produces(['Model_Items_Virtual_Epic_Raven' => 1])
+            ->name('Abschließen: Raben-Bootcamp')
+    )
+
+    // -- STACK -> EPIC FOUNDATIONS / RAVEN
+    ->pop_stack()
+
+    //++ STACK -> EPIC FOUNDATIONS / FENCE
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires('epc_fence')->category('Epische Projekte: Laserzaun');})
+
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('epc_fence_wiring')
+            ->name('Verkabelungen')
+            ->requires('gen1')
+            ->description('So ein hochentwickelter Laserzaun muss korrekt verkabelt sein!')
+            ->material(['Model_Items_Generic_Wire' => 8])
+            ->energy(15)
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('epc_fence_fusebox')
+            ->name('Sicherungskasten')
+            ->description('Der Sicherungskasten sorgt dafür, dass in deinem Versteck nicht jedes mal der Strom ausfällt, wenn ein Zombie in den Laserzaun läuft.')
+            ->material(['Model_Items_Generic_Wire' => 3, 'Model_Items_Generic_Oven' => 1, 'Model_Items_Shield2' => 1])
+            ->energy(15)
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('epc_fence_technobabble')
+            ->name('Rückstrombeständiger Fluktuationskompensator mit vierfachen Elektronenfokus-Strahlern')
+            ->description('Jedes Kind weis, dass man so etwas für einen Laserzaun benötigt!')
+            ->material(['Model_Items_Generic_Pressure' => 1, 'Model_Items_Bone' => 2, 'Model_Items_Dildo' => 4, 'Model_Items_Generic_Boiler' => 1])
+            ->deco(5)
+            ->energy(42)
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('epc_fence_lasers')
+            ->name('Laser-Emittent')
+            ->description('Vorsicht: Wiederholte Bestrahlung durch selbstgebaute Laser-Emittenten kann zur Ausbildung von Superkräften führen.')
+            ->material(['Model_Items_Generic_Lamp' => 3, 'Model_Items_Flashlight' => 3, 'Model_Items_Generic_Electro' => 3, 'Model_Items_Generic_Ducttape' => 1])
+            ->energy(30)
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('epc_fence_final')
+            ->requires('epc_fence_wiring')->requires('epc_fence_fusebox')->requires('epc_fence_technobabble')->requires('epc_fence_lasers')
+            ->produces(['Model_Items_Virtual_Epic_Fence' => 1])
+            ->name('Abschließen: Laserzaun')
+    )
+
+    // -- STACK -> EPIC FOUNDATIONS / FENCE
+    ->pop_stack()
 
 
     ->validate();

@@ -89,8 +89,17 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
 			$player = $this->get_player($remote_player);
 			
 			if ($player->alive()) {
-				$player->tick();
-				if (method_exists($player->location(),'tick')) $player->location()->tick();
+                // Tick items
+                foreach ($player->inventory()->get('Interface_Tickable') as $item)
+                    /** @var $item Interface_Tickable */
+                    $item->tick($player->id(), true);
+
+                foreach ($player->location()->inventory()->get('Interface_Tickable') as $item)
+                    /** @var $item Interface_Tickable */
+                    $item->tick($player->location_class(), false);
+
+                $player->tick();
+                if (method_exists($player->location(),'tick')) $player->location()->tick();
 			}
 		}
 	}

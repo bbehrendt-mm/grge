@@ -117,7 +117,7 @@ return array (
   'Seite :c/:m' =>
 	'Page :c/:m',
   'Frauenrechtlerin' =>
-	'Woman Rights Activist',
+	'Women\'s Rights Activist',
   'Medizinstudent' =>
 	'Med student',
   'Survivalist' =>
@@ -249,7 +249,7 @@ return array (
   'Kind' =>
 	'Child',
   'Konnte den Zombies entkommen, indem es die Beschützerinstinkte seiner Eltern eiskalt ausnutzte - musste dann aber leider feststellen, das Erwachsene in manchen Situationen doch ganz hilfreich sind.' =>
-	'Managed to escape the zombies by taking advantage of his parents protective instinct - only to realize that adults are actually pretty usefull in a zombie apocalypse.',
+	'You managed to escape the zombies by taking advantage of your parents protective instinct - only to realize that adults are actually pretty useful in a zombie apocalypse.',
   'Berserker' =>
 	'Berserker',
   'Mit dieser Einstellung startest du dein Spiel mit einer einzigartigen, besonders starken Machete.' =>
@@ -279,11 +279,11 @@ return array (
   'Nachdem die Welt den Bach heruntergegangen ist merkst du plötzlich, dass du eigentlich nichts kannst, nichts weißt und auch nicht sonderlich sympathisch bist. Als Politiker bist du im Wesentlichen ein Klotz am Bein der anderen Überlebenden... du kannst nur hoffen, dass sie sich nicht den Zombiehorden opfern.' =>
 	'After the world went kaput, you\'re suddenly faced with the realization that you don\'t know shit, can\'t do shit and, on top of that, are kind of a douche. As a politician, you\'re basically a burden for all the other survivors... let\'s just hope they won\'t sacrifice you to the zombies.',
   'Als Football-Coach bist du ein Meister subtiler Künste wie &quot;Frontal durch Zombiehorden brechen&quot;, außerdem kannst du im Kampf einiges einstecken, ohne dich zu verletzen. Mit ein bisschen Übung gelingt es dir eventuell sogar, eine Meute von belagernden Zombies so zu durchberechen, dass auch andere Spieler dir folgen können.' =>
-	'As football coach you are a master of subtle arts such as &quot;Run head-on into zombies&quot;. You can also take more abuse from zombies withut dying. With a little practice, you might be able to help other people escaping a zombie blockade when you try to breach it.',
+	'As football coach you are a master of subtle arts such as &quot;Run head-on into zombies&quot;. You can also take more abuse from zombies without dying. With a little practice, you might be able to help other people escaping a zombie blockade when you try to breach it.',
   'Als Student hast du viele medizinische Studien durchgeführt, die meisten davon hatten mit den Auswirkungen von Alkohol und Drogen auf den eigenen Körper zu tun. Aus diesem Grund warst du leider etwas weniger Aufmerksam in den Vorlesungen. Aber zum Aufkleben von Pflastern reichen deine Kenntnisse gerade so noch aus.' =>
 	'As a part of your research, you studied the effects of massive amounts of drugs and alcohol on your own body. Unfortunately, this interfered with your attention during lections. You might not be able to perform complex surgery, but you sure as hell can apply band-aids!',
   'Du bist eine Meisterin, lautstark gegen alles und jeden zu hetzen der dir nicht in den Kram passt - der einzige Grund, warum deine Mitüberlebenden dir noch keine Rohrzange über den Schädel gezogen haben, ist dass du dir in schöner Regelmäßigkeit Sprüche auf die Titten schreibst und dann stundenlang oben ohne gegen die Zombies protestierst. Dank deiner kratzfreudigen Fingernägel und dem Endlos-Vorrat Pfefferspray bist du aber auch im Kampf ganz brauchbar.' =>
-	'You\'re really good at protesting pretty much anything that you don\'t approve of - the only reason why you didn\'t end as zombie bait is the fact that you regularly run around topless while protesting the male dominance in the undead hordes. Your sharp nails and the endless amound of pepper spray you can dispense also make you an effective fighter.',
+	'You\'re really good at protesting pretty much anything that you don\'t approve of - the only reason why you didn\'t end up as zombie bait is the fact that you regularly run around topless while protesting the male dominance in the undead hordes. Your sharp nails and the endless amount of pepper spray you can dispense also make you an effective fighter.',
   ':num Seelenpunkte' =>
 	':num Soul Points',
   'Spielen' =>
@@ -671,7 +671,7 @@ return array (
   'Heißer Kaffee' =>
 	'Hot Coffee',
   'Heißer Kaffee... welch ein Luxus. Dank deines Wasserkochers ist dieser Kaffee übrigens so heiß, dass er niemals wieder kalt wird. Für die einen wäre das einfach eine Lücke in der Spiellogik, für andere aber ..... heißer Kaffee!' =>
-	'Hot Coffee... pure luxury. Thanks to your water boiler this coffe has been heated so much, it will never ever cool off again. Some would call this a hole in the games logic, but ..... hot coffee!',
+	'Hot Coffee... pure luxury. Thanks to your water boiler this coffee has been heated so much, it will never ever cool off again. Some would call this a hole in the games logic, but ..... hot coffee!',
   'Schachtel mit Paracetoid' =>
 	'Box of Paracetoid',
   'Hilft zuverlässig gegen Kopfschmerzen, Bauchschmerzen, abgerissene Körperteile und extreme radioaktive Verstrahlung. Nicht einnehmen bei Schwangerschaft oder fortgeschrittener Zombiefizierung.' =>
@@ -757,7 +757,7 @@ return array (
   'Schachtel mit Paracetin' =>
 	'Box of Paracetin',
   'Paracetin macht selbst den schlaffesten Sack wieder munter. Die hochkonzentrierte Mischung aus Koffein und dem von unserer Marketingabteilung neu entwickelten Acclerin - gewonnen aus natürlichem Orangenextrakt - bewirkt ein sofortiges Auffüllen von Energiereserven!' =>
-	'Paracetin has been reported to even wake the dead. It contains a mixture of highly concentrated caffeine and molecule complex called accelerin, that was just developed by our marketing department.',
+	'Paracetin has been reported to even wake the dead. It contains a mixture of highly concentrated caffeine and a molecule complex called accelerin, that was just developed by our marketing department.',
   'Kapsel' =>
 	'Capsule',
   'Eine Paralaxium schlucken' =>
@@ -1033,7 +1033,7 @@ return array (
   'Der Mond steht hoch am Himmel und die Welt ist in Dunkelheit getaucht. Da Zombies keine sonderlich guten Augen haben, kannst du ihnen nachts leichter entkommen. Allerdings wirst du ohne eine Taschenlampe auch weniger gegenstände finden...' =>
 	'The moon has risen high on the sky, and the world is immeresed in darkness. Zombies have bad eyes, so escaping them will be easier. Unfortunately, you will hardly find any items without a flashlight...',
   'Eine Sternschnuppe! So eine hast du schon ewig nicht mehr gesehen. Dieser wunderschöne Anblick gibt dir Hoffnung und einen gewaltigen Energieschub!' =>
-	'A shooting star! It\'s been ages since you\'ve seen one! This beauitiful sight lets you find new hope and gives you a boost of energy.',
+	'A shooting star! It\'s been ages since you\'ve seen one! This beautiful sight lets you find new hope and gives you a boost of energy.',
   'Produziert' =>
 	'Produces',
   'Exitus (1 Ration)' =>
@@ -1051,7 +1051,7 @@ return array (
   'Dieser Holzabfall ist alleine nicht viel Wert, aber wenn du genug davon sammelst kannst du eventuell ein Holzbrett daraus herstellen.' =>
 	'A rotting log is pretty much worthless, but if you collect enough you might be able to use them for something.',
   'Diese Metallsplitter sind alleine nicht viel Wert, aber wenn du genug davon sammelst kannst du daraus eventuell etwas Nützliches herstellen.' =>
-	'Scap metal is pretty much worthless, but if you collect enough you might be able to use them for something.',
+	'Scrap metal is pretty much worthless, but if you collect enough you might be able to use them for something.',
   'Dieses große Stück Stoff ist alleine nicht sehr nützlich, aber eventuell kannst du damit etwas anfangen wenn du mehrere hast...?' =>
 	'One of these alone isn\'t all that useful, but maybe you will find a use for multiple of these...?',
   'Eine eingestaubte, aber noch immer bequeme Matratze. Wenn du sie mitnimmst kannst du damit garantiert dein Versteck etwas aufmöbeln!' =>
@@ -1611,7 +1611,7 @@ return array (
   'Im Drogenrausch' =>
 	'Drug frenzy',
   'Dein Körper ist momentan damit beschäftigt, den Mist wegzuräumen mit dem du ihn gerade geflutet hast. Sei lieber vorsichtig, wenn du jetzt weiter Drogen nimmst wirst du möglicherweise abhängig...' =>
-	'Your body is busy cleaning up the mess those drugs left behind. Be carefull, flooding your body with even more drugs right now could get you addicted...',
+	'Your body is busy cleaning up the mess those drugs left behind. Be careful, flooding your body with even more drugs right now could get you addicted...',
   'Einschlafen' =>
 	'Falling asleep',
   'Du versuchst momentan, einzuschlafen. Bei all den furchtbaren Zombies da draußen ist das gar nicht so einfach - plane hierfür also lieber etwas mehr Zeit ein.' =>
@@ -1909,7 +1909,7 @@ return array (
   'Derzeit gibt es nichts Neues aus der Stadt zu berichten... probiere es in :duration noch einmal!' =>
 	'There are no interesting news from your town. Try again in :duration!',
   'Deine Stadt ist dir äußerst dankbar für diese neuen Informationen.' =>
-	'The members of your town are thankfull for these valuable informations.',
+	'The members of your town are thankful for this valuable information.',
   'Du hast eine neue Ruine entdeckt und eine grobe Karte mit ihrer Position gezeichnet. Diese Informationen sind sicher nützlich für deine Stadt.... besser wäre es natürlich, du würdest diese Ruine genauer erkunden.' =>
 	'You\'ve discovered a new ruin and marked its approximate position on your map. This will be useful to the people of your town.... it\'d be even better if you took a closer look at this place, of course.',
   'Alte Apotheke' =>
@@ -2001,7 +2001,7 @@ return array (
   'Messwein' =>
 	'Mass Wine',
   'OK, für den Beichtvater und die Chorknaben konntest du nicht mehr allzuviel tun, aber wenigstens das Allerheiligste konntest du retten, als du aus der Kathedrale geflohen bist: den gesamten Messweinvorrat! Der wird dir helfen, über den Verlust deiner Gemeinde hinweg zu kommen. Waren sowieso alles Sünder...' =>
-	'There was nothing you could do for your reverent, or even all these choristers, but at least could save the most holy thing in the entire cathedral when you fled: The mass wine! It will absolutely helf you get over the death of everyone in your congregation. They\'ve been sinners anyways...',
+	'There was nothing you could do for your reverent, or even all these choristers, but at least could save the most holy thing in the entire cathedral when you fled: The mass wine! It will absolutely help you get over the death of everyone in your congregation. They\'ve been sinners anyways...',
   'Kathedrale' =>
 	'Cathedral',
   'Ein Haus Gottes - Zuflucht für die Erschöpften, die Verfolgten und auch für Geistliche, die etwas zu innige Beziehungen mit ihren Ministranten pflegen. Nicht, dass du soetwas je gemacht hättest...<br />Selbst nach der Apokalypse versammeln sich hier die Gläubigen auf der Suche nach Hoffnung. Wobei die Gläubigen in diesem speziellen Fall leider relativ untot sind, und "Hoffnung" die Hoffnung auf etwas zu fressen meint.' =>
@@ -2053,7 +2053,7 @@ return array (
   'Revolver' =>
 	'Colt',
   'Batteriewerfer? HA! Mit diesem Baby nimmst du Zombies aus der Entfernung mit einem Lächeln aufs Korn!' =>
-	'Battery Launcher? Oh come one, these are for babies! This Colt protects you, your family and the American way of life from democrats, communists and illegal immigrants. [Disclaimer: This text may or may not be sponsored by the NRA]',
+	'Battery Launcher? Oh come on, those are for babies! This Colt protects you, your family, and the American way of life from democrats, communists, and illegal immigrants. [Disclaimer: This text may or may not be sponsored by the NRA]',
   'Hier hat anscheinend jemand in der Nähe einer Leichen einen Fressanfall gehabt ...  oder du hast einfach die Überreste eines Magersüchtigen gefunden.' =>
 	'Appearently, someone was really hungry and desperate around here ...  or this is just the body of some poor girl suffering from anorexia.',
   'Nachdem du das runtergeschlungen hast dreht sich dir der Magen um - aber wenigstens ist er wieder voll. Hoffentlich ist deine Hausapotheke das auch ...' =>
@@ -2095,17 +2095,17 @@ return array (
   'Jmd. verbinden' =>
 	'Patch s.o. up',
   'Dieser Platz ist umgeben von Wohnhäusern und Geschäften. Hier war früher immer eine bunte Mischung von Menschen zu beobachten. Spielende Kinder, telefonierende Yuppies, schlendernde Senioren... Heute ist dieser Platz menschenleer, nur noch vereinzelte Zombies schlurfen durch die Gegend. Wenigstens kannst du jetzt fast ungestört shoppen gehen!' =>
-	'This place is surrounded by shops and appartment buildings. A long time ago, you could see all kinds of people around here. Playing children, strolling seniors, important-looking yuppies holding even more important looking conversations... Today, this square is devoid of people, only a few zombies are shambling around. Well, at least now you can go window shopping without interruption!',
+	'This place is surrounded by shops and apartment buildings. A long time ago, you could see all kinds of people around here. Playing children, strolling seniors, important-looking yuppies holding even more important looking conversations... Today, this square is devoid of people, only a few zombies are shambling around. Well, at least now you can go window shopping without interruption!',
   'Apotheke "Hustensaft-Schlürfer"' =>
 	'Pharmacy "Linctus Addict"',
   'Augen zu und durch! Du schluckst die Pille herunter - und fühlst plötzlich weder Hunger noch Durst! Das Zeug war ja der Hammer!' =>
-	'Grit your teeth, close your eyes and down this pill - suddenly, any notion of hunger and thirst dissapears. This sure was useful!',
+	'Grit your teeth, close your eyes and down this pill - suddenly, any notion of hunger and thirst disappears. This sure was useful!',
   'Dir fehlen Gegenstände, um diese Aktion durchzuführen.' =>
 	'You are missing some objects to perform this action.',
   'Der Kampf beginnt!' =>
 	'The battle begins!',
   'Schreiend und mit geschlossenen Augen rennst du auf die Zombies zu. Die sind von dieser Aktion so überrascht, dass du die meisten von ihnen einfach aus dem Weg stoßen kannst - aber leider nicht alle. Ein Zombie steht dir mitten im Weg, und wirft dich zu Boden als du versuchst, ihn umzurennen. Zwar kannst du schnell wieder aufspringen, bist nun aber von geifernden Zombies umzingelt. Flucht ist keine Option mehr, du wirst kämpfen müssen.' =>
-	'You close your eyes and run towards the zombies while screaming and flail around with your arms. This seems to confuse the zombies, as they allow you to simple push most of them out of the way - most, but not all of thwm. One of them thows you to the ground. You manage to get up right away, but find yourself surrounded by zombies. There is no other way, you\'ll have to fight.',
+	'You close your eyes and run towards the zombies while screaming and flail around with your arms. This seems to confuse the zombies, as they allow you to simply push most of them out of the way - most, but not all of them. One of them throws you to the ground. You manage to get up right away, but find yourself surrounded by zombies. There is no other way, you\'ll have to fight.',
   'Fehlgeschlagene Flucht!' =>
 	'Failed Escape!',
   'Drogensucht' =>
@@ -2391,15 +2391,15 @@ return array (
   'Tja, Zombies ist es wohl ziemlich egal ob sie Jagd auf Menschen oder Tiere machen. Dieses Vieh war mal Zombiesfutter.... jetzt könnte es Futter für dich werden, sofern du ziemlich anspruchslos bist.' =>
 	'Well, zombies probably don\'t care if they feed on humans or animals, so it looks like this creature turned to zombie food. Well, there is some meat left, so... you hungry?',
   'Mit diesem Leichensack kannst du - Überraschung - Leichen transportieren. Schön verpackt ist so ein Körper viel einfacher zu transportieren, wenn du also auf Leichenjagd gehst solltest du so einen Sack immer dabei haben.' =>
-	'This bodybag allows you to - big surprise - move bodies. This makes it much easier to transport it, so if you plan to hunt down some bodies you should remember to bring your body bag.',
+	'This body bag allows you to - big surprise - move bodies. This makes it much easier to transport it, so if you plan to hunt down some bodies you should remember to bring your body bag.',
   'Mit diesem Leichensack kannst du - Überraschung - Leichen transportieren. Schön verpackt ist so ein Körper viel einfacher zu transportieren, wenn du also auf Leichenjagd gehst solltest du so einen Sack immer dabei haben. Dieser Leichensack weist allerdings einige Gebrauchsspuren auf... er könnte beim Transport aufreißen, sei also vorsichtig.' =>
-	'This bodyback allows you to - big surprise - move bodies. This makes it much easier to transport it, so if you plan to hunt down some bodies you should remember to bring your body bag. This one, however, shows signs of usage... it might rip, so be careful.',
+	'This body bag allows you to - big surprise - move bodies. This makes it much easier to transport it, so if you plan to hunt down some bodies you should remember to bring your body bag. This one, however, shows signs of usage... it might rip, so be careful.',
   'Prall gefüllter Leichensack' =>
 	'Filled Bodybag',
   'Da hast du ja einen dicken Fang an Land gezogen. Zum Glück kannst du ihn in diesem Leichensack gut transportieren.' =>
-	'Well, you certainly reeled in a big one. Thank godness you can move it around in this bodybag.',
+	'Well, you certainly reeled in a big one. Thank goodness you can move it around in this body bag.',
   'Dieser Leichensack ist sicherlich praktisch - wäre da nicht dieses klaffende Loch. Hiermit kannst du nichts transportieren, aber du könntest es zuhause auf deiner Werkbank flicken...' =>
-	'This bodybag is useful - if it wasn\'t for this giant gaping hole. You won\'t be able to transport anything with this, but you might be able to fix it using your workbench...',
+	'This body bag is useful - if it wasn\'t for this giant gaping hole. You won\'t be able to transport anything with this, but you might be able to fix it using your workbench...',
   'Wer sagt, dass man nur kleine Dinge frittieren kann? Diese Leiche kannst du jetzt fast ohne gesundheitliche Risiken essen, und sie schmeckt auch noch viel besser!' =>
 	'Who says one can only frie small things? Now, you can eat this body without risking your health, and it even tastes better!',
   'Du kannst diese kleinen Holzbolzen mit einer Armbrust abfeuern. Die werden nicht so viel Schaden anrichten wie eine Batterie, aber dafür kannst du sie leichter herstellen.' =>
@@ -2433,7 +2433,7 @@ return array (
   'Bestes mit Klavirlack bemaltes Holz, goldene Griffe, ein religiöses Emblem in der Mitte... dieser Sarg war sicher ziemlich teuer! Mit etwas Glück liegt im Sarg noch eine wertvolle Beigabe! Warum schaust du nicht mal nach?' =>
 	'Fine tropical wood, golden handles, some religious emblem right in the middle... this damn thing looks expensive! Maybe there is even something expensive on the inside! You\'ll never know if you don\'t look...',
   'Allein der Duft dieses leckeren Plätzchens lässt dich alles um dich herum vergessen. Plötzlich bist du wieder ein kleines Kind, das unter dem Weihnachtsbaum sitzt und seine Geschenke auspackt. Natürlich kannst du dieses Plätzchen einfach essen - du könntest es natürlich auch in deinem Versteck für den Weihnachtsmann zurücklassen, der dir dafür sicherlich dankbar wäre...' =>
-	'The smell of these delicious cookies give you a warm and cozy feeling inside. Suddenly you\'re a little kid again, sidding under a Christmas tree and unpacking presents. You could simply eat this cookie - or leave it hin you\'re hideout for santa...',
+	'The smell of these delicious cookies give you a warm and cozy feeling inside. Suddenly you\'re a little kid again, sitting under a Christmas tree and unpacking presents. You could simply eat this cookie - or leave it in your hideout for Santa...',
   'Besonderes Weihnachtsplätzchen' =>
 	'Special Christmas Cookie',
   'Allein der Duft dieses leckeren Plätzchens lässt dich alles um dich herum vergessen - hauptsächlich wegen der in den Teig gemischten Drogen. Dieses Plätzchen verbreitet zwar nicht unbedingt Weihnachtsstimmung, aber du siehst nach seinem Genuss zumindest Sterne!' =>
@@ -2473,7 +2473,7 @@ return array (
   'Ein simpler Drahtesel, mit dem du jederzeit überall hin kommst! Nur jetzt gerade nicht, denn es ist kaputt und muss repariert werden. Aber wenn du erstmal ein bisschen Arbeit reingesteckt hast wird es sich sicher lohnen!' =>
 	'A simple two wheel bicycle that will take you anywhere anytime! Pretty much broken right now and needs some patching up. But when it\'s done it will be ready to do the job.',
   'Ein simpler Drahtesel, mit dem du jederzeit überall hin kommst! Achtung: Kann nicht verwendet werden, um Zombieschädel zu spalten. Erstens würdest du es damit kaputt machen, zweitens ist es eh viel zu schwer dafür.' =>
-	'A simple two wheel bicycle that will take you anywhere anytime! Warning: Can not be used to smack the zombies in the head; it would breake in an instant. But no one would try that anyway, it is way too heavy!',
+	'A simple two wheel bicycle that will take you anywhere anytime! Warning: Can not be used to smack the zombies in the head; it would break in an instant. But no one would try that anyway, it is way too heavy!',
   'Han Solo Wackelkopf-Figur' =>
 	'Han Solo Bobblehead',
   'Dies ist die originale Han Solo Wackelkopf-Figur, die im Film als Stund-Double von Harrison Ford eingesetzt wurde. Hätte es die nicht gegeben, dann hätte Han ja zuerst schießen müssen!' =>
@@ -2531,13 +2531,13 @@ return array (
   'Geheimnisvolles Ticket' =>
 	'Myterious Ticket',
   'Die Schrift auf diesem Ticket ist verblasst, nachdem es so lange der Sonnenstrahlung in der Aussenwelt ausgesetzt war. Was kann man mit diesem Ticket wohl machen?' =>
-	'After beeing subjected to wind and weather for god knows how long, the writing on this ticket has faded. I wounder what you could do with this?',
+	'After being subjected to wind and weather for god knows how long, the writing on this ticket has faded. I wonder what you could do with this?',
   'Wäre dies ein Browserspiel mit Vampiren, dann wäre dieses Item sicher wertvoll. Weil Zombies aber viel cooler sind als Vampire, ist dieses Item einfach nur eklig. Bäh!' =>
 	'If this browser game was about vampires, this item would be valuable. But then the game would be crap, so this is just disgusting. Yuck!',
   'Dieses Wasser stammt aus einer deiner Flaschen. Du willst es doch hier nicht versickern lassen, oder?' =>
 	'This water comes from one of your bottles. Do you want it to dry off or what?',
   'Draht kann man eigentlich immer gebrauchen. Er ist zum beispiel nützlich um irgendwelchen Elektromüll zu verkabeln. Oder du kannst damit lustige Fallen in deinem Versteck bauen, um mit den Zombies so eine "Kevin allein zu Haus"-Nummer abzuziehen.' =>
-	'Wires are a helpful in a lot of situations. For instance, you could use it to wire some electronics together. Or you could construct some traps in your hideout, so you can play a whacky game of "Home Alone" with some zombies.',
+	'Wire is helpful in a lot of situations. For instance, you could use it to wire some electronics together. Or you could construct some traps in your hideout, so you can play a whacky game of "Home Alone" with some zombies.',
   'Christbaumlichter' =>
 	'Holiday lights',
   'Diese Lichterkette verbreitet extreme Weihnachtsstimmung. Außerdem ist sie vielseitig einsetzbar; du kannst zum Beispiel einen Weihnachtsbaum damit schmücken.' =>
@@ -2549,7 +2549,7 @@ return array (
   'Schmuckseil' =>
 	'Decorative rope',
   'Eine Last kann dieses Seil nicht tragen - einen Weihnachtsbaum schmücken hingegen schon.' =>
-	'This rope won\'t hold any load - but it will make your Christmas tree lock prettier!',
+	'This rope won\'t hold any load - but it will make your Christmas tree look prettier!',
   'Metallsäge' =>
 	'Hacksaw',
   'Beim Anblick dieser Säge läuft dir ein kalter Schauer den Rücken herunter...' =>
@@ -2591,9 +2591,9 @@ return array (
   'Eine Pille' =>
 	'Some Pill',
   'Experimentelle Plasmakanone' =>
-	'Experimental Plasmagun',
+	'Experimental Plasma Gun',
   'Dieser Waffe liegt ein faszinierendes Konzept zu grunde: Was, wenn man die Energie einer Batterie als Waffe nutzen würde, anstatt einfach die Batterie zu verschießen? Die experimentelle Plasmakanone benutzt richtig abgefahrene Wissenschaft sowie eine Batterie, um auf Plasmatemperatur erhitzte Luftpartikel in Richtung Zombies zu katapultieren. Wo diese Waffe hinfeuert bleibt kein Stein mehr auf dem anderen... allerdings kannst du sie aufgrund der extremen Hitzeentwicklung nur einmal pro Kampf einsetzen - und auch nur gegen Zombies, die weit entfernt stehen.' =>
-	'This weapon follows an intriguing idea: What if we would use the energy stored in a battery to fingtz zombies instead of just using the battery itself? This experimental plasmagun uses some complicated science stuff as well as an ordinary battery to heat air particles until they become plasma and shoot them towards zombies. Wherever this weapon hits, everything turns into dust. However, due to the incredible heat this device produces, you can only use it once during a battle. It\'s also wise to not try shooting something close to you...',
+	'This weapon follows an intriguing idea: What if we would use the energy stored in a battery to fight zombies instead of just using the battery itself? This experimental plasma gun uses some complicated science stuff as well as an ordinary battery to heat air particles until they become plasma and shoot them towards zombies. Wherever this weapon hits, everything turns into dust. However, due to the incredible heat this device produces, you can only use it once during a battle. It\'s also wise to not try shooting something close to you...',
   'Aufgrund einer Kombination aus minderwertigem Schwarzpulver sowie deiner Unerfahrenheit im Bombenbau ist diese Schwarzpulverbombe leider nicht dafür geeignet, Zombies wegzusprengen. Sie wirbelt allerdings genug Staub auf, um Zombies zu verwirren und dir bei der Flucht vor ihnen zu helfen.' =>
 	'Since you lack suitable base material as well as any skill, this poor excuse for a bomb won\'t even blow ants away. It will, however, create a dust cloud that could potentially confuse zombies and allow you to get out of tight situations.',
   'Geschenk' =>
@@ -2607,7 +2607,7 @@ return array (
   'Das war mal ein essbarer Kürbis... naja, essen könntest du ihn immer noch, und vermutlich würde er deinen Hunder stillen - vorrausgesetzt, er bleibt in deinem Magen.' =>
 	'This used to be edible... well, technically it is stil edible, but it might make you hurl...',
   'Süßes sonst gibts Saures! Diese Kürbisbombe ist äußerst effektiv gegen in der Nähe herumstehende Zombies, die dir einfach keine Bonbons geben wollen.' =>
-	'Trick or treat! This pumpkin bomb has proven very effective agains loitering zombies who refuse to give you candy.',
+	'Trick or treat! This pumpkin bomb has proven very effective against loitering zombies who refuse to give you candy.',
   'Diese leckere Suppe stillt Hunger und Durst - und verbreitet ein herbstliches Aroma. Was will man mehr?' =>
 	'This tasty soup vanishes your thirst and hunger - and spreads an autumnal atmosphere. What more could you ask for?',
   'An diesem Knochen hängt noch eine Menge Fleisch. Du könntest es essen... aber dafür müsstest du schon wirklich verzweifelt sein, oder?' =>
@@ -2679,7 +2679,7 @@ return array (
   'Sobald die Zombies in Wurfreichweite kommen kannst du ihnen mit diesem kleinen Geschenk die Tour vermiesen. Nichts ist effektiver gegen eine Gruppe Zombies als eine Wasserbombe!' =>
 	'As soon as zombies enter your throwing perimeter, you can instantly turn them into a puddle of goo. There is nothing more effective at melting zombies faces off than a Water Bomb!',
   'Die Aquablaster XL ist die militärische Variante der Aquablaster XS. Durch das zusätzliche Hochleistungsprühsystem handelt es sich hierbei um eine tödliche Waffe (insbesondere für Zombies). Falls gerade keine Zombie-Apokalypse stattfindet, kann man sie auch zur Auflösung lästiger Demonstationen verwenden.' =>
-	'This Aquablaster XL is a military version of the standart Aquablaster XS. The additional high power spraying system turns this device into a deadly weapon (especially for zombies!). Of course, you can also use it to efficiently end annoying demonstrations.',
+	'This Aquablaster XL is a military version of the standard Aquablaster XS. The additional high power spraying system turns this device into a deadly weapon (especially for zombies!). Of course, you can also use it to efficiently end annoying demonstrations.',
   'Weihnachtsgetränk' =>
 	'Christmas Drink',
   'Ein absolut klassisches Weihnachtsgetränk! Hauptsächlich deshalb, weil man sich im Dezember so viel davon reinschüttet, dass man es die restlichen 11 Monate nicht mehr anrühren kann.' =>
@@ -2701,7 +2701,7 @@ return array (
   'Gebrauchsanleitung für einen Kühlschrank' =>
 	'Freezer Manual',
   'Gebrauchsanleitung für eine Waschmaschine' =>
-	'Washing Maschine Manual',
+	'Washing Machine Manual',
   'Gebrauchsanleitung für einen Wäschetrockner' =>
 	'Dryer Manual',
   'Gebrauchsanleitung für eine HiFi-Anlage' =>
@@ -2713,7 +2713,7 @@ return array (
   'Mario Barth LIVE CD' =>
 	'Justin Bieber CD',
   'Auf dem Booklet steht was von "totlachen"... "Tod" ist schonmal sehr treffend, "lachen" eher nicht. Die Witze (bzw. der eine Witz, der über 90 Minuten immer wieder wiederholt wird) verursachen selbst bei Zombies noch den sofortigen Hirntod - was dann irgendwie doch wieder etwas beeindruckend ist.' =>
-	'The contend of this CD shows some marvellous technical achievements... I mean, would you ever have thought that you could crank up auto-tune to a level where even the grunts of a zombie sould like a rock ballad? Unfortunately, since that zombie sounds vastly to superior to Justin, his music is still shit even with auto-tune.',
+	'The content of this CD shows some marvelous technical achievements... I mean, would you ever have thought that you could crank up auto-tune to a level where even the grunts of a zombie sounds like a rock ballad? Unfortunately, since that zombie sounds vastly to superior to Justin, his music is still shit even with auto-tune.',
   'CD einer DSDS Gewinnerin' =>
 	'Japanese Pop CD',
   'Diese CD enthält Musik von irgend einer Gewinnerin von DSDS, deren Namen wahrscheinlich nicht mal sie selber kennt. Leider hat sie sich nicht allzu gut verkauft, und wurde in den Top 100 Albumcharts von den CDs "Fahrstuhlmusik heute" und "Furzgeräusche rund um die Welt" vernichtend geschlagen.' =>
@@ -3001,7 +3001,7 @@ return array (
   'Zum Glück ist der Sarg schon ziemlich verrottet, daher lässt er sich leicht öffnen. Der im Sarg liegende Leichnam sieht noch ziemlich saftig aus... Du hast Glück - neben den sterblichen Überresten findest du ein/eine/einen :item!' =>
 	'Luckily, this coffin is pretty rotten by now, so it is easy to open. The body in there looks pretty juicy... You even manage to find :item next to it!',
   'Uuuh, das hat gezwiebelt. Aber deine Energie ist wieder aufgeladen. Leider ist der Bauchmuskeltrainer jetzt etwas angekokelt...' =>
-	'Argh, you skin is burning! But you energy is replenished. The contacts of your EMS system seem to have been burned...',
+	'Argh, your skin is burning! But your energy is replenished. The electrodes of your EMS system seem to have been burned...',
   'Zum Glück ist der Sarg schon ziemlich verrottet, daher lässt er sich leicht öffnen. Der im Sarg liegende Leichnam sah bestimmt schonmal weniger blass aus... Leider scheint hier sonst nichts von Wert drin zu sein.' =>
 	'Luckily, this coffin is pretty rotten by now, so it is easy to open. The guy in there looks mighty pale, in a really unhealthy way... however, there is nothing else in here.',
   'So ein Workout wirkt Wunder! Nach ein paar Liegestützen und Kniebeugen bist du wieder Fit für den Kampf um Leben und Tod.' =>
@@ -4085,7 +4085,7 @@ return array (
   'Seehofer' =>
 	'Romneys',
   'OH GOTT! Du wirst von obskuren Gestalten angegriffen, die eventuell mit deinen schweren Halluzinationen in Zusammenhang stehen!' =>
-	'OH GOD! You\\#re being attacked by stange creatures that may or may not have something to do with your heavy hallucinations!',
+	'OH GOD! You\'re being attacked by strange creatures that may or may not have something to do with your heavy hallucinations!',
   'Augen zu und durch! Du schluckst die Pille herunter. Was danach passiert, weißt du nicht mehr - aber dein ganzer Rucksack ist plötzlich leer! Wär hätte denn ahnen können dass die schwarze Pille Blackouts verursachen kann ...' =>
 	'Grit your teeth, close your eyes and down this pill. No idea what happened, but when you wake up your rucksack feels considerably lighter. Who could have thought the black pill causes blackouts??',
   'Im Schlaf zerfetzt' =>
@@ -4197,9 +4197,9 @@ return array (
   'Augen zu und durch! Du schluckst die Pille herunter - und mit einem mal fühlst du dich extrem satt! Anscheinend war das irgend eine Nährstoffpille!' =>
 	'Grit your teeth, close your eyes and down this pill! Suddenly you feel totally sated. This seems to have been some sort of nutrient pill!',
   'Die Aktion konnte nicht vollständig ausgeführt werden, da eines oder mehrere der ausgewählten Gegenstände nicht länger in deiner Reichweite sind.' =>
-	'Some parts of this action could not be completed, since at least on of the targeted items is out of your reach.',
+	'Some parts of this action could not be completed, since at least one of the targeted items is out of your reach.',
   'Du nimmst die Bandage, wickelst die um den Griff der Machete und befestigst die Enden mit ein wenig Klebeband. Toll, nun kannst du deine Machete viel einfacher halten und es besteht keine Gefahr mehr, beim Metzeln (oder bei der Intimrasur) abzurutschen.' =>
-	'With some duct tape and a normal bandage, you manage to make the handly of your machete much more easy to grip. Now you will never have to worry about imprecise movements when butchering zombies (or shaving your privates).',
+	'With some duct tape and a normal bandage, you manage to make the handle of your machete much more easy to grip. Now you will never have to worry about imprecise movements when butchering zombies (or shaving your privates).',
   'Privatpatienten haben mehr Geld, also sind sie die besseren Menschen und verdienen bessere medizinische Versorgung. Dazu gehört auch dieses Luxuszimmer, mit Besuchersessel aus Leder, Heimkinoanlage und natürlich einer gut bestückten Bar. Eigentlich könntest du dich auch selbst hier "einliefern" lassen und diesen Ort zu einem Versteck umbauen...' =>
 	'Private patients usually have more money, which makes them better people who deserve better medical care. This includes this luxurious room, featuring a leather armchair for visitors, home cinema system and of course a well-filled bar. Say, why don\'t you "hospitalize" yourself and turn this room into a nifty hideout?',
   'Du hast die alte Beschriftung weggewischt.' =>
@@ -4219,7 +4219,7 @@ return array (
   'Ein angriffslustiger Zombie springt aus dem Kühlraum und greift an!' =>
 	'A belligerent zombie jumps out of the cooling chamber and attacks!',
   'Die schwere Metalltür, die die Küche vom Kühlraum trennt, ist inzwischen startk verrostet. Nach einiger Anstrengung gelingt es dir aber doch, sie einen Spalt zu öffnen. Du willst gerade hineingehen, als du plötzlich von einem Zombie angefallen wirst! Wie zum Teufel ist der denn da rein gekommen? Zu allem Überfluss ist der Kühlraum (bis auf den Zombie) völlig leer...' =>
-	'The hinges of this heavy, metal door are rusted, making it hard to open it. After a huge effort however, you manage to pry it open a little. As you try to squeeze yourself throug, you are suddenly attacked by a zombie! How on earth did he manage to get in there? Worse than that, the room seems to be empty...',
+	'The hinges of this heavy, metal door are rusted, making it hard to open it. After a huge effort however, you manage to pry it open a little. As you try to squeeze yourself through, you are suddenly attacked by a zombie! How on earth did he manage to get in there? Worse than that, the room seems to be empty...',
   'Hobbyraum' =>
 	'Hobby Room',
   'Bist du verrückt? Das kannst du doch nicht machen, wenn alle zugucken... Such dir ein ruhigeres Plätzchen.' =>
@@ -4263,7 +4263,7 @@ return array (
   'Direkt nachdem du die Paralaxium schluckst fallen dir langsam die Augen zu... Die Schachtel ist leer!' =>
 	'Right after swallowing the pill, you feel your eyelids getting heavier... The box is empty!',
   'Wie jedes Lagerhaus verfügt auch dieses über einfache Schutzmaßnahmen gegen Diebstahl. Plünderer hat das nicht aufhalten können, aber vielleicht Zombies? Du könntest durchaus versuchen, diesen Ort zu einem Versteck zu machen...' =>
-	'Every warehouse has some basic protection against thieves. It wasn\'t enough to fend of scavengers, but what about zombies? You could try to turn this place into a new hideout...',
+	'Every warehouse has some basic protection against thieves. It wasn\'t enough to fend off scavengers, but what about zombies? You could try to turn this place into a new hideout...',
   'Dies ist alles, was von eurem Freund übrig geblieben ist... Naja, immerhin kann man noch eine Suppe draus kochen.' =>
 	'This is all that has been left from your friend ... Well, you can still make a stew out of this.',
   'Das zentrale Utensil jeder Küche - der Wasserkocher - steht nun auch dir zur Verfügung. Nutze ihn Weise, und missbrauche seine Kräfte nicht!' =>
@@ -4317,7 +4317,7 @@ return array (
   'Auf seinem blauen Overall ist ein Namensschild - "Steve". Anscheinend hat Steve früher hier gearbeitet. Und handwerklich geschickt war er auch, denn neben ihm findest du einen Splitterwerfer. Du hast ganz schön Glück, dass du ständig Tote findest die cooles Zeug dabei haben, weist du das eigentlich?' =>
 	'His blue jumpsuit has a name tag - "Steffen". Seems that Steffen used to work here. He probably was a talented mechanic, because there is a homemade splinter gun next to him. You\'re pretty lucky to always run into dead people with cool stuff, you know that??',
   'Neben einem kleinen Schuppen findest du hinter einer Wand aus Kisten eine Leiche. Der arme Kerl wollte sich wohl vor den Zombies verstecken. Scheint nicht geklappt zu haben ...' =>
-	'Next to the shed, behind a wall of boxes, you find a single body. It seems the poor guy tried to hide here from the zombies. It alsos eems that it did not work all that well ...',
+	'Next to the shed, behind a wall of boxes, you find a single body. It seems the poor guy tried to hide here from the zombies. It also seems that it did not work all that well ...',
   'Hier lagern momentan :num Eimer voller Splitter, aus denen du :num2 Splitterkugeln formen könntest.' =>
 	'You have :num buckets full of splinters here. You can use those to create :num2 splinter balls.',
   'Du brauchst mehr Splitter, um eine solide Splitterkugel zu bauen.' =>

@@ -14,6 +14,7 @@ class Controller_Admin_Main extends Controller_Admin_Admin {
             ->set('allow_translate', static::priv_allow_all('TRANSLATE'))
             ->set('allow_userlist', static::priv_allow_all('USERLIST'))
             ->set('allow_gamelist', static::priv_allow_all('GAMELIST'))
+            ->set('allow_ranking', static::priv_allow_all('RANKING'))
             ->render());
 
         $this->render();

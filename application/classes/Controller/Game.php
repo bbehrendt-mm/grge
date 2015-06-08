@@ -414,7 +414,7 @@ class Controller_Game extends Controller {
 
         $buffs = [];
         foreach ($p->buff_get() as $buff) if ($buff->visible() && (!$remote || $buff->visible(true)))
-            $buffs[] = ['icon' => $buff->icon(), 'name' => __($buff->name()), 'desc' => $remote ? '' : __($buff->description())];
+            $buffs[] = ['icon' => $buff->icon(), 'name' => __($buff->name()), 'desc' => $remote ? '' : __($buff->description()), 'time' => $remote ? false : ($buff->lifetime() < 0 ? false : Tool_Numerics::duration_to_string($buff->lifetime()))];
 
         $tmp = [
             'bars' => $cache,
@@ -675,6 +675,7 @@ class Controller_Game extends Controller {
         }
 
         $this->add_data('players', [
+            'messages' => count($player->get_messages(false,true)) > 0,
             'others' => $players,
             'self' => [
                 'escort' => $player->companion(),
@@ -811,6 +812,8 @@ class Controller_Game extends Controller {
                 $players[$p->id()] = $p->name();
 
         $this->add_widget(View::factory('pages/pm')->set('messages', $player->get_messages())->set('players', $players)->render());
+        foreach ($player->get_messages(false,true) as $msg)
+            $player->read_message($msg['mid']);
 
         return $this->render();
     }

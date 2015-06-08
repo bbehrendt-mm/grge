@@ -3819,215 +3819,207 @@ return array (
   'Der QR-Code kann nur einmalig verwendet werden und ist für 5 Minuten gültig. Möchtest du mehrere Geräte verbinden, schließe dieses Popup und öffne es erneut, um einen neuen Code zu generieren.' =>
 	'This QR code can only be used once and is valid for 5 minutes. If you want to connect multiple devices, simply close this popup after pairing each device and open it again to generate a new code.',
   'Bitte gib deinen PIN ein.' =>
-	'Bitte gib deinen PIN ein.',
+	'Please enter your PIN.',
   'Es gibt keine bessere Art, von A nach B zu kommen, als mit dem Fahrrad - wenn man mal von all den Arten absieht, die besser sind als ein Fahrrad. Apropos Fahrrad: Wie wärs, wenn du hier etwas Geld für ein Item ausgeben würdest, dass du ohnehin im Spiel finden kannst?' =>
-	'Es gibt keine bessere Art, von A nach B zu kommen, als mit dem Fahrrad - wenn man mal von all den Arten absieht, die besser sind als ein Fahrrad. Apropos Fahrrad: Wie wärs, wenn du hier etwas Geld für ein Item ausgeben würdest, dass du ohnehin im Spiel finden kannst?',
+	'There is no better way to go from A to be than with a bike - if you ignore all the ways that actually are better than the bike, of course. Speaking about bikes: Why don\'t you spend some of your hard-earned cash on something you could also find for free in the game?',
   'Aufnehmen / Ablegen' =>
-	'Aufnehmen / Ablegen',
+	'Take / Drop',
   'Du hast die Arbeiten an einem epischen Projekt in deinem Versteck begonnen. Viel Erfolg!' =>
-	'Du hast die Arbeiten an einem epischen Projekt in deinem Versteck begonnen. Viel Erfolg!',
+	'You\'ve begun to work on an epic project in your hideout. Good luck finishing it!',
   'Bauen' =>
-	'Bauen',
+	'Build',
   'Boden aufreißen' =>
-	'Boden aufreißen',
+	'Tear out the floor',
   'Bevor du hier etwas pflanzen kannst, muss erstmal der Bodenbelag weg.' =>
-	'Bevor du hier etwas pflanzen kannst, muss erstmal der Bodenbelag weg.',
+	'You can\'t plant stuff on a wooden floor now, can you?',
   'Epische Projekte: Kleines Gewächshaus' =>
-	'Epische Projekte: Kleines Gewächshaus',
+	'Epic Project: Small Greenhouse',
   'Abschließen: Kleines Gewächshaus' =>
-	'Abschließen: Kleines Gewächshaus',
+	'Finalize: Small Greenhouse',
   'Beet' =>
-	'Beet',
+	'Patch',
   'Umgraben, abgrenzen, Hundehaufen platzieren - fertig!' =>
-	'Umgraben, abgrenzen, Hundehaufen platzieren - fertig!',
+	'Just dig over, fence of and place some dog poo on top of it - done!',
   'Beleuchtung' =>
-	'Beleuchtung',
+	'Lighting',
   'Ohne ein bisschen Licht wird hier nichts wachsen...' =>
-	'Ohne ein bisschen Licht wird hier nichts wachsen...',
+	'Nothing\'s gonna grow here without some light...',
   'Bewässerungssystem' =>
-	'Bewässerungssystem',
+	'Aquifer',
   'Damit du auch etwas anderes ernten kannst als Staub.' =>
-	'Damit du auch etwas anderes ernten kannst als Staub.',
+	'Pretty much required if you want to harvest something other than dust and dirt.',
   'Beet bepflanzen' =>
-	'Beet bepflanzen',
+	'Plant patch',
   'Bringe die Saat in deinem kleinen Gewächshaus aus, damit du in 24 Stunden ernten kannst. Denke daran, dass du ab dem Aussähen alle 3 Stunden gießen musst, um eine optimale Ernte einfahren zu können.' =>
-	'Bringe die Saat in deinem kleinen Gewächshaus aus, damit du in 24 Stunden ernten kannst. Denke daran, dass du ab dem Aussähen alle 3 Stunden gießen musst, um eine optimale Ernte einfahren zu können.',
-  'Der Beet ist momentan leer.' =>
-	'Der Beet ist momentan leer.',
+	'After planting the seeds, you need to wait24 hours for the plants to grow. Remember that you have to water the patch every 3 hours to be able to harvest the most fruits.',
   'Das Beet ist momentan leer.' =>
-	'Das Beet ist momentan leer.',
+	'The patch is empty right now.',
   'Fortschritt' =>
-	'Fortschritt',
+	'Progress',
   'Qualität' =>
-	'Qualität',
+	'Quality',
   'Wasser' =>
-	'Wasser',
+	'Water',
   'Deine Pflanzen sind in :time erntebereit!' =>
-	'Deine Pflanzen sind in :time erntebereit!',
-  'Die Qualität bestimmt die Anzahl der Früche, die du bei der Ernte erhalten wirst. Derzeit zeichnet sich folgende Qualität ab: ' =>
-	'Die Qualität bestimmt die Anzahl der Früche, die du bei der Ernte erhalten wirst. Derzeit zeichnet sich folgende Qualität ab: ',
+	'You can harvest in :time!',
   'Excellent' =>
 	'Excellent',
   'Ausgezeichnet' =>
-	'Ausgezeichnet',
+	'Superb',
   'Sehr gut' =>
-	'Sehr gut',
+	'Very good',
   'Gut' =>
-	'Gut',
+	'Good',
   'Durchschnittlich' =>
 	'Average',
   'Verbesserungswürdig' =>
-	'Verbesserungswürdig',
+	'Improvable',
   'Schlecht' =>
-	'Schlecht',
+	'Bad',
   'Sehr schlecht' =>
-	'Sehr schlecht',
+	'Very bad',
   'Unbrauchbar' =>
-	'Unbrauchbar',
+	'Useless',
   'Die Qualität bestimmt die Anzahl der Früche, die du bei der Ernte erhalten wirst. Derzeit zeichnet sich folgende Qualität ab: :quality' =>
-	'Die Qualität bestimmt die Anzahl der Früche, die du bei der Ernte erhalten wirst. Derzeit zeichnet sich folgende Qualität ab: :quality',
+	'The quality indicated the amount of fruits you will be able to harvest. Right now, it seems you plants have the following quality: :quality',
   'Wenn der Wasservorrat deiner Pflanzen aufgebraucht ist, musst du neues nachfüllen. Warte damit nicht zu lange, andernfalls sinkt die Erntequalität.' =>
-	'Wenn der Wasservorrat deiner Pflanzen aufgebraucht ist, musst du neues nachfüllen. Warte damit nicht zu lange, andernfalls sinkt die Erntequalität.',
+	'Once the plants have used up all their water, they will dry out and lose quality. Remember to fill their tank before this happens.',
   'Du kannst in :time neues Wasser hinzufügen.' =>
-	'Du kannst in :time neues Wasser hinzufügen.',
+	'You can add new water in :time.',
   'Wenn du bis in :time kein neues Wasser hinzugefügt hast, wird die Erntequalität abnehmen!' =>
-	'Wenn du bis in :time kein neues Wasser hinzugefügt hast, wird die Erntequalität abnehmen!',
+	'You need to add water in less than :time, otherwise the quality will suffer!',
   'Gießen' =>
-	'Gießen',
+	'Water plants',
   'Wenn du deine Pflanzen nicht rechtzeitig und regelmäßig gießt, sinkt ihre Qualität oder die vertrocknen ganz.' =>
-	'Wenn du deine Pflanzen nicht rechtzeitig und regelmäßig gießt, sinkt ihre Qualität oder die vertrocknen ganz.',
+	'You need to regularily water your plants so they don\'t lose quality.',
   'Düngen' =>
-	'Düngen',
+	'Fertilize',
   'Pflanzen, die mit Lebensmitteln gedüngt werden, sind saftiger.' =>
-	'Pflanzen, die mit Lebensmitteln gedüngt werden, sind saftiger.',
+	'If you use food as fertilizer, your fruits will be more juicy.',
   'Deine Pflanzen verdorren! Füge schnell neues Wasser hinzu!' =>
-	'Deine Pflanzen verdorren! Füge schnell neues Wasser hinzu!',
+	'Your plants are drying out! You need to water them NOW!',
   'Bist du sicher, dass du diese Gegenstände einsetzen möchtest, um die Pflanzen zu düngen?' =>
-	'Bist du sicher, dass du diese Gegenstände einsetzen möchtest, um die Pflanzen zu düngen?',
+	'Are you sure you wish to use these items as fertilizer?',
   'Benutze folgende Gegenstände, um deine Pflanzen zu düngen: :items' =>
-	'Benutze folgende Gegenstände, um deine Pflanzen zu düngen: :items',
+	'Use these items as fertilizer for your plants: :items',
   'Welchen Effekt deine geernteten Pflanzen haben hängt davon ab, womit du sie düngst. Nahrung macht sie saftiger, Drogen geben ihnen einen heilenden Effekt und Chemikalien lassen sie aufputschend wirken.' =>
-	'Welchen Effekt deine geernteten Pflanzen haben hängt davon ab, womit du sie düngst. Nahrung macht sie saftiger, Drogen geben ihnen einen heilenden Effekt und Chemikalien lassen sie aufputschend wirken.',
+	'The effect of your fruits depend on what fertilizers you use. Food will make them more juicy, drugs give them a healing abillity and chemicals will make them more energizing.',
   'Schachtel mit Pillen' =>
-	'Schachtel mit Pillen',
+	'Box of pills',
   'Dünger' =>
-	'Dünger',
+	'Fertilizer',
   'Die Stärke deiner Düngung bestimmt die Höhe der Effekte der geernteten Pflanzen. Wenn du nach Erreichen der maximalen Düngestärke noch weiter düngst, hat dies nur noch Einfluss auf die Art der Effekte, nicht jedoch deren Höhe.' =>
-	'Die Stärke deiner Düngung bestimmt die Höhe der Effekte der geernteten Pflanzen. Wenn du nach Erreichen der maximalen Düngestärke noch weiter düngst, hat dies nur noch Einfluss auf die Art der Effekte, nicht jedoch deren Höhe.',
+	'The amount of fertilizer you\'ve used determines the effectiveness of harvested fruits. After reaching the maximum amount of fertilizer, and additional fertilizing will only change the fruit\'s effects, but not their effectiveness.',
   'Geerntete Pflanze' =>
-	'Geerntete Pflanze',
-  'Du hast diese Pflanze ' =>
-	'Du hast diese Pflanze ',
+	'Harvested Fruit',
   'Du hast die Pflanzen gedüngt. Mal sehen, was hier jetzt wachsen wird...' =>
-	'Du hast die Pflanzen gedüngt. Mal sehen, was hier jetzt wachsen wird...',
+	'You\'ve added some fertilizer. Let\'s see what that\'s gonna do...',
   'Ernten' =>
-	'Ernten',
+	'Harvest',
   'Endlich ist es zeit, die Früchte deiner Arbeit zu ernten. Beeil dich lieber, sonst verdorren sie.' =>
-	'Endlich ist es zeit, die Früchte deiner Arbeit zu ernten. Beeil dich lieber, sonst verdorren sie.',
+	'Finally you can harvest the fruits of your work... literally! You\'d better get going, otherwise they might dry out.',
   'Portionen' =>
-	'Portionen',
+	'Servings',
   'Na, da hat sich das warten doch gelohnt. Du hast soeben :num Pflanzen ernten können.' =>
-	'Na, da hat sich das warten doch gelohnt. Du hast soeben :num Pflanzen ernten können.',
+	'Well, that was certainly worth it. You\'ve managed to harvest :num whole fruits!',
   'Du hast diese Pflanze selbst angebaut und gerade frisch geerntet. Jetzt musst du nur noch hoffen, dass sie zufällig nicht giftig ist.' =>
-	'Du hast diese Pflanze selbst angebaut und gerade frisch geerntet. Jetzt musst du nur noch hoffen, dass sie zufällig nicht giftig ist.',
+	'You\'ve seen this thing grow from a little seed corn into a beaturiful juicy fruit. Let\'s just hope it isn\'t too toxic...',
   'Dopen' =>
-	'Dopen',
+	'Dope',
   'Mit ein paar Steroiden (und einer Luftpumpe) kannst du deinen Raben zu einem mächtigen Greifen aufpumpen, der auch schwere Gegenstände transportieren kann. Dies erhöht allerdings auch die Erhohlungszeit.' =>
-	'Mit ein paar Steroiden (und einer Luftpumpe) kannst du deinen Raben zu einem mächtigen Greifen aufpumpen, der auch schwere Gegenstände transportieren kann. Dies erhöht allerdings auch die Erhohlungszeit.',
+	'All it takes to turn your raven into a mighty griffin is some steroids and a bicycle pump. After that, he\'ll be able to lift more items, but he\'ll also require longer rest.',
   'Raben aussenden' =>
-	'Raben aussenden',
+	'Send raven',
   'Der Rabe muss sich noch :time ausruhen.' =>
-	'Der Rabe muss sich noch :time ausruhen.',
+	'The raven will have to rest for :time.',
   'Zielgebiet auswählen' =>
-	'Zielgebiet auswählen',
+	'Select target area',
   'Hier kannst du auswählen, wie weit der Rabe fliegen soll, um eine Ruine auszuwählen. Für eine größere Distanz musst du selbstverständlich mehr Futter springen lassen. Der Rabe wird zufällig eine Ruine (die kein Aussichtspunkt und auch kein Versteck ist) in dem gewählten Bereich auswählen und dort dreimal nach Gegenständen suchen. Gefundene Gegenstände wird er zu dir bringen, zumindest so lange er sie tragen kann. Falls er nichts findet oder die gefundenen Gegenstände ihn nicht auslasten, wird er Gegenstände vom Boden aufheben. Der Rabe kann nicht mehr als :capacity Gegenstände mit einem Gesamtgewicht von :size tragen!' =>
-	'Hier kannst du auswählen, wie weit der Rabe fliegen soll, um eine Ruine auszuwählen. Für eine größere Distanz musst du selbstverständlich mehr Futter springen lassen. Der Rabe wird zufällig eine Ruine (die kein Aussichtspunkt und auch kein Versteck ist) in dem gewählten Bereich auswählen und dort dreimal nach Gegenständen suchen. Gefundene Gegenstände wird er zu dir bringen, zumindest so lange er sie tragen kann. Falls er nichts findet oder die gefundenen Gegenstände ihn nicht auslasten, wird er Gegenstände vom Boden aufheben. Der Rabe kann nicht mehr als :capacity Gegenstände mit einem Gesamtgewicht von :size tragen!',
+	'Here you can select how far you want the raven to fly in order to choose a location. Of course, longer distances require more food. The raven will randomly choose any location (that isn\'t a vantage point or hideout) in the selected area and dig there three times. If he finds something that he can carry, he\'ll bring it back to you. Otherwise, he\'ll just grab items already laying on the floor. The raven can not carry more than :capacity items with a total weight of :size!',
   'Nähere Umgebung (Distanz bis :m2)' =>
-	'Nähere Umgebung (Distanz bis :m2)',
+	'Close Surroundings (Distance up to :m2)',
   'Entfernte Regionen (Distanz zwischen :m1 und :m2)' =>
-	'Entfernte Regionen (Distanz zwischen :m1 und :m2)',
+	'Distant Regions (Distance between :m1 and :m2)',
   'Arsch der Welt (Distanz über :m1)' =>
-	'Arsch der Welt (Distanz über :m1)',
+	'Arse-end Of The World (Distance above :m1)',
   'Der Rabe hat :itemdef gebracht!' =>
-	'Der Rabe hat :itemdef gebracht!',
+	'The raven has brought you :itemdef!',
   'In dem gewählten Gebiet scheint es keine Ziele für den Raben zu geben...' =>
-	'In dem gewählten Gebiet scheint es keine Ziele für den Raben zu geben...',
+	'This area doesn\'t seem to have any targets for your raven...',
   'Corax der Rabe' =>
-	'Corax der Rabe',
+	'Corax Ravenfoot',
   'Der Ausflug deines Raben scheint erfolgreich verlaufen zu sein! Er hat :location besucht und dir sogar etwas mitgebracht.' =>
-	'Der Ausflug deines Raben scheint erfolgreich verlaufen zu sein! Er hat :location besucht und dir sogar etwas mitgebracht.',
+	'Your raven seems to have been lucky! He visited :location and even brought you a present!',
   'Dein Rabe hat :location besucht, ist jedoch mit leeren Krallen zurückgekehrt...' =>
-	'Dein Rabe hat :location besucht, ist jedoch mit leeren Krallen zurückgekehrt...',
+	'Your raven visited :location, but returned with empty claws...',
   'Du hast deinem Raben ein paar Pillen in seine Körner gemischt.' =>
-	'Du hast deinem Raben ein paar Pillen in seine Körner gemischt.',
+	'You\'ve mixed some pills into your raven\'s food.',
   'Raben sind keine sonderlich altruistisch eingestellten Tiere... du musst ihn schon ausreichend füttern, wenn du Gegenstände von ihm bekommen möchtest.' =>
-	'Raben sind keine sonderlich altruistisch eingestellten Tiere... du musst ihn schon ausreichend füttern, wenn du Gegenstände von ihm bekommen möchtest.',
+	'Ravens aren\'t known for being altruistic animals... you need to feed him if you want him to do your bidding.',
   'Abschließen: Raben-Bootcamp' =>
-	'Abschließen: Raben-Bootcamp',
+	'Finalize: Raven Bootcamp',
   'Epische Projekte: Raben-Bootcamp' =>
-	'Epische Projekte: Raben-Bootcamp',
+	'Epic Projects: Raven Bootcamp',
   'Wandöffnung' =>
-	'Wandöffnung',
+	'Tear open wall',
   'Dein Rabe kann keine Türen benutzen - wenn er hier rein- und rauskommen soll, musst du wohl oder übel ein kleines Loch in die Wand schlagen.' =>
-	'Dein Rabe kann keine Türen benutzen - wenn er hier rein- und rauskommen soll, musst du wohl oder übel ein kleines Loch in die Wand schlagen.',
+	'Ravens don\'t use doors. You want him to be able to come and go? Bottom line, you gotta rip a hole in your wall.',
   'Rabenkäfig' =>
-	'Rabenkäfig',
+	'Birdcage',
   'Baue deinem Raben lieber einen Käfig... sonst wirst du eines Nachts seine Krallen an deiner Kehle spüren.' =>
-	'Baue deinem Raben lieber einen Käfig... sonst wirst du eines Nachts seine Krallen an deiner Kehle spüren.',
+	'Ravens that are not securely locked inside a cage tend to develop a hunger for livers...',
   'Futterschale' =>
-	'Futterschale',
+	'Bird Feeder',
   'Der Rabe kann sich entweder aus einer Futterschale oder deiner Leber bedienen... deine Entscheidung.' =>
-	'Der Rabe kann sich entweder aus einer Futterschale oder deiner Leber bedienen... deine Entscheidung.',
+	'You\'d better have one of those - otherwise, your raven may attempt to find some food inside your stomach...',
   'Raben anlocken' =>
-	'Raben anlocken',
+	'Lure Raven',
   'Locke einen Raben an, damit du ihn trainieren kannst.' =>
-	'Locke einen Raben an, damit du ihn trainieren kannst.',
+	'Lure in a raven, so you can catch and train him.',
   'Raben trainieren' =>
-	'Raben trainieren',
+	'Train Raven',
   'Ist zumindest angenehmer, als einen bengalischen Tiger zu trainieren.' =>
-	'Ist zumindest angenehmer, als einen bengalischen Tiger zu trainieren.',
+	'It\'s gotta be better than having to train a bengal tiger.',
   'Verkabelungen' =>
-	'Verkabelungen',
+	'Wiring',
   'So ein hochentwickelter Laserzaun muss korrekt verkabelt sein!' =>
-	'So ein hochentwickelter Laserzaun muss korrekt verkabelt sein!',
+	'You need lots\'a wires for compley equipment like that.',
   'Sicherungskasten' =>
-	'Sicherungskasten',
+	'Fusebox',
   'Der Sicherungskasten sorgt dafür, dass in deinem Versteck nicht jedes mal der Strom ausfällt, wenn ein Zombie in den Laserzaun läuft.' =>
-	'Der Sicherungskasten sorgt dafür, dass in deinem Versteck nicht jedes mal der Strom ausfällt, wenn ein Zombie in den Laserzaun läuft.',
+	'Gotta have some way to make a fusebox counting gag for Spoony, if he ever stumbles upon this.',
   'Rückstrombeständiger Fluktuationskompensator mit vierfachen Elektronenfokus-Strahlern' =>
-	'Rückstrombeständiger Fluktuationskompensator mit vierfachen Elektronenfokus-Strahlern',
+	'Reverse Flow-Resistant Fluctuation Capacitor using Quattro-Focus Electron Beams',
   'Jedes Kind weis, dass man so etwas für einen Laserzaun benötigt!' =>
-	'Jedes Kind weis, dass man so etwas für einen Laserzaun benötigt!',
+	'Every child knows you need one of these to build a laser fence!',
   'Epische Projekte: Laserzaun' =>
-	'Epische Projekte: Laserzaun',
+	'Epic Projects: Laser Fence',
   'Laser-Emittent' =>
-	'Laser-Emittent',
+	'Laser Emittor',
   'Vorsicht: Wiederholte Bestrahlung durch selbstgebaute Laser-Emittenten kann zur Ausbildung von Superkräften führen.' =>
-	'Vorsicht: Wiederholte Bestrahlung durch selbstgebaute Laser-Emittenten kann zur Ausbildung von Superkräften führen.',
+	'Be careful: Repeated exposure to custom laser emitters may cause spontaneous development of super powers... or testicular cancer.',
   'Abschließen: Laserzaun' =>
-	'Abschließen: Laserzaun',
+	'Finalize: Laser Fence',
   'Für die gewählte Distanz benötigt der Rabe folgendes Futter:' =>
-	'Für die gewählte Distanz benötigt der Rabe folgendes Futter:',
+	'For this distance, you\'ll need to feed him:',
   'Einschalten' =>
 	'Switch on',
   'Aktiviert den Laserzaun. Während der eingeschaltet ist konsumiert er Energie, dafür können Zombies unmöglich in dein Versteck einbrechen.' =>
-	'Aktiviert den Laserzaun. Während der eingeschaltet ist konsumiert er Energie, dafür können Zombies unmöglich in dein Versteck einbrechen.',
+	'Boots up the laser fence. While active, it prevents any zombies from breaking in, but also consumes energy.',
   'Die durch den Laserzaun zusätzlich generierte Verteidigung wird auf die Hausverteidigung addiert.' =>
-	'Die durch den Laserzaun zusätzlich generierte Verteidigung wird auf die Hausverteidigung addiert.',
+	'The additional defense generated by your laser fence will be added to your normal hideout defense value.',
   'Zeigt die Menge an Energie an, die deinem Versteck momentan zur Verfügung steht. Geht die Energie zur Neige, solltest du mit dem Generator neue erzeugen.' =>
-	'Zeigt die Menge an Energie an, die deinem Versteck momentan zur Verfügung steht. Geht die Energie zur Neige, solltest du mit dem Generator neue erzeugen.',
+	'Shows the amount of energy available for the laser fence to consume. Once it begins to deplete, you can produce more using the generator.',
   'Dies ist die Zeit, die der Laserzaun mit deinem aktuellen Energievorrat noch laufen kann, bevor er wegen Energiemangel automatisch heruntergefahren wird.' =>
-	'Dies ist die Zeit, die der Laserzaun mit deinem aktuellen Energievorrat noch laufen kann, bevor er wegen Energiemangel automatisch heruntergefahren wird.',
+	'This is the time you laser fence will be able to stay active given your current amount of energy. Once the energy depletes, the laser fence will power down automatically.',
   'Ausschalten' =>
-	'Ausschalten',
+	'Switch off',
   'Deaktiviert den Laserzaun. Es wird keine Energie mehr verbraucht, aber dafür können die Zombies wieder eindringen.' =>
-	'Deaktiviert den Laserzaun. Es wird keine Energie mehr verbraucht, aber dafür können die Zombies wieder eindringen.',
+	'Powers down the laser fence. It will stop consuming energy and protecting you from zombies.',
   'Du hast den Laserzaun aktiviert.' =>
-	'Du hast den Laserzaun aktiviert.',
-  'Du hast den Laserzaun aufgeladen.' =>
-	'Du hast den Laserzaun aufgeladen.',
+	'You\'ve turned the laser fence on.',
   'Hier scheint niemand zu sein ...' =>
-	'Hier scheint niemand zu sein ...',
+	'Nobody here...',
   'Post' =>
 	'Post',
   'Nachricht verfassen' =>
@@ -4039,27 +4031,317 @@ return array (
   'Senden' =>
 	'Send',
   'Nachrichtentext' =>
-	'Nachrichtentext',
+	'Message Body',
   'Dein Posteingang ist leer...' =>
-	'Dein Posteingang ist leer...',
+	'Your inbox is empty...',
   'Möchtest du diese Nachricht wirklich senden?' =>
-	'Möchtest du diese Nachricht wirklich senden?',
+	'Are you sure you wish to send this message?',
   'Deine Nachricht wurde erfolgreich versandt.' =>
-	'Deine Nachricht wurde erfolgreich versandt.',
+	'Your message has been sent.',
   'Löschen' =>
-	'Löschen',
+	'Delete',
   'Antworten' =>
 	'Answer',
   'Nachrichtentext oder Titel sind zu kurz. Bitte verwende mindestens 2 Zeichen im Titel und 5 Zeichen im Text.' =>
-	'Nachrichtentext oder Titel sind zu kurz. Bitte verwende mindestens 2 Zeichen im Titel und 5 Zeichen im Text.',
+	'The title or body of your message are too short. Please use at least 2 characters for the title and 5 characters for the body.',
   'Nachrichtentext oder Titel sind zu lang. Bitte verwende nicht mehr als 64 Zeichen im Titel und 2048 Zeichen im Text.' =>
-	'Nachrichtentext oder Titel sind zu lang. Bitte verwende nicht mehr als 64 Zeichen im Titel und 2048 Zeichen im Text.',
+	'The title or body of your message are too long. Please use no more than 64 characters for the title and 2048 characters for the body.',
   'Beim Senden der Nachricht ist ein Fehler aufgetreten.' =>
-	'Beim Senden der Nachricht ist ein Fehler aufgetreten.',
+	'Failed to send the message...',
   'Bist du sicher, dass du diese Nachricht löschen möchtest?' =>
-	'Bist du sicher, dass du diese Nachricht löschen möchtest?',
+	'Are you sure you wish to delete this message?',
   'Die ausgewählte Nachricht wurde gelöscht.' =>
-	'Die ausgewählte Nachricht wurde gelöscht.',
+	'Your message has been deleted.',
   'Beim Löschen der Nachricht ist ein Fehler aufgetreten.' =>
-	'Beim Löschen der Nachricht ist ein Fehler aufgetreten.',
+	'Unable to delete this message...',
+  'Verbleibende Dauer: :time' =>
+	'Remaining time: :time',
+  'Roadkill-Experte' =>
+	'Roadkill Expert',
+  'Elitärer Club' =>
+	'Elite Club',
+  'Du hast neue Nachrichten!' =>
+	'You\'ve got unread messages!',
+  'Du schiebst ein paar Trümmer sowie eine zerissene Plane beiseite und siehst, dass der Wagen mit Lebensmitteln beladen war! Welch ein Festmahl!' =>
+	'After moving some debris and an old blanket, you see that the stall was loaded with food! What a feast!',
+  'Das war lecker. Du fühlst, wie sich dein Hunger langsam in Luft auflöst.' =>
+	'That tasted great! Your hunger is practically gone now!',
+  'Du nimmst einen Schluck aus deiner Flasche. Das Wasser ist schleimig und verklebt dir die Kehle. Außerdem schmeckt es, als hätte sich darin ein Zombie aufgelöst.' =>
+	'You\'re taking a sip out of your bottle. The water is slimy and tastes as if a zombie has been dissolved in it. After swallowing it, your throat starts to burn.',
+  'Schwere Halluzinationen' =>
+	'Heavy hallucinations',
+  'Keine Angst, alles ist in Ordnung; das behauptet zumindest der grüne Elefant, der auf deiner Schulter sitzt. Moment, steht da drüben etwa Helmut Berger neben der fliegenden Schokoladenpalme, an der hölzerne Bullenhaie wachens?' =>
+	'Don\'t worry, everythin is fine; at least that\'s what the green elephant sitting on your shoulders claims. Wait, is that Charlie Sheen standing next to the flying chocolate palmtree growing wooden bullsharks?',
+  'Augen zu und durch! Du schluckst die Pille herunter - aber es scheint nichts zu passieren. Moment... war die dreiköpfige Giraffe da hinten schon immer da?' =>
+	'Grit your teeth, close your eyes and down this pill - but nothing seems to happen. Wait... was this three-headed giraffe in that corner always there?',
+  'Genitalmonster' =>
+	'Genital Monsters',
+  'Schwiegermütter' =>
+	'Mothers-in-Law',
+  'Pokémon' =>
+	'Pokémon',
+  'Schnupfophanten' =>
+	'Snuffophant',
+  'Seehofer' =>
+	'Romneys',
+  'OH GOTT! Du wirst von obskuren Gestalten angegriffen, die eventuell mit deinen schweren Halluzinationen in Zusammenhang stehen!' =>
+	'OH GOD! You\\#re being attacked by stange creatures that may or may not have something to do with your heavy hallucinations!',
+  'Augen zu und durch! Du schluckst die Pille herunter. Was danach passiert, weißt du nicht mehr - aber dein ganzer Rucksack ist plötzlich leer! Wär hätte denn ahnen können dass die schwarze Pille Blackouts verursachen kann ...' =>
+	'Grit your teeth, close your eyes and down this pill. No idea what happened, but when you wake up your rucksack feels considerably lighter. Who could have thought the black pill causes blackouts??',
+  'Im Schlaf zerfetzt' =>
+	'Torn up in bed',
+  'Du nimmst einen Schluck aus deiner Flasche. Es fällt dir schwer, den Güllegeschmack des Wassers zu ignorieren, aber irgendwie musst du ja gegen deinen Durst vorgehen.' =>
+	'You\'re taking a sip out of your bottle. It\'s hard to suppress the gagging reflex, but you are thirsty and this is all you have!',
+  'Dein Einfamilienhaus' =>
+	'Your Home',
+  '"Zombiewagen" Vertragswerkstatt' =>
+	'"Zombiewagen" Garage',
+  'Provisorische Straßenbarrikade' =>
+	'Improvised Street Barricade',
+  'Gerade erst hast du die letzte Rate für dein Haus bezahlt, da musst du es wegen der Zombieapokalypse direkt wieder evakuieren. Hättest du doch damals nur diese Zombieversicherung abgeschlossen...' =>
+	'You just paid the last mortgage rate for your house, and now you have to evacuate it due to a zombie apocalypse. Damn it, you should have bought the zombie insurance...',
+  'Eine Gruppe Zombies stürmt aus dem Container und greift an!' =>
+	'A group of zombies emerges from this container and attacks!',
+  'Deine Bisswunde sieht aber gar nicht gut aus... offenbar hast du dich mit dem Zombievirus infiziert!' =>
+	'Your bite wound looks bad... It seems like it got infected!',
+  '"Pay\'n\'Spray" Autowerkstatt' =>
+	'"Pay\'n\'Spray" Body Shop',
+  'Gäbe es einen Gott für Recycling, er wäre sicherlich stolz auf dich!' =>
+	'If there was a god of recycling, he\'d be proud of you!',
+  'Wenn dein Auto merkwürdige Geräusche macht, hast du entweder einen Motorschaden oder einen Zombie auf der Rückbank. Glücklicherweise findet sich immer eine Werkstatt wie diese in der Nähe, die deine Karre reparieren oder den Zombie fachmännisch (mit einem großen Schraubenschlüssel) entfernen können. Unglücklicherweise hat diese Werkstatt derzeit leider aus unerfindlichen Gründen geschlossen...' =>
+	'If your car is making strange noises, you have a damaged engine or a zombie on your back seat. Luckily, there is always a small garage like this one nearby. The mechanics can competently repair the damages or remove the zombie (by using the bigges wrench they can find). However, it seems this garage is closed for an unknown reason...',
+  'Barrikade abbauen' =>
+	'Tear down',
+  'Diese Barrikade sieht ziemlich stabil aus, aber wenn du dich etwas ins Zeug legst kannst du hier bestimmt das eine oder andere nützliche Item ausbauen.' =>
+	'This barricade looks pretty big, but if you just try hard enough, you might be able to salvage some stuff from it.',
+  'Hier haben die Menschen anscheinend versucht, die Zombies mithilfe improvisierter Straßenbarrikaden aufzuhalten. So richtig funktioniert hat das wohl aber nicht, immerhin liegen hier überall Leichen herum...' =>
+	'It seems, the people around here have tried to keep the zombies out by building this massive barricade. The bodies lying around everywhere are an indicator for the fact that this didn\'t work out...',
+  'Verflucht! Nachdem du etwas Schutt aus dem Weg geräumt hast, springt dich ein Zombie an! Wie zur Hölle ist der da nur rein gekommen??' =>
+	'Damn it! Right after clearing away some debris, a zombie jumps you! How the hell did he manage to get down there??',
+  'Es hat dich etwas Arbeit gekostet, aber du konntest etwas nützliches aus dieser Barrikade herauszerren.' =>
+	'It was hard work, but you\'ve managed to pull something out of there.',
+  'Fast hätte es geklappt... leider sind ein paar standhafte Zombies übrig geblieben, die dich jetzt ziemlich grimmig anschauen...' =>
+	'You nearly made it... but a few zombies were left standing, and they look pretty angry right now...',
+  'Na, so ein Glück! Da drehst du dich nur mal kurz um, schon liegen vor dir :num Gegenstände! Wo die wohl hergekommen sind?' =>
+	'Wow, how lucky! You just turn around once and find :num items just sitting there on the floor! Wonder where they\'d come from?',
+  'Na, so ein Glück! Du hast plötzlich und unerwartet einen Gegenstand gefunden! Wo kam der nur her?' =>
+	'Wow, how lucky! You have suddenly found a new item! Wonder where it came from...',
+  'Deine Machete sieht schon ziemlich stumpf und rostig aus, also bringst du sie mit diesem praktischen Schleifstein wieder auf Vordermann.' =>
+	'Your machete looks pretty rusty and dull, so let\'s whip it into shape using this handy grindstone.',
+  'Augen zu und durch! In der Hoffung, dies wäre eine Twinoid-Kapsel, schluckst du die Pille herunter. Tja, und wenn du das überlebt hättest, hättest du wohl gelernt dass das Aussehen auch täuschen kann.' =>
+	'This sure looks like a Twinoid capsule. Those are usually pretty awesome, so taking it can\'t be bad, can it? Well, your dead now. Congratulations.',
+  'Seltsame Substanz (Milodrin)' =>
+	'Strange Substance (Milodrin)',
+  'Seltsame Substanz (Karmitain)' =>
+	'Strange Substance (Karmitain)',
+  'Die Chemikalie perlt von den Pillen ab... das hat wohl nichts gebracht.' =>
+	'Your chemicals don\'t seem to have any effect here...',
+  'Seltsame Substanz (Neotrigmat)' =>
+	'Strange Substance (Neotrigmat)',
+  'Augen zu und durch! Du schluckst die Pille herunter - wenige Sekunden später beginnst du, dich unruhig und unwohl zu fühlen. Schmerzen zucken durch deinen Körper, während du dich auf dem Boden krümmst und hoffst, dass die Wirkung der Pille bald nachlässt.' =>
+	'Grit your teeth, close your eyes and down this pill - suddenly, you feel cold and unwell. Pain overwhelms you while laying on the ground, and all you can do is pray that this is over soon...',
+  'Auf gut Glück ganze Gläser voll mit Pillen schlucken hat noch nie jemandem geschadet - zumindest niemandem, der noch am Leben ist...' =>
+	'Haphazardly downling bottles full of random pills never had any negative effects on anyone - anyone, who is still alive, that is...',
+  'Augen zu und durch! Du schluckst die Pille herunter - wenige Sekunden später spürst du, wie sich eine angenehme Wärme in dir ausbreitet. Welch ein schönes Gefühl ...' =>
+	'Grit your teeth, close your eyes and down this pill - suddenly, you feel warm and comfy. How pleasant!',
+  'Augen zu und durch! Du schluckst die Pille herunter - und wirst plötzlich unglaublich müde.' =>
+	'Grit your teeth, close your eyes and down this pill - suddenly, you feel extremely drowsy.',
+  'Farbige Substanz (Neotrigin)' =>
+	'Colorful Substance (Neotrigin)',
+  'Du wirfst die Pille in die Chemikalie ... es blubbert ein bisschen, und als du die Pille herausholst stellst du fest, dass sie die Farbe geändert hat!' =>
+	'You throw a pill in your chemical ... it bubbles a litte and the pill starts changing it\'s color!',
+  'Augen zu und durch! Du schluckst die Pille herunter - sofort durchzucken Krämpfe deinen Körper! Was immer das war, du hättest es besser nicht schlucken sollen!' =>
+	'Grit your teeth, close your eyes and down this pill - suddenly, an intense pain overcomes you and convulsions shake your body. Whatever medication you just took surely did not help your situation...',
+  'Du wirfst die Pille in die Chemikalie ... es blubbert relativ stark. Als du die Pille herausnehmen möchtest stellst du fest, dass plötzlich eine zweite, identische Pille im Reagenzglas liegt! Welch Wunder der Chemie!' =>
+	'You throw a pill in your chemical ... it starts to sizzle intensly. After clearing up, you notice that there is now a second, identical pill!',
+  'Immunisiert' =>
+	'Immunized',
+  'Du bist momentan davor geschützt, dich mit der Zombiekrankheit anzustecken. Genieße es, solange es anhält.' =>
+	'You\'re currently protected from contracting the zombie disease. Enjoy it while it lasts.',
+  'Du spritzt dir das Medikament... aber so wirklich passieren tut nichts. Tja, da wirst du wohl einfach hoffen müssen dass du nun immun bist.' =>
+	'You\'ve applied the drug, but nothing seems to happen... . Well, you\'re just going to have to trust in the fact that you\'re immune now.',
+  'Direkt nachdem du die Twinoid schluckst fühlst du dich wieder besser! Jetzt sind noch :num Pillen in der Schachtel.' =>
+	'You start to feel better right after taking these Twinoid pills! There are now only :num pills left in this box.',
+  'Direkt nachdem du die Twinoid schluckst fühlst du dich wieder besser! In der Schachtel ist nur noch eine Pille. Setze sie mit Bedacht ein!' =>
+	'You start to feel better right after taking these Twinoid pills! There is only one pill left, so use it wisely!',
+  'Erforschung der Irrenanstalt' =>
+	'Exploring the Insane Asylum',
+  'Dir läuft ein Schauer über den Rücken, als du durch die schlecht beleuchteten Gänge schleichst ...' =>
+	'These badly lit, long and empty hallways send a chill down your spine ...',
+  'Du siehst Blutspuren an der Wand. Die müssen entstanden sein, als die Anstalt von Zombies überrannt wurde. Allerdings sieht das Blut überraschend frisch aus ...' =>
+	'You see some bloodstains on the wall. These must be from when the asylum was overrun by zombies. However, they seem awefully fresh...',
+  'Du hörst ein knackendes Geräusch hinter dir, und spürst einen Luftzug. Du machst dich bereit, auf Zombies zu treffen. Aber nichts geschieht ...' =>
+	'You hear a sound from the shadows behind you, and feel a cooling draught. Expecting a zombie attack, you turn around. But nothing happens ...',
+  'Hinter einem Tresen liegen ein paar aufgestapelte Leichen. Sie scheinen ausschließlich Verletzungen am Hals zu haben, der Rest ist unversehrt. Untypisch für Zombies...' =>
+	'Behind a counter, you find some stockpiled bodies. The only wounds they have seem to be on their necks. This is pretty strange for supposed zombie victims...',
+  'Du findest einen Spiegel auf dem Boden, auf dem ein blutverschmierter Teddybär liegt. Das Blut scheint frisch zu sein ... Was ist nur in dieser Anstalt geschehen? Du verspürst den immer stärker werdenden Drang, dieses Gebäude zu verlassen und nie wieder zurückzukehren...' =>
+	'You\'ve found a mirror with a bloody teddy on it on the ground. The blood seems to be rather fresh... What on earth happened here? You feel the pressing urge to leave this place, and never return...',
+  'Frische Seele' =>
+	'Fresh Soul',
+  'Hier kommst du nicht weiter... du musst deine Reise nach :od unterbrechen und bei :ad eine Pause machen.' =>
+	'You can\'t go any further from here... Since you won\'t be able to reach :od in this situation, so you\'ll have to make a stop at :ad.',
+  'Der Keller ist komplett aus Stein und daher relativ unbeschädigt durch das Feuer. Leider lassen die Blutspuren überall darauf schließen, dass sich hier ein paar Zombies eingenistet haben...' =>
+	'The cellar has stone walls, so it\'s mostly unaffected by the fire. However, there is blood all over the place, which might indicate that there are zombies around...!',
+  'Du solltest deinen Munitionsgürtel nicht aus der Hand geben ...' =>
+	'You should not leave your ammobelt behind...',
+  'Die Pille ist dir aus der Hand gerutscht, heruntergefallen und weggekugelt! Vielleicht solltest du deinen Alkoholkonsum zügeln ... ' =>
+	'The pill slipped from your hand and has rolled away! Maybe you should stop drinking so much ... ',
+  'Direkt nachdem du die Paracetin schluckst fühlst du, wie deine Kraft zurückkehrt. In der Schachtel ist nur noch eine Pille. Setze sie mit Bedacht ein!' =>
+	'Right after taking that Paracetin pill, you feel your strength returning.  There is only one pill left, so use it wisely!',
+  'Du wickelst die Bandage straff um deine Verletzungen. Zwar hast du dein Blut nun mit allerlei Dreck und Keimen geflutet, aber zumindest läuft es nicht mehr unkontrolliert aus deiner Wunde.' =>
+	'You wrap the bandage tightly your injuries. While your blood now contains a variety of germs and dirt, at least it stays inside your body.',
+  'Ausgewogene Ernährung' =>
+	'Well-rounded nutrition',
+  'Du weist, wie man sich richtig ernährt! Da dein Körper mit allen wichtigen Nährstoffen versorgt ist, bekommst du nicht mehr so schnell Hunger. Zumindest für eine Weile...' =>
+	'You truly know how (and what) to eat! Your body is adequately supplied with all kinds of nutrients, so you won\'t feel hunger anytime soon...',
+  'Augen zu und durch! Du schluckst die Pille herunter - und mit einem mal fühlst du dich extrem satt! Anscheinend war das irgend eine Nährstoffpille!' =>
+	'Grit your teeth, close your eyes and down this pill! Suddenly you feel totally sated. This seems to have been some sort of nutrient pill!',
+  'Die Aktion konnte nicht vollständig ausgeführt werden, da eines oder mehrere der ausgewählten Gegenstände nicht länger in deiner Reichweite sind.' =>
+	'Some parts of this action could not be completed, since at least on of the targeted items is out of your reach.',
+  'Du nimmst die Bandage, wickelst die um den Griff der Machete und befestigst die Enden mit ein wenig Klebeband. Toll, nun kannst du deine Machete viel einfacher halten und es besteht keine Gefahr mehr, beim Metzeln (oder bei der Intimrasur) abzurutschen.' =>
+	'With some duct tape and a normal bandage, you manage to make the handly of your machete much more easy to grip. Now you will never have to worry about imprecise movements when butchering zombies (or shaving your privates).',
+  'Privatpatienten haben mehr Geld, also sind sie die besseren Menschen und verdienen bessere medizinische Versorgung. Dazu gehört auch dieses Luxuszimmer, mit Besuchersessel aus Leder, Heimkinoanlage und natürlich einer gut bestückten Bar. Eigentlich könntest du dich auch selbst hier "einliefern" lassen und diesen Ort zu einem Versteck umbauen...' =>
+	'Private patients usually have more money, which makes them better people who deserve better medical care. This includes this luxurious room, featuring a leather armchair for visitors, home cinema system and of course a well-filled bar. Say, why don\'t you "hospitalize" yourself and turn this room into a nifty hideout?',
+  'Du hast die alte Beschriftung weggewischt.' =>
+	'You\'ve cleared the old description.',
+  'Entzugserscheinungen' =>
+	'Withdrawal symptoms',
+  'Wie lange ist dein letzter Schuss her? Du weist es nicht mehr... es scheint eine Ewigkeit zu sein. Wirst du den Entzug durchhalten oder wieder zur Nadel greifen?' =>
+	'How much time has passed since your last shot? You don\'t know... it seems like an eternity to you. Will you be able to bear the withdrawal symptoms?',
+  'Das hat gut getan! Du hast die Entzugserscheinungen gegen rosa Elephanten eingetauscht, die mit geschminkten Aligatoren um zwei Einhörner kämpfen. Zumindest für ein Weilchen...' =>
+	'Great! You\'ve managed to exchange your withdrawal symptoms for a group of pink elephants wrestling with a group of painted alligators for the affection of two unicorns. At least for a while...',
+  'Herzlichen Glückwunsch - das ist jetzt das :num. mal, dass du deine Sucht nach verschreibungspflichtigen Medikamenten, industriellem Lösungsmittel oder abgelaufenem Hustensaft besiegt hast!' =>
+	'Congratulations - this is the :numth time you managed to come off prescription drugs, industrial solvents oder or expired cough medicine!',
+  'Direkt nachdem du die Paracetoid schluckst merkst du, wie es dir besser geht. In der Schachtel ist nur noch eine Pille. Setze sie mit Bedacht ein!' =>
+	'Shortly after taking this pill, you start to feel better. There is only one pill left, so use it wisely!',
+  'Die Chemikalie läuft an der Klinge herunter und ätzt den Rost weg! Deine Machete ist nun schärfer den je!' =>
+	'This chemical seems to be etching the rust from your blade. Your machete is sharper than ever now! ',
+  'Ein angriffslustiger Zombie springt aus dem Kühlraum und greift an!' =>
+	'A belligerent zombie jumps out of the cooling chamber and attacks!',
+  'Die schwere Metalltür, die die Küche vom Kühlraum trennt, ist inzwischen startk verrostet. Nach einiger Anstrengung gelingt es dir aber doch, sie einen Spalt zu öffnen. Du willst gerade hineingehen, als du plötzlich von einem Zombie angefallen wirst! Wie zum Teufel ist der denn da rein gekommen? Zu allem Überfluss ist der Kühlraum (bis auf den Zombie) völlig leer...' =>
+	'The hinges of this heavy, metal door are rusted, making it hard to open it. After a huge effort however, you manage to pry it open a little. As you try to squeeze yourself throug, you are suddenly attacked by a zombie! How on earth did he manage to get in there? Worse than that, the room seems to be empty...',
+  'Hobbyraum' =>
+	'Hobby Room',
+  'Bist du verrückt? Das kannst du doch nicht machen, wenn alle zugucken... Such dir ein ruhigeres Plätzchen.' =>
+	'Are you crazy? You can\'t do that with everyone watching... Go find some other, more private place.',
+  ':name hat dich gebeten, ihn nach :location zu begleiten.' =>
+	':name has asked you to accompany him on his way to :location.',
+  'Jeder Mensch braucht nun mal ein Hobby. Das Hobby der Bewohner dieses Hauses beinhaltete anscheinend Peitschen, an der Wand befestigte Ketten und ein Laufgitter voll angebrannter Puppen.' =>
+	'Everyone needs a hobby. The occupants of this house obviously had a hobby that involved whips, chains and a playpen full of burned dolls.',
+  'Lächelnder Leichnam' =>
+	'Smiling Body',
+  'Auf welche Art auch immer er gestorben ist, es scheint ihm unglaublichen Spaß gemacht zu haben - zumindest basierend auf seinem Gesichtsausdruck.' =>
+	'There is no way to tell what killed him - but whatever it was, based on his facial expression it seems that he had a lot of fun while it happened.',
+  'Hobbykeller' =>
+	'Hobby Room',
+  'Die ganze Einrichtung hier erinnert dich irgendwie an den Londoner Dungeon...' =>
+	'The furnishing of this place kind of reminds you of the London Dungeon...',
+  ':name hat nicht genug Energie, um diesen Ort zu erreichen ...' =>
+	':name does not have enough energy to reach this place ...',
+  'Jmd. Wunde auswaschen' =>
+	'Clean s.b. wound',
+  'In einer Ecke des Raumes findest du, versteckt unter etwas Geröll, mehrere kleine Schälchen mit Blut...' =>
+	'In a corner of the room, hidden under some rubble, you find a few small bowls filled with blood...',
+  'Du spürst einen Luftzug an deinem Nacken... er ist warm, fast als wäre es jemandes Atem. Aber hier ist zum Glück ja niemand...' =>
+	'You feel a slight draught around your neck... it feels warm, as if it was someone\'s breath. But that can\'t be, because nobody else is here...',
+  'Befleckter Teddy der verlorenen Kindheit' =>
+	'Soiled Teddy of a Lost Childhood',
+  'Zwischen den Puppen in der Kinderkrippe liegt noch etwas anderes... ein blutverschmierter Teddybär! Warum kommt es dir nur so vor, als wenn du den schon einmal irgendwo gesehen hättest?' =>
+	'There is something else between the puppets in this crib... it\'s a bloody teddy bear... literally! Somehow, you feel like you have seen this before...',
+  'Pille' =>
+	'Pill',
+  'Umgeworfene Tragen, zerrissene Vorhänge, eine Schleusentür ist aus der Schiene gerissen... du stehst quasi im Epizentrum der Zombieapokalypse. Die Ärzte und Schwestern, die hier gearbeitet haben, sind durch die Hölle gegangen. Leider sind sie von dort wieder zurückgekehrt.... bete lieber, dass du ihnen nicht begegnest!' =>
+	'Overthrown stretchers, torn curtains, a big door lays unhinged on the floor... this is the epicenter of the zombie outbreak. The physicians and nurses here went through hell - but they did not stay there.... you\'d better pray to not cross their way!',
+  ':num Seiten (bereits gelesen)' =>
+	':num pages (already read)',
+  'Und wieder hast du ein Buch durchgelesen. Nur das Ende hätte etwas spannender sein können...' =>
+	'And another book done! Well, the ending could have been less forced...',
+  'Mit ein paar kleinen Verbesserungen kann man die Effektivität eines Batteriewerfers ungemein erhöhen. Mit der neuen Ladevorrichtung sparst du im Kampf viel Zeit, die du wiederum in das Abschlachten weiterer Zombies investieren kannst.' =>
+	'A few small tweaks can make your battery launcher so much more effective. The new automatic loader will save you a lot of time in battle, which you can now spend killing even more zombies.',
+  'Dieses Teil hast du eh nicht mehr gebraucht... und warum soll es rumliegen und Platz verschwenden, wenn du es einfach auseinandernehmen kannst?' =>
+	'You didn\'t need this thing anyways... why keep it around to collect dust, when you can just disassemble it?',
+  'Direkt nachdem du die Paralaxium schluckst fallen dir langsam die Augen zu... Die Schachtel ist leer!' =>
+	'Right after swallowing the pill, you feel your eyelids getting heavier... The box is empty!',
+  'Wie jedes Lagerhaus verfügt auch dieses über einfache Schutzmaßnahmen gegen Diebstahl. Plünderer hat das nicht aufhalten können, aber vielleicht Zombies? Du könntest durchaus versuchen, diesen Ort zu einem Versteck zu machen...' =>
+	'Every warehouse has some basic protection against thieves. It wasn\'t enough to fend of scavengers, but what about zombies? You could try to turn this place into a new hideout...',
+  'Dies ist alles, was von eurem Freund übrig geblieben ist... Naja, immerhin kann man noch eine Suppe draus kochen.' =>
+	'This is all that has been left from your friend ... Well, you can still make a stew out of this.',
+  'Das zentrale Utensil jeder Küche - der Wasserkocher - steht nun auch dir zur Verfügung. Nutze ihn Weise, und missbrauche seine Kräfte nicht!' =>
+	'The center piece of every kitchen - the boiler - is now available to you. Use him wisely, and don\'t abuse it\'s powers!',
+  'Du musst diesen Gegenstand aufheben, bevor du ihn anlegen kannst.' =>
+	'You need to pick this up before you can equip it.',
+  'Anscheinend kann man sich Munition ganz einfach selber bauen, indem man ein Kupferrohr in kleine Stücke sägt und mit Schwarzpulver füllt. Wer hätte das gedacht?' =>
+	'It seems, getting new ammo is real easy. Just take a pipe, saw it into pieces and fill them with gunpowder. Who would have thought that this actually worked??',
+  'Du gießt das Wasser auf den Boden um das Gewäch herum. Überraschenderweise passiert nichts spannendes, doch als du dich gerade umdrehen und wieder gehen willst lässt dir das Gewächs eine Frucht vor die Füße fallen... Ob das seine Art war, Danke zu sagen?' =>
+	'You\'ve spilled some water on the ground arount the plant. Surprisingly, nothing at all happens. As you\'re about to leave, the plant drops a fruit in front of your feet. Maybe it is trying to say "Thank you"?',
+  'Du gießt das Wasser auf den Boden um das Gewäch herum. Überraschenderweise passiert nichts spannendes, doch als du dich gerade umdrehen und wieder gehen willst lässt dir das Gewächs :num Früchte vor die Füße fallen... Ob das seine Art war, Danke zu sagen?' =>
+	'You\'ve spilled some water on the ground arount the plant. Surprisingly, nothing at all happens. As you\'re about to leave, the plant drops :num fruits in front of your feet. Maybe it is trying to say "Thank you"?',
+  'Der Saft spritzt dir nur so ins Gesicht, als du in diese Mutationsmelone beißt. So etwas gutes hast du wirklich lange nicht mehr gegessen!' =>
+	'Juice gushes in your face as you bite this Mutalone. It\'s been a ling time since you\'ve eaten something that tasty.',
+  'Transportmittel' =>
+	'Transportation',
+  'Du hast ein Transportmittel gefunden! Jetzt kannst du dich wesentlich leichter in der Welt bewegen!' =>
+	'You have found some means of transportation! Now, traveling will be way easier!',
+  'Das kannst du nicht ablegen...' =>
+	'You can\'t drop that...',
+  'Sehr schön! Du hast einige neue Informationen in deine Karte aufnehmen können!' =>
+	'Great! You\'ve managed to aquire some new information to add to your map.',
+  'Gebrauchsanleitung für einen Großen Hadronen-Speicherring' =>
+	'Large Hadron Collider Manual',
+  'Direkt nachdem du die Paralaxium schluckst fallen dir langsam die Augen zu... Jetzt sind noch :num Pillen in der Schachtel.' =>
+	'Right after swallowing the pill, you feel your eyelids getting heavier... There are still :num pills in that box.',
+  'Direkt nachdem du die Paralaxium schluckst fallen dir langsam die Augen zu... In der Schachtel ist nur noch eine Pille. Setze sie mit Bedacht ein!' =>
+	'Right after swallowing the pill, you feel your eyelids getting heavier... There is only one pill left, so use it wisely!',
+  'So ein Mist... dein Fahrrad ist auf dem Weg hierher kaputt gegangen...' =>
+	'Damn... your bicycle has broken down on the way...',
+  'Der Automat hat deine Flasche geschluckt und etwas Geld dafür ausgespuckt.' =>
+	'The vending machine took your bottle and gave you some cash in return.',
+  'Es werde Licht! Herzlichen Glückwunsch, du hast etwas Strom für dein Versteck erzeugt!' =>
+	'Let there be light! Congratulations, you managed to generate some electricity for your hideout!',
+  'Also, so richtig hygienisch sieht das jetzt nicht aus...' =>
+	'Well, this turnd out kind off less hygienic than planned...',
+  'Splitter zählen' =>
+	'Count splinters',
+  'Schredder verwenden' =>
+	'Use Shredder',
+  'Mit dieser Aktion kannst du alle Gegenstände, die im Moment auf dem Boden liegen, zerstören um Splitter herzustellen.' =>
+	'This action destroys all items on the ground and turns them into splinters.',
+  'Splitterkugeln herstellen' =>
+	'Get splinter balls',
+  'Aus 10 Eimern mit Splittern kannst du eine Splitterkugel pressen, die du als Munition verwenden kannst.' =>
+	'You can compress 10 buckets of splinters into a splinter ball, which you can use as ammunition.',
+  'Obwohl hier schon seit Jahren kein neuer Müll mehr gelagert wurde kannst du die Mülldeponie noch immer meilenweit riechen. Das allermeiste, was du hier aus den Müllbergen ziehen kannst, ist zu nichts mehr zu gebrauchen. Allerdings kannst du ja immer auf einen Glücksfund hoffen.' =>
+	'Even though there has been no new garbage around here for years, you can still smell this place from a  mile away. Most of the stuff here is garbage - but you might be able to find a use for that. Maybe you\'ll even dig out something valuable?',
+  'Steve' =>
+	'Steffen',
+  'Auf seinem blauen Overall ist ein Namensschild - "Steve". Anscheinend hat Steve früher hier gearbeitet. Und handwerklich geschickt war er auch, denn neben ihm findest du einen Splitterwerfer. Du hast ganz schön Glück, dass du ständig Tote findest die cooles Zeug dabei haben, weist du das eigentlich?' =>
+	'His blue jumpsuit has a name tag - "Steffen". Seems that Steffen used to work here. He probably was a talented mechanic, because there is a homemade splinter gun next to him. You\'re pretty lucky to always run into dead people with cool stuff, you know that??',
+  'Neben einem kleinen Schuppen findest du hinter einer Wand aus Kisten eine Leiche. Der arme Kerl wollte sich wohl vor den Zombies verstecken. Scheint nicht geklappt zu haben ...' =>
+	'Next to the shed, behind a wall of boxes, you find a single body. It seems the poor guy tried to hide here from the zombies. It alsos eems that it did not work all that well ...',
+  'Hier lagern momentan :num Eimer voller Splitter, aus denen du :num2 Splitterkugeln formen könntest.' =>
+	'You have :num buckets full of splinters here. You can use those to create :num2 splinter balls.',
+  'Du brauchst mehr Splitter, um eine solide Splitterkugel zu bauen.' =>
+	'You need more splinters to form a solid ball of splinters.',
+  'Überlebenstipp #3 gegen Zombieinvasionen: Wenn Zombies keine Löcher in deiner Verteidigung finden, dann machen sie sich selbst welche! Verstärke also besser immer deine Wände.' =>
+	'Zombie Apocalypse Survival Rule #3: When zombies do not find holes in your defense strategy, they create one themselves! So you better reinforce your walls.',
+  'Sobald du in deinem Versteck eine Werkbank errichtet hast, solltest du so oft wie möglich im Baumarkt vorbei schauen. Hier gibt\'s praktisch alles was das Bastlerherz begehrt. Leider gibt es hier auch einige Zombies, du solltest also besser auf alles vorbereitet sein ...' =>
+	'The Hardware Store is THE place to go after construction your own, personal workbench. They have anything you could possibly need, and even some things you can\'t possibly want - like zombies!. You\'d better be prepared for anything around here ...',
+  'Viel hilft viel - mit ein paar zusätzlichen Druckreglern kannst du Batterien nun mit extra-hoher Geschwindigkeit abfeuern.' =>
+	'More is always better - with a few more Pressure Regulators, you can launch batteries with an extra-high speed.',
+  'Anfängerseele' =>
+	'Weak Soul',
+  'Pech gehabt... hier scheinst du nichts finden zu können. Da hast du deine Heldentag wohl verschenkt.' =>
+	'Too bad... seems like you can\'t find anything here. Guess you just wasted your heroic action.',
+  'Du versuchst, die Treppe in die erste Etage hinaufzusteigen. Das Holz knirscht unter deinen Füßen und du merkst, wie der Boden langsam nachgibt. Sofort springst du zurück - du bist zu schwer beladen, um hier hochzulaufen. Lege ein paar schwere Sachen aus deinem Rucksack ab und versuche es dann erneut.' =>
+	'You try to enter the first floor of this building, but as soon as you step on the staircase, the stairs crunch and bend. Immediately, you jump back - you\'re too heavy to enter here. Maybe you could leave some things behind?',
+  'Augen zu und durch! Du schluckst die Pille herunter - sofort fühlst du, wie die Pille dich von innen reinigt. Sehr angenehm!' =>
+	'Grit your teeth, close your eyes and down this pill - suddenly, you feel all poisons disappearing from your body. Great!',
+  'Es geht doch nichts über belegte Brote. Dein Hunger ist gestillt und du fühlst neue Kraft. Du hast deine Nahrungsrationen fast aufgebraucht. Eine Ration befindet sich noch in der Box.' =>
+	'Everybody loves sandwiches. Your hunger is gone and you feel refreshed. But watch out, you ony have one ration left in your lunchbox.',
+  'Es geht doch nichts über belegte Brote. Dein Hunger ist gestillt und du fühlst neue Kraft. Die Box ist leer!' =>
+	'Everybody loves sandwiches. Your hunger is gone and you feel refreshed. The lunchbox is now empty!',
+  'Du stemmst dich mit aller Kraft gegen das Ventil. Mit einem Schlag öffnet es sich, und ein Schwall Kühlwasser ergießt sich über dich. Das lindert zwar sofort deinen Durst, leider bist du jetzt auch gewaltig verstrahlt worden...' =>
+	'You use all your force to open this valve. Once you\'ve managed to turn it a little, a pipe in front of you opens and drowses you in cooling water. This helps against your thirst, but it also heavily irradiates you...',
+  'Diese Krankenhauskantine war früher mal ein echter Geheimtipp in der Stadt, denn hier konnte man vergleichsweise billig eine leckere Mahlzeit bekommen. Der günstige Preis ist auch kein Wunder - man kann Nahrungsmittel ziemlich billig produzieren, wenn sich im selben Gebäude eine leichenhalle befindet...' =>
+	'Diese Krankenhauskantine war früher mal ein echter Geheimtipp in der Stadt, denn hier konnte man vergleichsweise billig eine leckere Mahlzeit bekommen. Der günstige Preis ist auch kein Wunder - man kann Nahrungsmittel ziemlich billig produzieren, wenn sich im selben Gebäude eine leichenhalle befindet...',
 );

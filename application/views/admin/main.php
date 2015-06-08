@@ -7,6 +7,7 @@
  * @var bool $allow_translate Allow Translation functions
  * @var bool $allow_userlist Allow user listing
  * @var bool $allow_gamelist Allow game listing
+ * @var bool $allow_ranking Allow ranking functions
  */
 
 ?>
@@ -37,6 +38,7 @@
         <div class="tile" data-ref="translate" data-icon="language" data-active="<?=$allow_translate ? 1 : 0 ?>"></div>
         <div class="tile" data-ref="users" data-icon="users" data-active="<?=$allow_userlist ? 1 : 0 ?>"></div>
         <div class="tile" data-ref="games" data-icon="gamepad" data-active="<?=$allow_gamelist ? 1 : 0 ?>"></div>
+        <div class="tile" data-ref="ranking" data-icon="newspaper-o" data-active="<?=$allow_ranking ? 1 : 0 ?>"></div>
     </div>
 </div>
 <script type="application/javascript">

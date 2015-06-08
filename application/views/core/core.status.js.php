@@ -231,6 +231,11 @@
                             ).append(
                                 $('<span />').text(v.desc)
                             );
+
+                            if (v.time)
+                                content.append(
+                                    $('<span />').addClass('separator')
+                                ).append($('<div />').text(game.i18n(<?=__j('Verbleibende Dauer: :time')?>, {':time': v.time})));
                         }
                     })
                 ).appendTo(target);

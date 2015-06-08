@@ -63,68 +63,74 @@ class Model_Achievement extends Model {
     const MA_RANKING_COLLOSSEUM = 4000;
     const MA_RANKING_MULTI_OPEN = 10000;
 
+    const MA_RANKING_MULTI_PRIVATE_SMALL = 10100;
+    const MA_RANKING_MULTI_PRIVATE_LARGE = 10200;
+    const MA_RANKING_MULTI_PRIVATE_ROADTRIP = 11000;
+
     private static $data = array(
-			Model_Achievement::MA_KILLED_ZOMBIES 		=> array('name' => "Getötete Zombies",                      'points' => 0,),
-			Model_Achievement::MA_SLEEP 				=> array('name' => "Schlafmütze",                           'points' => 1,),
-			Model_Achievement::MA_BROKEN_CHAIRS		    => array('name' => "Wrestling Extrem",                      'points' => 1,),
-			Model_Achievement::MA_CLOSE_ESCAPES		    => array('name' => "Knapp entkommen",                       'points' => 2,),
-			Model_Achievement::MA_GAMETIME			    => array('name' => "Kreuze auf deinem Kalender",            'points' => 1,),
-			Model_Achievement::MA_BODY_EATER			=> array('name' => "Om Nom Nom",                            'points' => 5,),
-			Model_Achievement::MA_PILL_EATER			=> array('name' => "Verzweifelter Junkie",                  'points' => 1,),
-			Model_Achievement::MA_CONSTRUCTIONS		    => array('name' => "Heimwerker",                            'points' => 3,),
-			Model_Achievement::MA_ADMINISTRATOR		    => array('name' => "Alpha & Omega",                         'points' => 500,),
-			Model_Achievement::MA_CHICKEN				=> array('name' => "Feiges Huhn",                           'points' => 1,),
-			Model_Achievement::MA_FIST_FIGHT			=> array('name' => "Faustkampf",                            'points' => 1,),
-			Model_Achievement::MA_BUILD_MKII			=> array('name' => "MK II-Fetischist",                      'points' => 5,),
-			Model_Achievement::MA_HORROR				=> array('name' => "Spuren des Grauens",                    'points' => 5,),
-			Model_Achievement::MA_POISON_DRINK		    => array('name' => "Nichts haut mich um",                   'points' => 5,),//Bambii
-			Model_Achievement::MA_CREATIVE_INPUT		=> array('name' => "Kreativer Input",                       'points' => 100,),
-			Model_Achievement::MA_SOME_COMPANY		    => array('name' => "Ein wenig Gesellschaft",                'points' => 2,),//Panther
-			Model_Achievement::MA_ITEM_COUNT			=> array('name' => "3... 2... 1... MEINS!",                 'points' => 0,),//Panther
-			Model_Achievement::MA_BANDAGE_MUMMY		    => array('name' => "Wandelnde Mumie",                       'points' => 3,),//Bambii
-			Model_Achievement::MA_SLASHER_KILLER		=> array('name' => "Schlimmer als Zombies ...",             'points' => 2,),//MisterD
-			Model_Achievement::MA_GARBAGE_GUY			=> array('name' => "Müllmann",                              'points' => 1,),
-			Model_Achievement::MA_PRINCESS			    => array('name' => "Prinzessin auf der Erbse",              'points' => 1,),//Bambii
-			Model_Achievement::MA_ENTOMOLOGIST	        => array('name' => "Entomologe",                            'points' => 142,),
-			Model_Achievement::MA_BREAK_INS			    => array('name' => "Sie kamen von hinten!",                 'points' => 4,),
-			Model_Achievement::MA_ALCOHOLIC			    => array('name' => "Nicht-so-anonymer Alkoholiker",         'points' => 3,),
-			Model_Achievement::MA_PUMPKINHEAD			=> array('name' => "Visagist von Pumpkinhead",              'points' => 20,),
-			Model_Achievement::MA_ALPHATESTER			=> array('name' => "Testsubjekt",                           'points' => 200,),
-			Model_Achievement::MA_SCIENCE				=> array('name' => "Verrückter Wissenschaftler",            'points' => 3,),
-			Model_Achievement::MA_NOSCIENCE			    => array('name' => "Wissenschafts-Azubi",                   'points' => 1,),
-			Model_Achievement::MA_XMAS				    => array('name' => "In der Weihnachtsbäckerei",             'points' => 20,),
-			Model_Achievement::MA_NAMEGIVER			    => array('name' => "Namensgeber",                           'points' => 500,),
-			Model_Achievement::MA_GRAVEROBBER			=> array('name' => "Grabräuber",                            'points' => 10,),
-			Model_Achievement::MA_BLOODSUCKER			=> array('name' => "Blutsauger",                            'points' => 5,),//Advo
-			Model_Achievement::MA_EVENTWINNER			=> array('name' => "Eventsieger",                           'points' => 50,),
-			Model_Achievement::MA_EVENT				    => array('name' => "Event-Teilnehmer",                      'points' => 5,),
-			Model_Achievement::MA_EVENTLOOSER			=> array('name' => "Trostpreis",                            'points' => 10,),
-			Model_Achievement::MA_GENEROUS			    => array('name' => "Edler Spender",                         'points' => 40,),
-			Model_Achievement::MA_CAPITALISM			=> array('name' => "Kapitalismus",                          'points' => 10,),
-            Model_Achievement::MA_LETTERS	    		=> array('name' => "Brieffreund",                           'points' => 0,),
-            Model_Achievement::MA_GLADIATOR	    	    => array('name' => "Gladiator",                             'points' => 5,),
-            Model_Achievement::MA_DALAD                 => array('name' => "Dalad Jelly Auszeichnung",              'points' => 5,),
-            Model_Achievement::MA_MENTOR                => array('name' => "Geduldiger Lehrmeister",                'points' => 20,),
-            Model_Achievement::MA_LORD                  => array('name' => "Burgherr",                              'points' => 50,),
-            Model_Achievement::MA_MASOCHIST             => array('name' => "Masochist",                             'points' => 3,),
-            Model_Achievement::MA_GAMEWEEK              => array('name' => "Survival 24/7",                         'points' => 15,),
-            Model_Achievement::MA_GAMEMONTH             => array('name' => "Kalenderblatt-Verschwender",            'points' => 45,),
-            Model_Achievement::MA_MERCYKILL             => array('name' => "Gnadenstoß",                            'points' => 30,),
-            Model_Achievement::MA_WIKI                  => array('name' => "Berühmter Autor",                       'points' => 40,),
-            Model_Achievement::MA_APRIL                 => array('name' => "April April",                           'points' => 10,),
-            Model_Achievement::MA_RAVEN                 => array('name' => "Opfer der Raben",                       'points' => 5,),
-            Model_Achievement::MA_EASTER                => array('name' => "Oster-Glückspilz",                      'points' => 15,),
-            Model_Achievement::MA_EASTER_BAD            => array('name' => "Oster-Pechvogel",                       'points' => 0,),
-            Model_Achievement::MA_CLOCK                 => array('name' => "Geöltes Uhrwerk",                       'points' => 5,),
-			Model_Achievement::MA_CLOWN                 => array('name' => "Blutiger Clown",                        'points' => 50,),
+			Model_Achievement::MA_KILLED_ZOMBIES 		            => array('name' => "Getötete Zombies",                      'points' => 0,),
+			Model_Achievement::MA_SLEEP 				            => array('name' => "Schlafmütze",                           'points' => 1,),
+			Model_Achievement::MA_BROKEN_CHAIRS		                => array('name' => "Wrestling Extrem",                      'points' => 1,),
+			Model_Achievement::MA_CLOSE_ESCAPES		                => array('name' => "Knapp entkommen",                       'points' => 2,),
+			Model_Achievement::MA_GAMETIME			                => array('name' => "Kreuze auf deinem Kalender",            'points' => 1,),
+			Model_Achievement::MA_BODY_EATER			            => array('name' => "Om Nom Nom",                            'points' => 5,),
+			Model_Achievement::MA_PILL_EATER			            => array('name' => "Verzweifelter Junkie",                  'points' => 1,),
+			Model_Achievement::MA_CONSTRUCTIONS		                => array('name' => "Heimwerker",                            'points' => 3,),
+			Model_Achievement::MA_ADMINISTRATOR		                => array('name' => "Alpha & Omega",                         'points' => 500,),
+			Model_Achievement::MA_CHICKEN				            => array('name' => "Feiges Huhn",                           'points' => 1,),
+			Model_Achievement::MA_FIST_FIGHT			            => array('name' => "Faustkampf",                            'points' => 1,),
+			Model_Achievement::MA_BUILD_MKII			            => array('name' => "MK II-Fetischist",                      'points' => 5,),
+			Model_Achievement::MA_HORROR				            => array('name' => "Spuren des Grauens",                    'points' => 5,),
+			Model_Achievement::MA_POISON_DRINK		                => array('name' => "Nichts haut mich um",                   'points' => 5,),//Bambii
+			Model_Achievement::MA_CREATIVE_INPUT		            => array('name' => "Kreativer Input",                       'points' => 100,),
+			Model_Achievement::MA_SOME_COMPANY		                => array('name' => "Ein wenig Gesellschaft",                'points' => 2,),//Panther
+			Model_Achievement::MA_ITEM_COUNT			            => array('name' => "3... 2... 1... MEINS!",                 'points' => 0,),//Panther
+			Model_Achievement::MA_BANDAGE_MUMMY		                => array('name' => "Wandelnde Mumie",                       'points' => 3,),//Bambii
+			Model_Achievement::MA_SLASHER_KILLER		            => array('name' => "Schlimmer als Zombies ...",             'points' => 2,),//MisterD
+			Model_Achievement::MA_GARBAGE_GUY			            => array('name' => "Müllmann",                              'points' => 1,),
+			Model_Achievement::MA_PRINCESS			                => array('name' => "Prinzessin auf der Erbse",              'points' => 1,),//Bambii
+			Model_Achievement::MA_ENTOMOLOGIST	                    => array('name' => "Entomologe",                            'points' => 142,),
+			Model_Achievement::MA_BREAK_INS			                => array('name' => "Sie kamen von hinten!",                 'points' => 4,),
+			Model_Achievement::MA_ALCOHOLIC			                => array('name' => "Nicht-so-anonymer Alkoholiker",         'points' => 3,),
+			Model_Achievement::MA_PUMPKINHEAD			            => array('name' => "Visagist von Pumpkinhead",              'points' => 20,),
+			Model_Achievement::MA_ALPHATESTER			            => array('name' => "Testsubjekt",                           'points' => 200,),
+			Model_Achievement::MA_SCIENCE				            => array('name' => "Verrückter Wissenschaftler",            'points' => 3,),
+			Model_Achievement::MA_NOSCIENCE			                => array('name' => "Wissenschafts-Azubi",                   'points' => 1,),
+			Model_Achievement::MA_XMAS				                => array('name' => "In der Weihnachtsbäckerei",             'points' => 20,),
+			Model_Achievement::MA_NAMEGIVER			                => array('name' => "Namensgeber",                           'points' => 500,),
+			Model_Achievement::MA_GRAVEROBBER			            => array('name' => "Grabräuber",                            'points' => 10,),
+			Model_Achievement::MA_BLOODSUCKER			            => array('name' => "Blutsauger",                            'points' => 5,),//Advo
+			Model_Achievement::MA_EVENTWINNER			            => array('name' => "Eventsieger",                           'points' => 50,),
+			Model_Achievement::MA_EVENT				                => array('name' => "Event-Teilnehmer",                      'points' => 5,),
+			Model_Achievement::MA_EVENTLOOSER			            => array('name' => "Trostpreis",                            'points' => 10,),
+			Model_Achievement::MA_GENEROUS			                => array('name' => "Edler Spender",                         'points' => 40,),
+			Model_Achievement::MA_CAPITALISM			            => array('name' => "Kapitalismus",                          'points' => 10,),
+            Model_Achievement::MA_LETTERS	    		            => array('name' => "Brieffreund",                           'points' => 0,),
+            Model_Achievement::MA_GLADIATOR	    	                => array('name' => "Gladiator",                             'points' => 5,),
+            Model_Achievement::MA_DALAD                             => array('name' => "Dalad Jelly Auszeichnung",              'points' => 5,),
+            Model_Achievement::MA_MENTOR                            => array('name' => "Geduldiger Lehrmeister",                'points' => 20,),
+            Model_Achievement::MA_LORD                              => array('name' => "Burgherr",                              'points' => 50,),
+            Model_Achievement::MA_MASOCHIST                         => array('name' => "Masochist",                             'points' => 3,),
+            Model_Achievement::MA_GAMEWEEK                          => array('name' => "Survival 24/7",                         'points' => 15,),
+            Model_Achievement::MA_GAMEMONTH                         => array('name' => "Kalenderblatt-Verschwender",            'points' => 45,),
+            Model_Achievement::MA_MERCYKILL                         => array('name' => "Gnadenstoß",                            'points' => 30,),
+            Model_Achievement::MA_WIKI                              => array('name' => "Berühmter Autor",                       'points' => 40,),
+            Model_Achievement::MA_APRIL                             => array('name' => "April April",                           'points' => 10,),
+            Model_Achievement::MA_RAVEN                             => array('name' => "Opfer der Raben",                       'points' => 5,),
+            Model_Achievement::MA_EASTER                            => array('name' => "Oster-Glückspilz",                      'points' => 15,),
+            Model_Achievement::MA_EASTER_BAD                        => array('name' => "Oster-Pechvogel",                       'points' => 0,),
+            Model_Achievement::MA_CLOCK                             => array('name' => "Geöltes Uhrwerk",                       'points' => 5,),
+			Model_Achievement::MA_CLOWN                             => array('name' => "Blutiger Clown",                        'points' => 50,),
 
-			Model_Achievement::MA_RANKING_SURVIVAL	    => array('name' => "Berühmter Überlebenskünstler",          'points' => 50,),
-			Model_Achievement::MA_RANKING_HARDCORE	    => array('name' => "Berühmter Hardcore-Überlebenskünstler", 'points' => 75,),
-			Model_Achievement::MA_RANKING_MASSACRE	    => array('name' => "Berühmter Serienkiller",                'points' => 50,),
-            Model_Achievement::MA_RANKING_LONESCOUT	    => array('name' => "Goldene Arschkarte",                    'points' => 100,),
-            Model_Achievement::MA_RANKING_COLLOSSEUM    => array('name' => "Titan",                                 'points' => 100,),
-            Model_Achievement::MA_RANKING_MULTI_OPEN    => array('name' => "Einer Für Alle!",                       'points' => 50,)
-
+			Model_Achievement::MA_RANKING_SURVIVAL	                => array('name' => "Berühmter Überlebenskünstler",          'points' => 50,),
+			Model_Achievement::MA_RANKING_HARDCORE	                => array('name' => "Berühmter Hardcore-Überlebenskünstler", 'points' => 75,),
+			Model_Achievement::MA_RANKING_MASSACRE	                => array('name' => "Berühmter Serienkiller",                'points' => 50,),
+            Model_Achievement::MA_RANKING_LONESCOUT	                => array('name' => "Goldene Arschkarte",                    'points' => 100,),
+            Model_Achievement::MA_RANKING_COLLOSSEUM                => array('name' => "Titan",                                 'points' => 100,),
+            Model_Achievement::MA_RANKING_MULTI_OPEN                => array('name' => "Einer Für Alle!",                       'points' => 50,),
+            Model_Achievement::MA_RANKING_MULTI_PRIVATE_SMALL	    => array('name' => "Elitärer Club",                         'points' => 40,),
+            Model_Achievement::MA_RANKING_MULTI_PRIVATE_LARGE       => array('name' => "Elitärer Club",                         'points' => 40,),
+            Model_Achievement::MA_RANKING_MULTI_PRIVATE_ROADTRIP    => array('name' => "Roadkill-Experte",                      'points' => 50,)
     );
     
 	private $container = Array();

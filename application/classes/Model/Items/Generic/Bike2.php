@@ -19,7 +19,7 @@ class Model_Items_Generic_Bike2 extends Model_Items_Abstract_Transport implement
      * @return bool
      */
     public function trigger_after($p, $d) {
-        if (mt_rand(0,100) < round($d/4)) {
+        if (mt_rand(0,100) < min(25,round($d/4))) {
             $this->consume();
             $p->location()->inventory()->add(new Model_Items_Generic_Bike);
             $p->log()->add('So ein Mist... dein Fahrrad ist auf dem Weg hierher kaputt gegangen...');

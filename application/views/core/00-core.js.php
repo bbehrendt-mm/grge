@@ -102,10 +102,13 @@ core = {
             action_box.addClass('custom custom-' + data.location.meta.css);
         }
 
-        var auto_select = $('<select />').appendTo($('<div />').addClass('hide-desktop control').appendTo(action_box))
+        if (data.players && data.players.messages)
+            action_box.append($('<div />').addClass('note control').text(<?=__j('Du hast neue Nachrichten!')?>));
+
+        var auto_select = $('<select />').appendTo($('<div />').addClass('cell rw-12 padded hide-desktop control').appendTo(action_box))
             .append($('<option />').val('#inv_container').text(<?=__j('Gegenstände & Heldentaten')?>))
             .append($('<option />').val('#settings_container').text(<?=__j('Zeitfluss & Verhalten')?>))
-            .append(data.players ? $('<option />').val('#mp_container').text(<?=__j('Spielerübersicht')?>) : false)
+            .append(data.players ? $('<option />').val('#mp_container').text((data.players.messages ? '[!!!] ' : '') + <?=__j('Spielerübersicht')?>) : false)
             .change(function() {
                 $('[data-toggle="' + $(this).val() + '"]').click();
             })
@@ -114,7 +117,7 @@ core = {
         var auto_tab = $('<ul />').addClass('tabline hide-mobile').appendTo(action_box)
             .append($('<li>').attr('data-toggle', '#inv_container').text(<?=__j('Gegenstände & Heldentaten')?>))
             .append($('<li>').attr('data-toggle', '#settings_container').text(<?=__j('Zeitfluss & Verhalten')?>))
-            .append(data.players ? $('<li>').attr('data-toggle', '#mp_container').text(<?=__j('Spielerübersicht')?>) : false)
+            .append(data.players ? $('<li>').attr('data-toggle', '#mp_container').text(<?=__j('Spielerübersicht')?>).prepend(data.players.messages ? $('<img />').attr('src','media/icons/new.png') : false) : false)
             .find('>li').click(function() {
                 var t = $($(this).data('toggle'));
                 auto_select.val($(this).data('toggle')).selectric();

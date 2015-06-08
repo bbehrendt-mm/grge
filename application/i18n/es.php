@@ -76,9 +76,9 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
   'Kolosseum' =>
 	'Coliseo',
   'Survival Privat' =>
-	'Survival Privat',
+	'Supervivencia privada ',
   'Survival Privat (groß)' =>
-	'Survival Privat (groß)',
+	'Supervivencia privada ( Varios)',
   'Roadtrip' =>
 	'Viaje en auto',
   'Einzelspieler' =>
@@ -136,7 +136,7 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
   'Pfadfinder' =>
 	'Boy Scout',
   'Alter Schnösel' =>
-	'Alter Schnösel',
+	'Señora mayor ',
   'Alter Pfadfinder' =>
 	'Explorador anciano',
   'Alter Soldat' =>
@@ -178,7 +178,7 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
   'Neuigkeiten' =>
 	'Noticias',
   'PHP internal call' =>
-	'PHP internal call',
+	'Llamada interna PHP',
   'arguments' =>
 	'Discusiones ',
   'G:i \\U\\h\\r \\a\\m d.m.' =>
@@ -270,7 +270,7 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
   'Laie' =>
 	'Amateur',
   'Tja, du hast beim Losen wohl die Arschkarte gezogen. Nicht nur, dass du aus deiner gemütlichen Stadt hierher geschickt wurdest, du hast noch nicht mal wirklich Ahnung von dem, was du hier tun sollst. Ob das gut gehen kann...?' =>
-	'Tja, du hast beim Losen wohl die Arschkarte gezogen. Nicht nur, dass du aus deiner gemütlichen Stadt hierher geschickt wurdest, du hast noch nicht mal wirklich Ahnung von dem, was du hier tun sollst. Ob das gut gehen kann...?',
+	'Bueno, parece que te toco  la paja más corta. No sólo usted tiene que dejar su acogedora ciudad post-apocalíptica, que ni siquiera tienes la menor idea de lo que te dijeron que hacer. Vamos a ver  que bien te ira ...',
   'Zeichner' =>
 	'El delineante
 ',
@@ -279,17 +279,17 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
   'Techniker' =>
 	'Tecnico ',
   'Mit einem Zeichenbrett kannst du nicht wirklich was anfangen... dafür bist du ein Meister der Laservermessung. Wo ein einfacher Zeichner Stunden mit sinnlosem Gekritzel verbringt, erzeugst du in wenigen Sekunden eine präzise Messung. Vorrausgesetzt natürlich, du findest die entsprechenden Teile...' =>
-	'Mit einem Zeichenbrett kannst du nicht wirklich was anfangen... dafür bist du ein Meister der Laservermessung. Wo ein einfacher Zeichner Stunden mit sinnlosem Gekritzel verbringt, erzeugst du in wenigen Sekunden eine präzise Messung. Vorrausgesetzt natürlich, du findest die entsprechenden Teile...',
+	' Realmente no estas interesado en esto  del "dibujo". Pero ¿quién necesita lápices de todos modos si eres es un maestro de la utilización de los equipos láser de alta tecnología. Es más rápido y mucho  más increíble - siempre va encontrar las piezas necesarias para  montar tu equipo ...',
   'Gladiator' =>
 	'Gladiador ',
   'Nachdem die Welt den Bach heruntergegangen ist merkst du plötzlich, dass du eigentlich nichts kannst, nichts weißt und auch nicht sonderlich sympathisch bist. Als Politiker bist du im Wesentlichen ein Klotz am Bein der anderen Überlebenden... du kannst nur hoffen, dass sie sich nicht den Zombiehorden opfern.' =>
-	'Nachdem die Welt den Bach heruntergegangen ist merkst du plötzlich, dass du eigentlich nichts kannst, nichts weißt und auch nicht sonderlich sympathisch bist. Als Politiker bist du im Wesentlichen ein Klotz am Bein der anderen Überlebenden... du kannst nur hoffen, dass sie sich nicht den Zombiehorden opfern.',
+	'Después de que el mundo hizo  kapoom, de repente estas te das cuenta de que no sabes una mierda, no puede hacer mierda y, además de eso, es una especie de idiota. Como político, que es básicamente  una carga para todos los demás supervivientes ... Esperemos que no te sacrifiquen a los zombies.',
   'Als Football-Coach bist du ein Meister subtiler Künste wie &quot;Frontal durch Zombiehorden brechen&quot;, außerdem kannst du im Kampf einiges einstecken, ohne dich zu verletzen. Mit ein bisschen Übung gelingt es dir eventuell sogar, eine Meute von belagernden Zombies so zu durchberechen, dass auch andere Spieler dir folgen können.' =>
-	'Als Football-Coach bist du ein Meister subtiler Künste wie &quot;Frontal durch Zombiehorden brechen&quot;, außerdem kannst du im Kampf einiges einstecken, ohne dich zu verletzen. Mit ein bisschen Übung gelingt es dir eventuell sogar, eine Meute von belagernden Zombies so zu durchberechen, dass auch andere Spieler dir folgen können.',
+	'Como entrenador de fútbol que tambienes un maestro del arte de " Correr y Cabezear  Zombies" . También puede tomar más daño  de los zombies sin  morir. Con un poco de práctica,  podrías ser capaz de ayudar a otras personas que huyen de una horda zombie cuando intentes atravesar la. ',
   'Als Student hast du viele medizinische Studien durchgeführt, die meisten davon hatten mit den Auswirkungen von Alkohol und Drogen auf den eigenen Körper zu tun. Aus diesem Grund warst du leider etwas weniger Aufmerksam in den Vorlesungen. Aber zum Aufkleben von Pflastern reichen deine Kenntnisse gerade so noch aus.' =>
-	'Als Student hast du viele medizinische Studien durchgeführt, die meisten davon hatten mit den Auswirkungen von Alkohol und Drogen auf den eigenen Körper zu tun. Aus diesem Grund warst du leider etwas weniger Aufmerksam in den Vorlesungen. Aber zum Aufkleben von Pflastern reichen deine Kenntnisse gerade so noch aus.',
+	'Como parte de tu investigación, estudiaste  los efectos de grandes cantidades de drogas y alcohol en tu propio cuerpo. Desafortunadamente, esto interferío con tu atención durante las lecciones . Puede que no seas capaz de realizar una cirugía compleja, pero estoy seguro que puedes aplicar curitas!',
   'Du bist eine Meisterin, lautstark gegen alles und jeden zu hetzen der dir nicht in den Kram passt - der einzige Grund, warum deine Mitüberlebenden dir noch keine Rohrzange über den Schädel gezogen haben, ist dass du dir in schöner Regelmäßigkeit Sprüche auf die Titten schreibst und dann stundenlang oben ohne gegen die Zombies protestierst. Dank deiner kratzfreudigen Fingernägel und dem Endlos-Vorrat Pfefferspray bist du aber auch im Kampf ganz brauchbar.' =>
-	'Du bist eine Meisterin, lautstark gegen alles und jeden zu hetzen der dir nicht in den Kram passt - der einzige Grund, warum deine Mitüberlebenden dir noch keine Rohrzange über den Schädel gezogen haben, ist dass du dir in schöner Regelmäßigkeit Sprüche auf die Titten schreibst und dann stundenlang oben ohne gegen die Zombies protestierst. Dank deiner kratzfreudigen Fingernägel und dem Endlos-Vorrat Pfefferspray bist du aber auch im Kampf ganz brauchbar.',
+	'Eres muy bueno en protestando por casi cualquier cosa que no aprobaras de. La única razón por la que no terminaras como cebo para zombies es porque normalmente andabas desnudo  mientras protestabas por el dominio masculino en las hordas de muertos vivientes. Tus uñas afiladas y el interminable de spray de pimienta también te hacen un combatiente eficaz.',
   ':num Seelenpunkte' =>
 	':num Puntos de Alma',
   'Spielen' =>
@@ -305,9 +305,9 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
   'Weiter' =>
 	'Continuar ',
   'Wenn du dein Spiel mit einem Passwort schützt, können nur Spieler beitreten, die dieses Passwort kennen. Denk daran, dir das Passwort zu notieren, denn nach der Erzeugung des Spiels kannst du es nicht mehr einsehen! Entscheidest du dich gegen die Verwendung eines Passworts, wird dein Spiel öffentlich zugänglich. Spieler, die aufgrund von Beschwerden nicht mehr an öffentlichen Spielen teilnehmen können, dürfen deinem Spiel dann nicht mehr beitreten.' =>
-	'Wenn du dein Spiel mit einem Passwort schützt, können nur Spieler beitreten, die dieses Passwort kennen. Denk daran, dir das Passwort zu notieren, denn nach der Erzeugung des Spiels kannst du es nicht mehr einsehen! Entscheidest du dich gegen die Verwendung eines Passworts, wird dein Spiel öffentlich zugänglich. Spieler, die aufgrund von Beschwerden nicht mehr an öffentlichen Spielen teilnehmen können, dürfen deinem Spiel dann nicht mehr beitreten.',
+	'Si proteges tu juego con una contraseña, sólo los jugadores que sepan la contraseña pueden unirse. Recuerda anotar la contraseña, porque después de la creación del juego que no serás capaz de llevar una copia de seguridad! Si decides no utilizar una contraseña, el juego estará disponible para el público. Los jugadores que ya no están en condiciones de participar en los juegos públicos debido a las quejas no pueden unirse a su juego.',
   'Über den Passwortschutz' =>
-	'Über den Passwortschutz',
+	'Sobre la proteccion de contraseñas  ',
   'Mehrspieler-Lobby' =>
 	'Sala Multijugador',
   'Hier findest du offene Mehrspieler-Partien, denen du beitreten kannst. Ist eine Partie voll, so wird sie automatisch aus dieser Liste entfernt.' =>
@@ -365,7 +365,7 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
   'Der Lauf der Zeit ist in ZombVival in sog. "Ticks" organisiert. Oben rechts auf der Seite wird ein Countdown bis zum nächsten Tick eingeblendet. Bei jedem Tick wird dein Status neu berechnet, außerdem gibt es eine Chance das Dinge geschehen. Wenn du beispielsweise in der Umgebung deines Verstecks stehst, hast du bei jedem Tick die Chance eine Ruine aufzudecken. Bist du in einer Ruine, hast du die Chance einen Gegenstand zu finden und/oder von Zombies attackiert zu werden.' =>
 	'El flujo del tiempo en ZombVival está organizado en lo que apodamos como "Ticks". En la parte superior derecha de la página, aparecerá una cuenta atrás para el próximo tick . Con cada tic-tac, su estado se vuelve a calcular y existe la posibilidad de que las cosas sucedan. Si, por ejemplo, sucede estar en el Basurero  alrededor de tu escondite,  tienes la oportunidad de descubrir una ruina en cada tick. Si estas en una ruina,  tienes la oportunidad de encontrar un artículo y / o ser atacado por zombies.',
   'Ein "Tick" entspricht 5 Minuten Spielzeit. Hast du bei den Spieleinstellungen einen klassischen, festen Zeitfluss gewählt, so musst du direkt beim Start eines Spiels festlegen, wie lange ein Tick in echter Zeit dauern soll. Stellst du dort beispielsweise 1 Minute ein, so läuft das Spiel in 5-facher Geschwindigkeit. Hast du den variablen Zeitfluss gewählt, so kannst du die Geschwindigkeit während des Spiels ändern. Beim klassischen Zeitfluss hingegen hast du jederzeit die Möglichkeit, das Spiel vollständig zu pausieren. Ist das Spiel pausiert, kannst du keinerlei Aktionen durchführen. Dafür werden auch die Ticks angehalten.' =>
-	'Ein "Tick" entspricht 5 Minuten Spielzeit. Hast du bei den Spieleinstellungen einen klassischen, festen Zeitfluss gewählt, so musst du direkt beim Start eines Spiels festlegen, wie lange ein Tick in echter Zeit dauern soll. Stellst du dort beispielsweise 1 Minute ein, so läuft das Spiel in 5-facher Geschwindigkeit. Hast du den variablen Zeitfluss gewählt, so kannst du die Geschwindigkeit während des Spiels ändern. Beim klassischen Zeitfluss hingegen hast du jederzeit die Möglichkeit, das Spiel vollständig zu pausieren. Ist das Spiel pausiert, kannst du keinerlei Aktionen durchführen. Dafür werden auch die Ticks angehalten.',
+	'Un "tick" es equivalente a 5 minutos de tiempo del juego. Hay dos modos de flujo de tiempo diferentes; clásico y variable. Si elige el modo clásico, tendrás que especificar la longitud real de una tick en el inicio de su juego. No se puede cambiar la velocidad más adelante, pero tiene la posibilidad de hacer una pausa en el juego por completo. Con el modo variable, puede cambiar la velocidad durante el juego, pero ya no puedes pausar por completo el juego.',
   'Der Weltuntergang wartet.' =>
 	'El apocalipsis te espera.',
   'Du willst die Zombies doch nicht enttäuschen, oder?' =>
@@ -405,523 +405,535 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
   'Es ist Fütterungszeit...' =>
 	'Es hora de alimentarse...',
   'Bitte gib deiner Partie einen Namen.' =>
-	'Bitte gib deiner Partie einen Namen.',
+	'Por favor ingresa el nombre de tu grupo.',
   'Du musst ein Passwort eingeben, um dieser Partie beitreten zu können!' =>
-	'Du musst ein Passwort eingeben, um dieser Partie beitreten zu können!',
+	'Tienes que ingresar una contraseña para poder unirte a esta partida.',
   'Passwort bestätigt' =>
-	'Passwort bestätigt',
+	'Contraseña correcta  ',
   ':n Spieler' =>
-	':n Spieler',
+	':n Jugadores ',
   'Dein Spielname muss mindestens 4 Zeichen lang sein.' =>
-	'Dein Spielname muss mindestens 4 Zeichen lang sein.',
+	'El nombre de tu partida debe de tener por lo menos 4 caracteres. ',
   'Validiere...' =>
-	'Validiere...',
+	'Validando... ',
   'Das angegebene Passwort war leider nicht korrekt. Bitte prüfe deine Eingabe und versuche es erneut.' =>
-	'Das angegebene Passwort war leider nicht korrekt. Bitte prüfe deine Eingabe und versuche es erneut.',
+	'Tu contraseña es incorrecta. Por favor  intente de nuevo',
   'Dein Passwort wurde akzeptiert.' =>
-	'Dein Passwort wurde akzeptiert.',
+	'Tu contraseña a sido aceptada.',
   'Zurück zum Spiel' =>
-	'Zurück zum Spiel',
+	'Regresar al juego',
   'ZombVival kann im Mehrspieler-Modus nur Spaß machen, wenn sich alle Spieler fair verhalten. Bitte behandle deine Mitspieler so, wie du selbst behandelt werden möchtest. Fehlverhalten anderer Spieler kannst du jederzeit an Brainbox melden.' =>
-	'ZombVival kann im Mehrspieler-Modus nur Spaß machen, wenn sich alle Spieler fair verhalten. Bitte behandle deine Mitspieler so, wie du selbst behandelt werden möchtest. Fehlverhalten anderer Spieler kannst du jederzeit an Brainbox melden.',
+	' ZombiVival solo puede ser divertido para todos si todos jugamos de una manera justa. Por favor trata a los demás como te gustaría que te tratasen. Si te encuentras con alguien que crees que esta siendo injusto, por favor informarle a Brainbox.',
   'Ein Spiel starten' =>
-	'Ein Spiel starten',
+	'Comenzar una nueva partida',
   'Lobby' =>
 	'Lobby',
   'Tritt einer Mehrspieler-Partie bei...' =>
-	'Tritt einer Mehrspieler-Partie bei...',
+	'Unirse a una partida existente...',
   '...  oder eröffne eine eigene Einzel- oder Mehrspieler-Partie!' =>
-	'...  oder eröffne eine eigene Einzel- oder Mehrspieler-Partie!',
+	'...  o puedes crear tu propia!',
   'Dieses Spiel erfordert ein Passwort.' =>
-	'Dieses Spiel erfordert ein Passwort.',
+	'Este juego requiere de una contraseña. ',
   'Spieleinstellungen' =>
-	'Spieleinstellungen',
+	'Opciones del juego',
   'Wähle deinen Beruf!' =>
-	'Wähle deinen Beruf!',
+	'Elige una profesión! ',
   'Wähle eine Spielgeschwindigkeit!' =>
-	'Wähle eine Spielgeschwindigkeit!',
+	'Elige la velocidad del juego!',
   'Kanns losgehen?' =>
-	'Kanns losgehen?',
+	'Listo? ',
   'Benutzer' =>
-	'Benutzer',
+	'Usuario ',
   'Login-Gültigkeit' =>
-	'Login-Gültigkeit',
+	'Validar tu login',
   ':s Sekunden (ca. :m Minuten)' =>
-	':s Sekunden (ca. :m Minuten)',
+	':s Segundos (aproximadamente . :m Minutos)',
   'Admin-Token zurückziehen' =>
-	'Admin-Token zurückziehen',
+	'Revocar acceso ',
   'Ausloggen' =>
-	'Ausloggen',
+	'Salir',
   'Lade Cache' =>
-	'Lade Cache',
+	'Cargar Cache ',
   'Autosuche' =>
-	'Autosuche',
+	'Autobusqueda',
   'Suchbegriff eingeben...' =>
-	'Suchbegriff eingeben...',
+	'Buscando...',
   'Suche' =>
-	'Suche',
+	'Buscar',
   'Es wurden keine Übersetzungen gefunden.' =>
-	'Es wurden keine Übersetzungen gefunden.',
+	'No se encontraron traducciones. 
+',
   'Deine Übersetzung wurde erfolgreich gespeichert.' =>
-	'Deine Übersetzung wurde erfolgreich gespeichert.',
+	'Tu traducción se guardo exitosamente.',
   'Vielen Dank!' =>
-	'Vielen Dank!',
+	'Gracias! ',
   'Ein Fehler ist aufgetreten...' =>
-	'Ein Fehler ist aufgetreten...',
+	'Un error ha ocurrido...',
   'Oops' =>
 	'Oops',
   'Alle' =>
-	'Alle',
+	'Todos',
   'Quell- und Zielsprache dürfen nicht identisch sein.' =>
-	'Quell- und Zielsprache dürfen nicht identisch sein.',
+	'Fuente- y el idioma traducido no deben ser idénticos.  ',
   'Voll' =>
-	'Voll',
+	'Lleno',
   'Kontrollzentrum' =>
-	'Kontrollzentrum',
+	'Centro de control ',
   'Übersetzungen' =>
-	'Übersetzungen',
+	'Traducciones',
   'Dein Zugangstoken läuft in :sec Sekunde/n (ca. :min Minute/n) ab.' =>
-	'Dein Zugangstoken läuft in :sec Sekunde/n (ca. :min Minute/n) ab.',
+	'Tu pase de acceso :sec segundos (approx. :min minuto/s).',
   'Willkommen im Administrationsbereich, :name!' =>
-	'Willkommen im Administrationsbereich, :name!',
+	'Bienvenido al panel de control, :name!',
   'Einzelspieler-Modus' =>
-	'Einzelspieler-Modus',
+	'Un jugador',
   'Die Suche lieferte keine Ergebnisse.' =>
-	'Die Suche lieferte keine Ergebnisse.',
+	'Tu búsqueda no dio con ningún resultado.',
   'Die Flags wurden übermittelt.' =>
 	'Die Flags wurden übermittelt.',
   'Infos' =>
-	'Infos',
+	'Info',
   'Aktionen' =>
-	'Aktionen',
+	'Acciones ',
   'Setzen' =>
 	'Setzen',
   'Auswahl erforderlich!' =>
-	'Auswahl erforderlich!',
+	'Selección requerida!',
   'Kein Admin-Zugang' =>
-	'Kein Admin-Zugang',
+	'Sin acceso de administrador ',
   'Inaktiver Admin-Zugang' =>
-	'Inaktiver Admin-Zugang',
+	'Acceso de administrador inactivo',
   'Administrator' =>
-	'Administrator',
+	'Administrador ',
   'Das Password wurde gesetzt.' =>
-	'Das Password wurde gesetzt.',
+	'La contraseña ha sido establecida.',
   'Das Password wurde entfernt.' =>
-	'Das Password wurde entfernt.',
+	'La contraseña ha sido removida. ',
   'Requests' =>
-	'Requests',
+	'Peticiones ',
   'Benchmark' =>
-	'Benchmark',
+	'Punto de referencia ',
   'Min' =>
 	'Min',
   'Max' =>
 	'Max',
   'Average' =>
-	'Average',
+	'Promedio ',
   'Total' =>
 	'Total',
   'Kohana' =>
 	'Kohana',
   'Application Execution' =>
-	'Application Execution',
+	'Ejecución de la aplicación ',
   'The requested view :file could not be found' =>
 	'The requested view :file could not be found',
   'Sprachabhängige Scripte werden nachgeladen...' =>
-	'Sprachabhängige Scripte werden nachgeladen...',
+	'Cargando scripts dependientes de idioma  ..',
   'Geringe Gefahr' =>
-	'Geringe Gefahr',
+	'Peligro bajo',
   'Versteck' =>
-	'Versteck',
+	'Escondite',
   'In deinem Versteck bist du vor Zombieangriffen geschützt und kannst dich von deinen Aktionen in der Aussenwelt erholen - zumindest, wenn du dich gut verbarrikadiert hast! Unglücklicherweise kannst du nicht für immer hier sitzen bleiben - das wirst du spätestens dann merken, wenn deine gesammelten Vorräte aufgebraucht sind ...' =>
-	'In deinem Versteck bist du vor Zombieangriffen geschützt und kannst dich von deinen Aktionen in der Aussenwelt erholen - zumindest, wenn du dich gut verbarrikadiert hast! Unglücklicherweise kannst du nicht für immer hier sitzen bleiben - das wirst du spätestens dann merken, wenn deine gesammelten Vorräte aufgebraucht sind ...',
+	'En tu escondite, que está a salvo de los ataques de  sorpresa y puedes  relajarte después de un duro día de trabajo -siempre y cuando tus barricadas mantienen los visitantes no deseados fuera! No serás capaz de permanecer aquí para siempre  tarde o temprano, tendrás que dejar este lugar en busca de comida y agua ...',
   'Dein Gespühr sagt dir, dass du auf Zombie-Gruppen mit einer Größe von bis zu :max Zombies gefasst sein solltest.' =>
-	'Dein Gespühr sagt dir, dass du auf Zombie-Gruppen mit einer Größe von bis zu :max Zombies gefasst sein solltest.',
+	'Tu experiencia te dice que prepares para grupos de zombies con un máximo de :max',
   'Rechne damit, etwa alle :pc_min Minuten auf Zombies zu treffen.' =>
-	'Rechne damit, etwa alle :pc_min Minuten auf Zombies zu treffen.',
+	' Espera encontrarte con ellos cada :pc_min minutos .',
   'Die Zombies könnten sich hier versammeln und dir den Fluchtweg abschneiden... So wies aussieht würden sie dafür vermutlich um die :sg_min Minuten benötigen.' =>
-	'Die Zombies könnten sich hier versammeln und dir den Fluchtweg abschneiden... So wies aussieht würden sie dafür vermutlich um die :sg_min Minuten benötigen.',
+	'Los zombies podrían reunirse aqui y bloquear tu ruta de escape. Quizás les tome alrededor de unos :sg_min minutos para hacer esi',
   'Spielstand herunterladen...' =>
-	'Spielstand herunterladen...',
+	'Cargando tu partida...',
   'Sicher' =>
-	'Sicher',
+	'Seguro',
   'Moderate Gefahr' =>
-	'Moderate Gefahr',
+	'Peligro Moderado ',
   'Beträchtliche Gefahr' =>
-	'Beträchtliche Gefahr',
+	'Peligro Significativo ',
   'Hohe Gefahr' =>
-	'Hohe Gefahr',
+	'Gran Peligro',
   'Sehr hohe Gefahr!' =>
-	'Sehr hohe Gefahr!',
+	'Peligro Extremo! ',
   'Hier musst du vorerst keine Angst unerwarteten Angriffen haben.' =>
-	'Hier musst du vorerst keine Angst unerwarteten Angriffen haben.',
+	'No tienes que temer por un ataque sorpresa aqui. ',
   'Die Zombies haben hier keine Gelegenheit, dir den Weg zu versperren.' =>
-	'Die Zombies haben hier keine Gelegenheit, dir den Weg zu versperren.',
+	'Los zombies no tienen ninguna manera de frustrar tu escape aqui. ',
   'Dieses Versteck werden die Zombies niemals finden!' =>
-	'Dieses Versteck werden die Zombies niemals finden!',
+	'Los zombies jamas encontraran este escondite! ',
   'Es ist nur eine Frage der Zeit, bis dieses Versteck von Zombies umstellt wird. So wies aussieht würden sie dafür vermutlich um die :sg_min Minuten benötigen.' =>
-	'Es ist nur eine Frage der Zeit, bis dieses Versteck von Zombies umstellt wird. So wies aussieht würden sie dafür vermutlich um die :sg_min Minuten benötigen.',
+	'Solo es cuestion de tiempo para que los zombies comiencen rodear tu escondite evitando que escapes. Quizás tome  :sg_min minutos para que pase eso. ',
   'Du bist hier so lange sicher, wie dein Versteck den Zombies widerstehen kann.' =>
-	'Du bist hier so lange sicher, wie dein Versteck den Zombies widerstehen kann.',
+	'Estarás seguro aqui... mientras mantengas a los zombies afuera.',
   'Keine Zombies' =>
-	'Keine Zombies',
+	'No hay zombies ',
   '1 Zombie' =>
 	'1 Zombie',
   ':num Zombies' =>
 	':num Zombies',
   'Es sieht so aus, als könntest du diesen Ort momentan ohne Probleme verlassen. Du solltest trotzdem regelmäßig nachschauen, ob Zombies eventuell den Weg blockieren.' =>
-	'Es sieht so aus, als könntest du diesen Ort momentan ohne Probleme verlassen. Du solltest trotzdem regelmäßig nachschauen, ob Zombies eventuell den Weg blockieren.',
+	'Parece que la salida de este lugar esta abierta. 
+De todas formas, deberias de revisar para evitar una sorpresa... ',
   'Die Zombies haben dein Versteck aufgespürt. Von hier kannst du nicht mehr fliehen - du musst die Zombies bekämpfen!' =>
-	'Die Zombies haben dein Versteck aufgespürt. Von hier kannst du nicht mehr fliehen - du musst die Zombies bekämpfen!',
+	'Los zombies han encontrado tu escondite. No puedes escapar, parece que la violencia es la única opción! ',
   'Es geht weder vor noch zurück - Zombies blockieren den Ausgang! Du kannst entweder eine waghalsige Flucht versuchen oder den Weg freizuräumen. Eins steht fest: Von alleine werden diese Zombies hier nicht verschwinden...' =>
-	'Es geht weder vor noch zurück - Zombies blockieren den Ausgang! Du kannst entweder eine waghalsige Flucht versuchen oder den Weg freizuräumen. Eins steht fest: Von alleine werden diese Zombies hier nicht verschwinden...',
+	'No hay escape, los zombies bloquean cada salida.
+Puedes intentar un valiente escape o luchar los zombies que se encuentran en tu camino. Una cosa es segura los zombies no se irán por su cuenta...',
   'Weg freikämpfen' =>
-	'Weg freikämpfen',
+	'Libera el camino!',
   'Fluchtversuch' =>
-	'Fluchtversuch',
+	'Intenta escapar',
   'Zombies' =>
 	'Zombies',
   'Drogenlabor' =>
-	'Drogenlabor',
+	'Laboratorio de Drogas',
   'In diesem heruntergekommenen Schuppen wurden jahrelang diverse Mittelchen mit eher kontroverser Wirkung produziert. Es ist immer noch einiges an Equipment da, das du sicher für irgendwas nutzen kannst. Leider haben auch die Zombies Gefallen an diesem Örtchen gefunden... allerdings weniger wegen dem Equipment, sondern eher wegen den wehrlosen Junkies, die sich hier herumtreiben.' =>
-	'In diesem heruntergekommenen Schuppen wurden jahrelang diverse Mittelchen mit eher kontroverser Wirkung produziert. Es ist immer noch einiges an Equipment da, das du sicher für irgendwas nutzen kannst. Leider haben auch die Zombies Gefallen an diesem Örtchen gefunden... allerdings weniger wegen dem Equipment, sondern eher wegen den wehrlosen Junkies, die sich hier herumtreiben.',
+	'Esta choza en mal estado, alguna vez fue usada para producir químicos, un poco controversiales por un largo tiempo. 
+Aún queda algunos equipos tirados por ahi, tambien unos cadáveres que pueden o no volver a la vida!
+Esperemos que solo sean restos de algunos drogadictos... ',
   'Die Umgebung des Verstecks' =>
-	'Die Umgebung des Verstecks',
+	'Basurero cerca del escondite ',
   'Früher blühte hier das Leben, jetzt findet man hier nur noch Sand und gelegentlich ein paar Zombies, die in kleinen Grüppchen die Ruinen der Zivilisation umstreifen. Unwahrscheinlich, dass du hier etwas nützliches findest. Eventuell findest du aber das ein oder andere Gebäude, das du nach nützlichen Dingen durchsuchen kannst.' =>
-	'Früher blühte hier das Leben, jetzt findet man hier nur noch Sand und gelegentlich ein paar Zombies, die in kleinen Grüppchen die Ruinen der Zivilisation umstreifen. Unwahrscheinlich, dass du hier etwas nützliches findest. Eventuell findest du aber das ein oder andere Gebäude, das du nach nützlichen Dingen durchsuchen kannst.',
+	'Esto solía ser una gran ciudad llena de personas felices y alegres.
+Ahora todo lo que queda es polvo y zombies. No encontraras nada util aqui,pero puede que descubras otras ruinas. ',
   '"Corpseland" Restaurant' =>
-	'"Corpseland" Restaurant',
+	'"Cadaverlandia" ',
   'Dieses Franchise hat schonmal bessere Zeiten erlebt ... Die dicken Kinder, die sich hier früher Essensschlachten geliefert haben sind schon lange verschwunden - dafür schleichen nun Zombies zwischen den Tischen und in der Küche umher. Die gute Nachricht ist: Selbst ein Zombie würde das Zeug, das hier serviert wurde, nicht anrühren - du kannst hier also bestimmt noch ein paar Combomenüs abstauben.' =>
-	'Dieses Franchise hat schonmal bessere Zeiten erlebt ... Die dicken Kinder, die sich hier früher Essensschlachten geliefert haben sind schon lange verschwunden - dafür schleichen nun Zombies zwischen den Tischen und in der Küche umher. Die gute Nachricht ist: Selbst ein Zombie würde das Zeug, das hier serviert wurde, nicht anrühren - du kannst hier also bestimmt noch ein paar Combomenüs abstauben.',
+	'Esta franquicia de restaurantes ha visto mejores tiempos...
+Todos esos niños gordos lanzando su comida por todas partes han desaparecido y ahora reemplazando su lugar hay zombies andando por cada mesa y la cocina. El lado bueno es que, ni siquiera los zombies se atreven a tocar lo que servían es este lugar, así que puede que consigas una buena oferta...',
   'Ausrüstung' =>
-	'Ausrüstung',
+	'Equipamiento ',
   'Wasserbehälter' =>
-	'Wasserbehälter',
+	'Contenedores de agua ',
   'Drogen und med. Zubehör' =>
-	'Drogen und med. Zubehör',
+	'Drogas y herramientas médicas ',
   'Waffen und Verteidigung' =>
-	'Waffen und Verteidigung',
+	'Armas y Protección ',
   'Straßenkleidung' =>
-	'Straßenkleidung',
+	'Ropa Callejera ',
   'Die Zombies haben dir alles genommen - bis auf die Kleidung, die du trägst. Da du sie aber schon einige Wochen ununterbrochen trägst, kann man verstehen, dass die Zombies mit diesen stinkenden Lumpen nichts zu tun haben wollen.' =>
-	'Die Zombies haben dir alles genommen - bis auf die Kleidung, die du trägst. Da du sie aber schon einige Wochen ununterbrochen trägst, kann man verstehen, dass die Zombies mit diesen stinkenden Lumpen nichts zu tun haben wollen.',
+	'Los zombies te han quitado todo, menos tu ropa. Aunque has estado usando esta por unas cuantas semanas ya, así que es entendible que no quieran nada con ella...',
   'Magische Box' =>
 	'Magische Box',
   'Dieses Item wurde zu Testzwecken implementiert und erlaubt es, beliebige andere Items zu erzeugen.' =>
 	'Dieses Item wurde zu Testzwecken implementiert und erlaubt es, beliebige andere Items zu erzeugen.',
   'Feldflasche' =>
-	'Feldflasche',
+	'Cantimplora ',
   'Diese kleine, pfadfindergeprüfte Feldflasche kann bis zu 4 Rationen Wasser ausnehmen. Außerdem lässt sie sich beschriften - es wäre doch schade, wenn du deine Wasserfeldflasche mal mit der Feldflasche verwechselst, in der du die Batteriesäure aufbewahrst... ' =>
-	'Diese kleine, pfadfindergeprüfte Feldflasche kann bis zu 4 Rationen Wasser ausnehmen. Außerdem lässt sie sich beschriften - es wäre doch schade, wenn du deine Wasserfeldflasche mal mit der Feldflasche verwechselst, in der du die Batteriesäure aufbewahrst... ',
+	'Esta cantimplora  puede llevar hasta 4 raciones de agua. 
+También tiene una etiqueta para que puedas escribir en ella , seria una lastima que confundieras y tomaras la que tiene ácido de bateria...',
   'Selbstmord-Pille' =>
-	'Selbstmord-Pille',
+	'Cianuro ',
   'Obwohl dieses kleine Ding die meisten deiner Probleme lösen kann - beim Erklimmen des Rankings hilft es nur bedingt.' =>
-	'Obwohl dieses kleine Ding die meisten deiner Probleme lösen kann - beim Erklimmen des Rankings hilft es nur bedingt.',
+	'Esta pequeña cosa puede ser la solución de la mayoría de tus problemas, pero frustrara tu plan de tener una buena posición en los rankings.',
   'Lächerliches Taschenmesser der Männlichkeit' =>
-	'Lächerliches Taschenmesser der Männlichkeit',
+	'Navaja de bolsillo ',
   'Wenn alles andere fehlschlägt kannst du die Zombies immernoch mit diesem Taschenmesser .... zum Lachen bringen.' =>
-	'Wenn alles andere fehlschlägt kannst du die Zombies immernoch mit diesem Taschenmesser .... zum Lachen bringen.',
+	'Cuando todo lo demás falle, aun puedes usar esta navaja de bolsillo para ...entretener a los zombies.',
   'Dein Rucksack' =>
-	'Dein Rucksack',
+	'Tu Mochilla',
   'Deine Truhe' =>
-	'Deine Truhe',
+	'Tu Baul ',
   'Items am Boden' =>
-	'Items am Boden',
+	'Objetos en el suelo ',
   'Krummes Holzbrett' =>
-	'Krummes Holzbrett',
+	'Tabla de madera ',
   'Holzbretter sind ein grundlegendes Baumaterial und werden für viele verschiedene Konstruktionen benötigt. Eigentlich kann man von ihnen gar nicht genug haben.' =>
-	'Holzbretter sind ein grundlegendes Baumaterial und werden für viele verschiedene Konstruktionen benötigt. Eigentlich kann man von ihnen gar nicht genug haben.',
+	'Las tablas de madera son uno de los materiales básicos que necesitarás para la construcción. Nunca llegaras a tener suficiente de estos.',
   'Alteisen' =>
-	'Alteisen',
+	'Hierro Forjado',
   'Alteisen ist ein grundlegendes Baumaterial und wird für viele verschiedene Konstruktionen benötigt. Eigentlich kann man davon gar nicht genug haben.' =>
-	'Alteisen ist ein grundlegendes Baumaterial und wird für viele verschiedene Konstruktionen benötigt. Eigentlich kann man davon gar nicht genug haben.',
+	'El hierro forjado es uno de los materiales básicos que necesitaras para la construcción. Nunca llegaras a tener suficiente de estos. ',
   'Schachtel mit Twinoid' =>
-	'Schachtel mit Twinoid',
+	'Paquete de Twinoid ',
   'Twinoid macht müde Verdammte munter! Nach einer Twinoi-Kapsel ströhmt neue Energie durch deinen Körper, die dich antreibt und deine Wunden heilt.' =>
-	'Twinoid macht müde Verdammte munter! Nach einer Twinoi-Kapsel ströhmt neue Energie durch deinen Körper, die dich antreibt und deine Wunden heilt.',
+	'Twinoid le da un empujón a cualquiera que esté vivo! Despues de tomarte una sola de estas, la energía fluye por tu cuerpo, dándote energía y hasta curandote las heridas.',
   'Pink-Rote Pille' =>
-	'Pink-Rote Pille',
+	'Pastilla Magenta Rojoso',
   'Leider hast du zu dieser Pille weder Packung noch Beipackzettel gefunden. Ein versierter Mediziner könnte sicherlich von der Farbe auf die Wirkung dieser Pille schließen - dir bleibt dafür wohl nur der Selbstversuch übrig.' =>
-	'Leider hast du zu dieser Pille weder Packung noch Beipackzettel gefunden. Ein versierter Mediziner könnte sicherlich von der Farbe auf die Wirkung dieser Pille schließen - dir bleibt dafür wohl nur der Selbstversuch übrig.',
+	'Desafortunadamente, esta pastilla viene sin un paquete o etiqueta. Alguien  con conocimientos medicos podría deducir los efectos de una pastilla de este color, no tienes mas opcion que experimentar...',
   'Türkise Pille' =>
-	'Türkise Pille',
+	'Pastilla Turguesa',
   'Pinke Pille' =>
-	'Pinke Pille',
+	'Pastilla Magenta',
   'Weiße Pille' =>
-	'Weiße Pille',
+	'Pastilla Blanca',
   'Rot-Blaue Pille' =>
-	'Rot-Blaue Pille',
+	'Pastilla Azul y Roja',
   'Rosa Pille' =>
-	'Rosa Pille',
+	'Pastilla Rosa',
   'Schwarze Pille' =>
-	'Schwarze Pille',
+	'Pastilla negra',
   'Grün-Rote Pille' =>
-	'Grün-Rote Pille',
+	'Pastilla Verde y Roja',
   'Beige Pille' =>
-	'Beige Pille',
+	'Pastilla Beige',
   'Rote Pille' =>
-	'Rote Pille',
+	'Pastilla Roja ',
   'Blaue Pille' =>
-	'Blaue Pille',
+	'Pastilla Azul',
   'Baumaterialien' =>
-	'Baumaterialien',
+	'Materiales de construcción ',
   'Zyanid' =>
-	'Zyanid',
+	'Cianuro ',
   'Klares Wasser' =>
-	'Klares Wasser',
+	'Agua Limpia',
   'Klares Wasser zu finden ist eine Seltenheit - pass auf, dass du es nicht ruinierst indem du es mit dreckigem Wasser mischt!' =>
-	'Klares Wasser zu finden ist eine Seltenheit - pass auf, dass du es nicht ruinierst indem du es mit dreckigem Wasser mischt!',
+	'La agua limpia es una des las cosas que mas extrañas en el apocalipsis! Mejor trata de no arruinarla mezclandola con agua sucia.',
   'Heißer Kaffee' =>
-	'Heißer Kaffee',
+	'Cafe Caliente',
   'Heißer Kaffee... welch ein Luxus. Dank deines Wasserkochers ist dieser Kaffee übrigens so heiß, dass er niemals wieder kalt wird. Für die einen wäre das einfach eine Lücke in der Spiellogik, für andere aber ..... heißer Kaffee!' =>
-	'Heißer Kaffee... welch ein Luxus. Dank deines Wasserkochers ist dieser Kaffee übrigens so heiß, dass er niemals wieder kalt wird. Für die einen wäre das einfach eine Lücke in der Spiellogik, für andere aber ..... heißer Kaffee!',
+	'Café caliente... lujoso. Gracias a tu calentadora de agua este café ha sido calentado tanto que, nunca se enfriara de nuevo. Algunos le llamarían un error en la lógica del juego, pero... es café caliente! ',
   'Schachtel mit Paracetoid' =>
-	'Schachtel mit Paracetoid',
+	'Caja de Paracetoid',
   'Hilft zuverlässig gegen Kopfschmerzen, Bauchschmerzen, abgerissene Körperteile und extreme radioaktive Verstrahlung. Nicht einnehmen bei Schwangerschaft oder fortgeschrittener Zombiefizierung.' =>
-	'Hilft zuverlässig gegen Kopfschmerzen, Bauchschmerzen, abgerissene Körperteile und extreme radioaktive Verstrahlung. Nicht einnehmen bei Schwangerschaft oder fortgeschrittener Zombiefizierung.',
+	'Confiable, cura dolores de cabeza,dolor abdominal, extremidades arrancadas y radiación extrema. No tomar en caso de embarazo o zombificacion avanzada. ',
   'Orange Pille' =>
-	'Orange Pille',
+	'Pastilla Naranja',
   'Nahrungsmittel' =>
-	'Nahrungsmittel',
+	'Comida ',
   'Dies ist eine Rüstung. Sie wendet während eines Kampfes Schaden von dir ab.' =>
-	'Dies ist eine Rüstung. Sie wendet während eines Kampfes Schaden von dir ab.',
+	'Esto es tu armadura. Reducirá danos en batallas.',
   'Dies ist eine Waffe. Sie wird automatisch eingesetzt wenn du gegen Zombies kämpfst.' =>
-	'Dies ist eine Waffe. Sie wird automatisch eingesetzt wenn du gegen Zombies kämpfst.',
+	'Un arma. Se activara  automáticamente cuando te enfrentes a los zombies.',
   'Dieser Gegenstand hilft dir dabei, vor Zombies zu fliehen die dich Belagern. Er wird automatisch bei Bedarf eingesetzt.' =>
-	'Dieser Gegenstand hilft dir dabei, vor Zombies zu fliehen die dich Belagern. Er wird automatisch bei Bedarf eingesetzt.',
+	'Este objeto te ayudara escapar cuando haya zombies bloqueando el camino. Se activara automáticamente cuando sea necesario.',
   'Dieser Gegenstand verschwindet, wenn du ihn zurücklässt.' =>
-	'Dieser Gegenstand verschwindet, wenn du ihn zurücklässt.',
+	'Este objeto desaparecerá si lo dejas atrás! ',
   'Dies ist ein Event-Gegenstand. Er verschwindet, wenn du das Event-Gebiet verlässt oder das Event endet.' =>
-	'Dies ist ein Event-Gegenstand. Er verschwindet, wenn du das Event-Gebiet verlässt oder das Event endet.',
+	'Es un objeto de evento. Desaparecerá cuando el evento haya pasado o trates de removerlo de la área del evento.',
   'Du kannst diesen Gegenstand mitführen, ohne dass dein Rucksack belastet wird.' =>
-	'Du kannst diesen Gegenstand mitführen, ohne dass dein Rucksack belastet wird.',
+	'Puedes cargar esto sin afectar el espacio en tu mochila. ',
   'Ablegen' =>
-	'Ablegen',
+	'Des-equipar ',
   'Einen Schluck trinken' =>
-	'Einen Schluck trinken',
+	'Tomar ',
   'Micropur hineinwerfen' =>
-	'Micropur hineinwerfen',
+	'Echar una tabla purificadora ',
   'Untersuchen ...' =>
-	'Untersuchen ...',
+	'Examinar ...',
   'Füllen oder Leeren...' =>
-	'Füllen oder Leeren...',
+	'Transferir líquidos...',
   'Schlucken' =>
-	'Schlucken',
+	'Tragar',
   'Erfordert' =>
-	'Erfordert',
+	'Requiere ',
   'Effekte' =>
-	'Effekte',
+	'Efectos ',
   'Effekte auf ausgewählten Spieler' =>
-	'Effekte auf ausgewählten Spieler',
+	'Efectos en el jugador elegido ',
   'Runter damit!' =>
-	'Runter damit!',
+	'Tragar',
   'Schwarz-weiße Pille' =>
-	'Schwarz-weiße Pille',
+	'Pastilla Blanca y Negra ',
   'Aufbrechen' =>
-	'Aufbrechen',
+	'Irrumpir ',
   'Mysteriöse Kiste' =>
-	'Mysteriöse Kiste',
+	'Caja misteriosa ',
   'Diese Kiste sieht nicht so aus als wäre sie für den regulären Handel bestimmt... du könntest sie öffnen und schauen, was drin ist.' =>
-	'Diese Kiste sieht nicht so aus als wäre sie für den regulären Handel bestimmt... du könntest sie öffnen und schauen, was drin ist.',
+	'Esta caja no parece que fue diseñada para contener algo legal... porque no la abres y das un vistazo dentro?',
   'Wunden versorgen' =>
-	'Wunden versorgen',
+	'Curar heridas',
   'Bandage' =>
-	'Bandage',
+	'Vendaje ',
   'Lieber Arm dran als Arm ab; aber wenn der Arm nun schonmal ab ist kann man wenigstens eine Bandage drum machen. Eine Bandage kann nur verwendet werden wenn du weniger als 50 Gesundheit hast!' =>
-	'Lieber Arm dran als Arm ab; aber wenn der Arm nun schonmal ab ist kann man wenigstens eine Bandage drum machen. Eine Bandage kann nur verwendet werden wenn du weniger als 50 Gesundheit hast!',
+	'Solía ser un aventurero igual que tu, pero luego alguien me disparo una flecha a mi rodilla. Si hubiera tenido un vendaje, me hubiese curado bastante rápido, si no quieres sufrir el mismo destino, mejor siempre lleva un vendaje contigo. ',
   'Sonstiges' =>
-	'Sonstiges',
+	'Otros ',
   'Alle ablegen' =>
-	'Alle ablegen',
+	'Dejar todo',
   'Alle mitnehmen' =>
-	'Alle mitnehmen',
+	'Tomar todo',
   'Bitte gib an, wie viele Kapseln du aus der Packung nehmen möchtest.' =>
-	'Bitte gib an, wie viele Kapseln du aus der Packung nehmen möchtest.',
+	'Por favor ingresa el numero de píldoras que quieres sacar de la caja.',
   'Eine Paracetoid schlucken' =>
-	'Eine Paracetoid schlucken',
+	'Tomar una sola pastilla ',
   'Ganze Schachtel schlucken' =>
-	'Ganze Schachtel schlucken',
+	'Tomar la caja completa ',
   'Paracetoid zusammenführen' =>
-	'Paracetoid zusammenführen',
+	'Organizar pastillas ',
   'Paracetoid trennen' =>
-	'Paracetoid trennen',
+	'Separar pastillas',
   'Rationen' =>
-	'Rationen',
+	'Raciones ',
   'Kapseln' =>
-	'Kapseln',
+	'Capsulas ',
   'Gewicht' =>
-	'Gewicht',
+	'Peso ',
   'Eine Paracetin schlucken' =>
-	'Eine Paracetin schlucken',
+	'Tomar una sola pastilla ',
   'Paracetin zusammenführen' =>
-	'Paracetin zusammenführen',
+	'Organizar pastillas',
   'Paracetin trennen' =>
-	'Paracetin trennen',
+	'Separar pastillas ',
   'Schachtel mit Paracetin' =>
-	'Schachtel mit Paracetin',
+	'Caja de Paracetin ',
   'Paracetin macht selbst den schlaffesten Sack wieder munter. Die hochkonzentrierte Mischung aus Koffein und dem von unserer Marketingabteilung neu entwickelten Acclerin - gewonnen aus natürlichem Orangenextrakt - bewirkt ein sofortiges Auffüllen von Energiereserven!' =>
-	'Paracetin macht selbst den schlaffesten Sack wieder munter. Die hochkonzentrierte Mischung aus Koffein und dem von unserer Marketingabteilung neu entwickelten Acclerin - gewonnen aus natürlichem Orangenextrakt - bewirkt ein sofortiges Auffüllen von Energiereserven!',
+	'Ha sido reportado que Paracetin puede levantar hasta los muertos.
+Contiene una mezcla de caffeina altamente concentrada y una molécula llamada accelerin, que fue desarrollada por nuestro departamento. ',
   'Kapsel' =>
-	'Kapsel',
+	'Capsula ',
   'Eine Paralaxium schlucken' =>
-	'Eine Paralaxium schlucken',
+	'Tomar una sola pastilla ',
   'Paralaxium zusammenführen' =>
-	'Paralaxium zusammenführen',
+	'Organizar pastillas',
   'Paralaxium trennen' =>
-	'Paralaxium trennen',
+	'Dividir Paralaxium',
   'Schachtel mit Paralaxium' =>
-	'Schachtel mit Paralaxium',
+	'Caja de Paralaxium',
   'Manchmal muss man einfach mal abschalten; Paralaxium hilft dir dabei. Mit nur ein paar Kapseln bist du selbst dann noch entspannt, wenn Zombies an deinem Kopf knabbern.' =>
-	'Manchmal muss man einfach mal abschalten; Paralaxium hilft dir dabei. Mit nur ein paar Kapseln bist du selbst dann noch entspannt, wenn Zombies an deinem Kopf knabbern.',
+	'Estas loco por un tiempo fuera? Paralaxium puede ayudarte con eso. Solo tomate unas cuantas y ni siquiera un zombie mordiéndote la cara podrá despertarte! ',
   'Eine Twinoid schlucken' =>
-	'Eine Twinoid schlucken',
+	'Tomar una sola pastilla ',
   'Twinoid zusammenführen' =>
-	'Twinoid zusammenführen',
+	'Organizar pastillas ',
   'Twinoid trennen' =>
-	'Twinoid trennen',
+	'Dividir Twinoid ',
   'Mit etwas Mühe bekommst du die Kiste aufgebrochen - und stellst fest dass sie randvoll mit Medikamenten ist!' =>
-	'Mit etwas Mühe bekommst du die Kiste aufgebrochen - und stellst fest dass sie randvoll mit Medikamenten ist!',
+	'Con un poco de esfuerzo, pero finalmente logras abrir la caja, la cual esta llena de medicina! ',
   'Gelbe Pille' =>
-	'Gelbe Pille',
+	'Pastilla amarilla ',
   'Mit etwas Mühe bekommst du die Kiste aufgebrochen - und stellst fest dass sie randvoll mit bunten Pillen ist!' =>
-	'Mit etwas Mühe bekommst du die Kiste aufgebrochen - und stellst fest dass sie randvoll mit bunten Pillen ist!',
+	'Con un poco de esfuerzo, pero finalmente logras abrir la caja, la cual esta llena de pastillas de colores! ',
   'Mit etwas Mühe bekommst du die Kiste aufgebrochen - und stellst fest dass sie leer ist. Na toll ...' =>
-	'Mit etwas Mühe bekommst du die Kiste aufgebrochen - und stellst fest dass sie leer ist. Na toll ...',
+	'Con un poco de esfuerzo, finalmente logras abrir la caja, la cual resulta estar vacía. Genial. ',
   'Mit all den anderen Kapseln konntest du diese Schachtel füllen. Sie enthält nun :max Kapseln.' =>
-	'Mit all den anderen Kapseln konntest du diese Schachtel füllen. Sie enthält nun :max Kapseln.',
+	'Ya tienes suficientes pastillas para llenar esta caja.
+Ahora contiene :max pastillas. ',
   'Du sammelst alle Kapseln die du dabei hast in dieser Schachtel. Sie ist zwar nicht voll, enthält nun aber immerhin :num Kapseln.' =>
-	'Du sammelst alle Kapseln die du dabei hast in dieser Schachtel. Sie ist zwar nicht voll, enthält nun aber immerhin :num Kapseln.',
+	'Ya has recolectado todas las pastillas que puedes en esa caja. Ahora contiene :num pastillas, así que aun queda espacio para mas.',
   'Anlegen' =>
-	'Anlegen',
+	'Equipar',
   'Du hast eine Rüstung abgelegt.' =>
-	'Du hast eine Rüstung abgelegt.',
+	'Has des-equipado tu armadura. ',
   'Du hast eine neue Rüstung angelegt.' =>
-	'Du hast eine neue Rüstung angelegt.',
+	'Haz equipado una armadura. ',
   'Diese Flasche ist leer.' =>
-	'Diese Flasche ist leer.',
+	'Tu botella esta vacía! ',
   'Einsetzen' =>
-	'Einsetzen',
+	'Ponerle una bateria ',
   'Supercharger verwenden' =>
-	'Supercharger verwenden',
+	'Usar Supercargador ',
   'Bauchmuskeltrainer H.U.L.K. Pro' =>
-	'Bauchmuskeltrainer H.U.L.K. Pro',
+	'Servicio expreso "H.U.L.K. Pro"',
   'Ein gewöhnlicher Bauchmuskeltrainer ist für Flaschen! Dieser mit vergoldeten Kontakten ausgerüstete Bauchmuskeltrainer macht dir wirklich Dampf - aufgrund der hohen Spannung ist das übrigens wörtlich zu nehmen...' =>
-	'Ein gewöhnlicher Bauchmuskeltrainer ist für Flaschen! Dieser mit vergoldeten Kontakten ausgerüstete Bauchmuskeltrainer macht dir wirklich Dampf - aufgrund der hohen Spannung ist das übrigens wörtlich zu nehmen...',
+	'El servicio de entregas normal es para personas que ni siquiera viven! Este sistema de entregas esta equipado con contactos de oro que literalmente volaran tu trasero!',
   'Deine Vorräte sind aufgebraucht!' =>
-	'Deine Vorräte sind aufgebraucht!',
+	'Tus provisiones se están agotando! ',
   'Du öffnest die Augen und lässt deinen Blick durch dein karges Versteck schweifen. Deine Vorräte sind aufgebraucht, du kannst dich also nicht länger einfach verschanzen...' =>
-	'Du öffnest die Augen und lässt deinen Blick durch dein karges Versteck schweifen. Deine Vorräte sind aufgebraucht, du kannst dich also nicht länger einfach verschanzen...',
+	'Abres tus ojos y miras a tu alrededor de tu escondite ligeramente decorado. Tus suministros se han acabado, asi que no tiene sentido seguir escondiéndose aquí...',
   'Das Spiel beginnt...' =>
-	'Das Spiel beginnt...',
+	'Que comiencen los juegos...',
   'Fressen' =>
-	'Fressen',
+	'Festin',
   'Leiche eines Schnitzeljägers' =>
-	'Leiche eines Schnitzeljägers',
+	'Un cadáver cualquiera ',
   'Sieht so aus als hätte dieser arme Tropf an einer Schnitzeljagt teilgenommen... seine linke Hand hält ein paar unleserliche Schriftstücke fest umklammert, seine rechte einen Text, der mit "Dayan" unterschrieben ist...' =>
-	'Sieht so aus als hätte dieser arme Tropf an einer Schnitzeljagt teilgenommen... seine linke Hand hält ein paar unleserliche Schriftstücke fest umklammert, seine rechte einen Text, der mit "Dayan" unterschrieben ist...',
+	'Solo es el cadáver de un tipo cualquiera ...que, creías que este tipo tenia alguna importancia en el juego?',
   'Rostige Machete' =>
-	'Rostige Machete',
+	'Machete oxidado ',
   'Obwohl leicht abgestumpft und rostig ist diese Machete immer noch effektiv im Kampf gegen Zombiehorden. Noch besser ist es natürlich, die Zombies gar nicht erst in Machetenreichweite kommen zu lassen.' =>
-	'Obwohl leicht abgestumpft und rostig ist diese Machete immer noch effektiv im Kampf gegen Zombiehorden. Noch besser ist es natürlich, die Zombies gar nicht erst in Machetenreichweite kommen zu lassen.',
+	'Esta un poco viejo y oxidado, por el pasar del tiempo pero aun lo puedes usar para rebanar algunos zombies. Claro, siempre es conveniente que estén el el rango de  tu machete.',
   'Munitionsgürtel' =>
-	'Munitionsgürtel',
+	'Cinturón de municiones ',
   'Dieses kleidsame Accessoir ist unerlässlich für den modebewussten Überlebenskünstler. Gefertigt von geschickten Kinderhänden aus irgend einem Drittweltland und aus 100% Zombieleder garantiert dieser Munitionsgürtel volle Übersicht und schnellen Zugriff auf alle Arten von Munition.' =>
-	'Dieses kleidsame Accessoir ist unerlässlich für den modebewussten Überlebenskünstler. Gefertigt von geschickten Kinderhänden aus irgend einem Drittweltland und aus 100% Zombieleder garantiert dieser Munitionsgürtel volle Übersicht und schnellen Zugriff auf alle Arten von Munition.',
+	'Este guapo accesorio  es esencial para todos los sobrevivientes que estén a  la moda. Hecho por los niños en algún país del tercer mundo de el 100% de cuero zombi, este cinturón de municiones  le permite acceder y mantener un registro de todas sus diferentes tipos de munición rápidamente.',
   'Selbstgebauter Batteriewerfer' =>
-	'Selbstgebauter Batteriewerfer',
+	'Lanza baterías ',
   'Eigentlich ist es nur eine leicht modifizierte Kartoffelkanone, die man mit Batterien beladen kann. Sie schießt nicht sehr weit, und zielen kann man auch nicht sonderlich gut damit - aber 100mal besser als die Zombies mit bloßen Händen K.O. schlagen zu müssen, oder?' =>
-	'Eigentlich ist es nur eine leicht modifizierte Kartoffelkanone, die man mit Batterien beladen kann. Sie schießt nicht sehr weit, und zielen kann man auch nicht sonderlich gut damit - aber 100mal besser als die Zombies mit bloßen Händen K.O. schlagen zu müssen, oder?',
+	'Bueno técnicamente esto es un lanza papas ligeramente modificado al cual le puedes introducir baterías. Este lanza baterías no podrá disparar muy lejos y no es muy  certero, pero sigue siendo un millón de veces mejor que luchar con zombies con las manos vacías, cierto?',
   'Der Geruch, der aus der Flasche aufsteigt, lässt dir die Augen tränen. Was immer da drin ist, trinken solltest du es nicht.' =>
-	'Der Geruch, der aus der Flasche aufsteigt, lässt dir die Augen tränen. Was immer da drin ist, trinken solltest du es nicht.',
+	'Simplemente el olor que desprende la botella te saca lagrimas y te quita el aliento. Sea lo que sea mejor no lo bebas. ',
   'Metallsplitter' =>
-	'Metallsplitter',
+	'Trozo de Metal',
   'Diese Metallsplitter sind alleine nicht viel Wert, aber wenn du genug davon sammelst kannst du daraus eventuell etwas Nützliches herstellen.' =>
-	'Diese Metallsplitter sind alleine nicht viel Wert, aber wenn du genug davon sammelst kannst du daraus eventuell etwas Nützliches herstellen.',
+	'Los trozos de metal no son de mucho valor, pero si recolectas suficientes podrás usarlos para algo.',
   'Holzabfall' =>
-	'Holzabfall',
+	'Trono Podrido ',
   'Dieser Holzabfall ist alleine nicht viel Wert, aber wenn du genug davon sammelst kannst du eventuell ein Holzbrett daraus herstellen.' =>
-	'Dieser Holzabfall ist alleine nicht viel Wert, aber wenn du genug davon sammelst kannst du eventuell ein Holzbrett daraus herstellen.',
+	'Los troncos podridos no son de mucho valor, pero si recolectas suficientes podrás usarlos para algo. ',
   'Daten merken' =>
-	'Daten merken',
+	'Recuerdame',
   'Klassische Seite' =>
-	'Klassische Seite',
+	'Sito Clásico ',
   'Kleines Geschäft' =>
 	'Kleines Geschäft',
   'Dies ist die Gelegenheit für dich, das absolut billigste Zeug aus einer minimalen Auswahl von Gebrauchsgegenständen und Lebensmitteln zu ergattern! Die vernagelten (und schlecht geputzten) Schaufenster lassen jedoch erahnen, dass dieses Geschäft wohl in nächster Zeit nicht mehr öffnen wird. Vor dem Laden steht ein Marktwagen mit der Aufschrift "Vera Loewenhaupt & Söhne", unter dem eine Leiche liegt...' =>
-	'Dies ist die Gelegenheit für dich, das absolut billigste Zeug aus einer minimalen Auswahl von Gebrauchsgegenständen und Lebensmitteln zu ergattern! Die vernagelten (und schlecht geputzten) Schaufenster lassen jedoch erahnen, dass dieses Geschäft wohl in nächster Zeit nicht mehr öffnen wird. Vor dem Laden steht ein Marktwagen mit der Aufschrift "Vera Loewenhaupt & Söhne", unter dem eine Leiche liegt...',
+	'Es una pequeña tienda que ofrece una gama muy limitada de alimentos y otros objetos de uso cotidiano. El plano clavado (y sucia) ventanas indican que esta tienda no se abrirá de nuevo en cualquier momento pronto. Delante de la entrada hay un puesto de mercado con la etiqueta "Vera Loewenhaupt & Sons". Un cuerpo hecho jirones parece estar debajo del mismo.',
   'Geld einwerfen' =>
-	'Geld einwerfen',
+	'Echar dinero',
   'Verkaufsautomat (MicroJam Vendor)' =>
-	'Verkaufsautomat (MicroJam Vendor)',
+	'Maquina Expendedora ',
   'Dieser Verkaufsautomat sieht ziemlich heruntergekommen aus. Die Scheibe ist verdreckt und die Beschriftungen der einzelnen Knöpfe sind nicht mehr lesbar. Vielleicht wirfst du einfach mal Geld ein und schaust, ob etwas heraus kommt?' =>
-	'Dieser Verkaufsautomat sieht ziemlich heruntergekommen aus. Die Scheibe ist verdreckt und die Beschriftungen der einzelnen Knöpfe sind nicht mehr lesbar. Vielleicht wirfst du einfach mal Geld ein und schaust, ob etwas heraus kommt?',
+	'Un resumen, máquina expendedora sucia. Apenas se puede mirar a través del cristal y las etiquetas de todos los botones se han vuelto completamente ilegible. ¿Por qué no lo intentas poner dinero en él para ver si algo va a salir?',
   'Flasche einwerfen' =>
-	'Flasche einwerfen',
+	'Tirar una botella',
   'Pfandautomat' =>
-	'Pfandautomat',
+	'Máquina expendedora inversa',
   'Ein Pfandautomat - eine der wenigen Möglichkeiten, wie man im Ruhrpott noch auf legale Weise an Geld kommen kann. Verfüttere doch ein paar deiner vielen Flaschen an ihn (die aus Glas, nicht deine Mitspieler).' =>
-	'Ein Pfandautomat - eine der wenigen Möglichkeiten, wie man im Ruhrpott noch auf legale Weise an Geld kommen kann. Verfüttere doch ein paar deiner vielen Flaschen an ihn (die aus Glas, nicht deine Mitspieler).',
+	'Una máquina expendedora inversa  una de las pocas maneras de ganar algo de dinero en Detroit. Tal vez usted podría utilizar su alcoholismo a su ventaja y darle  algunas botellas vacías?',
   'Vera Loewenhaupt' =>
 	'Vera Loewenhaupt',
   'Dies muss wohl die Namensgeberin des Wagens sein, unter dem sie liegt... allerdings keine Spur von ihren Söhnen.' =>
-	'Dies muss wohl die Namensgeberin des Wagens sein, unter dem sie liegt... allerdings keine Spur von ihren Söhnen.',
+	'Esta debe ser la nombro este puesto...
+sin embargo no hay senales de sus hijos.',
   'Essen' =>
-	'Essen',
+	'Comer',
   'Kekse' =>
-	'Kekse',
+	'Galletas',
   'KEKSE!!!!' =>
-	'KEKSE!!!!',
+	'GALLETAS!!',
   'Ei' =>
-	'Ei',
+	'Huevo',
   'Dies ist ein einfaches, braunes Hühnerei, das ein paar Jahre in der Sonne gelegen hat. Daran solltest du aber besser gar nicht denken, wenn du es isst...' =>
-	'Dies ist ein einfaches, braunes Hühnerei, das ein paar Jahre in der Sonne gelegen hat. Daran solltest du aber besser gar nicht denken, wenn du es isst...',
+	'Un simple huevo de gallina marrón que ha estado expuesto al sol por unos cuantos años. Mejor no pienses en eso si planeas comértelo...',
   'Abgestandene Nudelsuppe' =>
-	'Abgestandene Nudelsuppe',
+	'Tazón de fideos vencidos',
   'Diese Nudelsuppe stärkt deine Anwehkräfte. Nur leider ist dein Immunsystem allgemein relativ machtlos gegen spitze Zähne und Krallen. Naja, zumindest stillt diese Suppe deinen Hunger...' =>
-	'Diese Nudelsuppe stärkt deine Anwehkräfte. Nur leider ist dein Immunsystem allgemein relativ machtlos gegen spitze Zähne und Krallen. Naja, zumindest stillt diese Suppe deinen Hunger...',
+	'Cada tazón de fideos fortalece tu sistema inmune. Desafortunadamente, tu sistema inmune no te protejera de garras y dientes afilados. Bueno al menos aun puedes usar estos fideos para llenar tu estomago...',
   'Schokoriegel' =>
-	'Schokoriegel',
+	'Barra de chocolate',
   'Erinnerst du dich noch an das kleine, dicke Kind, dass auf dem Schulhof immer alleine in einer Ecke stand und an einem Schokoriegel gelutscht hat? Tja, das fette Kind hat inzwischen einen Hunger auf Menschenfleisch entwickelt und hat daher sicher nichts dagegen, dass du dich an seinen Schokoriegeln bedienst.' =>
-	'Erinnerst du dich noch an das kleine, dicke Kind, dass auf dem Schulhof immer alleine in einer Ecke stand und an einem Schokoriegel gelutscht hat? Tja, das fette Kind hat inzwischen einen Hunger auf Menschenfleisch entwickelt und hat daher sicher nichts dagegen, dass du dich an seinen Schokoriegeln bedienst.',
+	'Recuerdas ese pequeño chico obseso de la escuela, que siempre se mantenía apartado de todos, mientras comía silenciosamente una barra de chocolate? Bueno, ese chico ahora desarrollo un gusto por la carne humana así que no le molestara si te robas su chocolate.',
   'Plastiktüte' =>
-	'Plastiktüte',
+	'Bolsa Plastica',
   'Plastiktüten sind praktisch unverrottbar, daher findet man sie auch nach der Zombieapokalypse an jeder Ecke. Leider sind sie weder sonderlich nützlich noch wertvoll. Naja, wenn du an Wasserüberschuss leidest könntest du eine Wasserbombe daraus bauen ...' =>
-	'Plastiktüten sind praktisch unverrottbar, daher findet man sie auch nach der Zombieapokalypse an jeder Ecke. Leider sind sie weder sonderlich nützlich noch wertvoll. Naja, wenn du an Wasserüberschuss leidest könntest du eine Wasserbombe daraus bauen ...',
+	'Las bolsas de plástico están hechas para durar. Nunca se descomponeran, así que podrás encontrar toneladas de ellas, aun hasta después que la civilización cayo. Desafortunadamente, no son ni de valor o útiles. Bueno, si necesitas una manera de deshacerte de toda tu agua podrías usarlas para hacer bombas de agua...',
   'Zerrissene Klamotten' =>
-	'Zerrissene Klamotten',
+	'Ropa Destrozada',
   'Dieser Haufen Stoff war sicher mal bequeme Kleidung - jetzt kannst du damit höchstens noch dein Versteck auswischen.' =>
-	'Dieser Haufen Stoff war sicher mal bequeme Kleidung - jetzt kannst du damit höchstens noch dein Versteck auswischen.',
+	'Estos trapos alguna vez estuvieron a la moda.
+Ahora, para lo único que sirven es para limpiar tu escondite.',
   'Ektorp-Gluten Stuhl' =>
 	'Ektorp-Gluten Stuhl',
   'Stabil und aus einem Stück gegossen - dieser Stuhl ist zwar schwerer, dafür aber auch widerstandsfähiger als ein einfacher Plastikstuhl.' =>
 	'Stabil und aus einem Stück gegossen - dieser Stuhl ist zwar schwerer, dafür aber auch widerstandsfähiger als ein einfacher Plastikstuhl.',
   'Portion Pommes Rot-Weiß' =>
-	'Portion Pommes Rot-Weiß',
+	'Papas fritas',
   'Der absolute Klassiker - Pommes Frittes, auch bekannt als die Einstiegsdroge zur Fettleibigkeit.' =>
-	'Der absolute Klassiker - Pommes Frittes, auch bekannt als die Einstiegsdroge zur Fettleibigkeit.',
+	'Todos aman las papas.',
   'Salat "Fettfried"' =>
-	'Salat "Fettfried"',
+	'Lechuga Épica de la Obsesidad',
   'Heureka! Den besten Wissenschaftlern diesseits des Rubikon haben es geschafft! Dieser Salat verbindet ein gesund aussehendes Äußeres mit gigantischem Fettgehalt. Dieses Ding hilft nun zwar nicht unbedingt beim Abnehmen, aber es sorgt für ein gutes Gefühl - beim Zunehmen.' =>
-	'Heureka! Den besten Wissenschaftlern diesseits des Rubikon haben es geschafft! Dieser Salat verbindet ein gesund aussehendes Äußeres mit gigantischem Fettgehalt. Dieses Ding hilft nun zwar nicht unbedingt beim Abnehmen, aber es sorgt für ein gutes Gefühl - beim Zunehmen.',
+	'Eureka! Los mejores científicos del oeste lo han hecho de nuevo! Esta lechuga combina la deliciosa y saludable apariencia con una inmensa cantidad de grasa. Puede que no sea apto para una dieta,pero al menos puedes fingir que te importa tu salud cuando en realidad no.',
   'Beginn einer Gladiatoren-Karriere' =>
-	'Beginn einer Gladiatoren-Karriere',
+	'El comienzo de una historia épica ',
   'Ein Zettel ist soeben durch deinen Kamin geflogen... Du siehst ihn dir an und stellst fest, dass es sich um einen Werbeflyer für ein großes Zombieturnier im alten Kolosseum handelt. Das wär doch mal eine gelungene Abwechslung zum "im Versteck verrotten". Zunächst solltest du dich auf den Weg zum Kolosseum machen, um die Qualifikationsrunde zu absolvieren - du hast 24 Stunden Zeit dafür!' =>
-	'Ein Zettel ist soeben durch deinen Kamin geflogen... Du siehst ihn dir an und stellst fest, dass es sich um einen Werbeflyer für ein großes Zombieturnier im alten Kolosseum handelt. Das wär doch mal eine gelungene Abwechslung zum "im Versteck verrotten". Zunächst solltest du dich auf den Weg zum Kolosseum machen, um die Qualifikationsrunde zu absolvieren - du hast 24 Stunden Zeit dafür!',
+	'Una hoja de papel solo bajo por tu chimenea... Es un anuncio para un torneo de batallas contra zombies en el gran coliseo romano que convenientemente esta al doblar la esquina. Finalmente algo que hacer aparte de \'\'podirte en tu escondite\'\' Primero, tienes que calificar para el torneo tienes 24 horas para hacerlo.',
   'Das Gemetzel beginnt...' =>
-	'Das Gemetzel beginnt...',
+	'Que la masacre comience...',
   'Das Wasser in dieser Flasche stinkt erbärmlich! Das solltest du nur trinken, wenn du absolut verzweifelt bist!' =>
-	'Das Wasser in dieser Flasche stinkt erbärmlich! Das solltest du nur trinken, wenn du absolut verzweifelt bist!',
+	'Después de abrir la botella,una nube con un horrible olor emerge. Estas considerando realmente en beberte eso?',
   'Tante Emma Laden' =>
-	'Tante Emma Laden',
+	'Tienda de Esquina ',
   'Stofffetzen' =>
-	'Stofffetzen',
+	'Pedazo de Tela',
   'Dieses große Stück Stoff ist alleine nicht sehr nützlich, aber eventuell kannst du damit etwas anfangen wenn du mehrere hast...?' =>
-	'Dieses große Stück Stoff ist alleine nicht sehr nützlich, aber eventuell kannst du damit etwas anfangen wenn du mehrere hast...?',
+	'Uno de estos solo no es muy útil, pero quizás puedas encontrarle un uso a varios de estos...?',
   'Rolle Klebeband' =>
-	'Rolle Klebeband',
+	'Cinta Adhesiva ',
   'Dieses Klebeband fügt zusammen, was zusammen gehört. Unerlässlich für die meisten Bastelarbeiten kann es zudem als Fliegenpapier verwendet werden.' =>
-	'Dieses Klebeband fügt zusammen, was zusammen gehört. Unerlässlich für die meisten Bastelarbeiten kann es zudem als Fliegenpapier verwendet werden.',
+	'Esta cinta adhesiva mantiene las cosas unidas. Lo necesitaras para muchas cosas en el taller.',
   'Elektronisches Bauteil' =>
-	'Elektronisches Bauteil',
+	'Componente Electrónico ',
   'Es ist gar nicht wichtig, was dieses Teil mal war oder wozu es gut ist. Es ist eine Leiterplatte mit Leiterbahnen und diversen Schickschnack drauf - steck es einfach in eine von deinen Konstruktionen und es wird schon irgendwie funktionieren!' =>
 	'Es ist gar nicht wichtig, was dieses Teil mal war oder wozu es gut ist. Es ist eine Leiterplatte mit Leiterbahnen und diversen Schickschnack drauf - steck es einfach in eine von deinen Konstruktionen und es wird schon irgendwie funktionieren!',
   'Schrauben, Muttern, Zahnräder' =>
@@ -1967,7 +1979,7 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
   'Die schwere Metalltür, die die Küche vom Kühlraum trennt, ist inzwischen startk verrostet. Nach einiger Anstrengung gelingt es dir aber doch, sie einen Spalt zu öffnen. Als du hineinschaust erlebst du jedoch eine böse überraschung: Die Arbeiter in diesem Restaurant scheinen sich beim Ausbruch der Epidemie im Kühlraum versteckt zu haben! Alle Vorräte sind aufgebraucht, nur ein paar magere Leichen und eine alte Matratze liegen noch herum!' =>
 	'Die schwere Metalltür, die die Küche vom Kühlraum trennt, ist inzwischen startk verrostet. Nach einiger Anstrengung gelingt es dir aber doch, sie einen Spalt zu öffnen. Als du hineinschaust erlebst du jedoch eine böse überraschung: Die Arbeiter in diesem Restaurant scheinen sich beim Ausbruch der Epidemie im Kühlraum versteckt zu haben! Alle Vorräte sind aufgebraucht, nur ein paar magere Leichen und eine alte Matratze liegen noch herum!',
   'Fastfood-Küche' =>
-	'Fastfood-Küche',
+	'Comida rápida- Cocina',
   'Frittierte Leiche' =>
 	'Frittierte Leiche',
   'Blasenkaugummi' =>
@@ -2119,23 +2131,24 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
   'Aufgrund akuten Platzmangels wurde dieses Geschäftszentrum vor den Toren der Stadt aus dem Boden gestampft. Die Bauern, die das Land hier vorher bewirtschafteten, wurden einfach enteignet und dann als Toilettenputzer, Hundekot-Aufsammler und Briefmarkenlecker weiterbeschäftigt. Und so schließt sich der Kreis der sozialen Marktwirtschaft, für die wir unsere Politiker jeden Tag preisen sollten. Achja, jetzt laufen hier natürlich überall Zombies rum.' =>
 	'Aufgrund akuten Platzmangels wurde dieses Geschäftszentrum vor den Toren der Stadt aus dem Boden gestampft. Die Bauern, die das Land hier vorher bewirtschafteten, wurden einfach enteignet und dann als Toilettenputzer, Hundekot-Aufsammler und Briefmarkenlecker weiterbeschäftigt. Und so schließt sich der Kreis der sozialen Marktwirtschaft, für die wir unsere Politiker jeden Tag preisen sollten. Achja, jetzt laufen hier natürlich überall Zombies rum.',
   'Gegenstände & Heldentaten' =>
-	'Gegenstände & Heldentaten',
+	'Objetos y Acciones Heroicas ',
   'Zeitfluss & Verhalten' =>
-	'Zeitfluss & Verhalten',
+	'Tiempo y Comportamiento ',
   'Wähle einen Wasserbehälter aus, in den du die gewählte Ration Wasser hineinschütten willst.' =>
-	'Wähle einen Wasserbehälter aus, in den du die gewählte Ration Wasser hineinschütten willst.',
+	'Seleccione el contenedor en el cual desea llenar con la ración de agua seleccionada.',
   'Du kannst diese Chemikalie mit beliebigen anderen Gegenständen kombinieren. Welchen Effekt das hat... das wirst du selbst herausfinden müssen.' =>
-	'Du kannst diese Chemikalie mit beliebigen anderen Gegenständen kombinieren. Welchen Effekt das hat... das wirst du selbst herausfinden müssen.',
+	'Puedes combinar esta sustancia con cualquier otro objeto.
+Lo que suceda.... depende de ti descubrirlo. ',
   'Wähle einen Gegenstand, mit dem du die Chemikalie verbinden möchtest.' =>
-	'Wähle einen Gegenstand, mit dem du die Chemikalie verbinden möchtest.',
+	'Selecciona cualquier objeto que desees combinar con la substancia.',
   'Klicke einen leeren Slot an, um Wasser aus einer anderen Quelle hinzuzugeben. Klicke einen gefüllten Slot an, um Wasser auszuschütten. Schwarz gefärbte Slots können nicht ausgeleert werden.' =>
-	'Klicke einen leeren Slot an, um Wasser aus einer anderen Quelle hinzuzugeben. Klicke einen gefüllten Slot an, um Wasser auszuschütten. Schwarz gefärbte Slots können nicht ausgeleert werden.',
+	'Dale en un espacio vació para llenarlo con cualquier liquido. Dale a un espacio lleno para dejar su contenido en el suelo. No puedes dejar los contenidos de espacios en negro.',
   'Wähle eine Flüssigkeit oder einen anderen Behälter aus, um diesen Behälter zu füllen.' =>
 	'Wähle eine Flüssigkeit oder einen anderen Behälter aus, um diesen Behälter zu füllen.',
   'Auffüllen' =>
-	'Auffüllen',
+	'Llenar',
   'Teilen' =>
-	'Teilen',
+	'Compartir',
   'Wie viele Kapseln möchtest du aus dieser Packung herausnehmen?' =>
 	'Wie viele Kapseln möchtest du aus dieser Packung herausnehmen?',
   'Stunden' =>
@@ -3235,7 +3248,7 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
   'Du entsendest :name nach :location, um dort nach dem Rechten zu sehen.' =>
 	'Du entsendest :name nach :location, um dort nach dem Rechten zu sehen.',
   'Forum' =>
-	'Forum',
+	'Foro',
   'Fünf Batterien abfeuern' =>
 	'Fünf Batterien abfeuern',
   'Grundwert' =>
@@ -3335,7 +3348,7 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
   'Falls du von einer fremden Seite hierher gelangt bist, informiere dessen Betreiber, dass der Link offenbar nicht mehr aktuell ist.' =>
 	'Falls du von einer fremden Seite hierher gelangt bist, informiere dessen Betreiber, dass der Link offenbar nicht mehr aktuell ist.',
   'Bist du über einen Link auf ZombVival hierher gekommen, melde das bitte im Forum!' =>
-	'Bist du über einen Link auf ZombVival hierher gekommen, melde das bitte im Forum!',
+	'Si haz seguido un link en ZombVival, por favor visite el foro.',
   'Bringe dem Internet ein Tieropfer dar und hoffe, dass dies die Seite zurückbringt, die du suchst.' =>
 	'Bringe dem Internet ein Tieropfer dar und hoffe, dass dies die Seite zurückbringt, die du suchst.',
   'Zur Hauptseite' =>
@@ -3361,7 +3374,7 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
   'Seele von :name' =>
 	'Seele von :name',
   'Seelen' =>
-	'Seelen',
+	'Almas',
   'Rang' =>
 	'Rang',
   'Karma' =>
@@ -3854,8 +3867,6 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
 	'Beet bepflanzen',
   'Bringe die Saat in deinem kleinen Gewächshaus aus, damit du in 24 Stunden ernten kannst. Denke daran, dass du ab dem Aussähen alle 3 Stunden gießen musst, um eine optimale Ernte einfahren zu können.' =>
 	'Bringe die Saat in deinem kleinen Gewächshaus aus, damit du in 24 Stunden ernten kannst. Denke daran, dass du ab dem Aussähen alle 3 Stunden gießen musst, um eine optimale Ernte einfahren zu können.',
-  'Der Beet ist momentan leer.' =>
-	'Der Beet ist momentan leer.',
   'Das Beet ist momentan leer.' =>
 	'Das Beet ist momentan leer.',
   'Fortschritt' =>
@@ -3866,8 +3877,6 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
 	'Wasser',
   'Deine Pflanzen sind in :time erntebereit!' =>
 	'Deine Pflanzen sind in :time erntebereit!',
-  'Die Qualität bestimmt die Anzahl der Früche, die du bei der Ernte erhalten wirst. Derzeit zeichnet sich folgende Qualität ab: ' =>
-	'Die Qualität bestimmt die Anzahl der Früche, die du bei der Ernte erhalten wirst. Derzeit zeichnet sich folgende Qualität ab: ',
   'Excellent' =>
 	'Excellent',
   'Ausgezeichnet' =>
@@ -3918,8 +3927,6 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
 	'Die Stärke deiner Düngung bestimmt die Höhe der Effekte der geernteten Pflanzen. Wenn du nach Erreichen der maximalen Düngestärke noch weiter düngst, hat dies nur noch Einfluss auf die Art der Effekte, nicht jedoch deren Höhe.',
   'Geerntete Pflanze' =>
 	'Geerntete Pflanze',
-  'Du hast diese Pflanze ' =>
-	'Du hast diese Pflanze ',
   'Du hast die Pflanzen gedüngt. Mal sehen, was hier jetzt wachsen wird...' =>
 	'Du hast die Pflanzen gedüngt. Mal sehen, was hier jetzt wachsen wird...',
   'Ernten' =>
@@ -4026,8 +4033,6 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
 	'Deaktiviert den Laserzaun. Es wird keine Energie mehr verbraucht, aber dafür können die Zombies wieder eindringen.',
   'Du hast den Laserzaun aktiviert.' =>
 	'Du hast den Laserzaun aktiviert.',
-  'Du hast den Laserzaun aufgeladen.' =>
-	'Du hast den Laserzaun aufgeladen.',
   'Hier scheint niemand zu sein ...' =>
 	'Hier scheint niemand zu sein ...',
   'Post' =>
@@ -4064,4 +4069,294 @@ Tu muerte  es segura,pero depende de ti retrasarla lo mas que puedas! Mientras t
 	'Die ausgewählte Nachricht wurde gelöscht.',
   'Beim Löschen der Nachricht ist ein Fehler aufgetreten.' =>
 	'Beim Löschen der Nachricht ist ein Fehler aufgetreten.',
+  'Verbleibende Dauer: :time' =>
+	'Verbleibende Dauer: :time',
+  'Roadkill-Experte' =>
+	'Roadkill-Experte',
+  'Elitärer Club' =>
+	'Elitärer Club',
+  'Du hast neue Nachrichten!' =>
+	'Du hast neue Nachrichten!',
+  'Du schiebst ein paar Trümmer sowie eine zerissene Plane beiseite und siehst, dass der Wagen mit Lebensmitteln beladen war! Welch ein Festmahl!' =>
+	'Du schiebst ein paar Trümmer sowie eine zerissene Plane beiseite und siehst, dass der Wagen mit Lebensmitteln beladen war! Welch ein Festmahl!',
+  'Das war lecker. Du fühlst, wie sich dein Hunger langsam in Luft auflöst.' =>
+	'Das war lecker. Du fühlst, wie sich dein Hunger langsam in Luft auflöst.',
+  'Du nimmst einen Schluck aus deiner Flasche. Das Wasser ist schleimig und verklebt dir die Kehle. Außerdem schmeckt es, als hätte sich darin ein Zombie aufgelöst.' =>
+	'Du nimmst einen Schluck aus deiner Flasche. Das Wasser ist schleimig und verklebt dir die Kehle. Außerdem schmeckt es, als hätte sich darin ein Zombie aufgelöst.',
+  'Schwere Halluzinationen' =>
+	'Schwere Halluzinationen',
+  'Keine Angst, alles ist in Ordnung; das behauptet zumindest der grüne Elefant, der auf deiner Schulter sitzt. Moment, steht da drüben etwa Helmut Berger neben der fliegenden Schokoladenpalme, an der hölzerne Bullenhaie wachens?' =>
+	'Keine Angst, alles ist in Ordnung; das behauptet zumindest der grüne Elefant, der auf deiner Schulter sitzt. Moment, steht da drüben etwa Helmut Berger neben der fliegenden Schokoladenpalme, an der hölzerne Bullenhaie wachens?',
+  'Augen zu und durch! Du schluckst die Pille herunter - aber es scheint nichts zu passieren. Moment... war die dreiköpfige Giraffe da hinten schon immer da?' =>
+	'Augen zu und durch! Du schluckst die Pille herunter - aber es scheint nichts zu passieren. Moment... war die dreiköpfige Giraffe da hinten schon immer da?',
+  'Genitalmonster' =>
+	'Genitalmonster',
+  'Schwiegermütter' =>
+	'Schwiegermütter',
+  'Pokémon' =>
+	'Pokémon',
+  'Schnupfophanten' =>
+	'Schnupfophanten',
+  'Seehofer' =>
+	'Seehofer',
+  'OH GOTT! Du wirst von obskuren Gestalten angegriffen, die eventuell mit deinen schweren Halluzinationen in Zusammenhang stehen!' =>
+	'OH GOTT! Du wirst von obskuren Gestalten angegriffen, die eventuell mit deinen schweren Halluzinationen in Zusammenhang stehen!',
+  'Augen zu und durch! Du schluckst die Pille herunter. Was danach passiert, weißt du nicht mehr - aber dein ganzer Rucksack ist plötzlich leer! Wär hätte denn ahnen können dass die schwarze Pille Blackouts verursachen kann ...' =>
+	'Augen zu und durch! Du schluckst die Pille herunter. Was danach passiert, weißt du nicht mehr - aber dein ganzer Rucksack ist plötzlich leer! Wär hätte denn ahnen können dass die schwarze Pille Blackouts verursachen kann ...',
+  'Im Schlaf zerfetzt' =>
+	'Im Schlaf zerfetzt',
+  'Du nimmst einen Schluck aus deiner Flasche. Es fällt dir schwer, den Güllegeschmack des Wassers zu ignorieren, aber irgendwie musst du ja gegen deinen Durst vorgehen.' =>
+	'Du nimmst einen Schluck aus deiner Flasche. Es fällt dir schwer, den Güllegeschmack des Wassers zu ignorieren, aber irgendwie musst du ja gegen deinen Durst vorgehen.',
+  'Dein Einfamilienhaus' =>
+	'Dein Einfamilienhaus',
+  '"Zombiewagen" Vertragswerkstatt' =>
+	'"Zombiewagen" Vertragswerkstatt',
+  'Provisorische Straßenbarrikade' =>
+	'Provisorische Straßenbarrikade',
+  'Gerade erst hast du die letzte Rate für dein Haus bezahlt, da musst du es wegen der Zombieapokalypse direkt wieder evakuieren. Hättest du doch damals nur diese Zombieversicherung abgeschlossen...' =>
+	'Gerade erst hast du die letzte Rate für dein Haus bezahlt, da musst du es wegen der Zombieapokalypse direkt wieder evakuieren. Hättest du doch damals nur diese Zombieversicherung abgeschlossen...',
+  'Eine Gruppe Zombies stürmt aus dem Container und greift an!' =>
+	'Eine Gruppe Zombies stürmt aus dem Container und greift an!',
+  'Deine Bisswunde sieht aber gar nicht gut aus... offenbar hast du dich mit dem Zombievirus infiziert!' =>
+	'Deine Bisswunde sieht aber gar nicht gut aus... offenbar hast du dich mit dem Zombievirus infiziert!',
+  '"Pay\'n\'Spray" Autowerkstatt' =>
+	'"Pay\'n\'Spray" Autowerkstatt',
+  'Gäbe es einen Gott für Recycling, er wäre sicherlich stolz auf dich!' =>
+	'Gäbe es einen Gott für Recycling, er wäre sicherlich stolz auf dich!',
+  'Wenn dein Auto merkwürdige Geräusche macht, hast du entweder einen Motorschaden oder einen Zombie auf der Rückbank. Glücklicherweise findet sich immer eine Werkstatt wie diese in der Nähe, die deine Karre reparieren oder den Zombie fachmännisch (mit einem großen Schraubenschlüssel) entfernen können. Unglücklicherweise hat diese Werkstatt derzeit leider aus unerfindlichen Gründen geschlossen...' =>
+	'Wenn dein Auto merkwürdige Geräusche macht, hast du entweder einen Motorschaden oder einen Zombie auf der Rückbank. Glücklicherweise findet sich immer eine Werkstatt wie diese in der Nähe, die deine Karre reparieren oder den Zombie fachmännisch (mit einem großen Schraubenschlüssel) entfernen können. Unglücklicherweise hat diese Werkstatt derzeit leider aus unerfindlichen Gründen geschlossen...',
+  'Barrikade abbauen' =>
+	'Barrikade abbauen',
+  'Diese Barrikade sieht ziemlich stabil aus, aber wenn du dich etwas ins Zeug legst kannst du hier bestimmt das eine oder andere nützliche Item ausbauen.' =>
+	'Diese Barrikade sieht ziemlich stabil aus, aber wenn du dich etwas ins Zeug legst kannst du hier bestimmt das eine oder andere nützliche Item ausbauen.',
+  'Hier haben die Menschen anscheinend versucht, die Zombies mithilfe improvisierter Straßenbarrikaden aufzuhalten. So richtig funktioniert hat das wohl aber nicht, immerhin liegen hier überall Leichen herum...' =>
+	'Hier haben die Menschen anscheinend versucht, die Zombies mithilfe improvisierter Straßenbarrikaden aufzuhalten. So richtig funktioniert hat das wohl aber nicht, immerhin liegen hier überall Leichen herum...',
+  'Verflucht! Nachdem du etwas Schutt aus dem Weg geräumt hast, springt dich ein Zombie an! Wie zur Hölle ist der da nur rein gekommen??' =>
+	'Verflucht! Nachdem du etwas Schutt aus dem Weg geräumt hast, springt dich ein Zombie an! Wie zur Hölle ist der da nur rein gekommen??',
+  'Es hat dich etwas Arbeit gekostet, aber du konntest etwas nützliches aus dieser Barrikade herauszerren.' =>
+	'Es hat dich etwas Arbeit gekostet, aber du konntest etwas nützliches aus dieser Barrikade herauszerren.',
+  'Fast hätte es geklappt... leider sind ein paar standhafte Zombies übrig geblieben, die dich jetzt ziemlich grimmig anschauen...' =>
+	'Fast hätte es geklappt... leider sind ein paar standhafte Zombies übrig geblieben, die dich jetzt ziemlich grimmig anschauen...',
+  'Na, so ein Glück! Da drehst du dich nur mal kurz um, schon liegen vor dir :num Gegenstände! Wo die wohl hergekommen sind?' =>
+	'Na, so ein Glück! Da drehst du dich nur mal kurz um, schon liegen vor dir :num Gegenstände! Wo die wohl hergekommen sind?',
+  'Na, so ein Glück! Du hast plötzlich und unerwartet einen Gegenstand gefunden! Wo kam der nur her?' =>
+	'Na, so ein Glück! Du hast plötzlich und unerwartet einen Gegenstand gefunden! Wo kam der nur her?',
+  'Deine Machete sieht schon ziemlich stumpf und rostig aus, also bringst du sie mit diesem praktischen Schleifstein wieder auf Vordermann.' =>
+	'Deine Machete sieht schon ziemlich stumpf und rostig aus, also bringst du sie mit diesem praktischen Schleifstein wieder auf Vordermann.',
+  'Augen zu und durch! In der Hoffung, dies wäre eine Twinoid-Kapsel, schluckst du die Pille herunter. Tja, und wenn du das überlebt hättest, hättest du wohl gelernt dass das Aussehen auch täuschen kann.' =>
+	'Augen zu und durch! In der Hoffung, dies wäre eine Twinoid-Kapsel, schluckst du die Pille herunter. Tja, und wenn du das überlebt hättest, hättest du wohl gelernt dass das Aussehen auch täuschen kann.',
+  'Seltsame Substanz (Milodrin)' =>
+	'Seltsame Substanz (Milodrin)',
+  'Seltsame Substanz (Karmitain)' =>
+	'Seltsame Substanz (Karmitain)',
+  'Die Chemikalie perlt von den Pillen ab... das hat wohl nichts gebracht.' =>
+	'Die Chemikalie perlt von den Pillen ab... das hat wohl nichts gebracht.',
+  'Seltsame Substanz (Neotrigmat)' =>
+	'Seltsame Substanz (Neotrigmat)',
+  'Augen zu und durch! Du schluckst die Pille herunter - wenige Sekunden später beginnst du, dich unruhig und unwohl zu fühlen. Schmerzen zucken durch deinen Körper, während du dich auf dem Boden krümmst und hoffst, dass die Wirkung der Pille bald nachlässt.' =>
+	'Augen zu und durch! Du schluckst die Pille herunter - wenige Sekunden später beginnst du, dich unruhig und unwohl zu fühlen. Schmerzen zucken durch deinen Körper, während du dich auf dem Boden krümmst und hoffst, dass die Wirkung der Pille bald nachlässt.',
+  'Auf gut Glück ganze Gläser voll mit Pillen schlucken hat noch nie jemandem geschadet - zumindest niemandem, der noch am Leben ist...' =>
+	'Auf gut Glück ganze Gläser voll mit Pillen schlucken hat noch nie jemandem geschadet - zumindest niemandem, der noch am Leben ist...',
+  'Augen zu und durch! Du schluckst die Pille herunter - wenige Sekunden später spürst du, wie sich eine angenehme Wärme in dir ausbreitet. Welch ein schönes Gefühl ...' =>
+	'Augen zu und durch! Du schluckst die Pille herunter - wenige Sekunden später spürst du, wie sich eine angenehme Wärme in dir ausbreitet. Welch ein schönes Gefühl ...',
+  'Augen zu und durch! Du schluckst die Pille herunter - und wirst plötzlich unglaublich müde.' =>
+	'Augen zu und durch! Du schluckst die Pille herunter - und wirst plötzlich unglaublich müde.',
+  'Farbige Substanz (Neotrigin)' =>
+	'Farbige Substanz (Neotrigin)',
+  'Du wirfst die Pille in die Chemikalie ... es blubbert ein bisschen, und als du die Pille herausholst stellst du fest, dass sie die Farbe geändert hat!' =>
+	'Du wirfst die Pille in die Chemikalie ... es blubbert ein bisschen, und als du die Pille herausholst stellst du fest, dass sie die Farbe geändert hat!',
+  'Augen zu und durch! Du schluckst die Pille herunter - sofort durchzucken Krämpfe deinen Körper! Was immer das war, du hättest es besser nicht schlucken sollen!' =>
+	'Augen zu und durch! Du schluckst die Pille herunter - sofort durchzucken Krämpfe deinen Körper! Was immer das war, du hättest es besser nicht schlucken sollen!',
+  'Du wirfst die Pille in die Chemikalie ... es blubbert relativ stark. Als du die Pille herausnehmen möchtest stellst du fest, dass plötzlich eine zweite, identische Pille im Reagenzglas liegt! Welch Wunder der Chemie!' =>
+	'Du wirfst die Pille in die Chemikalie ... es blubbert relativ stark. Als du die Pille herausnehmen möchtest stellst du fest, dass plötzlich eine zweite, identische Pille im Reagenzglas liegt! Welch Wunder der Chemie!',
+  'Immunisiert' =>
+	'Immunisiert',
+  'Du bist momentan davor geschützt, dich mit der Zombiekrankheit anzustecken. Genieße es, solange es anhält.' =>
+	'Du bist momentan davor geschützt, dich mit der Zombiekrankheit anzustecken. Genieße es, solange es anhält.',
+  'Du spritzt dir das Medikament... aber so wirklich passieren tut nichts. Tja, da wirst du wohl einfach hoffen müssen dass du nun immun bist.' =>
+	'Du spritzt dir das Medikament... aber so wirklich passieren tut nichts. Tja, da wirst du wohl einfach hoffen müssen dass du nun immun bist.',
+  'Direkt nachdem du die Twinoid schluckst fühlst du dich wieder besser! Jetzt sind noch :num Pillen in der Schachtel.' =>
+	'Direkt nachdem du die Twinoid schluckst fühlst du dich wieder besser! Jetzt sind noch :num Pillen in der Schachtel.',
+  'Direkt nachdem du die Twinoid schluckst fühlst du dich wieder besser! In der Schachtel ist nur noch eine Pille. Setze sie mit Bedacht ein!' =>
+	'Direkt nachdem du die Twinoid schluckst fühlst du dich wieder besser! In der Schachtel ist nur noch eine Pille. Setze sie mit Bedacht ein!',
+  'Erforschung der Irrenanstalt' =>
+	'Erforschung der Irrenanstalt',
+  'Dir läuft ein Schauer über den Rücken, als du durch die schlecht beleuchteten Gänge schleichst ...' =>
+	'Dir läuft ein Schauer über den Rücken, als du durch die schlecht beleuchteten Gänge schleichst ...',
+  'Du siehst Blutspuren an der Wand. Die müssen entstanden sein, als die Anstalt von Zombies überrannt wurde. Allerdings sieht das Blut überraschend frisch aus ...' =>
+	'Du siehst Blutspuren an der Wand. Die müssen entstanden sein, als die Anstalt von Zombies überrannt wurde. Allerdings sieht das Blut überraschend frisch aus ...',
+  'Du hörst ein knackendes Geräusch hinter dir, und spürst einen Luftzug. Du machst dich bereit, auf Zombies zu treffen. Aber nichts geschieht ...' =>
+	'Du hörst ein knackendes Geräusch hinter dir, und spürst einen Luftzug. Du machst dich bereit, auf Zombies zu treffen. Aber nichts geschieht ...',
+  'Hinter einem Tresen liegen ein paar aufgestapelte Leichen. Sie scheinen ausschließlich Verletzungen am Hals zu haben, der Rest ist unversehrt. Untypisch für Zombies...' =>
+	'Hinter einem Tresen liegen ein paar aufgestapelte Leichen. Sie scheinen ausschließlich Verletzungen am Hals zu haben, der Rest ist unversehrt. Untypisch für Zombies...',
+  'Du findest einen Spiegel auf dem Boden, auf dem ein blutverschmierter Teddybär liegt. Das Blut scheint frisch zu sein ... Was ist nur in dieser Anstalt geschehen? Du verspürst den immer stärker werdenden Drang, dieses Gebäude zu verlassen und nie wieder zurückzukehren...' =>
+	'Du findest einen Spiegel auf dem Boden, auf dem ein blutverschmierter Teddybär liegt. Das Blut scheint frisch zu sein ... Was ist nur in dieser Anstalt geschehen? Du verspürst den immer stärker werdenden Drang, dieses Gebäude zu verlassen und nie wieder zurückzukehren...',
+  'Frische Seele' =>
+	'Frische Seele',
+  'Hier kommst du nicht weiter... du musst deine Reise nach :od unterbrechen und bei :ad eine Pause machen.' =>
+	'Hier kommst du nicht weiter... du musst deine Reise nach :od unterbrechen und bei :ad eine Pause machen.',
+  'Der Keller ist komplett aus Stein und daher relativ unbeschädigt durch das Feuer. Leider lassen die Blutspuren überall darauf schließen, dass sich hier ein paar Zombies eingenistet haben...' =>
+	'Der Keller ist komplett aus Stein und daher relativ unbeschädigt durch das Feuer. Leider lassen die Blutspuren überall darauf schließen, dass sich hier ein paar Zombies eingenistet haben...',
+  'Du solltest deinen Munitionsgürtel nicht aus der Hand geben ...' =>
+	'Du solltest deinen Munitionsgürtel nicht aus der Hand geben ...',
+  'Die Pille ist dir aus der Hand gerutscht, heruntergefallen und weggekugelt! Vielleicht solltest du deinen Alkoholkonsum zügeln ... ' =>
+	'Die Pille ist dir aus der Hand gerutscht, heruntergefallen und weggekugelt! Vielleicht solltest du deinen Alkoholkonsum zügeln ... ',
+  'Direkt nachdem du die Paracetin schluckst fühlst du, wie deine Kraft zurückkehrt. In der Schachtel ist nur noch eine Pille. Setze sie mit Bedacht ein!' =>
+	'Direkt nachdem du die Paracetin schluckst fühlst du, wie deine Kraft zurückkehrt. In der Schachtel ist nur noch eine Pille. Setze sie mit Bedacht ein!',
+  'Du wickelst die Bandage straff um deine Verletzungen. Zwar hast du dein Blut nun mit allerlei Dreck und Keimen geflutet, aber zumindest läuft es nicht mehr unkontrolliert aus deiner Wunde.' =>
+	'Du wickelst die Bandage straff um deine Verletzungen. Zwar hast du dein Blut nun mit allerlei Dreck und Keimen geflutet, aber zumindest läuft es nicht mehr unkontrolliert aus deiner Wunde.',
+  'Ausgewogene Ernährung' =>
+	'Ausgewogene Ernährung',
+  'Du weist, wie man sich richtig ernährt! Da dein Körper mit allen wichtigen Nährstoffen versorgt ist, bekommst du nicht mehr so schnell Hunger. Zumindest für eine Weile...' =>
+	'Du weist, wie man sich richtig ernährt! Da dein Körper mit allen wichtigen Nährstoffen versorgt ist, bekommst du nicht mehr so schnell Hunger. Zumindest für eine Weile...',
+  'Augen zu und durch! Du schluckst die Pille herunter - und mit einem mal fühlst du dich extrem satt! Anscheinend war das irgend eine Nährstoffpille!' =>
+	'Augen zu und durch! Du schluckst die Pille herunter - und mit einem mal fühlst du dich extrem satt! Anscheinend war das irgend eine Nährstoffpille!',
+  'Die Aktion konnte nicht vollständig ausgeführt werden, da eines oder mehrere der ausgewählten Gegenstände nicht länger in deiner Reichweite sind.' =>
+	'Die Aktion konnte nicht vollständig ausgeführt werden, da eines oder mehrere der ausgewählten Gegenstände nicht länger in deiner Reichweite sind.',
+  'Du nimmst die Bandage, wickelst die um den Griff der Machete und befestigst die Enden mit ein wenig Klebeband. Toll, nun kannst du deine Machete viel einfacher halten und es besteht keine Gefahr mehr, beim Metzeln (oder bei der Intimrasur) abzurutschen.' =>
+	'Du nimmst die Bandage, wickelst die um den Griff der Machete und befestigst die Enden mit ein wenig Klebeband. Toll, nun kannst du deine Machete viel einfacher halten und es besteht keine Gefahr mehr, beim Metzeln (oder bei der Intimrasur) abzurutschen.',
+  'Privatpatienten haben mehr Geld, also sind sie die besseren Menschen und verdienen bessere medizinische Versorgung. Dazu gehört auch dieses Luxuszimmer, mit Besuchersessel aus Leder, Heimkinoanlage und natürlich einer gut bestückten Bar. Eigentlich könntest du dich auch selbst hier "einliefern" lassen und diesen Ort zu einem Versteck umbauen...' =>
+	'Privatpatienten haben mehr Geld, also sind sie die besseren Menschen und verdienen bessere medizinische Versorgung. Dazu gehört auch dieses Luxuszimmer, mit Besuchersessel aus Leder, Heimkinoanlage und natürlich einer gut bestückten Bar. Eigentlich könntest du dich auch selbst hier "einliefern" lassen und diesen Ort zu einem Versteck umbauen...',
+  'Du hast die alte Beschriftung weggewischt.' =>
+	'Du hast die alte Beschriftung weggewischt.',
+  'Entzugserscheinungen' =>
+	'Entzugserscheinungen',
+  'Wie lange ist dein letzter Schuss her? Du weist es nicht mehr... es scheint eine Ewigkeit zu sein. Wirst du den Entzug durchhalten oder wieder zur Nadel greifen?' =>
+	'Wie lange ist dein letzter Schuss her? Du weist es nicht mehr... es scheint eine Ewigkeit zu sein. Wirst du den Entzug durchhalten oder wieder zur Nadel greifen?',
+  'Das hat gut getan! Du hast die Entzugserscheinungen gegen rosa Elephanten eingetauscht, die mit geschminkten Aligatoren um zwei Einhörner kämpfen. Zumindest für ein Weilchen...' =>
+	'Das hat gut getan! Du hast die Entzugserscheinungen gegen rosa Elephanten eingetauscht, die mit geschminkten Aligatoren um zwei Einhörner kämpfen. Zumindest für ein Weilchen...',
+  'Herzlichen Glückwunsch - das ist jetzt das :num. mal, dass du deine Sucht nach verschreibungspflichtigen Medikamenten, industriellem Lösungsmittel oder abgelaufenem Hustensaft besiegt hast!' =>
+	'Herzlichen Glückwunsch - das ist jetzt das :num. mal, dass du deine Sucht nach verschreibungspflichtigen Medikamenten, industriellem Lösungsmittel oder abgelaufenem Hustensaft besiegt hast!',
+  'Direkt nachdem du die Paracetoid schluckst merkst du, wie es dir besser geht. In der Schachtel ist nur noch eine Pille. Setze sie mit Bedacht ein!' =>
+	'Direkt nachdem du die Paracetoid schluckst merkst du, wie es dir besser geht. In der Schachtel ist nur noch eine Pille. Setze sie mit Bedacht ein!',
+  'Die Chemikalie läuft an der Klinge herunter und ätzt den Rost weg! Deine Machete ist nun schärfer den je!' =>
+	'Die Chemikalie läuft an der Klinge herunter und ätzt den Rost weg! Deine Machete ist nun schärfer den je!',
+  'Ein angriffslustiger Zombie springt aus dem Kühlraum und greift an!' =>
+	'Ein angriffslustiger Zombie springt aus dem Kühlraum und greift an!',
+  'Die schwere Metalltür, die die Küche vom Kühlraum trennt, ist inzwischen startk verrostet. Nach einiger Anstrengung gelingt es dir aber doch, sie einen Spalt zu öffnen. Du willst gerade hineingehen, als du plötzlich von einem Zombie angefallen wirst! Wie zum Teufel ist der denn da rein gekommen? Zu allem Überfluss ist der Kühlraum (bis auf den Zombie) völlig leer...' =>
+	'Die schwere Metalltür, die die Küche vom Kühlraum trennt, ist inzwischen startk verrostet. Nach einiger Anstrengung gelingt es dir aber doch, sie einen Spalt zu öffnen. Du willst gerade hineingehen, als du plötzlich von einem Zombie angefallen wirst! Wie zum Teufel ist der denn da rein gekommen? Zu allem Überfluss ist der Kühlraum (bis auf den Zombie) völlig leer...',
+  'Hobbyraum' =>
+	'Hobbyraum',
+  'Bist du verrückt? Das kannst du doch nicht machen, wenn alle zugucken... Such dir ein ruhigeres Plätzchen.' =>
+	'Bist du verrückt? Das kannst du doch nicht machen, wenn alle zugucken... Such dir ein ruhigeres Plätzchen.',
+  ':name hat dich gebeten, ihn nach :location zu begleiten.' =>
+	':name hat dich gebeten, ihn nach :location zu begleiten.',
+  'Jeder Mensch braucht nun mal ein Hobby. Das Hobby der Bewohner dieses Hauses beinhaltete anscheinend Peitschen, an der Wand befestigte Ketten und ein Laufgitter voll angebrannter Puppen.' =>
+	'Jeder Mensch braucht nun mal ein Hobby. Das Hobby der Bewohner dieses Hauses beinhaltete anscheinend Peitschen, an der Wand befestigte Ketten und ein Laufgitter voll angebrannter Puppen.',
+  'Lächelnder Leichnam' =>
+	'Lächelnder Leichnam',
+  'Auf welche Art auch immer er gestorben ist, es scheint ihm unglaublichen Spaß gemacht zu haben - zumindest basierend auf seinem Gesichtsausdruck.' =>
+	'Auf welche Art auch immer er gestorben ist, es scheint ihm unglaublichen Spaß gemacht zu haben - zumindest basierend auf seinem Gesichtsausdruck.',
+  'Hobbykeller' =>
+	'Hobbykeller',
+  'Die ganze Einrichtung hier erinnert dich irgendwie an den Londoner Dungeon...' =>
+	'Die ganze Einrichtung hier erinnert dich irgendwie an den Londoner Dungeon...',
+  ':name hat nicht genug Energie, um diesen Ort zu erreichen ...' =>
+	':name hat nicht genug Energie, um diesen Ort zu erreichen ...',
+  'Jmd. Wunde auswaschen' =>
+	'Jmd. Wunde auswaschen',
+  'In einer Ecke des Raumes findest du, versteckt unter etwas Geröll, mehrere kleine Schälchen mit Blut...' =>
+	'In einer Ecke des Raumes findest du, versteckt unter etwas Geröll, mehrere kleine Schälchen mit Blut...',
+  'Du spürst einen Luftzug an deinem Nacken... er ist warm, fast als wäre es jemandes Atem. Aber hier ist zum Glück ja niemand...' =>
+	'Du spürst einen Luftzug an deinem Nacken... er ist warm, fast als wäre es jemandes Atem. Aber hier ist zum Glück ja niemand...',
+  'Befleckter Teddy der verlorenen Kindheit' =>
+	'Befleckter Teddy der verlorenen Kindheit',
+  'Zwischen den Puppen in der Kinderkrippe liegt noch etwas anderes... ein blutverschmierter Teddybär! Warum kommt es dir nur so vor, als wenn du den schon einmal irgendwo gesehen hättest?' =>
+	'Zwischen den Puppen in der Kinderkrippe liegt noch etwas anderes... ein blutverschmierter Teddybär! Warum kommt es dir nur so vor, als wenn du den schon einmal irgendwo gesehen hättest?',
+  'Pille' =>
+	'Pille',
+  'Umgeworfene Tragen, zerrissene Vorhänge, eine Schleusentür ist aus der Schiene gerissen... du stehst quasi im Epizentrum der Zombieapokalypse. Die Ärzte und Schwestern, die hier gearbeitet haben, sind durch die Hölle gegangen. Leider sind sie von dort wieder zurückgekehrt.... bete lieber, dass du ihnen nicht begegnest!' =>
+	'Umgeworfene Tragen, zerrissene Vorhänge, eine Schleusentür ist aus der Schiene gerissen... du stehst quasi im Epizentrum der Zombieapokalypse. Die Ärzte und Schwestern, die hier gearbeitet haben, sind durch die Hölle gegangen. Leider sind sie von dort wieder zurückgekehrt.... bete lieber, dass du ihnen nicht begegnest!',
+  ':num Seiten (bereits gelesen)' =>
+	':num Seiten (bereits gelesen)',
+  'Und wieder hast du ein Buch durchgelesen. Nur das Ende hätte etwas spannender sein können...' =>
+	'Und wieder hast du ein Buch durchgelesen. Nur das Ende hätte etwas spannender sein können...',
+  'Mit ein paar kleinen Verbesserungen kann man die Effektivität eines Batteriewerfers ungemein erhöhen. Mit der neuen Ladevorrichtung sparst du im Kampf viel Zeit, die du wiederum in das Abschlachten weiterer Zombies investieren kannst.' =>
+	'Mit ein paar kleinen Verbesserungen kann man die Effektivität eines Batteriewerfers ungemein erhöhen. Mit der neuen Ladevorrichtung sparst du im Kampf viel Zeit, die du wiederum in das Abschlachten weiterer Zombies investieren kannst.',
+  'Dieses Teil hast du eh nicht mehr gebraucht... und warum soll es rumliegen und Platz verschwenden, wenn du es einfach auseinandernehmen kannst?' =>
+	'Dieses Teil hast du eh nicht mehr gebraucht... und warum soll es rumliegen und Platz verschwenden, wenn du es einfach auseinandernehmen kannst?',
+  'Direkt nachdem du die Paralaxium schluckst fallen dir langsam die Augen zu... Die Schachtel ist leer!' =>
+	'Direkt nachdem du die Paralaxium schluckst fallen dir langsam die Augen zu... Die Schachtel ist leer!',
+  'Wie jedes Lagerhaus verfügt auch dieses über einfache Schutzmaßnahmen gegen Diebstahl. Plünderer hat das nicht aufhalten können, aber vielleicht Zombies? Du könntest durchaus versuchen, diesen Ort zu einem Versteck zu machen...' =>
+	'Wie jedes Lagerhaus verfügt auch dieses über einfache Schutzmaßnahmen gegen Diebstahl. Plünderer hat das nicht aufhalten können, aber vielleicht Zombies? Du könntest durchaus versuchen, diesen Ort zu einem Versteck zu machen...',
+  'Dies ist alles, was von eurem Freund übrig geblieben ist... Naja, immerhin kann man noch eine Suppe draus kochen.' =>
+	'Dies ist alles, was von eurem Freund übrig geblieben ist... Naja, immerhin kann man noch eine Suppe draus kochen.',
+  'Das zentrale Utensil jeder Küche - der Wasserkocher - steht nun auch dir zur Verfügung. Nutze ihn Weise, und missbrauche seine Kräfte nicht!' =>
+	'Das zentrale Utensil jeder Küche - der Wasserkocher - steht nun auch dir zur Verfügung. Nutze ihn Weise, und missbrauche seine Kräfte nicht!',
+  'Du musst diesen Gegenstand aufheben, bevor du ihn anlegen kannst.' =>
+	'Du musst diesen Gegenstand aufheben, bevor du ihn anlegen kannst.',
+  'Anscheinend kann man sich Munition ganz einfach selber bauen, indem man ein Kupferrohr in kleine Stücke sägt und mit Schwarzpulver füllt. Wer hätte das gedacht?' =>
+	'Anscheinend kann man sich Munition ganz einfach selber bauen, indem man ein Kupferrohr in kleine Stücke sägt und mit Schwarzpulver füllt. Wer hätte das gedacht?',
+  'Du gießt das Wasser auf den Boden um das Gewäch herum. Überraschenderweise passiert nichts spannendes, doch als du dich gerade umdrehen und wieder gehen willst lässt dir das Gewächs eine Frucht vor die Füße fallen... Ob das seine Art war, Danke zu sagen?' =>
+	'Du gießt das Wasser auf den Boden um das Gewäch herum. Überraschenderweise passiert nichts spannendes, doch als du dich gerade umdrehen und wieder gehen willst lässt dir das Gewächs eine Frucht vor die Füße fallen... Ob das seine Art war, Danke zu sagen?',
+  'Du gießt das Wasser auf den Boden um das Gewäch herum. Überraschenderweise passiert nichts spannendes, doch als du dich gerade umdrehen und wieder gehen willst lässt dir das Gewächs :num Früchte vor die Füße fallen... Ob das seine Art war, Danke zu sagen?' =>
+	'Du gießt das Wasser auf den Boden um das Gewäch herum. Überraschenderweise passiert nichts spannendes, doch als du dich gerade umdrehen und wieder gehen willst lässt dir das Gewächs :num Früchte vor die Füße fallen... Ob das seine Art war, Danke zu sagen?',
+  'Der Saft spritzt dir nur so ins Gesicht, als du in diese Mutationsmelone beißt. So etwas gutes hast du wirklich lange nicht mehr gegessen!' =>
+	'Der Saft spritzt dir nur so ins Gesicht, als du in diese Mutationsmelone beißt. So etwas gutes hast du wirklich lange nicht mehr gegessen!',
+  'Transportmittel' =>
+	'Transportmittel',
+  'Du hast ein Transportmittel gefunden! Jetzt kannst du dich wesentlich leichter in der Welt bewegen!' =>
+	'Du hast ein Transportmittel gefunden! Jetzt kannst du dich wesentlich leichter in der Welt bewegen!',
+  'Das kannst du nicht ablegen...' =>
+	'Das kannst du nicht ablegen...',
+  'Sehr schön! Du hast einige neue Informationen in deine Karte aufnehmen können!' =>
+	'Sehr schön! Du hast einige neue Informationen in deine Karte aufnehmen können!',
+  'Gebrauchsanleitung für einen Großen Hadronen-Speicherring' =>
+	'Gebrauchsanleitung für einen Großen Hadronen-Speicherring',
+  'Direkt nachdem du die Paralaxium schluckst fallen dir langsam die Augen zu... Jetzt sind noch :num Pillen in der Schachtel.' =>
+	'Direkt nachdem du die Paralaxium schluckst fallen dir langsam die Augen zu... Jetzt sind noch :num Pillen in der Schachtel.',
+  'Direkt nachdem du die Paralaxium schluckst fallen dir langsam die Augen zu... In der Schachtel ist nur noch eine Pille. Setze sie mit Bedacht ein!' =>
+	'Direkt nachdem du die Paralaxium schluckst fallen dir langsam die Augen zu... In der Schachtel ist nur noch eine Pille. Setze sie mit Bedacht ein!',
+  'So ein Mist... dein Fahrrad ist auf dem Weg hierher kaputt gegangen...' =>
+	'So ein Mist... dein Fahrrad ist auf dem Weg hierher kaputt gegangen...',
+  'Der Automat hat deine Flasche geschluckt und etwas Geld dafür ausgespuckt.' =>
+	'Der Automat hat deine Flasche geschluckt und etwas Geld dafür ausgespuckt.',
+  'Es werde Licht! Herzlichen Glückwunsch, du hast etwas Strom für dein Versteck erzeugt!' =>
+	'Es werde Licht! Herzlichen Glückwunsch, du hast etwas Strom für dein Versteck erzeugt!',
+  'Also, so richtig hygienisch sieht das jetzt nicht aus...' =>
+	'Also, so richtig hygienisch sieht das jetzt nicht aus...',
+  'Splitter zählen' =>
+	'Splitter zählen',
+  'Schredder verwenden' =>
+	'Schredder verwenden',
+  'Mit dieser Aktion kannst du alle Gegenstände, die im Moment auf dem Boden liegen, zerstören um Splitter herzustellen.' =>
+	'Mit dieser Aktion kannst du alle Gegenstände, die im Moment auf dem Boden liegen, zerstören um Splitter herzustellen.',
+  'Splitterkugeln herstellen' =>
+	'Splitterkugeln herstellen',
+  'Aus 10 Eimern mit Splittern kannst du eine Splitterkugel pressen, die du als Munition verwenden kannst.' =>
+	'Aus 10 Eimern mit Splittern kannst du eine Splitterkugel pressen, die du als Munition verwenden kannst.',
+  'Obwohl hier schon seit Jahren kein neuer Müll mehr gelagert wurde kannst du die Mülldeponie noch immer meilenweit riechen. Das allermeiste, was du hier aus den Müllbergen ziehen kannst, ist zu nichts mehr zu gebrauchen. Allerdings kannst du ja immer auf einen Glücksfund hoffen.' =>
+	'Obwohl hier schon seit Jahren kein neuer Müll mehr gelagert wurde kannst du die Mülldeponie noch immer meilenweit riechen. Das allermeiste, was du hier aus den Müllbergen ziehen kannst, ist zu nichts mehr zu gebrauchen. Allerdings kannst du ja immer auf einen Glücksfund hoffen.',
+  'Steve' =>
+	'Steve',
+  'Auf seinem blauen Overall ist ein Namensschild - "Steve". Anscheinend hat Steve früher hier gearbeitet. Und handwerklich geschickt war er auch, denn neben ihm findest du einen Splitterwerfer. Du hast ganz schön Glück, dass du ständig Tote findest die cooles Zeug dabei haben, weist du das eigentlich?' =>
+	'Auf seinem blauen Overall ist ein Namensschild - "Steve". Anscheinend hat Steve früher hier gearbeitet. Und handwerklich geschickt war er auch, denn neben ihm findest du einen Splitterwerfer. Du hast ganz schön Glück, dass du ständig Tote findest die cooles Zeug dabei haben, weist du das eigentlich?',
+  'Neben einem kleinen Schuppen findest du hinter einer Wand aus Kisten eine Leiche. Der arme Kerl wollte sich wohl vor den Zombies verstecken. Scheint nicht geklappt zu haben ...' =>
+	'Neben einem kleinen Schuppen findest du hinter einer Wand aus Kisten eine Leiche. Der arme Kerl wollte sich wohl vor den Zombies verstecken. Scheint nicht geklappt zu haben ...',
+  'Hier lagern momentan :num Eimer voller Splitter, aus denen du :num2 Splitterkugeln formen könntest.' =>
+	'Hier lagern momentan :num Eimer voller Splitter, aus denen du :num2 Splitterkugeln formen könntest.',
+  'Du brauchst mehr Splitter, um eine solide Splitterkugel zu bauen.' =>
+	'Du brauchst mehr Splitter, um eine solide Splitterkugel zu bauen.',
+  'Überlebenstipp #3 gegen Zombieinvasionen: Wenn Zombies keine Löcher in deiner Verteidigung finden, dann machen sie sich selbst welche! Verstärke also besser immer deine Wände.' =>
+	'Überlebenstipp #3 gegen Zombieinvasionen: Wenn Zombies keine Löcher in deiner Verteidigung finden, dann machen sie sich selbst welche! Verstärke also besser immer deine Wände.',
+  'Sobald du in deinem Versteck eine Werkbank errichtet hast, solltest du so oft wie möglich im Baumarkt vorbei schauen. Hier gibt\'s praktisch alles was das Bastlerherz begehrt. Leider gibt es hier auch einige Zombies, du solltest also besser auf alles vorbereitet sein ...' =>
+	'Sobald du in deinem Versteck eine Werkbank errichtet hast, solltest du so oft wie möglich im Baumarkt vorbei schauen. Hier gibt\'s praktisch alles was das Bastlerherz begehrt. Leider gibt es hier auch einige Zombies, du solltest also besser auf alles vorbereitet sein ...',
+  'Viel hilft viel - mit ein paar zusätzlichen Druckreglern kannst du Batterien nun mit extra-hoher Geschwindigkeit abfeuern.' =>
+	'Viel hilft viel - mit ein paar zusätzlichen Druckreglern kannst du Batterien nun mit extra-hoher Geschwindigkeit abfeuern.',
+  'Anfängerseele' =>
+	'Anfängerseele',
+  'Pech gehabt... hier scheinst du nichts finden zu können. Da hast du deine Heldentag wohl verschenkt.' =>
+	'Pech gehabt... hier scheinst du nichts finden zu können. Da hast du deine Heldentag wohl verschenkt.',
+  'Du versuchst, die Treppe in die erste Etage hinaufzusteigen. Das Holz knirscht unter deinen Füßen und du merkst, wie der Boden langsam nachgibt. Sofort springst du zurück - du bist zu schwer beladen, um hier hochzulaufen. Lege ein paar schwere Sachen aus deinem Rucksack ab und versuche es dann erneut.' =>
+	'Du versuchst, die Treppe in die erste Etage hinaufzusteigen. Das Holz knirscht unter deinen Füßen und du merkst, wie der Boden langsam nachgibt. Sofort springst du zurück - du bist zu schwer beladen, um hier hochzulaufen. Lege ein paar schwere Sachen aus deinem Rucksack ab und versuche es dann erneut.',
+  'Augen zu und durch! Du schluckst die Pille herunter - sofort fühlst du, wie die Pille dich von innen reinigt. Sehr angenehm!' =>
+	'Augen zu und durch! Du schluckst die Pille herunter - sofort fühlst du, wie die Pille dich von innen reinigt. Sehr angenehm!',
+  'Es geht doch nichts über belegte Brote. Dein Hunger ist gestillt und du fühlst neue Kraft. Du hast deine Nahrungsrationen fast aufgebraucht. Eine Ration befindet sich noch in der Box.' =>
+	'Es geht doch nichts über belegte Brote. Dein Hunger ist gestillt und du fühlst neue Kraft. Du hast deine Nahrungsrationen fast aufgebraucht. Eine Ration befindet sich noch in der Box.',
+  'Es geht doch nichts über belegte Brote. Dein Hunger ist gestillt und du fühlst neue Kraft. Die Box ist leer!' =>
+	'Es geht doch nichts über belegte Brote. Dein Hunger ist gestillt und du fühlst neue Kraft. Die Box ist leer!',
+  'Du stemmst dich mit aller Kraft gegen das Ventil. Mit einem Schlag öffnet es sich, und ein Schwall Kühlwasser ergießt sich über dich. Das lindert zwar sofort deinen Durst, leider bist du jetzt auch gewaltig verstrahlt worden...' =>
+	'Du stemmst dich mit aller Kraft gegen das Ventil. Mit einem Schlag öffnet es sich, und ein Schwall Kühlwasser ergießt sich über dich. Das lindert zwar sofort deinen Durst, leider bist du jetzt auch gewaltig verstrahlt worden...',
+  'Diese Krankenhauskantine war früher mal ein echter Geheimtipp in der Stadt, denn hier konnte man vergleichsweise billig eine leckere Mahlzeit bekommen. Der günstige Preis ist auch kein Wunder - man kann Nahrungsmittel ziemlich billig produzieren, wenn sich im selben Gebäude eine leichenhalle befindet...' =>
+	'Diese Krankenhauskantine war früher mal ein echter Geheimtipp in der Stadt, denn hier konnte man vergleichsweise billig eine leckere Mahlzeit bekommen. Der günstige Preis ist auch kein Wunder - man kann Nahrungsmittel ziemlich billig produzieren, wenn sich im selben Gebäude eine leichenhalle befindet...',
 );

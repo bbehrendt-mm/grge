@@ -3852,8 +3852,6 @@ return array (
 	'Beet bepflanzen',
   'Bringe die Saat in deinem kleinen Gewächshaus aus, damit du in 24 Stunden ernten kannst. Denke daran, dass du ab dem Aussähen alle 3 Stunden gießen musst, um eine optimale Ernte einfahren zu können.' =>
 	'Bringe die Saat in deinem kleinen Gewächshaus aus, damit du in 24 Stunden ernten kannst. Denke daran, dass du ab dem Aussähen alle 3 Stunden gießen musst, um eine optimale Ernte einfahren zu können.',
-  'Der Beet ist momentan leer.' =>
-	'Der Beet ist momentan leer.',
   'Das Beet ist momentan leer.' =>
 	'Das Beet ist momentan leer.',
   'Fortschritt' =>
@@ -3864,8 +3862,6 @@ return array (
 	'Wasser',
   'Deine Pflanzen sind in :time erntebereit!' =>
 	'Deine Pflanzen sind in :time erntebereit!',
-  'Die Qualität bestimmt die Anzahl der Früche, die du bei der Ernte erhalten wirst. Derzeit zeichnet sich folgende Qualität ab: ' =>
-	'Die Qualität bestimmt die Anzahl der Früche, die du bei der Ernte erhalten wirst. Derzeit zeichnet sich folgende Qualität ab: ',
   'Excellent' =>
 	'Excellent',
   'Ausgezeichnet' =>
@@ -3916,8 +3912,6 @@ return array (
 	'Die Stärke deiner Düngung bestimmt die Höhe der Effekte der geernteten Pflanzen. Wenn du nach Erreichen der maximalen Düngestärke noch weiter düngst, hat dies nur noch Einfluss auf die Art der Effekte, nicht jedoch deren Höhe.',
   'Geerntete Pflanze' =>
 	'Geerntete Pflanze',
-  'Du hast diese Pflanze ' =>
-	'Du hast diese Pflanze ',
   'Du hast die Pflanzen gedüngt. Mal sehen, was hier jetzt wachsen wird...' =>
 	'Du hast die Pflanzen gedüngt. Mal sehen, was hier jetzt wachsen wird...',
   'Ernten' =>
@@ -4024,8 +4018,6 @@ return array (
 	'Deaktiviert den Laserzaun. Es wird keine Energie mehr verbraucht, aber dafür können die Zombies wieder eindringen.',
   'Du hast den Laserzaun aktiviert.' =>
 	'Du hast den Laserzaun aktiviert.',
-  'Du hast den Laserzaun aufgeladen.' =>
-	'Du hast den Laserzaun aufgeladen.',
   'Hier scheint niemand zu sein ...' =>
 	'Hier scheint niemand zu sein ...',
   'Post' =>
@@ -4062,4 +4054,294 @@ return array (
 	'Die ausgewählte Nachricht wurde gelöscht.',
   'Beim Löschen der Nachricht ist ein Fehler aufgetreten.' =>
 	'Beim Löschen der Nachricht ist ein Fehler aufgetreten.',
+  'Verbleibende Dauer: :time' =>
+	'Verbleibende Dauer: :time',
+  'Roadkill-Experte' =>
+	'Roadkill-Experte',
+  'Elitärer Club' =>
+	'Elitärer Club',
+  'Du hast neue Nachrichten!' =>
+	'Du hast neue Nachrichten!',
+  'Du schiebst ein paar Trümmer sowie eine zerissene Plane beiseite und siehst, dass der Wagen mit Lebensmitteln beladen war! Welch ein Festmahl!' =>
+	'Du schiebst ein paar Trümmer sowie eine zerissene Plane beiseite und siehst, dass der Wagen mit Lebensmitteln beladen war! Welch ein Festmahl!',
+  'Das war lecker. Du fühlst, wie sich dein Hunger langsam in Luft auflöst.' =>
+	'Das war lecker. Du fühlst, wie sich dein Hunger langsam in Luft auflöst.',
+  'Du nimmst einen Schluck aus deiner Flasche. Das Wasser ist schleimig und verklebt dir die Kehle. Außerdem schmeckt es, als hätte sich darin ein Zombie aufgelöst.' =>
+	'Du nimmst einen Schluck aus deiner Flasche. Das Wasser ist schleimig und verklebt dir die Kehle. Außerdem schmeckt es, als hätte sich darin ein Zombie aufgelöst.',
+  'Schwere Halluzinationen' =>
+	'Schwere Halluzinationen',
+  'Keine Angst, alles ist in Ordnung; das behauptet zumindest der grüne Elefant, der auf deiner Schulter sitzt. Moment, steht da drüben etwa Helmut Berger neben der fliegenden Schokoladenpalme, an der hölzerne Bullenhaie wachens?' =>
+	'Keine Angst, alles ist in Ordnung; das behauptet zumindest der grüne Elefant, der auf deiner Schulter sitzt. Moment, steht da drüben etwa Helmut Berger neben der fliegenden Schokoladenpalme, an der hölzerne Bullenhaie wachens?',
+  'Augen zu und durch! Du schluckst die Pille herunter - aber es scheint nichts zu passieren. Moment... war die dreiköpfige Giraffe da hinten schon immer da?' =>
+	'Augen zu und durch! Du schluckst die Pille herunter - aber es scheint nichts zu passieren. Moment... war die dreiköpfige Giraffe da hinten schon immer da?',
+  'Genitalmonster' =>
+	'Genitalmonster',
+  'Schwiegermütter' =>
+	'Schwiegermütter',
+  'Pokémon' =>
+	'Pokémon',
+  'Schnupfophanten' =>
+	'Schnupfophanten',
+  'Seehofer' =>
+	'Seehofer',
+  'OH GOTT! Du wirst von obskuren Gestalten angegriffen, die eventuell mit deinen schweren Halluzinationen in Zusammenhang stehen!' =>
+	'OH GOTT! Du wirst von obskuren Gestalten angegriffen, die eventuell mit deinen schweren Halluzinationen in Zusammenhang stehen!',
+  'Augen zu und durch! Du schluckst die Pille herunter. Was danach passiert, weißt du nicht mehr - aber dein ganzer Rucksack ist plötzlich leer! Wär hätte denn ahnen können dass die schwarze Pille Blackouts verursachen kann ...' =>
+	'Augen zu und durch! Du schluckst die Pille herunter. Was danach passiert, weißt du nicht mehr - aber dein ganzer Rucksack ist plötzlich leer! Wär hätte denn ahnen können dass die schwarze Pille Blackouts verursachen kann ...',
+  'Im Schlaf zerfetzt' =>
+	'Im Schlaf zerfetzt',
+  'Du nimmst einen Schluck aus deiner Flasche. Es fällt dir schwer, den Güllegeschmack des Wassers zu ignorieren, aber irgendwie musst du ja gegen deinen Durst vorgehen.' =>
+	'Du nimmst einen Schluck aus deiner Flasche. Es fällt dir schwer, den Güllegeschmack des Wassers zu ignorieren, aber irgendwie musst du ja gegen deinen Durst vorgehen.',
+  'Dein Einfamilienhaus' =>
+	'Dein Einfamilienhaus',
+  '"Zombiewagen" Vertragswerkstatt' =>
+	'"Zombiewagen" Vertragswerkstatt',
+  'Provisorische Straßenbarrikade' =>
+	'Provisorische Straßenbarrikade',
+  'Gerade erst hast du die letzte Rate für dein Haus bezahlt, da musst du es wegen der Zombieapokalypse direkt wieder evakuieren. Hättest du doch damals nur diese Zombieversicherung abgeschlossen...' =>
+	'Gerade erst hast du die letzte Rate für dein Haus bezahlt, da musst du es wegen der Zombieapokalypse direkt wieder evakuieren. Hättest du doch damals nur diese Zombieversicherung abgeschlossen...',
+  'Eine Gruppe Zombies stürmt aus dem Container und greift an!' =>
+	'Eine Gruppe Zombies stürmt aus dem Container und greift an!',
+  'Deine Bisswunde sieht aber gar nicht gut aus... offenbar hast du dich mit dem Zombievirus infiziert!' =>
+	'Deine Bisswunde sieht aber gar nicht gut aus... offenbar hast du dich mit dem Zombievirus infiziert!',
+  '"Pay\'n\'Spray" Autowerkstatt' =>
+	'"Pay\'n\'Spray" Autowerkstatt',
+  'Gäbe es einen Gott für Recycling, er wäre sicherlich stolz auf dich!' =>
+	'Gäbe es einen Gott für Recycling, er wäre sicherlich stolz auf dich!',
+  'Wenn dein Auto merkwürdige Geräusche macht, hast du entweder einen Motorschaden oder einen Zombie auf der Rückbank. Glücklicherweise findet sich immer eine Werkstatt wie diese in der Nähe, die deine Karre reparieren oder den Zombie fachmännisch (mit einem großen Schraubenschlüssel) entfernen können. Unglücklicherweise hat diese Werkstatt derzeit leider aus unerfindlichen Gründen geschlossen...' =>
+	'Wenn dein Auto merkwürdige Geräusche macht, hast du entweder einen Motorschaden oder einen Zombie auf der Rückbank. Glücklicherweise findet sich immer eine Werkstatt wie diese in der Nähe, die deine Karre reparieren oder den Zombie fachmännisch (mit einem großen Schraubenschlüssel) entfernen können. Unglücklicherweise hat diese Werkstatt derzeit leider aus unerfindlichen Gründen geschlossen...',
+  'Barrikade abbauen' =>
+	'Barrikade abbauen',
+  'Diese Barrikade sieht ziemlich stabil aus, aber wenn du dich etwas ins Zeug legst kannst du hier bestimmt das eine oder andere nützliche Item ausbauen.' =>
+	'Diese Barrikade sieht ziemlich stabil aus, aber wenn du dich etwas ins Zeug legst kannst du hier bestimmt das eine oder andere nützliche Item ausbauen.',
+  'Hier haben die Menschen anscheinend versucht, die Zombies mithilfe improvisierter Straßenbarrikaden aufzuhalten. So richtig funktioniert hat das wohl aber nicht, immerhin liegen hier überall Leichen herum...' =>
+	'Hier haben die Menschen anscheinend versucht, die Zombies mithilfe improvisierter Straßenbarrikaden aufzuhalten. So richtig funktioniert hat das wohl aber nicht, immerhin liegen hier überall Leichen herum...',
+  'Verflucht! Nachdem du etwas Schutt aus dem Weg geräumt hast, springt dich ein Zombie an! Wie zur Hölle ist der da nur rein gekommen??' =>
+	'Verflucht! Nachdem du etwas Schutt aus dem Weg geräumt hast, springt dich ein Zombie an! Wie zur Hölle ist der da nur rein gekommen??',
+  'Es hat dich etwas Arbeit gekostet, aber du konntest etwas nützliches aus dieser Barrikade herauszerren.' =>
+	'Es hat dich etwas Arbeit gekostet, aber du konntest etwas nützliches aus dieser Barrikade herauszerren.',
+  'Fast hätte es geklappt... leider sind ein paar standhafte Zombies übrig geblieben, die dich jetzt ziemlich grimmig anschauen...' =>
+	'Fast hätte es geklappt... leider sind ein paar standhafte Zombies übrig geblieben, die dich jetzt ziemlich grimmig anschauen...',
+  'Na, so ein Glück! Da drehst du dich nur mal kurz um, schon liegen vor dir :num Gegenstände! Wo die wohl hergekommen sind?' =>
+	'Na, so ein Glück! Da drehst du dich nur mal kurz um, schon liegen vor dir :num Gegenstände! Wo die wohl hergekommen sind?',
+  'Na, so ein Glück! Du hast plötzlich und unerwartet einen Gegenstand gefunden! Wo kam der nur her?' =>
+	'Na, so ein Glück! Du hast plötzlich und unerwartet einen Gegenstand gefunden! Wo kam der nur her?',
+  'Deine Machete sieht schon ziemlich stumpf und rostig aus, also bringst du sie mit diesem praktischen Schleifstein wieder auf Vordermann.' =>
+	'Deine Machete sieht schon ziemlich stumpf und rostig aus, also bringst du sie mit diesem praktischen Schleifstein wieder auf Vordermann.',
+  'Augen zu und durch! In der Hoffung, dies wäre eine Twinoid-Kapsel, schluckst du die Pille herunter. Tja, und wenn du das überlebt hättest, hättest du wohl gelernt dass das Aussehen auch täuschen kann.' =>
+	'Augen zu und durch! In der Hoffung, dies wäre eine Twinoid-Kapsel, schluckst du die Pille herunter. Tja, und wenn du das überlebt hättest, hättest du wohl gelernt dass das Aussehen auch täuschen kann.',
+  'Seltsame Substanz (Milodrin)' =>
+	'Seltsame Substanz (Milodrin)',
+  'Seltsame Substanz (Karmitain)' =>
+	'Seltsame Substanz (Karmitain)',
+  'Die Chemikalie perlt von den Pillen ab... das hat wohl nichts gebracht.' =>
+	'Die Chemikalie perlt von den Pillen ab... das hat wohl nichts gebracht.',
+  'Seltsame Substanz (Neotrigmat)' =>
+	'Seltsame Substanz (Neotrigmat)',
+  'Augen zu und durch! Du schluckst die Pille herunter - wenige Sekunden später beginnst du, dich unruhig und unwohl zu fühlen. Schmerzen zucken durch deinen Körper, während du dich auf dem Boden krümmst und hoffst, dass die Wirkung der Pille bald nachlässt.' =>
+	'Augen zu und durch! Du schluckst die Pille herunter - wenige Sekunden später beginnst du, dich unruhig und unwohl zu fühlen. Schmerzen zucken durch deinen Körper, während du dich auf dem Boden krümmst und hoffst, dass die Wirkung der Pille bald nachlässt.',
+  'Auf gut Glück ganze Gläser voll mit Pillen schlucken hat noch nie jemandem geschadet - zumindest niemandem, der noch am Leben ist...' =>
+	'Auf gut Glück ganze Gläser voll mit Pillen schlucken hat noch nie jemandem geschadet - zumindest niemandem, der noch am Leben ist...',
+  'Augen zu und durch! Du schluckst die Pille herunter - wenige Sekunden später spürst du, wie sich eine angenehme Wärme in dir ausbreitet. Welch ein schönes Gefühl ...' =>
+	'Augen zu und durch! Du schluckst die Pille herunter - wenige Sekunden später spürst du, wie sich eine angenehme Wärme in dir ausbreitet. Welch ein schönes Gefühl ...',
+  'Augen zu und durch! Du schluckst die Pille herunter - und wirst plötzlich unglaublich müde.' =>
+	'Augen zu und durch! Du schluckst die Pille herunter - und wirst plötzlich unglaublich müde.',
+  'Farbige Substanz (Neotrigin)' =>
+	'Farbige Substanz (Neotrigin)',
+  'Du wirfst die Pille in die Chemikalie ... es blubbert ein bisschen, und als du die Pille herausholst stellst du fest, dass sie die Farbe geändert hat!' =>
+	'Du wirfst die Pille in die Chemikalie ... es blubbert ein bisschen, und als du die Pille herausholst stellst du fest, dass sie die Farbe geändert hat!',
+  'Augen zu und durch! Du schluckst die Pille herunter - sofort durchzucken Krämpfe deinen Körper! Was immer das war, du hättest es besser nicht schlucken sollen!' =>
+	'Augen zu und durch! Du schluckst die Pille herunter - sofort durchzucken Krämpfe deinen Körper! Was immer das war, du hättest es besser nicht schlucken sollen!',
+  'Du wirfst die Pille in die Chemikalie ... es blubbert relativ stark. Als du die Pille herausnehmen möchtest stellst du fest, dass plötzlich eine zweite, identische Pille im Reagenzglas liegt! Welch Wunder der Chemie!' =>
+	'Du wirfst die Pille in die Chemikalie ... es blubbert relativ stark. Als du die Pille herausnehmen möchtest stellst du fest, dass plötzlich eine zweite, identische Pille im Reagenzglas liegt! Welch Wunder der Chemie!',
+  'Immunisiert' =>
+	'Immunisiert',
+  'Du bist momentan davor geschützt, dich mit der Zombiekrankheit anzustecken. Genieße es, solange es anhält.' =>
+	'Du bist momentan davor geschützt, dich mit der Zombiekrankheit anzustecken. Genieße es, solange es anhält.',
+  'Du spritzt dir das Medikament... aber so wirklich passieren tut nichts. Tja, da wirst du wohl einfach hoffen müssen dass du nun immun bist.' =>
+	'Du spritzt dir das Medikament... aber so wirklich passieren tut nichts. Tja, da wirst du wohl einfach hoffen müssen dass du nun immun bist.',
+  'Direkt nachdem du die Twinoid schluckst fühlst du dich wieder besser! Jetzt sind noch :num Pillen in der Schachtel.' =>
+	'Direkt nachdem du die Twinoid schluckst fühlst du dich wieder besser! Jetzt sind noch :num Pillen in der Schachtel.',
+  'Direkt nachdem du die Twinoid schluckst fühlst du dich wieder besser! In der Schachtel ist nur noch eine Pille. Setze sie mit Bedacht ein!' =>
+	'Direkt nachdem du die Twinoid schluckst fühlst du dich wieder besser! In der Schachtel ist nur noch eine Pille. Setze sie mit Bedacht ein!',
+  'Erforschung der Irrenanstalt' =>
+	'Erforschung der Irrenanstalt',
+  'Dir läuft ein Schauer über den Rücken, als du durch die schlecht beleuchteten Gänge schleichst ...' =>
+	'Dir läuft ein Schauer über den Rücken, als du durch die schlecht beleuchteten Gänge schleichst ...',
+  'Du siehst Blutspuren an der Wand. Die müssen entstanden sein, als die Anstalt von Zombies überrannt wurde. Allerdings sieht das Blut überraschend frisch aus ...' =>
+	'Du siehst Blutspuren an der Wand. Die müssen entstanden sein, als die Anstalt von Zombies überrannt wurde. Allerdings sieht das Blut überraschend frisch aus ...',
+  'Du hörst ein knackendes Geräusch hinter dir, und spürst einen Luftzug. Du machst dich bereit, auf Zombies zu treffen. Aber nichts geschieht ...' =>
+	'Du hörst ein knackendes Geräusch hinter dir, und spürst einen Luftzug. Du machst dich bereit, auf Zombies zu treffen. Aber nichts geschieht ...',
+  'Hinter einem Tresen liegen ein paar aufgestapelte Leichen. Sie scheinen ausschließlich Verletzungen am Hals zu haben, der Rest ist unversehrt. Untypisch für Zombies...' =>
+	'Hinter einem Tresen liegen ein paar aufgestapelte Leichen. Sie scheinen ausschließlich Verletzungen am Hals zu haben, der Rest ist unversehrt. Untypisch für Zombies...',
+  'Du findest einen Spiegel auf dem Boden, auf dem ein blutverschmierter Teddybär liegt. Das Blut scheint frisch zu sein ... Was ist nur in dieser Anstalt geschehen? Du verspürst den immer stärker werdenden Drang, dieses Gebäude zu verlassen und nie wieder zurückzukehren...' =>
+	'Du findest einen Spiegel auf dem Boden, auf dem ein blutverschmierter Teddybär liegt. Das Blut scheint frisch zu sein ... Was ist nur in dieser Anstalt geschehen? Du verspürst den immer stärker werdenden Drang, dieses Gebäude zu verlassen und nie wieder zurückzukehren...',
+  'Frische Seele' =>
+	'Frische Seele',
+  'Hier kommst du nicht weiter... du musst deine Reise nach :od unterbrechen und bei :ad eine Pause machen.' =>
+	'Hier kommst du nicht weiter... du musst deine Reise nach :od unterbrechen und bei :ad eine Pause machen.',
+  'Der Keller ist komplett aus Stein und daher relativ unbeschädigt durch das Feuer. Leider lassen die Blutspuren überall darauf schließen, dass sich hier ein paar Zombies eingenistet haben...' =>
+	'Der Keller ist komplett aus Stein und daher relativ unbeschädigt durch das Feuer. Leider lassen die Blutspuren überall darauf schließen, dass sich hier ein paar Zombies eingenistet haben...',
+  'Du solltest deinen Munitionsgürtel nicht aus der Hand geben ...' =>
+	'Du solltest deinen Munitionsgürtel nicht aus der Hand geben ...',
+  'Die Pille ist dir aus der Hand gerutscht, heruntergefallen und weggekugelt! Vielleicht solltest du deinen Alkoholkonsum zügeln ... ' =>
+	'Die Pille ist dir aus der Hand gerutscht, heruntergefallen und weggekugelt! Vielleicht solltest du deinen Alkoholkonsum zügeln ... ',
+  'Direkt nachdem du die Paracetin schluckst fühlst du, wie deine Kraft zurückkehrt. In der Schachtel ist nur noch eine Pille. Setze sie mit Bedacht ein!' =>
+	'Direkt nachdem du die Paracetin schluckst fühlst du, wie deine Kraft zurückkehrt. In der Schachtel ist nur noch eine Pille. Setze sie mit Bedacht ein!',
+  'Du wickelst die Bandage straff um deine Verletzungen. Zwar hast du dein Blut nun mit allerlei Dreck und Keimen geflutet, aber zumindest läuft es nicht mehr unkontrolliert aus deiner Wunde.' =>
+	'Du wickelst die Bandage straff um deine Verletzungen. Zwar hast du dein Blut nun mit allerlei Dreck und Keimen geflutet, aber zumindest läuft es nicht mehr unkontrolliert aus deiner Wunde.',
+  'Ausgewogene Ernährung' =>
+	'Ausgewogene Ernährung',
+  'Du weist, wie man sich richtig ernährt! Da dein Körper mit allen wichtigen Nährstoffen versorgt ist, bekommst du nicht mehr so schnell Hunger. Zumindest für eine Weile...' =>
+	'Du weist, wie man sich richtig ernährt! Da dein Körper mit allen wichtigen Nährstoffen versorgt ist, bekommst du nicht mehr so schnell Hunger. Zumindest für eine Weile...',
+  'Augen zu und durch! Du schluckst die Pille herunter - und mit einem mal fühlst du dich extrem satt! Anscheinend war das irgend eine Nährstoffpille!' =>
+	'Augen zu und durch! Du schluckst die Pille herunter - und mit einem mal fühlst du dich extrem satt! Anscheinend war das irgend eine Nährstoffpille!',
+  'Die Aktion konnte nicht vollständig ausgeführt werden, da eines oder mehrere der ausgewählten Gegenstände nicht länger in deiner Reichweite sind.' =>
+	'Die Aktion konnte nicht vollständig ausgeführt werden, da eines oder mehrere der ausgewählten Gegenstände nicht länger in deiner Reichweite sind.',
+  'Du nimmst die Bandage, wickelst die um den Griff der Machete und befestigst die Enden mit ein wenig Klebeband. Toll, nun kannst du deine Machete viel einfacher halten und es besteht keine Gefahr mehr, beim Metzeln (oder bei der Intimrasur) abzurutschen.' =>
+	'Du nimmst die Bandage, wickelst die um den Griff der Machete und befestigst die Enden mit ein wenig Klebeband. Toll, nun kannst du deine Machete viel einfacher halten und es besteht keine Gefahr mehr, beim Metzeln (oder bei der Intimrasur) abzurutschen.',
+  'Privatpatienten haben mehr Geld, also sind sie die besseren Menschen und verdienen bessere medizinische Versorgung. Dazu gehört auch dieses Luxuszimmer, mit Besuchersessel aus Leder, Heimkinoanlage und natürlich einer gut bestückten Bar. Eigentlich könntest du dich auch selbst hier "einliefern" lassen und diesen Ort zu einem Versteck umbauen...' =>
+	'Privatpatienten haben mehr Geld, also sind sie die besseren Menschen und verdienen bessere medizinische Versorgung. Dazu gehört auch dieses Luxuszimmer, mit Besuchersessel aus Leder, Heimkinoanlage und natürlich einer gut bestückten Bar. Eigentlich könntest du dich auch selbst hier "einliefern" lassen und diesen Ort zu einem Versteck umbauen...',
+  'Du hast die alte Beschriftung weggewischt.' =>
+	'Du hast die alte Beschriftung weggewischt.',
+  'Entzugserscheinungen' =>
+	'Entzugserscheinungen',
+  'Wie lange ist dein letzter Schuss her? Du weist es nicht mehr... es scheint eine Ewigkeit zu sein. Wirst du den Entzug durchhalten oder wieder zur Nadel greifen?' =>
+	'Wie lange ist dein letzter Schuss her? Du weist es nicht mehr... es scheint eine Ewigkeit zu sein. Wirst du den Entzug durchhalten oder wieder zur Nadel greifen?',
+  'Das hat gut getan! Du hast die Entzugserscheinungen gegen rosa Elephanten eingetauscht, die mit geschminkten Aligatoren um zwei Einhörner kämpfen. Zumindest für ein Weilchen...' =>
+	'Das hat gut getan! Du hast die Entzugserscheinungen gegen rosa Elephanten eingetauscht, die mit geschminkten Aligatoren um zwei Einhörner kämpfen. Zumindest für ein Weilchen...',
+  'Herzlichen Glückwunsch - das ist jetzt das :num. mal, dass du deine Sucht nach verschreibungspflichtigen Medikamenten, industriellem Lösungsmittel oder abgelaufenem Hustensaft besiegt hast!' =>
+	'Herzlichen Glückwunsch - das ist jetzt das :num. mal, dass du deine Sucht nach verschreibungspflichtigen Medikamenten, industriellem Lösungsmittel oder abgelaufenem Hustensaft besiegt hast!',
+  'Direkt nachdem du die Paracetoid schluckst merkst du, wie es dir besser geht. In der Schachtel ist nur noch eine Pille. Setze sie mit Bedacht ein!' =>
+	'Direkt nachdem du die Paracetoid schluckst merkst du, wie es dir besser geht. In der Schachtel ist nur noch eine Pille. Setze sie mit Bedacht ein!',
+  'Die Chemikalie läuft an der Klinge herunter und ätzt den Rost weg! Deine Machete ist nun schärfer den je!' =>
+	'Die Chemikalie läuft an der Klinge herunter und ätzt den Rost weg! Deine Machete ist nun schärfer den je!',
+  'Ein angriffslustiger Zombie springt aus dem Kühlraum und greift an!' =>
+	'Ein angriffslustiger Zombie springt aus dem Kühlraum und greift an!',
+  'Die schwere Metalltür, die die Küche vom Kühlraum trennt, ist inzwischen startk verrostet. Nach einiger Anstrengung gelingt es dir aber doch, sie einen Spalt zu öffnen. Du willst gerade hineingehen, als du plötzlich von einem Zombie angefallen wirst! Wie zum Teufel ist der denn da rein gekommen? Zu allem Überfluss ist der Kühlraum (bis auf den Zombie) völlig leer...' =>
+	'Die schwere Metalltür, die die Küche vom Kühlraum trennt, ist inzwischen startk verrostet. Nach einiger Anstrengung gelingt es dir aber doch, sie einen Spalt zu öffnen. Du willst gerade hineingehen, als du plötzlich von einem Zombie angefallen wirst! Wie zum Teufel ist der denn da rein gekommen? Zu allem Überfluss ist der Kühlraum (bis auf den Zombie) völlig leer...',
+  'Hobbyraum' =>
+	'Hobbyraum',
+  'Bist du verrückt? Das kannst du doch nicht machen, wenn alle zugucken... Such dir ein ruhigeres Plätzchen.' =>
+	'Bist du verrückt? Das kannst du doch nicht machen, wenn alle zugucken... Such dir ein ruhigeres Plätzchen.',
+  ':name hat dich gebeten, ihn nach :location zu begleiten.' =>
+	':name hat dich gebeten, ihn nach :location zu begleiten.',
+  'Jeder Mensch braucht nun mal ein Hobby. Das Hobby der Bewohner dieses Hauses beinhaltete anscheinend Peitschen, an der Wand befestigte Ketten und ein Laufgitter voll angebrannter Puppen.' =>
+	'Jeder Mensch braucht nun mal ein Hobby. Das Hobby der Bewohner dieses Hauses beinhaltete anscheinend Peitschen, an der Wand befestigte Ketten und ein Laufgitter voll angebrannter Puppen.',
+  'Lächelnder Leichnam' =>
+	'Lächelnder Leichnam',
+  'Auf welche Art auch immer er gestorben ist, es scheint ihm unglaublichen Spaß gemacht zu haben - zumindest basierend auf seinem Gesichtsausdruck.' =>
+	'Auf welche Art auch immer er gestorben ist, es scheint ihm unglaublichen Spaß gemacht zu haben - zumindest basierend auf seinem Gesichtsausdruck.',
+  'Hobbykeller' =>
+	'Hobbykeller',
+  'Die ganze Einrichtung hier erinnert dich irgendwie an den Londoner Dungeon...' =>
+	'Die ganze Einrichtung hier erinnert dich irgendwie an den Londoner Dungeon...',
+  ':name hat nicht genug Energie, um diesen Ort zu erreichen ...' =>
+	':name hat nicht genug Energie, um diesen Ort zu erreichen ...',
+  'Jmd. Wunde auswaschen' =>
+	'Jmd. Wunde auswaschen',
+  'In einer Ecke des Raumes findest du, versteckt unter etwas Geröll, mehrere kleine Schälchen mit Blut...' =>
+	'In einer Ecke des Raumes findest du, versteckt unter etwas Geröll, mehrere kleine Schälchen mit Blut...',
+  'Du spürst einen Luftzug an deinem Nacken... er ist warm, fast als wäre es jemandes Atem. Aber hier ist zum Glück ja niemand...' =>
+	'Du spürst einen Luftzug an deinem Nacken... er ist warm, fast als wäre es jemandes Atem. Aber hier ist zum Glück ja niemand...',
+  'Befleckter Teddy der verlorenen Kindheit' =>
+	'Befleckter Teddy der verlorenen Kindheit',
+  'Zwischen den Puppen in der Kinderkrippe liegt noch etwas anderes... ein blutverschmierter Teddybär! Warum kommt es dir nur so vor, als wenn du den schon einmal irgendwo gesehen hättest?' =>
+	'Zwischen den Puppen in der Kinderkrippe liegt noch etwas anderes... ein blutverschmierter Teddybär! Warum kommt es dir nur so vor, als wenn du den schon einmal irgendwo gesehen hättest?',
+  'Pille' =>
+	'Pille',
+  'Umgeworfene Tragen, zerrissene Vorhänge, eine Schleusentür ist aus der Schiene gerissen... du stehst quasi im Epizentrum der Zombieapokalypse. Die Ärzte und Schwestern, die hier gearbeitet haben, sind durch die Hölle gegangen. Leider sind sie von dort wieder zurückgekehrt.... bete lieber, dass du ihnen nicht begegnest!' =>
+	'Umgeworfene Tragen, zerrissene Vorhänge, eine Schleusentür ist aus der Schiene gerissen... du stehst quasi im Epizentrum der Zombieapokalypse. Die Ärzte und Schwestern, die hier gearbeitet haben, sind durch die Hölle gegangen. Leider sind sie von dort wieder zurückgekehrt.... bete lieber, dass du ihnen nicht begegnest!',
+  ':num Seiten (bereits gelesen)' =>
+	':num Seiten (bereits gelesen)',
+  'Und wieder hast du ein Buch durchgelesen. Nur das Ende hätte etwas spannender sein können...' =>
+	'Und wieder hast du ein Buch durchgelesen. Nur das Ende hätte etwas spannender sein können...',
+  'Mit ein paar kleinen Verbesserungen kann man die Effektivität eines Batteriewerfers ungemein erhöhen. Mit der neuen Ladevorrichtung sparst du im Kampf viel Zeit, die du wiederum in das Abschlachten weiterer Zombies investieren kannst.' =>
+	'Mit ein paar kleinen Verbesserungen kann man die Effektivität eines Batteriewerfers ungemein erhöhen. Mit der neuen Ladevorrichtung sparst du im Kampf viel Zeit, die du wiederum in das Abschlachten weiterer Zombies investieren kannst.',
+  'Dieses Teil hast du eh nicht mehr gebraucht... und warum soll es rumliegen und Platz verschwenden, wenn du es einfach auseinandernehmen kannst?' =>
+	'Dieses Teil hast du eh nicht mehr gebraucht... und warum soll es rumliegen und Platz verschwenden, wenn du es einfach auseinandernehmen kannst?',
+  'Direkt nachdem du die Paralaxium schluckst fallen dir langsam die Augen zu... Die Schachtel ist leer!' =>
+	'Direkt nachdem du die Paralaxium schluckst fallen dir langsam die Augen zu... Die Schachtel ist leer!',
+  'Wie jedes Lagerhaus verfügt auch dieses über einfache Schutzmaßnahmen gegen Diebstahl. Plünderer hat das nicht aufhalten können, aber vielleicht Zombies? Du könntest durchaus versuchen, diesen Ort zu einem Versteck zu machen...' =>
+	'Wie jedes Lagerhaus verfügt auch dieses über einfache Schutzmaßnahmen gegen Diebstahl. Plünderer hat das nicht aufhalten können, aber vielleicht Zombies? Du könntest durchaus versuchen, diesen Ort zu einem Versteck zu machen...',
+  'Dies ist alles, was von eurem Freund übrig geblieben ist... Naja, immerhin kann man noch eine Suppe draus kochen.' =>
+	'Dies ist alles, was von eurem Freund übrig geblieben ist... Naja, immerhin kann man noch eine Suppe draus kochen.',
+  'Das zentrale Utensil jeder Küche - der Wasserkocher - steht nun auch dir zur Verfügung. Nutze ihn Weise, und missbrauche seine Kräfte nicht!' =>
+	'Das zentrale Utensil jeder Küche - der Wasserkocher - steht nun auch dir zur Verfügung. Nutze ihn Weise, und missbrauche seine Kräfte nicht!',
+  'Du musst diesen Gegenstand aufheben, bevor du ihn anlegen kannst.' =>
+	'Du musst diesen Gegenstand aufheben, bevor du ihn anlegen kannst.',
+  'Anscheinend kann man sich Munition ganz einfach selber bauen, indem man ein Kupferrohr in kleine Stücke sägt und mit Schwarzpulver füllt. Wer hätte das gedacht?' =>
+	'Anscheinend kann man sich Munition ganz einfach selber bauen, indem man ein Kupferrohr in kleine Stücke sägt und mit Schwarzpulver füllt. Wer hätte das gedacht?',
+  'Du gießt das Wasser auf den Boden um das Gewäch herum. Überraschenderweise passiert nichts spannendes, doch als du dich gerade umdrehen und wieder gehen willst lässt dir das Gewächs eine Frucht vor die Füße fallen... Ob das seine Art war, Danke zu sagen?' =>
+	'Du gießt das Wasser auf den Boden um das Gewäch herum. Überraschenderweise passiert nichts spannendes, doch als du dich gerade umdrehen und wieder gehen willst lässt dir das Gewächs eine Frucht vor die Füße fallen... Ob das seine Art war, Danke zu sagen?',
+  'Du gießt das Wasser auf den Boden um das Gewäch herum. Überraschenderweise passiert nichts spannendes, doch als du dich gerade umdrehen und wieder gehen willst lässt dir das Gewächs :num Früchte vor die Füße fallen... Ob das seine Art war, Danke zu sagen?' =>
+	'Du gießt das Wasser auf den Boden um das Gewäch herum. Überraschenderweise passiert nichts spannendes, doch als du dich gerade umdrehen und wieder gehen willst lässt dir das Gewächs :num Früchte vor die Füße fallen... Ob das seine Art war, Danke zu sagen?',
+  'Der Saft spritzt dir nur so ins Gesicht, als du in diese Mutationsmelone beißt. So etwas gutes hast du wirklich lange nicht mehr gegessen!' =>
+	'Der Saft spritzt dir nur so ins Gesicht, als du in diese Mutationsmelone beißt. So etwas gutes hast du wirklich lange nicht mehr gegessen!',
+  'Transportmittel' =>
+	'Transportmittel',
+  'Du hast ein Transportmittel gefunden! Jetzt kannst du dich wesentlich leichter in der Welt bewegen!' =>
+	'Du hast ein Transportmittel gefunden! Jetzt kannst du dich wesentlich leichter in der Welt bewegen!',
+  'Das kannst du nicht ablegen...' =>
+	'Das kannst du nicht ablegen...',
+  'Sehr schön! Du hast einige neue Informationen in deine Karte aufnehmen können!' =>
+	'Sehr schön! Du hast einige neue Informationen in deine Karte aufnehmen können!',
+  'Gebrauchsanleitung für einen Großen Hadronen-Speicherring' =>
+	'Gebrauchsanleitung für einen Großen Hadronen-Speicherring',
+  'Direkt nachdem du die Paralaxium schluckst fallen dir langsam die Augen zu... Jetzt sind noch :num Pillen in der Schachtel.' =>
+	'Direkt nachdem du die Paralaxium schluckst fallen dir langsam die Augen zu... Jetzt sind noch :num Pillen in der Schachtel.',
+  'Direkt nachdem du die Paralaxium schluckst fallen dir langsam die Augen zu... In der Schachtel ist nur noch eine Pille. Setze sie mit Bedacht ein!' =>
+	'Direkt nachdem du die Paralaxium schluckst fallen dir langsam die Augen zu... In der Schachtel ist nur noch eine Pille. Setze sie mit Bedacht ein!',
+  'So ein Mist... dein Fahrrad ist auf dem Weg hierher kaputt gegangen...' =>
+	'So ein Mist... dein Fahrrad ist auf dem Weg hierher kaputt gegangen...',
+  'Der Automat hat deine Flasche geschluckt und etwas Geld dafür ausgespuckt.' =>
+	'Der Automat hat deine Flasche geschluckt und etwas Geld dafür ausgespuckt.',
+  'Es werde Licht! Herzlichen Glückwunsch, du hast etwas Strom für dein Versteck erzeugt!' =>
+	'Es werde Licht! Herzlichen Glückwunsch, du hast etwas Strom für dein Versteck erzeugt!',
+  'Also, so richtig hygienisch sieht das jetzt nicht aus...' =>
+	'Also, so richtig hygienisch sieht das jetzt nicht aus...',
+  'Splitter zählen' =>
+	'Splitter zählen',
+  'Schredder verwenden' =>
+	'Schredder verwenden',
+  'Mit dieser Aktion kannst du alle Gegenstände, die im Moment auf dem Boden liegen, zerstören um Splitter herzustellen.' =>
+	'Mit dieser Aktion kannst du alle Gegenstände, die im Moment auf dem Boden liegen, zerstören um Splitter herzustellen.',
+  'Splitterkugeln herstellen' =>
+	'Splitterkugeln herstellen',
+  'Aus 10 Eimern mit Splittern kannst du eine Splitterkugel pressen, die du als Munition verwenden kannst.' =>
+	'Aus 10 Eimern mit Splittern kannst du eine Splitterkugel pressen, die du als Munition verwenden kannst.',
+  'Obwohl hier schon seit Jahren kein neuer Müll mehr gelagert wurde kannst du die Mülldeponie noch immer meilenweit riechen. Das allermeiste, was du hier aus den Müllbergen ziehen kannst, ist zu nichts mehr zu gebrauchen. Allerdings kannst du ja immer auf einen Glücksfund hoffen.' =>
+	'Obwohl hier schon seit Jahren kein neuer Müll mehr gelagert wurde kannst du die Mülldeponie noch immer meilenweit riechen. Das allermeiste, was du hier aus den Müllbergen ziehen kannst, ist zu nichts mehr zu gebrauchen. Allerdings kannst du ja immer auf einen Glücksfund hoffen.',
+  'Steve' =>
+	'Steve',
+  'Auf seinem blauen Overall ist ein Namensschild - "Steve". Anscheinend hat Steve früher hier gearbeitet. Und handwerklich geschickt war er auch, denn neben ihm findest du einen Splitterwerfer. Du hast ganz schön Glück, dass du ständig Tote findest die cooles Zeug dabei haben, weist du das eigentlich?' =>
+	'Auf seinem blauen Overall ist ein Namensschild - "Steve". Anscheinend hat Steve früher hier gearbeitet. Und handwerklich geschickt war er auch, denn neben ihm findest du einen Splitterwerfer. Du hast ganz schön Glück, dass du ständig Tote findest die cooles Zeug dabei haben, weist du das eigentlich?',
+  'Neben einem kleinen Schuppen findest du hinter einer Wand aus Kisten eine Leiche. Der arme Kerl wollte sich wohl vor den Zombies verstecken. Scheint nicht geklappt zu haben ...' =>
+	'Neben einem kleinen Schuppen findest du hinter einer Wand aus Kisten eine Leiche. Der arme Kerl wollte sich wohl vor den Zombies verstecken. Scheint nicht geklappt zu haben ...',
+  'Hier lagern momentan :num Eimer voller Splitter, aus denen du :num2 Splitterkugeln formen könntest.' =>
+	'Hier lagern momentan :num Eimer voller Splitter, aus denen du :num2 Splitterkugeln formen könntest.',
+  'Du brauchst mehr Splitter, um eine solide Splitterkugel zu bauen.' =>
+	'Du brauchst mehr Splitter, um eine solide Splitterkugel zu bauen.',
+  'Überlebenstipp #3 gegen Zombieinvasionen: Wenn Zombies keine Löcher in deiner Verteidigung finden, dann machen sie sich selbst welche! Verstärke also besser immer deine Wände.' =>
+	'Überlebenstipp #3 gegen Zombieinvasionen: Wenn Zombies keine Löcher in deiner Verteidigung finden, dann machen sie sich selbst welche! Verstärke also besser immer deine Wände.',
+  'Sobald du in deinem Versteck eine Werkbank errichtet hast, solltest du so oft wie möglich im Baumarkt vorbei schauen. Hier gibt\'s praktisch alles was das Bastlerherz begehrt. Leider gibt es hier auch einige Zombies, du solltest also besser auf alles vorbereitet sein ...' =>
+	'Sobald du in deinem Versteck eine Werkbank errichtet hast, solltest du so oft wie möglich im Baumarkt vorbei schauen. Hier gibt\'s praktisch alles was das Bastlerherz begehrt. Leider gibt es hier auch einige Zombies, du solltest also besser auf alles vorbereitet sein ...',
+  'Viel hilft viel - mit ein paar zusätzlichen Druckreglern kannst du Batterien nun mit extra-hoher Geschwindigkeit abfeuern.' =>
+	'Viel hilft viel - mit ein paar zusätzlichen Druckreglern kannst du Batterien nun mit extra-hoher Geschwindigkeit abfeuern.',
+  'Anfängerseele' =>
+	'Anfängerseele',
+  'Pech gehabt... hier scheinst du nichts finden zu können. Da hast du deine Heldentag wohl verschenkt.' =>
+	'Pech gehabt... hier scheinst du nichts finden zu können. Da hast du deine Heldentag wohl verschenkt.',
+  'Du versuchst, die Treppe in die erste Etage hinaufzusteigen. Das Holz knirscht unter deinen Füßen und du merkst, wie der Boden langsam nachgibt. Sofort springst du zurück - du bist zu schwer beladen, um hier hochzulaufen. Lege ein paar schwere Sachen aus deinem Rucksack ab und versuche es dann erneut.' =>
+	'Du versuchst, die Treppe in die erste Etage hinaufzusteigen. Das Holz knirscht unter deinen Füßen und du merkst, wie der Boden langsam nachgibt. Sofort springst du zurück - du bist zu schwer beladen, um hier hochzulaufen. Lege ein paar schwere Sachen aus deinem Rucksack ab und versuche es dann erneut.',
+  'Augen zu und durch! Du schluckst die Pille herunter - sofort fühlst du, wie die Pille dich von innen reinigt. Sehr angenehm!' =>
+	'Augen zu und durch! Du schluckst die Pille herunter - sofort fühlst du, wie die Pille dich von innen reinigt. Sehr angenehm!',
+  'Es geht doch nichts über belegte Brote. Dein Hunger ist gestillt und du fühlst neue Kraft. Du hast deine Nahrungsrationen fast aufgebraucht. Eine Ration befindet sich noch in der Box.' =>
+	'Es geht doch nichts über belegte Brote. Dein Hunger ist gestillt und du fühlst neue Kraft. Du hast deine Nahrungsrationen fast aufgebraucht. Eine Ration befindet sich noch in der Box.',
+  'Es geht doch nichts über belegte Brote. Dein Hunger ist gestillt und du fühlst neue Kraft. Die Box ist leer!' =>
+	'Es geht doch nichts über belegte Brote. Dein Hunger ist gestillt und du fühlst neue Kraft. Die Box ist leer!',
+  'Du stemmst dich mit aller Kraft gegen das Ventil. Mit einem Schlag öffnet es sich, und ein Schwall Kühlwasser ergießt sich über dich. Das lindert zwar sofort deinen Durst, leider bist du jetzt auch gewaltig verstrahlt worden...' =>
+	'Du stemmst dich mit aller Kraft gegen das Ventil. Mit einem Schlag öffnet es sich, und ein Schwall Kühlwasser ergießt sich über dich. Das lindert zwar sofort deinen Durst, leider bist du jetzt auch gewaltig verstrahlt worden...',
+  'Diese Krankenhauskantine war früher mal ein echter Geheimtipp in der Stadt, denn hier konnte man vergleichsweise billig eine leckere Mahlzeit bekommen. Der günstige Preis ist auch kein Wunder - man kann Nahrungsmittel ziemlich billig produzieren, wenn sich im selben Gebäude eine leichenhalle befindet...' =>
+	'Diese Krankenhauskantine war früher mal ein echter Geheimtipp in der Stadt, denn hier konnte man vergleichsweise billig eine leckere Mahlzeit bekommen. Der günstige Preis ist auch kein Wunder - man kann Nahrungsmittel ziemlich billig produzieren, wenn sich im selben Gebäude eine leichenhalle befindet...',
 );

@@ -152,8 +152,6 @@ return array (
 	'',
   'Falls du von einer fremden Seite hierher gelangt bist, informiere dessen Betreiber, dass der Link offenbar nicht mehr aktuell ist.' =>
 	'',
-  'Bist du über einen Link auf ZombVival hierher gekommen, melde das bitte im Forum!' =>
-	'',
   'Bringe dem Internet ein Tieropfer dar und hoffe, dass dies die Seite zurückbringt, die du suchst.' =>
 	'',
   'Zur Hauptseite' =>
@@ -514,8 +512,6 @@ return array (
 	'',
   'Bringe die Saat in deinem kleinen Gewächshaus aus, damit du in 24 Stunden ernten kannst. Denke daran, dass du ab dem Aussähen alle 3 Stunden gießen musst, um eine optimale Ernte einfahren zu können.' =>
 	'',
-  'Der Beet ist momentan leer.' =>
-	'',
   'Das Beet ist momentan leer.' =>
 	'',
   'Fortschritt' =>
@@ -525,8 +521,6 @@ return array (
   'Wasser' =>
 	'',
   'Deine Pflanzen sind in :time erntebereit!' =>
-	'',
-  'Die Qualität bestimmt die Anzahl der Früche, die du bei der Ernte erhalten wirst. Derzeit zeichnet sich folgende Qualität ab: ' =>
 	'',
   'Excellent' =>
 	'',
@@ -575,8 +569,6 @@ return array (
   'Die Stärke deiner Düngung bestimmt die Höhe der Effekte der geernteten Pflanzen. Wenn du nach Erreichen der maximalen Düngestärke noch weiter düngst, hat dies nur noch Einfluss auf die Art der Effekte, nicht jedoch deren Höhe.' =>
 	'',
   'Geerntete Pflanze' =>
-	'',
-  'Du hast diese Pflanze ' =>
 	'',
   'Du hast die Pflanzen gedüngt. Mal sehen, was hier jetzt wachsen wird...' =>
 	'',
@@ -682,8 +674,6 @@ return array (
 	'',
   'Du hast den Laserzaun aktiviert.' =>
 	'',
-  'Du hast den Laserzaun aufgeladen.' =>
-	'',
   'Hier scheint niemand zu sein ...' =>
 	'',
   'Post' =>
@@ -709,5 +699,15 @@ return array (
   'Die ausgewählte Nachricht wurde gelöscht.' =>
 	'',
   'Beim Löschen der Nachricht ist ein Fehler aufgetreten.' =>
+	'',
+  'Verbleibende Dauer: :time' =>
+	'',
+  'Roadkill-Experte' =>
+	'',
+  'Elitärer Club' =>
+	'',
+  'Du hast neue Nachrichten!' =>
+	'',
+  'Diese Krankenhauskantine war früher mal ein echter Geheimtipp in der Stadt, denn hier konnte man vergleichsweise billig eine leckere Mahlzeit bekommen. Der günstige Preis ist auch kein Wunder - man kann Nahrungsmittel ziemlich billig produzieren, wenn sich im selben Gebäude eine leichenhalle befindet...' =>
 	'',
 );

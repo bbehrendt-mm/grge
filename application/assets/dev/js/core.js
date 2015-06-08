@@ -97,10 +97,13 @@ core = {
             action_box.addClass('custom custom-' + data.location.meta.css);
         }
 
-        var auto_select = $('<select />').appendTo($('<div />').addClass('hide-desktop control').appendTo(action_box))
+        if (data.players && data.players.messages)
+            action_box.append($('<div />').addClass('note control').text("Du hast neue Nachrichten!"));
+
+        var auto_select = $('<select />').appendTo($('<div />').addClass('cell rw-12 padded hide-desktop control').appendTo(action_box))
             .append($('<option />').val('#inv_container').text("Gegenst\u00e4nde & Heldentaten"))
             .append($('<option />').val('#settings_container').text("Zeitfluss & Verhalten"))
-            .append(data.players ? $('<option />').val('#mp_container').text("Spieler\u00fcbersicht") : false)
+            .append(data.players ? $('<option />').val('#mp_container').text((data.players.messages ? '[!!!] ' : '') + "Spieler\u00fcbersicht") : false)
             .change(function() {
                 $('[data-toggle="' + $(this).val() + '"]').click();
             })
@@ -109,7 +112,7 @@ core = {
         var auto_tab = $('<ul />').addClass('tabline hide-mobile').appendTo(action_box)
             .append($('<li>').attr('data-toggle', '#inv_container').text("Gegenst\u00e4nde & Heldentaten"))
             .append($('<li>').attr('data-toggle', '#settings_container').text("Zeitfluss & Verhalten"))
-            .append(data.players ? $('<li>').attr('data-toggle', '#mp_container').text("Spieler\u00fcbersicht") : false)
+            .append(data.players ? $('<li>').attr('data-toggle', '#mp_container').text("Spieler\u00fcbersicht").prepend(data.players.messages ? $('<img />').attr('src','media/icons/new.png') : false) : false)
             .find('>li').click(function() {
                 var t = $($(this).data('toggle'));
                 auto_select.val($(this).data('toggle')).selectric();
@@ -1752,7 +1755,7 @@ core = {
     };
 })();
 (function() {
-    var render_others = function(data, target) {
+    var render_others = function(data, target, messages) {
         target.append($('<h3 />').text("Andere Spieler"));
 
         var row = $('<div />').addClass('row').appendTo(target);
@@ -1803,7 +1806,7 @@ core = {
 
         row.append($('<div />').addClass('cell rw-12 padded').append(
             $('<div />').addClass('row')
-                .append($('<div />').addClass('cell rw-4 rw-md-5 rw-sm-12 padded').append($('<div />').addClass('btn btn-zv').text("Post").click(function() {
+                .append($('<div />').addClass('cell rw-4 rw-md-5 rw-sm-12 padded').append($('<div />').addClass('btn btn-zv').text("Post").prepend(messages ? $('<img />').attr('src','media/icons/new.png') : false).click(function() {
                     game.network.load('game/pm');
                 })))
         ));
@@ -1837,7 +1840,7 @@ core = {
         render_self(data.self, player_info);
 
         var others_info = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-8 rw-lg-6 rw-md-12 padded').appendTo(target));
-        render_others(data.others, others_info);
+        render_others(data.others, others_info, data.messages);
 
     };
 })();(function() {
@@ -3556,6 +3559,11 @@ core = {
                             ).append(
                                 $('<span />').text(v.desc)
                             );
+
+                            if (v.time)
+                                content.append(
+                                    $('<span />').addClass('separator')
+                                ).append($('<div />').text(game.i18n("Verbleibende Dauer: :time", {':time': v.time})));
                         }
                     })
                 ).appendTo(target);

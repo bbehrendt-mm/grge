@@ -1,5 +1,5 @@
 (function() {
-    var render_others = function(data, target) {
+    var render_others = function(data, target, messages) {
         target.append($('<h3 />').text(<?=__j('Andere Spieler')?>));
 
         var row = $('<div />').addClass('row').appendTo(target);
@@ -50,7 +50,7 @@
 
         row.append($('<div />').addClass('cell rw-12 padded').append(
             $('<div />').addClass('row')
-                .append($('<div />').addClass('cell rw-4 rw-md-5 rw-sm-12 padded').append($('<div />').addClass('btn btn-zv').text(<?=__j('Post')?>).click(function() {
+                .append($('<div />').addClass('cell rw-4 rw-md-5 rw-sm-12 padded').append($('<div />').addClass('btn btn-zv').text(<?=__j('Post')?>).prepend(messages ? $('<img />').attr('src','media/icons/new.png') : false).click(function() {
                     game.network.load('game/pm');
                 })))
         ));
@@ -84,7 +84,7 @@
         render_self(data.self, player_info);
 
         var others_info = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-8 rw-lg-6 rw-md-12 padded').appendTo(target));
-        render_others(data.others, others_info);
+        render_others(data.others, others_info, data.messages);
 
     };
 })();

@@ -17,7 +17,7 @@ class Model_Places_Hospital_Private extends Model_Places_Abstract_Hideout {
 
     public function uin($new = null) {
         if ($new !== null)
-            $this->add_upgrades(['bedr1','bedr2','bedr3']);
+            Model_Blueprints::fast_apply($this, 'upgrades', ['bedr1','bedr2','bedr3']);
 
         return parent::uin($new);
     }

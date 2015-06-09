@@ -20,7 +20,7 @@ class Model_Places_Treehouse extends Model_Places_Abstract_Hideout {
 
     public function uin($new = null) {
         if ($new !== null)
-            $this->add_upgrades('bedr1');
+            Model_Blueprints::fast_apply($this, 'upgrades', 'bedr1');
 
         return parent::uin($new);
     }

@@ -21,7 +21,7 @@ class Model_Places_Warehouse extends Model_Places_Abstract_Hideout {
 
     public function uin($new = null) {
         if ($new !== null)
-            $this->add_upgrades(['slot_epic']);
+            Model_Blueprints::fast_apply($this, 'upgrades', 'slot_epic');
 
         return parent::uin($new);
     }

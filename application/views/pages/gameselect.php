@@ -15,7 +15,7 @@
     //ToDo: Unstartable Jobs
 ?>
 
-<h1 class="noclick"><i class="fa fa-arrow-circle-right"></i>Spielauswahl</h1>
+<h1 class="noclick"><i class="fa fa-arrow-circle-right"></i><?=__('Spielauswahl');?></h1>
 
 <form id="data-container" class="hidden"></form>
 <div id="cv_target" class="row">

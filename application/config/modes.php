@@ -540,7 +540,8 @@ return array(
                     if ($level >= 3)
                         $game->map()->add_location('Model_Places_Villa');
 
-                    if ($level >= 4) Tool_Scripts::home($game)->add_upgrades(['bedr1','manu1']);
+                    if ($level >= 4)
+                        Model_Blueprints::fast_apply(Tool_Scripts::home($game), 'upgrades', ['bedr1','manu1']);
                 }),
         ),
         1060 => array(

@@ -7,6 +7,7 @@ return Model_Blueprints::factory()
             ->provide('hideout_slot')
             ->name('Verfluchtes Versteck')
             ->description('Bei diesem Versteck hast du ein ungutes Gefühl... zu recht!')
+            ->decay(-100)
             ->category('Versteck')
     )
     ->add_blueprints(

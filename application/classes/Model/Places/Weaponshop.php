@@ -16,9 +16,9 @@ class Model_Places_Weaponshop extends Model_Places_Abstract_Place {
 
 		$this->inventory->add(new Model_Items_Vending(get_class($this), "ApocaliCorp. Hunting Supply"));
         $this->inventory->add(new Model_Items_Virtual_Location_Ffgunsmith());
-		$this->add_upgrades('manu_wpn1');
+        Model_Blueprints::fast_apply($this, 'items', 'manu_wpn1');
 		if ($game->config('modules.armory'))
-			$this->add_upgrades('manu_wpn2');
+            Model_Blueprints::fast_apply($this, 'items', 'manu_wpn2');
 
         return $t;
 	}

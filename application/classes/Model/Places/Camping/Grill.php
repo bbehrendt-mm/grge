@@ -10,7 +10,7 @@ class Model_Places_Camping_Grill extends Model_Places_Abstract_Node {
     public function uin($new = null) {
         if ($new !== null) {
             $this->inventory->add(new Model_Items_Virtual_Location_Ffgrill());
-            $this->add_upgrades('ktc_grill');
+            Model_Blueprints::fast_apply($this, 'items', 'ktc_grill');
         }
 
         return parent::uin($new);

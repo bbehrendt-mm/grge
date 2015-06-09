@@ -80,21 +80,6 @@ class Controller_Location extends Controller_Game {
         return $data;
     }
 
-    private function combine_blueprints($sub) {
-        /** @global Model_Player $player */
-        global $player;
-
-        $ret = Model_Blueprints::factory();
-        foreach (Tool_System::get_class_hierarchy($player->location()) as $name) {
-            $name = str_replace('Model_Places_','',$name, $n);
-            if ($n == 1 && $b = Tool_System::simple_config("blueprints/{$sub}/" . $name))
-                /** @var Model_Blueprints $b */
-                $ret->merge($b,true);
-        }
-
-        return $ret;
-    }
-
     /**
      * @param Model_Blueprints $blueprints
      * @param string $bid
@@ -103,10 +88,7 @@ class Controller_Location extends Controller_Game {
         /** @global Model_Player $player */
         global $player;
 
-        $r = $blueprints->execute($bid, $player, $player->location()->get_upgrades());
-        $this->add_data('result', $r);
-        if (is_array($r))
-            $player->location()->add_upgrades($r);
+        $this->add_data('result', $blueprints->execute($bid, $player, $player->location()->get_upgrades()));
         $this->render_notifications();
     }
 
@@ -114,7 +96,7 @@ class Controller_Location extends Controller_Game {
         /** @global Model_Player $player */
         global $player;
 
-        $blueprints = $this->combine_blueprints('upgrades');
+        $blueprints = Model_Blueprints::factory($player->location(), 'upgrades');
 
         if ($build = $this->request->post('build'))
             $this->exec_build($blueprints, $build);
@@ -130,8 +112,9 @@ class Controller_Location extends Controller_Game {
         /** @global Model_Player $player */
         global $player;
 
-        $blueprints = $this->combine_blueprints('items');
-        $externals = $this->combine_blueprints('upgrades')->externalize();
+
+        $blueprints = Model_Blueprints::factory($player->location(), 'items');
+        $externals = Model_Blueprints::factory($player->location(), 'upgrades')->externalize();
 
         if ($build = $this->request->post('build'))
             $this->exec_build($blueprints, $build);
@@ -149,8 +132,8 @@ class Controller_Location extends Controller_Game {
         /** @global Model_Player $player */
         global $player;
 
-        $blueprints = $this->combine_blueprints('attack');
-        $externals = $this->combine_blueprints('upgrades')->externalize();
+        $blueprints = Model_Blueprints::factory($player->location(), 'attack');
+        $externals = Model_Blueprints::factory($player->location(), 'upgrades')->externalize();
 
         if ($build = $this->request->post('build'))
             $this->exec_build($blueprints, $build);

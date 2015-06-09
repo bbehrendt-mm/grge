@@ -376,6 +376,7 @@ class Model_Blueprint {
         return ($ignore_blocked_slots || $this->can_prod($preconditions)) && $this->can_req($preconditions);
     }
 
+
     /**
      * @param Model_Player $player Active player
      * @param string[] $preconditions Realized blueprints
@@ -420,14 +421,9 @@ class Model_Blueprint {
         foreach ($this->produces as $item => $count)
             for ($i = 0; $i < $count; $i++)
                 $player->location()->inventory()->add(new $item());
-        if (Tool_System::instance_of($player->location(), 'Model_Places_Abstract_Hideout')) {
-            /** @var Model_Places_Abstract_Hideout $place */
-            $place = $player->location();
-            $place->set_decay($this->decay, false);
-            $place->set_patchup($this->decay_speed, false);
-            $place->inc_defense($this->defense);
-            $place->deco($this->deco_value);
-        }
+
+        $ret = $this->apply($player->location(), $preconditions);
+
         if ($this->effect)
             $this->effect->execute($player, null);
 
@@ -448,6 +444,23 @@ class Model_Blueprint {
                 $player->location()->zombie_factory()->destroy_zombie_population($z);
             }
         } elseif ($this->message) $player->log()->add($this->message);
+
+        return $ret;
+    }
+
+    /**
+     * @param Model_Places_Abstract_Place $location
+     * @param string[] $preconditions Realized blueprints
+     * @return bool|string[] Returns if execution failed, or an array containing the newly activated blueprint ids. Note that this function may return an empty array on success!
+     */
+    public function apply($location, $preconditions) {
+        if (Tool_System::instance_of($location, 'Model_Places_Abstract_Hideout')) {
+            /** @var Model_Places_Abstract_Hideout $location */
+            $location->set_decay($this->decay, false);
+            $location->set_patchup($this->decay_speed, false);
+            $location->inc_defense($this->defense);
+            $location->deco($this->deco_value);
+        }
 
         if ($this->steps <= 0)
             return [];

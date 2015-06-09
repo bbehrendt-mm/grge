@@ -10,8 +10,43 @@ class Model_Blueprints {
     private $blueprints = [];
     private $processor_stack = [];
 
-    public static function factory() {
-        return new Model_Blueprints();
+    /**
+     * @param Model_Places_Abstract_Place|null $location
+     * @param string|null $category
+     * @return Model_Blueprints
+     */
+    public static function factory($location = null, $category = null) {
+        $ret = new Model_Blueprints();
+        if (!$location || !$category) return $ret;
+        else {
+            foreach (Tool_System::get_class_hierarchy($location) as $name) {
+                $name = str_replace('Model_Places_','',$name, $n);
+                if ($n == 1 && $b = Tool_System::simple_config("blueprints/{$category}/" . $name))
+                    /** @var Model_Blueprints $b */
+                    $ret->merge($b,true);
+            }
+
+            return $ret;
+        }
+    }
+
+    /**
+     * @param Model_Places_Abstract_Place|null $location
+     * @param string|null $category
+     * @param string|string[] $id
+     * @return bool|string[]
+     */
+    public static function fast_apply($location, $category, $id) {
+        $b = static::factory($location, $category);
+        if (!is_array($id)) $id = [$id];
+        $ret = [];
+        foreach ($id as $entry) {
+            $tmp = $b->perform_apply($entry, $location);
+            if (is_array($tmp))
+                $ret = array_merge($ret, $tmp);
+        }
+
+        return $ret;
     }
 
     /**
@@ -169,13 +204,43 @@ class Model_Blueprints {
         return $ret;
     }
 
+    /**
+     * @param string $id
+     * @param Model_Player $player
+     * @param string[] $preconditions
+     * @return bool|string[]
+     */
     public function execute($id, $player, $preconditions) {
         if (!isset($this->blueprints[$id]))
             return false;
         else {
             /** @var Model_Blueprint $b */
             $b = $this->blueprints[$id];
-            return $b->modify($player, $preconditions)->execute($player, $preconditions);
+            $r = $b->modify($player, $preconditions)->execute($player, $preconditions);
+            if (is_array($r))
+                $player->location()->add_upgrades($r);
+            return $r;
         }
+    }
+
+    /**
+     * @param string $id
+     * @param Model_Places_Abstract_Place $location
+     * @return bool|string[]
+     */
+    private function perform_apply($id, $location) {
+        $r = false;
+        if (!isset($this->blueprints[$id]) && !isset($this->externals[$id]))
+            return false;
+        elseif (isset($this->blueprints[$id])) {
+            /** @var Model_Blueprint $b */
+            $b = $this->blueprints[$id];
+            $r = $b->apply($location, $location->get_upgrades());
+        }
+        else $r = [$id];
+
+        if (is_array($r))
+            $location->add_upgrades($r);
+        return $r;
     }
 }

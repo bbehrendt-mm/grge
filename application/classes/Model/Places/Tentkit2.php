@@ -19,7 +19,7 @@ class Model_Places_Tentkit2 extends Model_Places_Tentkit {
 
     public function uin($new = null) {
         if ($new !== null)
-            $this->add_upgrades('bedr2');
+            Model_Blueprints::fast_apply($this, 'upgrades', 'bedr2');
 
         return parent::uin($new);
     }

@@ -51,10 +51,9 @@ class Model_Places_Motorhome extends Model_Places_Home {
     }
 
     public function uin($new = null) {
-        if ($new !== null) {
-            $this->add_upgrades(['bedr1','sofa1','manu1','gen1','gen2','ktc1','outside']);
-            $this->set_decay(0, true);
-        }
+        if ($new !== null)
+            Model_Blueprints::fast_apply($this, 'upgrades', ['bedr1','sofa1','manu1','gen1','gen2','ktc1','outside']);
+
         return parent::uin($new);
     }
 

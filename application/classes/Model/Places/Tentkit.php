@@ -26,10 +26,8 @@ class Model_Places_Tentkit extends Model_Places_Abstract_Hideout {
     }
 
     public function uin($new = null) {
-        if ($new !== null) {
-            $this->set_decay(0,true);
-            $this->add_upgrades(['instatent','hideout_slot','bedr1']);
-        }
+        if ($new !== null)
+            Model_Blueprints::fast_apply($this, 'upgrades', ['instatent','bedr1']);
 
         return parent::uin($new);
     }

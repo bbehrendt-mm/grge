@@ -316,13 +316,17 @@ core.popup = {
                 return;
             }
 
-            var header = $('<div />').addClass('map-header').text(data.mapname).appendTo(popup);;
+            var header = $('<div />').addClass('map-header').text(data.mapname).appendTo(popup);
 
             var canvas = $('<canvas />').attr({
                 'width':dx,
                 'height':dy
             }).addClass('map').appendTo(popup);
             var ctx = canvas.get(0).getContext("2d");
+
+            $('<div />').addClass('map-close').append($('<div />').addClass('btn small').append($('<i/>').addClass('fa fa-times')).click(function() {
+                popup.trigger('unpop');
+            })).appendTo(popup);
 
             var bottom = $('<div />').addClass('row').css({
                 height: bsize,

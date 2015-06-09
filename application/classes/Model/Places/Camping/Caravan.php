@@ -18,7 +18,7 @@ class Model_Places_Camping_Caravan extends Model_Places_Abstract_Hideout {
 
     public function uin($new = null) {
         if ($new !== null)
-            $this->add_upgrades(['bedr1','gen1','ktc1','outside','outside_space']);
+            Model_Blueprints::fast_apply($this, 'upgrades', ['bedr1','gen1','ktc1','outside','outside_space']);
 
         return parent::uin($new);
     }

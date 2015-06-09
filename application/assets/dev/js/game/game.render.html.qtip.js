@@ -94,7 +94,7 @@ game.render.html.qtip = {
     },
 
     ingame: function(pos, events) {
-        return game.render.html.qtip.generic(pos,'qtip-default qtip-shadow qtip-custom-ingame',true, 0, events);
+        return game.render.html.qtip.generic(pos,'qtip-default qtip-shadow qtip-custom-ingame',true, 500, events);
     },
 
     map: function(target, events) {

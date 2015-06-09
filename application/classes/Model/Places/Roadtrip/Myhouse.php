@@ -16,10 +16,9 @@ class Model_Places_Roadtrip_Myhouse extends Model_Places_Abstract_Hideout {
     protected static $decay_exp = 0;
 
     public function uin($new = null) {
-        if ($new !== null) {
-            $this->add_upgrades('hideout','bedr1','bedr2','bedr3','sofa1','sofa2','manu1','manu2','gen1','gen2','ktc1','ktc2','ktc3','ktc4','deffence1','fence','outside','outside_space');
-            $this->set_decay(0, true);
-        }
+        if ($new !== null)
+            Model_Blueprints::fast_apply($this, 'upgrades', ['hideout','bedr1','bedr2','bedr3','sofa1','sofa2','manu1','manu2','gen1','gen2','ktc1','ktc2','ktc3','ktc4','deffence1','fence','outside','outside_space']);
+
         return parent::uin($new);
     }
 

@@ -43,7 +43,7 @@ class Controller_Account extends Controller {
             ->render());
 
         // Render menu
-        $this->add_widget('main-menu', View::factory('menus/login')->render());
+        $this->add_menu('login');
 
         $this->render();
     }
@@ -63,7 +63,7 @@ class Controller_Account extends Controller {
             ->render());
 
         // Render menu
-        $this->add_widget('main-menu', View::factory('menus/login')->render());
+        $this->add_menu('login');
 
         $this->render();
     }
@@ -103,7 +103,7 @@ class Controller_Account extends Controller {
         $this->add_widget(View::factory('pages/settings')->set('url', URL::base(true))->render());
 
         // Render menu
-        $this->add_widget('main-menu', View::factory('menus/logout')->render());
+        $this->add_menu('logout');
 
         $this->render();
     }
@@ -188,7 +188,7 @@ class Controller_Account extends Controller {
             ->render());
 
         // Render menu
-        $this->add_widget('main-menu', View::factory('menus/logout')->render());
+        $this->add_menu('logout');
 
         $this->render();
     }

@@ -195,7 +195,7 @@
                         } else {
                             summary[obj.attacker.name].damage_dealt += (obj.damage - obj.protection.value);
                             summary[obj.attacker.name].kills += obj.kills;
-                            summary[obj.attacker.name].energy_lost = obj.weapon.energy;
+                            summary[obj.attacker.name].energy_lost += obj.weapon.energy;
 
                             if (obj.weapon.destroyed)
                                 add_lost_item(obj.attacker.name, obj.weapon.name,obj.weapon.icon);

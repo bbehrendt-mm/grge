@@ -202,7 +202,16 @@ abstract class Controller extends Kohana_Controller {
     private function render_defaults() {
         $this->add_data('current_url', $this->request->uri(), true);
         if (!isset($this->widgets['main-menu']) && static::$menu)
-            $this->add_widget('main-menu', View::factory('menus/' . static::$menu)->render());
+            $this->add_menu(static::$menu);
+    }
+
+    protected function add_menu($menu, $additional_data = []) {
+        $view = View::factory('menus/' . $menu)->set('url_wiki', Tool_Htmlout::get_external_link('wiki'));
+
+        foreach ($additional_data as $key => $value)
+            $view->set($key,$value);
+
+        $this->add_widget('main-menu',$view->render());
     }
 
     protected function modify_current_url($url) {
@@ -267,7 +276,7 @@ abstract class Controller extends Kohana_Controller {
             global $compression;
 
             $this->add_data('profiling', [
-                'version' => "GRGE {$version_data['major']}.{$version_data['minor']}.{$version_data['service']}-{$version_data['stage']}-{$version_data['maintenance']}-{$version_data['build']} ({$version_data['date']})",
+                'version' => "GRGE {$version_data['major']}.{$version_data['minor']}.{$version_data['service']}-{$version_data['maintenance']}-{$version_data['stage']}-{$version_data['build']} ({$version_data['date']})",
                 'path' => $this->request->controller() . ' / ' . ($this->request->action() == 'japi' ? ($this->request->param('jaction') . ' (japi)') : $this->request->action()),
                 'memory' => number_format((memory_get_peak_usage() - KOHANA_START_MEMORY) / 1024, 2).'KB',
                 'time' => number_format(microtime(TRUE) - KOHANA_START_TIME, 5).'s',

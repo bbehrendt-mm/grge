@@ -10,9 +10,16 @@ abstract class Model_Items_Abstract_Ammo extends Model_Items_Abstract_Stackable 
          */
         global $player;
 		parent::__construct($num);
-		
+
+        $bonus = 1;
+        if (isset(static::$boni[$player->job()])) {
+            $lv = $player->job(false);
+            while ($lv > 0 && !isset(static::$boni[$player->job()][$lv])) $lv--;
+            $bonus = isset(static::$boni[$player->job()][$lv]) ? static::$boni[$player->job()][$lv] : 1;
+        }
+
 		if ($num === null && isset(static::$boni[$player->job()]))
-			$this->count = ceil($this->count * static::$boni[$player->job()][$player->job(false)]);
+			$this->count = ceil($this->count * $bonus);
 	}
 
     public function remoteTake($pid, $silent = false) {

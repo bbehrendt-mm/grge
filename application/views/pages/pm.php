@@ -89,11 +89,13 @@
 
             if (msg_title.length < 2 || msg_body.length < 5) {
                 alert(<?=__j('Nachrichtentext oder Titel sind zu kurz. Bitte verwende mindestens 2 Zeichen im Titel und 5 Zeichen im Text.')?>);
+                alias.removeClass('disabled');
                 return;
             }
 
             if (msg_title.length > 64 || msg_body.length > 2048) {
                 alert(<?=__j('Nachrichtentext oder Titel sind zu lang. Bitte verwende nicht mehr als 64 Zeichen im Titel und 2048 Zeichen im Text.')?>);
+                alias.removeClass('disabled');
                 return;
             }
 

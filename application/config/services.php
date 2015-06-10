@@ -11,4 +11,11 @@ return array(
             'default' => 30,
         ),
     ),
+    'links' => array(
+        'wiki' => array(
+            'de' => 'http://ger.zv-wiki.net/',
+            'en' => 'http://eng.zv-wiki.net',
+            'default' => 'http://eng.zv-wiki.net'
+        ),
+    )
 );

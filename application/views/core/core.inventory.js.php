@@ -208,6 +208,57 @@
                         content.append(v.description);
                     else notes.push(<?=__j('Über diesen Gegenstand stehen nur wenige Informationen zur Verfügung ...')?>);
 
+                    if (v.armor) {
+                        content.append('<span class="separator" />');
+                        $('<div />').addClass('row')
+                            .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Typ')?>))
+                            .append($('<div />').addClass('cell rw-6 padded left').text(v.armor.type))
+                            .appendTo(content);
+                        $('<div />').addClass('row')
+                            .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Schützt')?>))
+                            .append($('<div />').addClass('cell rw-6 padded left').text(v.armor.cover))
+                            .appendTo(content);
+                        $('<div />').addClass('row')
+                            .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Zustand')?>))
+                            .append($('<div />').addClass('cell rw-6 padded left').text(v.armor.condition))
+                            .appendTo(content);
+                    }
+
+                    if (v.weapon) {
+                        content.append('<span class="separator" />');
+                        $('<div />').addClass('row')
+                            .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Schaden')?>))
+                            .append($('<div />').addClass('cell rw-6 padded left').text((v.weapon.damage[0] == v.weapon.damage[1] ? v.weapon.damage[0] : (v.weapon.damage[0] + ' - ' + v.weapon.damage[1]))))
+                            .appendTo(content);
+                        $('<div />').addClass('row')
+                            .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Genauigkeit')?>))
+                            .append($('<div />').addClass('cell rw-6 padded left').text(v.weapon.accuracy === true ? <?=__j('Distanzabhängig')?> : (v.weapon.accuracy + '%')))
+                            .appendTo(content);
+                        if (v.weapon.ammo) {
+                            var ammo_cont = $('<div />');
+                            $.each(v.weapon.ammo, function(ak,av) {
+                                ammo_cont.append($('<img />').attr('src', 'media/icons/' + av + '.gif'));
+                            });
+                            $('<div />').addClass('row')
+                                .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Munition')?>))
+                                .append($('<div />').addClass('cell rw-6 padded left').append(ammo_cont))
+                                .appendTo(content);
+                        }
+                        if (v.weapon.energy)
+                            $('<div />').addClass('row')
+                                .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Energie')?>))
+                                .append($('<div />').addClass('cell rw-6 padded left').text(v.weapon.energy).append($('<img />').attr('src', 'media/icons/status_energy.gif')))
+                                .appendTo(content);
+                        $('<div />').addClass('row')
+                            .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Angriffsgeschw.')?>))
+                            .append($('<div />').addClass('cell rw-6 padded left').text(game.i18n(<?=__j(':num Runden')?>,{':num': 1+v.weapon.duration})))
+                            .appendTo(content);
+                        $('<div />').addClass('row')
+                            .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Zerstörbar')?>))
+                            .append($('<div />').addClass('cell rw-6 padded left').text(v.weapon.breakable ? <?=__j('Ja')?> : <?=__j('Nein')?>))
+                            .appendTo(content);
+                    }
+
                     if (notes.length && v.description) content.append('<span class="separator" />');
                     $.each(notes, function(k,v) {
                         content.append(

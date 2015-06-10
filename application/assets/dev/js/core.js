@@ -6,7 +6,7 @@ core = {
     parts: {},
     snippets: {},
 
-    version: '2.0.0-0-1-100',
+    version: '2.0.0-1-0-105',
 
     last: {},
     plugins: {},
@@ -79,8 +79,8 @@ core = {
     },
 
     render: function(data, target) {
-        console.log(data);
-
+                    console.log(data);
+        
         core.last = data;
 
         if (core.parts.admin) core.parts.admin.controls($('<div />').addClass('cell rw-12 padded').appendTo($('<div />').addClass('row').appendTo(target)));
@@ -103,6 +103,7 @@ core = {
         var auto_select = $('<select />').appendTo($('<div />').addClass('cell rw-12 padded hide-desktop control').appendTo(action_box))
             .append($('<option />').val('#inv_container').text("Gegenst\u00e4nde & Heldentaten"))
             .append($('<option />').val('#settings_container').text("Zeitfluss & Verhalten"))
+            .append($('<option />').val('#game_info').text("Spieldetails"))
             .append(data.players ? $('<option />').val('#mp_container').text((data.players.messages ? '[!!!] ' : '') + "Spieler\u00fcbersicht") : false)
             .change(function() {
                 $('[data-toggle="' + $(this).val() + '"]').click();
@@ -112,6 +113,7 @@ core = {
         var auto_tab = $('<ul />').addClass('tabline hide-mobile').appendTo(action_box)
             .append($('<li>').attr('data-toggle', '#inv_container').text("Gegenst\u00e4nde & Heldentaten"))
             .append($('<li>').attr('data-toggle', '#settings_container').text("Zeitfluss & Verhalten"))
+            .append($('<li>').attr('data-toggle', '#game_info').text("Spieldetails"))
             .append(data.players ? $('<li>').attr('data-toggle', '#mp_container').text("Spieler\u00fcbersicht").prepend(data.players.messages ? $('<img />').attr('src','media/icons/new.png') : false) : false)
             .find('>li').click(function() {
                 var t = $($(this).data('toggle'));
@@ -127,6 +129,9 @@ core = {
 
         if (data.settings)
             core.parts.settings(data.settings, $('<div />').attr('id', 'settings_container').addClass('row').appendTo(action_box));
+
+        if (data.game)
+            core.parts.info(data.game, $('<div />').attr('id', 'game_info').addClass('row').appendTo(action_box));
 
         if (data.players)
             core.parts.mp_players(data.players, $('<div />').attr('id', 'mp_container').addClass('row').appendTo(action_box));
@@ -262,6 +267,35 @@ core = {
     }
 })();
 (function() {
+
+    core.parts.info = function(data, target) {
+        var details = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-6 ro-3 rw-lg-8 ro-lg-2 rw-md-12 ro-md-0 padded').appendTo(target));
+
+        details.append($('<h3 />').text("Aktuelles Spiel"))
+            .append($('<div />').addClass('row')
+                .append($('<div />').addClass('cell rw-6 padded right b').text("Spielmodus"))
+                .append($('<div />').addClass('cell rw-6 padded left').text(data.mode))
+            ).append($('<div />').addClass('row')
+                .append($('<div />').addClass('cell rw-6 padded right b').text("Beruf"))
+                .append($('<div />').addClass('cell rw-6 padded left').text(data.job))
+            ).append($('<div />').addClass('row')
+                .append($('<div />').addClass('cell rw-6 padded right b').text("Level"))
+                .append($('<div />').addClass('cell rw-6 padded left').text(data.level))
+            ).append($('<div />').addClass('row')
+                .append($('<div />').addClass('cell rw-6 padded right b').text("Spieldauer"))
+                .append($('<div />').addClass('cell rw-6 padded left').text(data.gametime))
+            ).append(data.gametime == data.lifetime ? false : $('<div />').addClass('row')
+                .append($('<div />').addClass('cell rw-6 padded right b').text("Lebensdauer"))
+                .append($('<div />').addClass('cell rw-6 padded left').text(data.lifetime))
+            ).append($('<div />').addClass('row')
+                .append($('<div />').addClass('cell rw-6 padded right b').text("Punkte"))
+                .append($('<div />').addClass('cell rw-6 padded left').text(data.points))
+            ).append($('<div />').addClass('row')
+                .append($('<div />').addClass('cell rw-6 padded right b').text("Get\u00f6tete Zombies"))
+                .append($('<div />').addClass('cell rw-6 padded left').text(data.kills))
+            );
+    };
+})();(function() {
     var cancel = function() {
         var inventories = $('.inventory_location, .inventory_self');
         inventories.find('li[data-id]').removeClass('disabled marked-target').data('click-override', false);
@@ -470,6 +504,57 @@ core = {
                     if (v.description)
                         content.append(v.description);
                     else notes.push("\u00dcber diesen Gegenstand stehen nur wenige Informationen zur Verf\u00fcgung ...");
+
+                    if (v.armor) {
+                        content.append('<span class="separator" />');
+                        $('<div />').addClass('row')
+                            .append($('<div />').addClass('cell rw-6 padded b right').text("Typ"))
+                            .append($('<div />').addClass('cell rw-6 padded left').text(v.armor.type))
+                            .appendTo(content);
+                        $('<div />').addClass('row')
+                            .append($('<div />').addClass('cell rw-6 padded b right').text("Sch\u00fctzt"))
+                            .append($('<div />').addClass('cell rw-6 padded left').text(v.armor.cover))
+                            .appendTo(content);
+                        $('<div />').addClass('row')
+                            .append($('<div />').addClass('cell rw-6 padded b right').text("Zustand"))
+                            .append($('<div />').addClass('cell rw-6 padded left').text(v.armor.condition))
+                            .appendTo(content);
+                    }
+
+                    if (v.weapon) {
+                        content.append('<span class="separator" />');
+                        $('<div />').addClass('row')
+                            .append($('<div />').addClass('cell rw-6 padded b right').text("Schaden"))
+                            .append($('<div />').addClass('cell rw-6 padded left').text((v.weapon.damage[0] == v.weapon.damage[1] ? v.weapon.damage[0] : (v.weapon.damage[0] + ' - ' + v.weapon.damage[1]))))
+                            .appendTo(content);
+                        $('<div />').addClass('row')
+                            .append($('<div />').addClass('cell rw-6 padded b right').text("Genauigkeit"))
+                            .append($('<div />').addClass('cell rw-6 padded left').text(v.weapon.accuracy === true ? "Distanzabh\u00e4ngig" : (v.weapon.accuracy + '%')))
+                            .appendTo(content);
+                        if (v.weapon.ammo) {
+                            var ammo_cont = $('<div />');
+                            $.each(v.weapon.ammo, function(ak,av) {
+                                ammo_cont.append($('<img />').attr('src', 'media/icons/' + av + '.gif'));
+                            });
+                            $('<div />').addClass('row')
+                                .append($('<div />').addClass('cell rw-6 padded b right').text("Munition"))
+                                .append($('<div />').addClass('cell rw-6 padded left').append(ammo_cont))
+                                .appendTo(content);
+                        }
+                        if (v.weapon.energy)
+                            $('<div />').addClass('row')
+                                .append($('<div />').addClass('cell rw-6 padded b right').text("Energie"))
+                                .append($('<div />').addClass('cell rw-6 padded left').text(v.weapon.energy).append($('<img />').attr('src', 'media/icons/status_energy.gif')))
+                                .appendTo(content);
+                        $('<div />').addClass('row')
+                            .append($('<div />').addClass('cell rw-6 padded b right').text("Angriffsgeschw."))
+                            .append($('<div />').addClass('cell rw-6 padded left').text(game.i18n(":num Runden",{':num': 1+v.weapon.duration})))
+                            .appendTo(content);
+                        $('<div />').addClass('row')
+                            .append($('<div />').addClass('cell rw-6 padded b right').text("Zerst\u00f6rbar"))
+                            .append($('<div />').addClass('cell rw-6 padded left').text(v.weapon.breakable ? "Ja" : "Nein"))
+                            .appendTo(content);
+                    }
 
                     if (notes.length && v.description) content.append('<span class="separator" />');
                     $.each(notes, function(k,v) {
@@ -1012,6 +1097,21 @@ core = {
         }));
     };
 
+    var locationradar = function(data, target) {
+        $(target).empty().append(
+            $('<div />').addClass('cell rw-12 padded').append(
+
+                $('<div />').addClass('widget radar').append(
+                    $('<span />').text("Erkundungsrate")
+                ).append(
+                    $('<div />').addClass('discoverybar').append($('<div />').css('width', data + '%'))
+                )
+                    .attr('title', data >= 100 ? "Du hast diesen Ort vollst\u00e4ndig ausgekundschaftet - von hier aus wirst du keine neuen Ruinen entdecken k\u00f6nnen." : "Du bist momentan auf der Suche nach neuen Orten. Jedes mal, wenn der Ereigniscountdown abl\u00e4uft, hast du die Chance einen neuen Ort zu entdecken.")
+                    .qtip(game.render.html.qtip.ingame('top'))
+            )
+        );
+    };
+
     var garden = function(data, target) {
         var content;
         target.append($('<div />').addClass('cell rw-12 widget epic padded').append(content = $('<div />').addClass('row').append($('<h3 />').text("Kleines Gew\u00e4chshaus"))));
@@ -1147,7 +1247,7 @@ core = {
     };
 
     core.parts.location = function(data, target) {
-        var zradar, hideout, actions, spc_colosseum, spc_scout, spc_roadtrip, desc, epic;
+        var zradar, hideout, actions, spc_colosseum, spc_scout, spc_roadtrip, desc, epic, lradar;
 
         $(target).empty().addClass('row location_box ' + (data.meta.outside ? 'outside' : 'inside')).append(
             $('<h2 />').text(data.meta.name)
@@ -1158,7 +1258,7 @@ core = {
             var lomap,mapbg;
 
             $(target).append(
-                lomap = $('<div />').addClass('cell padded rw-4')
+                lomap = $('<div />').addClass('cell padded rw-4 rw-lg-6 rw-md-12')
             );
 
             var d = lomap.width();
@@ -1222,8 +1322,10 @@ core = {
         $(target).append(
             $('<div />').addClass('rw-12 padded hide-desktop hide-sm').text(data.meta.desc)
         ).append(
-            $('<div />').addClass('cell padded').addClass(data.lomap ? 'rw-4 rw-lg-6' : 'rw-6 rw-lg-12').append(
+            $('<div />').addClass('cell padded').addClass(data.lomap ? 'rw-4 rw-lg-6 rw-md-12' : 'rw-6 rw-lg-12').append(
                 zradar = $('<div />').addClass('row')
+            ).append(
+                lradar = data.discovery !== false ? $('<div />').addClass('row') : null
             ).append(
                 hideout = data.hideout ? $('<div />').addClass('row') : null
             ).append(
@@ -1263,7 +1365,9 @@ core = {
         });
 
         actions.append(
-            $('<div />').addClass('cell padded justify rw-' + (data.doorways ? (data.lomap ? '8' : '10') : '12')).append(core.snippets.button("Karte", function() {
+            $('<div />').addClass('cell padded justify rw-' + (data.doorways ? (data.lomap ? '8' : '10') : '12')).append(
+                data.radar.zombies > 0 ? $('<div />').addClass('note margin-bottom').text(data.hideout ? "Zombies blockieren den Weg. Besiege sie, um diesen Ort verlassen zu k\u00f6nnen." : "Zombies blockieren den Weg. Besiege sie oder versuche zu fliehen, um diesen Ort verlassen zu k\u00f6nnen.") : false
+            ).append(core.snippets.button("Karte", function() {
                 core.popup.map();
             })).addClass(data.lomap ? 'disabled' : '')
         );
@@ -1359,6 +1463,8 @@ core = {
         }
 
         zombieradar(data.radar, zradar);
+        if (data.discovery !== false)
+            locationradar(data.discovery, lradar);
         if (hideout)
             hideoutstats(data.hideout, hideout);
         if (data.colosseum)
@@ -1572,7 +1678,7 @@ core = {
                         } else {
                             summary[obj.attacker.name].damage_dealt += (obj.damage - obj.protection.value);
                             summary[obj.attacker.name].kills += obj.kills;
-                            summary[obj.attacker.name].energy_lost = obj.weapon.energy;
+                            summary[obj.attacker.name].energy_lost += obj.weapon.energy;
 
                             if (obj.weapon.destroyed)
                                 add_lost_item(obj.attacker.name, obj.weapon.name,obj.weapon.icon);
@@ -2575,7 +2681,7 @@ core = {
 
                 var pos = p(v,iconsize,iconsize);
                 popup.append(
-                    $('<div />').addClass(k == data.current ? 'map location active' : (!(data.read_only && !v.skip_ro) && v.energy <= data.radius ? 'map location' : 'map location unreachable')).attr({
+                    $('<div />').addClass(k == data.current ? 'map location active' : (!(data.read_only && !v.skip_ro) && v.energy <= data.radius ? 'map location' : 'map location unreachable')).addClass($.map($.objToArray(v.classes, true), function(mv) {return 'mapflag_' + mv}).join(' ')).attr({
                         'data-location':k,
                         'data-x': pos.x,
                         'data-y': pos.y

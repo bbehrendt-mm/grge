@@ -21,7 +21,6 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
 		try 
 		{
 			new Init_Game($this, $this->set['gamedata'], $this->set['gameid'], $mode, $time_mode, $speed, $contest_id, $name);
-			Model_Chat::create_room($this->chatroom(), false);
             $this->write();
 		}
 		catch (Exception $e)
@@ -39,8 +38,6 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
 		global $user, $player;
 
         if (isset($this->set['gamedata']->players[$user->uid()])) return false;
-        Model_Chat::grant_access($this->chatroom(), $user->uid(), $user->name());
-
 		new Init_Player($this, $this->set['gamedata'], $user->uid(), $user->name(), $sub, $level);
 	
 		if (!DB::insert('xref_game_player', array('gameid', 'uid'))->values(array($this->set['gameid'], $user->uid()))->execute()) {
@@ -109,8 +106,6 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
         if (isset($this->set["gamedata"]->graveyard[$uid]))
             return false;
 
-        Model_Chat::revoke_access($this->chatroom(), $uid);
-
 		//Create ranking entry if game is rankable and player has more than zero points
 		$this->get_player($uid)->expire($this->set['gamedata']->head->season, $this->set['gameid'], ($this->set['gamedata']->head->rankable && !(isset($this->set['gamedata']->head->contest) && $this->set['gamedata']->head->contest)), $this->set['gamedata']->timing->game_start, $this->set['gamedata']->timing->last_point);
 
@@ -175,8 +170,6 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
     }
 	
 	public function purge() {
-        Model_Chat::delete_room($this->chatroom());
-
         DB::delete('games')->where('gameid', '=', $this->set['gameid'])->execute();
         $this->delete_lobby();
 		$this->set['gamedata']->uin->clean();

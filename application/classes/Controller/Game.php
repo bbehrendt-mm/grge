@@ -178,6 +178,7 @@ class Controller_Game extends Controller {
                 'defense' => $hideout->get_defense(false),
                 'deco' => $hideout->deco(null, false),
             ] : false,
+            'discovery' => Tool_System::instance_of($player->location(), 'Model_Places_Abstract_Node') ? round(100*$game->map($player->location_class())->get_discovery_rate($player->location_class(), true)) : false,
             'radar' => [
                 'danger' => $danger,
                 'min' => 0,
@@ -251,6 +252,32 @@ class Controller_Game extends Controller {
                 'label' => $item->label(),
                 'deco' => $item->deco()
             ];
+
+            /** @var Model_Items_Abstract_Armor $item */
+            if (Tool_System::instance_of($item, 'Model_Items_Abstract_Armor'))
+                $data['armor'] = [
+                    'condition' => __($item->convertStringProtection()),
+                    'type' => __($item->convertStringType()),
+                    'cover' => __($item->convertStringCover()),
+                ];
+
+            /** @var Model_Battle_Weapon $item */
+            if (Tool_System::instance_of($item, 'Model_Battle_Weapon')) {
+
+                $ammo = [];
+                if ($item->ammo()) foreach ($item->ammo() as $entry => $c)
+                    /** @var Model_Items_Abstract_Item $entry */
+                    $ammo[] = ($entry == 'self' || $entry == 'custom') ? $item::static_icon() : $entry::static_icon();
+
+                $data['weapon'] = [
+                    'damage' => $item->damage(),
+                    'ammo' => $ammo ? $ammo : false,
+                    'energy' => $item::$energy_cost,
+                    'accuracy' => ($item::$accuracy_type == Model_Battle_Weapon::MBW_ACC_LINEAR_DISTANCE) ? true : round(100*$item::$accuracy),
+                    'duration' => $item::$reload_time,
+                    'breakable' => $item::$durability < 1 || in_array('self', array_keys($item->ammo())),
+                ];
+            }
 
             // No item specifics for short
             if (!$short) {
@@ -466,6 +493,24 @@ class Controller_Game extends Controller {
             'last_tick' => $game->now(),
             'current' => time(),
             'ingame' => Tool_Scripts::get_daytime()->getTimestamp(),
+        ]);
+    }
+
+    private function render_info() {
+        /**
+         * @global $game Model_Game
+         * @global $player Model_Player
+         */
+        global $game, $player;
+
+        $this->add_data('game', [
+            'mode' => __(Tool_Gamemodes::get_board_by_id($game->setting_mode())),
+            'job' => __(Tool_Gamemodes::get_job_by_id($player->job())),
+            'level' => $player->job(false),
+            'gametime' => Tool_Numerics::duration_to_string($game->duration()),
+            'lifetime' => Tool_Numerics::duration_to_string(min($game->duration(),$player->get_lifetime())),
+            'points' => $game->points($player->id()),
+            'kills' => $player->achievements()->get_achievements(Model_Achievement::MA_KILLED_ZOMBIES)
         ]);
     }
 
@@ -699,6 +744,7 @@ class Controller_Game extends Controller {
             return $this->render(['redirect' => 'game/redirect']);
         }
 
+        $this->render_info();
         $this->render_location();
         $this->render_inventory();
         $this->render_status();
@@ -711,7 +757,7 @@ class Controller_Game extends Controller {
         $this->render_notifications();
 
         $version_data = Kohana::$config->load('build.version');
-        $this->add_data('version', "{$version_data['major']}.{$version_data['minor']}.{$version_data['service']}-{$version_data['stage']}-{$version_data['maintenance']}-{$version_data['build']}");
+        $this->add_data('version', "{$version_data['major']}.{$version_data['minor']}.{$version_data['service']}-{$version_data['maintenance']}-{$version_data['stage']}-{$version_data['build']}");
 
         $this->render(false);
         return true;
@@ -852,7 +898,7 @@ class Controller_Game extends Controller {
         $this->render_notifications();
 
         $version_data = Kohana::$config->load('build.version');
-        $this->add_data('version', "{$version_data['major']}.{$version_data['minor']}.{$version_data['service']}-{$version_data['stage']}-{$version_data['maintenance']}-{$version_data['build']}");
+        $this->add_data('version', "{$version_data['major']}.{$version_data['minor']}.{$version_data['service']}-{$version_data['maintenance']}-{$version_data['stage']}-{$version_data['build']}");
 
         $this->render(false);
         return true;

@@ -710,4 +710,26 @@ return array (
 	'',
   'Spielauswahl' =>
 	'',
+  'Wiki' =>
+	'',
+  'Genauigkeit' =>
+	'',
+  'Distanzabhängig' =>
+	'',
+  'Angriffsgeschw.' =>
+	'',
+  ':num Runden' =>
+	'',
+  'Zerstörbar' =>
+	'',
+  'Du hast diesen Ort vollständig ausgekundschaftet - von hier aus wirst du keine neuen Ruinen entdecken können.' =>
+	'',
+  'Zombies blockieren den Weg. Besiege sie, um diesen Ort verlassen zu können.' =>
+	'',
+  'Zombies blockieren den Weg. Besiege sie oder versuche zu fliehen, um diesen Ort verlassen zu können.' =>
+	'',
+  'Level' =>
+	'',
+  'Aktuelles Spiel' =>
+	'',
 );

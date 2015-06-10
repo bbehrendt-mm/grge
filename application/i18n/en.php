@@ -4344,4 +4344,48 @@ return array (
 	'You use all your force to open this valve. Once you\'ve managed to turn it a little, a pipe in front of you opens and drowses you in cooling water. This helps against your thirst, but it also heavily irradiates you...',
   'Spielauswahl' =>
 	'Game Selection',
+  'Wiki' =>
+	'Wiki',
+  'Stabil' =>
+	'Stable',
+  'Schild' =>
+	'Shield',
+  'Körper' =>
+	'Body',
+  'Kopf' =>
+	'Body',
+  'Typ' =>
+	'Type',
+  'Schützt' =>
+	'Protects',
+  'Schaden' =>
+	'Damage',
+  'Genauigkeit' =>
+	'Accuracy',
+  'Distanzabhängig' =>
+	'Depends on distance',
+  'Angriffsgeschw.' =>
+	'Attack Speed',
+  ':num Runden' =>
+	':num Rounds',
+  'Zerstörbar' =>
+	'Destructible',
+  'Erkundungsrate' =>
+	'Ruins Discovered',
+  'Du hast diesen Ort vollständig ausgekundschaftet - von hier aus wirst du keine neuen Ruinen entdecken können.' =>
+	'This location has been fully explored - you won\'t be able to discover other places from here.',
+  'Du bist momentan auf der Suche nach neuen Orten. Jedes mal, wenn der Ereigniscountdown abläuft, hast du die Chance einen neuen Ort zu entdecken.' =>
+	'You are currently looking for new places to go to. Every time the event countdown reaches zero, there is a chance to discover a new place.',
+  'Zombies blockieren den Weg. Besiege sie, um diesen Ort verlassen zu können.' =>
+	'Zombies are blocking the way! You must destroy them to leave this place.',
+  'Zombies blockieren den Weg. Besiege sie oder versuche zu fliehen, um diesen Ort verlassen zu können.' =>
+	'Zombies are blocking the way! Destroy them or attempt an escape to leave this place.',
+  'Spieldetails' =>
+	'Game Details',
+  'Level' =>
+	'Level',
+  'Lebensdauer' =>
+	'Lifetime',
+  'Aktuelles Spiel' =>
+	'Current Game',
 );

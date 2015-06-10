@@ -314,6 +314,21 @@
         }));
     };
 
+    var locationradar = function(data, target) {
+        $(target).empty().append(
+            $('<div />').addClass('cell rw-12 padded').append(
+
+                $('<div />').addClass('widget radar').append(
+                    $('<span />').text(<?=__j('Erkundungsrate')?>)
+                ).append(
+                    $('<div />').addClass('discoverybar').append($('<div />').css('width', data + '%'))
+                )
+                    .attr('title', data >= 100 ? <?=__j('Du hast diesen Ort vollständig ausgekundschaftet - von hier aus wirst du keine neuen Ruinen entdecken können.')?> : <?=__j('Du bist momentan auf der Suche nach neuen Orten. Jedes mal, wenn der Ereigniscountdown abläuft, hast du die Chance einen neuen Ort zu entdecken.')?>)
+                    .qtip(game.render.html.qtip.ingame('top'))
+            )
+        );
+    };
+
     var garden = function(data, target) {
         var content;
         target.append($('<div />').addClass('cell rw-12 widget epic padded').append(content = $('<div />').addClass('row').append($('<h3 />').text(<?=__j('Kleines Gewächshaus')?>))));
@@ -449,7 +464,7 @@
     };
 
     core.parts.location = function(data, target) {
-        var zradar, hideout, actions, spc_colosseum, spc_scout, spc_roadtrip, desc, epic;
+        var zradar, hideout, actions, spc_colosseum, spc_scout, spc_roadtrip, desc, epic, lradar;
 
         $(target).empty().addClass('row location_box ' + (data.meta.outside ? 'outside' : 'inside')).append(
             $('<h2 />').text(data.meta.name)
@@ -460,7 +475,7 @@
             var lomap,mapbg;
 
             $(target).append(
-                lomap = $('<div />').addClass('cell padded rw-4')
+                lomap = $('<div />').addClass('cell padded rw-4 rw-lg-6 rw-md-12')
             );
 
             var d = lomap.width();
@@ -524,8 +539,10 @@
         $(target).append(
             $('<div />').addClass('rw-12 padded hide-desktop hide-sm').text(data.meta.desc)
         ).append(
-            $('<div />').addClass('cell padded').addClass(data.lomap ? 'rw-4 rw-lg-6' : 'rw-6 rw-lg-12').append(
+            $('<div />').addClass('cell padded').addClass(data.lomap ? 'rw-4 rw-lg-6 rw-md-12' : 'rw-6 rw-lg-12').append(
                 zradar = $('<div />').addClass('row')
+            ).append(
+                lradar = data.discovery !== false ? $('<div />').addClass('row') : null
             ).append(
                 hideout = data.hideout ? $('<div />').addClass('row') : null
             ).append(
@@ -565,7 +582,9 @@
         });
 
         actions.append(
-            $('<div />').addClass('cell padded justify rw-' + (data.doorways ? (data.lomap ? '8' : '10') : '12')).append(core.snippets.button(<?=__j('Karte');?>, function() {
+            $('<div />').addClass('cell padded justify rw-' + (data.doorways ? (data.lomap ? '8' : '10') : '12')).append(
+                data.radar.zombies > 0 ? $('<div />').addClass('note margin-bottom').text(data.hideout ? <?=__j('Zombies blockieren den Weg. Besiege sie, um diesen Ort verlassen zu können.')?> : <?=__j('Zombies blockieren den Weg. Besiege sie oder versuche zu fliehen, um diesen Ort verlassen zu können.')?>) : false
+            ).append(core.snippets.button(<?=__j('Karte');?>, function() {
                 core.popup.map();
             })).addClass(data.lomap ? 'disabled' : '')
         );
@@ -661,6 +680,8 @@
         }
 
         zombieradar(data.radar, zradar);
+        if (data.discovery !== false)
+            locationradar(data.discovery, lradar);
         if (hideout)
             hideoutstats(data.hideout, hideout);
         if (data.colosseum)

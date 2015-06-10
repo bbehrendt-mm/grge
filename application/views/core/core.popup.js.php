@@ -480,7 +480,7 @@ core.popup = {
 
                 var pos = p(v,iconsize,iconsize);
                 popup.append(
-                    $('<div />').addClass(k == data.current ? 'map location active' : (!(data.read_only && !v.skip_ro) && v.energy <= data.radius ? 'map location' : 'map location unreachable')).attr({
+                    $('<div />').addClass(k == data.current ? 'map location active' : (!(data.read_only && !v.skip_ro) && v.energy <= data.radius ? 'map location' : 'map location unreachable')).addClass($.map($.objToArray(v.classes, true), function(mv) {return 'mapflag_' + mv}).join(' ')).attr({
                         'data-location':k,
                         'data-x': pos.x,
                         'data-y': pos.y

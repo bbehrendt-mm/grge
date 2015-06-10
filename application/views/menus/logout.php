@@ -1,8 +1,14 @@
+<?php
+/**
+ * @var string $url_wiki
+ */
+?>
 <span id="main-menu-game"><?=__('Spielen')?></span>
 <span id="main-menu-main"><?=__('Neuigkeiten')?></span>
 <span id="main-menu-souls"><?=__('Seelen')?></span>
 <span id="main-menu-ranking"><?=__('Ranking')?></span>
 <span id="main-menu-forum"><?=__('Forum')?></span>
+<span id="main-menu-wiki"><?=__('Wiki')?></span>
 <span id="main-menu-logout"><?=__('Logout')?></span>
 <script type="application/javascript">
 // ## JS COMPRESS BEGIN ## //
@@ -20,6 +26,9 @@
     });
     $('#main-menu-forum').click(function() {
         window.open('<?=Kohana::$config->load('services.forum')?>');
+    });
+    $('#main-menu-wiki').click(function() {
+        window.open('<?=$url_wiki?>');
     });
     $('#main-menu-logout').click(function(){
         $(this).html('<i class="fa fa-spin fa-circle-o-notch"></i>');

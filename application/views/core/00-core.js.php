@@ -11,7 +11,7 @@ core = {
     parts: {},
     snippets: {},
 
-    version: '<?="{$version_data['major']}.{$version_data['minor']}.{$version_data['service']}-{$version_data['stage']}-{$version_data['maintenance']}-{$version_data['build']}"?>',
+    version: '<?="{$version_data['major']}.{$version_data['minor']}.{$version_data['service']}-{$version_data['maintenance']}-{$version_data['stage']}-{$version_data['build']}"?>',
 
     last: {},
     plugins: {},
@@ -84,7 +84,9 @@ core = {
     },
 
     render: function(data, target) {
-        console.log(data);
+        <?php if ($version_data['stage'] < 3) { ?>
+            console.log(data);
+        <?php } ?>
 
         core.last = data;
 
@@ -108,6 +110,7 @@ core = {
         var auto_select = $('<select />').appendTo($('<div />').addClass('cell rw-12 padded hide-desktop control').appendTo(action_box))
             .append($('<option />').val('#inv_container').text(<?=__j('Gegenstände & Heldentaten')?>))
             .append($('<option />').val('#settings_container').text(<?=__j('Zeitfluss & Verhalten')?>))
+            .append($('<option />').val('#game_info').text(<?=__j('Spieldetails')?>))
             .append(data.players ? $('<option />').val('#mp_container').text((data.players.messages ? '[!!!] ' : '') + <?=__j('Spielerübersicht')?>) : false)
             .change(function() {
                 $('[data-toggle="' + $(this).val() + '"]').click();
@@ -117,6 +120,7 @@ core = {
         var auto_tab = $('<ul />').addClass('tabline hide-mobile').appendTo(action_box)
             .append($('<li>').attr('data-toggle', '#inv_container').text(<?=__j('Gegenstände & Heldentaten')?>))
             .append($('<li>').attr('data-toggle', '#settings_container').text(<?=__j('Zeitfluss & Verhalten')?>))
+            .append($('<li>').attr('data-toggle', '#game_info').text(<?=__j('Spieldetails')?>))
             .append(data.players ? $('<li>').attr('data-toggle', '#mp_container').text(<?=__j('Spielerübersicht')?>).prepend(data.players.messages ? $('<img />').attr('src','media/icons/new.png') : false) : false)
             .find('>li').click(function() {
                 var t = $($(this).data('toggle'));
@@ -132,6 +136,9 @@ core = {
 
         if (data.settings)
             core.parts.settings(data.settings, $('<div />').attr('id', 'settings_container').addClass('row').appendTo(action_box));
+
+        if (data.game)
+            core.parts.info(data.game, $('<div />').attr('id', 'game_info').addClass('row').appendTo(action_box));
 
         if (data.players)
             core.parts.mp_players(data.players, $('<div />').attr('id', 'mp_container').addClass('row').appendTo(action_box));

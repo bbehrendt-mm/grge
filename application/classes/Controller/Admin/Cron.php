@@ -122,7 +122,7 @@ class Controller_Admin_Cron extends Controller {
         $version_data = Kohana::$config->load('build.version');
         $content = View::factory('cron')
             ->set('baseurl', URL::base('http'))
-            ->set('version', "GRGE {$version_data['major']}.{$version_data['minor']}.{$version_data['service']}-{$version_data['stage']}-{$version_data['maintenance']}-{$version_data['build']} ({$version_data['date']})")
+            ->set('version', "GRGE {$version_data['major']}.{$version_data['minor']}.{$version_data['service']}-{$version_data['maintenance']}-{$version_data['stage']}-{$version_data['build']} ({$version_data['date']})")
             ->set('autoprc', $auto_proc)
             ->set('garbage', $garbage)
             ->set('errors', $this->read_error_log($t))->render();

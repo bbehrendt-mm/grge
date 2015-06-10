@@ -15,9 +15,12 @@
 
 @weight-bg: #f0ceb6;
 @weight-color: #b05f05;
+@discovery-bg: #f0ceb6;
+@discovery-color: #ea4905;
 
 @var-bg: rgba(0,0,0,0.2);
 
+.discoverybar {.progress(@discovery-bg, @discovery-color)}
 .weightbar {.progress(@weight-bg, @weight-color)}
 .car-weightbar {.progress(fade(#000000, 30%), @weight-color, 8px, @shadow: 0 0 3px 1px fade(@weight-color,30%))}
 

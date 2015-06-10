@@ -4344,4 +4344,48 @@ return array (
 	'Du stemmst dich mit aller Kraft gegen das Ventil. Mit einem Schlag öffnet es sich, und ein Schwall Kühlwasser ergießt sich über dich. Das lindert zwar sofort deinen Durst, leider bist du jetzt auch gewaltig verstrahlt worden...',
   'Spielauswahl' =>
 	'Spielauswahl',
+  'Wiki' =>
+	'Wiki',
+  'Stabil' =>
+	'Stabil',
+  'Schild' =>
+	'Schild',
+  'Körper' =>
+	'Körper',
+  'Kopf' =>
+	'Kopf',
+  'Typ' =>
+	'Typ',
+  'Schützt' =>
+	'Schützt',
+  'Schaden' =>
+	'Schaden',
+  'Genauigkeit' =>
+	'Genauigkeit',
+  'Distanzabhängig' =>
+	'Distanzabhängig',
+  'Angriffsgeschw.' =>
+	'Angriffsgeschw.',
+  ':num Runden' =>
+	':num Runden',
+  'Zerstörbar' =>
+	'Zerstörbar',
+  'Erkundungsrate' =>
+	'Erkundungsrate',
+  'Du hast diesen Ort vollständig ausgekundschaftet - von hier aus wirst du keine neuen Ruinen entdecken können.' =>
+	'Du hast diesen Ort vollständig ausgekundschaftet - von hier aus wirst du keine neuen Ruinen entdecken können.',
+  'Du bist momentan auf der Suche nach neuen Orten. Jedes mal, wenn der Ereigniscountdown abläuft, hast du die Chance einen neuen Ort zu entdecken.' =>
+	'Du bist momentan auf der Suche nach neuen Orten. Jedes mal, wenn der Ereigniscountdown abläuft, hast du die Chance einen neuen Ort zu entdecken.',
+  'Zombies blockieren den Weg. Besiege sie, um diesen Ort verlassen zu können.' =>
+	'Zombies blockieren den Weg. Besiege sie, um diesen Ort verlassen zu können.',
+  'Zombies blockieren den Weg. Besiege sie oder versuche zu fliehen, um diesen Ort verlassen zu können.' =>
+	'Zombies blockieren den Weg. Besiege sie oder versuche zu fliehen, um diesen Ort verlassen zu können.',
+  'Spieldetails' =>
+	'Spieldetails',
+  'Level' =>
+	'Level',
+  'Lebensdauer' =>
+	'Lebensdauer',
+  'Aktuelles Spiel' =>
+	'Aktuelles Spiel',
 );

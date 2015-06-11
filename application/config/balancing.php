@@ -3,7 +3,7 @@
 return array(
 	'pause' => Array(
 		'min_duration' => 1800,         // 30 Minutes
-		'min_interval' => 5400,        // 1.5 Hours
+		'min_interval' => 1800,        // 1.5 Hours
 	),
     'shop' => array(
         'enabled' => true,

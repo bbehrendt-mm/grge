@@ -354,5 +354,8 @@ return array(
         'Model_Places_Hospital_Korridor'		=> Array(	'size' =>   0,
             'content' => Array()
         ),
+        'Model_Places_Hospital_Lobby'		=> Array(	'size' =>   0,
+            'content' => Array()
+        ),
     ),
 );

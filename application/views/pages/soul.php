@@ -201,7 +201,7 @@
     });
 
     <?php foreach ($achievements as $achievement) { ?>
-        $('[data-aid=<?=$achievement['id']?>]').attr('title', '<?=__($achievement['count'])?> x ').qtip(game.render.html.qtip.ingame('top', {
+        $('[data-aid=<?=$achievement['id']?>]').attr('title', '-').qtip(game.render.html.qtip.ingame('top', {
             render: function(event,api) {
                 var content = $(this).find('.qtip-content').empty();
 

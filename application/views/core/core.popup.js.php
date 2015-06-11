@@ -35,7 +35,7 @@ core.popup = {
         dx = exp(dx);
         dy = exp(dy);
 
-        var wrapper = $('<div />').addClass('popup-wrapper').appendTo('body');
+        var wrapper = $('<div />').addClass('popup-wrapper').appendTo($('body').css('overflow','hidden'));
 
         var popup = $('<div />').addClass('popup')
             .on('reposition', function() {
@@ -60,6 +60,8 @@ core.popup = {
                 transform: 'scale(1.5)'
             }, 400, 'swing', function() {
                 $(this).parent().remove();
+                if (!$('.popup').length)
+                    $('body').css('overflow','auto');
             });
         }, true, true);
 
@@ -214,7 +216,7 @@ core.popup = {
                 close = $('<div />').addClass('cell rw-1 right')
             ).appendTo(popup);
 
-            filters.append($('<div />').addClass('btn small btn-exp').text('Angezeigte Projekte filtern...').click(function() {
+            filters.append($('<div />').addClass('btn small btn-exp').text(<?=__j('Angezeigte Projekte filtern...')?>).click(function() {
                 core.popup.genericFilterLoader(function(a) {
                     frame.data('type-filters', a).trigger('filter');
                 }, JSON.parse(JSON.stringify(frame.data('type-filters'))));

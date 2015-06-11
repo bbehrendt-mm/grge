@@ -400,6 +400,48 @@ class Controller_Gamemaster extends Controller {
         $this->render(['store' => $store]);
     }
 
+    private function convert_requirements($req) {
+
+        $ret = [];
+        foreach ($req['mode'] as $modeblock => $pair) {
+            $modes = explode(',', "$modeblock");
+            foreach ($modes as $c => $m)
+                $modes[$c] = __(Tool_Gamemodes::get_board_by_id($m));
+            if (count($modes) == 1)
+                $modes = $modes[0];
+            else $modes = implode(', ', array_slice($modes,0,-1)) . ' ' . __('oder') . ' ' . array_slice($modes,-1,1)[0];
+            $ret[] = [
+                'name' => __('SP in :modes', [':modes' => $modes]),
+                'unlocked' => $pair[0] >= $pair[1],
+                'text' => "{$pair[0]} / {$pair[1]}"
+            ];
+        }
+
+        foreach ($req['job'] as $jobblock => $pair) {
+            $jobs = explode(',', "$jobblock");
+            foreach ($jobs as $c => $j)
+                $jobs[$c] = __(Tool_Gamemodes::get_job_by_id($j));
+            if (count($jobs) == 1)
+                $jobs = $jobs[0];
+            else $jobs = implode(', ', array_slice($jobs,0,-1)) . ' ' . __('oder') . ' ' . array_slice($jobs,-1,1)[0];
+            $ret[] = [
+                'name' => __('SP als :jobs', [':jobs' => $jobs]),
+                'unlocked' => $pair[0] >= $pair[1],
+                'text' => "{$pair[0]} / {$pair[1]}"
+            ];
+        }
+
+        foreach ($req['ext'] as $id => $func) {
+            $ret[] = [
+                'name' => __($req['ext_notes']),
+                'unlocked' => $func(),
+                'text' => ''
+            ];
+        }
+
+        return $ret;
+    }
+
     /**
      * Game Creator Renderer
      * @throws Exception
@@ -449,9 +491,17 @@ class Controller_Gamemaster extends Controller {
         }
         $game = null;
 
+        $database = Tool_Gamemodes::compile_mode_database(true);
+        foreach ($database['modes'] as &$db_mode)
+            $db_mode['requirements'] = $this->convert_requirements($db_mode['requirements']);
+        foreach ($database['jobs'] as &$db_job)
+            $db_job['requirements'] = $this->convert_requirements($db_job['requirements']);
+
+        $this->dump('db', $database);
+
         // Render
         $this->add_widget(View::factory('pages/gameselect')
-                ->set('database', Tool_Gamemodes::compile_mode_database(true))
+                ->set('database', $database)
                 ->set('games', $data)
                 ->set('languages', static::get_lang_flags())
                 ->set('lock_count', $user->lockouts_get_count())

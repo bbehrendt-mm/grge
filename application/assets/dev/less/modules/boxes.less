@@ -112,3 +112,16 @@
 }
 
 .license {.whitebox;}
+
+.hotbox {
+  .whitebox; .no-select;
+  margin: 3px; padding: 5px; cursor: pointer; transition: background 250ms ease, border-color 500ms ease;
+  &:hover {.whitebox(5%)}
+  &:active {margin-top: 5px; border-bottom-width: 2px;}
+  >.head {display: block; color: #004352;}
+  >.subtitle {display: block; color: #7b7b7b; font-variant: small-caps;}
+  &.disabled>.head {
+    padding-left: 24px; position: relative;
+    &::before {.font-awesome-insert('\f023'; 24px;); left: 0; top: 0;}
+  }
+}

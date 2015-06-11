@@ -68,39 +68,6 @@ h2:first-child {
     margin-right: 3px;
 }
 
-.hotbox {
-    border-radius: 4px;
-    background: #fff9f6;
-    border: 1px solid #f1ebe8;
-    border-bottom: 4px solid #f1ebe8;
-    margin: 3px;
-    padding: 5px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    cursor: pointer;
-    transition: background 250ms ease, border-color 500ms ease;
-}
-
-.hotbox:hover {
-    background: #f5efec;
-    border-color: #dcd6d3;
-}
-
-.hotbox:active {
-    margin-top: 5px;
-    border-bottom-width: 2px;
-}
-
-.hotbox > .head {
-    display: block;
-    color: #004352;
-}
-
-.hotbox > .subtitle {
-    display: block;
-    color: #7b7b7b;
-    font-variant: small-caps;
-}
-
 ul.breadcrumbs {
     margin: 0;
     padding: 0;

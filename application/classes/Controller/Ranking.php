@@ -219,10 +219,6 @@ class Controller_Ranking extends Controller {
         /** @global Model_Euser $user */
         global $user;
 
-        $converter = function($meta) {
-            return __($meta['name']);
-        };
-
         // Search user
         $uid = $this->request->param('id', $user->uid());
         if (!($name = Model_Euser::name_by_id($uid))) {

@@ -603,9 +603,9 @@ return array (
   'Die Zombies haben dir alles genommen - bis auf die Kleidung, die du trägst. Da du sie aber schon einige Wochen ununterbrochen trägst, kann man verstehen, dass die Zombies mit diesen stinkenden Lumpen nichts zu tun haben wollen.' =>
 	'Zombies took everything from you - except for your clothes. Well, you\'ve been wearing these for a couple of weeks now, so it\'s understandable zombies don\'t want anything to do with these...',
   'Magische Box' =>
-	'Magische Box',
+	'Magic Box',
   'Dieses Item wurde zu Testzwecken implementiert und erlaubt es, beliebige andere Items zu erzeugen.' =>
-	'Dieses Item wurde zu Testzwecken implementiert und erlaubt es, beliebige andere Items zu erzeugen.',
+	'This item was implemented for testing purposes.',
   'Feldflasche' =>
 	'Flask',
   'Diese kleine, pfadfindergeprüfte Feldflasche kann bis zu 4 Rationen Wasser ausnehmen. Außerdem lässt sie sich beschriften - es wäre doch schade, wenn du deine Wasserfeldflasche mal mit der Feldflasche verwechselst, in der du die Batteriesäure aufbewahrst... ' =>
@@ -797,7 +797,7 @@ return array (
   'Diese Flasche ist leer.' =>
 	'Your bottle is empty!',
   'Daten merken' =>
-	'Daten merken',
+	'Remember me',
   'Klassische Seite' =>
 	'Classic Page',
   'Du kannst diese Aktion noch :num mal einsetzen.' =>
@@ -4388,4 +4388,210 @@ return array (
 	'Lifetime',
   'Aktuelles Spiel' =>
 	'Current Game',
+  'Sehr Instabil' =>
+	'Very unstable',
+  'Rüstung' =>
+	'Armor',
+  'Füllstand' =>
+	'Filling Level',
+  'Leer!' =>
+	'Empty!',
+  ':num Schuss' =>
+	':num shots',
+  'Du hast die Kettensäge mit Benzin aufgefüllt, jetzt schnurrt sie wie ein (tödliches) Kätzchen. Zombies und böse Dämonen haben keine Chance mehr - Groovy!' =>
+	'After putting gasoline in, your chainsaw is ready to kill all sorts of undead creatures. Zombies, deamons, zealots, politicians - none of them stand a chance. Groovy!',
+  'SP in :modes' =>
+	'SP in :modes',
+  'SP als :jobs' =>
+	'SP as :jobs',
+  'oder' =>
+	'or',
+  'Erforderlich zum Freischalten' =>
+	'Required to unlock',
+  'Level-Informationen' =>
+	'Leveling Information',
+  'Aktuelles Level' =>
+	'Current Level',
+  'Maximales Level erreicht!' =>
+	'You\'ve reached the maximum level!',
+  'Nächstes Level' =>
+	'Next Level',
+  'Der Klassiker' =>
+	'Just classic',
+  'Bleib am leben solange du kannst, um Punkte zu erhalten.' =>
+	'Stay alive as long as possbile to gain points.',
+  'Der Klassiker - Extra-Würzig' =>
+	'Classic, with spice!',
+  'Wie lange kannst du überleben, wenn dich dein Glück verlassen hat?' =>
+	'The game hates you - deal with it!',
+  'Einmal Gemetzel, bitte!' =>
+	'I\'ll take some slaughter!',
+  'Versuche so viele Zombies wie möglich in einer Spielwoche platt zu machen. Stirbst du vor Ablauf der Woche gibt\'s Punktabzug' =>
+	'Try to dispose of as many zombies as possible. If you last less then a week, you\'ll lose points!',
+  'Kann ich bitte die Karte haben?' =>
+	'So, where is north?',
+  'Du bist der letzte Aufklärer deiner Stadt und wurdest auf ein Himmelfahrtskommando geschickt, um die Umgebung zu kartographieren.' =>
+	'You are your towns last scout and have been sent on a suicide mission to chart the desert.',
+  'Frisch aus Rom' =>
+	'Fresh from rome',
+  'Wie lange kannst du im postapokalyptischen Kolosseum überleben? Wie viele Wellen von Zombies wirst du aushalten? Es gibt nur einen Weg, das herauszufinden...' =>
+	'How long will you withstand waves of zombies in an ancient roman colosseum (that just happens to be right around the corner)? Well, there is just one way to find out...',
+  'Haben Sie eine Reservierung?' =>
+	'Do you have a reservation?',
+  'In diesem Modus kannst du mit deinen Freunden gemeinsam ums Überleben kämpfen ohne Angst haben zu müssen, dass plötzlich Fremde dazustoßen. Dieser Modus ist für 2 - 5 Spieler geeignet.' =>
+	'In this mode, you can play with your friends without being interrupted by strangers. This mode is designed for 2 to 5 players.',
+  'In diesem Modus kannst du mit deinen Freunden gemeinsam ums Überleben kämpfen ohne Angst haben zu müssen, dass plötzlich Fremde dazustoßen. Dieser Modus ist für 6 - 10 Spieler geeignet.' =>
+	'In this mode, you can play with your friends without being interrupted by strangers. This mode is designed for 6 to 10 players.',
+  'In diesem Spielmodus reist du mit einem klapprigen Wohnmobil durch die Welt. Versuche, so weit zu kommen wie möglich. Dieser Modus ist für 2 - 5 Spieler geeignet.' =>
+	'In this game mode, you travel the world in a rickety old caravan. Try to escape as far as possible. You can play with 2 - 5 players.',
+  'Angezeigte Projekte filtern...' =>
+	'Filter entries...',
+  'Diese Krankenhauskantine war früher mal ein echter Geheimtipp in der Stadt, denn hier konnte man vergleichsweise billig eine leckere Mahlzeit bekommen. Der günstige Preis ist auch kein Wunder - man kann Nahrungsmittel ziemlich billig produzieren, wenn sich im selben Gebäude eine leichenhalle befindet...' =>
+	'This hospital cafeteria used to be one of the hottest restaurants in town - mostly, because they offered tasty food for affordable prices. Now that you think about it, the low prices may have something to do with the fact that there is a morgue directly adjacent to the kitchen...',
+  'Ein modriger Geruch steigt aus der Flasche auf... Aber wer wird schon wählerisch sein, wenn es um Wasser geht?' =>
+	'A foul smell emits from your bottle... well, beggars can\'t be choosers.',
+  'Routinierte Seele' =>
+	'Seasoned Soul',
+  'Hier musst du immer wachsam sein; wenn du in Ruhe lesen willst, kehre in dein Versteck zurück.' =>
+	'This is not the place to lay back and enjoy a good book. If you want to read, go back to your hideout.',
+  'Oben-Ohne-Protest' =>
+	'Topless Protest',
+  'Kostet 20 Energie. Jeder andere Spieler in der Nähe regeneriert 20 Energie und Müdigkeit und erhält den Buff "Aufgeregt" für 15 Minuten. Hat keinen Effekt auf Kinder und Spieler, die gerade beschäftigt sind.' =>
+	'Requires 20 energy points. All other players around you will gain 20 energy and fatigue points and receive the "Excited"-buff for 15 minutes. Does not affect children or players who are busy at the moment.',
+  'Matriarchiale Kampfkunst' =>
+	'Matriarchal Fighting Style',
+  'Mit einer richtig angepissten Emanzipationsterroristin legen sich selbst Zombies nur ungerne an. Du richtest im Kampf wesentlich mehr Schaden an, steckst dafür aber auch etwas mehr Schaden ein.' =>
+	'Even Zombies would not mess with a pissed off woman rights activist. You will deal a lot more damage in fights, but you will take more damage as a result, too.',
+  'Lieblings-Item' =>
+	'Favourite Item',
+  'Die Chemikalie läuft an der Klinge herunter, doch nichts passiert ...' =>
+	'The chemical runs over your blade, but nothing happens...',
+  'Du schüttest die Chemikalie über diesem Gegenstand aus. Es riecht ein wenig komisch, aber sonst geschieht nichts... Schade.' =>
+	'You soak this object in your chemical... but it just does nothing.',
+  'Gestrandetes Wohnmobil' =>
+	'Stranded Motor Home',
+  'Tatsächlich ist diese Mutationsmelone ziemlich hart und zäh, außerdem schmeckt sie nach Erde. Nichtsdestotrotz stillt sie deinen Hunger und deinen Durst, also beschwer dich gefälligst nicht!' =>
+	'This Mutalone is pretty tough and tasts a little like dirt. Nevertheless, it helps agains your hunger and thirst, so stop complaining, will you?',
+  'Du schließt die Augen, kniest nieder und spürst die göttliche Kraft, die durch deinen Körper fließt.' =>
+	'You\'ve closed you eyes, focussed on your faith and drew new strength from it.',
+  'Du kannst maximal einmal pro Stunde Kraft aus einem Gebet schöpfen!' =>
+	'You can only draw strength from a prayer once an hour!',
+  'Das wenige vorhandene Fruchtfleisch ist sehnig und zäh, außerdem schmeckt es irgendwie komisch. Naja, besser als nichts...' =>
+	'There is barely any pulp on this Mutalone, and what little there is tastes kinda strange. But it\'s better than nothing...',
+  'Du benötigst Wasser zum Gießen... Fülle das Wasser, das du verwenden willst, aus deiner Flasche auf den Boden.' =>
+	'You need something to water the plant... Take the liquid you wish to use out of it\'s bottle and place it on the ground.',
+  'Großmeisterseele' =>
+	'Soul of a Grand Master',
+  'Erfolgreiche Flucht!' =>
+	'Succesfull Escape!',
+  'Schreiend und mit geschlossenen Augen rennst du auf die Zombies zu. Die sind von dieser Aktion so überrascht, dass du die meisten von ihnen einfach aus dem Weg stoßen kannst. Als du deine Augen wieder öffnest, stellst du fest, dass keine Zombies mehr in deiner Nähe sind.' =>
+	'You close your eyes and run towards the zombies while screaming and flail around with your arms. This seems to confuse the zombies, as they allow you to simple push most of them out of the way. A few seconds after opening your eyes again, you realize that you\'ve managed to outrun all the zombies.',
+  'Früher strömten Menschen von Nah und Fern an diesen Ort, um sich dem zügellosen Konsumrausch hinzugeben. Und noch immer ist dieses Einkaufszentrum gut besucht - nur leider von Zombies, die ziellos durch die Gänge streunen. Wenn du den Mut hast dich ihnen zu stellen wirst du hier sicher viele Gegenstände finden.' =>
+	'Before the apocalypse, this place has been crawling with peolpe giving in to their shopping rush. There are still a lot of people around - in fact, they havn\'t really left. Running around here is incredibly dangerous, but there are loads of useful things here...',
+  'Verkaufsautomat (Jumbomax Mallmaster)' =>
+	'Vending Machine (Jumbomax Mallmaster)',
+  'Du benötigst eine leere Flasche, die du hineinwerfen kannst.' =>
+	'You need an empty bottle for this.',
+  'Die Welt um dich herum dreht sich bereits mit bedenklicher Geschwindigkeit, aber einer geht sicher noch rein! ... denkst du, kurz bevor sich dir der Magen umdreht und seinen Inhalt zu Tage fördert.' =>
+	'The world around you is already spinning quite fast, but there must be room for one mor drink... at least that\'s what you thought, right before emptying your stomache on your shoes. Great...',
+  'Das Wasser in der Flasche ist etwas löhmerig ...' =>
+	'The water seems to be a little cloudy...',
+  'Entspannen' =>
+	'Relaxing',
+  'Du bist gerade dabei, dich ein wenig zu entspannen. Verdammt, warum hat dieses Versteck eigentlich keinen Kamin?' =>
+	'You\'re currently busy relaxing. Damn, why does this hideout not have a chimney?',
+  'Du setzt dich in den Sitz fallen und versuchst, all die schlimmen Ereignisse heute abzuschütteln.' =>
+	'You let yourself fall into a chair and try to forget all those horrible things you saw today.',
+  'Epische Seele' =>
+	'Epic Soul',
+  'Reservist' =>
+	'Reservist',
+  'Du beherrscht die Grundlagen des bewaffneten Kampfes. Waffe ausrichten, Abzug drücken, Zombies beim Umfallen zugucken. Leider ist dein Wissen eher theoretischer Natur, dennoch erhälst du einen Bonus beim Einsatz von Waffen.' =>
+	'Your are familiar with the basics of armed combat. Point gun, pull trigger, watch zombies drop to the ground. Unfortunately, your knowledge is more theoretical, but that still gives you a small bonus on fighting with guns.',
+  'Du wirfst die Pille in die Chemikalie ... sie löst sich sofort und rückstandslos auf. Toll ...' =>
+	'You throw a pill in your chemical ... and it just dissolves. Great ...',
+  'Heino Rock CD' =>
+	'Nickelback CD',
+  'Leider passt nur eine einzige Person in ein InstaZELT™... und dieses ist schon voll.' =>
+	'There\'s only room for one person inside an InstaTent™... and it seems this one is already occupied.',
+  'Hmm... nichts passiert. Kann es eventuell sein, dass du gar nicht auf Entzug warst?' =>
+	'Hmm... nothing happened. Could that be because you\'re not actally suffering any withdrawl symptoms right now?',
+  'Mit unbarmherziger Macht zerstört der Schredder jeden Gegenstand, den du in seinen Schlot wirfst. Am Ende hast du damit :num Eimer mit Splittern gefüllt!' =>
+	'Without mercy, the shredder destroys everything you throw down its gullet. You\'ve managed to produce :num buckets full of splinters!',
+  'Du setzt deine ganze Kraft ein, um die Splitter in der Presse bestmöglich zu komprimieren. Als Belohnung für deine Leistung hälst du nun :num neue Splitterkugeln in der Hand.' =>
+	'You use all your power to compress the splinters into a spheric form. Finally, you have created :num new splinter balls.',
+  'Du fühlst erneut einen Luftzug, dann spürst du wie sich etwas von hinten nähert. Noch während du dich umdrehst siehst du etwas aufblitzen, dann fühlst du etwas Kaltes an deinem Hals. Dann wird alles um dich herum schwarz. Herzlichen Glückwunsch, du bist tot.' =>
+	'Again, you feel a breeze of air, and something coming from behind. While turning around, you see something flash before your eyes, and something cold touching your neck. After that, you sink into absolute blackness. Congratulations, you are dead.',
+  'Du weist, dass der offensichtliche Weg nicht immer der effektivste ist. Deine Fähigkeit Wege zu optimieren hilft dir, Energie zu sparen.' =>
+	'You know that the most obvious way is usually not the best one. Your abillity to find better paths will help you to conserve energy when traveling.',
+  'Dein furchtbarer Durst hindert dich am weiterschlafen... Du bist aufgewacht.' =>
+	'Your terrible thirst prevents you from sleeping any longer...',
+  'Die Zeiten von eiskaltem Essen sind vorbei! Vorrausgesetzt natürlich, du kannst etwas Strom auftreiben ...' =>
+	'The times of ice cold food are over! At least, as long as you have electricity ...',
+  'Wow, dieser "Puderzucker" hats echt in sich! Du fühlst dich als könntest du Bäume ausreissen! Das extreme Nasenbluten ist jedoch etwas nervig...' =>
+	'Wow, this "Powdered Sugar" is awesome! You feel like throwing trees around! Now, if only your nose would stop bleeding...',
+  'Kugel' =>
+	'Ball',
+  'Es sieht etwas zusammengeschustert aus... aber wenigstens musst du nun nicht mehr in Unterwäsche herumlaufen.' =>
+	'It looks kind of botchy... well, at least you don\'t have to run around in your underwear any more.',
+  'Normalerweise würde kein Mensch so etwas machen - aber in der aktuellen Situation ist es tatsächlich notwendig, seine Bequemlichkeit zugunsten von etwas mehr Sicherheit zu opfern.' =>
+	'Normally, nobody would do stuff like this - but this exact situation kind of requires you to sacrifice some comfort to more safety.',
+  'Wackelig' =>
+	'Rickety',
+  'Helm' =>
+	'Helmet',
+  'Gehts noch? Welche Frau gibt denn bitte ihre Tasche aus der Hand?' =>
+	'Come on! What kind of woman yould EVER leave her bag behind?',
+  'Desolat' =>
+	'Desolate',
+  'Instabil' =>
+	'Unstable',
+  'Augen zu und durch! Du schluckst die Pille herunter - und übrgibst dich direkt danach!' =>
+	'Grit your teeth, close your eyes and down this pill - and puke on your shoes right away...',
+  'Augen zu und durch! Du schluckst die Pille herunter - plötzlich tut dein rechter Backenzahn weh. Wie unangenehm!' =>
+	'Grit your teeth, close your eyes and down this pill - your left molar starts hurting. How unpleasant!',
+  'ENDLICH! Nun musst du den Brei nicht mehr mit der Hand kneten und das Fleisch nicht mehr mit Karateschlägen schneiden. Heureka!' =>
+	'FINALLY! No more kneading the dough or karate-chopping meat with your bare hands. Eureka!',
+  'Du hast deinem Freund Dalad Jelly gegeben... was immer das auch sein mag.' =>
+	'You\'ve given your friend some Dalad Jelly... whatever the hell that is.',
+  ':name hat dir etwas Dalad Jelly verabreicht... Herzlichen Glückwunsch?' =>
+	':name has given you some Dalad Jelly... Congratulations?',
+  'Du hast nicht genug Energie um diesen Weg zu bewältigen während du jemand anderem hilfst.' =>
+	'You don\'t have enough energy to make your way to this place while helping others.',
+  'Du tunkst das Essen in die Chemikalie - und beginnt zu blubbern und löst sich vor deinen Augen in seine Bestandteile auf! Zurück bleibt nur eine große glibbrige Masse Nährschleim. Lecker ...' =>
+	'You dip your food into these chemicals - It immediately starts to sizzle and disintegrate before your eyes! All that is left is a wad of nutrient slime. Tasty ...',
+  'Dieser Ort scheint bereits intensiv geplündert worden zu sein; hier wirst du wohl eher nichts mehr finden. Allerdings ist einer der Gästeräume vergleichsweise gut erhalten. Du könntest hier ein Versteck aufschlagen... wenn du keine Angst davor hast, dass dir die Decke auf den Kopf fällt.' =>
+	'This place seems to have been scavenged in the past, so you shouldn\'t expect to find anything here. One of the guest rooms is pretty well preserved, however. You could turn it into a hideout... if you don\'t mind the ceilling dropping on your head.',
+  'Zerstampfen, verrühren, würzen. Für dieses Rezept muss man kein Meisterkoch sein, und man kann es in allen Lebenslagen anwenden (Kürbisse zubereiten, Gespräche mit dem Finanzamt etc) ' =>
+	'Crush, stir, spice. You don\'t need to be a master chef to get that right, and you can apply it to a lot of situations (make pumpkin soup, talk to an I.R.S Agent etc).',
+  'Großartig - andere hätten diese Kleinteile mühsam zusammensuchen müssen, du kannst sie einfach selbst herstellen!' =>
+	'Great - other people would have spent ages trying to find these small things, you just made some yourself!',
+  'Es scheint, als hätte der diensthabende Pathologe versucht, sich hier drin zu verbarrikadieren. Die schwere Metalltür ist fest verschlossen, und der Öffnungsmechanismus ist zerstört. Leider hat er nicht bedacht, dass er sich in einer LEICHENHALLE befindet - mit Leichen, die vielleicht noch nicht vollständig verstorben sind. Wenigstens scheint er vor seinem Tod ordentlich Schaden angerichtet zu haben...' =>
+	'It seems like to corroner tried to barricade hinself in this morgue. The heavy metal doors are locked shut, and the opening mechanism is destroyed. Unforunately, he didn\'t think of the fact that this is a MORGUE - full with bodies that might mor might not actually be dead!. Well, at least he managed to do some damage here...',
+  'Pathologe Quincy' =>
+	'Corroner Quincy',
+  'Du wickelst die Bandage straff um die Verletzungen deines Freundes. Mit den Bandagen im Gesicht sieht er gleich viel besser aus...' =>
+	'You wrap the bandage tightly around your friend\'s injuries. All these bandages in his face seem to make him more appealing...',
+  ':name hat eine Bandage um deine Verletzungen gewickelt.' =>
+	':name has treated your injuries with a bandage.',
+  'Du spritzt dir das Medikament... aber es scheint keine Wirkung zu haben!' =>
+	'You\'ve applied the drug... but it does not seem to have any effect!',
+  'Nachdem du dir das Medikament gespritzt hast fühlst du sofort, wie deine Menschlichkeit zurückkehrt. Herzlichen Glückwunsch, du hast die Zombiekrankheit erfolgreich überwunden!' =>
+	'After applying this drug, you instantly feel your humanity returning. Congratulations, you\'ve managed to overcome a zombie infection!',
+  'Es scheint, als wäre dieses kurz vor der Zombieapokalypse fertig geworden. Es ist zwar vollständig eingerichtet, aber gewohnt hat hier wohl niemand. Dies könnte der ideale Ort für ein Versteck sein... wenn es nicht gerade der Ort wäre, an dem Zombies zuerst nach dir suchen würden.' =>
+	'It seems the construction finished just days before the outbreak. It\'s already furnished, but it doesn\'t seem like anyone has inhabited it yet. This could be an ideal location for a new hideout... if it wasn\'t the first location zombies would look for you.',
+  'Mit diesem Schläger fährst du keine Homerun-Rekorde mehr ein... Dafür ist er wesentlich Effektiver im Bereich "Zombieverstümmelung".' =>
+	'This bat will no longer produce any homerun records... but he is way more efficient if you practice "Zombie Mutilation".',
+  'Wenn du schon ganz allein gegen Zombies kämpfen musst, kannst du dabei wenigstens cool aussehen. Leider ist niemand mehr da, um ein Video von deiner coolen neuen Choreographie bei YouTube zu posten.' =>
+	'When having to fight zombies alone, might as well look awesome. You wish there was someone who could upload a video of your new choreography to YouTube.',
+  'Das war wohl nichts... Deine Pflanzen sind total vertrocknet und absolut nutzlos. Da musst du wohl nochmal von vorne beginnen.' =>
+	'Aw man... all those plants are complete dried up and utterly useless. Well, guess you\'ll have to try again.',
+  'Diese Krankenhauskantine war früher mal ein echter Geheimtipp in der Stadt, denn hier konnte man vergleichsweise billig eine leckere Mahlzeit bekommen. Der günstige Preis ist auch kein Wunder - man kann Nahrungsmittel ziemlich billig produzieren, wenn sich im selben Gebäude eine Leichenhalle befindet...' =>
+	'This hospital cafeteria used to be one of the hottest restaurants in town - mostly, because they offered tasty food for affordable prices. Now that you think about it, the low prices may have something to do with the fact that there is a morgue directly adjacent to the kitchen...',
+  'So ein Teil solltest du dir nicht zum Spaß umlegen... wie wärs, wenn du wartest, bis du stark blutest?' =>
+	'Wearing these is not all that healthy, you know... maybe you should wait until you bleed before putting these on?',
+  ':name kann sich zur Zeit nicht bewegen...' =>
+	':name can not move right now...',
+  'Bitte wähle, welches Ranking du sehen möchtest.' =>
+	'Please select the Ranking you want to see.',
 );

@@ -244,6 +244,11 @@
                                 .append($('<div />').addClass('cell rw-6 padded left').append(ammo_cont))
                                 .appendTo(content);
                         }
+                        if (v.weapon.shots !== false)
+                            $('<div />').addClass('row')
+                                .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Füllstand')?>))
+                                .append($('<div />').addClass('cell rw-6 padded left').text(v.weapon.shots == 0 ? <?=__j('Leer!')?> : game.i18n(<?=__j(':num Schuss')?>,{':num': v.weapon.shots})))
+                                .appendTo(content);
                         if (v.weapon.energy)
                             $('<div />').addClass('row')
                                 .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Energie')?>))

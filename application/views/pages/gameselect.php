@@ -339,10 +339,18 @@
     $('#persistent').empty();
     $('[data-conditional=1]').hide();
     <?php
-        foreach ($database['modes'] as &$db_entry)
-            unset($db_entry['locked'],$db_entry['type'],$db_entry['meta'],$db_entry['requirements']);
-        foreach ($database['jobs'] as &$jb_entry)
-            $jb_entry = ['meta' => ['name' => __($jb_entry['meta']['name'])]];
+        foreach ($database['modes'] as &$db_entry) {
+            unset($db_entry['type']);
+            foreach ($db_entry['meta'] as &$db_meta)
+                $db_meta = __($db_meta);
+        }
+
+        foreach ($database['jobs'] as &$jb_entry) {
+            unset($jb_entry['levels']);
+            foreach ($jb_entry['meta'] as &$jb_meta)
+                $jb_meta = __($jb_meta);
+        }
+
         foreach ($games as &$game_entry)
             unset($game_entry['locked'],$game_entry['lang'],$game_entry['mode'],$game_entry['password'],$game_entry['slots'],$game_entry['name']);
      ?>
@@ -537,7 +545,12 @@
 
     $('[data-modeset]').click(function() {
         $('[data-jobset]').parent().hide();
+        var start_game = ($(this).data('set')['init']);
+
+        var alias = $(this);
+
         $.each(database.modes[$(this).data('modeset')].jobs, function(k,v) {
+            if (!start_game || $.inArray(v, database.modes[alias.data('modeset')].unstartable_jobs) < 0)
             $('[data-jobset=' + v + ']').parent().show();
         });
 
@@ -550,6 +563,82 @@
         }
 
         window.scrollTo(0,0);
+    }).each(function() {
+        var alias = $(this);
+
+        var modedata = database.modes[alias.attr('data-modeset')];
+
+        if (modedata.meta.headline)
+            alias.parent().attr('title','-').qtip(game.render.html.qtip.ingame('top', {
+                render: function(event,api) {
+                    var content = $(this).find('.qtip-content');
+
+                    content
+                        .empty()
+                        .append($('<b />').addClass('header').text(modedata.meta.headline))
+                        .append($('<p />').text(modedata.meta.body));
+
+                    if (modedata.locked && modedata.requirements.length) {
+                        content.append($('<span />').addClass('separator')).append($('<div />').addClass('center').text(<?=__j('Erforderlich zum Freischalten')?>));
+                        $.each(modedata.requirements, function(kr,vr) {
+                            content.append($('<div />').addClass('row')
+                                    .append($('<div />').addClass('cell rw-6 padded right b').text(vr.name))
+                                    .append($('<div />').addClass('cell rw-6 padded').append($('<div />').addClass('point').addClass(vr.unlocked ? 'success' : 'failure').text(vr.text)))
+                            );
+                        })
+                    }
+
+
+                }
+            }));
+    });
+
+    $('[data-jobset]').each(function() {
+        var alias = $(this);
+
+        alias.parent().attr('title','-').qtip(game.render.html.qtip.ingame('top', {
+            render: function(event,api) {
+                var content = $(this).find('.qtip-content');
+
+                var jobdata = database.jobs[alias.attr('data-jobset')];
+
+                content
+                    .empty()
+                    .append($('<b />').addClass('header').text(jobdata.meta.name))
+                    .append($('<p />').text(jobdata.meta.caption));
+
+                if (jobdata.locked && jobdata.requirements.length) {
+                    content.append($('<span />').addClass('separator')).append($('<div />').addClass('center').text(<?=__j('Erforderlich zum Freischalten')?>));
+                    $.each(jobdata.requirements, function(kr,vr) {
+                        content.append($('<div />').addClass('row')
+                                .append($('<div />').addClass('cell rw-6 padded right b').text(vr.name))
+                                .append($('<div />').addClass('cell rw-6 padded').append($('<div />').addClass('point').addClass(vr.unlocked ? 'success' : 'failure').text(vr.text)))
+                        );
+                    })
+                }
+                if (!jobdata.locked && (jobdata.level > 1 || jobdata.next_level != null)) {
+                    content
+                        .append($('<span />').addClass('separator')).append($('<div />').addClass('center').text(<?=__j('Level-Informationen')?>))
+                        .append($('<div />').addClass('row')
+                            .append($('<div />').addClass('cell rw-6 padded right b').text(<?=__j('Aktuelles Level')?>))
+                            .append($('<div />').addClass('cell rw-6 padded').text(jobdata.level))
+                        ).append($('<div />').addClass('row')
+                            .append($('<div />').addClass('cell rw-6 padded right b').text(<?=__j('Seelenpunkte')?>))
+                            .append($('<div />').addClass('cell rw-6 padded').text(jobdata.points))
+                        );
+
+                    if (!jobdata.next_level)
+                        content.append($('<div />').addClass('b center').text(<?=__j('Maximales Level erreicht!')?>));
+                    else content.append($('<div />').addClass('row')
+                            .append($('<div />').addClass('cell rw-6 padded right b').text(<?=__j('Nächstes Level')?>))
+                            .append($('<div />').addClass('cell rw-6 padded').append($('<div />').addClass('soulpointbar').append($('<div />').css('width', (100 * jobdata.points/jobdata.next_level) + '%'))).append($('<div />').addClass('center').text(jobdata.points + ' / ' + jobdata.next_level)))
+                    );
+
+                }
+
+
+            }
+        }));
     });
 
     $('[data-set]').click(function() {

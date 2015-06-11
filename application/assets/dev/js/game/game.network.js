@@ -40,8 +40,14 @@ game.network = {
             if (data && data.profiling) {
                 if (args && Object.keys(args).length)
                     data.profiling.args = args;
-                console.debug(data.profiling);
+                console.log('GRGE profiling info: %o', data.profiling);
             }
+
+            if (data && data.var_dump)
+                $.each(data.var_dump, function(title, obj) {
+                    console.log('GRGE Debug Output "%s": %o', title, obj);
+                });
+
 
             if (data && data.notifications)
                 $.each(data.notifications, function(k,v) {

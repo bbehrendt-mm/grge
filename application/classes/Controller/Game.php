@@ -267,11 +267,12 @@ class Controller_Game extends Controller {
                 $ammo = [];
                 if ($item->ammo()) foreach ($item->ammo() as $entry => $c)
                     /** @var Model_Items_Abstract_Item $entry */
-                    $ammo[] = ($entry == 'self' || $entry == 'custom') ? $item::static_icon() : $entry::static_icon();
+                    $ammo[] = ($entry == 'self' || $entry == 'custom') ? ($entry == 'self' ? $item::static_icon() : $item::custom_ammo_icon()) : $entry::static_icon();
 
                 $data['weapon'] = [
                     'damage' => $item->damage(),
                     'ammo' => $ammo ? $ammo : false,
+                    'shots' => in_array('custom', array_keys($item->ammo())) ? $item->count() : false,
                     'energy' => $item::$energy_cost,
                     'accuracy' => ($item::$accuracy_type == Model_Battle_Weapon::MBW_ACC_LINEAR_DISTANCE) ? true : round(100*$item::$accuracy),
                     'duration' => $item::$reload_time,

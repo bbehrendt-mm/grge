@@ -9,7 +9,7 @@
 <h1 class="noclick"><i class="fa fa-arrow-circle-right"></i><?=__('Ranking');?></h1>
 
 <div class="row">
-    <h2>Bitte wähle, welches Ranking du sehen möchtest.</h2>
+    <h2><?=__('Bitte wähle, welches Ranking du sehen möchtest.');?></h2>
 
     <div class="cell rw-3 rw-md-6 padded">
         <label for="game_type"></label><select class="form_input" id="game_type" data-container="body">

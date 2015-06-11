@@ -12,6 +12,7 @@ abstract class Controller extends Kohana_Controller {
     private $widgets = array();
     private $notifications = array();
     private $data = array();
+    private $dumps = array();
 
     /**
      * Returns true when the current request was made using AJAX calls
@@ -105,6 +106,10 @@ abstract class Controller extends Kohana_Controller {
             $this->request->action('noaction');
             if ($this->is_ajax_request()) $this->error(\grge\E_SERVER_LIMITED_MAINTENANCE);
         }
+    }
+
+    protected function dump($title, $object) {
+        $this->dumps[$title] = $object;
     }
 
     private function daily_login_bonus() {
@@ -271,10 +276,10 @@ abstract class Controller extends Kohana_Controller {
         } elseif (is_array($obj)) $this->add_data($obj);
 
         // Get version data, append profiling information when this is not a stable version
-        $version_data = Kohana::$config->load('build.version');
-        if ($version_data['stage'] < 3) {
-            global $compression;
 
+        if (Kohana::$environment === Kohana::DEVELOPMENT) {
+            global $compression;
+            $version_data = Kohana::$config->load('build.version');
             $this->add_data('profiling', [
                 'version' => "GRGE {$version_data['major']}.{$version_data['minor']}.{$version_data['service']}-{$version_data['maintenance']}-{$version_data['stage']}-{$version_data['build']} ({$version_data['date']})",
                 'path' => $this->request->controller() . ' / ' . ($this->request->action() == 'japi' ? ($this->request->param('jaction') . ' (japi)') : $this->request->action()),
@@ -290,6 +295,9 @@ abstract class Controller extends Kohana_Controller {
             $this->add_data('notifications', $this->session->get('notifications',[]), true);
             $this->session->delete('notifications');
         }
+
+        if ($this->dumps && Kohana::$environment === Kohana::DEVELOPMENT)
+            $this->add_data('var_dump', $this->dumps, true);
 
         // Render
         $this->response->body(json_encode($this->data, JSON_FORCE_OBJECT));

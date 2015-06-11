@@ -4388,4 +4388,210 @@ return array (
 	'Lebensdauer',
   'Aktuelles Spiel' =>
 	'Aktuelles Spiel',
+  'Sehr Instabil' =>
+	'Sehr Instabil',
+  'Rüstung' =>
+	'Rüstung',
+  'Füllstand' =>
+	'Füllstand',
+  'Leer!' =>
+	'Leer!',
+  ':num Schuss' =>
+	':num Schuss',
+  'Du hast die Kettensäge mit Benzin aufgefüllt, jetzt schnurrt sie wie ein (tödliches) Kätzchen. Zombies und böse Dämonen haben keine Chance mehr - Groovy!' =>
+	'Du hast die Kettensäge mit Benzin aufgefüllt, jetzt schnurrt sie wie ein (tödliches) Kätzchen. Zombies und böse Dämonen haben keine Chance mehr - Groovy!',
+  'SP in :modes' =>
+	'SP in :modes',
+  'SP als :jobs' =>
+	'SP als :jobs',
+  'oder' =>
+	'oder',
+  'Erforderlich zum Freischalten' =>
+	'Erforderlich zum Freischalten',
+  'Level-Informationen' =>
+	'Level-Informationen',
+  'Aktuelles Level' =>
+	'Aktuelles Level',
+  'Maximales Level erreicht!' =>
+	'Maximales Level erreicht!',
+  'Nächstes Level' =>
+	'Nächstes Level',
+  'Der Klassiker' =>
+	'Der Klassiker',
+  'Bleib am leben solange du kannst, um Punkte zu erhalten.' =>
+	'Bleib am leben solange du kannst, um Punkte zu erhalten.',
+  'Der Klassiker - Extra-Würzig' =>
+	'Der Klassiker - Extra-Würzig',
+  'Wie lange kannst du überleben, wenn dich dein Glück verlassen hat?' =>
+	'Wie lange kannst du überleben, wenn dich dein Glück verlassen hat?',
+  'Einmal Gemetzel, bitte!' =>
+	'Einmal Gemetzel, bitte!',
+  'Versuche so viele Zombies wie möglich in einer Spielwoche platt zu machen. Stirbst du vor Ablauf der Woche gibt\'s Punktabzug' =>
+	'Versuche so viele Zombies wie möglich in einer Spielwoche platt zu machen. Stirbst du vor Ablauf der Woche gibt\'s Punktabzug',
+  'Kann ich bitte die Karte haben?' =>
+	'Kann ich bitte die Karte haben?',
+  'Du bist der letzte Aufklärer deiner Stadt und wurdest auf ein Himmelfahrtskommando geschickt, um die Umgebung zu kartographieren.' =>
+	'Du bist der letzte Aufklärer deiner Stadt und wurdest auf ein Himmelfahrtskommando geschickt, um die Umgebung zu kartographieren.',
+  'Frisch aus Rom' =>
+	'Frisch aus Rom',
+  'Wie lange kannst du im postapokalyptischen Kolosseum überleben? Wie viele Wellen von Zombies wirst du aushalten? Es gibt nur einen Weg, das herauszufinden...' =>
+	'Wie lange kannst du im postapokalyptischen Kolosseum überleben? Wie viele Wellen von Zombies wirst du aushalten? Es gibt nur einen Weg, das herauszufinden...',
+  'Haben Sie eine Reservierung?' =>
+	'Haben Sie eine Reservierung?',
+  'In diesem Modus kannst du mit deinen Freunden gemeinsam ums Überleben kämpfen ohne Angst haben zu müssen, dass plötzlich Fremde dazustoßen. Dieser Modus ist für 2 - 5 Spieler geeignet.' =>
+	'In diesem Modus kannst du mit deinen Freunden gemeinsam ums Überleben kämpfen ohne Angst haben zu müssen, dass plötzlich Fremde dazustoßen. Dieser Modus ist für 2 - 5 Spieler geeignet.',
+  'In diesem Modus kannst du mit deinen Freunden gemeinsam ums Überleben kämpfen ohne Angst haben zu müssen, dass plötzlich Fremde dazustoßen. Dieser Modus ist für 6 - 10 Spieler geeignet.' =>
+	'In diesem Modus kannst du mit deinen Freunden gemeinsam ums Überleben kämpfen ohne Angst haben zu müssen, dass plötzlich Fremde dazustoßen. Dieser Modus ist für 6 - 10 Spieler geeignet.',
+  'In diesem Spielmodus reist du mit einem klapprigen Wohnmobil durch die Welt. Versuche, so weit zu kommen wie möglich. Dieser Modus ist für 2 - 5 Spieler geeignet.' =>
+	'In diesem Spielmodus reist du mit einem klapprigen Wohnmobil durch die Welt. Versuche, so weit zu kommen wie möglich. Dieser Modus ist für 2 - 5 Spieler geeignet.',
+  'Angezeigte Projekte filtern...' =>
+	'Angezeigte Projekte filtern...',
+  'Diese Krankenhauskantine war früher mal ein echter Geheimtipp in der Stadt, denn hier konnte man vergleichsweise billig eine leckere Mahlzeit bekommen. Der günstige Preis ist auch kein Wunder - man kann Nahrungsmittel ziemlich billig produzieren, wenn sich im selben Gebäude eine leichenhalle befindet...' =>
+	'Diese Krankenhauskantine war früher mal ein echter Geheimtipp in der Stadt, denn hier konnte man vergleichsweise billig eine leckere Mahlzeit bekommen. Der günstige Preis ist auch kein Wunder - man kann Nahrungsmittel ziemlich billig produzieren, wenn sich im selben Gebäude eine leichenhalle befindet...',
+  'Ein modriger Geruch steigt aus der Flasche auf... Aber wer wird schon wählerisch sein, wenn es um Wasser geht?' =>
+	'Ein modriger Geruch steigt aus der Flasche auf... Aber wer wird schon wählerisch sein, wenn es um Wasser geht?',
+  'Routinierte Seele' =>
+	'Routinierte Seele',
+  'Hier musst du immer wachsam sein; wenn du in Ruhe lesen willst, kehre in dein Versteck zurück.' =>
+	'Hier musst du immer wachsam sein; wenn du in Ruhe lesen willst, kehre in dein Versteck zurück.',
+  'Oben-Ohne-Protest' =>
+	'Oben-Ohne-Protest',
+  'Kostet 20 Energie. Jeder andere Spieler in der Nähe regeneriert 20 Energie und Müdigkeit und erhält den Buff "Aufgeregt" für 15 Minuten. Hat keinen Effekt auf Kinder und Spieler, die gerade beschäftigt sind.' =>
+	'Kostet 20 Energie. Jeder andere Spieler in der Nähe regeneriert 20 Energie und Müdigkeit und erhält den Buff "Aufgeregt" für 15 Minuten. Hat keinen Effekt auf Kinder und Spieler, die gerade beschäftigt sind.',
+  'Matriarchiale Kampfkunst' =>
+	'Matriarchiale Kampfkunst',
+  'Mit einer richtig angepissten Emanzipationsterroristin legen sich selbst Zombies nur ungerne an. Du richtest im Kampf wesentlich mehr Schaden an, steckst dafür aber auch etwas mehr Schaden ein.' =>
+	'Mit einer richtig angepissten Emanzipationsterroristin legen sich selbst Zombies nur ungerne an. Du richtest im Kampf wesentlich mehr Schaden an, steckst dafür aber auch etwas mehr Schaden ein.',
+  'Lieblings-Item' =>
+	'Lieblings-Item',
+  'Die Chemikalie läuft an der Klinge herunter, doch nichts passiert ...' =>
+	'Die Chemikalie läuft an der Klinge herunter, doch nichts passiert ...',
+  'Du schüttest die Chemikalie über diesem Gegenstand aus. Es riecht ein wenig komisch, aber sonst geschieht nichts... Schade.' =>
+	'Du schüttest die Chemikalie über diesem Gegenstand aus. Es riecht ein wenig komisch, aber sonst geschieht nichts... Schade.',
+  'Gestrandetes Wohnmobil' =>
+	'Gestrandetes Wohnmobil',
+  'Tatsächlich ist diese Mutationsmelone ziemlich hart und zäh, außerdem schmeckt sie nach Erde. Nichtsdestotrotz stillt sie deinen Hunger und deinen Durst, also beschwer dich gefälligst nicht!' =>
+	'Tatsächlich ist diese Mutationsmelone ziemlich hart und zäh, außerdem schmeckt sie nach Erde. Nichtsdestotrotz stillt sie deinen Hunger und deinen Durst, also beschwer dich gefälligst nicht!',
+  'Du schließt die Augen, kniest nieder und spürst die göttliche Kraft, die durch deinen Körper fließt.' =>
+	'Du schließt die Augen, kniest nieder und spürst die göttliche Kraft, die durch deinen Körper fließt.',
+  'Du kannst maximal einmal pro Stunde Kraft aus einem Gebet schöpfen!' =>
+	'Du kannst maximal einmal pro Stunde Kraft aus einem Gebet schöpfen!',
+  'Das wenige vorhandene Fruchtfleisch ist sehnig und zäh, außerdem schmeckt es irgendwie komisch. Naja, besser als nichts...' =>
+	'Das wenige vorhandene Fruchtfleisch ist sehnig und zäh, außerdem schmeckt es irgendwie komisch. Naja, besser als nichts...',
+  'Du benötigst Wasser zum Gießen... Fülle das Wasser, das du verwenden willst, aus deiner Flasche auf den Boden.' =>
+	'Du benötigst Wasser zum Gießen... Fülle das Wasser, das du verwenden willst, aus deiner Flasche auf den Boden.',
+  'Großmeisterseele' =>
+	'Großmeisterseele',
+  'Erfolgreiche Flucht!' =>
+	'Erfolgreiche Flucht!',
+  'Schreiend und mit geschlossenen Augen rennst du auf die Zombies zu. Die sind von dieser Aktion so überrascht, dass du die meisten von ihnen einfach aus dem Weg stoßen kannst. Als du deine Augen wieder öffnest, stellst du fest, dass keine Zombies mehr in deiner Nähe sind.' =>
+	'Schreiend und mit geschlossenen Augen rennst du auf die Zombies zu. Die sind von dieser Aktion so überrascht, dass du die meisten von ihnen einfach aus dem Weg stoßen kannst. Als du deine Augen wieder öffnest, stellst du fest, dass keine Zombies mehr in deiner Nähe sind.',
+  'Früher strömten Menschen von Nah und Fern an diesen Ort, um sich dem zügellosen Konsumrausch hinzugeben. Und noch immer ist dieses Einkaufszentrum gut besucht - nur leider von Zombies, die ziellos durch die Gänge streunen. Wenn du den Mut hast dich ihnen zu stellen wirst du hier sicher viele Gegenstände finden.' =>
+	'Früher strömten Menschen von Nah und Fern an diesen Ort, um sich dem zügellosen Konsumrausch hinzugeben. Und noch immer ist dieses Einkaufszentrum gut besucht - nur leider von Zombies, die ziellos durch die Gänge streunen. Wenn du den Mut hast dich ihnen zu stellen wirst du hier sicher viele Gegenstände finden.',
+  'Verkaufsautomat (Jumbomax Mallmaster)' =>
+	'Verkaufsautomat (Jumbomax Mallmaster)',
+  'Du benötigst eine leere Flasche, die du hineinwerfen kannst.' =>
+	'Du benötigst eine leere Flasche, die du hineinwerfen kannst.',
+  'Die Welt um dich herum dreht sich bereits mit bedenklicher Geschwindigkeit, aber einer geht sicher noch rein! ... denkst du, kurz bevor sich dir der Magen umdreht und seinen Inhalt zu Tage fördert.' =>
+	'Die Welt um dich herum dreht sich bereits mit bedenklicher Geschwindigkeit, aber einer geht sicher noch rein! ... denkst du, kurz bevor sich dir der Magen umdreht und seinen Inhalt zu Tage fördert.',
+  'Das Wasser in der Flasche ist etwas löhmerig ...' =>
+	'Das Wasser in der Flasche ist etwas löhmerig ...',
+  'Entspannen' =>
+	'Entspannen',
+  'Du bist gerade dabei, dich ein wenig zu entspannen. Verdammt, warum hat dieses Versteck eigentlich keinen Kamin?' =>
+	'Du bist gerade dabei, dich ein wenig zu entspannen. Verdammt, warum hat dieses Versteck eigentlich keinen Kamin?',
+  'Du setzt dich in den Sitz fallen und versuchst, all die schlimmen Ereignisse heute abzuschütteln.' =>
+	'Du setzt dich in den Sitz fallen und versuchst, all die schlimmen Ereignisse heute abzuschütteln.',
+  'Epische Seele' =>
+	'Epische Seele',
+  'Reservist' =>
+	'Reservist',
+  'Du beherrscht die Grundlagen des bewaffneten Kampfes. Waffe ausrichten, Abzug drücken, Zombies beim Umfallen zugucken. Leider ist dein Wissen eher theoretischer Natur, dennoch erhälst du einen Bonus beim Einsatz von Waffen.' =>
+	'Du beherrscht die Grundlagen des bewaffneten Kampfes. Waffe ausrichten, Abzug drücken, Zombies beim Umfallen zugucken. Leider ist dein Wissen eher theoretischer Natur, dennoch erhälst du einen Bonus beim Einsatz von Waffen.',
+  'Du wirfst die Pille in die Chemikalie ... sie löst sich sofort und rückstandslos auf. Toll ...' =>
+	'Du wirfst die Pille in die Chemikalie ... sie löst sich sofort und rückstandslos auf. Toll ...',
+  'Heino Rock CD' =>
+	'Heino Rock CD',
+  'Leider passt nur eine einzige Person in ein InstaZELT™... und dieses ist schon voll.' =>
+	'Leider passt nur eine einzige Person in ein InstaZELT™... und dieses ist schon voll.',
+  'Hmm... nichts passiert. Kann es eventuell sein, dass du gar nicht auf Entzug warst?' =>
+	'Hmm... nichts passiert. Kann es eventuell sein, dass du gar nicht auf Entzug warst?',
+  'Mit unbarmherziger Macht zerstört der Schredder jeden Gegenstand, den du in seinen Schlot wirfst. Am Ende hast du damit :num Eimer mit Splittern gefüllt!' =>
+	'Mit unbarmherziger Macht zerstört der Schredder jeden Gegenstand, den du in seinen Schlot wirfst. Am Ende hast du damit :num Eimer mit Splittern gefüllt!',
+  'Du setzt deine ganze Kraft ein, um die Splitter in der Presse bestmöglich zu komprimieren. Als Belohnung für deine Leistung hälst du nun :num neue Splitterkugeln in der Hand.' =>
+	'Du setzt deine ganze Kraft ein, um die Splitter in der Presse bestmöglich zu komprimieren. Als Belohnung für deine Leistung hälst du nun :num neue Splitterkugeln in der Hand.',
+  'Du fühlst erneut einen Luftzug, dann spürst du wie sich etwas von hinten nähert. Noch während du dich umdrehst siehst du etwas aufblitzen, dann fühlst du etwas Kaltes an deinem Hals. Dann wird alles um dich herum schwarz. Herzlichen Glückwunsch, du bist tot.' =>
+	'Du fühlst erneut einen Luftzug, dann spürst du wie sich etwas von hinten nähert. Noch während du dich umdrehst siehst du etwas aufblitzen, dann fühlst du etwas Kaltes an deinem Hals. Dann wird alles um dich herum schwarz. Herzlichen Glückwunsch, du bist tot.',
+  'Du weist, dass der offensichtliche Weg nicht immer der effektivste ist. Deine Fähigkeit Wege zu optimieren hilft dir, Energie zu sparen.' =>
+	'Du weist, dass der offensichtliche Weg nicht immer der effektivste ist. Deine Fähigkeit Wege zu optimieren hilft dir, Energie zu sparen.',
+  'Dein furchtbarer Durst hindert dich am weiterschlafen... Du bist aufgewacht.' =>
+	'Dein furchtbarer Durst hindert dich am weiterschlafen... Du bist aufgewacht.',
+  'Die Zeiten von eiskaltem Essen sind vorbei! Vorrausgesetzt natürlich, du kannst etwas Strom auftreiben ...' =>
+	'Die Zeiten von eiskaltem Essen sind vorbei! Vorrausgesetzt natürlich, du kannst etwas Strom auftreiben ...',
+  'Wow, dieser "Puderzucker" hats echt in sich! Du fühlst dich als könntest du Bäume ausreissen! Das extreme Nasenbluten ist jedoch etwas nervig...' =>
+	'Wow, dieser "Puderzucker" hats echt in sich! Du fühlst dich als könntest du Bäume ausreissen! Das extreme Nasenbluten ist jedoch etwas nervig...',
+  'Kugel' =>
+	'Kugel',
+  'Es sieht etwas zusammengeschustert aus... aber wenigstens musst du nun nicht mehr in Unterwäsche herumlaufen.' =>
+	'Es sieht etwas zusammengeschustert aus... aber wenigstens musst du nun nicht mehr in Unterwäsche herumlaufen.',
+  'Normalerweise würde kein Mensch so etwas machen - aber in der aktuellen Situation ist es tatsächlich notwendig, seine Bequemlichkeit zugunsten von etwas mehr Sicherheit zu opfern.' =>
+	'Normalerweise würde kein Mensch so etwas machen - aber in der aktuellen Situation ist es tatsächlich notwendig, seine Bequemlichkeit zugunsten von etwas mehr Sicherheit zu opfern.',
+  'Wackelig' =>
+	'Wackelig',
+  'Helm' =>
+	'Helm',
+  'Gehts noch? Welche Frau gibt denn bitte ihre Tasche aus der Hand?' =>
+	'Gehts noch? Welche Frau gibt denn bitte ihre Tasche aus der Hand?',
+  'Desolat' =>
+	'Desolat',
+  'Instabil' =>
+	'Instabil',
+  'Augen zu und durch! Du schluckst die Pille herunter - und übrgibst dich direkt danach!' =>
+	'Augen zu und durch! Du schluckst die Pille herunter - und übrgibst dich direkt danach!',
+  'Augen zu und durch! Du schluckst die Pille herunter - plötzlich tut dein rechter Backenzahn weh. Wie unangenehm!' =>
+	'Augen zu und durch! Du schluckst die Pille herunter - plötzlich tut dein rechter Backenzahn weh. Wie unangenehm!',
+  'ENDLICH! Nun musst du den Brei nicht mehr mit der Hand kneten und das Fleisch nicht mehr mit Karateschlägen schneiden. Heureka!' =>
+	'ENDLICH! Nun musst du den Brei nicht mehr mit der Hand kneten und das Fleisch nicht mehr mit Karateschlägen schneiden. Heureka!',
+  'Du hast deinem Freund Dalad Jelly gegeben... was immer das auch sein mag.' =>
+	'Du hast deinem Freund Dalad Jelly gegeben... was immer das auch sein mag.',
+  ':name hat dir etwas Dalad Jelly verabreicht... Herzlichen Glückwunsch?' =>
+	':name hat dir etwas Dalad Jelly verabreicht... Herzlichen Glückwunsch?',
+  'Du hast nicht genug Energie um diesen Weg zu bewältigen während du jemand anderem hilfst.' =>
+	'Du hast nicht genug Energie um diesen Weg zu bewältigen während du jemand anderem hilfst.',
+  'Du tunkst das Essen in die Chemikalie - und beginnt zu blubbern und löst sich vor deinen Augen in seine Bestandteile auf! Zurück bleibt nur eine große glibbrige Masse Nährschleim. Lecker ...' =>
+	'Du tunkst das Essen in die Chemikalie - und beginnt zu blubbern und löst sich vor deinen Augen in seine Bestandteile auf! Zurück bleibt nur eine große glibbrige Masse Nährschleim. Lecker ...',
+  'Dieser Ort scheint bereits intensiv geplündert worden zu sein; hier wirst du wohl eher nichts mehr finden. Allerdings ist einer der Gästeräume vergleichsweise gut erhalten. Du könntest hier ein Versteck aufschlagen... wenn du keine Angst davor hast, dass dir die Decke auf den Kopf fällt.' =>
+	'Dieser Ort scheint bereits intensiv geplündert worden zu sein; hier wirst du wohl eher nichts mehr finden. Allerdings ist einer der Gästeräume vergleichsweise gut erhalten. Du könntest hier ein Versteck aufschlagen... wenn du keine Angst davor hast, dass dir die Decke auf den Kopf fällt.',
+  'Zerstampfen, verrühren, würzen. Für dieses Rezept muss man kein Meisterkoch sein, und man kann es in allen Lebenslagen anwenden (Kürbisse zubereiten, Gespräche mit dem Finanzamt etc) ' =>
+	'Zerstampfen, verrühren, würzen. Für dieses Rezept muss man kein Meisterkoch sein, und man kann es in allen Lebenslagen anwenden (Kürbisse zubereiten, Gespräche mit dem Finanzamt etc) ',
+  'Großartig - andere hätten diese Kleinteile mühsam zusammensuchen müssen, du kannst sie einfach selbst herstellen!' =>
+	'Großartig - andere hätten diese Kleinteile mühsam zusammensuchen müssen, du kannst sie einfach selbst herstellen!',
+  'Es scheint, als hätte der diensthabende Pathologe versucht, sich hier drin zu verbarrikadieren. Die schwere Metalltür ist fest verschlossen, und der Öffnungsmechanismus ist zerstört. Leider hat er nicht bedacht, dass er sich in einer LEICHENHALLE befindet - mit Leichen, die vielleicht noch nicht vollständig verstorben sind. Wenigstens scheint er vor seinem Tod ordentlich Schaden angerichtet zu haben...' =>
+	'Es scheint, als hätte der diensthabende Pathologe versucht, sich hier drin zu verbarrikadieren. Die schwere Metalltür ist fest verschlossen, und der Öffnungsmechanismus ist zerstört. Leider hat er nicht bedacht, dass er sich in einer LEICHENHALLE befindet - mit Leichen, die vielleicht noch nicht vollständig verstorben sind. Wenigstens scheint er vor seinem Tod ordentlich Schaden angerichtet zu haben...',
+  'Pathologe Quincy' =>
+	'Pathologe Quincy',
+  'Du wickelst die Bandage straff um die Verletzungen deines Freundes. Mit den Bandagen im Gesicht sieht er gleich viel besser aus...' =>
+	'Du wickelst die Bandage straff um die Verletzungen deines Freundes. Mit den Bandagen im Gesicht sieht er gleich viel besser aus...',
+  ':name hat eine Bandage um deine Verletzungen gewickelt.' =>
+	':name hat eine Bandage um deine Verletzungen gewickelt.',
+  'Du spritzt dir das Medikament... aber es scheint keine Wirkung zu haben!' =>
+	'Du spritzt dir das Medikament... aber es scheint keine Wirkung zu haben!',
+  'Nachdem du dir das Medikament gespritzt hast fühlst du sofort, wie deine Menschlichkeit zurückkehrt. Herzlichen Glückwunsch, du hast die Zombiekrankheit erfolgreich überwunden!' =>
+	'Nachdem du dir das Medikament gespritzt hast fühlst du sofort, wie deine Menschlichkeit zurückkehrt. Herzlichen Glückwunsch, du hast die Zombiekrankheit erfolgreich überwunden!',
+  'Es scheint, als wäre dieses kurz vor der Zombieapokalypse fertig geworden. Es ist zwar vollständig eingerichtet, aber gewohnt hat hier wohl niemand. Dies könnte der ideale Ort für ein Versteck sein... wenn es nicht gerade der Ort wäre, an dem Zombies zuerst nach dir suchen würden.' =>
+	'Es scheint, als wäre dieses kurz vor der Zombieapokalypse fertig geworden. Es ist zwar vollständig eingerichtet, aber gewohnt hat hier wohl niemand. Dies könnte der ideale Ort für ein Versteck sein... wenn es nicht gerade der Ort wäre, an dem Zombies zuerst nach dir suchen würden.',
+  'Mit diesem Schläger fährst du keine Homerun-Rekorde mehr ein... Dafür ist er wesentlich Effektiver im Bereich "Zombieverstümmelung".' =>
+	'Mit diesem Schläger fährst du keine Homerun-Rekorde mehr ein... Dafür ist er wesentlich Effektiver im Bereich "Zombieverstümmelung".',
+  'Wenn du schon ganz allein gegen Zombies kämpfen musst, kannst du dabei wenigstens cool aussehen. Leider ist niemand mehr da, um ein Video von deiner coolen neuen Choreographie bei YouTube zu posten.' =>
+	'Wenn du schon ganz allein gegen Zombies kämpfen musst, kannst du dabei wenigstens cool aussehen. Leider ist niemand mehr da, um ein Video von deiner coolen neuen Choreographie bei YouTube zu posten.',
+  'Das war wohl nichts... Deine Pflanzen sind total vertrocknet und absolut nutzlos. Da musst du wohl nochmal von vorne beginnen.' =>
+	'Das war wohl nichts... Deine Pflanzen sind total vertrocknet und absolut nutzlos. Da musst du wohl nochmal von vorne beginnen.',
+  'Diese Krankenhauskantine war früher mal ein echter Geheimtipp in der Stadt, denn hier konnte man vergleichsweise billig eine leckere Mahlzeit bekommen. Der günstige Preis ist auch kein Wunder - man kann Nahrungsmittel ziemlich billig produzieren, wenn sich im selben Gebäude eine Leichenhalle befindet...' =>
+	'Diese Krankenhauskantine war früher mal ein echter Geheimtipp in der Stadt, denn hier konnte man vergleichsweise billig eine leckere Mahlzeit bekommen. Der günstige Preis ist auch kein Wunder - man kann Nahrungsmittel ziemlich billig produzieren, wenn sich im selben Gebäude eine Leichenhalle befindet...',
+  'So ein Teil solltest du dir nicht zum Spaß umlegen... wie wärs, wenn du wartest, bis du stark blutest?' =>
+	'So ein Teil solltest du dir nicht zum Spaß umlegen... wie wärs, wenn du wartest, bis du stark blutest?',
+  ':name kann sich zur Zeit nicht bewegen...' =>
+	':name kann sich zur Zeit nicht bewegen...',
+  'Bitte wähle, welches Ranking du sehen möchtest.' =>
+	'Bitte wähle, welches Ranking du sehen möchtest.',
 );

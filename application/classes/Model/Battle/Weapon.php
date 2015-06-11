@@ -63,7 +63,7 @@ abstract class Model_Battle_Weapon extends Model_Items_Abstract_Item {
 	
 	public static function custom_ammo_icon() {
 		$i = static::$custom_icon;
-		return "/application/assets/icons/items/{$i}.gif";
+		return "items/{$i}";
 	} 
 	
 	public static $reload_time = 0;

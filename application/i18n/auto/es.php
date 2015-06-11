@@ -732,4 +732,42 @@ return array (
 	'',
   'Aktuelles Spiel' =>
 	'',
+  'Füllstand' =>
+	'',
+  'Leer!' =>
+	'',
+  ':num Schuss' =>
+	'',
+  'SP in :modes' =>
+	'',
+  'SP als :jobs' =>
+	'',
+  'oder' =>
+	'',
+  'Erforderlich zum Freischalten' =>
+	'',
+  'Level-Informationen' =>
+	'',
+  'Aktuelles Level' =>
+	'',
+  'Maximales Level erreicht!' =>
+	'',
+  'Nächstes Level' =>
+	'',
+  'Angezeigte Projekte filtern...' =>
+	'',
+  'Diese Krankenhauskantine war früher mal ein echter Geheimtipp in der Stadt, denn hier konnte man vergleichsweise billig eine leckere Mahlzeit bekommen. Der günstige Preis ist auch kein Wunder - man kann Nahrungsmittel ziemlich billig produzieren, wenn sich im selben Gebäude eine leichenhalle befindet...' =>
+	'',
+  'Lieblings-Item' =>
+	'',
+  'Heino Rock CD' =>
+	'',
+  'Leider passt nur eine einzige Person in ein InstaZELT™... und dieses ist schon voll.' =>
+	'',
+  'Das war wohl nichts... Deine Pflanzen sind total vertrocknet und absolut nutzlos. Da musst du wohl nochmal von vorne beginnen.' =>
+	'',
+  'Diese Krankenhauskantine war früher mal ein echter Geheimtipp in der Stadt, denn hier konnte man vergleichsweise billig eine leckere Mahlzeit bekommen. Der günstige Preis ist auch kein Wunder - man kann Nahrungsmittel ziemlich billig produzieren, wenn sich im selben Gebäude eine Leichenhalle befindet...' =>
+	'',
+  'Bitte wähle, welches Ranking du sehen möchtest.' =>
+	'',
 );

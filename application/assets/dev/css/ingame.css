@@ -197,11 +197,11 @@ div.details .group > span > b:first-child {
 }
 
 div.details .group > span > *:first-child.green {
-    color: #005d0f;
+    color: #2DB743;
 }
 
 div.details .group > span > *:first-child.red {
-    color: #5d1a19;
+    color: #D70300;
 }
 
 div.point {

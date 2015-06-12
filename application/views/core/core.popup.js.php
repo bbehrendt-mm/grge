@@ -481,8 +481,9 @@ core.popup = {
                 });
 
                 var pos = p(v,iconsize,iconsize);
+                var icon;
                 popup.append(
-                    $('<div />').addClass(k == data.current ? 'map location active' : (!(data.read_only && !v.skip_ro) && v.energy <= data.radius ? 'map location' : 'map location unreachable')).addClass($.map($.objToArray(v.classes, true), function(mv) {return 'mapflag_' + mv}).join(' ')).attr({
+                    icon = $('<div />').addClass(k == data.current ? 'map location active' : (!(data.read_only && !v.skip_ro) && v.energy <= data.radius ? 'map location' : 'map location unreachable')).addClass($.map($.objToArray(v.classes, true), function(mv) {return 'mapflag_' + mv}).join(' ')).attr({
                         'data-location':k,
                         'data-x': pos.x,
                         'data-y': pos.y
@@ -491,7 +492,43 @@ core.popup = {
                         left: pos.x
                     }).append(
                         $('<img />').attr('src','media/icons/places/' + v.icon)
-                    ).mouseenter(function() {
+                    )
+                );
+
+                var tooltip = function(elem, imode) {
+                    elem.append(
+                        $(imode ? '<b />' : '<h3 />').addClass(imode ? 'header' : '').text(v.name)
+                    ).append(
+                        $('<div />').addClass('row center').append(
+                            $('<div />').addClass('cell rw-3').append(
+                                $('<img />').attr('src', 'media/icons/distance.gif' )
+                            ).append(
+                                $(imode ? '<div />' : '<span />').text(v.distance)
+                            )
+                        ).append(
+                            $('<div />').addClass('cell rw-3').append(
+                                $('<img />').attr('src', 'media/icons/status_energy.gif' )
+                            ).append(
+                                $(imode ? '<div />' : '<span />').text(v.energy)
+                            )
+                        ).append(
+                            $('<div />').addClass('cell rw-3').append(
+                                $('<img />').attr('src', 'media/icons/zombie.gif' )
+                            ).append(
+                                $(imode ? '<div />' : '<span />').text(v.zombies)
+                            )
+                        ).append(
+                            $('<div />').addClass('cell rw-3').append(
+                                $('<img />').attr('src', 'media/icons/status_weight.gif' )
+                            ).append(
+                                $(imode ? '<div />' : '<span />').text(v.weight === null ? 0 : v.weight )
+                            )
+                        )
+                    );
+                };
+
+                if (!game.touch())
+                    icon.mouseenter(function() {
                         draw($.objToArray(v.nodes,true), !(data.read_only && !v.skip_ro) && v.energy <= data.radius ? '#39ACE5' : '#E3573B');
 
                         $(this).siblings().each(function() {
@@ -500,93 +537,96 @@ core.popup = {
                                 $(this).addClass(!(data.read_only && !v.skip_ro) && v.energy <= data.radius ? 'travel' : 'untravel');
                         });
 
-                        infopanel.empty().stop().fadeIn(100).append(
-                            $('<h3 />').text(v.name)
-                        ).append(
-                            $('<div />').addClass('row center').append(
-                                $('<div />').addClass('cell rw-3').append(
-                                    $('<img />').attr('src', 'media/icons/distance.gif' )
-                                ).append(
-                                    $('<span />').text(v.distance)
-                                )
-                            ).append(
-                                $('<div />').addClass('cell rw-3').append(
-                                    $('<img />').attr('src', 'media/icons/status_energy.gif' )
-                                ).append(
-                                    $('<span />').text(v.energy)
-                                )
-                            ).append(
-                                $('<div />').addClass('cell rw-3').append(
-                                    $('<img />').attr('src', 'media/icons/zombie.gif' )
-                                ).append(
-                                    $('<span />').text(v.zombies)
-                                )
-                            ).append(
-                                $('<div />').addClass('cell rw-3').append(
-                                    $('<img />').attr('src', 'media/icons/status_weight.gif' )
-                                ).append(
-                                    $('<span />').text(v.weight === null ? 0 : v.weight )
-                                )
-                            )
-                        )
+                        tooltip(infopanel.empty().stop().fadeIn(100), false);
                     }).mouseleave(function() {
                         draw();
                         infopanel.stop().fadeOut(100);
                         $(this).siblings('.travel, .untravel').removeClass('travel untravel');
-                    }).click(function() {
-                        if ((data.read_only && !v.skip_ro) || v.energy > data.radius || k == data.current) return;
+                    });
+                else
+                    icon.attr('title','-').qtip(game.render.html.qtip.ingame('top', {
+                        render: function() {
+                            var content, button;
+                            tooltip(content = $(this).find('.qtip-content').empty().stop().fadeIn(100), true);
+                            content.append($('<div />').addClass('row').append($('<div />').addClass('cell rw-12 padded').append(
+                                $('<div />').addClass('btn btn-zv btn-zv-skinned-context').addClass(((data.read_only && !v.skip_ro) || v.energy > data.radius || k == data.current) ? 'disabled' : '').text(<?=__j('Los gehts!')?>).click(function() {
+                                    icon.trigger('click', [true]);
+                                })
+                            )))
 
-                        if (v.zombies && !confirm(game.i18n(<?=__j('Dieser Ort wird von :zombies Zombies belagert. Wenn du diesen Ort betrittst, wirst du kämpfen müssen. Weiter?')?>, {':zombies': v.zombies}))) return;
+                        },
+                        show: function() {
+                            draw($.objToArray(v.nodes,true), !(data.read_only && !v.skip_ro) && v.energy <= data.radius ? '#39ACE5' : '#E3573B');
 
-                        var route_zombies = [];
-                        $.each(v.route, function(rkey, rval) {
-                            if (rval == v.id || rval == data.current) return;
-                            if (data.locations[rval].zombies > 0)
-                                route_zombies.push(data.locations[rval].name);
-                        });
-                        if (route_zombies.length && !confirm(game.i18n(<?=__j('Auf dem Weg zu diesem Ort befinden sich Zombies (:locations). Du wirst gegen sie kämpfen müssen, wenn du dorthin möchtest. Weiter?')?>,{':locations': route_zombies.join(', ')}))) return;
-
-                        if (core.last.players) {
-                            var esc_popup = core.popup.spawn({desktop: 400, sm: '100%'});
-
-                            var title;
-                            esc_popup.append($('<h2 />').addClass('center').text(v.name));
-
-                            esc_popup.append(
-                                $('<div />').addClass('row').append(title = $('<div />').addClass('cell rw-12 padded').text(<?=__j('Wenn du dich alleine fürchtest, kannst du andere Spieler bitten, dich zu begleiten. Oder noch besser, schick sie am besten direkt vor, nicht dass noch jemand (z.B. du) verletzt wird!')?>))
-                            );
-
-                            var check_row = $('<form />').addClass('row').appendTo(esc_popup);
-
-                            if (core.last.players.others)
-                                $.each(core.last.players.others, function(id, player) {
-                                    if (player.escort)
-                                        check_row.append($('<div />').addClass('cell rw-6 padded').append(
-                                            $('<label />').text(player.name).prepend($('<input />').attr('type','checkbox').attr('data-id', player.id))
-                                        ))
-                                });
+                            icon.siblings().each(function() {
+                                var id = $(this).data('location');
+                                if (id != v.current && id != k && ($.objToArray(v.route, true).indexOf(id) >= 0))
+                                    $(this).addClass(!(data.read_only && !v.skip_ro) && v.energy <= data.radius ? 'travel' : 'untravel');
+                            });
+                        },
+                        hide: function() {
+                            draw();
+                            icon.siblings('.travel, .untravel').removeClass('travel untravel');
+                        }
+                    }));
 
 
-                            if (check_row.children().length) {
-                                var bhav;
+                icon.click(function(ev, force) {
+                    if (!force && game.touch()) return;
 
-                                check_row
-                                    .prepend($('<div />').addClass('cell rw-12 padded').append($('<b />').text(<?=__j('Wer soll alles mitkommen?')?>)))
-                                    .append($('<div />').addClass('cell rw-12 padded').append($('<b />').text(<?=__j('Und wie siehts mit dir aus?')?>)))
-                                    .append($('<div />').addClass('cell rw-12 padded').append(
-                                        bhav = $('<select />')
-                                            .append($('<option />').val('2').text(<?=__j('Mitgehen und helfen')?>))
-                                            .append($('<option />').val('1').text(<?=__j('Nur mitgehen')?>))
-                                            .append($('<option />').val('0').text(<?=__j('Die Stellung halten')?>))
-                                            .val('1')
-                                    ));
+                    if ((data.read_only && !v.skip_ro) || v.energy > data.radius || k == data.current) return;
 
-                                bhav.selectric();
-                                check_row.find(':checkbox').customRadioCheck();
+                    if (v.zombies && !confirm(game.i18n(<?=__j('Dieser Ort wird von :zombies Zombies belagert. Wenn du diesen Ort betrittst, wirst du kämpfen müssen. Weiter?')?>, {':zombies': v.zombies}))) return;
 
-                            } else title.text(<?=__j('Bist du sicher, dass du diesen Ort betreten möchtest? Er ist weit weg, und riecht auch bestimmt nicht sehr gut...')?>);
+                    var route_zombies = [];
+                    $.each(v.route, function(rkey, rval) {
+                        if (rval == v.id || rval == data.current) return;
+                        if (data.locations[rval].zombies > 0)
+                            route_zombies.push(data.locations[rval].name);
+                    });
+                    if (route_zombies.length && !confirm(game.i18n(<?=__j('Auf dem Weg zu diesem Ort befinden sich Zombies (:locations). Du wirst gegen sie kämpfen müssen, wenn du dorthin möchtest. Weiter?')?>,{':locations': route_zombies.join(', ')}))) return;
 
-                            esc_popup.append($('<div />').addClass('row')
+                    if (core.last.players) {
+                        var esc_popup = core.popup.spawn({desktop: 400, sm: '100%'});
+
+                        var title;
+                        esc_popup.append($('<h2 />').addClass('center').text(v.name));
+
+                        esc_popup.append(
+                            $('<div />').addClass('row').append(title = $('<div />').addClass('cell rw-12 padded').text(<?=__j('Wenn du dich alleine fürchtest, kannst du andere Spieler bitten, dich zu begleiten. Oder noch besser, schick sie am besten direkt vor, nicht dass noch jemand (z.B. du) verletzt wird!')?>))
+                        );
+
+                        var check_row = $('<form />').addClass('row').appendTo(esc_popup);
+
+                        if (core.last.players.others)
+                            $.each(core.last.players.others, function(id, player) {
+                                if (player.escort)
+                                    check_row.append($('<div />').addClass('cell rw-6 padded').append(
+                                        $('<label />').text(player.name).prepend($('<input />').attr('type','checkbox').attr('data-id', player.id))
+                                    ))
+                            });
+
+
+                        if (check_row.children().length) {
+                            var bhav;
+
+                            check_row
+                                .prepend($('<div />').addClass('cell rw-12 padded').append($('<b />').text(<?=__j('Wer soll alles mitkommen?')?>)))
+                                .append($('<div />').addClass('cell rw-12 padded').append($('<b />').text(<?=__j('Und wie siehts mit dir aus?')?>)))
+                                .append($('<div />').addClass('cell rw-12 padded').append(
+                                    bhav = $('<select />')
+                                        .append($('<option />').val('2').text(<?=__j('Mitgehen und helfen')?>))
+                                        .append($('<option />').val('1').text(<?=__j('Nur mitgehen')?>))
+                                        .append($('<option />').val('0').text(<?=__j('Die Stellung halten')?>))
+                                        .val('1')
+                                ));
+
+                            bhav.selectric();
+                            check_row.find(':checkbox').customRadioCheck();
+
+                        } else title.text(<?=__j('Bist du sicher, dass du diesen Ort betreten möchtest? Er ist weit weg, und riecht auch bestimmt nicht sehr gut...')?>);
+
+                        esc_popup.append($('<div />').addClass('row')
                                 .append($('<div />').addClass('cell rw-8 rw-sm-12 padded').append(
                                     $('<div />').addClass('btn').text(<?=__j('Los gehts!')?>).click(function() {
 
@@ -614,21 +654,21 @@ core.popup = {
                                     $('<div />').addClass('btn').text(<?=__j('Abbrechen')?>).click(function() {
                                         esc_popup.trigger('unpop');
                                     })))
-                            );
-                        } else {
-                            popup.addClass('disabled');
-                            core.command('map/go', {to: k, follow: 1}, true, function(data) {
-                                popup.removeClass('disabled');
-                                if (data.success) {
-                                    popup.trigger('unpop');
-                                    core.command();
-                                }
-                            });
-                        }
+                        );
+                    } else {
+                        popup.addClass('disabled');
+                        core.command('map/go', {to: k, follow: 1}, true, function(data) {
+                            popup.removeClass('disabled');
+                            if (data.success) {
+                                popup.trigger('unpop');
+                                core.command();
+                            }
+                        });
+                    }
 
 
-                    })
-                )
+                })
+
             });
 
             popup.find('.map.location').each(function() {

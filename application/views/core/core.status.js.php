@@ -162,7 +162,7 @@
             ).append(
                 $('<div />').addClass('background').append(
                     $('<div />').css({width: value + '%', background: num_decode_color(type)})
-                )
+                ).append($('<div />').addClass('label').text(Math.round(value * 10)/10))
             )
         );
 

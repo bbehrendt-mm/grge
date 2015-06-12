@@ -323,8 +323,17 @@
                 ).append(
                     $('<div />').addClass('discoverybar').append($('<div />').css('width', data + '%'))
                 )
-                    .attr('title', data >= 100 ? <?=__j('Du hast diesen Ort vollständig ausgekundschaftet - von hier aus wirst du keine neuen Ruinen entdecken können.')?> : <?=__j('Du bist momentan auf der Suche nach neuen Orten. Jedes mal, wenn der Ereigniscountdown abläuft, hast du die Chance einen neuen Ort zu entdecken.')?>)
-                    .qtip(game.render.html.qtip.ingame('top'))
+                    .attr('title', '-')
+                    .qtip(game.render.html.qtip.ingame('top', {
+                        render: function(ev,api) {
+                            var content = $(this).find('.qtip-content').empty()
+                                .append($('<span />').text(data >= 100 ? <?=__j('Du hast diesen Ort vollständig ausgekundschaftet - von hier aus wirst du keine neuen Ruinen entdecken können.')?> : <?=__j('Du bist momentan auf der Suche nach neuen Orten. Jedes mal, wenn der Ereigniscountdown abläuft, hast du die Chance einen neuen Ort zu entdecken.')?>))
+                            if (data <= 100)
+                                content
+                                    .append($('<span />').addClass('separator'))
+                                    .append($('<div />').addClass('center').text(game.i18n(<?=__j('Aktueller Wert: :num')?>, {':num': Math.round(data) + '%'})))
+                        }
+                    }))
             )
         );
     };

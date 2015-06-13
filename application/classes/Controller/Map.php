@@ -66,7 +66,7 @@ class Controller_Map extends Controller_Game {
                 $player->log()->add(((count($companion) == 1) ? 'Du kannst diese Reise nicht antreten.' : 'Ihr könnt diese Reise nicht antreten.'));
                 return false;
             } elseif ($last_pass->uin() != $destination->uin()) {
-                $player->log()->add((count($companion) == 1) ? 'Hier kommst du nicht weiter... du musst deine Reise nach :od unterbrechen und bei :ad eine Pause machen.' : 'Hier kommt ihr nicht weiter... ihr müsst eure Reise nach :od unterbrechen und bei :ad eine Pause machen..', array(':od' => $destination->name(), ':ad' => $last_pass->name()));
+                $player->log()->add((count($companion) == 1) ? 'Hier kommst du nicht weiter... du musst deine Reise nach :od unterbrechen und bei :ad eine Pause machen.' : 'Hier kommt ihr nicht weiter... ihr müsst eure Reise nach :od unterbrechen und bei :ad eine Pause machen..', [], array(':od' => $destination->name(), ':ad' => $last_pass->name()));
                 $destination = $last_pass;
                 $did = $last_pass->uin();
                 if (!($route = $game->map($lid)->get_route($lid, $last_pass->uin())))

@@ -123,7 +123,7 @@ class Controller_Player extends Controller_Game {
 
         //var_dump($lock_energy, $lock_throw, $lock_tank); die;
 
-        $player->set_battle_settings((bool)$lock_energy, (bool)$lock_tank, (bool)$lock_throw, $aitype, $ammo_data);
+        $player->set_battle_settings((bool)$lock_energy, (bool)$lock_throw, (bool)(bool)$lock_tank, $aitype, $ammo_data);
         $player->log()->add('Du hast dein Kampfverhalten angepasst.');
 
         $this->render_notifications();

@@ -4594,4 +4594,6 @@ return array (
 	':name can not move right now...',
   'Bitte wähle, welches Ranking du sehen möchtest.' =>
 	'Please select the Ranking you want to see.',
+  'Du hast eine Kapsel aus der Verpackung genommen.' =>
+	'You took a capsule out of the box.',
 );

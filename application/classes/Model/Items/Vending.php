@@ -60,7 +60,7 @@ class Model_Items_Vending extends Model_Items_Abstract_Item {
 		
 		$item = $this->factory->spawn(true);
 		Tool_Scripts::place_new_item($item, false);
-		$player->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_VENDING, $item));
+		$player->location()->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_VENDING, $item));
         return true;
 	}
 

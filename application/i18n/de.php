@@ -4594,4 +4594,6 @@ return array (
 	':name kann sich zur Zeit nicht bewegen...',
   'Bitte wähle, welches Ranking du sehen möchtest.' =>
 	'Bitte wähle, welches Ranking du sehen möchtest.',
+  'Du hast eine Kapsel aus der Verpackung genommen.' =>
+	'Du hast eine Kapsel aus der Verpackung genommen.',
 );

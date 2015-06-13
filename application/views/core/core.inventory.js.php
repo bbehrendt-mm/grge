@@ -338,7 +338,7 @@
                                     num = prompt(<?=__j('Wie viele Kapseln möchtest du aus dieser Packung herausnehmen?')?> + ' (1 - ' + (v.count - 1) + ')', 1);
                                     if (num == null) break;
                                     num = parseInt(num);
-                                    if (isFinite(num) && num > 1 && num < v.count - 1) ok = true;
+                                    if (isFinite(num) && num >= 1 && num <= v.count - 1) ok = true;
                                 }
                                 if (ok) core.command('act/inventory',{action: 'pilldrop', items: [v.uin], count: num});
                             })

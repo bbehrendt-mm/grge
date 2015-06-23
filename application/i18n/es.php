@@ -4611,4 +4611,192 @@ Lo que suceda.... depende de ti descubrirlo. ',
 	'Bitte wähle, welches Ranking du sehen möchtest.',
   'Du hast eine Kapsel aus der Verpackung genommen.' =>
 	'Du hast eine Kapsel aus der Verpackung genommen.',
+  'Zurück' =>
+	'Zurück',
+  'Titanenseele' =>
+	'Titanenseele',
+  'Bist du verrückt? Womit willst du dich wehren, wenn dir einer deiner Mitverdammten ein Kompliment über dein Aussehen machen möchte?' =>
+	'Bist du verrückt? Womit willst du dich wehren, wenn dir einer deiner Mitverdammten ein Kompliment über dein Aussehen machen möchte?',
+  'Wäre dies ein Vampirspiel, so wärst du mit diesen Bolzen perfekt ausgerüstet, um Dracula gegenüber zu treten. Leider ist dies ein Zombiespiel, also wirst du wohl doch zur Armbrust greifen müssen...' =>
+	'Wäre dies ein Vampirspiel, so wärst du mit diesen Bolzen perfekt ausgerüstet, um Dracula gegenüber zu treten. Leider ist dies ein Zombiespiel, also wirst du wohl doch zur Armbrust greifen müssen...',
+  'Du schlägst deine Zähne in das Kürbisfleisch - so muss es sich anfühlen, ein Zombie zu sein!' =>
+	'Du schlägst deine Zähne in das Kürbisfleisch - so muss es sich anfühlen, ein Zombie zu sein!',
+  'Du benutzt deine Machete, um die Leiche in kleine Stücke zu schneiden. Das macht sie zwar nicht genießbarer, aber zumindest handlicher.' =>
+	'Du benutzt deine Machete, um die Leiche in kleine Stücke zu schneiden. Das macht sie zwar nicht genießbarer, aber zumindest handlicher.',
+  'Verkaufsautomat (Drogotron)' =>
+	'Verkaufsautomat (Drogotron)',
+  'Farbige Substanz (Betakosimtat)' =>
+	'Farbige Substanz (Betakosimtat)',
+  'Mit etwas Mühe bekommst du die Kiste aufgebrochen - und stellst fest dass sie randvoll mit Chemikalien ist!' =>
+	'Mit etwas Mühe bekommst du die Kiste aufgebrochen - und stellst fest dass sie randvoll mit Chemikalien ist!',
+  'Mit etwas Mühe bekommst du die Kiste aufgebrochen - und stellst fest dass sie randvoll mit Päckchen voller weißem Puder ist. Leider hast du ein paar Päckchen beim Aufbrechen der Kiste beschädigt, sodass sich deren Inhalt in Form einer Wolke um dich verbreitet...' =>
+	'Mit etwas Mühe bekommst du die Kiste aufgebrochen - und stellst fest dass sie randvoll mit Päckchen voller weißem Puder ist. Leider hast du ein paar Päckchen beim Aufbrechen der Kiste beschädigt, sodass sich deren Inhalt in Form einer Wolke um dich verbreitet...',
+  'Seltsame Substanz (Gatonoptigin)' =>
+	'Seltsame Substanz (Gatonoptigin)',
+  'Seltsame Substanz (Betakosidatin)' =>
+	'Seltsame Substanz (Betakosidatin)',
+  'Du wälzt dich hin und her, aber dein furchtbarer Durst hindert sich am Einschlafen...' =>
+	'Du wälzt dich hin und her, aber dein furchtbarer Durst hindert sich am Einschlafen...',
+  'Nur, weil du an einem Ort bereits einen Gegenstand gefunden hast, bedeutet das nicht, dass dort nicht vielleicht noch ein Zweiter liegt. Dank dieser genialen Erkenntnis kannst du hier nun wieder Items finden.' =>
+	'Nur, weil du an einem Ort bereits einen Gegenstand gefunden hast, bedeutet das nicht, dass dort nicht vielleicht noch ein Zweiter liegt. Dank dieser genialen Erkenntnis kannst du hier nun wieder Items finden.',
+  'Dies ist die einzige Radiostation, die selbst Wochen nach Ausbruch der Zombieinfektion noch sendete. Unermütlich und rund um die Uhr versuchten die Moderatoren, die Überlebenden in ihrem Sendegebiet zu koordinieren - leider haben sie dabei wohl vergessen, die Tür zu ihrem Studio abzuschließen.' =>
+	'Dies ist die einzige Radiostation, die selbst Wochen nach Ausbruch der Zombieinfektion noch sendete. Unermütlich und rund um die Uhr versuchten die Moderatoren, die Überlebenden in ihrem Sendegebiet zu koordinieren - leider haben sie dabei wohl vergessen, die Tür zu ihrem Studio abzuschließen.',
+  'Das Ding ist ganz schön fest verschlossen... beinahe so, als hätten die Angehörigen Angst vor einem Wiedersehen mit dem Verstorbenen gehabt. Nach einigen Krafakten gelingt es dir dann allerdings doch, den Sarg aufzubrechen. Der im Sarg liegende Leichnam sieht noch ziemlich saftig aus... Du hast Glück - neben den sterblichen Überresten findest du ein/eine/einen :item!' =>
+	'Das Ding ist ganz schön fest verschlossen... beinahe so, als hätten die Angehörigen Angst vor einem Wiedersehen mit dem Verstorbenen gehabt. Nach einigen Krafakten gelingt es dir dann allerdings doch, den Sarg aufzubrechen. Der im Sarg liegende Leichnam sieht noch ziemlich saftig aus... Du hast Glück - neben den sterblichen Überresten findest du ein/eine/einen :item!',
+  'Ohje, wer hätte das gedacht? Du hast dieses völlig verseuchte Stück Zombiefleisch runtergeschlungen und dich mit der Zombiekrankheit infiziert. Welch eine Überraschung!' =>
+	'Ohje, wer hätte das gedacht? Du hast dieses völlig verseuchte Stück Zombiefleisch runtergeschlungen und dich mit der Zombiekrankheit infiziert. Welch eine Überraschung!',
+  'Es ist wirklich überhaupt nicht bizarr, wenn erwachsene Überlebende einer Apokalypse durch die Ruinen der Zivilisation rennen und mit militärischen Wasserpistolen um sich spritzen! Hört auch zu lachen!' =>
+	'Es ist wirklich überhaupt nicht bizarr, wenn erwachsene Überlebende einer Apokalypse durch die Ruinen der Zivilisation rennen und mit militärischen Wasserpistolen um sich spritzen! Hört auch zu lachen!',
+  'Du nimmst einen Schluck aus deiner Flasche. Das Wasser hat einen leicht modrigen Nachgeschmack, dennoch hilft es gegen deinen Durst.' =>
+	'Du nimmst einen Schluck aus deiner Flasche. Das Wasser hat einen leicht modrigen Nachgeschmack, dennoch hilft es gegen deinen Durst.',
+  'Mit ein bisschen mehr Holz (und Schrauben anstelle von Klebeband) hast du deinen Holzkistendeckel stabilisiert.' =>
+	'Mit ein bisschen mehr Holz (und Schrauben anstelle von Klebeband) hast du deinen Holzkistendeckel stabilisiert.',
+  'Wenn man zwei Grundnahrungsmittel kombiniert, kann man unter umständen ein ganz neues Nahrungsmittel erschaffen. Diesen Vorgang nennt man "kochen", und du hast ihn soeben erfolgreich durchgeführt.' =>
+	'Wenn man zwei Grundnahrungsmittel kombiniert, kann man unter umständen ein ganz neues Nahrungsmittel erschaffen. Diesen Vorgang nennt man "kochen", und du hast ihn soeben erfolgreich durchgeführt.',
+  'Kohana_Cache_File::get corrupted cache file!' =>
+	'Kohana_Cache_File::get corrupted cache file!',
+  'Nur wenige wissen, dass sich Softdrinks in klares Wasser umwandeln lassen, indem man einfach zwei von ihnen zusammenmischt. Gut, dass du in Chemie immer so gut aufgepasst hast!' =>
+	'Nur wenige wissen, dass sich Softdrinks in klares Wasser umwandeln lassen, indem man einfach zwei von ihnen zusammenmischt. Gut, dass du in Chemie immer so gut aufgepasst hast!',
+  'Jigsaw-Nudisten' =>
+	'Jigsaw-Nudisten',
+  'Wer glaubt schon an Herstellerangaben! Diese Batterie kann problemlos so stark aufgeladen werden, dass man damit eine Kleinstadt mehrere Tage mit Strom versorgen könnte. Und diese Gerüchte von wegen "Explosionsgefahr" sind bestimmt bloß Panikmache aus den Medien ...' =>
+	'Wer glaubt schon an Herstellerangaben! Diese Batterie kann problemlos so stark aufgeladen werden, dass man damit eine Kleinstadt mehrere Tage mit Strom versorgen könnte. Und diese Gerüchte von wegen "Explosionsgefahr" sind bestimmt bloß Panikmache aus den Medien ...',
+  'Du hörst den Alarmdraht klingen und springst aus dem Bett, um dich gegen Zombies zu verteidigen!' =>
+	'Du hörst den Alarmdraht klingen und springst aus dem Bett, um dich gegen Zombies zu verteidigen!',
+  'Eine leckere Speise ist nur halb so gut, wenn sie kalt und ungewürzt ist. Du streust also ein paar Gewürze drüber und lässt das ganze eine Weile im Ofen schmoren - voilá, du hast deine Speise noch leckerer gemacht!' =>
+	'Eine leckere Speise ist nur halb so gut, wenn sie kalt und ungewürzt ist. Du streust also ein paar Gewürze drüber und lässt das ganze eine Weile im Ofen schmoren - voilá, du hast deine Speise noch leckerer gemacht!',
+  'Gut, dass dieser hochgradig experimentelle Plasmablitz-Generator eine absolut standartkonforme Bauform sowie Anschlüsse besitzt, sodass du ihn mit Bauteilen deines Batteriewerfers und Revolvers in eine tödliche Waffe verwandeln kannst. Fast könnte man meinen, das ganze wäre ziemlich unrealistisch.... aber nur fast!' =>
+	'Gut, dass dieser hochgradig experimentelle Plasmablitz-Generator eine absolut standartkonforme Bauform sowie Anschlüsse besitzt, sodass du ihn mit Bauteilen deines Batteriewerfers und Revolvers in eine tödliche Waffe verwandeln kannst. Fast könnte man meinen, das ganze wäre ziemlich unrealistisch.... aber nur fast!',
+  'Direkt nachdem du die Twinoid schluckst fühlst du dich wieder besser! Die Schachtel ist leer!' =>
+	'Direkt nachdem du die Twinoid schluckst fühlst du dich wieder besser! Die Schachtel ist leer!',
+  'Du wirfst die Tablette ins Wasser - es sprudelt ein wenig, danach mischt sich angenehmer Zitronenduft in den Güllegeruch des Wassers. Naja, besser als nichts...' =>
+	'Du wirfst die Tablette ins Wasser - es sprudelt ein wenig, danach mischt sich angenehmer Zitronenduft in den Güllegeruch des Wassers. Naja, besser als nichts...',
+  'Du kannst Energie nicht transportieren.' =>
+	'Du kannst Energie nicht transportieren.',
+  'Der zerfetzte Körper der Leiche saugt die Chemikalie auf, aber du kannst keine Veränderung feststellen ...' =>
+	'Der zerfetzte Körper der Leiche saugt die Chemikalie auf, aber du kannst keine Veränderung feststellen ...',
+  'Batterie entnehmen' =>
+	'Batterie entnehmen',
+  'Du hast eine Supercharger-Batterie in diese Taschenlampe eingebaut. Mal sehen, was man aus diesem alten Teil noch alles rausquetschen kann!' =>
+	'Du hast eine Supercharger-Batterie in diese Taschenlampe eingebaut. Mal sehen, was man aus diesem alten Teil noch alles rausquetschen kann!',
+  'Dir war das Risiko, dieses Teil einzusetzen, offensichtlich zu hoch. Tja...' =>
+	'Dir war das Risiko, dieses Teil einzusetzen, offensichtlich zu hoch. Tja...',
+  'So ein Kürbis kann sicher toll explodieren, wenn man ihn bis zum Rand mit Schwarzpulver vollstopft! Und das Gesicht.... naja, der Kürbis hätt halt ohne einfach doof ausgesehen.' =>
+	'So ein Kürbis kann sicher toll explodieren, wenn man ihn bis zum Rand mit Schwarzpulver vollstopft! Und das Gesicht.... naja, der Kürbis hätt halt ohne einfach doof ausgesehen.',
+  'Erschöpft vom Zombieapokalypse-Alltag setzt du dir erstmal eine schöne Kanne Kaffee auf.' =>
+	'Erschöpft vom Zombieapokalypse-Alltag setzt du dir erstmal eine schöne Kanne Kaffee auf.',
+  'Du hast eine Armbrust hergestellt. Wie wärs, wenn du direkt mal mit Zielübungen auf ein paar Zombies beginnst?' =>
+	'Du hast eine Armbrust hergestellt. Wie wärs, wenn du direkt mal mit Zielübungen auf ein paar Zombies beginnst?',
+  'Du schaltest die Taschenlampe ein, die sofort einen enormen Lichtblitz erzeugt. Als du deine Augen wieder öffnest stellst du fest, dass der Blitz alle Zombies vertrieben hat, die deinen Weg blockiert haben. Die Taschenlampe ist jedoch völlig zerstört.' =>
+	'Du schaltest die Taschenlampe ein, die sofort einen enormen Lichtblitz erzeugt. Als du deine Augen wieder öffnest stellst du fest, dass der Blitz alle Zombies vertrieben hat, die deinen Weg blockiert haben. Die Taschenlampe ist jedoch völlig zerstört.',
+  'Es schmeckt ein bisschen nach Hähnchen .... und zwar nach einem Hähnchen, dass 4 Wochen lang in der Sonne verwest ist!' =>
+	'Es schmeckt ein bisschen nach Hähnchen .... und zwar nach einem Hähnchen, dass 4 Wochen lang in der Sonne verwest ist!',
+  'Nicht alle Vorraussetungen für diese Aktion sind erfüllt.' =>
+	'Nicht alle Vorraussetungen für diese Aktion sind erfüllt.',
+  'Du schlingst die Pflanze mit einem Schluck herunter. Schmeckt eigentlich gar nicht so furchtbar... zumindest im Vergleich mit dieser verfaulten Leiche, die du gestern gegessen hast.' =>
+	'Du schlingst die Pflanze mit einem Schluck herunter. Schmeckt eigentlich gar nicht so furchtbar... zumindest im Vergleich mit dieser verfaulten Leiche, die du gestern gegessen hast.',
+  'Portion' =>
+	'Portion',
+  'Ein Stich hier.... ein Stich dort... Fertig! Dieser stylische Leichensack wird deine Transportprobleme zumindest im Bezug auf Leichen für immer lösen!' =>
+	'Ein Stich hier.... ein Stich dort... Fertig! Dieser stylische Leichensack wird deine Transportprobleme zumindest im Bezug auf Leichen für immer lösen!',
+  'Leiche einsacken' =>
+	'Leiche einsacken',
+  'Nichts ist befriedigender als das Geräusch von verfaulendem Fleisch, dass auf Holzpfähle gespießt wird!' =>
+	'Nichts ist befriedigender als das Geräusch von verfaulendem Fleisch, dass auf Holzpfähle gespießt wird!',
+  'Lecker! Es geht doch nichts über etwas Selbstgekochtes!' =>
+	'Lecker! Es geht doch nichts über etwas Selbstgekochtes!',
+  'Leiche herausholen' =>
+	'Leiche herausholen',
+  'Du musst ein bisschen drücken, quetschen und pressen, aber irgendwann steckt diese Leiche komplett in deinem Leichensack. Jetzt kannst du sie viel einfacher transportieren, hurra!' =>
+	'Du musst ein bisschen drücken, quetschen und pressen, aber irgendwann steckt diese Leiche komplett in deinem Leichensack. Jetzt kannst du sie viel einfacher transportieren, hurra!',
+  'Das Ding ist ganz schön fest verschlossen... beinahe so, als hätten die Angehörigen Angst vor einem Wiedersehen mit dem Verstorbenen gehabt. Nach einigen Krafakten gelingt es dir dann allerdings doch, den Sarg aufzubrechen. Der im Sarg liegende Leichnam sieht noch ziemlich saftig aus... Leider scheint hier sonst nichts von Wert drin zu sein.' =>
+	'Das Ding ist ganz schön fest verschlossen... beinahe so, als hätten die Angehörigen Angst vor einem Wiedersehen mit dem Verstorbenen gehabt. Nach einigen Krafakten gelingt es dir dann allerdings doch, den Sarg aufzubrechen. Der im Sarg liegende Leichnam sieht noch ziemlich saftig aus... Leider scheint hier sonst nichts von Wert drin zu sein.',
+  'Zerknautschte Leiche' =>
+	'Zerknautschte Leiche',
+  'Naja, die Form hat beim Transport im Leichensack etwas gelitten... Aber man erkennt, dass es mal so was ähnliches wie ein Mensch war!' =>
+	'Naja, die Form hat beim Transport im Leichensack etwas gelitten... Aber man erkennt, dass es mal so was ähnliches wie ein Mensch war!',
+  'Das Ding ist ganz schön fest verschlossen... beinahe so, als hätten die Angehörigen Angst vor einem Wiedersehen mit dem Verstorbenen gehabt. Nach einigen Krafakten gelingt es dir dann allerdings doch, den Sarg aufzubrechen. Zu deiner Überraschung ist die Leiche im Sarg weniger tot als sie aussieht!' =>
+	'Das Ding ist ganz schön fest verschlossen... beinahe so, als hätten die Angehörigen Angst vor einem Wiedersehen mit dem Verstorbenen gehabt. Nach einigen Krafakten gelingt es dir dann allerdings doch, den Sarg aufzubrechen. Zu deiner Überraschung ist die Leiche im Sarg weniger tot als sie aussieht!',
+  'Von der Konsistenz her erinnert diese Mutationsmelone eher an einen Keks als an eine Frucht. Vom Geschmack her erinnert sie an einen Sack voll Staub. Wenigstens um Gewichtszunahme musst du dir keine Gedanken machen ...' =>
+	'Von der Konsistenz her erinnert diese Mutationsmelone eher an einen Keks als an eine Frucht. Vom Geschmack her erinnert sie an einen Sack voll Staub. Wenigstens um Gewichtszunahme musst du dir keine Gedanken machen ...',
+  'Verflucht! gerade hast du die Leiche mühsam verstaut, reißt der Leichensack komplett auseinander! Transportieren kannst du damit nichts mehr...' =>
+	'Verflucht! gerade hast du die Leiche mühsam verstaut, reißt der Leichensack komplett auseinander! Transportieren kannst du damit nichts mehr...',
+  'Du fühlst sich wie eine Art makabrer Modedesigner! Ein paar Sticke mit der Nadel, schon ist dieser hässliche Riss nicht mehr zu sehen. Und ein paar potentielle Schwachstellen hast du gleich mit ausgebessert! Bravo!' =>
+	'Du fühlst sich wie eine Art makabrer Modedesigner! Ein paar Sticke mit der Nadel, schon ist dieser hässliche Riss nicht mehr zu sehen. Und ein paar potentielle Schwachstellen hast du gleich mit ausgebessert! Bravo!',
+  'Du rührst die Chemikalie in den Nährschleim... zunächst geschieht nichts, doch dann beginnt der Schleim plötzlich zu verbrennen! Naja siehs mal so... jetzt musst du das Zeug wenigstens nicht mehr essen.' =>
+	'Du rührst die Chemikalie in den Nährschleim... zunächst geschieht nichts, doch dann beginnt der Schleim plötzlich zu verbrennen! Naja siehs mal so... jetzt musst du das Zeug wenigstens nicht mehr essen.',
+  ':name hat dich angewiesen, bei :location nach dem Rechten zu sehen.' =>
+	':name hat dich angewiesen, bei :location nach dem Rechten zu sehen.',
+  'Nun, da dein Graben voller Wasser ist, bist du praktisch vor Zombieangriffen geschützt - solange du dein Versteck nicht verlässt, versteht sich.' =>
+	'Nun, da dein Graben voller Wasser ist, bist du praktisch vor Zombieangriffen geschützt - solange du dein Versteck nicht verlässt, versteht sich.',
+  'Bobs Autobude' =>
+	'Bobs Autobude',
+  'Eigentlich war dieser Bunker dafür gedacht, den Menschen im Falle eines Atomkriegs Schutz zu bieten. Darauf, dass man ihn auch bei der Zombieapokalypse gebrauchen könnte, ist wohl niemand gekommen. Umso besser für dich, denn du kannst diesen Bunker zu einem Versteck machen!' =>
+	'Eigentlich war dieser Bunker dafür gedacht, den Menschen im Falle eines Atomkriegs Schutz zu bieten. Darauf, dass man ihn auch bei der Zombieapokalypse gebrauchen könnte, ist wohl niemand gekommen. Umso besser für dich, denn du kannst diesen Bunker zu einem Versteck machen!',
+  'Hier gibt es nichts, was du schreddern könntest...' =>
+	'Hier gibt es nichts, was du schreddern könntest...',
+  'Nachdem du dieses Ding heruntergewürgt hast brennt dein Hals und dein Magen wie Feuer. Deinen Hunger oder Durst hat das nicht gestillt, aber zumindest bist du jetzt hellwach.' =>
+	'Nachdem du dieses Ding heruntergewürgt hast brennt dein Hals und dein Magen wie Feuer. Deinen Hunger oder Durst hat das nicht gestillt, aber zumindest bist du jetzt hellwach.',
+  'Endlich kannst du deine destruktiven Energien mal an was anderem als an Zombies ausleben. Aus irgend einem Grund bereitet dir das Auseinandernehmen dieses Skeletts eine merkwürdige Befriedigung...' =>
+	'Endlich kannst du deine destruktiven Energien mal an was anderem als an Zombies ausleben. Aus irgend einem Grund bereitet dir das Auseinandernehmen dieses Skeletts eine merkwürdige Befriedigung...',
+  'Eine NEM schlucken' =>
+	'Eine NEM schlucken',
+  'Mist... du hast nicht mal einen einzigen Zombie umgebracht.' =>
+	'Mist... du hast nicht mal einen einzigen Zombie umgebracht.',
+  'Farbige Substanz (Gatonoptium)' =>
+	'Farbige Substanz (Gatonoptium)',
+  'Hurra, du hast deinen Hunger (ein bisschen) bekämpft und sogar noch etwas neue Energie erhalten. Jetzt sind noch :num Pillen in der Schachtel.' =>
+	'Hurra, du hast deinen Hunger (ein bisschen) bekämpft und sogar noch etwas neue Energie erhalten. Jetzt sind noch :num Pillen in der Schachtel.',
+  'Dein furchtbarer Hunger hindert dich am weiterschlafen... Du bist aufgewacht.' =>
+	'Dein furchtbarer Hunger hindert dich am weiterschlafen... Du bist aufgewacht.',
+  'Die Chemikalie ätzt der Leiche das Fleisch von den Knochen! Es bleibt ledigtlich etwas Blut zurück... und ein perfekt erhaltenes Skelett!' =>
+	'Die Chemikalie ätzt der Leiche das Fleisch von den Knochen! Es bleibt ledigtlich etwas Blut zurück... und ein perfekt erhaltenes Skelett!',
+  'Die Reifen dieses Wohnmobils sind zerstört, der Motor ist beschädigt und Benzin ist auch nicht mehr im Tank. Ich würde sagen, mit diesem Teil fährst du nirgenwo mehr hin; aber häuslich einrichten kannst du dich da drin natürlich trotzdem.' =>
+	'Die Reifen dieses Wohnmobils sind zerstört, der Motor ist beschädigt und Benzin ist auch nicht mehr im Tank. Ich würde sagen, mit diesem Teil fährst du nirgenwo mehr hin; aber häuslich einrichten kannst du dich da drin natürlich trotzdem.',
+  'Grillen ...' =>
+	'Grillen ...',
+  'Der Grillplatz war einst der wichtigste Ort dieses Campingplatzes; hier wurden Nahrungsmittel und Getränke verteilt sowie soziale Kontakte geschlossen. Jetzt ist der Platz wie ausgestorben, bis auf ein paar herumschleichende Zombies natürlich. Und die haben kein interesse an sozialen Kontakten...' =>
+	'Der Grillplatz war einst der wichtigste Ort dieses Campingplatzes; hier wurden Nahrungsmittel und Getränke verteilt sowie soziale Kontakte geschlossen. Jetzt ist der Platz wie ausgestorben, bis auf ein paar herumschleichende Zombies natürlich. Und die haben kein interesse an sozialen Kontakten...',
+  'Grillstation' =>
+	'Grillstation',
+  'Gegrillte Leiche' =>
+	'Gegrillte Leiche',
+  'Gegrillter Zombie' =>
+	'Gegrillter Zombie',
+  'Gegrillter Tierkadaver' =>
+	'Gegrillter Tierkadaver',
+  'Zelt' =>
+	'Zelt',
+  'Ein Zelt bietet leider überhaupt keinen Schutz vor Zombies - der Bewohner dieses Zelts hat das wohl auf die harte Tour lernen müssen. Wenigstens kannst du jetzt ungesraft in seinen Sachen wühlen.' =>
+	'Ein Zelt bietet leider überhaupt keinen Schutz vor Zombies - der Bewohner dieses Zelts hat das wohl auf die harte Tour lernen müssen. Wenigstens kannst du jetzt ungesraft in seinen Sachen wühlen.',
+  'Mit einem Grill kannst du selbst das ekelhafteste Zeug schmackhaft machen. Herzlichen Glückwunsch, du hast ein paar Steaks erzeugt.' =>
+	'Mit einem Grill kannst du selbst das ekelhafteste Zeug schmackhaft machen. Herzlichen Glückwunsch, du hast ein paar Steaks erzeugt.',
+  'Wirklich lecker, wenn man bedenkt, woraus dieses Steak gemacht wurde...' =>
+	'Wirklich lecker, wenn man bedenkt, woraus dieses Steak gemacht wurde...',
+  'Keine Ahnung wozu du als Survivalist überhaupt eine Matratze brauchst... aber gut, wenn du Spaß an Bastelarbeit hast.' =>
+	'Keine Ahnung wozu du als Survivalist überhaupt eine Matratze brauchst... aber gut, wenn du Spaß an Bastelarbeit hast.',
+  'Nachdem du die Knochen mit Fleisch in den Ofen gelegt hast, ist deine Küche erfüllt von .... leckerem .... Geruch. Aber wenigstens kannst du die Knochen nun essen, ohne dir eine Vergiftung zuzuziehen.' =>
+	'Nachdem du die Knochen mit Fleisch in den Ofen gelegt hast, ist deine Küche erfüllt von .... leckerem .... Geruch. Aber wenigstens kannst du die Knochen nun essen, ohne dir eine Vergiftung zuzuziehen.',
+  'Beim Kochen sind nicht nur die meisten Salmonellen, sondern auch fast alle Geschmacksstoffe verloren gegangen. Glücklicherweise handelt es sich hier um einen Knochen mit Fleisch, der Verlust von Geschmack ist also etwas sehr gutes...' =>
+	'Beim Kochen sind nicht nur die meisten Salmonellen, sondern auch fast alle Geschmacksstoffe verloren gegangen. Glücklicherweise handelt es sich hier um einen Knochen mit Fleisch, der Verlust von Geschmack ist also etwas sehr gutes...',
+  'Was kann man mit einer verrückten Waffe machen? Sie NOCH verrückter machen, natürlich! Was denn sonst?' =>
+	'Was kann man mit einer verrückten Waffe machen? Sie NOCH verrückter machen, natürlich! Was denn sonst?',
+  'Mit ein bisschen Metall (und Schrauben anstelle von Klebeband) hast du deinen Fahrradhelm verbessert.' =>
+	'Mit ein bisschen Metall (und Schrauben anstelle von Klebeband) hast du deinen Fahrradhelm verbessert.',
+  'Vorsichtig füllst du das Schwarzpulver in eine Plastiktüte... BINGO! Perfekte Schwarzpulverbombe! Dieses Teil wird dir sicher irgendwann einmal das Leben retten.' =>
+	'Vorsichtig füllst du das Schwarzpulver in eine Plastiktüte... BINGO! Perfekte Schwarzpulverbombe! Dieses Teil wird dir sicher irgendwann einmal das Leben retten.',
+  'Du spritzt dir das Medikament, aber nichts geschieht... könnte es sein, dass du überhaupt nicht infiziert warst?' =>
+	'Du spritzt dir das Medikament, aber nichts geschieht... könnte es sein, dass du überhaupt nicht infiziert warst?',
+  'Du schaltest die Taschenlampe ein. Zuerst geschieht anscheinend nichts... dann beginnt die Lampe, eine unglaubliche Hitze zu entwickeln. Erschrocken lässt du sie fallen, und vor deinen Augen zerschmilzt sie zu einem Metallklumpen.' =>
+	'Du schaltest die Taschenlampe ein. Zuerst geschieht anscheinend nichts... dann beginnt die Lampe, eine unglaubliche Hitze zu entwickeln. Erschrocken lässt du sie fallen, und vor deinen Augen zerschmilzt sie zu einem Metallklumpen.',
+  'Dein Tod kam sehr überraschend... Niemand kann genau sagen, was passiert ist. Trotzdem bist du tot.' =>
+	'Dein Tod kam sehr überraschend... Niemand kann genau sagen, was passiert ist. Trotzdem bist du tot.',
+  'Du drehst den Zündschlüssel und hörst ein Klappern, aber der Motor springt nicht an. Irgend etwas muss da kaputt sein...' =>
+	'Du drehst den Zündschlüssel und hörst ein Klappern, aber der Motor springt nicht an. Irgend etwas muss da kaputt sein...',
+  'Dein Freund hat keine Wunde, die du auswaschen könntest...' =>
+	'Dein Freund hat keine Wunde, die du auswaschen könntest...',
+  'Du hast unglaubliche Willenskraft bewiesen und den kalten Entzug überstanden! Herzlichen Glückwunsch, deine Drogensucht ist Geschichte!' =>
+	'Du hast unglaubliche Willenskraft bewiesen und den kalten Entzug überstanden! Herzlichen Glückwunsch, deine Drogensucht ist Geschichte!',
+  'Die Tür zur Leichenhalle ist fest versiegelt und lässt sich nicht öffnen. Über dir befindet sich ein kleines Lüftungsgitter, über das du vermutlich in die Leichenhalle gelangen könntest - wenn du hinein passen würdest. Echt Mist dass du kein Kind mehr bist...' =>
+	'Die Tür zur Leichenhalle ist fest versiegelt und lässt sich nicht öffnen. Über dir befindet sich ein kleines Lüftungsgitter, über das du vermutlich in die Leichenhalle gelangen könntest - wenn du hinein passen würdest. Echt Mist dass du kein Kind mehr bist...',
 );

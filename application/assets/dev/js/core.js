@@ -6,7 +6,7 @@ core = {
     parts: {},
     snippets: {},
 
-    version: '2.0.2-1-0-1',
+    version: '2.0.2-2-0-1',
 
     last: {},
     plugins: {},
@@ -316,8 +316,8 @@ core = {
                 core.command('act/inventory',{action: rucksack ? 'drop' : 'take', items: cache, player: rucksack ? 0 : $('.inventory_player[data-pid-selected=1]').data('pid')});
             }).qtip(game.render.html.qtip.ingame('top')));
 
-        $.each(data, function(k,v) {
-            var container = core.snippets.item(false, v.name, v.icon, v.static <= 1 ? v.count : v.static, v.static > 1, true).addClass(remote ? 'remote' : '');
+        $.each($.objToArray(data, true).sort(function(a,b) {return (a.addr < b.addr) ? -1 : (a.addr == b.addr ? 0 : 1)}) , function(k,v) {
+            var container = core.snippets.item(false, v.name, v.icon, v.static <= 1 ? ((v.weapon && v.weapon.shots !== false) ? v.weapon.shots : v.count) : v.static, v.static > 1, true).addClass(remote ? 'remote' : '');
             var flags = $.map(v.flags, function(m) {return m;});
             $(target).append(container);
 
@@ -591,7 +591,7 @@ core = {
                                     num = prompt("Wie viel Munition m\u00f6chtest du ablegen?" + ' (1 - ' + (vin.count) + ')', vin.count);
                                     if (num == null) break;
                                     num = parseInt(num);
-                                    if (isFinite(num) && num > 1 && num <= vin.count) ok = true;
+                                    if (isFinite(num) && num >= 1 && num <= vin.count) ok = true;
                                 }
                                 if (ok) core.command('act/inventory',{action: 'belt', items: [v.uin], count: num, addr: vin.addr});
                             }))

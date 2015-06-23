@@ -770,4 +770,24 @@ return array (
 	'',
   'Bitte wähle, welches Ranking du sehen möchtest.' =>
 	'',
+  'Zurück' =>
+	'',
+  'Kohana_Cache_File::get corrupted cache file!' =>
+	'',
+  'Nicht alle Vorraussetungen für diese Aktion sind erfüllt.' =>
+	'',
+  'Du schlingst die Pflanze mit einem Schluck herunter. Schmeckt eigentlich gar nicht so furchtbar... zumindest im Vergleich mit dieser verfaulten Leiche, die du gestern gegessen hast.' =>
+	'',
+  'Portion' =>
+	'',
+  'Mist... du hast nicht mal einen einzigen Zombie umgebracht.' =>
+	'',
+  'Grillstation' =>
+	'',
+  'Gegrillte Leiche' =>
+	'',
+  'Gegrillter Zombie' =>
+	'',
+  'Gegrillter Tierkadaver' =>
+	'',
 );

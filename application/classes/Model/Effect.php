@@ -268,7 +268,7 @@ class Model_Effect {
     public function convert() {
         $tmp = array();
         foreach ($this->effects as $stat => $dif)
-            if ($dif == 0) continue;
+            if ($dif === 0) continue;
             else {
                 if ($stat >= 0)
                     $tmp[] = array('icon' => static::translate($stat), 'color' => static::color($stat, $dif), 'value' => $this->convert_val($dif), 'numeric' => !is_string($dif));

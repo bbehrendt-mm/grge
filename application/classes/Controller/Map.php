@@ -48,6 +48,8 @@ class Controller_Map extends Controller_Game {
                 return false;
             }
 
+            if ($map_type == Model_Map_Abstract::MMA_TYPE_LABYRINTH) $route['tail'] = [array_pop($route['tail'])];
+
             //Trail route to find if all nodes are passable
             $last_pass = $location;
             foreach ($route['tail'] as $pass) if ($pass != $lid) {

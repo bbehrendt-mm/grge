@@ -8,8 +8,11 @@
 <h1 class="noclick"><i class="fa fa-arrow-circle-right"></i><?=__('Post')?></h1>
 
 <div class="row">
-    <div class="cell rw-12 padded">
+    <div class="cell rw-10 rw-lg-9 rw-md-8 rw-sm-6 padded">
         <div class="btn" id="new_msg"><?=__('Nachricht verfassen')?></div>
+    </div>
+    <div class="cell rw-2 rw-lg-3 rw-md-4 rw-sm-6 padded">
+        <div class="btn" data-return="1"><?=__('Zurück')?></div>
     </div>
     <div id="new_msg_area" class="cell rw-12 padded">
         <div class="row">
@@ -57,6 +60,12 @@
     <?php } ?>
 </div>
 
+<div class="row">
+    <div class="cell rw-2 ro-10 rw-lg-3 ro-lg-9 rw-md-4 ro-md-8 rw-sm-6 ro-sm-6 padded">
+        <div class="btn" data-return="1"><?=__('Zurück')?></div>
+    </div>
+</div>
+
 <script type="application/javascript">
     // ## JS COMPRESS BEGIN ## //
     (function() {
@@ -65,6 +74,10 @@
             $('#new_msg_area').show();
         });
         $('#new_msg_area').hide().find('select').selectric();
+
+        $('[data-return]').click(function() {
+            game.network.load('game/redirect');
+        });
 
         var mbox = function(obj, callback) {
             $('#new_msg_confirm').addClass('disabled');

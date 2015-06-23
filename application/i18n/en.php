@@ -4596,4 +4596,192 @@ return array (
 	'Please select the Ranking you want to see.',
   'Du hast eine Kapsel aus der Verpackung genommen.' =>
 	'You took a capsule out of the box.',
+  'Zurück' =>
+	'Back',
+  'Titanenseele' =>
+	'Titan Sould',
+  'Bist du verrückt? Womit willst du dich wehren, wenn dir einer deiner Mitverdammten ein Kompliment über dein Aussehen machen möchte?' =>
+	'Bitch, you crazy? How are you going to defend yourself from male survivors complimenting you good looks?',
+  'Wäre dies ein Vampirspiel, so wärst du mit diesen Bolzen perfekt ausgerüstet, um Dracula gegenüber zu treten. Leider ist dies ein Zombiespiel, also wirst du wohl doch zur Armbrust greifen müssen...' =>
+	'If this was a vampire game, you\'de be perfectly set to face Dracula. Unfortunately, this is a zombie game, so you\'ll need a crossbow to use these bolts...',
+  'Du schlägst deine Zähne in das Kürbisfleisch - so muss es sich anfühlen, ein Zombie zu sein!' =>
+	'You sink your teeth in this pumpkins flesh - that must be what it feels like beeing a zombie!',
+  'Du benutzt deine Machete, um die Leiche in kleine Stücke zu schneiden. Das macht sie zwar nicht genießbarer, aber zumindest handlicher.' =>
+	'You\'ve used your machete to cut this body into small pieces. This might not make them more tasteful, but at least they are easier to handle now.',
+  'Verkaufsautomat (Drogotron)' =>
+	'Vending Machine (Drugshore)',
+  'Farbige Substanz (Betakosimtat)' =>
+	'Colorful Substance (Betakosimate)',
+  'Mit etwas Mühe bekommst du die Kiste aufgebrochen - und stellst fest dass sie randvoll mit Chemikalien ist!' =>
+	'It takes some effort, but you finally manage to crack this crate open - which is full of chemicals!',
+  'Mit etwas Mühe bekommst du die Kiste aufgebrochen - und stellst fest dass sie randvoll mit Päckchen voller weißem Puder ist. Leider hast du ein paar Päckchen beim Aufbrechen der Kiste beschädigt, sodass sich deren Inhalt in Form einer Wolke um dich verbreitet...' =>
+	'It takes some effort, but you finally manage to crack this crate open - which is full with white powder. This powder starts forming a cloud around you, by the way...',
+  'Seltsame Substanz (Gatonoptigin)' =>
+	'Strange Substance (Gatonoptigin)',
+  'Seltsame Substanz (Betakosidatin)' =>
+	'Strange Substance (Betakosidatin)',
+  'Du wälzt dich hin und her, aber dein furchtbarer Durst hindert sich am Einschlafen...' =>
+	'You roll around in your bed, but your terrible thirst keeps you from falling asleep...',
+  'Nur, weil du an einem Ort bereits einen Gegenstand gefunden hast, bedeutet das nicht, dass dort nicht vielleicht noch ein Zweiter liegt. Dank dieser genialen Erkenntnis kannst du hier nun wieder Items finden.' =>
+	'Just because you\'ve already found an item here, doesn\'t mean there is nothing more to find. Thanks to this genious idea, you can find items at this location again.',
+  'Dies ist die einzige Radiostation, die selbst Wochen nach Ausbruch der Zombieinfektion noch sendete. Unermütlich und rund um die Uhr versuchten die Moderatoren, die Überlebenden in ihrem Sendegebiet zu koordinieren - leider haben sie dabei wohl vergessen, die Tür zu ihrem Studio abzuschließen.' =>
+	'This is the only broadcasting station that remains active weeks after the initial zombie outbreak. The anchors tried their best helping all the survivors in their broadcasting area to organize - unfortunately, it seems they forgot to lock their door...',
+  'Das Ding ist ganz schön fest verschlossen... beinahe so, als hätten die Angehörigen Angst vor einem Wiedersehen mit dem Verstorbenen gehabt. Nach einigen Krafakten gelingt es dir dann allerdings doch, den Sarg aufzubrechen. Der im Sarg liegende Leichnam sieht noch ziemlich saftig aus... Du hast Glück - neben den sterblichen Überresten findest du ein/eine/einen :item!' =>
+	'This thing is closed pretty tight, as if the kinsmen were worried the occupant of this coffin would pay them a visit after being buried... After applying some brute force, you manage to crack it open. The body in there looks pretty juicy... You even manage to find :item next to it!',
+  'Ohje, wer hätte das gedacht? Du hast dieses völlig verseuchte Stück Zombiefleisch runtergeschlungen und dich mit der Zombiekrankheit infiziert. Welch eine Überraschung!' =>
+	'Oh no! You have eaten this extremely infested piece of zombie meat and gotten yourself infected by the zombie virus. How completely avoidable!',
+  'Es ist wirklich überhaupt nicht bizarr, wenn erwachsene Überlebende einer Apokalypse durch die Ruinen der Zivilisation rennen und mit militärischen Wasserpistolen um sich spritzen! Hört auch zu lachen!' =>
+	'There is nothing weird about an adult running around the remnants of civilization splashing zombies with a military grade super soaker! Stop laughing!',
+  'Du nimmst einen Schluck aus deiner Flasche. Das Wasser hat einen leicht modrigen Nachgeschmack, dennoch hilft es gegen deinen Durst.' =>
+	'You\'re taking a sip out of your bottle. There is a slight notion of rotten flesh, but it still vanquishes your thirst.',
+  'Mit ein bisschen mehr Holz (und Schrauben anstelle von Klebeband) hast du deinen Holzkistendeckel stabilisiert.' =>
+	'Adding some more wood (and using screws instead of duct tape) have made your wooden crate cap more sturdy.',
+  'Wenn man zwei Grundnahrungsmittel kombiniert, kann man unter umständen ein ganz neues Nahrungsmittel erschaffen. Diesen Vorgang nennt man "kochen", und du hast ihn soeben erfolgreich durchgeführt.' =>
+	'When combining numerous, different foods, you might be able to create a new kind of food. This procedure is called "cooking", and you\'ve just completed it.',
+  'Kohana_Cache_File::get corrupted cache file!' =>
+	'Kohana_Cache_File::get corrupted cache file!',
+  'Nur wenige wissen, dass sich Softdrinks in klares Wasser umwandeln lassen, indem man einfach zwei von ihnen zusammenmischt. Gut, dass du in Chemie immer so gut aufgepasst hast!' =>
+	'Few people know that you can transform softdrinks to clean water by simply mixing them together. It\'s a good thing you\'ve paid attention in school!',
+  'Jigsaw-Nudisten' =>
+	'Jigsaw Nudists',
+  'Wer glaubt schon an Herstellerangaben! Diese Batterie kann problemlos so stark aufgeladen werden, dass man damit eine Kleinstadt mehrere Tage mit Strom versorgen könnte. Und diese Gerüchte von wegen "Explosionsgefahr" sind bestimmt bloß Panikmache aus den Medien ...' =>
+	'Who even believes in manifacturer specifications! You can load this battery up with so much energy, it could supply power to a whole city for a couple of days. And these rumors about beeing "Highly Explosive" are probably just scaremongering...',
+  'Du hörst den Alarmdraht klingen und springst aus dem Bett, um dich gegen Zombies zu verteidigen!' =>
+	'Hearing the tripwire go off, you jump out of your bed to fight the invading zombies!',
+  'Eine leckere Speise ist nur halb so gut, wenn sie kalt und ungewürzt ist. Du streust also ein paar Gewürze drüber und lässt das ganze eine Weile im Ofen schmoren - voilá, du hast deine Speise noch leckerer gemacht!' =>
+	'Tasty food is only half as tasty if it\'s cold and without spices. So, what better way to fix that then by shoving it in an oven and adding stuff that might count as something similar to spices - voilá, now the food is even more tasty!',
+  'Gut, dass dieser hochgradig experimentelle Plasmablitz-Generator eine absolut standartkonforme Bauform sowie Anschlüsse besitzt, sodass du ihn mit Bauteilen deines Batteriewerfers und Revolvers in eine tödliche Waffe verwandeln kannst. Fast könnte man meinen, das ganze wäre ziemlich unrealistisch.... aber nur fast!' =>
+	'It\'s a good thing this highly experimental Plasma Spark Generator has a set of standartized ports for hooking it up to parts of a battery launcher and a normal handgun. It\'s almost as if all that wasn\'t realistic at all - almost!',
+  'Direkt nachdem du die Twinoid schluckst fühlst du dich wieder besser! Die Schachtel ist leer!' =>
+	'You start to feel better right after taking these Twinoid pills! The box is empty!',
+  'Du wirfst die Tablette ins Wasser - es sprudelt ein wenig, danach mischt sich angenehmer Zitronenduft in den Güllegeruch des Wassers. Naja, besser als nichts...' =>
+	'You throw a purifying tablet into the water - it sparkles a little, but the water still smells rather foul...',
+  'Du kannst Energie nicht transportieren.' =>
+	'You can not move energy around.',
+  'Der zerfetzte Körper der Leiche saugt die Chemikalie auf, aber du kannst keine Veränderung feststellen ...' =>
+	'The torn flesh of this body seems to soak all the chemicals in, but nothing else happens...',
+  'Batterie entnehmen' =>
+	'Take battery out',
+  'Du hast eine Supercharger-Batterie in diese Taschenlampe eingebaut. Mal sehen, was man aus diesem alten Teil noch alles rausquetschen kann!' =>
+	'You\'ve put a supercharger battery in this flashlight. Let\'s see what we can get out of this baby!',
+  'Dir war das Risiko, dieses Teil einzusetzen, offensichtlich zu hoch. Tja...' =>
+	'Not taking any risks, are we?. Pff, boring...',
+  'So ein Kürbis kann sicher toll explodieren, wenn man ihn bis zum Rand mit Schwarzpulver vollstopft! Und das Gesicht.... naja, der Kürbis hätt halt ohne einfach doof ausgesehen.' =>
+	'A pumpkin is a super effective bomb, if you just fill it to the rim with gunpowder! As for the face you\'ve carved in.... well, it would have looked less badass without it.',
+  'Erschöpft vom Zombieapokalypse-Alltag setzt du dir erstmal eine schöne Kanne Kaffee auf.' =>
+	'Surviving day by day in a zombie apocalypse sure is exhausting. Better have some coffee.',
+  'Du hast eine Armbrust hergestellt. Wie wärs, wenn du direkt mal mit Zielübungen auf ein paar Zombies beginnst?' =>
+	'You have built a crossbow! How about a little target practice on some zombies?',
+  'Du schaltest die Taschenlampe ein, die sofort einen enormen Lichtblitz erzeugt. Als du deine Augen wieder öffnest stellst du fest, dass der Blitz alle Zombies vertrieben hat, die deinen Weg blockiert haben. Die Taschenlampe ist jedoch völlig zerstört.' =>
+	'Upon turning the switch, a incredibly bright flash emits from the flashlight. After opening your eyes, you notice all the zombies that have blocked you are gone. Unfortunately, the flashlight is destroyed beyond all repair.',
+  'Es schmeckt ein bisschen nach Hähnchen .... und zwar nach einem Hähnchen, dass 4 Wochen lang in der Sonne verwest ist!' =>
+	'It tastes a bit like chicken .... a chicken that has died two month ago by being drowned in the sewers, that is!',
+  'Nicht alle Vorraussetungen für diese Aktion sind erfüllt.' =>
+	'Not all requirements for this action have been fulfilled.',
+  'Du schlingst die Pflanze mit einem Schluck herunter. Schmeckt eigentlich gar nicht so furchtbar... zumindest im Vergleich mit dieser verfaulten Leiche, die du gestern gegessen hast.' =>
+	'After munching on this plant a bit, you start to realize that eating this is not quite as painfull as you were expecting... unlike that time last week, where you were trying to eat a rotting corpse.',
+  'Portion' =>
+	'Portion',
+  'Ein Stich hier.... ein Stich dort... Fertig! Dieser stylische Leichensack wird deine Transportprobleme zumindest im Bezug auf Leichen für immer lösen!' =>
+	'Stich here.... stich there... done! This stylish body bag will forever solve all your problems (that are related to carrying corpses).',
+  'Leiche einsacken' =>
+	'Bag a body',
+  'Nichts ist befriedigender als das Geräusch von verfaulendem Fleisch, dass auf Holzpfähle gespießt wird!' =>
+	'Nothing is more satisfying than the sound of rotten flesh being impaled on wooden stakes.',
+  'Lecker! Es geht doch nichts über etwas Selbstgekochtes!' =>
+	'Tasty! There is nothing like a meal you\'ve cooked yourself.',
+  'Leiche herausholen' =>
+	'Unpack body',
+  'Du musst ein bisschen drücken, quetschen und pressen, aber irgendwann steckt diese Leiche komplett in deinem Leichensack. Jetzt kannst du sie viel einfacher transportieren, hurra!' =>
+	'Your experience in playing Tetris is finally useful! You managed to get this body into your bag. Now you can transport it much easier.',
+  'Das Ding ist ganz schön fest verschlossen... beinahe so, als hätten die Angehörigen Angst vor einem Wiedersehen mit dem Verstorbenen gehabt. Nach einigen Krafakten gelingt es dir dann allerdings doch, den Sarg aufzubrechen. Der im Sarg liegende Leichnam sieht noch ziemlich saftig aus... Leider scheint hier sonst nichts von Wert drin zu sein.' =>
+	'This thing is closed pretty tight, as if the kinsmen were worried the occupant of this coffin would pay them a visit after being buried... After some strenuous effort, you manage to pry the coffin open. The body in there looks pretty juicy...  however, there is nothing else in here.',
+  'Zerknautschte Leiche' =>
+	'Squashed carcass',
+  'Naja, die Form hat beim Transport im Leichensack etwas gelitten... Aber man erkennt, dass es mal so was ähnliches wie ein Mensch war!' =>
+	'Well, it\'s form has slightly changed while being in this body bag... But you can still clearly see this used to be human!',
+  'Das Ding ist ganz schön fest verschlossen... beinahe so, als hätten die Angehörigen Angst vor einem Wiedersehen mit dem Verstorbenen gehabt. Nach einigen Krafakten gelingt es dir dann allerdings doch, den Sarg aufzubrechen. Zu deiner Überraschung ist die Leiche im Sarg weniger tot als sie aussieht!' =>
+	'This thing is closed pretty tight, as if the kinsmen were worried the occupant of this coffin would pay them a visit after being buried... After some strenuous effort, you manage to pry the coffin open. You are, however, rather surprised to find the body in there is not all that dead!',
+  'Von der Konsistenz her erinnert diese Mutationsmelone eher an einen Keks als an eine Frucht. Vom Geschmack her erinnert sie an einen Sack voll Staub. Wenigstens um Gewichtszunahme musst du dir keine Gedanken machen ...' =>
+	'This feels more like a cookie than a fruit, and tastes more like dust. But look at the bright side: This thing is great for not gaining any weight...',
+  'Verflucht! gerade hast du die Leiche mühsam verstaut, reißt der Leichensack komplett auseinander! Transportieren kannst du damit nichts mehr...' =>
+	'Goddamn! Just as you managed to fit this body in here, the bags fabric ripped! You won\'t be carrying anything in this bag anytime soon...',
+  'Du fühlst sich wie eine Art makabrer Modedesigner! Ein paar Sticke mit der Nadel, schon ist dieser hässliche Riss nicht mehr zu sehen. Und ein paar potentielle Schwachstellen hast du gleich mit ausgebessert! Bravo!' =>
+	'You feel like some sort of gothing clothing designer! With just a few stiches, you\'ve completely fixed that nasty hole. You even managed to improve on some potential weak points! Bravo!',
+  'Du rührst die Chemikalie in den Nährschleim... zunächst geschieht nichts, doch dann beginnt der Schleim plötzlich zu verbrennen! Naja siehs mal so... jetzt musst du das Zeug wenigstens nicht mehr essen.' =>
+	'You mix your nutrient slime with some chemicals ... aaaaaaaand it\'s gone!',
+  ':name hat dich angewiesen, bei :location nach dem Rechten zu sehen.' =>
+	':name has ordered you to check out :location.',
+  'Nun, da dein Graben voller Wasser ist, bist du praktisch vor Zombieangriffen geschützt - solange du dein Versteck nicht verlässt, versteht sich.' =>
+	'Now, after you\'ve filled your trench with water, you\'re pretty much safe from zombie attacks - as long as you don\'t leave your hideout, of course.',
+  'Bobs Autobude' =>
+	'Bobs Parts Shop',
+  'Eigentlich war dieser Bunker dafür gedacht, den Menschen im Falle eines Atomkriegs Schutz zu bieten. Darauf, dass man ihn auch bei der Zombieapokalypse gebrauchen könnte, ist wohl niemand gekommen. Umso besser für dich, denn du kannst diesen Bunker zu einem Versteck machen!' =>
+	'This bunker was designed to protect people in case of a nuclear strike. Seemingly nobody got the idea that this place might also protect you from a zombie apocalypse. Well, maybe YOU could turn this thing into a proper hideout.',
+  'Hier gibt es nichts, was du schreddern könntest...' =>
+	'There is nothing here to shredder...',
+  'Nachdem du dieses Ding heruntergewürgt hast brennt dein Hals und dein Magen wie Feuer. Deinen Hunger oder Durst hat das nicht gestillt, aber zumindest bist du jetzt hellwach.' =>
+	'You whole intestines burn like hell after eating this. It didn\'t do anything for your hunger or thirst, but it worked wonders for waking you up.',
+  'Endlich kannst du deine destruktiven Energien mal an was anderem als an Zombies ausleben. Aus irgend einem Grund bereitet dir das Auseinandernehmen dieses Skeletts eine merkwürdige Befriedigung...' =>
+	'Now, you can use your destructive nature for something usefull. or some reason, disassembling this skelleton gives you a strange kind of satisfaction...',
+  'Eine NEM schlucken' =>
+	'Take NS',
+  'Mist... du hast nicht mal einen einzigen Zombie umgebracht.' =>
+	'Damn... that didn\'t even kill one solitary zombie!',
+  'Farbige Substanz (Gatonoptium)' =>
+	'Colorful Substance (Gatonoptium)',
+  'Hurra, du hast deinen Hunger (ein bisschen) bekämpft und sogar noch etwas neue Energie erhalten. Jetzt sind noch :num Pillen in der Schachtel.' =>
+	'Yay, you\'ve fought your hunger (a little) and even got some energy back. There are still :num pills left in the box.',
+  'Dein furchtbarer Hunger hindert dich am weiterschlafen... Du bist aufgewacht.' =>
+	'Your terrible hunger prevents you from sleeping any longer...',
+  'Die Chemikalie ätzt der Leiche das Fleisch von den Knochen! Es bleibt ledigtlich etwas Blut zurück... und ein perfekt erhaltenes Skelett!' =>
+	'These chemicals eat all the flesh of this body! Only some blood remains... and a skelleton, of course.',
+  'Die Reifen dieses Wohnmobils sind zerstört, der Motor ist beschädigt und Benzin ist auch nicht mehr im Tank. Ich würde sagen, mit diesem Teil fährst du nirgenwo mehr hin; aber häuslich einrichten kannst du dich da drin natürlich trotzdem.' =>
+	'The tires are ripped, the motor is badly damaged and there isn\'t a drop of gas left in its tank. I\'d say you\'re not going anywhere in this thing anymore; of course, you can still use it as a convienient hideout.',
+  'Grillen ...' =>
+	'Grill ...',
+  'Der Grillplatz war einst der wichtigste Ort dieses Campingplatzes; hier wurden Nahrungsmittel und Getränke verteilt sowie soziale Kontakte geschlossen. Jetzt ist der Platz wie ausgestorben, bis auf ein paar herumschleichende Zombies natürlich. Und die haben kein interesse an sozialen Kontakten...' =>
+	'This barbecue area used to be the central place of this campsite; food and beverages have been served and new friends have been made here. Now this place is as dead as the few shambling zombies around here. And they are really not into making new friends...',
+  'Grillstation' =>
+	'BBQ Station',
+  'Gegrillte Leiche' =>
+	'Grilled Body',
+  'Gegrillter Zombie' =>
+	'Grilled Zombie',
+  'Gegrillter Tierkadaver' =>
+	'Grilled Animal',
+  'Zelt' =>
+	'Tent',
+  'Ein Zelt bietet leider überhaupt keinen Schutz vor Zombies - der Bewohner dieses Zelts hat das wohl auf die harte Tour lernen müssen. Wenigstens kannst du jetzt ungesraft in seinen Sachen wühlen.' =>
+	'A tent does not protect you at all from zombies - the occupants of this tent learned that the hard way. Well, at least they won\'t ojbect anymore to you going through their stuff.',
+  'Mit einem Grill kannst du selbst das ekelhafteste Zeug schmackhaft machen. Herzlichen Glückwunsch, du hast ein paar Steaks erzeugt.' =>
+	'This grill can make even the nastiest food look and taste great. Congratulations, you\'ve got yourself some steaks.',
+  'Wirklich lecker, wenn man bedenkt, woraus dieses Steak gemacht wurde...' =>
+	'Pretty tasty, considering what it was made from...',
+  'Keine Ahnung wozu du als Survivalist überhaupt eine Matratze brauchst... aber gut, wenn du Spaß an Bastelarbeit hast.' =>
+	'No idea why a survivalist would even need a matress... but it\'s ok, at least you were having fun making this.',
+  'Nachdem du die Knochen mit Fleisch in den Ofen gelegt hast, ist deine Küche erfüllt von .... leckerem .... Geruch. Aber wenigstens kannst du die Knochen nun essen, ohne dir eine Vergiftung zuzuziehen.' =>
+	'After putting that meaty bone in your oven, the kitchen is filled with a .... pleasant .... smell. But at least you can now eat this bone without being poisoned.',
+  'Beim Kochen sind nicht nur die meisten Salmonellen, sondern auch fast alle Geschmacksstoffe verloren gegangen. Glücklicherweise handelt es sich hier um einen Knochen mit Fleisch, der Verlust von Geschmack ist also etwas sehr gutes...' =>
+	'Cooking this not only gets rid of most of the poisons, but also most of the flavoring. But since this is a Meaty Bone, getting rid of the flavor is actually a good thing...',
+  'Was kann man mit einer verrückten Waffe machen? Sie NOCH verrückter machen, natürlich! Was denn sonst?' =>
+	'What can you possible do with a totally whacky gun? Make if even more whacky, of course!',
+  'Mit ein bisschen Metall (und Schrauben anstelle von Klebeband) hast du deinen Fahrradhelm verbessert.' =>
+	'Adding some metal (and using some screws) have made your bike helmet more sturdy',
+  'Vorsichtig füllst du das Schwarzpulver in eine Plastiktüte... BINGO! Perfekte Schwarzpulverbombe! Dieses Teil wird dir sicher irgendwann einmal das Leben retten.' =>
+	'You fill the gunpowder carefully in a plastic bag... BINGO! Perfect gunpowder bomb! This thing might even save your life someday.',
+  'Du spritzt dir das Medikament, aber nichts geschieht... könnte es sein, dass du überhaupt nicht infiziert warst?' =>
+	'You\'ve applied the drug, but nothing happens... maybe it\'s because you weren\\actually infected?',
+  'Du schaltest die Taschenlampe ein. Zuerst geschieht anscheinend nichts... dann beginnt die Lampe, eine unglaubliche Hitze zu entwickeln. Erschrocken lässt du sie fallen, und vor deinen Augen zerschmilzt sie zu einem Metallklumpen.' =>
+	'You turn the flashlight on an nothing happens... at first. Suddenly, it starts emitting an incredible heat. You drop the flashlight to the ground, and before your eyes it turns into a hunk of metal.',
+  'Dein Tod kam sehr überraschend... Niemand kann genau sagen, was passiert ist. Trotzdem bist du tot.' =>
+	'You death came very suprising... Nobody knows what happens, but you\'re dead anyways',
+  'Du drehst den Zündschlüssel und hörst ein Klappern, aber der Motor springt nicht an. Irgend etwas muss da kaputt sein...' =>
+	'You turn the ignition, but apart from some sputtering nothing happens. Damn it, the engine must be damaged...',
+  'Dein Freund hat keine Wunde, die du auswaschen könntest...' =>
+	'Your friend has no wound for you to clean.',
+  'Du hast unglaubliche Willenskraft bewiesen und den kalten Entzug überstanden! Herzlichen Glückwunsch, deine Drogensucht ist Geschichte!' =>
+	'By employing your amazing strength of will, you\'ve managed to survive the cold turkey! Your addiction is gone - Congratulations!',
+  'Die Tür zur Leichenhalle ist fest versiegelt und lässt sich nicht öffnen. Über dir befindet sich ein kleines Lüftungsgitter, über das du vermutlich in die Leichenhalle gelangen könntest - wenn du hinein passen würdest. Echt Mist dass du kein Kind mehr bist...' =>
+	'The morgue door is sealed shut and won\'t open. There is a small ventilation shaft above you - you could probably use it to enter the morgue, but unfortunately you don\'t fit in there. If only you were a little smaller...',
 );

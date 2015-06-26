@@ -66,6 +66,20 @@
             });
     };
 
+    core.plugins.Minimap.prototype.startStop = function(start = false) {
+        if (start) {
+            createjs.Ticker.removeAllEventListeners('tick');
+            var alias = this;
+            createjs.Ticker.timingMode = 'synched';
+            createjs.Ticker.framerate = 60;
+            createjs.Ticker.addEventListener("tick", function() {
+                alias.stage.update();
+                var ctx = $(alias.canvas).get(0).getContext('2d');
+                ctx.putImageData(alias.postProcessing(ctx.getImageData(0,0,alias.size,alias.size)),0,0);
+            });
+        } else createjs.Ticker.reset();
+    };
+
     /**
      * Initializes the module and loads missing assets
      * @returns {boolean}
@@ -79,15 +93,9 @@
         this.stage = new createjs.Stage($(this.canvas).attr({height: this.size, width: this.size}).get(0));
         this.stage.regX = this.stage.regY = .5;
 
-        createjs.Ticker.setFPS(60);
-        createjs.Ticker.addEventListener("tick", function() {
-            alias.stage.update();
-            var ctx = $(alias.canvas).get(0).getContext('2d');
-            ctx.putImageData(alias.postProcessing(ctx.getImageData(0,0,alias.size,alias.size)),0,0);
-        });
-
         this.requestImage('media/icons/minimap/floor.png', true);
 
+        this.startStop(true);
         return true;
     };
 
@@ -104,6 +112,10 @@
      * @param players {int} Number of other players
      */
     core.plugins.Minimap.prototype.addEnvironment = function(pos_x, pos_y, top, bottom, left, right, zombies, players) {
+        $.map(this.environments, function(v) {
+            return (v.x == pos_x && v.y == pos_y) ? null : v;
+        });
+
         this.environments.push({x: pos_x, y: pos_y, container: null, top: top, bottom: bottom, left: left, right: right, zombies: zombies, players: players, size: (top || bottom || left || right) ? 0.25 : 0.65});
         this.updateRenderer();
         return this;

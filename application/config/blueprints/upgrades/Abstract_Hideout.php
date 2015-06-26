@@ -463,7 +463,7 @@ return Model_Blueprints::factory()
             ->name('Flaschensammlung')
             ->description('Nichts schmückt eine Wohnung mehr als ein riesiger Haufen leerer Bierflaschen.')
             ->deco(10)
-            ->material(['Model_Items_Smallbottle' => 6])
+            ->material('Model_Items_Smallbottle', 6, function($i) {/** @var Model_Items_Smallbottle $i */ return $i->count() == 0;})
     )
 
     ->add_blueprints(
@@ -500,7 +500,7 @@ return Model_Blueprints::factory()
     ->pop_stack()
 
     //++ STACK -> EPIC FOUNDATIONS
-    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->provide('epic')->requires('slot_epic')->category('Epische Projekte')->message('Du hast die Arbeiten an einem epischen Projekt in deinem Versteck begonnen. Viel Erfolg!');})
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->provide('epic')->requires('slot_epic')->category('Epische Projekte')->confirm('Bist du sicher, dass du die Arbeit an dem epischen Projekt ":name" beginnen möchtest? Denk daran, dass du nur ein episches Projekt pro Versteck errichten kannst!')->message('Du hast die Arbeiten an einem epischen Projekt in deinem Versteck begonnen. Viel Erfolg!')->effect(Model_Effect::factory()->achieve(Model_Achievement::MA_EPIC_BEGIN, 1, true));})
 
     ->add_blueprints(
         Model_Blueprint::factory()
@@ -582,6 +582,7 @@ return Model_Blueprints::factory()
             ->requires('epc_garden_floor')->requires('epc_garden_patch')->requires('epc_garden_lights')->requires('epc_garden_water')
             ->produces(['Model_Items_Virtual_Epic_Garden' => 1])
             ->name('Abschließen: Kleines Gewächshaus')
+            ->effect(Model_Effect::factory()->upgrade_achieve(Model_Achievement::MA_EPIC_BEGIN, Model_Achievement::MA_EPIC_END, 1, true, true))
     )
 
     // -- STACK -> EPIC FOUNDATIONS / GARDEN
@@ -644,6 +645,7 @@ return Model_Blueprints::factory()
             ->requires('epc_raven_hole')->requires('epc_raven_lure')->requires('epc_raven_cage')->requires('epc_raven_foodbin')->requires('epc_raven_training')
             ->produces(['Model_Items_Virtual_Epic_Raven' => 1])
             ->name('Abschließen: Raben-Bootcamp')
+            ->effect(Model_Effect::factory()->upgrade_achieve(Model_Achievement::MA_EPIC_BEGIN, Model_Achievement::MA_EPIC_END, 1, true, true))
     )
 
     // -- STACK -> EPIC FOUNDATIONS / RAVEN
@@ -697,6 +699,7 @@ return Model_Blueprints::factory()
             ->requires('epc_fence_wiring')->requires('epc_fence_fusebox')->requires('epc_fence_technobabble')->requires('epc_fence_lasers')
             ->produces(['Model_Items_Virtual_Epic_Fence' => 1])
             ->name('Abschließen: Laserzaun')
+            ->effect(Model_Effect::factory()->upgrade_achieve(Model_Achievement::MA_EPIC_BEGIN, Model_Achievement::MA_EPIC_END, 1, true, true))
     )
 
     // -- STACK -> EPIC FOUNDATIONS / FENCE

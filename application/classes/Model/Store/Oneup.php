@@ -28,6 +28,6 @@ class Model_Store_Oneup extends Model_Store_Interface {
      * @param int $level
      */
     public static function trigger_player_before_init(&$job, &$level) {
-        $level++;
+        $level = min($level, count(Tool_Gamemodes::compile_mode_database(true)['jobs'][$job]['levels'])) + 1;
     }
 }

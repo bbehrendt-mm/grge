@@ -790,4 +790,10 @@ return array (
 	'',
   'Gegrillter Tierkadaver' =>
 	'',
+  'Bist du sicher, dass du die Arbeit an dem epischen Projekt ":name" beginnen möchtest? Denk daran, dass du nur ein episches Projekt pro Versteck errichten kannst!' =>
+	'',
+  'Ambitionierter Bauherr' =>
+	'',
+  'Epischer Baumeister' =>
+	'',
 );

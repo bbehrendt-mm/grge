@@ -6,7 +6,7 @@ core = {
     parts: {},
     snippets: {},
 
-    version: '2.0.2-2-0-1',
+    version: '2.0.2-3-0-1',
 
     last: {},
     plugins: {},
@@ -1282,14 +1282,12 @@ core = {
             mapbg.append($('<canvas />').attr({height: d, width: d}));
 
             var renderer = core.cache_get('minimap_stage');
-            if (renderer) {
-                renderer.reset(mapbg.find('canvas').get(0));
-                core.cache_put('minimap_stage', undefined);
-            } else {
-                renderer = new core.plugins.Minimap(mapbg.find('canvas').get(0));
-                renderer.addEnvironment(0,0, data.lomap.top ? data.lomap.top.id : 0, data.lomap.bottom ? data.lomap.bottom.id : 0, data.lomap.left ? data.lomap.left.id : 0, data.lomap.right ? data.lomap.right.id : 0, data.lomap.current.zombies,  data.lomap.current.players);
-            }
 
+            if (renderer) renderer.reset(mapbg.find('canvas').get(0));
+            else renderer = new core.plugins.Minimap(mapbg.find('canvas').get(0));
+            renderer.addEnvironment(0,0, data.lomap.top ? data.lomap.top.id : 0, data.lomap.bottom ? data.lomap.bottom.id : 0, data.lomap.left ? data.lomap.left.id : 0, data.lomap.right ? data.lomap.right.id : 0, data.lomap.current.zombies,  data.lomap.current.players);
+
+            core.cache_put('minimap_stage', renderer);
             var go = function(lid, slidex, slidey) {
                 return function() {
                     lomap.find('.navbtn').fadeOut(200);
@@ -1297,7 +1295,7 @@ core = {
                     core.command('map/go', {to: lid, follow: 1}, true, function(data) {
                         if (data.success) {
                             if (data.preview && (slidex != 0 || slidey != 0)) {
-                                core.cache_put('minimap_stage', renderer);
+
                                 renderer
                                     .addEnvironment(slidex, slidey, data.preview.top ? data.preview.top.id : 0, data.preview.bottom ? data.preview.bottom.id : 0, data.preview.left ? data.preview.left.id : 0, data.preview.right ? data.preview.right.id : 0, data.preview.current.zombies,  data.preview.current.players)
                                     .shift(slidex, slidey, 1000, function () {
@@ -2031,6 +2029,20 @@ core = {
             });
     };
 
+    core.plugins.Minimap.prototype.startStop = function(start = false) {
+        if (start) {
+            createjs.Ticker.removeAllEventListeners('tick');
+            var alias = this;
+            createjs.Ticker.timingMode = 'synched';
+            createjs.Ticker.framerate = 60;
+            createjs.Ticker.addEventListener("tick", function() {
+                alias.stage.update();
+                var ctx = $(alias.canvas).get(0).getContext('2d');
+                ctx.putImageData(alias.postProcessing(ctx.getImageData(0,0,alias.size,alias.size)),0,0);
+            });
+        } else createjs.Ticker.reset();
+    };
+
     /**
      * Initializes the module and loads missing assets
      * @returns {boolean}
@@ -2044,15 +2056,9 @@ core = {
         this.stage = new createjs.Stage($(this.canvas).attr({height: this.size, width: this.size}).get(0));
         this.stage.regX = this.stage.regY = .5;
 
-        createjs.Ticker.setFPS(60);
-        createjs.Ticker.addEventListener("tick", function() {
-            alias.stage.update();
-            var ctx = $(alias.canvas).get(0).getContext('2d');
-            ctx.putImageData(alias.postProcessing(ctx.getImageData(0,0,alias.size,alias.size)),0,0);
-        });
-
         this.requestImage('media/icons/minimap/floor.png', true);
 
+        this.startStop(true);
         return true;
     };
 
@@ -2069,6 +2075,10 @@ core = {
      * @param players {int} Number of other players
      */
     core.plugins.Minimap.prototype.addEnvironment = function(pos_x, pos_y, top, bottom, left, right, zombies, players) {
+        $.map(this.environments, function(v) {
+            return (v.x == pos_x && v.y == pos_y) ? null : v;
+        });
+
         this.environments.push({x: pos_x, y: pos_y, container: null, top: top, bottom: bottom, left: left, right: right, zombies: zombies, players: players, size: (top || bottom || left || right) ? 0.25 : 0.65});
         this.updateRenderer();
         return this;
@@ -2267,7 +2277,7 @@ core = {
             }).trigger('reposition').appendTo(wrapper);
 
         var z = game.render.html.modal.blend(function() {
-            popup.addClass('disabled').css({
+            popup.trigger('close').addClass('disabled').css({
                 '-webkit-filter': game.mobile ? '' : 'blur(5px)',
                 'filter': game.mobile ? '' : 'blur(5px)'
             }).animate({
@@ -2467,6 +2477,9 @@ core = {
                 else targets = frame;
 
                 targets.append($('<div />').addClass('cell padded rw-4 rw-md-6').append(core.snippets.blueprint(v, bdata.energy, bdata.zombies, bdata.blueprints, function() {
+                    if (v.confirm && !window.confirm(game.i18n(v.confirm, {':name': v.name})))
+                        return;
+
                     var prev_scroll = $('.popup').find('>*:first-child').scrollTop();
                     popup.addClass('disabled');
                     core.command('location/' + type, {build: k}, true, function(new_data) {
@@ -2474,7 +2487,7 @@ core = {
                         popup.removeClass('disabled');
                         frame.trigger('filter');
                         $('.popup').find('>*:first-child').animate({scrollTop: prev_scroll}, 0);
-                        popup.off('unpop').on('unpop', function() {
+                        popup.off('close').on('close', function() {
                             setTimeout(function() {
                                 core.command();
                             }, 100);

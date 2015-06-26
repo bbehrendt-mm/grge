@@ -55,6 +55,8 @@ class Model_Achievement extends Model {
     const MA_EASTER_BAD = 51;
     const MA_CLOCK = 52;
 	const MA_CLOWN = 53;
+    const MA_EPIC_BEGIN = 54;
+    const MA_EPIC_END = 55;
 	
 	const MA_RANKING_SURVIVAL = 1000;
 	const MA_RANKING_HARDCORE = 1100;
@@ -122,6 +124,9 @@ class Model_Achievement extends Model {
             Model_Achievement::MA_CLOCK                             => array('name' => "Geöltes Uhrwerk",                       'points' => 5,),
 			Model_Achievement::MA_CLOWN                             => array('name' => "Blutiger Clown",                        'points' => 50,),
 
+            Model_Achievement::MA_EPIC_BEGIN                        => array('name' => "Ambitionierter Bauherr",                'points' => 0,),
+            Model_Achievement::MA_EPIC_END                          => array('name' => "Epischer Baumeister",                   'points' => 35,),
+
 			Model_Achievement::MA_RANKING_SURVIVAL	                => array('name' => "Berühmter Überlebenskünstler",          'points' => 50,),
 			Model_Achievement::MA_RANKING_HARDCORE	                => array('name' => "Berühmter Hardcore-Überlebenskünstler", 'points' => 75,),
 			Model_Achievement::MA_RANKING_MASSACRE	                => array('name' => "Berühmter Serienkiller",                'points' => 50,),
@@ -163,22 +168,40 @@ class Model_Achievement extends Model {
 	private function init($achievement) {
 		if (!isset($this->container[$achievement])) $this->container[$achievement] = 0;
 	}
-	
-	/**
-	 * Add an achievement, with an optional number
-	 * @param number $achievement
-	 * @param number $num
-	 */
+
+    /**
+     * Add an achievement, with an optional number
+     * @param number $achievement
+     * @param int|number $num
+     */
 	public function achieve($achievement, $num = 1) {
 		$this->init($achievement);
 		$this->container[$achievement] += $num;
 	}
-	
-	/**
-	 * Set achievement counter to a fixed value
-	 * @param number $achievement
-	 * @param number $value
-	 */
+
+    /**
+     * Upgrade an existing achievement ($from) to a new one ($to), optional with number. If $block is enabled, the transfer will only succeed if all conversions can be completed.
+     * @param $from
+     * @param $to
+     * @param int $num
+     * @param bool $block
+     */
+    public function upgrade_achieve($from, $to, $num = 1, $block = false) {
+        $this->init($from);
+        $this->init($to);
+
+        if ($block && $this->container[$from] < $num) return;
+        $num = floor(min($num, $this->container[$from]));
+
+        $this->container[$from] -= $num;
+        $this->container[$to] += $num;
+    }
+
+    /**
+     * Set achievement counter to a fixed value
+     * @param number $achievement
+     * @param int|number $value
+     */
 	public function achieve_force($achievement, $value = 0) {
 		$this->init($achievement);
 		$this->container[$achievement] = $value;
@@ -204,13 +227,14 @@ class Model_Achievement extends Model {
 
 		$this->container = $tmp;
 	}
-	
-	/**
-	 * Award all gained achievements
-	 * @param number $pid
-	 * @param number $gid
-     * @param number $season
-	 */
+
+    /**
+     * Award all gained achievements
+     * @param number $pid
+     * @param number $gid
+     * @param int|number $season
+     * @throws Kohana_Exception
+     */
 	public function award($pid, $gid, $season = -1) {
 		$this->compile();
 

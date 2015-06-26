@@ -494,14 +494,12 @@
             mapbg.append($('<canvas />').attr({height: d, width: d}));
 
             var renderer = core.cache_get('minimap_stage');
-            if (renderer) {
-                renderer.reset(mapbg.find('canvas').get(0));
-                core.cache_put('minimap_stage', undefined);
-            } else {
-                renderer = new core.plugins.Minimap(mapbg.find('canvas').get(0));
-                renderer.addEnvironment(0,0, data.lomap.top ? data.lomap.top.id : 0, data.lomap.bottom ? data.lomap.bottom.id : 0, data.lomap.left ? data.lomap.left.id : 0, data.lomap.right ? data.lomap.right.id : 0, data.lomap.current.zombies,  data.lomap.current.players);
-            }
 
+            if (renderer) renderer.reset(mapbg.find('canvas').get(0));
+            else renderer = new core.plugins.Minimap(mapbg.find('canvas').get(0));
+            renderer.addEnvironment(0,0, data.lomap.top ? data.lomap.top.id : 0, data.lomap.bottom ? data.lomap.bottom.id : 0, data.lomap.left ? data.lomap.left.id : 0, data.lomap.right ? data.lomap.right.id : 0, data.lomap.current.zombies,  data.lomap.current.players);
+
+            core.cache_put('minimap_stage', renderer);
             var go = function(lid, slidex, slidey) {
                 return function() {
                     lomap.find('.navbtn').fadeOut(200);
@@ -509,7 +507,7 @@
                     core.command('map/go', {to: lid, follow: 1}, true, function(data) {
                         if (data.success) {
                             if (data.preview && (slidex != 0 || slidey != 0)) {
-                                core.cache_put('minimap_stage', renderer);
+
                                 renderer
                                     .addEnvironment(slidex, slidey, data.preview.top ? data.preview.top.id : 0, data.preview.bottom ? data.preview.bottom.id : 0, data.preview.left ? data.preview.left.id : 0, data.preview.right ? data.preview.right.id : 0, data.preview.current.zombies,  data.preview.current.players)
                                     .shift(slidex, slidey, 1000, function () {

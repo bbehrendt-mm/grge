@@ -69,7 +69,7 @@ class Controller_Location extends Controller_Game {
         // Translate stuff
         $data = $blueprints->compile($player->location()->get_upgrades(), $player);
         foreach ($data as &$blueprint) {
-            foreach (['name','description'] as $key)
+            foreach (['name','description','confirm'] as $key)
                 $blueprint[$key] = __($blueprint[$key]);
             foreach ($blueprint['categories'] as &$cat)
                 $cat = __($cat);

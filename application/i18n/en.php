@@ -4784,4 +4784,18 @@ return array (
 	'By employing your amazing strength of will, you\'ve managed to survive the cold turkey! Your addiction is gone - Congratulations!',
   'Die Tür zur Leichenhalle ist fest versiegelt und lässt sich nicht öffnen. Über dir befindet sich ein kleines Lüftungsgitter, über das du vermutlich in die Leichenhalle gelangen könntest - wenn du hinein passen würdest. Echt Mist dass du kein Kind mehr bist...' =>
 	'The morgue door is sealed shut and won\'t open. There is a small ventilation shaft above you - you could probably use it to enter the morgue, but unfortunately you don\'t fit in there. If only you were a little smaller...',
+  'Bist du sicher, dass du die Arbeit an dem epischen Projekt ":name" beginnen möchtest? Denk daran, dass du nur ein episches Projekt pro Versteck errichten kannst!' =>
+	'Are you sure you want to start working on the epic project ":name"? Remember, you can only construct one epic project in each hideout!',
+  'Ambitionierter Bauherr' =>
+	'Bob The Ambitious Builder',
+  'Epischer Baumeister' =>
+	'Epic Architect',
+  'Hurra, du hast deinen Hunger (ein bisschen) bekämpft und sogar noch etwas neue Energie erhalten. Die Schachtel ist leer!' =>
+	'Yay, you\'ve managed to fight your hunger (a little)! You even managed to get some new energy out of it. The box is empty!',
+  'Superlecker! Es geht doch nichts über etwas Selbstgekochtes!' =>
+	'Extremely tasty! There is nothing like a meal you\'ve cooked yourself.',
+  'Hier kommt ihr nicht weiter... ihr müsst eure Reise nach :od unterbrechen und bei :ad eine Pause machen..' =>
+	'You can\'t go on from here... you\'ll have to make a stop at :ad on your travel to :od.',
+  'Das Wasser in deiner Flasche schaut dich mit großen, traurigen Augen an - aber das hilft nicht viel. Eiskalt kochst du es auf 100° und tötest so alles Leben darin ab!' =>
+	'The water in your bottle looks at you with big, sad eyes - but that won\'t help him. Without giving it another thought, you boil it to 100 degrees and kill all live in it!',
 );

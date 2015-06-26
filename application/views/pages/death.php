@@ -141,7 +141,7 @@ if (!isset($services)) $services = array();
 // ## JS COMPRESS BEGIN ## //
     $('#persistent').empty();
     <?php foreach ($achievements as $achievement) { ?>
-        $('[data-aid=<?=$achievement['id']?>]').attr('title', '<?=__($achievement['count'])?> x <?=__($achievement['name'])?>').qtip(game.render.html.qtip.ingame('top'));
+        $('[data-aid=<?=$achievement['id']?>]').attr('title', '<?=$achievement['count']?> x ' + <?=__j($achievement['name'])?>).qtip(game.render.html.qtip.ingame('top'));
     <?php } ?>
 
     $('#finalizebtn').click(function() {

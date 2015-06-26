@@ -83,20 +83,57 @@ class Model_Effect {
     /**
      * @param int $achievement
      * @param int $num
+     * @param bool $all
      * @return Model_Effect
      */
-    public function achieve($achievement, $num = 1) {
+    public function achieve($achievement, $num = 1, $all = false) {
         if ($achievement < 0) return $this;
-        return $this->custom(function($p) use ($achievement, $num) {
-            /** @var Model_Player $p */
-            $p->achievements()->achieve($achievement, $num);
-        }, static::CFUNC_PROCESS_POST);
+
+        if ($all)
+            return $this->custom(function() use ($achievement, $num) {
+                /** @global Model_Game $game */
+                global $game;
+
+                foreach ($game->players() as $p)
+                    $p->achievements()->achieve($achievement, $num);
+            }, static::CFUNC_PROCESS_POST);
+        else
+            return $this->custom(function($p) use ($achievement, $num) {
+                /** @var Model_Player $p */
+                $p->achievements()->achieve($achievement, $num);
+            }, static::CFUNC_PROCESS_POST);
+    }
+
+    /**
+     * @param int $from
+     * @param int $to
+     * @param int $num
+     * @param bool $block
+     * @param bool $all
+     * @return Model_Effect
+     */
+    public function upgrade_achieve($from, $to, $num = 1, $block = true, $all = false) {
+        if ($from < 0) return $this;
+
+        if ($all)
+            return $this->custom(function() use ($from, $to, $block, $num) {
+                /** @global Model_Game $game */
+                global $game;
+
+                foreach ($game->players() as $p)
+                    $p->achievements()->upgrade_achieve($from, $to, $num, $block);
+            }, static::CFUNC_PROCESS_POST);
+        else
+            return $this->custom(function($p) use ($from, $to, $block, $num) {
+                /** @var Model_Player $p */
+                $p->achievements()->upgrade_achieve($from, $to, $num, $block);
+            }, static::CFUNC_PROCESS_POST);
     }
 
     /**
      * @param string|null $buff Buff class (when remove is false) or buff identifier (when remove is true)
      * @param bool $remove
-     * @param number $lifetime
+     * @param int|number $lifetime
      * @return Model_Effect
      */
     public function buff($buff = null, $remove = false, $lifetime = -1) {

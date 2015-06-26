@@ -10,9 +10,10 @@ class Tool_Scripts
      * @param bool $active_location Include active locations inventory
      * @param bool $other_players Include inventory of other players at the active location
      * @param null|Model_Player $perspective
+     * @param null|callable $decider
      * @return number
      */
-    public static function count_available_items($classname = null, $active_player = true, $active_location = true, $other_players = false, $perspective = null)
+    public static function count_available_items($classname = null, $active_player = true, $active_location = true, $other_players = false, $perspective = null, $decider = null)
     {
         /**
          * @var $belt Model_Items_Ammobelt
@@ -21,13 +22,13 @@ class Tool_Scripts
         //Add ammobelt items
         $d = 0;
         if (Tool_System::instance_of($classname, 'Model_Items_Abstract_Ammo'))
-            foreach (Tool_Scripts::available_items('Model_Items_Ammobelt', $active_player, $active_location, $other_players) as $belt)
+            foreach (Tool_Scripts::available_items('Model_Items_Ammobelt', $active_player, $active_location, $other_players, $perspective) as $belt)
                 $d += $belt->has($classname);
         // Add stackable items
         elseif (Tool_System::instance_of($classname, 'Model_Items_Abstract_Stackable'))
-            foreach (Tool_Scripts::available_items($classname, $active_player, $active_location, $other_players) as $instance)
+            foreach (Tool_Scripts::available_items($classname, $active_player, $active_location, $other_players, $perspective, $decider) as $instance)
                 $d += $instance->count();
-        else return count(Tool_Scripts::available_items($classname, $active_player, $active_location, $other_players, $perspective));
+        else return count(Tool_Scripts::available_items($classname, $active_player, $active_location, $other_players, $perspective, $decider));
 
         return $d;
     }
@@ -38,29 +39,40 @@ class Tool_Scripts
      * @param bool $active_location
      * @param bool $other_players
      * @param null|Model_Player $perspective
+     * @param bool $grind
+     * @param null|callable|callable[] $decider
      * @return bool
      */
-    public static function consume_available_items($matrix, $active_player, $active_location, $other_players, $perspective = null, $grind = false) {
+    public static function consume_available_items($matrix, $active_player, $active_location, $other_players, $perspective = null, $grind = false, $decider = null) {
+        /**
+         * @param string $cls
+         * @return callable|null
+         */
+        $get_decider = function($cls) use ($decider) {
+            if (!is_array($decider))
+                return $decider;
+            else return isset($decider[$cls]) ? $decider[$cls] : null;
+        };
+
+        foreach ($matrix as $classname => $count) {
+            if (static::count_available_items($classname, $active_player, $active_location, $other_players, $perspective, $get_decider($classname)) < $count)
+                return false;
+        }
+
         /**
          * @var $belt Model_Items_Ammobelt
          * @var $item Model_Items_Abstract_Item
          */
-
-        foreach ($matrix as $classname => $count)
-            if (static::count_available_items($classname, $active_player, $active_location, $other_players, $perspective) < $count)
-                return false;
-
         foreach ($matrix as $classname => $count) {
-
             if (Tool_System::instance_of($classname, 'Model_Items_Abstract_Ammo')) {
-                foreach (Tool_Scripts::available_items('Model_Items_Ammobelt', $active_player, $active_location, $other_players) as $belt)
+                foreach (Tool_Scripts::available_items('Model_Items_Ammobelt', $active_player, $active_location, $other_players, $perspective) as $belt)
                     if ($belt->get($classname, $count)) break;
                     else {
                         $count -= $belt->has($classname);
                         $belt->get($classname, $belt->has($classname));
                     }
             } elseif (Tool_System::instance_of($classname, 'Model_Items_Abstract_Stackable')) {
-                foreach (Tool_Scripts::available_items($classname, $active_player, $active_location, $other_players) as $instance)
+                foreach (Tool_Scripts::available_items($classname, $active_player, $active_location, $other_players, $perspective, $get_decider($classname)) as $instance)
                     if ($instance->count() > $count)
                         for ($i = 0; $i < $count; $i++) $instance->consume();
                     elseif ($instance->count() == $count) {
@@ -71,7 +83,7 @@ class Tool_Scripts
                         $instance->grind();
                     }
             } else {
-                foreach (static::available_items($classname, $active_player, $active_location, $other_players, $perspective) as $item) {
+                foreach (static::available_items($classname, $active_player, $active_location, $other_players, $perspective, $get_decider($classname)) as $item) {
                     if ($grind)
                         $item->grind();
                     else $item->consume();
@@ -129,18 +141,19 @@ class Tool_Scripts
      * @param bool $active_location Include active locations inventory
      * @param bool $other_players Include inventory of other players at the active location
      * @param null|Model_Player $perspective
+     * @param null|callable $decider
      * @return Model_Items_Abstract_Item[]
      */
-    public static function available_items($classname = null, $active_player = true, $active_location = true, $other_players = false, $perspective = null)
+    public static function available_items($classname = null, $active_player = true, $active_location = true, $other_players = false, $perspective = null, $decider = null)
     {
         /**
          * @global $player Model_Player
          */
-        if ($perspective)
+        if (is_object($perspective))
             $player = $perspective;
         else global $player;
 
-        $proto = Array();
+        $proto = [];
         if ($active_player)
             $proto = array_merge($proto, $player->inventory()->get($classname));
 
@@ -152,7 +165,7 @@ class Tool_Scripts
                 if ($s_player->uin() != $player->uin())
                     $proto = array_merge($proto, $s_player->inventory()->get($classname));
 
-        return $proto;
+        return ($decider && is_callable($decider)) ? array_values(array_filter($proto, $decider)) : $proto;
     }
     /**
      * Returns the first available item from a list

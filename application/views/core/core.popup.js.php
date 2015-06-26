@@ -52,7 +52,7 @@ core.popup = {
             }).trigger('reposition').appendTo(wrapper);
 
         var z = game.render.html.modal.blend(function() {
-            popup.addClass('disabled').css({
+            popup.trigger('close').addClass('disabled').css({
                 '-webkit-filter': game.mobile ? '' : 'blur(5px)',
                 'filter': game.mobile ? '' : 'blur(5px)'
             }).animate({
@@ -252,6 +252,9 @@ core.popup = {
                 else targets = frame;
 
                 targets.append($('<div />').addClass('cell padded rw-4 rw-md-6').append(core.snippets.blueprint(v, bdata.energy, bdata.zombies, bdata.blueprints, function() {
+                    if (v.confirm && !window.confirm(game.i18n(v.confirm, {':name': v.name})))
+                        return;
+
                     var prev_scroll = $('.popup').find('>*:first-child').scrollTop();
                     popup.addClass('disabled');
                     core.command('location/' + type, {build: k}, true, function(new_data) {
@@ -259,7 +262,7 @@ core.popup = {
                         popup.removeClass('disabled');
                         frame.trigger('filter');
                         $('.popup').find('>*:first-child').animate({scrollTop: prev_scroll}, 0);
-                        popup.off('unpop').on('unpop', function() {
+                        popup.off('close').on('close', function() {
                             setTimeout(function() {
                                 core.command();
                             }, 100);

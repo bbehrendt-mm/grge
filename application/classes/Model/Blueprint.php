@@ -14,6 +14,7 @@ class Model_Blueprint {
     private $description;
 
     private $items = [];
+    private $item_deciders = [];
     private $produces = [];
     private $requires = [];
     private $provides = [];
@@ -28,6 +29,7 @@ class Model_Blueprint {
     private $defense = 0;
     private $categories = [];
     private $modifiers = [];
+    private $confirmation = false;
 
     /** @var bool|array|callable|int */
     private $zombies = false;
@@ -81,6 +83,20 @@ class Model_Blueprint {
             return $this->name;
         else {
             $this->name = $name;
+            return $this;
+        }
+    }
+
+    /**
+     * Setter / Getter for the blueprint confirmation message
+     * @param null|string|false $msg Confirmation message or false to disable confirmation.
+     * @return Model_Blueprint|string|bool
+     */
+    public function confirm($msg = null) {
+        if ($msg === null)
+            return $this->confirmation;
+        else {
+            $this->confirmation = $msg;
             return $this;
         }
     }
@@ -240,14 +256,19 @@ class Model_Blueprint {
      * Adds a new required item to the stack
      * @param string|array $class Required item class
      * @param int $count Item count
+     * @param null|callable $decider Decider function called for each item instance; will be ignored when items are passed as array!
      * @return Model_Blueprint
      */
-    public function material($class, $count = 1) {
+    public function material($class, $count = 1, $decider = null) {
         if (is_array($class))
             foreach ($class as $i_class => $i_count)
                 $this->material($i_class, $i_count);
 
-        else $this->items[$class] = $count;
+        else  {
+            $this->items[$class] = $count;
+            if ($decider && is_callable($decider))
+                $this->item_deciders[$class] = $decider;
+        }
         return $this;
     }
 
@@ -412,7 +433,7 @@ class Model_Blueprint {
             return false;
         }
 
-        if (!Tool_Scripts::consume_available_items($this->items, true, true, false, $player, true)) {
+        if (!Tool_Scripts::consume_available_items($this->items, true, true, false, $player, true, $this->item_deciders)) {
             $player->log()->add('Dir fehlen Gegenstände, um diese Aktion durchzuführen.');
             return false;
         }
@@ -541,7 +562,8 @@ class Model_Blueprint {
             'steps_current' => ($current_steps === true) ? $this->steps - 1 : $current_steps,
             'occupies' => $this->provide(),
             'hidden' => $hidden,
-            'zombies' => $z
+            'zombies' => $z,
+            'confirm' => $this->confirmation
         ];
     }
 

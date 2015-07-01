@@ -6,7 +6,7 @@ core = {
     parts: {},
     snippets: {},
 
-    version: '2.0.2-3-0-1',
+    version: '2.0.2-4-0-1',
 
     last: {},
     plugins: {},
@@ -1073,9 +1073,9 @@ core = {
 
         radar.attr('title',
             game.i18n(tooltip.join('<br /><br />'), {':min': '<b>' + data.min + '</b>',':max': '<b>' + data.max + '</b>',':pc_min': '<b>' + data.prop + '</b>',':sg_min': '<b>' + data.inc + '</b>'})
-        ).qtip(game.render.html.qtip.ingame('top'));
+        ).qtip(game.render.html.qtip.ingame('bottom'));
 
-        siege.attr('title','-').qtip(game.render.html.qtip.ingame('top',{
+        siege.attr('title','-').qtip(game.render.html.qtip.ingame('bottom',{
             render: function(event,api) {
                 var content = $(this).find('.qtip-content').empty();
                 if (data.zombies == 0)
@@ -2029,7 +2029,7 @@ core = {
             });
     };
 
-    core.plugins.Minimap.prototype.startStop = function(start = false) {
+    core.plugins.Minimap.prototype.startStop = function(start) {
         if (start) {
             createjs.Ticker.removeAllEventListeners('tick');
             var alias = this;
@@ -2278,11 +2278,11 @@ core = {
 
         var z = game.render.html.modal.blend(function() {
             popup.trigger('close').addClass('disabled').css({
-                '-webkit-filter': game.mobile ? '' : 'blur(5px)',
-                'filter': game.mobile ? '' : 'blur(5px)'
+                '-webkit-filter': (game.mobile || game.s.quality() <= 2) ? '' : 'blur(5px)',
+                'filter': (game.mobile || game.s.quality() <= 2) ? '' : 'blur(5px)'
             }).animate({
                 opacity: 0,
-                transform: 'scale(1.5)'
+                transform: game.s.quality() > 1 ? 'scale(1.5)' : 'scale(1)'
             }, 400, 'swing', function() {
                 $(this).parent().remove();
                 if (!$('.popup').length)
@@ -2296,10 +2296,10 @@ core = {
             game.render.html.modal.unblend(z,true)
         }).css({
             opacity: 0,
-            transform: 'scale(0.5)',
+            transform: game.s.quality() > 1 ? 'scale(0.5)' : 'scale(1)',
             'transition': 'filter 0.4s ease, -webkit-filter 0.4s ease',
-            '-webkit-filter': game.mobile ? '' : 'blur(5px)',
-            'filter': game.mobile ? '' : 'blur(5px)'
+            '-webkit-filter': (game.mobile || game.s.quality() <= 2) ? '' : 'blur(5px)',
+            'filter': (game.mobile || game.s.quality() <= 2) ? '' : 'blur(5px)'
         }).animate({
             opacity: 1,
             transform: 'scale(1)'

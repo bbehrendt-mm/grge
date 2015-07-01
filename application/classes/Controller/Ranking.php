@@ -200,6 +200,48 @@ class Controller_Ranking extends Controller {
         ]);
     }
 
+    public function japi_achievements() {
+        $aid = (int)$this->request->current()->post('aid');
+        $offset = $this->request->current()->post('offset');
+        $length = $this->request->current()->post('length');
+
+        $lists_raw = DB::select('achievements.uid','achievements.aid','users.name',[DB::expr('SUM(value)'),'value'])->from([DB::select('*')->from('achievements')->where('aid',($aid > 0) ? '=' : '>', max(0,$aid)),'achievements'])->group_by('achievements.uid')->group_by('achievements.aid')->join('users','INNER')->on('achievements.uid','=','users.uid')->where('value','>',0)->execute()->as_array();
+        $lists = [];
+        foreach ($lists_raw as $entry) {
+            if (!isset($lists[$entry['uid']])) {
+                $lists[$entry['uid']] = $entry;
+                $lists[$entry['uid']]['value'] = 0;
+            }
+            $lists[$entry['uid']]['value'] += $entry['value'] * (($aid <= 0) ? Model_Achievement::points_aid($entry['aid']) : 1);
+        }
+        $num_entries = count($lists);
+        usort($lists, function($a,$b) {return $b['value'] - $a['value'];});
+
+        array_unshift($lists, true);
+        $this->render([
+            'games' => $num_entries,
+            'ranking' => array_map(function($v) {
+                unset($v['aid']);
+                return $v;
+            }, array_slice($lists, 1 + $offset, $length, true))
+        ]);
+    }
+
+    public function japi_soulpoints() {
+        $offset = $this->request->current()->post('offset');
+        $length = $this->request->current()->post('length');
+
+        $lists = DB::select('ranking.uid','users.name',[DB::expr('SUM(points)'),'points'])->from('ranking')->group_by('ranking.uid')->join('users','INNER')->on('ranking.uid','=','users.uid')->where('points','>',0)->order_by('points','DESC')->execute()->as_array();
+        $num_entries = count($lists);
+
+        array_unshift($lists, true);
+        $this->render([
+            'games' => $num_entries,
+            'ranking' => array_slice($lists, 1 + $offset, $length, true)
+        ]);
+    }
+
+
     public function action_lists() {
 
         $converter = function($meta) {
@@ -210,6 +252,29 @@ class Controller_Ranking extends Controller {
             ->set('season', Kohana::$config->load('server.season'))
             ->set('sp_modes', array_map($converter, Tool_Modes::config_get_modes('single')))
             ->set('mp_modes', array_map($converter, Tool_Modes::config_get_modes(['multi_auto','multi_custom'])))
+            ->render()
+        );
+        $this->render();
+    }
+
+    public function action_global() {
+
+        $known_achievements = DB::select('aid',[DB::expr('SUM(value)'),'value'])->from('achievements')->group_by('aid')->where('value','>',0)->execute()->as_array('aid','value');
+        $achievements = [];
+        foreach ((new ReflectionClass('Model_Achievement'))->getConstants() as $aid)
+            $achievements[$aid] = [
+                'id' => $aid,
+                'name' => Model_Achievement::decode_aid($aid),
+                'points' => Model_Achievement::points_aid($aid),
+                'class' => Model_Achievement::class_aid($aid),
+                'count' => isset($known_achievements[$aid]) ? $known_achievements[$aid] : 0,
+                'icon' => "{$aid}.gif",
+            ];
+
+        usort($achievements, function($a,$b) {return ($a['points'] == $b['points'] ? -strcmp($a['name'], $b['name']) : $b['points'] - $a['points']);});
+
+        $this->add_widget(View::factory('pages/ranking_global')
+            ->set('achievements', $achievements)
             ->render()
         );
         $this->render();

@@ -53,11 +53,11 @@ core.popup = {
 
         var z = game.render.html.modal.blend(function() {
             popup.trigger('close').addClass('disabled').css({
-                '-webkit-filter': game.mobile ? '' : 'blur(5px)',
-                'filter': game.mobile ? '' : 'blur(5px)'
+                '-webkit-filter': (game.mobile || game.s.quality() <= 2) ? '' : 'blur(5px)',
+                'filter': (game.mobile || game.s.quality() <= 2) ? '' : 'blur(5px)'
             }).animate({
                 opacity: 0,
-                transform: 'scale(1.5)'
+                transform: game.s.quality() > 1 ? 'scale(1.5)' : 'scale(1)'
             }, 400, 'swing', function() {
                 $(this).parent().remove();
                 if (!$('.popup').length)
@@ -71,10 +71,10 @@ core.popup = {
             game.render.html.modal.unblend(z,true)
         }).css({
             opacity: 0,
-            transform: 'scale(0.5)',
+            transform: game.s.quality() > 1 ? 'scale(0.5)' : 'scale(1)',
             'transition': 'filter 0.4s ease, -webkit-filter 0.4s ease',
-            '-webkit-filter': game.mobile ? '' : 'blur(5px)',
-            'filter': game.mobile ? '' : 'blur(5px)'
+            '-webkit-filter': (game.mobile || game.s.quality() <= 2) ? '' : 'blur(5px)',
+            'filter': (game.mobile || game.s.quality() <= 2) ? '' : 'blur(5px)'
         }).animate({
             opacity: 1,
             transform: 'scale(1)'

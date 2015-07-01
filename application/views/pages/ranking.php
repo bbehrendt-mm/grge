@@ -6,7 +6,7 @@
  */
 ?>
 
-<h1 class="noclick"><i class="fa fa-arrow-circle-right"></i><?=__('Ranking');?></h1>
+<h1 class="noclick"><i class="fa fa-arrow-circle-right"></i><?=__('Season-Ranking');?></h1>
 
 <div class="row">
     <h2><?=__('Bitte wähle, welches Ranking du sehen möchtest.');?></h2>
@@ -29,6 +29,10 @@
     <div class="cell rw-3 rw-md-6 padded">
         <label for="game_time"></label><select class="form_input" id="game_time" data-container="body"></select>
     </div>
+
+    <div class="cell rw-12 right">
+        <div id="btn_switch_global" class="btn small"><?=__('Zum globalen Ranking wechseln');?></div>
+    </div>
 </div>
 
 <div class="row center navigation">
@@ -43,16 +47,17 @@
 
 <script type="application/javascript">
 // ## JS COMPRESS BEGIN ## //
-    var game_type_elem = $('#game_type').change(function() {
+(function() {
+    var game_type_elem = $('#game_type').change(function () {
         var gm = $('#game_mode').empty();
         var gs = $('#game_season');
         var gt = $('#game_time');
 
-        var season_backup = Math.max(($(this).val() == "2" ? 4 : 0),parseInt(gs.val()));
+        var season_backup = Math.max(($(this).val() == "2" ? 4 : 0), parseInt(gs.val()));
         gs.empty();
 
         var modes = [];
-        switch($(this).val()) {
+        switch ($(this).val()) {
             case "1":
                 modes = <?=json_encode($sp_modes, JSON_FORCE_OBJECT)?>;
                 gt.html('<option value="0"><?=__('Klassischer Zeitfluss')?></option><option value="1"><?=__('Variabler Zeitfluss')?></option>');
@@ -64,7 +69,7 @@
             default:
                 break;
         }
-        $.each(modes, function(id,name) {
+        $.each(modes, function (id, name) {
             $('<option value="' + id + '">' + name + '</option>').appendTo(gm);
         });
         for (var i = ($(this).val() == "2" ? 4 : 0); i <= <?=$season?>; i++)
@@ -75,14 +80,14 @@
 
     }).trigger('change');
 
-    var read_fetch = function(offset) {
-        return function() {
+    var read_fetch = function (offset) {
+        return function () {
             var is_mp = $('#game_type').val() == "2";
-            fetch(is_mp, $('#game_mode').val(), is_mp ? "1" : $('#game_time').val(), $('#game_season').val(), Math.max(0,offset))
+            fetch(is_mp, $('#game_mode').val(), is_mp ? "1" : $('#game_time').val(), $('#game_season').val(), Math.max(0, offset))
         }
     };
 
-    var fetch = function(is_mp, mode, time, season, offset) {
+    var fetch = function (is_mp, mode, time, season, offset) {
         $('#ranking_target').html('<i class="fa fa-circle-o-notch fa-spin"></i>');
         var content = $('#content');
         var selectors = content.find('select:not(:disabled)').attr('disabled', 'disabled');
@@ -94,7 +99,7 @@
             season: season,
             length: 20,
             offset: offset
-        }, function(data) {
+        }, function (data) {
             selectors.removeAttr('disabled');
 
             $('#ranking_target').empty();
@@ -107,7 +112,7 @@
 
             } else $('<span><?=__('Es wurden keine Spiele im Ranking gefunden, die deinen Suchkriterien entsprechen.')?></span>').appendTo('#ranking_target');
 
-            $.each(data.ranking, function(p, elem) {
+            $.each(data.ranking, function (p, elem) {
                 var entry = $('<div class="row"></div>');
 
                 var icon = null;
@@ -125,7 +130,7 @@
                     var pl = $('<div class="cell padded rw-6 rw-sm-10"></div>').appendTo(entry);
                     var has_players = false;
                     if (elem.players)
-                        $.each(elem.players, function(k,v) {
+                        $.each(elem.players, function (k, v) {
                             has_players = true;
                             var player = $('<span class="inline-player">' + v.name + '</span>').appendTo(pl);
 
@@ -150,8 +155,8 @@
                 entry.appendTo(table);
             });
 
-            var max_offset = Math.floor(data.games/20) * 20;
-            var current_page = Math.floor(offset/20);
+            var max_offset = Math.floor(data.games / 20) * 20;
+            var current_page = Math.floor(offset / 20);
 
             if (max_offset == 0)
                 $('.navigation').hide();
@@ -161,14 +166,14 @@
                 $(navigation.get(1)).removeClass('btn-disabled').click(read_fetch(offset - 20));
             }
 
-            $(navigation.get(2)).removeClass('btn-disabled').click(function() {
-                var entry = prompt('<?=__('Zu welcher Seite möchtest du springen?')?>',current_page+1);
+            $(navigation.get(2)).removeClass('btn-disabled').click(function () {
+                var entry = prompt('<?=__('Zu welcher Seite möchtest du springen?')?>', current_page + 1);
                 if (entry == null)
                     return;
                 var p = parseInt(entry);
-                if (!isNaN(p) && p > 0 && p != (current_page+1) && p <= max_offset/20+1)
-                    read_fetch((p-1)*20)();
-            }).html(game.i18n('<?=__('Seite :c/:m')?>', {':c': current_page+1, ':m': max_offset/20+1}));
+                if (!isNaN(p) && p > 0 && p != (current_page + 1) && p <= max_offset / 20 + 1)
+                    read_fetch((p - 1) * 20)();
+            }).html(game.i18n('<?=__('Seite :c/:m')?>', {':c': current_page + 1, ':m': max_offset / 20 + 1}));
 
             if (offset < max_offset) {
                 $(navigation.get(3)).removeClass('btn-disabled').click(read_fetch(offset + 20));
@@ -182,5 +187,8 @@
     });
     $('.navigation').hide();
     game_type_elem.trigger('change');
+
+    $('#btn_switch_global').click(function() {game.network.load('ranking/global')});
+})();
 // ## JS COMPRESS END ## //
 </script>

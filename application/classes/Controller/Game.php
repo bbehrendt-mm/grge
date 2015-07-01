@@ -745,6 +745,8 @@ class Controller_Game extends Controller {
             return $this->render(['redirect' => 'game/redirect']);
         }
 
+        $player->rebuild();
+
         $this->render_info();
         $this->render_location();
         $this->render_inventory();

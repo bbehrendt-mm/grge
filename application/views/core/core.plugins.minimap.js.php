@@ -66,7 +66,7 @@
             });
     };
 
-    core.plugins.Minimap.prototype.startStop = function(start = false) {
+    core.plugins.Minimap.prototype.startStop = function(start) {
         if (start) {
             createjs.Ticker.removeAllEventListeners('tick');
             var alias = this;

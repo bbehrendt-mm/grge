@@ -4798,4 +4798,62 @@ return array (
 	'Ambitionierter Bauherr',
   'Epischer Baumeister' =>
 	'Epischer Baumeister',
+  'Der Kürbis saugt vor deinen Augen die Chemikalie auf... und beginnt, in Zeitraffer zu faulen!' =>
+	'Der Kürbis saugt vor deinen Augen die Chemikalie auf... und beginnt, in Zeitraffer zu faulen!',
+  'Du tunkst das Essen in die Chemikalie - und beginnt zu blubbern und löst sich vor deinen Augen auf! So ein Ärger, das wirst du wohl nicht mehr essen können...' =>
+	'Du tunkst das Essen in die Chemikalie - und beginnt zu blubbern und löst sich vor deinen Augen auf! So ein Ärger, das wirst du wohl nicht mehr essen können...',
+  'Zunächst hörst du ein Zischen aus deiner Flasche, danach stellst du fest dass die Chemikalie dein Wasser gereinigt hat! Hurra!' =>
+	'Zunächst hörst du ein Zischen aus deiner Flasche, danach stellst du fest dass die Chemikalie dein Wasser gereinigt hat! Hurra!',
+  'Eigentlich kann man ja mit dem Trinken nie früh genug anfangen. Nachdem du die Flasche ausgetrunken hast, stellst du diese Aussage jedoch spontan in Frage - immerhin dreht sich die Welt um dich herum, und dir ist speiübel.' =>
+	'Eigentlich kann man ja mit dem Trinken nie früh genug anfangen. Nachdem du die Flasche ausgetrunken hast, stellst du diese Aussage jedoch spontan in Frage - immerhin dreht sich die Welt um dich herum, und dir ist speiübel.',
+  'Die Pillen saugen die Chemikalie regelrecht auf! Vermutlich ast du jetzt ihre Wirkungsweise geändert...' =>
+	'Die Pillen saugen die Chemikalie regelrecht auf! Vermutlich ast du jetzt ihre Wirkungsweise geändert...',
+  'Du schaltest die Taschenlampe an. Mit einem lauten Knall explodiert sie in deiner Hand und fügt dir schwere Verletzungen zu!' =>
+	'Du schaltest die Taschenlampe an. Mit einem lauten Knall explodiert sie in deiner Hand und fügt dir schwere Verletzungen zu!',
+  'Na sowas! Laut aktuellen Analysen verursacht die Zombieapokalypse eine spontane Deflation an den Finanzmärkten. Damit hat sich der Wert deines Ersparten verdoppelt!' =>
+	'Na sowas! Laut aktuellen Analysen verursacht die Zombieapokalypse eine spontane Deflation an den Finanzmärkten. Damit hat sich der Wert deines Ersparten verdoppelt!',
+  'Ein bisschen Auswaschen, ein bisschen Eiter entfernen... schon sieht diese klaffende Wunde viel ansehnlicher aus.' =>
+	'Ein bisschen Auswaschen, ein bisschen Eiter entfernen... schon sieht diese klaffende Wunde viel ansehnlicher aus.',
+  ':name hat deine Wunde mithilfe von Alkohol ausgewaschen.' =>
+	':name hat deine Wunde mithilfe von Alkohol ausgewaschen.',
+  'Wer braucht schon EKEA? Dieser Tisch hat eine mindestens genauso fragwürdige Qualität, und er ist aus echtem undefinierbaren Holz!' =>
+	'Wer braucht schon EKEA? Dieser Tisch hat eine mindestens genauso fragwürdige Qualität, und er ist aus echtem undefinierbaren Holz!',
+  'Season-Ranking' =>
+	'Season-Ranking',
+  'Globales Ranking' =>
+	'Globales Ranking',
+  'Auszeichnungen' =>
+	'Auszeichnungen',
+  'Zum globalen Ranking wechseln' =>
+	'Zum globalen Ranking wechseln',
+  'Zum saisonalen Ranking wechseln' =>
+	'Zum saisonalen Ranking wechseln',
+  'Diese Auszeichnung wurde bereits :num mal verliehen!' =>
+	'Diese Auszeichnung wurde bereits :num mal verliehen!',
+  'Bisher hat es noch niemand geschafft, diese Auszeichnung zu erhalten...' =>
+	'Bisher hat es noch niemand geschafft, diese Auszeichnung zu erhalten...',
+  'SP' =>
+	'SP',
+  'Benutzeroberfläche' =>
+	'Benutzeroberfläche',
+  'Darstellungsqualität' =>
+	'Darstellungsqualität',
+  'Hoch' =>
+	'Hoch',
+  'Mittel' =>
+	'Mittel',
+  'Niedrig' =>
+	'Niedrig',
+  'Durch die Verringerung der Darstellungsqualität werden bestimmte grafische Effekte deaktiviert, umd die Leistung auf Geräten mit schwächerer Hardware zu verbessern.' =>
+	'Durch die Verringerung der Darstellungsqualität werden bestimmte grafische Effekte deaktiviert, umd die Leistung auf Geräten mit schwächerer Hardware zu verbessern.',
+  'Eingabegerät' =>
+	'Eingabegerät',
+  'Automatisch' =>
+	'Automatisch',
+  'Maus' =>
+	'Maus',
+  'Touchscreen' =>
+	'Touchscreen',
+  'Die Benutzeroberfläche erkennt normalerweise automatisch, ob du mit Maus oder Touchscreen spielst, und optimiert die Eingabefunkionen dementsprechend. Sollte das bei dir nicht funktionieren (z.B. weil du ein Gerät nutzt, das sowohl über eine Maus, als auch einen Touchscreen verfügt), kannst du die automatische Erkennung außer Kraft setzen.' =>
+	'Die Benutzeroberfläche erkennt normalerweise automatisch, ob du mit Maus oder Touchscreen spielst, und optimiert die Eingabefunkionen dementsprechend. Sollte das bei dir nicht funktionieren (z.B. weil du ein Gerät nutzt, das sowohl über eine Maus, als auch einen Touchscreen verfügt), kannst du die automatische Erkennung außer Kraft setzen.',
 );

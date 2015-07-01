@@ -30,7 +30,8 @@
 @whitebox-color-border: #e9e9e9;
 
 //noinspection CssOverwrittenProperties
-.whitebox(@darkness: 0%; @border-darkness: @darkness) {border-radius: 4px; background: darken(@whitebox-color-bg, @darkness); .incomplete-border-definition(1px solid darken(@whitebox-color-border, @border-darkness), true, true, false, true); border-bottom: 4px solid darken(@whitebox-color-border, @border-darkness); box-shadow: 0 4px 8px rgba(0,0,0,0.3);}
+.colorbox(@inner, @outer) {border-radius: 4px; background: @inner; .incomplete-border-definition(1px solid @outer, true, true, false, true); border-bottom: 4px solid @outer; box-shadow: 0 4px 8px rgba(0,0,0,0.3);}
+.whitebox(@darkness: 0%; @border-darkness: @darkness) {.colorbox(darken(@whitebox-color-bg, @darkness), darken(@whitebox-color-border, @border-darkness));}
 
 .impactbox(@border-color, @base-color) {border-radius: 5px; background: @base-color; border: 1px solid @border-color; border-bottom: 4px solid @border-color; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.8);}
 
@@ -115,9 +116,12 @@
 
 .hotbox {
   .whitebox; .no-select;
-  margin: 3px; padding: 5px; cursor: pointer; transition: background 250ms ease, border-color 500ms ease;
+  margin: 3px; padding: 5px; cursor: pointer; transition: background 250ms ease, border-color 500ms ease; vertical-align: bottom;
   &:hover {.whitebox(5%)}
-  &:active {margin-top: 5px; border-bottom-width: 2px;}
+  &.active {.colorbox(@zv-color-main, @zv-color-main-dark)}
+  &.active:hover {.colorbox(lighten(@zv-color-main, 10%), lighten(@zv-color-main-dark, 10%))}
+  &:active {margin-top: 5px !important; border-bottom-width: 2px !important;}
+
   >.head {display: block; color: #004352;}
   >.subtitle {display: block; color: #7b7b7b; font-variant: small-caps;}
   &.disabled>.head {

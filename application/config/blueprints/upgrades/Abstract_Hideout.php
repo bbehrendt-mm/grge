@@ -8,14 +8,15 @@ return Model_Blueprints::factory()
     ->add_blueprints(Model_Blueprint::factory()->id('impaler')->name('Vorbereitete Fallgruben'), true)
     ->add_blueprints(Model_Blueprint::factory()->id('slot_epic')->name('Bauplatz für epische Projekte'), true)
 
-    // ++ STACK -> All blueprints below benefit from daytime and handyman bonus
-    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->add_modifier(Model_Blueprint::BP_MOD_ENERGY, function($pl,$pre,$e) { /** @var Model_Player $pl */
-        $mod = 1;
-        if (Tool_Scripts::get_timeofday($pl) == 'morning') $mod -= 0.25;    // Daytime bonus
-        if ($pl->buff_retr('tr_handyman')) $mod -= 0.1;                     // Handyman Bonus
-
-        return max(min(1,$e),floor($e*$mod));
-    });})
+    // ++ STACK -> All blueprints below benefit from daytime and handyman bonus, and give builder achievement
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */
+        $b->add_modifier(Model_Blueprint::BP_MOD_ENERGY, function($pl,$pre,$e) { /** @var Model_Player $pl */
+            $mod = 1;
+            if (Tool_Scripts::get_timeofday($pl) == 'morning') $mod -= 0.25;    // Daytime bonus
+            if ($pl->buff_retr('tr_handyman')) $mod -= 0.1;                     // Handyman Bonus
+            return max(min(1,$e),floor($e*$mod));
+        });
+    })
 
     // Hideout repair stuff
     ->add_blueprints(

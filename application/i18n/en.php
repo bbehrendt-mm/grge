@@ -4798,4 +4798,62 @@ return array (
 	'You can\'t go on from here... you\'ll have to make a stop at :ad on your travel to :od.',
   'Das Wasser in deiner Flasche schaut dich mit großen, traurigen Augen an - aber das hilft nicht viel. Eiskalt kochst du es auf 100° und tötest so alles Leben darin ab!' =>
 	'The water in your bottle looks at you with big, sad eyes - but that won\'t help him. Without giving it another thought, you boil it to 100 degrees and kill all live in it!',
+  'Season-Ranking' =>
+	'Seasonal Ranking',
+  'Globales Ranking' =>
+	'Global Ranking',
+  'Auszeichnungen' =>
+	'Achievements',
+  'Zum globalen Ranking wechseln' =>
+	'Switch to global Ranking',
+  'Zum saisonalen Ranking wechseln' =>
+	'Switch to seasonal Ranking',
+  'Diese Auszeichnung wurde bereits :num mal verliehen!' =>
+	'This achievement has already been awarded :num times!',
+  'Bisher hat es noch niemand geschafft, diese Auszeichnung zu erhalten...' =>
+	'Nobody managed to get this achievement yet...',
+  'SP' =>
+	'SP',
+  'Benutzeroberfläche' =>
+	'User Interface',
+  'Darstellungsqualität' =>
+	'Visual Quality',
+  'Hoch' =>
+	'High',
+  'Mittel' =>
+	'Medium',
+  'Niedrig' =>
+	'Low',
+  'Durch die Verringerung der Darstellungsqualität werden bestimmte grafische Effekte deaktiviert, umd die Leistung auf Geräten mit schwächerer Hardware zu verbessern.' =>
+	'By lowering the visual quality, certain effects will get removed in order to make the game run better on slower hardware.',
+  'Eingabegerät' =>
+	'Input Device',
+  'Automatisch' =>
+	'Automatic',
+  'Maus' =>
+	'Mouse',
+  'Touchscreen' =>
+	'Touchscreen',
+  'Die Benutzeroberfläche erkennt normalerweise automatisch, ob du mit Maus oder Touchscreen spielst, und optimiert die Eingabefunkionen dementsprechend. Sollte das bei dir nicht funktionieren (z.B. weil du ein Gerät nutzt, das sowohl über eine Maus, als auch einen Touchscreen verfügt), kannst du die automatische Erkennung außer Kraft setzen.' =>
+	'Usually, the game will automatically detect what kind of input device you use to interact with the user interface. If this doesn\'t work for some reason (i.e. because you\'re using a device that supports both mouse and touchscreen interaction), you can manually select which device you\'re using.',
+  'Der Kürbis saugt vor deinen Augen die Chemikalie auf... und beginnt, in Zeitraffer zu faulen!' =>
+	'The pumpkin soaks up all the chemical... and starts to decay in fast motion!',
+  'Du tunkst das Essen in die Chemikalie - und beginnt zu blubbern und löst sich vor deinen Augen auf! So ein Ärger, das wirst du wohl nicht mehr essen können...' =>
+	'You dip your food into these chemicals - It immediately starts to sizzle and disintegrate before your eyes! Damn, now there is nothing left to eat...',
+  'Zunächst hörst du ein Zischen aus deiner Flasche, danach stellst du fest dass die Chemikalie dein Wasser gereinigt hat! Hurra!' =>
+	'The water in your bottle sizzles. After it has calmed down again, you notice it looks way cleaner than before. Yay!',
+  'Eigentlich kann man ja mit dem Trinken nie früh genug anfangen. Nachdem du die Flasche ausgetrunken hast, stellst du diese Aussage jedoch spontan in Frage - immerhin dreht sich die Welt um dich herum, und dir ist speiübel.' =>
+	'It\'s never to early to start drinking - or maybe it is, you\'re to drunk to know for sure. ',
+  'Die Pillen saugen die Chemikalie regelrecht auf! Vermutlich ast du jetzt ihre Wirkungsweise geändert...' =>
+	'These pills soak the chemicals in, drastically altering their effect.',
+  'Du schaltest die Taschenlampe an. Mit einem lauten Knall explodiert sie in deiner Hand und fügt dir schwere Verletzungen zu!' =>
+	'You switch the flashlight on... AND IT EXPLODES! Damn, now your hand is bleeding badly...',
+  'Na sowas! Laut aktuellen Analysen verursacht die Zombieapokalypse eine spontane Deflation an den Finanzmärkten. Damit hat sich der Wert deines Ersparten verdoppelt!' =>
+	'Boy howdy! Analysts say the current zombie apocalypse causes a spontaneous deflation at the financial markets. This means the value of your money has been doubled!',
+  'Ein bisschen Auswaschen, ein bisschen Eiter entfernen... schon sieht diese klaffende Wunde viel ansehnlicher aus.' =>
+	'A little cleaning, a little removing all that gooey pus... now this horrible, gaping would looks much more healthy.',
+  ':name hat deine Wunde mithilfe von Alkohol ausgewaschen.' =>
+	':name has cleaned your wound with some alcohol.',
+  'Wer braucht schon EKEA? Dieser Tisch hat eine mindestens genauso fragwürdige Qualität, und er ist aus echtem undefinierbaren Holz!' =>
+	'Who the hell needs EKEA? This table shows the exact same lack of quality and if even made of real undefinable wood!',
 );

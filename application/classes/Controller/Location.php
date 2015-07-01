@@ -83,13 +83,17 @@ class Controller_Location extends Controller_Game {
     /**
      * @param Model_Blueprints $blueprints
      * @param string $bid
+     * @return bool
      */
     private function exec_build($blueprints, $bid) {
         /** @global Model_Player $player */
         global $player;
 
-        $this->add_data('result', $blueprints->execute($bid, $player, $player->location()->get_upgrades()));
+        $tmp = $blueprints->execute($bid, $player, $player->location()->get_upgrades());
+        $this->add_data('result', $tmp);
         $this->render_notifications();
+
+        return (bool)$tmp;
     }
 
     public function japi_builder() {
@@ -99,7 +103,7 @@ class Controller_Location extends Controller_Game {
         $blueprints = Model_Blueprints::factory($player->location(), 'upgrades');
 
         if ($build = $this->request->post('build'))
-            $this->exec_build($blueprints, $build);
+            $player->achievements()->achieve(Model_Achievement::MA_CONSTRUCTIONS, $this->exec_build($blueprints, $build) ? 1 : 0);
 
         $this->add_data('blueprints', $this->compile_builder($blueprints));
         $this->add_data('energy', $player->stats_get(Model_Player::MP_STAT_ENERGY));

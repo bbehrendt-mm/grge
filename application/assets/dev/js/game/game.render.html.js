@@ -53,7 +53,7 @@ game.render.html = {
                 }, 200, 'swing', function() {
                     notification.animate({
                         opacity: 0,
-                        transform: 'scale(0.5)'
+                        transform: game.s.quality() > 1 ? 'scale(0.5)' : 'scale(1)'
                     }, 100, 'swing', function() {
                         notification.css({
                             transform: 'scale(1)',
@@ -68,7 +68,7 @@ game.render.html = {
             else
                 notification.animate({
                     opacity: 0,
-                    transform: 'scale(0.5)'
+                    transform: game.s.quality() > 1 ? 'scale(0.5)' : 'scale(1)'
                 }, 200, 'swing', function() {
                     notification.remove();
                 });
@@ -86,7 +86,7 @@ game.render.html = {
                 width: 96,
                 'margin-left': 252,
                 opacity: 0,
-                transform: 'scale(0.5)'
+                transform: game.s.quality() > 1 ? 'scale(0.5)' : 'scale(1)'
             }).animate({
                 opacity: 1,
                 transform: 'scale(1)'
@@ -99,7 +99,7 @@ game.render.html = {
         else
             notification.css({
                 opacity: 0,
-                transform: 'scale(0.5)'
+                transform: game.s.quality() > 1 ? 'scale(0.5)' : 'scale(1)'
             }).animate({
                 opacity: 1,
                 transform: 'scale(1)'

@@ -15,10 +15,6 @@ class Controller_Test extends Controller {
         $this->response->headers("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
     }
 
-    private function dump($v) {
-        echo "<pre />"; var_dump($v); echo "</pre>";
-    }
-
     public function action_rq() {
         $this->dump($this->session->get('request',[]));
     }
@@ -55,9 +51,5 @@ class Controller_Test extends Controller {
             echo "</tr>";
         }
         echo "</table>";
-
-        echo "<pre>";
-        var_dump($m->build_route_array($m->resolve_fixed_id(1)));
-        echo "</pre>";
     }
 }

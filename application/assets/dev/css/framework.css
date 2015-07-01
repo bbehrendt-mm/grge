@@ -17,6 +17,22 @@ body {
     opacity: 0;
 }
 
+/*noinspection CssInvalidFunction,CssInvalidPropertyValue*/
+body.q-no-blur #static.fade {
+    transition: all 6s ease;
+    -webkit-filter: contrast(300%) sepia(100%);
+    filter: contrast(300%) sepia(100%);
+    opacity: 0;
+}
+
+/*noinspection CssInvalidFunction,CssInvalidPropertyValue*/
+body.q-low #static.fade {
+    transition: all 6s ease;
+    -webkit-filter: none;
+    filter: none;
+    opacity: 0;
+}
+
 footer {
     text-align: center;
     padding: 20px 0;

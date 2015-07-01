@@ -7,7 +7,10 @@ game = {
     vcsid: null,
 
     touch: function() {
-        return typeof window.ontouchstart != "undefined";
+        var cfg = game.storage.get('settings','input-device');
+        if (cfg == 'touch') return true;
+        else if (cfg == 'mouse') return false;
+        else return typeof window.ontouchstart != "undefined";
     },
 
     clean: function(skip_temp) {
@@ -27,6 +30,8 @@ game = {
             else                game.mobile = 'sm';
             $('.popup').trigger('reposition');
         }).trigger('resize');
+
+        game.update_ui_quality();
     },
 
     registerVirtualCookie: function(sid) {
@@ -71,5 +76,30 @@ game = {
 
     reset: function() {
         window.location.href = 'index.php';
+    },
+
+    update_ui_quality: function() {
+        var q = game.s.quality();
+
+
+        if (q <= 2) $('body').addClass('q-no-blur');
+        else $('body').removeClass('q-no-blur');
+
+        if (q <= 1) $('body').addClass('q-low');
+        else $('body').removeClass('q-low');
+
+        $.fx.off = (q <= 1);
+    },
+
+    s: {
+        quality: function() {return game.storage.get('settings','ui-quality', game.mobile ? 2 : 3)}
+    },
+
+    w: {
+        quality: function(v) {
+            game.storage.set('settings','ui-quality', v);
+            game.update_ui_quality();
+
+        }
     }
 };

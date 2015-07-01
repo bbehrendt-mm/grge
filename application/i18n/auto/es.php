@@ -796,4 +796,38 @@ return array (
 	'',
   'Epischer Baumeister' =>
 	'',
+  'Season-Ranking' =>
+	'',
+  'Globales Ranking' =>
+	'',
+  'Zum globalen Ranking wechseln' =>
+	'',
+  'Zum saisonalen Ranking wechseln' =>
+	'',
+  'Diese Auszeichnung wurde bereits :num mal verliehen!' =>
+	'',
+  'Bisher hat es noch niemand geschafft, diese Auszeichnung zu erhalten...' =>
+	'',
+  'SP' =>
+	'',
+  'Benutzeroberfläche' =>
+	'',
+  'Darstellungsqualität' =>
+	'',
+  'Niedrig' =>
+	'',
+  'Durch die Verringerung der Darstellungsqualität werden bestimmte grafische Effekte deaktiviert, umd die Leistung auf Geräten mit schwächerer Hardware zu verbessern.' =>
+	'',
+  'Eingabegerät' =>
+	'',
+  'Automatisch' =>
+	'',
+  'Maus' =>
+	'',
+  'Touchscreen' =>
+	'',
+  'Die Benutzeroberfläche erkennt normalerweise automatisch, ob du mit Maus oder Touchscreen spielst, und optimiert die Eingabefunkionen dementsprechend. Sollte das bei dir nicht funktionieren (z.B. weil du ein Gerät nutzt, das sowohl über eine Maus, als auch einen Touchscreen verfügt), kannst du die automatische Erkennung außer Kraft setzen.' =>
+	'',
+  'Wer braucht schon EKEA? Dieser Tisch hat eine mindestens genauso fragwürdige Qualität, und er ist aus echtem undefinierbaren Holz!' =>
+	'',
 );

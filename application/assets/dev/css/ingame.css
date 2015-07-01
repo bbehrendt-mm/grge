@@ -82,10 +82,20 @@
     animation: bubble 0.7s ease infinite alternate;
 }
 
+body.q-low .inventory ul li.marked-target {
+    animation: bubble-low 0.3s ease infinite alternate;
+}
+
 @keyframes bubble {
     from {transform: scale(1.0);}
     to {transform: scale(1.5);}
 }
+
+@keyframes bubble-low {
+    from {filter: invert(100%); -webkit-filter: invert(100%);}
+    to {filter: invert(0%); -webkit-filter: invert(0%);}
+}
+
 
 
 .inventory ul li.temp.event {
@@ -173,6 +183,13 @@ div.popup-wrapper > div.popup.disabled {
     filter: blur(2px) sepia(100%);
     -webkit-filter: blur(2px) sepia(100%);
 }
+
+/*noinspection ALL*/
+body.q-no-blur div.popup-wrapper > div.popup.disabled {
+    filter: sepia(100%);
+    -webkit-filter: sepia(100%);
+}
+
 
 div.details .cell > i:first-child {
     font-size: 10px;
@@ -340,10 +357,26 @@ div.log_box > .message.pointer > .content::before {
     -webkit-filter: filter: grayscale(100%);
 }
 
+.achievement-unknown {
+    height: 28px;
+    width: 28px;
+    border-radius: 14px;
+    background: white;
+    border: 1px solid rgb(200,200,200);
+    border-bottom: 4px solid rgb(200,200,200);
+    filter: grayscale(100%);
+    -webkit-filter: filter: grayscale(100%);
+}
+
 .achievement > img {
     position: absolute;
     left: 16px;
     top: 10px;
+}
+
+.achievement-unknown > img {
+    left: 5px;
+    top: 5px;
 }
 
 .achievement > span {
@@ -365,3 +398,4 @@ div.log_box > .message.pointer > .content::before {
 .achievement-4 {background: url("media/img/achievement-bg/4.png")}
 .achievement-5 {background: url("media/img/achievement-bg/5.png")}
 .achievement-6 {background: url("media/img/achievement-bg/6.png")}
+

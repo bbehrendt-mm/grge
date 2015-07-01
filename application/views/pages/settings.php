@@ -8,6 +8,49 @@
 
 <div class="row"><div class="cell rw-12 padded"><div class="note"><?=__('Hier kannst du einige Einstellungen für dein ZombVival-Profil vornehmen.');?></div></div></div>
 <br />
+
+<div class="row">
+
+    <div class="cell rw-12 center">
+        <h2><?=__('Benutzeroberfläche')?></h2>
+    </div>
+    <div class="cell rw-12">
+        <div class="row">
+            <div class="cell rw-4 rw-md-12 padded">
+
+                <label for="quality"><b><?=__('Darstellungsqualität');?></b></label><br />
+                <select id="quality" data-associated-setting data-handler="quality" data-default="3">
+                    <option value="3"><?=__('Hoch');?></option>
+                    <option value="2"><?=__('Mittel');?></option>
+                    <option value="1"><?=__('Niedrig');?></option>
+                </select>
+            </div>
+            <div class="cell rw-8 rw-md-12 padded">
+                <div class="note">
+                    <?=__('Durch die Verringerung der Darstellungsqualität werden bestimmte grafische Effekte deaktiviert, umd die Leistung auf Geräten mit schwächerer Hardware zu verbessern.');?>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell rw-4 rw-md-12 padded">
+
+                <label for="input"><b><?=__('Eingabegerät');?></b></label><br />
+                <select id="quality" data-associated-setting="input-device"  data-default="auto">
+                    <option value="auto"><?=__('Automatisch');?></option>
+                    <option value="mouse"><?=__('Maus');?></option>
+                    <option value="touch"><?=__('Touchscreen');?></option>
+                </select>
+            </div>
+            <div class="cell rw-8 rw-md-12 padded">
+                <div class="note">
+                    <?=__('Die Benutzeroberfläche erkennt normalerweise automatisch, ob du mit Maus oder Touchscreen spielst, und optimiert die Eingabefunkionen dementsprechend. Sollte das bei dir nicht funktionieren (z.B. weil du ein Gerät nutzt, das sowohl über eine Maus, als auch einen Touchscreen verfügt), kannst du die automatische Erkennung außer Kraft setzen.');?>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <div class="row">
 
     <div class="cell rw-12 center">
@@ -84,8 +127,18 @@
                 )
             }
         });
-
-
     });
+
+
+    $('[data-associated-setting]').each(function() {
+        var setting = $(this).data('associated-setting');
+        $(this).val(($(this).data('handler') && game.s[$(this).data('handler')]) ? game.s[$(this).data('handler')]() : game.storage.get('settings',setting,$(this).data('default'))).change(function() {
+            if ($(this).data('handler') && game.w[$(this).data('handler')])
+                game.w[$(this).data('handler')]($(this).val());
+            else game.storage.set('settings',setting,$(this).val());
+        })
+    });
+
+    $('#content').find('select').selectric();
 // ## JS COMPRESS END ## //
 </script>

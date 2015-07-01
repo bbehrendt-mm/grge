@@ -285,9 +285,9 @@
 
         radar.attr('title',
             game.i18n(tooltip.join('<br /><br />'), {':min': '<b>' + data.min + '</b>',':max': '<b>' + data.max + '</b>',':pc_min': '<b>' + data.prop + '</b>',':sg_min': '<b>' + data.inc + '</b>'})
-        ).qtip(game.render.html.qtip.ingame('top'));
+        ).qtip(game.render.html.qtip.ingame('bottom'));
 
-        siege.attr('title','-').qtip(game.render.html.qtip.ingame('top',{
+        siege.attr('title','-').qtip(game.render.html.qtip.ingame('bottom',{
             render: function(event,api) {
                 var content = $(this).find('.qtip-content').empty();
                 if (data.zombies == 0)

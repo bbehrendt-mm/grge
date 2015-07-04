@@ -6,7 +6,7 @@ core = {
     parts: {},
     snippets: {},
 
-    version: '2.0.2-4-0-1',
+    version: '2.0.3-0-0-1',
 
     last: {},
     plugins: {},
@@ -2772,7 +2772,7 @@ core = {
                         $(this).siblings('.travel, .untravel').removeClass('travel untravel');
                     });
                 else
-                    icon.attr('title','-').qtip(game.render.html.qtip.ingame('top', {
+                    icon.attr('title','-').qtip(game.render.html.qtip.ingame('bottom', {
                         render: function() {
                             var content, button;
                             tooltip(content = $(this).find('.qtip-content').empty().stop().fadeIn(100), true);

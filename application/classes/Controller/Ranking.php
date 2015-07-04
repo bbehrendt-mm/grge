@@ -318,7 +318,6 @@ class Controller_Ranking extends Controller {
             $apoints += $achievement['count'] * $achievement['points'];
         }
 
-
         $this->add_widget(View::factory('pages/soul')
             ->set('season', Kohana::$config->load('server.season'))
             ->set('own_soul', $uid == $user->uid())
@@ -332,6 +331,10 @@ class Controller_Ranking extends Controller {
             ->set('next_rank_points', $next_srank)
             ->set('rank_karma', $krank)
             ->set('achievements', $achievements)
+            ->set('tables', [
+                'mode' => array_map(function($a) {return ['name' => Tool_Gamemodes::get_board_by_id($a['board']), 'points' => $a['points']];}, DB::select('board', [DB::expr('SUM(points)'), 'points'])->from('ranking')->where('uid','=',$uid)->where('season', '>=', 0)->group_by('board','uid')->order_by('board', 'ASC')->execute()->as_array()),
+                'job' => array_map(function($a) {return ['name' => Tool_Gamemodes::get_job_by_id($a['job']), 'points' => $a['points']];}, DB::select('job', [DB::expr('SUM(points)'), 'points'])->from('ranking')->where('uid','=',$uid)->where('season', '>=', 0)->group_by('job','uid')->order_by('job', 'ASC')->execute()->as_array())
+            ])
 
             ->render()
         );

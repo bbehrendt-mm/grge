@@ -547,7 +547,7 @@ core.popup = {
                         $(this).siblings('.travel, .untravel').removeClass('travel untravel');
                     });
                 else
-                    icon.attr('title','-').qtip(game.render.html.qtip.ingame('top', {
+                    icon.attr('title','-').qtip(game.render.html.qtip.ingame('bottom', {
                         render: function() {
                             var content, button;
                             tooltip(content = $(this).find('.qtip-content').empty().stop().fadeIn(100), true);

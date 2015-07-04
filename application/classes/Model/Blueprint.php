@@ -477,7 +477,7 @@ class Model_Blueprint {
     public function apply($location, $preconditions) {
         if (Tool_System::instance_of($location, 'Model_Places_Abstract_Hideout')) {
             /** @var Model_Places_Abstract_Hideout $location */
-            $location->set_decay($this->decay, false);
+            $location->set_decay($this->decay/100, false);
             $location->set_patchup($this->decay_speed, false);
             $location->inc_defense($this->defense);
             $location->deco($this->deco_value);

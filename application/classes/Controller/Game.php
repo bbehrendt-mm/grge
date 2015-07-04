@@ -827,9 +827,18 @@ class Controller_Game extends Controller {
                 ];
             }
 
+            $player_ratings = [];
+            if ($game->is_rankable() && $game->points($player->id()) > 0)
+                foreach ($game->players(false) as $p)
+                    if ($p->user_id() != $player->user_id())
+                    $player_ratings[$p->user_id()] = [
+                        'prev_rating' => Model_User::get_karma($p->user_id(), $player->user_id()),
+                        'name' => $p->name()
+                    ];
+
             $this->add_widget(View::factory('pages/death')
                 ->set('soul_points', $game->points($player->id()))
-                ->set('ach_points', $game->points($player->id()))
+                ->set('ach_points', $a_points)
                 ->set('achievements', $a_data)
                 ->set('rankable', $game->is_rankable())
                 ->set('time', Tool_Numerics::duration_to_string($game->get_player($player->id())->get_lifetime()))
@@ -837,6 +846,7 @@ class Controller_Game extends Controller {
                 ->set('cause_of_death', $player->get_cod())
                 ->set('braincoins', $player->get_braincoins() * ($player->get_lifetime() >= 288 ? 1 : -1))
                 ->set('braincoins_account', Model_User::get_coins($player->id()))
+                ->set('ratings', $player_ratings ? $player_ratings : null)
                 ->render());
         }
 
@@ -878,9 +888,10 @@ class Controller_Game extends Controller {
         //Check if player is still alive
         if (!$player->alive())
         {
-            //ToDo: Karma
-            //foreach ($game->players(false) as $p) if ($p->id() != $player->id())
-            //    Model_User::set_karma($p->id(), $player->id(), (int)$this->request->post('karma_' . $p->id()));
+            if ($r = $this->request->post('ratings') && $game->is_rankable() && $game->points($player->id()) > 0)
+                foreach ($game->players(false) as $p) if ($p->id() != $player->id() && isset($r[$p->id()]) && is_numeric($r[$p->id()]))
+                    Model_User::set_karma($p->id(), $player->id(), min(2,max(-2,(int)$r[$p->id()])));
+
 
             //End game and delete game object from session
             if ($game->retire($user->uid())) {

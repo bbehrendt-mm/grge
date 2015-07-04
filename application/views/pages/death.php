@@ -9,6 +9,7 @@
  * @var int $braincoins Number of earned braincoins
  * @var int $braincoins_account Number of braincoins in the users account
  * @var array $achievements Achievements
+ * @var array $ratings Player Ratings
  */
 if (!isset($services)) $services = array();
 ?>
@@ -127,6 +128,39 @@ if (!isset($services)) $services = array();
     <?php } ?>
 </div>
 
+<?php if ($ratings) { ?>
+    <br />
+    <div class="row">
+        <div class="cell rw-12">
+            <h3><?=__('Karma-Bewertung');?></h3>
+            <div class="note">
+                <b><?=__('Wenn du möchtest, kannst du hier die Spielleistung deiner Mitspieler bewerten.'); ?></b>
+                <?=__('Auf diese Art kannst du deinen Mitspielern für ihren Einsatz danken oder sie dazu bewegen, ihre Spielweise zu überdenken. Jede Bewertung erfolgt annonym und kann vom jewailigen Spieler nicht zurückverfolgt werden.'); ?>
+            </div>
+        </div>
+        <?php foreach ($ratings as $uid => $data) { ?>
+            <div class="cell rw-6 padded">
+                <div class="flatbox">
+                    <h4><label for="rating_<?=$uid?>"><?=$data['name'];?></label></h4>
+                    <div class="row">
+                        <div class="cell rw-12 padded">
+                            <select data-rating-for="<?=$uid?>" id="rating_<?=$uid?>">
+                                <option value="no" selected="selected"><?=__('nicht bewerten.');?></option>
+                                <?php $rate_g = array(-2 => 'hat die Partie ordentlich sabotiert!', -1 => 'hat kaum etwas nützliches beigetrage.', 0 => 'ist nicht besonders aufgefallen.', 1 => 'hat zum Erfolg dieser Partie beigetragen.', 2 => 'hat sich mächtig für uns ins Zeug gelegt!'); ?>
+                                <?php foreach ($rate_g as $v => $k) { ?>
+                                    <option value="<?=$v?>"><?=__($k);?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        <?php } ?>
+    </div>
+    <br />
+<?php } ?>
+
 <div class="row">
     <div class="cell rw-12">
         <div id="finalizebtn" class="btn btn-icon"><span class="btn-icon-inner"><i class="fa fa-arrow-right"></i></span><span id="finalizebtn-content"><?=__('Das Spiel beenden');?></span></div>
@@ -149,9 +183,15 @@ if (!isset($services)) $services = array();
         alias.addClass('btn-disabled').find('.fa').attr('class','fa fa-spin fa-circle-o-notch');
         alias.find('#finalizebtn-content').html(<?=__j('Bitte warten...');?>);
 
+        var ratings = {};
+        $('[data-rating-for]').each(function() {
+            if ($(this).val() != 'no')
+                ratings[$(this).data('rating-for')] = $(this).val();
+        });
+
         $('#content').find('.form_input').attr('disabled', 'disabled');
 
-        game.network.query('japi/game/end', {}, function(data) {
+        game.network.query('japi/game/end', {ratings: ratings}, function(data) {
             if (data.error) {
                 alert(data.error.code + ' [' + data.error.name + ']: ' + data.error.message);
 
@@ -164,6 +204,8 @@ if (!isset($services)) $services = array();
                 game.network.load(data.redirect);
         });
     });
+
+    $('select').selectric();
 
     core.renderLog($('#logtarget'));
 // ## JS COMPRESS END ## //

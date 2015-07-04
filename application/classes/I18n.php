@@ -26,6 +26,7 @@ if ( !function_exists('__'))
             '::/b::' => '</b>'
         ]);
 
+        $lang = explode('-',$lang)[0];
 		return empty($values) ? I18n::get($string, $lang) : strtr(I18n::get($string, $lang), $values);
 	}
 }

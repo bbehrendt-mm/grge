@@ -4856,4 +4856,30 @@ return array (
 	'Touchscreen',
   'Die Benutzeroberfläche erkennt normalerweise automatisch, ob du mit Maus oder Touchscreen spielst, und optimiert die Eingabefunkionen dementsprechend. Sollte das bei dir nicht funktionieren (z.B. weil du ein Gerät nutzt, das sowohl über eine Maus, als auch einen Touchscreen verfügt), kannst du die automatische Erkennung außer Kraft setzen.' =>
 	'Die Benutzeroberfläche erkennt normalerweise automatisch, ob du mit Maus oder Touchscreen spielst, und optimiert die Eingabefunkionen dementsprechend. Sollte das bei dir nicht funktionieren (z.B. weil du ein Gerät nutzt, das sowohl über eine Maus, als auch einen Touchscreen verfügt), kannst du die automatische Erkennung außer Kraft setzen.',
+  'Du wickelst die Bandage straff um die Verletzungen deines Freundes. Er ist zwar immer noch Leichenblass, das hat aber nichts mehr mit dem Blutverlust zu tun...' =>
+	'Du wickelst die Bandage straff um die Verletzungen deines Freundes. Er ist zwar immer noch Leichenblass, das hat aber nichts mehr mit dem Blutverlust zu tun...',
+  ':name hat eine ziemlich schmutzige Bandage um deine Verletzungen gewickelt... wenigestens weist du jetzt was du ihm wert bist.' =>
+	':name hat eine ziemlich schmutzige Bandage um deine Verletzungen gewickelt... wenigestens weist du jetzt was du ihm wert bist.',
+  'Karma-Bewertung' =>
+	'Karma-Bewertung',
+  'Wenn du möchtest, kannst du hier die Spielleistung deiner Mitspieler bewerten.' =>
+	'Wenn du möchtest, kannst du hier die Spielleistung deiner Mitspieler bewerten.',
+  'Auf diese Art kannst du deinen Mitspielern für ihren Einsatz danken oder sie dazu bewegen, ihre Spielweise zu überdenken. Jede Bewertung erfolgt annonym und kann vom jewailigen Spieler nicht zurückverfolgt werden.' =>
+	'Auf diese Art kannst du deinen Mitspielern für ihren Einsatz danken oder sie dazu bewegen, ihre Spielweise zu überdenken. Jede Bewertung erfolgt annonym und kann vom jewailigen Spieler nicht zurückverfolgt werden.',
+  'nicht bewerten.' =>
+	'nicht bewerten.',
+  'hat die Partie ordentlich sabotiert!' =>
+	'hat die Partie ordentlich sabotiert!',
+  'hat kaum etwas nützliches beigetrage.' =>
+	'hat kaum etwas nützliches beigetrage.',
+  'ist nicht besonders aufgefallen.' =>
+	'ist nicht besonders aufgefallen.',
+  'hat zum Erfolg dieser Partie beigetragen.' =>
+	'hat zum Erfolg dieser Partie beigetragen.',
+  'hat sich mächtig für uns ins Zeug gelegt!' =>
+	'hat sich mächtig für uns ins Zeug gelegt!',
+  'Deine Punkte-Übersicht' =>
+	'Deine Punkte-Übersicht',
+  ':name\'s Punkte-Übersicht' =>
+	':name\'s Punkte-Übersicht',
 );

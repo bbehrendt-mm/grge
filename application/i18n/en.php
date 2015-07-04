@@ -4856,4 +4856,30 @@ return array (
 	':name has cleaned your wound with some alcohol.',
   'Wer braucht schon EKEA? Dieser Tisch hat eine mindestens genauso fragwürdige Qualität, und er ist aus echtem undefinierbaren Holz!' =>
 	'Who the hell needs EKEA? This table shows the exact same lack of quality and if even made of real undefinable wood!',
+  'Karma-Bewertung' =>
+	'Karma Assessment',
+  'Wenn du möchtest, kannst du hier die Spielleistung deiner Mitspieler bewerten.' =>
+	'You can assess the play style of your fellow players if you like.',
+  'Auf diese Art kannst du deinen Mitspielern für ihren Einsatz danken oder sie dazu bewegen, ihre Spielweise zu überdenken. Jede Bewertung erfolgt annonym und kann vom jewailigen Spieler nicht zurückverfolgt werden.' =>
+	'This way, you can thank them for their contribution to the game, or get them to change their evil ways. Every assessment is annonymous, other players can not see what score you gave them.',
+  'nicht bewerten.' =>
+	'Don\'t rate.',
+  'hat die Partie ordentlich sabotiert!' =>
+	'has sabotaged this game from the start!!',
+  'hat kaum etwas nützliches beigetrage.' =>
+	'was hardly helpful.',
+  'ist nicht besonders aufgefallen.' =>
+	'did not leave much of an impression.',
+  'hat zum Erfolg dieser Partie beigetragen.' =>
+	'has contributed to the success of this game.',
+  'hat sich mächtig für uns ins Zeug gelegt!' =>
+	'has worked hard for us!',
+  'Deine Punkte-Übersicht' =>
+	'Your Score Overview',
+  ':name\'s Punkte-Übersicht' =>
+	':name\'s Score Overview',
+  'Du wickelst die Bandage straff um die Verletzungen deines Freundes. Er ist zwar immer noch Leichenblass, das hat aber nichts mehr mit dem Blutverlust zu tun...' =>
+	'You wrap the bandage tightly around your friend\'s injuries. He still looks kind of pale, but probably not because of the blood loss...',
+  ':name hat eine ziemlich schmutzige Bandage um deine Verletzungen gewickelt... wenigestens weist du jetzt was du ihm wert bist.' =>
+	':name has treated your injuries with a pretty dirty bandage.... well, now you know what your life is worth to him.',
 );

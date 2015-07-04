@@ -9,12 +9,6 @@ class Model_Inventory extends Model {
     private $current_full = NULL;
     private $carrier_inventory = null;
 
-    // S6 to S6.5 converter
-    public function __wakeup() {
-        if ($this->carrier_inventory === null)
-            $this->carrier_inventory = ($this->limit > 0);
-    }
-
 	//Create inventory, set weight limit
 	public function __construct($weight_limit = NULL, $carrier = false) {
 		$this->limit = $weight_limit;

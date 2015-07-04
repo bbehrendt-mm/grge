@@ -12,6 +12,7 @@
  * @var string $rank_soul
  * @var string $rank_karma
  * @var array $achievements
+ * @var array $tables
  */
 ?>
 
@@ -73,22 +74,60 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="cell rw-12 center">
-        <h2><?=$own_soul ? __('Deine Ranking-Highlights') : __(':name\'s Ranking-Highlights', [':name' => $soul_owner])?></h2>
+<?php if ($points_soul > 0) { ?>
+    <div class="row">
+        <div class="cell rw-12 center">
+            <h2><?=$own_soul ? __('Deine Punkte-Übersicht') : __(':name\'s Punkte-Übersicht', [':name' => $soul_owner])?></h2>
+        </div>
+        <div class="cell rw-6 rw-md-12 padded nopad-md">
+            <div class="row-table padded row-table-borders row-table-striped row-table-interact">
+                <div class="row">
+                    <div class="cell padded rw-8 rw-sm-9"><?=__('Spielmodus')?></div>
+                    <div class="cell padded rw-4 rw-sm-3"><?=__('Punkte')?></div>
+                </div>
+                <?php foreach ($tables['mode'] as $entry) { ?>
+                    <div class="row">
+                        <div class="cell padded rw-8 rw-sm-9"><?=__($entry['name']);?></div>
+                        <div class="cell padded rw-4 rw-sm-3"><?=$entry['points'];?></div>
+                    </div>
+                <?php } ?>
+            </div>
+        </div>
+
+        <div class="cell rw-6 rw-md-12 padded nopad-md">
+            <div class="row-table padded row-table-borders row-table-striped row-table-interact">
+                <div class="row">
+                    <div class="cell padded rw-8 rw-sm-9"><?=__('Beruf')?></div>
+                    <div class="cell padded rw-4 rw-sm-3"><?=__('Punkte')?></div>
+                </div>
+                <?php foreach ($tables['job'] as $entry) { ?>
+                    <div class="row">
+                        <div class="cell padded rw-8 rw-sm-9"><?=__($entry['name']);?></div>
+                        <div class="cell padded rw-4 rw-sm-3"><?=$entry['points'];?></div>
+                    </div>
+                <?php } ?>
+            </div>
+        </div>
+
     </div>
-    <div class="cell rw-2 ro-5 rw-lg-4 ro-lg-4 rw-sm-12 ro-sm-0">
-        <label for="game_season"></label><select class="form_input" id="game_season" data-container="body">
-            <?php for ($i = $season; $i >= 0; $i--) { ?>
-                <option value="<?=$i;?>"><?=__('Season :num', [':num' => $i]);?></option>
-            <?php } ?>
 
-        </select>
+    <div class="row">
+        <div class="cell rw-12 center">
+            <h2><?=$own_soul ? __('Deine Ranking-Highlights') : __(':name\'s Ranking-Highlights', [':name' => $soul_owner])?></h2>
+        </div>
+        <div class="cell rw-2 ro-5 rw-lg-4 ro-lg-4 rw-sm-12 ro-sm-0">
+            <label for="game_season"></label><select class="form_input" id="game_season" data-container="body">
+                <?php for ($i = $season; $i >= 0; $i--) { ?>
+                    <option value="<?=$i;?>"><?=__('Season :num', [':num' => $i]);?></option>
+                <?php } ?>
+
+            </select>
+        </div>
     </div>
-</div>
 
 
-<div id="ranking_target" class="center"></div>
+    <div id="ranking_target" class="center"></div>
+<?php } ?>
 
 <script type="application/javascript">
 // ## JS COMPRESS BEGIN ## //
@@ -96,120 +135,118 @@
         game.network.load('account/settings');
     });
 
-    var read_fetch = function(offset) {
-        return function() {
-            var is_mp = $('#game_type').val() == "2";
-            fetch(is_mp, $('#game_mode').val(), is_mp ? "1" : $('#game_time').val(), $('#game_season').val(), Math.max(0,offset))
-        }
-    };
-
-    var fetch = function(season) {
-        $('#ranking_target').html('<i class="fa fa-circle-o-notch fa-spin"></i>');
-        var content = $('#content');
-        var selectors = content.find('select:not(:disabled)').attr('disabled', 'disabled');
-
-        game.network.query('japi/ranking/soul', {
-            season: season,
-            uid: <?=$soul_id?>
-        }, function(data) {
-            selectors.removeAttr('disabled');
-
-            $('#ranking_target').empty();
-            if (data.ranking) {
-                var table = $('<div class="row-table padded row-table-borders row-table-striped row-table-interact"></div>').appendTo('#ranking_target');
-                $('<div class="row"><div class="cell padded rw-2 rw-lg-1 rw-sm-2"><span class="hide-md hide-sm"><?=__('Platz')?></span><span class="hide-desktop hide-lg">#</span></div><div class="cell padded rw-1 rw-sm-0"><?=__('Punkte')?></div><div class="cell padded rw-2 rw-md-0"><?=__('Spieldauer')?></div><div class="cell padded rw-3 rw-md-5"><?=__('Spielmodus')?></div><div class="cell padded rw-4"><?=__('Beruf')?></div></div>').appendTo(table);
-
-                $.each(data.ranking, function(p, elem) {
-                    var entry = $('<div class="row"></div>');
-
-                    var icon = null;
-                    if (elem.pos == 1)          icon = '<img src="media/icons/superstar.gif" alt="rk-winner">';
-                    else if (elem.pos <= 3)     icon = '<img src="media/icons/silverstar.gif" alt="rk-silver">';
-                    else if (elem.pos <= 10)    icon = '<img src="media/icons/star.gif" alt="rk-topten">';
-                    else                        icon = '<i class="fa fa-star-o"></i>';
-
-                    $('<div class="cell padded rw-1 rw-lg-0"></div>').html(icon).appendTo(entry);
-                    $('<div class="cell padded rw-1 rw-sm-2"></div>').text(elem.pos).appendTo(entry);
-                    $('<div class="cell padded rw-1 rw-sm-0"></div>').text(elem.score).appendTo(entry);
-                    $('<div class="cell padded rw-2 rw-md-0"></div>').text(elem.duration).appendTo(entry);
-                    $('<div class="cell-small padded rw-5 rw-md-6"></div>').html(elem.mode).appendTo(entry);
-                    $('<div class="cell-small padded rw-1 rw-md-2"></div>').append($('<img />').attr('src','media/icons/flow' + elem.flow + '.gif').attr('title',elem.flow == 0 ? <?=__j('Klassischer Zeitfluss')?> : <?=__j('Variabler Zeitfluss')?>).qtip(game.render.html.qtip.player('left'))).appendTo(entry);
-                    $('<div class="cell padded rw-4 rw-lg-5"></div>').html(elem.players["0"].job).appendTo(entry);
-
-                    entry.appendTo(table);
-                });
+    <?php if ($points_soul > 0) { ?>
+        var read_fetch = function(offset) {
+            return function() {
+                var is_mp = $('#game_type').val() == "2";
+                fetch(is_mp, $('#game_mode').val(), is_mp ? "1" : $('#game_time').val(), $('#game_season').val(), Math.max(0,offset))
             }
+        };
 
-            if (data.ranking_mp) {
-                var table_mp = $('<div class="row-table padded row-table-borders row-table-striped row-table-interact"></div>').appendTo('#ranking_target');
-                $('<div class="row"><div class="cell padded rw-2 rw-lg-1"><span class="hide-md hide-sm"><?=__('Platz')?></span><span class="hide-desktop hide-lg">#</span></div><div class="cell padded rw-1 rw-md-0"><?=__('Punkte')?></div><div class="cell padded rw-3 rw-md-4 rw-sm-0"><?=__('Name')?></div><div class="cell padded rw-2 rw-lg-3 rw-sm-5"><?=__('Spielmodus')?></div><div class="cell padded rw-4 rw-sm-6"><?=__('Spieler')?></div></div>').appendTo(table_mp);
+        var fetch = function(season) {
+            $('#ranking_target').html('<i class="fa fa-circle-o-notch fa-spin"></i>');
+            var content = $('#content');
+            var selectors = content.find('select:not(:disabled)').attr('disabled', 'disabled');
 
-                $.each(data.ranking_mp, function(p, elem) {
-                    var entry = $('<div class="row"></div>');
+            game.network.query('japi/ranking/soul', {
+                season: season,
+                uid: <?=$soul_id?>
+            }, function(data) {
+                selectors.removeAttr('disabled');
 
-                    var icon = null;
-                    if (elem.pos == 1)          icon = '<img src="media/icons/superstar.gif" alt="rk-winner">';
-                    else if (elem.pos <= 3)     icon = '<img src="media/icons/silverstar.gif" alt="rk-silver">';
-                    else if (elem.pos <= 10)    icon = '<img src="media/icons/star.gif" alt="rk-topten">';
-                    else                        icon = '<i class="fa fa-star-o"></i>';
+                $('#ranking_target').empty();
+                if (data.ranking) {
+                    var table = $('<div class="row-table padded row-table-borders row-table-striped row-table-interact"></div>').appendTo('#ranking_target');
+                    $('<div class="row"><div class="cell padded rw-2 rw-lg-1 rw-sm-2"><span class="hide-md hide-sm"><?=__('Platz')?></span><span class="hide-desktop hide-lg">#</span></div><div class="cell padded rw-1 rw-sm-0"><?=__('Punkte')?></div><div class="cell padded rw-2 rw-md-0"><?=__('Spieldauer')?></div><div class="cell padded rw-3 rw-md-5"><?=__('Spielmodus')?></div><div class="cell padded rw-4"><?=__('Beruf')?></div></div>').appendTo(table);
 
-                    $('<div class="cell padded rw-1 rw-lg-0"></div>').html(icon).appendTo(entry);
-                    $('<div class="cell padded rw-1"></div>').html(elem.pos).appendTo(entry);
-                    $('<div class="cell padded rw-1 rw-md-0"></div>').text(elem.score).appendTo(entry);
-                    $('<div class="cell padded rw-3 rw-md-4 rw-sm-0"></div>').text(elem.name).appendTo(entry);
-                    $('<div class="cell padded rw-2 rw-lg-3 rw-sm-5"></div>').html(elem.mode).appendTo(entry);
-                    var pl = $('<div class="cell padded rw-4 rw-sm-6"></div>').appendTo(entry);
+                    $.each(data.ranking, function(p, elem) {
+                        var entry = $('<div class="row"></div>');
 
-                    var has_players = false;
-                    if (elem.players)
-                        $.each(elem.players, function(k,v) {
-                            has_players = true;
-                            var player = $('<span class="inline-player">' + v.name + '</span>').appendTo(pl);
+                        var icon = null;
+                        if (elem.pos == 1)          icon = '<img src="media/icons/superstar.gif" alt="rk-winner">';
+                        else if (elem.pos <= 3)     icon = '<img src="media/icons/silverstar.gif" alt="rk-silver">';
+                        else if (elem.pos <= 10)    icon = '<img src="media/icons/star.gif" alt="rk-topten">';
+                        else                        icon = '<i class="fa fa-star-o"></i>';
 
-                            var qtmp = $('<div class="row"></div>');
-                            $('<div class="cell padded rw-4 right"><b><?=__('Beruf');?></b></div>').appendTo(qtmp);
-                            $('<div class="cell padded rw-8 center"></div>').html(v.job).appendTo(qtmp);
-                            $('<div class="cell padded rw-4 right"><b><?=__('Überlebt');?></b></div>').appendTo(qtmp);
-                            $('<div class="cell padded rw-8 center"></div>').html(v.life).appendTo(qtmp);
-                            $('<div class="cell padded rw-4 right"><b><?=__('Punkte');?></b></div>').appendTo(qtmp);
-                            $('<div class="cell padded rw-8 center"></div>').html(v.score).appendTo(qtmp);
+                        $('<div class="cell padded rw-1 rw-lg-0"></div>').html(icon).appendTo(entry);
+                        $('<div class="cell padded rw-1 rw-sm-2"></div>').text(elem.pos).appendTo(entry);
+                        $('<div class="cell padded rw-1 rw-sm-0"></div>').text(elem.score).appendTo(entry);
+                        $('<div class="cell padded rw-2 rw-md-0"></div>').text(elem.duration).appendTo(entry);
+                        $('<div class="cell-small padded rw-5 rw-md-6"></div>').html(elem.mode).appendTo(entry);
+                        $('<div class="cell-small padded rw-1 rw-md-2"></div>').append($('<img />').attr('src','media/icons/flow' + elem.flow + '.gif').attr('title',elem.flow == 0 ? <?=__j('Klassischer Zeitfluss')?> : <?=__j('Variabler Zeitfluss')?>).qtip(game.render.html.qtip.player('left'))).appendTo(entry);
+                        $('<div class="cell padded rw-4 rw-lg-5"></div>').html(elem.players["0"].job).appendTo(entry);
 
-                            player.attr('title', $('<div>').append(qtmp).html()).qtip(game.render.html.qtip.player('top'));
-                        });
-                    if (!has_players)
-                        pl.html('--');
+                        entry.appendTo(table);
+                    });
+                }
+
+                if (data.ranking_mp) {
+                    var table_mp = $('<div class="row-table padded row-table-borders row-table-striped row-table-interact"></div>').appendTo('#ranking_target');
+                    $('<div class="row"><div class="cell padded rw-2 rw-lg-1"><span class="hide-md hide-sm"><?=__('Platz')?></span><span class="hide-desktop hide-lg">#</span></div><div class="cell padded rw-1 rw-md-0"><?=__('Punkte')?></div><div class="cell padded rw-3 rw-md-4 rw-sm-0"><?=__('Name')?></div><div class="cell padded rw-2 rw-lg-3 rw-sm-5"><?=__('Spielmodus')?></div><div class="cell padded rw-4 rw-sm-6"><?=__('Spieler')?></div></div>').appendTo(table_mp);
+
+                    $.each(data.ranking_mp, function(p, elem) {
+                        var entry = $('<div class="row"></div>');
+
+                        var icon = null;
+                        if (elem.pos == 1)          icon = '<img src="media/icons/superstar.gif" alt="rk-winner">';
+                        else if (elem.pos <= 3)     icon = '<img src="media/icons/silverstar.gif" alt="rk-silver">';
+                        else if (elem.pos <= 10)    icon = '<img src="media/icons/star.gif" alt="rk-topten">';
+                        else                        icon = '<i class="fa fa-star-o"></i>';
+
+                        $('<div class="cell padded rw-1 rw-lg-0"></div>').html(icon).appendTo(entry);
+                        $('<div class="cell padded rw-1"></div>').html(elem.pos).appendTo(entry);
+                        $('<div class="cell padded rw-1 rw-md-0"></div>').text(elem.score).appendTo(entry);
+                        $('<div class="cell padded rw-3 rw-md-4 rw-sm-0"></div>').text(elem.name).appendTo(entry);
+                        $('<div class="cell padded rw-2 rw-lg-3 rw-sm-5"></div>').html(elem.mode).appendTo(entry);
+                        var pl = $('<div class="cell padded rw-4 rw-sm-6"></div>').appendTo(entry);
+
+                        var has_players = false;
+                        if (elem.players)
+                            $.each(elem.players, function(k,v) {
+                                has_players = true;
+                                var player = $('<span class="inline-player">' + v.name + '</span>').appendTo(pl);
+
+                                var qtmp = $('<div class="row"></div>');
+                                $('<div class="cell padded rw-4 right"><b><?=__('Beruf');?></b></div>').appendTo(qtmp);
+                                $('<div class="cell padded rw-8 center"></div>').html(v.job).appendTo(qtmp);
+                                $('<div class="cell padded rw-4 right"><b><?=__('Überlebt');?></b></div>').appendTo(qtmp);
+                                $('<div class="cell padded rw-8 center"></div>').html(v.life).appendTo(qtmp);
+                                $('<div class="cell padded rw-4 right"><b><?=__('Punkte');?></b></div>').appendTo(qtmp);
+                                $('<div class="cell padded rw-8 center"></div>').html(v.score).appendTo(qtmp);
+
+                                player.attr('title', $('<div>').append(qtmp).html()).qtip(game.render.html.qtip.player('top'));
+                            });
+                        if (!has_players)
+                            pl.html('--');
 
 
-                    entry.appendTo(table_mp);
-                });
-            }
+                        entry.appendTo(table_mp);
+                    });
+                }
 
 
-            if (!data.ranking && !data.ranking_mp) $('<span><?=$own_soul ? __('Du hast es in dieser Season nicht ins Ranking geschafft.') : __(':name hat es in dieser Season nicht ins Ranking geschafft.',[':name' => $soul_owner])?></span>').appendTo('#ranking_target');
+                if (!data.ranking && !data.ranking_mp) $('<span><?=$own_soul ? __('Du hast es in dieser Season nicht ins Ranking geschafft.') : __(':name hat es in dieser Season nicht ins Ranking geschafft.',[':name' => $soul_owner])?></span>').appendTo('#ranking_target');
 
-        });
-    };
+            });
+        };
 
-    $('#content').find('#game_season').change(function() {
-        fetch($(this).val());
-    }).selectric({
-        maxHeight: 200
-    }).change();
+        $('#content').find('#game_season').change(function() {
+            fetch($(this).val());
+        }).selectric({
+            maxHeight: 200
+        }).change();
 
-    $('#avatar').error(function() {
-        $(this).attr('src', 'media/img/mugshot.png').off('error');
-    });
+        <?php foreach ($achievements as $achievement) { ?>
+            $('[data-aid=<?=$achievement['id']?>]').attr('title', '-').qtip(game.render.html.qtip.ingame('top', {
+                render: function(event,api) {
+                    var content = $(this).find('.qtip-content').empty();
 
-    <?php foreach ($achievements as $achievement) { ?>
-        $('[data-aid=<?=$achievement['id']?>]').attr('title', '-').qtip(game.render.html.qtip.ingame('top', {
-            render: function(event,api) {
-                var content = $(this).find('.qtip-content').empty();
-
-                content
-                    .append($('<b>').addClass('header').text(<?=__j($achievement['name'])?>))
-                    .append($('<span />').html(game.i18n(<?=__j('Diese Auszeichnung ist ::i:: :num  Punkte::/i:: wert.')?>, {':num' : <?=__($achievement['points'])?>})));
-            }
-        }));
+                    content
+                        .append($('<b>').addClass('header').text(<?=__j($achievement['name'])?>))
+                        .append($('<span />').html(game.i18n(<?=__j('Diese Auszeichnung ist ::i:: :num  Punkte::/i:: wert.')?>, {':num' : <?=__($achievement['points'])?>})));
+                }
+            }));
+        <?php } ?>
     <?php } ?>
 
     $('#soul-search').click(function() {
@@ -246,8 +283,11 @@
                 }
             });
         })
+    });
 
 
+    $('#avatar').error(function() {
+        $(this).attr('src', 'media/img/mugshot.png').off('error');
     });
 // ## JS COMPRESS END ## //
 </script>

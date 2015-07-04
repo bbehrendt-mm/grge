@@ -92,6 +92,20 @@ class Tool_Scripts
             }
         }
 
+        /**
+         * @global $player Model_Player
+         */
+        if (is_object($perspective))
+            $player = $perspective;
+        else global $player;
+
+        if ($active_player) $player->inventory()->reset_weight();
+        if ($active_location) $player->location()->inventory()->reset_weight();
+        if ($other_players)
+            foreach (Tool_Scripts::at_location() as $s_player)
+                if ($s_player->uin() != $player->uin())
+                    $s_player->inventory()->reset_weight();
+
         return true;
     }
 

@@ -830,4 +830,10 @@ return array (
 	'',
   'Wer braucht schon EKEA? Dieser Tisch hat eine mindestens genauso fragwürdige Qualität, und er ist aus echtem undefinierbaren Holz!' =>
 	'',
+  'nicht bewerten.' =>
+	'',
+  'Deine Punkte-Übersicht' =>
+	'',
+  ':name\'s Punkte-Übersicht' =>
+	'',
 );

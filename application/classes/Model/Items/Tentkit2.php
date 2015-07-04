@@ -30,6 +30,7 @@ class Model_Items_Tentkit2 extends Model_Items_Tentkit  {
                                 $cursed = Tool_System::instance_of($p->location(), ['Model_Places_Mental','Model_Places_House_Hobby']);
 
                                 $id = $game->map($p->location_class())->implant_location(new Model_Places_Tentkit2($cursed),0,0,true,null,false,$p->location_class(),true,true,null);
+                                $p->location()->leave($p->id());
                                 $p->location_class($id);
                             })
                             ->consume($this)

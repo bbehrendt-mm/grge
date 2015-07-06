@@ -21,7 +21,7 @@ class Model_Items_Virtual_Epic_Garden extends Model_Items_Abstract_Virtual {
     }
 
     public function get_fertilizer_status() {
-        return $this->get_planted_state() ? min(10,array_sum($this->fertilizer))/10 : 0;
+        return $this->get_planted_state() ? (min(10,array_sum($this->fertilizer))/10) : 0;
     }
 
     private function normalize_fertilizer() {
@@ -29,7 +29,8 @@ class Model_Items_Virtual_Epic_Garden extends Model_Items_Abstract_Virtual {
         if (!$this->fertilizer) $a =  [];
         elseif (array_sum($this->fertilizer) > 10) {
             $mx = 10/array_sum($this->fertilizer);
-            $a = array_map(function($v) use ($mx) {return $v*$mx;}, $this->fertilizer);
+            foreach ($this->fertilizer as $t => $v)
+                $a[$t] = $v * $mx;
         } else $a = $this->fertilizer;
 
         foreach ([static::FERTILIZER_DRUGS, static::FERTILIZER_ALCOHOL, static::FERTILIZER_FOOD, static::FERTILIZER_CHEM] as $t)
@@ -41,7 +42,7 @@ class Model_Items_Virtual_Epic_Garden extends Model_Items_Abstract_Virtual {
     public function get_harvest_state() {
         /** @global Model_Game $game */
         global $game;
-        return $this->planted && ($game->duration() > $this->harvest_at);
+        return $this->planted && ($game->duration() >= $this->harvest_at);
     }
 
     public function get_time_to_harvest() {
@@ -155,6 +156,7 @@ class Model_Items_Virtual_Epic_Garden extends Model_Items_Abstract_Virtual {
                             global $player;
                             $count = floor($this->get_quality() * 8);
 
+                            $level = $this->get_fertilizer_status();
                             $this->planted = false;
 
                             if ($count <= 0) {
@@ -162,8 +164,8 @@ class Model_Items_Virtual_Epic_Garden extends Model_Items_Abstract_Virtual {
                                 return;
                             } else $player->log()->add('Na, da hat sich das warten doch gelohnt. Du hast soeben :num Pflanzen ernten können.', [':num' => $count]);
 
+
                             $fertilize = $this->normalize_fertilizer();
-                            $level = $this->get_fertilizer_status();
 
                             $effects = [
                                 Model_Player::MP_STAT_HUNGER => round(5 + 5 * $level),

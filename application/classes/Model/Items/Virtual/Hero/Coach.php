@@ -2,6 +2,8 @@
 
 class Model_Items_Virtual_Hero_Coach extends Model_Items_Abstract_Virtual {
 
+    protected static $graceful_fail = true;
+
     public function __construct($level = 1) {
         $this->remaining = array(
             'hero_job_0' => ceil($level/3),
@@ -17,12 +19,17 @@ class Model_Items_Virtual_Hero_Coach extends Model_Items_Abstract_Virtual {
             ->add_action('Umstoßen', Model_Action::factory()
                     ->buttonskin('hero hja')
                     ->description('Tötet blockierende Zombies ohne Kampf. Für jeden Zombie werden 2 Gesundheitspunkte abgezogen. Deine Gesundheit kann durch diese Aktion nicht unter 20 fallen. Hast du nicht genug Gesundheit um alle Zombies zu töten, so musst du den Rest in einem normalen Kampf besiegen.')
+                    ->condition(function($p) {
+                        /** @var Model_Player $p */
+                        return $p->location()->zombie_pop() > 0;
+                    })
+                    ->fail_message('Es ist verständlich dass du gerne irgend etwas töten möchtest... nur sind leider gerade keine Zombies in der Nähe.')
                     ->effect(
                         Model_Effect::factory()
                             ->custom(function($p) {
                                 /** @var Model_Player $p */
 
-                                $pkills = floor(min(0,$p->stats_get(Model_Player::MP_STAT_HEALTH) - 20)/2);
+                                $pkills = floor(max(0,$p->stats_get(Model_Player::MP_STAT_HEALTH) - 20)/2);
                                 $zombies = $p->location()->zombie_pop();
                                 $p->location()->zombie_pop(true);
                                 $p->achievements()->achieve(Model_Achievement::MA_KILLED_ZOMBIES, min($pkills,$zombies));

@@ -6,7 +6,7 @@ core = {
     parts: {},
     snippets: {},
 
-    version: '2.0.3-0-0-1',
+    version: '2.0.4-0-0-1',
 
     last: {},
     plugins: {},
@@ -101,7 +101,8 @@ core = {
             action_box.append($('<div />').addClass('note control').text("Du hast neue Nachrichten!"));
 
         var auto_select = $('<select />').appendTo($('<div />').addClass('cell rw-12 padded hide-desktop control').appendTo(action_box))
-            .append($('<option />').val('#inv_container').text("Gegenst\u00e4nde & Heldentaten"))
+            .append($('<option />').val('#inv_container').text(game.storage.get('settings','heroid_ui') == 'tab' ? "Gegenst\u00e4nde" : "Gegenst\u00e4nde & Heldentaten"))
+            .append((game.storage.get('settings','heroid_ui') == 'tab') ? $('<option />').val('#inv_heroics').text("Heldentaten") : null)
             .append($('<option />').val('#settings_container').text("Zeitfluss & Verhalten"))
             .append($('<option />').val('#game_info').text("Spieldetails"))
             .append(data.players ? $('<option />').val('#mp_container').text((data.players.messages ? '[!!!] ' : '') + "Spieler\u00fcbersicht") : false)
@@ -111,7 +112,8 @@ core = {
             .selectric();
 
         var auto_tab = $('<ul />').addClass('tabline hide-mobile').appendTo(action_box)
-            .append($('<li>').attr('data-toggle', '#inv_container').text("Gegenst\u00e4nde & Heldentaten"))
+            .append($('<li>').attr('data-toggle', '#inv_container').text(game.storage.get('settings','heroid_ui') == 'tab' ? "Gegenst\u00e4nde" : "Gegenst\u00e4nde & Heldentaten"))
+            .append((game.storage.get('settings','heroid_ui') == 'tab') ? $('<li>').attr('data-toggle', '#inv_heroics').text("Heldentaten") : null)
             .append($('<li>').attr('data-toggle', '#settings_container').text("Zeitfluss & Verhalten"))
             .append($('<li>').attr('data-toggle', '#game_info').text("Spieldetails"))
             .append(data.players ? $('<li>').attr('data-toggle', '#mp_container').text("Spieler\u00fcbersicht").prepend(data.players.messages ? $('<img />').attr('src','media/icons/new.png') : false) : false)
@@ -124,8 +126,11 @@ core = {
                 t.show();
             }).first();
 
-        if (data.inventory)
-            core.parts.inventory(data.inventory, $('<div />').attr('id', 'inv_container').addClass('row').appendTo(action_box));
+        if (data.inventory) {
+            core.parts.inventory(data.inventory, $('<div />').attr('id', 'inv_container').addClass('row').appendTo(action_box), game.storage.get('settings', 'heroid_ui') != 'tab');
+            if (game.storage.get('settings', 'heroid_ui') == 'tab')
+                core.parts.heroics(data.inventory, $('<div />').attr('id', 'inv_heroics').addClass('row').appendTo(action_box));
+        }
 
         if (data.settings)
             core.parts.settings(data.settings, $('<div />').attr('id', 'settings_container').addClass('row').appendTo(action_box));
@@ -678,20 +683,22 @@ core = {
         core.session('main.mp.inventory.open', $(this).data('pid'));
     };
 
-    core.parts.inventory = function(data, target) {
-        var iv_a, iv_b;
+    core.parts.inventory = function(data, target, include_heroics) {
+        include_heroics = include_heroics || data.action;
+
+        var iv_a, iv_b, iv_c;
         $(target).empty().append(
-            $('<div />').addClass('cell rw-4 rw-lg-6 padded ').append(
+            $('<div />').addClass(include_heroics ? 'cell rw-4 rw-lg-6 padded' : 'cell rw-6 padded').append(
                 iv_a = $('<div />').addClass('row inventory flatbox inventory_player inventory_self')
             )
         ).append(
-            $('<div />').addClass('cell rw-4 rw-lg-6 padded').append(
+            $('<div />').addClass(include_heroics ? 'cell rw-4 rw-lg-6 padded' : 'cell rw-6 padded').append(
                 iv_b = $('<div />').addClass('row inventory flatbox inventory_location')
             )
         ).append(
-            $('<div />').addClass('cell rw-4 rw-lg-12 padded').append(
+            include_heroics ? $('<div />').addClass('cell rw-4 rw-lg-12 padded').append(
                 iv_c = $('<div />').addClass('row inventory flatbox').addClass(data.action ? 'inventory_action' : 'inventory_hero')
-            )
+            ) : null
         );
 
         render_block(data.player, iv_a, "Dein Rucksack", true);
@@ -752,14 +759,18 @@ core = {
                 )
 
         } else {
-            iv_c.append($('<h3 />').text("Heldentaten"));
-            $.each(data.heroics, function(k,v) {
-                iv_c.append(
-                    $('<div />').addClass(game.touch() ? 'cell rw-12 padded' : 'cell rw-6 rw-sm-12 padded').append(core.snippets.button(v, function() {
-                        return confirm("Bist du sicher, dass du diese Heldentat ausf\u00fchren m\u00f6chtest?")
-                    }, 'tooltip'))
-                )
-            });
+
+            if (include_heroics) {
+                iv_c.append($('<h3 />').text("Heldentaten"));
+                $.each(data.heroics, function(k,v) {
+                    iv_c.append(
+                        $('<div />').addClass(game.touch() ? 'cell rw-12 padded' : 'cell rw-6 rw-sm-12 padded').append(core.snippets.button(v, function() {
+                            return confirm("Bist du sicher, dass du diese Heldentat ausf\u00fchren m\u00f6chtest?")
+                        }, 'tooltip'))
+                    )
+                });
+            }
+
 
             if (core.last.players) {
                 $.each(core.last.players.others, function(k,v) {
@@ -781,10 +792,32 @@ core = {
             }
 
         }
+    };
 
+    core.parts.heroics = function(data, target) {
+        var iv_c;
+        $(target).empty().append(
+            $('<div />').addClass('cell rw-6 ro-3 rw-lg-8 ro-lg-2 rw-md-10 ro-md-1 rw-sm-12 ro-sm-0 padded').append(
+                iv_c = $('<div />').addClass('row inventory flatbox').addClass('inventory_hero')
+            )
+        );
 
+        if (data.action) iv_c.addClass('disabled');
 
+        iv_c.append($('<h3 />').text("Heldentaten"));
 
+        var has = false;
+        $.each(data.heroics, function(k,v) {
+            has = true;
+            iv_c.append(
+                $('<div />').addClass(game.touch() ? 'cell rw-12 padded' : 'cell rw-6 rw-sm-12 padded').append(core.snippets.button(v, function() {
+                    return confirm("Bist du sicher, dass du diese Heldentat ausf\u00fchren m\u00f6chtest?")
+                }, 'tooltip'))
+            )
+        });
+
+        if (!has)
+            iv_c.append($('<div />').addClass('note').text("Du kannst derzeit keine Heldentaten einsetzen."))
     };
 })();(function() {
     var colosseum = function(data, target) {

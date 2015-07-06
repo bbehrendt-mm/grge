@@ -4897,4 +4897,16 @@ Lo que suceda.... depende de ti descubrirlo. ',
 	'Du wickelst die Bandage straff um die Verletzungen deines Freundes. Er ist zwar immer noch Leichenblass, das hat aber nichts mehr mit dem Blutverlust zu tun...',
   ':name hat eine ziemlich schmutzige Bandage um deine Verletzungen gewickelt... wenigestens weist du jetzt was du ihm wert bist.' =>
 	':name hat eine ziemlich schmutzige Bandage um deine Verletzungen gewickelt... wenigestens weist du jetzt was du ihm wert bist.',
+  'Na, das war ja einfach. Du konntest diese schlappen Zombies einfach umrennen.' =>
+	'Na, das war ja einfach. Du konntest diese schlappen Zombies einfach umrennen.',
+  'Anzeige der Heldentaten' =>
+	'Anzeige der Heldentaten',
+  'Im Inventar-Tab' =>
+	'Im Inventar-Tab',
+  'In eigenem Tab' =>
+	'In eigenem Tab',
+  'Du kannst derzeit keine Heldentaten einsetzen.' =>
+	'Du kannst derzeit keine Heldentaten einsetzen.',
+  'Ladevorgang' =>
+	'Ladevorgang',
 );

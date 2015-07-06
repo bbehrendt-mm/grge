@@ -836,4 +836,14 @@ return array (
 	'',
   ':name\'s Punkte-Übersicht' =>
 	'',
+  'Anzeige der Heldentaten' =>
+	'',
+  'Im Inventar-Tab' =>
+	'',
+  'In eigenem Tab' =>
+	'',
+  'Du kannst derzeit keine Heldentaten einsetzen.' =>
+	'',
+  'Ladevorgang' =>
+	'',
 );

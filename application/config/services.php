@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
 return array(
-    'forum' => 'http://forum.zombvival.de',
+    'forum' => 'https://forum.zombvival.de',
     'newsfeed' => array(
         'server' => 'http://forum.zombvival.de',
         'token' => '61dbd53df8cd70fd85efc91367786bb13119e546',

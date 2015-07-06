@@ -2115,7 +2115,7 @@ return array (
   'Uups, da hast du es wohl ein wenig übertrieben, jetzt bist du drogensüchtig. Hoffentlich hast du entweder ein volles Pillenschränkchen oder zumindest weitreichende Erfahrung mit Entzugserscheinungen...' =>
 	'Whoops, you shouldn\'t have done that. Now you managed to get yourself addicted to drugs. I hope you have plenty of pills left, or you\'ll have to deal with cold turkey...',
   'Aufgrund akuten Platzmangels wurde dieses Geschäftszentrum vor den Toren der Stadt aus dem Boden gestampft. Die Bauern, die das Land hier vorher bewirtschafteten, wurden einfach enteignet und dann als Toilettenputzer, Hundekot-Aufsammler und Briefmarkenlecker weiterbeschäftigt. Und so schließt sich der Kreis der sozialen Marktwirtschaft, für die wir unsere Politiker jeden Tag preisen sollten. Achja, jetzt laufen hier natürlich überall Zombies rum.' =>
-	'Since space is rare and expensive in cities, this business center was built a few miles outside of town. The local farmers were simplay ousted and then hired as toilet cleaners, dog turd collectors and stamp lickers. It\'s a good thing we have capitalism, where everyone is given the opportunity to work his way to the top. Oh, by the way, now this place is filled with zombies, of course.',
+	'Since space is rare and expensive in cities, this business center was built a few miles outside of town. The local farmers were simply ousted and then hired as toilet cleaners, dog turd collectors and stamp lickers. It\'s a good thing we have capitalism, where everyone is given the opportunity to work his way to the top. Oh, by the way, now this place is filled with zombies, of course.',
   'Gegenstände & Heldentaten' =>
 	'Items & Heroic Actions',
   'Zeitfluss & Verhalten' =>
@@ -2623,7 +2623,7 @@ return array (
   'Autotür' =>
 	'Car Door',
   'Autotüren geben großartige Schilde ab! Sie haben einen Griff zum Halten, sind sehr stabil, groß und nehmen dir durch das Fenster noch nicht einmal die Sicht. Leider sind sie auch ziemlich schwer...' =>
-	'Car doors are great shields! They have a handle to hold them with, are pretty bug and durable and you can even look through their window! Unfortunately, they are also pretty big...',
+	'Car doors are great shields! They have a handle to hold them with, are pretty big and durable and you can even look through their window! Unfortunately, they are also pretty heavy...',
   'Verirrte Seele' =>
 	'Lost soul',
   'Dies ist eine verirrte Seele, die von deinem Seelenfänger-zeichen angelockt wurde. Erlöse sie, indem du sie dem Seelensammler übergibst!' =>
@@ -3063,7 +3063,7 @@ return array (
   'Om Nom Nom' =>
 	'Om Nom Nom',
   'Du nimmst einen Schluck aus deiner Flasche. Dein Durst verschwindet und du fühlst dich erfrischt!' =>
-	'You\'re taking a sip out of your bottle. Your thirst disapears and you feel refreshed.',
+	'You\'re taking a sip out of your bottle. Your thirst disappears and you feel refreshed.',
   'Aaah, das tut gut. Deine Müdigkeit verschwindet und du bekommst neue Energie.' =>
 	'Aaah, that\'s great! Your fatigue has been swept away with a load of new energy.',
   'Du hattest eben einen schönen Traum. Das hat dir etwas zusätzliche Energie verschafft.' =>
@@ -3651,7 +3651,7 @@ return array (
   'BrainCoins' =>
 	'BrainCoins',
   'Leider kannst du dir die gefundenen BrainCoins nicht anrechnen lassen, da du nicht lange genug überlebt hast...' =>
-	'You didn\'t manage to life long enough to keep these BrainCoins...',
+	'You didn\'t manage to live long enough to keep these BrainCoins...',
   'Herzlichen Glückwunsch! Du hast einige BrainCoins im Spiel gefunden, die deinem Konto nun angerechnet werden!' =>
 	'Congratulations! The BrainCoins you\'ve found in this game will be added to your account as soon as you confirm your death.',
   'Tägliche Wartung' =>
@@ -3909,7 +3909,7 @@ return array (
   'Dünger' =>
 	'Fertilizer',
   'Die Stärke deiner Düngung bestimmt die Höhe der Effekte der geernteten Pflanzen. Wenn du nach Erreichen der maximalen Düngestärke noch weiter düngst, hat dies nur noch Einfluss auf die Art der Effekte, nicht jedoch deren Höhe.' =>
-	'The amount of fertilizer you\'ve used determines the effectiveness of harvested fruits. After reaching the maximum amount of fertilizer, and additional fertilizing will only change the fruit\'s effects, but not their effectiveness.',
+	'The amount of fertilizer you\'ve used determines the effectiveness of harvested fruits. After reaching the maximum amount of fertilizer, any additional fertilizing will only change the fruit\'s effects, but not their effectiveness.',
   'Geerntete Pflanze' =>
 	'Harvested Fruit',
   'Du hast die Pflanzen gedüngt. Mal sehen, was hier jetzt wachsen wird...' =>
@@ -4109,7 +4109,7 @@ return array (
   'Gäbe es einen Gott für Recycling, er wäre sicherlich stolz auf dich!' =>
 	'If there was a god of recycling, he\'d be proud of you!',
   'Wenn dein Auto merkwürdige Geräusche macht, hast du entweder einen Motorschaden oder einen Zombie auf der Rückbank. Glücklicherweise findet sich immer eine Werkstatt wie diese in der Nähe, die deine Karre reparieren oder den Zombie fachmännisch (mit einem großen Schraubenschlüssel) entfernen können. Unglücklicherweise hat diese Werkstatt derzeit leider aus unerfindlichen Gründen geschlossen...' =>
-	'If your car is making strange noises, you have a damaged engine or a zombie on your back seat. Luckily, there is always a small garage like this one nearby. The mechanics can competently repair the damages or remove the zombie (by using the bigges wrench they can find). However, it seems this garage is closed for an unknown reason...',
+	'If your car is making strange noises, you have a damaged engine or a zombie in your back seat. Luckily, there is always a small garage like this one nearby. The mechanics can competently repair the damages or remove the zombie (by using the biggest wrench they can find). However, it seems this garage is closed for an unknown reason...',
   'Barrikade abbauen' =>
 	'Tear down',
   'Diese Barrikade sieht ziemlich stabil aus, aber wenn du dich etwas ins Zeug legst kannst du hier bestimmt das eine oder andere nützliche Item ausbauen.' =>
@@ -4882,4 +4882,16 @@ return array (
 	'You wrap the bandage tightly around your friend\'s injuries. He still looks kind of pale, but probably not because of the blood loss...',
   ':name hat eine ziemlich schmutzige Bandage um deine Verletzungen gewickelt... wenigestens weist du jetzt was du ihm wert bist.' =>
 	':name has treated your injuries with a pretty dirty bandage.... well, now you know what your life is worth to him.',
+  'Na, das war ja einfach. Du konntest diese schlappen Zombies einfach umrennen.' =>
+	'Well, that was easy. You managed to just run over these limb zombies.',
+  'Anzeige der Heldentaten' =>
+	'Heroic Actions Display',
+  'Im Inventar-Tab' =>
+	'Show in Inventory',
+  'In eigenem Tab' =>
+	'Show in own tab',
+  'Du kannst derzeit keine Heldentaten einsetzen.' =>
+	'You can\'t use Heroic Actions right now.',
+  'Ladevorgang' =>
+	'Loading',
 );

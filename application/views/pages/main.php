@@ -20,7 +20,7 @@
 
     var load_news = function(p, first) {
         $('#newstmp').remove();
-        $('#newsboard').append('<div id="newstmp" class="center"><i class="fa fa-spin fa-circle-o-notch"></i><br />Ladevorgang...</div>');
+        $('#newsboard').append('<div id="newstmp" class="center"><i class="fa fa-spin fa-circle-o-notch"></i><br /><?=__('Ladevorgang');?></div>');
         game.network.query('japi/lobby/feedproxy', {page: p}, function(data) {
             $('#newstmp').remove();
             if (data.error) {

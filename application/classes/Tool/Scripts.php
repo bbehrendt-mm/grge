@@ -73,9 +73,10 @@ class Tool_Scripts
                     }
             } elseif (Tool_System::instance_of($classname, 'Model_Items_Abstract_Stackable')) {
                 foreach (Tool_Scripts::available_items($classname, $active_player, $active_location, $other_players, $perspective, $get_decider($classname)) as $instance)
-                    if ($instance->count() > $count)
+                    if ($instance->count() > $count) {
                         for ($i = 0; $i < $count; $i++) $instance->consume();
-                    elseif ($instance->count() == $count) {
+                        break;
+                    } elseif ($instance->count() == $count) {
                         $instance->grind();
                         break;
                     } else {

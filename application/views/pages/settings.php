@@ -48,6 +48,17 @@
             </div>
 
         </div>
+
+        <div class="row">
+            <div class="cell rw-4 rw-md-12 padded">
+
+                <label for="heroic_ui"><b><?=__('Anzeige der Heldentaten');?></b></label><br />
+                <select id="heroic_ui" data-associated-setting="heroid_ui"  data-default="inline">
+                    <option value="inline"><?=__('Im Inventar-Tab');?></option>
+                    <option value="tab"><?=__('In eigenem Tab');?></option>
+                </select>
+            </div>
+        </div>
     </div>
 </div>
 

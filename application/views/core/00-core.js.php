@@ -108,7 +108,8 @@ core = {
             action_box.append($('<div />').addClass('note control').text(<?=__j('Du hast neue Nachrichten!')?>));
 
         var auto_select = $('<select />').appendTo($('<div />').addClass('cell rw-12 padded hide-desktop control').appendTo(action_box))
-            .append($('<option />').val('#inv_container').text(<?=__j('Gegenstände & Heldentaten')?>))
+            .append($('<option />').val('#inv_container').text(game.storage.get('settings','heroid_ui') == 'tab' ? <?=__j('Gegenstände')?> : <?=__j('Gegenstände & Heldentaten')?>))
+            .append((game.storage.get('settings','heroid_ui') == 'tab') ? $('<option />').val('#inv_heroics').text(<?=__j('Heldentaten')?>) : null)
             .append($('<option />').val('#settings_container').text(<?=__j('Zeitfluss & Verhalten')?>))
             .append($('<option />').val('#game_info').text(<?=__j('Spieldetails')?>))
             .append(data.players ? $('<option />').val('#mp_container').text((data.players.messages ? '[!!!] ' : '') + <?=__j('Spielerübersicht')?>) : false)
@@ -118,7 +119,8 @@ core = {
             .selectric();
 
         var auto_tab = $('<ul />').addClass('tabline hide-mobile').appendTo(action_box)
-            .append($('<li>').attr('data-toggle', '#inv_container').text(<?=__j('Gegenstände & Heldentaten')?>))
+            .append($('<li>').attr('data-toggle', '#inv_container').text(game.storage.get('settings','heroid_ui') == 'tab' ? <?=__j('Gegenstände')?> : <?=__j('Gegenstände & Heldentaten')?>))
+            .append((game.storage.get('settings','heroid_ui') == 'tab') ? $('<li>').attr('data-toggle', '#inv_heroics').text(<?=__j('Heldentaten')?>) : null)
             .append($('<li>').attr('data-toggle', '#settings_container').text(<?=__j('Zeitfluss & Verhalten')?>))
             .append($('<li>').attr('data-toggle', '#game_info').text(<?=__j('Spieldetails')?>))
             .append(data.players ? $('<li>').attr('data-toggle', '#mp_container').text(<?=__j('Spielerübersicht')?>).prepend(data.players.messages ? $('<img />').attr('src','media/icons/new.png') : false) : false)
@@ -131,8 +133,11 @@ core = {
                 t.show();
             }).first();
 
-        if (data.inventory)
-            core.parts.inventory(data.inventory, $('<div />').attr('id', 'inv_container').addClass('row').appendTo(action_box));
+        if (data.inventory) {
+            core.parts.inventory(data.inventory, $('<div />').attr('id', 'inv_container').addClass('row').appendTo(action_box), game.storage.get('settings', 'heroid_ui') != 'tab');
+            if (game.storage.get('settings', 'heroid_ui') == 'tab')
+                core.parts.heroics(data.inventory, $('<div />').attr('id', 'inv_heroics').addClass('row').appendTo(action_box));
+        }
 
         if (data.settings)
             core.parts.settings(data.settings, $('<div />').attr('id', 'settings_container').addClass('row').appendTo(action_box));

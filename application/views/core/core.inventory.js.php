@@ -381,20 +381,22 @@
         core.session('main.mp.inventory.open', $(this).data('pid'));
     };
 
-    core.parts.inventory = function(data, target) {
-        var iv_a, iv_b;
+    core.parts.inventory = function(data, target, include_heroics) {
+        include_heroics = include_heroics || data.action;
+
+        var iv_a, iv_b, iv_c;
         $(target).empty().append(
-            $('<div />').addClass('cell rw-4 rw-lg-6 padded ').append(
+            $('<div />').addClass(include_heroics ? 'cell rw-4 rw-lg-6 padded' : 'cell rw-6 padded').append(
                 iv_a = $('<div />').addClass('row inventory flatbox inventory_player inventory_self')
             )
         ).append(
-            $('<div />').addClass('cell rw-4 rw-lg-6 padded').append(
+            $('<div />').addClass(include_heroics ? 'cell rw-4 rw-lg-6 padded' : 'cell rw-6 padded').append(
                 iv_b = $('<div />').addClass('row inventory flatbox inventory_location')
             )
         ).append(
-            $('<div />').addClass('cell rw-4 rw-lg-12 padded').append(
+            include_heroics ? $('<div />').addClass('cell rw-4 rw-lg-12 padded').append(
                 iv_c = $('<div />').addClass('row inventory flatbox').addClass(data.action ? 'inventory_action' : 'inventory_hero')
-            )
+            ) : null
         );
 
         render_block(data.player, iv_a, <?=__j('Dein Rucksack')?>, true);
@@ -455,14 +457,18 @@
                 )
 
         } else {
-            iv_c.append($('<h3 />').text(<?=__j('Heldentaten')?>));
-            $.each(data.heroics, function(k,v) {
-                iv_c.append(
-                    $('<div />').addClass(game.touch() ? 'cell rw-12 padded' : 'cell rw-6 rw-sm-12 padded').append(core.snippets.button(v, function() {
-                        return confirm(<?=__j('Bist du sicher, dass du diese Heldentat ausführen möchtest?')?>)
-                    }, 'tooltip'))
-                )
-            });
+
+            if (include_heroics) {
+                iv_c.append($('<h3 />').text(<?=__j('Heldentaten')?>));
+                $.each(data.heroics, function(k,v) {
+                    iv_c.append(
+                        $('<div />').addClass(game.touch() ? 'cell rw-12 padded' : 'cell rw-6 rw-sm-12 padded').append(core.snippets.button(v, function() {
+                            return confirm(<?=__j('Bist du sicher, dass du diese Heldentat ausführen möchtest?')?>)
+                        }, 'tooltip'))
+                    )
+                });
+            }
+
 
             if (core.last.players) {
                 $.each(core.last.players.others, function(k,v) {
@@ -484,9 +490,31 @@
             }
 
         }
+    };
 
+    core.parts.heroics = function(data, target) {
+        var iv_c;
+        $(target).empty().append(
+            $('<div />').addClass('cell rw-6 ro-3 rw-lg-8 ro-lg-2 rw-md-10 ro-md-1 rw-sm-12 ro-sm-0 padded').append(
+                iv_c = $('<div />').addClass('row inventory flatbox').addClass('inventory_hero')
+            )
+        );
 
+        if (data.action) iv_c.addClass('disabled');
 
+        iv_c.append($('<h3 />').text(<?=__j('Heldentaten')?>));
 
+        var has = false;
+        $.each(data.heroics, function(k,v) {
+            has = true;
+            iv_c.append(
+                $('<div />').addClass(game.touch() ? 'cell rw-12 padded' : 'cell rw-6 rw-sm-12 padded').append(core.snippets.button(v, function() {
+                    return confirm(<?=__j('Bist du sicher, dass du diese Heldentat ausführen möchtest?')?>)
+                }, 'tooltip'))
+            )
+        });
+
+        if (!has)
+            iv_c.append($('<div />').addClass('note').text(<?=__j('Du kannst derzeit keine Heldentaten einsetzen.')?>))
     };
 })();

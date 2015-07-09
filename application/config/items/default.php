@@ -140,6 +140,7 @@ return array(
         'meds' => array(
                 'Model_Items_Paracetin'			=>		2,
                 'Model_Items_Paracetoid'		=>		2,
+                'Model_Items_Foodsupplement'	=>		1,
                 'Model_Items_Paralaxium'		=>		2,
                 'Model_Items_Nutrient'			=>		1,
                 'Model_Items_Pill'				=>		1,
@@ -150,6 +151,7 @@ return array(
         'smeds' => array(
             'Model_Items_Paracetin'			=>		2,
             'Model_Items_Paracetoid'		=>		2,
+            'Model_Items_Foodsupplement'	=>		1,
             'Model_Items_Paralaxium'		=>		2,
             'Model_Items_Nutrient'			=>		1,
             'Model_Items_Pill'				=>		1,

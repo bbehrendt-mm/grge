@@ -4909,4 +4909,18 @@ Lo que suceda.... depende de ti descubrirlo. ',
 	'Du kannst derzeit keine Heldentaten einsetzen.',
   'Ladevorgang' =>
 	'Ladevorgang',
+  'Dein Rabe hat :location besucht und dort auch etwas gefunden, konnte es jedoch nicht hierher tragen...' =>
+	'Dein Rabe hat :location besucht und dort auch etwas gefunden, konnte es jedoch nicht hierher tragen...',
+  'Du gießt etwas von der Chemikalie in den Münzschlitz... doch nichts geschieht' =>
+	'Du gießt etwas von der Chemikalie in den Münzschlitz... doch nichts geschieht',
+  'Was tun, wenn sich die Knochen im Lagerraum langsam stapeln? Bau einen Zaun damit! Das ist eine gute Beschäftigungstherapie und sieht einfach megacool aus. Achja, Zombies kannst du auf die Art auch von deinem Rasen fernhalten.' =>
+	'Was tun, wenn sich die Knochen im Lagerraum langsam stapeln? Bau einen Zaun damit! Das ist eine gute Beschäftigungstherapie und sieht einfach megacool aus. Achja, Zombies kannst du auf die Art auch von deinem Rasen fernhalten.',
+  'Der Kürbis saugt die Chemikalie auf und verliert etwas an Farbe... jetzt kannst du ihn nur noch als Zierkürbis verwenden.' =>
+	'Der Kürbis saugt die Chemikalie auf und verliert etwas an Farbe... jetzt kannst du ihn nur noch als Zierkürbis verwenden.',
+  'die Umwelt' =>
+	'die Umwelt',
+  'Diese Zombieapokalypse ist schlecht für :subject. Die beste Art gegen sowas zu protestieren, ist sich einen dämlichen Spruch auf die Titten zu schreiben und damit in der Öffentlichkeit herumzurennen! ... naja, zumindest die Aufmerksamkeit deiner Mitspieler hast du damit...' =>
+	'Diese Zombieapokalypse ist schlecht für :subject. Die beste Art gegen sowas zu protestieren, ist sich einen dämlichen Spruch auf die Titten zu schreiben und damit in der Öffentlichkeit herumzurennen! ... naja, zumindest die Aufmerksamkeit deiner Mitspieler hast du damit...',
+  'Pflichtbewusst hälst du deine Sprechstunde ab... aber keiner kommt. Kann es sein, das hier niemand krank ist?' =>
+	'Pflichtbewusst hälst du deine Sprechstunde ab... aber keiner kommt. Kann es sein, das hier niemand krank ist?',
 );

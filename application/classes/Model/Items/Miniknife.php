@@ -24,10 +24,11 @@ class Model_Items_Miniknife extends Model_Battle_Weapon implements Interface_Sta
 	public static $lock_type = Model_Battle_Weapon::MBW_LCK_PLAYER;
 	public static $energy_cost = 1;
 	
-	public function drop() {
-		global $game, $player;
-	
-		$player->log()->add(new Model_Log_Types_Text(null, null, 'Du fühlst dich ohne dein Taschenmesser ziemlich nackt ... du solltest es wirklich nicht einfach ablegen!'));
+	public function drop($silent = false) {
+		/** @global Model_Player $player */
+		global $player;
+
+        if (!$silent) $player->log()->add(new Model_Log_Types_Text(null, null, 'Du fühlst dich ohne dein Taschenmesser ziemlich nackt ... du solltest es wirklich nicht einfach ablegen!'));
 		return false;
 	}
 	

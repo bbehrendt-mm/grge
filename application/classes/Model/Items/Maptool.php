@@ -26,14 +26,16 @@ class Model_Items_Maptool extends Model_Items_Abstract_Item {
 	}
 	
 	public function get_map_details() {
-		global $player;
+        /** @global Model_Player $player */
+        global $player;
 		$location = $player->location_class();
 		if (!isset($this->datamem[$location])) return 0;
 		else return $this->datamem[$location];
 	}
 	
 	public function calc_duration($step) {
-		global $game, $player;
+        /** @global Model_Player $player */
+        global $player;
 		
 		$cfg = Array( 	0 => Array( 0 => Array(1 => 4, 2 => 7, 3 => 13), 1 => Array(1 => 7, 2 => 13), 2 => Array(1 => 10) ), 
 						1 => Array( 0 => Array(1 => 3, 2 => 6, 3 => 12), 1 => Array(1 => 6, 2 => 12), 2 => Array(1 =>  9) ),
@@ -53,7 +55,8 @@ class Model_Items_Maptool extends Model_Items_Abstract_Item {
 	}
 
 	public function score($p) {
-		global $game, $player;
+        /** @global Model_Player $player */
+        global $player;
 		$location = $player->location_class();
 		
 		if (isset($this->datamem[$location]) && $this->datamem[$location] >= 3) return;
@@ -77,7 +80,11 @@ class Model_Items_Maptool extends Model_Items_Abstract_Item {
 	}
 	
 	public function start_mapping($steps) {
-		global $player, $game;
+        /**
+         * @global Model_Player $player
+         * @global Model_Game $game
+         */
+        global $player, $game;
 		if ($player->buff_retr('fragile')) {
 			$player->log()->add(new Model_Log_Types_Text(null, null, 'Du bist momentan beschäftigt!'));
 			return;
@@ -103,10 +110,11 @@ class Model_Items_Maptool extends Model_Items_Abstract_Item {
 		} else new Model_Buffs_Mapping($steps, $this->calc_duration($steps));
 	}
 	
-	public function drop() {
-		global $game, $player;
-	
-		$player->log()->add(new Model_Log_Types_Text(null, null, 'Das kannst du nicht ablegen...'));
+	public function drop($silent = false) {
+		/** @global Model_Player $player */
+		global $player;
+
+		if (!$silent) $player->log()->add(new Model_Log_Types_Text(null, null, 'Das kannst du nicht ablegen...'));
 		return false;
 	}
 	

@@ -10,8 +10,47 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
 
     abstract public function recalculate_flow();
 
+	final protected function process_step() {
+        //Jump processing time
+        $this->set['gamedata']->timing->last_point += $this->set['gamedata']->timing->tick_lenght;
+
+        //MAINTENANCE
+        if (Tool_Events::maintenance($this->set['gamedata']->timing->last_point))
+            return;
+
+        //Count ticks
+        $this->set['gamedata']->head->ticks++;
+
+        //Tick
+        $this->tick();
+
+        //If no player is alive, stop time progression, otherwise recalculate time votes
+        if (!$this->is_alive())
+            $this->set['gamedata']->timing->last_point = time();
+        else
+            $this->recalculate_flow();
+    }
+
+    final public function fast_forward($ticks = 0) {
+        /** @global Model_Euser $user */
+        global $user;
+
+        $original_time = $this->set['gamedata']->timing->last_point;
+
+        for ($i = 0; $i < $ticks; $i++)
+            $this->process_step();
+
+        $this->set['gamedata']->timing->last_point = $original_time;
+
+        //Restore active player
+        global $player;
+        if ($user)
+            $player = $this->get_player($user->uid());
+    }
+
 	final protected function process() {
-		global $user;
+        /** @global Model_Euser $user */
+        global $user;
 
 		//If no player is alive, stop time progression
 		if (!$this->is_alive() || $this->paused()) {
@@ -32,24 +71,7 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
 			//Call ticks until present time is reached
 			while ($this->is_alive() && ($this->set['gamedata']->timing->last_point + $this->set['gamedata']->timing->tick_lenght) <= time())
 			{				
-				//Jump processing time
-				$this->set['gamedata']->timing->last_point += $this->set['gamedata']->timing->tick_lenght;
-
-                //MAINTENANCE
-                if (Tool_Events::maintenance($this->set['gamedata']->timing->last_point))
-                    continue;
-
-				//Count ticks
-				$this->set['gamedata']->head->ticks++;
-				
-				//Tick
-				$this->tick();
-
-                //If no player is alive, stop time progression, otherwise recalculate time votes
-                if (!$this->is_alive())
-                    $this->set['gamedata']->timing->last_point = time();
-                else
-                    $this->recalculate_flow();
+                $this->process_step();
 			}
 		} catch (Exception $e) {
 			//Resync with DB

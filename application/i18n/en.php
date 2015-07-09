@@ -4894,4 +4894,18 @@ return array (
 	'You can\'t use Heroic Actions right now.',
   'Ladevorgang' =>
 	'Loading',
+  'Dein Rabe hat :location besucht und dort auch etwas gefunden, konnte es jedoch nicht hierher tragen...' =>
+	'Your raven visited :location. He even found something for you, but didn\'t manage to bring it here...',
+  'Du gießt etwas von der Chemikalie in den Münzschlitz... doch nichts geschieht' =>
+	'You pour your chemical into the coin slot... but nothing happens.',
+  'Was tun, wenn sich die Knochen im Lagerraum langsam stapeln? Bau einen Zaun damit! Das ist eine gute Beschäftigungstherapie und sieht einfach megacool aus. Achja, Zombies kannst du auf die Art auch von deinem Rasen fernhalten.' =>
+	'What can you do with an amazing stack of bones? Build a fence with them! It keeps you busy and just looks mega hardcore. Also, it keeps zombies off your lawn.',
+  'Der Kürbis saugt die Chemikalie auf und verliert etwas an Farbe... jetzt kannst du ihn nur noch als Zierkürbis verwenden.' =>
+	'The pumpkin soaks up all the chemicals and starts loosing a little color... well, guess you\'ve got a gourd now.',
+  'die Umwelt' =>
+	'the environment',
+  'Diese Zombieapokalypse ist schlecht für :subject. Die beste Art gegen sowas zu protestieren, ist sich einen dämlichen Spruch auf die Titten zu schreiben und damit in der Öffentlichkeit herumzurennen! ... naja, zumindest die Aufmerksamkeit deiner Mitspieler hast du damit...' =>
+	'This zombie apocalypse is truely bad for :subject. The is only one way to fix this: Write some stupid slogan you stole from the internet on your boobs and run around topless in public! ... well, at least you got the attention of your fellow players...',
+  'Pflichtbewusst hälst du deine Sprechstunde ab... aber keiner kommt. Kann es sein, das hier niemand krank ist?' =>
+	'Dutifully, you start your daily consultation hour... but nobody comes. Could it be that nobody around here is ill?',
 );

@@ -5,6 +5,7 @@ abstract class Model_Items_Abstract_Virtual extends Model_Items_Abstract_Item {
     protected static $graceful_fail = false;
     protected static $manual_ui = false;
 
+    /** @var bool|array $remaining  */
     protected $remaining = false;
 
     public function use_manual_ui() {
@@ -35,7 +36,7 @@ abstract class Model_Items_Abstract_Virtual extends Model_Items_Abstract_Item {
         return false;
     }
 
-    public function drop() {
+    public function drop($silent = false) {
         return false;
     }
 

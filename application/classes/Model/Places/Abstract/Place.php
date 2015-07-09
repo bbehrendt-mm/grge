@@ -278,7 +278,13 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
     public function icon() {
         return static::$icon . ".gif";
     }
-	
+
+    /**
+     * @param bool $force
+     * @param bool $return
+     * @return bool|Model_Items_Abstract_Item|null
+     * @throws Exception
+     */
 	public function find_item($force = false, $return = false) {
         /**
          * @global $game Model_Game

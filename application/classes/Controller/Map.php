@@ -210,12 +210,10 @@ class Controller_Map extends Controller_Game {
         global $game, $player;
 
         $read_only = false;
-        $allow_skip_ro = true;
 
-        if ($player->buff_retr('passout') || $player->buff_retr('fragile')) {
+        if ($player->buff_retr('passout') || $player->buff_retr('fragile'))
             $read_only = true;
-            $allow_skip_ro = false;
-        }
+
 
         $rmp = Tool_Scripts::check_comrade((int)$this->request->param('id'));
 
@@ -223,6 +221,8 @@ class Controller_Map extends Controller_Game {
         if ($lid < 0) $lid = $game->map()->resolve_fixed_id(-$lid);
 
         if ($lid === null) return false;
+
+
 
         $locations = $game->map($lid)->build_route_array($lid, $limit_view);
         $nodes = $game->map($lid)->get_nodes();
@@ -302,6 +302,7 @@ class Controller_Map extends Controller_Game {
         switch ($game->map($player->location_class())->get_map_type()) {
             case Model_Map_Abstract::MMA_TYPE_OVERVIEW: return $this->mapdata_classic();
             case Model_Map_Abstract::MMA_TYPE_LABYRINTH: return $this->mapdata_classic(2);
+            default: throw new Exception('UNKNOWN_MAP_TYPE');
         }
     }
 }

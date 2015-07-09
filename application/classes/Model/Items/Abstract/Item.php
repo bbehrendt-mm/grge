@@ -211,7 +211,7 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 
     /**
      * Returns weather this item can be taken by a player
-     * @param bool $silent Set true to supress notifications
+     * @param bool $silent Set true to suppress notifications
      * @return bool True, when the item can be taken
      */
     public function take($silent = false) {
@@ -220,9 +220,10 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 
     /**
      * Returns weather this item can be dropped by a player
+	 * @param bool $silent Set true to suppress notifications
      * @return bool True, when the item can be dropped
      */
-	public function drop() {
+	public function drop($silent = false) {
 		return true;
 	}
 

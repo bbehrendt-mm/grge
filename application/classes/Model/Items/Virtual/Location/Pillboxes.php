@@ -32,6 +32,7 @@ class Model_Items_Virtual_Location_Pillboxes extends Model_Items_Abstract_Virtua
                         $s = Tool_Gambling::roulette(Array(
                             Array('chance' => $this->spawn_twinoid ? 2 : 4, 'value' => 'Model_Items_Paracetoid'),
                             Array('chance' => $this->spawn_twinoid ? 1 : 3, 'value' => 'Model_Items_Paracetin'),
+                            Array('chance' => $this->spawn_twinoid ? 1 : 2, 'value' => 'Model_Items_Foodsupplement'),
                             Array('chance' => $this->spawn_twinoid ? 4 : 0, 'value' => 'Model_Items_Twinoid'),
                         ));
                         $items[] = new $s;

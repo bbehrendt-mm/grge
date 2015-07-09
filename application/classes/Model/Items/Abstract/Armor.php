@@ -68,7 +68,7 @@ abstract class Model_Items_Abstract_Armor extends Model_Items_Abstract_Item {
         return $this->protection;
     }
 
-    public function drop() {
+    public function drop($silent = false) {
         $r = parent::drop();
         if ($r)
             $this->unequip();

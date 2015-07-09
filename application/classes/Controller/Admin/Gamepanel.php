@@ -12,7 +12,7 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
 
         if (!$game || !$player) return;
 
-        $game->map()->uncover_all();
+        $game->map($player->location_class())->uncover_all();
 
         $this->render();
     }
@@ -58,11 +58,10 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
         $instances = 0;
 
         foreach ($sets as $set) {
-            $classname = 'Model_Items_' . str_replace('0::','Generic_',$set['id']);
+            $classname = 'Model_Items_' . str_replace(['0::','v::'],['Generic_','Virtual_'],$set['id']);
 
             if (!class_exists($classname) ||
-                !Tool_System::instance_of($classname, 'Model_Items_Abstract_Item') ||
-                Tool_System::instance_of($classname, 'Model_Items_Abstract_Virtual')) {
+                !Tool_System::instance_of($classname, 'Model_Items_Abstract_Item')) {
                     $this->add_note('error',"{$set['id']} is not a valid item class!");
                     continue;
                 }
@@ -98,6 +97,20 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
         $this->render();
     }
 
+    public function japi_skip() {
+        /** @global Model_Game $game */
+        /** @global Model_Player $player */
+        global $game, $player;
+
+        if (!$game || !$player) return;
+
+        $ticks = (int)$this->request->post('ticks');
+        if ($ticks > 0)
+            $game->fast_forward($ticks);
+
+        $this->render();
+    }
+
     public function japi_list_items() {
         $path = APPPATH . 'classes/Model/Items';
         $list = [];
@@ -118,7 +131,7 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
             if (!$reflection->isInstantiable()) continue;
 
             if (!Tool_System::instance_of($classpath, 'Model_Items_Abstract_Item')) continue;
-            if (Tool_System::instance_of($classpath, 'Model_Items_Abstract_Virtual')) continue;
+            $virtual = Tool_System::instance_of($classpath, 'Model_Items_Abstract_Virtual');
 
             $tmp = [];
             $parameters = $reflection->getConstructor()->getParameters();
@@ -150,11 +163,11 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
 
 
                 $list[] = [
-                    'id' => str_replace(['Model_Items_Generic_','Model_Items_'],['0::',''],$classpath),
-                    'name' => $use_instances ? __($instance->name()) : __($classpath::static_name()),
-                    'desc' => $use_instances ? __($instance->description()) : __($classpath::static_description()),
-                    'icon' => $use_instances ? $instance->icon() : $classpath::static_icon(),
-                    'cat' => __(Model_Items_Abstract_Item::translateCatID($use_instances ? $instance->cat() : $classpath::static_cat())),
+                    'id' => str_replace(['Model_Items_Virtual_','Model_Items_Generic_','Model_Items_'],['v::','0::',''],$classpath),
+                    'name' => $virtual ? '[VCI]' : ($use_instances ? __($instance->name()) : __($classpath::static_name())),
+                    'desc' => $virtual ? '' : ($use_instances ? __($instance->description()) : __($classpath::static_description())),
+                    'icon' => $virtual ? 'items/any' : ($use_instances ? $instance->icon() : $classpath::static_icon()),
+                    'cat' => $virtual ? 'Virtual Control Items' : __(Model_Items_Abstract_Item::translateCatID($use_instances ? $instance->cat() : $classpath::static_cat())),
                     'params' => $tmp
                 ];
             }

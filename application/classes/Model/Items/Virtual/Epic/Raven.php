@@ -28,9 +28,6 @@ class Model_Items_Virtual_Epic_Raven extends Model_Items_Abstract_Virtual {
     }
 
     protected function hid() {
-        /** @global Model_Game $game */
-        global $game;
-
         $hid = parent::hid();
 
         if (!$this->doped && !$this->get_rest())
@@ -110,23 +107,25 @@ class Model_Items_Virtual_Epic_Raven extends Model_Items_Abstract_Virtual {
                         foreach (array_merge($items,$location->inventory()->get()) as $item) {
                             /** @var Model_Items_Abstract_Item $item */
                             if (count($final) >= $max_capacity || $weight >= $max_weight) break;
-                            if ($item->weight() + $weight < $max_weight) {
+                            if ($item->weight() + $weight < $max_weight && (Tool_System::instance_of($item, 'Model_Items_Abstract_Ammo') || $item->take(true))) {
                                 $final[] = $item;
                                 $weight += $item->weight();
                                 $location->inventory()->remove($item->uin());
                             }
                         }
 
+                        $p->location()->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, 'Corax der Rabe'));
                         if (count($final)) {
                             $p->log()->add('Der Ausflug deines Raben scheint erfolgreich verlaufen zu sein! Er hat :location besucht und dir sogar etwas mitgebracht.', [], [':location' => $location->name()]);
                             $p->location()->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_RAVEN, $final, 'Corax der Rabe'));
-                            foreach ($final as $item) $p->location()->inventory()->add($item);
+                            foreach ($final as $item) {
+                                $item->drop();
+                                $p->location()->inventory()->add($item);
+                            }
                         }
                         elseif (!count($final) && count($items))
                             $p->log()->add('Dein Rabe hat :location besucht und dort auch etwas gefunden, konnte es jedoch nicht hierher tragen...',[],[':location' => $location->name()]);
                         else $p->log()->add('Dein Rabe hat :location besucht, ist jedoch mit leeren Krallen zurückgekehrt...',[],[':location' => $location->name()]);
-
-                        $p->location()->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, 'Corax der Rabe'));
 
                         $this->doped = false;
                         $this->rest = $game->duration() + ($this->doped ? 24 : 12);

@@ -6,6 +6,7 @@ abstract class Model_Map_Abstract {
     const MMA_TYPE_LABYRINTH = 2;
 
     protected static $map_type;
+    protected static $map_grid_size = 2;
 
     protected $mapname = 'default';
     protected $mucfg = [];
@@ -63,7 +64,7 @@ abstract class Model_Map_Abstract {
     public function __construct($map, $sub) {
         $this->mapname = $map;
         $this->sublocation = $sub;
-        $this->sub_routing = new Model_Routing();
+        $this->sub_routing = new Model_Routing(static::$map_grid_size);
     }
 
     public function get_mapname() {

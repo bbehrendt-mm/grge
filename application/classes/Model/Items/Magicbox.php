@@ -42,10 +42,11 @@ class Model_Items_Magicbox extends Model_Items_Abstract_Item {
 		return true;
 	}
 	
-	public function drop() {
-		global $game, $player;	
-		
-		$player->log()->add(new Model_Log_Types_Text(null, null, 'Dieses Item kann nicht abgelegt werden!', true));
+	public function drop($silent = false) {
+		/** @global Model_Player $player */
+		global $player;
+
+        if (!$silent) $player->log()->add(new Model_Log_Types_Text(null, null, 'Dieses Item kann nicht abgelegt werden!', true));
 		return false;
 	}
 	

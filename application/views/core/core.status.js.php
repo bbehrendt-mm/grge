@@ -86,7 +86,7 @@
         });
 
         var fsum = function(last, current) {return last + current.value};
-        var sum_absolute_p = absolute_p.reduce(fsum,0), sum_absolute_n = absolute_n.reduce(fsum,0), sum_relative_p = 1+relative_p.reduce(fsum,0), sum_relative_n = 1+relative_n.reduce(fsum,0);
+        var sum_absolute_p = absolute_p.reduce(fsum,0), sum_absolute_n = absolute_n.reduce(fsum,0), sum_relative_p = Math.max(0,1+relative_p.reduce(fsum,0)), sum_relative_n = Math.max(0, 1+relative_n.reduce(fsum,0));
         var sum_p = sum_absolute_p * sum_relative_p, sum_n = sum_absolute_n * sum_relative_n;
         var sum = sum_p - sum_n;
 

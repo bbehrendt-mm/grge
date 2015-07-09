@@ -6,7 +6,7 @@ class Model_Items_Fruit extends Model_Items_Abstract_Stackable {
 			'name' => 'Geerntete Pflanze',
 			'icon' => 'fruit',
 			'description' => 'Du hast diese Pflanze selbst angebaut und gerade frisch geerntet. Jetzt musst du nur noch hoffen, dass sie zufällig nicht giftig ist.',
-			'category' => Model_Items_Abstract_Item::MIAI_CAT_DRUG,
+			'category' => Model_Items_Abstract_Item::MIAI_CAT_FOOD,
 	);
 	
 	protected static $weight = 2;

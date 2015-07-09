@@ -846,4 +846,6 @@ return array (
 	'',
   'Ladevorgang' =>
 	'',
+  'Dein Rabe hat :location besucht und dort auch etwas gefunden, konnte es jedoch nicht hierher tragen...' =>
+	'',
 );

@@ -25,9 +25,11 @@ class Model_Items_Pepperspray extends Model_Battle_Weapon implements Interface_S
 	public static $energy_cost = 1;
 
 	
-	public function drop() {
-		global $game, $player;
-		$player->log()->add(new Model_Log_Types_Text(null, null, 'Bist du verrückt? Womit willst du dich wehren, wenn dir einer deiner Mitverdammten ein Kompliment über dein Aussehen machen möchte?'));
+	public function drop($silent = false) {
+		/** @global Model_Player $player */
+		global $player;
+
+		if (!$silent) $player->log()->add(new Model_Log_Types_Text(null, null, 'Bist du verrückt? Womit willst du dich wehren, wenn dir einer deiner Mitverdammten ein Kompliment über dein Aussehen machen möchte?'));
 		return false;
 	}
 	

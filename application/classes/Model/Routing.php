@@ -9,6 +9,8 @@ class Model_Routing {
      */
     private $nodes = Array();
 
+    private $grid_size = 2;
+
     private $protected_nodes = array();
 
     /**
@@ -20,6 +22,10 @@ class Model_Routing {
      * @var array ['n1_n2' => true/false] true means horizontal
      */
     private $direction = Array();
+
+    public function __construct($grid = 2) {
+        $this->grid_size = $grid;
+    }
 
     private function name($x, $y, $i = 0) {
         if ($x == -0) $x = 0; if ($y == -0) $y = 0;
@@ -51,8 +57,8 @@ class Model_Routing {
      * @return string Node ID
      */
     public function add_node($x, $y, $protected = false) {
-        $x = round($x/static::grid_size)*static::grid_size;
-        $y = round($y/static::grid_size)*static::grid_size;
+        $x = round($x/$this->grid_size)*$this->grid_size;
+        $y = round($y/$this->grid_size)*$this->grid_size;
 
         if (!$protected) {
             $name = $this->name($x,$y);

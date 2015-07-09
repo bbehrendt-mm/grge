@@ -12,10 +12,11 @@ class Model_Items_Briefcase extends Model_Items_Abstract_Item {
 	protected static $weight = 0;
 	protected static $essential = true;
 	
-	public function drop() {
-		global $game, $player;
+	public function drop($silent = false) {
+		/** @global Model_Player $player */
+		global $player;
 	
-		$player->log()->add(new Model_Log_Types_Text(null, null, 'Gehts noch? Welche Frau gibt denn bitte ihre Tasche aus der Hand?'));
+		if (!$silent) $player->log()->add(new Model_Log_Types_Text(null, null, 'Gehts noch? Welche Frau gibt denn bitte ihre Tasche aus der Hand?'));
 		return false;
 	}
 	

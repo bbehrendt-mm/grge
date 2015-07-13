@@ -4908,4 +4908,46 @@ return array (
 	'Pflichtbewusst hälst du deine Sprechstunde ab... aber keiner kommt. Kann es sein, das hier niemand krank ist?',
   'Dein Rabe hat :location besucht und dort auch etwas gefunden, konnte es jedoch nicht hierher tragen...' =>
 	'Dein Rabe hat :location besucht und dort auch etwas gefunden, konnte es jedoch nicht hierher tragen...',
+  'Augen zu und durch! Du schluckst die Pille herunter. Was danach passiert, weißt du nicht mehr - aber dein ganzer Rucksack ist plötzlich leer! Wär hätte denn ahnen können dass diese  Pille Blackouts verursachen kann ...' =>
+	'Augen zu und durch! Du schluckst die Pille herunter. Was danach passiert, weißt du nicht mehr - aber dein ganzer Rucksack ist plötzlich leer! Wär hätte denn ahnen können dass diese  Pille Blackouts verursachen kann ...',
+  'Hurra, du hast deinen Hunger (ein bisschen) bekämpft und sogar noch etwas neue Energie erhalten. In der Schachtel ist nur noch eine Pille. Setze sie mit Bedacht ein!' =>
+	'Hurra, du hast deinen Hunger (ein bisschen) bekämpft und sogar noch etwas neue Energie erhalten. In der Schachtel ist nur noch eine Pille. Setze sie mit Bedacht ein!',
+  'Augen zu und durch! Eigentlich sieht sie sehr gesund aus, daher schluckst du die Pille herunter. Tja, und wenn du das überlebt hättest, hättest du wohl gelernt dass das Aussehen auch täuschen kann.' =>
+	'Augen zu und durch! Eigentlich sieht sie sehr gesund aus, daher schluckst du die Pille herunter. Tja, und wenn du das überlebt hättest, hättest du wohl gelernt dass das Aussehen auch täuschen kann.',
+  'süße Kätzchen' =>
+	'süße Kätzchen',
+  'Oh geil! Anscheinend protestiert :p mal wieder für oder gegen irgendwas. Im Prinzip ist das auch egal, solange sie dabei das T-Shirt nicht wieder anzieht...' =>
+	'Oh geil! Anscheinend protestiert :p mal wieder für oder gegen irgendwas. Im Prinzip ist das auch egal, solange sie dabei das T-Shirt nicht wieder anzieht...',
+  'deine Frisur' =>
+	'deine Frisur',
+  'Es ist immer gut, mit den Patienten zu sprechen. Das macht deren Krankheit direkt weniger schlimm.' =>
+	'Es ist immer gut, mit den Patienten zu sprechen. Das macht deren Krankheit direkt weniger schlimm.',
+  'Ranking-Punkte' =>
+	'Ranking-Punkte',
+  'Spielstart' =>
+	'Spielstart',
+  'Spielende' =>
+	'Spielende',
+  'Lebenszeit' =>
+	'Lebenszeit',
+  'Sonstige Spieler' =>
+	'Sonstige Spieler',
+  'Unter diesem Punkt werden alle Spieler zusammengefasst, die in dieser Partie zwar dabei waren, jedoch durch einen frühen Tod keine Seelenpunkte erhalten haben und damit auf dieser Ergebnisseite nicht namentlich genannt werden.' =>
+	'Unter diesem Punkt werden alle Spieler zusammengefasst, die in dieser Partie zwar dabei waren, jedoch durch einen frühen Tod keine Seelenpunkte erhalten haben und damit auf dieser Ergebnisseite nicht namentlich genannt werden.',
+  'Punkte-Anteil' =>
+	'Punkte-Anteil',
+  'Dieser Balken zeigt an, wie sehr dieser Spieler zur Gesamtpunktzahl des Spiels beigetragen hat.' =>
+	'Dieser Balken zeigt an, wie sehr dieser Spieler zur Gesamtpunktzahl des Spiels beigetragen hat.',
+  ':name hat :prc der Punkte zu diesem Spiel beigesteuert.' =>
+	':name hat :prc der Punkte zu diesem Spiel beigesteuert.',
+  'Dieser Balken zeigt an, wie sehr die nicht namentlich aufgeführten Spieler zur Gesamtpunktzahl des Spiels beigetragen haben.' =>
+	'Dieser Balken zeigt an, wie sehr die nicht namentlich aufgeführten Spieler zur Gesamtpunktzahl des Spiels beigetragen haben.',
+  'Sonstige Spieler haben :prc der Punkte zu diesem Spiel beigesteuert.' =>
+	'Sonstige Spieler haben :prc der Punkte zu diesem Spiel beigesteuert.',
+  'Profil' =>
+	'Profil',
+  'G:i \\U\\h\\r \\a\\m d.m.y' =>
+	'G:i \\U\\h\\r \\a\\m d.m.y',
+  'Überlebte Zeit' =>
+	'Überlebte Zeit',
 );

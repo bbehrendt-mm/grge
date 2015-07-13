@@ -155,7 +155,11 @@ class Model_Achievement extends Model {
         elseif ($p <= 100) return 5;
         else return 6;
     }
-	
+
+	static public function is_valid($aid) {
+        return isset(static::$data[$aid]);
+    }
+
 	static public function decode_aid($aid) {
         if (!isset(static::$data[$aid])) return "Mysteriöse Auszeichnung #{$aid}";
         else return static::$data[$aid]['name'];

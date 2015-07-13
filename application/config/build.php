@@ -4,11 +4,11 @@ return array(
     'version' => array(
         'major'         => 2,
         'minor'         => 0,
-        'service'       => 5,
+        'service'       => 6,
         'maintenance'   => 0,
         'build'         => 1,
 
         'stage'         => 0,               //0=nightly, 1=alpha, 2=beta, 3=rc, 4=final
-        'date'	        => '09.07.2015',
+        'date'	        => '13.07.2015',
     ),
 );

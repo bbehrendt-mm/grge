@@ -51,7 +51,7 @@
 
     <div class="row center">
         <?php foreach ($achievements as $achievement) { ?>
-            <div data-aid="<?=$achievement['id']?>" class="achievement achievement-<?=$achievement['class']?>">
+            <div data-aid="<?=$achievement['id']?>" class="pointer achievement achievement-<?=$achievement['class']?>">
                 <img alt="?" src="media/icons/achievements/<?=$achievement['icon']?>" />
                 <span><?=$achievement['count']?></span>
             </div>
@@ -160,7 +160,7 @@
                     $('<div class="row"><div class="cell padded rw-2 rw-lg-1 rw-sm-2"><span class="hide-md hide-sm"><?=__('Platz')?></span><span class="hide-desktop hide-lg">#</span></div><div class="cell padded rw-1 rw-sm-0"><?=__('Punkte')?></div><div class="cell padded rw-2 rw-md-0"><?=__('Spieldauer')?></div><div class="cell padded rw-3 rw-md-5"><?=__('Spielmodus')?></div><div class="cell padded rw-4"><?=__('Beruf')?></div></div>').appendTo(table);
 
                     $.each(data.ranking, function(p, elem) {
-                        var entry = $('<div class="row"></div>');
+                        var entry = $('<div class="row pointer"></div>');
 
                         var icon = null;
                         if (elem.pos == 1)          icon = '<img src="media/icons/superstar.gif" alt="rk-winner">';
@@ -176,7 +176,9 @@
                         $('<div class="cell-small padded rw-1 rw-md-2"></div>').append($('<img />').attr('src','media/icons/flow' + elem.flow + '.gif').attr('title',elem.flow == 0 ? <?=__j('Klassischer Zeitfluss')?> : <?=__j('Variabler Zeitfluss')?>).qtip(game.render.html.qtip.player('left'))).appendTo(entry);
                         $('<div class="cell padded rw-4 rw-lg-5"></div>').html(elem.players["0"].job).appendTo(entry);
 
-                        entry.appendTo(table);
+                        entry.click(function() {
+                            window.open('ranking/game/' + season + '/' +  elem.id);
+                        }).appendTo(table);
                     });
                 }
 
@@ -185,7 +187,7 @@
                     $('<div class="row"><div class="cell padded rw-2 rw-lg-1"><span class="hide-md hide-sm"><?=__('Platz')?></span><span class="hide-desktop hide-lg">#</span></div><div class="cell padded rw-1 rw-md-0"><?=__('Punkte')?></div><div class="cell padded rw-3 rw-md-4 rw-sm-0"><?=__('Name')?></div><div class="cell padded rw-2 rw-lg-3 rw-sm-5"><?=__('Spielmodus')?></div><div class="cell padded rw-4 rw-sm-6"><?=__('Spieler')?></div></div>').appendTo(table_mp);
 
                     $.each(data.ranking_mp, function(p, elem) {
-                        var entry = $('<div class="row"></div>');
+                        var entry = $('<div class="row pointer"></div>');
 
                         var icon = null;
                         if (elem.pos == 1)          icon = '<img src="media/icons/superstar.gif" alt="rk-winner">';
@@ -220,10 +222,11 @@
                             pl.html('--');
 
 
-                        entry.appendTo(table_mp);
+                        entry.click(function() {
+                            window.open('ranking/game/' + season + '/' +  elem.id);
+                        }).appendTo(table_mp);
                     });
                 }
-
 
                 if (!data.ranking && !data.ranking_mp) $('<span><?=$own_soul ? __('Du hast es in dieser Season nicht ins Ranking geschafft.') : __(':name hat es in dieser Season nicht ins Ranking geschafft.',[':name' => $soul_owner])?></span>').appendTo('#ranking_target');
 
@@ -245,7 +248,7 @@
                         .append($('<b>').addClass('header').text(<?=__j($achievement['name'])?>))
                         .append($('<span />').html(game.i18n(<?=__j('Diese Auszeichnung ist ::i:: :num  Punkte::/i:: wert.')?>, {':num' : <?=__($achievement['points'])?>})));
                 }
-            }));
+            })).click(function() {window.open('ranking/global/<?=$achievement['id']?>')});
         <?php } ?>
     <?php } ?>
 

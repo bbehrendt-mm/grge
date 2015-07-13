@@ -113,7 +113,7 @@
             } else $('<span><?=__('Es wurden keine Spiele im Ranking gefunden, die deinen Suchkriterien entsprechen.')?></span>').appendTo('#ranking_target');
 
             $.each(data.ranking, function (p, elem) {
-                var entry = $('<div class="row"></div>');
+                var entry = $('<div class="row pointer"></div>');
 
                 var icon = null;
                 if (p == 1)         icon = '<img src="media/icons/superstar.gif" alt="rk-winner">';
@@ -152,7 +152,11 @@
                     $('<div class="cell padded rw-4 rw-md-6"></div>').html(elem.players["0"].job).appendTo(entry);
                 }
 
-                entry.appendTo(table);
+                entry.click(function() {
+                    window.open('ranking/game/' + season + '/' +  elem.id);
+                }).appendTo(table);
+
+
             });
 
             var max_offset = Math.floor(data.games / 20) * 20;

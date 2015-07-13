@@ -1,6 +1,7 @@
 <?php
 /**
  * @var array $achievements
+ * @var int $preset
  */
 ?>
 
@@ -14,7 +15,7 @@
             <option value="1"><?=__('Auszeichnungen');?></option>
             <option value="2"><?=__('Seelenpunkte');?></option>
         </select>
-        <input type="hidden" value="0" id="selected_achievement">
+        <input type="hidden" value="<?=$preset?>" id="selected_achievement">
     </div>
 
     <div class="cell rw-9 rw-lg-8 rw-md-6 rw-sm-12 right">
@@ -38,7 +39,7 @@
 
     <div id="achievement_container" class="center padded cell rw-6 rw-md-12">
         <?php foreach ($achievements as $achievement) if ($achievement['count'] > 0) { ?>
-            <div class="hotbox inline-block">
+            <div class="hotbox inline-block <?=$achievement['id'] == $preset ? 'active' : ''?>">
                 <div data-aid="<?=$achievement['id']?>" class="achievement achievement-<?=$achievement['class']?>">
                     <img alt="?" src="media/icons/achievements/<?=$achievement['icon']?>" />
                     <span><?=$achievement['points']?></span>
@@ -58,7 +59,6 @@
 <script type="application/javascript">
 // ## JS COMPRESS BEGIN ## //
 (function() {
-
     var read_fetch = function (offset) {
         return function () {
             switch ($('#ranking_type').val()) {
@@ -240,7 +240,9 @@
             $('#ranking_container').removeClass('ro-3 rw-lg-9 ro-lg-1 ro-md-0');
         }
         (read_fetch(0)());
-    }).trigger('change');
+    });
+
+    (read_fetch(0)())
 })();
 // ## JS COMPRESS END ## //
 </script>

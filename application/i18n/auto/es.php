@@ -708,7 +708,15 @@ return array (
 	'',
   'Du hast neue Nachrichten!' =>
 	'',
+  'Diese Krankenhauskantine war früher mal ein echter Geheimtipp in der Stadt, denn hier konnte man vergleichsweise billig eine leckere Mahlzeit bekommen. Der günstige Preis ist auch kein Wunder - man kann Nahrungsmittel ziemlich billig produzieren, wenn sich im selben Gebäude eine leichenhalle befindet...' =>
+	'',
+  'Lieblings-Item' =>
+	'',
   'Spielauswahl' =>
+	'',
+  'Heino Rock CD' =>
+	'',
+  'Leider passt nur eine einzige Person in ein InstaZELT™... und dieses ist schon voll.' =>
 	'',
   'Wiki' =>
 	'',
@@ -731,6 +739,10 @@ return array (
   'Level' =>
 	'',
   'Aktuelles Spiel' =>
+	'',
+  'Das war wohl nichts... Deine Pflanzen sind total vertrocknet und absolut nutzlos. Da musst du wohl nochmal von vorne beginnen.' =>
+	'',
+  'Diese Krankenhauskantine war früher mal ein echter Geheimtipp in der Stadt, denn hier konnte man vergleichsweise billig eine leckere Mahlzeit bekommen. Der günstige Preis ist auch kein Wunder - man kann Nahrungsmittel ziemlich billig produzieren, wenn sich im selben Gebäude eine Leichenhalle befindet...' =>
 	'',
   'Füllstand' =>
 	'',
@@ -756,21 +768,7 @@ return array (
 	'',
   'Angezeigte Projekte filtern...' =>
 	'',
-  'Diese Krankenhauskantine war früher mal ein echter Geheimtipp in der Stadt, denn hier konnte man vergleichsweise billig eine leckere Mahlzeit bekommen. Der günstige Preis ist auch kein Wunder - man kann Nahrungsmittel ziemlich billig produzieren, wenn sich im selben Gebäude eine leichenhalle befindet...' =>
-	'',
-  'Lieblings-Item' =>
-	'',
-  'Heino Rock CD' =>
-	'',
-  'Leider passt nur eine einzige Person in ein InstaZELT™... und dieses ist schon voll.' =>
-	'',
-  'Das war wohl nichts... Deine Pflanzen sind total vertrocknet und absolut nutzlos. Da musst du wohl nochmal von vorne beginnen.' =>
-	'',
-  'Diese Krankenhauskantine war früher mal ein echter Geheimtipp in der Stadt, denn hier konnte man vergleichsweise billig eine leckere Mahlzeit bekommen. Der günstige Preis ist auch kein Wunder - man kann Nahrungsmittel ziemlich billig produzieren, wenn sich im selben Gebäude eine Leichenhalle befindet...' =>
-	'',
   'Bitte wähle, welches Ranking du sehen möchtest.' =>
-	'',
-  'Zurück' =>
 	'',
   'Kohana_Cache_File::get corrupted cache file!' =>
 	'',
@@ -790,11 +788,17 @@ return array (
 	'',
   'Gegrillter Tierkadaver' =>
 	'',
+  'Zurück' =>
+	'',
   'Bist du sicher, dass du die Arbeit an dem epischen Projekt ":name" beginnen möchtest? Denk daran, dass du nur ein episches Projekt pro Versteck errichten kannst!' =>
 	'',
   'Ambitionierter Bauherr' =>
 	'',
   'Epischer Baumeister' =>
+	'',
+  '' =>
+	'',
+  'Wer braucht schon EKEA? Dieser Tisch hat eine mindestens genauso fragwürdige Qualität, und er ist aus echtem undefinierbaren Holz!' =>
 	'',
   'Season-Ranking' =>
 	'',
@@ -828,8 +832,6 @@ return array (
 	'',
   'Die Benutzeroberfläche erkennt normalerweise automatisch, ob du mit Maus oder Touchscreen spielst, und optimiert die Eingabefunkionen dementsprechend. Sollte das bei dir nicht funktionieren (z.B. weil du ein Gerät nutzt, das sowohl über eine Maus, als auch einen Touchscreen verfügt), kannst du die automatische Erkennung außer Kraft setzen.' =>
 	'',
-  'Wer braucht schon EKEA? Dieser Tisch hat eine mindestens genauso fragwürdige Qualität, und er ist aus echtem undefinierbaren Holz!' =>
-	'',
   'nicht bewerten.' =>
 	'',
   'Deine Punkte-Übersicht' =>
@@ -847,5 +849,31 @@ return array (
   'Ladevorgang' =>
 	'',
   'Dein Rabe hat :location besucht und dort auch etwas gefunden, konnte es jedoch nicht hierher tragen...' =>
+	'',
+  'Ranking-Punkte' =>
+	'',
+  'Spielstart' =>
+	'',
+  'Spielende' =>
+	'',
+  'Sonstige Spieler' =>
+	'',
+  'Unter diesem Punkt werden alle Spieler zusammengefasst, die in dieser Partie zwar dabei waren, jedoch durch einen frühen Tod keine Seelenpunkte erhalten haben und damit auf dieser Ergebnisseite nicht namentlich genannt werden.' =>
+	'',
+  'Punkte-Anteil' =>
+	'',
+  'Dieser Balken zeigt an, wie sehr dieser Spieler zur Gesamtpunktzahl des Spiels beigetragen hat.' =>
+	'',
+  ':name hat :prc der Punkte zu diesem Spiel beigesteuert.' =>
+	'',
+  'Dieser Balken zeigt an, wie sehr die nicht namentlich aufgeführten Spieler zur Gesamtpunktzahl des Spiels beigetragen haben.' =>
+	'',
+  'Sonstige Spieler haben :prc der Punkte zu diesem Spiel beigesteuert.' =>
+	'',
+  'Profil' =>
+	'',
+  'G:i \\U\\h\\r \\a\\m d.m.y' =>
+	'',
+  'Überlebte Zeit' =>
 	'',
 );

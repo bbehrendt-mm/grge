@@ -322,4 +322,12 @@ abstract class Controller extends Kohana_Controller {
         $this->response->body(json_encode($tmp, JSON_FORCE_OBJECT));
         return false;
     }
+
+    protected function not_found($custom_uri = null) {
+        $this->add_widget(View::factory('pages/notfound')
+            ->set('uri', $custom_uri !== null ? $custom_uri : $this->request->uri())
+            ->render()
+        );
+        return $this->render();
+    }
 }

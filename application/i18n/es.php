@@ -903,9 +903,9 @@ sin embargo no hay senales de sus hijos.',
 	'Estos trapos alguna vez estuvieron a la moda.
 Ahora, para lo único que sirven es para limpiar tu escondite.',
   'Ektorp-Gluten Stuhl' =>
-	'Ektorp-Gluten Stuhl',
+	' Silla Ektorp-Gluten',
   'Stabil und aus einem Stück gegossen - dieser Stuhl ist zwar schwerer, dafür aber auch widerstandsfähiger als ein einfacher Plastikstuhl.' =>
-	'Stabil und aus einem Stück gegossen - dieser Stuhl ist zwar schwerer, dafür aber auch widerstandsfähiger als ein einfacher Plastikstuhl.',
+	'Esta cosa pesa mucho mas que una silla plástica, pero es mas resistente. Porque no vas y golpeas unos zombies con ella? ',
   'Portion Pommes Rot-Weiß' =>
 	'Papas fritas',
   'Der absolute Klassiker - Pommes Frittes, auch bekannt als die Einstiegsdroge zur Fettleibigkeit.' =>
@@ -935,37 +935,38 @@ Ahora, para lo único que sirven es para limpiar tu escondite.',
   'Elektronisches Bauteil' =>
 	'Componente Electrónico ',
   'Es ist gar nicht wichtig, was dieses Teil mal war oder wozu es gut ist. Es ist eine Leiterplatte mit Leiterbahnen und diversen Schickschnack drauf - steck es einfach in eine von deinen Konstruktionen und es wird schon irgendwie funktionieren!' =>
-	'Es ist gar nicht wichtig, was dieses Teil mal war oder wozu es gut ist. Es ist eine Leiterplatte mit Leiterbahnen und diversen Schickschnack drauf - steck es einfach in eine von deinen Konstruktionen und es wird schon irgendwie funktionieren!',
+	'Realmente no importa lo que esto solía ser antes. Tiene cables y otras cosas tecnologicas en ella, así que solo enchufarlo en una de tus construcciones y de alguna manera funcionara!',
   'Schrauben, Muttern, Zahnräder' =>
-	'Schrauben, Muttern, Zahnräder',
+	'Puñado de tuercas y clavos ',
   'In dieser bunten Mischung mechanischer Kleinteile findest du eigentlich immer, was du brauchst - es sei denn, du brauchst was gegen die Zombies.' =>
-	'In dieser bunten Mischung mechanischer Kleinteile findest du eigentlich immer, was du brauchst - es sei denn, du brauchst was gegen die Zombies.',
+	'Es una mezcla de las mas partes pequeñas más útiles, lo que sea que necesites está ahí!',
   'Kupferrohr' =>
-	'Kupferrohr',
+	'Tubo de Cobre ',
   'Es ist nicht leicht, ein intaktes Kupferrohr zu finden. Freu dich, dieses Rohr ist vielseitig einsetzbar!' =>
-	'Es ist nicht leicht, ein intaktes Kupferrohr zu finden. Freu dich, dieses Rohr ist vielseitig einsetzbar!',
+	'Encontrar un tubo de cobre que esté intacto no es tan facil como crees. Asi que alegrate de haber hallado uno! ',
   'Erste Etage des verbrannten Hauses' =>
-	'Erste Etage des verbrannten Hauses',
+	'Primer piso de la casa quemada ',
   'Hier oben sind die Brandschäden weitaus schlimmer als im Erdgeschoss... wahrscheinlich ist das Feuer hier oben ausgebrochen. Anscheinend bist du der Erste, der sich hier hoch getraut hat - keine Spuren von Zombies oder anderen Plünderern.' =>
-	'Hier oben sind die Brandschäden weitaus schlimmer als im Erdgeschoss... wahrscheinlich ist das Feuer hier oben ausgebrochen. Anscheinend bist du der Erste, der sich hier hoch getraut hat - keine Spuren von Zombies oder anderen Plünderern.',
+	'El fuego causó varios daños aquí arriba... Probablemente paso a el primer piso. Parece que eres la única persona valiente (o estúpida) para subir, no hay rastros de zombies o exploradores. ',
   'Glasflasche' =>
-	'Glasflasche',
+	'Botella de Vidrio ',
   'Sie ist weder groß noch sonderlich stabil, aber du kannst trotzdem ein wenig Flüssigkeit darin aufbewahren.' =>
-	'Sie ist weder groß noch sonderlich stabil, aber du kannst trotzdem ein wenig Flüssigkeit darin aufbewahren.',
+	'No es ni grande ni resistente, pero puedes echar líquido en el. ',
   'Ration' =>
-	'Ration',
+	'Raccion ',
   'Batterie wechseln' =>
-	'Batterie wechseln',
+	'Cambiar bateria ',
   'Supercharger einlegen' =>
-	'Supercharger einlegen',
+	'Poner Supercargador ',
   'Taschenlampe' =>
-	'Taschenlampe',
+	'Linterna',
   'Mit dieser Taschenlampe kannst du nun endlich auch Nachts nach Gegenständen suchen. Tagsüber verbessert sie deine Fundchance an schlecht beleuchteten Orten. Wenn du Spaß am Experimentieren hast, belade sie doch mal mit einer Supercharger-Batterie...' =>
-	'Mit dieser Taschenlampe kannst du nun endlich auch Nachts nach Gegenständen suchen. Tagsüber verbessert sie deine Fundchance an schlecht beleuchteten Orten. Wenn du Spaß am Experimentieren hast, belade sie doch mal mit einer Supercharger-Batterie...',
+	'Esta linterna te permite buscar objetos en la noche.
+Durante el dia, incrementará las posibilidades de encontrar objetos en lugares con poca iluminación. Si eres valiente, porque no la cargas con un supercargador...?',
   'Lesen' =>
-	'Lesen',
+	'Leer',
   'Klatschmagazin' =>
-	'Klatschmagazin',
+	'Revista de Chismes',
   'Du brauchst die absolut neusten, heissesten und erfundensten Infos darüber, wer gerade mit wem zusammen ist, wen betrügt, in wessen Film mitspielt, mit wem auf einer Koksparty gesichtet wurde oder wessen grausam verbrannten Körper heimlich nachts im Wald verscharrt hat? All dies und noch viel mehr findest du in Manifest schlechten Geschmacks, das selbst für Hitler zu unmenschlich wäre.' =>
 	'Du brauchst die absolut neusten, heissesten und erfundensten Infos darüber, wer gerade mit wem zusammen ist, wen betrügt, in wessen Film mitspielt, mit wem auf einer Koksparty gesichtet wurde oder wessen grausam verbrannten Körper heimlich nachts im Wald verscharrt hat? All dies und noch viel mehr findest du in Manifest schlechten Geschmacks, das selbst für Hitler zu unmenschlich wäre.',
   ':num Seiten' =>
@@ -4357,110 +4358,6 @@ Lo que suceda.... depende de ti descubrirlo. ',
 	'Es geht doch nichts über belegte Brote. Dein Hunger ist gestillt und du fühlst neue Kraft. Die Box ist leer!',
   'Du stemmst dich mit aller Kraft gegen das Ventil. Mit einem Schlag öffnet es sich, und ein Schwall Kühlwasser ergießt sich über dich. Das lindert zwar sofort deinen Durst, leider bist du jetzt auch gewaltig verstrahlt worden...' =>
 	'Du stemmst dich mit aller Kraft gegen das Ventil. Mit einem Schlag öffnet es sich, und ein Schwall Kühlwasser ergießt sich über dich. Das lindert zwar sofort deinen Durst, leider bist du jetzt auch gewaltig verstrahlt worden...',
-  'Spielauswahl' =>
-	'Spielauswahl',
-  'Wiki' =>
-	'Wiki',
-  'Stabil' =>
-	'Stabil',
-  'Schild' =>
-	'Schild',
-  'Körper' =>
-	'Körper',
-  'Kopf' =>
-	'Kopf',
-  'Typ' =>
-	'Typ',
-  'Schützt' =>
-	'Schützt',
-  'Schaden' =>
-	'Schaden',
-  'Genauigkeit' =>
-	'Genauigkeit',
-  'Distanzabhängig' =>
-	'Distanzabhängig',
-  'Angriffsgeschw.' =>
-	'Angriffsgeschw.',
-  ':num Runden' =>
-	':num Runden',
-  'Zerstörbar' =>
-	'Zerstörbar',
-  'Erkundungsrate' =>
-	'Erkundungsrate',
-  'Du hast diesen Ort vollständig ausgekundschaftet - von hier aus wirst du keine neuen Ruinen entdecken können.' =>
-	'Du hast diesen Ort vollständig ausgekundschaftet - von hier aus wirst du keine neuen Ruinen entdecken können.',
-  'Du bist momentan auf der Suche nach neuen Orten. Jedes mal, wenn der Ereigniscountdown abläuft, hast du die Chance einen neuen Ort zu entdecken.' =>
-	'Du bist momentan auf der Suche nach neuen Orten. Jedes mal, wenn der Ereigniscountdown abläuft, hast du die Chance einen neuen Ort zu entdecken.',
-  'Zombies blockieren den Weg. Besiege sie, um diesen Ort verlassen zu können.' =>
-	'Zombies blockieren den Weg. Besiege sie, um diesen Ort verlassen zu können.',
-  'Zombies blockieren den Weg. Besiege sie oder versuche zu fliehen, um diesen Ort verlassen zu können.' =>
-	'Zombies blockieren den Weg. Besiege sie oder versuche zu fliehen, um diesen Ort verlassen zu können.',
-  'Spieldetails' =>
-	'Spieldetails',
-  'Level' =>
-	'Level',
-  'Lebensdauer' =>
-	'Lebensdauer',
-  'Aktuelles Spiel' =>
-	'Aktuelles Spiel',
-  'Sehr Instabil' =>
-	'Sehr Instabil',
-  'Rüstung' =>
-	'Rüstung',
-  'Füllstand' =>
-	'Füllstand',
-  'Leer!' =>
-	'Leer!',
-  ':num Schuss' =>
-	':num Schuss',
-  'Du hast die Kettensäge mit Benzin aufgefüllt, jetzt schnurrt sie wie ein (tödliches) Kätzchen. Zombies und böse Dämonen haben keine Chance mehr - Groovy!' =>
-	'Du hast die Kettensäge mit Benzin aufgefüllt, jetzt schnurrt sie wie ein (tödliches) Kätzchen. Zombies und böse Dämonen haben keine Chance mehr - Groovy!',
-  'SP in :modes' =>
-	'SP in :modes',
-  'SP als :jobs' =>
-	'SP als :jobs',
-  'oder' =>
-	'oder',
-  'Erforderlich zum Freischalten' =>
-	'Erforderlich zum Freischalten',
-  'Level-Informationen' =>
-	'Level-Informationen',
-  'Aktuelles Level' =>
-	'Aktuelles Level',
-  'Maximales Level erreicht!' =>
-	'Maximales Level erreicht!',
-  'Nächstes Level' =>
-	'Nächstes Level',
-  'Der Klassiker' =>
-	'Der Klassiker',
-  'Bleib am leben solange du kannst, um Punkte zu erhalten.' =>
-	'Bleib am leben solange du kannst, um Punkte zu erhalten.',
-  'Der Klassiker - Extra-Würzig' =>
-	'Der Klassiker - Extra-Würzig',
-  'Wie lange kannst du überleben, wenn dich dein Glück verlassen hat?' =>
-	'Wie lange kannst du überleben, wenn dich dein Glück verlassen hat?',
-  'Einmal Gemetzel, bitte!' =>
-	'Einmal Gemetzel, bitte!',
-  'Versuche so viele Zombies wie möglich in einer Spielwoche platt zu machen. Stirbst du vor Ablauf der Woche gibt\'s Punktabzug' =>
-	'Versuche so viele Zombies wie möglich in einer Spielwoche platt zu machen. Stirbst du vor Ablauf der Woche gibt\'s Punktabzug',
-  'Kann ich bitte die Karte haben?' =>
-	'Kann ich bitte die Karte haben?',
-  'Du bist der letzte Aufklärer deiner Stadt und wurdest auf ein Himmelfahrtskommando geschickt, um die Umgebung zu kartographieren.' =>
-	'Du bist der letzte Aufklärer deiner Stadt und wurdest auf ein Himmelfahrtskommando geschickt, um die Umgebung zu kartographieren.',
-  'Frisch aus Rom' =>
-	'Frisch aus Rom',
-  'Wie lange kannst du im postapokalyptischen Kolosseum überleben? Wie viele Wellen von Zombies wirst du aushalten? Es gibt nur einen Weg, das herauszufinden...' =>
-	'Wie lange kannst du im postapokalyptischen Kolosseum überleben? Wie viele Wellen von Zombies wirst du aushalten? Es gibt nur einen Weg, das herauszufinden...',
-  'Haben Sie eine Reservierung?' =>
-	'Haben Sie eine Reservierung?',
-  'In diesem Modus kannst du mit deinen Freunden gemeinsam ums Überleben kämpfen ohne Angst haben zu müssen, dass plötzlich Fremde dazustoßen. Dieser Modus ist für 2 - 5 Spieler geeignet.' =>
-	'In diesem Modus kannst du mit deinen Freunden gemeinsam ums Überleben kämpfen ohne Angst haben zu müssen, dass plötzlich Fremde dazustoßen. Dieser Modus ist für 2 - 5 Spieler geeignet.',
-  'In diesem Modus kannst du mit deinen Freunden gemeinsam ums Überleben kämpfen ohne Angst haben zu müssen, dass plötzlich Fremde dazustoßen. Dieser Modus ist für 6 - 10 Spieler geeignet.' =>
-	'In diesem Modus kannst du mit deinen Freunden gemeinsam ums Überleben kämpfen ohne Angst haben zu müssen, dass plötzlich Fremde dazustoßen. Dieser Modus ist für 6 - 10 Spieler geeignet.',
-  'In diesem Spielmodus reist du mit einem klapprigen Wohnmobil durch die Welt. Versuche, so weit zu kommen wie möglich. Dieser Modus ist für 2 - 5 Spieler geeignet.' =>
-	'In diesem Spielmodus reist du mit einem klapprigen Wohnmobil durch die Welt. Versuche, so weit zu kommen wie möglich. Dieser Modus ist für 2 - 5 Spieler geeignet.',
-  'Angezeigte Projekte filtern...' =>
-	'Angezeigte Projekte filtern...',
   'Diese Krankenhauskantine war früher mal ein echter Geheimtipp in der Stadt, denn hier konnte man vergleichsweise billig eine leckere Mahlzeit bekommen. Der günstige Preis ist auch kein Wunder - man kann Nahrungsmittel ziemlich billig produzieren, wenn sich im selben Gebäude eine leichenhalle befindet...' =>
 	'Diese Krankenhauskantine war früher mal ein echter Geheimtipp in der Stadt, denn hier konnte man vergleichsweise billig eine leckere Mahlzeit bekommen. Der günstige Preis ist auch kein Wunder - man kann Nahrungsmittel ziemlich billig produzieren, wenn sich im selben Gebäude eine leichenhalle befindet...',
   'Ein modriger Geruch steigt aus der Flasche auf... Aber wer wird schon wählerisch sein, wenn es um Wasser geht?' =>
@@ -4519,6 +4416,8 @@ Lo que suceda.... depende de ti descubrirlo. ',
 	'Du setzt dich in den Sitz fallen und versuchst, all die schlimmen Ereignisse heute abzuschütteln.',
   'Epische Seele' =>
 	'Epische Seele',
+  'Spielauswahl' =>
+	'Spielauswahl',
   'Reservist' =>
 	'Reservist',
   'Du beherrscht die Grundlagen des bewaffneten Kampfes. Waffe ausrichten, Abzug drücken, Zombies beim Umfallen zugucken. Leider ist dein Wissen eher theoretischer Natur, dennoch erhälst du einen Bonus beim Einsatz von Waffen.' =>
@@ -4551,10 +4450,58 @@ Lo que suceda.... depende de ti descubrirlo. ',
 	'Es sieht etwas zusammengeschustert aus... aber wenigstens musst du nun nicht mehr in Unterwäsche herumlaufen.',
   'Normalerweise würde kein Mensch so etwas machen - aber in der aktuellen Situation ist es tatsächlich notwendig, seine Bequemlichkeit zugunsten von etwas mehr Sicherheit zu opfern.' =>
 	'Normalerweise würde kein Mensch so etwas machen - aber in der aktuellen Situation ist es tatsächlich notwendig, seine Bequemlichkeit zugunsten von etwas mehr Sicherheit zu opfern.',
+  'Wiki' =>
+	'Wiki',
+  'Stabil' =>
+	'Stabil',
+  'Schild' =>
+	'Schild',
+  'Körper' =>
+	'Körper',
+  'Kopf' =>
+	'Kopf',
+  'Typ' =>
+	'Typ',
+  'Schützt' =>
+	'Schützt',
+  'Schaden' =>
+	'Schaden',
+  'Genauigkeit' =>
+	'Genauigkeit',
+  'Distanzabhängig' =>
+	'Distanzabhängig',
+  'Angriffsgeschw.' =>
+	'Angriffsgeschw.',
+  ':num Runden' =>
+	':num Runden',
+  'Zerstörbar' =>
+	'Zerstörbar',
+  'Erkundungsrate' =>
+	'Erkundungsrate',
+  'Du hast diesen Ort vollständig ausgekundschaftet - von hier aus wirst du keine neuen Ruinen entdecken können.' =>
+	'Du hast diesen Ort vollständig ausgekundschaftet - von hier aus wirst du keine neuen Ruinen entdecken können.',
+  'Du bist momentan auf der Suche nach neuen Orten. Jedes mal, wenn der Ereigniscountdown abläuft, hast du die Chance einen neuen Ort zu entdecken.' =>
+	'Du bist momentan auf der Suche nach neuen Orten. Jedes mal, wenn der Ereigniscountdown abläuft, hast du die Chance einen neuen Ort zu entdecken.',
+  'Zombies blockieren den Weg. Besiege sie, um diesen Ort verlassen zu können.' =>
+	'Zombies blockieren den Weg. Besiege sie, um diesen Ort verlassen zu können.',
+  'Zombies blockieren den Weg. Besiege sie oder versuche zu fliehen, um diesen Ort verlassen zu können.' =>
+	'Zombies blockieren den Weg. Besiege sie oder versuche zu fliehen, um diesen Ort verlassen zu können.',
+  'Spieldetails' =>
+	'Spieldetails',
+  'Level' =>
+	'Level',
+  'Lebensdauer' =>
+	'Lebensdauer',
+  'Aktuelles Spiel' =>
+	'Aktuelles Spiel',
   'Wackelig' =>
 	'Wackelig',
+  'Rüstung' =>
+	'Rüstung',
   'Helm' =>
 	'Helm',
+  'Sehr Instabil' =>
+	'Sehr Instabil',
   'Gehts noch? Welche Frau gibt denn bitte ihre Tasche aus der Hand?' =>
 	'Gehts noch? Welche Frau gibt denn bitte ihre Tasche aus der Hand?',
   'Desolat' =>
@@ -4607,12 +4554,62 @@ Lo que suceda.... depende de ti descubrirlo. ',
 	'So ein Teil solltest du dir nicht zum Spaß umlegen... wie wärs, wenn du wartest, bis du stark blutest?',
   ':name kann sich zur Zeit nicht bewegen...' =>
 	':name kann sich zur Zeit nicht bewegen...',
+  'Füllstand' =>
+	'Füllstand',
+  'Leer!' =>
+	'Leer!',
+  ':num Schuss' =>
+	':num Schuss',
+  'Du hast die Kettensäge mit Benzin aufgefüllt, jetzt schnurrt sie wie ein (tödliches) Kätzchen. Zombies und böse Dämonen haben keine Chance mehr - Groovy!' =>
+	'Du hast die Kettensäge mit Benzin aufgefüllt, jetzt schnurrt sie wie ein (tödliches) Kätzchen. Zombies und böse Dämonen haben keine Chance mehr - Groovy!',
+  'SP in :modes' =>
+	'SP in :modes',
+  'SP als :jobs' =>
+	'SP als :jobs',
+  'oder' =>
+	'oder',
+  'Erforderlich zum Freischalten' =>
+	'Erforderlich zum Freischalten',
+  'Level-Informationen' =>
+	'Level-Informationen',
+  'Aktuelles Level' =>
+	'Aktuelles Level',
+  'Maximales Level erreicht!' =>
+	'Maximales Level erreicht!',
+  'Nächstes Level' =>
+	'Nächstes Level',
+  'Der Klassiker' =>
+	'Der Klassiker',
+  'Bleib am leben solange du kannst, um Punkte zu erhalten.' =>
+	'Bleib am leben solange du kannst, um Punkte zu erhalten.',
+  'Der Klassiker - Extra-Würzig' =>
+	'Der Klassiker - Extra-Würzig',
+  'Wie lange kannst du überleben, wenn dich dein Glück verlassen hat?' =>
+	'Wie lange kannst du überleben, wenn dich dein Glück verlassen hat?',
+  'Einmal Gemetzel, bitte!' =>
+	'Einmal Gemetzel, bitte!',
+  'Versuche so viele Zombies wie möglich in einer Spielwoche platt zu machen. Stirbst du vor Ablauf der Woche gibt\'s Punktabzug' =>
+	'Versuche so viele Zombies wie möglich in einer Spielwoche platt zu machen. Stirbst du vor Ablauf der Woche gibt\'s Punktabzug',
+  'Kann ich bitte die Karte haben?' =>
+	'Kann ich bitte die Karte haben?',
+  'Du bist der letzte Aufklärer deiner Stadt und wurdest auf ein Himmelfahrtskommando geschickt, um die Umgebung zu kartographieren.' =>
+	'Du bist der letzte Aufklärer deiner Stadt und wurdest auf ein Himmelfahrtskommando geschickt, um die Umgebung zu kartographieren.',
+  'Frisch aus Rom' =>
+	'Frisch aus Rom',
+  'Wie lange kannst du im postapokalyptischen Kolosseum überleben? Wie viele Wellen von Zombies wirst du aushalten? Es gibt nur einen Weg, das herauszufinden...' =>
+	'Wie lange kannst du im postapokalyptischen Kolosseum überleben? Wie viele Wellen von Zombies wirst du aushalten? Es gibt nur einen Weg, das herauszufinden...',
+  'Haben Sie eine Reservierung?' =>
+	'Haben Sie eine Reservierung?',
+  'In diesem Modus kannst du mit deinen Freunden gemeinsam ums Überleben kämpfen ohne Angst haben zu müssen, dass plötzlich Fremde dazustoßen. Dieser Modus ist für 2 - 5 Spieler geeignet.' =>
+	'In diesem Modus kannst du mit deinen Freunden gemeinsam ums Überleben kämpfen ohne Angst haben zu müssen, dass plötzlich Fremde dazustoßen. Dieser Modus ist für 2 - 5 Spieler geeignet.',
+  'In diesem Modus kannst du mit deinen Freunden gemeinsam ums Überleben kämpfen ohne Angst haben zu müssen, dass plötzlich Fremde dazustoßen. Dieser Modus ist für 6 - 10 Spieler geeignet.' =>
+	'In diesem Modus kannst du mit deinen Freunden gemeinsam ums Überleben kämpfen ohne Angst haben zu müssen, dass plötzlich Fremde dazustoßen. Dieser Modus ist für 6 - 10 Spieler geeignet.',
+  'In diesem Spielmodus reist du mit einem klapprigen Wohnmobil durch die Welt. Versuche, so weit zu kommen wie möglich. Dieser Modus ist für 2 - 5 Spieler geeignet.' =>
+	'In diesem Spielmodus reist du mit einem klapprigen Wohnmobil durch die Welt. Versuche, so weit zu kommen wie möglich. Dieser Modus ist für 2 - 5 Spieler geeignet.',
+  'Angezeigte Projekte filtern...' =>
+	'Angezeigte Projekte filtern...',
   'Bitte wähle, welches Ranking du sehen möchtest.' =>
 	'Bitte wähle, welches Ranking du sehen möchtest.',
-  'Du hast eine Kapsel aus der Verpackung genommen.' =>
-	'Du hast eine Kapsel aus der Verpackung genommen.',
-  'Zurück' =>
-	'Zurück',
   'Titanenseele' =>
 	'Titanenseele',
   'Bist du verrückt? Womit willst du dich wehren, wenn dir einer deiner Mitverdammten ein Kompliment über dein Aussehen machen möchte?' =>
@@ -4663,6 +4660,8 @@ Lo que suceda.... depende de ti descubrirlo. ',
 	'Wer glaubt schon an Herstellerangaben! Diese Batterie kann problemlos so stark aufgeladen werden, dass man damit eine Kleinstadt mehrere Tage mit Strom versorgen könnte. Und diese Gerüchte von wegen "Explosionsgefahr" sind bestimmt bloß Panikmache aus den Medien ...',
   'Du hörst den Alarmdraht klingen und springst aus dem Bett, um dich gegen Zombies zu verteidigen!' =>
 	'Du hörst den Alarmdraht klingen und springst aus dem Bett, um dich gegen Zombies zu verteidigen!',
+  'Du hast eine Kapsel aus der Verpackung genommen.' =>
+	'Du hast eine Kapsel aus der Verpackung genommen.',
   'Eine leckere Speise ist nur halb so gut, wenn sie kalt und ungewürzt ist. Du streust also ein paar Gewürze drüber und lässt das ganze eine Weile im Ofen schmoren - voilá, du hast deine Speise noch leckerer gemacht!' =>
 	'Eine leckere Speise ist nur halb so gut, wenn sie kalt und ungewürzt ist. Du streust also ein paar Gewürze drüber und lässt das ganze eine Weile im Ofen schmoren - voilá, du hast deine Speise noch leckerer gemacht!',
   'Gut, dass dieser hochgradig experimentelle Plasmablitz-Generator eine absolut standartkonforme Bauform sowie Anschlüsse besitzt, sodass du ihn mit Bauteilen deines Batteriewerfers und Revolvers in eine tödliche Waffe verwandeln kannst. Fast könnte man meinen, das ganze wäre ziemlich unrealistisch.... aber nur fast!' =>
@@ -4797,14 +4796,10 @@ Lo que suceda.... depende de ti descubrirlo. ',
 	'Dein Freund hat keine Wunde, die du auswaschen könntest...',
   'Du hast unglaubliche Willenskraft bewiesen und den kalten Entzug überstanden! Herzlichen Glückwunsch, deine Drogensucht ist Geschichte!' =>
 	'Du hast unglaubliche Willenskraft bewiesen und den kalten Entzug überstanden! Herzlichen Glückwunsch, deine Drogensucht ist Geschichte!',
+  'Zurück' =>
+	'Zurück',
   'Die Tür zur Leichenhalle ist fest versiegelt und lässt sich nicht öffnen. Über dir befindet sich ein kleines Lüftungsgitter, über das du vermutlich in die Leichenhalle gelangen könntest - wenn du hinein passen würdest. Echt Mist dass du kein Kind mehr bist...' =>
 	'Die Tür zur Leichenhalle ist fest versiegelt und lässt sich nicht öffnen. Über dir befindet sich ein kleines Lüftungsgitter, über das du vermutlich in die Leichenhalle gelangen könntest - wenn du hinein passen würdest. Echt Mist dass du kein Kind mehr bist...',
-  'Bist du sicher, dass du die Arbeit an dem epischen Projekt ":name" beginnen möchtest? Denk daran, dass du nur ein episches Projekt pro Versteck errichten kannst!' =>
-	'Bist du sicher, dass du die Arbeit an dem epischen Projekt ":name" beginnen möchtest? Denk daran, dass du nur ein episches Projekt pro Versteck errichten kannst!',
-  'Ambitionierter Bauherr' =>
-	'Ambitionierter Bauherr',
-  'Epischer Baumeister' =>
-	'Epischer Baumeister',
   'Hurra, du hast deinen Hunger (ein bisschen) bekämpft und sogar noch etwas neue Energie erhalten. Die Schachtel ist leer!' =>
 	'Hurra, du hast deinen Hunger (ein bisschen) bekämpft und sogar noch etwas neue Energie erhalten. Die Schachtel ist leer!',
   'Superlecker! Es geht doch nichts über etwas Selbstgekochtes!' =>
@@ -4813,6 +4808,32 @@ Lo que suceda.... depende de ti descubrirlo. ',
 	'Hier kommt ihr nicht weiter... ihr müsst eure Reise nach :od unterbrechen und bei :ad eine Pause machen..',
   'Das Wasser in deiner Flasche schaut dich mit großen, traurigen Augen an - aber das hilft nicht viel. Eiskalt kochst du es auf 100° und tötest so alles Leben darin ab!' =>
 	'Das Wasser in deiner Flasche schaut dich mit großen, traurigen Augen an - aber das hilft nicht viel. Eiskalt kochst du es auf 100° und tötest so alles Leben darin ab!',
+  'Bist du sicher, dass du die Arbeit an dem epischen Projekt ":name" beginnen möchtest? Denk daran, dass du nur ein episches Projekt pro Versteck errichten kannst!' =>
+	'Bist du sicher, dass du die Arbeit an dem epischen Projekt ":name" beginnen möchtest? Denk daran, dass du nur ein episches Projekt pro Versteck errichten kannst!',
+  'Ambitionierter Bauherr' =>
+	'Ambitionierter Bauherr',
+  'Epischer Baumeister' =>
+	'Epischer Baumeister',
+  'Der Kürbis saugt vor deinen Augen die Chemikalie auf... und beginnt, in Zeitraffer zu faulen!' =>
+	'Der Kürbis saugt vor deinen Augen die Chemikalie auf... und beginnt, in Zeitraffer zu faulen!',
+  'Du tunkst das Essen in die Chemikalie - und beginnt zu blubbern und löst sich vor deinen Augen auf! So ein Ärger, das wirst du wohl nicht mehr essen können...' =>
+	'Du tunkst das Essen in die Chemikalie - und beginnt zu blubbern und löst sich vor deinen Augen auf! So ein Ärger, das wirst du wohl nicht mehr essen können...',
+  'Zunächst hörst du ein Zischen aus deiner Flasche, danach stellst du fest dass die Chemikalie dein Wasser gereinigt hat! Hurra!' =>
+	'Zunächst hörst du ein Zischen aus deiner Flasche, danach stellst du fest dass die Chemikalie dein Wasser gereinigt hat! Hurra!',
+  'Eigentlich kann man ja mit dem Trinken nie früh genug anfangen. Nachdem du die Flasche ausgetrunken hast, stellst du diese Aussage jedoch spontan in Frage - immerhin dreht sich die Welt um dich herum, und dir ist speiübel.' =>
+	'Eigentlich kann man ja mit dem Trinken nie früh genug anfangen. Nachdem du die Flasche ausgetrunken hast, stellst du diese Aussage jedoch spontan in Frage - immerhin dreht sich die Welt um dich herum, und dir ist speiübel.',
+  'Die Pillen saugen die Chemikalie regelrecht auf! Vermutlich ast du jetzt ihre Wirkungsweise geändert...' =>
+	'Die Pillen saugen die Chemikalie regelrecht auf! Vermutlich ast du jetzt ihre Wirkungsweise geändert...',
+  'Du schaltest die Taschenlampe an. Mit einem lauten Knall explodiert sie in deiner Hand und fügt dir schwere Verletzungen zu!' =>
+	'Du schaltest die Taschenlampe an. Mit einem lauten Knall explodiert sie in deiner Hand und fügt dir schwere Verletzungen zu!',
+  'Na sowas! Laut aktuellen Analysen verursacht die Zombieapokalypse eine spontane Deflation an den Finanzmärkten. Damit hat sich der Wert deines Ersparten verdoppelt!' =>
+	'Na sowas! Laut aktuellen Analysen verursacht die Zombieapokalypse eine spontane Deflation an den Finanzmärkten. Damit hat sich der Wert deines Ersparten verdoppelt!',
+  'Ein bisschen Auswaschen, ein bisschen Eiter entfernen... schon sieht diese klaffende Wunde viel ansehnlicher aus.' =>
+	'Ein bisschen Auswaschen, ein bisschen Eiter entfernen... schon sieht diese klaffende Wunde viel ansehnlicher aus.',
+  ':name hat deine Wunde mithilfe von Alkohol ausgewaschen.' =>
+	':name hat deine Wunde mithilfe von Alkohol ausgewaschen.',
+  'Wer braucht schon EKEA? Dieser Tisch hat eine mindestens genauso fragwürdige Qualität, und er ist aus echtem undefinierbaren Holz!' =>
+	'Wer braucht schon EKEA? Dieser Tisch hat eine mindestens genauso fragwürdige Qualität, und er ist aus echtem undefinierbaren Holz!',
   'Season-Ranking' =>
 	'Season-Ranking',
   'Globales Ranking' =>
@@ -4851,26 +4872,10 @@ Lo que suceda.... depende de ti descubrirlo. ',
 	'Touchscreen',
   'Die Benutzeroberfläche erkennt normalerweise automatisch, ob du mit Maus oder Touchscreen spielst, und optimiert die Eingabefunkionen dementsprechend. Sollte das bei dir nicht funktionieren (z.B. weil du ein Gerät nutzt, das sowohl über eine Maus, als auch einen Touchscreen verfügt), kannst du die automatische Erkennung außer Kraft setzen.' =>
 	'Die Benutzeroberfläche erkennt normalerweise automatisch, ob du mit Maus oder Touchscreen spielst, und optimiert die Eingabefunkionen dementsprechend. Sollte das bei dir nicht funktionieren (z.B. weil du ein Gerät nutzt, das sowohl über eine Maus, als auch einen Touchscreen verfügt), kannst du die automatische Erkennung außer Kraft setzen.',
-  'Der Kürbis saugt vor deinen Augen die Chemikalie auf... und beginnt, in Zeitraffer zu faulen!' =>
-	'Der Kürbis saugt vor deinen Augen die Chemikalie auf... und beginnt, in Zeitraffer zu faulen!',
-  'Du tunkst das Essen in die Chemikalie - und beginnt zu blubbern und löst sich vor deinen Augen auf! So ein Ärger, das wirst du wohl nicht mehr essen können...' =>
-	'Du tunkst das Essen in die Chemikalie - und beginnt zu blubbern und löst sich vor deinen Augen auf! So ein Ärger, das wirst du wohl nicht mehr essen können...',
-  'Zunächst hörst du ein Zischen aus deiner Flasche, danach stellst du fest dass die Chemikalie dein Wasser gereinigt hat! Hurra!' =>
-	'Zunächst hörst du ein Zischen aus deiner Flasche, danach stellst du fest dass die Chemikalie dein Wasser gereinigt hat! Hurra!',
-  'Eigentlich kann man ja mit dem Trinken nie früh genug anfangen. Nachdem du die Flasche ausgetrunken hast, stellst du diese Aussage jedoch spontan in Frage - immerhin dreht sich die Welt um dich herum, und dir ist speiübel.' =>
-	'Eigentlich kann man ja mit dem Trinken nie früh genug anfangen. Nachdem du die Flasche ausgetrunken hast, stellst du diese Aussage jedoch spontan in Frage - immerhin dreht sich die Welt um dich herum, und dir ist speiübel.',
-  'Die Pillen saugen die Chemikalie regelrecht auf! Vermutlich ast du jetzt ihre Wirkungsweise geändert...' =>
-	'Die Pillen saugen die Chemikalie regelrecht auf! Vermutlich ast du jetzt ihre Wirkungsweise geändert...',
-  'Du schaltest die Taschenlampe an. Mit einem lauten Knall explodiert sie in deiner Hand und fügt dir schwere Verletzungen zu!' =>
-	'Du schaltest die Taschenlampe an. Mit einem lauten Knall explodiert sie in deiner Hand und fügt dir schwere Verletzungen zu!',
-  'Na sowas! Laut aktuellen Analysen verursacht die Zombieapokalypse eine spontane Deflation an den Finanzmärkten. Damit hat sich der Wert deines Ersparten verdoppelt!' =>
-	'Na sowas! Laut aktuellen Analysen verursacht die Zombieapokalypse eine spontane Deflation an den Finanzmärkten. Damit hat sich der Wert deines Ersparten verdoppelt!',
-  'Ein bisschen Auswaschen, ein bisschen Eiter entfernen... schon sieht diese klaffende Wunde viel ansehnlicher aus.' =>
-	'Ein bisschen Auswaschen, ein bisschen Eiter entfernen... schon sieht diese klaffende Wunde viel ansehnlicher aus.',
-  ':name hat deine Wunde mithilfe von Alkohol ausgewaschen.' =>
-	':name hat deine Wunde mithilfe von Alkohol ausgewaschen.',
-  'Wer braucht schon EKEA? Dieser Tisch hat eine mindestens genauso fragwürdige Qualität, und er ist aus echtem undefinierbaren Holz!' =>
-	'Wer braucht schon EKEA? Dieser Tisch hat eine mindestens genauso fragwürdige Qualität, und er ist aus echtem undefinierbaren Holz!',
+  'Du wickelst die Bandage straff um die Verletzungen deines Freundes. Er ist zwar immer noch Leichenblass, das hat aber nichts mehr mit dem Blutverlust zu tun...' =>
+	'Du wickelst die Bandage straff um die Verletzungen deines Freundes. Er ist zwar immer noch Leichenblass, das hat aber nichts mehr mit dem Blutverlust zu tun...',
+  ':name hat eine ziemlich schmutzige Bandage um deine Verletzungen gewickelt... wenigestens weist du jetzt was du ihm wert bist.' =>
+	':name hat eine ziemlich schmutzige Bandage um deine Verletzungen gewickelt... wenigestens weist du jetzt was du ihm wert bist.',
   'Karma-Bewertung' =>
 	'Karma-Bewertung',
   'Wenn du möchtest, kannst du hier die Spielleistung deiner Mitspieler bewerten.' =>
@@ -4893,10 +4898,16 @@ Lo que suceda.... depende de ti descubrirlo. ',
 	'Deine Punkte-Übersicht',
   ':name\'s Punkte-Übersicht' =>
 	':name\'s Punkte-Übersicht',
-  'Du wickelst die Bandage straff um die Verletzungen deines Freundes. Er ist zwar immer noch Leichenblass, das hat aber nichts mehr mit dem Blutverlust zu tun...' =>
-	'Du wickelst die Bandage straff um die Verletzungen deines Freundes. Er ist zwar immer noch Leichenblass, das hat aber nichts mehr mit dem Blutverlust zu tun...',
-  ':name hat eine ziemlich schmutzige Bandage um deine Verletzungen gewickelt... wenigestens weist du jetzt was du ihm wert bist.' =>
-	':name hat eine ziemlich schmutzige Bandage um deine Verletzungen gewickelt... wenigestens weist du jetzt was du ihm wert bist.',
+  'Du gießt etwas von der Chemikalie in den Münzschlitz... doch nichts geschieht' =>
+	'Du gießt etwas von der Chemikalie in den Münzschlitz... doch nichts geschieht',
+  'Was tun, wenn sich die Knochen im Lagerraum langsam stapeln? Bau einen Zaun damit! Das ist eine gute Beschäftigungstherapie und sieht einfach megacool aus. Achja, Zombies kannst du auf die Art auch von deinem Rasen fernhalten.' =>
+	'Was tun, wenn sich die Knochen im Lagerraum langsam stapeln? Bau einen Zaun damit! Das ist eine gute Beschäftigungstherapie und sieht einfach megacool aus. Achja, Zombies kannst du auf die Art auch von deinem Rasen fernhalten.',
+  'Der Kürbis saugt die Chemikalie auf und verliert etwas an Farbe... jetzt kannst du ihn nur noch als Zierkürbis verwenden.' =>
+	'Der Kürbis saugt die Chemikalie auf und verliert etwas an Farbe... jetzt kannst du ihn nur noch als Zierkürbis verwenden.',
+  'die Umwelt' =>
+	'die Umwelt',
+  'Diese Zombieapokalypse ist schlecht für :subject. Die beste Art gegen sowas zu protestieren, ist sich einen dämlichen Spruch auf die Titten zu schreiben und damit in der Öffentlichkeit herumzurennen! ... naja, zumindest die Aufmerksamkeit deiner Mitspieler hast du damit...' =>
+	'Diese Zombieapokalypse ist schlecht für :subject. Die beste Art gegen sowas zu protestieren, ist sich einen dämlichen Spruch auf die Titten zu schreiben und damit in der Öffentlichkeit herumzurennen! ... naja, zumindest die Aufmerksamkeit deiner Mitspieler hast du damit...',
   'Na, das war ja einfach. Du konntest diese schlappen Zombies einfach umrennen.' =>
 	'Na, das war ja einfach. Du konntest diese schlappen Zombies einfach umrennen.',
   'Anzeige der Heldentaten' =>
@@ -4909,18 +4920,50 @@ Lo que suceda.... depende de ti descubrirlo. ',
 	'Du kannst derzeit keine Heldentaten einsetzen.',
   'Ladevorgang' =>
 	'Ladevorgang',
-  'Dein Rabe hat :location besucht und dort auch etwas gefunden, konnte es jedoch nicht hierher tragen...' =>
-	'Dein Rabe hat :location besucht und dort auch etwas gefunden, konnte es jedoch nicht hierher tragen...',
-  'Du gießt etwas von der Chemikalie in den Münzschlitz... doch nichts geschieht' =>
-	'Du gießt etwas von der Chemikalie in den Münzschlitz... doch nichts geschieht',
-  'Was tun, wenn sich die Knochen im Lagerraum langsam stapeln? Bau einen Zaun damit! Das ist eine gute Beschäftigungstherapie und sieht einfach megacool aus. Achja, Zombies kannst du auf die Art auch von deinem Rasen fernhalten.' =>
-	'Was tun, wenn sich die Knochen im Lagerraum langsam stapeln? Bau einen Zaun damit! Das ist eine gute Beschäftigungstherapie und sieht einfach megacool aus. Achja, Zombies kannst du auf die Art auch von deinem Rasen fernhalten.',
-  'Der Kürbis saugt die Chemikalie auf und verliert etwas an Farbe... jetzt kannst du ihn nur noch als Zierkürbis verwenden.' =>
-	'Der Kürbis saugt die Chemikalie auf und verliert etwas an Farbe... jetzt kannst du ihn nur noch als Zierkürbis verwenden.',
-  'die Umwelt' =>
-	'die Umwelt',
-  'Diese Zombieapokalypse ist schlecht für :subject. Die beste Art gegen sowas zu protestieren, ist sich einen dämlichen Spruch auf die Titten zu schreiben und damit in der Öffentlichkeit herumzurennen! ... naja, zumindest die Aufmerksamkeit deiner Mitspieler hast du damit...' =>
-	'Diese Zombieapokalypse ist schlecht für :subject. Die beste Art gegen sowas zu protestieren, ist sich einen dämlichen Spruch auf die Titten zu schreiben und damit in der Öffentlichkeit herumzurennen! ... naja, zumindest die Aufmerksamkeit deiner Mitspieler hast du damit...',
   'Pflichtbewusst hälst du deine Sprechstunde ab... aber keiner kommt. Kann es sein, das hier niemand krank ist?' =>
 	'Pflichtbewusst hälst du deine Sprechstunde ab... aber keiner kommt. Kann es sein, das hier niemand krank ist?',
+  'Dein Rabe hat :location besucht und dort auch etwas gefunden, konnte es jedoch nicht hierher tragen...' =>
+	'Dein Rabe hat :location besucht und dort auch etwas gefunden, konnte es jedoch nicht hierher tragen...',
+  'Augen zu und durch! Du schluckst die Pille herunter. Was danach passiert, weißt du nicht mehr - aber dein ganzer Rucksack ist plötzlich leer! Wär hätte denn ahnen können dass diese  Pille Blackouts verursachen kann ...' =>
+	'Augen zu und durch! Du schluckst die Pille herunter. Was danach passiert, weißt du nicht mehr - aber dein ganzer Rucksack ist plötzlich leer! Wär hätte denn ahnen können dass diese  Pille Blackouts verursachen kann ...',
+  'Hurra, du hast deinen Hunger (ein bisschen) bekämpft und sogar noch etwas neue Energie erhalten. In der Schachtel ist nur noch eine Pille. Setze sie mit Bedacht ein!' =>
+	'Hurra, du hast deinen Hunger (ein bisschen) bekämpft und sogar noch etwas neue Energie erhalten. In der Schachtel ist nur noch eine Pille. Setze sie mit Bedacht ein!',
+  'Augen zu und durch! Eigentlich sieht sie sehr gesund aus, daher schluckst du die Pille herunter. Tja, und wenn du das überlebt hättest, hättest du wohl gelernt dass das Aussehen auch täuschen kann.' =>
+	'Augen zu und durch! Eigentlich sieht sie sehr gesund aus, daher schluckst du die Pille herunter. Tja, und wenn du das überlebt hättest, hättest du wohl gelernt dass das Aussehen auch täuschen kann.',
+  'süße Kätzchen' =>
+	'süße Kätzchen',
+  'Oh geil! Anscheinend protestiert :p mal wieder für oder gegen irgendwas. Im Prinzip ist das auch egal, solange sie dabei das T-Shirt nicht wieder anzieht...' =>
+	'Oh geil! Anscheinend protestiert :p mal wieder für oder gegen irgendwas. Im Prinzip ist das auch egal, solange sie dabei das T-Shirt nicht wieder anzieht...',
+  'deine Frisur' =>
+	'deine Frisur',
+  'Es ist immer gut, mit den Patienten zu sprechen. Das macht deren Krankheit direkt weniger schlimm.' =>
+	'Es ist immer gut, mit den Patienten zu sprechen. Das macht deren Krankheit direkt weniger schlimm.',
+  'Ranking-Punkte' =>
+	'Ranking-Punkte',
+  'Spielstart' =>
+	'Spielstart',
+  'Spielende' =>
+	'Spielende',
+  'Lebenszeit' =>
+	'Lebenszeit',
+  'Sonstige Spieler' =>
+	'Sonstige Spieler',
+  'Unter diesem Punkt werden alle Spieler zusammengefasst, die in dieser Partie zwar dabei waren, jedoch durch einen frühen Tod keine Seelenpunkte erhalten haben und damit auf dieser Ergebnisseite nicht namentlich genannt werden.' =>
+	'Unter diesem Punkt werden alle Spieler zusammengefasst, die in dieser Partie zwar dabei waren, jedoch durch einen frühen Tod keine Seelenpunkte erhalten haben und damit auf dieser Ergebnisseite nicht namentlich genannt werden.',
+  'Punkte-Anteil' =>
+	'Punkte-Anteil',
+  'Dieser Balken zeigt an, wie sehr dieser Spieler zur Gesamtpunktzahl des Spiels beigetragen hat.' =>
+	'Dieser Balken zeigt an, wie sehr dieser Spieler zur Gesamtpunktzahl des Spiels beigetragen hat.',
+  ':name hat :prc der Punkte zu diesem Spiel beigesteuert.' =>
+	':name hat :prc der Punkte zu diesem Spiel beigesteuert.',
+  'Dieser Balken zeigt an, wie sehr die nicht namentlich aufgeführten Spieler zur Gesamtpunktzahl des Spiels beigetragen haben.' =>
+	'Dieser Balken zeigt an, wie sehr die nicht namentlich aufgeführten Spieler zur Gesamtpunktzahl des Spiels beigetragen haben.',
+  'Sonstige Spieler haben :prc der Punkte zu diesem Spiel beigesteuert.' =>
+	'Sonstige Spieler haben :prc der Punkte zu diesem Spiel beigesteuert.',
+  'Profil' =>
+	'Profil',
+  'G:i \\U\\h\\r \\a\\m d.m.y' =>
+	'G:i \\U\\h\\r \\a\\m d.m.y',
+  'Überlebte Zeit' =>
+	'Überlebte Zeit',
 );

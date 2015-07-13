@@ -258,7 +258,6 @@ class Controller_Ranking extends Controller {
     }
 
     public function action_global() {
-
         $known_achievements = DB::select('aid',[DB::expr('SUM(value)'),'value'])->from('achievements')->group_by('aid')->where('value','>',0)->execute()->as_array('aid','value');
         $achievements = [];
         foreach ((new ReflectionClass('Model_Achievement'))->getConstants() as $aid)
@@ -273,11 +272,111 @@ class Controller_Ranking extends Controller {
 
         usort($achievements, function($a,$b) {return ($a['points'] == $b['points'] ? -strcmp($a['name'], $b['name']) : $b['points'] - $a['points']);});
 
+        $preset = $this->request->param('id', 0);
+        if (!Model_Achievement::is_valid($preset))
+            $preset = 0;
+
         $this->add_widget(View::factory('pages/ranking_global')
             ->set('achievements', $achievements)
+            ->set('preset', $preset)
             ->render()
         );
         $this->render();
+    }
+
+    public function action_game() {
+        $data = explode('/', $this->request->param('id', ''));
+
+        if (count($data) < 2) $data = [-1,-1];
+        list($season, $gameid) = $data;
+
+        $season = (int)$season;
+        $gameid = (int)$gameid;
+
+        if ($season < 0 || $season > (int)Kohana::$config->load('server.season') || $gameid <= 0)
+            return $this->not_found();
+
+        $entries = DB::select()->from('ranking')->where('gameid','=',$gameid)->where('season','=',$season)->execute()->as_array();
+        if (!count($entries))
+            return $this->not_found();
+
+        foreach ($entries as $entry)
+            if ($entry['board'] !== $entries[0]['board'])
+                return $this->not_found();
+
+        $multiplayer = in_array((int)$entries[0]['board'], Tool_Gamemodes::get_multiplayer_modes());
+        if (!$multiplayer && count($entries) > 1)
+            return $this->not_found();
+
+        // Get multiplayer data
+        if ($multiplayer) {
+            $mp_entry = DB::select()->from('ranking_mp')->where('gameid','=',$gameid)->where('season','=',$season)->execute()->as_array();
+            if (count($mp_entry) != 1) return $this->not_found();
+            else $mp_entry = $mp_entry[0];
+
+            if ($mp_entry['board'] !== $entries[0]['board']) return $this->not_found();
+        } else $mp_entry = null;
+
+
+        $game_start = PHP_INT_MAX;
+        $game_end = 0;
+
+
+        // Get user data
+        $achievement_db = [];
+        $users = [];
+        foreach ($entries as $entry) {
+            $game_start = min($game_start, (int)$entry['start']);
+            $game_end = max($game_end, (int)$entry['end']);
+
+            $user = [
+                'id' => (int)$entry['uid'],
+                'name' => Model_User::name_by_id((int)$entry['uid']),
+                'score_sp' => (int)$entry['points'],
+                'score_ap' => 0,
+                'ticks' => (int)$entry['ticks'],
+                'achievements' => DB::select('aid','value')->from('achievements')->where('gameid','=',$gameid)->where('season','=',$season)->where('uid','=', (int)$entry['uid'])->execute()->as_array()
+            ];
+
+            $user['achievements'] = array_map(function($e) {
+                return [
+                    'name' => Model_Achievement::decode_aid($e['aid']),
+                    'points' => Model_Achievement::points_aid($e['aid']),
+                    'class' => Model_Achievement::class_aid($e['aid']),
+                    'count' => (int)$e['value'],
+                    'icon' => "{$e['aid']}.gif",
+                    'id' => (int)$e['aid']
+                ];
+            }, $user['achievements']);
+
+            foreach ($user['achievements'] as $uae) {
+                $user['score_ap'] += $uae['points'] * $uae['count'];
+                $achievement_db["a{$uae['id']}"] = $uae;
+            }
+
+
+            usort($user['achievements'], function($a,$b) {return $b['points'] - $a['points'];});
+
+            $users[] = $user;
+        }
+
+        usort($users, function($a, $b) {return $b['ticks'] - $a['ticks'];});
+
+        $this->add_widget(View::factory('pages/ranking_game')
+            ->set('season', $season)
+            ->set('mode', Tool_Gamemodes::get_board_by_id((int)$entries[0]['board']))
+            ->set('multiplayer', $multiplayer)
+            ->set('score_sp', $multiplayer ? (int)$mp_entry['points'] : $users[0]['score_sp'])
+            ->set('score_ap', $multiplayer ? 0 : $users[0]['score_ap'])
+            ->set('from', $game_start)
+            ->set('to', $game_end)
+            ->set('ticks', $multiplayer ? 0 : $users[0]['ticks'])
+            ->set('name', $multiplayer ? $mp_entry['name'] : null)
+            ->set('players', $users)
+            ->set('achievement_db', array_values($achievement_db))
+            ->render()
+        );
+        return $this->render();
     }
 
     public function action_soul() {
@@ -286,13 +385,8 @@ class Controller_Ranking extends Controller {
 
         // Search user
         $uid = $this->request->param('id', $user->uid());
-        if (!($name = Model_Euser::name_by_id($uid))) {
-            $this->add_widget(View::factory('pages/notfound')
-                ->set('uri', "ranking/soul/$uid")
-                ->render()
-            );
-            return $this->render();
-        }
+        if (!($name = Model_Euser::name_by_id($uid)))
+            return $this->not_found();
 
         // Get achievements
         $achievements = DB::select('aid', array(DB::expr('SUM(`value`)'), 'value'))->from('achievements')->where('uid', '=', $uid)->group_by('aid')->execute()->as_array();
@@ -338,6 +432,6 @@ class Controller_Ranking extends Controller {
 
             ->render()
         );
-        $this->render();
+        return $this->render();
     }
 }

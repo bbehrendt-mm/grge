@@ -48,7 +48,10 @@
 .row-table {
   &.padded {margin: 5px;}
   &.row-table-borders {border: 2px solid @zv-color-main-dark; border-radius: 2px;}
-  &.row-table-striped > .row:nth-child(odd) {background: darken(@zv-color-bg, 5%)}
-  &.row-table-interact > .row:hover, .row-table.row-table-interact > .row.selected {background: darken(@zv-color-bg, 10%);}
+  &.row-table-striped > .row:nth-child(odd):not(.marked) {background: darken(@zv-color-bg, 5%)}
+  &.row-table-interact > .row:hover:not(.marked), .row-table.row-table-interact > .row.selected:not(.marked) {background: darken(@zv-color-bg, 10%);}
   > .row:first-child {background: @zv-color-main-dark !important; color: white; font-weight: bold;}
+  > .row.marked {background: mix(@zv-color-main-dark, @zv-color-bg, 30%)}
+  &.row-table-striped > .row:nth-child(odd).marked {background: mix(@zv-color-main-dark, darken(@zv-color-bg, 5%), 30%)}
+  &.row-table-interact > .row:hover.marked, .row-table.row-table-interact > .row.selected:not(.marked) {background: mix(@zv-color-main-dark, darken(@zv-color-bg, 10%), 30%)}
 }

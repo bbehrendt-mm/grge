@@ -114,6 +114,7 @@
 
             $.each(data.ranking, function (p, elem) {
                 var entry = $('<div class="row pointer"></div>');
+                if (elem.mark) entry.addClass('marked');
 
                 var icon = null;
                 if (p == 1)         icon = '<img src="media/icons/superstar.gif" alt="rk-winner">';

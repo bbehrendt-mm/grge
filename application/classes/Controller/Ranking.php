@@ -45,6 +45,9 @@ class Controller_Ranking extends Controller {
 
     private function convert_data($lists, $is_mp = false) {
         return $is_mp ? array_map(function($element) {
+            /** @global Model_Euser $user */
+            global $user;
+
             $tmp = [
                 'season'    => $element[0]['season'],
                 'id'        => $element[0]['gameid'],
@@ -58,17 +61,24 @@ class Controller_Ranking extends Controller {
             ];
 
             if ($element[0]['uid'])
-                foreach ($element as $sub)
+                foreach ($element as $sub) {
+                    if ($sub['uid'] == $user->uid())
+                        $tmp['mark'] = true;
+
                     $tmp['players'][(int)$sub['uid']] = [
-                        'name'  => $sub['player'],
-                        'id'    => $sub['uid'],
-                        'job'   => __(Tool_Modes::get_job_by_id($sub['job'])),
-                        'life'  => Tool_Numerics::duration_to_string($sub['pticks']),
+                        'name' => $sub['player'],
+                        'id' => $sub['uid'],
+                        'job' => __(Tool_Modes::get_job_by_id($sub['job'])),
+                        'life' => Tool_Numerics::duration_to_string($sub['pticks']),
                         'score' => $sub['ppoints']
                     ];
+                }
 
             return $tmp;
         }, $lists) : array_map(function($element) {
+            /** @global Model_Euser $user */
+            global $user;
+
             return [
                 'season'    => $element['season'],
                 'id'        => $element['gameid'],
@@ -78,6 +88,7 @@ class Controller_Ranking extends Controller {
                 'name'      => false,
                 'duration'  => Tool_Numerics::duration_to_string($element['ticks']),
                 'mode'      => __(Tool_Modes::get_mode_by_id($element['board'])),
+                'mark'      => $element['uid'] == $user->uid(),
                 'players'   => [[
                     'name'  => isset($element['name']) ? $element['name'] : Model_Euser::name_by_id($element['uid']),
                     'id'    => $element['uid'],
@@ -201,9 +212,13 @@ class Controller_Ranking extends Controller {
     }
 
     public function japi_achievements() {
+        /** @global Model_Euser $user */
+        global $user;
+
         $aid = (int)$this->request->current()->post('aid');
         $offset = $this->request->current()->post('offset');
         $length = $this->request->current()->post('length');
+
 
         $lists_raw = DB::select('achievements.uid','achievements.aid','users.name',[DB::expr('SUM(value)'),'value'])->from([DB::select('*')->from('achievements')->where('aid',($aid > 0) ? '=' : '>', max(0,$aid)),'achievements'])->group_by('achievements.uid')->group_by('achievements.aid')->join('users','INNER')->on('achievements.uid','=','users.uid')->where('value','>',0)->execute()->as_array();
         $lists = [];
@@ -217,9 +232,18 @@ class Controller_Ranking extends Controller {
         $num_entries = count($lists);
         usort($lists, function($a,$b) {return $b['value'] - $a['value'];});
 
+        $user_pos = [];
+        foreach ($lists as $k => $entry)
+            if ($entry['uid'] == $user->uid()) {
+                $lists[$k]['mark'] = true;
+                $user_pos = $entry;
+                $user_pos['pos'] = $k+1;
+            }
+
         array_unshift($lists, true);
         $this->render([
             'games' => $num_entries,
+            'user' => $user_pos,
             'ranking' => array_map(function($v) {
                 unset($v['aid']);
                 return $v;
@@ -228,15 +252,28 @@ class Controller_Ranking extends Controller {
     }
 
     public function japi_soulpoints() {
+        /** @global Model_Euser $user */
+        global $user;
+
         $offset = $this->request->current()->post('offset');
         $length = $this->request->current()->post('length');
 
         $lists = DB::select('ranking.uid','users.name',[DB::expr('SUM(points)'),'points'])->from('ranking')->group_by('ranking.uid')->join('users','INNER')->on('ranking.uid','=','users.uid')->where('points','>',0)->order_by('points','DESC')->execute()->as_array();
         $num_entries = count($lists);
 
+        $user_pos = [];
+        foreach ($lists as $k => $entry)
+            if ($entry['uid'] == $user->uid()) {
+                $lists[$k]['mark'] = true;
+                $user_pos = $entry;
+                $user_pos['pos'] = $k+1;
+                break;
+            }
+
         array_unshift($lists, true);
         $this->render([
             'games' => $num_entries,
+            'user' => $user_pos,
             'ranking' => array_slice($lists, 1 + $offset, $length, true)
         ]);
     }

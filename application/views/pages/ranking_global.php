@@ -86,14 +86,25 @@
 
             } else $('<span><?=__('Es wurden keine Spiele im Ranking gefunden, die deinen Suchkriterien entsprechen.')?></span>').appendTo('#ranking_target');
 
+            if (data.user) {
+                if (data.user.pos < offset) {
+                    var entry = $('<div class="row marked"></div>');
+
+                    $('<div class="cell padded rw-2"></div>').html(get_icon(data.user.pos)).appendTo(entry);
+                    $('<div class="cell padded rw-1"></div>').text(data.user.pos).appendTo(entry);
+                    $('<div class="cell padded rw-6"></div>').appendTo(entry).append($('<span class="inline-player"></span>').text(data.user.name));
+                    $('<div class="cell padded rw-3"></div>').text(data.user.value).appendTo(entry);
+
+                    entry.appendTo(table);
+                    $('<div class="row"><div class="cell padded rw-12 center" />...</div>').appendTo(table);
+                }
+            }
+
             $.each(data.ranking, function (p, elem) {
                 var entry = $('<div class="row"></div>');
+                var icon = get_icon(p);
 
-                var icon = null;
-                if (p == 1)         icon = '<img src="media/icons/superstar.gif" alt="rk-winner">';
-                else if (p <= 3)    icon = '<img src="media/icons/silverstar.gif" alt="rk-silver">';
-                else if (p <= 10)   icon = '<img src="media/icons/star.gif" alt="rk-topten">';
-                else                icon = '<i class="fa fa-star-o"></i>';
+                if (elem.mark) entry.addClass('marked');
 
                 $('<div class="cell padded rw-2"></div>').html(icon).appendTo(entry);
                 $('<div class="cell padded rw-1"></div>').text(p).appendTo(entry);
@@ -102,6 +113,20 @@
 
                 entry.appendTo(table);
             });
+
+            if (data.user) {
+                if (data.user.pos > (offset + 20)) {
+                    var entry2 = $('<div class="row marked"></div>');
+
+                    $('<div class="cell padded rw-2"></div>').html(get_icon(data.user.pos)).appendTo(entry2);
+                    $('<div class="cell padded rw-1"></div>').text(data.user.pos).appendTo(entry2);
+                    $('<div class="cell padded rw-6"></div>').appendTo(entry2).append($('<span class="inline-player"></span>').text(data.user.name));
+                    $('<div class="cell padded rw-3"></div>').text(data.user.value).appendTo(entry2);
+
+                    $('<div class="row"><div class="cell padded rw-12 center" />...</div>').appendTo(table);
+                    entry2.appendTo(table);
+                }
+            }
 
             var max_offset = Math.floor(data.games / 20) * 20;
             var current_page = Math.floor(offset / 20);
@@ -130,6 +155,13 @@
         });
     };
 
+    var get_icon = function(p) {
+        if (p == 1)         return '<img src="media/icons/superstar.gif" alt="rk-winner">';
+        else if (p <= 3)    return '<img src="media/icons/silverstar.gif" alt="rk-silver">';
+        else if (p <= 10)   return '<img src="media/icons/star.gif" alt="rk-topten">';
+        else                return '<i class="fa fa-star-o"></i>';
+    };
+
     var load_soulpoint_ranking = function(offset) {
         $('#ranking_target').html('<i class="fa fa-circle-o-notch fa-spin"></i>');
         var content = $('#content');
@@ -146,14 +178,25 @@
 
             } else $('<span><?=__('Es wurden keine Spiele im Ranking gefunden, die deinen Suchkriterien entsprechen.')?></span>').appendTo('#ranking_target');
 
+            if (data.user) {
+                if (data.user.pos < offset) {
+                    var entry = $('<div class="row marked"></div>');
+
+                    $('<div class="cell padded rw-2"></div>').html(get_icon(data.user.pos)).appendTo(entry);
+                    $('<div class="cell padded rw-1"></div>').text(data.user.pos).appendTo(entry);
+                    $('<div class="cell padded rw-6"></div>').appendTo(entry).append($('<span class="inline-player"></span>').text(data.user.name));
+                    $('<div class="cell padded rw-3"></div>').text(data.user.points).appendTo(entry);
+
+                    entry.appendTo(table);
+                    $('<div class="row"><div class="cell padded rw-12 center" />...</div>').appendTo(table);
+                }
+            }
+
             $.each(data.ranking, function (p, elem) {
                 var entry = $('<div class="row"></div>');
+                var icon = get_icon(p);
 
-                var icon = null;
-                if (p == 1)         icon = '<img src="media/icons/superstar.gif" alt="rk-winner">';
-                else if (p <= 3)    icon = '<img src="media/icons/silverstar.gif" alt="rk-silver">';
-                else if (p <= 10)   icon = '<img src="media/icons/star.gif" alt="rk-topten">';
-                else                icon = '<i class="fa fa-star-o"></i>';
+                if (elem.mark) entry.addClass('marked');
 
                 $('<div class="cell padded rw-2"></div>').html(icon).appendTo(entry);
                 $('<div class="cell padded rw-1"></div>').text(p).appendTo(entry);
@@ -162,6 +205,20 @@
 
                 entry.appendTo(table);
             });
+
+            if (data.user) {
+                if (data.user.pos > (offset + 20)) {
+                    var entry2 = $('<div class="row marked"></div>');
+
+                    $('<div class="cell padded rw-2"></div>').html(get_icon(data.user.pos)).appendTo(entry2);
+                    $('<div class="cell padded rw-1"></div>').text(data.user.pos).appendTo(entry2);
+                    $('<div class="cell padded rw-6"></div>').appendTo(entry2).append($('<span class="inline-player"></span>').text(data.user.name));
+                    $('<div class="cell padded rw-3"></div>').text(data.user.points).appendTo(entry2);
+
+                    $('<div class="row"><div class="cell padded rw-12 center" />...</div>').appendTo(table);
+                    entry2.appendTo(table);
+                }
+            }
 
             var max_offset = Math.floor(data.games / 20) * 20;
             var current_page = Math.floor(offset / 20);

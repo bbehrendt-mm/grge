@@ -4947,7 +4947,7 @@ return array (
   'Profil' =>
 	'Profile',
   'G:i \\U\\h\\r \\a\\m d.m.y' =>
-	'G:i \\U\\h\\r \\a\\m d.m.y',
+	'h:i A, d/m/y',
   'Überlebte Zeit' =>
-	'Überlebte Zeit',
+	'Survived for',
 );

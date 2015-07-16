@@ -342,8 +342,8 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 			{
 				/** @var $items Model_Items_Abstract_Escape[] */
                 $c -= $items[0]->escape();
-				if (!isset($item_list[$items[0]->icon()])) $item_list[$items[0]->icon()] = 1;
-				else $item_list[$items[0]->icon()]++;
+				if (!isset($item_list[$items[0]->name()])) $item_list[$items[0]->name()] = 1;
+				else $item_list[$items[0]->name()]++;
 				$items[0]->consume();
 			}
 
@@ -357,7 +357,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 				
 				$item_accum = Array();
 				if (count($item_list) > 0)
-					foreach ($item_list as $icon => $count) $item_accum[] = '<span class="value"><img src="' . $icon . '" alt="?" />{$count}</span>';
+					foreach ($item_list as $name => $count) $item_accum[] = __($name) . " ({$count})";
 
                 $player->log()->add(new Model_Log_Types_Text('Erfolgreiche Flucht!', 'Du bist entkommen!', 'Schreiend und mit geschlossenen Augen rennst du auf die Zombies zu. Die sind von dieser Aktion so überrascht, dass du die meisten von ihnen einfach aus dem Weg stoßen kannst. ' . ((empty($item_accum)) ? '' : ('<br /><br />Die Zombies, die du nicht einfach wegstoßen kannst lenkst du durch den geschickten Einsatz folgender Gegenstände ab:<br />:items<br /><br />')) . 'Als du deine Augen wieder öffnest, stellst du fest, dass keine Zombies mehr in deiner Nähe sind.', array(':items' => implode(', ', $item_accum))));
 				

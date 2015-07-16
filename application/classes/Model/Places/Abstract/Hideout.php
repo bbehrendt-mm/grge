@@ -56,7 +56,7 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
 
         //Check for zombie attack
         if (($this->get_defense() < 1) && ($battle_log = Tool_Scripts::battle($this->zombie_factory->spawn_zombies(), Tool_Scripts::at_location($this->uin), true, $battle, $zc))) {
-            $this->log->add(new Model_Log_Types_Battle(':zombiestr tauchen auf!', $battle_log, array(':zombiestr' => '<span class="value"><img src="media/icons/zombie.gif" />' . $zc . ' ' . __('Zombies') . '</span>')));
+            $this->log->add(new Model_Log_Types_Battle(':zombiestr tauchen auf!', $battle_log, array(':zombiestr' => $zc . ' ' . __('Zombies'))));
             return;
         }
 

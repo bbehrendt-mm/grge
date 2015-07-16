@@ -54,6 +54,7 @@ return array(
                 'Model_Items_Shield'	        =>		1,
                 'Model_Items_Helmet'            =>      1,
                 'Model_Items_Generic_Bike'      =>      1,
+                'Model_Items_Generic_Belt'      =>      1,
         ),
         'diy' => array(
                 'Model_Items_Generic_Wire'      =>      1,
@@ -82,6 +83,7 @@ return array(
                 'Model_Items_Flashlight'        =>      1,
                 'Model_Items_Generic_Bike'      =>      1,
                 'Model_Items_Tentkit'           =>      1,
+                'Model_Items_Generic_Belt'      =>      1,
         ),
         'hideout' => array(
                 'Model_Items_Generic_Bed'		=>		1,
@@ -114,6 +116,7 @@ return array(
                 'Model_Items_Phone'             =>      1,
                 'Model_Items_Flashlight'        =>      2,
                 'Model_Items_Tentkit'           =>      1,
+                'Model_Items_Generic_Belt'      =>      1,
         ),
         'water' => array(
                 'Model_Items_Generic_Water0'	=>		1,

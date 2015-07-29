@@ -18,7 +18,7 @@ class Model_Itemfactory extends Model {
             $list = Tool_System::instance_of($location, 'Model_Places_Abstract_Place') ? Tool_System::get_class_hierarchy($location) : [$location];
             foreach ($list as $l_entry)
                 foreach ($fallback as $f_entry)
-                    if ($tmp = Tool_System::simple_config("items_2/{$f_entry}/{$l_entry}"))
+                    if ($tmp = Tool_System::simple_config("items/{$f_entry}/{$l_entry}"))
                         return $tmp;
             return null;
         }
@@ -121,13 +121,15 @@ class Model_Itemfactory extends Model {
      * @param bool $apply_decay
      * @return null|Model_Items_Abstract_Item
      */
-    public function spawn($force = false, $apply_decay = true) {
-        if (!$this->equalized || (!$force && (mt_rand()/getrandmax()) > $this->fillrate))
+    public function spawn($force = false, $apply_decay = true, $chances_modifier = 1) {
+        if (!$this->equalized || (!$force && (mt_rand()/mt_getrandmax() > ($this->fillrate * $chances_modifier))))
             return null;
+
+
 
         $accum = 0;
         foreach ($this->equalized as $k => $c)
-            if ((mt_rand()/getrandmax()) < ($accum += $c)) {
+            if ((mt_rand()/mt_getrandmax()) < ($accum += $c)) {
                 if ($apply_decay) {
                     $this->fillrate -= $this->fillrate * $this->decay;
                     $this->equalized[$k] -= $this->equalized[$k] * $this->decay;
@@ -139,6 +141,9 @@ class Model_Itemfactory extends Model {
         return null;
     }
 
+    /**
+     * Forces the recalculation of the percentage table, so they add up to 100%.
+     */
     private function realign() {
         $accum = 0;
         foreach ($this->equalized as $c)
@@ -149,13 +154,32 @@ class Model_Itemfactory extends Model {
                 $this->equalized[$k] /= $accum;
     }
 
-    public function replenish($factor = 1) {
-        $this->fillrate += (1 - $this->fillrate) * $factor;
+    /**
+     * Replenishes the dryout. Set factor to 1 to completely reset dryout.
+     * @param float $factor Set to 1 for full replenishment, 0 for no effect.
+     * @return $this
+     */
+    public function replenish($factor = 1.0) {
+        $this->fillrate += (1 - $this->fillrate) * max(0,min(1,$factor));
         return $this;
     }
 
+    /**
+     * Returns the percentage table
+     * @return array
+     */
     public function get() {
         return $this->equalized;
+    }
+
+    /**
+     * Modifies the default dryout factor.
+     * @param float $modifier Modification factor
+     * @return $this
+     */
+    public function modify_decay($modifier) {
+        $this->decay = max(0,min(1,1 - (1 - $this->decay)/$modifier));
+        return $this;
     }
 
     public function findings_left() {

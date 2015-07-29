@@ -144,8 +144,8 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 
 		$this->log = new Model_Log_Log();
 		$this->zombie_factory = new Model_Factory_Zombies(get_called_class(), $game->config('game.config.spawn'));
-		
-		$this->item_factory = new Model_Factory_Items(get_called_class(), $game->config('places.dryout_factor'), $game->config('game.config.itemset'));
+
+        $this->item_factory = Model_Itemfactory::read(get_called_class(), $game->config('game.config.itemset'))->modify_decay($game->config('places.dryout_factor'));
 		
 		if (static::$namelist) {
             $list = array();
@@ -313,7 +313,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 
 
 		if (!$return && ($player->buff_retr('fragile') || $player->buff_retr('passout'))) return true;
-		$item = $this->item_factory->spawn($force, 1, Tool_Scripts::calculate_find_chances($player->id()));
+		$item = $this->item_factory->spawn($force, true, Tool_Scripts::calculate_find_chances($player->id()));
         if ($item && !$return) {
             Tool_Scripts::place_new_item($item);
             return true;

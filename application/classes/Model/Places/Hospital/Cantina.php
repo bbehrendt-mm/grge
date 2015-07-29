@@ -9,8 +9,8 @@ class Model_Places_Hospital_Cantina extends Model_Places_Abstract_Place {
 
     public function uin($new = null) {
         if ($new !== null) {
-            $this->inventory->add(new Model_Items_Vending('vdrinks', 'Cholera Cola'));
-            $this->inventory->add(new Model_Items_Vending('vfood', 'OmNomNutria'));
+            $this->inventory->add(new Model_Items_Vending('gp_vdrinks', 'Cholera Cola'));
+            $this->inventory->add(new Model_Items_Vending('gp_vfood', 'OmNomNutria'));
         }
         return parent::uin($new);
     }

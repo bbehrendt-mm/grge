@@ -9,7 +9,6 @@ abstract class Model_Places_Abstract_Xmas extends Model_Places_Abstract_Place {
         if ($uin === NULL) return parent::uin();
         else $t = parent::uin($uin);
 
-        $this->item_factory->updateConfigBase('xmas');
         $this->zombie_factory->updateConfigBase('xmas');
         return $t;
     }

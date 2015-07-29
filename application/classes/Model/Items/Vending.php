@@ -19,11 +19,12 @@ class Model_Items_Vending extends Model_Items_Abstract_Item {
 	protected static $weight = 120;
 
 	public function __construct($basecfg, $name) {
-		global $game;
+		/** @global Model_Game $game */
+        global $game;
         $this->basetype = $basecfg;
 		$this->basename = $name;
-		
-		$this->factory = new Model_Factory_Items($basecfg, 1, $game->config('game.config.itemset'));
+
+        $this->factory = Model_Itemfactory::read($basecfg, $game->config('game.config.itemset'))->set_decay_factor(0);
 		parent::__construct();
 	}
 	

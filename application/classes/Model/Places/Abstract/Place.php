@@ -40,6 +40,10 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 		return static::$widget_list;
 	}
 
+    public static function get_namelist() {
+        return (static::$namelist) ? static::$namelist : [static::$name];
+    }
+
     public static function getCustomStyle() {
         return static::$custom_style;
     }

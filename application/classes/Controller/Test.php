@@ -16,7 +16,59 @@ class Controller_Test extends Controller {
     }
 
     public function action_rq() {
-        $this->dump($this->session->get('request',[]));
+        $this->dump('user_request', $this->session->get('request',[]));
+    }
+
+    public function action_ispawn() {
+        $path = APPPATH . 'classes/Model/Places';
+        $list = [];
+
+        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
+        foreach($files as $name => $file) {
+            $filename = $file->getFilename();
+            if ($filename[0] == '.') continue;
+            if (substr($filename, -4) !== '.php') continue;
+
+            $filepath = str_replace('\\', '/', $file->getPathName());
+            $filepath = str_replace(str_replace('\\', '/', $path), '', $filepath);
+
+            /** @var Model_Places_Abstract_Place $classpath */
+            $classpath = 'Model_Places' . substr(str_replace('/', '_', $filepath), 0, -4);
+
+            $reflection = new ReflectionClass($classpath);
+            if (!$reflection->isInstantiable()) continue;
+
+            /** @var Model_Places_Abstract_Place $classpath */
+            if (!Tool_System::instance_of($classpath, 'Model_Places_Abstract_Place')) continue;
+
+            echo "<h2>" . implode(' / ',$classpath::get_namelist()) . "</h2>";
+            $spawn = Model_Itemfactory::read($classpath);
+
+            echo "<table cellpadding='4px'>";
+            if ($spawn) {
+                $a = 0;
+                $rem = $spawn->findings_left();
+
+                $list = $spawn->get();
+                arsort($list);
+                /** @var Model_Items_Abstract_Item $item */
+                foreach ($list as $item => $chance) {
+                    $a += $chance;
+                    $dchance = round($chance * 100, 2);
+                    $item = $item::static_name() ? $item::static_name() : "[[$item]]";
+                    echo "<tr><td>$item</td><td>$dchance %</td><td>" . round($rem * $chance, ($rem * $chance > 1) ? 0 : 2) . "</td></tr>";
+                }
+                if (!$a)
+                    echo "<tr><td><b>Empty!</b></td><td></td></tr>";
+                else {
+                    $a = round($a * 100, 10);
+                    echo "<tr><td><b>--- SUM ---</b></td><td>$a %</td><td></td></tr>";
+                    echo "<tr><td><b>Erw. Funde</b></td><td>$rem</td><td></td></tr>";
+                }
+            }
+            else echo "<b>No data!</b>";
+            echo "</table>";
+        }
     }
 
     public function action_labyrinth() {

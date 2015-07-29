@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Places_Abstract_Xmas extends Model_Places_Abstract_Place {
+abstract class Model_Places_Abstract_Xmas extends Model_Places_Abstract_Place {
 
     protected static $outside = true;
     protected static $perpetualDaytime = 'snowynight';

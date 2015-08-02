@@ -4950,4 +4950,48 @@ return array (
 	'G:i \\U\\h\\r \\a\\m d.m.y',
   'Überlebte Zeit' =>
 	'Überlebte Zeit',
+  'Pfadfinder-Frischling' =>
+	'Pfadfinder-Frischling',
+  'In deiner kurzen Zeit bei den Pfadfindern hast du zumindest deine Gehtechnik perfektionieren können. Du benötigst nun geringfügig weniger Energie, um an neue Orte zu gelangen.' =>
+	'In deiner kurzen Zeit bei den Pfadfindern hast du zumindest deine Gehtechnik perfektionieren können. Du benötigst nun geringfügig weniger Energie, um an neue Orte zu gelangen.',
+  'Als Pfadfinder kannst du natürlich problemlos einen Pfad finden, der an der Zombieblockade vorbei führt. Nun aber schell weg hier!' =>
+	'Als Pfadfinder kannst du natürlich problemlos einen Pfad finden, der an der Zombieblockade vorbei führt. Nun aber schell weg hier!',
+  'Du wirfst die Tablette ins Wasser - es sprudelt ein wenig, aber so wirklich sauber ist das Wasser nicht geworden. Eventuell solltest du eine zweite Tablette reinwerfen...' =>
+	'Du wirfst die Tablette ins Wasser - es sprudelt ein wenig, aber so wirklich sauber ist das Wasser nicht geworden. Eventuell solltest du eine zweite Tablette reinwerfen...',
+  'Du wirfst die Tablette ins Wasser - es dauert eine Weile, bis sie in dem zähflüssigen Inhalt deiner Flasche versinkt. Um die Tablette herum löst sich der Schleim etwas auf, der größte Teil des Wassers in der Flasche zeigt sich jedoch von deinen Reinigungsversuchen unbeeindruckt.' =>
+	'Du wirfst die Tablette ins Wasser - es dauert eine Weile, bis sie in dem zähflüssigen Inhalt deiner Flasche versinkt. Um die Tablette herum löst sich der Schleim etwas auf, der größte Teil des Wassers in der Flasche zeigt sich jedoch von deinen Reinigungsversuchen unbeeindruckt.',
+  'Das war einfacher als du dachtest - dein Fahrrad ist nun wieder einsatzbereit!' =>
+	'Das war einfacher als du dachtest - dein Fahrrad ist nun wieder einsatzbereit!',
+  'Du fühlst sich wie eine Art makabrer Modedesigner! Ein paar Sticke mit der Nadel, schon ist dieser hässliche Riss fast nicht mehr zu sehen.' =>
+	'Du fühlst sich wie eine Art makabrer Modedesigner! Ein paar Sticke mit der Nadel, schon ist dieser hässliche Riss fast nicht mehr zu sehen.',
+  'Das kannst du momentan nicht tun!' =>
+	'Das kannst du momentan nicht tun!',
+  'Du hast ein paar zusätzliche Details in deine Karte aufgenommen.' =>
+	'Du hast ein paar zusätzliche Details in deine Karte aufgenommen.',
+  'Wow! Du hast diesen Ort bis ins kleinste Detail ausgekundschaftet und jedes einzelne Staubkorn in deine Karte gezeichnet.' =>
+	'Wow! Du hast diesen Ort bis ins kleinste Detail ausgekundschaftet und jedes einzelne Staubkorn in deine Karte gezeichnet.',
+  'Statt darauf zu warten dass Gott dich für deine vielen Sünden bestrafst, kannst du das auch einfach selbst tun. Dieses hochspirituelle Erlebnis verschafft dir neue Energie und verstörender Weise auch eine Menge Befriedigung...' =>
+	'Statt darauf zu warten dass Gott dich für deine vielen Sünden bestrafst, kannst du das auch einfach selbst tun. Dieses hochspirituelle Erlebnis verschafft dir neue Energie und verstörender Weise auch eine Menge Befriedigung...',
+  'Eigentlich ist es ja Energieverschwendung, den Schredder für dieses bisschen Müll anzuwerfen... Aber hey, immerhin hast du einen Eimer mit Splittern gefüllt!' =>
+	'Eigentlich ist es ja Energieverschwendung, den Schredder für dieses bisschen Müll anzuwerfen... Aber hey, immerhin hast du einen Eimer mit Splittern gefüllt!',
+  'In einem rührseligen Akt aus Mitgefühl hat :rnd[0] seinen Teddybären an :rnd[1] verschenkt. :rnd[1] leidet offenbar seit Tagen an einer schlimmen Angststarre, jedenfalls wurde er bisher insgesamt 12 mal dabei gesehen, wie er sich den Vibrator sowie eine Batterie aus der Bank nahm.' =>
+	'In einem rührseligen Akt aus Mitgefühl hat :rnd[0] seinen Teddybären an :rnd[1] verschenkt. :rnd[1] leidet offenbar seit Tagen an einer schlimmen Angststarre, jedenfalls wurde er bisher insgesamt 12 mal dabei gesehen, wie er sich den Vibrator sowie eine Batterie aus der Bank nahm.',
+  'Nachtwächter :rnd[0] behauptet, gestern gegen 22 Uhr :rnd[1] dabei erwischt zu haben, wie er :rnd[2]\'s Malteser "Schnuffel" ein Bein gestohlen hat.' =>
+	'Nachtwächter :rnd[0] behauptet, gestern gegen 22 Uhr :rnd[1] dabei erwischt zu haben, wie er :rnd[2]\'s Malteser "Schnuffel" ein Bein gestohlen hat.',
+  'Eine Expeditionsgruppe, bestehend aus :rnd[0], :rnd[1], :rnd[2], :rnd[3] und :rnd[4], wird seit zwei Tagen vermisst. Wir hoffen noch immer, dass sie wieder auftauchen - immerhin hatten sie unsere Kettensäge und einen MarkII dabei.' =>
+	'Eine Expeditionsgruppe, bestehend aus :rnd[0], :rnd[1], :rnd[2], :rnd[3] und :rnd[4], wird seit zwei Tagen vermisst. Wir hoffen noch immer, dass sie wieder auftauchen - immerhin hatten sie unsere Kettensäge und einen MarkII dabei.',
+  'Du drehst den Zündschlüssel und trittst auf das Gaspedal. Der Motor ächzt, aber du kommst keinen Meter vorran. Anscheinend ist das Wohnmobil überladen...' =>
+	'Du drehst den Zündschlüssel und trittst auf das Gaspedal. Der Motor ächzt, aber du kommst keinen Meter vorran. Anscheinend ist das Wohnmobil überladen...',
+  'Seit :rnd[0] gestern Abend sturzbetrunken in den Brunnen gekotzt hat, hat sich unser Wasserverbrauch halbiert. Stadtverwalter :rnd[1] lies jedoch vor einer halben Stunde verlauten, das eine hätte nichts mit dem anderen zu tun.' =>
+	'Seit :rnd[0] gestern Abend sturzbetrunken in den Brunnen gekotzt hat, hat sich unser Wasserverbrauch halbiert. Stadtverwalter :rnd[1] lies jedoch vor einer halben Stunde verlauten, das eine hätte nichts mit dem anderen zu tun.',
+  'Du benötigst einen spontanen Kraftschub? Dann einfach Batterie einlegen und auf Start drücken! Dieser Bauchmuskeltrainer bringt dich garantiert auf Touren und ist dabei auch nur ein ganz kleines bisschen tödlich.<b>Die Kontakte dieses Exemplars sind leider komplett verkohlt... Dieses Ding wirst du wohl nicht mehr einsetzen können!</b>' =>
+	'Du benötigst einen spontanen Kraftschub? Dann einfach Batterie einlegen und auf Start drücken! Dieser Bauchmuskeltrainer bringt dich garantiert auf Touren und ist dabei auch nur ein ganz kleines bisschen tödlich.<b>Die Kontakte dieses Exemplars sind leider komplett verkohlt... Dieses Ding wirst du wohl nicht mehr einsetzen können!</b>',
+  'Die Bürger in der Stadt sind beunruhigt.... seit mehrern Tagen ist niemand mehr verdurstet oder in der Aussenwelt verschwunden. Es verbreiten sich Gerüchte, dass eine Meta in dieser Stadt anwesend wäre...' =>
+	'Die Bürger in der Stadt sind beunruhigt.... seit mehrern Tagen ist niemand mehr verdurstet oder in der Aussenwelt verschwunden. Es verbreiten sich Gerüchte, dass eine Meta in dieser Stadt anwesend wäre...',
+  'Diese Flasche ist leider leer...' =>
+	'Diese Flasche ist leider leer...',
+  'Mit ein paar kleinen Verbesserungen kann man die Effektivität eines Batteriewerfers ungemein erhöhen. Der neue Druckregler passt die Abschussgeschwindigkeit genau der Entfernung an und erhöht so deine Treffsicherheit. Mit ein wenig Glück kannst du mit einer Baterie sogar zwei Zombies erwischen!' =>
+	'Mit ein paar kleinen Verbesserungen kann man die Effektivität eines Batteriewerfers ungemein erhöhen. Der neue Druckregler passt die Abschussgeschwindigkeit genau der Entfernung an und erhöht so deine Treffsicherheit. Mit ein wenig Glück kannst du mit einer Baterie sogar zwei Zombies erwischen!',
+  'Überlebenstipp #4 gegen Zombieinvasionen: Wenn Zombies nicht von links, rechts, vorne und hinten kommen können, dann kommen sie eben von oben!' =>
+	'Überlebenstipp #4 gegen Zombieinvasionen: Wenn Zombies nicht von links, rechts, vorne und hinten kommen können, dann kommen sie eben von oben!',
 );

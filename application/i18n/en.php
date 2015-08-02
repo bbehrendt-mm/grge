@@ -3611,7 +3611,7 @@ return array (
   'Seit nunmehr :days Tagen kommst du täglich vorbei - wirklich beeindruckend! Damit hast du dir :num BrainCoins redlich verdient. Viel Vergnügen damit!' =>
 	'For :days days you\'ve been coming here every day. This is truly remarkable. Thank you for being an incredibly active player! Please take these :num BrainCoins, you truly have earned them.',
   'Du hast dich seit :mdays Tagen nicht mehr eingeloggt. Das bedeutet leider, dass dein seit :days Tagen laufender Login-Bonus abgebrochen wird...' =>
-	'It\'s been :mdays days since you were here last. Unfortunately, this means the daily login bonus you\'ve kept going for :days days has been cancled...',
+	'It\'s been :mdays days since you were here last. Unfortunately, this means the daily login bonus you\'ve kept going for :days days has been canceled...',
   'Sicheres Versteck' =>
 	'Secured Hideout',
   ':error' =>
@@ -4317,7 +4317,7 @@ return array (
   'Auf seinem blauen Overall ist ein Namensschild - "Steve". Anscheinend hat Steve früher hier gearbeitet. Und handwerklich geschickt war er auch, denn neben ihm findest du einen Splitterwerfer. Du hast ganz schön Glück, dass du ständig Tote findest die cooles Zeug dabei haben, weist du das eigentlich?' =>
 	'His blue jumpsuit has a name tag - "Steffen". Seems that Steffen used to work here. He probably was a talented mechanic, because there is a homemade splinter gun next to him. You\'re pretty lucky to always run into dead people with cool stuff, you know that??',
   'Neben einem kleinen Schuppen findest du hinter einer Wand aus Kisten eine Leiche. Der arme Kerl wollte sich wohl vor den Zombies verstecken. Scheint nicht geklappt zu haben ...' =>
-	'Next to the shed, behind a wall of boxes, you find a single body. It seems the poor guy tried to hide here from the zombies. It alsos eems that it did not work all that well ...',
+	'Next to the shed, behind a wall of boxes, you find a single body. It seems the poor guy tried to hide here from the zombies. It also seems that it did not work all that well ...',
   'Hier lagern momentan :num Eimer voller Splitter, aus denen du :num2 Splitterkugeln formen könntest.' =>
 	'You have :num buckets full of splinters here. You can use those to create :num2 splinter balls.',
   'Du brauchst mehr Splitter, um eine solide Splitterkugel zu bauen.' =>
@@ -4950,4 +4950,48 @@ return array (
 	'h:i A, d/m/y',
   'Überlebte Zeit' =>
 	'Survived for',
+  'Pfadfinder-Frischling' =>
+	'Rookie Scout',
+  'In deiner kurzen Zeit bei den Pfadfindern hast du zumindest deine Gehtechnik perfektionieren können. Du benötigst nun geringfügig weniger Energie, um an neue Orte zu gelangen.' =>
+	'In the short time you spent as a boyscout, you\'ve at least managed to optimize your walking techniques. This means you will need a little less energy to move from place to place.',
+  'Als Pfadfinder kannst du natürlich problemlos einen Pfad finden, der an der Zombieblockade vorbei führt. Nun aber schell weg hier!' =>
+	'Being a boyscout, you\'re pretty good at scouting. For instance, you\'ve managed to find a path that leads past the zombies. You\'d better take it fast, because the zombies might find it, too!',
+  'Du wirfst die Tablette ins Wasser - es sprudelt ein wenig, aber so wirklich sauber ist das Wasser nicht geworden. Eventuell solltest du eine zweite Tablette reinwerfen...' =>
+	'You throw a purifying tablet into the water - it sparkles a little, but other than that not much seems to have changed... maybe drop in another tablet?',
+  'Du wirfst die Tablette ins Wasser - es dauert eine Weile, bis sie in dem zähflüssigen Inhalt deiner Flasche versinkt. Um die Tablette herum löst sich der Schleim etwas auf, der größte Teil des Wassers in der Flasche zeigt sich jedoch von deinen Reinigungsversuchen unbeeindruckt.' =>
+	'You throw a purifying tablet into the water - it takes a while until the tablet sinks into the stinking mud inside your bottle. Around the tablet, some sparkles appear, and you can sense s faint scrent of lemons... but overall, this really did nothing.',
+  'Das war einfacher als du dachtest - dein Fahrrad ist nun wieder einsatzbereit!' =>
+	'OK, well, that was easy - your bicycle is now fully repaired!',
+  'Du fühlst sich wie eine Art makabrer Modedesigner! Ein paar Sticke mit der Nadel, schon ist dieser hässliche Riss fast nicht mehr zu sehen.' =>
+	'You feel like some sort of morbid fashion designer! With just a little needle magic, the nasty rip is nearly gone.',
+  'Das kannst du momentan nicht tun!' =>
+	'You can\'t do that right now.',
+  'Du hast ein paar zusätzliche Details in deine Karte aufgenommen.' =>
+	'You\'ve found some additional details to be added to your map.',
+  'Wow! Du hast diesen Ort bis ins kleinste Detail ausgekundschaftet und jedes einzelne Staubkorn in deine Karte gezeichnet.' =>
+	'Impressive! You\'ve scoutet every corner of this place and added lots of information to your map.',
+  'Statt darauf zu warten dass Gott dich für deine vielen Sünden bestrafst, kannst du das auch einfach selbst tun. Dieses hochspirituelle Erlebnis verschafft dir neue Energie und verstörender Weise auch eine Menge Befriedigung...' =>
+	'Why wait for God to punish you for your sins when you\'re perfectly capable of doing that yourself? This highly spiritual experience not only gets you new energy, but in a disturbing turn of events also a lot of satisfaction...',
+  'Eigentlich ist es ja Energieverschwendung, den Schredder für dieses bisschen Müll anzuwerfen... Aber hey, immerhin hast du einen Eimer mit Splittern gefüllt!' =>
+	'Using the shredder for this small pile of junk is acutally a waste of energy... But at least you\'ve managed to get a single bucket full of splinters.!',
+  'In einem rührseligen Akt aus Mitgefühl hat :rnd[0] seinen Teddybären an :rnd[1] verschenkt. :rnd[1] leidet offenbar seit Tagen an einer schlimmen Angststarre, jedenfalls wurde er bisher insgesamt 12 mal dabei gesehen, wie er sich den Vibrator sowie eine Batterie aus der Bank nahm.' =>
+	'In a sappy act of altruism, :rnd[0] has given his favourige teddy to :rnd[1]. It seems :rnd[1] suffers from beeing extremely terrorised, since people saw him take the towns vibrator at least 12 times today...',
+  'Nachtwächter :rnd[0] behauptet, gestern gegen 22 Uhr :rnd[1] dabei erwischt zu haben, wie er :rnd[2]\'s Malteser "Schnuffel" ein Bein gestohlen hat.' =>
+	'Watchman :rnd[0] reported that he spotted :rnd[1] yesterday, stealing the leg of :rnd[2]\'s Labradoodle "Snarf".',
+  'Eine Expeditionsgruppe, bestehend aus :rnd[0], :rnd[1], :rnd[2], :rnd[3] und :rnd[4], wird seit zwei Tagen vermisst. Wir hoffen noch immer, dass sie wieder auftauchen - immerhin hatten sie unsere Kettensäge und einen MarkII dabei.' =>
+	'An expedition group, consisting of :rnd[0], :rnd[1], :rnd[2], :rnd[3] und :rnd[4], has gone missing four days ago. We still hope that we\'ll find them eventually - they had our chainsaw and MarkII with them!',
+  'Du drehst den Zündschlüssel und trittst auf das Gaspedal. Der Motor ächzt, aber du kommst keinen Meter vorran. Anscheinend ist das Wohnmobil überladen...' =>
+	'You turn on the ignition and try to start driving - but the caravan does not move! Maybe it\'s to heavy...',
+  'Seit :rnd[0] gestern Abend sturzbetrunken in den Brunnen gekotzt hat, hat sich unser Wasserverbrauch halbiert. Stadtverwalter :rnd[1] lies jedoch vor einer halben Stunde verlauten, das eine hätte nichts mit dem anderen zu tun.' =>
+	'After :rnd[0] got drunk and puked in our well yesterday, the town\'s water consumption has been halved. Mayor :rnd[1] denies all connections between these events.',
+  'Du benötigst einen spontanen Kraftschub? Dann einfach Batterie einlegen und auf Start drücken! Dieser Bauchmuskeltrainer bringt dich garantiert auf Touren und ist dabei auch nur ein ganz kleines bisschen tödlich.<b>Die Kontakte dieses Exemplars sind leider komplett verkohlt... Dieses Ding wirst du wohl nicht mehr einsetzen können!</b>' =>
+	'Need an instant boost of energy? Just put a battery in and push Start! This EMS System gets you up and running in now time - and it even isn\'t fatal sometimes. <b>The contacts of the device have been fried... It probably won\'t work anymore.</b>',
+  'Die Bürger in der Stadt sind beunruhigt.... seit mehrern Tagen ist niemand mehr verdurstet oder in der Aussenwelt verschwunden. Es verbreiten sich Gerüchte, dass eine Meta in dieser Stadt anwesend wäre...' =>
+	'The people of your town are concerned.... nobody has died of thirst or vanished in the world beyond for days. Rumors say that there is a Meta active in this town...',
+  'Diese Flasche ist leider leer...' =>
+	'This bottle seems to be empty...',
+  'Mit ein paar kleinen Verbesserungen kann man die Effektivität eines Batteriewerfers ungemein erhöhen. Der neue Druckregler passt die Abschussgeschwindigkeit genau der Entfernung an und erhöht so deine Treffsicherheit. Mit ein wenig Glück kannst du mit einer Baterie sogar zwei Zombies erwischen!' =>
+	'A few little tweaks can have a great impact on efficiency. The new pressure regulator varies the ejection speed depending on the distance to your target, increasing accuracy. It\'s even possible to kill 2 zombies with just one battery.!',
+  'Überlebenstipp #4 gegen Zombieinvasionen: Wenn Zombies nicht von links, rechts, vorne und hinten kommen können, dann kommen sie eben von oben!' =>
+	'Zombie Apocalypse Survival Rule #4: When zombies can not enter your hideout from the left, right or behind, they come from above!',
 );

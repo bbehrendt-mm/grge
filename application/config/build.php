@@ -6,9 +6,9 @@ return array(
         'minor'         => 1,
         'service'       => 0,
         'maintenance'   => 1,
-        'build'         => 131,
+        'build'         => 134,
 
         'stage'         => 0,               //0=nightly, 1=alpha, 2=beta, 3=rc, 4=final
-        'date'	        => '29.07.2015',
+        'date'	        => '03.08.2015',
     ),
 );

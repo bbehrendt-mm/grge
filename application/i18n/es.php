@@ -612,9 +612,9 @@ Todos esos niños gordos lanzando su comida por todas partes han desaparecido y 
   'Die Zombies haben dir alles genommen - bis auf die Kleidung, die du trägst. Da du sie aber schon einige Wochen ununterbrochen trägst, kann man verstehen, dass die Zombies mit diesen stinkenden Lumpen nichts zu tun haben wollen.' =>
 	'Los zombies te han quitado todo, menos tu ropa. Aunque has estado usando esta por unas cuantas semanas ya, así que es entendible que no quieran nada con ella...',
   'Magische Box' =>
-	'Magische Box',
+	'Caja Magica',
   'Dieses Item wurde zu Testzwecken implementiert und erlaubt es, beliebige andere Items zu erzeugen.' =>
-	'Dieses Item wurde zu Testzwecken implementiert und erlaubt es, beliebige andere Items zu erzeugen.',
+	'Este objeto fue introducido con propósitos experimentales. ',
   'Feldflasche' =>
 	'Cantimplora ',
   'Diese kleine, pfadfindergeprüfte Feldflasche kann bis zu 4 Rationen Wasser ausnehmen. Außerdem lässt sie sich beschriften - es wäre doch schade, wenn du deine Wasserfeldflasche mal mit der Feldflasche verwechselst, in der du die Batteriesäure aufbewahrst... ' =>
@@ -855,7 +855,7 @@ Ahora contiene :max pastillas. ',
   'Klassische Seite' =>
 	'Sito Clásico ',
   'Kleines Geschäft' =>
-	'Kleines Geschäft',
+	'Tienda Libre de Impuestos',
   'Dies ist die Gelegenheit für dich, das absolut billigste Zeug aus einer minimalen Auswahl von Gebrauchsgegenständen und Lebensmitteln zu ergattern! Die vernagelten (und schlecht geputzten) Schaufenster lassen jedoch erahnen, dass dieses Geschäft wohl in nächster Zeit nicht mehr öffnen wird. Vor dem Laden steht ein Marktwagen mit der Aufschrift "Vera Loewenhaupt & Söhne", unter dem eine Leiche liegt...' =>
 	'Es una pequeña tienda que ofrece una gama muy limitada de alimentos y otros objetos de uso cotidiano. El plano clavado (y sucia) ventanas indican que esta tienda no se abrirá de nuevo en cualquier momento pronto. Delante de la entrada hay un puesto de mercado con la etiqueta "Vera Loewenhaupt & Sons". Un cuerpo hecho jirones parece estar debajo del mismo.',
   'Geld einwerfen' =>
@@ -968,119 +968,121 @@ Durante el dia, incrementará las posibilidades de encontrar objetos en lugares 
   'Klatschmagazin' =>
 	'Revista de Chismes',
   'Du brauchst die absolut neusten, heissesten und erfundensten Infos darüber, wer gerade mit wem zusammen ist, wen betrügt, in wessen Film mitspielt, mit wem auf einer Koksparty gesichtet wurde oder wessen grausam verbrannten Körper heimlich nachts im Wald verscharrt hat? All dies und noch viel mehr findest du in Manifest schlechten Geschmacks, das selbst für Hitler zu unmenschlich wäre.' =>
-	'Du brauchst die absolut neusten, heissesten und erfundensten Infos darüber, wer gerade mit wem zusammen ist, wen betrügt, in wessen Film mitspielt, mit wem auf einer Koksparty gesichtet wurde oder wessen grausam verbrannten Körper heimlich nachts im Wald verscharrt hat? All dies und noch viel mehr findest du in Manifest schlechten Geschmacks, das selbst für Hitler zu unmenschlich wäre.',
+	'Necesitas estar al día con los rumores sobre quién traiciona a quien, de que se rumorea que saldrá en tal película, quien salió en la última cinta de sexo que anda rondando por internet y quien enterró el cadaver de quien anoche en el bosque. Entérate de es esto y mas en nuestra gran revista! ',
   ':num Seiten' =>
-	':num Seiten',
+	':num Paginas',
   'Lesestoff' =>
-	'Lesestoff',
+	'Material de lectura ',
   'Benutzen' =>
-	'Benutzen',
+	'Usar',
   'Massagestab' =>
-	'Massagestab',
+	'Masajeador ',
   'Es ist ein Massagestab. NUR ein Massagestab. Für deinen verspannten Rücken! Und der ist auch nur deshalb so klebrig, weil du immer so schwitzige Hände bekommst, wenn du ihn benutzt!' =>
-	'Es ist ein Massagestab. NUR ein Massagestab. Für deinen verspannten Rücken! Und der ist auch nur deshalb so klebrig, weil du immer so schwitzige Hände bekommst, wenn du ihn benutzt!',
+	'Es un masajeador, usala en tu espalda debes de tener mucha tensión ahi! ',
   'Improvisierte Bandage' =>
-	'Improvisierte Bandage',
+	'Vendaje Improvisado ',
   'Komm schon, bei diesem provisorisch mit Alkohol desinfizierten dreckigen Lappen ist die Infektionsgefahr auch nicht höher als in einem durchschnittlichen Krankenhaus. Außerdem gibt dir das Teil den total coolen Vietnam-Veteranen-Look.' =>
-	'Komm schon, bei diesem provisorisch mit Alkohol desinfizierten dreckigen Lappen ist die Infektionsgefahr auch nicht höher als in einem durchschnittlichen Krankenhaus. Außerdem gibt dir das Teil den total coolen Vietnam-Veteranen-Look.',
+	'Vamos, este trapo sucio que has desinfectados con un poco de alcohol no lleva a un mayor riesgo de infección que un hospital de media. Además, con esta cosa te da ese look de veterano. ',
   'Holzkistendeckel' =>
-	'Holzkistendeckel',
+	'Caja de Madera',
   'Dieses zusammengenagelte und verrottete Stück Holz sieht nicht allzu stabil aus... Du könntest es benutzen, um dich vor Zombies zu verteidigen. Allerdings solltest du nicht überrascht sein, wenn dir das Teil in der Hand zerbröselt.' =>
-	'Dieses zusammengenagelte und verrottete Stück Holz sieht nicht allzu stabil aus... Du könntest es benutzen, um dich vor Zombies zu verteidigen. Allerdings solltest du nicht überrascht sein, wenn dir das Teil in der Hand zerbröselt.',
+	'Esta caja de madera  no parece muy estable... Pero puedes usar para protegerte de los zombies, aunque no cuentas mucho con ella. En algún momento seguramente se romperá.  ',
   'Schwarzpulver' =>
-	'Schwarzpulver',
+	'Polvora ',
   'Schon die alten Chinesen wussten: Schwarzpulver ist vielseitig einsetzbar. Zum Beispiel kann man es bei Bedarf explodieren lassen und so alle möglichen coolen Effekte erzeugen!' =>
-	'Schon die alten Chinesen wussten: Schwarzpulver ist vielseitig einsetzbar. Zum Beispiel kann man es bei Bedarf explodieren lassen und so alle möglichen coolen Effekte erzeugen!',
+	'Si los chinos no hubiesen inventado la pólvora, estaríamos persiguiendo y matándonos con machetes, por que no vuelas algo? Solo para celebrar la existencia de la pólvora? ',
   'Teddybär' =>
-	'Teddybär',
+	'Oso de peluche ',
   'Dieser niedliche Teddy ist genau das richtige, um sich ein bisschen von der schlechten wirtschaftlichen Lage sowie der Zombieapokalypse abzulenken. Ihn nicht mitzunehmen wäre geradezu ein Verbrechen!' =>
-	'Dieser niedliche Teddy ist genau das richtige, um sich ein bisschen von der schlechten wirtschaftlichen Lage sowie der Zombieapokalypse abzulenken. Ihn nicht mitzunehmen wäre geradezu ein Verbrechen!',
+	'Todos aman los animales de peluche! No te atrevas dejalo atras, al menos que quieras pasarte el resto de tus días atrapado en una miseria sin fin? ',
   'Nachttischlampe' =>
-	'Nachttischlampe',
+	'Lampara de Noche ',
   'Dieses hochdekorative Item sorgt für Erleuchtung - wahrscheinlich nicht bei dir, dafür aber für dein Versteck. Einziger Nachteil: Sie braucht dafür Energie...' =>
-	'Dieses hochdekorative Item sorgt für Erleuchtung - wahrscheinlich nicht bei dir, dafür aber für dein Versteck. Einziger Nachteil: Sie braucht dafür Energie...',
+	'Este objeto de decorativo trae luz a la oscuridad, así que no esperes liquidar zombies o algo asi con esto. Lo único malo es que probablemente necesites una batería para encenderla. ',
   'Lederjacke' =>
-	'Lederjacke',
+	'Chaqueta de Cuero ',
   'In der Postapokalypse musst du als Überlebender, der etwas auf sich hält, selbstverständlich eine Lederjacke tragen. Wenn du den Mad-Max-Look vollständig umsetzen willst musst du dir allerdings noch irgendwo eine Portion Antisemitismus besorgen...' =>
-	'In der Postapokalypse musst du als Überlebender, der etwas auf sich hält, selbstverständlich eine Lederjacke tragen. Wenn du den Mad-Max-Look vollständig umsetzen willst musst du dir allerdings noch irgendwo eine Portion Antisemitismus besorgen...',
+	'No eres un sobreviviente postapocalíptico si no llevas puesto una chaqueta de cuero. Hasta podrías parecerte un poco a Mad Max...
+',
   'Staubiger Teddy' =>
-	'Staubiger Teddy',
+	'Oso de Peluche Empolvado ',
   'Umfüllen ...' =>
-	'Umfüllen ...',
+	'Transvasar ...',
   'Dreckiges Wasser' =>
-	'Dreckiges Wasser',
+	'Agua Sucia ',
   'Dieses Wasser ist abgestanden, es haben sich sogar schon Algen darin gebildet. Du kannst es immer noch trinken, aber es wird wahrscheinlich deiner Gesundheit schaden.' =>
-	'Dieses Wasser ist abgestanden, es haben sich sogar schon Algen darin gebildet. Du kannst es immer noch trinken, aber es wird wahrscheinlich deiner Gesundheit schaden.',
+	'Esta agua se ha vuelto bastante rancia, hasta puedes ver algas en ella. Aún puedes beberla, pero puede tener efectos secundarios nocivos.',
   'Apotheke "Wehwehchen"' =>
-	'Apotheke "Wehwehchen"',
+	'Farmacia Goldmans',
   'Die Tür dieser Apotheke ist von innen mit einem großen Blasentee-Werbeaufsteller verbarrikadiert. Leider hat das übergroße Schaufenster direkt daneben ausreichend Angriffsfläche für die Zombies geboten. Die Leute, die sich hier versteckt hatten, können mit den gelagerten Medikamenten wohl nichts mehr anfangen, also bedien dich ruhig.' =>
-	'Die Tür dieser Apotheke ist von innen mit einem großen Blasentee-Werbeaufsteller verbarrikadiert. Leider hat das übergroße Schaufenster direkt daneben ausreichend Angriffsfläche für die Zombies geboten. Die Leute, die sich hier versteckt hatten, können mit den gelagerten Medikamenten wohl nichts mehr anfangen, also bedien dich ruhig.',
+	'La puerta de esta farmacia ha sido bloqueada con un gigante anuncio azul de te diurético. Desafortunadamente la ventana resultó ser menos resistente. Los zombies debieron de pasar por ella y matar a todos dentro. Suerte que las personas que estaban ahí no llegaron a usar los medicamentos que  quedaban.',
   'Scharfe Machete' =>
-	'Scharfe Machete',
+	'Machete Afilado ',
   'Nachdem du den Rost abgeschliffen und die Klinge geschärft hast gleitet deine Machete nun wie Butter durch Zombiehorden.' =>
-	'Nachdem du den Rost abgeschliffen und die Klinge geschärft hast gleitet deine Machete nun wie Butter durch Zombiehorden.',
+	'El óxido se ha ido y ha recuperado su filo de nuevo. Ahora puedes partir a un zombie por la mitad como si fuera mantequilla.',
   'Fahradhelm' =>
-	'Fahradhelm',
+	'Casco de Bicicleta ',
   'Wusstest du, dass ein simpler Fahradhelm die Wahrscheinlichkeit eines Todes durch gehirnfressende Zombies um 23.956% reduziert?' =>
-	'Wusstest du, dass ein simpler Fahradhelm die Wahrscheinlichkeit eines Todes durch gehirnfressende Zombies um 23.956% reduziert?',
+	'Sabías que usar un casco reduce las posibilidades de ser asesinado por zombies?',
   'Was möchtest du auf das Glas schreiben?' =>
-	'Was möchtest du auf das Glas schreiben?',
+	'Que te gustaría escribir en la etiqueta?',
   'Beschriften...' =>
-	'Beschriften...',
+	'Etiqueta... ',
   'Glas mit bunten Pillen' =>
-	'Glas mit bunten Pillen',
+	'Botella con pastillas coloridas ',
   'Der Apotheker, der dieses Glas gefüllt hat, scheint kein Freund von Ordnung gewesen zu sein. Es ist unmöglich zu wissen, was diese Pillen machen - es sei denn, du bist Mediziner.' =>
-	'Der Apotheker, der dieses Glas gefüllt hat, scheint kein Freund von Ordnung gewesen zu sein. Es ist unmöglich zu wissen, was diese Pillen machen - es sei denn, du bist Mediziner.',
+	'El farmacéutico que llenó la botella no le gusta mucho la organización, solo hay que mirar dentro de la botella para darse cuenta. No hay una forma de saber para que sirve cada pastilla que esta ahi, almenos que tengas conocimientos medicos.',
   'Pillen' =>
-	'Pillen',
+	'Pastillas ',
   'Verkaufsautomat (MedCo. Pharmacorp.)' =>
-	'Verkaufsautomat (MedCo. Pharmacorp.)',
+	'Maquina Expendedora  (MedCo. Pharmacorp.)',
   'Grüne Pille' =>
-	'Grüne Pille',
+	'Pastilla Verde ',
   'Du kannst diese Aktion noch :num mal einsetzen.' =>
-	'Du kannst diese Aktion noch :num mal einsetzen.',
+	'Aún puedes hacer esto :num veces mas',
   'Heldentaten' =>
-	'Heldentaten',
+	'Acciones Heroicas ',
   'Bist du sicher, dass du diese Heldentat ausführen möchtest?' =>
-	'Bist du sicher, dass du diese Heldentat ausführen möchtest?',
+	'Seguro que quieres usar esta Acción Heroica? ',
   'Hunger' =>
-	'Hunger',
+	'Hambre ',
   'Durst' =>
-	'Durst',
+	'Sed',
   'Gesundheit' =>
-	'Gesundheit',
+	'Salud',
   'Müdigkeit' =>
-	'Müdigkeit',
+	'Fatiga ',
   'Energie' =>
-	'Energie',
+	'Energia ',
   'Alkohol' =>
-	'Alkohol',
+	'Alcohol ',
   'Verstrahlung' =>
-	'Verstrahlung',
+	'Irradiacion ',
   'Zombie-Infektion' =>
-	'Zombie-Infektion',
+	'Infection de Zombie ',
   'Eisige Kälte' =>
-	'Eisige Kälte',
+	'Helado ',
   'Mit leerem Magen fällt der Kampf ums Überleben schwer. Iss regelmäßig, ansonsten verlierst du Energie und Gesundheit.' =>
-	'Mit leerem Magen fällt der Kampf ums Überleben schwer. Iss regelmäßig, ansonsten verlierst du Energie und Gesundheit.',
+	'Un estomago vacío hace sobrevivir mas difícil. Sera mejor que encuentres algo que comer regularmente, or perderás energía y salud. ',
   'Es ist nicht leicht, in der Ödnis Wasser zu finden - nichtsdestotrotz ist es essentiell für dein Überleben.' =>
-	'Es ist nicht leicht, in der Ödnis Wasser zu finden - nichtsdestotrotz ist es essentiell für dein Überleben.',
+	'El agua no es algo que encuentras en cada esquina de este basurero post-apocalíptico, de todos modos es indispensable para sobrevivir. ',
   'Du stirbst, wenn deine Gesundheit den Wert 0 erreicht. Gesundheit regeneriert sich von alleine, wenn du genug gegessen und getrunken hast. Du kannst deine Gesundheit aber auch durch die Verwendung verschiedener Items verbessern.' =>
-	'Du stirbst, wenn deine Gesundheit den Wert 0 erreicht. Gesundheit regeneriert sich von alleine, wenn du genug gegessen und getrunken hast. Du kannst deine Gesundheit aber auch durch die Verwendung verschiedener Items verbessern.',
+	'Cuando no te queden mas puntos de salud,morirás.
+La Salud se regenera mientras pasa el tiempo, siempre que no estés hambriento o sediento. También hay objetos que te ayudarian aumentar tu salud.',
   'Zombies müssen nicht schlafen - du hingegen schon! Du solltest Übermüdung um jeden Preis vermeiden, also schlafe regelmäßig.' =>
-	'Zombies müssen nicht schlafen - du hingegen schon! Du solltest Übermüdung um jeden Preis vermeiden, also schlafe regelmäßig.',
+	'Los zombies no duermen, sin embargo tu si! Deberías evitar estar cansado a toda costa asi que asegurate de dormir regularmente. ',
   'Du brauchst Energie, um Aktionen durchführen zu können. Energie regeneriert sich von alleine, wenn du bei guter Gesundheit und nicht hungrig/durstig bist. Es gibt allerdings auch einige Items, die Energie regenerieren.' =>
-	'Du brauchst Energie, um Aktionen durchführen zu können. Energie regeneriert sich von alleine, wenn du bei guter Gesundheit und nicht hungrig/durstig bist. Es gibt allerdings auch einige Items, die Energie regenerieren.',
+	'Necesitas energía para todo. La energía se regenera mientras pasa el tiempo, mientras no estés hambriento, sediento o herido. Puedes aumentar tu energía con algunos objetos...',
   'Mit ordentlich Promille im Blut wird das Leben nach der Apokalypse gleich viel erträglicher. Leider wird es auch kürzer, denn wenn du völlig abgefüllt in der Ecke liegst, kannst du dich nicht wirklich gut gegen Zombies verteidigen. Wenigstens um die Langzeitschäden an deiner Leber brauchst du dich nicht mehr zu sorgen ...' =>
-	'Mit ordentlich Promille im Blut wird das Leben nach der Apokalypse gleich viel erträglicher. Leider wird es auch kürzer, denn wenn du völlig abgefüllt in der Ecke liegst, kannst du dich nicht wirklich gut gegen Zombies verteidigen. Wenigstens um die Langzeitschäden an deiner Leber brauchst du dich nicht mehr zu sorgen ...',
+	'Estar cargado de alcohol ciertamente hace el apocalipsis menos malo, pero tambien lo vuelve mas peligroso, ya que no podras luchar con los zombies desmayado en el piso.',
   'Du warst Strahlung ausgesetzt! Das ist relativ ungesund, und dein Körper kann die strahlenden Partikel nur langsam abbauen. Während eine geringe Strahlendosis noch vertretbar ist, können höhere Strahlenmengen schnell dein Leben bedrohen!' =>
 	'Du warst Strahlung ausgesetzt! Das ist relativ ungesund, und dein Körper kann die strahlenden Partikel nur langsam abbauen. Während eine geringe Strahlendosis noch vertretbar ist, können höhere Strahlenmengen schnell dein Leben bedrohen!',
   'Ohje, das ist gar nicht gut... Offensichtlich bist du mit dem Zombievirus infiziert. Du solltest unbedingt ein Heilmittel finden, ansonsten wirst du sehr bald ins Unleben übertreten...' =>
-	'Ohje, das ist gar nicht gut... Offensichtlich bist du mit dem Zombievirus infiziert. Du solltest unbedingt ein Heilmittel finden, ansonsten wirst du sehr bald ins Unleben übertreten...',
+	'Mierda...has contraído el virus de los zombies. Sera mejor que encuentres una cura para ello, o muy pronto te unirás a los no muertos...',
   'Der kalte Wind bläst dir um die Ohren... allzu lange kann du hier nicht bleiben, wenn du nicht erfrieren willst.' =>
-	'Der kalte Wind bläst dir um die Ohren... allzu lange kann du hier nicht bleiben, wenn du nicht erfrieren willst.',
+	'El viento helado sopla en tu rostro... si te quedas aquí por mucho, moriras congelado.',
   'Absolute Einflüsse' =>
-	'Absolute Einflüsse',
+	'Influencia Absoluta ',
   'Relative Einflüsse' =>
 	'Relative Einflüsse',
   'Berechnung' =>
@@ -4966,4 +4968,48 @@ Lo que suceda.... depende de ti descubrirlo. ',
 	'G:i \\U\\h\\r \\a\\m d.m.y',
   'Überlebte Zeit' =>
 	'Überlebte Zeit',
+  'Pfadfinder-Frischling' =>
+	'Pfadfinder-Frischling',
+  'In deiner kurzen Zeit bei den Pfadfindern hast du zumindest deine Gehtechnik perfektionieren können. Du benötigst nun geringfügig weniger Energie, um an neue Orte zu gelangen.' =>
+	'In deiner kurzen Zeit bei den Pfadfindern hast du zumindest deine Gehtechnik perfektionieren können. Du benötigst nun geringfügig weniger Energie, um an neue Orte zu gelangen.',
+  'Als Pfadfinder kannst du natürlich problemlos einen Pfad finden, der an der Zombieblockade vorbei führt. Nun aber schell weg hier!' =>
+	'Als Pfadfinder kannst du natürlich problemlos einen Pfad finden, der an der Zombieblockade vorbei führt. Nun aber schell weg hier!',
+  'Du wirfst die Tablette ins Wasser - es sprudelt ein wenig, aber so wirklich sauber ist das Wasser nicht geworden. Eventuell solltest du eine zweite Tablette reinwerfen...' =>
+	'Du wirfst die Tablette ins Wasser - es sprudelt ein wenig, aber so wirklich sauber ist das Wasser nicht geworden. Eventuell solltest du eine zweite Tablette reinwerfen...',
+  'Du wirfst die Tablette ins Wasser - es dauert eine Weile, bis sie in dem zähflüssigen Inhalt deiner Flasche versinkt. Um die Tablette herum löst sich der Schleim etwas auf, der größte Teil des Wassers in der Flasche zeigt sich jedoch von deinen Reinigungsversuchen unbeeindruckt.' =>
+	'Du wirfst die Tablette ins Wasser - es dauert eine Weile, bis sie in dem zähflüssigen Inhalt deiner Flasche versinkt. Um die Tablette herum löst sich der Schleim etwas auf, der größte Teil des Wassers in der Flasche zeigt sich jedoch von deinen Reinigungsversuchen unbeeindruckt.',
+  'Das war einfacher als du dachtest - dein Fahrrad ist nun wieder einsatzbereit!' =>
+	'Das war einfacher als du dachtest - dein Fahrrad ist nun wieder einsatzbereit!',
+  'Du fühlst sich wie eine Art makabrer Modedesigner! Ein paar Sticke mit der Nadel, schon ist dieser hässliche Riss fast nicht mehr zu sehen.' =>
+	'Du fühlst sich wie eine Art makabrer Modedesigner! Ein paar Sticke mit der Nadel, schon ist dieser hässliche Riss fast nicht mehr zu sehen.',
+  'Das kannst du momentan nicht tun!' =>
+	'Das kannst du momentan nicht tun!',
+  'Du hast ein paar zusätzliche Details in deine Karte aufgenommen.' =>
+	'Du hast ein paar zusätzliche Details in deine Karte aufgenommen.',
+  'Wow! Du hast diesen Ort bis ins kleinste Detail ausgekundschaftet und jedes einzelne Staubkorn in deine Karte gezeichnet.' =>
+	'Wow! Du hast diesen Ort bis ins kleinste Detail ausgekundschaftet und jedes einzelne Staubkorn in deine Karte gezeichnet.',
+  'Statt darauf zu warten dass Gott dich für deine vielen Sünden bestrafst, kannst du das auch einfach selbst tun. Dieses hochspirituelle Erlebnis verschafft dir neue Energie und verstörender Weise auch eine Menge Befriedigung...' =>
+	'Statt darauf zu warten dass Gott dich für deine vielen Sünden bestrafst, kannst du das auch einfach selbst tun. Dieses hochspirituelle Erlebnis verschafft dir neue Energie und verstörender Weise auch eine Menge Befriedigung...',
+  'Eigentlich ist es ja Energieverschwendung, den Schredder für dieses bisschen Müll anzuwerfen... Aber hey, immerhin hast du einen Eimer mit Splittern gefüllt!' =>
+	'Eigentlich ist es ja Energieverschwendung, den Schredder für dieses bisschen Müll anzuwerfen... Aber hey, immerhin hast du einen Eimer mit Splittern gefüllt!',
+  'In einem rührseligen Akt aus Mitgefühl hat :rnd[0] seinen Teddybären an :rnd[1] verschenkt. :rnd[1] leidet offenbar seit Tagen an einer schlimmen Angststarre, jedenfalls wurde er bisher insgesamt 12 mal dabei gesehen, wie er sich den Vibrator sowie eine Batterie aus der Bank nahm.' =>
+	'In einem rührseligen Akt aus Mitgefühl hat :rnd[0] seinen Teddybären an :rnd[1] verschenkt. :rnd[1] leidet offenbar seit Tagen an einer schlimmen Angststarre, jedenfalls wurde er bisher insgesamt 12 mal dabei gesehen, wie er sich den Vibrator sowie eine Batterie aus der Bank nahm.',
+  'Nachtwächter :rnd[0] behauptet, gestern gegen 22 Uhr :rnd[1] dabei erwischt zu haben, wie er :rnd[2]\'s Malteser "Schnuffel" ein Bein gestohlen hat.' =>
+	'Nachtwächter :rnd[0] behauptet, gestern gegen 22 Uhr :rnd[1] dabei erwischt zu haben, wie er :rnd[2]\'s Malteser "Schnuffel" ein Bein gestohlen hat.',
+  'Eine Expeditionsgruppe, bestehend aus :rnd[0], :rnd[1], :rnd[2], :rnd[3] und :rnd[4], wird seit zwei Tagen vermisst. Wir hoffen noch immer, dass sie wieder auftauchen - immerhin hatten sie unsere Kettensäge und einen MarkII dabei.' =>
+	'Eine Expeditionsgruppe, bestehend aus :rnd[0], :rnd[1], :rnd[2], :rnd[3] und :rnd[4], wird seit zwei Tagen vermisst. Wir hoffen noch immer, dass sie wieder auftauchen - immerhin hatten sie unsere Kettensäge und einen MarkII dabei.',
+  'Du drehst den Zündschlüssel und trittst auf das Gaspedal. Der Motor ächzt, aber du kommst keinen Meter vorran. Anscheinend ist das Wohnmobil überladen...' =>
+	'Du drehst den Zündschlüssel und trittst auf das Gaspedal. Der Motor ächzt, aber du kommst keinen Meter vorran. Anscheinend ist das Wohnmobil überladen...',
+  'Seit :rnd[0] gestern Abend sturzbetrunken in den Brunnen gekotzt hat, hat sich unser Wasserverbrauch halbiert. Stadtverwalter :rnd[1] lies jedoch vor einer halben Stunde verlauten, das eine hätte nichts mit dem anderen zu tun.' =>
+	'Seit :rnd[0] gestern Abend sturzbetrunken in den Brunnen gekotzt hat, hat sich unser Wasserverbrauch halbiert. Stadtverwalter :rnd[1] lies jedoch vor einer halben Stunde verlauten, das eine hätte nichts mit dem anderen zu tun.',
+  'Du benötigst einen spontanen Kraftschub? Dann einfach Batterie einlegen und auf Start drücken! Dieser Bauchmuskeltrainer bringt dich garantiert auf Touren und ist dabei auch nur ein ganz kleines bisschen tödlich.<b>Die Kontakte dieses Exemplars sind leider komplett verkohlt... Dieses Ding wirst du wohl nicht mehr einsetzen können!</b>' =>
+	'Du benötigst einen spontanen Kraftschub? Dann einfach Batterie einlegen und auf Start drücken! Dieser Bauchmuskeltrainer bringt dich garantiert auf Touren und ist dabei auch nur ein ganz kleines bisschen tödlich.<b>Die Kontakte dieses Exemplars sind leider komplett verkohlt... Dieses Ding wirst du wohl nicht mehr einsetzen können!</b>',
+  'Die Bürger in der Stadt sind beunruhigt.... seit mehrern Tagen ist niemand mehr verdurstet oder in der Aussenwelt verschwunden. Es verbreiten sich Gerüchte, dass eine Meta in dieser Stadt anwesend wäre...' =>
+	'Die Bürger in der Stadt sind beunruhigt.... seit mehrern Tagen ist niemand mehr verdurstet oder in der Aussenwelt verschwunden. Es verbreiten sich Gerüchte, dass eine Meta in dieser Stadt anwesend wäre...',
+  'Diese Flasche ist leider leer...' =>
+	'Diese Flasche ist leider leer...',
+  'Mit ein paar kleinen Verbesserungen kann man die Effektivität eines Batteriewerfers ungemein erhöhen. Der neue Druckregler passt die Abschussgeschwindigkeit genau der Entfernung an und erhöht so deine Treffsicherheit. Mit ein wenig Glück kannst du mit einer Baterie sogar zwei Zombies erwischen!' =>
+	'Mit ein paar kleinen Verbesserungen kann man die Effektivität eines Batteriewerfers ungemein erhöhen. Der neue Druckregler passt die Abschussgeschwindigkeit genau der Entfernung an und erhöht so deine Treffsicherheit. Mit ein wenig Glück kannst du mit einer Baterie sogar zwei Zombies erwischen!',
+  'Überlebenstipp #4 gegen Zombieinvasionen: Wenn Zombies nicht von links, rechts, vorne und hinten kommen können, dann kommen sie eben von oben!' =>
+	'Überlebenstipp #4 gegen Zombieinvasionen: Wenn Zombies nicht von links, rechts, vorne und hinten kommen können, dann kommen sie eben von oben!',
 );

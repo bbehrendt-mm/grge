@@ -43,20 +43,34 @@ if ( !function_exists('__j'))
 class I18n extends Kohana_I18n {
 	// Cache of missing strings
 	protected static $cache = array();
-    protected static $missing = array();
-    protected static $got_missing = array();
-
     protected static $readonly = false;
 
 	protected static $lang_list = array('de', 'en', 'es');
 
+    public static function get_primary_language() {
+        return static::$lang_list[0];
+    }
+
+    public static function get_languages($include_primary = false) {
+        return $include_primary ? static::$lang_list : array_slice(static::$lang_list, 1);
+    }
+    
     /**
      * Returns a complete translation table
      * @param string|null $lang Language, or null to use default
      * @return array
      */
-    public static function get_all($lang = NULL) {
-        return I18n::load($lang);
+    public static function load($lang = NULL) {
+        if (!$lang) $lang = static::$lang;
+        if (!in_array($lang, static::$lang_list)) return [];
+        if (isset(static::$_cache[$lang])) return static::$_cache[$lang];
+
+        $q = $lang == static::get_primary_language() ? DB::select($lang) : DB::select(static::get_primary_language(), $lang);
+        return static::$_cache[$lang] = $q->from('language')->execute()->as_array(static::get_primary_language(), $lang);
+    }
+
+    public static function export() {
+        return array_map(function($a) {unset($a['hash']); return $a;}, DB::select(array_merge(['hash'],static::$lang_list))->from('language')->execute()->as_array('hash'));
     }
 
     /**
@@ -72,98 +86,67 @@ class I18n extends Kohana_I18n {
 
     /**
      * Changes an existing translation. This function can NOT add a completely new original/translation pair
-     * @param string|array $string Original string
-     * @param string|array $translation Translated string
+     * @param string $string Original string
+     * @param string $translation Translated string
      * @param string $lang Translation language
      * @return bool True when successfull, otherwise false
      */
     public static function set($string, $translation, $lang) {
-        static::flush_cache();
-        $table = I18n::load($lang);
-
-        if (!is_array($string)) $string = [$string];
-        if (!is_array($translation)) $translation = [$translation];
-
-        foreach ($string as $n => $s) {
-            if (!isset($table[$s])) return false;
-            $table[$s] = isset($translation[$n]) ? $translation[$n] : $translation[count($translation)-1];
-        }
-
-        I18n::toDisk($lang, $table);
+        if (static::$readonly) return true;
         static::flush_cache();
 
-        static::remove_missing($string, $lang);
-        static::flush_cache();
+        if ($lang == static::get_primary_language() || !in_array($lang, static::$lang_list))
+            return false;
 
-        return true;
+        return DB::update('language')->set([$lang => $translation])->where(static::get_primary_language(), '=', $string)->execute() > 0;
     }
 
     /**
      * Marks a string as missing in a certain language
      * @param string $string Missing string
-     * @param string $lang Language
+     * @return bool Success
      */
-    public static function set_missing($string,$lang) {
-        if (!isset(static::$missing[$lang]))
-            static::$missing[$lang] = [];
-        static::$missing[$lang][$string] = '';
+    public static function set_missing($string) {
+        if (static::$readonly) return true;
+
+        $hash = md5($string, true);
+        if (DB::select('id')->from('language')->where('hash','=', $hash)->execute()->count())
+            return false;
+
+        list($id, $rows) = DB::insert('language', ['hash',static::get_primary_language()])->values([$hash,$string])->execute();
+        return $rows > 0;
     }
 
     /**
      * Returns a list of all missing strings for one language
      * @param string $lang Language
-     * @return mixed
+     * @return array
      */
     public static function get_missing($lang) {
-        if (isset(static::$got_missing[$lang]))
-            return static::$missing[$lang];
-        static::$got_missing[$lang] = true;
-        if (!isset(static::$missing[$lang]))
-            static::$missing[$lang] = [];
-        static::$missing[$lang] = array_merge(I18n::load("auto/$lang"),static::$missing[$lang]);
-        return static::$missing[$lang];
-    }
+        if ($lang == static::get_primary_language() || !in_array($lang, static::$lang_list))
+            return [];
 
-    /**
-     * Removes a string from the list of missing language strings
-     * @param string|string[] $string String to remove
-     * @param string $lang Language
-     * @return bool
-     */
-    public static function remove_missing($string, $lang) {
-        static::get_missing($lang);
-        if (!is_array($string)) $string = [$string];
-        foreach ($string as $s)
-            if (isset(static::$missing[$lang][$s]))
-                unset(static::$missing[$lang][$s]);
-        I18n::toDisk("auto/$lang", static::$missing[$lang]);
-        return true;
+        return DB::select(static::get_primary_language())->from('language')->where($lang, '=', null)->execute()->as_array(null, static::get_primary_language());
     }
 
     /**
      * Removes a string from all translations as well as the cache and missing list. Legacy translations can not be removed!
      * @param string $string String to remove
+     * @return bool Success
      */
     public static function remove($string) {
         static::flush_cache();
-        foreach (static::$lang_list as $lang) {
-            static::remove_missing($string, $lang);
 
-            $table = I18n::load($lang);
-            unset(I18n::$cache[$string], $table[$string]);
-            I18n::toDisk($lang, $table);
-        }
-        static::flush_cache();
+        return DB::delete('language')->where(static::get_primary_language(), '=', $string)->execute() > 0;
     }
 
     /**
      * Fetches a translation in a given language for a given string. If there is no translation, the same string will be returned. If the given string is not part of the translation database, it will be added to the missing strings list.
      * @param string $string String to translate
      * @param string|null $lang Language (null, to use default language)
-     * @param bool $pool True, if you want to fetch from the pool. If set to false, and the string is not found, this function will try to fetch it from the pool automatically and add it to the new translation file
      * @return string Translated string
      */
-	public static function get($string, $lang = NULL, $pool = false) {
+	public static function get($string, $lang = NULL) {
 		// Return identity if input is something other than a string
         if (!is_string($string)) return $string;
 
@@ -174,65 +157,19 @@ class I18n extends Kohana_I18n {
         // Load default lang if none is given
 		if ($lang == null) $lang = I18n::$lang;
 
-        // Load language table
-		$table = I18n::load(($pool ? 'pool/' : '') .$lang);
-		I18n::$cache[$string] = $string;
-		
-		// Return the translated string if it exists
-	    if(isset($table[$string])) return $table[$string];
-	    elseif (!$pool) return static::get($string, $lang, true);
-        else {
-            static::set_missing($string,$lang);
+        // Check of language is valid
+        if ($lang == static::get_primary_language() || !in_array($lang, static::$lang_list))
             return $string;
-        }
-	}
 
-    /**
-     * Writes a language table to disc
-     * @param string $lang Language
-     * @param mixed $table Translation table
-     */
-	private static function toDisk($lang, $table) {
-		if (static::$readonly) return;
+        // Load language table
+		$table = I18n::load($lang);
 
-        $contents = "<?php defined('SYSPATH') or die('No direct script access.');\n/* Automatically generated translation file for $lang */\n\nreturn ";
-		$contents .= var_export($table, true);
-		$contents .= ';';
-		
-		$contents = str_replace(' => ', " =>\n\t", $contents);
-		file_put_contents(APPPATH.'/i18n/' . $lang . '.php', $contents);
-	}
-
-    /**
-     * Write all pending data to their appropriate files
-     */
-	public static function write() {
-        if (static::$readonly) return;
-
-        $tables = array();
-        foreach (I18n::$lang_list as $lang)
-   			$tables[$lang] = I18n::load($lang);
-   		
-   		$full_lg = I18n::$cache;
-   		
-   		if (file_exists(APPPATH.'/i18n/import.lines')) foreach (explode("\n",file_get_contents(APPPATH.'/i18n/import.lines')) as $line) 
-   			$full_lg[$line] = $line;
-   		
-   		foreach ($tables as $lang_table)
-   			$full_lg = array_merge($full_lg, $lang_table);
-
-   		$update = array();
-   		foreach (array_keys($full_lg) as $key) if (!is_numeric($key) && $key != '') foreach ($tables as $lang => $table) {
-   			if (!isset($table[$key])) {
-   				$tables[$lang][$key] = static::get($key,$lang);
-   				$update[$lang] = true;
-   			}
-   		}	
-   			
-   		foreach ($tables as $lang => $table) if (isset($update[$lang]))
-   			I18n::toDisk($lang, $table);
-
-        foreach (static::$missing as $lang => $table) if ($lang != 'de')
-            I18n::toDisk("auto/$lang", static::get_missing($lang));
+		// Return the translated string if it exists
+        if (!isset($table[$string])) {
+            static::set_missing($string);
+            return $string;
+        } elseif (!$table[$string])
+            return $string;
+        else return $table[$string];
 	}
 }

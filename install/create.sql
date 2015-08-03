@@ -36,6 +36,14 @@ CREATE TABLE IF NOT EXISTS ___PREFIX___karma (
   `timestamp` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE IF NOT EXISTS ___PREFIX___language (
+  `id` int(11) NOT NULL,
+  `hash` binary(16) NOT NULL,
+  `de` text NOT NULL,
+  `en` text,
+  `es` text
+) ENGINE=InnoDB AUTO_INCREMENT=2497 DEFAULT CHARSET=latin1;
+
 CREATE TABLE IF NOT EXISTS ___PREFIX___mentor (
   uid int(11) NOT NULL,
   mentor int(11) NOT NULL
@@ -110,7 +118,6 @@ CREATE TABLE IF NOT EXISTS ___PREFIX___xref_game_player (
   uid int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-
 ALTER TABLE ___PREFIX___achievements
   ADD PRIMARY KEY (uid,gameid,season,aid);
 
@@ -125,6 +132,12 @@ ALTER TABLE ___PREFIX___games_cloud
 
 ALTER TABLE ___PREFIX___karma
   ADD PRIMARY KEY (`subject`,rater);
+
+ALTER TABLE ___PREFIX___language
+ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `hash` (`hash`);
+
+ALTER TABLE ___PREFIX___language
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE ___PREFIX___mentor
   ADD PRIMARY KEY (uid);

@@ -116,6 +116,3 @@ echo Request::factory()
 	->execute()
 	->send_headers()
 	->body();
-
-// Write the updated language file, if necessary
-I18n::write();

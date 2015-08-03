@@ -18,31 +18,22 @@ class Controller_Admin_Translate extends Controller_Admin_Admin {
         if (!static::priv_allow_all('TRANSLATE_MOD'))
             return $this->error(\grge\E_SERVER_ACCESS_DENIED);
 
-        $from = $this->request->post('from');
-
-        I18n::remove($from);
-        I18n::write();
-
-        $this->render(['success' => 1]);
+        $this->render(['success' => (int)I18n::remove($this->request->post('from'))]);
         return true;
     }
 
     public function japi_set() {
-        $from = $this->request->post('from');
-        $to = $this->request->post('to');
-        $lang = $this->request->post('language');
-
-        I18n::remove_missing($from,$lang);
-        I18n::set($from,$to,$lang);
-        I18n::write();
-
-        $this->render(['success' => 1]);
+        $this->render(['success' => (int)I18n::set(
+                $this->request->post('from'),
+                $this->request->post('to'),
+                $this->request->post('language')
+        )]);
     }
 
     private function get_missing($lang, $mask) {
         $tmp = [];
         $tmp_m = [];
-        foreach (I18n::get_missing($lang) as $k => $v) {
+        foreach (I18n::get_missing($lang) as $k) {
             $tmp[$k] = $k;
             if ($mask != 'de')
                 $tmp_m[$k] = __($k, -1, $mask);
@@ -59,7 +50,7 @@ class Controller_Admin_Translate extends Controller_Admin_Admin {
     private function get_auto($lang, $mask) {
         $tmp = [];
         $tmp_m = [];
-        foreach (I18n::get_all($lang) as $s => $t)
+        foreach (I18n::load($lang) as $s => $t)
             if ($s == $t)
                 $tmp[$s] = $t;
         if ($mask == 'de') $tmp_m = [];
@@ -75,7 +66,7 @@ class Controller_Admin_Translate extends Controller_Admin_Admin {
     private function get_all($lang, $mask, $search) {
         $tmp = [];
         $tmp_m = [];
-        foreach (I18n::get_all($lang) as $s => $t)
+        foreach (I18n::load($lang) as $s => $t)
             if (!$search || strpos($s, $search) !== false || strpos($t, $search) !== false || ($mask != 'de' && strpos(__($s, -1, $mask), $search) !== false))
                 $tmp[$s] = $t;
         if ($mask == 'de') $tmp_m = [];

@@ -51,6 +51,10 @@ class I18n extends Kohana_I18n {
         return static::$lang_list[0];
     }
 
+    public static function get_primary_fallback() {
+        return isset(static::$lang_list[1]) ? static::$lang_list[1] : static::$lang_list[0];
+    }
+
     public static function get_languages($include_primary = false) {
         return $include_primary ? static::$lang_list : array_slice(static::$lang_list, 1);
     }
@@ -113,6 +117,7 @@ class I18n extends Kohana_I18n {
         if (DB::select('id')->from('language')->where('hash','=', $hash)->execute()->count())
             return false;
 
+        static::flush_cache();
         list($id, $rows) = DB::insert('language', ['hash',static::get_primary_language()])->values([$hash,$string])->execute();
         return $rows > 0;
     }
@@ -164,12 +169,13 @@ class I18n extends Kohana_I18n {
         // Load language table
 		$table = I18n::load($lang);
 
-		// Return the translated string if it exists
-        if (!isset($table[$string])) {
+        // Create entry if it doesn't exist
+        if (!isset($table[$string]))
             static::set_missing($string);
-            return $string;
-        } elseif (!$table[$string])
-            return $string;
+
+		// Return the translated string if it exists; attempt fallback before sending the untranslated string back
+        if (!isset($table[$string]) || !$table[$string])
+            return (!in_array($lang, [static::get_primary_language(), static::get_primary_fallback()])) ? static::get($string, static::get_primary_fallback()) : $string;
         else return $table[$string];
 	}
 }

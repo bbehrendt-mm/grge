@@ -71,6 +71,48 @@ class Controller_Test extends Controller {
         }
     }
 
+    public function action_combat() {
+
+        $battle = Model_Combat_Field::factory()
+            ->add_combatant(1, [
+                Model_Combat_Actor::factory()
+                    ->name('Brainbox', Model_Combat_Actor::MCA_TYPE_PLAYER)
+                    ->strength(84, 100, 1)
+                    ->stats(8,12,1,0),
+                Model_Combat_Actor::factory()
+                    ->name('Dog ("Veemon")', Model_Combat_Actor::MCA_TYPE_PET)
+                    ->strength(19, 20, 1)
+                    ->stats(10,0,0,0),
+            ])
+            ->add_combatant(2, [
+                Model_Combat_Actor::factory()
+                    ->name('Walker', Model_Combat_Actor::MCA_TYPE_ZOMBIE)
+                    ->strength(3,3,4)
+                    ->stats(5,2,0,0),
+                Model_Combat_Actor::factory()
+                    ->name('Shambler', Model_Combat_Actor::MCA_TYPE_ZOMBIE)
+                    ->strength(1,1,3)
+                    ->stats(2,0,0,0),
+                Model_Combat_Actor::factory()
+                    ->name('Shambler', Model_Combat_Actor::MCA_TYPE_ZOMBIE)
+                    ->strength(1,1,5)
+                    ->stats(2,0,0,0),
+                Model_Combat_Actor::factory()
+                    ->name('Zombie Dog', Model_Combat_Actor::MCA_TYPE_PET)
+                    ->strength(15,15,1)
+                    ->stats(6,2,2,0),
+            ])
+            ->init_positions(24, 5)
+            ->begin();
+
+        $log = $battle->get_scene();
+
+        echo "<h2>ZombVival Combat System V3 (GRGE_2.1 / Season 8)</h2>";
+        echo "<b>Battle text log below:</b><br />";
+        echo "<pre>$log</pre>";
+        echo "Log end.";
+    }
+
     public function action_labyrinth() {
         $m = new Model_Map_Labyrinth('default','hospital');
         $m->auto_init();

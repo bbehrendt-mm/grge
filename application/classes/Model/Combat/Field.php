@@ -44,7 +44,7 @@ class Model_Combat_Field {
             foreach ($combatant as $c)
                 $this->add_combatant($group, $c);
         } else
-            $this->combatants[] = $combatant->group($group)->id(count($this->combatants) + 1);
+            $this->combatants[] = $combatant->set_scene($this->scene)->group($group)->id(count($this->combatants) + 1);
 
         return $this;
     }

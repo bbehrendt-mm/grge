@@ -24,6 +24,10 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
         return static::$accuracy;
     }
 
+    public function get_ammo_icons() {
+        return [];
+    }
+
     protected function aoe() {
         return static::$aoe;
     }
@@ -33,7 +37,11 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
     }
 
     protected function range() {
-        return static::range();
+        return static::$range;
+    }
+
+    public function max_range() {
+        return static::$range[1];
     }
 
     /**
@@ -111,9 +119,11 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
      * @param Model_Combat_Actor $opponent
      * @param int $multiply
      * @param int $accuracy
+     * @param int $atk
+     * @param int $res
      * @return bool|number
      */
-    public function calculate_damage($me, $opponent, $multiply = 1, $accuracy = 1) {
+    public function calculate_damage($me, $opponent, $multiply = 1, $accuracy = 1, $atk = 1, $res = 1) {
         if (!$this->usable()) return false;
 
         $accuracy = $this->get_accuracy($me->distance_from($opponent), $accuracy);
@@ -121,7 +131,11 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
         for ($i = 0; $i < $multiply; $i++)
             if ($accuracy <= 0 && !($accuracy >= 1 || mt_rand()/mt_getrandmax() <= $accuracy)) $actual_multiply--;
 
-        return $actual_multiply <= 0 ? 0 : mt_rand($this->damage()[0] * $actual_multiply, $this->damage()[1] * $actual_multiply);
+        $raw = $actual_multiply <= 0 ? 0 : mt_rand($this->damage()[0] * $actual_multiply, $this->damage()[1] * $actual_multiply);
+        $raw = ($raw * $atk) / $res;
+        if ($this->aoe())
+            $raw = min($raw, $opponent->strength()[0]);
+        return $raw;
     }
 
     /**

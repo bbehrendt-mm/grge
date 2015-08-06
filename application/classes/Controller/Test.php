@@ -77,28 +77,34 @@ class Controller_Test extends Controller {
             ->add_combatant(1, [
                 Model_Combat_Actor::factory()
                     ->name('Brainbox', Model_Combat_Actor::MCA_TYPE_PLAYER)
+                    ->add_weapon(new Model_Test_Machete())
                     ->strength(84, 100, 1)
                     ->stats(8,12,1,0),
                 Model_Combat_Actor::factory()
                     ->name('Dog ("Veemon")', Model_Combat_Actor::MCA_TYPE_PET)
+                    ->add_weapon(new Model_Test_Machete())
                     ->strength(19, 20, 1)
                     ->stats(10,0,0,0),
             ])
             ->add_combatant(2, [
                 Model_Combat_Actor::factory()
                     ->name('Walker', Model_Combat_Actor::MCA_TYPE_ZOMBIE)
+                    ->add_weapon(new Model_Test_Claw())
                     ->strength(3,3,4)
                     ->stats(5,2,0,0),
                 Model_Combat_Actor::factory()
                     ->name('Shambler', Model_Combat_Actor::MCA_TYPE_ZOMBIE)
+                    ->add_weapon(new Model_Test_Claw())
                     ->strength(1,1,3)
                     ->stats(2,0,0,0),
                 Model_Combat_Actor::factory()
                     ->name('Shambler', Model_Combat_Actor::MCA_TYPE_ZOMBIE)
+                    ->add_weapon(new Model_Test_Claw())
                     ->strength(1,1,5)
                     ->stats(2,0,0,0),
                 Model_Combat_Actor::factory()
                     ->name('Zombie Dog', Model_Combat_Actor::MCA_TYPE_PET)
+                    ->add_weapon(new Model_Test_Claw())
                     ->strength(15,15,1)
                     ->stats(6,2,2,0),
             ])

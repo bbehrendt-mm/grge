@@ -53,9 +53,11 @@ class Model_Combat_Actor {
 
     /**
      * @param Model_Combat_Scene $scene
+     * @return Model_Combat_Actor
      */
     public function set_scene(&$scene) {
         $this->scene = $scene;
+        return $this;
     }
 
     /**
@@ -218,6 +220,7 @@ class Model_Combat_Actor {
      * @param Model_Combat_Actor[] $friends
      * @param Model_Combat_Actor[] $foes
      * @param Model_Combat_Weapon|null $weapon
+     * @param bool $ignore_range
      * @return array|null
      */
     protected function get_attack_priority($friends, $foes, $weapon = null, $ignore_range = false) {
@@ -234,11 +237,13 @@ class Model_Combat_Actor {
 
             $ret[] = [
                 $weapon->potential_damage($this, $foe, $ignore_range) * $priority,
-                $foe
+                $foe,
+                $weapon,
             ];
         }
 
-        return $this->get_recommendation($ret);
+        $swc = $this->get_recommendation($ret);
+        return ($swc[0] <= 0) ? [] : $swc;
     }
 
     /**
@@ -253,10 +258,10 @@ class Model_Combat_Actor {
 
         $rec = $this->get_recommendation($tmp);
         /** @noinspection PhpUndefinedMethodInspection */
-        if (!$rec || ($this->current_weapon && $rec[1]->uin() == $this->current_weapon->uin())) return null;
+        if (!$rec || ($this->current_weapon && $rec[2]->uin() == $this->current_weapon->uin())) return null;
         else return [
             $rec[0] * $this->ai_volatile,
-            $rec[1]
+            $rec[2]
         ];
     }
 
@@ -267,12 +272,12 @@ class Model_Combat_Actor {
      */
     protected function get_movement_priority($friends, $foes) {
         if ($this->current_weapon && ($closest_foe = $this->current_weapon->closest_foe($this, $foes))) {
-            $tmp = $this->get_weapon_priority($friends, [$closest_foe]);
+            $tmp = $this->get_attack_priority($friends, [$closest_foe], null, true);
             return $tmp ? [
                 $tmp[0] * $this->ai_brashness,
                 $tmp[1]
-            ] : null;
-        } return null;
+            ] : [];
+        } return [];
     }
 
     protected function can_attack($combatant) {
@@ -305,13 +310,17 @@ class Model_Combat_Actor {
     /**
      * @param Model_Combat_Actor[] $friends
      * @param Model_Combat_Actor[] $foes
+     * @param bool $second_act
      */
-    public function act($friends, $foes) {
-        $this->reset_steps();
+    public function act($friends, $foes, $second_act = false) {
+        if (!$second_act)
+            $this->reset_steps();
 
         $attack = $this->get_attack_priority($friends, $foes);
-        $switch = $this->get_weapon_priority($friends, $foes);
-        $move = $this->get_movement_priority($friends, $foes);
+        $switch = $second_act ? [] : $this->get_weapon_priority($friends, $foes);
+        $move = $second_act ? [] : $this->get_movement_priority($friends, $foes);
+
+        $this->scene->dbg_battle_ai($this, $attack, $switch, $move);
 
         list($ini, $atk, $res, $acc) = $this->actual_stats();
 
@@ -321,7 +330,9 @@ class Model_Combat_Actor {
             $target = $attack[1];
             list($op_ini, $op_atk, $op_res, $op_acc) = $this->actual_stats();
 
-            $target->damage($dmg = ($this->current_weapon->calculate_damage($this, $target, $this->count, $acc) * $atk)/$op_res);
+            $dmg = $this->current_weapon->calculate_damage($this, $target, $this->count, $acc, $atk, $op_res);
+            $this->scene->attack($this, $target, $this->current_weapon);
+            $target->damage($dmg);
             $this->current_weapon->trigger_usage($this, $target, $dmg, $this->scene);
 
         } elseif ($switch && (!$attack || $switch[0] > $attack[0]) && (!$move || $switch[0] > $move[0])) {
@@ -331,6 +342,26 @@ class Model_Combat_Actor {
 
         } elseif ($move && (!$switch || $move[0] > $switch[0]) && (!$attack || $move[0] > $attack[0])) {
             // Move action
+            /** @var Model_Combat_Actor $target */
+            $target = $move[1];
+
+            $d = $this->distance_from($target);
+            $d_min = $d - $this->current_weapon->max_range();
+
+            $target_x = (($target->pos_x - $this->pos_x)/$d) * $d_min;
+            $target_y = (($target->pos_y - $this->pos_y)/$d) * $d_min;
+
+            if ($d_min <= $this->movement_range) {
+                $this->pos_x = $target_x;
+                $this->pos_y = $target_y;
+                if ($d_min <= $this->movement_range)
+                    $this->act($friends, $foes, true);
+            } else {
+                $this->pos_x += (($target->pos_x - $this->pos_x)/$d) * $this->movement_range;
+                $this->pos_y += (($target->pos_y - $this->pos_y)/$d) * $this->movement_range;
+            }
+
+            $this->scene->move($this, [$this->pos_x, $this->pos_y], $target);
         } else {
             // Idle action
         }

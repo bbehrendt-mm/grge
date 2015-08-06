@@ -4,11 +4,12 @@ class Model_Combat_Scene {
 
     const MCS_EV_NEW_CHALLENGER = 1;           // [ID, Group, Name, Type, [x, y], [Health, Max Health, Count], [Ini, Dmg, Res, Acc]]
     const MCS_EV_NEXT = 2;                     // [ID]
-    const MCS_EV_ATTACK = 3;                   // [Atk-ID, Def-ID, Ammo, [Wpn-Name, Wpn-Icon, Wpn-Anim]]
+    const MCS_EV_ATTACK = 3;                   // [Atk-ID, Def-ID, [Ammo-Icons ...], [Wpn-Name, Wpn-Icon, Wpn-Anim]]
     const MCS_EV_DAMAGE = 4;                   // [ID, Damage, Kills, Death]
     const MCS_EV_INJURY = 5;                   // [ID, [Inj-Name, Inj-Icon]]
-    const MCS_EV_MOVE = 6;                     // [ID, [x, y]]
+    const MCS_EV_MOVE = 6;                     // [ID, [x, y], [to-id, distance]]
     const MCS_EV_SWITCH = 7;                   // [ID, [Wpn-Name, Wpn-Icon]]
+    const MCS_EV_DBG_AI = 8;                   // [ID, [P_ATK, P_SWC, P_MOV]]
 
     private $log_data = [];
 
@@ -47,15 +48,19 @@ class Model_Combat_Scene {
 
             case static::MCS_EV_DAMAGE:
                 list($id, $damage, $kills, $death) = $entry;
-                return "Combatant $id takes $damage damage, $kills die" . ($death ? " and the group is obliterated." : '.');
+                return "Combatant $id takes " . round($damage, 2) . " damage, $kills die" . ($death ? " and the group is obliterated." : '.');
 
             case static::MCS_EV_INJURY:
                 list($id, list($name, $icon)) = $entry;
                 return "Combatant $id has been injured: $name!";
 
             case static::MCS_EV_MOVE:
+                list ($id, list($x, $y), list($to_id, $dist)) = $entry;
+                return "Combatant $id moves to " . round($x, 2) . " / " . round($y, 2) . ($to_id >= 0 ? (", towards Combatant $to_id, remaining distance is " . round($dist, 2) . ".") : ".");
 
-
+            case static::MCS_EV_DBG_AI:
+                list($id, list($atk, $swc, $mov)) = $entry;
+                return "Combatant $id is thinking: PR:ATK $atk / PR:SWC $swc / PR:MOV $mov.";
 
             default: return "UNKNOWN SCENE INSTRUCTION ($type)!!! Data is " . json_encode($entry);
         }
@@ -93,15 +98,14 @@ class Model_Combat_Scene {
      * @param Model_Combat_Actor $atk
      * @param Model_Combat_Actor $def
      * @param Model_Combat_Weapon $weapon
-     * @param string $ammo
      */
-    public function attack($atk, $def, $weapon, $ammo) {
+    public function attack($atk, $def, $weapon) {
         $this->log_data[] = [
             static::MCS_EV_ATTACK,
 
             $atk->id(),
             $def->id(),
-            $ammo,
+            $weapon->get_ammo_icons(),
             [
                 $weapon->name(),
                 $weapon->icon(),
@@ -149,14 +153,21 @@ class Model_Combat_Scene {
     /**
      * @param Model_Combat_Actor $combatant
      * @param int[] $pos
+     * @param null|Model_Combat_Actor $to
      */
-    public function move($combatant, $pos) {
+    public function move($combatant, $pos, $to = null) {
         $this->log_data[] = [
             static::MCS_EV_MOVE,
 
             $combatant->id(),
-            $pos
-
+            $pos,
+            $to ? [
+                $to->id(),
+                $to->distance_from($combatant)
+            ] : [
+                -1,
+                -1
+            ]
         ];
     }
 
@@ -173,6 +184,26 @@ class Model_Combat_Scene {
             [
                 $new_weapon->name(),
                 $new_weapon->icon(),
+            ]
+
+        ];
+    }
+
+    /**
+     * @param Model_Combat_Actor $combatant
+     * @param array|null $ai_atk
+     * @param array|null $ai_swc
+     * @param array|null $ai_mov
+     */
+    public function dbg_battle_ai($combatant, $ai_atk, $ai_swc, $ai_mov) {
+        $this->log_data[] = [
+            static::MCS_EV_DBG_AI,
+
+            $combatant->id(),
+            [
+                $ai_atk ? $ai_atk[0] : '-',
+                $ai_swc ? $ai_swc[0] : '-',
+                $ai_mov ? $ai_mov[0] : '-',
             ]
 
         ];

@@ -41,6 +41,9 @@ class Model_Combat_Actor {
     /** @var Model_Combat_Weapon[] */
     protected $weapons = [];
 
+    /** @var  Model_Inventory */
+    protected $inventory;
+
     /** @var Model_Combat_Weapon */
     protected $current_weapon = null;
 
@@ -57,6 +60,19 @@ class Model_Combat_Actor {
      */
     public function set_scene(&$scene) {
         $this->scene = $scene;
+        return $this;
+    }
+
+    /**
+     * @param Model_Inventory $inv
+     * @return Model_Combat_Actor
+     */
+    public function register_inventory($inv) {
+        $this->inventory = $inv;
+
+        /** @noinspection PhpParamsInspection */
+        $this->add_weapon($this->inventory->get('Model_Combat_Weapon'));
+
         return $this;
     }
 
@@ -240,7 +256,7 @@ class Model_Combat_Actor {
 
             if (!$ret || $ret[0] < $p)
                 $ret = [
-                    $weapon->potential_damage($this, $foe, $ignore_range, $this->count) * $priority,
+                    $p,
                     $foe,
                     $weapon,
                 ];
@@ -274,8 +290,8 @@ class Model_Combat_Actor {
      * @return array|null
      */
     protected function get_movement_priority($friends, $foes) {
-        if ($this->current_weapon && ($closest_foe = $this->current_weapon->closest_foe($this, $foes))) {
-            $tmp = $this->get_attack_priority($friends, [$closest_foe], null, true);
+        if ($this->current_weapon && ($closest_foe = $this->current_weapon->closest_foe($this, $foes, false))) {
+            $tmp = $this->get_attack_priority($friends, [$closest_foe], $this->current_weapon, true);
             return $tmp ? [
                 $tmp[0] * $this->ai_brashness,
                 $tmp[1]
@@ -367,7 +383,8 @@ class Model_Combat_Actor {
                 $this->pos_y += $dy * $this->movement_range;
             }
 
-            $this->scene->move($this, [$this->pos_x, $this->pos_y], sqrt(pow($old_x - $this->pos_x, 2) + pow($old_y - $this->pos_y, 2)), $target);
+            $dist = sqrt(pow($old_x - $this->pos_x, 2) + pow($old_y - $this->pos_y, 2));
+            $this->scene->move($this, [$this->pos_x, $this->pos_y], $dist, $target);
         } else {
             // Idle action
         }

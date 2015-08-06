@@ -57,6 +57,8 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
      * @return float
      */
     private function get_accuracy($distance, $modifier = 1) {
+        $distance = round($distance, 2);
+
         if ($distance < $this->range()[0] || $distance > $this->range()[1]) return 0;
         elseif (static::$use_fixed_accuracy) $tmp = min(1,max(0,$this->accuracy()));
         else $tmp = min(1,max(0,(1 - ($distance - $this->range()[0])/($this->range()[1] - $this->range()[0])) * $this->accuracy()));
@@ -78,8 +80,10 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
             return 0;
         else {
             list($oh, $ohm, $c) = $other->strength();
-            $max_damage = $this->aoe() ? $oh + ($ohm * ($c - 1)) : $oh;
-            return min(($this->damage()[0] * $count + $this->damage()[1] * $count)/2 * ($ignore_range ? 1 : $this->get_accuracy($me->distance_from($other))), $max_damage);
+            $max_damage = $this->aoe() ? ($oh + ($ohm * ($c - 1))) : $oh;
+            return min(
+                ($this->damage()[0] * $count + $this->damage()[1] * $count)/2 * ($ignore_range ? 1 : $this->get_accuracy($other->distance_from($me)))
+                , $max_damage);
         }
     }
 
@@ -94,7 +98,7 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
         $ret = null;
         foreach ($others as $other)
             if ($include_in_range || !$this->in_range($me, $other)) {
-                if (($d = $me->distance_from($other)) < $a) {
+                if (($d = $other->distance_from($me)) < $a) {
                     $a = $d;
                     $ret = $other;
                 }
@@ -105,7 +109,7 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
     /**
      * @param Model_Combat_Actor $me
      * @param Model_Combat_Actor[]|Model_Combat_Actor $foes
-     * @return Model_Combat_Actor[]|Model_Combat_Actor
+     * @return Model_Combat_Actor[]|bool
      */
     public function in_range($me, $foes) {
         if (is_array($foes))

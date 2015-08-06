@@ -83,9 +83,8 @@ class Model_Combat_Field {
         while ($round < 512 && $this->get_distinct_groups() > 1) {
             $round++;
 
-            if (!($next = $this->jump_next_move())) {
-                echo "END $round"; break;
-            };
+            if (!($next = $this->jump_next_move()))
+                break;
 
             $this->scene->next_combatant($next);
             $next->act(array_filter($this->combatants, function($a) use ($next) {
@@ -96,7 +95,6 @@ class Model_Combat_Field {
                 return $a->alive() && $a->group() != $next->group();
             }));
         }
-        echo $this->get_distinct_groups();
 
         return $this;
     }

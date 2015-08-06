@@ -70,15 +70,16 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
      * @param Model_Combat_Actor $me
      * @param Model_Combat_Actor $other
      * @param bool $ignore_range
+     * @param int $count
      * @return float|int
      */
-    public function potential_damage($me, $other, $ignore_range = false) {
+    public function potential_damage($me, $other, $ignore_range = false, $count = 1) {
         if (!$this->usable())
             return 0;
         else {
             list($oh, $ohm, $c) = $other->strength();
             $max_damage = $this->aoe() ? $oh + ($ohm * ($c - 1)) : $oh;
-            return min(($this->damage()[0] + $this->damage()[1])/2 * ($ignore_range ? 1 : $this->get_accuracy($me->distance_from($other))), $max_damage);
+            return min(($this->damage()[0] * $count + $this->damage()[1] * $count)/2 * ($ignore_range ? 1 : $this->get_accuracy($me->distance_from($other))), $max_damage);
         }
     }
 
@@ -126,14 +127,19 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
     public function calculate_damage($me, $opponent, $multiply = 1, $accuracy = 1, $atk = 1, $res = 1) {
         if (!$this->usable()) return false;
 
-        $accuracy = $this->get_accuracy($me->distance_from($opponent), $accuracy);
-        $actual_multiply = $multiply;
-        for ($i = 0; $i < $multiply; $i++)
-            if ($accuracy <= 0 && !($accuracy >= 1 || mt_rand()/mt_getrandmax() <= $accuracy)) $actual_multiply--;
+        $accuracy = $this->get_accuracy($opponent->distance_from($me), $accuracy);
+        if ($accuracy <= 0)
+            $actual_multiply = 0;
+        elseif ($accuracy >= 1)
+            $actual_multiply = $multiply;
+        else {
+            $actual_multiply = $multiply;
+            for ($i = 0; $i < $multiply; $i++)
+                if (mt_rand()/mt_getrandmax() > $accuracy) $actual_multiply--;
+        }
 
-        $raw = $actual_multiply <= 0 ? 0 : mt_rand($this->damage()[0] * $actual_multiply, $this->damage()[1] * $actual_multiply);
-        $raw = ($raw * $atk) / $res;
-        if ($this->aoe())
+        $raw = (($actual_multiply <= 0 ? 0 : mt_rand($this->damage()[0] * $actual_multiply, $this->damage()[1] * $actual_multiply)) * $atk) / $res;
+        if (!$this->aoe())
             $raw = min($raw, $opponent->strength()[0]);
         return $raw;
     }

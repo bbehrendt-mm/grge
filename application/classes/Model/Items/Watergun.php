@@ -11,18 +11,13 @@ class Model_Items_Watergun extends Model_Items_Abstract_Wbgun {
 
 	protected static $weight = 5;
 	protected static $essential = true;
-	
-	protected static $capacity = 2;
-	public static $range = Array(0,10);
-	protected static $damage = Array(5,20);
-	public static $damage_type = Model_Battle_Weapon::MBW_DMG_SCATTER;
-	protected static $custom_icon = "water_variant";
-	protected static $ammo = 'custom';
-	public static $accuracy = 1.6;
-	public static $accuracy_type = Model_Battle_Weapon::MBW_ACC_LINEAR_DISTANCE;
-	public static $durability = 1;
-	public static $bounce = 0;
-	public static $reload_time = 0;
-	public static $lock_type = Model_Battle_Weapon::MBW_LCK_WEAPON;
-	public static $energy_cost = 0;
+
+	protected static $damage = [5,20];
+	protected static $range = [0,10];
+	protected static $accuracy = 1;
+	protected static $use_fixed_accuracy = false;
+	protected static $aoe = true;
+	protected static $friendly_fire = false;
+
+	// TODO: High accuracy
 }	

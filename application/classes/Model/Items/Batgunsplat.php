@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Items_Batgunsplat extends Model_Battle_Weapon implements Interface_Static {
+class Model_Items_Batgunsplat extends Model_Combat_Weapons_Ammo implements Interface_Static {
 
 	protected static $static_info = Array(
 			'name' => 'Zerstörer',
@@ -11,15 +11,12 @@ class Model_Items_Batgunsplat extends Model_Battle_Weapon implements Interface_S
 
 	protected static $weight = 12;
 
-	public static $range = Array(0,10);
-	protected static $damage = Array(20,50);
-	public static $damage_type = Model_Battle_Weapon::MBW_DMG_AREA;
-	protected static $ammo = 'Model_Items_Battery';
-	public static $accuracy = 0.9;
-	public static $accuracy_type = Model_Battle_Weapon::MBW_ACC_STATIC;
-	public static $durability = 1;
-	public static $bounce = 0;
-	public static $reload_time = 5;
-	public static $lock_type = Model_Battle_Weapon::MBW_LCK_PLAYER;
-	public static $energy_cost = 5;
+	protected static $ammo = ['Model_Items_Battery' => 1];
+	protected static $damage = [20,50];
+	protected static $range = [0,10];
+	protected static $accuracy = 0.9;
+	protected static $use_fixed_accuracy = true;
+	protected static $aoe = true;
+
+	//public static $reload_time = 5;
 }	

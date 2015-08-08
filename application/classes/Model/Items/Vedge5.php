@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Items_Vedge5 extends Model_Battle_Weapon implements Interface_Static {
+class Model_Items_Vedge5 extends Model_Combat_Weapons_Throwable implements Interface_Static {
 
 	protected static $static_info = Array(
 			'name' => 'Explosive Mutationsmelone',
@@ -24,18 +24,14 @@ class Model_Items_Vedge5 extends Model_Battle_Weapon implements Interface_Static
                     )
             );
     }
-	
-	protected static $distance_chance_modifier = 5;
-	public static $range = Array(1,18);
-	protected static $damage = Array(30,40);
-	public static $damage_type = Model_Battle_Weapon::MBW_DMG_AREA;
-	protected static $ammo = 'self';
-	public static $accuracy = 0.9;
-	public static $accuracy_type = Model_Battle_Weapon::MBW_ACC_STATIC;
-	public static $durability = 1;
-	public static $bounce = 0;
-	public static $reload_time = 1;
-	public static $lock_type = Model_Battle_Weapon::MBW_LCK_PLAYER;
-	public static $energy_cost = 1;
 
+	protected static $damage = [30,40];
+	protected static $range = [1,18];
+	protected static $accuracy = 0.9;
+	protected static $use_fixed_accuracy = true;
+	protected static $aoe = true;
+	protected static $friendly_fire = false;
+	protected static $energy = 1;
+
+	//public static $reload_time = 1;
 }	

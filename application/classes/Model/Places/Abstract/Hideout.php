@@ -55,8 +55,12 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         }
 
         //Check for zombie attack
-        if (($this->get_defense() < 1) && ($battle_log = Tool_Scripts::battle($this->zombie_factory->spawn_zombies(), Tool_Scripts::at_location($this->uin), true, $battle, $zc))) {
-            $this->log->add(new Model_Log_Types_Battle(':zombiestr tauchen auf!', $battle_log, array(':zombiestr' => $zc . ' ' . __('Zombies'))));
+        if ($this->get_defense() < 1) {
+            //TODO: Korrekte Distanz!!
+            Tool_Scripts::combat([Tool_Scripts::at_location($this->uin), $this->zombie_factory->spawn_zombies()], true, 10, $this);
+
+            //TODO: Korrekte Anzahl!
+            $this->log->add(':zombiestr tauchen auf!', [':zombiestr' => 10 . ' ' . __('Zombies')]);
             return;
         }
 
@@ -75,14 +79,17 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
                     }
             }
 
-            if ($battle_log = Tool_Scripts::battle($this->zombie_factory->release_zombie_population(), Tool_Scripts::at_location($this->uin), true, $battle, $num)) {
-                $this->breakins++;
+            //TODO: Korrekte Distanz!!
+            Tool_Scripts::combat([Tool_Scripts::at_location($this->uin), $this->zombie_factory->release_zombie_population()], true, 10, $this);
 
-                foreach (Tool_Scripts::at_location($this->uin) as $s_player)
-                    $s_player->achievements()->achieve(Model_Achievement::MA_BREAK_INS, $num);
+            $this->breakins++;
 
-                $this->log->add(new Model_Log_Types_Battle('Die Zombies haben deine Verteidigung durchbrochen! :num Zombies dringen ein!', $battle_log, array(':num' => $num)));
-            }
+            //TODO: Korrekte Anzahl!
+            $num = 10;
+            foreach (Tool_Scripts::at_location($this->uin) as $s_player)
+                $s_player->achievements()->achieve(Model_Achievement::MA_BREAK_INS, $num);
+
+            $this->log->add('Die Zombies haben deine Verteidigung durchbrochen! :num Zombies dringen ein!', array(':num' => $num));
         }
     }
 

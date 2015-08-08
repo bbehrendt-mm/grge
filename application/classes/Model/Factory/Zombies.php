@@ -103,9 +103,19 @@ class Model_Factory_Zombies extends Model {
 		
 		$ret = Array();
 		foreach ($data as $instance) if (($num = round($multiply * mt_rand($instance["num"][0], $instance["num"][1]))) > 0)
-			$ret[] = new $instance["type"]($num, mt_rand($instance["distance"][0], $instance["distance"][1]));
+			//$ret[] = new $instance["type"]($num, mt_rand($instance["distance"][0], $instance["distance"][1]));
+			//TODO: Distance!
+			$ret[] = $instance['type']::factory()->count($num);
 		
 		return $ret;
+	}
+
+	public function get_siege_range() {
+		//Get Config
+		if (!$config = Tool_System::config_tree("spawn/{$this->config}", $this->type))
+			throw new Exception('Failed to load zombie spawn configuration (' . $this->config . ')!');
+
+		return (int)$config['range'];
 	}
 
     /**
@@ -131,7 +141,9 @@ class Model_Factory_Zombies extends Model {
 		
 		//Spawn fixed number of zombies
         $ztype = empty($config["siege"]) ? 'Model_Battle_Shambler' : $config["siege"];
-		if ($number !== null) return Array(new $ztype($number, $config['range']));
+		//if ($number !== null) return Array(new $ztype($number, $config['range']));
+		//TODO: Distance!
+		if ($number !== null) return Array($ztype::factory()->count($number));
 		
 		if (count($config["groups"]) == 0) return null;
 		

@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Items_Generic_Bauble extends Model_Battle_Weapon implements Interface_Static {
+class Model_Items_Generic_Bauble extends Model_Combat_Weapons_Throwable implements Interface_Static {
 
     protected static $static_info = Array(
         'name' => 'Christbaumkugel',
@@ -22,15 +22,13 @@ class Model_Items_Generic_Bauble extends Model_Battle_Weapon implements Interfac
 
 	protected static $weight = 3;
 
-    public static $range = Array(1,80);
-    protected static $damage = Array(4,10);
-    public static $damage_type = Model_Battle_Weapon::MBW_DMG_SCATTER;
-    protected static $ammo = 'self';
-    public static $accuracy = 0.7;
-    public static $accuracy_type = Model_Battle_Weapon::MBW_ACC_STATIC;
-    public static $durability = 1;
-    public static $bounce = 0;
-    public static $reload_time = 0;
-    public static $lock_type = Model_Battle_Weapon::MBW_LCK_PLAYER;
-    public static $energy_cost = 0;
+    protected static $damage = [4,10];
+    protected static $range = [1,40];
+    protected static $accuracy = 0.7;
+    protected static $use_fixed_accuracy = true;
+    protected static $aoe = false;
+    protected static $friendly_fire = false;
+    protected static $energy = 0;
+
+    //public static $reload_time = 0;
 }	

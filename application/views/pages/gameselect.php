@@ -11,8 +11,6 @@
      * @var int $braincoins
      * @var bool $show_shop
      */
-
-    //ToDo: Unstartable Jobs
 ?>
 
 <h1 class="noclick"><i class="fa fa-arrow-circle-right"></i><?=__('Spielauswahl');?></h1>

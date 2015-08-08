@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Items_Batgunsnp extends Model_Battle_Weapon implements Interface_Static {
+class Model_Items_Batgunsnp extends Model_Combat_Weapons_Ammo implements Interface_Static {
 
 	protected static $static_info = Array(
 			'name' => 'Scharfschützen-Batteriewerfer',
@@ -11,15 +11,12 @@ class Model_Items_Batgunsnp extends Model_Battle_Weapon implements Interface_Sta
 
 	protected static $weight = 12;
 
-	public static $range = Array(50,100);
-	protected static $damage = Array(80,100);
-	public static $damage_type = Model_Battle_Weapon::MBW_DMG_IMPACT;
-	protected static $ammo = 'Model_Items_Battery';
-	public static $accuracy = 1;
-	public static $accuracy_type = Model_Battle_Weapon::MBW_ACC_STATIC;
-	public static $durability = 1;
-	public static $bounce = 0;
-	public static $reload_time = 15;
-	public static $lock_type = Model_Battle_Weapon::MBW_LCK_PLAYER;
-	public static $energy_cost = 0;
+	protected static $ammo = ['Model_Items_Battery' => 1];
+	protected static $damage = [50,100];
+	protected static $range = [20,100];
+	protected static $accuracy = 1;
+	protected static $use_fixed_accuracy = true;
+	protected static $aoe = false;
+
+	//public static $reload_time = 15;
 }	

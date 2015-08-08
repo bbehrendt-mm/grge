@@ -12,8 +12,10 @@ class Model_Buffs_Hallucinations extends Model_Buffs_Abstract_Buff {
             $z = array();
             $c = mt_rand(1,8);
             for ($i = 0; $i < $c; $i++)
-                $z[] = new Model_Battle_Hallucination(mt_rand(1,5),mt_rand(1,99));
-            $this->assoc_player->location()->log()->add(new Model_Log_Types_Battle('OH GOTT! Du wirst von obskuren Gestalten angegriffen, die eventuell mit deinen schweren Halluzinationen in Zusammenhang stehen!', Tool_Scripts::battle($z, array($this->assoc_player), false, $battle, $count, null)));
+                $z[] = new Model_Combat_Zombies_Hallucination();
+
+            Tool_Scripts::combat([[$this->assoc_player], $z], false, 20, $this->assoc_player->location());
+            $this->assoc_player->location()->log()->add('OH GOTT! Du wirst von obskuren Gestalten angegriffen, die eventuell mit deinen schweren Halluzinationen in Zusammenhang stehen!');
         }
 
         return parent::tick();

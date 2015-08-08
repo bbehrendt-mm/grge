@@ -22,40 +22,40 @@ class Model_Places_Colosseum extends Model_Places_Abstract_Place {
     }
 
 	private static $stageconf = Array( 
-				0 => Array('distance' => 100, 'zombies' => Array('Model_Battle_Mutant' => 5)),
+				0 => Array('distance' => 100, 'zombies' => Array('Model_Combat_Zombies_Mutant' => 5)),
 				//EASY BATTLES
-				1 => Array('distance' => 100,	'zombies' => Array('Model_Battle_Shambler' => 6)),
-				2 => Array('distance' => 100,	'zombies' => Array('Model_Battle_Runner' => 5)),
-				3 => Array('distance' => 0,		'zombies' => Array('Model_Battle_Fatass' => 1)),
-				4 => Array('distance' => 30,	'zombies' => Array('Model_Battle_Runner' => 1, 'Model_Battle_Fatass' => 2)),
-				5 => Array('distance' => 0,		'zombies' => Array('Model_Battle_Mutant' => 10, 'Model_Battle_Shambler' => 1)),
+				1 => Array('distance' => 100,	'zombies' => Array('Model_Combat_Zombies_Shambler' => 6)),
+				2 => Array('distance' => 100,	'zombies' => Array('Model_Combat_Zombies_Runner' => 5)),
+				3 => Array('distance' => 0,		'zombies' => Array('Model_Combat_Zombies_Fatass' => 1)),
+				4 => Array('distance' => 30,	'zombies' => Array('Model_Combat_Zombies_Runner' => 1, 'Model_Combat_Zombies_Fatass' => 2)),
+				5 => Array('distance' => 0,		'zombies' => Array('Model_Combat_Zombies_Mutant' => 10, 'Model_Combat_Zombies_Shambler' => 1)),
 				//MEDIUM BATTLES
-				6 => Array('distance' => 50,	'zombies' => Array('Model_Battle_Shambler' => 15)),
-				7 => Array('distance' => 30,	'zombies' => Array('Model_Battle_Runner' => 5)),
-				8 => Array('distance' => 0,		'zombies' => Array('Model_Battle_Fatass' => 3)),
-				9 => Array('distance' => 0,		'zombies' => Array('Model_Battle_Runner' => 5)),
-				10=> Array('distance' => 10,	'zombies' => Array('Model_Battle_Mutant' => 20, 'Model_Battle_Shambler' => 2)),
+				6 => Array('distance' => 50,	'zombies' => Array('Model_Combat_Zombies_Shambler' => 15)),
+				7 => Array('distance' => 30,	'zombies' => Array('Model_Combat_Zombies_Runner' => 5)),
+				8 => Array('distance' => 0,		'zombies' => Array('Model_Combat_Zombies_Fatass' => 3)),
+				9 => Array('distance' => 0,		'zombies' => Array('Model_Combat_Zombies_Runner' => 5)),
+				10=> Array('distance' => 10,	'zombies' => Array('Model_Combat_Zombies_Mutant' => 20, 'Model_Combat_Zombies_Shambler' => 2)),
 				//HARD BATTLES
-				11=> Array('distance' => 100,	'zombies' => Array('Model_Battle_Shambler' => 55)),
-				12=> Array('distance' => 20,	'zombies' => Array('Model_Battle_Runner' => 5, 'Model_Battle_Fatass' => 3)),
-				13=> Array('distance' => 0,		'zombies' => Array('Model_Battle_Fatass' => 6)),
-				14=> Array('distance' => 0,		'zombies' => Array('Model_Battle_Runner' => 5, 'Model_Battle_Shambler' => 5)),
-				15=> Array('distance' => 100,	'zombies' => Array('Model_Battle_Mutant' => 10, 'Model_Battle_Shambler' => 10, 'Model_Battle_Fatass' => 10, 'Model_Battle_Runner' => 10)),
+				11=> Array('distance' => 100,	'zombies' => Array('Model_Combat_Zombies_Shambler' => 55)),
+				12=> Array('distance' => 20,	'zombies' => Array('Model_Combat_Zombies_Runner' => 5, 'Model_Combat_Zombies_Fatass' => 3)),
+				13=> Array('distance' => 0,		'zombies' => Array('Model_Combat_Zombies_Fatass' => 6)),
+				14=> Array('distance' => 0,		'zombies' => Array('Model_Combat_Zombies_Runner' => 5, 'Model_Combat_Zombies_Shambler' => 5)),
+				15=> Array('distance' => 100,	'zombies' => Array('Model_Combat_Zombies_Mutant' => 10, 'Model_Combat_Zombies_Shambler' => 10, 'Model_Combat_Zombies_Fatass' => 10, 'Model_Combat_Zombies_Runner' => 10)),
 			);
-	
+
 	public function get_config() {
-		return ($this->stage > 15) ? Array('distance' => 100, 'zombies' => Array('Model_Battle_Behemoth' => $this->stage - 15)) : static::$stageconf[$this->stage];
+		return ($this->stage > 15) ? Array('distance' => 100, 'zombies' => Array('Model_Combat_Zombies_Behemoth' => $this->stage - 15)) : static::$stageconf[$this->stage];
 	}
 
 	private function battle() {
 		global $game, $player;
 
         $zmb = array();
-        if ($this->stage > 15) $zmb[] = new Model_Battle_Behemoth($this->stage - 15, 100);
-        else foreach (static::$stageconf[$this->stage]['zombies'] as $z => $c) $zmb[] = new $z($c, static::$stageconf[$this->stage]['distance']);
-        $battle_log = Tool_Scripts::battle($zmb, Tool_Scripts::at_location(), false, $battle, $zc);
+        if ($this->stage > 15) $zmb[] = new Model_Combat_Zombies_Behemoth();
+        else foreach (static::$stageconf[$this->stage]['zombies'] as $z => $c) $zmb[] = new $z();
 
-		$this->log->add(new Model_Log_Types_Battle(($this->stage == 0) ? 'Der Qualifikationskampf im Kolosseum beginnt!' : 'Der Kampf auf Ebene :level des Kolosseums beginnt!', $battle_log, array(':level' => $this->stage)));
+		Tool_Scripts::combat([Tool_Scripts::at_location(), $zmb], false, ($this->stage > 15) ? 60 : static::$stageconf[$this->stage]['distance'], $this);
+		$this->log->add($this->stage == 0 ? 'Der Qualifikationskampf im Kolosseum beginnt!' : 'Der Kampf auf Ebene :level des Kolosseums beginnt!');
 	}	
 	
 	private function reward_roulette($level) {

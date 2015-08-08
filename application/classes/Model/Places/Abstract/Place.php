@@ -370,47 +370,51 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 			} else $player->log()->add(new Model_Log_Types_Text('Fehlgeschlagene Flucht!', 'Der Kampf beginnt!', 'Schreiend und mit geschlossenen Augen rennst du auf die Zombies zu. Die sind von dieser Aktion so überrascht, dass du die meisten von ihnen einfach aus dem Weg stoßen kannst - aber leider nicht alle. Ein Zombie steht dir mitten im Weg, und wirft dich zu Boden als du versuchst, ihn umzurennen. Zwar kannst du schnell wieder aufspringen, bist nun aber von geifernden Zombies umzingelt. Flucht ist keine Option mehr, du wirst kämpfen müssen.'));
 		}
 
+        //TODO: Get remaining zombie count!
+        Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $this->zombie_factory->release_zombie_population()], true, $this->zombie_factory()->get_siege_range(), $this);
+
+        /*
         $battle_log = Tool_Scripts::battle($this->zombie_factory->release_zombie_population(), Tool_Scripts::at_location(), false, $battle, $zc);
         if ($battle_log) {
-            /** @var Model_Battle_Battle $battle */
+            /** @var Model_Battle_Battle $battle *//*
             $this->log->add(new Model_Log_Types_Battle('Du greifst die :zombiestr an, die den Weg versperren!', $battle_log, array(':zombiestr' => $zc . ' ' . __('Zombies'))));
             $this->zombie_factory()->accumulate_zombies($battle->get_zombie_count());
-        }
+        }*/
 
 		return true;	
 	}
 	
 	public function pretick() {
+        /** @global Model_Game $game */
         global $game;
 
         //Check for zombie attack
         if ($ghuls = $game->get_ghuls($this->uin())) {
-            $battle_log = Tool_Scripts::battle($ghuls, Tool_Scripts::at_location($this->uin), false, $battle, $zc, Model_Achievement::MA_MERCYKILL);
-            /** @var Model_Battle_Battle $battle */
-            if ($battle && $battle->get_zombie_count() == 0) {
-                $this->log->add(new Model_Log_Types_Battle('Einer deiner zombifizierten Freunde greift an!', $battle_log));
+            //TODO: Ghulkämpfe, Mercykill-Auszeichnung nicht vergessen!
+            $this->log->add('Einer deiner zombifizierten Freunde greift an!');
 
-                if ($battle->get_zombie_count() == 0)
-                    foreach ($ghuls as $key => $data) {
-                        $game->unregister_ghul($key);
-                        $drop = array();
-                        foreach ($data->inventory()->get() as $item) {
-                            $drop[] = $item;
-                            $this->inventory()->add($item);
-                        }
-
-                        $this->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_GHULKILL, $drop, $data->get_id()));
+            $battle_won = true;
+            if ($battle_won)
+                foreach ($ghuls as $key => $data) {
+                    $game->unregister_ghul($key);
+                    $drop = array();
+                    foreach ($data->inventory()->get() as $item) {
+                        $drop[] = $item;
+                        $this->inventory()->add($item);
                     }
-            }
-        } elseif ($battle_log = Tool_Scripts::battle($this->zombie_factory->spawn_zombies(), Tool_Scripts::at_location($this->uin), true, $battle, $zc)) {
-            $this->log->add(new Model_Log_Types_Battle(':zombiestr tauchen auf!', $battle_log, array(':zombiestr' => $zc . ' ' . __('Zombies'))));
-            return;
+
+                    $this->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_GHULKILL, $drop, $data->get_id()));
+                }
+
+        } else {
+            //TODO: Tatsächliche Zombie-Distanz aus der Config!!!
+            Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $this->zombie_factory()->spawn_zombies()], true, 10, $this);
         }
-		
+
 		//Accumulate zombies
 		$this->zombie_factory->accumulate_zombies();
 	}
-	
+
 	public function tick() {
 
 		$this->find_item();
@@ -418,27 +422,27 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 
 		return true;
 	}
-	
+
 	public function zombie_pop($reset = false) {
 		if ($reset) $this->zombie_factory->reset_zombie_population();
 		else return $this->zombie_factory->get_zombie_accumulation();
         return true;
 	}
-	
+
 	//Return description
 	public function description() {
 		return static::$description;
 	}
-	
+
 	//Interact with location
 	public function interact($action, $argument, $force = false) {
 		$method = $force ? "interaction_forced_{$action}" : "interaction_{$action}";
 		if (method_exists($this, $method)) $r = $this->$method($argument);
 		else throw new Exception("Location method '{$action}' (" . ($force ? 'enforced' : 'unenforced') . ") doesnt exist!", 1);
-		
+
 		return $r;
 	}
-	
+
 	public function interaction_mpa($project) {
         /**
          * @global $game Model_Game

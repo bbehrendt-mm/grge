@@ -9,6 +9,11 @@
 
         };
 
+    renderers[<?=Model_Log_Message::MLM_RAW_DATA?>] =
+        function(data) {
+            return $('<div />').data('expandable', true).append($('<div />').text(data.title)).append($('<pre />').addClass('sub').text(data.body));
+        };
+
     renderers[<?=Model_Log_Message::MLM_MOVEMENT_EVENT?>] =
         function(data) {
             var txt;

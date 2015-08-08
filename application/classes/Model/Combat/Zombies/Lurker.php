@@ -1,0 +1,15 @@
+<?php defined('SYSPATH') OR die('No direct access allowed.');
+
+class Model_Combat_Zombies_Lurker extends Model_Combat_Zombies_Zombie {
+
+    protected $name = 'Faulende Patienten';
+    protected $max_health = 4;
+
+    protected $stat_initiative = 5;
+    protected $stat_damage = 5;
+    protected $stat_resistance = 0;
+    protected $stat_accuracy = 0;
+
+    protected $movement_range = 5;
+
+}

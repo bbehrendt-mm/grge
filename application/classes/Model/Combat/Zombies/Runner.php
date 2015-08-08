@@ -1,0 +1,15 @@
+<?php defined('SYSPATH') OR die('No direct access allowed.');
+
+class Model_Combat_Zombies_Runner extends Model_Combat_Zombies_Zombie {
+
+    protected $name = 'Wahnsinnige Ghule';
+    protected $max_health = 1;
+
+    protected $stat_initiative = 10;
+    protected $stat_damage = 5;
+    protected $stat_resistance = 0;
+    protected $stat_accuracy = 0;
+
+    protected $movement_range = 8;
+
+}

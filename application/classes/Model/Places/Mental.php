@@ -78,10 +78,11 @@ class Model_Places_Mental extends Model_Places_Abstract_Place {
                         ->effect(Model_Effect::factory()
                                 ->custom(function($p) {
                                     /** @var Model_Player $p */
-                                    $this->log()->add(new Model_Log_Types_Battle('Als du versuchst nach ihm zu greifen, beginnt der Patient markerschütternd zu schreien und greift an!', Tool_Scripts::battle([new Model_Battle_Patient(1,10)], Tool_Scripts::at_location($this->uin()), false, $battle, $count)));
+                                    $this->log()->add('Als du versuchst nach ihm zu greifen, beginnt der Patient markerschütternd zu schreien und greift an!');
 
-                                    /** @var Model_Battle_Battle $battle */
-                                    if ($battle->get_zombie_count() == 0) {
+                                    Tool_Scripts::combat([[$p], [Model_Combat_Zombies_Patient::factory()]], false, 3, $this);
+
+                                    if ($p->alive()) {
                                         $items = array();
                                         $b = new Model_Items_Body('Verstörter Patient', 'Der Patient trägt ein Identifikationsarmband, auf dem sich ein Barcode sowie ein Name befindet. Du wirst wohl nie erfahren, wer das war oder was mit ihm in der Irrenanstalt geschehen ist. Wobei... vermutlich willst du das auch lieber gar nicht wissen.');
                                         $b->give_name(Model_User::random_names(1)[0]);

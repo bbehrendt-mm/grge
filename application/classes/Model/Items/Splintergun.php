@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Items_Splintergun extends Model_Battle_Weapon implements Interface_Static {
+class Model_Items_Splintergun extends Model_Combat_Weapons_Ammo implements Interface_Static {
 
 	protected static $static_info = Array(
 			'name' => 'Selbstgebauter Splitterwerfer',
@@ -11,15 +11,12 @@ class Model_Items_Splintergun extends Model_Battle_Weapon implements Interface_S
 	
 	protected static $weight = 5;
 
-	public static $range = Array(1,20);
-	protected static $damage = Array(10,20);
-	public static $damage_type = Model_Battle_Weapon::MBW_DMG_SCATTER;
-	protected static $ammo = 'Model_Items_Splinter';
-	public static $accuracy = 0.8;
-	public static $accuracy_type = Model_Battle_Weapon::MBW_ACC_LINEAR_DISTANCE;
-	public static $durability = 1;
-	public static $bounce = 0;
-	public static $reload_time = 3;
-	public static $lock_type = Model_Battle_Weapon::MBW_LCK_WEAPON;
-	public static $energy_cost = 0;
+	protected static $ammo = ['Model_Items_Splinter' => 1];
+	protected static $damage = [10,20];
+	protected static $range = [1,20];
+	protected static $accuracy = 0.8;
+	protected static $use_fixed_accuracy = false;
+	protected static $aoe = true;
+
+	//public static $reload_time = 3;
 }	

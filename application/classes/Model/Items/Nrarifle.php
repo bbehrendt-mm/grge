@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Items_Nrarifle extends Model_Battle_Weapon implements Interface_Static {
+class Model_Items_Nrarifle extends Model_Combat_Weapons_Ammo implements Interface_Static {
 
 	protected static $static_info = Array(
 			'name' => 'Sturmgewehr',
@@ -10,16 +10,14 @@ class Model_Items_Nrarifle extends Model_Battle_Weapon implements Interface_Stat
 	);
 	
 	protected static $weight = 13;
-	
-	public static $range = Array(1,90);
-	protected static $damage = Array(5,20);
-	public static $damage_type = Model_Battle_Weapon::MBW_DMG_SCATTER;
-	protected static $ammo = 'Model_Items_Ammo';
-	public static $accuracy = 5;
-	public static $accuracy_type = Model_Battle_Weapon::MBW_ACC_LINEAR_DISTANCE;
-	public static $durability = 1;
-	public static $bounce = 0;
-	public static $reload_time = 0;
-	public static $lock_type = Model_Battle_Weapon::MBW_LCK_WEAPON;
-	public static $energy_cost = 0;
+
+	protected static $ammo = ['Model_Items_Ammo' => 1];
+	protected static $damage = [5,20];
+	protected static $range = [1,100];
+	protected static $accuracy = 1;
+	protected static $use_fixed_accuracy = false;
+	protected static $aoe = true;
+
+	//TODO: Ultra high accuracy
+	//public static $reload_time = 0;
 }	

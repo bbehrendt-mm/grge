@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Items_Miniknife extends Model_Battle_Weapon implements Interface_Static {
+class Model_Items_Miniknife extends Model_Combat_Weapons_Close implements Interface_Static {
 
 	protected static $static_info = Array(
 			'name' => 'Lächerliches Taschenmesser der Männlichkeit',
@@ -11,18 +11,12 @@ class Model_Items_Miniknife extends Model_Battle_Weapon implements Interface_Sta
 
 	protected static $essential = true;
 	protected static $weight = 0;
-	
-	public static $range = Array(0,0);
-	protected static $damage = Array(1,2);
-	public static $damage_type = Model_Battle_Weapon::MBW_DMG_IMPACT;
-	protected static $ammo = null;
-	public static $accuracy = 1;
-	public static $accuracy_type = Model_Battle_Weapon::MBW_ACC_STATIC;
-	public static $durability = 1;
-	public static $bounce = 0;
-	public static $reload_time = 0;
-	public static $lock_type = Model_Battle_Weapon::MBW_LCK_PLAYER;
-	public static $energy_cost = 1;
+
+    protected static $damage = [1,2];
+    protected static $energy = 1;
+    protected static $max_range = 0.5;
+
+	//public static $reload_time = 0;
 	
 	public function drop($silent = false) {
 		/** @global Model_Player $player */

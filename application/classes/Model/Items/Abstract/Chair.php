@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-abstract class Model_Items_Abstract_Chair extends Model_Battle_Weapon {
+abstract class Model_Items_Abstract_Chair extends Model_Combat_Weapons_Close {
 	
 	protected static $static_info = Array(
 			'name' => 'Beliebiger Stuhl',

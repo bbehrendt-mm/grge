@@ -35,7 +35,7 @@ class Model_Combat_Actor {
     protected $ai_selfishness = 3;
     protected $ai_comradely = 0.5;
     protected $ai_volatile = 0.8;
-    protected $ai_brashness = 0.4;
+    protected $ai_brashness = 0.7;
 
 
     /** @var Model_Combat_Weapon[] */
@@ -51,7 +51,12 @@ class Model_Combat_Actor {
      * @return Model_Combat_Actor
      */
     public static function factory() {
-        return new Model_Combat_Actor();
+        $s = get_called_class();
+        return new $s;
+    }
+
+    public function __construct() {
+        $this->health = $this->max_health;
     }
 
     /**
@@ -165,6 +170,16 @@ class Model_Combat_Actor {
     }
 
     /**
+     * @param null|int $new
+     * @return Model_Combat_Actor
+     */
+    public function count($new = null) {
+        if ($new === null) return $this->count;
+        else $this->count = $new;
+        return $this;
+    }
+
+    /**
      * @param int|null $new_id
      * @return int|Model_Combat_Actor
      */
@@ -228,7 +243,7 @@ class Model_Combat_Actor {
      */
     private function get_recommendation($data) {
         if (!$data) return null;
-        usort($data, function($a,$b) {return $a[0] - $b[0];});
+        usort($data, function($a,$b) {return $b[0] - $a[0];});
         return $data[0];
     }
 
@@ -249,7 +264,8 @@ class Model_Combat_Actor {
         foreach ($foes as $foe) {
             $priority = max(1,$foe->can_attack($this) ? $this->ai_selfishness : 1);
             foreach ($friends as $friend)
-                $priority += ($foe->can_attack($friend) ? $this->ai_comradely : 0);
+                if ($friend->id() != $this->id())
+                    $priority += ($foe->can_attack($friend) ? $this->ai_comradely : 0);
 
             $p = $weapon->potential_damage($this, $foe, $ignore_range, $this->count) * $priority;
             if ($p <= 0) continue;
@@ -273,11 +289,17 @@ class Model_Combat_Actor {
     protected function get_weapon_priority($friends, $foes) {
         $tmp = [];
         foreach ($this->weapons as $weapon)
-            $tmp[] = $this->get_attack_priority($friends, $foes, $weapon);
+            if (!$this->current_weapon || $this->current_weapon->uin() != $weapon->uin()){
+                $res = $this->get_attack_priority($friends, [$weapon->closest_foe($this, $foes, true)], $weapon, true);
+                if (!$weapon->in_range($this, $res[1]))
+                    $res[0] = $res[0] * 0.5;
+                $tmp[] = $res;
+            }
+
 
         $rec = $this->get_recommendation($tmp);
         /** @noinspection PhpUndefinedMethodInspection */
-        if (!$rec || ($this->current_weapon && $rec[2]->uin() == $this->current_weapon->uin())) return null;
+        if (!$rec) return null;
         else return [
             $rec[0] * $this->ai_volatile,
             $rec[2]
@@ -305,25 +327,18 @@ class Model_Combat_Actor {
     }
 
     protected function damage($damage) {
-        if ($damage < $this->health) {
-            $kills = 0;
-            $death = false;
-            $this->health -= $damage;
-        } elseif ($damage < ($this->health + ($this->count - 1) * $this->max_health)) {
-            $kills = floor(($damage - $this->health)/$this->max_health);
-            $death = false;
-            $this->health = $this->max_health - (($damage - $this->health) - $this->max_health * $kills);
-            $this->count -= $kills;
-        } else {
-            $damage = $this->health + ($this->count - 1) * $this->max_health;
-            $kills = $this->count;
-            $death = true;
-            $this->alive = false;
-            $this->health = 0;
-            $this->count = 0;
+        $this->health -= $damage;
+
+        $kills = $this->health == 0 ? 1 : ($this->health < 0 ? -floor($this->health / $this->max_health) : 0);
+        $this->alive = $kills < $this->count;
+
+        if ($kills) {
+            if (!$this->alive) $damage = $this->health + $this->max_health * $this->count;
+            $this->health = !$this->alive ? 0 : ($this->health + $kills * $this->max_health);
+            $this->count = !$this->alive ? 0 : ($this->count - $kills);
         }
 
-        $this->scene->damage($this, $damage, $kills, $death);
+        $this->scene->damage($this, $damage, $kills, !$this->alive);
     }
 
     /**
@@ -391,6 +406,10 @@ class Model_Combat_Actor {
 
         if ($use_second_action) $this->act($friends, $foes, true);
 
+    }
+
+    public function disengage() {
+        return true;
     }
 
 }

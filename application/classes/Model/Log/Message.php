@@ -16,6 +16,7 @@ class Model_Log_Message extends Model {
     const MLM_BATTLE_INJURY = 10;
     const MLM_BATTLE_ROUND = 11;
 
+    const MLM_RAW_DATA = 12;
 
     protected $data = [];
     protected $uid;

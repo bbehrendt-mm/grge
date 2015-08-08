@@ -584,15 +584,11 @@ class Model_Player extends Model_Cloudshard {
 		
 		$this->stats_modify($tmp);
 	}
-	
-	/**
-	 * Create a combatant object to use im battles
-	 * @return Model_Battle_Player
-	 */
-	public function create_contestant() {
+
+	public function create_combatant() {
 		if ($this->job == 1040 && $this->level >= 5 && mt_rand(0,15) == 2)
-			return new Model_Battle_Saint($this->user_id);
-		return new Model_Battle_Player($this->user_id);
+			return Model_Combat_Players_Saint::create_linked_actor($this);
+		return Model_Combat_Players_Player::create_linked_actor($this);
 	}
 	
 	/**

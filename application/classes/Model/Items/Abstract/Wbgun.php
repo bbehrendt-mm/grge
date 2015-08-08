@@ -1,10 +1,10 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-abstract class Model_Items_Abstract_Wbgun extends Model_Battle_Weapon implements Interface_Fillable, Interface_Countable {
-	
-	private $fillrate;
+abstract class Model_Items_Abstract_Wbgun extends Model_Combat_Weapons_Fillable implements Interface_Fillable, Interface_Countable {
+
 	protected static $capacity = 0;
-	
+	public static $ammo_icon = 'items/water_variant';
+
 	public function has_ammo() {
 		return ($this->fillrate > 0);
 	}

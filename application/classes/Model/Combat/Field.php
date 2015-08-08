@@ -36,13 +36,23 @@ class Model_Combat_Field {
 
     /**
      * @param int $group
-     * @param Model_Combat_Actor|Model_Combat_Actor[] $combatant
+     * @param Model_Combat_Actor|Model_Combat_Actor[]|Model_Player|Model_Player[]|Model_Battle_Combatant|Model_Battle_Combatant[] $combatant
      * @return Model_Combat_Field
      */
     public function add_combatant($group, $combatant) {
         if (is_array($combatant)) {
             foreach ($combatant as $c)
                 $this->add_combatant($group, $c);
+        }
+        elseif (Tool_System::instance_of($combatant, 'Model_Player'))
+            return $this->add_combatant($group, $combatant->create_combatant());
+        //TODO: Temporär - muss entfernt werden!!!!!
+        elseif (Tool_System::instance_of($combatant, 'Model_Battle_Combatant')) {
+            if ($combatant->is_zombie()) {
+                /** @var Model_Combat_Zombies_Zombie $revised_class */
+                $revised_class = str_replace('Model_Battle_','Model_Combat_Zombies_',get_class($combatant));
+                return $this->add_combatant($group, $revised_class::factory()->count($combatant->count()));
+            }
         } else
             $this->combatants[] = $combatant->set_scene($this->scene)->group($group)->id(count($this->combatants) + 1);
 
@@ -95,6 +105,9 @@ class Model_Combat_Field {
                 return $a->alive() && $a->group() != $next->group();
             }));
         }
+
+        foreach ($this->combatants as $combatant)
+            $combatant->disengage();
 
         return $this;
     }

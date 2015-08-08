@@ -41,14 +41,24 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
     }
 
     public function max_range() {
-        return static::$range[1];
+        return $this->range()[1];
     }
 
     /**
      * @param Model_Player $p
+     * @return Model_Combat_Weapon
      */
     public function register($p) {
         $this->registered_user = $p;
+        return $this;
+    }
+
+    /**
+     * @return Model_Combat_Weapon
+     */
+    public function unregister() {
+        $this->registered_user = null;
+        return $this;
     }
 
     /**

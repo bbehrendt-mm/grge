@@ -44,7 +44,7 @@ class Model_Combat_Scene {
 
             case static::MCS_EV_ATTACK:
                 list($atk, $def, $ammo, list($name, $icon)) = $entry;
-                return "Combatant $atk attacks Combatant $def using $name." . ($ammo ? " $ammo has been consumed as ammo." : '');
+                return "Combatant $atk attacks Combatant $def using $name." . ($ammo ? " " . implode(', ', $ammo) . " has been consumed as ammo." : '');
 
             case static::MCS_EV_DAMAGE:
                 list($id, $damage, $kills, $death) = $entry;
@@ -61,6 +61,10 @@ class Model_Combat_Scene {
             case static::MCS_EV_DBG_AI:
                 list($id, list($atk, $swc, $mov)) = $entry;
                 return "Combatant $id is thinking: PR:ATK $atk / PR:SWC $swc / PR:MOV $mov.";
+
+            case static::MCS_EV_SWITCH:
+                list($id, list($wpn_name, $wpn_icon)) = $entry;
+                return "Combatant $id switches weapon to $wpn_name.";
 
             default: return "UNKNOWN SCENE INSTRUCTION ($type)!!! Data is " . json_encode($entry);
         }
@@ -180,7 +184,7 @@ class Model_Combat_Scene {
      */
     public function switch_weapon($combatant, $new_weapon) {
         $this->log_data[] = [
-            static::MCS_EV_MOVE,
+            static::MCS_EV_SWITCH,
 
             $combatant->id(),
             [

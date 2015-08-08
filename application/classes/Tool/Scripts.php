@@ -332,8 +332,8 @@ class Tool_Scripts
          * @global $player Model_Player
          */
         global $player;
-        $battle_log = Tool_Scripts::battle(new Model_Battle_Shambler($num_zmb, $distance), $limit_to_player ? $player : Tool_Scripts::at_location(), $escapeable, $battle, $zc);
-        $player->location()->log()->add(new Model_Log_Types_Battle($headline, $battle_log));
+        Tool_Scripts::combat([$limit_to_player ? [$player] : Tool_Scripts::at_location(), [Model_Combat_Zombies_Shambler::factory()->count($num_zmb)]], $escapeable, $distance, $player->location());
+        $player->location()->log()->add($headline);
     }
 
     /**
@@ -404,47 +404,30 @@ class Tool_Scripts
     }
 
     /**
-     * Starts a standart battle
-     * @param Model_Battle_Combatant[]|Model_Battle_Combatant $zombies
-     * @param Model_Player[]|Model_Player $players
+     * @param Model_Combat_Actor[][] $combatants
      * @param bool $escapeable
-     * @param Model_Battle_Battle $battle_obj Will contain a reference to the batle object after calling this function.
-     * @param number $count Will contain the initial zombie count.
-     * @param number $achievement
-     * @return array|bool
+     * @param Model_Places_Abstract_Place null $location
      */
-    public static function battle($zombies, $players, $escapeable, &$battle_obj, &$count, $achievement = null) {
-        if (!$zombies || !$players)
-            return false;
+    public static function combat($combatants, $escapeable, $distance = 10, $location = null) {
+        /** @global Model_Player $player */
+        global $player;
 
-        if (!is_array($zombies)) $zombies = array($zombies);
-        if (!is_array($players)) $players = array($players);
+        //TODO: Escapeable battles!
+        $battle = Model_Combat_Field::factory();
 
-        $battle_obj = new Model_Battle_Battle($escapeable);
-        foreach ($zombies as $zombie) $battle_obj->spawn_combatant($zombie);
+        foreach ($combatants as $fraction => $group)
+            $battle->add_combatant($fraction + 1, $group);
 
-        $count = $battle_obj->get_zombie_count();
+        //TODO: Sleeping players
 
-        $passives = array();
-        $actives = array();
-        foreach ($players as $s_player)
-            /** @var Model_Player $s_player */
-            if (!$s_player->buff_retr('passout')) {
-                $battle_obj->spawn_combatant($s_player->create_contestant());
-                $actives[]= $s_player;
-            } else $passives[] = $s_player;
+        $battle->init_positions($distance)->begin();
 
-        $ret = $battle_obj->fight();
-        if ($battle_obj->get_zombie_count() > 0)
-            foreach ($passives as $s_player) {
-                /** @var Model_Player $s_player */
-                $s_player->set_cod('Im Schlaf zerfetzt');
-                $s_player->kill();
-            }
-        else if ($achievement) foreach ($actives as $s_player)
-            if ($s_player->alive()) $s_player->achievements()->achieve($achievement, 1);
+        if ($location === null)
+            $location = $player->location();
 
-        return $ret;
+        //TODO: Actual log message
+        $location->log()->add(new Model_Log_Types_Raw('' . $battle->get_scene()));
+
     }
 
     /**

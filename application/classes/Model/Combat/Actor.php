@@ -82,6 +82,13 @@ class Model_Combat_Actor {
     }
 
     /**
+     * @return Model_Inventory
+     */
+    public function inventory() {
+        return $this->inventory;
+    }
+
+    /**
      * @param null $ini
      * @param null $dmg
      * @param null $res
@@ -93,6 +100,16 @@ class Model_Combat_Actor {
             return [$this->stat_initiative, $this->stat_damage, $this->stat_resistance, $this->stat_accuracy];
         else list($this->stat_initiative, $this->stat_damage, $this->stat_resistance, $this->stat_accuracy) = array_map(function($a) {return min(20,max(0,$a));}, [$ini, $dmg, $res, $acc]);
         $this->reset_steps();
+        return $this;
+    }
+
+    /**
+     * @param $distance
+     * @param int $jitter
+     * @return Model_Combat_Actor
+     */
+    public function set_distance($distance, $jitter = 3) {
+        $this->position([$distance + mt_rand(-$jitter, $jitter), mt_rand(0, $this->field[1])]);
         return $this;
     }
 
@@ -192,10 +209,10 @@ class Model_Combat_Actor {
     /**
      * @param null|int[] $pos
      * @param bool|false $move
-     * @return int[]|Model_Combat_Actor
+     * @return null|int[]|Model_Combat_Actor
      */
     public function position($pos = null, $move = false) {
-        if ($pos === null) return [$this->pos_x,$this->pos_y];
+        if ($pos === null) return ($this->pos_x === null || $this->pos_y === null) ? null : [$this->pos_x,$this->pos_y];
         elseif ($move) {
             $this->pos_x += $pos[0];
             $this->pos_y += $pos[1];
@@ -326,7 +343,21 @@ class Model_Combat_Actor {
         else return $this->current_weapon->in_range($this, $combatant);
     }
 
-    protected function damage($damage) {
+    /**
+     * @param int $damage
+     * @param int $kills
+     * @param int $death
+     * @param Model_Combat_Actor $target
+     */
+    protected function score_kills($damage, $kills, $death, $target) {
+
+    }
+
+    /**
+     * @param int $damage
+     * @param null|Model_Combat_Actor $from
+     */
+    protected function damage($damage, $from = null) {
         $this->health -= $damage;
 
         $kills = $this->health == 0 ? 1 : ($this->health < 0 ? -floor($this->health / $this->max_health) : 0);
@@ -337,6 +368,9 @@ class Model_Combat_Actor {
             $this->health = !$this->alive ? 0 : ($this->health + $kills * $this->max_health);
             $this->count = !$this->alive ? 0 : ($this->count - $kills);
         }
+
+        if ($from)
+            $from->score_kills($damage, $kills, !$this->alive(), $this);
 
         $this->scene->damage($this, $damage, $kills, !$this->alive);
     }
@@ -367,7 +401,7 @@ class Model_Combat_Actor {
 
             $dmg = $this->current_weapon->calculate_damage($this, $target, $this->count, $acc, $atk, $op_res);
             $this->scene->attack($this, $target, $this->current_weapon);
-            $target->damage($dmg);
+            $target->damage($dmg, $this);
             $this->current_weapon->trigger_usage($this, $target, $dmg, $this->scene);
 
         } elseif ($switch && (!$attack || $switch[0] > $attack[0]) && (!$move || $switch[0] > $move[0])) {
@@ -402,6 +436,7 @@ class Model_Combat_Actor {
             $this->scene->move($this, [$this->pos_x, $this->pos_y], $dist, $target);
         } else {
             // Idle action
+            //TODO: Idle action?
         }
 
         if ($use_second_action) $this->act($friends, $foes, true);

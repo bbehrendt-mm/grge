@@ -56,11 +56,15 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
 
         //Check for zombie attack
         if ($this->get_defense() < 1) {
-            //TODO: Korrekte Distanz!!
-            Tool_Scripts::combat([Tool_Scripts::at_location($this->uin), $this->zombie_factory->spawn_zombies()], true, 10, $this);
+            $zombies = $this->zombie_factory->spawn_zombies();
+            $zc = array_reduce($zombies, function($c, $i) {
+                /** @var $i Model_Combat_Zombies_Zombie */
+                return $c + $i->count();
+            }, 0);
 
-            //TODO: Korrekte Anzahl!
-            $this->log->add(':zombiestr tauchen auf!', [':zombiestr' => 10 . ' ' . __('Zombies')]);
+            Tool_Scripts::combat([Tool_Scripts::at_location($this->uin), $zombies], true, 10, $this);
+
+            $this->log->add(':zombiestr tauchen auf!', [':zombiestr' => $zc . ' ' . __('Zombies')]);
             return;
         }
 
@@ -79,13 +83,15 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
                     }
             }
 
-            //TODO: Korrekte Distanz!!
-            Tool_Scripts::combat([Tool_Scripts::at_location($this->uin), $this->zombie_factory->release_zombie_population()], true, 10, $this);
+            $zombies = $this->zombie_factory->release_zombie_population();
+            $num = array_reduce($zombies, function($c, $i) {
+                /** @var $i Model_Combat_Zombies_Zombie */
+                return $c + $i->count();
+            }, 0);
+            Tool_Scripts::combat([Tool_Scripts::at_location($this->uin), $zombies], true, 10, $this);
 
             $this->breakins++;
 
-            //TODO: Korrekte Anzahl!
-            $num = 10;
             foreach (Tool_Scripts::at_location($this->uin) as $s_player)
                 $s_player->achievements()->achieve(Model_Achievement::MA_BREAK_INS, $num);
 

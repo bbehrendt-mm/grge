@@ -35,8 +35,8 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
         return $ret;
     }
 
-    protected function damage($damage) {
-        parent::damage($damage);
+    protected function damage($damage, $from = null) {
+        parent::damage($damage, $from);
 
         $this->player->stats_modify([Model_Player::MP_STAT_HEALTH, -$damage]);
     }
@@ -55,5 +55,19 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
     public function disengage() {
         foreach ($this->weapons as $weapon)
             $weapon->unregister();
+    }
+
+    /**
+     * @param $damage
+     * @param $kills
+     * @param $death
+     * @param $target
+     */
+    protected function score_kills($damage, $kills, $death, $target) {
+        if ($kills > 0 && $target->type == static::MCA_TYPE_ZOMBIE)
+            $this->player->achievements()->achieve(Model_Achievement::MA_KILLED_ZOMBIES, $kills);
+
+        if ($kills > 0 && Tool_System::instance_of($target, 'Model_Combat_Zombies_Ghul'))
+            $this->player->achievements()->achieve(Model_Achievement::MA_MERCYKILL, $kills);
     }
 }

@@ -29,7 +29,7 @@ abstract class Model_Gamelayer_Logic extends Model_Gamelayer_Io {
 
     /**
      * @param number $location
-     * @param Model_Battle_Ghul $obj
+     * @param Model_Combat_Actor $obj
      */
     public function register_ghul($location, $obj) {
         $this->set['gamedata']->ghuls[] = array('location' => $location, 'data' => $obj);
@@ -39,8 +39,12 @@ abstract class Model_Gamelayer_Logic extends Model_Gamelayer_Io {
         unset($this->set['gamedata']->ghuls[$id]);
     }
 
+	/**
+	 * @param $lid
+	 * @return Model_Combat_Zombies_Ghul[]
+	 */
     public function get_ghuls($lid) {
-        $ret = array();
+        $ret = [];
 
         foreach ($this->set['gamedata']->ghuls as $k => $gob)
             if (mt_rand(0,100) < (($gob['location'] == $lid) ? 30 : 5)) {

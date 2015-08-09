@@ -14,6 +14,6 @@ class Model_Items_Stick extends Model_Combat_Weapons_Close implements Interface_
 	protected static $energy = 1;
 	protected static $max_range = 1;
 
-	//public static $durability = 0.2;
+	protected static $durabillity = 0.2;
 	//public static $reload_time = 0;
 }	

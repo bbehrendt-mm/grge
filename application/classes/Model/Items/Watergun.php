@@ -19,5 +19,5 @@ class Model_Items_Watergun extends Model_Items_Abstract_Wbgun {
 	protected static $aoe = true;
 	protected static $friendly_fire = false;
 
-	// TODO: High accuracy
+	protected static $accuracy_downscale = 0.5;
 }	

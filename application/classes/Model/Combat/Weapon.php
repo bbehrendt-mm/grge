@@ -6,8 +6,12 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
     protected static $range = [0,PHP_INT_MAX];
     protected static $accuracy = 1;
     protected static $use_fixed_accuracy = true;
+    protected static $accuracy_downscale = 0;
     protected static $aoe = false;
     protected static $friendly_fire = false;
+    protected static $durabillity = 1;
+
+    protected $broken = false;
 
     /** @var Model_Player */
     protected $registered_user;
@@ -16,11 +20,15 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
         return true;
     }
 
+    public function durabillity() {
+        return static::$durabillity;
+    }
+
     protected function damage() {
         return static::$damage;
     }
 
-    protected function accuracy() {
+    public function accuracy() {
         return static::$accuracy;
     }
 
@@ -61,6 +69,10 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
         return $this;
     }
 
+    protected function accuracy_downscale() {
+        return static::$accuracy_downscale;
+    }
+
     /**
      * @param $distance
      * @param int $modifier
@@ -71,7 +83,7 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
 
         if ($distance < $this->range()[0] || $distance > $this->range()[1]) return 0;
         elseif (static::$use_fixed_accuracy) $tmp = min(1,max(0,$this->accuracy()));
-        else $tmp = min(1,max(0,(1 - ($distance - $this->range()[0])/($this->range()[1] - $this->range()[0])) * $this->accuracy()));
+        else $tmp = min(1,max(0,$this->accuracy_downscale() + (1 - ($distance - $this->range()[0])/($this->range()[1] - $this->range()[0])) * ($this->accuracy() - $this->accuracy_downscale())));
 
         if ($tmp == 1 || $tmp == 0 || $modifier == 1) return $tmp;
         elseif ($modifier < 1) return $tmp * $modifier;
@@ -85,7 +97,10 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
      * @param int $count
      * @return float|int
      */
-    public function potential_damage($me, $other, $ignore_range = false, $count = 1) {
+    public function potential_damage($me = null, $other = null, $ignore_range = false, $count = 1) {
+        if (!$me || !$other)
+            return ($this->damage()[0] + $this->damage()[1])/2;
+
         if (!$this->usable())
             return 0;
         else {
@@ -166,7 +181,20 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
      * @return bool
      */
     public function trigger_usage($me, $opponent, $damage, $scene) {
+        if ($this->durabillity() < 1 && mt_rand()/mt_getrandmax() > $this->durabillity())
+            $this->weapon_break($me, $opponent, $damage, $scene);
         return true;
+    }
+
+    /**
+     * @param Model_Combat_Actor $me
+     * @param Model_Combat_Actor $opponent
+     * @param number $damage
+     * @param Model_Combat_Scene $scene
+     */
+    protected function weapon_break($me, $opponent, $damage, $scene) {
+        $this->broken = true;
+        $scene->break_weapon($me, $this);
     }
 
 }

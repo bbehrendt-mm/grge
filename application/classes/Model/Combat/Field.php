@@ -36,7 +36,7 @@ class Model_Combat_Field {
 
     /**
      * @param int $group
-     * @param Model_Combat_Actor|Model_Combat_Actor[]|Model_Player|Model_Player[]|Model_Battle_Combatant|Model_Battle_Combatant[] $combatant
+     * @param Model_Combat_Actor|Model_Combat_Actor[]|Model_Player|Model_Player[] $combatant
      * @return Model_Combat_Field
      */
     public function add_combatant($group, $combatant) {
@@ -46,14 +46,7 @@ class Model_Combat_Field {
         }
         elseif (Tool_System::instance_of($combatant, 'Model_Player'))
             return $this->add_combatant($group, $combatant->create_combatant());
-        //TODO: Temporär - muss entfernt werden!!!!!
-        elseif (Tool_System::instance_of($combatant, 'Model_Battle_Combatant')) {
-            if ($combatant->is_zombie()) {
-                /** @var Model_Combat_Zombies_Zombie $revised_class */
-                $revised_class = str_replace('Model_Battle_','Model_Combat_Zombies_',get_class($combatant));
-                return $this->add_combatant($group, $revised_class::factory()->count($combatant->count()));
-            }
-        } else
+        else
             $this->combatants[] = $combatant->set_scene($this->scene)->group($group)->id(count($this->combatants) + 1);
 
         return $this;
@@ -140,9 +133,40 @@ class Model_Combat_Field {
                 $gp_tmp[$combatant->group()] = $t;
             }
 
-            $combatant->position([$t * $avg_distance + mt_rand(-$jitter, $jitter), mt_rand(0, $this->field[1])]);
+            if (!$combatant->position())
+                $combatant->set_distance($t * $avg_distance, $jitter);
         }
 
         return $this;
     }
+
+    /**
+     * @return int|null
+     */
+    public function get_winning_group() {
+        if ($this->get_distinct_groups(true) !== 1) return null;
+
+        foreach ($this->combatants as $combatant)
+            if ($combatant->alive())
+                return $combatant->group();
+
+        return null;
+    }
+
+    /**
+     * @param null|int $group
+     * @param bool $instances
+     * @return int
+     */
+    public function count_group_members($group = null, $instances = false) {
+        $c = 0;
+
+        foreach ($this->combatants as $combatant)
+            if ($combatant->alive() && ($group === null || $combatant->group() == $group))
+                $c += $instances ? 1 : $combatant->count();
+
+        return $c;
+    }
+
+
 }

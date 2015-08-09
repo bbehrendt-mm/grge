@@ -255,10 +255,6 @@
                                 .append($('<div />').addClass('cell rw-6 padded left').text(v.weapon.energy).append($('<img />').attr('src', 'media/icons/status_energy.gif')))
                                 .appendTo(content);
                         $('<div />').addClass('row')
-                            .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Angriffsgeschw.')?>))
-                            .append($('<div />').addClass('cell rw-6 padded left').text(game.i18n(<?=__j(':num Runden')?>,{':num': 1+v.weapon.duration})))
-                            .appendTo(content);
-                        $('<div />').addClass('row')
                             .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Zerstörbar')?>))
                             .append($('<div />').addClass('cell rw-6 padded left').text(v.weapon.breakable ? <?=__j('Ja')?> : <?=__j('Nein')?>))
                             .appendTo(content);

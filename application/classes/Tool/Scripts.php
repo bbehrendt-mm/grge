@@ -407,6 +407,7 @@ class Tool_Scripts
      * @param Model_Combat_Actor[][] $combatants
      * @param bool $escapeable
      * @param Model_Places_Abstract_Place null $location
+     * @return Model_Combat_Field
      */
     public static function combat($combatants, $escapeable, $distance = 10, $location = null) {
         /** @global Model_Player $player */
@@ -428,6 +429,7 @@ class Tool_Scripts
         //TODO: Actual log message
         $location->log()->add(new Model_Log_Types_Raw('' . $battle->get_scene()));
 
+        return $battle;
     }
 
     /**

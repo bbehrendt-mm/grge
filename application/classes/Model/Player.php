@@ -316,7 +316,8 @@ class Model_Player extends Model_Cloudshard {
                    $ti->add($d);
 
                 $this->location()->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_ZOMBIFY, array(), $this->id()));
-                $game->register_ghul($this->location_class(), new Model_Battle_Ghul(mt_rand(50,100), $ti, $this->name(), $this->id(), $this->stats_get(Model_Player::MP_STAT_ZOMBIFY)));
+                //TODO: Actual stats
+				$game->register_ghul($this->location_class(), Model_Combat_Zombies_Ghul::factory()->zombiefied_player_id($this->id())->name($this->name())->stats(5,5,5,5)->register_inventory($this->inventory())->strength(Model_Player::MP_STAT_ZOMBIFY, 100, 1));
             } else {
                 foreach ($drop as $d)
                     $this->location()->inventory()->add($d);

@@ -18,6 +18,6 @@ class Model_Items_Nrarifle extends Model_Combat_Weapons_Ammo implements Interfac
 	protected static $use_fixed_accuracy = false;
 	protected static $aoe = true;
 
-	//TODO: Ultra high accuracy
+	protected static $accuracy_downscale = 0.75;
 	//public static $reload_time = 0;
 }	

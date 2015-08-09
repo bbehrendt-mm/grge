@@ -10,6 +10,7 @@ class Model_Combat_Scene {
     const MCS_EV_MOVE = 6;                     // [ID, [x, y], distance, [to-id, to-distance]]
     const MCS_EV_SWITCH = 7;                   // [ID, [Wpn-Name, Wpn-Icon]]
     const MCS_EV_DBG_AI = 8;                   // [ID, [P_ATK, P_SWC, P_MOV]]
+    const MCS_EV_BREAK = 9;                    // [ID, [Wpn-Name, Wpn-Icon]]
 
     private $log_data = [];
 
@@ -65,6 +66,10 @@ class Model_Combat_Scene {
             case static::MCS_EV_SWITCH:
                 list($id, list($wpn_name, $wpn_icon)) = $entry;
                 return "Combatant $id switches weapon to $wpn_name.";
+
+            case static::MCS_EV_BREAK:
+                list($id, list($wpn_name, $wpn_icon)) = $entry;
+                return "Combatant $id's' weapon $wpn_name broke!";
 
             default: return "UNKNOWN SCENE INSTRUCTION ($type)!!! Data is " . json_encode($entry);
         }
@@ -190,6 +195,23 @@ class Model_Combat_Scene {
             [
                 $new_weapon->name(),
                 $new_weapon->icon(),
+            ]
+
+        ];
+    }
+
+    /**
+     * @param Model_Combat_Actor $combatant
+     * @param Model_Combat_Weapon $weapon
+     */
+    public function break_weapon($combatant, $weapon) {
+        $this->log_data[] = [
+            static::MCS_EV_BREAK,
+
+            $combatant->id(),
+            [
+                $weapon->name(),
+                $weapon->icon(),
             ]
 
         ];

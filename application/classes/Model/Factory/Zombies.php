@@ -35,18 +35,13 @@ class Model_Factory_Zombies extends Model {
         global $game;
         return 1 + 0.25 * ($game->duration() / (576/$game->config('zombies.accum')));
     }
-	
+
 	/**
 	 * Calculates zombie accumulation
+	 * @param null|int $fixed
 	 * @throws Exception
 	 */
 	public function accumulate_zombies($fixed = null) {
-        /**
-         * @global $game Model_Game
-         * @global $player Model_Player
-         */
-		global $game;
-		
 		if ($fixed === null) {
 			//Get Config
             if (!$config = Tool_System::config_tree("spawn/{$this->config}", $this->type))
@@ -80,13 +75,13 @@ class Model_Factory_Zombies extends Model {
 	
 	/**
 	 * Creates combatants from accumulated zombies and resets zombie counter
-	 * @return null|Model_Battle_Combatant[]
+	 * @return null|Model_Combat_Zombies_Zombie[]
 	 */
 	public function release_zombie_population() {
 		
 		if ($tmp = floor($this->population)) {
 			$this->population = 0;
-			return $this->spawn_zombies($tmp, true);
+			return $this->spawn_zombies($tmp);
 		} else return null;
 	}
 
@@ -95,17 +90,16 @@ class Model_Factory_Zombies extends Model {
      *
      * @param $data
      * @param int $multiply
-     * @return null|Model_Battle_Combatant[]
+     * @return null|Model_Combat_Zombies_Zombie[]
      */
 	private function dice($data, $multiply = 1) {
 		//Failsafe
 		if (!is_array($data) || count($data) == 0) return null;
 		
 		$ret = Array();
+		/** @var Model_Combat_Zombies_Ghul[] $instance */
 		foreach ($data as $instance) if (($num = round($multiply * mt_rand($instance["num"][0], $instance["num"][1]))) > 0)
-			//$ret[] = new $instance["type"]($num, mt_rand($instance["distance"][0], $instance["distance"][1]));
-			//TODO: Distance!
-			$ret[] = $instance['type']::factory()->count($num);
+			$ret[] = $instance['type']::factory()->count($num)->set_distance(mt_rand($instance["distance"][0], $instance["distance"][1]));
 		
 		return $ret;
 	}
@@ -122,16 +116,10 @@ class Model_Factory_Zombies extends Model {
      * Returns an array with combating zombies, or null if there are no zombies to battle
      *
      * @param null $number
-     * @param bool $strict
      * @throws Exception
-     * @return null|Model_Battle_Combatant[]
+     * @return null|Model_Combat_Zombies_Zombie[]
      */
-	public function spawn_zombies($number = null, $strict = false) {
-        /**
-         * @global $game Model_Game
-         */
-		global $game;
-		
+	public function spawn_zombies($number = null) {
 		//Get Config
 		if (!$config = Tool_System::config_tree("spawn/{$this->config}", $this->type))
 			throw new Exception('Failed to load zombie spawn configuration (' . $this->config . ')!');
@@ -140,10 +128,9 @@ class Model_Factory_Zombies extends Model {
 		if ($number === null && $config['chance'] < mt_rand(0, 100)) return null;
 		
 		//Spawn fixed number of zombies
-        $ztype = empty($config["siege"]) ? 'Model_Battle_Shambler' : $config["siege"];
-		//if ($number !== null) return Array(new $ztype($number, $config['range']));
-		//TODO: Distance!
-		if ($number !== null) return Array($ztype::factory()->count($number));
+        $ztype = empty($config["siege"]) ? 'Model_Combat_Zombies_Shambler' : $config["siege"];
+		/** @var Model_Combat_Zombies_Ghul $ztype */
+		if ($number !== null) return Array($ztype::factory()->count($number)->set_distance($config['range']));
 		
 		if (count($config["groups"]) == 0) return null;
 		

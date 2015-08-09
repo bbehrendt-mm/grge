@@ -230,7 +230,7 @@ class Controller_Game extends Controller {
             // Set item flags
             if (Tool_System::instance_of($item, 'Model_Items_Abstract_Armor') && $item->is_active())    $flags[] = 'equipped';
             if (Tool_System::instance_of($item, 'Model_Items_Abstract_Armor'))                          $flags[] = 'armor';
-            if (Tool_System::instance_of($item, 'Model_Battle_Weapon'))                                 $flags[] = 'weapon';
+            if (Tool_System::instance_of($item, 'Model_Combat_Weapon'))                                 $flags[] = 'weapon';
             if (Tool_System::instance_of($item, 'Model_Items_Abstract_Escape'))                         $flags[] = 'escape';
             if (Tool_System::instance_of($item, 'Interface_Tmpitem'))                                   $flags[] = 'temp';
             if (Tool_System::instance_of($item, 'Interface_Event'))                                     $flags[] = 'event';
@@ -261,22 +261,21 @@ class Controller_Game extends Controller {
                     'cover' => __($item->convertStringCover()),
                 ];
 
-            /** @var Model_Battle_Weapon $item */
-            if (Tool_System::instance_of($item, 'Model_Battle_Weapon')) {
+            /** @var Model_Combat_Weapon $item */
+            if (Tool_System::instance_of($item, 'Model_Combat_Weapon')) {
 
                 $ammo = [];
-                if ($item->ammo()) foreach ($item->ammo() as $entry => $c)
-                    /** @var Model_Items_Abstract_Item $entry */
-                    $ammo[] = ($entry == 'self' || $entry == 'custom') ? ($entry == 'self' ? $item::static_icon() : $item::custom_ammo_icon()) : $entry::static_icon();
+                foreach ($item->get_ammo_icons() as $entry)
+                    $ammo[] = $entry;
 
+                /** @var Model_Combat_Weapons_Energy $item */
                 $data['weapon'] = [
-                    'damage' => $item->damage(),
+                    'damage' => $item->potential_damage(),
                     'ammo' => $ammo ? $ammo : false,
-                    'shots' => in_array('custom', array_keys($item->ammo())) ? $item->count() : false,
-                    'energy' => $item::$energy_cost,
-                    'accuracy' => ($item::$accuracy_type == Model_Battle_Weapon::MBW_ACC_LINEAR_DISTANCE) ? true : round(100*$item::$accuracy),
-                    'duration' => $item::$reload_time,
-                    'breakable' => $item::$durability < 1 || in_array('self', array_keys($item->ammo())),
+                    'shots' => Tool_System::instance_of($item, 'Model_Combat_Weapons_Fillable') ? $item->count() : false,
+                    'energy' => Tool_System::instance_of($item, 'Model_Combat_Weapons_Energy') ? $item->energy() : 0,
+                    'accuracy' => $item->accuracy(),
+                    'breakable' => $item->durabillity() < 1,
                 ];
             }
 

@@ -15,7 +15,7 @@ class Model_Items_Bat2 extends Model_Combat_Weapons_Close implements Interface_S
 	protected static $energy = 3;
 	protected static $max_range = 1;
 
-	//public static $durability = 0.8;
+	protected static $durabillity = 0.8;
 	//public static $reload_time = 1;
 	
 	public function mixchem($chemval) {

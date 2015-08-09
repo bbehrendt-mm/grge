@@ -224,7 +224,7 @@ class Controller_Act extends Controller_Game {
         /**
          * @global $game Model_Game
          * @global $player Model_Player
-         * @var $item Model_Battle_Weapon
+         * @var $item Model_Combat_Weapon
          */
         global $game, $player;
 

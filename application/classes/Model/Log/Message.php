@@ -8,15 +8,9 @@ class Model_Log_Message extends Model {
     const MLM_CHEM_EXPERIMENT = 3;
     const MLM_LOCATION_LOG = 4;
 
-    const MLM_BATTLE_CONTAINER = 5;
-    const MLM_BATTLE_ENTER = 6;
-    const MLM_BATTLE_ESCAPE = 7;
-    const MLM_BATTLE_DEATH = 8;
-    const MLM_BATTLE_ATTACK = 9;
-    const MLM_BATTLE_INJURY = 10;
-    const MLM_BATTLE_ROUND = 11;
+    const MLM_COMBAT = 5;
 
-    const MLM_RAW_DATA = 12;
+    const MLM_RAW_DATA = 6;
 
     protected $data = [];
     protected $uid;

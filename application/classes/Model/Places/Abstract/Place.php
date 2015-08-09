@@ -370,16 +370,13 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 			} else $player->log()->add(new Model_Log_Types_Text('Fehlgeschlagene Flucht!', 'Der Kampf beginnt!', 'Schreiend und mit geschlossenen Augen rennst du auf die Zombies zu. Die sind von dieser Aktion so überrascht, dass du die meisten von ihnen einfach aus dem Weg stoßen kannst - aber leider nicht alle. Ein Zombie steht dir mitten im Weg, und wirft dich zu Boden als du versuchst, ihn umzurennen. Zwar kannst du schnell wieder aufspringen, bist nun aber von geifernden Zombies umzingelt. Flucht ist keine Option mehr, du wirst kämpfen müssen.'));
 		}
 
-        //TODO: Get remaining zombie count!
-        Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $this->zombie_factory->release_zombie_population()], true, $this->zombie_factory()->get_siege_range(), $this);
+        $zombies = $this->zombie_factory->release_zombie_population();
+        $zc = 0;
+        foreach ($zombies as $zombie) $zc += $zombie->count();
+        $battle = Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $this->zombie_factory->release_zombie_population()], true, $this->zombie_factory()->get_siege_range(), $this);
 
-        /*
-        $battle_log = Tool_Scripts::battle($this->zombie_factory->release_zombie_population(), Tool_Scripts::at_location(), false, $battle, $zc);
-        if ($battle_log) {
-            /** @var Model_Battle_Battle $battle *//*
-            $this->log->add(new Model_Log_Types_Battle('Du greifst die :zombiestr an, die den Weg versperren!', $battle_log, array(':zombiestr' => $zc . ' ' . __('Zombies'))));
-            $this->zombie_factory()->accumulate_zombies($battle->get_zombie_count());
-        }*/
+        $this->log->add('Du greifst die :zombiestr an, die den Weg versperren!', array(':zombiestr' => $zc . ' ' . __('Zombies')));
+        $this->zombie_factory()->accumulate_zombies($battle->count_group_members(2));
 
 		return true;	
 	}
@@ -390,8 +387,9 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 
         //Check for zombie attack
         if ($ghuls = $game->get_ghuls($this->uin())) {
-            //TODO: Ghulkämpfe, Mercykill-Auszeichnung nicht vergessen!
+
             $this->log->add('Einer deiner zombifizierten Freunde greift an!');
+            Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $ghuls], false, 15, $this);
 
             $battle_won = true;
             if ($battle_won)
@@ -403,13 +401,11 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
                         $this->inventory()->add($item);
                     }
 
-                    $this->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_GHULKILL, $drop, $data->get_id()));
+                    $this->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_GHULKILL, $drop, $data->zombiefied_player_id()));
                 }
 
-        } else {
-            //TODO: Tatsächliche Zombie-Distanz aus der Config!!!
-            Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $this->zombie_factory()->spawn_zombies()], true, 10, $this);
-        }
+        } else
+            Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $this->zombie_factory()->spawn_zombies()], true, 20, $this);
 
 		//Accumulate zombies
 		$this->zombie_factory->accumulate_zombies();

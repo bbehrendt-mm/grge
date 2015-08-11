@@ -46,7 +46,7 @@ class Model_Combat_Field {
         }
         elseif (Tool_System::instance_of($combatant, 'Model_Player'))
             return $this->add_combatant($group, $combatant->create_combatant());
-        else
+        elseif (Tool_System::instance_of($combatant, 'Model_Combat_Actor'))
             $this->combatants[] = $combatant->set_scene($this->scene)->group($group)->id(count($this->combatants) + 1);
 
         return $this;

@@ -64,7 +64,7 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
      * @param $target
      */
     protected function score_kills($damage, $kills, $death, $target) {
-        if ($kills > 0 && $target->type == static::MCA_TYPE_ZOMBIE)
+        if ($kills > 0 && $target->get_type() == static::MCA_TYPE_ZOMBIE)
             $this->player->achievements()->achieve(Model_Achievement::MA_KILLED_ZOMBIES, $kills);
 
         if ($kills > 0 && Tool_System::instance_of($target, 'Model_Combat_Zombies_Ghul'))

@@ -14,6 +14,10 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
 	public function timeflow() {
 		return $this->set['gamedata']->timing->flow_mode;
 	}
+
+	public function season() {
+		return $this->set['gamedata']->head->season;
+	}
 	
 	/**
 	 * Check if game is paused

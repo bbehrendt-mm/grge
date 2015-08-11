@@ -7,21 +7,29 @@ CREATE TABLE IF NOT EXISTS ___PREFIX___achievements (
   season int(11) NOT NULL DEFAULT '-1',
   aid int(11) NOT NULL,
   `value` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AVG_ROW_LENGTH=260;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+CREATE TABLE IF NOT EXISTS ___PREFIX___battle (
+  bid int(11) NOT NULL,
+  gameid int(11) NOT NULL,
+  season int(11) NOT NULL,
+  fixed tinyint(1) NOT NULL,
+  data mediumblob NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS ___PREFIX___contests (
   contest_id varchar(16) NOT NULL,
   user_id int(11) NOT NULL,
   game_id int(11) NOT NULL,
   points int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AVG_ROW_LENGTH=256;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS ___PREFIX___games (
   gameid int(11) NOT NULL COMMENT 'Local game ID',
   `timestamp` int(11) NOT NULL COMMENT 'Last access timestamp',
   `lock` int(11) NOT NULL DEFAULT '0',
   gamedata longblob NOT NULL COMMENT 'Game dataset'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AVG_ROW_LENGTH=158105;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 CREATE TABLE IF NOT EXISTS ___PREFIX___games_cloud (
   gameid int(11) DEFAULT NULL,
@@ -42,7 +50,7 @@ CREATE TABLE IF NOT EXISTS ___PREFIX___language (
   `de` text NOT NULL,
   `en` text,
   `es` text
-) ENGINE=InnoDB AUTO_INCREMENT=2497 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS ___PREFIX___mentor (
   uid int(11) NOT NULL,
@@ -82,7 +90,7 @@ CREATE TABLE IF NOT EXISTS ___PREFIX___ranking (
   flow int(11) NOT NULL DEFAULT '0',
   `start` int(11) NOT NULL,
   `end` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AVG_ROW_LENGTH=176;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 CREATE TABLE IF NOT EXISTS ___PREFIX___qr (
   uid int(11) NOT NULL,
@@ -104,7 +112,7 @@ CREATE TABLE IF NOT EXISTS ___PREFIX___users (
   avatar varchar(511) DEFAULT NULL,
   univsp int(11) NOT NULL DEFAULT '0',
   `session` varchar(32) COLLATE utf8_bin NOT NULL COMMENT 'Last active session ID'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AVG_ROW_LENGTH=682;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 CREATE TABLE IF NOT EXISTS ___PREFIX___user_flags (
   autoid int(11) NOT NULL,
@@ -120,6 +128,9 @@ CREATE TABLE IF NOT EXISTS ___PREFIX___xref_game_player (
 
 ALTER TABLE ___PREFIX___achievements
   ADD PRIMARY KEY (uid,gameid,season,aid);
+
+ALTER TABLE ___PREFIX___battle
+  ADD KEY bid (bid);
 
 ALTER TABLE ___PREFIX___contests
   ADD PRIMARY KEY (contest_id,user_id) USING BTREE;
@@ -166,15 +177,20 @@ ALTER TABLE ___PREFIX___user_flags
 ALTER TABLE ___PREFIX___xref_game_player
   ADD PRIMARY KEY (uid);
 
+ALTER TABLE ___PREFIX___battle
+  MODIFY bid int(11) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE ___PREFIX___games
   MODIFY gameid int(11) NOT NULL AUTO_INCREMENT COMMENT 'Local game ID';
+
 ALTER TABLE ___PREFIX___games_cloud
   MODIFY uin int(11) NOT NULL AUTO_INCREMENT;
+
 ALTER TABLE ___PREFIX___users
   MODIFY uid int(11) NOT NULL AUTO_INCREMENT COMMENT 'Local player ID';
+
 ALTER TABLE ___PREFIX___user_flags
   MODIFY autoid int(11) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE ___PREFIX___ranking
-ADD CONSTRAINT ___PREFIX___ranking_ibfk_1 FOREIGN KEY (uid) REFERENCES ___PREFIX___users (uid) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT ___PREFIX___ranking_ibfk_1 FOREIGN KEY (uid) REFERENCES ___PREFIX___users (uid) ON DELETE CASCADE ON UPDATE CASCADE;

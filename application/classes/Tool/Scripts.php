@@ -410,8 +410,12 @@ class Tool_Scripts
      * @return Model_Combat_Field
      */
     public static function combat($combatants, $escapeable, $distance = 10, $location = null) {
-        /** @global Model_Player $player */
-        global $player;
+        /**
+         * @global Model_Player $player
+         * @global Model_Game $game
+         */
+
+        global $game, $player;
 
         //TODO: Escapeable battles!
         $battle = Model_Combat_Field::factory();
@@ -425,6 +429,9 @@ class Tool_Scripts
 
         if ($location === null)
             $location = $player->location();
+
+        //Upload to DB
+        DB::insert('battle', ['gameid','season','fixed','data'])->values([$game->id(), $game->season(), true, gzcompress(serialize($battle->get_scene()->export()), (int)Kohana::$config->load('server.io.performance.compression_level'))])->execute();
 
         //TODO: Actual log message
         $location->log()->add(new Model_Log_Types_Raw('' . $battle->get_scene()));

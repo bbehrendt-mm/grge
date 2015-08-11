@@ -14,6 +14,10 @@ class Model_Combat_Scene {
 
     private $log_data = [];
 
+    public function export() {
+        return $this->log_data;
+    }
+
     public function __toString() {
         return implode("\r\n",array_map(function($v) {return $this->entry_to_string($v);}, $this->log_data));
     }

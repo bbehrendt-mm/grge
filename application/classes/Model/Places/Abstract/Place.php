@@ -373,7 +373,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
         $zombies = $this->zombie_factory->release_zombie_population();
         $zc = 0;
         foreach ($zombies as $zombie) $zc += $zombie->count();
-        $battle = Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $this->zombie_factory->release_zombie_population()], true, $this->zombie_factory()->get_siege_range(), $this);
+        $battle = Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $zombies], true, $this->zombie_factory()->get_siege_range(), $this);
 
         $this->log->add('Du greifst die :zombiestr an, die den Weg versperren!', array(':zombiestr' => $zc . ' ' . __('Zombies')));
         $this->zombie_factory()->accumulate_zombies($battle->count_group_members(2));

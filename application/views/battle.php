@@ -18,8 +18,19 @@ if (!isset($path)) $path = '';
     <script type="application/javascript" src="../js/easeljs-0.8.0.min.js" ></script>
     <script type="application/javascript" src="../js/tweenjs-0.6.0.min.js" ></script>
 </head>
-<body>
-    <canvas width="640" height="400" id="output"></canvas>
+<body style="overflow: hidden; padding: 0; margin: 0; background: black">
+
+    <div>
+        <img style="position: absolute; left: 120px; top: 64px;" src="../media/icons/battle/logo.png" />
+        <div style="position: absolute; left: 0; top: 230px; width: 600px; text-align: center">
+            <img src="../media/icons/battle/loading.gif" />
+        </div>
+
+        <div id="error" style="display: none; position: absolute; left: 20px; top: 230px; width: 588px; text-align: center; font-size: 12px; background: white; border: 2px solid #aaaaaa; box-shadow: 0 0 5px red; padding: 4px; font-family: monospace;"></div>
+    </div>
+
+
+    <canvas style="position: absolute;" width="640" height="400" id="output"></canvas>
 
     <script type="text/javascript">
         (function() {
@@ -43,16 +54,20 @@ if (!isset($path)) $path = '';
                             eval(d.find('varbody').attr('onload'));
                             return;
                         }
+                        var error = $('#error').show();
 
                         if (status == 'abort')
-                            return;
+                            error.text('Download aborted by client.');
                         if (status == 'timeout')
-                            console.error({error: 'GRGE-0001-0000', name: 'E_CLIENT_CONNECTION_TIMEOUT', message: 'Connection timed out.'});
-                        else console.error({error: 'GRGE-0002-0000', name: 'E_SERVER_ERROR', message: 'Unexpected error while processing the request.'});
+                            error.text('Connection timeout.');
+                        else error.text('Unexpected server error.');
                     });
                 };
 
                 var receiver = function(data) {
+                    if (!data.video)
+                        return $('#error').show().text('Unable to obtain video file.');
+
                     battle = new Battle('output', data.video);
                     battle.load();
                     battle.proceed();
@@ -61,6 +76,7 @@ if (!isset($path)) $path = '';
                 $.getScript('../web/battle/?l=' + 'de', function() {
                     loader();
                 }).fail(function( jqxhr, settings, exception ) {
+                    $('#error').show().text('Compiler error: ' + exception.message);
                     console.error(exception);
                 });
             });

@@ -7,10 +7,6 @@ class Controller_Embed extends Controller {
     public function before() {
         //Load session, perform session checks
         $this->session = Session::instance();
-
-        //Avoid caching!
-        $this->response->headers("Cache-Control: no-cache, must-revalidate");
-        $this->response->headers("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
     }
 
     public function japi_battle() {

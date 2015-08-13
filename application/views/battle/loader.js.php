@@ -30,7 +30,7 @@
 
     Battle.prototype.load = function() {
         var alias = this;
-        this.addRessource('field.png', 'resist.gif', 'damage.gif', 'kill.gif');
+        this.addRessource('field.png', 'resist.gif', 'damage.gif', 'kill.gif', 'health.gif');
 
         $.each(this.data, function(k,v) {
             if (v[0] == <?=Model_Combat_Scene::MCS_EV_NEW_CHALLENGER?>)

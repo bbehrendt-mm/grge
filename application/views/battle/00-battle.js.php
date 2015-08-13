@@ -13,6 +13,9 @@
         this.current = 0;
         this.idle = 500;
 
+        this.card = null;
+        this.card_target = null;
+
         this.ressources = [];
         this.waiting = false;
         this.loadstate = 0;

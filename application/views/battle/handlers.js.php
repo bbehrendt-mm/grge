@@ -39,8 +39,10 @@
         this.combatants[id].actor.shadow = new createjs.Shadow("rgba(0,0,0,0.5)", 0, 0, 5);
 
         pos = this.transform(this.combatants[id].pos);
-        this.combatants[id].actor.x = -8;
-        this.combatants[id].actor.y = -8;
+        this.combatants[id].actor.x = -24;
+        this.combatants[id].actor.y = -24;
+        this.combatants[id].actor.scaleX = this.combatants[id].actor.scaleY = 3;
+        this.combatants[id].actor.alpha = 0;
 
         this.combatants[id].container = new createjs.Container();
         this.combatants[id].container.x = pos.x;
@@ -50,13 +52,18 @@
         this.combatants[id].container.addChild(this.combatants[id].actor);
         this.stage.addChild(this.combatants[id].container);
 
-        this.proceed();
+        var alias = this;
+        createjs.Tween.get(this.combatants[id].actor, {loop: false}).to({alpha: 1, scaleX: 1, scaleY: 1, x: -8, y: -8}, 100).call(function() {
+            alias.proceed();
+        });
     };
 
     Battle.prototype.events[<?=Model_Combat_Scene::MCS_EV_NEXT?>] = function(id) {
         var blip = new createjs.Shape();
         blip.x = blip.y = 0;
         blip.scaleX = blip.scaleY = 0;
+
+        this.showActorCard(id);
 
         this.combatants[id].container.addChildAt(blip, 0);
         blip.graphics
@@ -66,10 +73,13 @@
             .drawCircle(0, 0, 32);
 
         var alias = this;
-        createjs.Tween.get(blip, {loop: false}).to({scaleX: 1, scaleY: 1, alpha: 0}, 300).call(function() {
-            alias.combatants[id].container.removeChildAt(0);
-            alias.proceed();
-        });
+        createjs.Tween.get(blip, {loop: false})
+            .to({scaleX: 1, scaleY: 1, alpha: 0}, 300)
+            .wait(this.idle)
+            .call(function() {
+                alias.combatants[id].container.removeChildAt(0);
+                alias.proceed();
+            });
     };
 
     Battle.prototype.events[<?=Model_Combat_Scene::MCS_EV_MOVE?>] = function(id, pos, distance, target) {
@@ -81,12 +91,18 @@
     };
 
     Battle.prototype.events[<?=Model_Combat_Scene::MCS_EV_DAMAGE?>] = function(id, damage, kills, death) {
+        if (damage === undefined) damage = 0;
+        if (kills === undefined) kills = 0;
+
         this.combatants[id].health = {
-            health: this.combatants[id].health - (damage - kills * this.combatants[id].max),
-            max: this.combatants[id].max,
-            count: this.combatants[id].count - kills
+            health: this.combatants[id].health.health - (damage - kills * this.combatants[id].health.max),
+            max: this.combatants[id].health.max,
+            count: this.combatants[id].health.count - kills
         };
         var alias = this;
+
+        //TODO: Move to attack handler
+        this.addTargetCard(id);
 
         if (damage > 0) {
             this.characterPopupMessage(id, '' + Math.round(damage * 10)/10, 'damage.gif');

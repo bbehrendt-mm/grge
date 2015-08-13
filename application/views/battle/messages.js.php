@@ -1,5 +1,114 @@
 (function() {
 
+    var getCardContents = function(c) {
+        var avatar = new createjs.Shape();
+        avatar.graphics
+            .setStrokeStyle(2)
+            .beginStroke("#999999")
+            .beginFill('white')
+            .drawCircle(32,32,24);
+
+        var nametxt = new createjs.Text((c.type == <?=Model_Combat_Actor::MCA_TYPE_ZOMBIE?> && c.health.count > 0 ? (c.health.count + ' x ') : '') + c.name, "bold 15px Arial", "#ffffff");
+        nametxt.x = 64;
+        nametxt.y = 8;
+
+        var health_icon = new createjs.Bitmap(this.getRessource(c.health.count > 0 ? 'health.gif' : 'kill.gif'));
+        health_icon.x = 64;
+        health_icon.y = 24;
+
+        var healthtxt = new createjs.Text(c.health.count > 0 ? Math.round(c.health.health*10)/10 + ' / ' + c.health.max : <?=__j('Vernichtet!')?>, "bold 12px Arial", c.health.count > 0 ? "#FF1D03" : 'white');
+        healthtxt.x = 88 + 47 - healthtxt.getBounds().width/2;
+        healthtxt.y = c.health.count > 0 ? 24 : 28;
+
+        var healthbar = new createjs.Container();
+        healthbar.x = 88;
+        healthbar.y = 36;
+
+        if (c.health.count > 0) {
+            var hb_bg = new createjs.Shape();
+            hb_bg.graphics
+                .beginFill('#900431')
+                .rect(0, 0, 94, 4);
+
+            var hb_br = new createjs.Shape();
+            hb_br.graphics
+                .beginFill('#FF1D03')
+                .rect(0, 0, Math.round(94 * (c.health.health / c.health.max)), 4);
+
+            healthbar.addChild(hb_bg);
+            healthbar.addChild(hb_br);
+        }
+
+        return [avatar, nametxt, health_icon, healthtxt, healthbar];
+    };
+
+    Battle.prototype.showActorCard = function(id) {
+        var alias_card = this.card;
+        var alias = this;
+        if (alias_card)
+            createjs.Tween.get(alias_card, {loop: false})
+                .to({y: alias_card.y <= 10 ? -34 : 370, alpha: 0}, 200)
+                .call(function() {
+                    alias.stage.removeChild(alias_card);
+                });
+
+        var invert = this.combatants[id].pos.y > 30;
+
+        this.card = new createjs.Container();
+        this.card.alpha = 0;
+        this.card.x = 0;
+        this.card.y = invert ? -34 : 370;
+
+        var background = new createjs.Shape();
+        background.graphics
+            .beginFill('rgba(0,0,0,0.6)')
+            .rect(0,0,640,64);
+
+        var content = getCardContents.call(this, this.combatants[id]);
+
+        this.card.addChild(background);
+
+        $.each(content, function(k,v) {alias.card.addChild(v);});
+
+        this.stage.addChild(this.card);
+
+        createjs.Tween.get(this.card, {loop: false})
+            .to({y: invert ? 0 : 336, alpha: 1}, 200);
+    };
+
+    Battle.prototype.addTargetCard = function(id) {
+        if (!this.card) return;
+
+        var alias_card = this.card_target;
+        var alias = this;
+        if (alias_card)
+            createjs.Tween.get(alias_card, {loop: false})
+                .to({x: 368, alpha: 0}, 200)
+                .call(function() {
+                    alias.card.removeChild(alias_card);
+                });
+
+        this.card_target = new createjs.Container();
+        this.card_target.alpha = 0;
+        this.card_target.x = 368;
+        this.card_target.y = 0;
+
+        var background = new createjs.Shape();
+        background.graphics
+            .beginFill('rgba(0,0,0,0.3)')
+            .moveTo(-32, 0).lineTo(306,0).lineTo(306, 64).lineTo(-32,64).lineTo(-16,32).lineTo(-32, 0);
+
+        var content = getCardContents.call(this, this.combatants[id]);
+
+        this.card_target.addChild(background);
+        $.each(content, function(k,v) {alias.card_target.addChild(v);});
+
+        this.card.addChild(this.card_target);
+
+        createjs.Tween.get(this.card_target, {loop: false})
+            .to({x: 334, alpha: 1}, 200);
+    };
+
     Battle.prototype.characterPopupMessage = function(id, message, icon) {
         if (message !== undefined)
             this.combatants[id].messages.push([message, icon]);
@@ -23,14 +132,15 @@
                 txtcontainer.addChild(image);
             }
 
-            txtcontainer.x = -Math.round(txtcontainer.getBounds().width/2);
-            txtcontainer.y = -10;
+            var w = Math.round(txtcontainer.getBounds().width/2);
+            txtcontainer.x = -w * 0.75;
+            txtcontainer.y = -7.5;
             txtcontainer.scaleX = txtcontainer.scaleY = 0.75;
             txtcontainer.alpha = 0;
 
             this.combatants[id].container.addChild(txtcontainer);
             createjs.Tween.get(txtcontainer, {loop: false})
-                .to({y: -30, scaleX: 1, scaleY: 1, alpha: 1}, 800)
+                .to({x: -w, y: -30, scaleX: 1, scaleY: 1, alpha: 1}, 800)
                 .call(function() {
                     alias.characterPopupMessage(id);
                 })

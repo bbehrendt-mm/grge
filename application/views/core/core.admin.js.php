@@ -41,6 +41,10 @@
             core.parts.admin.execute('admin/japi/gamepanel/regenerate', {});
         }).appendTo(ret);
 
+        $('<div />').addClass('btn small').text('Force Battle').click(function() {
+            core.parts.admin.execute('admin/japi/gamepanel/force_battle', {});
+        }).appendTo(ret);
+
         $('<div />').addClass('btn small').text('Siege...').click(function() {
             var n = parseInt(prompt('Number of zombies? (+/-)', '0'));
             if (!isFinite(n) || !n) return;

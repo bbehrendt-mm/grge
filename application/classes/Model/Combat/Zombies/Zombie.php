@@ -8,4 +8,8 @@ abstract class Model_Combat_Zombies_Zombie extends Model_Combat_Actor {
         return parent::factory()
             ->add_weapon(new Model_Items_Claw());
     }
+
+    public function get_avatar() {
+        return 'media/icons/battle/avatar/zombie.jpg';
+    }
 }

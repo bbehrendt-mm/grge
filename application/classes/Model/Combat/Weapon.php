@@ -99,7 +99,7 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
      */
     public function potential_damage($me = null, $other = null, $ignore_range = false, $count = 1) {
         if (!$me || !$other)
-            return ($this->damage()[0] + $this->damage()[1])/2;
+            return $this->damage();
 
         if (!$this->usable())
             return 0;

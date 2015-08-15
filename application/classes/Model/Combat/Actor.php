@@ -55,6 +55,10 @@ class Model_Combat_Actor {
         return new $s;
     }
 
+    public function get_avatar() {
+        return null;
+    }
+
     public function __construct() {
         $this->health = $this->max_health;
     }

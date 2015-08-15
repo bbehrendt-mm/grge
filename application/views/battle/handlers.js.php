@@ -2,10 +2,11 @@
 
     Battle.prototype.events = {};
 
-    Battle.prototype.events[<?=Model_Combat_Scene::MCS_EV_NEW_CHALLENGER?>] = function(id, group, name, type, pos, strength, stats) {
+    Battle.prototype.events[<?=Model_Combat_Scene::MCS_EV_NEW_CHALLENGER?>] = function(id, group, name, avatar, type, pos, strength, stats) {
         this.combatants[id] = {
             group: group,
             name: name,
+            avatar: avatar,
             type: type,
             pos: {x: pos[0], y: pos[1]},
             health: {
@@ -26,12 +27,14 @@
             message_processing: false
         };
 
+        var inverse = pos[0] > 32;
+
         switch (this.combatants[id].type) {
             case <?=Model_Combat_Actor::MCA_TYPE_PLAYER?>:
-                this.combatants[id].actor = new createjs.Bitmap(this.getRessource('player.gif'));
+                this.combatants[id].actor = new createjs.Bitmap(this.getResource('player.gif'));
                 break;
             case <?=Model_Combat_Actor::MCA_TYPE_ZOMBIE?>:
-                this.combatants[id].actor = new createjs.Bitmap(this.getRessource('zombie.gif'));
+                this.combatants[id].actor = new createjs.Bitmap(this.getResource('zombie.gif'));
                 break;
             default:
                 console.error('Unknown actor type ' + this.combatants[id].type);
@@ -52,10 +55,43 @@
         this.combatants[id].container.addChild(this.combatants[id].actor);
         this.stage.addChild(this.combatants[id].container);
 
+        var blackbox = new createjs.Container();
+        blackbox.x = pos.x + (inverse ? 10 : -10);
+        blackbox.y = pos.y - 10;
+        blackbox.scaleX = 0;
+        blackbox.z = -99;
+
+        var txt = new createjs.Text(type === <?=Model_Combat_Actor::MCA_TYPE_ZOMBIE?> ? (this.combatants[id].health.count + ' x ' + name) : name, 'bold 15px sans-serif', '#ffffff');
+        var length = txt.getBounds().width + 40;
+        txt.x = 20;
+        txt.y = 2;
+
+        var bb_bg = new createjs.Shape();
+        bb_bg.graphics
+            .setStrokeStyle(1)
+            .beginStroke('rgba(0,0,0,0.6)')
+            .beginFill('rgba(0,0,0,0.6)')
+            .drawRect(0,0,length,20);
+
+        blackbox.addChild(bb_bg);
+        blackbox.addChild(txt);
+        this.stage.addChild(blackbox);
+
         var alias = this;
-        createjs.Tween.get(this.combatants[id].actor, {loop: false}).to({alpha: 1, scaleX: 1, scaleY: 1, x: -8, y: -8}, 100).call(function() {
-            alias.proceed();
-        });
+        createjs.Tween.get(this.combatants[id].actor, {loop: false})
+            .to({alpha: 1, scaleX: 1, scaleY: 1, x: -8, y: -8}, 100)
+            .call(function() {
+                createjs.Tween.get(blackbox)
+                    .to({scaleX: 1, x: inverse ? (pos.x + (10 - length)) : blackbox.x}, 100)
+                    .to({scaleX: 1.1, x: inverse ? (pos.x + (10 - length * 1.1)) : blackbox.x}, 1000)
+                    .call(function() {
+                        alias.proceed();
+                    })
+                    .to({scaleX: 0, alpha: 0, x: inverse ? (pos.x + (10 - length * 1.11)) : (length * 1.01 + pos.x)}, 100)
+                    .call(function() {
+                        alias.stage.removeChild(blackbox);
+                    });
+            })
     };
 
     Battle.prototype.events[<?=Model_Combat_Scene::MCS_EV_NEXT?>] = function(id) {
@@ -90,6 +126,12 @@
         });
     };
 
+    Battle.prototype.events[<?=Model_Combat_Scene::MCS_EV_ATTACK?>] = function(id_atk, id_def, ammo, weapon) {
+        this.showActorCard(id_atk, this.formatVariantLine([this.getResource(weapon[1]), weapon[0]], "bold 12px Arial", "#ffffff"));
+        this.addTargetCard(id_def);
+        this.proceed();
+    };
+
     Battle.prototype.events[<?=Model_Combat_Scene::MCS_EV_DAMAGE?>] = function(id, damage, kills, death) {
         if (damage === undefined) damage = 0;
         if (kills === undefined) kills = 0;
@@ -101,22 +143,31 @@
         };
         var alias = this;
 
-        //TODO: Move to attack handler
-        this.addTargetCard(id);
+        var line = null;
 
         if (damage > 0) {
-            this.characterPopupMessage(id, '' + Math.round(damage * 10)/10, 'damage.gif');
-            if (kills > 0) this.characterPopupMessage(id, '' + kills, 'kill.gif');
-        } else this.characterPopupMessage(id, '', 'resist.gif');
+            var dmg_show = Math.round(damage * 10)/10;
+            this.characterPopupMessage(id, '' + dmg_show, 'damage.gif');
+
+            if (kills > 0) {
+                this.characterPopupMessage(id, '' + kills, 'kill.gif');
+                line = this.formatVariantLine([this.getResource('damage.gif'), dmg_show, null, this.getResource('kill.gif'), kills], "bold 12px Arial", "#ffffff");
+            } else line = this.formatVariantLine([this.getResource('damage.gif'), dmg_show], "bold 12px Arial", "#ffffff");
+        } else {
+            this.characterPopupMessage(id, '', 'resist.gif');
+            line = this.formatVariantLine([this.getResource('resist.gif'), <?=__j('Watz!')?>], "bold 12px Arial", "#ffffff");
+        }
+
+        this.addTargetCard(id, line);
 
         if (death) {
             var body;
             switch (this.combatants[id].type) {
                 case <?=Model_Combat_Actor::MCA_TYPE_PLAYER?>:
-                    body = new createjs.Bitmap(alias.getRessource('player_dead.gif'));
+                    body = new createjs.Bitmap(alias.getResource('player_dead.gif'));
                     break;
                 case <?=Model_Combat_Actor::MCA_TYPE_ZOMBIE?>:
-                    body = new createjs.Bitmap(alias.getRessource('zombie_dead.gif'));
+                    body = new createjs.Bitmap(alias.getResource('zombie_dead.gif'));
                     break;
                 default:
                     console.error('Unknown actor type ' + this.combatants[id].type);
@@ -134,7 +185,7 @@
             createjs.Tween.get(body, {loop: false})
                 .to({alpha: 1}, 200)
                 .call(function() {
-                    alias.proceed();
+                    alias.proceed(2);
                 });
 
 
@@ -146,9 +197,10 @@
                 .to({x: -dist - 8, y: -dist - 8}, 100)
                 .to({x: -8, y: -8}, 100)
                 .call(function() {
-                    alias.proceed();
+                    alias.proceed(2);
                 });
-        } else this.proceed();
+        } else this.proceed(2);
+
 
     };
 

@@ -112,20 +112,21 @@ class Model_Factory_Zombies extends Model {
 		return (int)$config['range'];
 	}
 
-    /**
-     * Returns an array with combating zombies, or null if there are no zombies to battle
-     *
-     * @param null $number
-     * @throws Exception
-     * @return null|Model_Combat_Zombies_Zombie[]
-     */
-	public function spawn_zombies($number = null) {
+	/**
+	 * Returns an array with combating zombies, or null if there are no zombies to battle
+	 *
+	 * @param null $number
+	 * @param bool $force
+	 * @return Model_Combat_Zombies_Zombie[]|null
+	 * @throws Exception
+	 */
+	public function spawn_zombies($number = null, $force = false) {
 		//Get Config
 		if (!$config = Tool_System::config_tree("spawn/{$this->config}", $this->type))
 			throw new Exception('Failed to load zombie spawn configuration (' . $this->config . ')!');
 		
 		//No zombies appear
-		if ($number === null && $config['chance'] < mt_rand(0, 100)) return null;
+		if (!$force && $number === null && $config['chance'] < mt_rand(0, 100)) return null;
 		
 		//Spawn fixed number of zombies
         $ztype = empty($config["siege"]) ? 'Model_Combat_Zombies_Shambler' : $config["siege"];

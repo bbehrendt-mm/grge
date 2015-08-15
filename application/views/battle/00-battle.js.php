@@ -31,7 +31,7 @@
 
     Battle.prototype.initUI = function() {
         var background = new createjs.Shape();
-        background.graphics.beginBitmapFill(this.getRessource('field.png')).drawRect(0,0,640,400);
+        background.graphics.beginBitmapFill(this.getResource('field.png')).drawRect(0,0,640,400);
         background.z = -100;
         this.stage.addChild(background);
     };
@@ -46,14 +46,18 @@
         })
     };
 
-    Battle.prototype.proceed = function(autoplay) {
-        if (autoplay)
-            this.idle = autoplay;
+    Battle.prototype.setDelay = function(delay) {
+        this.idle = delay;
+    };
 
+    Battle.prototype.proceed = function(factor) {
         if (this.loadstate) {
             this.waiting = true;
             return;
         }
+
+        if (factor === undefined)
+            factor = 1;
 
         var event = this.data[this.current++];
         if (!event) return;
@@ -69,7 +73,7 @@
             window.setTimeout(function() {
                 console.log(type, event);
                 alias.events[type].apply(alias, event);
-            }, this.idle);
+            }, this.idle * factor);
         else alias.proceed();
     }
 })();

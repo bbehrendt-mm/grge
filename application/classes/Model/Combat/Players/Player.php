@@ -70,4 +70,9 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
         if ($kills > 0 && Tool_System::instance_of($target, 'Model_Combat_Zombies_Ghul'))
             $this->player->achievements()->achieve(Model_Achievement::MA_MERCYKILL, $kills);
     }
+
+    public function get_avatar() {
+        $s = Model_Euser::avatar_by_id($this->player->id());
+        return $s ? ('http:' . $s) : null;
+    }
 }

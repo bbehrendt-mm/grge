@@ -17,6 +17,15 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
         $this->render();
     }
 
+    public function japi_force_battle() {
+        /** @global Model_Game $game */
+        /** @global Model_Player $player */
+        global $player;
+
+        $zombies = $player->location()->zombie_factory()->spawn_zombies(null, true);
+        if ($zombies) Tool_Scripts::combat([Tool_Scripts::at_location($player->location_class()), $zombies], true, 20, $player->location());
+    }
+
     public function japi_siege() {
         /** @global Model_Game $game */
         /** @global Model_Player $player */

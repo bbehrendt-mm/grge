@@ -2,7 +2,7 @@
 
 class Model_Combat_Scene {
 
-    const MCS_EV_NEW_CHALLENGER = 1;           // [ID, Group, Name, Type, [x, y], [Health, Max Health, Count], [Ini, Dmg, Res, Acc]]
+    const MCS_EV_NEW_CHALLENGER = 1;           // [ID, Group, Name, Avatar, Type, [x, y], [Health, Max Health, Count], [Ini, Dmg, Res, Acc]]
     const MCS_EV_NEXT = 2;                     // [ID]
     const MCS_EV_ATTACK = 3;                   // [Atk-ID, Def-ID, [Ammo-Icons ...], [Wpn-Name, Wpn-Icon, Wpn-Anim]]
     const MCS_EV_DAMAGE = 4;                   // [ID, Damage, Kills, Death]
@@ -28,7 +28,7 @@ class Model_Combat_Scene {
 
         switch ($type) {
             case static::MCS_EV_NEW_CHALLENGER:
-                list($id, $group, $name, $atype, list($x, $y), list($health, $max, $count), list($ini, $dmg, $res, $acc)) = $entry;
+                list($id, $group, $name, $avatar, $atype, list($x, $y), list($health, $max, $count), list($ini, $dmg, $res, $acc)) = $entry;
                 switch ($atype) {
                     case Model_Combat_Actor::MCA_TYPE_PLAYER:
                         $tmp = "Player $name"; break;
@@ -89,6 +89,7 @@ class Model_Combat_Scene {
             $combatant->id(),
             $combatant->group(),
             $combatant->name(),
+            $combatant->get_avatar(),
             $combatant->get_type(),
             $combatant->position(),
             $combatant->strength(),

@@ -404,8 +404,10 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
                     $this->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_GHULKILL, $drop, $data->zombiefied_player_id()));
                 }
 
-        } else
-            Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $this->zombie_factory()->spawn_zombies()], true, 20, $this);
+        } else {
+            $zombies = $this->zombie_factory()->spawn_zombies();
+            if ($zombies) Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $zombies], true, 20, $this);
+        }
 
 		//Accumulate zombies
 		$this->zombie_factory->accumulate_zombies();

@@ -4,13 +4,19 @@ class Model_Log_Types_Chem extends Model_Log_Message {
 
     protected static $type = Model_Log_Message::MLM_CHEM_EXPERIMENT;
 
+    /**
+     * @param number $chemvalue
+     * @param Model_Items_Abstract_Item $item
+     * @param $results
+     * @param null $uid
+     */
     public function __construct($chemvalue, $item, $results, $uid = null) {
         /**
          * @global Model_Game $game
          * @global Model_Player $player
          */
         global $game, $player;
-        if ($uid === null) $uid = $player->user_id();
+        if ($uid === null) $uid = $player->id();
 
         if (!is_array($results))
             $results = [$results];
@@ -28,12 +34,6 @@ class Model_Log_Types_Chem extends Model_Log_Message {
     }
 
     protected function postprocess($data) {
-        /**
-         * @global Model_Game $game
-         * @global Model_Player $player
-         */
-        global $game, $player;
-
         /**
          * @var Model_Struct_Item $chem
          * @var Model_Struct_Item $item

@@ -15,7 +15,7 @@ class Model_Log_Types_Building extends Model_Log_Message {
          * @global Model_Player $player
          */
         global $game, $player;
-        if ($uid === null) $uid = $player->user_id();
+        if ($uid === null) $uid = $player->id();
 
         parent::__construct([
             'name' => $game->get_player($uid)->name(),

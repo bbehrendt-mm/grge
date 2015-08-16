@@ -829,9 +829,9 @@ class Controller_Game extends Controller {
             $player_ratings = [];
             if ($game->is_rankable() && $game->points($player->id()) > 0)
                 foreach ($game->players(false) as $p)
-                    if ($p->user_id() != $player->user_id())
-                    $player_ratings[$p->user_id()] = [
-                        'prev_rating' => Model_User::get_karma($p->user_id(), $player->user_id()),
+                    if ($p->id() != $player->id())
+                    $player_ratings[$p->id()] = [
+                        'prev_rating' => Model_User::get_karma($p->id(), $player->id()),
                         'name' => $p->name()
                     ];
 

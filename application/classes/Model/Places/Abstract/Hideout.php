@@ -107,7 +107,7 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         global $game, $player;
 
         if (Tool_Events::current($game->next_tick()) == 'halloween' && !$this->has_upgrade('cursed_hideout'))
-            new Model_Buffs_Scarecrow($player->user_id());
+            new Model_Buffs_Scarecrow($player->id());
 
         //Build chance array
         $chance = Array(Array('chance' => 1500, 'value' => 0),	//Nothing happens
@@ -119,16 +119,18 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         $sleeping = $player->buff_retr('sleep_cozy');
         switch (Tool_Gambling::roulette($chance))
         {
-            case 1: if ($sleeping) $player->log()->add(new Model_Log_Types_Text(null, null, 'Du hattest eben einen schönen Traum. Das hat dir etwas zusätzliche Energie verschafft.'));
-            else $player->log()->add(new Model_Log_Types_Text(null, null, 'Du hast soeben die Antwort auf eine philosophische Frage gefunden, die dich schon seit Jahren quält. Das hat dir etwas zusätzliche Energie verschafft.'));
-                $game->stats(Model_Game::MGLS_Energy, 5);
+            case 1:
+                if ($sleeping) $player->log()->add('Du hattest eben einen schönen Traum. Das hat dir etwas zusätzliche Energie verschafft.');
+                else $player->log()->add('Du hast soeben die Antwort auf eine philosophische Frage gefunden, die dich schon seit Jahren quält. Das hat dir etwas zusätzliche Energie verschafft.');
+                $player->stats_modify(Model_Player::MP_STAT_ENERGY, 5);
                 break;
-            case 2: if ($sleeping) $player->log()->add(new Model_Log_Types_Text(null, null, 'Du hast die perfekte Ruheposition gefunden. Weil du jetzt so bequem liegst erhälst du einen Energieschub.'));
-            else $player->log()->add(new Model_Log_Types_Text(null, null, 'In deiner Hose findest du eine alte Kinokarte von einem Film, den du dir mit Freunden angesehen hast. Diese schöne Erinnerung verschafft dir einen Energieschub.'));
-                $game->stats(Model_Game::MGLS_Energy, 15);
+            case 2:
+                if ($sleeping) $player->log()->add('Du hast die perfekte Ruheposition gefunden. Weil du jetzt so bequem liegst erhälst du einen Energieschub.');
+                else $player->log()->add('In deiner Hose findest du eine alte Kinokarte von einem Film, den du dir mit Freunden angesehen hast. Diese schöne Erinnerung verschafft dir einen Energieschub.');
+                $player->stats_modify(Model_Player::MP_STAT_ENERGY, 15);
                 break;
-            case 3: $player->log()->add(new Model_Log_Types_Text(null, null, 'Eine Sternschnuppe! So eine hast du schon ewig nicht mehr gesehen. Dieser wunderschöne Anblick gibt dir Hoffnung und einen gewaltigen Energieschub!'));
-                $game->stats(Model_Game::MGLS_Energy, 50);
+            case 3: $player->log()->add('Eine Sternschnuppe! So eine hast du schon ewig nicht mehr gesehen. Dieser wunderschöne Anblick gibt dir Hoffnung und einen gewaltigen Energieschub!');
+                $player->stats_modify(Model_Player::MP_STAT_ENERGY, 50);
                 break;
         }
 
@@ -148,7 +150,7 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         parent::enter($pid);
         new Model_Buffs_Home($player->id());
         if (Tool_Events::current($game->next_tick()) == 'halloween' && !$this->has_upgrade('cursed_hideout'))
-            new Model_Buffs_Scarecrow($player->user_id());
+            new Model_Buffs_Scarecrow($player->id());
     }
 
     public function leave($pid = null) {

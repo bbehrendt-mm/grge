@@ -11,7 +11,8 @@ class Model_Places_Outworld extends Model_Places_Abstract_Node {
     protected $tickets = Array();
 	
 	private function initial_supply() {
-		global $game;
+		/** @global Model_Game $game */
+        global $game;
         $this->initial_supply = true;
 
         if ($game->config('places.outworld.spawn_stranger')) {
@@ -57,9 +58,8 @@ class Model_Places_Outworld extends Model_Places_Abstract_Node {
 	public function tick() {
         /**
          * @global $game Model_Game
-         * @global $player Model_Player
          */
-        global $game, $player;
+        global $game;
 					
 		if (!$this->initial_supply && ($game->config('places.outworld.spawn_stranger') || $game->config('places.outworld.alt_spawn_stranger')))
 		{
@@ -71,6 +71,7 @@ class Model_Places_Outworld extends Model_Places_Abstract_Node {
 	}
 
     protected function create_npcs() {
+        /** @global Model_Game $game */
         global $game;
 
         $php53bb = $this;
@@ -107,7 +108,7 @@ class Model_Places_Outworld extends Model_Places_Abstract_Node {
                         ->fail_message('... du hast keine Seelen ... bei dir.')
                         ->effect(Model_Effect::factory()
                                 ->custom(function($p) {
-                                    /** @global Model_User $user */
+                                    /** @global Model_Euser $user */
                                     global $user;
 
                                     /** @var Model_Player $p */
@@ -117,7 +118,7 @@ class Model_Places_Outworld extends Model_Places_Abstract_Node {
                                     Tool_Scripts::consume_available_items(array('Model_Items_Soul' => $ws, 'Model_Items_Soul2' => $ss), true, false, false, $p);
                                     $points = $ws + 5 * $ss;
 
-                                    $user->award_coins($p->user_id(), $points);
+                                    $user->award_coins($p->id(), $points);
                                     $p->log()->add(new Model_Log_Types_Text(null, null, 'Du hast :total Seelen die Freiheit geschenkt und wirst dafür mit :usp Universal-Seelenpunkten belohnt!', array(':total' => $ws + $ss, ':usp' => $points)));
                                 })
                         )
@@ -133,6 +134,7 @@ class Model_Places_Outworld extends Model_Places_Abstract_Node {
                                 ->message('Du schließt für einen Moment deine Augen... als du sie wieder öffnest, stehst du plötzlich auf einem verlassenen Weihnachtsmarkt! In der Mitte des Markts steht eine leere Weihnachtsbaum-Halterung. Wie traurig... du solltest dich vom Geist der Weihnacht erfüllen lassen und dort einen wunderschön geschmückten Weihnachtsbaum aufstellen! Sicherlich wirst du dafür genug Materialien hier finden...')
                                 ->custom(function($p) use ($php53bb) {
                                     /** @var Model_Player $p */
+                                    /** @global Model_Game $game */
                                     global $game;
 
                                     $tid = time() . '_' . mt_rand();

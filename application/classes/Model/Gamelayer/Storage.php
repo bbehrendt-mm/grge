@@ -24,6 +24,7 @@ abstract class Model_Gamelayer_Storage extends Model {
 	}
 	
 	final public function __wakeup() {
+		/** @global Model_Euser $user */
 		global $user;
 
 		//Rebind global game variable
@@ -47,7 +48,7 @@ abstract class Model_Gamelayer_Storage extends Model {
 	final public function __construct($global_instance = true) {
 		//Bind global game variable
 		if ($global_instance) {
-			global $game, $player;
+			global $game;
 			$game = $this;
 		}		
 	}

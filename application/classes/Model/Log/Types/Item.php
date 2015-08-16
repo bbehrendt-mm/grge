@@ -26,7 +26,7 @@ class Model_Log_Types_Item extends Model_Log_Message {
          */
         global $game, $player;
 
-        if (!$uin) $uin =  $player->user_id();
+        if (!$uin) $uin =  $player->id();
 
         if (!is_array($item))
             $item = [$item];

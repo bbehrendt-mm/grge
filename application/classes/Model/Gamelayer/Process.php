@@ -2,7 +2,12 @@
 
 abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
 
+	/**
+	 * @param null $lid
+	 * @return Model_Places_Abstract_Place
+	 */
 	abstract public function location($lid = NULL);
+
 	abstract public function paused();
 	abstract public function is_alive();
 

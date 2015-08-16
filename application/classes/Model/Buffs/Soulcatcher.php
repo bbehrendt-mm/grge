@@ -8,6 +8,7 @@ class Model_Buffs_Soulcatcher extends Model_Buffs_Abstract_Buff {
 	protected static $bid = 'soulcatcher';
 
     public function tick() {
+        /** @global Model_Game $game */
         global $game;
 
         parent::tick();
@@ -34,7 +35,9 @@ class Model_Buffs_Soulcatcher extends Model_Buffs_Abstract_Buff {
             else $item = new Model_Items_Soul(1);
 
             $this->assoc_player->location()->inventory()->add($item);
-            $this->assoc_player->location()->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_SOUL, $item, $this->assoc_player->user_id()));
+            $this->assoc_player->location()->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_SOUL, $item, $this->assoc_player->id()));
         }
+
+        return true;
     }
 }

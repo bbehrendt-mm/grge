@@ -170,9 +170,11 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
     }
 	
 	public function purge() {
-        DB::delete('games')->where('gameid', '=', $this->set['gameid'])->execute();
+		DB::delete('games')->where('gameid', '=', $this->set['gameid'])->execute();
         $this->delete_lobby();
 		$this->set['gamedata']->uin->clean();
+		DB::delete('battle')->where('gameid', '=', $this->set['gameid'])->where('bid', 'NOT IN', DB::select('video')->distinct(true)->from('battle_gallery'))->execute();
+		DB::update('battle')->set(['fixed' => false])->where('gameid', '=', $this->set['gameid']);
 	}
 	
 	public function setting_mode($compare = NULL) {

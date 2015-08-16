@@ -18,7 +18,7 @@ class Model_Log_Types_Movement extends Model_Log_Message {
         global $player;
 
         if ($pid === null)
-            $pid = $player->user_id();
+            $pid = $player->id();
 
         if (is_numeric($pid))
             parent::__construct([

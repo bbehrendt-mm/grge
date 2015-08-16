@@ -431,9 +431,10 @@ class Tool_Scripts
             $location = $player->location();
 
         //Upload to DB
-        DB::insert('battle', ['gameid','season','fixed','data'])->values([$game->id(), $game->season(), true, gzcompress(serialize($battle->get_scene()->export()), (int)Kohana::$config->load('server.io.performance.compression_level'))])->execute();
+        $vid = DB::insert('battle', ['gameid','season','fixed','data'])->values([$game->id(), $game->season(), true, gzcompress(serialize($battle->get_scene()->export()), (int)Kohana::$config->load('server.io.performance.compression_level'))])->execute();
 
         //TODO: Actual log message
+        $location->log()->add(new Model_Log_Types_Battle('Ein Kampf!', $vid));
         $location->log()->add(new Model_Log_Types_Raw('' . $battle->get_scene()));
 
         return $battle;

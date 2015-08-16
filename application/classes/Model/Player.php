@@ -344,7 +344,7 @@ class Model_Player extends Model_Cloudshard {
 	
 	/**
 	 * Changes players stats and rebuilds buffers afterwards
-	 * @param Array $args Supposed to be in this format: [stat1, change1, stat2, change2, ...]
+	 * @param number|array $args,... Supposed to be in this format: [stat1, change1, stat2, change2, ...]
 	 * @throws Exception When $args is wrong format
 	 */
 	final public function stats_modify($args) {
@@ -670,11 +670,6 @@ class Model_Player extends Model_Cloudshard {
 			Log::instance()->write();
 		}
 	}
-	
-	public function user_id() {
-		return $this->user_id;
-	}
-
 
     /**
      * Returns the companion state, or sets it when newval is given

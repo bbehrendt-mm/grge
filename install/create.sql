@@ -17,6 +17,13 @@ CREATE TABLE IF NOT EXISTS ___PREFIX___battle (
   data mediumblob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE IF NOT EXISTS ___PREFIX___battle_gallery (
+  `id` int(11) NOT NULL,
+  `user` int(11) NOT NULL,
+  `video` int(11) NOT NULL,
+  `label` varchar(127) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 CREATE TABLE IF NOT EXISTS ___PREFIX___contests (
   contest_id varchar(16) NOT NULL,
   user_id int(11) NOT NULL,
@@ -132,6 +139,9 @@ ALTER TABLE ___PREFIX___achievements
 ALTER TABLE ___PREFIX___battle
   ADD KEY bid (bid);
 
+ALTER TABLE ___PREFIX___battle_gallery
+  ADD PRIMARY KEY (`id`);
+
 ALTER TABLE ___PREFIX___contests
   ADD PRIMARY KEY (contest_id,user_id) USING BTREE;
 
@@ -179,6 +189,9 @@ ALTER TABLE ___PREFIX___xref_game_player
 
 ALTER TABLE ___PREFIX___battle
   MODIFY bid int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE ___PREFIX___battle_gallery
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE ___PREFIX___games
   MODIFY gameid int(11) NOT NULL AUTO_INCREMENT COMMENT 'Local game ID';

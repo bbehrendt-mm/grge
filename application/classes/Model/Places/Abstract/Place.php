@@ -351,7 +351,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 				$items[0]->consume();
 			}
 
-            $game->stats(Model_Game::MGLS_Energy, -10);
+            $player->stats_modify(Model_Player::MP_STAT_ENERGY, -10);
 			if (($player->stats_get(Model_Player::MP_STAT_ENERGY) * $player->stats_get(Model_Player::MP_CHAR_EVASIVENESS)) >= $c) {
 				$c = $this->zombie_pop();
                 $this->zombie_pop(true);
@@ -441,37 +441,6 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 		return $r;
 	}
 
-	public function interaction_mpa($project) {
-        /**
-         * @global $game Model_Game
-         * @global $player Model_Player
-         */
-		global $game, $player;
-		$buildcfg = Kohana::$config->load('blueprints.lda.' . get_called_class() . '.' . $project);
-
-		if (!$buildcfg) return true;
-	
-		if ($game->requirements($buildcfg['energy'], $buildcfg['requires']))
-		{
-			foreach($buildcfg['produces'] as $class => $count) for ($i = 0; $i < $count; $i++) $this->inventory->add(new $class);
-			if (isset($buildcfg['achievement']) && $buildcfg['achievement']) $player->achievements()->achieve($buildcfg['achievement']);
-
-
-            if (isset($buildcfg['short']))
-                $p = $buildcfg['short'];
-            elseif (isset($buildcfg['produces'])) {
-                $c = array_keys($buildcfg['produces']);
-                $c = $c[0];
-                /** @noinspection PhpUndefinedMethodInspection */
-                $p = $c::static_name();
-            } else $p = $buildcfg['text'];
-
-            $this->log->add(new Model_Log_Types_Built(Model_Log_Types_Built::MLTB_VARIOUS,$p, $player->id()),null);
-            $player->log()->add(isset($buildcfg['finalmsg']) ? $buildcfg['finalmsg'] : 'Arbeit in der Ruine abgeschlossen!');
-		}
-		return true;
-	}
-
     protected function find_building() {
         /**
          * @global $game Model_Game
@@ -490,7 +459,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
             $player->log()->add(new Model_Log_Types_Text(null, null, 'Du hast eine neue Ruine entdeckt und eine grobe Karte mit ihrer Position gezeichnet. Diese Informationen sind sicher nützlich für deine Stadt.... besser wäre es natürlich, du würdest diese Ruine genauer erkunden.'));
         }
 
-        $this->log->add(new Model_Log_Types_Building($building, $player->user_id()));
+        $this->log->add(new Model_Log_Types_Building($building, $player->id()));
         return true;
     }
 

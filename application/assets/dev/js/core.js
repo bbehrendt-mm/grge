@@ -1625,6 +1625,45 @@ core = {
             return $('<div />').text(txt);
         };
 
+    renderers[5] =
+        function(data) {
+            var header;
+
+            var title = $('<div />');
+
+            title.append($('<span />').text(data.msg)).data('expandable', true).append(
+                sub = $('<div />').addClass('sub')
+            );
+
+            var videobtn = $('<div />').addClass('btn btn-icon')
+                .append($('<span />').addClass('btn-icon-inner').append($('<i />').addClass('fa fa-video-camera')))
+                .append($('<span />').text("Kampf ansehen"))
+                .click(function(e) {
+                    e.stopPropagation();
+                    var popup = core.popup.spawn(644);
+
+                    popup
+                        .append($('<iframe>').attr({src: 'embed/battle?v=' + data.bid, sandbox: 'allow-scripts allow-same-origin', seamless: 'seamless', height: 400, width: 640}))
+                        .append($('<br />'))
+                        .append($('<div />').addClass('row')
+                            .append($('<div />').addClass('cell rw-12 padded').append(
+                                $('<div />').addClass('note')
+                                    .text("Hast du einen besonders beeindruckenden Kampf erlebt, kannst du ihn in deine Kampfgallerie kopieren. Von dort aus kannst du ihn jederzeit auch nach Beendigung des Spiels ansehen, deinen Freunden pr\u00e4sentieren und sogar in andere Webseiten einbinden.")
+                                    .append($('<div />').addClass('btn').text("In meine Kampfgallerie aufnehmen"))
+                            ))
+                        )
+                });
+
+            sub.append($('<div />').addClass('row')
+                    .append($('<div />').addClass('cell rw-7 rw-md-6 rw-sm-12 padded').append($('<div />').addClass('b').text("Kampfzusammenfassung")))
+                    .append($('<div />').addClass('cell rw-5 rw-md-6 rw-sm-12 padded').append(
+                        $('<div />').addClass('note').text("Keine Lust auf langweilige Kampfstatistiken? Dann schau dir doch einfach ein Video des Kampfes an!").append(videobtn)
+                    ))
+            );
+
+            return title;
+        };
+
     renderers[2] =
         function(data) {
             var header;

@@ -83,18 +83,22 @@
     };
 
     Battle.prototype.showActorCard = function(id, line) {
-        var animate = !this.card || this.card.base_id != id;
-
-        if (animate) this.card_target = null;
+        var animate;
+        if (id !== false) {
+            animate = !this.card || this.card.base_id != id;
+            if (animate) this.card_target = null;
+        }
 
         var alias_card = this.card;
         var alias = this;
-        if (animate && alias_card)
+        if ((animate || id === false) && alias_card)
             createjs.Tween.get(alias_card, {loop: false})
                 .to({y: alias_card.y <= 10 ? -34 : 370, alpha: 0}, 200)
                 .call(function() {
                     alias.stage.removeChild(alias_card);
                 });
+
+        if (id === false) return;
 
         var invert = this.combatants[id].pos.y > 30;
 

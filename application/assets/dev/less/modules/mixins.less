@@ -5,6 +5,8 @@
   &::before {position: absolute; height: 1px; width: 100%; left: 0; bottom: -1px; content: " "; box-shadow: 0 0 @height @height/2 @color; opacity: @strength; z-index: @z-index}
 }
 
+iframe {border: 0 none white}
+
 .incomplete-border-definition(@definition, @top: false, @left: false, @bottom: @top, @right: @left) when (@top = true)    {border-top: @definition};
 .incomplete-border-definition(@definition, @top: false, @left: false, @bottom: @top, @right: @left) when (@left = true)   {border-left: @definition};
 .incomplete-border-definition(@definition, @top: false, @left: false, @bottom: @top, @right: @left) when (@bottom = true) {border-bottom: @definition};

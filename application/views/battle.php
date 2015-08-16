@@ -16,8 +16,13 @@ if (!isset($path)) $path = '';
 
     <link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css" />
     <style>
-        #play {background: rgb(169,3,41); background: linear-gradient(to bottom, rgba(169,3,41,1) 0%,rgba(143,2,34,1) 44%,rgba(109,0,25,1) 100%); border: 3px solid rgb(169,3,41); border-radius: 10px; text-align: center; color: white; cursor: pointer}
-        #play:hover {background: rgb(202,4,50); background: linear-gradient(to bottom, rgba(202,4,50,1) 0%,rgba(180,2,44,1) 44%,rgba(150,0,35,1) 100%); border: 3px solid rgb(202,4,50);}
+        #play, #replay {background: rgb(169,3,41); background: linear-gradient(to bottom, rgba(169,3,41,1) 0%,rgba(143,2,34,1) 44%,rgba(109,0,25,1) 100%); border: 3px solid rgb(169,3,41); border-radius: 10px; text-align: center; color: white; cursor: pointer}
+        #play:hover, #replay:hover {background: rgb(202,4,50); background: linear-gradient(to bottom, rgba(202,4,50,1) 0%,rgba(180,2,44,1) 44%,rgba(150,0,35,1) 100%); border: 3px solid rgb(202,4,50);}
+
+        #controls {font-size: 0}
+        #controls > div {cursor: pointer; font-size: 15px; color: white; height: 18px; width: 32px; padding: 2px; margin: 0; display: inline-block; text-align: center; background: #14171A; border-top: 1px solid #252C33}
+        #controls > div:hover {background: #2b323a; text-shadow: 0 0 2px rgba(255,255,255,0.8);}
+        #controls > div:last-child {border-right: 1px solid #252C33; border-top-right-radius: 8px}
     </style>
 
     <script type="application/javascript" src="../js/jquery.min.js" ></script>
@@ -39,14 +44,32 @@ if (!isset($path)) $path = '';
         </div>
     </div>
 
-
-    <canvas style="position: absolute; z-index: 1;" width="640" height="400" id="output"></canvas>
+    <div id="output_container" style="z-index: 1;">
+        <canvas style="position: absolute;" width="640" height="400" id="output"></canvas>
+        <div id="controls" data-ready="0" style="display: none; position: absolute; top: 377px; left: 0; z-index: 2">
+            <div id="c_replay"><i class="fa fa-repeat"></i></div>
+            <div id="c_pause" data-pause="1"><i class="fa fa-pause"></i></div>
+        </div>
+        <div id="finish" style=" display: none; position: absolute; top: 0; left: 0; height: 400px; width: 640px; background: rgba(0,0,0,0.5)">
+            <div id="replay" style="position: absolute; top: 150px; width: 100px; padding: 10px; left: 237px;" >
+                <i class="fa fa-repeat fa-3x"></i>
+            </div>
+        </div>
+    </div>
 
     <script type="text/javascript">
         (function() {
             window.addEventListener('load',function(){
-
                 var battle;
+                var controls = $('#controls');
+
+                $('#output_container').on('mousemove', function() {
+                    if (controls.attr('data-ready') == 1 && !controls.is(':visible'))
+                        controls.stop(true,true).fadeIn();
+                }).on('mouseleave', function() {
+                    if (controls.is(':visible'))
+                        controls.stop(true,true).fadeOut();
+                });
 
                 var loader = function() {
                     $.ajax('<?=$path?>japi/embed/battle', {
@@ -79,8 +102,35 @@ if (!isset($path)) $path = '';
                         return $('#error').show().text('Unable to obtain video file.');
 
                     battle = new Battle('output', data.video);
+
+                    $('#c_pause').click(function() {
+                        if ($(this).attr('data-pause') == 1) {
+                            $(this).attr('data-pause', 0).find('i').removeClass('fa-pause').addClass('fa-play');
+                            battle.pause();
+                        } else {
+                            $(this).attr('data-pause', 1).find('i').removeClass('fa-play').addClass('fa-pause');
+                            battle.unpause();
+                        }
+                    });
+                    $('#c_replay').click(function() {
+                        battle.reset();
+                    });
+                    $('#replay').click(function() {
+                        $('#finish').fadeOut();
+                        battle.reset();
+                    });
+
+                    battle
+                        .on('start', function() {controls.attr('data-ready', 1);})
+                        .on('finish', function() {
+                            controls.attr('data-ready', 0);
+                            if (controls.is(':visible')) controls.fadeOut();
+
+                            $('#finish').fadeIn();
+                        });
+
                     battle.load();
-                    battle.proceed();
+                    battle.begin();
                 };
 
                 $('#loading').hide();

@@ -19,7 +19,7 @@ abstract class Model_Combat_Weapons_Throwable extends Model_Combat_Weapons_Energ
      * @param Model_Combat_Scene $scene
      * @return bool
      */
-    public function trigger_usage($me, $opponent, $damage, $scene) {
+    public function trigger_usage(Model_Combat_Actor $me, Model_Combat_Actor $opponent, $damage, Model_Combat_Scene $scene) {
         $this->usable = false;
         return parent::trigger_usage($me, $opponent, $damage, $scene);
     }

@@ -13,7 +13,7 @@
             if (!alias.loadstate) {
                 alias.initUI();
                 if (alias.waiting)
-                    alias.proceed();
+                    alias.begin();
             }
         };
 

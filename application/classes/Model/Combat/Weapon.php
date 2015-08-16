@@ -118,7 +118,7 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
      * @param bool $include_in_range
      * @return Model_Combat_Actor
      */
-    public function closest_foe($me, $others, $include_in_range = true) {
+    public function closest_foe(Model_Combat_Actor $me, $others, $include_in_range = true) {
         $a = PHP_INT_MAX;
         $ret = null;
         foreach ($others as $other)
@@ -136,7 +136,7 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
      * @param Model_Combat_Actor[]|Model_Combat_Actor $foes
      * @return Model_Combat_Actor[]|bool
      */
-    public function in_range($me, $foes) {
+    public function in_range(Model_Combat_Actor $me, $foes) {
         if (is_array($foes))
             return array_filter($foes, function($c) use ($me) {
                 return $this->get_accuracy($me->distance_from($c)) > 0;
@@ -153,7 +153,7 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
      * @param int $res
      * @return bool|number
      */
-    public function calculate_damage($me, $opponent, $multiply = 1, $accuracy = 1, $atk = 1, $res = 1) {
+    public function calculate_damage(Model_Combat_Actor $me, $opponent, $multiply = 1, $accuracy = 1, $atk = 1, $res = 1) {
         if (!$this->usable()) return false;
 
         $accuracy = $this->get_accuracy($opponent->distance_from($me), $accuracy);
@@ -180,7 +180,7 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
      * @param Model_Combat_Scene $scene
      * @return bool
      */
-    public function trigger_usage($me, $opponent, $damage, $scene) {
+    public function trigger_usage(Model_Combat_Actor $me, Model_Combat_Actor $opponent, $damage, Model_Combat_Scene $scene) {
         if ($this->durabillity() < 1 && mt_rand()/mt_getrandmax() > $this->durabillity())
             $this->weapon_break($me, $opponent, $damage, $scene);
         return true;
@@ -192,7 +192,7 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
      * @param number $damage
      * @param Model_Combat_Scene $scene
      */
-    protected function weapon_break($me, $opponent, $damage, $scene) {
+    protected function weapon_break(Model_Combat_Actor $me, Model_Combat_Actor $opponent, $damage, Model_Combat_Scene $scene) {
         $this->broken = true;
         $scene->break_weapon($me, $this);
     }

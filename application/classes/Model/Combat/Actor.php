@@ -254,7 +254,7 @@ class Model_Combat_Actor {
      * @param Model_Combat_Actor $combatant
      * @return float
      */
-    public function distance_from($combatant) {
+    public function distance_from(Model_Combat_Actor $combatant) {
         return sqrt(pow($this->pos_x - $combatant->pos_x, 2) + pow($this->pos_y - $combatant->pos_y, 2));
     }
 
@@ -312,6 +312,7 @@ class Model_Combat_Actor {
         foreach ($this->weapons as $weapon)
             if (!$this->current_weapon || $this->current_weapon->uin() != $weapon->uin()){
                 $res = $this->get_attack_priority($friends, [$weapon->closest_foe($this, $foes, true)], $weapon, true);
+                if (!$res) continue;
                 if (!$weapon->in_range($this, $res[1]))
                     $res[0] = $res[0] * 0.5;
                 $tmp[] = $res;
@@ -342,7 +343,7 @@ class Model_Combat_Actor {
         } return [];
     }
 
-    protected function can_attack($combatant) {
+    protected function can_attack(Model_Combat_Actor $combatant) {
         if (!$this->current_weapon) return false;
         else return $this->current_weapon->in_range($this, $combatant);
     }
@@ -353,9 +354,7 @@ class Model_Combat_Actor {
      * @param int $death
      * @param Model_Combat_Actor $target
      */
-    protected function score_kills($damage, $kills, $death, $target) {
-
-    }
+    protected function score_kills($damage, $kills, $death, $target) {}
 
     /**
      * @param int $damage

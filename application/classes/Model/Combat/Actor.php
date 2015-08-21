@@ -377,6 +377,8 @@ class Model_Combat_Actor {
         $this->scene->damage($this, $damage, $kills, !$this->alive);
     }
 
+    public function enter() {}
+
     /**
      * @param Model_Combat_Actor[] $friends
      * @param Model_Combat_Actor[] $foes

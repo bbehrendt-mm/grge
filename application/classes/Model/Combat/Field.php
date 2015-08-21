@@ -79,8 +79,11 @@ class Model_Combat_Field {
      */
     public function begin() {
         // Add combatants to the scene
-        foreach ($this->combatants as $combatant)
+        foreach ($this->combatants as $combatant) {
             $this->scene->add_combatant($combatant);
+            $combatant->enter();
+        }
+
 
         $round = 0;
         while ($round < 512 && $this->get_distinct_groups() > 1) {

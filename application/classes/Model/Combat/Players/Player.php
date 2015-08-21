@@ -75,4 +75,9 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
         $s = Model_Euser::avatar_by_id($this->player->id());
         return $s ? ('http:' . $s) : null;
     }
+
+    public function enter() {
+        parent::enter();
+        $this->scene->switch_weapon($this, $this->current_weapon);
+    }
 }

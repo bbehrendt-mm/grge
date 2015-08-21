@@ -12,8 +12,6 @@
 
         var line = null;
 
-        console.log('DAMAGE IS',damage, kills, death);
-
         if (damage > 0) {
             var dmg_show = Math.round(damage * 10)/10;
             this.characterPopupMessage(id, '' + dmg_show, 'damage.gif');

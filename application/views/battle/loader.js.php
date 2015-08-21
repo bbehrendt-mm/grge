@@ -56,7 +56,7 @@
 
     Battle.prototype.load = function() {
         var alias = this;
-        this.addResource('field.png', 'grunge.png', 'resist.gif', 'damage.gif', 'kill.gif', 'health.gif');
+        this.addResource('field.png', 'grunge.png', 'resist.gif', 'damage.gif', 'kill.gif', 'health.gif', 'arrow_r.gif');
 
         for (var i = 1; i <= this.splatter_count; i++)
             this.addResource('splatter/splat' + i + '.png')
@@ -76,6 +76,8 @@
                 }
             }
 
+            if (v[0] == <?=Model_Combat_Scene::MCS_EV_SWITCH?>)
+                alias.queueResource(v[2][1], 'media/icons/' + v[2][1] + '.gif');
 
             if (v[0] == <?=Model_Combat_Scene::MCS_EV_ATTACK?>) {
                 alias.queueResource(v[4][1], 'media/icons/' + v[4][1] + '.gif');

@@ -9,6 +9,8 @@ class Model_Items_Watergun2 extends Model_Items_Abstract_Wbgun {
 			'category' => Model_Items_Abstract_Item::MIAI_CAT_FIGHT,
 	);
 
+	protected static $capacity = 4;
+
 	protected static $weight = 7;
 	protected static $essential = true;
 

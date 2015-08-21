@@ -18,13 +18,15 @@ class Model_Items_Plasmagun extends Model_Combat_Weapons_Ammo implements Interfa
 	protected static $use_fixed_accuracy = true;
 	protected static $aoe = true;
 
+	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SHOT_ENERGY;
+
 	protected $used = false;
 
 	public function usable() {
 		return !$this->used && parent::usable();
 	}
 
-	public function trigger_usage($me, $opponent, $damage, $scene) {
+	public function trigger_usage(Model_Combat_Actor $me, Model_Combat_Actor $opponent, $damage, Model_Combat_Scene $scene) {
 		parent::trigger_usage($me, $opponent, $damage, $scene);
 		$this->used = true;
 	}

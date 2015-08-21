@@ -17,9 +17,11 @@
 <div class="row">
     <div class="license">
         <div class="row">
-
             <div class="cell rw-3 padded">
-                <img src="<?=$license['local']?>" />
+                <?php if (!is_array($license['local'])) $license['local'] = [$license['local']]; ?>
+                <?php foreach ($license['local'] as $local_url) { ?>
+                    <img src="<?=$local_url?>" />
+                <?php } ?>
             </div>
             <div class="cell rw-9 padded">
                 <i class="small">This artwork is based on (and inherits its license from)</i><br />

@@ -17,4 +17,6 @@ class Model_Items_Godsword extends Model_Combat_Weapons_Close implements Interfa
     protected static $max_range = 3;
     protected static $aoe = true;
 
+	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SLASH_MULTI;
+
 }	

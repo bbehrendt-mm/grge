@@ -18,6 +18,8 @@ class Model_Items_Handgun extends Model_Combat_Weapons_Ammo implements Interface
 	protected static $use_fixed_accuracy = false;
 	protected static $aoe = false;
 
+	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SHOT_AMMO;
+
 	protected static $accuracy_downscale = 0.5;
 	//public static $reload_time = 1;
 }	

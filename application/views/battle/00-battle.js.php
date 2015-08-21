@@ -13,6 +13,9 @@
         this.current = 0;
         this.idle = 500;
 
+        this.splatter_count = 2;
+        this.splatlayer = null;
+
         this.card = null;
         this.card_target = null;
 
@@ -31,8 +34,9 @@
             alias.performZSorting();
         });
         createjs.Ticker.addEventListener("tick", this.stage);
-
     };
+
+    Battle.prototype.events = {};
 
     Battle.prototype.on = function(event, f) {
         switch (event) {
@@ -51,6 +55,22 @@
         background.graphics.beginBitmapFill(this.getResource('field.png')).drawRect(0,0,640,400);
         background.z = -100;
         this.stage.addChild(background);
+
+        var grunge = this.getResource('grunge.png');
+        var grunge_layer = new createjs.Bitmap(grunge);
+        grunge_layer.scaleX = 650/grunge.width;
+        grunge_layer.scaleY = 410/grunge.height;
+        grunge_layer.x = grunge_layer.y = -5;
+        grunge_layer.z = -99;
+        grunge_layer.filters = [new createjs.BlurFilter(5, 5, 1)];
+        grunge_layer.cache(0,0,650,410,1);
+
+        this.stage.addChild(grunge_layer);
+
+        this.splatlayer = new createjs.Container();
+        this.splatlayer.z = -99;
+        this.stage.addChild(this.splatlayer);
+        this.splatlayer.cache(0,0,640,400,1);
     };
 
     Battle.prototype.transform = function(pos) {

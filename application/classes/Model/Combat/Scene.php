@@ -4,7 +4,7 @@ class Model_Combat_Scene {
 
     const MCS_EV_NEW_CHALLENGER = 1;           // [ID, Group, Name, Avatar, Type, [x, y], [Health, Max Health, Count], [Ini, Dmg, Res, Acc]]
     const MCS_EV_NEXT = 2;                     // [ID]
-    const MCS_EV_ATTACK = 3;                   // [Atk-ID, Def-ID, [Ammo-Icons ...], [Wpn-Name, Wpn-Icon, Wpn-Anim]]
+    const MCS_EV_ATTACK = 3;                   // [Atk-ID, Def-ID, [Ammo-Icons ...], [Wpn-Name, Wpn-Icon, Wpn-Anim], damage]
     const MCS_EV_DAMAGE = 4;                   // [ID, Damage, Kills, Death]
     const MCS_EV_INJURY = 5;                   // [ID, [Inj-Name, Inj-Icon]]
     const MCS_EV_MOVE = 6;                     // [ID, [x, y], distance, [to-id, to-distance]]
@@ -48,7 +48,7 @@ class Model_Combat_Scene {
                 return "--- Combatant $id is now acting! ---";
 
             case static::MCS_EV_ATTACK:
-                list($atk, $def, $ammo, list($name, $icon)) = $entry;
+                list($atk, $def, $ammo, list($name, $icon, $animation), $damage) = $entry;
                 return "Combatant $atk attacks Combatant $def using $name." . ($ammo ? " " . implode(', ', $ammo) . " has been consumed as ammo." : '');
 
             case static::MCS_EV_DAMAGE:
@@ -112,8 +112,9 @@ class Model_Combat_Scene {
      * @param Model_Combat_Actor $atk
      * @param Model_Combat_Actor $def
      * @param Model_Combat_Weapon $weapon
+     * @param number $damage
      */
-    public function attack($atk, $def, $weapon) {
+    public function attack($atk, $def, $weapon, $damage) {
         $this->log_data[] = [
             static::MCS_EV_ATTACK,
 
@@ -123,9 +124,9 @@ class Model_Combat_Scene {
             [
                 $weapon->name(),
                 $weapon->icon(),
-                null,
-            ]
-
+                $weapon->get_animation(),
+            ],
+            $damage
         ];
     }
 

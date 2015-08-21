@@ -2,6 +2,20 @@
 
 abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
 
+    const MCW_ANIMATION_NONE = 0;
+    const MCW_ANIMATION_PUNCH = 1;
+    const MCW_ANIMATION_SLASH = 2;
+    const MCW_ANIMATION_SHOT_BAT = 3;
+    const MCW_ANIMATION_SHOT_AMMO = 4;
+    const MCW_ANIMATION_SHOT_WATER = 5;
+    const MCW_ANIMATION_THROW = 6;
+    const MCW_ANIMATION_SLASH_MULTI = 7;
+    const MCW_ANIMATION_SHOT_ENERGY = 8;
+    const MCW_ANIMATION_ZOMBIE_MUNCH = 9;
+    const MCW_ANIMATION_CHAINSAW = 10;
+    const MCW_ANIMATION_SHOT_BOLT = 11;
+    const MCW_ANIMATION_SHOT_SPLINTER = 12;
+
     protected static $damage = [1,1];
     protected static $range = [0,PHP_INT_MAX];
     protected static $accuracy = 1;
@@ -11,6 +25,8 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
     protected static $friendly_fire = false;
     protected static $durabillity = 1;
 
+    protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_NONE;
+
     protected $broken = false;
 
     /** @var Model_Player */
@@ -18,6 +34,10 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
 
     public function usable() {
         return true;
+    }
+
+    public function get_animation() {
+        return static::$animation;
     }
 
     public function durabillity() {

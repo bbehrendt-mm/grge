@@ -11,6 +11,8 @@ class Model_Items_Splintergun extends Model_Combat_Weapons_Ammo implements Inter
 	
 	protected static $weight = 5;
 
+	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SHOT_SPLINTER;
+
 	protected static $ammo = ['Model_Items_Splinter' => 1];
 	protected static $damage = [10,20];
 	protected static $range = [1,20];

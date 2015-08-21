@@ -11,6 +11,8 @@ class Model_Items_Crossbow extends Model_Combat_Weapons_Ammo implements Interfac
 
 	protected static $weight = 4;
 
+	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SHOT_BOLT;
+
 	protected static $ammo = ['Model_Items_Bolts' => 1];
 	protected static $damage = [4,8];
 	protected static $range = [5,50];

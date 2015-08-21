@@ -133,8 +133,6 @@
 
         var animate = !this.card_target || this.card_target.base_id != id;
 
-        console.log('Adding target card, animation state is', animate);
-
         var alias_card = this.card_target;
         var alias = this;
         if (animate && alias_card)

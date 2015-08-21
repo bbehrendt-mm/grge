@@ -1,7 +1,9 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
 abstract class Model_Items_Abstract_Chair extends Model_Combat_Weapons_Close {
-	
+
+	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_PUNCH;
+
 	protected static $static_info = Array(
 			'name' => 'Beliebiger Stuhl',
 			'icon' => 'generic_chair',

@@ -363,11 +363,10 @@ class Model_Combat_Actor {
     protected function damage($damage, $from = null) {
         $this->health -= $damage;
 
-        $kills = $this->health == 0 ? 1 : ($this->health < 0 ? -floor($this->health / $this->max_health) : 0);
+        $kills = min($this->count, $this->health == 0 ? 1 : ($this->health < 0 ? -floor($this->health / $this->max_health) : 0));
         $this->alive = $kills < $this->count;
 
         if ($kills) {
-            if (!$this->alive) $damage = $this->health + $this->max_health * $this->count;
             $this->health = !$this->alive ? 0 : ($this->health + $kills * $this->max_health);
             $this->count = !$this->alive ? 0 : ($this->count - $kills);
         }
@@ -403,7 +402,7 @@ class Model_Combat_Actor {
             list($op_ini, $op_atk, $op_res, $op_acc) = $this->actual_stats();
 
             $dmg = $this->current_weapon->calculate_damage($this, $target, $this->count, $acc, $atk, $op_res);
-            $this->scene->attack($this, $target, $this->current_weapon);
+            $this->scene->attack($this, $target, $this->current_weapon, $dmg);
             $target->damage($dmg, $this);
             $this->current_weapon->trigger_usage($this, $target, $dmg, $this->scene);
 

@@ -7,6 +7,7 @@ abstract class Model_Items_Abstract_Liquid extends Model_Items_Abstract_Item imp
 
 	public function __construct($toxicity = 0) {
 		$this->toxicity = $toxicity;
+		parent::__construct();
 	}
 	
 	public function toxicity() {
@@ -14,7 +15,8 @@ abstract class Model_Items_Abstract_Liquid extends Model_Items_Abstract_Item imp
 	}
 	
 	public function take($silent = false) {
-		global $game, $player;
+		/** @var Model_Player $player */
+		global $player;
 		
 		if (!$silent) $player->log()->add(new Model_Log_Types_Text(null, null, 'Du benötigst ein Gefäß, um diese Flüssigkeit transportieren zu können.'));
 		return false;

@@ -236,7 +236,6 @@ class Controller_Game extends Controller {
             if (Tool_System::instance_of($item, 'Interface_Event'))                                     $flags[] = 'event';
             if ($item->is_carrier_item())                                                               $flags[] = 'carrier';
 
-
             $data = [
                 'name' => __($item->name()),
                 'description' => $short ? '' : __($item->description()),
@@ -274,7 +273,7 @@ class Controller_Game extends Controller {
                     'ammo' => $ammo ? $ammo : false,
                     'shots' => Tool_System::instance_of($item, 'Model_Combat_Weapons_Fillable') ? $item->count() : false,
                     'energy' => Tool_System::instance_of($item, 'Model_Combat_Weapons_Energy') ? $item->energy() : 0,
-                    'accuracy' => $item->accuracy(),
+                    'accuracy' => $item->accuracy() * 100,
                     'breakable' => $item->durabillity() < 1,
                 ];
             }

@@ -77,12 +77,26 @@ return array(
         'local' => 'media/icons/store/drugdealer.gif',
         'author' => [
             'name' => 'OceansDream',
-            'url' => 'http://oceansdream.deviantart.com/art/Pixel-Icons-available-for-use-121152370',
+            'url' => 'http://oceansdream.deviantart.com/',
         ],
         'license' => [
             'short' => 'CC BY-SA 3.0',
             'long' => 'Creative Commons Attribution-ShareAlike 3.0 Unported',
             'url' => 'http://creativecommons.org/licenses/by-sa/3.0/'
+        ]
+    ],
+    [
+        'title' => 'Explosions',
+        'url' => 'http://opengameart.org/content/explosions-0',
+        'local' => ['media/icons/battle/animations/plasma.png', 'media/icons/battle/animations/smoke.png', 'media/icons/battle/animations/muzzle.png'],
+        'author' => [
+            'name' => 'chabull',
+            'url' => 'http://opengameart.org/users/chabull',
+        ],
+        'license' => [
+            'short' => 'CC BY 3.0',
+            'long' => 'Creative Commons Attribution 3.0 Unported',
+            'url' => 'http://creativecommons.org/licenses/by/3.0/'
         ]
     ],
 );

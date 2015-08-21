@@ -12,6 +12,7 @@ class Model_Items_Pill extends Model_Items_Abstract_Item implements Interface_St
     protected function hid() {
         /**
          * @global Model_Game $game
+         * @global Model_Player $player
          */
         global $game, $player;
 

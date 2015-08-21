@@ -19,7 +19,7 @@ class Tool_System {
         $class = (is_object($class)) ? get_class($class) : $class;
 		$super = (is_object($super)) ? get_class($super) : $super;
 
-        if (!class_exists($class) || !class_exists($super))
+        if (!class_exists($class) || (!class_exists($super) && !interface_exists($super)))
             return false;
 		
 		return ($class === $super || is_subclass_of($class, $super) || in_array($super, class_implements($class)));

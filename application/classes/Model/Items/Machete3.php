@@ -16,5 +16,6 @@ class Model_Items_Machete3 extends Model_Combat_Weapons_Close implements Interfa
 	protected static $energy = 3;
 	protected static $max_range = 2;
 
+	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SLASH_MULTI;
 	//public static $reload_time = 1;
 }	

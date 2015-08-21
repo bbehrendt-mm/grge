@@ -19,7 +19,7 @@ abstract class Model_Combat_Weapons_Energy extends Model_Combat_Weapon {
      * @param Model_Combat_Scene $scene
      * @return bool
      */
-    public function trigger_usage($me, $opponent, $damage, $scene) {
+    public function trigger_usage(Model_Combat_Actor $me, Model_Combat_Actor $opponent, $damage, Model_Combat_Scene $scene) {
         if ($this->registered_user)
             $this->registered_user->stats_modify([Model_Player::MP_STAT_ENERGY, -$this->energy()]);
         return parent::trigger_usage($me, $opponent, $damage, $scene);

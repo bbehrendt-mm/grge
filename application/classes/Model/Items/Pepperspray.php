@@ -12,10 +12,11 @@ class Model_Items_Pepperspray extends Model_Combat_Weapons_Close implements Inte
 	protected static $weight = 2;
 	protected static $essential = true;
 
-
     protected static $damage = [1,10];
     protected static $energy = 1;
     protected static $max_range = 7;
+
+	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_PUNCH;
 
     //public static $reload_time = 1;
 	

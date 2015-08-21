@@ -18,5 +18,7 @@ class Model_Items_Batgunsplat extends Model_Combat_Weapons_Ammo implements Inter
 	protected static $use_fixed_accuracy = true;
 	protected static $aoe = true;
 
+	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SHOT_BAT;
+
 	//public static $reload_time = 5;
 }	

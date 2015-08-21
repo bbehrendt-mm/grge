@@ -5,6 +5,8 @@ abstract class Model_Items_Abstract_Wbgun extends Model_Combat_Weapons_Fillable 
 	protected static $capacity = 0;
 	public static $ammo_icon = 'items/water_variant';
 
+	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SHOT_WATER;
+
 	public function has_ammo() {
 		return ($this->fillrate > 0);
 	}

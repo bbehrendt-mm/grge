@@ -18,5 +18,7 @@ class Model_Items_Batgunsnp extends Model_Combat_Weapons_Ammo implements Interfa
 	protected static $use_fixed_accuracy = true;
 	protected static $aoe = false;
 
+	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SHOT_BAT;
+
 	//public static $reload_time = 15;
 }	

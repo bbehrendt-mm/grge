@@ -9,6 +9,8 @@ class Model_Items_Fist extends Model_Combat_Weapon {
     protected static $aoe = false;
     protected static $friendly_fire = false;
 
+    protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_PUNCH;
+
     protected static $static_info = Array(
         'name' => 'Faust',
         'icon' => 'fist',

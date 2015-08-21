@@ -4,6 +4,8 @@ abstract class Model_Combat_Weapons_Throwable extends Model_Combat_Weapons_Energ
 {
     protected $usable = true;
 
+    protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_THROW;
+
     public function usable() {
         return $this->usable && parent::usable();
     }
@@ -26,6 +28,7 @@ abstract class Model_Combat_Weapons_Throwable extends Model_Combat_Weapons_Energ
 
     public function unregister() {
         parent::unregister();
-        $this->grind();
+        if (!$this->usable)
+            $this->grind();
     }
 }

@@ -11,7 +11,9 @@ class Model_Items_Chainsaw extends Model_Combat_Weapons_Fillable implements Inte
 
 	protected static $weight = 25;
 	protected static $essential = true;
-	
+
+	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_CHAINSAW;
+
 	protected static $capacity = 2;
 
 	protected static $damage = [20,20];

@@ -50,6 +50,12 @@
         return this;
     };
 
+    Battle.prototype.checkNewChar = function(id, set_false) {
+        if (set_false)
+            return this.combatants[id]['new'] = false;
+        else return this.combatants[id]['new'];
+    };
+
     Battle.prototype.initUI = function() {
         var background = new createjs.Shape();
         background.graphics.beginBitmapFill(this.getResource('field.png')).drawRect(0,0,640,400);

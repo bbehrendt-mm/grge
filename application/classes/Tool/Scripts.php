@@ -9,7 +9,7 @@ class Tool_Scripts
      * @param bool $active_player Include active players inventory
      * @param bool $active_location Include active locations inventory
      * @param bool $other_players Include inventory of other players at the active location
-     * @param null|Model_Player $perspective
+     * @param null|Model_Player|Model_Pseudoplayer $perspective
      * @param null|callable $decider
      * @return number
      */
@@ -38,7 +38,7 @@ class Tool_Scripts
      * @param bool $active_player
      * @param bool $active_location
      * @param bool $other_players
-     * @param null|Model_Player $perspective
+     * @param null|Model_Player|Model_Pseudoplayer $perspective
      * @param bool $grind
      * @param null|callable|callable[] $decider
      * @return bool
@@ -155,7 +155,7 @@ class Tool_Scripts
      * @param bool $active_player Include active players inventory
      * @param bool $active_location Include active locations inventory
      * @param bool $other_players Include inventory of other players at the active location
-     * @param null|Model_Player $perspective
+     * @param null|Model_Player|Model_Pseudoplayer $perspective
      * @param null|callable $decider
      * @return Model_Items_Abstract_Item[]
      */
@@ -167,6 +167,9 @@ class Tool_Scripts
         if (is_object($perspective))
             $player = $perspective;
         else global $player;
+
+        if (!$player->is_actual_player())
+            $active_location = $other_players = false;
 
         $proto = [];
         if ($active_player)
@@ -188,7 +191,7 @@ class Tool_Scripts
      * @param bool $active_player Include active players inventory
      * @param bool $active_location Include active locations inventory
      * @param bool $other_players Include inventory of other players at the active location
-     * @param null|Model_Player $perspective
+     * @param null|Model_Player|Model_Pseudoplayer $perspective
      * @return Model_Items_Abstract_Item
      */
 

@@ -371,10 +371,14 @@ class Model_Player extends Model_Cloudshard {
 		
 		$this->rebuild_buffs();
 	}
+
+	final public function is_actual_player() {
+		return true;
+	}
 	
 	/**
 	 * Sets players stats (ignoring their previous values) and rebuilds buffers afterwards
-	 * @param Array $args Supposed to be in this format: [stat1, newval1, stat2, newval2, ...]
+	 * @param number|array $args,... Supposed to be in this format: [stat1, newval1, stat2, newval2, ...]
 	 * @throws Exception When $args is wrong format
 	 */
 	final public function stats_set($args) {

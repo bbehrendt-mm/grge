@@ -29,8 +29,12 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
 
     protected $broken = false;
 
-    /** @var Model_Player */
+    /** @var Model_Player|Model_Pseudoplayer */
     protected $registered_user;
+
+    protected function actual_player_registration() {
+        return $this->registered_user && Tool_System::instance_of($this->registered_user, 'Model_Player');
+    }
 
     public function usable() {
         return true;
@@ -68,12 +72,16 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
         return static::$range;
     }
 
+    public function min_range() {
+        return $this->range()[0];
+    }
+
     public function max_range() {
         return $this->range()[1];
     }
 
     /**
-     * @param Model_Player $p
+     * @param Model_Player|Model_Pseudoplayer $p
      * @return Model_Combat_Weapon
      */
     public function register($p) {

@@ -15,7 +15,7 @@ class Model_Combat_Zombies_Hallucination extends Model_Combat_Zombies_Zombie {
     public function __construct() {
         parent::__construct();
 
-        $this->name = Tool_Gambling::select(['Schnupfophanten', 'Jigsaw-Nudisten', 'Seehofer', 'Genitalmonster', 'PokÈmon', 'Schwiegerm¸tter']);
+        $this->name = Tool_Gambling::select(['Schnupfophanten', 'Jigsaw-Nudisten', 'Seehofer', 'Genitalmonster', 'Pok√©mon', 'Schwiegerm√ºtter']);
     }
 
     protected function get_attack_priority($friends, $foes, $weapon = null, $ignore_range = false) {

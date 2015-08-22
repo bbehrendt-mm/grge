@@ -27,7 +27,8 @@ if ( !function_exists('__'))
         ]);
 
         $lang = explode('-',$lang)[0];
-		return empty($values) ? I18n::get($string, $lang) : strtr(I18n::get($string, $lang), $values);
+		$r = empty($values) ? I18n::get($string, $lang) : strtr(I18n::get($string, $lang), $values);
+        return mb_detect_encoding($r) == 'UTF-8' ? $r : utf8_encode($r);
 	}
 }
 

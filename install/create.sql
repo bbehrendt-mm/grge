@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS ___PREFIX___language (
   `de` text NOT NULL,
   `en` text,
   `es` text
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS ___PREFIX___mentor (
   uid int(11) NOT NULL,

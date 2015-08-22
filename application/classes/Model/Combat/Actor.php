@@ -113,7 +113,7 @@ class Model_Combat_Actor {
      * @return Model_Combat_Actor
      */
     public function set_distance($distance, $jitter = 3) {
-        $this->position([$distance + mt_rand(-$jitter, $jitter), mt_rand(0, $this->field[1])]);
+        $this->position([$distance + mt_rand(-$jitter, $jitter), 12 + mt_rand(0, $this->field[1] - 12)]);
         return $this;
     }
 
@@ -122,10 +122,13 @@ class Model_Combat_Actor {
      * @return Model_Combat_Actor
      */
     public function add_weapon($weapon) {
+        /** @global Model_Game $game */
+        global $game;
         if (is_array($weapon))
             foreach ($weapon as $w)
                 $this->add_weapon($w);
         else {
+            if (!$weapon->uin()) $game->uin()->set($weapon);
             if (!$this->current_weapon)
                 $this->current_weapon = $weapon;
             $this->weapons[] = $weapon;
@@ -268,6 +271,18 @@ class Model_Combat_Actor {
         return $data[0];
     }
 
+    protected function rounds_to_use(Model_Combat_Weapon $weapon, $foe) {
+        if (is_array($foe))
+            return min(array_map(function($a) use ($weapon) {return $this->rounds_to_use($weapon, $a);}, $foe));
+        else {
+            $min = $weapon->min_range();
+            $max = $weapon->max_range();
+            $dist = $this->distance_from($foe);
+
+            return ceil(($dist < $min ? ($min - $dist) : ($dist - $max))/$this->movement_range);
+        }
+    }
+
     /**
      * @param Model_Combat_Actor[] $friends
      * @param Model_Combat_Actor[] $foes
@@ -309,19 +324,22 @@ class Model_Combat_Actor {
      */
     protected function get_weapon_priority($friends, $foes) {
         $tmp = [];
-        foreach ($this->weapons as $weapon)
-            if (!$this->current_weapon || $this->current_weapon->uin() != $weapon->uin()){
-                $res = $this->get_attack_priority($friends, [$weapon->closest_foe($this, $foes, true)], $weapon, true);
-                if (!$res) continue;
-                if (!$weapon->in_range($this, $res[1]))
-                    $res[0] = $res[0] * 0.5;
-                $tmp[] = $res;
+        foreach ($this->weapons as $weapon) {
+            $res = $this->get_attack_priority($friends, [$weapon->closest_foe($this, $foes, true)], $weapon, true);
+            if (!$res) continue;
+            if (!$weapon->in_range($this, $res[1])) {
+                $rounds = $this->rounds_to_use($weapon, $res[1]);
+                $factor = $rounds <= 0 ? 1 : (($this->current_weapon ? max(1,$this->rounds_to_use($this->current_weapon, $res[1])) : $rounds)/$rounds);
+                $res[0] = ($rounds > 1 && $this->distance_from($res[1]) < $weapon->min_range()) ? 0 : (($res[0] * $this->ai_brashness)/$factor);
             }
+
+            $tmp[] = $res;
+        }
 
 
         $rec = $this->get_recommendation($tmp);
         /** @noinspection PhpUndefinedMethodInspection */
-        if (!$rec) return null;
+        if (!$rec || ($this->current_weapon && $this->current_weapon->uin() == $rec[2]->uin())) return null;
         else return [
             $rec[0] * $this->ai_volatile,
             $rec[2]
@@ -336,9 +354,11 @@ class Model_Combat_Actor {
     protected function get_movement_priority($friends, $foes) {
         if ($this->current_weapon && ($closest_foe = $this->current_weapon->closest_foe($this, $foes, false))) {
             $tmp = $this->get_attack_priority($friends, [$closest_foe], $this->current_weapon, true);
+
             return $tmp ? [
-                $tmp[0] * $this->ai_brashness,
-                $tmp[1]
+                ($tmp[0] * $this->ai_brashness)/$this->rounds_to_use($this->current_weapon, $closest_foe),
+                $tmp[1],
+                $closest_foe->distance_from($this) < $this->current_weapon->min_range() ? -1 : 1
             ] : [];
         } return [];
     }
@@ -419,7 +439,7 @@ class Model_Combat_Actor {
             $target = $move[1];
 
             $d = $this->distance_from($target);
-            $d_min = $d - $this->current_weapon->max_range();
+            $d_min = $d - ($move[2] > 0 ? $this->current_weapon->max_range() : $this->current_weapon->min_range());
 
             $old_x = $this->pos_x;
             $old_y = $this->pos_y;
@@ -427,14 +447,17 @@ class Model_Combat_Actor {
             $dx = ($target->pos_x - $this->pos_x)/$d;
             $dy = ($target->pos_y - $this->pos_y)/$d;
 
-            if ($d_min <= $this->movement_range) {
+            if (abs($d_min) <= $this->movement_range) {
                 $this->pos_x += $dx * $d_min;
                 $this->pos_y += $dy * $d_min;
-                $use_second_action = ($d_min < $this->movement_range);
+                $use_second_action = (abs($d_min) < $this->movement_range);
             } else {
-                $this->pos_x += $dx * $this->movement_range;
-                $this->pos_y += $dy * $this->movement_range;
+                $this->pos_x += $dx * $this->movement_range * $move[2];
+                $this->pos_y += $dy * $this->movement_range * $move[2];
             }
+
+            $this->pos_x = max(0,min($this->field[0], $this->pos_x));
+            $this->pos_y = max(0,min($this->field[1], $this->pos_y));
 
             $dist = sqrt(pow($old_x - $this->pos_x, 2) + pow($old_y - $this->pos_y, 2));
             $this->scene->move($this, [$this->pos_x, $this->pos_y], $dist, $target);

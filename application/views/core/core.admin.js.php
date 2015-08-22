@@ -1,123 +1,71 @@
 <?php if (Kohana::$environment === Kohana::DEVELOPMENT) { ?>
 (function() {
-    core.parts.admin = {};
+    var ui_skip_ahead = function() {
+        var in_w, in_d, in_h, in_m;
 
-    core.parts.admin.loader = function(target, path, callback) {
-        target.empty().append(core.snippets.wait());
-        game.network.query(path, {}, function(data) {
-            if (data.error) {
-                core.parts.admin.controls(target.empty());
-                alert(data.error.code + ' [' + data.error.name + ']: ' + data.error.message);
-            }
-            else
-                callback(target.empty().append($('<div />').addClass('btn small').text('Menü').click(function() {
-                    core.parts.admin.controls(target);
-                })).append('<br />'),data);
-        });
-    };
-
-    core.parts.admin.execute = function(path, data) {
-        game.render.html.modal.work();
-        game.network.query(path, data, function(r) {
-            if (r.error)
-                alert(r.error.code + ' [' + r.error.name + ']: ' + r.error.message);
-            else core.command();
-        });
-    };
-
-    core.parts.admin.controls = function(target) {
-        target.empty();
-        var ret = $('<div />').addClass('row').appendTo(target);
-
-        $('<div />').addClass('btn small').text('Create item...').click(function() {
-            core.parts.admin.loader(target,'admin/japi/gamepanel/list_items',core.parts.admin.items)
-        }).appendTo(ret);
-
-        $('<div />').addClass('btn small').text('Unveil Map').click(function() {
-            core.parts.admin.execute('admin/japi/gamepanel/unveil_map', {});
-        }).appendTo(ret);
-
-        $('<div />').addClass('btn small').text('Heal Player').click(function() {
-            core.parts.admin.execute('admin/japi/gamepanel/regenerate', {});
-        }).appendTo(ret);
-
-        $('<div />').addClass('btn small').text('Force Battle').click(function() {
-            core.parts.admin.execute('admin/japi/gamepanel/force_battle', {});
-        }).appendTo(ret);
-
-        $('<div />').addClass('btn small').text('Siege...').click(function() {
-            var n = parseInt(prompt('Number of zombies? (+/-)', '0'));
-            if (!isFinite(n) || !n) return;
-            core.parts.admin.execute('admin/japi/gamepanel/siege', {'z': n});
-        }).appendTo(ret);
-
-        $('<div />').addClass('btn small').text('Skip ahead...').click(function() {
-            var in_w, in_d, in_h, in_m;
-
-            core.popup.spawn(300, 'auto')
-                .append($('<div />').addClass('row')
-                    .append($('<div />').addClass('cell rw-6 padded').text('Weeks (W)'))
-                    .append($('<div />').addClass('cell rw-6 padded').append(in_w = $('<input />').addClass('form_input').attr('type','text').val('0')))
-                ).append($('<div />').addClass('row')
-                    .append($('<div />').addClass('cell rw-6 padded').text('Days (D)'))
-                    .append($('<div />').addClass('cell rw-6 padded').append(in_d = $('<input />').addClass('form_input').attr('type','text').val('0')))
-                ).append($('<div />').addClass('row')
-                    .append($('<div />').addClass('cell rw-6 padded').text('Hours (H)'))
-                    .append($('<div />').addClass('cell rw-6 padded').append(in_h = $('<input />').addClass('form_input').attr('type','text').val('0')))
-                ).append($('<div />').addClass('row')
-                    .append($('<div />').addClass('cell rw-6 padded').text('Minutes (M)'))
-                    .append($('<div />').addClass('cell rw-6 padded').append(in_m = $('<input />').addClass('form_input').attr('type','text').val('5')))
+        core.popup.spawn(300, 'auto')
+            .append($('<div />').addClass('row')
+                .append($('<div />').addClass('cell rw-6 padded').text('Weeks (W)'))
+                .append($('<div />').addClass('cell rw-6 padded').append(in_w = $('<input />').addClass('form_input').attr('type','text').val('0')))
+        ).append($('<div />').addClass('row')
+                .append($('<div />').addClass('cell rw-6 padded').text('Days (D)'))
+                .append($('<div />').addClass('cell rw-6 padded').append(in_d = $('<input />').addClass('form_input').attr('type','text').val('0')))
+        ).append($('<div />').addClass('row')
+                .append($('<div />').addClass('cell rw-6 padded').text('Hours (H)'))
+                .append($('<div />').addClass('cell rw-6 padded').append(in_h = $('<input />').addClass('form_input').attr('type','text').val('0')))
+        ).append($('<div />').addClass('row')
+                .append($('<div />').addClass('cell rw-6 padded').text('Minutes (M)'))
+                .append($('<div />').addClass('cell rw-6 padded').append(in_m = $('<input />').addClass('form_input').attr('type','text').val('5')))
                 .append($('<div />').addClass('row')
                     .append($('<div />').addClass('cell rw-6 padded').append($('<div />').addClass('btn').text('OK').click(function() {
-                            var v_w = parseInt(in_w.val()),v_d = parseInt(in_d.val()),v_h = parseInt(in_h.val()),v_m = parseInt(in_m.val());
+                        var v_w = parseInt(in_w.val()),v_d = parseInt(in_d.val()),v_h = parseInt(in_h.val()),v_m = parseInt(in_m.val());
 
-                            if (!isFinite(v_m) || !isFinite(v_h) || !isFinite(v_d) || !isFinite(v_w)) {
-                                alert('Please enter numeric values only!');
-                                return;
-                            }
+                        if (!isFinite(v_m) || !isFinite(v_h) || !isFinite(v_d) || !isFinite(v_w)) {
+                            alert('Please enter numeric values only!');
+                            return;
+                        }
 
-                            if (v_m < 0 || v_h < 0 || v_d < 0 || v_w < 0) {
-                                alert('Negative values are not allowed!');
-                                return;
-                            }
+                        if (v_m < 0 || v_h < 0 || v_d < 0 || v_w < 0) {
+                            alert('Negative values are not allowed!');
+                            return;
+                        }
 
-                            if (v_m % 5) {
-                                alert('Minutes must be a multiple of 5!');
-                                return;
-                            }
+                        if (v_m % 5) {
+                            alert('Minutes must be a multiple of 5!');
+                            return;
+                        }
 
-                            if (v_m < 0 || v_h < 0 || v_d < 0 || v_w < 0) {
-                                alert('Negative values are not allowed!');
-                                return;
-                            }
+                        if (v_m < 0 || v_h < 0 || v_d < 0 || v_w < 0) {
+                            alert('Negative values are not allowed!');
+                            return;
+                        }
 
-                            v_h += Math.floor(v_m/60); v_m %= 60;
-                            v_d += Math.floor(v_h/24); v_h %= 24;
-                            v_w += Math.floor(v_d/7); v_d %= 7;
-                            var ticks = v_m/5 + v_h * 12 + v_d * 288 + v_w * 2016;
+                        v_h += Math.floor(v_m/60); v_m %= 60;
+                        v_d += Math.floor(v_h/24); v_h %= 24;
+                        v_w += Math.floor(v_d/7); v_d %= 7;
+                        var ticks = v_m/5 + v_h * 12 + v_d * 288 + v_w * 2016;
 
-                            if (confirm('Skip ahead ' + v_w + ' Weeks, ' + v_d + ' Days, ' + v_h + ' Hours and ' + v_m + ' Minutes (' + ticks + ' Ticks) ?'))
-                                core.parts.admin.execute('admin/japi/gamepanel/skip', {'ticks': ticks});
+                        if (confirm('Skip ahead ' + v_w + ' Weeks, ' + v_d + ' Days, ' + v_h + ' Hours and ' + v_m + ' Minutes (' + ticks + ' Ticks) ?'))
+                            core.parts.admin.execute('admin/japi/gamepanel/skip', {'ticks': ticks});
 
                     }))).append($('<div />').addClass('cell rw-6 padded').append($('<div />').addClass('btn').text('Manual').click(function() {
 
-                            var p = parseInt(prompt('Enter number of ticks', '1'));
+                        var p = parseInt(prompt('Enter number of ticks', '1'));
 
-                            if (!isFinite(p) || p < 0) {
-                                alert('Invalid value!');
-                                return;
-                            }
+                        if (!isFinite(p) || p < 0) {
+                            alert('Invalid value!');
+                            return;
+                        }
 
-                            in_w.val(Math.floor(p/2016)); p %= 2016;
-                            in_d.val(Math.floor(p/288)); p %= 288;
-                            in_h.val(Math.floor(p/12)); p %= 12;
-                            in_m.val(p * 5);
+                        in_w.val(Math.floor(p/2016)); p %= 2016;
+                        in_d.val(Math.floor(p/288)); p %= 288;
+                        in_h.val(Math.floor(p/12)); p %= 12;
+                        in_m.val(p * 5);
                     }))))
-                );
-        }).appendTo(ret);
+        );
     };
 
-    core.parts.admin.items = function(target,data) {
+    var ui_show_items = function(target,data) {
 
         var spawn = $('<div />').addClass('row flatbox').hide();
         var spawner = function(location) {
@@ -186,7 +134,119 @@
 
         spawn.slideDown();
         inv.slideDown();
-    }
+    };
+
+    var ui_custom_battle = function(target, data) {
+        core.parts.admin.controls(target);
+
+        var maker = function() {
+            var select;
+
+            var div = $('<div />').attr('data-obj','maker').addClass('flatbox').append($('<div />').addClass('row')
+                    .append($('<div />').addClass('cell rw-6 rw-sm-12 padded').append(select = $('<select />')))
+                    .append($('<div />').addClass('cell rw-2 rw-sm-5 padded').append($('<input />').addClass('form_input').attr({placeholder: '#', name: 'acb_num', type: 'number'})))
+                    .append($('<div />').addClass('cell rw-2 rw-sm-5 padded').append($('<input />').addClass('form_input').attr({placeholder: 'Distance', name: 'acb_dist', type: 'number'})))
+                    .append($('<div />').addClass('cell rw-2 padded center').append($('<i />').addClass('fa fa-trash pointer').click(function() {
+                        $(this).parents('[data-obj=maker]').remove();
+                    })))
+            );
+
+
+            $.each(data.zombies, function(k,v) {
+                select.append($('<option />').attr('value', v.id).text(v.name));
+            });
+
+            select.selectric();
+            return $('<div />').addClass('row').append($('<div />').addClass('cell rw-12 padded').append(div));
+        };
+
+        var popup = core.popup.spawn(550, 'auto');
+        var t;
+
+        popup.append($('<div />').addClass('row')
+            .append(t = $('<div />').addClass('cell rw-12 padded'))
+            .append($('<div />').addClass('cell rw-6 padded').append($('<div />').addClass('btn').text('OK').click(function() {
+                    var cfg = [];
+                    popup.find('[data-obj=maker]').each(function() {
+                        var type = $(this).find('select').val();
+                        var count = parseInt($(this).find('[name=acb_num]').val());
+                        var dist = parseInt($(this).find('[name=acb_dist]').val());
+
+                        if (type && isFinite(count * dist) && (count * dist > 0))
+                            cfg.push({type: type, count: count, distance: dist});
+                    });
+
+                    core.parts.admin.execute('admin/japi/gamepanel/custom_battle', {data: cfg});
+                    popup.trigger('unpop');
+
+            })))
+            .append($('<div />').addClass('cell rw-6 padded').append($('<div />').addClass('btn').append($('<i />').addClass('fa fa-plus-circle')).click(function() {
+                    t.append(maker());
+                }).click()))
+        );
+    };
+
+    core.parts.admin = {};
+
+    core.parts.admin.loader = function(target, path, callback) {
+        target.empty().append(core.snippets.wait());
+        game.network.query(path, {}, function(data) {
+            if (data.error) {
+                core.parts.admin.controls(target.empty());
+                alert(data.error.code + ' [' + data.error.name + ']: ' + data.error.message);
+            }
+            else
+                callback(target.empty().append($('<div />').addClass('btn small').text('Menü').click(function() {
+                    core.parts.admin.controls(target);
+                })).append('<br />'),data);
+        });
+    };
+
+    core.parts.admin.execute = function(path, data) {
+        game.render.html.modal.work();
+        game.network.query(path, data, function(r) {
+            if (r.error)
+                alert(r.error.code + ' [' + r.error.name + ']: ' + r.error.message);
+            else core.command();
+        });
+    };
+
+    core.parts.admin.controls = function(target) {
+        target.empty();
+        var ret = $('<div />').addClass('row').appendTo(target);
+
+        $('<div />').addClass('btn small').text('Create item...').click(function() {
+            core.parts.admin.loader(target,'admin/japi/gamepanel/list_items', ui_show_items)
+        }).appendTo(ret);
+
+        $('<div />').addClass('btn small').text('Unveil Map').click(function() {
+            core.parts.admin.execute('admin/japi/gamepanel/unveil_map', {});
+        }).appendTo(ret);
+
+        $('<div />').addClass('btn small').text('Heal Player').click(function() {
+            core.parts.admin.execute('admin/japi/gamepanel/regenerate', {});
+        }).appendTo(ret);
+
+        $('<div />').addClass('btn small').text('Force Battle').click(function() {
+            core.parts.admin.execute('admin/japi/gamepanel/force_battle', {});
+        }).appendTo(ret);
+
+        $('<div />').addClass('btn small').text('Custom Battle...').click(function() {
+            core.parts.admin.loader(target,'admin/japi/gamepanel/list_zombies', ui_custom_battle)
+        }).appendTo(ret);
+
+        $('<div />').addClass('btn small').text('Siege...').click(function() {
+            var n = parseInt(prompt('Number of zombies? (+/-)', '0'));
+            if (!isFinite(n) || !n) return;
+            core.parts.admin.execute('admin/japi/gamepanel/siege', {'z': n});
+        }).appendTo(ret);
+
+        $('<div />').addClass('btn small').text('Skip ahead...').click(ui_skip_ahead).appendTo(ret);
+
+        $('<div />').addClass('btn small').text('Purge log').click(function() {
+            core.parts.admin.execute('admin/japi/gamepanel/purge_log', {});
+        }).appendTo(ret);
+    };
 })();
 <?php } else { ?>
 (function() {

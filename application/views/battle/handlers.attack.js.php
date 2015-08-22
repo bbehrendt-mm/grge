@@ -329,6 +329,7 @@
     };
 
     Battle.prototype.events[<?=Model_Combat_Scene::MCS_EV_ATTACK?>] = function(id_atk, id_def, ammo, weapon, damage) {
+        this.checkNewChar(id_atk, true);
         this.showActorCard(id_atk, this.formatVariantLine([this.getResource(weapon[1]), weapon[0]], "bold 12px Arial", "#ffffff"));
         this.addTargetCard(id_def);
 

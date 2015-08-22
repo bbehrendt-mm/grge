@@ -3,6 +3,23 @@
 abstract class Model_Combat_Zombies_Zombie extends Model_Combat_Actor {
 
     protected $type = Model_Combat_Actor::MCA_TYPE_ZOMBIE;
+    protected $pseudoplayer;
+
+    public function __construct() {
+        parent::__construct();
+        $this->pseudoplayer = new Model_Pseudoplayer([Model_Player::MP_STAT_ENERGY => 50]);
+    }
+
+    /**
+     * @param Model_Combat_Weapon|Model_Combat_Weapon[] $weapon
+     * @return Model_Combat_Actor
+     */
+    public function add_weapon($weapon) {
+        if (!is_array($weapon))
+            $weapon->register($this->pseudoplayer);
+
+        return parent::add_weapon($weapon);
+    }
 
     public static function factory() {
         return parent::factory()

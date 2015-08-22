@@ -1,7 +1,7 @@
 (function() {
     Battle.prototype.events[<?=Model_Combat_Scene::MCS_EV_SWITCH?>] = function(id, weapon) {
-        this.showActorCard(id, this.formatVariantLine([this.getResource('arrow_r.gif'), <?=__j('Waffenwechsel: ')?>,this.getResource(weapon[1]), weapon[0]], "bold 12px Arial", "#ffffff"));
-
+        this.showActorCard(id, this.formatVariantLine([this.getResource('arrow_r.gif'), this.checkNewChar(id) ? <?=__j('Ausrüsten: ')?> : <?=__j('Waffenwechsel: ')?>,this.getResource(weapon[1]), weapon[0]], "bold 12px Arial", "#ffffff"));
+        this.checkNewChar(id, true);
         var reverse = this.combatants[id].pos.x > 32;
 
         var img = this.createCentralizedBitmapContainer(weapon[1]);

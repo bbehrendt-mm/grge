@@ -2,7 +2,7 @@
 
 class Model_Combat_Zombies_Patient extends Model_Combat_Zombies_Zombie {
 
-    protected $name = 'Verstörter Patient';
+    protected $name = 'VerstÃ¶rter Patient';
     protected $max_health = 35;
 
     protected $stat_initiative = 10;

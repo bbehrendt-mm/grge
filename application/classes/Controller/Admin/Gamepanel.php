@@ -18,12 +18,21 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
     }
 
     public function japi_force_battle() {
-        /** @global Model_Game $game */
         /** @global Model_Player $player */
         global $player;
 
         $zombies = $player->location()->zombie_factory()->spawn_zombies(null, true);
         if ($zombies) Tool_Scripts::combat([Tool_Scripts::at_location($player->location_class()), $zombies], true, 20, $player->location());
+    }
+
+    public function japi_purge_log() {
+        /** @global Model_Player $player */
+        global $player;
+
+        $player->log()->clear();
+        $player->location()->log()->clear();
+
+        $this->render();
     }
 
     public function japi_siege() {
@@ -118,6 +127,57 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
             $game->fast_forward($ticks);
 
         $this->render();
+    }
+
+    public function japi_custom_battle() {
+        /** @global Model_Player $player */
+        global $player;
+
+        $config = $this->request->post('data');
+        $zombies = [];
+
+        foreach ($config as $entry) {
+            /** @var Model_Combat_Zombies_Zombie $classpath */
+            $classpath = "Model_Combat_Zombies_{$entry['type']}";
+            if (!Tool_System::instance_of($classpath, 'Model_Combat_Zombies_Zombie') || (int)$entry['count'] <= 0 || (int)$entry['distance'] < 0)
+                continue;
+
+            $zombies[] = $classpath::factory()->count((int)$entry['count'])->set_distance((int)$entry['distance']);
+        }
+
+        if ($zombies) Tool_Scripts::combat([Tool_Scripts::at_location($player->location_class()), $zombies], true, 20, $player->location());
+        $this->render();
+    }
+
+    public function japi_list_zombies() {
+        $path = APPPATH . 'classes/Model/Combat/Zombies';
+        $list = [];
+
+        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
+        foreach($files as $name => $file) {
+            $filename = $file->getFilename();
+            if ($filename[0] == '.') continue;
+            if (substr($filename, -4) !== '.php') continue;
+
+            $filepath = str_replace('\\','/',$file->getPathName());
+            $filepath = str_replace(str_replace('\\','/',$path),'',$filepath);
+
+            /** @var Model_Combat_Zombies_Zombie $classpath */
+
+            $classpath = 'Model_Combat_Zombies' . substr(str_replace('/','_',$filepath), 0, -4);
+
+            $reflection = new ReflectionClass($classpath);
+            if (!$reflection->isInstantiable() || Tool_System::instance_of($classpath, 'Model_Combat_Zombies_Ghul')) continue;
+
+            $list[] = [
+                'id' => str_replace('Model_Combat_Zombies_','',$classpath),
+                'name' => __($classpath::factory()->name()),
+            ];
+        }
+
+        $this->render([
+            'zombies' => $list
+        ]);
     }
 
     public function japi_list_items() {

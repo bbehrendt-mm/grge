@@ -19,6 +19,7 @@
             },
             actor: null,
             container: null,
+            'new': true,
 
             messages: [],
             message_processing: false
@@ -78,6 +79,7 @@
         createjs.Tween.get(this.combatants[id].actor, {loop: false})
             .to({alpha: 1, scaleX: 1, scaleY: 1, x: -8, y: -8}, 100)
             .call(function() {
+                alias.showActorCard(id);
                 createjs.Tween.get(blackbox)
                     .to({scaleX: 1, x: inverse ? (pos.x + (10 - length)) : blackbox.x}, 100)
                     .to({scaleX: 1.1, x: inverse ? (pos.x + (10 - length * 1.1)) : blackbox.x}, 1000)

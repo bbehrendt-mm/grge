@@ -503,14 +503,14 @@ core = {
             var notes = [];
             $.each(flags, function(k,v) {
                 switch (v) {
-                    case 'equipped':
-                        container.addClass('equipped');
+                    case 'equipped':case 'primary':
+                        container.addClass(v);
                         break;
                     case 'armor':
                         notes.push("Dies ist eine R\u00fcstung. Sie wendet w\u00e4hrend eines Kampfes Schaden von dir ab.");
                         break;
                     case 'weapon':
-                        notes.push("Dies ist eine Waffe. Sie wird automatisch eingesetzt wenn du gegen Zombies k\u00e4mpfst.");
+                        notes.push("Dies ist eine Waffe. Hast du sie ausger\u00fcstet, wird sie im Kampf gegen Zombies automatisch eingesetzt.");
                         break;
                     case 'escape':
                         notes.push("Dieser Gegenstand hilft dir dabei, vor Zombies zu fliehen die dich Belagern. Er wird automatisch bei Bedarf eingesetzt.");
@@ -644,10 +644,6 @@ core = {
                         $('<div />').addClass('row')
                             .append($('<div />').addClass('cell rw-6 padded b right').text("Typ"))
                             .append($('<div />').addClass('cell rw-6 padded left').text(v.armor.type))
-                            .appendTo(content);
-                        $('<div />').addClass('row')
-                            .append($('<div />').addClass('cell rw-6 padded b right').text("Sch\u00fctzt"))
-                            .append($('<div />').addClass('cell rw-6 padded left').text(v.armor.cover))
                             .appendTo(content);
                         $('<div />').addClass('row')
                             .append($('<div />').addClass('cell rw-6 padded b right').text("Zustand"))

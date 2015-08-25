@@ -42,6 +42,15 @@
     background: rgba(0,0,0,0.1);
 }
 
+
+.inventory ul li:not(.remote):not(.control).equipped:hover {
+    background: #5182db;
+}
+
+.inventory ul li:not(.remote):not(.control).equipped.primary:hover {
+    background: #60d4db;
+}
+
 .inventory ul li > .staticCount, .inventory ul li > .instanceCount, div.item > .staticCount, div.item > .instanceCount {
     position: absolute;
     top: 14px;
@@ -63,6 +72,10 @@
 
 .inventory ul li.equipped {
     background: #56a1ff;
+}
+
+.inventory ul li.equipped.primary {
+    background: #6ce3ea;
 }
 
 .inventory ul li.temp {

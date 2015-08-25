@@ -59,8 +59,6 @@ class Model_Player extends Model_Cloudshard {
     private $last_action = 0;
     private $escape = 0;
 
-    private $clock_repaired = false;
-
     private $april = false;
     private $got_ticket = false;
 
@@ -73,13 +71,9 @@ class Model_Player extends Model_Cloudshard {
 	
 	private $log;
 
-    public function clock_state($new = null) {
-        if ($new === null) return $this->clock_repaired;
-        else $this->clock_repaired = $new;
-    }
-
 	public function __wakeup() {
 		//Rebind global player variable
+		/** @global Model_Euser $user */
 		global $user;
 		
 		if ($user && $user->uid() == $this->user_id) {
@@ -147,6 +141,7 @@ class Model_Player extends Model_Cloudshard {
      * @param int $level
      */
 	final public function __construct($user_id, $name, $mode, $job, $level) {
+		/** @global Model_Euser $user */
 		global $user;
 		
 		//Set user ID and name
@@ -317,7 +312,7 @@ class Model_Player extends Model_Cloudshard {
 
                 $this->location()->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_ZOMBIFY, array(), $this->id()));
                 //TODO: Actual stats
-				$game->register_ghul($this->location_class(), Model_Combat_Zombies_Ghul::factory()->zombiefied_player_id($this->id())->name($this->name())->stats(5,5,5,5)->register_inventory($this->inventory())->strength(Model_Player::MP_STAT_ZOMBIFY, 100, 1));
+				$game->register_ghul($this->location_class(), Model_Combat_Zombies_Ghul::factory()->zombiefied_player_id($this->id())->name($this->name())->stats(5,5,5,5)->add_weapon($this->get_equipped_weapons())->strength(Model_Player::MP_STAT_ZOMBIFY, 100, 1));
             } else {
                 foreach ($drop as $d)
                     $this->location()->inventory()->add($d);
@@ -685,6 +680,29 @@ class Model_Player extends Model_Cloudshard {
         else return $this->companion = $newval;
     }
 
+	/**
+	 * @param null|number $filter
+	 * @param bool $primary
+	 * @return Model_Items_Abstract_Equipable[]
+	 */
+	public function get_equipment($filter = null, $primary = false) {
+		$items = $this->inventory()->get('Model_Items_Abstract_Equipable');
+		return array_filter($items, function($i) use ($filter, $primary) {
+			/** @var Model_Items_Abstract_Equipable $i */
+			return $i->is_equipped() && ($filter === null || $i->get_equipment_type() == $filter) && (!$primary || $i->is_equipped_primary());
+		});
+	}
+
+	/**
+	 * @param bool $primary
+	 * @return Model_Combat_Weapon[]|Model_Combat_Weapon|null
+	 */
+	public function get_equipped_weapons($primary = false) {
+		$items = $this->get_equipment(Model_Combat_Weapon::MIAE_WEAPON, $primary);
+		if ($primary)
+			return (count($items) >= 1) ? $items[0] : null;
+		else return $items;
+	}
 
     /**
      * Activates the chat beacon for a given amount of time, or returns the beacon status

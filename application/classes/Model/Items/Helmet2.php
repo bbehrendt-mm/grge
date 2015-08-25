@@ -11,7 +11,7 @@ class Model_Items_Helmet2 extends Model_Items_Abstract_Armor {
 	
 	protected static $weight = 1;
 
-    protected static $atype = Model_Items_Abstract_Armor::MIAA_HELMET;
+    protected static $equipment_type = Model_Items_Abstract_Equipable::MIAE_ARMOR_HELMET;
     protected $protection = 50;
     protected static $damage_reduction = 0.2;
     protected static $damage_blocking = 1;

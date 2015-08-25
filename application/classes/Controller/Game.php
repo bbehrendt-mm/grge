@@ -226,9 +226,12 @@ class Controller_Game extends Controller {
 
             $flags = [];
 
-            /** @noinspection PhpUndefinedMethodInspection */
+
             // Set item flags
-            if (Tool_System::instance_of($item, 'Model_Items_Abstract_Armor') && $item->is_active())    $flags[] = 'equipped';
+            /** @noinspection PhpUndefinedMethodInspection */
+            if (Tool_System::instance_of($item, 'Model_Items_Abstract_Equipable') && $item->is_equipped())      $flags[] = 'equipped';
+            /** @noinspection PhpUndefinedMethodInspection */
+            if (Tool_System::instance_of($item, 'Model_Items_Abstract_Equipable') && $item->allows_primary() && $item->is_equipped_primary()) $flags[] = 'primary';
             if (Tool_System::instance_of($item, 'Model_Items_Abstract_Armor'))                          $flags[] = 'armor';
             if (Tool_System::instance_of($item, 'Model_Combat_Weapon'))                                 $flags[] = 'weapon';
             if (Tool_System::instance_of($item, 'Model_Items_Abstract_Escape'))                         $flags[] = 'escape';
@@ -256,8 +259,7 @@ class Controller_Game extends Controller {
             if (Tool_System::instance_of($item, 'Model_Items_Abstract_Armor'))
                 $data['armor'] = [
                     'condition' => __($item->convertStringProtection()),
-                    'type' => __($item->convertStringType()),
-                    'cover' => __($item->convertStringCover()),
+                    'type' => __($item->convertStringType())
                 ];
 
             /** @var Model_Combat_Weapon $item */

@@ -26,12 +26,17 @@ class Controller_Act extends Controller_Game {
                 if (Tool_System::instance_of($item, 'Model_Items_Abstract_Ammo') && $p->id() != $player->id()) {
                     /** @var $item Model_Items_Abstract_Ammo */
                     if (!$item->remoteTake($p->id(), count($items) > 1)) continue;
-                } else {
+                } else
                     if (!$item->take(count($items) > 1)) continue;
-                }
 
                 if (!$p->location()->inventory()->remove($itemid)) continue;
                 if (!$p->inventory()->add($item)) $p->location()->inventory()->add($item);
+
+                if (Tool_System::instance_of($item, 'Model_Items_Abstract_Equipable')) {
+                    /** @var Model_Items_Abstract_Equipable $item */
+                    if (!$player->get_equipment($item->get_equipment_type()))
+                        $item->equip($player);
+                }
             }
     }
 

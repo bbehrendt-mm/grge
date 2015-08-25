@@ -11,7 +11,7 @@ class Model_Items_Clothes2 extends Model_Items_Abstract_Armor {
 	
 	protected static $weight = 5;
 
-    protected static $atype = Model_Items_Abstract_Armor::MIAA_BODY;
+    protected static $equipment_type = Model_Items_Abstract_Equipable::MIAE_ARMOR_BODY;
     protected $protection = 50;
     protected static $damage_reduction = 0;
     protected static $damage_blocking = 2;

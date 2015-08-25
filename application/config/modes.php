@@ -328,6 +328,7 @@ return array(
             'setup' => array(
                 'inherit' => array(),
                 'f' => function($mode, $level) {
+                        /** @global Model_Player $player */
                         global $player;
 
                         //Inventory
@@ -398,6 +399,7 @@ return array(
             'setup' => array(
                 'inherit' => array(0),
                 'f' => function($mode, $level) {
+                        /** @global Model_Player $player */
                         global $player;
 
                         $player->inventory()->add(new Model_Items_Bottle);
@@ -420,6 +422,7 @@ return array(
 
             'levels' => array(),
             'setup' => array('inherit' => array(1010), 'f' => function($mode, $level) {
+                    /** @global Model_Player $player */
                     global $player;
                     $player->inventory()->add(new Model_Items_Miniknife());
                 }),
@@ -439,6 +442,7 @@ return array(
 
             'levels' => array(),
             'setup' => array('inherit' => array(1010), 'f' => function($mode, $level) {
+                    /** @global Model_Player $player */
                     global $player;
                     $player->inventory()->limit(110);
                     $player->inventory()->add(new Model_Items_Briefcase);
@@ -459,6 +463,7 @@ return array(
 
             'levels' => array(100, 250, 500, 1000, 2000),
             'setup' => array('inherit' => array(1010), 'f' => function($mode, $level) {
+                    /** @global Model_Player $player */
                     global $player;
                     new Model_Buffs_Job_Soldier(null, $level);
                     $player->inventory()->add(new Model_Items_Virtual_Hero_Soldier($level));
@@ -484,6 +489,7 @@ return array(
 
             'levels' => array(100, 250,  500, 1000, 2000),
             'setup' => array('inherit' => array(1010), 'f' => function($mode, $level) {
+                    /** @global Model_Player $player */
                     global $player;
                     $player->inventory()->add(new Model_Items_Virtual_Hero_Pathfinder($level));
                     new Model_Buffs_Job_Pathfinder(null, $level);
@@ -504,6 +510,10 @@ return array(
 
             'levels' => array(100, 250,  500, 1000, 2000),
             'setup' => array('inherit' => array(1010), 'f' => function($mode, $level) {
+                    /**
+                     * @global Model_Player $player
+                     * @global Model_Game $game
+                     */
                     global $player, $game;
                     $player->inventory()->add(new Model_Items_Holybook);
                     $player->inventory()->add(new Model_Items_Virtual_Hero_Missionary($level));
@@ -528,6 +538,10 @@ return array(
 
             'levels' => array(100, 250,  500, 1000, 2000),
             'setup' => array('inherit' => array(1010), 'f' => function($mode, $level) {
+                    /**
+                     * @global Model_Player $player
+                     * @global Model_Game $game
+                     */
                     global $player, $game;
                     $player->inventory()->add(new Model_Items_Virtual_Hero_Snot($level));
                     $player->stats_set(	Model_Player::MP_STAT_HUNGER,100,Model_Player::MP_STAT_THIRST,100);
@@ -559,6 +573,7 @@ return array(
 
             'levels' => array(100, 250,  500, 1000, 2000),
             'setup' => array('inherit' => array(1010), 'f' => function($mode, $level) {
+                    /** @global Model_Player $player */
                     global $player;
                     $player->inventory()->add(new Model_Items_Virtual_Hero_Survivalist($level));
                 }),
@@ -578,6 +593,7 @@ return array(
 
             'levels' => array(100, 250,  500, 1000, 2000),
             'setup' => array('inherit' => array(1010), 'f' => function($mode, $level) {
+                    /** @global Model_Player $player */
                     global $player;
                     switch ($level) {
                         case 1: case 2: $player->inventory()->limit(115); break;
@@ -608,6 +624,7 @@ return array(
 
             'levels' => array(),
             'setup' => array('inherit' => array(10000), 'f' => function($mode, $level) {
+                    /** @global Model_Player $player */
                     global $player;
                     new Model_Buffs_Metabolism2();
                     $player->inventory()->add(new Model_Items_Virtual_Hero_Child($level));
@@ -617,6 +634,7 @@ return array(
         ),
         2000 => array(
             'setup' => array('inherit' => array(0), 'f' => function($mode, $level) {
+                    /** @global Model_Player $player */
                     global $player;
                     $player->stats_set(	Model_Player::MP_STAT_HUNGER,	100,
                         Model_Player::MP_STAT_THIRST,	100);
@@ -648,6 +666,7 @@ return array(
 
             'levels' => array(),
             'setup' => array('inherit' => array(2000), 'f' => function($mode, $level) {
+                    /** @global Model_Player $player */
                     global $player;
                     $player->inventory()->add(new Model_Items_Machete3);
                     $player->inventory()->add(new Model_Items_Batgun);
@@ -668,6 +687,7 @@ return array(
 
             'levels' => array(),
             'setup' => array('inherit' => array(2000), 'f' => function($mode, $level) {
+                    /** @global Model_Player $player */
                     global $player;
                     $player->inventory()->add(new Model_Items_Machete);
                     $player->inventory()->add(new Model_Items_Batgun4);
@@ -688,6 +708,7 @@ return array(
 
             'levels' => array(),
             'setup' => array('inherit' => array(2000), 'f' => function($mode, $level) {
+                    /** @global Model_Player $player */
                     global $player;
                     $player->inventory()->add(new Model_Items_Machete2);
                     $player->inventory()->add(new Model_Items_Batgun3);
@@ -695,6 +716,7 @@ return array(
         ),
         3000 => array(
             'setup' => array('inherit' => array(0), 'f' => function($mode, $level) {
+                    /** @global Model_Player $player */
                     global $player;
                     $player->stats_set(	Model_Player::MP_STAT_HUNGER,	60,
                         Model_Player::MP_STAT_THIRST,	75);
@@ -760,6 +782,7 @@ return array(
 
             'levels' => array(500, 1500),
             'setup' => array('inherit' => array(3000), 'f' => function($mode, $level) {
+                    /** @global Model_Player $player */
                     global $player;
                     if ($level >= 3) {
                         $player->inventory()->add(new Model_Items_Generic_Lasermapper);
@@ -782,6 +805,10 @@ return array(
 
             'levels' => array(),
             'setup' => array('inherit' => array(0), 'f' => function($mode, $level) {
+                    /**
+                     * @global Model_Player $player
+                     * @global Model_Game $game
+                     */
                     global $player, $game;
                     $bottle = new Model_Items_Bottle;
                     $bottle->add_water(2, 16);
@@ -797,6 +824,7 @@ return array(
         ),
         10000 => array(
             'setup' => array('inherit' => array(0), 'f' => function($mode, $level) {
+                    /** @global Model_Player $player */
                     global $player;
                     $player->inventory()->add(new Model_Items_Bottle);
                     $player->inventory()->add(new Model_Items_Ammobelt());
@@ -818,6 +846,7 @@ return array(
 
             'levels' => array(),
             'setup' => array('inherit' => array(10000), 'f' => function($mode, $level) {
+                    /** @global Model_Player $player */
                     global $player;
                     $player->inventory()->add(new Model_Items_Machete());
                 }),
@@ -837,6 +866,7 @@ return array(
 
             'levels' => array(100, 200, 300, 500, 800, 1300, 2100, 3400, 5500),
             'setup' => array('inherit' => array(10000), 'f' => function($mode, $level) {
+                    /** @global Model_Player $player */
                     global $player;
                     $player->inventory()->add(new Model_Items_Virtual_Hero_Coach($level));
                     $player->inventory()->add(new Model_Items_Machete());
@@ -858,6 +888,7 @@ return array(
 
             'levels' => array(100, 200, 300, 500, 800, 1300, 2100, 3400, 5500),
             'setup' => array('inherit' => array(10000), 'f' => function($mode, $level) {
+                    /** @global Model_Player $player */
                     global $player;
                     $player->inventory()->add(new Model_Items_Virtual_Hero_Student($level));
                     $player->inventory()->add(new Model_Items_Machete());
@@ -879,6 +910,7 @@ return array(
 
             'levels' => array(100, 200, 300, 500, 800, 1300, 2100, 3400, 5500),
             'setup' => array('inherit' => array(10000), 'f' => function($mode, $level) {
+                    /** @global Model_Player $player */
                     global $player;
                     $player->inventory()->add(new Model_Items_Virtual_Hero_Woman($level));
                     $player->inventory()->add(new Model_Items_Pepperspray());

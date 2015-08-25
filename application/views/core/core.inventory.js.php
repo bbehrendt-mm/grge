@@ -72,14 +72,14 @@
             var notes = [];
             $.each(flags, function(k,v) {
                 switch (v) {
-                    case 'equipped':
-                        container.addClass('equipped');
+                    case 'equipped':case 'primary':
+                        container.addClass(v);
                         break;
                     case 'armor':
                         notes.push(<?=__j('Dies ist eine Rüstung. Sie wendet während eines Kampfes Schaden von dir ab.')?>);
                         break;
                     case 'weapon':
-                        notes.push(<?=__j('Dies ist eine Waffe. Sie wird automatisch eingesetzt wenn du gegen Zombies kämpfst.')?>);
+                        notes.push(<?=__j('Dies ist eine Waffe. Hast du sie ausgerüstet, wird sie im Kampf gegen Zombies automatisch eingesetzt.')?>);
                         break;
                     case 'escape':
                         notes.push(<?=__j('Dieser Gegenstand hilft dir dabei, vor Zombies zu fliehen die dich Belagern. Er wird automatisch bei Bedarf eingesetzt.')?>);
@@ -213,10 +213,6 @@
                         $('<div />').addClass('row')
                             .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Typ')?>))
                             .append($('<div />').addClass('cell rw-6 padded left').text(v.armor.type))
-                            .appendTo(content);
-                        $('<div />').addClass('row')
-                            .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Schützt')?>))
-                            .append($('<div />').addClass('cell rw-6 padded left').text(v.armor.cover))
                             .appendTo(content);
                         $('<div />').addClass('row')
                             .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Zustand')?>))

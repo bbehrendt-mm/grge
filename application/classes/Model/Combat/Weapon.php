@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
+abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
 
     const MCW_ANIMATION_NONE = 0;
     const MCW_ANIMATION_PUNCH = 1;
@@ -15,6 +15,9 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
     const MCW_ANIMATION_CHAINSAW = 10;
     const MCW_ANIMATION_SHOT_BOLT = 11;
     const MCW_ANIMATION_SHOT_SPLINTER = 12;
+
+    protected static $allow_multi_equip = true;
+    protected static $allow_primary_equip = true;
 
     protected static $damage = [1,1];
     protected static $range = [0,PHP_INT_MAX];
@@ -37,7 +40,7 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
     }
 
     public function usable() {
-        return true;
+        return $this->is_equipped();
     }
 
     public function get_animation() {
@@ -195,7 +198,7 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Item {
                 if (mt_rand()/mt_getrandmax() > $accuracy) $actual_multiply--;
         }
 
-        $raw = (($actual_multiply <= 0 ? 0 : mt_rand($this->damage()[0] * $actual_multiply, $this->damage()[1] * $actual_multiply)) * $atk) / $res;
+        $raw = ($actual_multiply <= 0 ? 0 : mt_rand($this->damage()[0] * $actual_multiply, $this->damage()[1] * $actual_multiply)) * (1 + ($atk - $res));
         if (!$this->aoe())
             $raw = min($raw, $opponent->strength()[0]);
         return $raw;

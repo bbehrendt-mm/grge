@@ -7,6 +7,11 @@ class Model_Combat_Actor {
     const MCA_TYPE_NPC = 3;
     const MCA_TYPE_PET = 4;
 
+    const MCA_STAT_INI = 1;
+    const MCA_STAT_ATK = 2;
+    const MCA_STAT_DEF = 3;
+    const MCA_STAT_ACC = 4;
+
     /** @var  Model_Combat_Scene */
     protected $scene;
 
@@ -73,19 +78,6 @@ class Model_Combat_Actor {
     }
 
     /**
-     * @param Model_Inventory $inv
-     * @return Model_Combat_Actor
-     */
-    public function register_inventory($inv) {
-        $this->inventory = $inv;
-
-        /** @noinspection PhpParamsInspection */
-        $this->add_weapon($this->inventory->get('Model_Combat_Weapon'));
-
-        return $this;
-    }
-
-    /**
      * @return Model_Inventory
      */
     public function inventory() {
@@ -129,7 +121,7 @@ class Model_Combat_Actor {
                 $this->add_weapon($w);
         else {
             if (!$weapon->uin()) $game->uin()->set($weapon);
-            if (!$this->current_weapon)
+            if (!$this->current_weapon || $weapon->is_equipped_primary())
                 $this->current_weapon = $weapon;
             $this->weapons[] = $weapon;
         }

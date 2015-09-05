@@ -126,7 +126,7 @@ class Controller_Game extends Controller {
         $radar_scale = $player->buff_retr('tr_danger') ? 2 : 8;
 
         // Get Radar data
-        list($radar_min, $radar_max, $radar_prop, $radar_increase) = $player->location()->zombie_factory()->get_radar_data();
+        list(, $radar_max, $radar_prop, $radar_increase) = $player->location()->zombie_factory()->get_radar_data();
 
         // Check if we're at a hideout with active defenses
         $hideout = Tool_Scripts::current_location_hideout();
@@ -255,6 +255,20 @@ class Controller_Game extends Controller {
                 'deco' => $item->deco()
             ];
 
+            /** @var Model_Items_Abstract_Equipable $item */
+            if (Tool_System::instance_of($item, 'Model_Items_Abstract_Equipable')) {
+                $data['rpg'] = [
+                    'ini' => $item->get_stats(Model_Items_Abstract_Equipable::MIAE_STAT_INI),
+                    'atk' => $item->get_stats(Model_Items_Abstract_Equipable::MIAE_STAT_ATK),
+                    'def' => $item->get_stats(Model_Items_Abstract_Equipable::MIAE_STAT_DEF),
+                    'acc' => $item->get_stats(Model_Items_Abstract_Equipable::MIAE_STAT_ACC)
+                ];
+                $data['equipment'] = [
+                    'name' => __($item->convertStringType()),
+                    'primary_cat' => $item->allows_primary(),
+                ];
+            }
+
             /** @var Model_Items_Abstract_Armor $item */
             if (Tool_System::instance_of($item, 'Model_Items_Abstract_Armor'))
                 $data['armor'] = [
@@ -381,7 +395,10 @@ class Controller_Game extends Controller {
         ];
 
         if ($remote) return $tmp;
-        else return $this->add_data('inventory', $tmp);
+        else {
+            $this->add_data('inventory', $tmp);
+            return null;
+        }
     }
 
     private function condense_buff($bar) {
@@ -435,7 +452,6 @@ class Controller_Game extends Controller {
         $p = $remote ? $remote : $player;
 
         $cache = [];
-        $tmp = 0;
         for ($type = 1; $type <= Model_Player::MP_STATUS_COUNT; $type++)
             if ($type <= 5 || $p->stats_get($type))
                 $cache[$type] = $this->status($type, $remote);
@@ -450,7 +466,10 @@ class Controller_Game extends Controller {
         ];
 
         if ($remote) return $tmp;
-        else return $this->add_data('status', $tmp);
+        else {
+            $this->add_data('status', $tmp);
+            return null;
+        }
     }
 
     protected function render_notifications() {
@@ -565,6 +584,41 @@ class Controller_Game extends Controller {
         ]);
     }
 
+    private function render_rpg() {
+        /**
+         * @global $player Model_Player
+         */
+        global $player;
+
+        $tmp_all = [
+            Model_Items_Abstract_Equipable::MIAE_STAT_INI => 5,
+            Model_Items_Abstract_Equipable::MIAE_STAT_ATK => 5,
+            Model_Items_Abstract_Equipable::MIAE_STAT_DEF => 5,
+            Model_Items_Abstract_Equipable::MIAE_STAT_ACC => 5,
+        ];
+
+        $stats = [
+            Model_Items_Abstract_Equipable::MIAE_STAT_INI => [['type' => 0, 'value' => 5, 'all' => $tmp_all]],
+            Model_Items_Abstract_Equipable::MIAE_STAT_ATK => [['type' => 0, 'value' => 5, 'all' => $tmp_all]],
+            Model_Items_Abstract_Equipable::MIAE_STAT_DEF => [['type' => 0, 'value' => 5, 'all' => $tmp_all]],
+            Model_Items_Abstract_Equipable::MIAE_STAT_ACC => [['type' => 0, 'value' => 5, 'all' => $tmp_all]],
+        ];
+        foreach ($player->get_equipment(null, true) as $equipment)
+            foreach ([Model_Items_Abstract_Equipable::MIAE_STAT_INI,Model_Items_Abstract_Equipable::MIAE_STAT_ATK,Model_Items_Abstract_Equipable::MIAE_STAT_DEF,Model_Items_Abstract_Equipable::MIAE_STAT_ACC] as $k)
+                if ($equipment->get_stats($k) != 0)
+                    $stats[$k][] = [
+                        'type' => $equipment->get_equipment_type(),
+                        'value' => $equipment->get_stats($k),
+                        'name' => __($equipment->name()),
+                        'icon' => $equipment->icon(),
+                        'all' => $equipment->get_stats(true),
+                    ];
+
+        $this->add_data('rpg', [
+            'stats' => $stats
+        ]);
+    }
+
     private function render_specials() {
         /**
          * @global $game Model_Game
@@ -628,11 +682,6 @@ class Controller_Game extends Controller {
     }
 
     private function render_epics() {
-        /**
-         * @global $player Model_Player
-         */
-        global $player;
-
         /** @var Model_Items_Virtual_Epic_Garden $garden */
         if ($garden = Tool_Scripts::first_available_item('Model_Items_Virtual_Epic_Garden',false,true,false))
             $this->add_data('location', ['epc_garden' => [
@@ -695,7 +744,6 @@ class Controller_Game extends Controller {
             $joke = array_keys($jokes)[($game->id() + $p->id()) % count($jokes)];
 
             $local = $p->alive() && $p->location_class() == $player->location_class();
-            $stats = [];
             if ($local)
                 for ($type = 1; $type <= Model_Player::MP_STATUS_COUNT; $type++)
                     if ($type <= 5 || $player->stats_get($type))
@@ -753,6 +801,7 @@ class Controller_Game extends Controller {
         $this->render_status();
         $this->render_settings();
         $this->render_clock();
+        $this->render_rpg();
         $this->render_log();
         $this->render_mp();
         $this->render_specials();
@@ -832,7 +881,7 @@ class Controller_Game extends Controller {
                 foreach ($game->players(false) as $p)
                     if ($p->id() != $player->id())
                     $player_ratings[$p->id()] = [
-                        'prev_rating' => Model_User::get_karma($p->id(), $player->id()),
+                        'prev_rating' => Model_Euser::get_karma($p->id(), $player->id()),
                         'name' => $p->name()
                     ];
 

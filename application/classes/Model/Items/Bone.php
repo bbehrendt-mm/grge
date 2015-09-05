@@ -17,6 +17,4 @@ class Model_Items_Bone extends Model_Combat_Weapons_Close implements Interface_S
 	protected static $max_range = 0.5;
 
 	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_PUNCH;
-
-	//public static $reload_time = 0;
 }	

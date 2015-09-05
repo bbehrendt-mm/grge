@@ -5,9 +5,9 @@ class Model_Combat_Zombies_Ghul extends Model_Combat_Zombies_Zombie {
     protected $name;
     protected $max_health = 100;
 
-    protected $stat_initiative = 0;
-    protected $stat_damage = 20;
-    protected $stat_resistance = 10;
+    protected $stat_initiative = 4;
+    protected $stat_damage = 6;
+    protected $stat_resistance = 2;
     protected $stat_accuracy = 0;
 
     protected $movement_range = 5;

@@ -17,5 +17,4 @@ class Model_Items_Stick extends Model_Combat_Weapons_Close implements Interface_
     protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_PUNCH;
 
 	protected static $durabillity = 0.2;
-	//public static $reload_time = 0;
 }	

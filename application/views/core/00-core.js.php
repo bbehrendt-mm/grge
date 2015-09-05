@@ -57,6 +57,9 @@ core = {
         else url = 'japi/' + url;
 
         if (!background) game.render.html.modal.work();
+
+        var scroll = $(document).scrollTop();
+
         game.network.query(url,args,function(data) {
 
             if (data.error) {
@@ -80,6 +83,8 @@ core = {
             else if (data) core.render(data, $('#content').empty());
 
             if (finished) finished(data);
+
+            $(document).scrollTop(scroll)
         });
     },
 
@@ -90,10 +95,10 @@ core = {
 
         core.last = data;
 
-        if (core.parts.admin) core.parts.admin.controls($('<div />').addClass('cell rw-12 padded').appendTo($('<div />').addClass('row').appendTo(target)));
+        if (core.parts.admin) core.parts.admin.controls($('<div />').addClass('cell rw-12 padded').appendTo(Ω.row().appendTo(target)));
 
         if (data.location) {
-            var location_box = $('<div />').addClass('row').appendTo(target);
+            var location_box = Ω.row().appendTo(target);
             core.parts.location(data.location, location_box);
         }
 
@@ -109,6 +114,7 @@ core = {
 
         var auto_select = $('<select />').appendTo($('<div />').addClass('cell rw-12 padded hide-desktop control').appendTo(action_box))
             .append($('<option />').val('#inv_container').text(game.storage.get('settings','heroid_ui') == 'tab' ? <?=__j('Gegenstände')?> : <?=__j('Gegenstände & Heldentaten')?>))
+            .append($('<option />').val('#rpg_container').text(<?=__j('Kampfausrüstung')?>))
             .append((game.storage.get('settings','heroid_ui') == 'tab') ? $('<option />').val('#inv_heroics').text(<?=__j('Heldentaten')?>) : null)
             .append($('<option />').val('#settings_container').text(<?=__j('Zeitfluss & Verhalten')?>))
             .append($('<option />').val('#game_info').text(<?=__j('Spieldetails')?>))
@@ -120,6 +126,7 @@ core = {
 
         var auto_tab = $('<ul />').addClass('tabline hide-mobile').appendTo(action_box)
             .append($('<li>').attr('data-toggle', '#inv_container').text(game.storage.get('settings','heroid_ui') == 'tab' ? <?=__j('Gegenstände')?> : <?=__j('Gegenstände & Heldentaten')?>))
+            .append($('<li>').attr('data-toggle', '#rpg_container').text(<?=__j('Kampfausrüstung')?>))
             .append((game.storage.get('settings','heroid_ui') == 'tab') ? $('<li>').attr('data-toggle', '#inv_heroics').text(<?=__j('Heldentaten')?>) : null)
             .append($('<li>').attr('data-toggle', '#settings_container').text(<?=__j('Zeitfluss & Verhalten')?>))
             .append($('<li>').attr('data-toggle', '#game_info').text(<?=__j('Spieldetails')?>))
@@ -138,6 +145,9 @@ core = {
             if (game.storage.get('settings', 'heroid_ui') == 'tab')
                 core.parts.heroics(data.inventory, $('<div />').attr('id', 'inv_heroics').addClass('row').appendTo(action_box));
         }
+
+        if (data.rpg && data.inventory)
+            core.parts.rpg(data.rpg, data.inventory.player, $('<div />').attr('id', 'rpg_container').addClass('row').appendTo(action_box));
 
         if (data.settings)
             core.parts.settings(data.settings, $('<div />').attr('id', 'settings_container').addClass('row').appendTo(action_box));

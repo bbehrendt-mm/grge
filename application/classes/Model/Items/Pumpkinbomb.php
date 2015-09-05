@@ -20,5 +20,6 @@ class Model_Items_Pumpkinbomb extends Model_Combat_Weapons_Throwable implements 
 	protected static $friendly_fire = false;
 	protected static $energy = 10;
 
-	//public static $reload_time = 5;
+	// INI, ATK, DEF, ACC
+	protected static $effects = [-1,0,0,0];
 }	

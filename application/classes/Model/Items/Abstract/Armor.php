@@ -5,16 +5,6 @@ abstract class Model_Items_Abstract_Armor extends Model_Items_Abstract_Equipable
     protected $protection = 1;
     protected static $destroyed = null;
 
-    public static function convertStringType() {
-        switch (static::$equipment_type) {
-            case static::MIAE_ARMOR_BODY: return 'Rüstung';
-            case static::MIAE_ARMOR_HELMET: return 'Helm';
-            case static::MIAE_ARMOR_SHIELD: return 'Schild';
-            case static::MIAE_ARMOR_CAPE: return 'Umhang';
-            default: return 'Unbekannt';
-        }
-    }
-
     public function convertStringProtection() {
         if ($this->protection > 100) return "Sehr stabil";
         elseif ($this->protection > 75) return "Stabil";

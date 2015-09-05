@@ -49,6 +49,9 @@ class Model_Combat_Actor {
     /** @var  Model_Inventory */
     protected $inventory;
 
+    /** @var Model_Items_Abstract_Armor[] */
+    protected $armor = [];
+
     /** @var Model_Combat_Weapon */
     protected $current_weapon = null;
 
@@ -78,6 +81,26 @@ class Model_Combat_Actor {
     }
 
     /**
+     * @param Model_Inventory $inv
+     * @return Model_Combat_Actor
+     */
+    public function register_inventory($inv, $check_equip = true) {
+        $this->inventory = $inv;
+
+        foreach ($this->inventory->get('Model_Combat_Weapon') as $w)
+            /** @var Model_Combat_Weapon $w */
+            if (!$check_equip || $w->is_equipped())
+                $this->add_weapon($w);
+
+        foreach ($this->inventory->get('Model_Items_Abstract_Armor') as $a)
+            /** @var Model_Items_Abstract_Armor $a */
+            if (!$check_equip || $a->is_equipped())
+                $this->add_armor($a);
+
+        return $this;
+    }
+
+    /**
      * @return Model_Inventory
      */
     public function inventory() {
@@ -92,8 +115,20 @@ class Model_Combat_Actor {
      * @return int[]|Model_Combat_Actor
      */
     public function stats($ini = null, $dmg = null, $res = null, $acc = null) {
-        if ($ini === null)
-            return [$this->stat_initiative, $this->stat_damage, $this->stat_resistance, $this->stat_accuracy];
+        if ($ini === null) {
+            $tmp = [0,0,0,0];
+            foreach ($this->armor as $armor)
+                if (!$armor->is_destroyed())
+                    foreach ($armor->get_stats() as $id => $v)
+                        $tmp[$id] += $v;
+
+            if ($this->current_weapon && $this->current_weapon->usable())
+                foreach ($this->current_weapon->get_stats() as $id => $v)
+                    $tmp[$id] += $v;
+
+            return [$this->stat_initiative + $tmp[0], $this->stat_damage + $tmp[1], $this->stat_resistance + $tmp[2], $this->stat_accuracy + $tmp[3]];
+        }
+
         else list($this->stat_initiative, $this->stat_damage, $this->stat_resistance, $this->stat_accuracy) = array_map(function($a) {return min(20,max(0,$a));}, [$ini, $dmg, $res, $acc]);
         $this->reset_steps();
         return $this;
@@ -130,14 +165,31 @@ class Model_Combat_Actor {
     }
 
     /**
+     * @param Model_Items_Abstract_Armor|Model_Items_Abstract_Armor[] $armor
+     * @return Model_Combat_Actor
+     */
+    public function add_armor($armor) {
+        if (is_array($armor))
+            foreach ($armor as $a)
+                $this->add_armor($a);
+        else {
+            if (!$armor->is_equipped()) return $this;
+            $this->armor[] = $armor;
+        }
+
+        return $this;
+    }
+
+    /**
      * @return int[]
      */
-    private function actual_stats() {
+    protected function actual_stats() {
+        list($ini, $atk, $def, $acc) = $this->stats();
         return [
-            round(100/(1 + $this->stat_initiative * 0.05)),
-            1 + $this->stat_damage * 0.05,
-            1 - $this->stat_resistance * 0.05,
-            1 + $this->stat_accuracy * 0.05,
+            round(100/(1 + $ini * 0.05)),
+            1 + $atk * 0.05,
+            1 - $def * 0.05,
+            1 + $acc * 0.05,
         ];
     }
 
@@ -371,8 +423,9 @@ class Model_Combat_Actor {
     /**
      * @param int $damage
      * @param null|Model_Combat_Actor $from
+     * @param null|int $armor_damage
      */
-    protected function damage($damage, $from = null) {
+    protected function damage($damage, $from = null, $armor_damage = null) {
         $this->health -= $damage;
 
         $kills = min($this->count, $this->health == 0 ? 1 : ($this->health < 0 ? -floor($this->health / $this->max_health) : 0));
@@ -387,6 +440,21 @@ class Model_Combat_Actor {
             $from->score_kills($damage, $kills, !$this->alive(), $this);
 
         $this->scene->damage($this, $damage, $kills, !$this->alive);
+
+        if ($armor_damage) {
+            $list = [];
+            foreach ($this->armor as $proto)
+                if (!$proto->is_destroyed())
+                    $list[] = $proto;
+
+            if (count($list)) {
+                /** @var Model_Items_Abstract_Armor $armor */
+                $armor = Tool_Gambling::select($list);
+                $armor->take_damage($armor_damage);
+                if ($armor->is_destroyed())
+                    $this->scene->break_armor($this, $armor);
+            }
+        }
     }
 
     public function enter() {}
@@ -415,9 +483,9 @@ class Model_Combat_Actor {
             $target = $attack[1];
             list($op_ini, $op_atk, $op_res, $op_acc) = $this->actual_stats();
 
-            $dmg = $this->current_weapon->calculate_damage($this, $target, $this->count, $acc, $atk, $op_res);
+            list($dmg,$dmg_raw) = $this->current_weapon->calculate_damage($this, $target, $this->count, $acc, $atk, $op_res);
             $this->scene->attack($this, $target, $this->current_weapon, $dmg);
-            $target->damage($dmg, $this);
+            $target->damage($dmg, $this, $dmg_raw);
             $this->current_weapon->trigger_usage($this, $target, $dmg, $this->scene);
 
         } elseif ($switch && (!$attack || $switch[0] > $attack[0]) && (!$move || $switch[0] > $move[0])) {

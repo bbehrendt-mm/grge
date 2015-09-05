@@ -19,6 +19,4 @@ class Model_Items_Batgun4 extends Model_Combat_Weapons_Ammo implements Interface
 	protected static $aoe = false;
 
 	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SHOT_BAT;
-
-	//public static $reload_time = 1;
 }	

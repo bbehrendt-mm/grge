@@ -32,6 +32,4 @@ class Model_Items_Vedge5 extends Model_Combat_Weapons_Throwable implements Inter
 	protected static $aoe = true;
 	protected static $friendly_fire = false;
 	protected static $energy = 1;
-
-	//public static $reload_time = 1;
 }	

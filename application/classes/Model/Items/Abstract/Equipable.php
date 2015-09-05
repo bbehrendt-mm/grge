@@ -8,6 +8,11 @@ abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item 
     const MIAE_ARMOR_CAPE = 4;
     const MIAE_WEAPON = 5;
 
+    const MIAE_STAT_INI = 1;
+    const MIAE_STAT_ATK = 2;
+    const MIAE_STAT_DEF = 3;
+    const MIAE_STAT_ACC = 4;
+
     protected static $allow_multi_equip = false;
     protected static $allow_primary_equip = false;
 
@@ -38,6 +43,17 @@ abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item 
         $this->equip_primary($player);
     }
 
+    public static function convertStringType() {
+        switch (static::$equipment_type) {
+            case static::MIAE_ARMOR_BODY: return 'Rüstung';
+            case static::MIAE_ARMOR_HELMET: return 'Helm';
+            case static::MIAE_ARMOR_SHIELD: return 'Schild';
+            case static::MIAE_ARMOR_CAPE: return 'Umhang';
+            case static::MIAE_WEAPON: return 'Waffe';
+            default: return 'Unbekannt';
+        }
+    }
+
     public function allows_primary() {
         return static::$allow_primary_equip;
     }
@@ -51,12 +67,34 @@ abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item 
     }
 
     public function get_stats($type = null) {
-        return $type === null ? static::$effects : static::$effects[$type - 1];
+        if ($type === true)
+            return [
+                static::MIAE_STAT_INI => $this->get_stats(static::MIAE_STAT_INI),
+                static::MIAE_STAT_ATK => $this->get_stats(static::MIAE_STAT_ATK),
+                static::MIAE_STAT_DEF => $this->get_stats(static::MIAE_STAT_DEF),
+                static::MIAE_STAT_ACC => $this->get_stats(static::MIAE_STAT_ACC),
+            ];
+        else return $type === null ? static::$effects : static::$effects[$type - 1];
     }
 
     public function unequip() {
+        $rebuild = $this->is_equipped() && $this->allows_primary() && $this->is_equipped_primary();
+
         $this->equipped = false;
         $this->equipped_primary = false;
+
+        if ($rebuild)
+            Tool_Scripts::rebuild_primary_equipment($this->get_equipment_type());
+    }
+
+    public function consume() {
+        $this->unequip();
+        parent::consume();
+    }
+
+    public function grind() {
+        $this->unequip();
+        parent::grind();
     }
 
     public function is_equipped() {
@@ -65,7 +103,7 @@ abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item 
 
     public function drop($silent = false) {
         $r = parent::drop();
-        if ($r)
+        if ($r && $this->is_equipped())
             $this->unequip();
         return $r;
     }
@@ -83,55 +121,4 @@ abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item 
 
         $this->equipped_primary = true;
     }
-
-    protected function hid() {
-        if (!$this->is_equipped())
-            return parent::hid()
-                ->add_action('Ausrüsten',
-                    Model_Action::factory()
-                        ->condition(function($p) {
-                            /** @var Model_Player $p */
-                            return $p->inventory()->has($this->uin());
-                        })
-                        ->fail_message('Du musst diesen Gegenstand aufheben, bevor du ihn ausrüsten kannst.')
-                        ->effect(
-                            Model_Effect::factory()
-                                ->message('Du hast dich mit :item ausgerüstet.', [], [':item' => $this->name()])
-                                ->custom(function($p) {
-                                    $this->equip($p);
-                                })
-                        )
-                );
-        else {
-            $tmp = parent::hid();
-
-            if (static::$allow_primary_equip && !$this->is_equipped_primary())
-                $tmp->add_action('Als Standart setzen',
-                    Model_Action::factory()
-                        ->effect(
-                            Model_Effect::factory()
-                                ->message('Du hast :item als Standart ausgewählt.', [], [':item' => $this->name()])
-                                ->custom(function($p) {
-                                    $this->equip_primary($p);
-                                })
-                        )
-                );
-
-            $tmp->add_action('Ablegen',
-                Model_Action::factory()
-                    ->effect(
-                        Model_Effect::factory()
-                            ->message('Du hast diesen Gegenstand abgelegt.')
-                            ->custom(function() {
-                                $this->unequip();
-                            })
-                    )
-            );
-
-            return $tmp;
-
-        }
-
-    }
-	
 }	

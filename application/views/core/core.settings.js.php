@@ -76,7 +76,7 @@
 
         target.empty().append($('<h3 />').text(<?=__j('Kampfverhalten')?>));
 
-        var bhav_select, bhav = $('<div />').addClass('row').appendTo(target);
+        var bhav_select, bhav = Ω.row().appendTo(target);
         bhav.append($('<b />').text(<?=__j('Kampfstrategie')?>));
         bhav.append($('<div />').addClass('cell rw-6 rw-lg-8 rw-md-6 rw-sm-12 padded').append($('<label />').attr('title',<?=__j('Der ausgewählte Kampfstil beeinflusst deine Waffen- und Gegnerauswahl. Offensive Spieler werden versuchen, so viel Schaden anzurichten wie möglich. Defensive Spieler werden versuchen, Zombies so gut es geht auf Abstand zu halten.')?>).qtip(game.render.html.qtip.ingame('top')).prepend(bhav_select = $('<select />'))));
 
@@ -89,14 +89,14 @@
             }).selectric();
 
         var sw_energy, sw_breakable, sw_ammocache;
-        var sw = $('<div />').addClass('row').appendTo(target);
+        var sw = Ω.row().appendTo(target);
         sw.append($('<b />').text(<?=__j('Verwendung einzelner Waffenarten sperren')?>));
         sw
             .append($('<div />').addClass('cell rw-6 rw-sm-12 padded').append($('<label />').attr('title',<?=__j('Ist diese Option aktiviert, wirst du im Kampf keine Waffen einsetzen, die Energie verbrauchen.')?>).qtip(game.render.html.qtip.ingame('top')).text(<?=__j('Energiewaffen')?>).prepend(sw_energy = $('<input />').attr('type', 'checkbox').prop('checked', data.weapons.energy).prop('disabled', (data.weapons.energy === 'locked')))))
             .append($('<div />').addClass('cell rw-6 rw-sm-12 padded').append($('<label />').attr('title',<?=__j('Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die beim Einsatz zerstört werden (z.B. Wasserbombe).')?>).qtip(game.render.html.qtip.ingame('top')).text(<?=__j('Wurfgeschosse')?>).prepend(sw_breakable = $('<input />').attr('type', 'checkbox').prop('checked', data.weapons.throw))))
             .append($('<div />').addClass('cell rw-6 rw-sm-12 padded').append($('<label />').attr('title',<?=__j('Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die einen internen Munitionsspeicher haben (z.B. Wasserpistole).')?>).qtip(game.render.html.qtip.ingame('top')).text(<?=__j('Verbrauchswaffen')?>).prepend(sw_ammocache = $('<input />').attr('type', 'checkbox').prop('checked', data.weapons.tank))));
 
-        var mun = $('<div />').addClass('row').appendTo(target);
+        var mun = Ω.row().appendTo(target);
         mun.append($('<b />').text(<?=__j('Verwendung einzelner Munitionstypen sperren')?>));
 
         var mun_elems = {};
@@ -109,7 +109,7 @@
             button.removeClass('disabled')
         }).customRadioCheck();
 
-        target.append($('<div />').addClass('row').append($('<div />').addClass('cell rw-6 ro-6').append(
+        target.append(Ω.row().append($('<div />').addClass('cell rw-6 ro-6').append(
             button = $('<div />').addClass('btn btn-icon disabled')
                 .append($('<span />').addClass('btn-icon-inner').append($('<i />').addClass('fa fa-check')))
                 .append($('<span />').text(<?=__j('Speichern')?>))

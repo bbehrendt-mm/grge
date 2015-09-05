@@ -11,6 +11,9 @@ class Model_Items_Clothes extends Model_Items_Abstract_Armor {
 	
 	protected static $weight = 0;
 
+    // INI, ATK, DEF, ACC
+    protected static $effects = [0,0,1,0];
+
     protected static $equipment_type = Model_Items_Abstract_Equipable::MIAE_ARMOR_BODY;
     protected $protection = 10;
     protected static $damage_reduction = 0;

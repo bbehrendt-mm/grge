@@ -18,5 +18,6 @@ class Model_Items_Macheteband extends Model_Combat_Weapons_Close implements Inte
 
 	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SLASH;
 
-	//public static $reload_time = 1;
+	// INI, ATK, DEF, ACC
+	protected static $effects = [2,0,0,0];
 }	

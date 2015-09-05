@@ -20,6 +20,4 @@ class Model_Items_Phone extends Model_Combat_Weapons_Throwable implements Interf
 	protected static $aoe = false;
 	protected static $friendly_fire = false;
 	protected static $energy = 3;
-
-	//public static $reload_time = 1;
 }	

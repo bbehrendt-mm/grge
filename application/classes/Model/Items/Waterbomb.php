@@ -18,8 +18,6 @@ class Model_Items_Waterbomb extends Model_Combat_Weapons_Throwable implements In
 	protected static $aoe = true;
 	protected static $friendly_fire = false;
 	protected static $energy = 1;
-
-	//public static $reload_time = 1;
 	
 	public function interaction_fillfrom($id) {
 		/** @global Model_Player $player */

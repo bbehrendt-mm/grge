@@ -22,7 +22,6 @@ class Model_Items_Oldrifle extends Model_Combat_Weapons_Ammo implements Interfac
 	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SHOT_AMMO;
 
 	protected static $accuracy_downscale = 0.5;
-	//public static $reload_time = 3;
 	
 	public function drop_dead() {
 		return null;

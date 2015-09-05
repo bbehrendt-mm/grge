@@ -18,5 +18,6 @@ class Model_Items_Knife extends Model_Combat_Weapons_Close implements Interface_
 
 	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SLASH;
 
-	//public static $reload_time = 0;
+	// INI, ATK, DEF, ACC
+	protected static $effects = [1,0,0,0];
 }	

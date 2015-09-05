@@ -579,7 +579,7 @@
                     if (modedata.locked && modedata.requirements.length) {
                         content.append($('<span />').addClass('separator')).append($('<div />').addClass('center').text(<?=__j('Erforderlich zum Freischalten')?>));
                         $.each(modedata.requirements, function(kr,vr) {
-                            content.append($('<div />').addClass('row')
+                            content.append(Ω.row()
                                     .append($('<div />').addClass('cell rw-6 padded right b').text(vr.name))
                                     .append($('<div />').addClass('cell rw-6 padded').append($('<div />').addClass('point').addClass(vr.unlocked ? 'success' : 'failure').text(vr.text)))
                             );
@@ -608,7 +608,7 @@
                 if (jobdata.locked && jobdata.requirements.length) {
                     content.append($('<span />').addClass('separator')).append($('<div />').addClass('center').text(<?=__j('Erforderlich zum Freischalten')?>));
                     $.each(jobdata.requirements, function(kr,vr) {
-                        content.append($('<div />').addClass('row')
+                        content.append(Ω.row()
                                 .append($('<div />').addClass('cell rw-6 padded right b').text(vr.name))
                                 .append($('<div />').addClass('cell rw-6 padded').append($('<div />').addClass('point').addClass(vr.unlocked ? 'success' : 'failure').text(vr.text)))
                         );
@@ -617,17 +617,17 @@
                 if (!jobdata.locked && (jobdata.level > 1 || jobdata.next_level != null)) {
                     content
                         .append($('<span />').addClass('separator')).append($('<div />').addClass('center').text(<?=__j('Level-Informationen')?>))
-                        .append($('<div />').addClass('row')
+                        .append(Ω.row()
                             .append($('<div />').addClass('cell rw-6 padded right b').text(<?=__j('Aktuelles Level')?>))
                             .append($('<div />').addClass('cell rw-6 padded').text(jobdata.level))
-                        ).append($('<div />').addClass('row')
+                        ).append(Ω.row()
                             .append($('<div />').addClass('cell rw-6 padded right b').text(<?=__j('Seelenpunkte')?>))
                             .append($('<div />').addClass('cell rw-6 padded').text(jobdata.points))
                         );
 
                     if (!jobdata.next_level)
                         content.append($('<div />').addClass('b center').text(<?=__j('Maximales Level erreicht!')?>));
-                    else content.append($('<div />').addClass('row')
+                    else content.append(Ω.row()
                             .append($('<div />').addClass('cell rw-6 padded right b').text(<?=__j('Nächstes Level')?>))
                             .append($('<div />').addClass('cell rw-6 padded').append($('<div />').addClass('soulpointbar').append($('<div />').css('width', (100 * jobdata.points/jobdata.next_level) + '%'))).append($('<div />').addClass('center').text(jobdata.points + ' / ' + jobdata.next_level)))
                     );

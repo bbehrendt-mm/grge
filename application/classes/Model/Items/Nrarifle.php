@@ -21,5 +21,7 @@ class Model_Items_Nrarifle extends Model_Combat_Weapons_Ammo implements Interfac
 	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SHOT_AMMO;
 
 	protected static $accuracy_downscale = 0.75;
-	//public static $reload_time = 0;
+
+	// INI, ATK, DEF, ACC
+	protected static $effects = [4,0,0,0];
 }	

@@ -20,5 +20,6 @@ class Model_Items_Batgunsnp extends Model_Combat_Weapons_Ammo implements Interfa
 
 	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SHOT_BAT;
 
-	//public static $reload_time = 15;
+	// INI, ATK, DEF, ACC
+	protected static $effects = [-5,0,0,0];
 }	

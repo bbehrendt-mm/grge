@@ -17,7 +17,9 @@ class Model_Items_Miniknife extends Model_Combat_Weapons_Close implements Interf
     protected static $max_range = 0.5;
 
 	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SLASH;
-	//public static $reload_time = 0;
+
+	// INI, ATK, DEF, ACC
+	protected static $effects = [2,0,0,0];
 	
 	public function drop($silent = false) {
 		/** @global Model_Player $player */

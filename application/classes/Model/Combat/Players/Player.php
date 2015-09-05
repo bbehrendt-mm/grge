@@ -35,8 +35,8 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
         return $ret;
     }
 
-    protected function damage($damage, $from = null) {
-        parent::damage($damage, $from);
+    protected function damage($damage, $from = null, $armor_damage = null) {
+        parent::damage($damage, $from, $armor_damage);
 
         $this->player->stats_modify([Model_Player::MP_STAT_HEALTH, -$damage]);
     }

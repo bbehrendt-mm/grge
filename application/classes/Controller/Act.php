@@ -225,6 +225,29 @@ class Controller_Act extends Controller_Game {
         $item->set_label($text);
     }
 
+    private function inventory_equip($id, $action) {
+        /**
+         * @global Model_Game $game
+         * @global Model_Player $player
+         */
+        global $game, $player;
+        /** @var Model_Items_Abstract_Equipable $item */
+        $item = $game->uin()->get($id, 'Model_Items_Abstract_Equipable');
+        if (!$item || !$player->inventory()->has($item->uin())) return;
+
+        switch ($action) {
+            case 'equip':
+                $item->equip($player);
+                break;
+            case 'unequip':
+                $item->unequip();
+                break;
+            case 'equip_primary':
+                if ($item->allows_primary() && $item->is_equipped())
+                    $item->equip_primary();
+        }
+    }
+
     public function japi_inventory() {
         /**
          * @global $game Model_Game
@@ -250,7 +273,7 @@ class Controller_Act extends Controller_Game {
         if (!$p->location()) return;
 
         //Check params
-        if (!in_array($action, ($p->id() != $player->id()) ? ['take'] : ['take','drop','fill','defill','spill','mix','pilldrop','pilltake','belt','label']))
+        if (!in_array($action, ($p->id() != $player->id()) ? ['take'] : ['take','drop','fill','defill','spill','mix','pilldrop','pilltake','belt','label','equip','unequip','equip_primary']))
             return;
 
         $lost = false;
@@ -278,6 +301,8 @@ class Controller_Act extends Controller_Game {
             $this->inventory_belt($items[0],$this->request->post('addr'),(int)$this->request->post('count'));
         elseif ($action == 'label')
             $this->inventory_label($items[0],$this->request->post('text'));
+        elseif (in_array($action, ['equip','unequip','equip_primary']))
+            $this->inventory_equip($items[0], $action);
 
         //Message
         if ($lost) $player->log()->add('Die Aktion konnte nicht vollständig ausgeführt werden, da eines oder mehrere der ausgewählten Gegenstände nicht länger in deiner Reichweite sind.');

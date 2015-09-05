@@ -18,6 +18,9 @@ class Model_Items_Plasmagun extends Model_Combat_Weapons_Ammo implements Interfa
 	protected static $use_fixed_accuracy = true;
 	protected static $aoe = true;
 
+	// INI, ATK, DEF, ACC
+	protected static $effects = [20,0,0,0];
+
 	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SHOT_ENERGY;
 
 	protected $used = false;
@@ -35,8 +38,5 @@ class Model_Items_Plasmagun extends Model_Combat_Weapons_Ammo implements Interfa
 		parent::unregister();
 		$this->used = false;
 	}
-
-
-
 
 }	

@@ -18,5 +18,4 @@ class Model_Items_Batc extends Model_Combat_Weapons_Close implements Interface_S
 	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_PUNCH;
 
 	protected static $durabillity = 0.4;
-	//public static $reload_time = 1;
 }	

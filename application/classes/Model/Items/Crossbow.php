@@ -20,5 +20,6 @@ class Model_Items_Crossbow extends Model_Combat_Weapons_Ammo implements Interfac
 	protected static $use_fixed_accuracy = false;
 	protected static $aoe = false;
 
-	//public static $reload_time = 3;
+	// INI, ATK, DEF, ACC
+	protected static $effects = [-1,0,0,0];
 }	

@@ -11,10 +11,11 @@ class Model_Items_Shield3 extends Model_Items_Abstract_Armor {
 	
 	protected static $weight = 65;
 
+    // INI, ATK, DEF, ACC
+    protected static $effects = [-10,0,12,0];
+
     protected static $equipment_type = Model_Items_Abstract_Equipable::MIAE_ARMOR_SHIELD;
 
     protected $protection = 100;
-    protected static $damage_reduction = 2;
-    protected static $damage_blocking = 0.75;
     protected static $destroyed = null;
 }	

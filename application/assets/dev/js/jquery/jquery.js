@@ -98,6 +98,14 @@
         }
     })();
 
+    $.fn.qtt = function(d, f) {
+        $(this).attr('title','-').qtip(game.render.html.qtip.ingame(d, {
+            render: function (event, api) {
+                f.call($(this).find('.qtip-content').empty().get(0), event, api);
+            }
+        }));
+    };
+
     //IE FIXES
     if (window.navigator.userAgent.toUpperCase().indexOf('MSIE') >= 0 || window.navigator.userAgent.toUpperCase().indexOf('TRIDENT') >= 0) {
 

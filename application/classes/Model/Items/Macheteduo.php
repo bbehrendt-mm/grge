@@ -18,5 +18,6 @@ class Model_Items_Macheteduo extends Model_Combat_Weapons_Close implements Inter
 
 	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SLASH_MULTI;
 
-	//public static $reload_time = 0;
+	// INI, ATK, DEF, ACC
+	protected static $effects = [4,0,4,0];
 }	

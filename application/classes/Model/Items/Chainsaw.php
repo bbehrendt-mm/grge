@@ -24,8 +24,6 @@ class Model_Items_Chainsaw extends Model_Combat_Weapons_Fillable implements Inte
 	protected static $friendly_fire = false;
 	public static $ammo_icon = 'items/gas';
 
-	//public static $energy_cost = 5;
-
     protected function hid() {
         return parent::hid()
             ->add_action('Tank befüllen', Model_Action::factory()

@@ -118,7 +118,7 @@
         $.each(list, function(k,v) {
             var key_list;
             target.append(
-                $('<div />').addClass('row')
+                Ω.row()
                     .append($('<div />').addClass('cell rw-1').append(
                         $('<label />').append($('<input type="checkbox" name="selection[]" />').val(v.uid).data('sel', v.uid))
                     ))
@@ -174,13 +174,13 @@
 
                     pp.append($('<h3 />').text(v.name + ' via ' + provider));
                     pp.append(
-                        $('<div />').addClass('row')
-                            .append($('<div />').addClass('cell rw-2').text('Remote ID'))
-                            .append($('<div />').addClass('cell rw-10').text(data[0]))
-                            .append($('<div />').addClass('cell rw-2').text('Variant 1'))
-                            .append($('<div />').addClass('cell rw-10').text(data[1] ? data[1] : '-').css('word-wrap','break-word'))
-                            .append($('<div />').addClass('cell rw-2').text('Variant 2'))
-                            .append($('<div />').addClass('cell rw-10').text(data[2] ? data[2] : '-').css('word-wrap','break-word'))
+                        Ω.row()
+                            .append(Ω.cell(false, 2).text('Remote ID'))
+                            .append(Ω.cell(false, 10).text(data[0]))
+                            .append(Ω.cell(false, 2).text('Variant 1'))
+                            .append(Ω.cell(false, 10).text(data[1] ? data[1] : '-').css('word-wrap','break-word'))
+                            .append(Ω.cell(false, 2).text('Variant 2'))
+                            .append(Ω.cell(false, 10).text(data[2] ? data[2] : '-').css('word-wrap','break-word'))
                     )
 
                 }))

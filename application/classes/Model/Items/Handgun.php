@@ -21,5 +21,7 @@ class Model_Items_Handgun extends Model_Combat_Weapons_Ammo implements Interface
 	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SHOT_AMMO;
 
 	protected static $accuracy_downscale = 0.5;
-	//public static $reload_time = 1;
+
+	// INI, ATK, DEF, ACC
+	protected static $effects = [1,0,0,0];
 }	

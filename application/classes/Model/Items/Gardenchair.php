@@ -17,5 +17,7 @@ class Model_Items_Gardenchair extends Model_Items_Abstract_Chair implements Inte
 	protected static $max_range = 1;
 
 	protected static $durabillity = 0.6;
-	//public static $reload_time = 1;
+
+	// INI, ATK, DEF, ACC
+	protected static $effects = [-3,0,0,0];
 }	

@@ -225,6 +225,23 @@ class Model_Combat_Scene {
 
     /**
      * @param Model_Combat_Actor $combatant
+     * @param Model_Items_Abstract_Armor $armor
+     */
+    public function break_armor($combatant, $armor) {
+        $this->log_data[] = [
+            static::MCS_EV_BREAK,
+
+            $combatant->id(),
+            [
+                $armor->name(),
+                $armor->icon(),
+            ]
+
+        ];
+    }
+
+    /**
+     * @param Model_Combat_Actor $combatant
      * @param array|null $ai_atk
      * @param array|null $ai_swc
      * @param array|null $ai_mov

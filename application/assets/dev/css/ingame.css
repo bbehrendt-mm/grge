@@ -38,12 +38,11 @@
     cursor: pointer;
 }
 
-.inventory ul li:not(.remote):not(.control):hover {
+.inventory ul li:not(.remote):not(.control):hover, .inventory div.item.hover:hover {
     background: rgba(0,0,0,0.1);
 }
 
-
-.inventory ul li:not(.remote):not(.control).equipped:hover {
+.inventory ul li:not(.remote):not(.control).equipped:hover, .inventory div.item.equipped:hover {
     background: #5182db;
 }
 
@@ -70,7 +69,7 @@
     background: #c60054;
 }
 
-.inventory ul li.equipped {
+.inventory ul li.equipped, .inventory div.item.equipped {
     background: #56a1ff;
 }
 

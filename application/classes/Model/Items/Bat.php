@@ -18,7 +18,6 @@ class Model_Items_Bat extends Model_Combat_Weapons_Close implements Interface_St
     protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_PUNCH;
 
 	protected static $durabillity = 0.8;
-	//public static $reload_time = 1;
 	
 	public function mixchem($chemval) {
         $this->consume();

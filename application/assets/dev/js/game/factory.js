@@ -1,0 +1,41 @@
+goog.provide('factory');
+
+Ω = function() {};
+
+Ω.row = function(classes) {
+    return $('<div />').addClass('row').addClass(classes ? classes : '');
+};
+
+Ω.cell = function(pad, rw, ro, classes) {
+    var tmp = $('<div />').addClass('cell');
+    if (rw === undefined) rw = 12;
+    if (ro === undefined) ro = 0;
+    if (pad) tmp.addClass('padded');
+
+    if (typeof rw == 'object') {
+        if (rw.desktop != undefined) tmp.addClass('rw-' + rw.desktop);
+        if (rw.lg != undefined) tmp.addClass('rw-lg-' + rw.lg);
+        if (rw.md != undefined) tmp.addClass('rw-md-' + rw.md);
+        if (rw.sm != undefined) tmp.addClass('rw-sm-' + rw.sm);
+    } else tmp.addClass('rw-' + rw);
+
+    if (typeof ro == 'object') {
+        if (ro.desktop != undefined) tmp.addClass('ro-' + ro.desktop);
+        if (ro.lg != undefined) tmp.addClass('ro-lg-' + ro.lg);
+        if (ro.md != undefined) tmp.addClass('ro-md-' + ro.md);
+        if (ro.sm != undefined) tmp.addClass('ro-sm-' + ro.sm);
+    } else tmp.addClass('ro-' + ro);
+
+    return tmp.addClass(classes ? classes : '');
+};
+
+Ω.n = function(node, classes, content) {
+    var tmp = $('<' + node + ' />').addClass(classes ? classes : '');
+    if (!content) return tmp;
+    else if (typeof content == 'string') return tmp.text(content);
+    else return tmp.append(content);
+};
+
+Ω.separator = function(n) {
+    return Ω.n(n ? n : 'span', 'separator');
+};

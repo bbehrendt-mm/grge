@@ -29,6 +29,4 @@ class Model_Items_Generic_Bauble extends Model_Combat_Weapons_Throwable implemen
     protected static $aoe = false;
     protected static $friendly_fire = false;
     protected static $energy = 0;
-
-    //public static $reload_time = 0;
 }	

@@ -20,5 +20,6 @@ class Model_Items_Splintergun2 extends Model_Combat_Weapons_Ammo implements Inte
 	protected static $use_fixed_accuracy = false;
 	protected static $aoe = true;
 
-	//public static $reload_time = 2;
+	// INI, ATK, DEF, ACC
+	protected static $effects = [-1,0,0,0];
 }	

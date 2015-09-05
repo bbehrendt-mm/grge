@@ -22,7 +22,9 @@ class Model_Items_Rifle extends Model_Combat_Weapons_Ammo implements Interface_S
 	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SHOT_AMMO;
 
 	protected static $accuracy_downscale = 0.75;
-	//public static $reload_time = 0;
+
+	// INI, ATK, DEF, ACC
+	protected static $effects = [8,0,0,0];
 
 	
 	public function drop_dead() {

@@ -4,6 +4,26 @@ class Tool_Scripts
 {
 
     /**
+     * @param number $t
+     * @param Model_Player|null $p
+     */
+    public static function rebuild_primary_equipment($t, $p = null) {
+        /** @global Model_Game $game */
+        global $game;
+
+        if (!$p)
+            foreach ($game->players() as $player)
+                static::rebuild_primary_equipment($t, $player);
+        else {
+            $items = $p->get_equipment($t);
+            if (!count($items) || !$items[0]->allows_primary()) return;
+
+            if (!$p->get_equipment($t, true))
+                $items[0]->equip_primary($p);
+        }
+    }
+
+    /**
      * Counts available items
      * @param string $classname Restrict items to a specific class and its descendants
      * @param bool $active_player Include active players inventory

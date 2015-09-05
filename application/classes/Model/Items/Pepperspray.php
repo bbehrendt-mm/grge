@@ -18,7 +18,8 @@ class Model_Items_Pepperspray extends Model_Combat_Weapons_Close implements Inte
 
 	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_PUNCH;
 
-    //public static $reload_time = 1;
+	// INI, ATK, DEF, ACC
+	protected static $effects = [2,0,1,0];
 	
 	public function drop($silent = false) {
 		/** @global Model_Player $player */

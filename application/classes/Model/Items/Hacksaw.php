@@ -16,6 +16,4 @@ class Model_Items_Hacksaw extends Model_Combat_Weapons_Close implements Interfac
 	protected static $max_range = 0.5;
 
 	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SLASH;
-
-	//public static $reload_time = 0;
 }	

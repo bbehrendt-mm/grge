@@ -16,6 +16,8 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
     const MCW_ANIMATION_SHOT_BOLT = 11;
     const MCW_ANIMATION_SHOT_SPLINTER = 12;
 
+    protected static $equipment_type = Model_Items_Abstract_Equipable::MIAE_WEAPON;
+
     protected static $allow_multi_equip = true;
     protected static $allow_primary_equip = true;
 
@@ -182,10 +184,10 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
      * @param int $accuracy
      * @param int $atk
      * @param int $res
-     * @return bool|number
+     * @return number[]
      */
     public function calculate_damage(Model_Combat_Actor $me, $opponent, $multiply = 1, $accuracy = 1, $atk = 1, $res = 1) {
-        if (!$this->usable()) return false;
+        if (!$this->usable()) return [0,0];
 
         $accuracy = $this->get_accuracy($opponent->distance_from($me), $accuracy);
         if ($accuracy <= 0)
@@ -198,10 +200,10 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
                 if (mt_rand()/mt_getrandmax() > $accuracy) $actual_multiply--;
         }
 
-        $raw = ($actual_multiply <= 0 ? 0 : mt_rand($this->damage()[0] * $actual_multiply, $this->damage()[1] * $actual_multiply)) * (1 + ($atk - $res));
+        $raw = ($actual_multiply <= 0 ? 0 : mt_rand($this->damage()[0] * $actual_multiply, $this->damage()[1] * $actual_multiply));
         if (!$this->aoe())
             $raw = min($raw, $opponent->strength()[0]);
-        return $raw;
+        return [$raw * (1 + ($atk - $res)), $raw * $atk];
     }
 
     /**

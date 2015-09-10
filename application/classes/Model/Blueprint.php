@@ -18,6 +18,8 @@ class Model_Blueprint {
     private $produces = [];
     private $requires = [];
     private $provides = [];
+    private $removes = [];
+
     private $energy = 0;
     private $decay = 0;
     private $decay_speed = 0;
@@ -306,6 +308,19 @@ class Model_Blueprint {
     }
 
     /**
+     * Adds a new provided ID. Note that the ID if this blueprint is always provided by default. If called without argument, it returns all IDs this blueprint provides
+     * @param string $rid Provided ID
+     * @return Model_Blueprint|string[]
+     */
+    public function remove($rid = null) {
+        if ($rid === null)
+            return $this->removes;
+        elseif (!in_array($rid, $this->removes))
+            $this->removes[] = $rid;
+        return $this;
+    }
+
+    /**
      * Adds an item to the producer stack
      * @param string|array $item Item class
      * @param int $count Item count
@@ -484,12 +499,20 @@ class Model_Blueprint {
         }
 
         if ($this->steps <= 0)
-            return [];
+            if ($this->remove()) {
+                $ret = [];
+                foreach ($this->remove() as $rem)
+                    $ret[] = "-{$rem}";
+            } else return [];
 
         $ret = $this->provide();
+
         if (($c = $this->completion($preconditions)) !== true)
             foreach ($ret as &$r)
                 $r = $r . ':' . ($c+1);
+
+        foreach ($this->remove() as $rem)
+            $ret[] = "-{$rem}";
 
         return $ret;
     }

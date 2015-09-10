@@ -103,16 +103,19 @@ class Model_Items_Virtual_Epic_Raven extends Model_Items_Abstract_Virtual {
 
                         $weight = 0;;
                         $final = [];
+                        $final_ids = [];
                         shuffle($items);
-                        foreach (array_merge($items,$location->inventory()->get()) as $item) {
+                        foreach (array_merge($items,$location->inventory()->get()) as $item)
                             /** @var Model_Items_Abstract_Item $item */
-                            if (count($final) >= $max_capacity || $weight >= $max_weight) break;
-                            if ($item->weight() + $weight < $max_weight && (Tool_System::instance_of($item, 'Model_Items_Abstract_Ammo') || $item->take(true))) {
-                                $final[] = $item;
-                                $weight += $item->weight();
-                                $location->inventory()->remove($item->uin());
+                            if (!in_array($item->uin(), $final_ids)) {
+                                if (count($final) >= $max_capacity || $weight >= $max_weight) break;
+                                if ($item->weight() + $weight < $max_weight && (Tool_System::instance_of($item, 'Model_Items_Abstract_Ammo') || $item->take(true))) {
+                                    $final[] = $item;
+                                    $final_ids[] = $item->uin();
+                                    $weight += $item->weight();
+                                    $location->inventory()->remove($item->uin());
+                                }
                             }
-                        }
 
                         $p->location()->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, 'Corax der Rabe'));
                         if (count($final)) {
@@ -127,8 +130,8 @@ class Model_Items_Virtual_Epic_Raven extends Model_Items_Abstract_Virtual {
                             $p->log()->add('Dein Rabe hat :location besucht und dort auch etwas gefunden, konnte es jedoch nicht hierher tragen...',[],[':location' => $location->name()]);
                         else $p->log()->add('Dein Rabe hat :location besucht, ist jedoch mit leeren Krallen zurückgekehrt...',[],[':location' => $location->name()]);
 
-                        $this->doped = false;
                         $this->rest = $game->duration() + ($this->doped ? 24 : 12);
+                        $this->doped = false;
                     })
                 )
                 , 'fetch');

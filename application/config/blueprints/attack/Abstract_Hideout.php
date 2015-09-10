@@ -10,6 +10,7 @@ return Model_Blueprints::factory()
             ->id('z:impale')
             ->requires('impaler')
             ->name('Falltür öffnen')
+            ->remove('impaler')
             ->energy(2)
             ->zombies(false, function($z) {
                 return floor($z/2);

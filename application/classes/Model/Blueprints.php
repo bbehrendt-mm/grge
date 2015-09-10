@@ -218,7 +218,13 @@ class Model_Blueprints {
             $b = $this->blueprints[$id];
             $r = $b->modify($player, $preconditions)->execute($player, $preconditions);
             if (is_array($r))
-                $player->location()->add_upgrades($r);
+                foreach ($r as $prj) {
+                    if ($prj[0] == '-')
+                        $player->location()->remove_upgrades(substr($prj, 1));
+                    else
+                        $player->location()->add_upgrades($prj);
+                }
+
             return $r;
         }
     }
@@ -240,7 +246,12 @@ class Model_Blueprints {
         else $r = [$id];
 
         if (is_array($r))
-            $location->add_upgrades($r);
+            foreach ($r as $prj) {
+                if ($prj[0] == '-')
+                    $location->remove_upgrades(substr($prj, 1));
+                else
+                    $location->add_upgrades($prj);
+            }
         return $r;
     }
 }

@@ -16,8 +16,20 @@ class Controller_Ranking extends Controller {
 
         $data = $base_query->order_by('points', 'DESC')->order_by('ticks', 'DESC')->execute()->as_array();
         $raw_count = count($data);
-        array_unshift($data, true);
-        return array_slice($data, $offset === null ? 1 : (1 + $offset), $count, true);
+
+        $p = -1; $skip = 0;
+        foreach ($data as $pos => &$entry) {
+            if ($entry['points'] == $p)
+                $skip++;
+            else {
+                $skip = 0;
+                $p = $entry['points'];
+            }
+
+            $entry['pos'] = ($pos + 1) - $skip;
+        }
+
+        return array_slice($data, $offset === null ? 0 : $offset, $count, true);
     }
 
     private function get_ranking_data_mp(&$raw_count, $season = null, $mode = null, $offset = null, $count = null) {
@@ -28,19 +40,32 @@ class Controller_Ranking extends Controller {
 
         $data = $base_query->order_by('ranking_mp.points', 'DESC')->execute()->as_array();
 
-        $ranks = Array();
+        $ranks = [];
         foreach ($data as $line) {
             $adr = "{$line['season']}-{$line['gameid']}";
             if (!isset($ranks[$adr]))
-                $ranks[$adr] = array();
+                $ranks[$adr] = [];
 
             $ranks[$adr][] = $line;
         }
         $ranks = array_values($ranks);
 
         $raw_count = count($ranks);
-        array_unshift($ranks, true);
-        return array_slice($ranks, $offset === null ? 1 : (1 + $offset), $count, true);
+
+        $p = -1; $skip = 0;
+        foreach ($ranks as $pos => &$r_line)
+            foreach ($r_line as &$entry) {
+                if ($entry['points'] == $p)
+                    $skip++;
+                else {
+                    $skip = 0;
+                    $p = $entry['points'];
+                }
+
+                $entry['pos'] = ($pos + 1) - $skip;
+            }
+
+        return array_slice($ranks, $offset === null ? 0 : $offset, $count, true);
     }
 
     private function convert_data($lists, $is_mp = false) {
@@ -147,18 +172,40 @@ class Controller_Ranking extends Controller {
         $cache_m = [];
 
         // Single Player
+        $p = []; $skip = [];
         foreach ($this->get_ranking_data_sp($r,$season) as $entry) {
             $s = "m{$entry['board']}_f{$entry['flow']}";
             if (!isset($cache[$s])) $cache[$s] = [];
-            $entry['pos'] = count($cache[$s]) + 1;
+            if (!isset($p[$s])) $p[$s] = -1;
+            if (!isset($skip[$s])) $skip[$s] = 0;
+
+            if ($entry['points'] == $p[$s])
+                $skip[$s]++;
+            else {
+                $skip[$s] = 0;
+                $p[$s] = $entry['points'];
+            }
+
+            $entry['pos'] = count($cache[$s]) + 1 - $skip[$s];
             $cache[$s][] = $entry;
         }
 
         // Multi Player
+        $p = []; $skip = [];
         foreach ($this->get_ranking_data_mp($r,$season) as $entry) {
             $s = "m{$entry[0]['board']}";
             if (!isset($cache_m[$s])) $cache_m[$s] = [];
-            $entry[0]['pos'] = count($cache_m[$s]) + 1;
+            if (!isset($p[$s])) $p[$s] = -1;
+            if (!isset($skip[$s])) $skip[$s] = 0;
+
+            if ($entry[0]['points'] == $p[$s])
+                $skip[$s]++;
+            else {
+                $skip[$s] = 0;
+                $p[$s] = $entry[0]['points'];
+            }
+
+            $entry[0]['pos'] = count($cache_m[$s]) + 1 - $skip[$s];
             $cache_m[$s][] = $entry;
         }
 
@@ -207,7 +254,7 @@ class Controller_Ranking extends Controller {
         if (!$query || strlen($query) < 3) return;
 
         $this->render([
-            'users' => DB::select(['uid','id'],'name')->from('users')->where('name','LIKE',"%{$query}%")->execute()->as_array()
+            'users' => DB::select(['uid','id'],'name','avatar')->from('users')->where('name','LIKE',"%{$query}%")->execute()->as_array()
         ]);
     }
 
@@ -233,21 +280,31 @@ class Controller_Ranking extends Controller {
         usort($lists, function($a,$b) {return $b['value'] - $a['value'];});
 
         $user_pos = [];
-        foreach ($lists as $k => $entry)
+        $p = -1; $skip = 0;
+        foreach ($lists as $k => &$entry) {
             if ($entry['uid'] == $user->uid()) {
                 $lists[$k]['mark'] = true;
                 $user_pos = $entry;
                 $user_pos['pos'] = $k+1;
             }
 
-        array_unshift($lists, true);
+            if ($entry['value'] == $p)
+                $skip++;
+            else {
+                $p = $entry['value'];
+                $skip = 0;
+            }
+
+            $entry['pos'] = ($k + 1) - $skip;
+        }
+
         $this->render([
             'games' => $num_entries,
             'user' => $user_pos,
             'ranking' => array_map(function($v) {
                 unset($v['aid']);
                 return $v;
-            }, array_slice($lists, 1 + $offset, $length, true))
+            }, array_slice($lists, $offset, $length, true))
         ]);
     }
 
@@ -437,6 +494,7 @@ class Controller_Ranking extends Controller {
         $krank = Model_User::group_karma($kpoints);
 
         $apoints = 0;
+
         foreach ($achievements as &$achievement) {
             $achievement = [
                 'id' => $achievement['aid'],
@@ -448,6 +506,47 @@ class Controller_Ranking extends Controller {
             ];
             $apoints += $achievement['count'] * $achievement['points'];
         }
+
+        $mentor = Model_Euser::mentor_id($uid);
+        if ($mentor)
+            $mentor_data = [
+                'name' => Model_Euser::name_by_id($mentor),
+                'avatar' => Model_Euser::avatar_by_id($mentor),
+                'uid' => $mentor
+            ];
+        else $mentor_data = $mentor;
+
+        $pupils = Model_Euser::apprentice_id($uid);
+        $pupils_data = array_map(function($auid) {
+            return [
+                'name' => Model_Euser::name_by_id($auid),
+                'avatar' => Model_Euser::avatar_by_id($auid),
+                'uid' => $auid
+            ];
+        }, $pupils);
+
+        if ($uid == $user->uid())
+            $mcash = ($mentor || $pupils) ? [
+                'mentor' => [
+                    'overall' => Model_Euser::get_mentor_braincoins($mentor, $uid),
+                    'harvest' => 0
+                ],
+                'overall' => Model_Euser::get_mentor_braincoins($uid),
+                'harvest' => Model_Euser::get_mentor_braincoins($uid, null, false)
+            ] : false;
+        elseif ($mentor == $user->uid())
+            $mcash = [
+                'mentor' => true,
+                'overall' => Model_Euser::get_mentor_braincoins($user->uid(), $uid),
+                'harvest' => Model_Euser::get_mentor_braincoins($user->uid(), $uid, false)
+            ];
+        elseif (in_array($user->uid(), $pupils))
+            $mcash = [
+                'mentor' => false,
+                'overall' => Model_Euser::get_mentor_braincoins($uid, $user->uid()),
+                'harvest' => 0
+            ];
+        else $mcash = false;
 
         $this->add_widget(View::factory('pages/soul')
             ->set('season', Kohana::$config->load('server.season'))
@@ -466,6 +565,11 @@ class Controller_Ranking extends Controller {
                 'mode' => array_map(function($a) {return ['name' => Tool_Gamemodes::get_board_by_id($a['board']), 'points' => $a['points']];}, DB::select('board', [DB::expr('SUM(points)'), 'points'])->from('ranking')->where('uid','=',$uid)->where('season', '>=', 0)->group_by('board','uid')->order_by('board', 'ASC')->execute()->as_array()),
                 'job' => array_map(function($a) {return ['name' => Tool_Gamemodes::get_job_by_id($a['job']), 'points' => $a['points']];}, DB::select('job', [DB::expr('SUM(points)'), 'points'])->from('ranking')->where('uid','=',$uid)->where('season', '>=', 0)->group_by('job','uid')->order_by('job', 'ASC')->execute()->as_array())
             ])
+            ->set('mentor', $mentor_data)
+            ->set('pupils', $pupils_data)
+            ->set('cashout', $mcash)
+            ->set('mentor_ref', $uid == $user->uid() ? Model_Euser::get_mentoring_ref($uid) : false)
+            ->set('allow_mentor', Model_Euser::check_mentor($user->uid(), $uid))
 
             ->render()
         );

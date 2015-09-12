@@ -15,9 +15,38 @@ class Controller_Lobby extends Controller {
         $this->add_menu('logout');
         $this->add_widget(View::factory('pages/main')
             ->set('ingame', (bool)$user->get_current_game())
+            ->set('avatar', Model_Euser::avatar_by_id($user->uid()))
+            ->set('name', $user->name())
+            ->set('mentor', Model_Euser::get_mentoring_ref($user->uid()))
+            ->set('cashout', Model_Euser::get_mentor_braincoins($user->uid(), null, false))
+            ->set('pupils', count($user->get_apprentice_id()))
+            ->set('bc', Model_Euser::get_coins($user->uid()))
             ->render());
         $this->render();
     }
+
+    /**
+     * New user landing page
+     */
+    public function action_newuser() {
+        /**
+         * @global Model_EUser $user
+         */
+        global $user;
+
+        if ($user->soulpoints() > 0 || Model_Euser::mentor_id($user->uid()) !== null) {
+            $this->redirect(URL::site('lobby/main', 'http'));
+            return false;
+        }
+
+        $this->add_menu('logout');
+        $this->add_widget(View::factory('pages/newuser')
+            ->set('name', $user->name())
+            ->render());
+        return $this->render();
+    }
+
+
 
     private function get_feed($fid, $length, $offset) {
 

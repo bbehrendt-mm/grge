@@ -13,6 +13,11 @@
  * @var string $rank_karma
  * @var array $achievements
  * @var array $tables
+ * @var array $mentor
+ * @var array $pupils
+ * @var array|bool $cashout
+ * @var string|bool $mentor_ref
+ * @var bool $allow_mentor
  */
 ?>
 
@@ -49,6 +54,38 @@
         </div>
     </div>
 
+    <?php if ($own_soul) { ?>
+        <div class="row center">
+            <?php if ($mentor !== false) { ?>
+                <div class="cell rw-4 rw-md-6 rw-sm-12 padded">
+                    <b><?=__('Dein Mentor');?></b><br />
+                    <?php if ($mentor) { ?>
+                        <div data-redirect-uin="<?=$mentor['uid']?>" class="pointer framed mini cream inline-block"><img class="avatar mini" src="<?=$mentor['avatar'] ? $mentor['avatar'] : 'media/img/mugshot.png'?>" alt="<?=$mentor['name']?>" /></div>
+                        <br /><?=$mentor['name']?>
+                    <?php } else { ?>
+                        <p class="center"><?=__('Niemand');?></p>
+                    <?php } ?>
+                </div>
+            <?php } ?>
+
+            <div class="cell <?=($mentor===false) ? 'rw-8 ro-2 rw-lg-12 ro-lg-0' : 'rw-8 rw-md-6 rw-sm-12' ?> padded">
+                <b><?=__('Deine Schüler');?></b>
+                <?php if ($pupils) { ?>
+                    <div class="row left">
+                        <?php foreach ($pupils as $pupil) { ?>
+                            <div class="cell rw-4 rw-md-6 rw-sm-12 padded">
+                                <div data-redirect-uin="<?=$pupil['uid']?>" class="pointer framed mini cream inline-block"><img class="avatar mini tiny" src="<?=$pupil['avatar'] ? $pupil['avatar'] : 'media/img/mugshot.png'?>" alt="<?=$pupil['name']?>" /></div>
+                                <?=$pupil['name']?>
+                            </div>
+                        <?php } ?>
+                    </div>
+                <?php } else { ?>
+                    <p class="justify"><?=__('Du hast noch keine Schüler. Mach doch etwas Werbung in anderen Spielen, um ein paar Schüler zu gewinnen und dir BrainCoins zu verdienen.');?></p>
+                <?php } ?>
+            </div>
+        </div>
+    <?php } ?>
+
     <div class="row center">
         <?php foreach ($achievements as $achievement) { ?>
             <div data-aid="<?=$achievement['id']?>" class="pointer achievement achievement-<?=$achievement['class']?>">
@@ -57,7 +94,6 @@
             </div>
         <?php } ?>
     </div>
-
 </div>
 
 <div class="row">
@@ -73,6 +109,78 @@
         </div>
     </div>
 </div>
+
+<?php if ($cashout || $own_soul || $allow_mentor) { ?>
+    <div class="row">
+        <div class="cell rw-12 center">
+            <h2><?=__('Mentoren-Programm')?></h2>
+
+            <?php if ($own_soul) { ?>
+                <div class="row">
+                    <div class="cell rw-4 rw-sm-12 padded">
+                        <?=__('Mentoren-Referenznummer');?><br />
+                        <span style="font-size: 25px; font-weight: bold;"><?=$mentor_ref?></span><br /><br />
+                        <?=__('Gesamtverdienst');?><br />
+                        <span style="font-size: 20px;"><?=(int)$cashout['overall']?></span> <img src="media/icons/coin.gif" alt="BC" />
+
+                        <?php if ($cashout['harvest'] > 0) { ?>
+                            <div id="cashout_open">
+                                <br />
+                                <?=__('Offener Betrag');?><br />
+                                <div class="row">
+                                    <div class="cell rw-6 rw-md-12 padded center">
+                                        <span style="font-size: 20px; font-weight: bold"><?=$cashout['harvest']?></span> <img src="media/icons/coin.gif" alt="BC" />
+                                    </div>
+                                    <div class="cell rw-6 rw-md-12 padded center">
+                                        <div id="btn_cashout" class="btn btn-icon small">
+                                            <span class="btn-icon-inner"><i class="fa fa-money"></i></span>
+                                            <span class="btn-content"><?=__('Auszahlen');?></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
+                    </div>
+
+                    <div class="cell rw-8 rw-sm-12 padded">
+                        <div class="note">
+                            <?=__('Das Mentoren-Programm ist eine einfache Möglichkeit, ein paar zusätzliche BrainCoins zu verdienen. Wirb einfach ein paar neue Spieler, beispielsweise von Die Verdammten, und bitte sie, dich als ihren Mentor einzutragen. Neue Spieler werden direkt nach dem ersten Login nach ihrem Mentor gefragt.');?><br /><br />
+                            <?=__('Damit andere Spieler dich direkt nach ihrem ersten Login als Mentor eintragen können, benötigen sie deine Mentoren-Referenznummer. Neue Spieler können dich auch später noch als Mentor hinzufügen, indem sie deine Profilseite besuchen.');?><br /><br />
+                            <?=__('Als Mentor erhälst du von jedem deiner Schüler einen BrainCoin für je :num Seelenpunkte, die sie sich durch Spiele verdienen.', [':num' => round(1/Kohana::$config->load('balancing.mentor.sp_bc_factor'))]);?>
+                        </div>
+                    </div>
+                </div>
+            <?php } elseif ($cashout['mentor']) { ?>
+                <div class="row">
+                    <div class="cell rw-8 ro-2 rw-lg-10 ro-lg-1 rw-md-12 ro-md-0 padded justify">
+                        <?=__(':name ist dein Schüler. Seine Leistungen haben dir bisher :num BrainCoins eingebracht.', [':name' => $soul_owner, ':num' => $cashout['overall'] . ' <img src="media/icons/coin.gif" alt="BC" />']);?>
+                        <?php if ($cashout['harvest']) { ?>
+                            <?=__(':num davon hast du übrigens noch nicht eingesammelt...', [':num' => $cashout['harvest']]);?>
+                        <?php } ?>
+                    </div>
+                </div>
+            <?php } elseif ($cashout) { ?>
+                <div class="row">
+                    <div class="cell rw-8 ro-2 rw-lg-10 ro-lg-1 rw-md-12 ro-md-0 padded justify">
+                        <?=__(':name ist dein Mentor. Durch deine Leistungen hat er mittlerweile :num BrainCoins verdient.', [':name' => $soul_owner, ':num' => $cashout['overall'] . ' <img src="media/icons/coin.gif" alt="BC" />']);?>
+                    </div>
+                </div>
+            <?php } elseif ($allow_mentor) { ?>
+                <div class="row">
+                    <div class="cell rw-5 ro-1 rw-lg-6 ro-lg-0 padded justify">
+                        <div class="note"><?=__('Wenn :name dich für ZombVival geworben hat, kannst du dich bei ihm bedanken, indem du ihn zu deinem Mentor machst.', [':name' => $soul_owner]);?></div>
+                    </div>
+                    <div class="cell rw-5 rw-lg-6 padded justify">
+                        <div class="btn" id="assign_mentor"><?=__(':name zu meinem Mentor machen', [':name' => $soul_owner]);?></div>
+                    </div>
+                </div>
+            <?php } ?>
+
+
+        </div>
+    </div>
+
+<?php } ?>
 
 <?php if ($points_soul > 0) { ?>
     <div class="row">
@@ -133,6 +241,10 @@
 // ## JS COMPRESS BEGIN ## //
     $('#profile-settings').click(function() {
         game.network.load('account/settings');
+    });
+
+    $('[data-redirect-uin]').click(function() {
+        game.network.load('ranking/soul/' + $(this).attr('data-redirect-uin'));
     });
 
     <?php if ($points_soul > 0) { ?>
@@ -279,7 +391,11 @@
                 results.empty();
                 if (data.users) {
                     $.each(data.users, function(k,v) {
-                        results.append($('<li />').text(v.name).click(function() {
+                        results.append($('<li />').append(
+                            $('<div />').addClass('framed main mini inline-block').css('margin-right', 8).append(
+                                $('<img />').addClass('avatar tiny').attr('src', v.avatar ? v.avatar : 'media/img/mugshot.png')
+                            )
+                        ).append($('<span />').text(v.name)).click(function() {
                             game.network.load('ranking/soul/' + v.id);
                         }))
                     })
@@ -291,6 +407,39 @@
 
     $('#avatar').error(function() {
         $(this).attr('src', 'media/img/mugshot.png').off('error');
+    });
+
+    $('#btn_cashout').click(function() {
+        $(this).addClass('disabled').find('.fa').removeClass('fa-money').addClass('fa-spin fa-circle-o-notch');
+
+        var alias = $(this);
+        game.network.query('japi/account/cashout', {}, function(data) {
+            if (data.success) {
+                $('#cashout_open').slideUp();
+                game.render.html.notify('success',<?=__j('Herzlichen Glückwunsch! Die gesammelten BrainCoins wurden zu deinem Konto hinzugefügt.')?>);
+            } else {
+                alias.removeClass('disabled').find('.fa').removeClass('fa-spin fa-circle-o-notch').addClass('fa-money');
+                game.render.html.notify('error',<?=__j('Beim Abrufen deiner BrainCoins ist ein Fehler aufgetreten. Bitte versuche es später erneut!')?>);
+            }
+        })
+    });
+
+    $('#assign_mentor').click(function() {
+        if (!confirm(<?=__j('Diese Aktion kann nicht rückgängig gemacht werden, du solltest dir also besser sicher sein, dass du den richtigen Spieler ausgewählt hast! Weiter?')?>))
+            return;
+
+        var alias = $(this).addClass('disabled');
+
+        game.network.query('japi/account/mentorize', {uid: <?=(int)$soul_id?>}, function(data) {
+            if (data.success) {
+                game.network.load('ranking/soul/<?=$soul_id?>');
+                game.render.html.notify('success', <?=__j('Du hast einen neuen Mentor gewählt.')?>);
+            } else {
+                alias.removeClass('disabled');
+                game.render.html.notify('success', <?=__j('Oops, das hat nicht geklappt. Bitte melde diesen Fehler einem Administrator.')?>);
+            }
+        });
+
     });
 // ## JS COMPRESS END ## //
 </script>

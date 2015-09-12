@@ -108,6 +108,41 @@ class Controller_Account extends Controller {
         $this->render();
     }
 
+    public function japi_mentorize() {
+        /** @global Model_Euser $user */
+        global $user;
+        if (!$user) return $this->render(['success' => 0]);
+
+
+
+        $uid = $this->request->current()->post('uid');
+        if (!$uid && $this->request->current()->post('mrk'))
+            $uid = Model_Euser::get_uid_from_mentoring_ref($this->request->current()->post('mrk'));
+
+        if ($uid == -1)
+            return $this->render([
+                'success' => (int)$user->set_mentor_id(-1)
+            ]);
+
+
+        if (!$uid || !Model_Euser::check_mentor($user->uid(), $uid)) return $this->render(['success' => 0, 'a' => $uid]);
+        else return $this->render([
+            'success' => (int)$user->set_mentor_id($uid)
+        ]);
+    }
+
+    public function japi_cashout() {
+        /** @global Model_Euser $user */
+        global $user;
+        if (!$user) return $this->render(['success' => 0]);
+
+        $cash = Model_Euser::get_mentor_braincoins($user->uid(), null, false);
+        if ($cash && Model_Euser::reset_mentor_braincoins($user->uid(), null)) {
+            Model_Euser::award_coins($user->uid(), $cash);
+            return $this->render(['success' => 1]);
+        } else return $this->render(['success' => 0]);
+    }
+
     public function japi_qr() {
         sleep(5);
         $pin = trim($this->request->current()->post('key'));
@@ -244,6 +279,9 @@ class Controller_Account extends Controller {
      * @throws Kohana_Exception
      */
     public function japi_login($uid = null) {
+
+        $nw = 1;
+
         if ($uid == null) {
             //Get key
             $key = $this->request->current()->post('key');
@@ -266,7 +304,7 @@ class Controller_Account extends Controller {
                 default: return $this->error(grge\E_AUTH_INVALID_PROVIDER);
             }
 
-            if (!$authenticator->connectToLocal() || !$authenticator->is_ready())
+            if (!($nw = $authenticator->connectToLocal()) || !$authenticator->is_ready())
                 switch ($authenticator->getLastError()) {
                     case 'invalid_host': return $this->error(\grge\E_AUTH_INVALID_PROVIDER);
                     case 'connection_failed': return $this->error(\grge\E_AUTH_CONNECTION_FAILED);
@@ -316,7 +354,7 @@ class Controller_Account extends Controller {
             }
 
             $this->render([
-                'redirect' => 'lobby/main',
+                'redirect' => $nw === 2 ? 'lobby/newuser' : 'lobby/main',
                 'login' => [
                     'user' => $user->uid(),
                     'name' => $user->name(),

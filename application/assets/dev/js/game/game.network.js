@@ -18,7 +18,7 @@ game.network = {
 
         game.network.ai++;
         game.network.queries[ajax_id] = $.ajax(url, {
-            cache: false,
+            cache: true,
             type: 'POST',
             data: args,
             headers: send_headers,

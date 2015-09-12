@@ -25,12 +25,17 @@ abstract class Model_Auth_Legacy extends Model_Auth_Interface {
 
         $this->zvid = $target_id ? $target_id : static::lookup($this->rid);
 
-        if ($this->zvid <= 0) $this->zvid = Model_Euser::register($this->name,$this->avatar);
+        $created = false;
+
+        if ($this->zvid <= 0) {
+            $created = true;
+            $this->zvid = Model_Euser::register($this->name,$this->avatar);
+        }
         elseif (!Model_Euser::avatar_by_id($this->zvid) && $this->avatar) Model_Euser::user_update_avatar($this->zvid, $this->avatar);
 
         $this->ready = true;
         $this->link($this->sk);
-        return true;
+        return $created ? 2 : true;
     }
 
     private function login_remote($secret_key) {

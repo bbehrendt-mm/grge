@@ -8,5 +8,9 @@ return array(
     'shop' => array(
         'enabled' => true,
         'free_coins' => 100
+    ),
+    'mentor' => array(
+        'sp_threshold' => 100,
+        'sp_bc_factor' => 0.05,
     )
 );

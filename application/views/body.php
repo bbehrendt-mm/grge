@@ -95,8 +95,13 @@
             game.network.load(e.originalEvent.state.curl);
     });
 
-    $.getScript('web/core/?l=' + game.lang(), function() {
-        game.network.load('landing/redirect');
+    $.ajax({
+        url: 'web/core/?l=' + game.lang(),
+        dataType: "script",
+        cache: true,
+        success: function() {
+            game.network.load('landing/redirect');
+        }
     }).fail(function( jqxhr, settings, exception ) {
         $('#content').empty()
             .append($('<div />').addClass('center').text(exception.message));

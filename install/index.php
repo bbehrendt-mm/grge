@@ -54,6 +54,23 @@
                 if (!db($mysqli, file_get_contents('install/create.sql'))) return false;
                 line('Basic structure has been set up.');
 
+                line('Checking for old ranking data...');
+
+                if ($result = db($mysqli, 'DESCRIBE ___PREFIX___ranking;', false)) {
+
+                    $struct = [];
+                    while ($struct[] = $result->fetch_array());
+
+                    $struct = flat($struct);
+
+                    if (!in_array('harvested', $struct)) {
+                        line('HARVEST data missing. Creating...');
+                        if (!db($mysqli, 'ALTER TABLE ___PREFIX___ranking  ADD harvested BOOLEAN NOT NULL DEFAULT FALSE;')) return false;
+                        line('HARVEST data created.');
+                    }
+                } else return false;
+                line('Ranking data is up to date.');
+
                 line('Checking for old profile data...');
 
                 if ($result = db($mysqli, 'DESCRIBE ___PREFIX___users;', false)) {

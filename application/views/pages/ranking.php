@@ -113,6 +113,7 @@
             } else $('<span><?=__('Es wurden keine Spiele im Ranking gefunden, die deinen Suchkriterien entsprechen.')?></span>').appendTo('#ranking_target');
 
             $.each(data.ranking, function (p, elem) {
+                p = elem.pos;
                 var entry = $('<div class="row pointer"></div>');
                 if (elem.mark) entry.addClass('marked');
 

@@ -3,6 +3,7 @@
 class Controller_Web extends Controller {
 
     protected static $force_ajax = false;
+    protected static $override_cache_control = true;
 
     public function action_framework() {
         $js = ['jquery.min.js'];

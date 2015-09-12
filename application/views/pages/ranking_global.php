@@ -102,12 +102,12 @@
 
             $.each(data.ranking, function (p, elem) {
                 var entry = $('<div class="row"></div>');
-                var icon = get_icon(p);
+                var icon = get_icon(elem.pos);
 
                 if (elem.mark) entry.addClass('marked');
 
                 $('<div class="cell padded rw-2"></div>').html(icon).appendTo(entry);
-                $('<div class="cell padded rw-1"></div>').text(p).appendTo(entry);
+                $('<div class="cell padded rw-1"></div>').text(elem.pos).appendTo(entry);
                 $('<div class="cell padded rw-6"></div>').appendTo(entry).append($('<span class="inline-player"></span>').text(elem.name));
                 $('<div class="cell padded rw-3"></div>').text(elem.value).appendTo(entry);
 
@@ -128,7 +128,7 @@
                 }
             }
 
-            var max_offset = Math.floor(data.games / 20) * 20;
+            var max_offset = (Math.floor(data.games / 20) - (data.games % 20 ? 0 : 1)) * 20;
             var current_page = Math.floor(offset / 20);
 
             if (max_offset == 0)

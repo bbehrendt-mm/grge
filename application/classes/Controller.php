@@ -14,6 +14,8 @@ abstract class Controller extends Kohana_Controller {
     private $data = array();
     private $dumps = array();
 
+    protected static $allow_etag_cache = true;
+
     /**
      * Returns true when the current request was made using AJAX calls
      * @return bool
@@ -98,13 +100,28 @@ abstract class Controller extends Kohana_Controller {
         if (static::$force_login)
             $this->force_login();
 
-        //Avoid caching!
-        $this->response->headers("Cache-Control: no-cache, must-revalidate");
-        $this->response->headers("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
+        //Cache control
+        $this->response->headers(static::$allow_etag_cache ? 'Cache-Control: public, max-age=86400, must-revalidate' : 'Cache-Control: no-store, must-revalidate');
 
         if (!(in_array(strtolower($this->request->directory()),['admin']) || in_array(strtolower($this->request->controller()),['web','landing'])) && Tool_Events::maintenance()) {
             $this->request->action('noaction');
             if ($this->is_ajax_request()) $this->error(\grge\E_SERVER_LIMITED_MAINTENANCE);
+        }
+    }
+
+    public function after() {
+        if (static::$allow_etag_cache) {
+            $resource = $this->response->body();
+            $etag = md5($resource);
+            $not_modified = (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $etag);
+
+            if ($not_modified) {
+                header('HTTP/1.1 304 Not Modified');
+                exit;
+            } else {
+                header('Cache-Control: public, max-age=86400, must-revalidate');
+                header('ETag: ' . $etag);
+            }
         }
     }
 

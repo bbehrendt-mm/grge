@@ -47,6 +47,9 @@ iframe {border: 0 none white}
   border: 6px solid @zv-color-main-dark; box-shadow: 0 0 5px black, inset 0 0 5px black;border-radius: 5px; position: relative;
   &::after {position: absolute; top: 0; left: 0; height: 100%; width: 100%; content: " "; background: none; border: 1px solid rgba(0,0,0,0.3);}
   &.cream {border: 6px solid @zv-color-secondary;}
+  &.main {border: 6px solid @zv-color-main;}
+
+  &.mini {border-width: 2px}
 }
 
 .text-red {color: #913d40}
@@ -61,9 +64,10 @@ iframe {border: 0 none white}
 }
 
 img.avatar, img#avatar {
-  background: black;
-  max-width: 100px;
-  max-height: 100px;
+  background: black; max-width: 100px; max-height: 100px;
+  &.mini {max-width: 50px; max-height: 50px;}
+  &.tiny {max-width: 25px; max-height: 25px;}
+  &.mini.tiny {max-width: 16px; max-height: 16px;}
 }
 
 .text-stroke(@size, @color) {text-shadow: -@size -@size 0 @color, @size -@size 0 @color, -@size @size 0 @color, @size @size 0 @color}

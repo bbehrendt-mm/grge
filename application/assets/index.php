@@ -13,8 +13,6 @@ function typeWrangler(&$file, &$ext) {
     $base = $ext[1];
     $ext = $ext[2];
 
-
-
     if (!in_array($ext, ['css','js','jpg','bmp','gif','png','ico','webp','eot','svg','ttf','woff']))
         return false;
 
@@ -80,7 +78,22 @@ switch ($ext) {
         break;
 }
 
-header('Cache-Control: public, max-age=120');
+$last_modified = filemtime($f);
+$last_modified_gmt = gmdate('r', $last_modified);
+$etag = md5($last_modified . ':' . $f);
+
+$not_modified =
+    (isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) && $_SERVER['HTTP_IF_MODIFIED_SINCE'] == $last_modified_gmt) ||
+    (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $etag);
+
+if ($not_modified) {
+    header('HTTP/1.1 304 Not Modified');
+    exit();
+}
+
+header('Cache-Control: public, max-age=86400, must-revalidate');
+header('ETag: ' . $etag);
+header('Last-Modified: ' . $last_modified_gmt);
 header('Content-Length: ' . filesize($f));
 readfile($f);
 exit;

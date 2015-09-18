@@ -123,6 +123,7 @@
                                         $('<input>').val(v.label ? v.label : '').attr('type','text').attr('placeholder', <?=__j('Beschriften ...')?>).addClass('form_input').attr('autocomplete','off').on('keydown', function(e) {
                                             if (e.keyCode == 13) {
                                                 e.preventDefault();
+                                                api.hide();
                                                 core.command('act/inventory',{action: 'label', items: [v.uin], text: $(this).val()});
                                             }
                                         }))

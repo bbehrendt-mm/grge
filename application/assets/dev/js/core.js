@@ -6,7 +6,7 @@ core = {
     parts: {},
     snippets: {},
 
-    version: '2.0.6-2-0-1',
+    version: '2.0.7-0-0-1',
 
     last: {},
     plugins: {},
@@ -490,6 +490,7 @@ core = {
                                         $('<input>').val(v.label ? v.label : '').attr('type','text').attr('placeholder', "Beschriften ...").addClass('form_input').attr('autocomplete','off').on('keydown', function(e) {
                                             if (e.keyCode == 13) {
                                                 e.preventDefault();
+                                                api.hide();
                                                 core.command('act/inventory',{action: 'label', items: [v.uin], text: $(this).val()});
                                             }
                                         }))

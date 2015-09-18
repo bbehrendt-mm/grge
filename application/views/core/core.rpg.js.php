@@ -78,6 +78,7 @@
                                 .append(render_effect_list(elem.all, t))
                         });
                         break;
+                                                api.hide();
                 }
 
             bar_p.data('r', acc_m);

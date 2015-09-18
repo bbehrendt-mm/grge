@@ -5,6 +5,8 @@ class Controller_Web extends Controller {
     protected static $force_ajax = false;
     protected static $override_cache_control = true;
 
+    protected static $allow_etag_cache = true;
+
     public function action_framework() {
         $js = ['jquery.min.js'];
         $css = [];

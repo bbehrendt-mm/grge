@@ -14,7 +14,7 @@ abstract class Controller extends Kohana_Controller {
     private $data = array();
     private $dumps = array();
 
-    protected static $allow_etag_cache = true;
+    protected static $allow_etag_cache = false;
 
     /**
      * Returns true when the current request was made using AJAX calls

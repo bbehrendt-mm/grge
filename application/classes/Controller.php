@@ -101,7 +101,7 @@ abstract class Controller extends Kohana_Controller {
             $this->force_login();
 
         //Cache control
-        $this->response->headers(static::$allow_etag_cache ? 'Cache-Control: public, max-age=86400, must-revalidate' : 'Cache-Control: no-store, must-revalidate');
+        $this->response->headers(static::$allow_etag_cache ? '' : 'Cache-Control: no-store, must-revalidate');
 
         if (!(in_array(strtolower($this->request->directory()),['admin']) || in_array(strtolower($this->request->controller()),['web','landing'])) && Tool_Events::maintenance()) {
             $this->request->action('noaction');
@@ -119,7 +119,6 @@ abstract class Controller extends Kohana_Controller {
                 header('HTTP/1.1 304 Not Modified');
                 exit;
             } else {
-                header('Cache-Control: public, max-age=86400, must-revalidate');
                 header('ETag: ' . $etag);
             }
         }

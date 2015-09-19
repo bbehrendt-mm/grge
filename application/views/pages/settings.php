@@ -105,7 +105,7 @@
         var popup = core.popup.spawn({desktop: 424, sm: '100%'});
         var content, qr_area;
         popup.append(
-            Ω.row().append(
+            NF.row().append(
                 content = $('<div />').addClass('cell rw-12 padded')
             )
         );
@@ -113,9 +113,9 @@
         content
             .append($('<h2 />').addClass('center').text(<?=__j('Login via QR')?>))
             .append($('<div />').text(<?=__j('Scanne den folgenden QR-Code oder gib die darunter stehende URL auf deinem mobilen Gerät ein. Deine Login-Daten werden dadurch auf dem Gerät gespeichert und du kannst dich zukünftig ohne die Hilfe deines PCs einloggen.')?>))
-            .append(Ω.row().append(qr_area = $('<div />').addClass('cell rw-12 padded')))
+            .append(NF.row().append(qr_area = $('<div />').addClass('cell rw-12 padded')))
             .append($('<div />').addClass('note').text(<?=__j('Der QR-Code kann nur einmalig verwendet werden und ist für 5 Minuten gültig. Möchtest du mehrere Geräte verbinden, schließe dieses Popup und öffne es erneut, um einen neuen Code zu generieren.')?>))
-            .append(Ω.row().append($('<div />').addClass('cell rw-6 ro-6 rw-sm-12 ro-sm-0 padded').append($('<div />').addClass('btn').text(<?=__j('Schließen')?>).click(function() {popup.trigger('unpop')}))))
+            .append(NF.row().append($('<div />').addClass('cell rw-6 ro-6 rw-sm-12 ro-sm-0 padded').append($('<div />').addClass('btn').text(<?=__j('Schließen')?>).click(function() {popup.trigger('unpop')}))))
         ;
 
         qr_area.append($('<p />').addClass('center').append($('<i />').addClass('fa fa-spin fa-circle-o-notch')));
@@ -128,7 +128,7 @@
 
                 qr_area.empty().append(
                     $('<img />').on('load', function() {
-                        qr_area.append(Ω.row()
+                        qr_area.append(NF.row()
                                 .append($('<div />').addClass('cell rw-12 right padded').css({'font-size': 20})
                                     .append($('<span />').text('<?=$url?>m/'))
                                     .append($('<span />').text(data.pin).css({'font-size': 25, 'font-weight': 'bold'}))

@@ -36,6 +36,16 @@ class Controller_Act extends Controller_Game {
                     /** @var Model_Items_Abstract_Equipable $item */
                     if (!$player->get_equipment($item->get_equipment_type()))
                         $item->equip($player);
+
+                    if (Tool_System::instance_of($item, 'Interface_Static'))
+
+                        foreach ($player->inventory()->get(get_class($item)) as $ep)
+                            /** @var Model_Items_Abstract_Equipable $ep */
+                            if ($ep->is_equipped()) {
+                                $item->equip($player);
+                                break;
+                            }
+
                 }
             }
     }
@@ -238,9 +248,19 @@ class Controller_Act extends Controller_Game {
         switch ($action) {
             case 'equip':
                 $item->equip($player);
+                if (Tool_System::instance_of($item, 'Interface_Static'))
+
+                    foreach ($player->inventory()->get(get_class($item)) as $ep)
+                        /** @var Model_Items_Abstract_Equipable $ep */
+                        $ep->equip($player);
                 break;
             case 'unequip':
                 $item->unequip();
+                if (Tool_System::instance_of($item, 'Interface_Static'))
+
+                    foreach ($player->inventory()->get(get_class($item)) as $ep)
+                        /** @var Model_Items_Abstract_Equipable $ep */
+                        $ep->unequip();
                 break;
             case 'equip_primary':
                 if ($item->allows_primary() && $item->is_equipped())

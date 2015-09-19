@@ -31,6 +31,7 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
     protected static $durabillity = 1;
 
     protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_NONE;
+    protected $ignore_equip = false;
 
     protected $broken = false;
 
@@ -41,8 +42,12 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
         return $this->registered_user && Tool_System::instance_of($this->registered_user, 'Model_Player');
     }
 
+    public function ignore_equip() {
+        $this->ignore_equip = true;
+    }
+
     public function usable() {
-        return $this->is_equipped();
+        return $this->is_equipped() || $this->ignore_equip;
     }
 
     public function get_animation() {

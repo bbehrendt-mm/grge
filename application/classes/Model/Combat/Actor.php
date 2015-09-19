@@ -158,7 +158,7 @@ class Model_Combat_Actor {
             if (!$weapon->uin()) $game->uin()->set($weapon);
             if (!$this->current_weapon || $weapon->is_equipped_primary())
                 $this->current_weapon = $weapon;
-            $this->weapons[] = $weapon;
+            $this->weapons[$weapon->uin()] = $weapon;
         }
 
         return $this;
@@ -305,20 +305,13 @@ class Model_Combat_Actor {
         return sqrt(pow($this->pos_x - $combatant->pos_x, 2) + pow($this->pos_y - $combatant->pos_y, 2));
     }
 
-    /**
-     * @param $data
-     * @return null|array
-     */
-    private function get_recommendation($data) {
-        if (!$data) return null;
-        usort($data, function($a,$b) {return $b[0] - $a[0];});
-        return $data[0];
-    }
-
     protected function rounds_to_use(Model_Combat_Weapon $weapon, $foe) {
         if (is_array($foe))
             return min(array_map(function($a) use ($weapon) {return $this->rounds_to_use($weapon, $a);}, $foe));
         else {
+            if ($weapon->in_range($this, $foe))
+                return 0;
+
             $min = $weapon->min_range();
             $max = $weapon->max_range();
             $dist = $this->distance_from($foe);
@@ -367,26 +360,33 @@ class Model_Combat_Actor {
      * @return array|null
      */
     protected function get_weapon_priority($friends, $foes) {
-        $tmp = [];
+        $tmp = null;
+
+        $current_rounds = ($this->current_weapon && $this->current_weapon->usable()) ? $this->rounds_to_use($this->current_weapon, $foes) : -1;
+
         foreach ($this->weapons as $weapon) {
-            $res = $this->get_attack_priority($friends, [$weapon->closest_foe($this, $foes, true)], $weapon, true);
+            $foe = $weapon->closest_foe($this, $foes, true);
+            $res = $this->get_attack_priority($friends, [$foe], $weapon, true);
             if (!$res) continue;
-            if (!$weapon->in_range($this, $res[1])) {
-                $rounds = $this->rounds_to_use($weapon, $res[1]);
-                $factor = $rounds <= 0 ? 1 : (($this->current_weapon ? max(1,$this->rounds_to_use($this->current_weapon, $res[1])) : $rounds)/$rounds);
-                $res[0] = ($rounds > 1 && $this->distance_from($res[1]) < $weapon->min_range()) ? 0 : (($res[0] * $this->ai_brashness)/$factor);
+            if (!$weapon->in_range($this, $foe)) {
+
+                if ($current_rounds == 0) continue;
+                $rounds = $this->rounds_to_use($weapon, $foe);
+                if ($rounds > 1 && $this->distance_from($foe) < $weapon->min_range()) continue;
+
+                $factor = max(0, min(1,$current_rounds < 0 ? 1 : ($current_rounds/$rounds)));
+                $res[0] = ($rounds > 1 && $this->distance_from($foe) < $weapon->min_range()) ? 0 : ($res[0] * $this->ai_brashness * $factor);
             }
 
-            $tmp[] = $res;
+            if (!$tmp || $tmp[0] < $res[0])
+                $tmp = $res;
         }
 
-
-        $rec = $this->get_recommendation($tmp);
         /** @noinspection PhpUndefinedMethodInspection */
-        if (!$rec || ($this->current_weapon && $this->current_weapon->uin() == $rec[2]->uin())) return null;
+        if (!$tmp || ($this->current_weapon && $this->current_weapon->usable() && ($this->current_weapon->uin() == $tmp[2]->uin() || get_class($this->current_weapon) == get_class($tmp[2])))) return null;
         else return [
-            $rec[0] * $this->ai_volatile,
-            $rec[2]
+            $tmp[0] * $this->ai_volatile,
+            $tmp[2]
         ];
     }
 

@@ -89,7 +89,7 @@ core.popup = {
     genericFilterLoader: function(callback, typeFilterData) {
         var popup = core.popup.spawn({desktop: 500, md: '100%'},{desktop: 300, md: '100%'});
 
-        var frame = Ω.row().appendTo(
+        var frame = NF.row().appendTo(
             $('<div />').css({
                 position: 'absolute',
                 width: '100%',
@@ -100,7 +100,7 @@ core.popup = {
             }).appendTo(popup)
         );
 
-        var bottom = Ω.row().css({
+        var bottom = NF.row().css({
             position: 'absolute',
             width: '100%',
             left: 0,
@@ -119,10 +119,10 @@ core.popup = {
 
         var typefilters, classfilters, class_cell;
         frame.append(
-            Ω.row().append(
-                $('<div />').addClass('cell rw-12 padded').append($('<div />').addClass('flatbox').append($('<h3 />').text(<?=__j('Status')?>)).append(typefilters = Ω.row()))
+            NF.row().append(
+                $('<div />').addClass('cell rw-12 padded').append($('<div />').addClass('flatbox').append($('<h3 />').text(<?=__j('Status')?>)).append(typefilters = NF.row()))
             ).append(
-                class_cell = $('<div />').addClass('cell rw-12 padded').append($('<div />').addClass('flatbox').append($('<h3 />').text(<?=__j('Kategorie')?>)).append(classfilters = Ω.row()))
+                class_cell = $('<div />').addClass('cell rw-12 padded').append($('<div />').addClass('flatbox').append($('<h3 />').text(<?=__j('Kategorie')?>)).append(classfilters = NF.row()))
             )
         );
 
@@ -168,7 +168,7 @@ core.popup = {
         if (!frame || !filters || !close) {
             popup.empty();
 
-            frame = Ω.row().appendTo(
+            frame = NF.row().appendTo(
                 $('<div />').css({
                     position: 'absolute',
                     width: '100%',
@@ -210,7 +210,7 @@ core.popup = {
                     });
             });
 
-            Ω.row().append(
+            NF.row().append(
                 filters = $('<div />').addClass('cell rw-11')
             ).append(
                 close = $('<div />').addClass('cell rw-1 right')
@@ -333,7 +333,7 @@ core.popup = {
                 popup.trigger('unpop');
             })).appendTo(popup);
 
-            var bottom = Ω.row().css({
+            var bottom = NF.row().css({
                 height: bsize,
                 'margin-top': dy
             }).appendTo(popup);
@@ -551,7 +551,7 @@ core.popup = {
                         render: function() {
                             var content, button;
                             tooltip(content = $(this).find('.qtip-content').empty().stop().fadeIn(100), true);
-                            content.append(Ω.row().append($('<div />').addClass('cell rw-12 padded').append(
+                            content.append(NF.row().append($('<div />').addClass('cell rw-12 padded').append(
                                 $('<div />').addClass('btn btn-zv btn-zv-skinned-context').addClass(((data.read_only && !v.skip_ro) || v.energy > data.radius || k == data.current) ? 'disabled' : '').text(<?=__j('Los gehts!')?>).click(function() {
                                     icon.trigger('click', [true]);
                                 })
@@ -596,7 +596,7 @@ core.popup = {
                         esc_popup.append($('<h2 />').addClass('center').text(v.name));
 
                         esc_popup.append(
-                            Ω.row().append(title = $('<div />').addClass('cell rw-12 padded').text(<?=__j('Wenn du dich alleine fürchtest, kannst du andere Spieler bitten, dich zu begleiten. Oder noch besser, schick sie am besten direkt vor, nicht dass noch jemand (z.B. du) verletzt wird!')?>))
+                            NF.row().append(title = $('<div />').addClass('cell rw-12 padded').text(<?=__j('Wenn du dich alleine fürchtest, kannst du andere Spieler bitten, dich zu begleiten. Oder noch besser, schick sie am besten direkt vor, nicht dass noch jemand (z.B. du) verletzt wird!')?>))
                         );
 
                         var check_row = $('<form />').addClass('row').appendTo(esc_popup);
@@ -629,7 +629,7 @@ core.popup = {
 
                         } else title.text(<?=__j('Bist du sicher, dass du diesen Ort betreten möchtest? Er ist weit weg, und riecht auch bestimmt nicht sehr gut...')?>);
 
-                        esc_popup.append(Ω.row()
+                        esc_popup.append(NF.row()
                                 .append($('<div />').addClass('cell rw-8 rw-sm-12 padded').append(
                                     $('<div />').addClass('btn').text(<?=__j('Los gehts!')?>).click(function() {
 

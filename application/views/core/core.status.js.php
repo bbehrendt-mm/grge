@@ -208,7 +208,7 @@
                             var content = $(this).find('.qtip-content').empty().append(
                                 $('<b />').addClass('header').text(num_decode_title(v))
                             ).append(
-                                Ω.row().append(make_bar(v,bars[v].value,bars[v].buffs, true))
+                                NF.row().append(make_bar(v,bars[v].value,bars[v].buffs, true))
                             ).append(
                                 $('<div />').addClass('note center').text(game.i18n(<?=__j('Aktueller Wert: :num')?>, {':num': Math.round(100*bars[v].value)/100}))
                             ).append(
@@ -262,9 +262,9 @@
         var main, inventory, clock, bars;
 
         target.empty().append(
-            main = Ω.row().append(
+            main = NF.row().append(
                 $('<div />').addClass('cell rw-9').append(
-                    bars = Ω.row()
+                    bars = NF.row()
                 )
             ).append(
                 clock = $('<div />').addClass('cell rw-3 padded')

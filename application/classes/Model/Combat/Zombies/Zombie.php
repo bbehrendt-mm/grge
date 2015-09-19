@@ -6,8 +6,10 @@ abstract class Model_Combat_Zombies_Zombie extends Model_Combat_Actor {
     protected $pseudoplayer;
 
     public function __construct() {
+        /** @global Model_Player $player */
+        global $player;
         parent::__construct();
-        $this->pseudoplayer = new Model_Pseudoplayer([Model_Player::MP_STAT_ENERGY => 50]);
+        $this->pseudoplayer = new Model_Pseudoplayer([Model_Player::MP_STAT_ENERGY => 50], $player->location_class());
     }
 
     /**
@@ -15,8 +17,11 @@ abstract class Model_Combat_Zombies_Zombie extends Model_Combat_Actor {
      * @return Model_Combat_Actor
      */
     public function add_weapon($weapon) {
-        if (!is_array($weapon))
+        if (!is_array($weapon)) {
             $weapon->register($this->pseudoplayer);
+            $weapon->ignore_equip();
+        }
+
 
         return parent::add_weapon($weapon);
     }

@@ -2,14 +2,14 @@
     var render_others = function(data, target, messages) {
         target.append($('<h3 />').text(<?=__j('Andere Spieler')?>));
 
-        var row = Ω.row().appendTo(target);
+        var row = NF.row().appendTo(target);
         var found = false;
         $.each(data, function(id, player) {
             found = true;
             var box = $('<div />').addClass('playerbox' + (player.escort ? ' escort' : '') + (player.local ? '' : ' unknown')).appendTo($('<div />').addClass('cell rw-4 rw-lg-6 rw-md-4 rw-sm-12 padded').appendTo(row));
 
             box.append($('<b />').text(player.name));
-            var bars = Ω.row().appendTo(box);
+            var bars = NF.row().appendTo(box);
 
             box.attr('title', '-').qtip(game.render.html.qtip.ingame('bottom', {
                 render: function(event,api) {
@@ -18,24 +18,24 @@
                     var table;
                     content.append(
                         $('<b />').addClass('header').text(player.name)
-                    ).append(table = Ω.row());
+                    ).append(table = NF.row());
 
                     var date = new Date(player.last_seen * 1000);
 
-                    Ω.row()
+                    NF.row()
                         .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Beruf')?>))
                         .append($('<div />').addClass('cell rw-6 padded left').text(player.job))
                         .appendTo(content);
 
-                    Ω.row()
+                    NF.row()
                         .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Spielgeschwindigkeit')?>))
                         .append($('<div />').addClass('cell rw-6 padded left').text(core.snippets.timestr(player.speed)))
                         .appendTo(content);
-                    Ω.row()
+                    NF.row()
                         .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Letzte Aktivität')?>))
                         .append($('<div />').addClass('cell rw-6 padded left').text(date.toLocaleString()))
                         .appendTo(content);
-                    Ω.row()
+                    NF.row()
                         .append($('<div />').addClass('cell rw-6 padded b right').text(player.joke[0]))
                         .append($('<div />').addClass('cell rw-6 padded left').text(player.joke[1]))
                         .appendTo(content);
@@ -49,7 +49,7 @@
         if (!found) row.append($('<div />').addClass('cell rw-12 padded center').text(<?=__j('Hier scheint niemand zu sein ...')?>));
 
         row.append($('<div />').addClass('cell rw-12 padded').append(
-            Ω.row()
+            NF.row()
                 .append($('<div />').addClass('cell rw-4 rw-md-5 rw-sm-12 padded').append($('<div />').addClass('btn btn-zv').text(<?=__j('Post')?>).prepend(messages ? $('<img />').attr('src','media/icons/new.png') : false).click(function() {
                     game.network.load('game/pm');
                 })))

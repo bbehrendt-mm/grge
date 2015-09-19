@@ -4,19 +4,19 @@
         var in_w, in_d, in_h, in_m;
 
         core.popup.spawn(300, 'auto')
-            .append(Ω.row()
+            .append(NF.row()
                 .append($('<div />').addClass('cell rw-6 padded').text('Weeks (W)'))
                 .append($('<div />').addClass('cell rw-6 padded').append(in_w = $('<input />').addClass('form_input').attr('type','text').val('0')))
-        ).append(Ω.row()
+        ).append(NF.row()
                 .append($('<div />').addClass('cell rw-6 padded').text('Days (D)'))
                 .append($('<div />').addClass('cell rw-6 padded').append(in_d = $('<input />').addClass('form_input').attr('type','text').val('0')))
-        ).append(Ω.row()
+        ).append(NF.row()
                 .append($('<div />').addClass('cell rw-6 padded').text('Hours (H)'))
                 .append($('<div />').addClass('cell rw-6 padded').append(in_h = $('<input />').addClass('form_input').attr('type','text').val('0')))
-        ).append(Ω.row()
+        ).append(NF.row()
                 .append($('<div />').addClass('cell rw-6 padded').text('Minutes (M)'))
                 .append($('<div />').addClass('cell rw-6 padded').append(in_m = $('<input />').addClass('form_input').attr('type','text').val('5')))
-                .append(Ω.row()
+                .append(NF.row()
                     .append($('<div />').addClass('cell rw-6 padded').append($('<div />').addClass('btn').text('OK').click(function() {
                         var v_w = parseInt(in_w.val()),v_d = parseInt(in_d.val()),v_h = parseInt(in_h.val()),v_m = parseInt(in_m.val());
 
@@ -142,7 +142,7 @@
         var maker = function() {
             var select;
 
-            var div = $('<div />').attr('data-obj','maker').addClass('flatbox').append(Ω.row()
+            var div = $('<div />').attr('data-obj','maker').addClass('flatbox').append(NF.row()
                     .append($('<div />').addClass('cell rw-6 rw-sm-12 padded').append(select = $('<select />')))
                     .append($('<div />').addClass('cell rw-2 rw-sm-5 padded').append($('<input />').addClass('form_input').attr({placeholder: '#', name: 'acb_num', type: 'number'})))
                     .append($('<div />').addClass('cell rw-2 rw-sm-5 padded').append($('<input />').addClass('form_input').attr({placeholder: 'Distance', name: 'acb_dist', type: 'number'})))
@@ -157,13 +157,13 @@
             });
 
             select.selectric();
-            return Ω.row().append($('<div />').addClass('cell rw-12 padded').append(div));
+            return NF.row().append($('<div />').addClass('cell rw-12 padded').append(div));
         };
 
         var popup = core.popup.spawn(550, 'auto');
         var t;
 
-        popup.append(Ω.row()
+        popup.append(NF.row()
             .append(t = $('<div />').addClass('cell rw-12 padded'))
             .append($('<div />').addClass('cell rw-6 padded').append($('<div />').addClass('btn').text('OK').click(function() {
                     var cfg = [];
@@ -213,7 +213,7 @@
 
     core.parts.admin.controls = function(target) {
         target.empty();
-        var ret = Ω.row().appendTo(target);
+        var ret = NF.row().appendTo(target);
 
         $('<div />').addClass('btn small').text('Create item...').click(function() {
             core.parts.admin.loader(target,'admin/japi/gamepanel/list_items', ui_show_items)

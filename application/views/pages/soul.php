@@ -378,7 +378,7 @@
                 )
             )
         ).append(
-            Ω.row().append($('<div />').addClass('cell rw-12 padded').append($('<span />').addClass('small').text(<?=__j('Gib den Namen eines Spielers ein, dessen Seele du suchen möchtest.')?>)))
+            NF.row().append($('<div />').addClass('cell rw-12 padded').append($('<span />').addClass('small').text(<?=__j('Gib den Namen eines Spielers ein, dessen Seele du suchen möchtest.')?>)))
         ).append($('<div />').css({position: 'absolute', top: 80, left: 0, bottom: 0, right: 0, overflow: 'auto'}).append(results = $('<ul />').addClass('soul-listing')));
 
         input.on('keyup',function() {

@@ -4,7 +4,6 @@ class Model_Items_Godsword extends Model_Combat_Weapons_Close implements Interfa
 
 	protected static $static_info = Array(
 			'name' => 'Göttliches Schwert',
-			//TODO: Icon erzeugen!
             'icon' => 'machete_god',
 			'description' => '',
 			'category' => Model_Items_Abstract_Item::MIAI_CAT_FIGHT,

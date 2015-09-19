@@ -107,7 +107,7 @@
                             if (v.max == v.count) content.append($('<div />').text(<?=__j('Hier muss im Moment nichts repariert werden.')?>));
                             else if (data.speed == 0) {
                                 var row;
-                                content.append(row = Ω.row());
+                                content.append(row = NF.row());
                                 $.each([1,2,5,10], function(k,i) {
                                     row.append($('<div />').addClass('cell rw-3 smallpad').append(
                                         $('<div />').addClass('btn').append($('<i />').addClass('fa fa-wrench')).append($('<span />').text(' x ' + i)).click(function() {
@@ -208,7 +208,7 @@
 
                     content
                         .append($('<span />').text(<?=__j('Ein hübsch eingerichtetes Versteck reduziert die Chance, dass plötzlich ein RTL-Messie-Kamerateam (oder Tine Wittler) vor deiner Tür steht. So fühlst du dich direkt viel wohler.')?>))
-                        .append(Ω.row()
+                        .append(NF.row()
                             .append($('<div />').addClass('cell rw-9 padded right').text(<?=__j('Grundwert')?>))
                             .append($('<div />').addClass('cell rw-1 padded center').append($('<img />').attr('src', 'media/icons/deco_' + (data.deco[0] < 0 ? 'negative' : (data.deco[0] > 0 ? 'positive' : 'neutral')) + '.gif')))
                             .append($('<div />').addClass('cell rw-2 padded').text(data.deco[0]))
@@ -340,7 +340,7 @@
 
     var garden = function(data, target) {
         var content;
-        target.append($('<div />').addClass('cell rw-12 widget epic padded').append(content = Ω.row().append($('<h3 />').text(<?=__j('Kleines Gewächshaus')?>))));
+        target.append($('<div />').addClass('cell rw-12 widget epic padded').append(content = NF.row().append($('<h3 />').text(<?=__j('Kleines Gewächshaus')?>))));
 
         if (!data.planted)
             content.append($('<div />').addClass('cell rw-12 padded').append($('<b />').text(<?=__j('Das Beet ist momentan leer.')?>)));
@@ -403,7 +403,7 @@
 
     var raven = function(data, target) {
         var content;
-        target.append($('<div />').addClass('cell rw-12 widget epic padded').append(content = Ω.row().append($('<h3 />').text(<?=__j('Raben-Bootcamp')?>))));
+        target.append($('<div />').addClass('cell rw-12 widget epic padded').append(content = NF.row().append($('<h3 />').text(<?=__j('Raben-Bootcamp')?>))));
 
         if (data.time)
             content.append($('<div />').addClass('cell rw-12 padded').append($('<b />').text(game.i18n(<?=__j('Der Rabe muss sich noch :time ausruhen.')?>,{':time': data.time}))));
@@ -425,7 +425,7 @@
             popup.append(
                 $('<h2 />').addClass('center').text(<?=__j('Zielgebiet auswählen')?>)
             ).append(
-                Ω.row().append($('<div />').addClass('cell rw-12 padded').append(
+                NF.row().append($('<div />').addClass('cell rw-12 padded').append(
                     $('<div />').addClass('note').text(game.i18n(<?=__j('Hier kannst du auswählen, wie weit der Rabe fliegen soll, um eine Ruine auszuwählen. Für eine größere Distanz musst du selbstverständlich mehr Futter springen lassen. Der Rabe wird zufällig eine Ruine (die kein Aussichtspunkt und auch kein Versteck ist) in dem gewählten Bereich auswählen und dort dreimal nach Gegenständen suchen. Gefundene Gegenstände wird er zu dir bringen, zumindest so lange er sie tragen kann. Falls er nichts findet oder die gefundenen Gegenstände ihn nicht auslasten, wird er Gegenstände vom Boden aufheben. Der Rabe kann nicht mehr als :capacity Gegenstände mit einem Gesamtgewicht von :size tragen!')?>,{':size': data.size, ':capacity': data.capacity}))
                 )).append($('<div />').addClass('cell rw-12 padded').append(
                     select = $('<select />').addClass('form_input').change(function() {
@@ -436,11 +436,11 @@
                         .append($('<option />').attr('value',2).text(game.i18n(<?=__j('Arsch der Welt (Distanz über :m1)')?>,{':m1': 51, ':m2': 900})))
                 ))
             ).append(
-                Ω.row()
+                NF.row()
                     .append($('<div />').addClass('cell rw-10 rw-sm-12 padded').text(<?=__j('Für die gewählte Distanz benötigt der Rabe folgendes Futter:')?>))
                     .append(food = $('<div />').addClass('cell rw-2 rw-sm-12 padded'))
             ).append(
-                Ω.row()
+                NF.row()
                     .append($('<div />').addClass('cell rw-6 rw-sm-12 padded').append($('<div />').addClass('btn').text(<?=__j('Abbrechen')?>).click(function() {
                         popup.trigger('unpop');
                     })))
@@ -457,9 +457,9 @@
 
     var fence = function(data, target) {
         var content;
-        target.append($('<div />').addClass('cell rw-12 widget epic padded').append(content = Ω.row().append($('<h3 />').text(<?=__j('Laserzaun')?>))));
+        target.append($('<div />').addClass('cell rw-12 widget epic padded').append(content = NF.row().append($('<h3 />').text(<?=__j('Laserzaun')?>))));
 
-        content.append(Ω.row()
+        content.append(NF.row()
                 .append($('<div />').addClass('cell rw-4 rw-sm-12 padded center').append($('<img />').attr('src', 'media/icons/defense.gif')).append($('<span />').addClass('margin-left').text(data.status ? '∞' : '0')).attr('title', <?=__j('Die durch den Laserzaun zusätzlich generierte Verteidigung wird auf die Hausverteidigung addiert.')?>).qtip(game.render.html.qtip.ingame('top')))
                 .append($('<div />').addClass('cell rw-4 rw-sm-12 padded center').append($('<img />').attr('src', 'media/icons/items/energy.gif')).append($('<span />').addClass('margin-left').text(data.energy)).attr('title', <?=__j('Zeigt die Menge an Energie an, die deinem Versteck momentan zur Verfügung steht. Geht die Energie zur Neige, solltest du mit dem Generator neue erzeugen.')?>).qtip(game.render.html.qtip.ingame('top')))
                 .append($('<div />').addClass('cell rw-4 rw-sm-12 padded center').append($('<img />').attr('src', 'media/icons/clock.gif')).append($('<span />').addClass('margin-left').text(data.time ? data.time : '---')).attr('title', <?=__j('Dies ist die Zeit, die der Laserzaun mit deinem aktuellen Energievorrat noch laufen kann, bevor er wegen Energiemangel automatisch heruntergefahren wird.')?>).qtip(game.render.html.qtip.ingame('top')))
@@ -547,21 +547,21 @@
             $('<div />').addClass('rw-12 padded hide-desktop hide-sm').text(data.meta.desc)
         ).append(
             $('<div />').addClass('cell padded').addClass(data.lomap ? 'rw-4 rw-lg-6 rw-md-12' : 'rw-6 rw-lg-12').append(
-                zradar = Ω.row()
+                zradar = NF.row()
             ).append(
-                lradar = data.discovery !== false ? Ω.row() : null
+                lradar = data.discovery !== false ? NF.row() : null
             ).append(
-                hideout = data.hideout ? Ω.row() : null
+                hideout = data.hideout ? NF.row() : null
             ).append(
-                spc_colosseum = data.colosseum ? Ω.row() : null
+                spc_colosseum = data.colosseum ? NF.row() : null
             ).append(
-                spc_scout = data.scouting ? Ω.row() : null
+                spc_scout = data.scouting ? NF.row() : null
             ).append(
-                spc_roadtrip = data.caravan ? Ω.row() : null
+                spc_roadtrip = data.caravan ? NF.row() : null
             ).append(
-                actions = Ω.row()
+                actions = NF.row()
             ).append(
-                epic = (data.epc_garden || data.epc_raven || data.epc_fence) ? Ω.row() : null
+                epic = (data.epc_garden || data.epc_raven || data.epc_fence) ? NF.row() : null
             )
         ).append(
             desc = $('<div />').addClass('cell padded justify').addClass(data.lomap ? 'rw-4' : 'rw-6').append($('<span />').addClass('hide-mobile').text(data.meta.desc))
@@ -606,7 +606,7 @@
                         esc_popup.append($('<h2 />').addClass('center').text(<?=__j('Ort wechseln')?>));
 
                         esc_popup.append(
-                            Ω.row().append(title = $('<div />').addClass('cell rw-12 padded').text(<?=__j('Du kannst von diesem Ort aus einen anderen Teil der Spielwelt betreten.')?>))
+                            NF.row().append(title = $('<div />').addClass('cell rw-12 padded').text(<?=__j('Du kannst von diesem Ort aus einen anderen Teil der Spielwelt betreten.')?>))
                         );
 
                         var destination = $('<select />');
@@ -615,9 +615,9 @@
                         });
 
                         esc_popup.append(
-                            Ω.row().append($('<div />').addClass('cell rw-12 padded').append($('<b />').text(<?=__j("Wo soll's denn hingehen?")?>)))
+                            NF.row().append($('<div />').addClass('cell rw-12 padded').append($('<b />').text(<?=__j("Wo soll's denn hingehen?")?>)))
                         ).append(
-                            Ω.row().append($('<div />').addClass('cell rw-12 padded').append(destination))
+                            NF.row().append($('<div />').addClass('cell rw-12 padded').append(destination))
                         );
                         destination.selectric();
 
@@ -653,7 +653,7 @@
                             }
                         }
 
-                        esc_popup.append(Ω.row()
+                        esc_popup.append(NF.row()
                                 .append($('<div />').addClass('cell rw-8 padded').append(
                                     $('<div />').addClass('btn').text(<?=__j('Los gehts!')?>).addClass(data.radar.zombies > 0 ? 'disabled' : '').click(function() {
 

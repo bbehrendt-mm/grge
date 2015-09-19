@@ -22,13 +22,17 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
      */
     public static function create_linked_actor($p) {
 
+        $unarmed = new Model_Items_Fist();
+        $unarmed->equip($p);
+        $unarmed->register($p);
+
         /** @noinspection PhpUndefinedMethodInspection */
         $ret = static::factory()
             ->player($p)
             ->name($p->name(), Model_Combat_Actor::MCA_TYPE_PLAYER)
             ->strength($p->stats_get(Model_Player::MP_STAT_HEALTH), 100, 1)
             ->register_inventory($p->inventory())
-            ->add_weapon(new Model_Items_Fist());
+            ->add_weapon($unarmed);
 
         //TODO Implement stats
 

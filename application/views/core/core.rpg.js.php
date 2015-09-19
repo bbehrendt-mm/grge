@@ -1,7 +1,7 @@
 (function() {
 
     var render_effect_list = function(f, mark) {
-        var tmp = Ω.row('center');
+        var tmp = NF.row('center');
         $.each(f, function(id, v) {
             switch (parseInt(id)) {
                 case NaN: break;
@@ -11,7 +11,7 @@
                 case <?=Model_Items_Abstract_Equipable::MIAE_STAT_ACC?>: id = 'acc'; break;
             }
 
-            tmp.append(Ω.cell(true, 3).append($('<div />').addClass('rpg stat').addClass(v > 0 ? 'plus' : (v == 0 ? 'null' : 'minus')).addClass(id).text(v).css('opacity', (!mark || mark == id) ? 1 : 0.75)));
+            tmp.append(NF.cell(true, 3).append($('<div />').addClass('rpg stat').addClass(v > 0 ? 'plus' : (v == 0 ? 'null' : 'minus')).addClass(id).text(v).css('opacity', (!mark || mark == id) ? 1 : 0.75)));
         });
         return tmp;
     };
@@ -21,11 +21,11 @@
         var max_m = 0;
 
         $.each(data, function(id, block) {
-            var row = Ω.row().appendTo(target);
+            var row = NF.row().appendTo(target);
 
             var bar_p;
             var bar_m;
-            row.append(Ω.cell(true, {desktop: 10, md: 8, sm: 6}).append($('<div />').addClass('rpg statbar').append(bar_p = $('<div />').addClass('rpg barcontainer plus')).append( bar_m = $('<div />').addClass('rpg barcontainer minus'))));
+            row.append(NF.cell(true, {desktop: 10, md: 8, sm: 6}).append($('<div />').addClass('rpg statbar').append(bar_p = $('<div />').addClass('rpg barcontainer plus')).append( bar_m = $('<div />').addClass('rpg barcontainer minus'))));
 
             var t = 'unk';
 
@@ -51,9 +51,9 @@
                     case 0:
                         b.qtt('top', function() {
                             $(this)
-                                .append(Ω.n('b','header',<?=__j('Menschlichkeit')?>))
-                                .append(Ω.n('p','',<?=__j('Als Mensch bist du den meisten Zombies körperlich zumindest ein wenig überlegen.')?>))
-                                .append(Ω.separator())
+                                .append(NF.n('b','header',<?=__j('Menschlichkeit')?>))
+                                .append(NF.n('p','',<?=__j('Als Mensch bist du den meisten Zombies körperlich zumindest ein wenig überlegen.')?>))
+                                .append(NF.separator())
                                 .append(render_effect_list(elem.all, t))
                         });
                         break;
@@ -63,18 +63,18 @@
                     case <?=Model_Items_Abstract_Equipable::MIAE_ARMOR_CAPE?>:
                         b.append($('<img />').attr('src','media/icons/' + elem.icon + '.gif')).qtt('top', function() {
                             $(this)
-                                .append(Ω.n('b','header',elem.name))
-                                .append(Ω.n('p','',<?=__j('Dieser Ausrüstungsgegenstand beeinflusst deine Kampfwerte. Lege ihn ab, um diese Effekte zu beenden.')?>))
-                                .append(Ω.separator())
+                                .append(NF.n('b','header',elem.name))
+                                .append(NF.n('p','',<?=__j('Dieser Ausrüstungsgegenstand beeinflusst deine Kampfwerte. Lege ihn ab, um diese Effekte zu beenden.')?>))
+                                .append(NF.separator())
                                 .append(render_effect_list(elem.all, t))
                         });
                         break;
                     case <?=Model_Items_Abstract_Equipable::MIAE_WEAPON?>:
                         b.append($('<img />').attr('src','media/icons/' + elem.icon + '.gif')).qtt('top', function() {
                             $(this)
-                                .append(Ω.n('b','header',elem.name))
-                                .append(Ω.n('p','',<?=__j('Diese Waffe beeinflusst deine Kampfwerte. Im Gegensatz zu Rüstungsgegenständen kommt dieser Einfluss jedoch nur zum Tragen, wenn die Waffe tatsächlich im Kampf verwendet wird.')?>))
-                                .append(Ω.separator())
+                                .append(NF.n('b','header',elem.name))
+                                .append(NF.n('p','',<?=__j('Diese Waffe beeinflusst deine Kampfwerte. Im Gegensatz zu Rüstungsgegenständen kommt dieser Einfluss jedoch nur zum Tragen, wenn die Waffe tatsächlich im Kampf verwendet wird.')?>))
+                                .append(NF.separator())
                                 .append(render_effect_list(elem.all, t))
                         });
                         break;
@@ -118,7 +118,7 @@
                 grid.append($('<div />').addClass(i%(max_m + max_p) < max_m ? 'st_pre' : (i%(max_m + max_p) >= max_m + 20 ? 'st_post' : '')).css('width', 100/(max_m + max_p) + '%'));
         });
 
-        target.append(Ω.row().append($($('<div />').addClass('cell rw-12 padded')).append(
+        target.append(NF.row().append($($('<div />').addClass('cell rw-12 padded')).append(
             $('<div />').addClass('note')
                 .text(<?=__j('Jeder deiner Kampfwerte reicht von 0 bis 20. Jede darüber oder darunter liegende Veränderung wird ignoriert. Denke daran, dass Gegenstände im Kampf zerstört werden können, wodurch ihre Effekte sofort entfernt werden.')?>)
                 .append($('<br />')).append($('<br />'))
@@ -145,24 +145,24 @@
         $.each(tmp, function(name, group) {
             var ul;
             target.append(
-                Ω.row()
-                    .append(Ω.n('b','',name))
-                    .append(Ω.row().append(ul = Ω.cell(true)))
+                NF.row()
+                    .append(NF.n('b','',name))
+                    .append(NF.row().append(ul = NF.cell(true)))
             );
 
             var eq; var rd;
 
-            var r = Ω.row().appendTo(ul);
+            var r = NF.row().appendTo(ul);
 
-            r.append(Ω.cell(true, 6, 0, 'flatbox').append(Ω.row()
-                    .append(Ω.n('b','sub',<?=__j('Ausgerüstet')?>))
-                    .append(eq = Ω.cell(true))
+            r.append(NF.cell(true, 6, 0, 'flatbox').append(NF.row()
+                    .append(NF.n('b','sub',<?=__j('Ausgerüstet')?>))
+                    .append(eq = NF.cell(true))
 
             ));
 
-            r.append(Ω.cell(true, 6, 0, 'flatbox').append(Ω.row()
-                    .append(Ω.n('b','sub',<?=__j('Im Inventar')?>))
-                    .append(rd = Ω.cell(true))
+            r.append(NF.cell(true, 6, 0, 'flatbox').append(NF.row()
+                    .append(NF.n('b','sub',<?=__j('Im Inventar')?>))
+                    .append(rd = NF.cell(true))
 
             ));
 
@@ -184,21 +184,21 @@
                     core.command('act/inventory', {action: equipped ? 'unequip' : 'equip', items: [v.uin]});
                 }).qtt('bottom', function() {
                     $(this)
-                        .append(Ω.n('b', 'header', v.name))
+                        .append(NF.n('b', 'header', v.name))
                         .append(render_effect_list(v.rpg))
-                        .append(Ω.separator());
+                        .append(NF.separator());
 
                     if (group.primary && equipped && !primary)
                         $(this).append(
-                            Ω.row().append(Ω.cell(true).append(Ω.n('div', 'btn btn-zv', <?=__j('Als Standart setzen')?>).click(function() {
+                            NF.row().append(NF.cell(true).append(NF.n('div', 'btn btn-zv', <?=__j('Als Standart setzen')?>).click(function() {
                                 core.command('act/inventory', {action: 'equip_primary', items: [v.uin]});
                             })))
-                        ).append(Ω.separator());
+                        ).append(NF.separator());
 
                     if (!equipped)
-                        $(this).append(Ω.row().append(Ω.cell().addClass('note').text(<?=__j('Klicke diesen Gegenstand an, um ihn anzulegen.')?>)));
+                        $(this).append(NF.row().append(NF.cell().addClass('note').text(<?=__j('Klicke diesen Gegenstand an, um ihn anzulegen.')?>)));
                     else
-                        $(this).append(Ω.row().append(Ω.cell().addClass('note').text(<?=__j('Klicke diesen Gegenstand an, um ihn abzulegen.')?>)));
+                        $(this).append(NF.row().append(NF.cell().addClass('note').text(<?=__j('Klicke diesen Gegenstand an, um ihn abzulegen.')?>)));
 
                 });
 

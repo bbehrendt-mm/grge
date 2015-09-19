@@ -118,7 +118,7 @@
                     if (v.custom_label) {
                         content
                             .append(
-                                Ω.row().append(
+                                NF.row().append(
                                     $('<div />').addClass('cell rw-12').append(
                                         $('<input>').val(v.label ? v.label : '').attr('type','text').attr('placeholder', <?=__j('Beschriften ...')?>).addClass('form_input').attr('autocomplete','off').on('keydown', function(e) {
                                             if (e.keyCode == 13) {
@@ -135,7 +135,7 @@
 
                     if (v.rpg) {
                         content
-                            .append(Ω.row()
+                            .append(NF.row()
                                 .append($('<div />').addClass('cell rw-3 center padded').append($('<div />').addClass('rpg stat ini').addClass(v.rpg.ini > 0 ? 'plus' : (v.rpg.ini == 0 ? 'null' : 'minus')).text(v.rpg.ini)))
                                 .append($('<div />').addClass('cell rw-3 center padded').append($('<div />').addClass('rpg stat atk').addClass(v.rpg.atk > 0 ? 'plus' : (v.rpg.atk == 0 ? 'null' : 'minus')).text(v.rpg.atk)))
                                 .append($('<div />').addClass('cell rw-3 center padded').append($('<div />').addClass('rpg stat def').addClass(v.rpg.def > 0 ? 'plus' : (v.rpg.def == 0 ? 'null' : 'minus')).text(v.rpg.def)))
@@ -221,11 +221,11 @@
 
                     if (v.armor) {
                         content.append('<span class="separator" />');
-                        Ω.row()
+                        NF.row()
                             .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Typ')?>))
                             .append($('<div />').addClass('cell rw-6 padded left').text(v.armor.type))
                             .appendTo(content);
-                        Ω.row()
+                        NF.row()
                             .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Zustand')?>))
                             .append($('<div />').addClass('cell rw-6 padded left').text(v.armor.condition))
                             .appendTo(content);
@@ -233,11 +233,11 @@
 
                     if (v.weapon) {
                         content.append('<span class="separator" />');
-                        Ω.row()
+                        NF.row()
                             .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Schaden')?>))
                             .append($('<div />').addClass('cell rw-6 padded left').text((v.weapon.damage[0] == v.weapon.damage[1] ? v.weapon.damage[0] : (v.weapon.damage[0] + ' - ' + v.weapon.damage[1]))))
                             .appendTo(content);
-                        Ω.row()
+                        NF.row()
                             .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Genauigkeit')?>))
                             .append($('<div />').addClass('cell rw-6 padded left').text(v.weapon.accuracy === true ? <?=__j('Distanzabhängig')?> : (v.weapon.accuracy + '%')))
                             .appendTo(content);
@@ -246,22 +246,22 @@
                             $.each(v.weapon.ammo, function(ak,av) {
                                 ammo_cont.append($('<img />').attr('src', 'media/icons/' + av + '.gif'));
                             });
-                            Ω.row()
+                            NF.row()
                                 .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Munition')?>))
                                 .append($('<div />').addClass('cell rw-6 padded left').append(ammo_cont))
                                 .appendTo(content);
                         }
                         if (v.weapon.shots !== false)
-                            Ω.row()
+                            NF.row()
                                 .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Füllstand')?>))
                                 .append($('<div />').addClass('cell rw-6 padded left').text(v.weapon.shots == 0 ? <?=__j('Leer!')?> : game.i18n(<?=__j(':num Schuss')?>,{':num': v.weapon.shots})))
                                 .appendTo(content);
                         if (v.weapon.energy)
-                            Ω.row()
+                            NF.row()
                                 .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Energie')?>))
                                 .append($('<div />').addClass('cell rw-6 padded left').text(v.weapon.energy).append($('<img />').attr('src', 'media/icons/status_energy.gif')))
                                 .appendTo(content);
-                        Ω.row()
+                        NF.row()
                             .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Zerstörbar')?>))
                             .append($('<div />').addClass('cell rw-6 padded left').text(v.weapon.breakable ? <?=__j('Ja')?> : <?=__j('Nein')?>))
                             .appendTo(content);
@@ -277,7 +277,7 @@
 
                     if (v.deco) {
                         content.append('<span class="separator" />');
-                        content.append(Ω.row()
+                        content.append(NF.row()
                             .append($('<div />').addClass('cell rw-2 right').append($('<img />').attr('src','media/icons/deco_' + (v.deco > 0 ? 'positive' : 'negative') + '.gif')))
                             .append($('<div />').addClass('cell rw-3 center').addClass(v.deco > 0 ? 'text-green' : 'text-red').text(v.deco > 0 ? ('+' + v.deco) : v.deco))
                             .append($('<div />').addClass('cell rw-7 b').addClass(v.deco > 0 ? 'text-green' : 'text-red').text(v.deco > 0 ? <?=__j('Dekorativer Gegenstand')?> : <?=__j('Abstoßender Gegenstand')?>))
@@ -324,7 +324,7 @@
                     if (v.is_pillbox) {
                         var pillrow;
                         content.append('<span class="separator" />').append(
-                            pillrow = Ω.row()
+                            pillrow = NF.row()
                         );
 
                         $('<div />').addClass('cell rw-6 padded').append(
@@ -366,7 +366,7 @@
         $.each(data, function(k,v) {
             var item_target;
             $(target).append(
-                Ω.row().append(
+                NF.row().append(
                     $('<b />').text(v.name)
                 ).append(
                     item_target = $('<ul />')
@@ -482,7 +482,7 @@
 
                     render_block(v.inventory.player, remote_inv, game.i18n(<?=__j('Rucksack von :name')?>, {':name': v.name}), true, true);
 
-                    remote_inv.append(Ω.row().append($('<div />').addClass('cell rw-12 padded').append($('<div />').addClass('weightbar').append($('<div />').css('width', (100*v.inventory.weight[0]/v.inventory.weight[1]) + '%')))));
+                    remote_inv.append(NF.row().append($('<div />').addClass('cell rw-12 padded').append($('<div />').addClass('weightbar').append($('<div />').css('width', (100*v.inventory.weight[0]/v.inventory.weight[1]) + '%')))));
                     remote_inv.attr('data-pid', v.id).attr('data-pid-selected', 0).click(iv_switch).children('.row').hide();
                 });
                 iv_a.attr('data-pid',0).click(iv_switch).children('.row').hide();

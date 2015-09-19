@@ -95,10 +95,10 @@ core = {
 
         core.last = data;
 
-        if (core.parts.admin) core.parts.admin.controls($('<div />').addClass('cell rw-12 padded').appendTo(Ω.row().appendTo(target)));
+        if (core.parts.admin) core.parts.admin.controls($('<div />').addClass('cell rw-12 padded').appendTo(NF.row().appendTo(target)));
 
         if (data.location) {
-            var location_box = Ω.row().appendTo(target);
+            var location_box = NF.row().appendTo(target);
             core.parts.location(data.location, location_box);
         }
 

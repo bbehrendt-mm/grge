@@ -1,12 +1,12 @@
 goog.provide('factory');
 
-Ω = function() {};
+NF = function() {};
 
-Ω.row = function(classes) {
+NF.row = function(classes) {
     return $('<div />').addClass('row').addClass(classes ? classes : '');
 };
 
-Ω.cell = function(pad, rw, ro, classes) {
+NF.cell = function(pad, rw, ro, classes) {
     var tmp = $('<div />').addClass('cell');
     if (rw === undefined) rw = 12;
     if (ro === undefined) ro = 0;
@@ -29,13 +29,13 @@ goog.provide('factory');
     return tmp.addClass(classes ? classes : '');
 };
 
-Ω.n = function(node, classes, content) {
+NF.n = function(node, classes, content) {
     var tmp = $('<' + node + ' />').addClass(classes ? classes : '');
     if (!content) return tmp;
     else if (typeof content == 'string') return tmp.text(content);
     else return tmp.append(content);
 };
 
-Ω.separator = function(n) {
-    return Ω.n(n ? n : 'span', 'separator');
+NF.separator = function(n) {
+    return NF.n(n ? n : 'span', 'separator');
 };

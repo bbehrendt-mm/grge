@@ -52,7 +52,7 @@
                     popup
                         .append($('<iframe>').attr({src: 'embed/battle?v=' + data.bid, sandbox: 'allow-scripts allow-same-origin', seamless: 'seamless', height: 400, width: 640}))
                         .append($('<br />'))
-                        .append(Ω.row()
+                        .append(NF.row()
                             .append($('<div />').addClass('cell rw-12 padded').append(
                                 $('<div />').addClass('note')
                                     .text(<?=__j('Hast du einen besonders beeindruckenden Kampf erlebt, kannst du ihn in deine Kampfgallerie kopieren. Von dort aus kannst du ihn jederzeit auch nach Beendigung des Spiels ansehen, deinen Freunden präsentieren und sogar in andere Webseiten einbinden.')?>)
@@ -61,7 +61,7 @@
                         )
                 });
 
-            sub.append(Ω.row()
+            sub.append(NF.row()
                     .append($('<div />').addClass('cell rw-7 rw-md-6 rw-sm-12 padded').append($('<div />').addClass('b').text(<?=__j('Kampfzusammenfassung')?>)))
                     .append($('<div />').addClass('cell rw-5 rw-md-6 rw-sm-12 padded').append(
                         $('<div />').addClass('note').text(<?=__j('Keine Lust auf langweilige Kampfstatistiken? Dann schau dir doch einfach ein Video des Kampfes an!')?>).append(videobtn)

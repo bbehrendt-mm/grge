@@ -4,9 +4,11 @@ class Model_Pseudoplayer {
 
 	private $status_bars;
 	private $inventory;
+	private $location;
 
-	final public function __construct($stats = []) {
+	final public function __construct($stats = [], $location_class = null) {
 		$this->status_bars = $stats;
+		$this->location = $location_class;
 		$this->inventory = new Model_Inventory();
 	}
 
@@ -83,4 +85,27 @@ class Model_Pseudoplayer {
 		if (!isset($this->status_bars[$stat])) return 0;
         else return $this->status_bars[$stat];
 	}
+
+	final public function location_class() {
+		/**
+		 * @global Model_Game $game
+		 * @global Model_Player $player
+		 */
+		global $game, $player;
+		return ($this->location) ? $this->location : $player->location_class();
+	}
+
+	/**
+	 * @return Model_Places_Abstract_Place|null
+	 */
+	final public function location() {
+		/**
+		 * @global Model_Game $game
+		 * @global Model_Player $player
+		 */
+		global $game, $player;
+		return ($this->location) ? $game->location($this->location) : $player->location();
+	}
+
+
 }

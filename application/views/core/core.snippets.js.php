@@ -150,12 +150,12 @@
                         popup.append($('<h2 />').addClass('center').text(action.description));
 
                         popup.append(
-                            Ω.row().append($('<div />').addClass('cell rw-12 padded').text(<?=__j('Bitte wähle einen Spieler aus, auf den du diese Aktion anwenden willst. Du kannst nur Spieler auswählen, die sich am gleichen Ort befinden wie du und Befehle von dir entgegennehmen.')?>))
+                            NF.row().append($('<div />').addClass('cell rw-12 padded').text(<?=__j('Bitte wähle einen Spieler aus, auf den du diese Aktion anwenden willst. Du kannst nur Spieler auswählen, die sich am gleichen Ort befinden wie du und Befehle von dir entgegennehmen.')?>))
                         );
 
                         if (core.last.players.others)
                             $.each(core.last.players.others, function(id, player) {
-                                popup.append(Ω.row().append($('<div />').addClass('cell rw-12 padded').append(
+                                popup.append(NF.row().append($('<div />').addClass('cell rw-12 padded').append(
                                     $('<div />').addClass('btn btn-zv' + (player.escort ? '' : ' disabled')).text(player.name).click(function() {
                                         if (!player.escort || !confirm(game.i18n(<?=__j('Bist du sicher, dass du diese Aktion auf :name anwenden möchtest?')?>, {':name': player.name}))) return;
 
@@ -165,7 +165,7 @@
                                 )))
                             });
 
-                        popup.append(Ω.row().append($('<div />').addClass('cell rw-12 padded').append(
+                        popup.append(NF.row().append($('<div />').addClass('cell rw-12 padded').append(
                             $('<div />').addClass('btn').text(<?=__j('Abbrechen')?>).click(function() {
                                 popup.trigger('unpop');
                             }))

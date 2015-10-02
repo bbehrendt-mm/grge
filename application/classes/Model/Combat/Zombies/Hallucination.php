@@ -10,6 +10,8 @@ class Model_Combat_Zombies_Hallucination extends Model_Combat_Zombies_Zombie {
     protected $stat_resistance = 6;
     protected $stat_accuracy = 0;
 
+    protected static $num_str = 1;
+
     protected $movement_range = 4;
 
     public function __construct() {

@@ -12,4 +12,6 @@ class Model_Combat_Zombies_Runner extends Model_Combat_Zombies_Zombie {
 
     protected $movement_range = 8;
 
+    protected static $num_str = 8;
+
 }

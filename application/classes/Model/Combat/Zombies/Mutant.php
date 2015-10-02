@@ -7,4 +7,6 @@ class Model_Combat_Zombies_Mutant extends Model_Combat_Zombies_Starver {
 
     protected $movement_range = 5;
 
+    protected static $num_str = 1;
+
 }

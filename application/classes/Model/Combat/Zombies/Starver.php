@@ -11,5 +11,6 @@ class Model_Combat_Zombies_Starver extends Model_Combat_Zombies_Zombie {
     protected $stat_accuracy = 0;
 
     protected $movement_range = 1;
+    protected static $num_str = 1;
 
 }

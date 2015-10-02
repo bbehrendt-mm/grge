@@ -12,6 +12,8 @@ class Model_Combat_Zombies_Patient extends Model_Combat_Zombies_Zombie {
 
     protected $movement_range = 5;
 
+    protected static $num_str = 15;
+
     public static function factory() {
         return parent::factory()
             ->add_weapon(new Model_Items_Hacksaw());

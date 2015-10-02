@@ -5,11 +5,17 @@ abstract class Model_Combat_Zombies_Zombie extends Model_Combat_Actor {
     protected $type = Model_Combat_Actor::MCA_TYPE_ZOMBIE;
     protected $pseudoplayer;
 
+    protected static $num_str = 1;
+
     public function __construct() {
         /** @global Model_Player $player */
         global $player;
         parent::__construct();
         $this->pseudoplayer = new Model_Pseudoplayer([Model_Player::MP_STAT_ENERGY => 50], $player->location_class());
+    }
+
+    public static function get_strength_quantifier() {
+        return static::$num_str;
     }
 
     /**
@@ -21,7 +27,6 @@ abstract class Model_Combat_Zombies_Zombie extends Model_Combat_Actor {
             $weapon->register($this->pseudoplayer);
             $weapon->ignore_equip();
         }
-
 
         return parent::add_weapon($weapon);
     }

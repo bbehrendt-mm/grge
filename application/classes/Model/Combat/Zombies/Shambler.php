@@ -12,4 +12,6 @@ class Model_Combat_Zombies_Shambler extends Model_Combat_Zombies_Zombie {
 
     protected $movement_range = 5;
 
+    protected static $num_str = 2;
+
 }

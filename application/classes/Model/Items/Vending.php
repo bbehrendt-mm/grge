@@ -24,7 +24,7 @@ class Model_Items_Vending extends Model_Items_Abstract_Item {
         $this->basetype = $basecfg;
 		$this->basename = $name;
 
-        $this->factory = Model_Itemfactory::read($basecfg, $game->config('game.config.itemset'))->set_decay_factor(0);
+        $this->factory = Model_Factory_Items::read($basecfg, $game->config('game.config.itemset'))->set_decay_factor(0);
 		parent::__construct();
 	}
 	

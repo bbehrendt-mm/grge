@@ -12,6 +12,8 @@ class Model_Combat_Zombies_Ghul extends Model_Combat_Zombies_Zombie {
 
     protected $movement_range = 5;
 
+    protected static $num_str = 100;
+
     protected $player_id;
 
     /**

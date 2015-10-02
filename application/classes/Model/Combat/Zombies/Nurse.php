@@ -7,4 +7,6 @@ class Model_Combat_Zombies_Nurse extends Model_Combat_Zombies_Shambler {
 
     protected $movement_range = 4;
 
+    protected static $num_str = 3;
+
 }

@@ -145,7 +145,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 		$this->log = new Model_Log_Log();
 		$this->zombie_factory = new Model_Factory_Zombies(get_called_class(), $game->config('game.config.spawn'));
 
-        $this->item_factory = Model_Itemfactory::read(get_called_class(), $game->config('game.config.itemset'))->modify_decay($game->config('places.dryout_factor'));
+        $this->item_factory = Model_Factory_Items::read(get_called_class(), $game->config('game.config.itemset'))->modify_decay($game->config('places.dryout_factor'));
 		
 		if (static::$namelist) {
             $list = array();

@@ -12,4 +12,6 @@ class Model_Combat_Zombies_Behemoth extends Model_Combat_Zombies_Zombie {
 
     protected $movement_range = 3;
 
+    protected static $num_str = 100;
+
 }

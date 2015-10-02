@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
-    return Model_Itemfactory::factory()
+    return Model_Factory_Items::factory()
         ->add('Model_Items_Generic_Plasticbag'  , 4)
         ->add('Model_Items_Oldrifle'            , 1)
         ->add('Model_Items_Handgun'			    , 1)

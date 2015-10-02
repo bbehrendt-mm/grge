@@ -42,7 +42,7 @@ class Controller_Test extends Controller {
             if (!Tool_System::instance_of($classpath, 'Model_Places_Abstract_Place')) continue;
 
             echo "<h2>" . implode(' / ',$classpath::get_namelist()) . "</h2>";
-            $spawn = Model_Itemfactory::read($classpath);
+            $spawn = Model_Factory_Items::read($classpath);
 
             echo "<table cellpadding='4px'>";
             if ($spawn) {

@@ -12,4 +12,6 @@ class Model_Combat_Zombies_Fatass extends Model_Combat_Zombies_Zombie {
 
     protected $movement_range = 4;
 
+    protected static $num_str = 8;
+
 }

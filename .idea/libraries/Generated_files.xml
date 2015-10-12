@@ -4,7 +4,7 @@
       <sourceFilesUrls>
         <item url="file://$PROJECT_DIR$/application/assets/js/framework.min.js" />
         <item url="file://$PROJECT_DIR$/application/assets/dev/js/core.js" />
-        <item url="file://$PROJECT_DIR$/application/assets/dev/js/core.js" />
+        <item url="file://$PROJECT_DIR$/application/assets/skins/halloween/js/dummy.min.js" />
         <item url="file://$PROJECT_DIR$/application/assets/js/jquery.ext.min.js" />
       </sourceFilesUrls>
     </properties>
@@ -16,6 +16,7 @@
       <root url="file://$PROJECT_DIR$/application/assets/js/framework.min.js" />
       <root url="file://$PROJECT_DIR$/application/assets/dev/js/core.js" />
       <root url="file://$PROJECT_DIR$/application/assets/dev/js/core.js" />
+      <root url="file://$PROJECT_DIR$/application/assets/skins/halloween/js/dummy.min.js" />
       <root url="file://$PROJECT_DIR$/application/assets/js/jquery.ext.min.js" />
     </CLASSES>
     <SOURCES />

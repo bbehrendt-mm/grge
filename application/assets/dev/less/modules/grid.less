@@ -1,4 +1,4 @@
-@import (once) "zombvival";
+@import (once) "../zombvival";
 
 // Grid Classes
 * {
@@ -27,6 +27,8 @@
   .grid(@n, @class, (@i + 1))
 }
 
+@row-icon-color: @zv-color-main-light;
+
 .row {
   &::before, &::after {content: " "; clear: both;}
   &::before { display: table;}
@@ -41,17 +43,20 @@
   }
   >.cell {.grid(12)}
   >.cell-small {.grid(24)}
+
+  &.iconize > .cell > .fa {margin-top: 6px; font-size: 22px; color: @row-icon-color; display: block; text-align: center; text-shadow: 0 0 3px rgba(0,0,0,0.4);}
 }
 
 #content > .row {margin: 5px 30px;}
 
+@table-marking-color: @zv-color-main-dark;
+
 .row-table {
+  background: @zv-content-background-color;
   &.padded {margin: 5px;}
   &.row-table-borders {border: 2px solid @zv-color-main-dark; border-radius: 2px;}
-  &.row-table-striped > .row:nth-child(odd):not(.marked) {background: darken(@zv-color-bg, 5%)}
-  &.row-table-interact > .row:hover:not(.marked), .row-table.row-table-interact > .row.selected:not(.marked) {background: darken(@zv-color-bg, 10%);}
+  &.row-table-striped > .row:nth-child(odd):not(.marked) {background: darken(@zv-content-background-color, 5%)}
+  &.row-table-interact > .row:hover:not(.marked), .row-table.row-table-interact > .row.selected:not(.marked) {background: darken(@zv-content-background-color, 10%);}
   > .row:first-child {background: @zv-color-main-dark !important; color: white; font-weight: bold;}
-  > .row.marked {background: mix(@zv-color-main-dark, @zv-color-bg, 30%)}
-  &.row-table-striped > .row:nth-child(odd).marked {background: mix(@zv-color-main-dark, darken(@zv-color-bg, 5%), 30%)}
-  &.row-table-interact > .row:hover.marked, .row-table.row-table-interact > .row.selected:not(.marked) {background: mix(@zv-color-main-dark, darken(@zv-color-bg, 10%), 30%)}
+  > .row.marked {color: @table-marking-color; font-weight: bold}
 }

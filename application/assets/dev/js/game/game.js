@@ -75,7 +75,7 @@ game = {
     },
 
     reset: function() {
-        window.location.href = 'index.php';
+        window.location.reload();
     },
 
     update_ui_quality: function() {

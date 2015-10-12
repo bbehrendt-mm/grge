@@ -2,7 +2,7 @@
 
 return Model_Blueprints::factory()
     // ++ STACK -> All blueprints below can be produced indefinitely and require local facilities
-    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->steps(0)->requires('cursed_hideout')->requires('ktc_cursed');})
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->steps(0)->requires('cursed_hideout')->requires('ktc_cursed')->category('Küche');})
 
     ->add_blueprints(
         Model_Blueprint::factory()

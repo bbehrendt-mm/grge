@@ -129,5 +129,7 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
                 if (method_exists($player->location(),'tick')) $player->location()->tick();
 			}
 		}
+
+        //Post-tick events
 	}
 }

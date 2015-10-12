@@ -484,7 +484,7 @@ class Controller_Gamemaster extends Controller {
             // Get players
             $entry['players'] = array();
             foreach ($local_game_obj->players(false) as $p) if ($p) {
-                $entry['players'][] = array('name' => $p->name(), 'id' => (int)$p->id(), 'job' => $p->job(), 'cod' => $p->alive() ? null : $p->get_cod());
+                $entry['players'][] = array('name' => $p->name(), 'id' => (int)$p->id(), 'job' => $p->job(), 'cod' => $p->alive() ? null : __($p->get_cod()));
                 if ($p->id() == $user->uid())
                     $entry['locked'] = true;
             } else $entry['locked'] = true;
@@ -511,6 +511,7 @@ class Controller_Gamemaster extends Controller {
                 ->set('show_shop', Kohana::$config->load('balancing.shop.enabled'))
                 ->set('freecoins',Kohana::$config->load('balancing.shop.free_coins'))
                 ->set('braincoins', $user->coins())
+                ->set('midness', Tool_Events::is_october_midness())
                 ->render()
         );
         $this->render();

@@ -1,4 +1,53 @@
-@import (once) "zombvival";
+@import (once) "../zombvival";
+
+.no-select {-webkit-touch-callout: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;}
+
+
+#content > h1:first-child {
+  font-family: 'Exo 2', sans-serif; margin: 0 0 10px 0; padding: 5px 0 5px 40px; background: @zv-color-main; background: linear-gradient(to right, @zv-color-main 0%, @zv-color-main-light 100%);
+  color: @zv-color-secondary; text-shadow: 0 1px 0 @zv-color-main-light, 0 -1px 0 @zv-color-main-light, 1px 0 0 @zv-color-main-light, -1px 0 0 @zv-color-main-light, 1px 1px 0 @zv-color-main-light, -1px -1px 0 @zv-color-main-light, -1px 1px 0 @zv-color-main-light, 1px -1px 0 @zv-color-main-light;
+  .no-select; cursor: default;
+
+  >.fa {margin-right: 16px;}
+  &::after {display: block;  width: 910px; height: 5px; position: relative; top: 5px; left: -45px; background-color: @zv-color-main; content: " "; box-shadow: 0 0 2px black;}
+}
+
+@zv-subheader-color: @zv-color-main-light;
+
+h2 {
+  margin: 5px 0 10px 4px; color: @zv-subheader-color; text-shadow: 0 0 3px rgba(0,0,0,0.4);
+  &:first-child {margin-top: 0;}
+}
+
+@breadcrumbs-background: #ffbda1;
+@breadcrumbs-border: darken(@breadcrumbs-background, 10%);
+@breadcrumbs-shine: lighten(@breadcrumbs-background, 30%);
+@breadcrumbs-hover: white;
+@breadcrumbs-text-color: @zv-font-color;
+@breadcrumbs-symbol-color: white;
+
+ul.breadcrumbs {
+  margin: 0;  padding: 0; background: @breadcrumbs-background; border: 1px solid @breadcrumbs-border; min-height: 33px;
+  box-shadow: 0 0 1px 1px @breadcrumbs-shine inset; font-family: "Exo 2",sans-serif;
+
+  &:empty {opacity: 0;}
+
+  &>li {
+    padding: 4px; display: inline-block; border: 1px solid rgba(255,255,255,0); position: relative; cursor: pointer; color: @breadcrumbs-text-color;
+
+    &:first-child {cursor: default;}
+    &:not(:first-child):hover {border: 1px solid fade(@breadcrumbs-hover, 30%); background: fade(@breadcrumbs-hover, 20%); box-shadow: 0 0 1px 1px fade(@breadcrumbs-hover, 20%) inset;}
+
+    &+li {
+      margin-left: 16px; padding-left: -8px;
+
+      &::before {
+        position: absolute; left: -14px; font-family: FontAwesome; content: "\f101"; pointer-events: none; font-size: 20px;
+        color: @breadcrumbs-symbol-color; text-shadow: 0 0 3px black;
+      }
+    }
+  }
+}
 
 .border-shadow-fade-bottom(@height, @color: black, @strength: 0.75, @z-index: 1) {
   overflow: hidden; position: relative;
@@ -35,39 +84,6 @@ iframe {border: 0 none white}
 .inline-block {display: inline-block}
 
 .bg-red {background: #710800 !important; color: white !important;}
-
-.sleep-animation {
-  height: 64px;
-  width: 64px;
-  background: url('media/img/z-sleep.png') no-repeat;
-  position: absolute;
-}
-
-.framed {
-  border: 6px solid @zv-color-main-dark; box-shadow: 0 0 5px black, inset 0 0 5px black;border-radius: 5px; position: relative;
-  &::after {position: absolute; top: 0; left: 0; height: 100%; width: 100%; content: " "; background: none; border: 1px solid rgba(0,0,0,0.3);}
-  &.cream {border: 6px solid @zv-color-secondary;}
-  &.main {border: 6px solid @zv-color-main;}
-
-  &.mini {border-width: 2px}
-}
-
 .text-red {color: #913d40}
 .text-green {color: #005d0f}
-
-.no-select {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-img.avatar, img#avatar {
-  background: black; max-width: 100px; max-height: 100px;
-  &.mini {max-width: 50px; max-height: 50px;}
-  &.tiny {max-width: 25px; max-height: 25px;}
-  &.mini.tiny {max-width: 16px; max-height: 16px;}
-}
-
 .text-stroke(@size, @color) {text-shadow: -@size -@size 0 @color, @size -@size 0 @color, -@size @size 0 @color, @size @size 0 @color}

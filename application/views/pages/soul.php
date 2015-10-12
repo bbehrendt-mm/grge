@@ -54,38 +54,6 @@
         </div>
     </div>
 
-    <?php if ($own_soul) { ?>
-        <div class="row center">
-            <?php if ($mentor !== false) { ?>
-                <div class="cell rw-4 rw-md-6 rw-sm-12 padded">
-                    <b><?=__('Dein Mentor');?></b><br />
-                    <?php if ($mentor) { ?>
-                        <div data-redirect-uin="<?=$mentor['uid']?>" class="pointer framed mini cream inline-block"><img class="avatar mini" src="<?=$mentor['avatar'] ? $mentor['avatar'] : 'media/img/mugshot.png'?>" alt="<?=$mentor['name']?>" /></div>
-                        <br /><?=$mentor['name']?>
-                    <?php } else { ?>
-                        <p class="center"><?=__('Niemand');?></p>
-                    <?php } ?>
-                </div>
-            <?php } ?>
-
-            <div class="cell <?=($mentor===false) ? 'rw-8 ro-2 rw-lg-12 ro-lg-0' : 'rw-8 rw-md-6 rw-sm-12' ?> padded">
-                <b><?=__('Deine Schüler');?></b>
-                <?php if ($pupils) { ?>
-                    <div class="row left">
-                        <?php foreach ($pupils as $pupil) { ?>
-                            <div class="cell rw-4 rw-md-6 rw-sm-12 padded">
-                                <div data-redirect-uin="<?=$pupil['uid']?>" class="pointer framed mini cream inline-block"><img class="avatar mini tiny" src="<?=$pupil['avatar'] ? $pupil['avatar'] : 'media/img/mugshot.png'?>" alt="<?=$pupil['name']?>" /></div>
-                                <?=$pupil['name']?>
-                            </div>
-                        <?php } ?>
-                    </div>
-                <?php } else { ?>
-                    <p class="justify"><?=__('Du hast noch keine Schüler. Mach doch etwas Werbung in anderen Spielen, um ein paar Schüler zu gewinnen und dir BrainCoins zu verdienen.');?></p>
-                <?php } ?>
-            </div>
-        </div>
-    <?php } ?>
-
     <div class="row center">
         <?php foreach ($achievements as $achievement) { ?>
             <div data-aid="<?=$achievement['id']?>" class="pointer achievement achievement-<?=$achievement['class']?>">
@@ -116,6 +84,36 @@
             <h2><?=__('Mentoren-Programm')?></h2>
 
             <?php if ($own_soul) { ?>
+                <div class="row center">
+                    <?php if ($mentor !== false) { ?>
+                        <div class="cell rw-4 rw-md-6 rw-sm-12 padded">
+                            <b><?=__('Dein Mentor');?></b><br />
+                            <?php if ($mentor) { ?>
+                                <div data-redirect-uin="<?=$mentor['uid']?>" class="pointer framed mini inline-block"><img class="avatar mini" src="<?=$mentor['avatar'] ? $mentor['avatar'] : 'media/img/mugshot.png'?>" alt="<?=$mentor['name']?>" /></div>
+                                <br /><?=$mentor['name']?>
+                            <?php } else { ?>
+                                <p class="center"><?=__('Niemand');?></p>
+                            <?php } ?>
+                        </div>
+                    <?php } ?>
+
+                    <div class="cell <?=($mentor===false) ? 'rw-8 ro-2 rw-lg-12 ro-lg-0' : 'rw-8 rw-md-6 rw-sm-12' ?> padded">
+                        <b><?=__('Deine Schüler');?></b>
+                        <?php if ($pupils) { ?>
+                            <div class="row left">
+                                <?php foreach ($pupils as $pupil) { ?>
+                                    <div class="cell rw-4 rw-md-6 rw-sm-12 padded">
+                                        <div data-redirect-uin="<?=$pupil['uid']?>" class="pointer framed mini inline-block"><img class="avatar mini tiny" src="<?=$pupil['avatar'] ? $pupil['avatar'] : 'media/img/mugshot.png'?>" alt="<?=$pupil['name']?>" /></div>
+                                        <?=$pupil['name']?>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                        <?php } else { ?>
+                            <p class="justify"><?=__('Du hast noch keine Schüler. Mach doch etwas Werbung in anderen Spielen, um ein paar Schüler zu gewinnen und dir BrainCoins zu verdienen.');?></p>
+                        <?php } ?>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="cell rw-4 rw-sm-12 padded">
                         <?=__('Mentoren-Referenznummer');?><br />

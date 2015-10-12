@@ -1,4 +1,4 @@
-@import (once) "zombvival";
+@import (once) "../zombvival";
 
 @locationbox-outside-image: url("media/img/location_outside.png") bottom no-repeat;
 @locationbox-outside-background: linear-gradient(to bottom, #7fd2df 0%,#9dc6c9 50%);
@@ -97,8 +97,8 @@
 
 .action_box {
   box-shadow: 0 0 4px black; padding: 5px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px;
-  &.inside:not(.custom) {border-bottom: 4px solid #462d21; background: url("media/img/actions_inside.png")}
-  &.outside:not(.custom) {border-bottom: 4px solid #b88452; background: url("media/img/actions_outside.png")}
+  &.inside:not(.custom) {border-bottom: 4px solid @locationbox-inside-finish; background: url("media/img/actions_inside.png")}
+  &.outside:not(.custom) {border-bottom: 4px solid @locationbox-outside-finish; background: url("media/img/actions_outside.png")}
 
   &.custom {
 

@@ -1,0 +1,25 @@
+@import (once) "../zombvival";
+
+@achievement-step-num: 6;
+
+.achievement {
+  height: 48px; width: 48px; position: relative; display: inline-block;
+
+  &>img {position: absolute; left: 16px; top: 10px;}
+  &>span {
+    position: absolute; font-family: "Exo 2",sans-serif; font-weight: bold; display: inline-block; width: 100%; text-align: center;
+    font-size: 12px; left: 0; top: 28px;
+  }
+  &.achievement-missed {opacity: 0.5; filter: grayscale(100%); -webkit-filter: grayscale(100%);}
+  &.achievement-unknown {
+    height: 28px; width: 28px; border-radius: 14px; background: white; border: 1px solid rgb(200,200,200);
+    border-bottom: 4px solid rgb(200,200,200); filter: grayscale(100%); -webkit-filter: grayscale(100%);
+    &>img {left: 5px; top: 5px;}
+  }
+}
+
+.achievement-rec(@n;@i:0) when (@i <= @n) {
+  .achievement-@{i} {background: url("media/img/achievement-bg/@{i}.png")}
+  .achievement-rec(@n, (@i + 1))
+}
+.achievement-rec(@achievement-step-num);

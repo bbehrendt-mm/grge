@@ -107,6 +107,15 @@ abstract class Controller extends Kohana_Controller {
             $this->request->action('noaction');
             if ($this->is_ajax_request()) $this->error(\grge\E_SERVER_LIMITED_MAINTENANCE);
         }
+
+        // Skin Check
+        $current_skin = isset($_COOKIE['skin']) ? $_COOKIE['skin'] : null;
+        $event_skin = Tool_Events::current_skin();
+        if (!isset($_COOKIE['skin_cst']) && $this->is_ajax_request() && $current_skin != $event_skin) {
+            setcookie('skin', $event_skin, 0, URL::base());
+            $this->request->action('noaction');
+            $this->error(\grge\E_SERVER_INVALID_SESSION);
+        }
     }
 
     public function after() {

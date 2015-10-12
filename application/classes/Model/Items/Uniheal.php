@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Items_Uniheal extends Model_Items_Abstract_Item {
+class Model_Items_Uniheal extends Model_Items_Abstract_Item implements Interface_Static {
 
 	protected static $static_info = Array(
 			'name' => 'Substanz H9CE42-D',

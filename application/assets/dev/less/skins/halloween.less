@@ -1,0 +1,103 @@
+@import (once) "../zombvival";
+
+@zv-color-main: #1e1e28;
+@zv-content-background-color: #2b323a;
+@zv-color-secondary: white;
+@zv-background-color: #020203;
+@zv-content-background-size: 300px;
+
+@zv-font-color: white;
+@zv-subheader-color: #e0e6ff;
+
+@row-icon-color: @zv-subheader-color;
+
+@whitebox-color-bg: #404346;
+@whitebox-color-border: #2b323a;
+
+@article-segment-seperator-color: lighten(@whitebox-color-bg, 5%);
+@article-wrap-text-color: @zv-subheader-color;
+
+a, .link {color: @zv-subheader-color}
+
+@breadcrumbs-background: @zv-color-main;
+@breadcrumbs-hover: lighten(@zv-color-main-light,30%);
+@breadcrumbs-symbol-color: @zv-subheader-color;
+
+@hotbox-title-color: @zv-subheader-color;
+@hotbox-subtitle-color: #7b7b7b;
+
+@store-style-color: #427eb1;
+
+@mugshot-color-hover-bg: lighten(@store-style-color, 10%);
+@mugshot-color-hover-border: @store-style-color;
+
+@note-color-bg: #20202a;
+@note-color-text-main: @zv-subheader-color;
+@note-color-text-head: #36363f;
+
+@buttons-main-background-color: @whitebox-color-bg;
+@buttons-main-border-color: @whitebox-color-border;
+
+@table-marking-color: #4671ce;
+
+@zv-header-color: #1c356d;
+
+@zv-disclaimer-color: #869aa0;
+@zv-disclaimer-color-bold: #e2f3ff;
+@zv-disclaimer-color-italic: @zv-subheader-color;
+@zv-disclaimer-color-link: #aad9ff;
+@zv-disclaimer-color-mini: darken(@zv-disclaimer-color, 30%);
+
+@bar-inner-color: #6d7073;
+@status-line-color: #6d7073;
+
+@locationbox-inside-finish: #524d4a;
+@locationbox-outside-finish: #181c31;
+@locationbox-outside-color-text: white;
+@locationbox-outside-color-shadow: black;
+
+@locationbox-outside-background: #252241;
+@locationbox-outside-color-text: @locationbox-inside-color-text;
+@locationbox-outside-color-shadow: @locationbox-inside-color-shadow;
+@locationbox-outside-color-head: @locationbox-inside-color-head;
+@locationbox-outside-text-blur: @locationbox-inside-text-blur;
+@locationbox-outside-widget-background: @locationbox-inside-widget-background;
+@locationbox-outside-image: url("media/img/location_outside.png") bottom no-repeat, url("media/img/sky.jpg");
+
+@tablist-font-color: white;
+@tablist-primary-color: #346185;
+
+@discovery-bg: #b6def0;
+@discovery-color: #0075ea;
+
+@flatbox-color-bold: #62728a;
+
+@status-calc-color-positive: #7aaeea;
+@status-calc-color-negative: #ffaef1;
+@status-calc-color-fade: 50%;
+
+@inventory-item-filter: sepia(45%) contrast(125%);
+@itembox-font-color: white;
+
+@popup-color: #e5ecf4;
+
+@qtip-yellow-seperator: #d6d6d6;
+.qtip-default {border-color: #d6d6d6; background-color: #e8e8e8;}
+@qtip-help-bg1: #2d343c;
+@qtip-help-bg2: #24242f;
+
+body {overflow-x: hidden}
+
+#wrapper {
+  &::before, &::after {display: inline-block; width: 200px; height: 200px; position: absolute; background: url('media/img/web.png'); content: " "; top: 0;}
+  &::before {transform: scaleX(-1); left: -200px;}
+  &::after {right: -200px;}
+}
+
+ul.tabline >li:last-child {
+  position: relative;
+  &::after {
+    display: inline-block; width: 25px; height: 25px; position: absolute; background: url('media/img/web.png') no-repeat scroll center top / cover;
+    content: " "; top: 0; right: -24px; transform: scale(1,-1);
+  }
+}

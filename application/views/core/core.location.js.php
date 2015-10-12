@@ -582,6 +582,34 @@
             }
         }
 
+        if (data.npcs) {
+            var pp = $('<p />').appendTo(desc);
+            $.each(data.npcs, function(k,obj) {
+                pp.append($('<span />').addClass('inline-npc green').text(obj.name).attr('title','-').qtip(game.render.html.qtip.ingame('bottom',{
+                    render: function(event,api) {
+                        var content = $(this).find('.qtip-content').empty();
+
+                        content.append(
+                            $('<b />').addClass('header').text(obj.name)
+                        );
+
+                        if (obj.desc)
+                            content.append(obj.desc).append('<span class="separator" />');
+
+                        content.append($('<div />').addClass('note').text(<?=__j('Dies ist ein vom Computer gesteuerter Charakter (NPC). Du kannst ihn nicht wie einen menschlichen Spieler herumkommandieren, dafür bietet er dir aber andere, einzigartige Interaktionsmöglichkeiten.')?>)).append('<span class="separator" />');
+
+                        $.each(obj.actions, function(k,v) {
+                            content.append(
+                                core.snippets.button(v, false, 'nested')
+                            )
+                        });
+                    }
+                })));
+
+
+            });
+        }
+
         $.each(data.actions, function(k,v) {
             actions.append(
                 $('<div />').addClass(game.touch() ? 'cell rw-12 padded justify' : 'cell rw-6 rw-sm-12 padded justify').append(core.snippets.button(v, null, 'tooltip'))

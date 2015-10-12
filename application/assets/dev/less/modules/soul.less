@@ -1,4 +1,4 @@
-@import (once) "zombvival";
+@import (once) "../zombvival";
 
 ul.soul-listing {
   margin: 0; padding: 0;
@@ -7,4 +7,11 @@ ul.soul-listing {
     >span {vertical-align: super}
     &:hover {background: fade(@zv-color-main, 10%)}
   }
+}
+
+img.avatar, img#avatar {
+  background: black; max-width: 100px; max-height: 100px;
+  &.mini {max-width: 50px; max-height: 50px;}
+  &.tiny {max-width: 25px; max-height: 25px;}
+  &.mini.tiny {max-width: 16px; max-height: 16px;}
 }

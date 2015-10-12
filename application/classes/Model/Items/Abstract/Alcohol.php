@@ -9,6 +9,9 @@ abstract class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
 	protected static $cat = Model_Items_Abstract_Item::MIAI_CAT_FOOD;
 
     protected function hid() {
+        /**
+         * @global Model_Player $player
+         */
         global $player;
         $a = max(static::$alcohol * (Tool_Scripts::get_timeofday() == "evening" ? 0.75 : 1) * ($player->job(1080) ? 2.5 : 1), $player->job(1080) ? 20 : 0);
         return parent::hid()
@@ -70,8 +73,22 @@ abstract class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
                             ->achieve(Model_Achievement::MA_ALCOHOLIC)
                             ->message('Eigentlich kann man ja mit dem Trinken nie früh genug anfangen. Nachdem du die Flasche ausgetrunken hast, stellst du diese Aussage jedoch spontan in Frage - allerdings nur für einen Augenblick, denn du verlierst kurz darauf das Bewusstsein.')
                         ,'s5')
+                    ->effect(
+                        Model_Effect::factory()
+                            ->consume($this)
+                            ->spawn('Model_Items_Generic_Waterb', 1)
+                            ->spawn('Model_Items_Smallbottle')
+                            ->achieve(Model_Achievement::MA_HALLOWEEN_15)
+                            ->message('Kaum ist der erste Tropfen deine Kehle hinunter gelaufen, merkst du das etwas nicht stimmt. Diese Flasche war mit BLUT gefüllt!!')
+                        ,'horror')
                     ->decider(function($p) use ($a) {
+                        /** @global Model_Game $game */
+                        global $game;
+
                         /** @var Model_Player $p */
+                        if (Tool_Events::current($game->next_tick()) == 'halloween' && Tool_Gambling::random(0.08))
+                            return 'horror';
+
                         $ca = $p->stats_get(Model_Player::MP_STAT_DRUNK) + $a;
                         if ($ca > 100) return 's2';
                         if ($ca > 90) return ($p->job(1080)) ? 's5' : 's4';

@@ -11,7 +11,7 @@ class Model_Places_Outworld extends Model_Places_Abstract_Node {
     protected $tickets = Array();
 	
 	private function initial_supply() {
-		/** @global Model_Game $game */
+        /** @global Model_Game $game */
         global $game;
         $this->initial_supply = true;
 
@@ -74,7 +74,6 @@ class Model_Places_Outworld extends Model_Places_Abstract_Node {
         /** @global Model_Game $game */
         global $game;
 
-        $php53bb = $this;
         $ret = parent::create_npcs();
 
         if (Tool_Events::current($game->next_tick()) == 'halloween' && !$game->setting_mode(2000))
@@ -119,7 +118,7 @@ class Model_Places_Outworld extends Model_Places_Abstract_Node {
                                     $points = $ws + 5 * $ss;
 
                                     $user->award_coins($p->id(), $points);
-                                    $p->log()->add(new Model_Log_Types_Text(null, null, 'Du hast :total Seelen die Freiheit geschenkt und wirst dafür mit :usp Universal-Seelenpunkten belohnt!', array(':total' => $ws + $ss, ':usp' => $points)));
+                                    $p->log()->add(new Model_Log_Types_Text(null, null, 'Du hast :total Seelen die Freiheit geschenkt und wirst dafür mit :usp BrainCoins belohnt!', array(':total' => $ws + $ss, ':usp' => $points)));
                                 })
                         )
                 )
@@ -132,7 +131,7 @@ class Model_Places_Outworld extends Model_Places_Abstract_Node {
                         ->requirement('Model_Items_Generic_Ticket', 1)
                         ->effect(Model_Effect::factory()
                                 ->message('Du schließt für einen Moment deine Augen... als du sie wieder öffnest, stehst du plötzlich auf einem verlassenen Weihnachtsmarkt! In der Mitte des Markts steht eine leere Weihnachtsbaum-Halterung. Wie traurig... du solltest dich vom Geist der Weihnacht erfüllen lassen und dort einen wunderschön geschmückten Weihnachtsbaum aufstellen! Sicherlich wirst du dafür genug Materialien hier finden...')
-                                ->custom(function($p) use ($php53bb) {
+                                ->custom(function($p)  {
                                     /** @var Model_Player $p */
                                     /** @global Model_Game $game */
                                     global $game;
@@ -143,7 +142,7 @@ class Model_Places_Outworld extends Model_Places_Abstract_Node {
                                     $xmasfair = $game->location($xmas_id);
                                     $xmasfair->register_doorway($this->uin);
 
-                                    $php53bb->leave_map($p->id());
+                                    $this->leave_map($p->id());
                                     $p->location_class($xmas_id);
                                     $xmasfair->enter_map($p->id());
 

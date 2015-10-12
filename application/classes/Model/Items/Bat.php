@@ -26,7 +26,7 @@ class Model_Items_Bat extends Model_Combat_Weapons_Close implements Interface_St
         {
             case 11:case 12:
                 Tool_Scripts::chem_reaction(
-                    'Die Pillen saugen die Chemikalie regelrecht auf! Wow, du hast Twinoid erzeugt!',
+                    'Das Holz saugt die Chemikalie auf... es scheint, als hättest du im wahrsten Sinne des Wortes eine chemische Keule erzeugt!',
                     $chemval,$this, new Model_Items_Batc);
                 $this->grind();
                 return true;

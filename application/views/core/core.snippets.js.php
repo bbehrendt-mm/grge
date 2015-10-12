@@ -244,19 +244,27 @@
 
         button.attr('data-cats', '|' + $.objToArray(blueprint.categories, true).join('|') + '|');
 
-        var all_rq_ok = true;
-        $.each(blueprint.requires, function(k,v) {
-            var cache = [];
-            var ok = false;
-            $.each(v, function(ki,vi) {
-                if (lib[vi]) {
-                    cache.push(lib[vi].name);
-                    if (lib[vi].build || lib[vi].slot_open) ok = true;
-                }
+        var rq_all_cache = {};
+        var rq_all_check = function(bp) {
+            if (rq_all_cache[bp.id] !== undefined)
+                return rq_all_cache[bp.id];
+
+            var gb_ok = true;
+            $.each(bp.requires, function(k,v) {
+                var ok = false;
+
+                $.each(v, function(ki,vi) {if (lib[vi] && lib[vi].build)  ok = true;});
+                if (!ok)
+                    $.each(v, function(ki,vi) {if (lib[vi] && lib[vi].slot_open && rq_all_check(lib[vi])) ok = true;});
+
+                if (!ok)
+                    return gb_ok = false;
             });
-            if (!ok)
-                return all_rq_ok = false;
-        });
+
+            return rq_all_cache[bp.id] = gb_ok;
+        };
+
+        var all_rq_ok = rq_all_check(blueprint);
 
         if (blueprint.build)
             button.addClass('blue');

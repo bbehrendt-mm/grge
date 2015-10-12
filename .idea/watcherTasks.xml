@@ -44,26 +44,6 @@
     <TaskOptions isEnabled="true">
       <option name="arguments" value="" />
       <option name="checkSyntaxErrors" value="true" />
-      <option name="description" value="Compresses .css files" />
-      <option name="exitCodeBehavior" value="ERROR" />
-      <option name="fileExtension" value="css" />
-      <option name="immediateSync" value="false" />
-      <option name="name" value="YUI Compressor CSS" />
-      <option name="output" value="$ProjectFileDir$/application/assets/css/zombvival.base.min.css" />
-      <option name="outputFilters">
-        <array />
-      </option>
-      <option name="outputFromStdout" value="false" />
-      <option name="passParentEnvs" value="true" />
-      <option name="program" value="$ProjectFileDir$/application/assets/dev/minifycss.bat" />
-      <option name="scopeName" value="CSS" />
-      <option name="trackOnlyRoot" value="true" />
-      <option name="workingDir" value="$ProjectFileDir$/application/assets/dev/" />
-      <envs />
-    </TaskOptions>
-    <TaskOptions isEnabled="true">
-      <option name="arguments" value="" />
-      <option name="checkSyntaxErrors" value="true" />
       <option name="description" value="" />
       <option name="exitCodeBehavior" value="ERROR" />
       <option name="fileExtension" value="php" />
@@ -105,6 +85,26 @@
       <option name="scopeName" value="LESS" />
       <option name="trackOnlyRoot" value="false" />
       <option name="workingDir" value="$ProjectFileDir$\application\assets\dev" />
+      <envs />
+    </TaskOptions>
+    <TaskOptions isEnabled="true">
+      <option name="arguments" value="--compilation_level SIMPLE_OPTIMIZATIONS --js_output_file=&quot;application\assets\skins\halloween\js\dummy.min.js&quot; --js &quot;application\assets\dev\js\game\skins\halloween.js&quot;" />
+      <option name="checkSyntaxErrors" value="true" />
+      <option name="description" value="Compiles .js files" />
+      <option name="exitCodeBehavior" value="ERROR" />
+      <option name="fileExtension" value="js" />
+      <option name="immediateSync" value="false" />
+      <option name="name" value="Closure Compiler (Halloween) Copy" />
+      <option name="output" value="$ProjectFileDir$\application\assets\skins\halloween\js\dummy.min.js" />
+      <option name="outputFilters">
+        <array />
+      </option>
+      <option name="outputFromStdout" value="false" />
+      <option name="passParentEnvs" value="true" />
+      <option name="program" value="$ProjectFileDir$/application/assets/dev/compiler.jar" />
+      <option name="scopeName" value="Framework MODs" />
+      <option name="trackOnlyRoot" value="true" />
+      <option name="workingDir" value="$ProjectFileDir$" />
       <envs />
     </TaskOptions>
   </component>

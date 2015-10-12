@@ -21,7 +21,7 @@ class Model_Places_Asylumhideout extends Model_Places_Abstract_Hideout implement
 
     public function uin($new = null) {
         if ($new !== null) {
-            Model_Blueprints::fast_apply($this, 'upgrades', ['hideout_cursed','hideout_slot','bedr1','bedr2','bedr3','ktc1','ktc3','ktc_cursed']);
+            Model_Blueprints::fast_apply($this, 'upgrades', ['cursed_hideout','hideout_slot','bedr1','bedr2','bedr3','ktc1','ktc3','ktc_cursed']);
 
             $f1 = mt_rand(1,4);
             $f2 = mt_rand(2,20);

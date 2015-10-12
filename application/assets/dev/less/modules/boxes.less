@@ -1,4 +1,4 @@
-@import (once) "zombvival";
+@import (once) "../zombvival";
 
 @help-color-bg: @zv-color-main;
 @help-color-border: @zv-color-main-light;
@@ -16,7 +16,7 @@
 }
 
 @note-color-bg: #F5D88F;
-@note-color-border: #F4CE7D;
+@note-color-border: darken(@note-color-bg, 5%);
 @note-color-text-main: #6a5432;
 @note-color-text-head: white;
 
@@ -62,9 +62,9 @@
 
 @valrow-color-bg: @zv-color-main;
 @valrow-color-border: @zv-color-main-light;
-
+.value-box-light {background: @valrow-color-bg; margin: 10px; border: 2px solid @valrow-color-border; border-radius: 2px; box-shadow: 0 0 3px rgba(0,0,0,1); position: relative; color: @zv-color-secondary;}
 .value-box {
-  background: @valrow-color-bg; margin: 10px; border: 2px solid @valrow-color-border; border-radius: 2px; box-shadow: 0 0 3px rgba(0,0,0,1); position: relative; color: @zv-color-secondary;
+  .value-box-light;
   .row {
     background: @valrow-color-bg; position: relative; z-index: 2;
     .cell > b:first-child {font-family: "Strait",sans-serif; font-size: 20px;}
@@ -82,8 +82,10 @@
   }
 }
 
+@itembox-font-color: inherit;
+
 .itembox {
-  .whitebox; padding: 2px; display: inline-block; margin: 4px;
+  .whitebox; padding: 2px; display: inline-block; margin: 4px; color: @itembox-font-color;
   >img+span {margin-left: 4px; font-size: small}
 }
 
@@ -97,6 +99,7 @@
   >.btn {margin-top: 10px;}
 }
 
+@flatbox-color-text: black;
 @flatbox-color-bg: white;
 @flatbox-color-border: #f5f5f5;
 @flatbox-color-header-text: black;
@@ -105,7 +108,7 @@
 @flatbox-color-bold-sub: #404346;
 
 .flatbox {
-  border: 1px solid @flatbox-color-border; background: @flatbox-color-bg; box-shadow: 0 0 4px black; padding-bottom: 8px;
+  border: 1px solid @flatbox-color-border; background: @flatbox-color-bg; box-shadow: 0 0 4px black; padding-bottom: 8px; color: @flatbox-color-text;
   h3 {margin: 2px; padding: 0; text-align: center; color: fade(@flatbox-color-header-shine, 40%); text-shadow: 1px 1px 0 @flatbox-color-header-text; font-size: 16px;}
   h4 {margin: 2px; padding: 0; text-align: center; color: mix(@flatbox-color-header-shine,@flatbox-color-header-text,40%); font-size: 14px;}
   >b,.row>b,.cell>b,.cell-small>b {font-size: 10px; border-bottom: 1px solid mix(@flatbox-color-bold, @flatbox-color-bg, 30%); display: block; color: @flatbox-color-bold; padding: 2px 8px 0;}
@@ -118,6 +121,9 @@
 
 .license {.whitebox;}
 
+@hotbox-title-color: #004352;
+@hotbox-subtitle-color: #7b7b7b;
+
 .hotbox {
   .whitebox; .no-select;
   margin: 3px; padding: 5px; cursor: pointer; transition: background 250ms ease, border-color 500ms ease; vertical-align: bottom;
@@ -126,10 +132,57 @@
   &.active:hover {.colorbox(lighten(@zv-color-main, 10%), lighten(@zv-color-main-dark, 10%))}
   &:active {margin-top: 5px !important; border-bottom-width: 2px !important;}
 
-  >.head {display: block; color: #004352;}
-  >.subtitle {display: block; color: #7b7b7b; font-variant: small-caps;}
+  >.head {display: block; color: @hotbox-title-color;}
+  >.subtitle {display: block; color: @hotbox-subtitle-color; font-variant: small-caps;}
   &.disabled>.head {
     padding-left: 24px; position: relative;
     &::before {.font-awesome-insert('\f023'; 24px;); left: 0; top: 0;}
   }
+}
+
+@player-badge-blue-inner: #337b94;
+@player-badge-blue-outer: #2c677e;
+@player-badge-blue-shine: #8cc8d2;
+
+@player-badge-red-inner: #94311e;
+@player-badge-red-outer: #822a1e;
+@player-badge-red-shine: #d2968a;
+
+@player-badge-green-inner: #49944a;
+@player-badge-green-outer: #62825e;
+@player-badge-green-shine: #b1d2a3;
+
+.inline-entity(@symbol) {
+  display: inline-block; white-space: nowrap; position: relative; background: @player-badge-blue-inner; border: 1px solid @player-badge-blue-outer; font-weight: normal;
+  color: @zv-color-secondary; text-shadow: 0 1px 0 rgba(0, 0, 0, 0.80); border-radius: 3px; box-shadow: 0 0 1px 1px fade(@player-badge-blue-shine, 80%) inset, 0 1px 0 rgba(0,0,0,.3);
+  cursor: default; padding: 0 4px; margin: 2px;
+
+  &::before {font-family: FontAwesome; content: @symbol; margin-right: 3px;}
+
+  &.red {background: @player-badge-red-inner; border: 1px solid @player-badge-red-outer; box-shadow: 0 0 1px 1px fade(@player-badge-red-shine, 80%) inset, 0 1px 0 rgba(0,0,0,.3);}
+  &.green {background: @player-badge-green-inner; border: 1px solid @player-badge-green-outer; box-shadow: 0 0 1px 1px fade(@player-badge-green-shine, 80%) inset, 0 1px 0 rgba(0,0,0,.3);}
+}
+
+.inline-player {.inline-entity("\f007")};
+.inline-npc {.inline-entity("\f085")};
+
+.framed {
+  border: 6px solid @zv-color-main-dark; box-shadow: 0 0 5px black, inset 0 0 5px black;border-radius: 5px; position: relative;
+  &::after {position: absolute; top: 0; left: 0; height: 100%; width: 100%; content: " "; background: none; border: 1px solid rgba(0,0,0,0.3);}
+  &.cream {border: 6px solid @zv-color-secondary;}
+  &.main {border: 6px solid @zv-color-main;}
+
+  &.mini {border-width: 2px}
+}
+
+.tile {
+  margin: 4px; display: inline-block;
+  .btn;
+
+  >i.fa {
+    display: block; width: 96px; height: 96px; padding: 0; color: @zv-color-secondary;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.80);
+    text-align: center; line-height: 96px; font-size: 72px; cursor: pointer;
+  }
+
 }

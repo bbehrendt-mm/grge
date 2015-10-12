@@ -10,6 +10,7 @@
      * @var int $freecoins
      * @var int $braincoins
      * @var bool $show_shop
+     * @var bool $midness
      */
 ?>
 
@@ -22,6 +23,19 @@
             <li><?=__('Lobby');?></li>
         </ul>
     </div>
+
+    <?php if ($midness) { ?>
+        <div class="cell rw-12">
+            <div class="value-box-light">
+                <div class="center row">
+                    <div class="cell rw-4 rw-md-12"><img class="midness" alt="" src="media/icons/midness.gif" /></div>
+                    <div class="cell rw-4 rw-md-12"><b><?=__('Der absolute Wahnsinn!');?></b></div>
+                    <div class="cell rw-4 rw-md-0"><img class="midness"  alt="" src="media/icons/midness.gif" /></div>
+                </div>
+            </div>
+
+        </div>
+    <?php } ?>
 
     <div class="row" id="cvtarget">
 
@@ -169,6 +183,8 @@
                             <div class="center">
                                 <?php if ($data['locked']) { ?>
                                     <img src="media/icons/lock.gif" alt="x" />
+                                <?php } else if ($midness) { ?>
+                                    <img alt="" src="media/icons/midness.gif">
                                 <?php } else if (count($data['levels']) == 0) { ?>
                                     <img src="media/icons/silverstar.gif" alt="+" />
                                 <?php } elseif (count($data['levels']) + 1 == $data['level']) { ?>

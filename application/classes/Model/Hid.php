@@ -70,10 +70,9 @@ class Model_Hid {
      */
     public function convert($uid = null) {
         /**
-         * @global Model_Player $player
          * @global Model_Game $game
          */
-        global $player, $game;
+        global $game;
 
         $tmp = array();
         foreach ($this->actions as $id => $action) {

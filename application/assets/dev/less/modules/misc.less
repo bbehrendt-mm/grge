@@ -1,0 +1,22 @@
+@import (once) "../zombvival";
+
+@snore-animation-sprite-size: 64px;
+iframe {border: 0 none white}
+
+
+.sleep-animation {height: @snore-animation-sprite-size; width: @snore-animation-sprite-size; background: url('media/img/z-sleep.png') no-repeat; position: absolute;}
+
+img.midness {animation: midness_anim 3s ease infinite;}
+
+@keyframes midness_anim {
+  0%   {transform: scale(1);}
+  8%   {transform: scale(1.2);}
+  10%  {transform: scale(1);}
+  18%  {transform: scale(1.2);}
+  20%  {transform: scale(1);}
+  28%  {transform: scale(1.2);}
+  30%  {transform: scale(1);}
+  38%  {transform: scale(2);}
+  50%  {transform: scale(1);}
+  100% {transform: scale(1);}
+}

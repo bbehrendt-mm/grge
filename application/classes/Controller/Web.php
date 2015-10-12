@@ -7,6 +7,16 @@ class Controller_Web extends Controller {
 
     protected static $allow_etag_cache = true;
 
+    public function action_skin() {
+        $skin = $this->request->param('skin');
+        if ($skin) {
+            setcookie('skin', $skin, 0, URL::base());
+            setcookie('skin_cst', '1', 0, URL::base());
+        }
+        $this->response->body(View::factory('redirect')->set('url',URL::base())->set('path','')->set('sid', $this->session->id()));
+        $this->request->action('noaction');
+    }
+
     public function action_framework() {
         $js = ['jquery.min.js'];
         $css = [];

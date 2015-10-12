@@ -1,1 +1,39 @@
-@import (once) "zombvival";
+@import (once) "../zombvival";
+
+@log-font-color: black;
+
+@log-background: whitesmoke;
+@log-border: #d9c6c6;
+@log-seperator: #d3d3d3;
+@log-radius: 8px;
+@log-timestamp-color: #9b9b9b;
+
+div.log_box {
+  margin-top: 30px !important; border-radius: 8px; background: @log-background; border: 1px solid @log-border;
+  box-shadow: 0 0 4px rgba(0,0,0,0.3); padding: 4px; color: @log-font-color;
+
+  &>.message {
+    padding: 5px 2px;
+    &:not(.pointer) {cursor: default;}
+
+    &:first-child {border-top-right-radius: @log-radius; border-top-left-radius: @log-radius;}
+    &:last-child {border-bottom-right-radius: @log-radius; border-bottom-left-radius: @log-radius;}
+    &+.message {border-top: 1px solid #d3d3d3;}
+
+    &> .timestamp {
+      display: inline-block; width: 80px; padding-left: 5px; text-align: center; position: relative; vertical-align: top; color: @log-timestamp-color;
+      &.new::before {
+        background: @zv-color-main-dark; color: @zv-color-secondary; position: absolute; top: 0; left: -15px; height: 24px; width: 24px;
+        font-family: FontAwesome; font-style: normal; font-weight: normal; content: "\f12a"; font-size: 22px; border-radius: 12px; pointer-events: none;
+      }
+    }
+
+    &>.content {display: inline-block; width: ~"calc(100% - 80px)"; padding-right: 10px; padding-left: 10px; position: relative;}
+    &.point>.content {
+      padding-left: 20px;
+      &::before {
+        position: absolute; top: 0; left: 3px; height: 24px; width: 24px; font-family: FontAwesome; font-style: normal; font-weight: normal;
+        content: "\f0d7"; font-size: 22px; pointer-events: none; color: @log-timestamp-color;}
+    }
+  }
+}

@@ -664,7 +664,7 @@ class Controller_Game extends Controller {
                 /** @var Model_Items_Abstract_Item $item */
                 $parts[] = [
                     'icon' => $item::static_icon(),
-                    'name' => $item::static_name(),
+                    'name' => __($item::static_name()),
                     'addr' => Tool_System::getClassID($item),
                     'count' => $status[0],
                     'max' => $status[1],
@@ -778,6 +778,22 @@ class Controller_Game extends Controller {
         ]);
     }
 
+    public function render_npcs() {
+        /**
+         * @global $player Model_Player
+         */
+        global $player;
+
+        $tmp = [];
+
+        foreach ($player->location()->get_npc() as $id => $npc)
+            /** @var Model_Npc $npc */
+            $tmp[$id] = ['name' => __($npc->name()), 'actions' => $this->prepare_actionlist($npc->convert("npc::$id"))];
+
+        if ($tmp)
+            $this->add_data('location', ['npcs' => $tmp]);
+    }
+
     /**
      * Renderer API
      * @throws Kohana_Exception
@@ -804,6 +820,7 @@ class Controller_Game extends Controller {
         $this->render_rpg();
         $this->render_log();
         $this->render_mp();
+        $this->render_npcs();
         $this->render_specials();
         $this->render_epics();
         $this->render_notifications();

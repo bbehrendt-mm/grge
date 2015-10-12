@@ -1,4 +1,4 @@
-@import (once) "zombvival";
+@import (once) "../zombvival";
 
 @article-segment-seperator-color: #f1ebe8;
 @article-wrap-text-color: #8b8182;
@@ -14,7 +14,7 @@
       border-bottom: 2px solid @article-segment-seperator-color;
       &:not(:first-child) {padding-top: 9px;}
     }
-    &:first-child,&:last-child {color: #8b8182;}
+    &:first-child,&:last-child {color: @article-wrap-text-color;}
     &:first-child {
       text-align: center;
       >h3 {margin: 3px; font-size: 20px; text-shadow: 0 0 6px @article-wrap-text-color;}

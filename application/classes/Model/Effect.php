@@ -160,16 +160,22 @@ class Model_Effect {
      * @param int $count
      * @return Model_Effect
      */
-    public function spawn($item, $count = 1) {
+    public function spawn($item, $count = 1, $find = false) {
         if (!Tool_System::instance_of($item, 'Model_Items_Abstract_Item'))
             return $this;
 
-        return $this->custom(function($p) use ($item, $count) {
+        return $this->custom(function($p) use ($item, $count, $find) {
             /** @var Model_Player $p */
+            $tmp = [];
             if (is_string($item))
                 for ($i = 0; $i < $count; $i++)
-                    $p->location()->inventory()->add(new $item);
-            else $p->location()->inventory()->add($item);
+                    $tmp[] = new $item;
+            else $tmp[] = $item;
+
+            if ($find)
+                Tool_Scripts::place_new_item($tmp);
+            else foreach ($tmp as $item)
+                $p->location()->inventory()->add($item);
         }, static::CFUNC_PROCESS_POST);
     }
 

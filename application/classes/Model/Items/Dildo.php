@@ -13,6 +13,7 @@ class Model_Items_Dildo extends Model_Items_Abstract_Item implements Interface_S
 	protected static $weight = 1;
 
     protected function hid() {
+        /** @global $player Model_Player */
         global $player;
         if ($player->job(1080))
             return parent::hid();
@@ -33,21 +34,43 @@ class Model_Items_Dildo extends Model_Items_Abstract_Item implements Interface_S
                             ->buff('Model_Buffs_Exited', false, 9)
                             ->effect(Model_Player::MP_STAT_ENERGY, 10)
                             ->effect(Model_Player::MP_STAT_SLEEPY, 10)
-                        , null, true)
+                        , null, false)
                     ->decider(function() {
-                        return (mt_rand(0,10) <= 1) ? 1 : 0;
+                        /** @global Model_Game $game */
+                        global $game;
+
+                        if (Tool_Events::current($game->next_tick()) == 'halloween' && Tool_Gambling::random(0.08))
+                            return 2;
+
+                        return Tool_Gambling::random(0.1) ? 1 : 0;
                     })
                     //Success
                     ->effect(
                         Model_Effect::factory()
+                            ->achieve(Model_Achievement::MA_MASOCHIST)
+                            ->buff('Model_Buffs_Exited', false, 9)
+                            ->effect(Model_Player::MP_STAT_ENERGY, 10)
+                            ->effect(Model_Player::MP_STAT_SLEEPY, 10)
                             ->message('Naja, wenn die Welt schonmal untergegangen ist, dann kann man ruhig mal etwas experimentieren. Eigentlich wars sogar ganz angenehm...')
                     )
                     //Failure
                     ->effect(
                         Model_Effect::factory()
                             ->buff('Model_Buffs_Blood', false)
+                            ->achieve(Model_Achievement::MA_MASOCHIST)
+                            ->buff('Model_Buffs_Exited', false, 9)
+                            ->effect(Model_Player::MP_STAT_ENERGY, 10)
                             ->effect(Model_Player::MP_STAT_SLEEPY, 100)
                             ->message('AAAARGH! GOTT VERDAMMT! Eine falsche Handbewegung, schon leckst du wie ein Weinfass mit Einschussloch!')
+                    )
+                    //Horror
+                    ->effect(
+                        Model_Effect::factory()
+                            ->achieve(Model_Achievement::MA_MASOCHIST)
+                            ->achieve(Model_Achievement::MA_HALLOWEEN_15)
+                            ->spawn('Model_Items_Generic_Cursed', 1, true)
+                            ->buff('Model_Buffs_Exited', false, 15)
+                            ->message('Als du gerade konzentriert "bei der Arbeit" bist, hörst du plötzlich hinter dir ein Kinderlachen. Du drehst dich erschrocken um, findest hinter dir jedoch nur einen Teddybären...')
                     )
             );
     }

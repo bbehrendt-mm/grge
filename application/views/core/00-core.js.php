@@ -76,7 +76,7 @@ core = {
             if (!background && !no_clean) game.clean(true);
 
             if (data.version && data.version != core.version) {
-                game.reset();
+                game.reset(true);
                 return;
             } if (callback)
                 callback(data);

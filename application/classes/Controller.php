@@ -122,7 +122,7 @@ abstract class Controller extends Kohana_Controller {
         if (static::$allow_etag_cache) {
             $resource = $this->response->body();
             $etag = md5($resource);
-            $not_modified = (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $etag);
+            $not_modified = $this->request->headers('X-Skip-ETag') != '1' && (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $etag);
 
             if ($not_modified) {
                 header('HTTP/1.1 304 Not Modified');

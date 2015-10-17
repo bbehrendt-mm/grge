@@ -74,7 +74,9 @@ game = {
         } else return cfg;
     },
 
-    reset: function() {
+    reset: function(update) {
+        if (update)
+            game.storage.set('update','force_next_update',true);
         window.location.reload();
     },
 

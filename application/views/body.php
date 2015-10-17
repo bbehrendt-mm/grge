@@ -49,7 +49,8 @@
             <b><?=__('Kontakt'); ?></b><br />
             <a href="mailto: kontakt@ruine.dvspot.de">kontakt@ruine.dvspot.de</a><br />
             <div class="hide-mobile"><img src="media/img/small.png" alt="Zombvival"></div>
-            <i id="main_backend" class="min pointer" style="cursor: pointer">[Back-End]</i>
+            <i id="main_backend" class="min pointer">[Back-End]</i>
+            <i id="main_fdsu" class="min pointer">[FDSU]</i>
         </div>
 
         <div class="cell rw-10 ro-1 center">
@@ -82,6 +83,11 @@
         game.network.load('admin/account/login');
     });
 
+    $('#main_fdsu').click(function() {
+        game.storage.set('update','force_next_update',true);
+        alert('Next CORE update will be forced. Please refresh site.');
+    });
+
     $(window).scroll(function() {
         var scroll = $('body').scrollTop();
         var p = $('#persistent');
@@ -98,8 +104,10 @@
     $.ajax({
         url: 'web/core/?l=' + game.lang(),
         dataType: "script",
+        headers: { 'X-Skip-ETag': game.storage.get('update','force_next_update',false) ? '1' : '0' },
         cache: true,
         success: function() {
+            game.storage.set('update','force_next_update',false);
             game.network.load('landing/redirect');
         }
     }).fail(function( jqxhr, settings, exception ) {

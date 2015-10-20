@@ -77,7 +77,7 @@ game = {
     reset: function(update) {
         if (update)
             game.storage.set('update','force_next_update',true);
-        history.pushState({curl: ''}, '', '?_=all_load_and_no_play_makes_zombvival_dull_game');
+        history.pushState({curl: ''}, '', '?_=all_load_and_no_play_makes_zombvival_a_dull_game');
         window.location.reload();
     },
 

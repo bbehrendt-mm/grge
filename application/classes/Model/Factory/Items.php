@@ -55,14 +55,6 @@ class Model_Factory_Items extends Model_Factory_Abstract {
     }
 
     /**
-     * Returns the percentage table
-     * @return array
-     */
-    public function get() {
-        return $this->equalized;
-    }
-
-    /**
      * Modifies the default dryout factor.
      * @param float $modifier Modification factor
      * @return $this

@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Combat_Actor extends Model {
+class Model_Combat_Actor extends Named {
 
     const MCA_TYPE_PLAYER = 1;
     const MCA_TYPE_ZOMBIE = 2;

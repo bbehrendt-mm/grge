@@ -12,8 +12,10 @@ abstract class Model_Factory_Abstract extends Model {
     protected $equalized = [];
 
     public static function load($location, $group = 'default', $fallback = ['default']) {
-        if ($location === null)
-            return new Model_Factory_Items();
+        if ($location === null) {
+            $s = get_called_class();
+            return new $s();
+        }
         else {
             $fallback = is_array($group) ? $group : array_merge([$group], $fallback);
             $list = Tool_System::instance_of($location, 'Model_Places_Abstract_Place') ? Tool_System::get_class_hierarchy($location) : [$location];
@@ -26,7 +28,15 @@ abstract class Model_Factory_Abstract extends Model {
     }
 
     /**
-     * @param null|string|Model_Factory_Items $elem
+     * Returns the percentage table
+     * @return array
+     */
+    public function get() {
+        return $this->equalized;
+    }
+
+    /**
+     * @param null|string|Model_Factory_Abstract $elem
      * @param $count
      * @return $this
      */

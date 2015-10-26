@@ -42,6 +42,7 @@ class Controller_Test extends Controller {
             if (!Tool_System::instance_of($classpath, 'Model_Places_Abstract_Place')) continue;
 
             echo "<h2>" . implode(' / ',$classpath::get_namelist()) . "</h2>";
+            /** @var Model_Factory_Items $spawn */
             $spawn = Model_Factory_Items::read($classpath);
 
             echo "<table cellpadding='4px'>";
@@ -71,52 +72,58 @@ class Controller_Test extends Controller {
         }
     }
 
-    public function action_combat() {
+    public function action_zspawn() {
+        $path = APPPATH . 'classes/Model/Places';
+        $list = [];
 
-        $battle = Model_Combat_Field::factory()
-            ->add_combatant(1, [
-                Model_Combat_Actor::factory()
-                    ->name('Brainbox', Model_Combat_Actor::MCA_TYPE_PLAYER)
-                    ->add_weapon(new Model_Test_Machete())
-                    ->strength(84, 100, 1)
-                    ->stats(8,12,1,0),
-                Model_Combat_Actor::factory()
-                    ->name('Dog ("Veemon")', Model_Combat_Actor::MCA_TYPE_PET)
-                    ->add_weapon(new Model_Test_Machete())
-                    ->strength(19, 20, 1)
-                    ->stats(10,0,0,0),
-            ])
-            ->add_combatant(2, [
-                Model_Combat_Actor::factory()
-                    ->name('Walker', Model_Combat_Actor::MCA_TYPE_ZOMBIE)
-                    ->add_weapon(new Model_Test_Claw())
-                    ->strength(3,3,4)
-                    ->stats(5,2,0,0),
-                Model_Combat_Actor::factory()
-                    ->name('Shambler', Model_Combat_Actor::MCA_TYPE_ZOMBIE)
-                    ->add_weapon(new Model_Test_Claw())
-                    ->strength(1,1,3)
-                    ->stats(2,0,0,0),
-                Model_Combat_Actor::factory()
-                    ->name('Shambler', Model_Combat_Actor::MCA_TYPE_ZOMBIE)
-                    ->add_weapon(new Model_Test_Claw())
-                    ->strength(1,1,5)
-                    ->stats(2,0,0,0),
-                Model_Combat_Actor::factory()
-                    ->name('Zombie Dog', Model_Combat_Actor::MCA_TYPE_PET)
-                    ->add_weapon(new Model_Test_Claw())
-                    ->strength(15,15,1)
-                    ->stats(6,2,2,0),
-            ])
-            ->init_positions(24, 5)
-            ->begin();
+        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
+        foreach($files as $name => $file) {
+            $filename = $file->getFilename();
+            if ($filename[0] == '.') continue;
+            if (substr($filename, -4) !== '.php') continue;
 
-        $log = $battle->get_scene();
+            $filepath = str_replace('\\', '/', $file->getPathName());
+            $filepath = str_replace(str_replace('\\', '/', $path), '', $filepath);
 
-        echo "<h2>ZombVival Combat System V3 (GRGE_2.1 / Season 8)</h2>";
-        echo "<b>Battle text log below:</b><br />";
-        echo "<pre>$log</pre>";
-        echo "Log end.";
+            /** @var Model_Places_Abstract_Place $classpath */
+            $classpath = 'Model_Places' . substr(str_replace('/', '_', $filepath), 0, -4);
+
+            $reflection = new ReflectionClass($classpath);
+            if (!$reflection->isInstantiable()) continue;
+
+            /** @var Model_Places_Abstract_Place $classpath */
+            if (!Tool_System::instance_of($classpath, 'Model_Places_Abstract_Place')) continue;
+
+            echo "<h2>" . implode(' / ',$classpath::get_namelist()) . "</h2>";
+            /** @var Model_Factory_Zombies2 $spawn */
+            $spawn = Model_Factory_Zombies2::read($classpath);
+
+            echo "<table cellpadding='4px'>";
+            if ($spawn) {
+                $a = 0;
+
+                $list = $spawn->get();
+                arsort($list);
+                /** @var Model_Combat_Zombies_Zombie $zomb */
+                foreach ($list as $zomb => $chance) {
+                    $a += $chance;
+                    $dchance = round($chance * 100, 2);
+                    $str = $zomb::get_strength_quantifier();
+                    $zomb = "[[$zomb]]";
+                    echo "<tr><td>$zomb</td><td>$dchance %</td><td>" . floor($spawn->get_strength(false)/$str) . "</td></tr>";
+                }
+                if (!$a)
+                    echo "<tr><td><b>Empty!</b></td><td></td></tr>";
+                else {
+                    $a = round($a * 100, 10);
+                    echo "<tr><td><b>--- SUM ---</b></td><td>$a %</td><td></td></tr>";
+                    echo "<tr><td><b>Max Str.</b></td><td>" . $spawn->get_strength(false) .  " (" . $spawn->get_max_group_count() . ")</td><td></td></tr>";
+                }
+
+            }
+            else echo "<b>No data!</b>";
+            echo "</table>";
+        }
     }
 
     public function action_labyrinth() {

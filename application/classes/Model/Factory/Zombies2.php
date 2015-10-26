@@ -3,6 +3,7 @@
 class Model_Factory_Zombies2 extends Model_Factory_Abstract {
 
     protected static $base = 'zombies';
+    protected static $expected_result_class = 'Model_Combat_Actor';
 
     private $strength = 0;
     private $strength_factor = 1;
@@ -23,7 +24,6 @@ class Model_Factory_Zombies2 extends Model_Factory_Abstract {
     public function set_strength($str, $max) {
         $this->strength = $str;
         $this->max_adversaries = $max;
-
         return $this;
     }
 
@@ -51,6 +51,11 @@ class Model_Factory_Zombies2 extends Model_Factory_Abstract {
     public function get_strength($include_factor = true) {
         return $this->strength * ($include_factor ? max(0,min(1,$this->strength_factor)) : 1);
     }
+
+    public function get_max_group_count() {
+        return $this->max_adversaries;
+    }
+
 
     /**
      * @param null|int $set

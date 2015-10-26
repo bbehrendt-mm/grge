@@ -759,6 +759,9 @@ class Model_Player extends Model_Cloudshard {
      * @return bool|int
      */
     public function vote_time($vote = null, $lock_duration = null) {
+        /** @global Model_Game $game */
+        global $game;
+
         if ($vote === null)
             return $this->timevote;
 
@@ -769,7 +772,10 @@ class Model_Player extends Model_Cloudshard {
             return false;
 
         $this->timevote = $vote;
-        $this->timelock = time() + $lock_duration;
+
+        if ($game->duration())
+            $this->timelock = time() + $lock_duration;
+
         return true;
     }
 

@@ -39,7 +39,7 @@ class Model_Items_Virtual_Hero_Coach extends Model_Items_Abstract_Virtual {
                                     $p->log()->add('Na, das war ja einfach. Du konntest diese schlappen Zombies einfach umrennen.');
                                 else {
                                     $p->log()->add('Fast hätte es geklappt... leider sind ein paar standhafte Zombies übrig geblieben, die dich jetzt ziemlich grimmig anschauen...');
-                                    $p->location()->zombie_factory()->accumulate_zombies($zombies - $pkills);
+                                    $p->location()->zombie_factory()->accumulation($zombies - $pkills);
                                     $p->location()->break_out(true);
                                 }
                             })

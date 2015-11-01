@@ -50,29 +50,21 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
     public function pretick() {
         //Decay
         if ($this->decay < 1) {
-            $this->set_decay(static::$decay_rate * (1/288) * $this->patchup * (1 + floor($this->zombie_factory->get_zombie_accumulation())/5), false);
+            $this->set_decay(static::$decay_rate * (1/288) * $this->patchup * (1 + floor($this->zombie_factory->accumulation())/5), false);
             $this->set_patchup(static::$decay_exp * (1/288), false);
         }
 
         //Check for zombie attack
         if ($this->get_defense() < 1) {
-            $zombies = $this->zombie_factory->spawn_zombies();
-            $zc = array_reduce($zombies, function($c, $i) {
-                /** @var $i Model_Combat_Zombies_Zombie */
-                return $c + $i->count();
-            }, 0);
-
-            Tool_Scripts::combat([Tool_Scripts::at_location($this->uin), $zombies], true, 10, $this);
-
-            $this->log->add(':zombiestr tauchen auf!', [':zombiestr' => $zc . ' ' . __('Zombies')]);
+            parent::pretick();
             return;
         }
 
         //Accumulate zombies
-        $this->zombie_factory->accumulate_zombies();
+        $this->zombie_factory->dry_spawn();
 
         /** @var Model_Items_Virtual_Epic_Fence $fence */
-        if (($this->get_defense() > 0) && floor($this->zombie_factory->get_zombie_accumulation()) > $this->get_defense() && (!($fence = Tool_Scripts::first_available_item('Model_Items_Virtual_Epic_Fence', false)) || !$fence->get_status())) {
+        if (($this->get_defense() > 0) && floor($this->zombie_factory->accumulation()) > $this->get_defense() && (!($fence = Tool_Scripts::first_available_item('Model_Items_Virtual_Epic_Fence', false)) || !$fence->get_status())) {
             if ($this->has_upgrade("bedrwake")) {
                 $this->remove_upgrades("bedrwake");
                 foreach (Tool_Scripts::at_location($this->uin) as $s_player)
@@ -83,7 +75,7 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
                     }
             }
 
-            $zombies = $this->zombie_factory->release_zombie_population();
+            $zombies = $this->zombie_factory->release();
             $num = array_reduce($zombies, function($c, $i) {
                 /** @var $i Model_Combat_Zombies_Zombie */
                 return $c + $i->count();

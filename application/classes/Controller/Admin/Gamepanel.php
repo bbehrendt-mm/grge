@@ -21,7 +21,7 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
         /** @global Model_Player $player */
         global $player;
 
-        $zombies = $player->location()->zombie_factory()->spawn_zombies(null, true);
+        $zombies = $player->location()->zombie_factory()->spawn(true);
         if ($zombies) Tool_Scripts::combat([Tool_Scripts::at_location($player->location_class()), $zombies], true, 20, $player->location());
     }
 
@@ -43,8 +43,8 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
         if (!$game || !$player) return;
 
         $z = (int)$this->request->post('z');
-        if ($z <> 0)
-            $player->location()->zombie_factory()->accumulate_zombies($z);
+        if ($z >= 0)
+            $player->location()->zombie_factory()->accumulation($z);
 
         $this->render();
     }

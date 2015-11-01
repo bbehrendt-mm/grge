@@ -216,7 +216,7 @@ class Model_Places_Motorhome extends Model_Places_Home {
         }
 
         $player->log()->add('Du drehst den Zündschlüssel und trittst auf das Gaspedal. Mit beeindruckendem Tempo siehst du den Parkplatz im Rückspiegel verschwinden. Hier wirst du wohl nie wieder hinkommen.... gut so!');
-        $this->zombie_factory()->reset_zombie_population();
+        $this->zombie_factory()->accumulation(0);
         $this->drivecontrol(true);
     }
 
@@ -285,6 +285,6 @@ class Model_Places_Motorhome extends Model_Places_Home {
         parent::pretick();
 
         if ($this->is_driving())
-            $this->zombie_factory()->reset_zombie_population();
+            $this->zombie_factory()->accumulation(0);
     }
 }	

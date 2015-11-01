@@ -57,6 +57,12 @@ abstract class Model_Factory_Abstract extends Model {
         return new $s($group, $import_from);
     }
 
+    /**
+     * @param $location
+     * @param string $group
+     * @param array $fallback
+     * @return null|Model_Factory_Abstract
+     */
     public static function read($location, $group = 'default', $fallback = ['default']) {
         $tmp = static::load($location, $group, $fallback);
         return $tmp ? $tmp->equalize()->clean() : null;

@@ -11,7 +11,7 @@ abstract class Model_Combat_Zombies_Zombie extends Model_Combat_Actor {
         /** @global Model_Player $player */
         global $player;
         parent::__construct();
-        $this->pseudoplayer = new Model_Pseudoplayer([Model_Player::MP_STAT_ENERGY => 50], $player->location_class());
+        $this->pseudoplayer = new Model_Pseudoplayer([Model_Player::MP_STAT_ENERGY => 50], $player ? $player->location_class() : -1);
     }
 
     public static function get_strength_quantifier() {

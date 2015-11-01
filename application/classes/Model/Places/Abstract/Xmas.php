@@ -5,15 +5,12 @@ abstract class Model_Places_Abstract_Xmas extends Model_Places_Abstract_Place {
     protected static $outside = true;
     protected static $perpetualDaytime = 'snowynight';
 
-    public function uin($uin = NULL) {
-        if ($uin === NULL) return parent::uin();
-        else $t = parent::uin($uin);
-
-        $this->zombie_factory->updateConfigBase('xmas');
-        return $t;
-    }
 
     public function tick() {
+        /**
+         * @global Model_Game $game
+         * @global Model_Player $player
+         */
         global $game, $player;
 
         parent::tick();

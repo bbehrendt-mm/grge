@@ -95,8 +95,8 @@ class Controller_Test extends Controller {
             if (!Tool_System::instance_of($classpath, 'Model_Places_Abstract_Place')) continue;
 
             echo "<h2>" . implode(' / ',$classpath::get_namelist()) . "</h2>";
-            /** @var Model_Factory_Zombies2 $spawn */
-            $spawn = Model_Factory_Zombies2::read($classpath);
+            /** @var Model_Factory_Zombies $spawn */
+            $spawn = Model_Factory_Zombies::read($classpath);
 
             echo "<table cellpadding='4px'>";
             if ($spawn) {
@@ -109,7 +109,10 @@ class Controller_Test extends Controller {
                     $a += $chance;
                     $dchance = round($chance * 100, 2);
                     $str = $zomb::get_strength_quantifier();
-                    $zomb = "[[$zomb]]";
+
+                    $name = (new $zomb())->name();
+
+                    $zomb = $name ? $name : "[[$zomb]]";
                     echo "<tr><td>$zomb</td><td>$dchance %</td><td>" . floor($spawn->get_strength(false)/$str) . "</td></tr>";
                 }
                 if (!$a)

@@ -25,7 +25,8 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 	protected $inventory;
 
     protected $upgrades = [];
-	
+
+    /** @var Model_Factory_Zombies  */
 	protected $zombie_factory;
 	protected $item_factory;
 	
@@ -143,8 +144,8 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 		$this->inventory = new Model_Inventory;
 
 		$this->log = new Model_Log_Log();
-		$this->zombie_factory = new Model_Factory_Zombies(get_called_class(), $game->config('game.config.spawn'));
-
+		/** @var Model_Factory_Zombies zombie_factory */
+        $this->zombie_factory = Model_Factory_Zombies::read(get_called_class(), $game->config('game.config.spawn'));
         $this->item_factory = Model_Factory_Items::read(get_called_class(), $game->config('game.config.itemset'))->modify_decay($game->config('places.dryout_factor'));
 		
 		if (static::$namelist) {
@@ -198,7 +199,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
          * @global $game Model_Game
          */
         global $game;
-        return ($ignore_zombies || $game->get_player($pid)->can_escape() || $this->zombie_factory->get_zombie_accumulation() <= 0);
+        return ($ignore_zombies || $game->get_player($pid)->can_escape() || $this->zombie_factory->accumulation() <= 0);
 	}
 
     //Enter map
@@ -337,7 +338,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 		if (!$fight) {
 			//Attempt to flee
 			$c = $game->config('zombies.escape_threshold');
-			for ($i = 0; $i < $this->zombie_factory->get_zombie_accumulation(); $i++) $c += mt_rand(0, ceil($this->zombie_factory->get_zombie_accumulation()/5));
+			for ($i = 0; $i < $this->zombie_factory->accumulation(); $i++) $c += mt_rand(0, ceil($this->zombie_factory->accumulation()/5));
 			
 			$c = ceil($c * (1 + ($player->stats_get(Model_Player::MP_STAT_DRUNK) / 100)));
 			
@@ -355,7 +356,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 			if (($player->stats_get(Model_Player::MP_STAT_ENERGY) * $player->stats_get(Model_Player::MP_CHAR_EVASIVENESS)) >= $c) {
 				$c = $this->zombie_pop();
                 $this->zombie_pop(true);
-				$this->zombie_factory()->accumulate_zombies(ceil($c/(1.05 * $player->stats_get(Model_Player::MP_CHAR_BULKYNESS))));
+				$this->zombie_factory()->accumulation(ceil($c/(1.05 * $player->stats_get(Model_Player::MP_CHAR_BULKYNESS))));
 
 				$player->enable_escape();
 				
@@ -370,13 +371,13 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 			} else $player->log()->add(new Model_Log_Types_Text('Fehlgeschlagene Flucht!', 'Der Kampf beginnt!', 'Schreiend und mit geschlossenen Augen rennst du auf die Zombies zu. Die sind von dieser Aktion so überrascht, dass du die meisten von ihnen einfach aus dem Weg stoßen kannst - aber leider nicht alle. Ein Zombie steht dir mitten im Weg, und wirft dich zu Boden als du versuchst, ihn umzurennen. Zwar kannst du schnell wieder aufspringen, bist nun aber von geifernden Zombies umzingelt. Flucht ist keine Option mehr, du wirst kämpfen müssen.'));
 		}
 
-        $zombies = $this->zombie_factory->release_zombie_population();
+        $zombies = $this->zombie_factory->release();
         $zc = 0;
         foreach ($zombies as $zombie) $zc += $zombie->count();
-        $battle = Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $zombies], true, $this->zombie_factory()->get_siege_range(), $this);
+        $battle = Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $zombies], true, 10, $this);
 
         $this->log->add('Du greifst die :zombiestr an, die den Weg versperren!', array(':zombiestr' => $zc . ' ' . __('Zombies')));
-        $this->zombie_factory()->accumulate_zombies($battle->count_group_members(2));
+        $this->zombie_factory()->accumulation($battle->count_group_members(2));
 
 		return true;	
 	}
@@ -405,12 +406,9 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
                 }
 
         } else {
-            $zombies = $this->zombie_factory()->spawn_zombies();
+            $zombies = $this->zombie_factory()->spawn();
             if ($zombies) Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $zombies], true, 20, $this);
         }
-
-		//Accumulate zombies
-		$this->zombie_factory->accumulate_zombies();
 	}
 
 	public function tick() {
@@ -422,8 +420,8 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 	}
 
 	public function zombie_pop($reset = false) {
-		if ($reset) $this->zombie_factory->reset_zombie_population();
-		else return $this->zombie_factory->get_zombie_accumulation();
+		if ($reset) $this->zombie_factory->accumulation(0);
+		else return $this->zombie_factory->accumulation();
         return true;
 	}
 

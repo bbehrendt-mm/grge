@@ -1,173 +1,182 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Factory_Zombies extends Model {
+class Model_Factory_Zombies extends Model_Factory_Abstract {
 
-    private $config = 'default';
-	private $type;
-	private $population;
-		
-	public function __construct($assoc, $config = 'default') {
-		$this->type = $assoc;
-		$this->population = 0;
-        $this->config = $config;
-	}
+    protected static $base = 'zombies';
+    protected static $expected_result_class = 'Model_Combat_Actor';
 
-    public function updateConfigBase($config = 'default') {
-        $this->config = $config;
+    private $strength = 0;
+    private $strength_factor = 1;
+    private $max_adversaries = 1;
+
+    private $chance = 0.1;
+    private $block = 0.5;
+
+    private $range = [10,30];
+
+    private $accumulation = 0;
+
+    /**
+     * @param $str
+     * @param $max
+     * @return Model_Factory_Zombies
+     */
+    public function set_strength($str, $max) {
+        $this->strength = $str;
+        $this->max_adversaries = $max;
+        return $this;
     }
 
     /**
-     * Returns the group size multiplier for this factory
-     * @return number The return value is never smaller than 1
+     * @param $encounter_rate
+     * @param float $block_rate
+     * @return $this
      */
-    private function get_group_multiplier() {
-        /** @global Model_Game $game */
-        global $game;
-        return max(1,$game->duration() / 1440);
+    public function set_chance($encounter_rate, $block_rate = 0.5) {
+        $this->chance = $encounter_rate;
+        $this->block = $block_rate;
+        return $this;
     }
 
     /**
-     * Returns the accumulation size multiplier for this factory
-     * @return number The return value is never smaller than 1
+     * @param $min
+     * @param $max
+     * @return Model_Factory_Zombies
      */
-    private function get_accumulation_multiplier() {
-        /** @global Model_Game $game */
-        global $game;
-        return 1 + 0.25 * ($game->duration() / (576/$game->config('zombies.accum')));
+    public function set_range($min, $max) {
+        $this->range = [$min, $max];
+        return $this;
     }
 
-	/**
-	 * Calculates zombie accumulation
-	 * @param null|int $fixed
-	 * @throws Exception
-	 */
-	public function accumulate_zombies($fixed = null) {
-		if ($fixed === null) {
-			//Get Config
-            if (!$config = Tool_System::config_tree("spawn/{$this->config}", $this->type))
-				throw new Exception('Failed to load zombie spawn configuration (' . $this->config . ')!' );
-			
-			$this->population += (mt_rand(0, $config['accum'])/100) * $this->get_accumulation_multiplier();
-		} else {
-			$this->population += $fixed;
-		}
-	}
-	
-	/**
-	 * Returns the number of accumulated zombies
-	 * @return number
-	 */
-	public function get_zombie_accumulation() {
-		return floor($this->population);
-	}
-	
-	/**
-	 * Resets the number of accumulated zombies
-	 */
-	public function reset_zombie_population() {
-		$this->population = 0;
-	}
-	
-	public function destroy_zombie_population($value) {
-		$this->population -= $value;
-		if ($this->population < 0) $this->population = 0;
-	}
-	
-	/**
-	 * Creates combatants from accumulated zombies and resets zombie counter
-	 * @return null|Model_Combat_Zombies_Zombie[]
-	 */
-	public function release_zombie_population() {
-		
-		if ($tmp = floor($this->population)) {
-			$this->population = 0;
-			return $this->spawn_zombies($tmp);
-		} else return null;
-	}
+    public function get_strength($include_factor = true) {
+        return $this->strength * ($include_factor ? max(0,min(1,$this->strength_factor)) : 1);
+    }
+
+    public function get_max_group_count() {
+        return $this->max_adversaries;
+    }
+
 
     /**
-     * Returns an array with combating zombies from a single configuration case
-     *
-     * @param $data
-     * @param int $multiply
-     * @return null|Model_Combat_Zombies_Zombie[]
+     * @param null|int $set
+     * @return Model_Factory_Zombies|int
      */
-	private function dice($data, $multiply = 1) {
-		//Failsafe
-		if (!is_array($data) || count($data) == 0) return null;
-		
-		$ret = Array();
-		/** @var Model_Combat_Zombies_Ghul[] $instance */
-		foreach ($data as $instance) if (($num = round($multiply * mt_rand($instance["num"][0], $instance["num"][1]))) > 0)
-			$ret[] = $instance['type']::factory()->count($num)->set_distance(mt_rand($instance["distance"][0], $instance["distance"][1]));
-		
-		return $ret;
-	}
+    public function accumulation($set = null) {
+        if ($set === null)
+            return $this->accumulation;
+        else {
+            $this->accumulation = $set;
+            return $this;
+        }
+    }
 
-	public function get_siege_range() {
-		//Get Config
-		if (!$config = Tool_System::config_tree("spawn/{$this->config}", $this->type))
-			throw new Exception('Failed to load zombie spawn configuration (' . $this->config . ')!');
-
-		return (int)$config['range'];
-	}
-
-	/**
-	 * Returns an array with combating zombies, or null if there are no zombies to battle
-	 *
-	 * @param null $number
-	 * @param bool $force
-	 * @return Model_Combat_Zombies_Zombie[]|null
-	 * @throws Exception
-	 */
-	public function spawn_zombies($number = null, $force = false) {
-		//Get Config
-		if (!$config = Tool_System::config_tree("spawn/{$this->config}", $this->type))
-			throw new Exception('Failed to load zombie spawn configuration (' . $this->config . ')!');
-		
-		//No zombies appear
-		if (!$force && $number === null && $config['chance'] < mt_rand(0, 100)) return null;
-		
-		//Spawn fixed number of zombies
-        $ztype = empty($config["siege"]) ? 'Model_Combat_Zombies_Shambler' : $config["siege"];
-		/** @var Model_Combat_Zombies_Ghul $ztype */
-		if ($number !== null) return Array($ztype::factory()->count($number)->set_distance($config['range']));
-		
-		if (count($config["groups"]) == 0) return null;
-		
-		//Calculate zombies
-		return $this->dice($config["groups"][mt_rand(0, count($config["groups"]) - 1)], $this->get_group_multiplier());
-	}
-
-    /**
-     * Returns zombie radar data: Minimal group size, maximal group size, appearance probability per tick, average blocking increase per tick
-     * @return array
-     * @throws Exception When no spawn config exists
-     */
+    /** @deprecated */
     public function get_radar_data() {
-        if (!$config = Tool_System::config_tree("spawn/{$this->config}", $this->type))
-            throw new Exception('Failed to load zombie spawn configuration (' . $this->config . ')!');
+        $min_cl = null;
+        foreach ($this->get() as $zcl => $c)
+            /** @var Model_Combat_Zombies_Zombie $zcl */
+            if (!$min_cl === null || $min_cl > $zcl::get_strength_quantifier())
+                $min_cl = $zcl::get_strength_quantifier();
+        $min_cl = floor($this->strength/$min_cl);
 
-        $sums_min = $sums_max = [];
-        $m = $this->get_group_multiplier();
-        foreach ($config['groups'] as $group) {
-            $sum_min = $sum_max = 0;
-            foreach ($group as $element) {
-                $sum_min += round($element['num'][0] * $m);
-                $sum_max += round($element['num'][1] * $m);
-            }
-            $sums_min[] = $sum_min;
-            $sums_max[] = $sum_max;
+        return [1, $min_cl, $this->chance * (1 - $this->block), $this->chance * $this->block];
+    }
+
+    public function release() {
+        return $this->spawn(true, false, 1, $this->accumulation);
+    }
+
+    public function dry_spawn($force = false) {
+        if (!$this->max_adversaries || !$this->get_strength() || (!$force && (mt_rand()/mt_getrandmax()) < $this->chance))
+            return;
+
+        if ((mt_rand()/mt_getrandmax()) < $this->block)
+            $this->accumulation++;
+    }
+
+    /**
+     * @param bool|false $force
+     * @param bool|true $apply_decay
+     * @param int $strength_modifier
+     * @param null|int $fixed_number
+     * @return Model_Combat_Zombies_Zombie[]|null
+     */
+    public function spawn($force = false, $apply_decay = true, $strength_modifier = 1, $fixed_number = null) {
+        if ($fixed_number === 0 || $fixed_number < 0 || !$this->max_adversaries || !($str = $this->get_strength() * $strength_modifier) || (!$force && (mt_rand()/mt_getrandmax()) < $this->chance))
+            return null;
+
+        if (!$force && !$fixed_number && (mt_rand()/mt_getrandmax()) < $this->block) {
+            $this->accumulation++;
+            return null;
         }
 
-		if (empty($sum_min)) {
-			$sums_min = [0];
-			$sums_max = [0];
-			$config['chance'] = 0;
-		}
+        $army = [];
+        for ($i = 0; $i < $this->max_adversaries; $i++) {
+            $tmp = $this->get_element();
+            if ($tmp) $army[] = $tmp;
+        }
 
-        return [
-            min($sums_min), max($sums_max), $config['chance']/100, ($config['accum']/200) * $this->get_accumulation_multiplier()
-        ];
+        if (!$army) return null;
+        usort($army, function($a, $b) {
+           /**
+            * @var Model_Combat_Zombies_Zombie $a
+            * @var Model_Combat_Zombies_Zombie $b
+            */
+            return $b::get_strength_quantifier() - $a::get_strength_quantifier();
+        });
+
+        $accum_count = 0;
+        $accum_str = $str;
+        $accum_army = [];
+        foreach ($army as $zclass) {
+            /** @var Model_Combat_Zombies_Zombie $zclass */
+            if (!($max_num = floor($accum_str/$zclass::get_strength_quantifier())))
+                continue;
+            $accum_count += ($num = mt_rand(1, $max_num));
+            $accum_str -= $num * $zclass::get_strength_quantifier();
+
+            $accum_army[] = ['count' => $num, 'class' => $zclass];
+        }
+
+        if (!$accum_count)
+            return null;
+
+        if ($fixed_number && $accum_count != $fixed_number) {
+
+            if ($accum_count < $fixed_number) {
+                $f = $fixed_number/$accum_count;
+
+                $accum_count = 0;
+                foreach ($accum_army as &$entry)
+                    $accum_count += ($entry['count'] = ceil($entry['count'] * $f));
+            }
+
+            $i = 0;
+            while ($accum_count > $fixed_number) {
+                if ($i >= count($accum_army))
+                    $i = 0;
+
+                if ($accum_army[$i]['count']) {
+                    $accum_army[$i]['count']--;
+                    $accum_count--;
+                }
+
+                $i++;
+            }
+
+        }
+
+        $ret = [];
+        foreach ($accum_army as $entry)
+            if ($entry['count'] > 0) {
+                /** @var Model_Combat_Zombies_Zombie $z */
+                $z = $entry['class'];
+                $ret[] = $z::factory()->count($entry['count'])->set_distance(mt_rand($this->range[0], $this->range[1]), 0);
+            }
+
+        if ($apply_decay)
+            $this->strength_factor -= $this->strength_factor * (($str - $accum_str)/(6 * $str));
+
+        return $ret;
     }
-}
+}	

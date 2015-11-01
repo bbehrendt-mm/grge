@@ -8,6 +8,7 @@
 @inventory-item-counter-instance: #c60054;
 
 @inventory-item-tag-equipped: #56a1ff;
+@inventory-item-tag-equipped-primary: #6ce3ea;
 @inventory-item-tag-temp: #e80000;
 @inventory-item-tag-event: #b70bed;
 
@@ -48,6 +49,7 @@
       }
 
       &.equipped {.item(@inventory-item-tag-equipped)}
+      &.equipped.primary {.item(@inventory-item-tag-equipped-primary)}
       &.event {border-bottom: 2px solid @inventory-item-tag-event}
       &.temp {border-bottom: 2px solid @inventory-item-tag-temp;}
       &.event.temp {animation: tmp_event 0.5s infinite alternate;}
@@ -67,7 +69,10 @@
   }
 }
 
-div.item {.item()}
+div.item {
+  .item(fade(white, 0%));
+  &.equipped {.item(@inventory-item-tag-equipped)}
+}
 body.q-low .inventory ul li.marked-target {animation: bubble-low 0.3s ease infinite alternate;}
 @flatbox-color-bold-sub: #404346;
 

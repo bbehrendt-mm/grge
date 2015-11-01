@@ -119,8 +119,12 @@ class Controller_Test extends Controller {
                     echo "<tr><td><b>Empty!</b></td><td></td></tr>";
                 else {
                     $a = round($a * 100, 10);
+                    $rad = $spawn->get_radar_data();
+                    $rad[2] *= 100; $rad[3] *= 100;
+                    $rad[4] = $rad[2] + $rad[3];
                     echo "<tr><td><b>--- SUM ---</b></td><td>$a %</td><td></td></tr>";
                     echo "<tr><td><b>Max Str.</b></td><td>" . $spawn->get_strength(false) .  " (" . $spawn->get_max_group_count() . ")</td><td></td></tr>";
+                    echo "<tr><td><b>Radar</b></td><td>{$rad[0]} - {$rad[1]}</td><td>{$rad[4]}% ({$rad[2]}% + {$rad[3]}%)</td></tr>";
                 }
 
             }

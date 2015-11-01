@@ -62,6 +62,7 @@
                 });
 
             sub.append(NF.row()
+                    .append($('<div />').addClass('cell rw-12').text(data.bdy))
                     .append($('<div />').addClass('cell rw-7 rw-md-6 rw-sm-12 padded').append($('<div />').addClass('b').text(<?=__j('Kampfzusammenfassung')?>)))
                     .append($('<div />').addClass('cell rw-5 rw-md-6 rw-sm-12 padded').append(
                         $('<div />').addClass('note').text(<?=__j('Keine Lust auf langweilige Kampfstatistiken? Dann schau dir doch einfach ein Video des Kampfes an!')?>).append(videobtn)

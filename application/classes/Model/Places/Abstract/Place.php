@@ -28,6 +28,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 
     /** @var Model_Factory_Zombies  */
 	protected $zombie_factory;
+    /** @var  Model_Factory_Items */
 	protected $item_factory;
 	
 	protected $log;
@@ -102,6 +103,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
         if ($uin === NULL) return parent::uin();
         else $t = parent::uin($uin);
 
+        /** @global Model_Game $game */
         global $game;
 
         //Register sub locations
@@ -374,9 +376,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
         $zombies = $this->zombie_factory->release();
         $zc = 0;
         foreach ($zombies as $zombie) $zc += $zombie->count();
-        $battle = Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $zombies], true, 10, $this);
-
-        $this->log->add('Du greifst die :zombiestr an, die den Weg versperren!', array(':zombiestr' => $zc . ' ' . __('Zombies')));
+        $battle = Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $zombies], true, 10, $this, 'Du greifst die Zombies an, die den Weg versperren!');
         $this->zombie_factory()->accumulation($battle->count_group_members(2));
 
 		return true;	
@@ -389,8 +389,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
         //Check for zombie attack
         if ($ghuls = $game->get_ghuls($this->uin())) {
 
-            $this->log->add('Einer deiner zombifizierten Freunde greift an!');
-            Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $ghuls], false, 15, $this);
+            Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $ghuls], false, 15, $this, 'Einer deiner zombifizierten Freunde greift an!');
 
             $battle_won = true;
             if ($battle_won)
@@ -407,7 +406,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 
         } else {
             $zombies = $this->zombie_factory()->spawn();
-            if ($zombies) Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $zombies], true, 20, $this);
+            if ($zombies) Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $zombies], true, 20, $this, 'Zombies greifen an!');
         }
 	}
 

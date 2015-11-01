@@ -121,6 +121,9 @@ class Model_Combat_Field {
      * @return Model_Combat_Field
      */
     public function init_positions($avg_distance, $jitter = 3) {
+        if (!count($this->combatants))
+            return $this;
+
         $groups = $this->get_distinct_groups(false);
         if ($groups > 1)
             $avg_distance = max(0,min($this->field[0]/($groups-1), $avg_distance));
@@ -139,6 +142,18 @@ class Model_Combat_Field {
             if (!$combatant->position())
                 $combatant->set_distance($t * $avg_distance, $jitter);
         }
+
+        //Center
+        $p1 = $this->field; $p2 = [0,0];
+        foreach ($this->combatants as $combatant) {
+            $p = $combatant->position();
+            $p1 = [min($p[0], $p1[0]),min($p[1], $p1[1])];
+            $p2 = [max($p[0], $p2[0]),max($p[1], $p2[1])];
+        }
+
+        $p_correct = [($this->field[0] - $p1[0] - $p2[0])/2, ($this->field[1] - $p1[1] - $p2[1])/2];
+        foreach ($this->combatants as $combatant)
+            $combatant->position($p_correct, true);
 
         return $this;
     }

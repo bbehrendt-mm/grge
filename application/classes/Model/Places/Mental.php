@@ -78,9 +78,7 @@ class Model_Places_Mental extends Model_Places_Abstract_Place {
                         ->effect(Model_Effect::factory()
                                 ->custom(function($p) {
                                     /** @var Model_Player $p */
-                                    $this->log()->add('Als du versuchst nach ihm zu greifen, beginnt der Patient markerschütternd zu schreien und greift an!');
-
-                                    Tool_Scripts::combat([[$p], [Model_Combat_Zombies_Patient::factory()]], false, 3, $this);
+                                    Tool_Scripts::combat([[$p], [Model_Combat_Zombies_Patient::factory()]], false, 3, $this, 'Als du versuchst nach ihm zu greifen, beginnt der Patient markerschütternd zu schreien und greift an!');
 
                                     if ($p->alive()) {
                                         $items = array();

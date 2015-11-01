@@ -32,7 +32,7 @@ class Model_Factory_Items extends Model_Factory_Abstract {
      * @return null|Model_Items_Abstract_Item
      */
     public function spawn($force = false, $apply_decay = true, $chances_modifier = 1) {
-        if (!$this->equalized || (!$force && (mt_rand()/mt_getrandmax() > ($this->fillrate * $chances_modifier))) || ($k = $this->get_element()))
+        if (!$this->equalized || (!$force && (mt_rand()/mt_getrandmax() > ($this->fillrate * $chances_modifier))) || !($k = $this->get_element()))
             return null;
 
         if ($apply_decay) {

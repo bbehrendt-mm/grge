@@ -75,9 +75,9 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
         $min_cl = null;
         foreach ($this->get() as $zcl => $c)
             /** @var Model_Combat_Zombies_Zombie $zcl */
-            if (!$min_cl === null || $min_cl > $zcl::get_strength_quantifier())
+            if ($min_cl === null || $min_cl > $zcl::get_strength_quantifier())
                 $min_cl = $zcl::get_strength_quantifier();
-        $min_cl = floor($this->strength/$min_cl);
+        $min_cl = $min_cl > 0 ? floor($this->strength/$min_cl) : 0;
 
         return [1, $min_cl, $this->chance * (1 - $this->block), $this->chance * $this->block];
     }
@@ -102,7 +102,7 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
      * @return Model_Combat_Zombies_Zombie[]|null
      */
     public function spawn($force = false, $apply_decay = true, $strength_modifier = 1, $fixed_number = null) {
-        if ($fixed_number === 0 || $fixed_number < 0 || !$this->max_adversaries || !($str = $this->get_strength() * $strength_modifier) || (!$force && (mt_rand()/mt_getrandmax()) < $this->chance))
+        if ($fixed_number === 0 || $fixed_number < 0 || !$this->max_adversaries || !($str = $this->get_strength() * $strength_modifier) || (!$force && (mt_rand()/mt_getrandmax()) > $this->chance))
             return null;
 
         if (!$force && !$fixed_number && (mt_rand()/mt_getrandmax()) < $this->block) {
@@ -112,11 +112,15 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
 
         $army = [];
         for ($i = 0; $i < $this->max_adversaries; $i++) {
+            /** @var Model_Combat_Zombies_Zombie $tmp */
             $tmp = $this->get_element();
-            if ($tmp) $army[] = $tmp;
+            $army[] = $tmp;
         }
 
-        if (!$army) return null;
+        if ($force && !$army)
+            $army = [Model_Combat_Zombies_Shambler::cls()];
+        elseif (!$army) return null;
+
         usort($army, function($a, $b) {
            /**
             * @var Model_Combat_Zombies_Zombie $a
@@ -138,7 +142,10 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
             $accum_army[] = ['count' => $num, 'class' => $zclass];
         }
 
-        if (!$accum_count)
+        if (!$accum_count && $force) {
+            $accum_count = 1;
+            $accum_army = ['count' => 1, 'class' => Model_Combat_Zombies_Shambler::cls()];
+        } elseif (!$accum_count)
             return null;
 
         if ($fixed_number && $accum_count != $fixed_number) {

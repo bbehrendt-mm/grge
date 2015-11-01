@@ -143,7 +143,7 @@ abstract class Model_Factory_Abstract extends Model {
         $r = (mt_rand()/mt_getrandmax());
         foreach ($this->equalized as $k => $c)
             if ($r < ($accum += $c))
-                return new $k;
+                return $k;
         return null;
     }
 }	

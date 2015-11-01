@@ -355,8 +355,7 @@ class Tool_Scripts
          * @global $player Model_Player
          */
         global $player;
-        Tool_Scripts::combat([$limit_to_player ? [$player] : Tool_Scripts::at_location(), [Model_Combat_Zombies_Shambler::factory()->count($num_zmb)]], $escapeable, $distance, $player->location());
-        $player->location()->log()->add($headline);
+        Tool_Scripts::combat([$limit_to_player ? [$player] : Tool_Scripts::at_location(), [Model_Combat_Zombies_Shambler::factory()->count($num_zmb)]], $escapeable, $distance, $player->location(), $headline);
     }
 
     /**
@@ -432,7 +431,7 @@ class Tool_Scripts
      * @param Model_Places_Abstract_Place null $location
      * @return Model_Combat_Field
      */
-    public static function combat($combatants, $escapeable, $distance = 10, $location = null) {
+    public static function combat($combatants, $escapeable, $distance = 10, $location = null, $title = 'Ein Kampf!', $text = null) {
         /**
          * @global Model_Player $player
          * @global Model_Game $game
@@ -457,7 +456,7 @@ class Tool_Scripts
         $vid = DB::insert('battle', ['gameid','season','fixed','data'])->values([$game->id(), $game->season(), true, gzcompress(serialize($battle->get_scene()->export()), (int)Kohana::$config->load('server.io.performance.compression_level'))])->execute()[0];
 
         //TODO: Actual log message
-        $location->log()->add(new Model_Log_Types_Battle('Ein Kampf!', $vid));
+        $location->log()->add(new Model_Log_Types_Battle($title, $text, $vid));
         $location->log()->add(new Model_Log_Types_Raw('' . $battle->get_scene()));
 
         return $battle;

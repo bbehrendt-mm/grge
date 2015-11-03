@@ -23,8 +23,8 @@ class Model_Items_Meds extends Model_Items_Abstract_Stackable implements Interfa
 
         while (count($this->effects) < 3) {
             $next = mt_rand(1,6);
-            if (!isset($this->effects[$next]))
-                $this->effects[$next] = mt_rand(-20,35);
+            if (!isset($this->effects[$next]) && ($v = mt_rand(-20,35)))
+                $this->effects[$next] = $v;
         }
     }
 
@@ -57,35 +57,7 @@ class Model_Items_Meds extends Model_Items_Abstract_Stackable implements Interfa
     protected function hid() {
         $php53pb = $this;
         return parent::hid()
-            ->add_action('Schlucken', $this->create_action())
-            ->add_action('Beschriften...',
-                Model_Action::factory()
-                    ->argument('Was möchtest du auf das Glas schreiben?')
-                    ->effect(
-                        Model_Effect::factory()
-                            ->custom(function($p, $a) use ($php53pb) {
-                                /**
-                                 * @var Model_Items_Meds $php53pb
-                                 * @var Model_Player $p
-                                 */
-
-                                $php53pb->interaction_label($a);
-                            })
-                    )
-            );
-    }
-
-    public function interaction_label($arg) {
-        /** @global Model_Player $player */
-        global $player;
-
-        $arg = substr(preg_replace('/[^0-9a-zA-ZäöüÄÖÜ\+\-&.,:% _]+/i', ' ', $arg), 0, 24);
-        $this->label = $arg;
-
-        if ($this->label == '') $player->log()->add(new Model_Log_Types_Text(null, null, 'Du hast die alte Beschriftung weggewischt.'));
-        else $player->log()->add(new Model_Log_Types_Text(null, null, 'Du hast die alte Beschriftung weggewischt und ":label" auf die Flasche geschrieben.', array(':label' => $this->label)));
-
-        return true;
+            ->add_action('Schlucken', $this->create_action());
     }
 
     public function label() {
@@ -97,7 +69,7 @@ class Model_Items_Meds extends Model_Items_Abstract_Stackable implements Interfa
         global $player;
 
         $new = (bool)$this->label;
-        $this->label = substr($new_text, 0, 20);
+        $this->label = mb_substr($new_text, 0, 20);
 
         if ($this->label == '') $player->log()->add('Du hast die Beschriftung auf diesem Gegenstand weggewischt.');
         elseif (!$new) $player->log()->add('Du hast diesen Gegenstand mit einer Beschriftung versehen.');

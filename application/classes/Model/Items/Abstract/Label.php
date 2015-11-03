@@ -10,7 +10,7 @@ abstract class Model_Items_Abstract_Label extends Model_Items_Abstract_Item impl
         global $player;
 
         $new = (bool)$this->label;
-        $this->label = substr($new_text, 0, static::$max_label_size);
+        $this->label = mb_substr($new_text, 0, static::$max_label_size);
 
         if ($this->label == '') $player->log()->add('Du hast die Beschriftung auf diesem Gegenstand weggewischt.');
         elseif (!$new) $player->log()->add('Du hast diesen Gegenstand mit einer Beschriftung versehen.');

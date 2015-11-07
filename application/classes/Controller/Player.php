@@ -28,6 +28,24 @@ class Controller_Player extends Controller_Game {
         return $this->japi_data();
     }
 
+    public function japi_favbattle() {
+        /**
+         * @global $game Model_Game
+         * @global $player Model_Player
+         * @var $item Model_Items_Abstract_Item
+         */
+        global $game, $player;
+
+        $video_id = (int)$this->request->post('v');
+        $label = mb_substr($this->request->post('l'), 0, 127);
+
+        if (!$video_id || !$label || !($chk = Model_Combat_Handler::check_battle($video_id)) || ($game->id() != $chk))
+            return $this->render(['success' => 0]);
+
+        Model_Combat_Handler::add_to_gallery($video_id, $player->id(), $label);
+        return $this->render(['success' => 1]);
+    }
+
     public function japi_message() {
         /**
          * @global $game Model_Game

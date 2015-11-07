@@ -49,6 +49,26 @@
                     e.stopPropagation();
                     var popup = core.popup.spawn(644);
 
+                    var fav = (data.gallery || videobtn.data('nogallery')) ? $('<div />').addClass('b').text(<?=__j('Dieses Video befindet sich bereits in deiner Gallerie.')?>) : $('<div />').addClass('btn').text(<?=__j('In meine Kampfgallerie aufnehmen')?>)
+                        .click(function() {
+                            var label = prompt(<?=__j('Bitte gib deinem Kampf einen Titel, unter dem er in deiner Gallerie erscheinen soll.')?>, game.i18n(<?=__j('Kampf #:id')?>, {':id': data.bid}))
+
+                            if (label) {
+                                fav.addClass('disabled');
+
+                                core.command('player/favbattle', {v: data.bid, l: label}, true, function(data) {
+                                    if (data.success) {
+                                        game.render.html.notify('success', <?=__j('Deine Videogallerie wurde aktualisiert!')?>);
+                                        fav.replaceWith($('<div />').addClass('b').text(<?=__j('Dieses Video befindet sich bereits in deiner Gallerie.')?>));
+                                        videobtn.data('nogallery', true);
+                                    } else {
+                                        game.render.html.notify('error', <?=__j('Das Video konnte nicht in deine Gallerie kopiert werden ...')?>);
+                                        fav.removeClass('disabled');
+                                    }
+                                });
+                            }
+                        });
+
                     popup
                         .append($('<iframe>').attr({src: 'embed/battle?v=' + data.bid, sandbox: 'allow-scripts allow-same-origin', seamless: 'seamless', height: 400, width: 640}))
                         .append($('<br />'))
@@ -56,7 +76,7 @@
                             .append($('<div />').addClass('cell rw-12 padded').append(
                                 $('<div />').addClass('note')
                                     .text(<?=__j('Hast du einen besonders beeindruckenden Kampf erlebt, kannst du ihn in deine Kampfgallerie kopieren. Von dort aus kannst du ihn jederzeit auch nach Beendigung des Spiels ansehen, deinen Freunden präsentieren und sogar in andere Webseiten einbinden.')?>)
-                                    .append($('<div />').addClass('btn').text(<?=__j('In meine Kampfgallerie aufnehmen')?>))
+                                    .append(fav)
                             ))
                         )
                 });

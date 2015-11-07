@@ -10,19 +10,16 @@ class Controller_Embed extends Controller {
     }
 
     public function japi_battle() {
-        $video_id = $this->request->post('v');
+        /** @global Model_Game|null $game */
+        global $game;
 
-        if (!$video_id)
+        $video_id = (int)$this->request->post('v');
+        $gallery_id = (int)$this->request->post('p');
+
+        if (!$video_id || !($chk = Model_Combat_Handler::check_battle($video_id)) || (!$game && !$gallery_id) || (!$gallery_id & $game->id() != $chk))
             return $this->render(['video' => null]);
 
-        $data = DB::select('data')->from('battle')->where('bid','=',$video_id)->execute()->get('data');
-        if ($data)
-            $data = unserialize(gzuncompress($data));
-
-        if (!$data)
-            return $this->render(['video' => null]);
-
-        return $this->render(['video' => $data]);
+        return $this->render(['video' => $gallery_id ? Model_Combat_Handler::get_battle_from_gallery($video_id,$gallery_id) : Model_Combat_Handler::get_battle($video_id)]);
     }
 
     public function action_battle() {

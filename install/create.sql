@@ -137,7 +137,7 @@ ALTER TABLE ___PREFIX___achievements
   ADD PRIMARY KEY (uid,gameid,season,aid);
 
 ALTER TABLE ___PREFIX___battle
-  ADD KEY bid (bid);
+ADD PRIMARY KEY (bid), ADD KEY bid (bid);
 
 ALTER TABLE ___PREFIX___battle_gallery
   ADD PRIMARY KEY (`id`);

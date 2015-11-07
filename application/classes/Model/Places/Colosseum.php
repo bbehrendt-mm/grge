@@ -4,6 +4,7 @@ class Model_Places_Colosseum extends Model_Places_Abstract_Place {
 	
 	protected static $name = 'Kolosseum';
 	protected static $description = 'Dieses alterwürdige Gebäude hat jahrhundertelang allen Kriegen und dem Zahn der Zeit widerstanden. Selbst die Zombieapokalypse konnte diesem Gebäude nichts anhaben. Heute wird es von einer geheimnissvollen Organisation als Austragungsort des Zombieturniers verwendet.';
+    protected static $icon = 'colosseum';
 
 	protected static $custom_style = 'colosseum';
 

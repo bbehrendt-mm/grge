@@ -14,7 +14,6 @@
         <array />
       </option>
       <option name="outputFromStdout" value="false" />
-      <option name="passParentEnvs" value="true" />
       <option name="program" value="$ProjectFileDir$/application/assets/dev/compiler.jar" />
       <option name="scopeName" value="Framework JS" />
       <option name="trackOnlyRoot" value="true" />
@@ -34,7 +33,6 @@
         <array />
       </option>
       <option name="outputFromStdout" value="false" />
-      <option name="passParentEnvs" value="true" />
       <option name="program" value="$ProjectFileDir$/application/assets/dev/compiler.jar" />
       <option name="scopeName" value="jQuery Extensions JS" />
       <option name="trackOnlyRoot" value="true" />
@@ -54,7 +52,6 @@
         <array />
       </option>
       <option name="outputFromStdout" value="true" />
-      <option name="passParentEnvs" value="true" />
       <option name="program" value="$ProjectFileDir$/application/assets/dev/core_compiler.bat" />
       <option name="scopeName" value="Core JS" />
       <option name="trackOnlyRoot" value="false" />
@@ -80,7 +77,6 @@
         </array>
       </option>
       <option name="outputFromStdout" value="false" />
-      <option name="passParentEnvs" value="true" />
       <option name="program" value="$ProjectFileDir$/application/assets/dev/less_compiler.bat" />
       <option name="scopeName" value="LESS" />
       <option name="trackOnlyRoot" value="false" />
@@ -100,7 +96,6 @@
         <array />
       </option>
       <option name="outputFromStdout" value="false" />
-      <option name="passParentEnvs" value="true" />
       <option name="program" value="$ProjectFileDir$/application/assets/dev/compiler.jar" />
       <option name="scopeName" value="Framework MODs" />
       <option name="trackOnlyRoot" value="true" />

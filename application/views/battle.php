@@ -75,7 +75,7 @@ if (!isset($path)) $path = '';
                     $.ajax('<?=$path?>japi/embed/battle', {
                         cache: false,
                         type: 'POST',
-                        data: {v: <?=$bid?>},
+                        data: {v: <?=$bid?>, g: <?=$pid === null ? 0 : $pid?>},
                         timeout: 45000
                     }).done(function(data) {
                         receiver(data);

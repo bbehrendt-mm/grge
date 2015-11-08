@@ -32,7 +32,7 @@ class Model_Combat_Handler {
     }
 
     public static function delete_game($game_id, $season) {
-        return DB::delete('battle')->where('bid','IN', static::can_delete(static::by_game($game_id, $season)))->execute();
+        return static::delete(static::can_delete(static::by_game($game_id, $season)));
     }
 
     public static function in_gallery($battle, $user) {
@@ -61,4 +61,35 @@ class Model_Combat_Handler {
         else DB::update('battle_gallery')->set(['label' => $label])->where('video','=',$battle)->where('user','=',$user)->execute();
     }
 
+    private static function delete(array $a) {
+        return $a ? DB::delete('battle')->where('bid','IN', $a)->execute() : 0;
+    }
+
+    public static function delete_from_gallery($gid) {
+        DB::delete('battle_gallery')->where('id','=',$gid)->execute();;
+        static::delete(static::can_delete([$gid]));
+    }
+
+    /**
+     * @return Kohana_Database_Query_Builder_Select
+     */
+    private static function gallery_query() {
+        return DB::select('id', ['user','pid'],'label','bid', 'battle.season',['ranking.gameid','rank_sp'], ['ranking_mp.gameid','rank_mp'])
+            ->from('battle_gallery')
+            ->join('battle','LEFT')->on('bid','=','video')
+            ->join('ranking','LEFT')->on('ranking.gameid','=','battle.gameid')->on('ranking.season','=','battle.season')
+            ->join('ranking_mp','LEFT')->on('ranking_mp.gameid','=','battle.gameid')->on('ranking_mp.season','=','battle.season');
+    }
+
+    public static function gallery_by_player($pid) {
+        return static::gallery_query()->where('user','=',$pid)->execute()->as_array('id');
+    }
+
+    public static function gallery_by_game($gameid) {
+        return static::gallery_query()->where('gameid','=',$gameid)->execute()->as_array('id');
+    }
+
+    public static function gallery_by_id($local_id) {
+        return static::gallery_query()->where('id','=',$local_id)->execute()->as_array('id');
+    }
 }

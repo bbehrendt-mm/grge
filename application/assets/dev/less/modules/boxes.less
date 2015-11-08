@@ -121,6 +121,17 @@
 
 .license {.whitebox;}
 
+.toolbox {
+  .whitebox;
+  &>.row.tools {
+    margin-top: 10px; padding-bottom: 10px; padding-top: 6px; background: mix(@whitebox-color-bg, @zv-color-main, 80%);
+    &>.cell {
+      color: @zv-color-main-dark;
+      &.disabled {opacity: 0.3}
+    }
+  }
+}
+
 @hotbox-title-color: #004352;
 @hotbox-subtitle-color: #7b7b7b;
 

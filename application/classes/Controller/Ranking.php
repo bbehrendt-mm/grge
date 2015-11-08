@@ -570,6 +570,7 @@ class Controller_Ranking extends Controller {
             ->set('cashout', $mcash)
             ->set('mentor_ref', $uid == $user->uid() ? Model_Euser::get_mentoring_ref($uid) : false)
             ->set('allow_mentor', Model_Euser::check_mentor($user->uid(), $uid))
+            ->set('gallery', Model_Combat_Handler::gallery_by_player($uid))
 
             ->render()
         );

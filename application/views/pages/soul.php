@@ -18,6 +18,7 @@
  * @var array|bool $cashout
  * @var string|bool $mentor_ref
  * @var bool $allow_mentor
+ * @var array $gallery
  */
 ?>
 
@@ -77,6 +78,44 @@
         </div>
     </div>
 </div>
+
+<?php if ($gallery || $own_soul) { ?>
+    <div class="row">
+        <div class="cell rw-12 center">
+            <h2><?=__('Kampfgallerie')?></h2>
+            <div class="row">
+                <?php if (!$gallery) { ?>
+                    <div class="cell rw-8 ro-2 rw-lg-10 ro-lg-1 rw-md-12 ro-md-0">
+                        <div class="note"><?=__('Wenn du im Spiel einen beeindruckenden Kampf erlebst, kannst du ihn in deine Gallerie aufnehmen, sodass er hier angezeigt wird. Du kannst in der Gallerie gespeicherte Kämpfe sogar auf anderen Webseiten (z.B. Blogs) einbinden, ähnlich wie ein YouTube Video.');?></div>
+                    </div>
+                <?php } else foreach ($gallery as $g_entry) { ?>
+
+                    <div class="cell rw-4 rw-lg-6 rw-sm-12 padded nopad-sm">
+                        <div class="toolbox">
+                            <b><?=$g_entry['label']?></b><br />
+                            <div class="row center tools">
+                                <div class="cell <?=$own_soul ? 'rw-3' : 'rw-6'?>">
+                                    <i class="fa fa-youtube-play pointer" title="<?=__('Abspielen');?>" data-gallery-action="view" data-gallery="<?=$g_entry['pid']?>" data-videoid="<?=$g_entry['id']?>"></i>
+                                </div>
+                                <div class="cell <?=$own_soul ? 'rw-3' : 'rw-6'?> <?=$g_entry['rank_sp'] || $g_entry['rank_mp'] ? '' : 'disabled'?>">
+                                    <i class="fa fa-list pointer" title="<?=__('Ranking-Eintrag öffnen');?>" data-gallery-action="ranking" data-gameid="<?=$g_entry['rank_mp'] ? $g_entry['rank_mp'] : $g_entry['rank_sp']?>" data-season="<?=$g_entry['season']?>" data-is-mp="<?=$g_entry['rank_mp'] ? '1' : '0'?>"></i>
+                                </div>
+                                <?php if ($own_soul) { ?>
+                                    <div class="cell rw-3">
+                                        <i class="fa fa-edit pointer" title="<?=__('Titel ändern');?>" data-gallery-action="edit" data-videoid="<?=$g_entry['id']?>"></i>
+                                    </div>
+                                    <div class="cell rw-3">
+                                        <i class="fa fa-trash pointer" title="<?=__('Aus Gallerie entfernen');?>" data-gallery-action="delete" data-videoid="<?=$g_entry['id']?>"></i>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+            </div>
+        </div>
+    </div>
+<?php } ?>
 
 <?php if ($cashout || $own_soul || $allow_mentor) { ?>
     <div class="row">
@@ -438,6 +477,61 @@
             }
         });
 
+    });
+
+    $('[data-gallery-action]').qtip(game.render.html.qtip.ingame('top')).click(function() {
+        var alias = $(this);
+        switch ($(this).data('gallery-action')) {
+            case 'view':
+
+                var popup = core.popup.spawn(644);
+
+                popup
+                    .append($('<iframe>').attr({src: 'embed/battle?v=' + $(this).data('videoid') + '&p=' + $(this).data('gallery'), sandbox: 'allow-scripts allow-same-origin', seamless: 'seamless', height: 400, width: 640}))
+                    .append($('<br />'))
+                    .append(NF.row()
+                        .append($('<div />').addClass('cell rw-12 padded').append(
+                            $('<div />').addClass('btn')
+                                .text(<?=__j('Schließen')?>)
+                                .click(function() {
+                                    popup.trigger('unpop');
+                                })
+                        ))
+                    );
+
+
+                break;
+            case 'ranking':
+                window.open('ranking/game/' + $(this).data('season') + '/' +  $(this).data('gameid'));
+                break;
+            case 'edit':
+                var new_label = prompt(<?=__j('Bitte gib einen neuen Titel für dieses Video ein.')?>);
+                if (!new_label) return;
+
+
+                game.network.query('japi/gallery/rename', {
+                    id: alias.data('videoid'),
+                    label: new_label
+                }, function (data) {
+                    if (data.success == '1') {
+                        alias.parents('.toolbox').children('b').text(new_label);
+                        game.render.html.notify('success', <?=__j('Der Eintrag wurde aktualisiert.')?>)
+                    } else game.render.html.notify('error', <?=__j('Beim Aktualisieren des Eintrags ist ein Fehler aufgetreten ...')?>)
+                });
+                break;
+            case 'delete':
+                if (!confirm(<?=__j('Wenn du das Video aus deiner Gallerie entfernst, kann es nicht wiederhergestellt werden. Bist du sicher, dass du dieses Kampfvideo unwiderruflich aus deiner Gallerie löschen möchtest?')?>)) return;
+
+                game.network.query('japi/gallery/delete', {
+                    id: alias.data('videoid')
+                }, function (data) {
+                    if (data.success == '1') {
+                        alias.parents('.toolbox').parent().remove();
+                        game.render.html.notify('success', <?=__j('Der Eintrag wurde entfernt.')?>)
+                    } else game.render.html.notify('error', <?=__j('Beim Löschen des Eintrags ist ein Fehler aufgetreten ...')?>)
+                });
+                break;
+        }
     });
 // ## JS COMPRESS END ## //
 </script>

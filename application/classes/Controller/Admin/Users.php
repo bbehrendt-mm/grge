@@ -11,7 +11,7 @@ class Controller_Admin_Users extends Controller_Admin_Admin {
             $ach[$aid] = Model_Achievement::decode_aid($aid);
 
         $this->add_widget(View::factory('admin/users')
-            ->set('permissions',['ROOT','TRANSLATE','TRANSLATE_MOD','USERLIST','GAMELIST','WHITELIST','CHEAT','RANKING'])
+            ->set('permissions',['ROOT','TRANSLATE','TRANSLATE_MOD','USERLIST','GAMELIST','WHITELIST','CHEAT','RANKING','WIKI'])
             ->set('achievements', $ach)
             ->render());
 

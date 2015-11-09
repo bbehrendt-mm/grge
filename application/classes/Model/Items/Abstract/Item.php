@@ -157,7 +157,7 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 	 * @return string
 	 */
 	public static function static_icon() {
-		return 'items/' . static::static_info('icon');
+		return ($tmp = static::static_info('icon')) ? "items/$tmp" : '';
 	}
 	
 	/**

@@ -29,7 +29,7 @@ class Controller_Admin_Account extends Controller_Admin_Admin {
             return $this->error(\grge\E_SERVER_LOGIN_REJECTED);
 
         if (static::priv_get($user->uid(), $pw))
-            $this->admin_status_set(30);
+            $this->admin_status_set(Kohana::$environment == Kohana::PRODUCTION ? 30 : 120);
 
         if (!$this->admin_status_get(0))
             return $this->error(\grge\E_SERVER_LOGIN_REJECTED);

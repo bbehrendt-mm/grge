@@ -58,6 +58,7 @@ class Model_Achievement extends Model {
     const MA_EPIC_BEGIN = 54;
     const MA_EPIC_END = 55;
     const MA_HALLOWEEN_15 = 56;
+    const MA_PILL_EVENT = 57;
 	
 	const MA_RANKING_SURVIVAL = 1000;
 	const MA_RANKING_HARDCORE = 1100;
@@ -128,6 +129,7 @@ class Model_Achievement extends Model {
             Model_Achievement::MA_EPIC_BEGIN                        => array('name' => "Ambitionierter Bauherr",                'points' => 0,),
             Model_Achievement::MA_EPIC_END                          => array('name' => "Epischer Baumeister",                   'points' => 35,),
             Model_Achievement::MA_HALLOWEEN_15                      => array('name' => "Hast du das auch gehört??",             'points' =>  5,),
+            Model_Achievement::MA_PILL_EVENT                        => array('name' => "Professioneller Pillendreher",          'points' => 500,),
 
 			Model_Achievement::MA_RANKING_SURVIVAL	                => array('name' => "Berühmter Überlebenskünstler",          'points' => 50,),
 			Model_Achievement::MA_RANKING_HARDCORE	                => array('name' => "Berühmter Hardcore-Überlebenskünstler", 'points' => 75,),

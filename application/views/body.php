@@ -50,7 +50,6 @@
             <a href="mailto: kontakt@ruine.dvspot.de">kontakt@ruine.dvspot.de</a><br />
             <div class="hide-mobile"><img src="media/img/small.png" alt="Zombvival"></div>
             <i id="main_backend" class="min pointer">[Back-End]</i>
-            <i id="main_fdsu" class="min pointer">[FDSU]</i>
         </div>
 
         <div class="cell rw-10 ro-1 center">
@@ -81,11 +80,6 @@
 
     $('#main_backend').click(function() {
         game.network.load('admin/account/login');
-    });
-
-    $('#main_fdsu').click(function() {
-        game.storage.set('update','force_next_update',true);
-        alert('Next CORE update will be forced. Please refresh site.');
     });
 
     $(window).scroll(function() {

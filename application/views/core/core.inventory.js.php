@@ -406,7 +406,7 @@
 
         iv_a.append(
             $('<div />')
-                .addClass('row').append($('<div />').addClass('cell rw-12 padded').append($('<div />').addClass('weightbar').append($('<div />').css('width', (100*data.weight[0]/data.weight[1]) + '%'))))
+                .addClass('row').append($('<div />').addClass('cell rw-12 padded').append($('<div />').addClass('weightbar').append($('<div />').css('width', (100*Math.max(0,Math.min(1,data.weight[0]/data.weight[1])) ) + '%'))))
                 .attr('title','-').qtip(game.render.html.qtip.ingame('bottom', {
                     render: function(event,api) {
                         var content = $(this).find('.qtip-content').empty();

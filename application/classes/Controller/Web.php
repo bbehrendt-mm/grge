@@ -27,14 +27,20 @@ class Controller_Web extends Controller {
         $this->response->body(View::factory('framework')->set('js',$js)->set('css',$css)->set('sid', $sid));
     }
 
-    private function compile_js_module($name, $debug = false) {
+    private function compile_js_module($name, $debug = false, $base_module = []) {
         if ($debug)
             I18n::set_readonly_flag();
         $buffer = '';
         $version = Kohana::$config->load('build.version');
-        foreach (scandir(APPPATH . "views/$name/") as $f)
+
+        foreach ($base_module as $mod) {
+            $jv = JView::factory("scripts/base/$mod")->set('version_data', $version);
+            $buffer .= $debug ? $jv->disable_compression() : $jv;
+        }
+
+        foreach (scandir(APPPATH . "views/scripts/$name/") as $f)
             if (!in_array($f, ['.','..'])) {
-                $jv = JView::factory("$name/" . str_replace('.php','',$f))->set('version_data', $version);
+                $jv = JView::factory("scripts/$name/" . str_replace('.php','',$f))->set('version_data', $version);
                 $buffer .= $debug ? $jv->disable_compression() : $jv;
             }
 

@@ -6,7 +6,12 @@
 
 (function() {
     Battle = function(canvas, data) {
-        this.stage = new createjs.Stage(canvas);
+        var alias = this;
+        CanvasAnimationModule.call(this, canvas, 60, 'media/icons/battle/',
+            function() {alias.performZSorting();},
+            function() {alias.initUI(); alias.proceed();}
+        );
+
         this.data = data;
         this.combatants = {};
         this.field = [64,40];
@@ -18,37 +23,9 @@
 
         this.card = null;
         this.card_target = null;
-
-        this.ressources = [];
-        this.waiting = false;
-        this.loadstate = 0;
-
-        this.state = 'created';
-
-        this.callback_start = function() {};
-        this.callback_finish = function() {};
-
-        var alias = this;
-        createjs.Ticker.setFPS(60);
-        createjs.Ticker.addEventListener("tick", function() {
-            alias.performZSorting();
-        });
-        createjs.Ticker.addEventListener("tick", this.stage);
     };
 
-    Battle.prototype.events = {};
-
-    Battle.prototype.on = function(event, f) {
-        switch (event) {
-            case 'start':
-                this.callback_start = f;
-                break;
-            case 'finish':
-                this.callback_finish = f;
-                break;
-        }
-        return this;
-    };
+    Battle.prototype = Object.create(CanvasAnimationModule.prototype);
 
     Battle.prototype.checkNewChar = function(id, set_false) {
         if (set_false)
@@ -79,6 +56,8 @@
         this.splatlayer.cache(0,0,640,400,1);
     };
 
+    Battle.prototype.events = {};
+
     Battle.prototype.transform = function(pos) {
         return {x: Math.round(pos.x * 9) + 32,y: Math.round(pos.y * 9) + 20};
     };
@@ -91,14 +70,6 @@
 
     Battle.prototype.setDelay = function(delay) {
         this.idle = delay;
-    };
-
-    Battle.prototype.begin = function() {
-        if (this.loadstate)
-            this.waiting = true;
-        else
-            this.callback_start();
-            this.proceed();
     };
 
     Battle.prototype.pause = function() {

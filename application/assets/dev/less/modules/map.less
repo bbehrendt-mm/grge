@@ -5,6 +5,8 @@ canvas.map {position: absolute; top: 0; left: 0; bottom: 0; right: 0;}
 div.map-header {position: absolute; left: 0; top: 20px; width: 100%; text-align: center; pointer-events: none; opacity: 0.3; font-variant: small-caps; font-size: 36px;}
 div.map-close {position: absolute; right: 0; top: 0; width: 32px; text-align: center;}
 
+@map_panel_color: black;
+@map_panel_text: white;
 
 div.map {
   &.location {
@@ -25,7 +27,10 @@ div.map {
   }
 
   &.panel {
-    .flatbox;
+    .incomplete-border-definition(1px solid fade(@map_panel_color, 60%), true, true, false, true);
+    position: absolute; pointer-events: none; bottom: 0; left: 30%; right: 30%; background: fade(@map_panel_color, 50%); color: @map_panel_text; box-shadow: 0 0 8px fade(@map_panel_color, 40%);
+    background: linear-gradient(to bottom, fade(@map_panel_color, 50%) 0%,fade(@map_panel_color, 60%) 100%);
+    h3 {.center; margin: 2px; padding: 0}
     img + * {margin-left: 3px;}
   }
 }

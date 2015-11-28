@@ -34,7 +34,7 @@ class Controller_Web extends Controller {
         $version = Kohana::$config->load('build.version');
 
         foreach ($base_module as $mod) {
-            $jv = JView::factory("scripts/base/$mod")->set('version_data', $version);
+            $jv = JView::factory("scripts/base/$mod.js")->set('version_data', $version);
             $buffer .= $debug ? $jv->disable_compression() : $jv;
         }
 
@@ -47,24 +47,26 @@ class Controller_Web extends Controller {
         return $buffer;
     }
 
-    public function action_core() {
+    private function modscript($name, $base = []) {
         $this->response->headers('Content-Type', 'application/javascript; charset=utf-8');
 
         $path = $this->request->param('id');
         if (!$path || $path == 'deploy')
-            $this->response->body($this->compile_js_module('core', false));
+            $this->response->body($this->compile_js_module($name, false, $base));
         elseif ($path == 'debug' && Kohana::$environment === Kohana::DEVELOPMENT)
-            $this->response->body($this->compile_js_module('core', true));
+            $this->response->body($this->compile_js_module($name, true, $base));
+    }
+
+    public function action_core() {
+        $this->modscript('core');
     }
 
     public function action_battle() {
-        $this->response->headers('Content-Type', 'application/javascript; charset=utf-8');
+        $this->modscript('battle', ['canvasModule']);
+    }
 
-        $path = $this->request->param('id');
-        if (!$path || $path == 'deploy')
-            $this->response->body($this->compile_js_module('battle', false));
-        elseif ($path == 'debug' && Kohana::$environment === Kohana::DEVELOPMENT)
-            $this->response->body($this->compile_js_module('battle', true));
+    public function action_map() {
+        $this->modscript('map', ['canvasModule']);
     }
 
     public function action_body() {

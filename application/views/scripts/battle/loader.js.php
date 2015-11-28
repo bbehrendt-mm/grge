@@ -1,59 +1,5 @@
 (function() {
 
-    Battle.prototype.queueResource = function(name, path) {
-        if (this.ressources[name]) return;
-
-        this.loadstate++;
-
-        this.ressources[name] = new Image();
-
-        var alias = this;
-        this.ressources[name].onload = function() {
-            alias.loadstate--;
-            if (!alias.loadstate) {
-                alias.initUI();
-                if (alias.waiting)
-                    alias.begin();
-            }
-        };
-
-        this.ressources[name].src = /^(\w*?):\/\//.test(path) ? path : ('../' + path);
-    };
-
-    Battle.prototype.addResource = function() {
-        for (var i = 0; i < arguments.length; i++) {
-            var name = arguments[i];
-            this.queueResource(name, 'media/icons/battle/' + name);
-        }
-    };
-
-    Battle.prototype.getResource = function(name) {
-        return this.ressources[name];
-    };
-
-    Battle.prototype.getAnimation = function(name, sizeX, sizeY) {
-        var spriteSheet = new createjs.SpriteSheet({
-            images: [this.getResource(name)],
-            frames: {width: sizeX, height: sizeY,  count:32, regX: 0, regY:0, spacing:0, margin:0}
-        });
-
-        return new createjs.Sprite(spriteSheet);
-    };
-
-    Battle.prototype.createCentralizedBitmapContainer = function(path) {
-        var bmp = this.getResource(path);
-
-        var bitmap = new createjs.Bitmap(bmp);
-        bitmap.x = -Math.round(bmp.width/2);
-        bitmap.y = -Math.round(bmp.height/2);
-
-        var container = new createjs.Container();
-        container.addChild(bitmap);
-        container.cache(bitmap.x, bitmap.y, bmp.width, bmp.height, 1);
-
-        return container;
-    };
-
     Battle.prototype.load = function() {
         var alias = this;
         this.addResource('field.png', 'grunge.png', 'resist.gif', 'damage.gif', 'kill.gif', 'health.gif', 'arrow_r.gif');
@@ -109,5 +55,6 @@
 
         });
     };
+
 
 })();

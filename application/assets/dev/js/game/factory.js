@@ -31,11 +31,15 @@ NF.cell = function(pad, rw, ro, classes) {
 
 NF.n = function(node, classes, content) {
     var tmp = $('<' + node + ' />').addClass(classes ? classes : '');
-    if (!content) return tmp;
+    if (typeof content == 'undefined') return tmp;
     else if (typeof content == 'string') return tmp.text(content);
     else return tmp.append(content);
 };
 
 NF.separator = function(n) {
     return NF.n(n ? n : 'span', 'separator');
+};
+
+NF.img = function(src) {
+    return NF.n('img').attr('src', src);
 };

@@ -72,14 +72,13 @@ class Model_Places_Xmasfair extends Model_Places_Abstract_Xmas {
         return $this->status;
     }
 
-    public function interaction_xmas() {
+    public function interaction_xmas($project) {
         /**
          * @global Model_Game $game
          * @global Model_Player $player
          */
         global $game, $player;
 
-        $project = Request::current()->post('project');
         if (!isset($this->status[$project]))
             return false;
 
@@ -99,6 +98,8 @@ class Model_Places_Xmasfair extends Model_Places_Abstract_Xmas {
                 $this->status['mistle']['current'][1] += 3;
             }
         } else $player->log()->add(new Model_Log_Types_Text(null, null, 'Du hast nicht genug Material, um den Baum zu dekorieren.'));
+
+        return true;
     }
 
     public function get_decoration_value() {
@@ -106,6 +107,6 @@ class Model_Places_Xmasfair extends Model_Places_Abstract_Xmas {
         foreach ($this->status as $data)
             $p += $data['current'][0] * $data['points'];
 
-        return floor($p/4);
+        return $p;
     }
 }	

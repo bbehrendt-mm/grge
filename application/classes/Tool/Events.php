@@ -22,7 +22,7 @@ class Tool_Events {
             return 'halloween';
 
         //Detect christmas (6.12. - 26.12.)
-        if ( static::get(static::TE_MONTH, $time) == 12 && static::get(static::TE_DAY, $time) >= 6 && static::get(static::TE_DAY, $time) <= 26 )
+        if (static::get(static::TE_MONTH, $time) == 12 && static::get(static::TE_DAY, $time) >= 6 && static::get(static::TE_DAY, $time) <= 26 )
             return 'xmas';
 
         //Detect new year (30.12. - 02.01.)

@@ -1,0 +1,35 @@
+@import (once) "../zombvival";
+
+@zv-background-color: #100602;
+@zv-content-background-size: 275px;
+body {background: url(@zv-background) center bottom/100% auto no-repeat fixed @zv-background-color;}
+
+@zv-color-main: #ba1c00;
+@zv-color-secondary: white;
+
+@buttons-main-background-color: @zv-color-main;
+#wrapper {box-shadow: 0 0 40px 10px black; background: url(@zv-content-background) repeat-x scroll center bottom, url('media/img/content-background.jpg') repeat;}
+
+#content > h1:first-child {background: url(media/img/header-background.png) repeat}
+#disclaimer {background: rgba(0,0,0,0.75); margin-top: 10px; border-radius: 5px;}
+
+@inventory-item-filter: saturate(125%) contrast(125%);
+
+#snowflakeContainer {position: absolute; left: 0; top: 0;}
+.snowflake {
+  padding-left: 15px; font-family: Cambria, Georgia, serif; font-size: 14px; line-height: 24px; position: fixed;
+  color: #FFFFFF; user-select: none; z-index: 1000; pointer-events: none;
+  &:hover {cursor: default;}
+}
+
+@locationbox-outside-finish: #95b1ba;
+
+.location_box.custom.custom-xmas {
+  background: url('media/img/xmas_location_top.jpg') bottom left no-repeat, black; padding-bottom: 0; color: white;
+  >h2 {border-bottom: solid 2px #F88E00; color: #F88E00;}
+  .widget {color: black; background: linear-gradient(to bottom, rgba(250, 250, 250, 0.75) 0%, rgba(250, 250, 250, 0.90) 100%); box-shadow: 0 0 4px rgba(255,255,255,0.8); .incomplete-border-definition(2px solid #d0d0d0, true, true, false, true);}
+}
+
+.action_box.custom.custom-xmas {
+  border-bottom: 4px solid black; background: url("media/img/locations/colosseum_bottom.jpg")
+}

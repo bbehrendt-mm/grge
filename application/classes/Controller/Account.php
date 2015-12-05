@@ -268,7 +268,14 @@ class Controller_Account extends Controller {
      */
     public function action_license() {
         $this->add_widget(View::factory('pages/license')
-            ->set('data', Kohana::$config->load('licenses'))
+            ->set('data', array_filter((array)Kohana::$config->load('licenses'), function($entry) {
+                if (!isset($entry['skin'])) return true;
+
+                if (is_array($entry['skin']) && !in_array(Tool_Events::current_skin(), $entry['skin'])) return false;
+                if (is_string($entry['skin']) && $entry['skin'] != Tool_Events::current_skin()) return false;
+
+                return true;
+            }))
             ->render());
         $this->render();
     }

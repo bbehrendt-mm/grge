@@ -616,6 +616,71 @@
             )
         });
 
+        if (data.xmasfair) {
+            actions.append(
+                $('<div />').addClass('cell rw-12 padded justify').append(core.snippets.button(<?=__j('Weihnachtsbaum schmücken')?>, function() {
+                    var inner;
+                    var popup = core.popup.spawn(515, 772).append($('<div />').css({height: 768, width: 511, background: 'url("media/img/tree.jpg") center/cover no-repeat'}).append(inner = $('<div />').addClass('row')));
+
+                    inner.append($('<div />').addClass('row').append($('<div />').addClass('cell rw-12 padded').append(
+                        $('<div />').addClass('note')
+                            .append($('<span />').text(<?=__j('Aktueller Dekorationswert:')?> + ' '))
+                            .append($('<b />').text(data.xmasfair.deco))
+                            .append($('<img />').attr('src', 'media/icons/deco_event.gif'))
+                            .append($('<br />'))
+                            .append($('<span />').text(<?=__j('Wenn du dir bei der Dekoration des Weihnachtsbaums Mühe gibst, wirst du beim Verlassen des Weihnachtsmarktes BrainCoins sowie ein paar nützliche Geschenke erhalten.')?>))
+                    )));
+
+                    $.each(data.xmasfair.tree, function(k, v) {
+                        var req;
+
+                        inner.append(
+                            $('<div />').addClass('cell rw-6 rw-md-12').append(
+                                $('<div />').addClass(v.current[0] >= v.current[1] ? 'hotbox disabled' : 'hotbox')
+                                    .append($('<b />').text(v.name).css({'min-height': 54, display: 'block'}))
+
+                                    .append(
+                                        $('<div />').addClass('row')
+                                            .append($('<div />').addClass('cell rw-6 padded').text(<?=__j('Info')?>))
+                                            .append($('<div />').addClass('cell rw-6 padded').text(<?=__j('Erfordert')?>))
+                                            .append($('<div />').addClass('cell rw-6 details')
+                                                .append(
+                                                    $('<div />').addClass('group').append(
+                                                        $('<img />').attr('src', v.points > 0 ? 'media/icons/deco_event.gif' : 'media/icons/deco_neutral.gif')
+                                                    ).append(
+                                                        $('<span />').append($('<b />').text(v.points))
+                                                    )
+                                                ).append(
+                                                    $('<div />').addClass('group').append(
+                                                        $('<img />').attr('src', v.current[0] >= v.current[1] ? 'media/icons/lock.gif' : 'media/icons/plus.gif')
+                                                    ).append(
+                                                        $('<span />').append($('<b />').addClass(v.current[0] < v.current[1] ? 'green' : 'red').text(v.current[0])).append($('<span />').text('/' + v.current[1]))
+                                                    )
+                                                )
+                                            )
+                                            .append(req = $('<div />').addClass('cell rw-6 details'))
+                                    ).css({opacity: 0, position: 'relative', top: 25}).delay(Math.random() * 1500 + 1250).animate({opacity: 1, top: 0}, 500)
+                            ).click(function() {
+                                core.command('location/legacy', {'do': 'xmas', 'arg': k});
+                                popup.trigger('unpop');
+                            })
+                        );
+
+                        $.each(v.requires, function(ki,vi) {
+                            req.append(
+                                $('<div />').addClass('group').append(
+                                    vi.icon ? $('<img />').attr('src', 'media/icons/' + vi.icon + '.gif') : $('<img />').addClass('fake').attr('src', 'media/icons/fake_h.gif')
+                                ).append(
+                                    $('<span />').append($('<b />').addClass(vi.have >= vi.count ? 'green' : 'red').text(vi.have)).append($('<span />').text('/' + vi.count))
+                                )
+                            );
+                        });
+                    });
+
+                }).addClass('purple'))
+            )
+        }
+
         actions.append(
             $('<div />').addClass('cell padded justify rw-' + (data.doorways ? (data.lomap ? '8' : '10') : '12')).append(
                 data.radar.zombies > 0 ? $('<div />').addClass('note margin-bottom').text(data.hideout ? <?=__j('Zombies blockieren den Weg. Besiege sie, um diesen Ort verlassen zu können.')?> : <?=__j('Zombies blockieren den Weg. Besiege sie oder versuche zu fliehen, um diesen Ort verlassen zu können.')?>) : false
@@ -636,6 +701,11 @@
                         esc_popup.append(
                             NF.row().append(title = $('<div />').addClass('cell rw-12 padded').text(<?=__j('Du kannst von diesem Ort aus einen anderen Teil der Spielwelt betreten.')?>))
                         );
+
+                        if (data.xmasfair)
+                            esc_popup.append(
+                                $('<div />').addClass('row').append(title = $('<div />').addClass('cell rw-12 padded b text-red').text(<?=__j('Wenn du den Weihnachtsmarkt verlässt, kannst du nicht mehr zurückkehren. Falls du noch über weitere Tickets verfügst, werden diese dich zu anderen Weihnachtsmärkten bringen. Event-Gegenstände werden bei der Reise aus deinem Inventar entfernt. ')?>))
+                            );
 
                         var destination = $('<select />');
                         $.each(data.doorways, function(id, meta) {

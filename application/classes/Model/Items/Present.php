@@ -79,8 +79,8 @@ class Model_Items_Present extends Model_Items_Abstract_Item implements Interface
 	}	
 	
 	public function icon() {	
-		if ($this->is_awesome) return  'present/big';
-		else return  'present/small';
+		if ($this->is_awesome) return  'items/present/big';
+		else return  'items/present/small';
 	}	
 	
 	public function open($player = null) {

@@ -99,4 +99,94 @@ return array(
             'url' => 'http://creativecommons.org/licenses/by/3.0/'
         ]
     ],
+    [
+        'title' => 'Snowy Christmas Eve photo. Image №37921',
+        'skin' => 'xmas',
+        'url' => 'http://www.torange.us/Holidays/christmas/Snowy-Christmas-Eve-37921.html',
+        'local' => 'media/img/background.jpg',
+        'author' => [
+            'name' => 'image Bank Torange.biz',
+            'url' => 'http://www.torange.us/',
+        ],
+        'license' => [
+            'short' => 'CC BY 4.0',
+            'long' => 'Creative Commons Attribution 4.0 International',
+            'url' => 'http://creativecommons.org/licenses/by/4.0/'
+        ]
+    ],
+    [
+        'title' => 'brilliant yellow photo. Image №37820',
+        'skin' => 'xmas',
+        'url' => 'http://www.torange.us/Backgrounds-textures/abstract-backgrounds/brilliant-yellow-37820.html',
+        'local' => 'media/img/content-background.jpg',
+        'author' => [
+            'name' => 'image Bank Torange.biz',
+            'url' => 'http://www.torange.us/',
+        ],
+        'license' => [
+            'short' => 'CC BY 4.0',
+            'long' => 'Creative Commons Attribution 4.0 International',
+            'url' => 'http://creativecommons.org/licenses/by/4.0/'
+        ]
+    ],
+    [
+        'title' => 'Christmas decoration photo. Image №15096',
+        'skin' => 'xmas',
+        'url' => 'http://www.torange.us/Holidays/christmas/Christmas-decoration-15096.html',
+        'local' => 'media/img/head.jpg',
+        'author' => [
+            'name' => 'image Bank Torange.biz',
+            'url' => 'http://www.torange.us/',
+        ],
+        'license' => [
+            'short' => 'CC BY 4.0',
+            'long' => 'Creative Commons Attribution 4.0 International',
+            'url' => 'http://creativecommons.org/licenses/by/4.0/'
+        ]
+    ],
+    [
+        'title' => 'A Christmas Tree at Home',
+        'skin' => 'xmas',
+        'url' => 'https://commons.wikimedia.org/wiki/File:Y_Christmas_Tree_2.jpg',
+        'local' => 'media/img/tree.jpg',
+        'author' => [
+            'name' => 'Yatharth',
+            'url' => 'https://commons.wikimedia.org/wiki/User:Yatharth',
+        ],
+        'license' => [
+            'short' => 'CC BY-SA 3.0',
+            'long' => 'Creative Commons Attribution-ShareAlike 3.0 Unported',
+            'url' => 'https://creativecommons.org/licenses/by-sa/3.0/'
+        ]
+    ],
+    [
+        'title' => 'Un champ enneigé en Belgique.',
+        'skin' => 'xmas',
+        'url' => 'https://commons.wikimedia.org/wiki/File:Snowy_field_belgium_2006.JPG',
+        'local' => 'media/img/location_outside.png',
+        'author' => [
+            'name' => 'Egien',
+            'url' => 'https://commons.wikimedia.org/wiki/File:Snowy_field_belgium_2006.JPG',
+        ],
+        'license' => [
+            'short' => 'CC BY 2.5',
+            'long' => 'Creative Commons Attribution 2.5 Generic',
+            'url' => 'https://creativecommons.org/licenses/by/2.5/deed.en'
+        ]
+    ],
+    [
+        'title' => 'A Christmas market in Toulouse, France.',
+        'skin' => 'xmas',
+        'url' => 'https://commons.wikimedia.org/wiki/File:Toulouse_Christmas_market_DSC02662.jpg',
+        'local' => 'media/img/xmas_location_top.jpg',
+        'author' => [
+            'name' => 'David Monniaux',
+            'url' => 'https://commons.wikimedia.org/wiki/User:David.Monniaux',
+        ],
+        'license' => [
+            'short' => 'CC BY-SA 3.0',
+            'long' => 'Creative Commons Attribution-ShareAlike 3.0 Unported',
+            'url' => 'https://creativecommons.org/licenses/by-sa/3.0/'
+        ]
+    ]
 );

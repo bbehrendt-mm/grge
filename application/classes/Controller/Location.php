@@ -186,4 +186,17 @@ class Controller_Location extends Controller_Game {
 
         $this->japi_data();
     }
+
+    public function japi_legacy() {
+        /**
+         * @global $player Model_Player
+         */
+        global $player;
+
+        $action = $this->request->post('do');
+        $arg = $this->request->post('arg');
+
+        $player->location()->interact($action, $arg);
+        $this->japi_data();
+    }
 }

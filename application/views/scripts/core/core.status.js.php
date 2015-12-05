@@ -210,7 +210,7 @@
                             ).append(
                                 NF.row().append(make_bar(v,bars[v].value,bars[v].buffs, true))
                             ).append(
-                                $('<div />').addClass('note center').text(game.i18n(<?=__j('Aktueller Wert: :num')?>, {':num': Math.round(100*bars[v].value)/100}))
+                                $('<div />').addClass('info center').text(game.i18n(<?=__j('Aktueller Wert: :num')?>, {':num': Math.round(100*bars[v].value)/100}))
                             ).append(
                                 $('<span />').addClass('separator')
                             ).append(

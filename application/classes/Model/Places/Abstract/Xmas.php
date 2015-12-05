@@ -5,6 +5,8 @@ abstract class Model_Places_Abstract_Xmas extends Model_Places_Abstract_Place {
     protected static $outside = true;
     protected static $perpetualDaytime = 'snowynight';
 
+    protected static $custom_style = 'xmas';
+
 
     public function tick() {
         /**
@@ -39,15 +41,15 @@ abstract class Model_Places_Abstract_Xmas extends Model_Places_Abstract_Place {
         $deco = $game->location($game->map($this->uin)->resolve_fixed_id(1))->get_decoration_value();
         if ($deco > 0) {
             $user->award_coins($player->id(), $deco);
-            $player->log()->add(new Model_Log_Types_Text(null, null, 'Da du den Weihnachtsbaum so hübsch geschmückt hast, erhälst du als Belohnung :num universelle Seelenpunkte sowie ein paar Geschenke. Herzlichen Glückwunsch und Frohe Weihnachten!', array(':num' => $deco)));
+            $player->log()->add(new Model_Log_Types_Text(null, null, 'Da du den Weihnachtsbaum so hübsch geschmückt hast, erhälst du als Belohnung :num BrainCoins sowie ein paar Geschenke. Herzlichen Glückwunsch und Frohe Weihnachten!', array(':num' => $deco)));
 
-            $n2 = floor($deco/5);
-            $n1 = $deco - $n2 * 4;
+            $n2 = floor($deco/20);
+            $n1 = ceil(($deco - $n2 * 16)/4);
             $items = array();
             for ($i = 0; $i < $n1; $i++)
                 $items[] = new Model_Items_Present('Geschenk', 'Dieses Geschenk hast du als Dank dafür erhalten, dass du den Weihnachtsbaum so schön geschmückt hast. Hoffentlich gefällt dir der Inhalt.', false);
             for ($i = 0; $i < $n2; $i++)
-                $items[] = new Model_Items_Present('Großes Geschenk', 'Dieses Geschenk hast du als Dank dafür erhalten, dass du beim Schmücken des Weihnachtsbaums dein Allerbestes gegeben hast. Der Inhalt wird dir sicherlich gefallen!', false);
+                $items[] = new Model_Items_Present('Großes Geschenk', 'Dieses Geschenk hast du als Dank dafür erhalten, dass du beim Schmücken des Weihnachtsbaums dein Allerbestes gegeben hast. Der Inhalt wird dir sicherlich gefallen!', true);
 
             Tool_Scripts::place_new_item($items);
         }

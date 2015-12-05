@@ -679,6 +679,34 @@ class Controller_Game extends Controller {
                 'weight' => [$motorhome->weight(), $motorhome->weight_max()]
             ]]);
         }
+
+        // XMAS
+        if (Tool_System::instance_of($player->location(), 'Model_Places_Xmasfair')) {
+            /** @var Model_Places_Xmasfair $fair */
+            $fair = $player->location();
+
+            $tree = $fair->get_construction_info();
+            foreach ($tree as &$entry) {
+                $entry['name'] = __($entry['name']);
+                $entry['requires'] = [];
+                /** @var Model_Items_Abstract_Item $cls  */
+                foreach ($entry['items'] as $cls => $count) {
+                    $entry['requires'][] = [
+                        'name' => __($cls::static_name()),
+                        'count' => $count,
+                        'have' => Tool_Scripts::count_available_items($cls),
+                        'icon' => $cls::static_icon()
+                    ];
+                }
+                unset($entry['items']);
+            }
+
+
+            $this->add_data('location', ['xmasfair' => [
+                'tree' => $tree,
+                'deco' => $fair->get_decoration_value()
+            ]]);
+        }
     }
 
     private function render_epics() {

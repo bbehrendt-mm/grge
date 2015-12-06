@@ -2,6 +2,9 @@ window.addEventListener('load',function(){
 
     window.setTimeout(function() {
 
+        if (game.s.quality() < 2)
+            return;
+
         $('body').append($('<div />').attr('id',"snowflakeContainer").append($('<p />').addClass('snowflake').text('*')));
 
         var requestAnimationFrame = window.requestAnimationFrame ||

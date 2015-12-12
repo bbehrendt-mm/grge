@@ -264,7 +264,11 @@ class Model_Player extends Model_Cloudshard {
          * @global $game Model_Game
          */
         global $game;
-		return $game->location($this->location);
+
+        if (!$game->location($this->location))
+            $this->location_class($game->map_main()->resolve_fixed_id(1));
+
+        return $game->location($this->location);
 	}
 
     /**

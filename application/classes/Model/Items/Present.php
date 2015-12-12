@@ -46,6 +46,7 @@ class Model_Items_Present extends Model_Items_Abstract_Item implements Interface
 		Array('value' => 'Model_Items_Beer', 'chance' => 2),
 		Array('value' => 'Model_Items_Whiskey', 'chance' => 2),
 		Array('value' => 'Model_Items_Generic_Teddy', 'chance' => 4),
+        Array('value' => 'Model_Items_Generic_Cookieproto', 'chance' => 4),
 	);
 	
 	protected static $content_awesome = Array(
@@ -59,7 +60,8 @@ class Model_Items_Present extends Model_Items_Abstract_Item implements Interface
 			Array('value' => 'Model_Items_Twinoid', 'chance' => 1),
 			Array('value' => 'Model_Items_Vedge', 'chance' => 1),
 			Array('value' => 'Model_Items_Vedge5', 'chance' => 1),
-			Array('value' => 'Model_Items_Pumpkin', 'chance' => 1)
+			Array('value' => 'Model_Items_Pumpkin', 'chance' => 1),
+            Array('value' => 'Model_Items_Generic_Cookieproto', 'chance' => 2),
 	);
 	
 	public function __construct($name = 'Geschenk', $desc ='Wer auch immer dir dieses Geschenk hingestellt hat, er meint es wohl gut mit dir!', $awesome = false) {

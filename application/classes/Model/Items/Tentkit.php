@@ -18,7 +18,7 @@ class Model_Items_Tentkit extends Model_Items_Abstract_Item implements Interface
                         /** @var Model_Player $p */
                         /** @global Model_Game $game */
                         global $game;
-                        return (Tool_Scripts::current_location_hideout($p) == null && $game->map($p->location_class())->get_map_type() == Model_Map_Abstract::MMA_TYPE_OVERVIEW);
+                        return (Tool_Scripts::current_location_hideout($p) == null && $game->map($p->location_class())->get_map_type() == Model_Map_Abstract::MMA_TYPE_OVERVIEW && !Tool_System::instance_of($p->location(), 'Model_Places_Abstract_Xmas'));
                     })
                     ->fail_message('Du kannst an dieser Stelle kein InstaZELT™ aufstellen.')
                     ->effect(

@@ -54,12 +54,6 @@ abstract class Model_Places_Abstract_Xmas extends Model_Places_Abstract_Place {
             Tool_Scripts::place_new_item($items);
         }
 
-        foreach ($game->map($this->uin())->get_locations() as $location) {
-            $lobj = $game->location($location);
-            if ($lobj) $lobj->grind();
-            else $game->uin()->remove($location);
-        }
-
         return true;
     }
 }	

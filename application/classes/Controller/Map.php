@@ -129,6 +129,11 @@ class Controller_Map extends Controller_Game {
             $destination->enter($current->id());
             $current->location_class($did);
 
+            if ($sub) {
+                $location->leave_map($current->id());
+                $destination->enter_map($current->id());
+            }
+
             //Passes
             if (!$sub)
                 foreach ($route['tail'] as $pass) if ($pass != $lid && $pass != $did)

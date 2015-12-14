@@ -29,6 +29,9 @@
 
             if ($.inArray('open', alias.icons[id]['classes']) >= 0) {color_border = "#975847"; color_inner = "#FF9F68"}
             if ($.inArray('closed', alias.icons[id]['classes']) >= 0) {color_border = "#80493A"; color_inner = "#E08761"}
+            if ($.inArray('viewpoint', alias.icons[id]['classes']) >= 0) {color_border = "#cdff92"; color_inner = "#97c669"}
+            if ($.inArray('doorway', alias.icons[id]['classes']) >= 0) {color_border = "#bdc66b"; color_inner = "#f2ff9a"}
+            if ($.inArray('hideout', alias.icons[id]['classes']) >= 0) {color_border = "#d8a6dc"; color_inner = "#fad5ff"}
 
             var s = new createjs.Shape();
             s.setBounds(-containerSize/2,-containerSize/2,containerSize/2,containerSize/2);
@@ -40,8 +43,9 @@
                 this.scaleX = this.scaleY = 1/alias.scale;
 
                 var hl = this.highlight || this.current_location;
+                var hl_color = typeof this.highlight == 'string' ? this.highlight : '#69E7FF';
 
-                s.graphics.c().setStrokeStyle(1).beginStroke(hl ? '#39ACE5' : color_border).beginFill(hl ? '#69E7FF' : color_inner).drawRoundRectComplex (-containerSize/2,-containerSize/2,containerSize,containerSize, 3, 3, 3, 3);
+                s.graphics.c().setStrokeStyle(1).beginStroke(hl ? hl_color : color_border).beginFill(hl ? hl_color : color_inner).drawRoundRectComplex (-containerSize/2,-containerSize/2,containerSize,containerSize, 3, 3, 3, 3);
 
                 if (alias.isZooming) return;
 
@@ -82,12 +86,13 @@
                 this.highlight = true;
 
                 alias.handler(id, 'mouseover');
+                var highlight_color = location.distance > alias.data.radius ? '#FF0000' : '#69E7FF';
 
                 $.each(alias.data.locations[id].nodes, function(i, n) {
-                    alias.dots[n].highlight = true;
+                    alias.dots[n].highlight = highlight_color;
                 });
                 $.each(alias.data.locations[id].route, function(i, n) {
-                    alias.icons[n].highlight = true;
+                    alias.icons[n].highlight = highlight_color;
                 });
             });
 

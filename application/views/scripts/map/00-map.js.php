@@ -49,18 +49,15 @@
         this.defaultView = {x:0, y: 0, scale: 1};
 
         this.stage.on('stagemousedown', function(e) {
-            alias.controls = {drag: true, x: e.stageX, y: e.stageY};
+            if (e.nativeEvent.which == 1)
+                alias.controls = {drag: true, x: e.stageX, y: e.stageY};
         });
         this.stage.on('stagemouseup', function(e) {
             alias.controls = {drag: false, x: 0, y: 0};
         });
         this.stage.on('stagemousemove', function(e) {
             if (!alias.controls.drag) return;
-
-            var scroll = [e.stageX - alias.controls.x, e.stageY - alias.controls.y];
-
-            alias.translateLayer.x += scroll[0];
-            alias.translateLayer.y += scroll[1];
+            alias.scroll(e.stageX - alias.controls.x, e.stageY - alias.controls.y);
 
             alias.controls = {drag: true, x: e.stageX, y: e.stageY};
         });
@@ -84,6 +81,11 @@
         this.renderRoads();
         this.renderIcons();
         console.log(this.data);
+    };
+
+    Gamemap.prototype.scroll = function(x, y) {
+        this.translateLayer.x += x;
+        this.translateLayer.y += y;
     };
 
     Gamemap.prototype.zoom = function(factor) {

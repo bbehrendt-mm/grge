@@ -103,6 +103,9 @@ return Model_Blueprints::factory()
             ->show_condition(function() {
                 return Tool_Events::current() == 'xmas';
             })
+            ->effect(Model_Effect::factory()
+                ->achieve(Model_Achievement::MA_XMAS)
+            )
     )
 
     ->add_blueprints(
@@ -116,6 +119,9 @@ return Model_Blueprints::factory()
             ->show_condition(function() {
                 return Tool_Events::current() == 'xmas';
             })
+            ->effect(Model_Effect::factory()
+                ->achieve(Model_Achievement::MA_XMAS)
+            )
     )
 
     // -- STACK -> All blueprints below NO LONGER need the basic kitchen

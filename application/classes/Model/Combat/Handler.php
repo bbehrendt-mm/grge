@@ -19,8 +19,7 @@ class Model_Combat_Handler {
     }
 
     private static function can_delete(array $preselection) {
-
-        return DB::select('tmp_final.bid')->from([
+        return $preselection ? DB::select('tmp_final.bid')->from([
             DB::select('battle.bid',['battle.fixed','c0'], [DB::expr('IFNULL(' . Database::instance()->table_prefix() . 'tmp_gallery.gallery, 0)'), 'c1'], [DB::expr('CASE WHEN ' . Database::instance()->table_prefix() . 'games.timestamp IS NULL THEN 0 ELSE 1 END'), 'c2'])
                 ->from('battle')
                 ->where('battle.bid', 'IN', $preselection)
@@ -28,7 +27,7 @@ class Model_Combat_Handler {
                     DB::select('video', [DB::expr('COUNT(video)'), 'gallery'])->from('battle_gallery')->group_by('video')
                 , 'tmp_gallery'], 'LEFT')->on('battle.bid','=','tmp_gallery.video')
                 ->join('games', 'LEFT')->on('battle.gameid', '=', 'games.gameid')
-        ,'tmp_final'])->where(DB::expr(Database::instance()->table_prefix() . 'tmp_final.c0 + ' . Database::instance()->table_prefix() . 'tmp_final.c1 + ' . Database::instance()->table_prefix() . 'tmp_final.c2'), '=', 0)->execute()->as_array(null, 'bid');
+        ,'tmp_final'])->where(DB::expr(Database::instance()->table_prefix() . 'tmp_final.c0 + ' . Database::instance()->table_prefix() . 'tmp_final.c1 + ' . Database::instance()->table_prefix() . 'tmp_final.c2'), '=', 0)->execute()->as_array(null, 'bid') : [];
     }
 
     public static function delete_game($game_id, $season) {

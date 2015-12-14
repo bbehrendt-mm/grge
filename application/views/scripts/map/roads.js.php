@@ -27,7 +27,10 @@
             alias.dots[k].on('tick', function() {
                 this.scaleX = this.scaleY = 1/alias.scale;
                 this.alpha = this.used ? 1 : 0.1;
-                s.graphics.c().setStrokeStyle(this.highlight ? 2 : 1).beginStroke(this.highlight ? '#39ACE5' : "#000000").drawCircle(0,0,this.highlight ? 4 : 3).beginFill(this.highlight ? '#69E7FF' : '#000000').drawCircle(0,0,this.highlight ? 2 : 1);
+
+                var hl_color = typeof this.highlight == 'string' ? this.highlight : '#39ACE5';
+
+                s.graphics.c().setStrokeStyle(this.highlight ? 2 : 1).beginStroke(this.highlight ? hl_color : "#000000").drawCircle(0,0,this.highlight ? 4 : 3).beginFill(this.highlight ? hl_color : '#000000').drawCircle(0,0,this.highlight ? 2 : 1);
             });
             alias.roadLayer.addChild(alias.dots[k]);
         });
@@ -52,8 +55,12 @@
 
                 alias.roads[id].on('tick', function() {
                     var hl = (alias.dots[this.nodes[0]].highlight && alias.dots[this.nodes[1]].highlight);
+                    var hl_color;
+                    if (typeof alias.dots[this.nodes[0]].highlight == 'string') hl_color = alias.dots[this.nodes[0]].highlight;
+                    else if (typeof alias.dots[this.nodes[1]].highlight == 'string') hl_color = alias.dots[this.nodes[1]].highlight;
+                    else hl_color = '#39ACE5';
 
-                    s.graphics.c().setStrokeStyle((hl ? 3 : 1)/alias.scale).beginStroke(hl ? '#39ACE5' : "#000000").moveTo(0,0).lineTo(this.to_x - this.x, this.to_y - this.y);
+                    s.graphics.c().setStrokeStyle((hl ? 3 : 1)/alias.scale).beginStroke(hl ? hl_color : "#000000").moveTo(0,0).lineTo(this.to_x - this.x, this.to_y - this.y);
                     this.alpha = (alias.dots[this.nodes[0]].used && alias.dots[this.nodes[1]].used) ? 1 : 0.1;
                 });
                 alias.roadLayer.addChild(alias.roads[id]);

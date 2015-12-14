@@ -29,10 +29,10 @@ NF.cell = function(pad, rw, ro, classes) {
     return tmp.addClass(classes ? classes : '');
 };
 
-NF.n = function(node, classes, content) {
+NF.n = function(node, classes, content, html) {
     var tmp = $('<' + node + ' />').addClass(classes ? classes : '');
     if (typeof content == 'undefined') return tmp;
-    else if (typeof content == 'string') return tmp.text(content);
+    else if (typeof content == 'string') return html ? tmp.html(content) : tmp.text(content);
     else return tmp.append(content);
 };
 
@@ -42,4 +42,8 @@ NF.separator = function(n) {
 
 NF.img = function(src) {
     return NF.n('img').attr('src', src);
+};
+
+NF.fa = function(name) {
+    return NF.n('i', 'fa ' + ((name.substr(0, 3) == 'fa-') ? name : ('fa-' + name)));
 };

@@ -297,21 +297,66 @@ core.popup = {
     map: function() {
         var popup = core.popup.spawn(804).css('overflow','hidden');
 
-        popup.append(core.snippets.wait());
+        popup.attr('tabindex', 1).append(core.snippets.wait()).focus();
 
         var init = function(data) {
 
-            var overlay;
+            var overlay, help, dbl1, dbl2;
 
-            popup.empty().append($('<canvas />').attr({id: 'gamemap', height: 600, width: 800}))
+            popup.empty()
+                .append($('<canvas />').attr({id: 'gamemap', height: 600, width: 800}))
                 .append(
-                    overlay = $('<div />').addClass('map panel').css({opacity: 0, bottom: -50})
+                    overlay = $('<div />').addClass('map panel bottom hide no-interaction')
+                ).append(
+                    help = $('<div />').addClass('map panel left hide no-interaction')
+                        .append(NF.row()
+                            .append(NF.cell(true, 12, 0, 'center b').text(<?=__j('Maus')?>))
+                            .append(NF.cell(true, 12, 0).append(NF.n('ul')
+                                .append(NF.n('li', '', <?=__j('::b::Linke Maustaste::/b:: halten und ::b::Maus bewegen::/b::, um den Kartenausschnitt zu verschieben.')?>, true))
+                                .append(NF.n('li', '', <?=__j('::b::Mausrad::/b:: drehen, um zu zoomen.')?>, true))
+                                .append(NF.n('li', '', <?=__j('::b::Mittlere Maustaste::/b:: drücken, um die Karte zurückzusetzen.')?>, true))
+                            ))
+                            .append(NF.cell(true, 12, 0, 'center b').text(<?=__j('Tastatur')?>))
+                            .append(NF.cell(true, 12, 0).append(NF.n('ul')
+                                .append(NF.n('li', '', <?=__j('::b::Pfeiltasten::/b:: benutzen, um den Kartenausschnitt zu verschieben.')?>, true))
+                                .append(NF.n('li', '', <?=__j('::b::+::/b:: und ::b::-::/b::-Tasten verwenden, um zu zoomen.')?>, true))
+                                .append(NF.n('li', '', <?=__j('::b::0::/b:: oder ::b::R::/b::-Tasten verwenden, um die Karte zurückzusetzen.')?>, true))
+                            ))
+                        )
+                ).append($('<div />').addClass('map panel left-top center')
+                    .append(NF.n('span', 'b', <?=__j('Steuerung')?>))
+                    .append(dbl1 = NF.fa('angle-double-right').addClass('pointer').css('float', 'right'))
+                    .click(function() {
+                        if (help.hasClass('hide')) {
+                            help.removeClass('hide');
+                            dbl1.removeClass('fa-angle-double-right').addClass('fa-angle-double-left')
+                        } else {
+                            help.addClass('hide');
+                            dbl1.addClass('fa-angle-double-right').removeClass('fa-angle-double-left')
+                        }
+                    })
                 );
 
             var map = new Gamemap('gamemap', data);
 
             popup.on('close', function() {
                 map.end();
+            }).on('mousewheel', function(event) {
+                map.zoom(event.deltaY);
+            }).on('mousedown', function(event) {
+                if (event.which == 2) map.zoom(0);
+            }).on('keydown', function(event) {
+                switch (event.key) {
+                    case "+": map.zoom(1); return;
+                    case "-": map.zoom(-1); return;
+                    case "0":case "r": map.zoom(0); return;
+                }
+                switch (event.which) {
+                    case 37: map.scroll(-24,0); event.preventDefault(); return; //LEFT
+                    case 38: map.scroll(0,-24); event.preventDefault(); return; //UP
+                    case 39: map.scroll(24,0); event.preventDefault(); return; //RIGHT
+                    case 40: map.scroll(0, 24); event.preventDefault(); return; //DOWN
+                }
             });
 
             map.load();
@@ -432,10 +477,10 @@ core.popup = {
                                     .append(NF.img('media/icons/status_weight.gif'))
                                     .append(NF.n('span','',data.locations[id].weight === null ? 0 : data.locations[id].weight))
                             )
-                        ).stop(true).animate({opacity: 1, bottom: 0}, 250);
+                        ).removeClass('hide');
                         break;
                     case 'mouseout':
-                        overlay.stop(true).animate({opacity: 0, bottom: -50}, 250);
+                        overlay.addClass('hide');
                         break;
                 }
             });

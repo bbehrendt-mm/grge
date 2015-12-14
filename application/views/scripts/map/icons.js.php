@@ -5,6 +5,35 @@
 ?>
 
 (function() {
+    Gamemap.prototype.hover = function(id, trigger_events) {
+        this.icons[id].highlight = true;
+
+        if (trigger_events) this.handler(id, 'mouseover');
+        var highlight_color = this.data.locations[id].distance > this.data.radius ? '#FF0000' : '#69E7FF';
+
+        var alias = this;
+        $.each(this.data.locations[id].nodes, function(i, n) {
+            alias.dots[n].highlight = highlight_color;
+        });
+        $.each(this.data.locations[id].route, function(i, n) {
+            alias.icons[n].highlight = highlight_color;
+        });
+    };
+
+    Gamemap.prototype.unhover = function(id, trigger_events) {
+        this.icons[id].highlight = false;
+
+        if (trigger_events) this.handler(id, 'mouseout');
+
+        var alias = this;
+        $.each(this.data.locations[id].nodes, function(i, n) {
+            alias.dots[n].highlight = false;
+        });
+        $.each(this.data.locations[id].route, function(i, n) {
+            alias.icons[n].highlight = false;
+        });
+    };
+
     Gamemap.prototype.renderIcons = function() {
         this.iconLayer.removeAllChildren();
         this.icons = {};
@@ -83,30 +112,11 @@
             });
 
             alias.icons[id].on('rollover', function() {
-                this.highlight = true;
-
-                alias.handler(id, 'mouseover');
-                var highlight_color = location.distance > alias.data.radius ? '#FF0000' : '#69E7FF';
-
-                $.each(alias.data.locations[id].nodes, function(i, n) {
-                    alias.dots[n].highlight = highlight_color;
-                });
-                $.each(alias.data.locations[id].route, function(i, n) {
-                    alias.icons[n].highlight = highlight_color;
-                });
+                alias.hover(id, true);
             });
 
             alias.icons[id].on('rollout', function() {
-                this.highlight = false;
-
-                alias.handler(id, 'mouseout');
-
-                $.each(alias.data.locations[id].nodes, function(i, n) {
-                    alias.dots[n].highlight = false;
-                });
-                $.each(alias.data.locations[id].route, function(i, n) {
-                    alias.icons[n].highlight = false;
-                });
+                alias.unhover(id, true);
             });
         });
     };

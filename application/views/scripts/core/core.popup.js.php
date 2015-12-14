@@ -295,13 +295,13 @@ core.popup = {
     },
 
     map: function() {
-        var popup = core.popup.spawn(804).css('overflow','hidden');
+        var popup = core.popup.spawn(804, 604).css('overflow','hidden');
 
         popup.attr('tabindex', 1).append(core.snippets.wait()).focus();
 
         var init = function(data) {
 
-            var overlay, help, dbl1, dbl2;
+            var overlay, help, list, list_inner, dbl1, dbl2;
 
             popup.empty()
                 .append($('<canvas />').attr({id: 'gamemap', height: 600, width: 800}))
@@ -335,9 +335,48 @@ core.popup = {
                             dbl1.addClass('fa-angle-double-right').removeClass('fa-angle-double-left')
                         }
                     })
+                ).append(
+                    list = $('<div />').addClass('map panel right manual-color hide').css('overflow-y','auto').append(NF.row().append(list_inner = NF.cell(true, 12)))
+                ).append($('<div />').addClass('map panel right-top center')
+                    .append(NF.n('span', 'b', <?=__j('Orte')?>))
+                    .append(dbl2 = NF.fa('angle-double-left').addClass('pointer').css('float', 'left'))
+                    .click(function() {
+                        if (list.hasClass('hide')) {
+                            list.removeClass('hide');
+                            dbl2.removeClass('fa-angle-double-left').addClass('fa-angle-double-right')
+                        } else {
+                            list.addClass('hide');
+                            dbl2.addClass('fa-angle-double-left').removeClass('fa-angle-double-right')
+                        }
+                    })
                 );
 
             var map = new Gamemap('gamemap', data);
+
+            $.each(data.locations, function(id, location) {
+                if (id == data.current) return;
+                list_inner.append(NF.row().append(NF.cell(false, 12, 0, 'hotbox').on('mouseover', function() {map.hover(id);}).on('mouseout', function() {map.unhover(id);}).on('click', function() {map.handler(id, 'click')})
+                    .append(NF.row('center').append(NF.cell(true, 12).append(NF.n('b', '', location.name)).append(NF.img('media/icons/places/' + location.icon).css('float','left'))))
+                    .append(NF.row('center').append(
+                        NF.cell(false, 3)
+                            .append(NF.img('media/icons/distance.gif'))
+                            .append(NF.n('span','',location.distance))
+                        ).append(
+                        NF.cell(false, 3)
+                            .append(NF.img('media/icons/status_energy.gif'))
+                            .append(NF.n('span','',location.energy))
+                        ).append(
+                        NF.cell(false, 3)
+                            .append(NF.img('media/icons/zombie.gif'))
+                            .append(NF.n('span','',location.zombies))
+                        ).append(
+                        NF.cell(false, 3)
+                            .append(NF.img('media/icons/status_weight.gif'))
+                            .append(NF.n('span','',location.weight === null ? 0 : location.weight))
+                        )
+                    )
+                ))
+            });
 
             popup.on('close', function() {
                 map.end();
@@ -375,7 +414,7 @@ core.popup = {
                         });
                         if (route_zombies.length && !confirm(game.i18n(<?=__j('Auf dem Weg zu diesem Ort befinden sich Zombies (:locations). Du wirst gegen sie kämpfen müssen, wenn du dorthin möchtest. Weiter?')?>,{':locations': route_zombies.join(', ')}))) return;
 
-                        if (core.last.players) {
+                        if (game.storage.get('settings','travel_confirm') != 'auto') {
                             var esc_popup = core.popup.spawn({desktop: 400, sm: '100%'});
 
                             var title;
@@ -387,7 +426,7 @@ core.popup = {
 
                             var check_row = $('<form />').addClass('row').appendTo(esc_popup);
 
-                            if (core.last.players.others)
+                            if (core.last.players && core.last.players.others)
                                 $.each(core.last.players.others, function(id, player) {
                                     if (player.escort)
                                         check_row.append($('<div />').addClass('cell rw-6 padded').append(

@@ -71,8 +71,9 @@ class Model_Hid {
     public function convert($uid = null) {
         /**
          * @global Model_Game $game
+         * @global Model_Player $player
          */
-        global $game;
+        global $game, $player;
 
         $tmp = array();
         foreach ($this->actions as $id => $action) {
@@ -84,14 +85,14 @@ class Model_Hid {
             if ($a->has_side_effect() && !$game->config('modules.multiplayer'))
                 continue;
 
-            $tmp[] = array_merge($a->convert_effects(), array(
+            $tmp[] = array_merge($a->convert_effects($player), array(
                 'description' => $action['desc'],
                 'tooltip'     => $a->description(),
                 'action' => $action['id'],
                 'popup' => $a->popup(),
                 'target' => $uid,
                 'escort' => $a->has_side_effect(),
-                'requires' => $a->convert_requires(),
+                'requires' => $a->convert_requires($player),
                 'skin' => $a->has_side_effect() ? ('multiplayer ' . $a->buttonskin()) : $a->buttonskin(),
                 'flags' => $a->flag()
             ));

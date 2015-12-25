@@ -289,7 +289,7 @@ class Model_Action {
     public function convert_effects($player = null) {
         if ($this->show_as !== null)
             /** @noinspection PhpUndefinedMethodInspection */
-        return array('effects' => $this->show_as['e']->convert());
+        return array('effects' => $this->show_as['e']->convert($player));
 
         if (!$this->effects)
             return array();
@@ -305,13 +305,17 @@ class Model_Action {
         else $r = null;
 
         /** @noinspection PhpUndefinedMethodInspection */
-        return ($r !== null && isset($this->effects[$r])) ? array('effects' => $this->effects[$r]['effect']->convert(), 'sides' => $this->effects[$r]['side_effect'] ? $this->effects[$r]['side_effect']->convert() : null) : array('effect' => array(array('value' => '???')));
+        return ($r !== null && isset($this->effects[$r])) ? array('effects' => $this->effects[$r]['effect']->convert($player), 'sides' => $this->effects[$r]['side_effect'] ? $this->effects[$r]['side_effect']->convert() : null) : array('effect' => array(array('value' => '???')));
     }
 
-    public function convert_requires() {
+    /**
+     * @param null|Interface_Plentity $player
+     * @return array
+     */
+    public function convert_requires($player = null) {
         $t = array();
         foreach ($this->get_stat_requirements() as $stat => $value)
-            $t[] = array('icon' => Model_Effect::translate($stat), 'value' => $value);
+            $t[] = array('icon' => Model_Effect::translate($stat), 'value' => $value * ($player ? $player->get_status()->scaling($stat, Model_Status::MS_EFFECT_REQUIREMENT) : 1));
         foreach ($this->get_item_requirements() as $class => $value)
             /** @var Model_Items_Abstract_Item $class */
             if (!Tool_System::instance_of($class,'Model_Items_Abstract_Virtual'))

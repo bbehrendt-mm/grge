@@ -102,9 +102,17 @@ class Model_Status {
      * @return number
      */
     public function scaling($stat, $type) {
-        if (!isset($this->scaling_effects[$stat]) || !isset($this->scaling_effects[$stat][$type]) || empty($this->scaling_effects[$stat][$type]) || $stat >= Model_Status::MS_THRESHOLD)
+        if (!isset($this->scaling_effects[$stat]) || $stat >= Model_Status::MS_THRESHOLD || $type == static::MS_EFFECT_UNSCALE)
             return 1;
-        else return array_reduce($this->scaling_effects[$stat][$type], function($a, $b) {return $a * $b;}, 1) * ($type == static::MS_EFFECT_GLOBAL ? 1 : $this->scaling($stat, static::MS_EFFECT_GLOBAL));
+
+        return
+            (
+                (isset($this->scaling_effects[$stat][$type]) && !empty($this->scaling_effects[$stat][$type]))
+                    ? array_reduce($this->scaling_effects[$stat][$type], function($a, $b) {return $a * $b;}, 1)
+                    : 1
+            ) * (
+                ($type !== static::MS_EFFECT_GLOBAL) ? $this->scaling($stat, static::MS_EFFECT_GLOBAL) : 1
+            );
     }
 
     public function scaling_add($stat, $type, $name, $value) {
@@ -197,8 +205,11 @@ class Model_Status {
 
     public function tick() {
         $tmp = [];
-        foreach (array_keys($this->status_bars) as $stat)
+        foreach (array_keys($this->status_bars) as $stat) {
+            $tmp[] = $stat;
             $tmp[] = $this->buffs_by_stat($stat);
+        }
+
 
         $this->modify($tmp, static::MS_EFFECT_BUFF);
 

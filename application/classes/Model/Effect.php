@@ -297,24 +297,34 @@ class Model_Effect {
         else return (array_search($stat, static::$reversed_colors) === false) ? 'red' : 'green';
     }
 
-    private function convert_val($i) {
+    /**
+     * @param $i
+     * @param int $stat
+     * @param null|Interface_Plentity $player
+     * @return string
+     */
+    private function convert_val($i, $stat = -1, $player = null) {
         if (is_string($i)) return $i;
-        if (is_array($i)) return $i[0] . " - " . $i[1];
+
+        $factor = ($stat >= 0 && $player) ? $player->get_status()->scaling($stat, Model_Status::MS_EFFECT_ITEM) : 1;
+
+        if (is_array($i)) return ($i[0] * $factor) . " - " . ($i[1] * $factor);
         if ($i == PHP_INT_MAX) return '+∞';
         if ($i == -PHP_INT_MAX) return '-∞';
-        return $i;
+        return $i * $factor;
     }
 
     /**
+     * @param null|Interface_Plentity $player
      * @return array
      */
-    public function convert() {
+    public function convert($player = null) {
         $tmp = array();
         foreach ($this->effects as $stat => $dif)
             if ($dif === 0) continue;
             else {
                 if ($stat >= 0)
-                    $tmp[] = array('icon' => static::translate($stat), 'color' => static::color($stat, $dif), 'value' => $this->convert_val($dif), 'numeric' => !is_string($dif));
+                    $tmp[] = array('icon' => static::translate($stat), 'color' => static::color($stat, $dif), 'value' => $this->convert_val($dif, $stat, $player), 'numeric' => !is_string($dif));
                 elseif ($stat == -PHP_INT_MAX)
                     $tmp[] = array('value' => '???');
                 else $tmp[] = array('icon' => static::translate(-$stat), 'color' => '', 'value' => '???', 'numeric' => true);

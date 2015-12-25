@@ -13,7 +13,7 @@ abstract class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
          * @global Model_Player $player
          */
         global $player;
-        $a = max(static::$alcohol * (Tool_Scripts::get_timeofday() == "evening" ? 0.75 : 1) * ($player->job(1080) ? 2.5 : 1), $player->job(1080) ? 20 : 0);
+        $a = static::$alcohol * (Tool_Scripts::get_timeofday() == "evening" ? 0.75 : 1);
         return parent::hid()
             ->add_action('Trinken', Model_Action::factory()
                     ->effect(

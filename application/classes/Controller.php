@@ -12,7 +12,7 @@ abstract class Controller extends Kohana_Controller {
     private $widgets = array();
     private $notifications = array();
     private $data = array();
-    private $dumps = array();
+    private static $dumps = [];
 
     protected static $allow_etag_cache = false;
 
@@ -133,8 +133,8 @@ abstract class Controller extends Kohana_Controller {
         }
     }
 
-    protected function dump($title, $object) {
-        $this->dumps[$title] = $object;
+    public static function dump($title, $object) {
+        Controller::$dumps[$title] = $object;
     }
 
     private function daily_login_bonus() {
@@ -321,8 +321,8 @@ abstract class Controller extends Kohana_Controller {
             $this->session->delete('notifications');
         }
 
-        if ($this->dumps && Kohana::$environment === Kohana::DEVELOPMENT)
-            $this->add_data('var_dump', $this->dumps, true);
+        if (Controller::$dumps && Kohana::$environment === Kohana::DEVELOPMENT)
+            $this->add_data('var_dump', Controller::$dumps, true);
 
         // Render
         $this->response->body(json_encode($this->data, JSON_FORCE_OBJECT));

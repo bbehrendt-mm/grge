@@ -630,6 +630,8 @@ return array(
                     $player->inventory()->add(new Model_Items_Virtual_Hero_Child($level));
                     $player->inventory()->limit(50);
                     $player->inventory()->add(new Model_Items_Generic_Teddy());
+
+                    $player->get_status()->scaling_add(Model_Status::MS_STAT_DRUNK, Model_Status::MS_EFFECT_GLOBAL, 'child_booze', 2.5);
                 }),
         ),
         2000 => array(

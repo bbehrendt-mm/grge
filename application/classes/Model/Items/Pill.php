@@ -70,7 +70,7 @@ class Model_Items_Pill extends Model_Items_Abstract_Item implements Interface_St
                         Model_Effect::factory()
                             ->effect(Model_Status::MS_STAT_HEALTH, $child_effects ? 20 : 15)
                             ->effect(Model_Status::MS_STAT_SLEEPY, $child_effects ? -20 : -5)
-                            ->effect(Model_Status::MS_STAT_DRUNK, $child_effects ? 10 : 0)
+                            ->effect(Model_Status::MS_STAT_DRUNK, $child_effects ? 5 : 0)
                             ->message('Augen zu und durch! Du schluckst die Pille herunter - und merkst sofort, wie sich dein Körper entspannt. Das fühlt sich gut an!')
                     )
                     //Green + Red pill

@@ -26,7 +26,7 @@ class Model_Items_Holybook extends Model_Items_Abstract_Item implements Interfac
                     ->fail_message('Du kannst maximal einmal pro Stunde Kraft aus einem Gebet schöpfen!')
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_ENERGY, 4, 11)
+                            ->effect(Model_Status::MS_STAT_ENERGY, 4, 11)
                             ->message('Du schließt die Augen, kniest nieder und spürst die göttliche Kraft, die durch deinen Körper fließt.')
                             ->custom(function() use ($php53pb) {
                                 /** @global Model_Game $game */

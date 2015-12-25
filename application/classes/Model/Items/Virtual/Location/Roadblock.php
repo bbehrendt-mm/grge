@@ -14,7 +14,7 @@ class Model_Items_Virtual_Location_Roadblock extends Model_Items_Abstract_Virtua
         return parent::hid()->add_action('Barrikade abbauen', Model_Action::factory()
             ->buttonskin('location')
             ->description('Diese Barrikade sieht ziemlich stabil aus, aber wenn du dich etwas ins Zeug legst kannst du hier bestimmt das eine oder andere nützliche Item ausbauen.')
-            ->requirement(Model_Player::MP_STAT_ENERGY, static::$elist[$this->remaining['barricade_open']])
+            ->requirement(Model_Status::MS_STAT_ENERGY, static::$elist[$this->remaining['barricade_open']])
             ->show_as(Model_Effect::factory()
                 ->ambiguous_effect()
             )

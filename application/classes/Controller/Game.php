@@ -80,7 +80,7 @@ class Controller_Game extends Controller {
 
                 $tmp = [
                     'id' => $id,
-                    'energy' => floor($data['distance'] * $player->stats_get(Model_Player::MP_CHAR_DISTANCING) * $modifier),
+                    'energy' => floor($data['distance'] * $player->get_status()->get(Model_Status::MS_CHAR_DISTANCING) * $modifier),
                     'weight' => $location->weight_limit(),
                     'name' => __($location->name()),
                     'icon' => $location->icon(),
@@ -123,7 +123,7 @@ class Controller_Game extends Controller {
          */
         global $game, $player;
 
-        $radar_scale = $player->buff_retr('tr_danger') ? 1 : 4;
+        $radar_scale = $player->get_status()->retrieve('tr_danger') ? 1 : 4;
 
         // Get Radar data
         list(, $radar_max, $radar_prop, $radar_increase) = $player->location()->zombie_factory()->get_radar_data();
@@ -148,7 +148,7 @@ class Controller_Game extends Controller {
 
         // Get local actions
         $a = [];
-        if (!$player->buff_retr('fragile'))
+        if (!$player->get_status()->retrieve('fragile'))
             foreach (Tool_Scripts::available_items('Model_Items_Abstract_Virtual',false,true,false,$player) as $a_item)
                 /** @var  Model_Items_Abstract_Virtual $a_item */
                 if (!$a_item->use_manual_ui())
@@ -371,7 +371,7 @@ class Controller_Game extends Controller {
         $action = false;
         if (!$remote) {
             /** @var Model_Buffs_Abstract_Fragile $buff */
-            if (!($buff = $p->buff_retr('fragile')))
+            if (!($buff = $p->get_status()->retrieve('fragile')))
                 foreach (Tool_Scripts::available_items('Model_Items_Abstract_Virtual',true,false,false,$p) as $a_item)
                     /** @var  Model_Items_Abstract_Virtual $a_item */
                     $a = array_merge($a,$this->prepare_actionlist($a_item->auto_actions(), $a_item));
@@ -408,7 +408,7 @@ class Controller_Game extends Controller {
         global $player;
 
         $ret = Array();
-        foreach ($player->buff_get() as $buff) {
+        foreach ($player->get_status()->buffs() as $buff) {
             $t = ['icon' => $buff->icon(), 'effects' => []];
             $apply = false;
             foreach ([Model_Buffs_Abstract_Buff::MB_RAISE_ACC, Model_Buffs_Abstract_Buff::MB_DROP_ACC, Model_Buffs_Abstract_Buff::MB_RAISE_PRC, Model_Buffs_Abstract_Buff::MB_DROP_PRC] as $id) {
@@ -436,7 +436,7 @@ class Controller_Game extends Controller {
 
 
         return [
-            'value' => round($p->stats_get($type),2),
+            'value' => round($p->get_status()->get($type),2),
             'buffs' => $remote ? [] : $this->condense_buff($type)
         ];
     }
@@ -452,12 +452,12 @@ class Controller_Game extends Controller {
         $p = $remote ? $remote : $player;
 
         $cache = [];
-        for ($type = 1; $type <= Model_Player::MP_STATUS_COUNT; $type++)
-            if ($type <= 5 || $p->stats_get($type))
+        for ($type = 1; $type <= Model_Status::MS_STATUS_COUNT; $type++)
+            if ($type <= 5 || $p->get_status()->get($type))
                 $cache[$type] = $this->status($type, $remote);
 
         $buffs = [];
-        foreach ($p->buff_get() as $buff) if ($buff->visible() && (!$remote || $buff->visible(true)))
+        foreach ($p->get_status()->buffs() as $buff) if ($buff->visible() && (!$remote || $buff->visible(true)))
             $buffs[] = ['icon' => $buff->icon(), 'name' => __($buff->name()), 'desc' => $remote ? '' : __($buff->description()), 'time' => $remote ? false : ($buff->lifetime() < 0 ? false : Tool_Numerics::duration_to_string($buff->lifetime()))];
 
         $tmp = [
@@ -773,8 +773,8 @@ class Controller_Game extends Controller {
 
             $local = $p->alive() && $p->location_class() == $player->location_class();
             if ($local)
-                for ($type = 1; $type <= Model_Player::MP_STATUS_COUNT; $type++)
-                    if ($type <= 5 || $player->stats_get($type))
+                for ($type = 1; $type <= Model_Status::MS_STATUS_COUNT; $type++)
+                    if ($type <= 5 || $player->get_status()->get($type))
                         $cache[$type] = $this->status($type);
 
 
@@ -783,7 +783,7 @@ class Controller_Game extends Controller {
                 'id' => $p->id(),
                 'speed' => $speeds[$p->vote_time()],
                 'local' => $local,
-                'loner' => (bool)$p->buff_retr('tr_loner'),
+                'loner' => (bool)$p->get_status()->retrieve('tr_loner'),
                 'stats' => $local ? $this->render_status($p) : false,
                 'inventory' => ($local && $p->companion()) ? $this->render_inventory($p) : false,
                 'escort' => $local ? $p->companion() : false,
@@ -837,7 +837,7 @@ class Controller_Game extends Controller {
             return $this->render(['redirect' => 'game/redirect']);
         }
 
-        $player->rebuild();
+        $player->get_status()->rebuild();
 
         $this->render_info();
         $this->render_location();

@@ -18,7 +18,7 @@ class Model_Items_Clock extends Model_Items_Abstract_Item implements Interface_S
                         /** @var $p Model_Player */
                         return false;
                     })
-                    ->requirement(Model_Player::MP_STAT_ENERGY, 4)
+                    ->requirement(Model_Status::MS_STAT_ENERGY, 4)
                     ->fail_message('Du hast den Countdown bereits repariert...')
                     ->effect(
                         Model_Effect::factory()

@@ -8,13 +8,13 @@ class Model_Buffs_Blood extends Model_Buffs_Abstract_Buff {
 	protected static $bid = 'blood';
 	
 	protected $effects = Array(
-				Model_Player::MP_STAT_ENERGY => Array(
+				Model_Status::MS_STAT_ENERGY => Array(
 					Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0.3,
 					Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
 				),
-				Model_Player::MP_STAT_HEALTH => Array(
+				Model_Status::MS_STAT_HEALTH => Array(
 					Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_ACC => 1.2,
 					Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,

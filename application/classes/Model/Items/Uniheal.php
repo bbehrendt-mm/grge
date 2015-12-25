@@ -16,12 +16,12 @@ class Model_Items_Uniheal extends Model_Items_Abstract_Item implements Interface
             ->add_action('Applizieren', Model_Action::factory()
                     ->show_as(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_ZOMBIFY, -PHP_INT_MAX)
+                            ->effect(Model_Status::MS_STAT_ZOMBIFY, -PHP_INT_MAX)
                             ->buff('Model_Buffs_Drug1', false, 288)
                     )
                     ->decider(function($p) {
                         /** @var Model_Player $p */
-                        return ($p->stats_get(Model_Player::MP_STAT_ZOMBIFY) > 0) ? 1 : 0;
+                        return ($p->get_status()->get(Model_Status::MS_STAT_ZOMBIFY) > 0) ? 1 : 0;
                     })
                     ->effect(
                         Model_Effect::factory()
@@ -31,7 +31,7 @@ class Model_Items_Uniheal extends Model_Items_Abstract_Item implements Interface
                     )
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_ZOMBIFY, -PHP_INT_MAX)
+                            ->effect(Model_Status::MS_STAT_ZOMBIFY, -PHP_INT_MAX)
                             ->buff('Model_Buffs_Drug1', false, 288)
                             ->consume($this)
                             ->message('Nachdem du dir das Medikament gespritzt hast fühlst du sofort, wie deine Menschlichkeit zurückkehrt. Herzlichen Glückwunsch, du hast die Zombiekrankheit erfolgreich überwunden!')

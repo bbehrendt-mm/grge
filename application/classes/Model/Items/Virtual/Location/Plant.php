@@ -10,7 +10,7 @@ class Model_Items_Virtual_Location_Plant extends Model_Items_Abstract_Virtual {
     protected function hid() {
         return parent::hid()->add_action('Ventile des Kühlkreislaufes öffnen', Model_Action::factory()
             ->buttonskin('location')
-            ->requirement(Model_Player::MP_STAT_ENERGY, 30)
+            ->requirement(Model_Status::MS_STAT_ENERGY, 30)
             ->show_as(Model_Effect::factory()
                 ->ambiguous_effect()
             )
@@ -28,7 +28,7 @@ class Model_Items_Virtual_Location_Plant extends Model_Items_Abstract_Virtual {
                         /** @var Model_Player $p */
                         $r_drinks = mt_rand(2, 6);
                         for ($i = 0; $i < $r_drinks; $i++) $p->location()->inventory()->add(new Model_Items_Generic_Water2());
-                        $p->stats_modify(Model_Player::MP_STAT_RADIATION, mt_rand(20,50), Model_Player::MP_STAT_THIRST, 100);
+                        $p->get_status()->modify(Model_Status::MS_STAT_RADIATION, mt_rand(20,50), Model_Status::MS_STAT_THIRST, 100);
                 })
             , 'd1')
             ->effect(Model_Effect::factory()

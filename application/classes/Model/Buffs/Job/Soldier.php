@@ -11,7 +11,7 @@ class Model_Buffs_Job_Soldier extends Model_Buffs_Abstract_Job {
 	protected static $bid = 'soldier';
 	
 	protected $effects = Array(
-			Model_Player::MP_CHAR_ACCURACY => Array(
+			Model_Status::MS_CHAR_ACCURACY => Array(
 					Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
@@ -20,6 +20,6 @@ class Model_Buffs_Job_Soldier extends Model_Buffs_Abstract_Job {
 	);
 	
 	protected function adjust() {
-		$this->effects[Model_Player::MP_CHAR_ACCURACY][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = $this->level == 1 ? 0.05 : 0.1;
+		$this->effects[Model_Status::MS_CHAR_ACCURACY][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = $this->level == 1 ? 0.05 : 0.1;
 	}	
 }

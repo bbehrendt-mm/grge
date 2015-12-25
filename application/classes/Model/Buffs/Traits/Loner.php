@@ -8,7 +8,7 @@ class Model_Buffs_Traits_Loner extends Model_Buffs_Abstract_Buff {
 	protected static $bid = 'tr_loner';
 
     protected $effects = Array(
-        Model_Player::MP_CHAR_EVASIVENESS => Array(
+        Model_Status::MS_CHAR_EVASIVENESS => Array(
             Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0.15,
             Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
             Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,

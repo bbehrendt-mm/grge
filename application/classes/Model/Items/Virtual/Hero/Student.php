@@ -24,15 +24,15 @@ class Model_Items_Virtual_Hero_Student extends Model_Items_Abstract_Virtual {
                             $b = false;
                             $i = false;
 
-                            $b_heal = ($p->stats_get(Model_Player::MP_STAT_ZOMBIFY) <= 0) ? 25 : 15;
-                            foreach (Tool_Scripts::at_location($p->location_class()) as $ps) if ($ps->id() != $p->id()) if ($ps->stats_get(Model_Player::MP_STAT_ZOMBIFY) > 0) {
-                                if ($ps->stats_get(Model_Player::MP_STAT_ZOMBIFY) > ($b_heal + 5))
-                                    $ps->stats_modify(Model_Player::MP_STAT_ZOMBIFY, -$b_heal);
-                                else $ps->stats_set(Model_Player::MP_STAT_ZOMBIFY, 5);
+                            $b_heal = ($p->get_status()->get(Model_Status::MS_STAT_ZOMBIFY) <= 0) ? 25 : 15;
+                            foreach (Tool_Scripts::at_location($p->location_class()) as $ps) if ($ps->id() != $p->id()) if ($ps->get_status()->get(Model_Status::MS_STAT_ZOMBIFY) > 0) {
+                                if ($ps->get_status()->has(Model_Status::MS_STAT_ZOMBIFY, $b_heal + 5, Model_Status::MS_EFFECT_ITEM))
+                                    $ps->get_status()->modify(Model_Status::MS_STAT_ZOMBIFY, -$b_heal, Model_Status::MS_EFFECT_ITEM);
+                                else $ps->get_status()->set(Model_Status::MS_STAT_ZOMBIFY, 5);
 
-                                if (!$i && $p->stats_get(Model_Player::MP_STAT_ZOMBIFY) <= 0 && mt_rand(0,100) < 15) {
+                                if (!$i && $p->get_status()->get(Model_Status::MS_STAT_ZOMBIFY) <= 0 && mt_rand(0,100) < 15) {
                                     $i = true;
-                                    $p->stats_set(Model_Player::MP_STAT_ZOMBIFY, 5);
+                                    $p->get_status()->set(Model_Status::MS_STAT_ZOMBIFY, 5);
                                 }
                                 $b = true;
                             }

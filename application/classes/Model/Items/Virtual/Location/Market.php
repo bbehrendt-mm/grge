@@ -11,7 +11,7 @@ class Model_Items_Virtual_Location_Market extends Model_Items_Abstract_Virtual {
         $phpbb53 = $this;
         return parent::hid()->add_action('Marktwagen freilegen', Model_Action::factory()
             ->buttonskin('location')
-            ->requirement(Model_Player::MP_STAT_ENERGY, 10)
+            ->requirement(Model_Status::MS_STAT_ENERGY, 10)
             ->show_as(Model_Effect::factory()
                 ->ambiguous_effect()
             )

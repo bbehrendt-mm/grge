@@ -29,7 +29,7 @@ class Tool_Scripts
      * @param bool $active_player Include active players inventory
      * @param bool $active_location Include active locations inventory
      * @param bool $other_players Include inventory of other players at the active location
-     * @param null|Model_Player|Model_Pseudoplayer $perspective
+     * @param null|Interface_Plentity $perspective
      * @param null|callable $decider
      * @return number
      */
@@ -58,7 +58,7 @@ class Tool_Scripts
      * @param bool $active_player
      * @param bool $active_location
      * @param bool $other_players
-     * @param null|Model_Player|Model_Pseudoplayer $perspective
+     * @param null|Interface_Plentity $perspective
      * @param bool $grind
      * @param null|callable|callable[] $decider
      * @return bool
@@ -175,7 +175,7 @@ class Tool_Scripts
      * @param bool $active_player Include active players inventory
      * @param bool $active_location Include active locations inventory
      * @param bool $other_players Include inventory of other players at the active location
-     * @param null|Model_Player|Model_Pseudoplayer $perspective
+     * @param null|Interface_Plentity $perspective
      * @param null|callable $decider
      * @return Model_Items_Abstract_Item[]
      */
@@ -211,7 +211,7 @@ class Tool_Scripts
      * @param bool $active_player Include active players inventory
      * @param bool $active_location Include active locations inventory
      * @param bool $other_players Include inventory of other players at the active location
-     * @param null|Model_Player|Model_Pseudoplayer $perspective
+     * @param null|Interface_Plentity $perspective
      * @return Model_Items_Abstract_Item
      */
 
@@ -411,7 +411,7 @@ class Tool_Scripts
     }
 
     /**
-     * @param Model_Player $p
+     * @param Interface_Plentity $p
      * @return Model_Places_Abstract_Hideout|null
      */
     public static function current_location_hideout($p = null) {
@@ -508,7 +508,7 @@ class Tool_Scripts
         $c = 1;
 
         //Flashlight Effect
-        if (static::get_timeofday() != 'night' && !$player->location()->is_outside() && ($fb = $player->buff_retr('flashlight')) && $fb->active())
+        if (static::get_timeofday() != 'night' && !$player->location()->is_outside() && ($fb = $player->get_status()->retrieve('flashlight')) && $fb->active())
             $c *= 1.2;
 
         //Night Malus
@@ -516,15 +516,15 @@ class Tool_Scripts
             $c *= 0.25;
 
         //Fatigue Malus
-        if ($player->stats_get(Model_Player::MP_STAT_SLEEPY) < 50)
-            $c *= ($player->stats_get(Model_Player::MP_STAT_SLEEPY)/50);
+        if ($player->get_status()->get(Model_Status::MS_STAT_SLEEPY) < 50)
+            $c *= ($player->get_status()->get(Model_Status::MS_STAT_SLEEPY)/50);
 
         //Fatigue Bonus
-        if ($player->stats_get(Model_Player::MP_STAT_SLEEPY) > 90)
-            $c *= ($player->stats_get(Model_Player::MP_STAT_SLEEPY)/90);
+        if ($player->get_status()->get(Model_Status::MS_STAT_SLEEPY) > 90)
+            $c *= ($player->get_status()->get(Model_Status::MS_STAT_SLEEPY)/90);
 
         //Drunk Malus
-        $c *= (1 - ($player->stats_get(Model_Player::MP_STAT_DRUNK)/100));
+        $c *= (1 - ($player->get_status()->get(Model_Status::MS_STAT_DRUNK)/100));
 
         //Survivalist Boni
         if ($player->job(1060)) {

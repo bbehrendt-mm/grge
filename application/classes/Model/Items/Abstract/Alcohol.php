@@ -18,9 +18,9 @@ abstract class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
             ->add_action('Trinken', Model_Action::factory()
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_DRUNK, $a)
-                            ->effect(Model_Player::MP_STAT_ENERGY, static::$energy)
-                            ->effect(Model_Player::MP_STAT_THIRST, static::$thirst)
+                            ->effect(Model_Status::MS_STAT_DRUNK, $a)
+                            ->effect(Model_Status::MS_STAT_ENERGY, static::$energy)
+                            ->effect(Model_Status::MS_STAT_THIRST, static::$thirst)
                             ->effect(static::$additional_effects)
                             ->consume($this)
                             ->spawn('Model_Items_Smallbottle')
@@ -28,10 +28,10 @@ abstract class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
                     ,'s1')
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_DRUNK, -12)
-                            ->effect(Model_Player::MP_STAT_ENERGY, 5)
-                            ->effect(Model_Player::MP_STAT_THIRST, -20)
-                            ->effect(Model_Player::MP_STAT_HUNGER, -40)
+                            ->effect(Model_Status::MS_STAT_DRUNK, -12)
+                            ->effect(Model_Status::MS_STAT_ENERGY, 5)
+                            ->effect(Model_Status::MS_STAT_THIRST, -20)
+                            ->effect(Model_Status::MS_STAT_HUNGER, -40)
                             ->achieve(Model_Achievement::MA_ALCOHOLIC)
                             ->consume($this)
                             ->spawn('Model_Items_Smallbottle')
@@ -39,10 +39,10 @@ abstract class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
                     ,'s2')
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_DRUNK, $a)
-                            ->effect(Model_Player::MP_STAT_ENERGY, static::$energy)
-                            ->effect(Model_Player::MP_STAT_HEALTH, -static::$alcohol)
-                            ->effect(Model_Player::MP_STAT_THIRST, static::$thirst)
+                            ->effect(Model_Status::MS_STAT_DRUNK, $a)
+                            ->effect(Model_Status::MS_STAT_ENERGY, static::$energy)
+                            ->effect(Model_Status::MS_STAT_HEALTH, -static::$alcohol)
+                            ->effect(Model_Status::MS_STAT_THIRST, static::$thirst)
                             ->effect(static::$additional_effects)
                             ->consume($this)
                             ->spawn('Model_Items_Smallbottle')
@@ -50,9 +50,9 @@ abstract class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
                         ,'s3')
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_DRUNK, $a)
-                            ->effect(Model_Player::MP_STAT_ENERGY, static::$energy)
-                            ->effect(Model_Player::MP_STAT_THIRST, static::$thirst)
+                            ->effect(Model_Status::MS_STAT_DRUNK, $a)
+                            ->effect(Model_Status::MS_STAT_ENERGY, static::$energy)
+                            ->effect(Model_Status::MS_STAT_THIRST, static::$thirst)
                             ->effect(static::$additional_effects)
                             ->buff('Model_Buffs_Drunk')
                             ->consume($this)
@@ -62,10 +62,10 @@ abstract class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
                         ,'s4')
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_DRUNK, $a)
-                            ->effect(Model_Player::MP_STAT_ENERGY, static::$energy)
-                            ->effect(Model_Player::MP_STAT_HEALTH, -static::$alcohol)
-                            ->effect(Model_Player::MP_STAT_THIRST, static::$thirst)
+                            ->effect(Model_Status::MS_STAT_DRUNK, $a)
+                            ->effect(Model_Status::MS_STAT_ENERGY, static::$energy)
+                            ->effect(Model_Status::MS_STAT_HEALTH, -static::$alcohol)
+                            ->effect(Model_Status::MS_STAT_THIRST, static::$thirst)
                             ->effect(static::$additional_effects)
                             ->buff('Model_Buffs_Drunk')
                             ->consume($this)
@@ -89,7 +89,7 @@ abstract class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
                         if (Tool_Events::current($game->next_tick()) == 'halloween' && Tool_Gambling::random(0.08))
                             return 'horror';
 
-                        $ca = $p->stats_get(Model_Player::MP_STAT_DRUNK) + $a;
+                        $ca = $p->get_status()->get(Model_Status::MS_STAT_DRUNK) + $a;
                         if ($ca > 100) return 's2';
                         if ($ca > 90) return ($p->job(1080)) ? 's5' : 's4';
                         return ($p->job(1080)) ? 's3' : 's1';

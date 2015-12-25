@@ -26,7 +26,7 @@ class Controller_Map extends Controller_Game {
 
         //Check if any player is passed out or performs a fragile action
         foreach ($companion as $current)
-            if ($current->buff_retr('passout') || $current->buff_retr('fragile')) {
+            if ($current->get_status()->retrieve('passout') || $current->get_status()->retrieve('fragile')) {
                 $player->log()->add(($current == $player) ? 'Du kannst dich zur Zeit nicht bewegen...' : ':name kann sich zur Zeit nicht bewegen...', array(':name' => $current->name()));
                 return false;
             }
@@ -100,9 +100,9 @@ class Controller_Map extends Controller_Game {
         $overhead = 0;
         $modifier = $game->map($lid)->movement_modifier();
         foreach ($companion as $current) {
-            $energy = floor($distance * $current->stats_get(Model_Player::MP_CHAR_DISTANCING) * $modifier);
-            if ($current->stats_get(Model_Player::MP_STAT_ENERGY) < $energy) {
-                if ($support) $overhead += ($energy - $current->stats_get(Model_Player::MP_STAT_ENERGY));
+            $energy = floor($distance * $current->get_status()->get(Model_Status::MS_CHAR_DISTANCING) * $modifier);
+            if (!$current->get_status()->has(Model_Status::MS_STAT_ENERGY, $energy, Model_Status::MS_EFFECT_MOVEMENT)) {
+                if ($support) $overhead += $current->get_status()->miss(Model_Status::MS_STAT_ENERGY, $energy, Model_Status::MS_EFFECT_MOVEMENT);
                 else {
                     $player->log()->add(($current == $player) ? 'Du hast nicht genug Energie, um diesen Ort zu erreichen ...' : ':name hat nicht genug Energie, um diesen Ort zu erreichen ...', array(':name' => $current->name()));
                     return false;
@@ -110,22 +110,22 @@ class Controller_Map extends Controller_Game {
             }
         }
 
-        $energy = floor($distance * $player->stats_get(Model_Player::MP_CHAR_DISTANCING) * $modifier);
-        if ($player->stats_get(Model_Player::MP_STAT_ENERGY) < ($energy + $overhead * 1.2)) {
+        $energy = floor($distance * $player->get_status()->get(Model_Status::MS_CHAR_DISTANCING) * $modifier);
+        if (!$player->get_status()->has(Model_Status::MS_STAT_ENERGY, $energy + $overhead * 1.2, Model_Status::MS_EFFECT_MOVEMENT)) {
             $player->log()->add('Du hast nicht genug Energie um diesen Weg zu bewältigen während du jemand anderem hilfst.');
             return false;
         }
 
         //Actually move
         foreach ($companion as $current) {
-            $energy = floor($distance * $current->stats_get(Model_Player::MP_CHAR_DISTANCING) * $modifier);
+            $energy = floor($distance * $current->get_status()->get(Model_Status::MS_CHAR_DISTANCING) * $modifier);
             if ($transport = Tool_Scripts::get_active_transport($current))
                 $transport->trigger_before($current, $distance);
 
             $location->leave($current->id());
-            $current->stats_modify(Model_Player::MP_STAT_ENERGY, -$energy);
+            $current->get_status()->modify(Model_Status::MS_STAT_ENERGY, -$energy, Model_Status::MS_EFFECT_MOVEMENT);
             if (Tool_Scripts::get_timeofday() == "day")
-                $current->stats_modify(Model_Player::MP_STAT_THIRST, -$energy * 0.2);
+                $current->get_status()->modify(Model_Status::MS_STAT_THIRST, -$energy * 0.2, Model_Status::MS_EFFECT_MOVEMENT);
             $destination->enter($current->id());
             $current->location_class($did);
 
@@ -142,11 +142,11 @@ class Controller_Map extends Controller_Game {
             //Tumbles
             if (($sub || $map_type != Model_Map_Abstract::MMA_TYPE_LABYRINTH) && $game->tumble($current->id())) {
                 $current->log()->add('Du bist gestolpert und hast dir das Knie aufgeschlagen! Vielleicht solltest du deinen Alkoholkonsum zügeln ...');
-                $current->stats_modify(Model_Player::MP_STAT_HEALTH, -mt_rand(3, 10));
+                $current->get_status()->modify(Model_Status::MS_STAT_HEALTH, -mt_rand(3, 10), Model_Status::MS_EFFECT_MOVEMENT);
             }
 
             //Remove movement buffs
-            $current->buff_remove('move');
+            $current->get_status()->remove('move');
 
             //Messages
             if (!$sub && $map_type == Model_Map_Abstract::MMA_TYPE_LABYRINTH) {
@@ -166,7 +166,7 @@ class Controller_Map extends Controller_Game {
             if ($transport = Tool_Scripts::get_active_transport($current))
                 $transport->trigger_after($current, $distance);
         }
-        $player->stats_modify(Model_Player::MP_STAT_ENERGY, -$overhead * 1.2);
+        $player->get_status()->modify(Model_Status::MS_STAT_ENERGY, -$overhead * 1.2, Model_Status::MS_EFFECT_MOVEMENT);
 
         //Battle
         if ($destination->zombie_pop() > 0 && !Tool_System::instance_of($destination, 'Model_Places_Abstract_Trap'))
@@ -216,7 +216,7 @@ class Controller_Map extends Controller_Game {
 
         $read_only = false;
 
-        if ($player->buff_retr('passout') || $player->buff_retr('fragile'))
+        if ($player->get_status()->retrieve('passout') || $player->get_status()->retrieve('fragile'))
             $read_only = true;
 
 
@@ -249,7 +249,7 @@ class Controller_Map extends Controller_Game {
             $pass[$id]['route'] = $data['tail'];
             $pass[$id]['nodes'] = $data['nodes'];
             $pass[$id]['distance'] = $data['distance'];
-            $pass[$id]['energy'] = floor($data['distance'] * $player->stats_get(Model_Player::MP_CHAR_DISTANCING) * $modifier);
+            $pass[$id]['energy'] = floor($data['distance'] * $player->get_status()->get(Model_Status::MS_CHAR_DISTANCING) * $modifier);
             $pass[$id]['weight'] = $location->weight_limit();
             $pass[$id]['zombies'] = $location->zombie_pop();
             $pass[$id]['name'] = __($location->name());
@@ -293,7 +293,7 @@ class Controller_Map extends Controller_Game {
             'current' => $lid,
             'escort' => $rmp,
             'companions' => $companions,
-            'radius' => $player->stats_get(Model_Player::MP_STAT_ENERGY)
+            'radius' => $player->get_status()->get(Model_Status::MS_STAT_ENERGY)
         ]);
     }
 

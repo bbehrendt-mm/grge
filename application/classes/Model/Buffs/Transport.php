@@ -8,7 +8,7 @@ class Model_Buffs_Transport extends Model_Buffs_Abstract_Passive {
 	protected static $bid = 'transport';
 	
 	protected $effects = Array(				
-				Model_Player::MP_CHAR_DISTANCING => Array(
+				Model_Status::MS_CHAR_DISTANCING => Array(
 						Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
 						Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
 						Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
@@ -17,9 +17,9 @@ class Model_Buffs_Transport extends Model_Buffs_Abstract_Passive {
 			);
 	
 	protected function activator() {
-		$i = Tool_Scripts::get_active_transport($this->assoc_player);
+		$i = $this->associated_to_player() ? Tool_Scripts::get_active_transport($this->assoc_player) : null;
         if ($i != null) {
-            $this->effects[Model_Player::MP_CHAR_DISTANCING][Model_Buffs_Abstract_Buff::MB_DROP_ACC] = $i->speedup();
+            $this->effects[Model_Status::MS_CHAR_DISTANCING][Model_Buffs_Abstract_Buff::MB_DROP_ACC] = $i->speedup();
             return true;
         } else return false;
 	}

@@ -3,8 +3,8 @@
 class Model_Items_Pamphlet extends Model_Items_Abstract_Book {
 	
 	protected static $effects = array(
-        Model_Player::MP_STAT_SLEEPY => -0.05,
-        Model_Player::MP_STAT_ENERGY => 0.2
+        Model_Status::MS_STAT_SLEEPY => -0.05,
+        Model_Status::MS_STAT_ENERGY => 0.2
     );
 
     protected static $reading_speed = 1;

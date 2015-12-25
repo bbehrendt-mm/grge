@@ -16,8 +16,8 @@ class Model_Items_Pumpkin extends Model_Items_Abstract_Item implements Interface
             ->add_action('Essen', Model_Action::factory()
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_HUNGER, 100)
-                            ->effect(Model_Player::MP_STAT_ENERGY, -30)
+                            ->effect(Model_Status::MS_STAT_HUNGER, 100)
+                            ->effect(Model_Status::MS_STAT_ENERGY, -30)
                             ->consume($this)
                             ->message('Du schlägst deine Zähne in das Kürbisfleisch - so muss es sich anfühlen, ein Zombie zu sein!')
                     )

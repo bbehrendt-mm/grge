@@ -3,7 +3,7 @@
 class Model_Items_Booklet extends Model_Items_Abstract_Book {
 	
 	protected static $effects = array(
-        Model_Player::MP_STAT_SLEEPY => -0.3
+        Model_Status::MS_STAT_SLEEPY => -0.3
     );
 
     protected static $reading_speed = 3;

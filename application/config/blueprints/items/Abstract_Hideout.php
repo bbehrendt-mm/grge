@@ -193,7 +193,7 @@ return Model_Blueprints::factory()
         /** @var Model_Player $pl */
         $mod = 1;
         if ($pl->location()->has_upgrade('manuspd')) $mod -= 0.5;           // Suspender Bonus
-        if ($pl->buff_retr('tr_handyman')) $mod -= 0.1;                     // Handyman Bonus
+        if ($pl->get_status()->retrieve('tr_handyman')) $mod -= 0.1;                     // Handyman Bonus
 
         return max(min(1,$e),floor($e*$mod));
     });})

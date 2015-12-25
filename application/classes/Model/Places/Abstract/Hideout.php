@@ -68,8 +68,8 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
             if ($this->has_upgrade("bedrwake")) {
                 $this->remove_upgrades("bedrwake");
                 foreach (Tool_Scripts::at_location($this->uin) as $s_player)
-                    if ($s_player->buff_retr('sleep_cozy')) {
-                        $s_player->buff_retr('sleep_cozy')->unbuff();
+                    if ($s_player->get_status()->retrieve('sleep_cozy')) {
+                        $s_player->get_status()->retrieve('sleep_cozy')->unbuff();
                         new Model_Buffs_Exited($s_player->id(), 4);
                         $s_player->log()->add('Du hörst den Alarmdraht klingen und springst aus dem Bett, um dich gegen Zombies zu verteidigen!');
                     }
@@ -106,21 +106,21 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
             Array('chance' => 1, 'value' => 3));	//random big energy gain
 
         //Act accordingly
-        $sleeping = $player->buff_retr('sleep_cozy');
+        $sleeping = $player->get_status()->retrieve('sleep_cozy');
         switch (Tool_Gambling::roulette($chance))
         {
             case 1:
                 if ($sleeping) $player->log()->add('Du hattest eben einen schönen Traum. Das hat dir etwas zusätzliche Energie verschafft.');
                 else $player->log()->add('Du hast soeben die Antwort auf eine philosophische Frage gefunden, die dich schon seit Jahren quält. Das hat dir etwas zusätzliche Energie verschafft.');
-                $player->stats_modify(Model_Player::MP_STAT_ENERGY, 5);
+                $player->get_status()->modify(Model_Status::MS_STAT_ENERGY, 5);
                 break;
             case 2:
                 if ($sleeping) $player->log()->add('Du hast die perfekte Ruheposition gefunden. Weil du jetzt so bequem liegst erhälst du einen Energieschub.');
                 else $player->log()->add('In deiner Hose findest du eine alte Kinokarte von einem Film, den du dir mit Freunden angesehen hast. Diese schöne Erinnerung verschafft dir einen Energieschub.');
-                $player->stats_modify(Model_Player::MP_STAT_ENERGY, 15);
+                $player->get_status()->modify(Model_Status::MS_STAT_ENERGY, 15);
                 break;
             case 3: $player->log()->add('Eine Sternschnuppe! So eine hast du schon ewig nicht mehr gesehen. Dieser wunderschöne Anblick gibt dir Hoffnung und einen gewaltigen Energieschub!');
-                $player->stats_modify(Model_Player::MP_STAT_ENERGY, 50);
+                $player->get_status()->modify(Model_Status::MS_STAT_ENERGY, 50);
                 break;
         }
 
@@ -160,8 +160,8 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
             $player->log()->add(new Model_Log_Types_Text(null, null, 'Auf dem Weg nach draußen hast du die Fallgrube wieder geschlossen und für einen erneuten Einsatz bereit gemacht.'));
         }
 
-        if ($buff = $player->buff_retr('home')) $buff->unbuff();
-        if ($buff = $player->buff_retr('scarecrow')) $buff->unbuff();
+        if ($buff = $player->get_status()->retrieve('home')) $buff->unbuff();
+        if ($buff = $player->get_status()->retrieve('scarecrow')) $buff->unbuff();
 
         return true;
     }
@@ -183,7 +183,7 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
                         ->requirement('Model_Items_Brainbox', 1)
                         ->condition(function($p) {
                             /** @var Model_Player $p */
-                            if ($p->buff_retr('wow')) return false;
+                            if ($p->get_status()->retrieve('wow')) return false;
                             else return true;
                         })
                         ->show_as(Model_Effect::factory()

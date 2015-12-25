@@ -6,6 +6,14 @@ class Model_Buffs_Soulcatcher extends Model_Buffs_Abstract_Buff {
 	protected static $icon = 'soulcatcher';
 	protected static $desc = 'Der mysteriöse Fremde in der Aussenwelt hat dir das Zeichen des Seelenfängers übertragen. Von nun an wirst du an Orten, an denen Schreckliches vorgefallen ist, Seelen finden können. Wenn du sie dem Fremden bringst wird er dich sicher belohnen.';
 	protected static $bid = 'soulcatcher';
+    protected static $allow_npc_assoc = false;
+
+    public function __construct($association = NULL, $lifetime = -1) {
+        parent::__construct($association, $lifetime);
+
+        if (!$this->associated_to_player())
+            $this->unbuff();
+    }
 
     public function tick() {
         /** @global Model_Game $game */

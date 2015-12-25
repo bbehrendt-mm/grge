@@ -334,13 +334,13 @@ return array(
                         //Inventory
                         $player->inventory()->limit(100);
 
-                        $player->stats_set(
-                            Model_Player::MP_STAT_DRUNK,	0,
-                            Model_Player::MP_STAT_ENERGY,	100,
-                            Model_Player::MP_STAT_HEALTH,	100,
-                            Model_Player::MP_STAT_HUNGER,	50,
-                            Model_Player::MP_STAT_SLEEPY,	100,
-                            Model_Player::MP_STAT_THIRST,	50
+                        $player->get_status()->set(
+                            Model_Status::MS_STAT_DRUNK,	0,
+                            Model_Status::MS_STAT_ENERGY,	100,
+                            Model_Status::MS_STAT_HEALTH,	100,
+                            Model_Status::MS_STAT_HUNGER,	50,
+                            Model_Status::MS_STAT_SLEEPY,	100,
+                            Model_Status::MS_STAT_THIRST,	50
                         );
 
                         //Buffs
@@ -544,7 +544,7 @@ return array(
                      */
                     global $player, $game;
                     $player->inventory()->add(new Model_Items_Virtual_Hero_Snot($level));
-                    $player->stats_set(	Model_Player::MP_STAT_HUNGER,100,Model_Player::MP_STAT_THIRST,100);
+                    $player->get_status()->set(	Model_Status::MS_STAT_HUNGER,100,Model_Status::MS_STAT_THIRST,100);
 
                     if ($level >= 2)
                     {
@@ -636,8 +636,8 @@ return array(
             'setup' => array('inherit' => array(0), 'f' => function($mode, $level) {
                     /** @global Model_Player $player */
                     global $player;
-                    $player->stats_set(	Model_Player::MP_STAT_HUNGER,	100,
-                        Model_Player::MP_STAT_THIRST,	100);
+                    $player->get_status()->set(	Model_Status::MS_STAT_HUNGER,	100,
+                        Model_Status::MS_STAT_THIRST,	100);
 
                     $bottle = new Model_Items_Bottle;
                     $bottle->add_water(4, 0);
@@ -718,8 +718,8 @@ return array(
             'setup' => array('inherit' => array(0), 'f' => function($mode, $level) {
                     /** @global Model_Player $player */
                     global $player;
-                    $player->stats_set(	Model_Player::MP_STAT_HUNGER,	60,
-                        Model_Player::MP_STAT_THIRST,	75);
+                    $player->get_status()->set(	Model_Status::MS_STAT_HUNGER,	60,
+                        Model_Status::MS_STAT_THIRST,	75);
 
                     $bottle = new Model_Items_Bottle;
                     $bottle->add_water(4, 0);

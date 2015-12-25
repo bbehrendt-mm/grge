@@ -18,8 +18,8 @@ class Model_Items_Body3 extends Model_Items_Abstract_Item implements Interface_S
             ->add_action('Fressen', Model_Action::factory()
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_HUNGER, 50)
-                            ->effect(Model_Player::MP_STAT_HEALTH, -30)
+                            ->effect(Model_Status::MS_STAT_HUNGER, 50)
+                            ->effect(Model_Status::MS_STAT_HEALTH, -30)
                             ->consume($this)
                             ->achieve(Model_Achievement::MA_BODY_EATER)
                             ->spawn('Model_Items_Bone')

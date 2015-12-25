@@ -24,10 +24,10 @@ class Model_Items_Whiskey extends Model_Items_Abstract_Alcohol implements Interf
                 Model_Action::factory()
                     ->condition(function($p, $s) {
                         /** @var Model_Player $s */
-                        return (bool)$s->buff_retr('blood');
+                        return (bool)$s->get_status()->retrieve('blood');
                     })
                     ->fail_message('Dein Freund hat keine Wunde, die du auswaschen könntest...')
-                    ->requirement(Model_Player::MP_STAT_ENERGY, 15)
+                    ->requirement(Model_Status::MS_STAT_ENERGY, 15)
                     ->effect(
                         Model_Effect::factory()
                             ->consume($this)
@@ -35,8 +35,8 @@ class Model_Items_Whiskey extends Model_Items_Abstract_Alcohol implements Interf
                             ->message('Ein bisschen Auswaschen, ein bisschen Eiter entfernen... schon sieht diese klaffende Wunde viel ansehnlicher aus.')
                         , null, null,
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_HEALTH, -10)
-                            ->effect(Model_Player::MP_STAT_DRUNK, 10)
+                            ->effect(Model_Status::MS_STAT_HEALTH, -10)
+                            ->effect(Model_Status::MS_STAT_DRUNK, 10)
                             ->buff('Model_Buffs_Blood', true)
                             ->message(':name hat deine Wunde mithilfe von Alkohol ausgewaschen.', array(':name' => $player->name()))
                     )

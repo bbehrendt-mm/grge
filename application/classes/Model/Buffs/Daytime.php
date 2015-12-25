@@ -7,7 +7,7 @@ class Model_Buffs_Daytime extends Model_Buffs_Abstract_Buff {
     protected static $remotable = false;
 
     protected $effects = Array(
-        Model_Player::MP_STAT_FREEZE => Array(
+        Model_Status::MS_STAT_FREEZE => Array(
             Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
             Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
             Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
@@ -16,7 +16,7 @@ class Model_Buffs_Daytime extends Model_Buffs_Abstract_Buff {
     );
 
     public function name() {
-        switch (Tool_Scripts::get_timeofday($this->assoc_player)) {
+        switch (Tool_Scripts::get_timeofday($this->associated_to_player() ? $this->assoc_player : null)) {
             case "night":
                 return "Tageszeit: Nacht"; break;
             case "morning":
@@ -33,7 +33,7 @@ class Model_Buffs_Daytime extends Model_Buffs_Abstract_Buff {
     }
 
     public function icon() {
-        return static::static_icon(Tool_Scripts::get_timeofday($this->assoc_player));
+        return static::static_icon(Tool_Scripts::get_timeofday($this->associated_to_player() ? $this->assoc_player : null));
     }
 
     public static function static_icon($s = null) {
@@ -55,7 +55,7 @@ class Model_Buffs_Daytime extends Model_Buffs_Abstract_Buff {
     }
 
     public function description() {
-        return static::static_description(Tool_Scripts::get_timeofday($this->assoc_player));
+        return static::static_description(Tool_Scripts::get_timeofday($this->associated_to_player() ? $this->assoc_player : null));
     }
 
     public static function static_description($s = null) {
@@ -78,23 +78,23 @@ class Model_Buffs_Daytime extends Model_Buffs_Abstract_Buff {
 
 
     public function rebuild() {
-        $tod = Tool_Scripts::get_timeofday($this->assoc_player);
+        $tod = Tool_Scripts::get_timeofday($this->associated_to_player() ? $this->assoc_player : null);
 
         switch ($tod) {
             case 'snowynight':
-                $this->effects[Model_Player::MP_STAT_FREEZE][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = 0.75;
-                $this->effects[Model_Player::MP_STAT_FREEZE][Model_Buffs_Abstract_Buff::MB_DROP_ACC] = 0;
+                $this->effects[Model_Status::MS_STAT_FREEZE][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = 0.75;
+                $this->effects[Model_Status::MS_STAT_FREEZE][Model_Buffs_Abstract_Buff::MB_DROP_ACC] = 0;
                 break;
             default:
-                $this->effects[Model_Player::MP_STAT_FREEZE][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = 0;
-                $this->effects[Model_Player::MP_STAT_FREEZE][Model_Buffs_Abstract_Buff::MB_DROP_ACC] = 5;
+                $this->effects[Model_Status::MS_STAT_FREEZE][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = 0;
+                $this->effects[Model_Status::MS_STAT_FREEZE][Model_Buffs_Abstract_Buff::MB_DROP_ACC] = 5;
         };
 
         //Control sun buff
         if ($tod != "day" || !$this->assoc_player->location()->is_outside())
-            $this->assoc_player->buff_remove("sun");
-        elseif ($tod == "day" && $this->assoc_player->location()->is_outside() && !$this->assoc_player->buff_retr("sun"))
-            new Model_Buffs_Sun($this->assoc_player->id());
+            $this->assoc_player->get_status()->remove("sun");
+        elseif ($tod == "day" && $this->assoc_player->location()->is_outside() && !$this->assoc_player->get_status()->retrieve("sun"))
+            new Model_Buffs_Sun($this->assoc_player);
 
 		return parent::rebuild();
 	}

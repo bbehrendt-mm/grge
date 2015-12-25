@@ -9,15 +9,15 @@ class Model_Buffs_Drug1 extends Model_Buffs_Abstract_Buff {
 	
 	public function __construct($player_id = NULL, $lifetime) {
 		parent::__construct($player_id, $lifetime);
-		if ($buff = $this->assoc_player->buff_retr('drug3')) {
+		if ($buff = $this->assoc_player->get_status()->retrieve('drug3')) {
 			$buff->unbuff();
 			$this->assoc_player->log()->add(new Model_Log_Types_Text('Drogensucht', null, 'Das hat gut getan! Du hast die Entzugserscheinungen gegen rosa Elephanten eingetauscht, die mit geschminkten Aligatoren um zwei Einhörner kämpfen. Zumindest für ein Weilchen...'));
 		}
 	}
 	
 	public function merge($newclass) {
-		if (!$this->assoc_player->buff_retr('drug2') && mt_rand(0, 2) < 2) { 
-			new Model_Buffs_Drug2($this->assoc_player->id());
+		if (!$this->assoc_player->get_status()->retrieve('drug2') && mt_rand(0, 2) < 2) {
+			new Model_Buffs_Drug2($this->assoc_player);
 			$this->assoc_player->log()->add(new Model_Log_Types_Text('Drogensucht', null, 'Uups, da hast du es wohl ein wenig übertrieben, jetzt bist du drogensüchtig. Hoffentlich hast du entweder ein volles Pillenschränkchen oder zumindest weitreichende Erfahrung mit Entzugserscheinungen...'));
 		}
 		$this->lifetime += $newclass->lifetime();
@@ -25,7 +25,7 @@ class Model_Buffs_Drug1 extends Model_Buffs_Abstract_Buff {
 	}
 	
 	public function unbuff() {
-		if ($this->assoc_player->buff_retr('drug2')) new Model_Buffs_Drug3($this->assoc_player->id(), 864);
+		if ($this->assoc_player->get_status()->retrieve('drug2')) new Model_Buffs_Drug3($this->assoc_player, 864);
 		parent::unbuff();
 	}
 }

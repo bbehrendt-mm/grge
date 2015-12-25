@@ -16,8 +16,8 @@ class Model_Items_Coffee extends Model_Items_Abstract_Item implements Interface_
             ->add_action('Trinken', Model_Action::factory()
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_SLEEPY, 20 * ((Tool_Scripts::get_timeofday() == "morning") ? 1.5 : 1))
-                            ->effect(Model_Player::MP_STAT_ENERGY, 10 * ((Tool_Scripts::get_timeofday() == "morning") ? 1.5 : 1))
+                            ->effect(Model_Status::MS_STAT_SLEEPY, 20 * ((Tool_Scripts::get_timeofday() == "morning") ? 1.5 : 1))
+                            ->effect(Model_Status::MS_STAT_ENERGY, 10 * ((Tool_Scripts::get_timeofday() == "morning") ? 1.5 : 1))
                             ->consume($this)
                             ->message('Aaah, das tut gut. Deine Müdigkeit verschwindet und du bekommst neue Energie.')
                     )

@@ -56,7 +56,7 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
 
         if (!$game || !$player) return;
 
-        $player->stats_set(Model_Player::MP_STAT_ENERGY, 100, Model_Player::MP_STAT_HEALTH, 100, Model_Player::MP_STAT_HUNGER, 100, Model_Player::MP_STAT_THIRST, 100, Model_Player::MP_STAT_SLEEPY, 100);
+        $player->get_status()->set(Model_Status::MS_STAT_ENERGY, 100, Model_Status::MS_STAT_HEALTH, 100, Model_Status::MS_STAT_HUNGER, 100, Model_Status::MS_STAT_THIRST, 100, Model_Status::MS_STAT_SLEEPY, 100);
 
         $this->render();
     }

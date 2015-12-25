@@ -10,13 +10,13 @@ class Model_Buffs_Driver extends Model_Buffs_Abstract_Fragile {
     protected static $abortable = false;
 
     protected $effects = Array(
-        Model_Player::MP_STAT_ENERGY => Array(
+        Model_Status::MS_STAT_ENERGY => Array(
             Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
             Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0.2,
             Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
             Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
         ),
-        Model_Player::MP_STAT_SLEEPY => Array(
+        Model_Status::MS_STAT_SLEEPY => Array(
             Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
             Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0.4,
             Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,

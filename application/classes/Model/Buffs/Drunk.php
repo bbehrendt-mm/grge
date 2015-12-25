@@ -13,19 +13,19 @@ class Model_Buffs_Drunk extends Model_Buffs_Abstract_Fragile {
     }
 
     protected $effects = Array(
-        Model_Player::MP_STAT_ENERGY => Array(
+        Model_Status::MS_STAT_ENERGY => Array(
             Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0.6,
             Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
             Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
             Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
         ),
-        Model_Player::MP_STAT_DRUNK => Array(
+        Model_Status::MS_STAT_DRUNK => Array(
             Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
             Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
             Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
             Model_Buffs_Abstract_Buff::MB_DROP_PRC => 1,
         ),
-        Model_Player::MP_STAT_SLEEPY => Array(
+        Model_Status::MS_STAT_SLEEPY => Array(
             Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 1.1,
             Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
             Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
@@ -34,13 +34,13 @@ class Model_Buffs_Drunk extends Model_Buffs_Abstract_Fragile {
     );
 
     protected function action_on_complete() {
-        if (Tool_Scripts::location_type($this->assoc_player->location_class()) == 2) {
+        if ($this->associated_to_player() && Tool_Scripts::location_type($this->assoc_player->location_class()) == 2) {
 
             $l = $this->assoc_player->location();
-            if		($l->has_upgrade('bedr3'))	new Model_Buffs_Sleep($this->assoc_player->id(), 3);
-            elseif	($l->has_upgrade('bedr2'))	new Model_Buffs_Sleep($this->assoc_player->id(), 2);
-            elseif	($l->has_upgrade('bedr1'))	new Model_Buffs_Sleep($this->assoc_player->id(), 1);
-            else										new Model_Buffs_Sleep($this->assoc_player->id(), 0);
+            if		($l->has_upgrade('bedr3'))	new Model_Buffs_Sleep($this->assoc_player, 3);
+            elseif	($l->has_upgrade('bedr2'))	new Model_Buffs_Sleep($this->assoc_player, 2);
+            elseif	($l->has_upgrade('bedr1'))	new Model_Buffs_Sleep($this->assoc_player, 1);
+            else								new Model_Buffs_Sleep($this->assoc_player, 0);
         }
 
     }

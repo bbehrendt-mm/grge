@@ -54,13 +54,13 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
                     ->buttonskin('hideout')
                     ->condition(function($p) {
                         /** @var Model_Player $p */
-                        if ($p->buff_retr('fragile')) return 'fragile';
+                        if ($p->get_status()->retrieve('fragile')) return 'fragile';
                         return true;
                     })
                     ->fail_message('Du bist im Moment beschäftigt.', 'fragile')
                     ->show_as(Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_ENERGY, '++')
-                            ->effect(Model_Player::MP_STAT_SLEEPY, '--')
+                            ->effect(Model_Status::MS_STAT_ENERGY, '++')
+                            ->effect(Model_Status::MS_STAT_SLEEPY, '--')
                     )
                     ->effect(Model_Effect::factory()
                             ->message('Du setzt dich in den Sitz fallen und versuchst, all die schlimmen Ereignisse heute abzuschütteln.')
@@ -79,11 +79,11 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
             ->buttonskin('hideout')
             ->condition(function($p) {
                 /** @var Model_Player $p */
-                if ($p->buff_retr('fragile')) return 'fragile';
-                if ($p->buff_retr('wow')) return 'wow';
-                if ($p->stats_get(Model_Player::MP_STAT_THIRST) < 20) return 'thirst';
-                if ($p->stats_get(Model_Player::MP_STAT_HUNGER) < 20) return 'hunger';
-                if ($p->stats_get(Model_Player::MP_STAT_SLEEPY) > 85) return 'sleepy';
+                if ($p->get_status()->retrieve('fragile')) return 'fragile';
+                if ($p->get_status()->retrieve('wow')) return 'wow';
+                if ($p->get_status()->get(Model_Status::MS_STAT_THIRST) < 20) return 'thirst';
+                if ($p->get_status()->get(Model_Status::MS_STAT_HUNGER) < 20) return 'hunger';
+                if ($p->get_status()->get(Model_Status::MS_STAT_SLEEPY) > 85) return 'sleepy';
                 if ($p->location()->has_upgrade('hideout_cursed')) return 'cursed';
                 return true;
             })
@@ -94,9 +94,9 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
             ->fail_message('Du wälzt dich hin und her, aber kannst einfach nicht einschlafen... Vielleicht bist du ja gar nicht müde.', 'sleepy')
             ->fail_message('Du legst dich auf das Bett und versuchst zu schlafen. Allerdings kannst du dich einfach nicht dazu durchringen, in diesem fürchterlichen Raum die Augen zu schließen. Als du dann auch noch jemanden (oder etwas?) in der Ferne durch die Gänge schleichen hörst, springst du wieder auf. Sieht nicht so aus, als könntest du hier schlafen...', 'cursed')
             ->show_as(Model_Effect::factory()
-                ->effect(Model_Player::MP_STAT_ENERGY, '++')
-                ->effect(Model_Player::MP_STAT_SLEEPY, '++')
-                ->effect(Model_Player::MP_STAT_HEALTH, $location->has_upgrade("bedr1") ? '++' : 0)
+                ->effect(Model_Status::MS_STAT_ENERGY, '++')
+                ->effect(Model_Status::MS_STAT_SLEEPY, '++')
+                ->effect(Model_Status::MS_STAT_HEALTH, $location->has_upgrade("bedr1") ? '++' : 0)
             )
             ->effect(Model_Effect::factory()
                 ->message('Es war ein langer Tag, und du bist froh wenigstens für ein paar Stunden alles um dich herum vergessen zu können ...')

@@ -10,7 +10,7 @@ class Model_Buffs_Presleep extends Model_Buffs_Abstract_Fragile {
 	private $level = 0;
 
     protected function action_on_complete() {
-        new Model_Buffs_Sleep($this->assoc_player->id(), $this->level);
+        new Model_Buffs_Sleep($this->assoc_player, $this->level);
     }
 	
 	public function __construct($player_id, $level, $duration = 5) {
@@ -19,19 +19,19 @@ class Model_Buffs_Presleep extends Model_Buffs_Abstract_Fragile {
 	}
 	
 	protected $effects = Array(
-				Model_Player::MP_STAT_ENERGY => Array(
+				Model_Status::MS_STAT_ENERGY => Array(
 					Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
 				),
-				Model_Player::MP_STAT_HEALTH => Array(
+				Model_Status::MS_STAT_HEALTH => Array(
 					Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
 				),								
-				Model_Player::MP_STAT_SLEEPY => Array(
+				Model_Status::MS_STAT_SLEEPY => Array(
 						Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
 						Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
 						Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
@@ -40,22 +40,22 @@ class Model_Buffs_Presleep extends Model_Buffs_Abstract_Fragile {
 			);
 	
 	public function rebuild() {
-		if ($this->assoc_player->stats_get(Model_Player::MP_STAT_SLEEPY) == 100) {
-			$this->assoc_player->achievements()->achieve(Model_Achievement::MA_SLEEP);
+		if ($this->assoc_player->get_status()->get(Model_Status::MS_STAT_SLEEPY) == 100) {
+			if ($this->associated_to_player()) $this->assoc_player->achievements()->achieve(Model_Achievement::MA_SLEEP);
 			return $this->unbuff();
 		}
 		
-		if ($this->assoc_player->stats_get(Model_Player::MP_STAT_HUNGER) < 20 ) {
-			$this->assoc_player->log()->add('Dein furchtbarer Hunger hindert dich am weiterschlafen... Du bist aufgewacht.');
+		if ($this->assoc_player->get_status()->get(Model_Status::MS_STAT_HUNGER) < 20 ) {
+            if ($this->associated_to_player()) $this->assoc_player->log()->add('Dein furchtbarer Hunger hindert dich am weiterschlafen... Du bist aufgewacht.');
 			return $this->unbuff();
 		}
-		if ($this->assoc_player->stats_get(Model_Player::MP_STAT_THIRST) < 20 ) {
-			$this->assoc_player->log()->add('Dein furchtbarer Durst hindert dich am weiterschlafen... Du bist aufgewacht.');
+		if ($this->assoc_player->get_status()->get(Model_Status::MS_STAT_THIRST) < 20 ) {
+            if ($this->associated_to_player()) $this->assoc_player->log()->add('Dein furchtbarer Durst hindert dich am weiterschlafen... Du bist aufgewacht.');
 			return $this->unbuff();
 		}
 
-        $this->effects[Model_Player::MP_STAT_ENERGY][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = 0.15;
-        $this->effects[Model_Player::MP_STAT_SLEEPY][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = 0.15;
+        $this->effects[Model_Status::MS_STAT_ENERGY][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = 0.15;
+        $this->effects[Model_Status::MS_STAT_SLEEPY][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = 0.15;
 
 		return parent::rebuild();
 	}

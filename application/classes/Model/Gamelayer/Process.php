@@ -70,7 +70,7 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
 				$this->set['gamedata']->uin->get($active_player, 'Model_Player')->location()->inventory()->prefetch();
 
                 //Rebuild buffs
-                $this->set['gamedata']->uin->get($active_player, 'Model_Player')->rebuild();
+                $this->set['gamedata']->uin->get($active_player, 'Model_Player')->get_status()->rebuild();
 			}
 
 			//Call ticks until present time is reached

@@ -1,27 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Player extends Model_Cloudshard {
-
-	const MP_STAT_HUNGER = 1;
-	const MP_STAT_THIRST = 2;
-	const MP_STAT_HEALTH = 3;
-	const MP_STAT_SLEEPY = 4;
-	const MP_STAT_ENERGY = 5;
-	const MP_STAT_DRUNK  = 6;
-	const MP_STAT_RADIATION = 7;
-    const MP_STAT_ZOMBIFY = 8;
-    const MP_STAT_FREEZE = 9;
-
-	const MP_STATUS_COUNT = 9;
-	const MP_THRESHOLD = 512;
-	
-	const MP_CHAR_DISTANCING = 512;
-	const MP_CHAR_EVASIVENESS = 513;
-	const MP_CHAR_ACCURACY = 514;
-	const MP_CHAR_DAMAGE_RESISTANCE = 515;
-	const MP_CHAR_BULKYNESS = 516;
-    const MP_CHAR_DAMAGE_MULTIPLIER = 517;
-    const MP_CHAR_LOCATION_SPAWNRATE = 518;
+class Model_Player extends Model_Cloudshard implements Interface_Plentity {
 
     const MP_SETTINGS_BATTLE_NOENERGY = 1;
     const MP_SETTINGS_BATTLE_NOSELFAMMO = 2;
@@ -37,9 +16,8 @@ class Model_Player extends Model_Cloudshard {
 	
 	private $user_id;
 	private $name;
-	private $status_bars;
+    private $status;
     private $temp_registry;
-	private $buffs;
 	private $alive;
 	private $location;
 	private $inventory;
@@ -82,10 +60,6 @@ class Model_Player extends Model_Cloudshard {
 		}
 
         $this->temp_registry = array();
-
-        //Reset above-threshold bars
-        foreach ($this->status_bars as $key => &$value)
-            if ($key >= static::MP_THRESHOLD) $value = 1;
 
 		if ($this->alive())
 			$this->cod = null;
@@ -157,12 +131,11 @@ class Model_Player extends Model_Cloudshard {
             $this->set_battle_settings(true, false, false, 2, array());
 		
 		//Init
-		$this->status_bars = Array();
-		$this->buffs = Array();
 		$this->alive = true;
 		$this->inventory = new Model_Inventory(null, true);
 		$this->log = new Model_Log_Log();
 		$this->achievements = new Model_Achievement();
+        $this->status = new Model_Status();
 		
 		//Init all gameplay data
 		$this->kickoff();
@@ -308,14 +281,14 @@ class Model_Player extends Model_Cloudshard {
 				
 			$drop[] = new Model_Items_Body('[nt]' . $this->name, 'Dies ist alles, was von eurem Freund übrig geblieben ist... Naja, immerhin kann man noch eine Suppe draus kochen.');
 
-            if ($this->stats_get(Model_Player::MP_STAT_ZOMBIFY) >= 50) {
+            if ($this->get_status()->get(Model_Status::MS_STAT_ZOMBIFY) >= 50) {
                 $ti = new Model_Inventory();
 
                 foreach ($drop as $d)
                    $ti->add($d);
 
                 $this->location()->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_ZOMBIFY, array(), $this->id()));
-				$game->register_ghul($this->location_class(), Model_Combat_Zombies_Ghul::factory()->zombiefied_player_id($this->id())->name($this->name())->register_inventory($this->inventory())->strength(Model_Player::MP_STAT_ZOMBIFY, 100, 1));
+				$game->register_ghul($this->location_class(), Model_Combat_Zombies_Ghul::factory()->zombiefied_player_id($this->id())->name($this->name())->register_inventory($this->inventory())->strength(Model_Status::MS_STAT_ZOMBIFY, 100, 1));
             } else {
                 foreach ($drop as $d)
                     $this->location()->inventory()->add($d);
@@ -339,191 +312,9 @@ class Model_Player extends Model_Cloudshard {
 	public function get_cod() {
 		return $this->cod;
 	}
-	
-	/**
-	 * Changes players stats and rebuilds buffers afterwards
-	 * @param number|array $args,... Supposed to be in this format: [stat1, change1, stat2, change2, ...]
-	 * @throws Exception When $args is wrong format
-	 */
-	final public function stats_modify($args) {
-		if (!is_array($args)) $args = func_get_args();
-		
-		//Make sure the input format is correct
-		if (count($args) % 2) throw new Exception('Invalid input format for stat modificator!');
-		
-		//Run over each input pair
-		$i = 0;
-		while ($i < count($args)) {
-			//Check if value is set already and calculate change
-			if (!isset($this->status_bars[$args[$i]]))
-                $this->status_bars[$args[$i]] = ($args[$i] >= static::MP_THRESHOLD) ? 1 : 0;
-
-			$this->status_bars[$args[$i]] += $args[$i+1];
-			
-			//Enforce bounds (0/100)
-			$this->status_bars[$args[$i]] = min(max($this->status_bars[$args[$i]],0),100);
-			
-			//Jump to next pair
-			$i += 2;
-		}
-		
-		$this->rebuild_buffs();
-	}
 
 	final public function is_actual_player() {
 		return true;
-	}
-	
-	/**
-	 * Sets players stats (ignoring their previous values) and rebuilds buffers afterwards
-	 * @param number|array $args,... Supposed to be in this format: [stat1, newval1, stat2, newval2, ...]
-	 * @throws Exception When $args is wrong format
-	 */
-	final public function stats_set($args) {
-		if (!is_array($args)) $args = func_get_args();
-	
-		//Make sure the input format is correct
-		if (count($args) % 2) throw new Exception('Invalid input format for stat modificator!');
-	
-		//Run over each input pair
-		$i = 0;
-		while ($i < count($args)) {
-			//Set new value
-			$this->status_bars[$args[$i]] = $args[$i+1];
-				
-			//Enforce bounds (0/100)
-			$this->status_bars[$args[$i]] = min(max($this->status_bars[$args[$i]],0),100);
-				
-			//Jump to next pair
-			$i += 2;
-		}
-		
-		$this->rebuild_buffs();
-	}
-	
-	/**
-	 * Returns a specific status value; if this value has not been set, returns 0
-	 * @param int $stat
-	 * @return int
-	 */
-	final public function stats_get($stat) {
-		if (!isset($this->status_bars[$stat])) return ($stat >= static::MP_THRESHOLD) ? 1 : 0;
-        elseif ($stat >= static::MP_THRESHOLD)
-            return max(0,1 + $this->stats_buffs($stat));
-        else return $this->status_bars[$stat];
-	}
-	
-	/**
-	 * Returns all active status bars
-	 * @return number[]
-	 */
-	public function active_stats() {
-		return array_keys($this->status_bars);
-	}
-	
-	/**
-	 * Rebuilds all buffs
-	 */
-	private function rebuild_buffs() {
-        /**
-         * @var $buff Model_Buffs_Abstract_Buff
-         */
-        foreach ($this->buffs as $buff)
-			$buff->rebuild();
-	}
-
-    public function rebuild() {
-        $this->rebuild_buffs();
-    }
-	
-	/**
-	 * Return status effects one one specific stat caused by buffs
-	 * @param int $stat
-	 * @return int
-	 */
-	final public function stats_buffs($stat) {
-        /**
-         * @var $buff Model_Buffs_Abstract_Buff
-         */
-		$raise_acc = $drop_acc = 0;
-		$raise_prc = $drop_prc = 1;
-		
-		foreach ($this->buffs as $buff) {
-			$raise_acc += $buff->effect($stat, Model_Buffs_Abstract_Buff::MB_RAISE_ACC);
-			$raise_prc += $buff->effect($stat, Model_Buffs_Abstract_Buff::MB_RAISE_PRC);
-			$drop_acc += $buff->effect($stat, Model_Buffs_Abstract_Buff::MB_DROP_ACC);
-			$drop_prc += $buff->effect($stat, Model_Buffs_Abstract_Buff::MB_DROP_PRC);
-		}
-		
-		return max(0,($raise_acc * max($raise_prc,0))) - max(0,($drop_acc * max($drop_prc,0)));
-	}
-	
-	/**
-	 * Adds a new buff
-	 * @param Model_Buffs_Abstract_Buff $buff
-	 */
-	final public function buff_add($buff) {
-        /**
-         * @var $p Model_Buffs_Abstract_Buff|null
-         */
-
-        //Get existing buff
-        $p = isset($this->buffs[$buff->bid()]) ? $this->buffs[$buff->bid()] : null;
-
-		if ($p) {
-            if ($p->get_dominance() > $buff->get_dominance()) return;
-            elseif ($p->get_dominance() < $buff->get_dominance()) $this->buffs[$buff->bid()] = $buff;
-            else $p->merge($buff);
-        } else $this->buffs[$buff->bid()] = $buff;
-	}
-	
-	/**
-	 * Removes a buff
-	 * @param Model_Buffs_Abstract_Buff|string $obj
-	 */
-	final public function buff_remove($obj) {
-		if (is_object($obj)) {
-            $obj->remove();
-            unset($this->buffs[$obj->bid()]);
-        }
-		else
-        {
-            $tmp = explode('/', $obj);
-            $obj = $tmp[0];
-
-            if (isset($this->buffs[$obj]) && isset($tmp[1]) && $this->buff_retr($obj)->abid() != $tmp[1])
-                return;
-
-            if (isset($this->buffs[$obj]))
-                /** @noinspection PhpUndefinedMethodInspection */
-                $this->buffs[$obj]->remove();
-            unset($this->buffs[$obj]);
-        }
-	}
-	
-	/**
-	 * If a buff specified by $id is set, this function retrieves it, otherwise NULL is returned.
-	 * @param string $id
-	 * @return Model_Buffs_Abstract_Buff
-	 */
-	final public function buff_retr($id) {
-        $tmp = explode('/', $id);
-        $id = $tmp[0];
-
-        /** @noinspection PhpUndefinedMethodInspection */
-        if (isset($this->buffs[$id]) && isset($tmp[1]) && $this->buffs[$id]->abid() != $tmp[1])
-            return NULL;
-
-        if (isset($this->buffs[$id])) return $this->buffs[$id];
-		else return NULL;
-	}
-	
-	/**
-	 * Returns all active buffs
-	 * @return Model_Buffs_Abstract_Buff[]
-	 */
-	final public function buff_get() {
-		return $this->buffs;
 	}
 
     /**
@@ -542,25 +333,17 @@ class Model_Player extends Model_Cloudshard {
          * @var $buff Model_Buffs_Abstract_Buff
          */
         if (!$this->alive()) return;
-		
-		$tmp = Array();
+
 		$this->livetime++;
         if ($this->escape > 0)
             $this->escape--;
-
-		foreach (array_keys($this->status_bars) as $stat) {
-			$tmp[] = $stat;
-			$tmp[] = $this->stats_buffs($stat);
-		}
 		
 		$this->set_cod("Multiorganversagen");
-		$this->stats_modify($tmp);
+		$this->get_status()->tick();
 		$this->set_cod(null);
-		
-		foreach ($this->buffs as $buff) $buff->tick();
 
         //Death fix
-        if ($this->alive && !$this->buff_retr('heartbeat'))
+        if ($this->alive && !$this->get_status()->retrieve('heartbeat'))
             $this->kill();
         else {
             //Tick achievements
@@ -574,19 +357,13 @@ class Model_Player extends Model_Cloudshard {
                 $this->achievements->achieve(Model_Achievement::MA_GAMEMONTH);
         }
 	}
-	
-	/**
-	 * Refreshes all char values
-	 */
-	public function refresh_char_values() {
-		$tmp = Array();
-        foreach (array_keys($this->status_bars) as $stat) if ($stat >= static::MP_THRESHOLD) {
-			$tmp[] = $stat;
-			$tmp[] = $this->stats_buffs($stat);
-		}
-		
-		$this->stats_modify($tmp);
-	}
+
+    /**
+     * @return Model_Status
+     */
+    public function get_status() {
+        return $this->status;
+    }
 
 	public function create_combatant() {
 		if ($this->job == 1040 && $this->level >= 5 && mt_rand(0,15) == 2)

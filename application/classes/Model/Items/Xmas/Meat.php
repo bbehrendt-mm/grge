@@ -26,8 +26,8 @@ class Model_Items_Xmas_Meat extends Model_Items_Abstract_Item implements Interfa
             ->add_action('Essen', Model_Action::factory()
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_HUNGER, 15)
-                            ->effect(Model_Player::MP_STAT_FREEZE, -20)
+                            ->effect(Model_Status::MS_STAT_HUNGER, 15)
+                            ->effect(Model_Status::MS_STAT_FREEZE, -20)
                             ->consume($this)
                             ->message('Aah, das war gut. Und es wärmt schön von innen.')
                     )

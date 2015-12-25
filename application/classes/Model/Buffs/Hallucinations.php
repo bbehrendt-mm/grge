@@ -8,7 +8,7 @@ class Model_Buffs_Hallucinations extends Model_Buffs_Abstract_Buff {
     protected static $bid = 'hallucination';
 
     public function tick() {
-        if (!$this->assoc_player->buff_retr('passout') && mt_rand(0,5) > 4) {
+        if (!$this->assoc_player->get_status()->retrieve('passout') && mt_rand(0,5) > 4) {
             $z = array();
             $c = mt_rand(1,8);
             for ($i = 0; $i < $c; $i++)

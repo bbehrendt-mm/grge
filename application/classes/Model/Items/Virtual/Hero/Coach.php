@@ -29,11 +29,11 @@ class Model_Items_Virtual_Hero_Coach extends Model_Items_Abstract_Virtual {
                             ->custom(function($p) {
                                 /** @var Model_Player $p */
 
-                                $pkills = floor(max(0,$p->stats_get(Model_Player::MP_STAT_HEALTH) - 20)/2);
+                                $pkills = floor(max(0,$p->get_status()->get(Model_Status::MS_STAT_HEALTH) - 20)/2);
                                 $zombies = $p->location()->zombie_pop();
                                 $p->location()->zombie_pop(true);
                                 $p->achievements()->achieve(Model_Achievement::MA_KILLED_ZOMBIES, min($pkills,$zombies));
-                                $p->stats_modify(Model_Player::MP_STAT_HEALTH, min($pkills,$zombies) * -2);
+                                $p->get_status()->modify(Model_Status::MS_STAT_HEALTH, min($pkills,$zombies) * -2);
 
                                 if ($pkills >= $zombies)
                                     $p->log()->add('Na, das war ja einfach. Du konntest diese schlappen Zombies einfach umrennen.');

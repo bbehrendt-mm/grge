@@ -81,7 +81,7 @@ class Model_Places_Outworld extends Model_Places_Abstract_Node {
                 ->add_action('Ansprechen', Model_Action::factory()
                         ->condition(function($p) {
                             /** @var Model_Player $p */
-                            return !(bool)$p->buff_retr('soulcatcher');
+                            return !(bool)$p->get_status()->retrieve('soulcatcher');
                         })
                         ->fail_message('... Träger des Zeichens ... begib dich auf deine Reise ... die gequälten Seelen zu befreien.')
                         ->effect(Model_Effect::factory()
@@ -91,7 +91,7 @@ class Model_Places_Outworld extends Model_Places_Abstract_Node {
                 ->add_action('Seelenfänger werden', Model_Action::factory()
                         ->condition(function($p) {
                             /** @var Model_Player $p */
-                            return !(bool)$p->buff_retr('soulcatcher');
+                            return !(bool)$p->get_status()->retrieve('soulcatcher');
                         })
                         ->fail_message('... du trägst das Zeichen des Seelenfängers ... bereits!')
                         ->effect(Model_Effect::factory()
@@ -148,7 +148,7 @@ class Model_Places_Outworld extends Model_Places_Abstract_Node {
 
 
                                     $game->map($xmas_id)->movement_modifier(0.1);
-                                    if (!$p->buff_retr('freeze'))
+                                    if (!$p->get_status()->retrieve('freeze'))
                                         new Model_Buffs_Freeze($p->id());
                                 })
                         )

@@ -9,7 +9,7 @@ class Model_Places_Plant extends Model_Places_Abstract_Place {
 	
 	public function tick() {
 		global $player;
-		$player->stats_modify(Model_Player::MP_STAT_RADIATION, 3.5);
+		$player->get_status()->modify(Model_Status::MS_STAT_RADIATION, 3.5);
 		parent::tick();
 	}
 

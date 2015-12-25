@@ -27,9 +27,9 @@ class Model_Items_Softdrink extends Model_Items_Abstract_Item implements Interfa
             ->add_action('Trinken', Model_Action::factory()
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_ENERGY, 5)
-                            ->effect(Model_Player::MP_STAT_THIRST, 10)
-                            ->effect(Model_Player::MP_STAT_HEALTH, -1)
+                            ->effect(Model_Status::MS_STAT_ENERGY, 5)
+                            ->effect(Model_Status::MS_STAT_THIRST, 10)
+                            ->effect(Model_Status::MS_STAT_HEALTH, -1)
                             ->consume($this)
                             ->message('Ahhh, erfrischend. Das lindert deinen Durst, und du bekommst sogar ein wenig neue Energie.')
                     )

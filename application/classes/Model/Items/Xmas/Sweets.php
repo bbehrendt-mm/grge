@@ -26,8 +26,8 @@ class Model_Items_Xmas_Sweets extends Model_Items_Abstract_Item implements Inter
             ->add_action('Essen', Model_Action::factory()
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_HUNGER, 5)
-                            ->effect(Model_Player::MP_STAT_HEALTH, -3)
+                            ->effect(Model_Status::MS_STAT_HUNGER, 5)
+                            ->effect(Model_Status::MS_STAT_HEALTH, -3)
                             ->consume($this)
                             ->message('Aah, das war gut... aber woher kommt dieser Beigeschmack von aufgelösten Zähnen?')
                     )

@@ -8,13 +8,13 @@ class Model_Buffs_Tactics extends Model_Buffs_Abstract_Buff {
     protected static $desc = 'Du hast dir einen guten Überblick über die Lage verschafft und kannst daher wesentlich effektiver kämpfen.';
 	
 	protected $effects = Array(
-        Model_Player::MP_CHAR_ACCURACY => Array(
+        Model_Status::MS_CHAR_ACCURACY => Array(
                 Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0.5,
                 Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
                 Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
                 Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
         ),
-        Model_Player::MP_CHAR_DAMAGE_MULTIPLIER => Array(
+        Model_Status::MS_CHAR_DAMAGE_MULTIPLIER => Array(
             Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0.5,
             Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
             Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,

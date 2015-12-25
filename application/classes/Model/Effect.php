@@ -13,19 +13,19 @@ class Model_Effect {
     private $custom = array();
 
     private static $translation_effects = array(
-        Model_Player::MP_STAT_HEALTH => 'status_health',
-        Model_Player::MP_STAT_ENERGY => 'status_energy',
-        Model_Player::MP_STAT_DRUNK => 'status_drunk',
-        Model_Player::MP_STAT_HUNGER => 'status_hunger',
-        Model_Player::MP_STAT_SLEEPY => 'status_sleepy',
-        Model_Player::MP_STAT_RADIATION => 'status_rad',
-        Model_Player::MP_STAT_THIRST => 'status_thirst',
-        Model_Player::MP_STAT_ZOMBIFY => 'status_zmb',
-        Model_Player::MP_STAT_FREEZE => 'status_freeze',
+        Model_Status::MS_STAT_HEALTH => 'status_health',
+        Model_Status::MS_STAT_ENERGY => 'status_energy',
+        Model_Status::MS_STAT_DRUNK => 'status_drunk',
+        Model_Status::MS_STAT_HUNGER => 'status_hunger',
+        Model_Status::MS_STAT_SLEEPY => 'status_sleepy',
+        Model_Status::MS_STAT_RADIATION => 'status_rad',
+        Model_Status::MS_STAT_THIRST => 'status_thirst',
+        Model_Status::MS_STAT_ZOMBIFY => 'status_zmb',
+        Model_Status::MS_STAT_FREEZE => 'status_freeze',
     );
 
     private static $reversed_colors = array(
-        Model_Player::MP_STAT_RADIATION, Model_Player::MP_STAT_DRUNK, Model_Player::MP_STAT_ZOMBIFY, Model_Player::MP_STAT_FREEZE
+        Model_Status::MS_STAT_RADIATION, Model_Status::MS_STAT_DRUNK, Model_Status::MS_STAT_ZOMBIFY, Model_Status::MS_STAT_FREEZE
     );
 
     const CFUNC_PROCESS_POST = 1;
@@ -150,7 +150,7 @@ class Model_Effect {
         return $this->custom(function($p) use ($buff, $remove, $lifetime) {
             /** @var Model_Player $p */
             if ($remove)
-                $p->buff_remove($buff::static_bid());
+                $p->get_status()->remove($buff::static_bid());
             else new $buff($p->id(), $lifetime);
         }, static::CFUNC_PROCESS_POST);
     }
@@ -257,12 +257,12 @@ class Model_Effect {
         if ($this->cod)
             $player->set_cod($this->cod);
 
-        $accum = array();
+        $accum = [];
         foreach ($this->effects as $stat => $dif) if ($stat >= 0) {
             $accum[] = $stat;
             $accum[] = is_array($dif) ? mt_rand($dif[0], $dif[1]) : $dif;
         }
-        $player->stats_modify($accum);
+        $player->get_status()->modify($accum, Model_Status::MS_EFFECT_ITEM);
 
         if ($this->message)
             $player->log()->add($this->message, $this->m_variables, $this->m_translateables);

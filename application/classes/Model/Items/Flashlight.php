@@ -63,7 +63,7 @@ class Model_Items_Flashlight extends Model_Items_Abstract_Item implements Interf
 
         if ($player = $game->get_player($pid)) {
             if (Tool_Scripts::get_timeofday() != 'night' && !$player->location()->is_outside() && $player->register_temp('flashlight'))
-                $player->stats_modify(Model_Player::MP_CHAR_LOCATION_SPAWNRATE, 0.2);
+                $player->get_status()->modify(Model_Status::MS_CHAR_LOCATION_SPAWNRATE, 0.2);
         }
     }
 }

@@ -20,20 +20,20 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
                     ->fail_message('Du führst die Flasche an deinen Mund, um zu trinken - aber sie ist leer.')
                     ->show_as(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_THIRST, 25)
-                            ->ambiguous_effect(Model_Player::MP_STAT_HEALTH)
+                            ->effect(Model_Status::MS_STAT_THIRST, 25)
+                            ->ambiguous_effect(Model_Status::MS_STAT_HEALTH)
                     )
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_THIRST, 25)
-                            ->effect(Model_Player::MP_STAT_HEALTH, -$this->toxicity)
-                            ->ambiguous_effect(Model_Player::MP_STAT_HEALTH)
+                            ->effect(Model_Status::MS_STAT_THIRST, 25)
+                            ->effect(Model_Status::MS_STAT_HEALTH, -$this->toxicity)
+                            ->ambiguous_effect(Model_Status::MS_STAT_HEALTH)
                             ->custom(function($p) use ($php53pb) {
                                 /**
                                  * @var Model_Items_Abstract_Bottle $php53pb
                                  * @var Model_Player $p
                                  */
-                                if ($php53pb->toxicity() > 50 && $p->stats_get(Model_Player::MP_STAT_HEALTH) > $php53pb->toxicity())
+                                if ($php53pb->toxicity() > 50 && $p->get_status()->get(Model_Status::MS_STAT_HEALTH) > $php53pb->toxicity())
                                     $p->achievements()->achieve(Model_Achievement::MA_POISON_DRINK);
                             })
                             ->consume($this)

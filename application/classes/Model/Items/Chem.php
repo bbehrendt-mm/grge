@@ -75,7 +75,7 @@ class Model_Items_Chem extends Model_Items_Abstract_Item implements Interface_St
             $damage = -20 - ($d - 1) * 9;
             $drunk = ($d - 1) * 20;
 
-            $player->stats_modify(Model_Player::MP_STAT_HEALTH, $damage, Model_Player::MP_STAT_DRUNK, $drunk);
+            $player->get_status()->modify(Model_Status::MS_STAT_HEALTH, $damage, Model_Status::MS_STAT_DRUNK, $drunk, Model_Status::MS_EFFECT_ITEM);
 
             Tool_Scripts::chem_reaction(
                 'Du mischt beide Chemikalien zusammen. Mit einem Schlag gibt es einen lauten Knall, das Reagenzglas zerspringt und du findest dich in einer bestialisch stinkenden Wolke wieder. Diese beiden Stoffe zu mischen scheint keine allzu gute Idee gewesen zu sein...',
@@ -87,7 +87,7 @@ class Model_Items_Chem extends Model_Items_Abstract_Item implements Interface_St
             $damage = -5 - ($d - 1) * 4;
             $radiation = ($d - 1) * 15;
 
-            $player->stats_modify(Model_Player::MP_STAT_HEALTH, $damage, Model_Player::MP_STAT_RADIATION, $radiation);
+            $player->get_status()->modify(Model_Status::MS_STAT_HEALTH, $damage, Model_Status::MS_STAT_RADIATION, $radiation, Model_Status::MS_EFFECT_ITEM);
 
             Tool_Scripts::chem_reaction(
                 'Du mischt beide Chemikalien zusammen. Mit einem Schlag gibt es einen lauten Knall, das Reagenzglas zerspringt und du findest dich in einer bestialisch stinkenden Wolke wieder. Diese beiden Stoffe zu mischen scheint keine allzu gute Idee gewesen zu sein...',

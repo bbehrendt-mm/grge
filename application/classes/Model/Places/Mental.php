@@ -49,7 +49,7 @@ class Model_Places_Mental extends Model_Places_Abstract_Place {
                 $s_player->achievements()->achieve(Model_Achievement::MA_SLASHER_KILLER);
 
                 $s_player->set_cod("Serienkiller-Opfer");
-                    $s_player->buff_retr('heartbeat')->unbuff();
+                    $s_player->get_status()->retrieve('heartbeat')->unbuff();
                 $this->mentalstate = 4;
 			    break;
             default:

@@ -7,6 +7,7 @@ class Model_Buffs_Mapping extends Model_Buffs_Abstract_Fragile {
 	protected static $desc = 'Du arbeitest gerade an einer Karte dieses Orts. Dies erfordert deine volle Konzentration - du kannst keine anderen Aktionen durchführen und diesen Ort nicht zwischendurch verlassen.';
 
 	protected static $abortable = true;
+    protected static $allow_npc_assoc = false;
 	
 	private $level;
 	
@@ -16,9 +17,10 @@ class Model_Buffs_Mapping extends Model_Buffs_Abstract_Fragile {
 	}
 	
 	protected function action_on_complete() {
-		$items = $this->assoc_player->inventory()->get('Model_Items_Maptool');
-		if (count($items) != 1) $this->assoc_player->log()->add('Das Kartographieren dieses Orts ist fehlgeschlagen...');
-		else $items[0]->score($this->level);
+        /** @var Model_Items_Maptool $item */
+        $item = Tool_Scripts::first_available_item('Model_Items_Maptool', true, false, false, $this->assoc_player);
+		if (!$item) $this->assoc_player->log()->add('Das Kartographieren dieses Orts ist fehlgeschlagen...');
+		else $item->score($this->level);
 	}
 
 }

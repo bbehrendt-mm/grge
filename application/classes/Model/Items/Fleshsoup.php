@@ -16,8 +16,8 @@ class Model_Items_Fleshsoup extends Model_Items_Abstract_Item implements Interfa
             ->add_action('Essen', Model_Action::factory()
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_HUNGER, 15)
-                            ->effect(Model_Player::MP_STAT_THIRST, 10)
+                            ->effect(Model_Status::MS_STAT_HUNGER, 15)
+                            ->effect(Model_Status::MS_STAT_THIRST, 10)
                             ->consume($this)
                             ->achieve(Model_Achievement::MA_BODY_EATER)
                             ->message('Anscheinend besteht diese Suppe aus einer seltenen Art von Tomaten, die fast genau so schmecken wie in Blut eingelegtes Menschenfleisch. Zumindest hast du dir also erfolgreich selbst eingeredet, dass es solche Tomaten wirklich gibt...')

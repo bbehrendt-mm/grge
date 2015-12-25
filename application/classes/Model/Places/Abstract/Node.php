@@ -10,7 +10,7 @@ abstract class Model_Places_Abstract_Node extends Model_Places_Abstract_Place {
          */
         global $game, $player;
 
-        if (!$player->buff_retr('fragile') && !$player->buff_retr('passout') && Tool_Events::current($game->next_tick()) == 'halloween') {
+        if (!$player->get_status()->retrieve('fragile') && !$player->get_status()->retrieve('passout') && Tool_Events::current($game->next_tick()) == 'halloween') {
             if (mt_rand(0,100) > 90)
                 Tool_Scripts::place_new_item(new Model_Items_Generic_Pumpkin());
         }

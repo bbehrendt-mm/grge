@@ -21,7 +21,7 @@ class Model_Items_Uniheal2 extends Model_Items_Abstract_Item implements Interfac
                     )
                     ->decider(function($p) {
                         /** @var Model_Player $p */
-                        return ($p->stats_get(Model_Player::MP_STAT_ZOMBIFY) > 0) ? 0 : 1;
+                        return ($p->get_status()->get(Model_Status::MS_STAT_ZOMBIFY) > 0) ? 0 : 1;
                     })
                     ->effect(
                         Model_Effect::factory()

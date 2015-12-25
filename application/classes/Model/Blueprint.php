@@ -433,7 +433,7 @@ class Model_Blueprint {
             }
         }
 
-        if ($player->stats_get(Model_Player::MP_STAT_ENERGY) < $this->energy) {
+        if (!$player->get_status()->has(Model_Status::MS_STAT_ENERGY, $this->energy, Model_Status::MS_EFFECT_REQUIREMENT)) {
             $player->log()->add('Du bist derzeit nicht in der Lage diese Aktion durchzuführen.');
             return false;
         }
@@ -453,7 +453,7 @@ class Model_Blueprint {
             return false;
         }
 
-        $player->stats_modify(Model_Player::MP_STAT_ENERGY, -$this->energy);
+        $player->get_status()->modify(Model_Status::MS_STAT_ENERGY, -$this->energy, Model_Status::MS_EFFECT_REQUIREMENT);
         foreach ($this->produces as $item => $count)
             for ($i = 0; $i < $count; $i++)
                 $player->location()->inventory()->add(new $item());

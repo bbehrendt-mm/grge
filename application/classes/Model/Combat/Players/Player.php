@@ -30,7 +30,7 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
         $ret = static::factory()
             ->player($p)
             ->name($p->name(), Model_Combat_Actor::MCA_TYPE_PLAYER)
-            ->strength($p->stats_get(Model_Player::MP_STAT_HEALTH), 100, 1)
+            ->strength($p->get_status()->get(Model_Status::MS_STAT_HEALTH), 100, 1)
             ->register_inventory($p->inventory())
             ->add_weapon($unarmed);
 
@@ -42,7 +42,7 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
     protected function damage($damage, $from = null, $armor_damage = null) {
         parent::damage($damage, $from, $armor_damage);
 
-        $this->player->stats_modify([Model_Player::MP_STAT_HEALTH, -$damage]);
+        $this->player->get_status()->modify(Model_Status::MS_STAT_HEALTH, -$damage, Model_Status::MS_EFFECT_UNSCALE);
     }
 
     /**

@@ -9,7 +9,7 @@ abstract class Model_Combat_Weapons_Energy extends Model_Combat_Weapon {
     }
 
     public function usable() {
-        return parent::usable() && $this->registered_user && $this->registered_user->stats_get(Model_Player::MP_STAT_ENERGY) >= $this->energy();
+        return parent::usable() && $this->registered_user && $this->registered_user->get_status()->has(Model_Status::MS_STAT_ENERGY, $this->energy(), Model_Status::MS_EFFECT_REQUIREMENT);
     }
 
     /**
@@ -21,7 +21,7 @@ abstract class Model_Combat_Weapons_Energy extends Model_Combat_Weapon {
      */
     public function trigger_usage(Model_Combat_Actor $me, Model_Combat_Actor $opponent, $damage, Model_Combat_Scene $scene) {
         if ($this->registered_user)
-            $this->registered_user->stats_modify([Model_Player::MP_STAT_ENERGY, -$this->energy()]);
+            $this->registered_user->get_status()->modify(Model_Status::MS_STAT_ENERGY, -$this->energy(), Model_Status::MS_EFFECT_REQUIREMENT);
         return parent::trigger_usage($me, $opponent, $damage, $scene);
     }
 

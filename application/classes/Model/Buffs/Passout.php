@@ -7,7 +7,7 @@ class Model_Buffs_Passout extends Model_Buffs_Abstract_Buff {
 	protected static $visible = false;
 	
 	public function rebuild() {
-		if ($this->assoc_player->stats_get(Model_Player::MP_STAT_HEALTH) < 0.5) $this->unbuff();
+		if ($this->assoc_player->get_status()->get(Model_Status::MS_STAT_HEALTH) < 0.5) $this->unbuff();
 		
 		return parent::rebuild();
 	}

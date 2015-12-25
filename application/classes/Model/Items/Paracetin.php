@@ -13,7 +13,7 @@ class Model_Items_Paracetin extends Model_Items_Abstract_Pillbox {
     protected static $take_msg = 'Direkt nachdem du die Paracetin schluckst fühlst du, wie deine Kraft zurückkehrt.';
     protected static $singular_name = 'Paracetin';
     protected static $pill_effects = Array(
-        Model_Player::MP_STAT_ENERGY => 5
+        Model_Status::MS_STAT_ENERGY => 5
     );
 	
 	public function mixchem($chemval) {

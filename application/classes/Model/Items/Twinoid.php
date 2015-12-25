@@ -13,7 +13,7 @@ class Model_Items_Twinoid extends Model_Items_Abstract_Pillbox {
     protected static $take_msg = 'Direkt nachdem du die Twinoid schluckst fühlst du dich wieder besser!';
     protected static $singular_name = 'Twinoid';
     protected static $pill_effects = Array(
-        Model_Player::MP_STAT_ENERGY => 5,
-        Model_Player::MP_STAT_HEALTH => 5
+        Model_Status::MS_STAT_ENERGY => 5,
+        Model_Status::MS_STAT_HEALTH => 5
     );
 }	

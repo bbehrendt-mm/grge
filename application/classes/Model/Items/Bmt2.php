@@ -22,8 +22,8 @@ class Model_Items_Bmt2 extends Model_Items_Bmt {
                     ->requirement('Model_Items_Generic_Supercharger', 1)
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_HEALTH, -85)
-                            ->effect(Model_Player::MP_STAT_ENERGY, 100)
+                            ->effect(Model_Status::MS_STAT_HEALTH, -85)
+                            ->effect(Model_Status::MS_STAT_ENERGY, 100)
                             ->remove('Model_Items_Generic_Supercharger', 1)
                             ->message('Das war so ziemlich das schmerzhafteste, was du in den letzten 2 Stunden getan hast. Wenigstens hat sich deine Energie wieder aufgeladen...')
                     )

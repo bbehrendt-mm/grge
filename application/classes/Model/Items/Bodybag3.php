@@ -15,7 +15,7 @@ class Model_Items_Bodybag3 extends Model_Items_Abstract_Item implements Interfac
     protected function hid() {
         return parent::hid()
             ->add_action('Leiche herausholen', Model_Action::factory()
-                    ->requirement(Model_Player::MP_STAT_ENERGY, 5)
+                    ->requirement(Model_Status::MS_STAT_ENERGY, 5)
                     ->effect(
                         Model_Effect::factory()
                             ->consume($this)

@@ -19,12 +19,12 @@ class Model_Items_Bandage2 extends Model_Items_Abstract_Item implements Interfac
                 Model_Action::factory()
                     ->condition(function($p) {
                             /** @var Model_Player $p */
-                            return (bool)$p->buff_retr('blood');
+                            return (bool)$p->get_status()->retrieve('blood');
                         })
                     ->fail_message('So ein Teil solltest du dir nicht zum Spaß umlegen... wie wärs, wenn du wartest, bis du stark blutest?')
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_HEALTH, -35)
+                            ->effect(Model_Status::MS_STAT_HEALTH, -35)
                             ->consume($this)
                             ->buff('Model_Buffs_Blood', true)
                             ->achieve(Model_Achievement::MA_BANDAGE_MUMMY)
@@ -35,17 +35,17 @@ class Model_Items_Bandage2 extends Model_Items_Abstract_Item implements Interfac
                 Model_Action::factory()
                     ->condition(function($p, $s) {
                         /** @var Model_Player $s */
-                        return (bool)$s->buff_retr('blood');
+                        return (bool)$s->get_status()->retrieve('blood');
                     })
                     ->fail_message('Auch wenn diese dreckige Bandage deinem Freund sicher gut stehen würde - warte lieber, bis er blutet.')
-                    ->requirement(Model_Player::MP_STAT_ENERGY, 6)
+                    ->requirement(Model_Status::MS_STAT_ENERGY, 6)
                     ->effect(
                         Model_Effect::factory()
                             ->consume($this)
                             ->message('Du wickelst die Bandage straff um die Verletzungen deines Freundes. Er ist zwar immer noch Leichenblass, das hat aber nichts mehr mit dem Blutverlust zu tun...')
                     , null, null,
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_HEALTH, -24 + ($player->job(10030) ? 2 : 0) * $player->job(false, null))
+                            ->effect(Model_Status::MS_STAT_HEALTH, -24 + ($player->job(10030) ? 2 : 0) * $player->job(false, null))
                             ->buff('Model_Buffs_Blood', true)
                             ->achieve(Model_Achievement::MA_BANDAGE_MUMMY)
                             ->message(':name hat eine ziemlich schmutzige Bandage um deine Verletzungen gewickelt... wenigestens weist du jetzt was du ihm wert bist.', array(':name' => $player->name()))

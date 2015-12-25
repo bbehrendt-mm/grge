@@ -57,7 +57,7 @@ abstract class Model_Gamelayer_Logic extends Model_Gamelayer_Io {
 
 	public function tumble($pid = null) {
 		if (!$this->get_player($pid)) return false;
-        return (mt_rand(15, 100) <= $this->get_player($pid)->stats_get(Model_Player::MP_STAT_DRUNK));
+        return (mt_rand(15, 100) <= $this->get_player($pid)->get_status()->get(Model_Status::MS_STAT_DRUNK));
 	}
 
 	final public function mass_consume($data, $callbacks = NULL) {

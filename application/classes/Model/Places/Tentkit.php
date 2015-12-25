@@ -40,7 +40,7 @@ class Model_Places_Tentkit extends Model_Places_Abstract_Hideout {
                 $p->log()->add('Gerade hast du es dir bequem gemacht, da hörst du hinter dir plötzlich die Zeltplane reißen. Noch bevor du dich umdrehen kannst spürst du einen stechenden Schmerz im Rücken - herzlichen Glückwunsch, du bist tot.');
                 $p->achievements()->achieve(Model_Achievement::MA_SLASHER_KILLER);
                 $p->set_cod("Serienkiller-Opfer");
-                $p->buff_retr('heartbeat')->unbuff();
+                $p->get_status()->retrieve('heartbeat')->unbuff();
             }
 
         }

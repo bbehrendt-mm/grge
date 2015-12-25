@@ -21,7 +21,9 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
 	protected static $visible = true;
     protected static $remotable = true;
     protected static $dominance = Model_Buffs_Abstract_Buff::MBR_EQUAL;
-	
+    protected static $allow_npc_assoc = true;
+
+    /** @var Interface_Plentity  */
 	protected $assoc_player;
 	protected $effects = Array();
 	protected $lifetime = -1;
@@ -130,10 +132,11 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
 
     /**
      * Creates and applies the buff; if $player_id is not provided, the currently active player will be selected
-     * @param number|null $player_id
-     * @param number $lifetime Buff lifetime; omit or set smaller than 0 to disable auto-unbuff based on lifetime
+     * @param Interface_Plentity|number|null $association
+     * @param int|number $lifetime Buff lifetime; omit or set smaller than 0 to disable auto-unbuff based on lifetime
+     * @throws Exception
      */
-    public function __construct($player_id = NULL, $lifetime = -1) {
+    public function __construct($association = NULL, $lifetime = -1) {
         /**
          * @global $game Model_Game
          */
@@ -141,11 +144,21 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
 		
 		$this->lifetime = $lifetime;
 
-		$this->assoc_player = $game->get_player($player_id);
-		$this->assoc_player->buff_add($this);
+        if (!$association || is_numeric($association))
+		    $this->assoc_player = $game->get_player($association);
+        elseif (Tool_System::instance_of($association, 'Model_Player') || (static::$allow_npc_assoc && Tool_System::instance_of($association, 'Interface_Plentity')))
+            $this->assoc_player = $association;
+        else
+            throw new Exception('Invalid buff association!');
+
+        $this->assoc_player->get_status()->add($this);
 
 		$this->apply();
 	}
+
+    protected function associated_to_player() {
+        return Tool_System::instance_of($this->assoc_player, 'Model_Player');
+    }
 
     /**
      * Applies the buff effects to the player
@@ -156,7 +169,7 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
 			$tmp[] = $key;
 			$tmp[] = 0;
 		}
-		$this->assoc_player->stats_modify($tmp);
+		$this->assoc_player->get_status()->modify($tmp, Model_Status::MS_EFFECT_BUFF);
 	}
 
     /**
@@ -164,7 +177,7 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
      * @return bool
      */
     public function unbuff() {
-		$this->assoc_player->buff_remove($this);
+		$this->assoc_player->get_status()->remove($this);
         return true;
 	}
 

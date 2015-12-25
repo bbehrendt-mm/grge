@@ -74,7 +74,7 @@ class Model_Items_Vending extends Model_Items_Abstract_Item {
         switch ($chemval)
         {
             case 7:
-                $player->stats_modify(Model_Player::MP_STAT_HEALTH, -35);
+                $player->get_status()->modify(Model_Status::MS_STAT_HEALTH, -35);
                 Tool_Scripts::chem_reaction(
                     'Du gießt etwas von der Chemikalie in den Münzschlitz... es gibt einen Knall, und der Automat fliegt in die Luft! Du wurdest durch die Explosion verletzt, aber wenigstens hast du ein paar neue gegenstände erhalten...',
                     $chemval,$this, [$this->factory->spawn(true),$this->factory->spawn(true),$this->factory->spawn(true),$this->factory->spawn(true),$this->factory->spawn(true)]);

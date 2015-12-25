@@ -9,43 +9,43 @@ class Model_Buffs_Metabolism extends Model_Buffs_Abstract_Buff {
     protected static $remotable = false;
 	
 	protected $effects = Array(
-				Model_Player::MP_STAT_ENERGY => Array(
+				Model_Status::MS_STAT_ENERGY => Array(
 					Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
 				),
-				Model_Player::MP_STAT_HEALTH => Array(
+				Model_Status::MS_STAT_HEALTH => Array(
 					Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
 				),				
-				Model_Player::MP_STAT_HUNGER => Array(
+				Model_Status::MS_STAT_HUNGER => Array(
 					Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
 				),				
-				Model_Player::MP_STAT_THIRST => Array(
+				Model_Status::MS_STAT_THIRST => Array(
 					Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
 				),				
-				Model_Player::MP_STAT_SLEEPY => Array(
+				Model_Status::MS_STAT_SLEEPY => Array(
 					Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
 				),				
-				Model_Player::MP_STAT_DRUNK => Array(
+				Model_Status::MS_STAT_DRUNK => Array(
 					Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
 				),
-				Model_Player::MP_STAT_RADIATION => Array(
+				Model_Status::MS_STAT_RADIATION => Array(
 					Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
@@ -65,7 +65,7 @@ class Model_Buffs_Metabolism extends Model_Buffs_Abstract_Buff {
 	}
 	
 	private function statchange_hunger() {
-		$this->effects[Model_Player::MP_STAT_HUNGER] = Array(
+		$this->effects[Model_Status::MS_STAT_HUNGER] = Array(
 					Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0.15,
 					Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
@@ -74,7 +74,7 @@ class Model_Buffs_Metabolism extends Model_Buffs_Abstract_Buff {
 	}
 	
 	private function statchange_thirst() {
-		$this->effects[Model_Player::MP_STAT_THIRST] = Array(
+		$this->effects[Model_Status::MS_STAT_THIRST] = Array(
 				Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
 				Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0.25,
 				Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
@@ -83,13 +83,13 @@ class Model_Buffs_Metabolism extends Model_Buffs_Abstract_Buff {
 	}
 	
 	private function statchange_misc() {
-		$this->effects[Model_Player::MP_STAT_DRUNK] = Array(
+		$this->effects[Model_Status::MS_STAT_DRUNK] = Array(
 				Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
 				Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0.83,
 				Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
 				Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
 		);
-		$this->effects[Model_Player::MP_STAT_RADIATION] = Array(
+		$this->effects[Model_Status::MS_STAT_RADIATION] = Array(
 				Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
 				Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0.25,
 				Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
@@ -98,9 +98,9 @@ class Model_Buffs_Metabolism extends Model_Buffs_Abstract_Buff {
 	}
 	
 	private function statchange_sleepy() {
-		$energy = $this->assoc_player->stats_get(Model_Player::MP_STAT_ENERGY);
+		$energy = $this->assoc_player->get_status()->get(Model_Status::MS_STAT_ENERGY);
 		
-		$this->effects[Model_Player::MP_STAT_SLEEPY] = Array(
+		$this->effects[Model_Status::MS_STAT_SLEEPY] = Array(
 				Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
 				Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0.25 + (100-$energy)/200,
 				Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
@@ -109,11 +109,11 @@ class Model_Buffs_Metabolism extends Model_Buffs_Abstract_Buff {
 	}
 	
 	private function statchange_health() {
-		$energy = $this->assoc_player->stats_get(Model_Player::MP_STAT_ENERGY);
-		$health = $this->assoc_player->stats_get(Model_Player::MP_STAT_HEALTH);
-		$hunger = $this->assoc_player->stats_get(Model_Player::MP_STAT_HUNGER);
-		$thirst = $this->assoc_player->stats_get(Model_Player::MP_STAT_THIRST);
-		$sleepy = $this->assoc_player->stats_get(Model_Player::MP_STAT_SLEEPY);
+		$energy = $this->assoc_player->get_status()->get(Model_Status::MS_STAT_ENERGY);
+		$health = $this->assoc_player->get_status()->get(Model_Status::MS_STAT_HEALTH);
+		$hunger = $this->assoc_player->get_status()->get(Model_Status::MS_STAT_HUNGER);
+		$thirst = $this->assoc_player->get_status()->get(Model_Status::MS_STAT_THIRST);
+		$sleepy = $this->assoc_player->get_status()->get(Model_Status::MS_STAT_SLEEPY);
 		
 		$ndif = 1;
 		if		($thirst > 90)	$ndif += 0.003;
@@ -134,7 +134,7 @@ class Model_Buffs_Metabolism extends Model_Buffs_Abstract_Buff {
 		elseif	($hunger > 10)	$ndif -= 0.008;
 		else					$ndif -= 0.040;
 
-		$this->effects[Model_Player::MP_STAT_HEALTH] = Array(
+		$this->effects[Model_Status::MS_STAT_HEALTH] = Array(
 				Model_Buffs_Abstract_Buff::MB_RAISE_ACC => ($ndif >= 1) ? ($health * $ndif) - $health : 0,
 				Model_Buffs_Abstract_Buff::MB_DROP_ACC => ($ndif >= 1) ? 0 : -((200 - $health) - ((200 - $health) * (2-$ndif))),
 				Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
@@ -143,8 +143,8 @@ class Model_Buffs_Metabolism extends Model_Buffs_Abstract_Buff {
 	}
 	
 	private function statchange_energy() {
-		$hunger = $this->assoc_player->stats_get(Model_Player::MP_STAT_HUNGER);
-		$thirst = $this->assoc_player->stats_get(Model_Player::MP_STAT_THIRST);
+		$hunger = $this->assoc_player->get_status()->get(Model_Status::MS_STAT_HUNGER);
+		$thirst = $this->assoc_player->get_status()->get(Model_Status::MS_STAT_THIRST);
 		
 		$ndif = 0;
 		if		($thirst > 90)	$ndif += 0.08;
@@ -165,7 +165,7 @@ class Model_Buffs_Metabolism extends Model_Buffs_Abstract_Buff {
 		elseif	($hunger < 20)	$ndif -= 0.02;
 		elseif	($hunger < 30)	$ndif -= 0.01;
 	
-		$this->effects[Model_Player::MP_STAT_ENERGY] = Array(
+		$this->effects[Model_Status::MS_STAT_ENERGY] = Array(
 				Model_Buffs_Abstract_Buff::MB_RAISE_ACC => ($ndif < 0) ? 0 : $ndif,
 				Model_Buffs_Abstract_Buff::MB_DROP_ACC => ($ndif > 0) ? 0 : $ndif,
 				Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,

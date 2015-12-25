@@ -21,8 +21,8 @@ class Model_Items_Virtual_Hero_Muscle extends Model_Items_Abstract_Virtual {
                 ->description('Bekämpft Müdigkeit und regeneriert Energie. Der Effekt ist abhängig von Hunger, Durst und Gewicht des Rucksacks - je voller der Rucksack, desto besser.')
                 ->effect(
                     Model_Effect::factory()
-                        ->effect(Model_Player::MP_STAT_ENERGY, $player->inventory()->weight() * ($player->stats_get(Model_Player::MP_STAT_HUNGER)/100) * ($player->stats_get(Model_Player::MP_STAT_THIRST)/100))
-                        ->effect(Model_Player::MP_STAT_SLEEPY, $player->inventory()->weight() * ($player->stats_get(Model_Player::MP_STAT_HUNGER)/100) * ($player->stats_get(Model_Player::MP_STAT_THIRST)/100))
+                        ->effect(Model_Status::MS_STAT_ENERGY, $player->inventory()->weight() * ($player->get_status()->get(Model_Status::MS_STAT_HUNGER)/100) * ($player->get_status()->get(Model_Status::MS_STAT_THIRST)/100))
+                        ->effect(Model_Status::MS_STAT_SLEEPY, $player->inventory()->weight() * ($player->get_status()->get(Model_Status::MS_STAT_HUNGER)/100) * ($player->get_status()->get(Model_Status::MS_STAT_THIRST)/100))
                         ->message('So ein Workout wirkt Wunder! Nach ein paar Liegestützen und Kniebeugen bist du wieder Fit für den Kampf um Leben und Tod.')
                 )
             , 'hero_job_0')

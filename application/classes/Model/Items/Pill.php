@@ -41,43 +41,43 @@ class Model_Items_Pill extends Model_Items_Abstract_Item implements Interface_St
                     //Red pill
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_ENERGY, 100)
-                            ->effect(Model_Player::MP_STAT_SLEEPY, 100)
+                            ->effect(Model_Status::MS_STAT_ENERGY, 100)
+                            ->effect(Model_Status::MS_STAT_SLEEPY, 100)
                             ->message('Augen zu und durch! Du schluckst die Pille herunter - und eine ungeahnte Energie durchströhmt dich! Du fühlst dich, als könntest du Bäume ausreißen!')
                     )
                     //Blue pill
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_HUNGER, 100)
-                            ->effect(Model_Player::MP_STAT_THIRST, 100)
+                            ->effect(Model_Status::MS_STAT_HUNGER, 100)
+                            ->effect(Model_Status::MS_STAT_THIRST, 100)
                             ->message('Augen zu und durch! Du schluckst die Pille herunter - und fühlst plötzlich weder Hunger noch Durst! Das Zeug war ja der Hammer!')
                     )
                     //Green pill
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_ENERGY, $child_effects ? -80 : -35)
-                            ->effect(Model_Player::MP_STAT_SLEEPY, $child_effects ? -100 : -80)
+                            ->effect(Model_Status::MS_STAT_ENERGY, $child_effects ? -80 : -35)
+                            ->effect(Model_Status::MS_STAT_SLEEPY, $child_effects ? -100 : -80)
                             ->message('Augen zu und durch! Du schluckst die Pille herunter - und wirst plötzlich unglaublich müde.')
                     )
                     //Orange pill
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_HEALTH, $child_effects ? -100 : -35)
+                            ->effect(Model_Status::MS_STAT_HEALTH, $child_effects ? -100 : -35)
                             ->message('Augen zu und durch! Du schluckst die Pille herunter - sofort durchzucken Krämpfe deinen Körper! Was immer das war, du hättest es besser nicht schlucken sollen!')
                     )
                     //White pill
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_HEALTH, $child_effects ? 20 : 15)
-                            ->effect(Model_Player::MP_STAT_SLEEPY, $child_effects ? -20 : -5)
-                            ->effect(Model_Player::MP_STAT_DRUNK, $child_effects ? 10 : 0)
+                            ->effect(Model_Status::MS_STAT_HEALTH, $child_effects ? 20 : 15)
+                            ->effect(Model_Status::MS_STAT_SLEEPY, $child_effects ? -20 : -5)
+                            ->effect(Model_Status::MS_STAT_DRUNK, $child_effects ? 10 : 0)
                             ->message('Augen zu und durch! Du schluckst die Pille herunter - und merkst sofort, wie sich dein Körper entspannt. Das fühlt sich gut an!')
                     )
                     //Green + Red pill
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_HUNGER, -15)
-                            ->effect(Model_Player::MP_STAT_THIRST, -25)
+                            ->effect(Model_Status::MS_STAT_HUNGER, -15)
+                            ->effect(Model_Status::MS_STAT_THIRST, -25)
                             ->message('Augen zu und durch! Du schluckst die Pille herunter - und übrgibst dich direkt danach!')
                     )
                     //Black pill
@@ -104,10 +104,10 @@ class Model_Items_Pill extends Model_Items_Abstract_Item implements Interface_St
                     //Rose pill
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_HEALTH, ($game->duration() & 1) ? 25 : -50 )
-                            ->effect(Model_Player::MP_STAT_ENERGY, ($game->duration() & 1) ? 25 : -50 )
-                            ->effect(Model_Player::MP_STAT_HUNGER, ($game->duration() & 1) ? 25 : 0 )
-                            ->effect(Model_Player::MP_STAT_THIRST, ($game->duration() & 1) ? 25 : 0 )
+                            ->effect(Model_Status::MS_STAT_HEALTH, ($game->duration() & 1) ? 25 : -50 )
+                            ->effect(Model_Status::MS_STAT_ENERGY, ($game->duration() & 1) ? 25 : -50 )
+                            ->effect(Model_Status::MS_STAT_HUNGER, ($game->duration() & 1) ? 25 : 0 )
+                            ->effect(Model_Status::MS_STAT_THIRST, ($game->duration() & 1) ? 25 : 0 )
                             ->message(($game->duration() & 1)
                                 ? 'Augen zu und durch! Du schluckst die Pille herunter - wenige Sekunden später spürst du, wie sich eine angenehme Wärme in dir ausbreitet. Welch ein schönes Gefühl ...'
                                 : 'Augen zu und durch! Du schluckst die Pille herunter - wenige Sekunden später beginnst du, dich unruhig und unwohl zu fühlen. Schmerzen zucken durch deinen Körper, während du dich auf dem Boden krümmst und hoffst, dass die Wirkung der Pille bald nachlässt.'
@@ -116,10 +116,10 @@ class Model_Items_Pill extends Model_Items_Abstract_Item implements Interface_St
                     //Marine pill
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_HEALTH, ($game->duration() & 1) ? -50 : 25 )
-                            ->effect(Model_Player::MP_STAT_ENERGY, ($game->duration() & 1) ? -50 : 25 )
-                            ->effect(Model_Player::MP_STAT_HUNGER, ($game->duration() & 1) ? 0 : 25 )
-                            ->effect(Model_Player::MP_STAT_THIRST, ($game->duration() & 1) ? 0 : 25 )
+                            ->effect(Model_Status::MS_STAT_HEALTH, ($game->duration() & 1) ? -50 : 25 )
+                            ->effect(Model_Status::MS_STAT_ENERGY, ($game->duration() & 1) ? -50 : 25 )
+                            ->effect(Model_Status::MS_STAT_HUNGER, ($game->duration() & 1) ? 0 : 25 )
+                            ->effect(Model_Status::MS_STAT_THIRST, ($game->duration() & 1) ? 0 : 25 )
                             ->message(($game->duration() & 1)
                                     ? 'Augen zu und durch! Du schluckst die Pille herunter - wenige Sekunden später beginnst du, dich unruhig und unwohl zu fühlen. Schmerzen zucken durch deinen Körper, während du dich auf dem Boden krümmst und hoffst, dass die Wirkung der Pille bald nachlässt.'
                                     : 'Augen zu und durch! Du schluckst die Pille herunter - wenige Sekunden später spürst du, wie sich eine angenehme Wärme in dir ausbreitet. Welch ein schönes Gefühl ...'
@@ -128,23 +128,23 @@ class Model_Items_Pill extends Model_Items_Abstract_Item implements Interface_St
                     //Beige pill
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_DRUNK, 100)
-                            ->effect(Model_Player::MP_STAT_ENERGY, 100)
-                            ->effect(Model_Player::MP_STAT_HUNGER, 100)
-                            ->effect(Model_Player::MP_STAT_THIRST, 100)
+                            ->effect(Model_Status::MS_STAT_DRUNK, 100)
+                            ->effect(Model_Status::MS_STAT_ENERGY, 100)
+                            ->effect(Model_Status::MS_STAT_HUNGER, 100)
+                            ->effect(Model_Status::MS_STAT_THIRST, 100)
                             ->message('Augen zu und durch! Du schluckst die Pille herunter - für einen kurzen Moment fühlst du dich großartig, danach fängt alles um dich herum an sich zu drehen ...')
                     )
                     //Black + White pill
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_DRUNK, -100)
-                            ->effect(Model_Player::MP_STAT_HEALTH, 10)
+                            ->effect(Model_Status::MS_STAT_DRUNK, -100)
+                            ->effect(Model_Status::MS_STAT_HEALTH, 10)
                             ->message('Augen zu und durch! Du schluckst die Pille herunter - sofort fühlst du, wie die Pille dich von innen reinigt. Sehr angenehm!')
                     )
                     //Pink pill
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_HUNGER, 100)
+                            ->effect(Model_Status::MS_STAT_HUNGER, 100)
                             ->buff('Model_Buffs_Nom', false, 120)
                             ->message('Augen zu und durch! Du schluckst die Pille herunter - und mit einem mal fühlst du dich extrem satt! Anscheinend war das irgend eine Nährstoffpille!')
                     )

@@ -19,12 +19,12 @@ class Model_Items_Bandage extends Model_Items_Abstract_Item implements Interface
                 Model_Action::factory()
                     ->condition(function($p) {
                             /** @var Model_Player $p */
-                            return $p->stats_get(Model_Player::MP_STAT_HEALTH) <= 50 || (bool)$p->buff_retr('blood');
+                            return $p->get_status()->get(Model_Status::MS_STAT_HEALTH) <= 50 || (bool)$p->get_status()->retrieve('blood');
                         })
                     ->fail_message('Für die paar Kratzer willst du eine Bandage verwenden? Sei mal nicht so ein Schwächling, und warte zumindest bis deine Gesundheit auf 50 gefallen ist.')
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_HEALTH, 35)
+                            ->effect(Model_Status::MS_STAT_HEALTH, 35)
                             ->consume($this)
                             ->buff('Model_Buffs_Blood', true)
                             ->achieve(Model_Achievement::MA_BANDAGE_MUMMY)
@@ -35,17 +35,17 @@ class Model_Items_Bandage extends Model_Items_Abstract_Item implements Interface
                 Model_Action::factory()
                     ->condition(function($p, $s) {
                         /** @var Model_Player $s */
-                        return $s->stats_get(Model_Player::MP_STAT_HEALTH) <= 50 || $s->buff_retr('blood');
+                        return $s->get_status()->get(Model_Status::MS_STAT_HEALTH) <= 50 || $s->get_status()->retrieve('blood');
                     })
                     ->fail_message('Du machst dir zuviel Sorgen... bei ein paar kleinen Kratzern wäre eine Bandage doch wohl etwas übertrieben. Warte bis die Gesundheit deines Freundes unter 50 gefallen ist.')
-                    ->requirement(Model_Player::MP_STAT_ENERGY, 6)
+                    ->requirement(Model_Status::MS_STAT_ENERGY, 6)
                     ->effect(
                         Model_Effect::factory()
                             ->consume($this)
                             ->message('Du wickelst die Bandage straff um die Verletzungen deines Freundes. Mit den Bandagen im Gesicht sieht er gleich viel besser aus...')
                     , null, null,
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_HEALTH, 50 + ($player->job(10030) ? 2 : 0) * $player->job(false, null))
+                            ->effect(Model_Status::MS_STAT_HEALTH, 50 + ($player->job(10030) ? 2 : 0) * $player->job(false, null))
                             ->buff('Model_Buffs_Blood', true)
                             ->achieve(Model_Achievement::MA_BANDAGE_MUMMY)
                             ->message(':name hat eine Bandage um deine Verletzungen gewickelt.', array(':name' => $player->name()))

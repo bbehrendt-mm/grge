@@ -43,7 +43,7 @@ class Model_Items_Basefood extends Model_Items_Abstract_Item implements Interfac
         ->add_action('Essen', Model_Action::factory()
                 ->effect(
                     Model_Effect::factory()
-                        ->effect(Model_Player::MP_STAT_HUNGER, 20)
+                        ->effect(Model_Status::MS_STAT_HUNGER, 20)
                         ->consume($this)
                         ->message('Das war lecker. Du fühlst, wie sich dein Hunger langsam in Luft auflöst.')
                 )

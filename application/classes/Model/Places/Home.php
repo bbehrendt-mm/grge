@@ -119,7 +119,7 @@ class Model_Places_Home extends Model_Places_Abstract_Hideout {
                 ->add_action('Mit Leber zahlen', Model_Action::factory()
                         ->effect(Model_Effect::factory()
                                 ->buff('Model_Buffs_Blood')
-                                ->effect(Model_Player::MP_STAT_HEALTH, -95)
+                                ->effect(Model_Status::MS_STAT_HEALTH, -95)
                                 ->causeofdeath("Aggressiver Rabe")
                                 ->achieve(Model_Achievement::MA_MASOCHIST)
                                 ->custom($item_gen)

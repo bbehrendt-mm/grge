@@ -110,7 +110,7 @@ class Model_Places_Motorhome extends Model_Places_Home {
 
         if (!$start)
             foreach (Tool_Scripts::at_location($this->uin()) as $p)
-                $p->buff_remove('fragile/driver');
+                $p->get_status()->remove('fragile/driver');
         else new Model_Buffs_Driver($player->id());
 
         $game->delete_lobby();
@@ -168,7 +168,7 @@ class Model_Places_Motorhome extends Model_Places_Home {
         /** @global Model_Player $player */
         global $player;
         if ($this->driving) return false;
-        if ($player->buff_retr('fragile')) return false;
+        if ($player->get_status()->retrieve('fragile')) return false;
 
         foreach ($this->parts as $part => &$data) {
             if (Tool_System::getClassID($part) == $addr) {
@@ -197,7 +197,7 @@ class Model_Places_Motorhome extends Model_Places_Home {
 
         if ($this->driving)
             return;
-        if ($player->buff_retr('fragile'))
+        if ($player->get_status()->retrieve('fragile'))
             return;
 
         if ($player->job(1080)) {
@@ -229,18 +229,18 @@ class Model_Places_Motorhome extends Model_Places_Home {
     public function tick() {
         if (!$this->driving) {
             foreach (Tool_Scripts::at_location($this->uin()) as $p)
-                $p->buff_remove('fragile/driver');
+                $p->get_status()->remove('fragile/driver');
             return;
         }
         $this->km += $this->get_speed();
 
         foreach (Tool_Scripts::at_location($this->uin()) as $p)
-            if ($p->buff_retr('fragile/driver')) {
+            if ($p->get_status()->retrieve('fragile/driver')) {
 
                 $kc = 100;
-                if (($s = $p->stats_get(Model_Player::MP_STAT_SLEEPY) < 20))
+                if (($s = $p->get_status()->get(Model_Status::MS_STAT_SLEEPY) < 20))
                     $kc *= $s/20;
-                if (($s = $p->stats_get(Model_Player::MP_STAT_DRUNK) > 20))
+                if (($s = $p->get_status()->get(Model_Status::MS_STAT_DRUNK) > 20))
                     $kc *= (100-$s)/80;
 
                 if (mt_rand(0,100) > $kc) {
@@ -248,11 +248,11 @@ class Model_Places_Motorhome extends Model_Places_Home {
                     $this->log()->add(':name hat einen Unfall gebaut! Die Insassen haben Verletzungen davon getragen und der Wohnwagen wurde schwer beschädigt!', array(':name' => $p->name()));
                     foreach (Tool_Scripts::at_location($this->uin()) as $ps) {
                         $ps->set_cod('Autounfall');
-                        $ps->stats_modify(Model_Player::MP_STAT_HEALTH, -mt_rand(10,80));
+                        $ps->get_status()->modify(Model_Status::MS_STAT_HEALTH, -mt_rand(10,80));
                         if ($ps->id() != $p->id())
                             $ps->log()->add('Du hast gerade eben noch friedlich aus dem Fenster geschaut, jetzt liegst du plötzlich in einem Trümmerhaufen aus Blech und Blut. :name, dieser verblödete Idiot, hat anscheinend einen Unfall gebaut.', array(':name' => $p->name()));
                     }
-                    $p->stats_modify(Model_Player::MP_STAT_HEALTH, -mt_rand(20,50));
+                    $p->get_status()->modify(Model_Status::MS_STAT_HEALTH, -mt_rand(20,50));
                     $p->log()->add('Tja, sowas passiert wenn man in deinem Zustand autofährt. Vielleicht hättest du das jemand anderen tun lassen sollen, zum Beispiel jemandem der nicht das einzige Fahrzeugwrack auf der Straße im Umkreis von 10 Kilometern frontal rammt?');
 
                     foreach ($this->parts as &$status_value)

@@ -13,7 +13,7 @@ class Model_Items_Paracetoid extends Model_Items_Abstract_Pillbox {
     protected static $take_msg = 'Direkt nachdem du die Paracetoid schluckst merkst du, wie es dir besser geht.';
     protected static $singular_name = 'Paracetoid';
     protected static $pill_effects = Array(
-        Model_Player::MP_STAT_HEALTH => 5
+        Model_Status::MS_STAT_HEALTH => 5
     );
 	
 	public function mixchem($chemval) {

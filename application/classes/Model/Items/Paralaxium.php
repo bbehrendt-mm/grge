@@ -13,7 +13,7 @@ class Model_Items_Paralaxium extends Model_Items_Abstract_Pillbox {
     protected static $take_msg = 'Direkt nachdem du die Paralaxium schluckst fallen dir langsam die Augen zu...';
     protected static $singular_name = 'Paralaxium';
     protected static $pill_effects = Array(
-        Model_Player::MP_STAT_SLEEPY => -5
+        Model_Status::MS_STAT_SLEEPY => -5
     );
 	
 	public function mixchem($chemval) {

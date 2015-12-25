@@ -16,8 +16,8 @@ class Model_Items_Rawmeat extends Model_Items_Abstract_Item implements Interface
             ->add_action('Fressen', Model_Action::factory()
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_HUNGER, 15)
-                            ->effect(Model_Player::MP_STAT_HEALTH, -10)
+                            ->effect(Model_Status::MS_STAT_HUNGER, 15)
+                            ->effect(Model_Status::MS_STAT_HEALTH, -10)
                             ->consume($this)
                             ->spawn('Model_Items_Bone')
                             ->message('Es schmeckt ein bisschen nach Hähnchen .... und zwar nach einem Hähnchen, dass 4 Wochen lang in der Sonne verwest ist!')

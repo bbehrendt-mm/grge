@@ -22,6 +22,6 @@ class Model_Items_Xmas_Drink extends Model_Items_Abstract_Alcohol implements Int
     protected static $thirst = 5;
     protected static $energy = 20;
     protected static $additional_effects = [
-        Model_Player::MP_STAT_FREEZE => -18
+        Model_Status::MS_STAT_FREEZE => -18
     ];
 }	

@@ -315,7 +315,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
             Tool_Scripts::place_new_item(new Model_Items_Braincoin());
 
 
-		if (!$return && ($player->buff_retr('fragile') || $player->buff_retr('passout'))) return true;
+		if (!$return && ($player->get_status()->retrieve('fragile') || $player->get_status()->retrieve('passout'))) return true;
 		$item = $this->item_factory->spawn($force, true, Tool_Scripts::calculate_find_chances($player->id()));
         if ($item && !$return) {
             Tool_Scripts::place_new_item($item);
@@ -342,10 +342,10 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 			$c = $game->config('zombies.escape_threshold');
 			for ($i = 0; $i < $this->zombie_factory->accumulation(); $i++) $c += mt_rand(0, ceil($this->zombie_factory->accumulation()/5));
 			
-			$c = ceil($c * (1 + ($player->stats_get(Model_Player::MP_STAT_DRUNK) / 100)));
+			$c = ceil($c * (1 + ($player->get_status()->get(Model_Status::MS_STAT_DRUNK) / 100)));
 			
 			$item_list = Array();
-			while ((($player->stats_get(Model_Player::MP_STAT_ENERGY) * $player->stats_get(Model_Player::MP_CHAR_EVASIVENESS)) < $c) && ($items = Tool_Scripts::available_items('Model_Items_Abstract_Escape')))
+			while ((($player->get_status()->get(Model_Status::MS_STAT_ENERGY) * $player->get_status()->get(Model_Status::MS_CHAR_EVASIVENESS)) < $c) && ($items = Tool_Scripts::available_items('Model_Items_Abstract_Escape')))
 			{
 				/** @var $items Model_Items_Abstract_Escape[] */
                 $c -= $items[0]->escape();
@@ -354,11 +354,11 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 				$items[0]->consume();
 			}
 
-            $player->stats_modify(Model_Player::MP_STAT_ENERGY, -10);
-			if (($player->stats_get(Model_Player::MP_STAT_ENERGY) * $player->stats_get(Model_Player::MP_CHAR_EVASIVENESS)) >= $c) {
+            $player->get_status()->modify(Model_Status::MS_STAT_ENERGY, -10);
+			if (($player->get_status()->get(Model_Status::MS_STAT_ENERGY) * $player->get_status()->get(Model_Status::MS_CHAR_EVASIVENESS)) >= $c) {
 				$c = $this->zombie_pop();
                 $this->zombie_pop(true);
-				$this->zombie_factory()->accumulation(ceil($c/(1.05 * $player->stats_get(Model_Player::MP_CHAR_BULKYNESS))));
+				$this->zombie_factory()->accumulation(ceil($c/(1.05 * $player->get_status()->get(Model_Status::MS_CHAR_BULKYNESS))));
 
 				$player->enable_escape();
 				
@@ -445,8 +445,8 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
          */
         global $game, $player;
 
-        if ($player->buff_retr('fragile')) return false;
-        if (!($building = $game->map($this->uin())->attempt_unvail($this->uin(), $player->stats_get(Model_Player::MP_CHAR_LOCATION_SPAWNRATE)))) return true;
+        if ($player->get_status()->retrieve('fragile')) return false;
+        if (!($building = $game->map($this->uin())->attempt_unvail($this->uin(), $player->get_status()->get(Model_Status::MS_CHAR_LOCATION_SPAWNRATE)))) return true;
 
         //Mapper
         if ($game->config('modules.mapping') && ($items = $player->inventory()->get('Model_Items_Maptool'))) {

@@ -38,7 +38,7 @@ class Model_Items_Flashlight2 extends Model_Items_Abstract_Item {
                     )
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_HEALTH, -50)
+                            ->effect(Model_Status::MS_STAT_HEALTH, -50)
                             ->buff('Model_Buffs_Blood')
                             ->message('Du schaltest die Taschenlampe an. Mit einem lauten Knall explodiert sie in deiner Hand und fügt dir schwere Verletzungen zu!')
                     )

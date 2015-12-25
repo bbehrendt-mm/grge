@@ -11,7 +11,7 @@ class Controller_Location extends Controller_Game {
          */
         global $player;
 
-        if ($player->buff_retr('passout') || $player->buff_retr('fragile') || $player->can_escape()) return;
+        if ($player->get_status()->retrieve('passout') || $player->get_status()->retrieve('fragile') || $player->can_escape()) return;
 
         if ($player->location()->zombie_pop() > 0)
             $player->location()->break_out($fight);
@@ -40,7 +40,7 @@ class Controller_Location extends Controller_Game {
          */
         global $game, $player;
 
-        if ($player->buff_retr('fragile')) return;
+        if ($player->get_status()->retrieve('fragile')) return;
 
         if ($game->config('modules.mapping') && $player->inventory()->get('Model_Items_Maptool') && !Tool_System::instance_of($player->location(), 'Model_Places_Abstract_Xmas') && !Tool_System::instance_of($player->location(), 'Model_Places_Abstract_Hideout') && !Tool_System::instance_of($player->location(), 'Model_Places_Abstract_Node')) {
             /** @var Model_Items_Maptool $mapper */
@@ -106,7 +106,7 @@ class Controller_Location extends Controller_Game {
             $player->achievements()->achieve(Model_Achievement::MA_CONSTRUCTIONS, $this->exec_build($blueprints, $build) ? 1 : 0);
 
         $this->add_data('blueprints', $this->compile_builder($blueprints));
-        $this->add_data('energy', $player->stats_get(Model_Player::MP_STAT_ENERGY));
+        $this->add_data('energy', $player->get_status()->get(Model_Status::MS_STAT_ENERGY));
         $this->add_data('zombies', $player->location()->zombie_pop());
         $this->render(false);
         return true;
@@ -126,7 +126,7 @@ class Controller_Location extends Controller_Game {
         $blueprints->merge($externals)->validate();
 
         $this->add_data('blueprints', $this->compile_builder($blueprints));
-        $this->add_data('energy', $player->stats_get(Model_Player::MP_STAT_ENERGY));
+        $this->add_data('energy', $player->get_status()->get(Model_Status::MS_STAT_ENERGY));
         $this->add_data('zombies', $player->location()->zombie_pop());
         $this->render(false);
         return true;
@@ -145,7 +145,7 @@ class Controller_Location extends Controller_Game {
         $blueprints->merge($externals)->validate();
 
         $this->add_data('blueprints', $this->compile_builder($blueprints));
-        $this->add_data('energy', $player->stats_get(Model_Player::MP_STAT_ENERGY));
+        $this->add_data('energy', $player->get_status()->get(Model_Status::MS_STAT_ENERGY));
         $this->add_data('zombies', $player->location()->zombie_pop());
         $this->render(false);
         return true;

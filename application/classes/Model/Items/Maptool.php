@@ -85,7 +85,7 @@ class Model_Items_Maptool extends Model_Items_Abstract_Item {
          * @global Model_Game $game
          */
         global $player, $game;
-		if ($player->buff_retr('fragile')) {
+		if ($player->get_status()->retrieve('fragile')) {
 			$player->log()->add(new Model_Log_Types_Text(null, null, 'Du bist momentan beschäftigt!'));
 			return;
 		}

@@ -14,7 +14,7 @@ class Model_Items_Drugpack extends Model_Items_Abstract_Item implements Interfac
     protected function hid() {
         return parent::hid()
             ->add_action('Aufbrechen', Model_Action::factory()
-                ->requirement(Model_Player::MP_STAT_ENERGY, 10)
+                ->requirement(Model_Status::MS_STAT_ENERGY, 10)
                 ->effect(Model_Effect::factory()
                     ->message('Mit etwas Mühe bekommst du die Kiste aufgebrochen - und stellst fest dass sie leer ist. Na toll ...')
                     ->consume($this)
@@ -41,9 +41,9 @@ class Model_Items_Drugpack extends Model_Items_Abstract_Item implements Interfac
                 ->effect(Model_Effect::factory()
                     ->message('Mit etwas Mühe bekommst du die Kiste aufgebrochen - und stellst fest dass sie randvoll mit Päckchen voller weißem Puder ist. Leider hast du ein paar Päckchen beim Aufbrechen der Kiste beschädigt, sodass sich deren Inhalt in Form einer Wolke um dich verbreitet...')
                     ->spawn('Model_Items_Powderpack', 6)
-                    ->effect(Model_Player::MP_STAT_DRUNK, 30)
-                    ->effect(Model_Player::MP_STAT_ENERGY, 30)
-                    ->effect(Model_Player::MP_STAT_HEALTH, -50)
+                    ->effect(Model_Status::MS_STAT_DRUNK, 30)
+                    ->effect(Model_Status::MS_STAT_ENERGY, 30)
+                    ->effect(Model_Status::MS_STAT_HEALTH, -50)
                     ->consume($this)
                 )
             );

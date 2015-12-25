@@ -16,8 +16,8 @@ class Model_Items_Vedge3 extends Model_Items_Abstract_Item implements Interface_
             ->add_action('Essen', Model_Action::factory()
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_HUNGER, 10)
-                            ->effect(Model_Player::MP_STAT_THIRST, 5)
+                            ->effect(Model_Status::MS_STAT_HUNGER, 10)
+                            ->effect(Model_Status::MS_STAT_THIRST, 5)
                             ->consume($this)
                             ->message('Das wenige vorhandene Fruchtfleisch ist sehnig und zäh, außerdem schmeckt es irgendwie komisch. Naja, besser als nichts...')
                     )

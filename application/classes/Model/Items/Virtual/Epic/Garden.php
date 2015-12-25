@@ -168,11 +168,11 @@ class Model_Items_Virtual_Epic_Garden extends Model_Items_Abstract_Virtual {
                             $fertilize = $this->normalize_fertilizer();
 
                             $effects = [
-                                Model_Player::MP_STAT_HUNGER => round(5 + 5 * $level),
-                                Model_Player::MP_STAT_THIRST => round(10 + 4 * $fertilize[static::FERTILIZER_FOOD] * $level),
-                                Model_Player::MP_STAT_HEALTH => round(2 * $fertilize[static::FERTILIZER_DRUGS] * $level),
-                                Model_Player::MP_STAT_ENERGY => round(3 * $fertilize[static::FERTILIZER_CHEM] * $level),
-                                Model_Player::MP_STAT_SLEEPY => round(5 * ($fertilize[static::FERTILIZER_CHEM] + $fertilize[static::FERTILIZER_ALCOHOL]) * $level)
+                                Model_Status::MS_STAT_HUNGER => round(5 + 5 * $level),
+                                Model_Status::MS_STAT_THIRST => round(10 + 4 * $fertilize[static::FERTILIZER_FOOD] * $level),
+                                Model_Status::MS_STAT_HEALTH => round(2 * $fertilize[static::FERTILIZER_DRUGS] * $level),
+                                Model_Status::MS_STAT_ENERGY => round(3 * $fertilize[static::FERTILIZER_CHEM] * $level),
+                                Model_Status::MS_STAT_SLEEPY => round(5 * ($fertilize[static::FERTILIZER_CHEM] + $fertilize[static::FERTILIZER_ALCOHOL]) * $level)
                             ];
 
                             $player->location()->inventory()->add(new Model_Items_Fruit($effects,$count));

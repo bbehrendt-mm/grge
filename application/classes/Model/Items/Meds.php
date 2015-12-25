@@ -42,10 +42,10 @@ class Model_Items_Meds extends Model_Items_Abstract_Stackable implements Interfa
         $c = 0;
         foreach ($this->effects as $stat => $dif) {
             $c++;
-            $eff->effect($stat, $dif * ($player->buff_retr('tr_dealer') ? 1.2 : 1));
+            $eff->effect($stat, $dif * ($player->get_status()->retrieve('tr_dealer') ? 1.2 : 1));
             if ($player->job(10030)) {
                 if ($player->job(10030, $c*3, false))
-                    $sha->effect($stat, $dif * ($player->buff_retr('tr_dealer') ? 1.2 : 1));
+                    $sha->effect($stat, $dif * ($player->get_status()->retrieve('tr_dealer') ? 1.2 : 1));
                 else $sha->ambiguous_effect($stat);
             } else $sha->ambiguous_effect();
         }

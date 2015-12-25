@@ -23,7 +23,7 @@ class Model_Items_Dildo extends Model_Items_Abstract_Item implements Interface_S
                     ->condition(function($p) {
                         /** @var Model_Player $p */
                         if (count(Tool_Scripts::at_location($p->location_class())) != 1) return 'peek';
-                        elseif ($p->buff_retr('wow')) return "wow";
+                        elseif ($p->get_status()->retrieve('wow')) return "wow";
                         else return true;
                     })
                     ->fail_message('Bist du verrückt? Das kannst du doch nicht machen, wenn alle zugucken... Such dir ein ruhigeres Plätzchen.', 'peek')
@@ -32,8 +32,8 @@ class Model_Items_Dildo extends Model_Items_Abstract_Item implements Interface_S
                         Model_Effect::factory()
                             ->achieve(Model_Achievement::MA_MASOCHIST)
                             ->buff('Model_Buffs_Exited', false, 9)
-                            ->effect(Model_Player::MP_STAT_ENERGY, 10)
-                            ->effect(Model_Player::MP_STAT_SLEEPY, 10)
+                            ->effect(Model_Status::MS_STAT_ENERGY, 10)
+                            ->effect(Model_Status::MS_STAT_SLEEPY, 10)
                         , null, false)
                     ->decider(function() {
                         /** @global Model_Game $game */
@@ -49,8 +49,8 @@ class Model_Items_Dildo extends Model_Items_Abstract_Item implements Interface_S
                         Model_Effect::factory()
                             ->achieve(Model_Achievement::MA_MASOCHIST)
                             ->buff('Model_Buffs_Exited', false, 9)
-                            ->effect(Model_Player::MP_STAT_ENERGY, 10)
-                            ->effect(Model_Player::MP_STAT_SLEEPY, 10)
+                            ->effect(Model_Status::MS_STAT_ENERGY, 10)
+                            ->effect(Model_Status::MS_STAT_SLEEPY, 10)
                             ->message('Naja, wenn die Welt schonmal untergegangen ist, dann kann man ruhig mal etwas experimentieren. Eigentlich wars sogar ganz angenehm...')
                     )
                     //Failure
@@ -59,8 +59,8 @@ class Model_Items_Dildo extends Model_Items_Abstract_Item implements Interface_S
                             ->buff('Model_Buffs_Blood', false)
                             ->achieve(Model_Achievement::MA_MASOCHIST)
                             ->buff('Model_Buffs_Exited', false, 9)
-                            ->effect(Model_Player::MP_STAT_ENERGY, 10)
-                            ->effect(Model_Player::MP_STAT_SLEEPY, 100)
+                            ->effect(Model_Status::MS_STAT_ENERGY, 10)
+                            ->effect(Model_Status::MS_STAT_SLEEPY, 100)
                             ->message('AAAARGH! GOTT VERDAMMT! Eine falsche Handbewegung, schon leckst du wie ein Weinfass mit Einschussloch!')
                     )
                     //Horror

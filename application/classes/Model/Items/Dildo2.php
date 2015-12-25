@@ -23,7 +23,7 @@ class Model_Items_Dildo2 extends Model_Items_Abstract_Item implements Interface_
                     ->condition(function($p) {
                         /** @var Model_Player $p */
                         if (count(Tool_Scripts::at_location($p->location_class())) != 1) return 'peek';
-                        elseif ($p->buff_retr('wow')) return "wow";
+                        elseif ($p->get_status()->retrieve('wow')) return "wow";
                         else return true;
                     })
                     ->fail_message('Bist du verrückt? Das kannst du doch nicht machen, wenn alle zugucken... Such dir ein ruhigeres Plätzchen.', 'peek')
@@ -32,8 +32,8 @@ class Model_Items_Dildo2 extends Model_Items_Abstract_Item implements Interface_
                         Model_Effect::factory()
                             ->achieve(Model_Achievement::MA_MASOCHIST)
                             ->buff('Model_Buffs_Exited', false, 48)
-                            ->effect(Model_Player::MP_STAT_ENERGY, 70)
-                            ->effect(Model_Player::MP_STAT_SLEEPY, 70)
+                            ->effect(Model_Status::MS_STAT_ENERGY, 70)
+                            ->effect(Model_Status::MS_STAT_SLEEPY, 70)
                         , null, true)
                     ->decider(function() {
                         return (mt_rand(0,10) <= 3) ? 1 : 0;
@@ -47,7 +47,7 @@ class Model_Items_Dildo2 extends Model_Items_Abstract_Item implements Interface_
                     ->effect(
                         Model_Effect::factory()
                             ->buff('Model_Buffs_Blood', false)
-                            ->effect(Model_Player::MP_STAT_SLEEPY, 100)
+                            ->effect(Model_Status::MS_STAT_SLEEPY, 100)
                             ->message('AAAARGH! GOTT VERDAMMT! Eine falsche Handbewegung, schon leckst du wie ein Weinfass mit Einschussloch!')
                     )
             );

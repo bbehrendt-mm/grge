@@ -277,7 +277,7 @@ class Controller_Act extends Controller_Game {
         global $game, $player;
 
         //Block sleeping
-        if ($player->buff_retr('passout') || $player->buff_retr('fragile'))
+        if ($player->get_status()->retrieve('passout') || $player->get_status()->retrieve('fragile'))
             return;
 
         //Get params
@@ -339,7 +339,7 @@ class Controller_Act extends Controller_Game {
 
         //Block sleeping
         /** @var Model_Buffs_Abstract_Fragile $buff */
-        if (!($buff = $player->buff_retr('fragile')) || !$buff->abortable())
+        if (!($buff = $player->get_status()->retrieve('fragile')) || !$buff->abortable())
             return $this->japi_data();
         else {
             $buff->cancel();
@@ -356,7 +356,7 @@ class Controller_Act extends Controller_Game {
         global $game, $player;
 
         //Block sleeping
-        if ($player->buff_retr('passout') || $player->buff_retr('fragile'))
+        if ($player->get_status()->retrieve('passout') || $player->get_status()->retrieve('fragile'))
             return $this->japi_data();
 
         //Get UIN

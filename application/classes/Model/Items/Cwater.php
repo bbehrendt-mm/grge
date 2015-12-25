@@ -16,7 +16,7 @@ class Model_Items_Cwater extends Model_Items_Abstract_Item implements Interface_
             ->add_action('Trinken', Model_Action::factory()
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_THIRST, 5)
+                            ->effect(Model_Status::MS_STAT_THIRST, 5)
                             ->consume($this)
                             ->message('Du leckst das Gefäß gierig leer, um auch die letzten Tropfen Wasser noch in deinen Mund zu bekommen.')
                     )

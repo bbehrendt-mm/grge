@@ -16,8 +16,8 @@ class Model_Items_Rawmeat2 extends Model_Items_Abstract_Item implements Interfac
             ->add_action('Essen', Model_Action::factory()
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_HUNGER, 16)
-                            ->effect(Model_Player::MP_STAT_HEALTH, -1)
+                            ->effect(Model_Status::MS_STAT_HUNGER, 16)
+                            ->effect(Model_Status::MS_STAT_HEALTH, -1)
                             ->consume($this)
                             ->spawn('Model_Items_Bone')
                             ->message('Beim Kochen sind nicht nur die meisten Salmonellen, sondern auch fast alle Geschmacksstoffe verloren gegangen. Glücklicherweise handelt es sich hier um einen Knochen mit Fleisch, der Verlust von Geschmack ist also etwas sehr gutes...')

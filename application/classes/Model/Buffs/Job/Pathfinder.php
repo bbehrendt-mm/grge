@@ -11,19 +11,19 @@ class Model_Buffs_Job_Pathfinder extends Model_Buffs_Abstract_Job {
 	protected static $bid = 'pathfinder';
 	
 	protected $effects = Array(
-			Model_Player::MP_CHAR_DISTANCING => Array(
+			Model_Status::MS_CHAR_DISTANCING => Array(
                 Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
                 Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
                 Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
                 Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
 			),
-			Model_Player::MP_CHAR_EVASIVENESS => Array(
+			Model_Status::MS_CHAR_EVASIVENESS => Array(
 				Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
 				Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
 				Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
 				Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
 			),
-            Model_Player::MP_CHAR_LOCATION_SPAWNRATE => Array(
+            Model_Status::MS_CHAR_LOCATION_SPAWNRATE => Array(
                 Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
                 Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
                 Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
@@ -32,8 +32,8 @@ class Model_Buffs_Job_Pathfinder extends Model_Buffs_Abstract_Job {
 	);
 	
 	protected function adjust() {
-		$this->effects[Model_Player::MP_CHAR_DISTANCING][Model_Buffs_Abstract_Buff::MB_DROP_ACC] = min(4, $this->level) * 0.05;
-		if ($this->level >= 4) $this->effects[Model_Player::MP_CHAR_EVASIVENESS][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = 0.1;
-        if ($this->level >= 5) $this->effects[Model_Player::MP_CHAR_LOCATION_SPAWNRATE][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = 0.15;
+		$this->effects[Model_Status::MS_CHAR_DISTANCING][Model_Buffs_Abstract_Buff::MB_DROP_ACC] = min(4, $this->level) * 0.05;
+		if ($this->level >= 4) $this->effects[Model_Status::MS_CHAR_EVASIVENESS][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = 0.1;
+        if ($this->level >= 5) $this->effects[Model_Status::MS_CHAR_LOCATION_SPAWNRATE][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = 0.15;
 	}	
 }

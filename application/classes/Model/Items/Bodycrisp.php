@@ -17,8 +17,8 @@ class Model_Items_Bodycrisp extends Model_Items_Abstract_Item implements Interfa
             ->add_action('Fressen', Model_Action::factory()
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_HUNGER, 100)
-                            ->effect(Model_Player::MP_STAT_HEALTH, -20)
+                            ->effect(Model_Status::MS_STAT_HUNGER, 100)
+                            ->effect(Model_Status::MS_STAT_HEALTH, -20)
                             ->consume($this)
                             ->achieve(Model_Achievement::MA_BODY_EATER)
                             ->spawn('Model_Items_Generic_Bone3')

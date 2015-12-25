@@ -13,8 +13,8 @@ class Model_Items_Foodsupplement extends Model_Items_Abstract_Pillbox {
     protected static $take_msg = 'Hurra, du hast deinen Hunger (ein bisschen) bekämpft und sogar noch etwas neue Energie erhalten.';
     protected static $singular_name = 'NEM';
     protected static $pill_effects = Array(
-        Model_Player::MP_STAT_HUNGER => 5,
-        Model_Player::MP_STAT_ENERGY => 2
+        Model_Status::MS_STAT_HUNGER => 5,
+        Model_Status::MS_STAT_ENERGY => 2
     );
 	
 	public function mixchem($chemval) {

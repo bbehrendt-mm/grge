@@ -8,25 +8,25 @@ class Model_Buffs_Home extends Model_Buffs_Abstract_Buff {
 	protected static $bid = 'home';
 	
 	protected $effects = Array(		
-        Model_Player::MP_STAT_HUNGER => Array(
+        Model_Status::MS_STAT_HUNGER => Array(
             Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
             Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
             Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
             Model_Buffs_Abstract_Buff::MB_DROP_PRC => -0.2,
         ),
-        Model_Player::MP_STAT_THIRST => Array(
+        Model_Status::MS_STAT_THIRST => Array(
             Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
             Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
             Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
             Model_Buffs_Abstract_Buff::MB_DROP_PRC => -0.3,
         ),
-        Model_Player::MP_STAT_HEALTH => Array(
+        Model_Status::MS_STAT_HEALTH => Array(
             Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
             Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
             Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
             Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
         ),
-        Model_Player::MP_STAT_ENERGY => Array(
+        Model_Status::MS_STAT_ENERGY => Array(
             Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
             Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
             Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
@@ -37,16 +37,16 @@ class Model_Buffs_Home extends Model_Buffs_Abstract_Buff {
     public function rebuild() {
         if (!($hideout = Tool_Scripts::current_location_hideout($this->assoc_player)))
             return parent::rebuild();
-        $deco = $hideout->deco();
+        $deco = ($this->associated_to_player()) ? $hideout->deco() : 0;
 
-        $this->effects[Model_Player::MP_STAT_HEALTH] = Array(
+        $this->effects[Model_Status::MS_STAT_HEALTH] = Array(
             Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
             Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
             Model_Buffs_Abstract_Buff::MB_RAISE_PRC => min(50,max(0,$deco-100)/4)/100,
             Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
         );
 
-        $this->effects[Model_Player::MP_STAT_ENERGY] = Array(
+        $this->effects[Model_Status::MS_STAT_ENERGY] = Array(
             Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
             Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
             Model_Buffs_Abstract_Buff::MB_RAISE_PRC => $deco < 0 ? min(0,max(-100,$deco))/500 : min(250,max(0,$deco))/500,

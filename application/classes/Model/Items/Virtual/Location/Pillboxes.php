@@ -20,7 +20,7 @@ class Model_Items_Virtual_Location_Pillboxes extends Model_Items_Abstract_Virtua
             ->show_as(Model_Effect::factory()
                 ->ambiguous_effect()
             )
-            ->requirement(Model_Player::MP_STAT_ENERGY, 10)
+            ->requirement(Model_Status::MS_STAT_ENERGY, 10)
             ->effect(Model_Effect::factory()
                 ->custom(function($p) {
                     /** @var Model_Player $p */

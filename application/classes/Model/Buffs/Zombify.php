@@ -8,31 +8,31 @@ class Model_Buffs_Zombify extends Model_Buffs_Abstract_Buff {
 	protected static $visible = false;
 	
 	protected $effects = Array(
-				Model_Player::MP_STAT_HEALTH => Array(
+				Model_Status::MS_STAT_HEALTH => Array(
 					Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
 				),
-                Model_Player::MP_STAT_ENERGY => Array(
+                Model_Status::MS_STAT_ENERGY => Array(
                     Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
                     Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
                     Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
                     Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
                 ),
-                Model_Player::MP_STAT_HUNGER => Array(
+                Model_Status::MS_STAT_HUNGER => Array(
                     Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
                     Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
                     Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
                     Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
                 ),
-                Model_Player::MP_STAT_THIRST => Array(
+                Model_Status::MS_STAT_THIRST => Array(
                     Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
                     Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
                     Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
                     Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
                 ),
-                Model_Player::MP_STAT_SLEEPY => Array(
+                Model_Status::MS_STAT_SLEEPY => Array(
                     Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
                     Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
                     Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
@@ -41,78 +41,78 @@ class Model_Buffs_Zombify extends Model_Buffs_Abstract_Buff {
 			);
 	
 	public function rebuild() {
-		$zombify = $this->assoc_player->stats_get(Model_Player::MP_STAT_ZOMBIFY);
-        $health = $this->assoc_player->stats_get(Model_Player::MP_STAT_HEALTH);
+		$zombify = $this->assoc_player->get_status()->get(Model_Status::MS_STAT_ZOMBIFY);
+        $health = $this->assoc_player->get_status()->get(Model_Status::MS_STAT_HEALTH);
 		
 		if ($zombify > 0) {
-			$this->effects[Model_Player::MP_STAT_HEALTH] = Array(
+			$this->effects[Model_Status::MS_STAT_HEALTH] = Array(
                 Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
                 Model_Buffs_Abstract_Buff::MB_DROP_ACC => ($health > (100-$zombify)) ? 1 : 0,
                 Model_Buffs_Abstract_Buff::MB_RAISE_PRC => -$zombify/100,
                 Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
 			);
-			$this->effects[Model_Player::MP_STAT_ENERGY] = Array(
+			$this->effects[Model_Status::MS_STAT_ENERGY] = Array(
                 Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
                 Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
                 Model_Buffs_Abstract_Buff::MB_RAISE_PRC => -$zombify/100,
                 Model_Buffs_Abstract_Buff::MB_DROP_PRC => -$zombify/100,
 			);
-            $this->effects[Model_Player::MP_STAT_HUNGER] = Array(
+            $this->effects[Model_Status::MS_STAT_HUNGER] = Array(
                 Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
                 Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
                 Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
                 Model_Buffs_Abstract_Buff::MB_DROP_PRC => $zombify/100,
             );
-            $this->effects[Model_Player::MP_STAT_THIRST] = Array(
+            $this->effects[Model_Status::MS_STAT_THIRST] = Array(
                 Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
                 Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
                 Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
                 Model_Buffs_Abstract_Buff::MB_DROP_PRC => -$zombify/100,
             );
-            $this->effects[Model_Player::MP_STAT_SLEEPY] = Array(
+            $this->effects[Model_Status::MS_STAT_SLEEPY] = Array(
                 Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
                 Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
                 Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
                 Model_Buffs_Abstract_Buff::MB_DROP_PRC => -$zombify/100,
             );
-            $this->effects[Model_Player::MP_STAT_ZOMBIFY] = Array(
+            $this->effects[Model_Status::MS_STAT_ZOMBIFY] = Array(
                 Model_Buffs_Abstract_Buff::MB_RAISE_ACC => $zombify/500,
                 Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
                 Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
                 Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
             );
 		} else {
-            $this->effects[Model_Player::MP_STAT_HEALTH] = Array(
+            $this->effects[Model_Status::MS_STAT_HEALTH] = Array(
                 Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
                 Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
                 Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
                 Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
             );
-            $this->effects[Model_Player::MP_STAT_ENERGY] = Array(
+            $this->effects[Model_Status::MS_STAT_ENERGY] = Array(
                 Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
                 Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
                 Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
                 Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
             );
-            $this->effects[Model_Player::MP_STAT_HUNGER] = Array(
+            $this->effects[Model_Status::MS_STAT_HUNGER] = Array(
                 Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
                 Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
                 Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
                 Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
             );
-            $this->effects[Model_Player::MP_STAT_THIRST] = Array(
+            $this->effects[Model_Status::MS_STAT_THIRST] = Array(
                 Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
                 Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
                 Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
                 Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
             );
-            $this->effects[Model_Player::MP_STAT_SLEEPY] = Array(
+            $this->effects[Model_Status::MS_STAT_SLEEPY] = Array(
                 Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
                 Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
                 Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
                 Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
             );
-            $this->effects[Model_Player::MP_STAT_ZOMBIFY] = Array(
+            $this->effects[Model_Status::MS_STAT_ZOMBIFY] = Array(
                 Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
                 Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
                 Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,

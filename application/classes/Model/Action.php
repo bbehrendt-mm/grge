@@ -218,7 +218,7 @@ class Model_Action {
         }
 
         foreach ($this->get_stat_requirements() as $stat => $value)
-            if ($player->stats_get($stat) < $value) {
+            if (!$player->get_status()->has($stat, $value, Model_Status::MS_EFFECT_REQUIREMENT)) {
                 $player->log()->add('Du bist derzeit nicht in der Lage diese Aktion durchzuführen.');
                 return false;
             }
@@ -229,7 +229,7 @@ class Model_Action {
         }
 
         foreach ($this->get_stat_requirements() as $stat => $value)
-            $player->stats_modify($stat, -$value);
+            $player->get_status()->modify($stat, -$value, Model_Status::MS_EFFECT_REQUIREMENT);
 
         $tmp = array();
         foreach ($this->effects as $id => $effect)

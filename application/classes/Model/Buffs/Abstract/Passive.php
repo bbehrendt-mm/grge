@@ -19,7 +19,7 @@ abstract class Model_Buffs_Abstract_Passive extends Model_Buffs_Abstract_Buff {
 		$update = (!$this->active && $switch) || ($this->active && !$switch);	
 		$this->active = $switch;
 		
-		if ($update) $this->assoc_player->refresh_char_values();
+		if ($update) $this->assoc_player->get_status()->refresh_char();
 		
 		return parent::rebuild();
 	}

@@ -20,8 +20,8 @@ class Model_Items_Sportsdrink extends Model_Items_Abstract_Stackable {
             ->add_action('Einen Schluck nehmen', Model_Action::factory()
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_THIRST, 25)
-                            ->effect(Model_Player::MP_STAT_ENERGY, 8)
+                            ->effect(Model_Status::MS_STAT_THIRST, 25)
+                            ->effect(Model_Status::MS_STAT_ENERGY, 8)
                             ->consume($this)
                             ->message('Es geht doch nichts über das Prickeln in der Kehle nach dem Genuss dieses Sportgetränks. Dein Durst ist gestillt und du fühlst neue Kraft. ' . (($this->count > 2) ? 'Jetzt sind noch :num Schluck in der Flasche.' : (($this->count == 2) ? 'Du hast diesen Drink fast leergetrunken. Eine Schluck befindet sich noch in der Flasche.' : 'Die Flasche ist leer!')), array(':num' => $this->count - 1))
                     )

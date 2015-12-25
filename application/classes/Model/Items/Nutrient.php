@@ -16,7 +16,7 @@ class Model_Items_Nutrient extends Model_Items_Abstract_Item implements Interfac
             ->add_action('Verschlingen', Model_Action::factory()
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_HUNGER, 30)
+                            ->effect(Model_Status::MS_STAT_HUNGER, 30)
                             ->consume($this)
                             ->message('Das schmeckte wie ein geschmolzener Zombie, dessen Haltbarkeitsdatum abgelaufen ist ... aber zumindest stillt es deinen Hunger. Was will man mehr?')
                     )

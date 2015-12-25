@@ -24,7 +24,7 @@ class Model_Items_Virtual_Location_Landfill extends Model_Items_Abstract_Virtual
             ->add_action('Schredder verwenden', Model_Action::factory()
                 ->buttonskin('location')
                 ->description('Mit dieser Aktion kannst du alle Gegenstände, die im Moment auf dem Boden liegen, zerstören um Splitter herzustellen.')
-                ->requirement(Model_Player::MP_STAT_ENERGY, 5)
+                ->requirement(Model_Status::MS_STAT_ENERGY, 5)
                 ->condition(function($p) {
                     /** @var Model_Player $p */
                     $g = 0;
@@ -55,7 +55,7 @@ class Model_Items_Virtual_Location_Landfill extends Model_Items_Abstract_Virtual
             ->add_action('Splitterkugeln herstellen', Model_Action::factory()
                 ->buttonskin('location')
                 ->description('Aus 10 Eimern mit Splittern kannst du eine Splitterkugel pressen, die du als Munition verwenden kannst.')
-                ->requirement(Model_Player::MP_STAT_ENERGY, 50)
+                ->requirement(Model_Status::MS_STAT_ENERGY, 50)
                 ->condition(function($p) {
                     /** @var Model_Player $p */
                     return ($p->location()->splinters() > 10);

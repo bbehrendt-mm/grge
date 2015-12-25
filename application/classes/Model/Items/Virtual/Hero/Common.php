@@ -23,11 +23,11 @@ class Model_Items_Virtual_Hero_Common extends Model_Items_Abstract_Virtual {
                     ->description('Reduziert jede deiner Statusleisten um 15% und fügt die abgezogenen Punkte deiner Energie hinzu.')
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Player::MP_STAT_HUNGER, $t_h = -floor(0.15 * $player->stats_get(Model_Player::MP_STAT_HUNGER)))
-                            ->effect(Model_Player::MP_STAT_THIRST, $t_d = -floor(0.15 * $player->stats_get(Model_Player::MP_STAT_THIRST)))
-                            ->effect(Model_Player::MP_STAT_HEALTH, $t_g = -floor(0.15 * $player->stats_get(Model_Player::MP_STAT_HEALTH)))
-                            ->effect(Model_Player::MP_STAT_SLEEPY, $t_m = -floor(0.15 * $player->stats_get(Model_Player::MP_STAT_SLEEPY)))
-                            ->effect(Model_Player::MP_STAT_ENERGY, abs($t_h) + abs($t_d) + abs($t_g) + abs($t_m))
+                            ->effect(Model_Status::MS_STAT_HUNGER, $t_h = -floor(0.15 * $player->get_status()->get(Model_Status::MS_STAT_HUNGER)))
+                            ->effect(Model_Status::MS_STAT_THIRST, $t_d = -floor(0.15 * $player->get_status()->get(Model_Status::MS_STAT_THIRST)))
+                            ->effect(Model_Status::MS_STAT_HEALTH, $t_g = -floor(0.15 * $player->get_status()->get(Model_Status::MS_STAT_HEALTH)))
+                            ->effect(Model_Status::MS_STAT_SLEEPY, $t_m = -floor(0.15 * $player->get_status()->get(Model_Status::MS_STAT_SLEEPY)))
+                            ->effect(Model_Status::MS_STAT_ENERGY, abs($t_h) + abs($t_d) + abs($t_g) + abs($t_m))
                             ->message('Du wirst nicht sterben... nicht hier, und auch nicht auf diese Weise! Mit diesem Mantra hast du deine letzten Kräfte mobilisiert und neue Energie gewonnen.')
                     )
             , 'hero_focus')
@@ -38,19 +38,19 @@ class Model_Items_Virtual_Hero_Common extends Model_Items_Abstract_Virtual {
                         ->message('Gott würfelt nicht - denn er ist zu beschäftigt damit, am Glücksrad zu drehen. Eine deiner Statusleisten wurde auf 100 gesetzt; hoffentlich bist du mit dem Ergebnis zufrieden...')
                     , null, true)
                     ->effect(Model_Effect::factory()
-                        ->effect(Model_Player::MP_STAT_HUNGER, PHP_INT_MAX)
+                        ->effect(Model_Status::MS_STAT_HUNGER, PHP_INT_MAX)
                     )
                     ->effect(Model_Effect::factory()
-                        ->effect(Model_Player::MP_STAT_THIRST, PHP_INT_MAX)
+                        ->effect(Model_Status::MS_STAT_THIRST, PHP_INT_MAX)
                     )
                     ->effect(Model_Effect::factory()
-                        ->effect(Model_Player::MP_STAT_ENERGY, PHP_INT_MAX)
+                        ->effect(Model_Status::MS_STAT_ENERGY, PHP_INT_MAX)
                     )
                     ->effect(Model_Effect::factory()
-                        ->effect(Model_Player::MP_STAT_SLEEPY, PHP_INT_MAX)
+                        ->effect(Model_Status::MS_STAT_SLEEPY, PHP_INT_MAX)
                     )
                     ->effect(Model_Effect::factory()
-                        ->effect(Model_Player::MP_STAT_HEALTH, PHP_INT_MAX)
+                        ->effect(Model_Status::MS_STAT_HEALTH, PHP_INT_MAX)
                     )
                 , 'hero_wof')
             ->add_action('Winterschlaf', Model_Action::factory()
@@ -73,9 +73,9 @@ class Model_Items_Virtual_Hero_Common extends Model_Items_Abstract_Virtual {
                         Model_Effect::factory()
                             ->custom(function ($p) {
                                 /** @var Model_Player $p */
-                                if ($p->buff_retr('drug3')) {
-                                    $p->buff_remove('drug3');
-                                    $p->buff_remove('drug2');
+                                if ($p->get_status()->retrieve('drug3')) {
+                                    $p->get_status()->remove('drug3');
+                                    $p->get_status()->remove('drug2');
                                     $p->log()->add('Herzlichen Glückwunsch - das ist jetzt das :num. mal, dass du deine Sucht nach verschreibungspflichtigen Medikamenten, industriellem Lösungsmittel oder abgelaufenem Hustensaft besiegt hast!', array(':num' => mt_rand(10,99)));
                                 } else $p->log()->add('Hmm... nichts passiert. Kann es eventuell sein, dass du gar nicht auf Entzug warst?');
                             })
@@ -98,7 +98,7 @@ class Model_Items_Virtual_Hero_Common extends Model_Items_Abstract_Virtual {
                             return;
                         }
 
-                        $damage = min($p->stats_get(Model_Player::MP_STAT_HEALTH) - 1, $p->location()->zombie_pop() * 20);
+                        $damage = min($p->get_status()->get(Model_Status::MS_STAT_HEALTH) - 1, $p->location()->zombie_pop() * 20);
                         $injury = mt_rand(0,100) < (50 + $damage);
 
                         foreach ($p->inventory()->get() as $item)
@@ -107,7 +107,7 @@ class Model_Items_Virtual_Hero_Common extends Model_Items_Abstract_Virtual {
                                 $p->location()->inventory()->add($item);
                             }
 
-                        $p->stats_modify(Model_Player::MP_STAT_HEALTH, -$damage);
+                        $p->get_status()->modify(Model_Status::MS_STAT_HEALTH, -$damage);
                         if ($injury) new Model_Buffs_Blood($p->id());
 
                         $p->location()->leave($p->id());

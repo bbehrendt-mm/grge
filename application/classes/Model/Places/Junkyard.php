@@ -35,16 +35,17 @@ class Model_Places_Junkyard extends Model_Places_Abstract_Place {
 		$this->log->add(new Model_Log_Types_Text('Verschiedene Gegenstände gefunden', 'Ein hilfreicher Fund', 'Neben einem kleinen Schuppen findest du hinter einer Wand aus Kisten eine Leiche. Der arme Kerl wollte sich wohl vor den Zombies verstecken. Scheint nicht geklappt zu haben ...'));
 	}
 	
-	public function tick() {
-		global $game, $player;
+	public function tick($type = Interface_Tickable::IT_TYPE_PLAYER) {
+		/** @global Interface_Plentity $player */
+        global $player;
 					
-		if (!$this->initial_supply)
+		if (!$this->initial_supply && $player->can(Interface_Plentity::IC_TRIGGER_SUPPLIES))
 		{
 			$this->initial_supply();
 			return true;	
 		}		
 			
-		return parent::tick();
+		return parent::tick($type);
 	}
 
 }	

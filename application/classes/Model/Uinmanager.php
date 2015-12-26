@@ -44,10 +44,10 @@ class Model_Uinmanager extends Model {
 
     /**
      * Adds an object to cache
-     * @param Model_Cloudshard $obj
+     * @param Interface_Cloudshard $obj
      * @param bool $no_hash Create a hash for the new object
      */
-	private function cache_set(&$obj, $no_hash = false) {
+	private function cache_set(Interface_Cloudshard &$obj, $no_hash = false) {
         if (!$obj) return;
         if (isset($this->cleanup[$obj->uin()])) return;
         if (isset($this->reserved[$obj->uin()])) unset($this->reserved[$obj->uin()]);
@@ -97,10 +97,10 @@ class Model_Uinmanager extends Model {
 	
 	/**
 	 * Passes an object if it matches expected_class (if set)
-	 * @param Model_Cloudshard $object
+	 * @param Interface_Cloudshard $object
 	 * @param string $expected_class
 	 * @param boolean $heritage
-     * @return Model_Cloudshard|null
+     * @return Interface_Cloudshard|null
      */
 	private function passthrough($object, $expected_class = NULL, $heritage = true) {
 		//Check if it matches expected class
@@ -114,7 +114,7 @@ class Model_Uinmanager extends Model {
 	 * @param number $uin
 	 * @param string $expected_class
 	 * @param boolean $heritage
-	 * @return null|Model_Cloudshard
+	 * @return null|Interface_Cloudshard
 	 */
 	public function get($uin, $expected_class = NULL, $heritage = true) {
 		if (isset($this->data[$uin])) return $this->passthrough($this->data[$uin]["obj"], $expected_class, $heritage);
@@ -146,13 +146,13 @@ class Model_Uinmanager extends Model {
     /**
      * Adds an object to cloud by filling a previously reserved slot
      * @param number $id Reserved slot ID
-     * @param Model_Cloudshard $data
+     * @param Interface_Cloudshard $data
      * @throws Exception
      * @return number
      */
-    public function fill_reservation($id, &$data) {
+    public function fill_reservation($id, Interface_Cloudshard &$data) {
         if (!$data) throw new Exception("Cannot register NULL objects in game cloud!", 1);
-        if (!($data instanceof Model_Cloudshard)) throw new Exception("Class '" . get_class($data) . "' is not derived from Cloudshard class!." , 1);
+
         if (!isset($this->reserved[$id])) throw new Exception("Cloud ID $id is not reserved!", 1);
 
         $data->uin($id);
@@ -163,13 +163,12 @@ class Model_Uinmanager extends Model {
 	
 	/**
 	 * Adds an object to cloud
-	 * @param Model_Cloudshard $data
+	 * @param Interface_Cloudshard $data
 	 * @throws Exception
 	 * @return number
 	 */
-	public function set(&$data) {
+	public function set(Interface_Cloudshard &$data) {
 		if (!$data) throw new Exception("Cannot register NULL objects in game cloud!", 1);
-		if (!($data instanceof Model_Cloudshard)) throw new Exception("Class '" . get_class($data) . "' is not derived from Cloudshard class!." , 1);
 		
 		$target_uin = $this->reserve();
 		$data->uin($target_uin);
@@ -180,7 +179,7 @@ class Model_Uinmanager extends Model {
 	
 	/**
 	 * Removes an object from cloud
-	 * @param number|Model_Cloudshard $obj
+	 * @param number|Interface_Cloudshard $obj
 	 */
 	public function remove($obj) {
 		$num = is_numeric($obj) ? $obj : $obj->uin();

@@ -55,7 +55,7 @@ class Model_Places_Colosseum extends Model_Places_Abstract_Place {
         if ($this->stage > 15) $zmb[] = new Model_Combat_Zombies_Behemoth();
         else foreach (static::$stageconf[$this->stage]['zombies'] as $z => $c) $zmb[] = new $z();
 
-		Tool_Scripts::combat([Tool_Scripts::at_location(), $zmb], false, ($this->stage > 15) ? 60 : static::$stageconf[$this->stage]['distance'], $this, $this->stage == 0 ? 'Der Qualifikationskampf im Kolosseum beginnt!' : 'Der Kampf auf Ebene :level des Kolosseums beginnt!');
+		Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $zmb], false, ($this->stage > 15) ? 60 : static::$stageconf[$this->stage]['distance'], $this, $this->stage == 0 ? 'Der Qualifikationskampf im Kolosseum beginnt!' : 'Der Kampf auf Ebene :level des Kolosseums beginnt!');
 	}	
 	
 	private function reward_roulette($level) {

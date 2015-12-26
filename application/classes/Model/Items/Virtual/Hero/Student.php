@@ -25,7 +25,7 @@ class Model_Items_Virtual_Hero_Student extends Model_Items_Abstract_Virtual {
                             $i = false;
 
                             $b_heal = ($p->get_status()->get(Model_Status::MS_STAT_ZOMBIFY) <= 0) ? 25 : 15;
-                            foreach (Tool_Scripts::at_location($p->location_class()) as $ps) if ($ps->id() != $p->id()) if ($ps->get_status()->get(Model_Status::MS_STAT_ZOMBIFY) > 0) {
+                            foreach (Tool_Scripts::at_location($p->location_class(), true, true) as $ps) if ($ps->id() != $p->id()) if ($ps->get_status()->get(Model_Status::MS_STAT_ZOMBIFY) > 0) {
                                 if ($ps->get_status()->has(Model_Status::MS_STAT_ZOMBIFY, $b_heal + 5, Model_Status::MS_EFFECT_ITEM))
                                     $ps->get_status()->modify(Model_Status::MS_STAT_ZOMBIFY, -$b_heal, Model_Status::MS_EFFECT_ITEM);
                                 else $ps->get_status()->set(Model_Status::MS_STAT_ZOMBIFY, 5);

@@ -297,7 +297,7 @@ class Model_Player extends Model_Cloudshard implements Interface_Plentity {
             }
 
 
-			if (count(Tool_Scripts::at_location()) == 0) $this->location()->vacate();
+			if (count(Tool_Scripts::at_location($this->location_class(), true, true)) == 0) $this->location()->vacate();
 		}
 	}
 	
@@ -564,5 +564,15 @@ class Model_Player extends Model_Cloudshard implements Interface_Plentity {
         if ($set)
             return $this->last_action = time();
         else return $this->last_action;
+    }
+
+    public function ai() {/* Player Object has no AI */}
+
+    public function can($type) {
+        return true;
+    }
+
+    public function type() {
+        return static::IC_NPC_NONPC;
     }
 }

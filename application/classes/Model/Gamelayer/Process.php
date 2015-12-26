@@ -99,37 +99,46 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
 		if (!$this->is_alive()) return;
 
 		//Find and run preticks
-		$pretick = array();
-		foreach (array_keys($this->set['gamedata']->players) as $remote_player) {
-			global $player;
-			$player = $this->get_player($remote_player);
-				
-			if ($player->alive()) $pretick[$player->location_class()] = method_exists($player->location(),'pretick');
-		}
+		$active_locations = [];
+        foreach ($this->playable_entities() as $plentity)
+            if ($plentity->can(Interface_Plentity::IC_TRIGGER_LOCATION_TICKS))
+                $active_locations[$plentity->location_class()] = true;
+        $active_locations = array_keys($active_locations);
 
-		foreach ($pretick as $lid => $do)
-			if ($do) $this->location($lid)->pretick();
+		foreach ($active_locations as $lid) {
+            $this->location($lid)->pretick();
+            foreach ($this->location($lid)->inventory()->get('Interface_Tickable') as $item)
+                /** @var $item Interface_Tickable */
+                $item->tick($lid, Interface_Tickable::IT_TYPE_LOCATION);
+        }
+
 		
-		//Run player ticks
-		foreach (array_keys($this->set['gamedata']->players) as $remote_player) {
+		//Run player and NPC ticks
+		foreach ($this->playable_entities(true) as $pl) {
 			global $player;
-			$player = $this->get_player($remote_player);
+			$player = $pl;
 			
 			if ($player->alive()) {
                 // Tick items
                 foreach ($player->inventory()->get('Interface_Tickable') as $item)
                     /** @var $item Interface_Tickable */
-                    $item->tick($player->id(), true);
+                    $item->tick($player->id(), $player->type() == Interface_Plentity::IC_NPC_NONPC ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC);
 
                 foreach ($player->location()->inventory()->get('Interface_Tickable') as $item)
                     /** @var $item Interface_Tickable */
                     $item->tick($player->location_class(), false);
 
                 $player->tick();
-                if (method_exists($player->location(),'tick')) $player->location()->tick();
+                $player->location()->tick($player->type() == Interface_Plentity::IC_NPC_NONPC ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC);
 			}
 		}
 
         //Post-tick events
+        foreach ($this->npcs() as $pl) {
+            global $player;
+            $player = $pl;
+
+            $player->ai();
+        }
 	}
 }

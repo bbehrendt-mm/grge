@@ -8,23 +8,23 @@ abstract class Model_Places_Abstract_Xmas extends Model_Places_Abstract_Place {
     protected static $custom_style = 'xmas';
 
 
-    public function tick() {
+    public function tick($type = Interface_Tickable::IT_TYPE_PLAYER) {
         /**
          * @global Model_Game $game
          * @global Model_Player $player
          */
         global $game, $player;
 
-        parent::tick();
+        parent::tick($type);
 
         if (Tool_Events::current($game->next_tick()) != 'xmas' ) {
-            $this->leave_map($player->id());
+            $this->leave_map($player->id(), $type);
             $player->location_class($game->map_main()->resolve_fixed_id(1));
-            $player->location()->enter_map($player->id());
+            $player->location()->enter_map($player->id(), $type);
         }
     }
 
-    public function leave_map($pid = null) {
+    public function leave_map($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
         /**
          * @global $game Model_Game
          * @global $player Model_Player
@@ -33,7 +33,7 @@ abstract class Model_Places_Abstract_Xmas extends Model_Places_Abstract_Place {
         global $game, $user;
         if (!$pid) global $player;
         else $player = $game->get_player($pid);
-        if (!parent::leave($pid)) return false;
+        if (!parent::leave($pid, $type)) return false;
 
         foreach ($player->inventory()->get('Interface_Event') as $i)
             $i->grind();

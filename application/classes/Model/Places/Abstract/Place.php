@@ -50,10 +50,6 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
         return static::$custom_style;
     }
 
-    protected function create_npcs() {
-        return array();
-    }
-
     public function is_outside() {
         return static::$outside;
     }
@@ -118,18 +114,6 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
         return $t;
     }
 
-    /**
-     * @param mixed|null $id
-     * @return null|Model_Npc|Model_Hid|[Model_NPC]
-     */
-    public function get_npc($id = null) {
-        if ($id === null) return $this->create_npcs();
-
-        $tmp = $this->create_npcs();
-        if (isset($tmp[$id])) return $tmp[$id];
-        else return null;
-    }
-
     public function mapable() {
         return true;
     }
@@ -191,39 +175,42 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 	}
 	
 	//Enter location
-	public function can_enter($pid = null) {
+	public function can_enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
 		return true;
 	}
 	
 	//Leave location
-	public function can_leave($pid = null, $ignore_zombies = false) {
+	public function can_leave($pid = null, $ignore_zombies = false, $type = Interface_Tickable::IT_TYPE_PLAYER) {
         /**
          * @global $game Model_Game
          */
         global $game;
-        return ($ignore_zombies || $game->get_player($pid)->can_escape() || $this->zombie_factory->accumulation() <= 0);
+        return ($ignore_zombies || ($type == Interface_Tickable::IT_TYPE_PLAYER && $game->get_player($pid)->can_escape()) || $this->zombie_factory->accumulation() <= 0);
 	}
 
     //Enter map
-    public function can_enter_map($pid = null) {
-        return $this->can_enter($pid);
+    public function can_enter_map($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
+        return $this->can_enter($pid, $type);
     }
 
     //Leave map
-    public function can_leave_map($pid = null) {
-        return $this->can_leave();
+    public function can_leave_map($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
+        return $this->can_leave($pid, $type);
     }
 	
 	//Enter location
-	public function enter($pid = null) {
+	public function enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
         /**
          * @global $game Model_Game
          */
 		global $game;
 		if (!$pid) global $player;
-		else $player = $game->get_player($pid);
-		$this->log->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $pid));
-		if ($player->job(1060) && !$this->survival_find) {
+		elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = $game->get_player($pid);
+        else $player = $game->get_npc($pid);
+
+		$this->log->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $pid, $type == Interface_Tickable::IT_TYPE_NPC));
+
+        if ($type == Interface_Tickable::IT_TYPE_PLAYER && $player->job(1060) && !$this->survival_find) {
 			
 			$this->survival_find = true;
 			$findings = min(2,max(0,$player->job(false) - 2));
@@ -244,26 +231,24 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 	}
 	
 	//Leave location
-	public function leave($pid = null) {
-		$this->log->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_LEAVE, $pid));
-
-		if (count(Tool_Scripts::at_location()) <= 1) $this->vacate();
-		
+	public function leave($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
+		$this->log->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_LEAVE, $pid, $type == Interface_Tickable::IT_TYPE_NPC));
+		if (count(Tool_Scripts::at_location($this->uin(), true, true)) <= 1) $this->vacate();
 		return true;
 	}
 
     //Enter map
-    public function enter_map($pid = null) {
-        return $this->enter($pid);
+    public function enter_map($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
+        return $this->enter($pid, $type);
     }
 
     //Leave map
-    public function leave_map($pid = null) {
-        return $this->leave($pid);
+    public function leave_map($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
+        return $this->leave($pid, $type);
     }
 
-    public function pass($pid = null) {
-        $this->log->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_PASS, $pid));
+    public function pass($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
+        $this->log->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_PASS, $pid, $type == Interface_Tickable::IT_TYPE_NPC));
 
         return true;
     }
@@ -383,7 +368,9 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 	}
 	
 	public function pretick() {
-        /** @global Model_Game $game */
+        /**
+         * @global Model_Game $game
+         */
         global $game;
 
         //Check for zombie attack
@@ -410,10 +397,12 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
         }
 	}
 
-	public function tick() {
+	public function tick($type = Interface_Tickable::IT_TYPE_PLAYER) {
+        /** @global Interface_Plentity $player */
+        global $player;
 
-		$this->find_item();
-        $this->find_building();
+        if ($player->can(Interface_Plentity::IC_TRIGGER_ITEM_FINDINGS)) $this->find_item();
+        if ($player->can(Interface_Plentity::IC_TRIGGER_LOCATION_FINDINGS)) $this->find_building();
 
 		return true;
 	}

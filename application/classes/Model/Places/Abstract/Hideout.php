@@ -67,11 +67,12 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         if (($this->get_defense() > 0) && floor($this->zombie_factory->accumulation()) > $this->get_defense() && (!($fence = Tool_Scripts::first_available_item('Model_Items_Virtual_Epic_Fence', false)) || !$fence->get_status())) {
             if ($this->has_upgrade("bedrwake")) {
                 $this->remove_upgrades("bedrwake");
-                foreach (Tool_Scripts::at_location($this->uin) as $s_player)
+                foreach (Tool_Scripts::at_location($this->uin(), true, true) as $s_player)
                     if ($s_player->get_status()->retrieve('sleep_cozy')) {
                         $s_player->get_status()->retrieve('sleep_cozy')->unbuff();
-                        new Model_Buffs_Exited($s_player->id(), 4);
-                        $s_player->log()->add('Du hörst den Alarmdraht klingen und springst aus dem Bett, um dich gegen Zombies zu verteidigen!');
+                        new Model_Buffs_Exited($s_player, 4);
+                        if ($s_player->type() == Interface_Plentity::IC_NPC_NONPC)
+                            $s_player->log()->add('Du hörst den Alarmdraht klingen und springst aus dem Bett, um dich gegen Zombies zu verteidigen!');
                     }
             }
 
@@ -89,10 +90,10 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         }
     }
 
-    public function tick() {
+    public function tick($type = Interface_Tickable::IT_TYPE_PLAYER) {
         /**
          * @global $game Model_Game
-         * @global $player Model_Player
+         * @global $player Interface_Plentity|Model_Player
          */
         global $game, $player;
 
@@ -106,55 +107,59 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
             Array('chance' => 1, 'value' => 3));	//random big energy gain
 
         //Act accordingly
-        $sleeping = $player->get_status()->retrieve('sleep_cozy');
-        switch (Tool_Gambling::roulette($chance))
-        {
-            case 1:
-                if ($sleeping) $player->log()->add('Du hattest eben einen schönen Traum. Das hat dir etwas zusätzliche Energie verschafft.');
-                else $player->log()->add('Du hast soeben die Antwort auf eine philosophische Frage gefunden, die dich schon seit Jahren quält. Das hat dir etwas zusätzliche Energie verschafft.');
-                $player->get_status()->modify(Model_Status::MS_STAT_ENERGY, 5);
-                break;
-            case 2:
-                if ($sleeping) $player->log()->add('Du hast die perfekte Ruheposition gefunden. Weil du jetzt so bequem liegst erhälst du einen Energieschub.');
-                else $player->log()->add('In deiner Hose findest du eine alte Kinokarte von einem Film, den du dir mit Freunden angesehen hast. Diese schöne Erinnerung verschafft dir einen Energieschub.');
-                $player->get_status()->modify(Model_Status::MS_STAT_ENERGY, 15);
-                break;
-            case 3: $player->log()->add('Eine Sternschnuppe! So eine hast du schon ewig nicht mehr gesehen. Dieser wunderschöne Anblick gibt dir Hoffnung und einen gewaltigen Energieschub!');
-                $player->get_status()->modify(Model_Status::MS_STAT_ENERGY, 50);
-                break;
+        if ($player->type() == Interface_Plentity::IC_NPC_NONPC) {
+            $sleeping = $player->get_status()->retrieve('sleep_cozy');
+            switch (Tool_Gambling::roulette($chance))
+            {
+                case 1:
+                    if ($sleeping) $player->log()->add('Du hattest eben einen schönen Traum. Das hat dir etwas zusätzliche Energie verschafft.');
+                    else $player->log()->add('Du hast soeben die Antwort auf eine philosophische Frage gefunden, die dich schon seit Jahren quält. Das hat dir etwas zusätzliche Energie verschafft.');
+                    $player->get_status()->modify(Model_Status::MS_STAT_ENERGY, 5);
+                    break;
+                case 2:
+                    if ($sleeping) $player->log()->add('Du hast die perfekte Ruheposition gefunden. Weil du jetzt so bequem liegst erhälst du einen Energieschub.');
+                    else $player->log()->add('In deiner Hose findest du eine alte Kinokarte von einem Film, den du dir mit Freunden angesehen hast. Diese schöne Erinnerung verschafft dir einen Energieschub.');
+                    $player->get_status()->modify(Model_Status::MS_STAT_ENERGY, 15);
+                    break;
+                case 3: $player->log()->add('Eine Sternschnuppe! So eine hast du schon ewig nicht mehr gesehen. Dieser wunderschöne Anblick gibt dir Hoffnung und einen gewaltigen Energieschub!');
+                    $player->get_status()->modify(Model_Status::MS_STAT_ENERGY, 50);
+                    break;
+            }
         }
+
 
         return true;
     }
 
 
 
-    public function enter($pid = null) {
+    public function enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
         /**
          * @global $game Model_Game
          * @global $player Model_Player
          */
         global $game;
         if (!$pid) global $player;
-        else $player = $game->get_player($pid);
-        parent::enter($pid);
-        new Model_Buffs_Home($player->id());
-        if (Tool_Events::current($game->next_tick()) == 'halloween' && !$this->has_upgrade('cursed_hideout'))
-            new Model_Buffs_Scarecrow($player->id());
+        elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = $game->get_player($pid);
+        else $player = $game->get_npc($pid);
+
+        parent::enter($pid, $type);
+        new Model_Buffs_Home($player);
     }
 
-    public function leave($pid = null) {
+    public function leave($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
         /**
          * @global $game Model_Game
          * @global $player Model_Player
          */
         global $game;
         if (!$pid) global $player;
-        else $player = $game->get_player($pid);
+        elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = $game->get_player($pid);
+        else $player = $game->get_npc($pid);
 
-        if (!parent::leave($pid)) return false;
+        if (!parent::leave($pid, $type)) return false;
 
-        if ($this->has_upgrade('defimp') && !$this->has_upgrade('impaler'))
+        if ($this->has_upgrade('defimp') && !$this->has_upgrade('impaler') && $type == Interface_Tickable::IT_TYPE_PLAYER)
         {
             $this->add_upgrades('impaler');
             $player->log()->add(new Model_Log_Types_Text(null, null, 'Auf dem Weg nach draußen hast du die Fallgrube wieder geschlossen und für einen erneuten Einsatz bereit gemacht.'));
@@ -164,41 +169,6 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         if ($buff = $player->get_status()->retrieve('scarecrow')) $buff->unbuff();
 
         return true;
-    }
-
-    protected function create_npcs() {
-        /** @global Model_Game $game */
-        global $game;
-        $ret = parent::create_npcs();
-
-        if (Tool_Events::current($game->next_tick()) == 'halloween' && !$this->has_upgrade('cursed_hideout'))
-            $ret['halloween'] = Model_Npc::factory()->name('Grausame Vogelscheuche')
-                ->add_action('Ansehen', Model_Action::factory()
-                        ->effect(Model_Effect::factory()
-                                ->message('Wer hat denn dieses gruselige Ding hier reingestellt? Die leeren Augen dieser Vogelscheuche sehen aus, als würden sie dich ständig anstarren... wie furchtbar!')
-                        )
-                )
-                ->add_action('Gehirn einsetzen', Model_Action::factory()
-                        ->grind_requirements(false)
-                        ->requirement('Model_Items_Brainbox', 1)
-                        ->condition(function($p) {
-                            /** @var Model_Player $p */
-                            if ($p->get_status()->retrieve('wow')) return false;
-                            else return true;
-                        })
-                        ->show_as(Model_Effect::factory()
-                                ->buff('Model_Buffs_Exited', false, 3)
-                                ->ambiguous_effect()
-                        )
-                        ->fail_message('Dafür bist du im Moment zu aufgeregt.')
-                        ->effect(Model_Effect::factory()
-                                ->buff('Model_Buffs_Exited', false, 3)
-                                ->spawn('Model_Items_Soul', 1)
-                                ->message('Der Vogelscheuche ein Gehirn einzusetzen hat sie nicht wirklich weniger gruselig werden lassen... vor allem, weil sich das Gehirn vor deinen Augen aufgelöst und eine Seele freigesetzt hat!')
-                        )
-                )
-            ;
-        return $ret;
     }
 
     protected $defense = 5;

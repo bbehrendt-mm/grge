@@ -379,19 +379,13 @@ class Controller_Act extends Controller_Game {
             $side = $game->get_player($side_id);
         } else $side = null;
 
-        //Get Item, or thow Exception if this UIN does not resolve to a valid item
-        if (substr($id, 0, 5) === 'npc::') {
-            $npc = $player->location()->get_npc(substr($id, 5));
-            if (!$npc) return null;
-            $npc->perform($action, $player, $side, $argument);
-        } else {
-            $item = $game->uin()->get((int)$id, 'Model_Items_Abstract_Item');
-            if (!$game->item_available((int)$id) || !$item) {
-                $player->log()->add('Die Aktion konnte nicht vollständig ausgeführt werden, da eines oder mehrere der ausgewählten Gegenstände nicht länger in deiner Reichweite sind.');
-                return $this->japi_data();
-            }
-            $item->interact($action, $argument, $side);
+        //Get Item, or throw Exception if this UIN does not resolve to a valid item
+        $item = $game->uin()->get((int)$id, 'Model_Items_Abstract_Item');
+        if (!$game->item_available((int)$id) || !$item) {
+            $player->log()->add('Die Aktion konnte nicht vollständig ausgeführt werden, da eines oder mehrere der ausgewählten Gegenstände nicht länger in deiner Reichweite sind.');
+            return $this->japi_data();
         }
+        $item->interact($action, $argument, $side);
 
 
         return $this->japi_data();

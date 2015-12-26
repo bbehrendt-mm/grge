@@ -32,7 +32,23 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
 		return $this->set['gameid'];
 	}
 
+    /**
+     * @param bool $limit_alive
+     * @return Model_Player[]
+     */
     abstract public function players($limit_alive = true);
+
+    /**
+     * @param bool $limit_alive
+     * @return Interface_Plentity[]
+     */
+    abstract public function npcs($limit_alive = true);
+
+    /**
+     * @param bool $limit_alive
+     * @return Interface_Plentity[]
+     */
+    abstract public function playable_entities($limit_alive = true);
 
 	public function join($sub, $level, $contest_id) {
 		global $user, $player;

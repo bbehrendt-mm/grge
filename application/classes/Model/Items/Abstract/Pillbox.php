@@ -18,17 +18,14 @@ abstract class Model_Items_Abstract_Pillbox extends Model_Items_Abstract_Stackab
     protected static $pill_effects = Array();
 
     protected function hid() {
-        $php53pb = $this;
         return parent::hid()
             ->add_action('Eine ' . static::$singular_name . ' schlucken', Model_Action::factory()
                     ->export('succ')
                     ->decider(function($p) {
                         /**
                          * @var Model_Player $p
-                         * @global Model_Game $game
                          */
-                        global $game;
-                        return $game->tumble($p->id()) ? 'fail' : 'succ';
+                        return Tool_Gambling::tumble($p) ? 'fail' : 'succ';
                     })
                     ->effect(
                         Model_Effect::factory()

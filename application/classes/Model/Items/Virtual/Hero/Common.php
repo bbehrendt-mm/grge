@@ -83,6 +83,7 @@ class Model_Items_Virtual_Hero_Common extends Model_Items_Abstract_Virtual {
                 , 'hero_unaddict')
             ;
 
+        // TODO: Allow animals to somehow escape, too!
         if ($player->get_escape_target() && $player->get_escape_target() != $player->location_class())
             $tmp->add_action('Überstürzte Flucht', Model_Action::factory()
                 ->buttonskin('context')
@@ -93,7 +94,7 @@ class Model_Items_Virtual_Hero_Common extends Model_Items_Abstract_Virtual {
                         /** @global Model_Game $game */
                         global $game;
                         if (!($did = $p->get_escape_target())) return;
-                        if ($did == $p->location_class() || !$p->location()->can_leave($p->id(), true) || !$game->location($did)->can_enter($p->id())) {
+                        if ($did == $p->location_class() || !$p->location()->can_leave($p->id(), true, Interface_Tickable::IT_TYPE_PLAYER) || !$game->location($did)->can_enter($p->id(), Interface_Tickable::IT_TYPE_PLAYER)) {
                             $p->log()->add('Eine Flucht scheint im Moment aussichtslos...');
                             return;
                         }
@@ -110,8 +111,8 @@ class Model_Items_Virtual_Hero_Common extends Model_Items_Abstract_Virtual {
                         $p->get_status()->modify(Model_Status::MS_STAT_HEALTH, -$damage);
                         if ($injury) new Model_Buffs_Blood($p->id());
 
-                        $p->location()->leave($p->id());
-                        $game->location($did)->enter($p->id());
+                        $p->location()->leave($p->id(), Interface_Tickable::IT_TYPE_PLAYER);
+                        $game->location($did)->enter($p->id(), Interface_Tickable::IT_TYPE_PLAYER);
                         $p->location_class($did);
 
                         $p->log()->add('Puuh, das war eine ganz schön wilde Flucht... aber jetzt scheinst du erst einmal in Sicherheit zu sein.');

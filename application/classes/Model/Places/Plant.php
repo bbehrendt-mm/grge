@@ -7,10 +7,11 @@ class Model_Places_Plant extends Model_Places_Abstract_Place {
     protected static $icon = 'plant';
     protected static $outside = false;
 	
-	public function tick() {
-		global $player;
+	public function tick($type = Interface_Tickable::IT_TYPE_PLAYER) {
+		/** @global Interface_Plentity $player */
+        global $player;
 		$player->get_status()->modify(Model_Status::MS_STAT_RADIATION, 3.5);
-		parent::tick();
+		parent::tick($type);
 	}
 
     public function uin($uin = NULL) {

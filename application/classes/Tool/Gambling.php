@@ -39,5 +39,13 @@ class Tool_Gambling {
     public static function random($chance) {
         return $chance <= 0 ? false : (mt_rand()/mt_getrandmax() < $chance);
     }
+
+    /**
+     * @param Interface_Plentity $p
+     * @return bool
+     */
+    public static function tumble($p) {
+        return (mt_rand(15, 100) <= $p->get_status()->get(Model_Status::MS_STAT_DRUNK));
+    }
 		
 }	

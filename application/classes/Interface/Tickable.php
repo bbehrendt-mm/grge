@@ -2,6 +2,10 @@
 
 interface Interface_Tickable {
 
-    public function tick($id, $player_tick = true);
+    const IT_TYPE_LOCATION = 0;
+    const IT_TYPE_PLAYER = 1;
+    const IT_TYPE_NPC = 2;
+
+    public function tick($id, $type = Interface_Tickable::IT_TYPE_PLAYER);
 
 }

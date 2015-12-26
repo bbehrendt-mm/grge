@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Cloudshard extends Model {
+class Model_Cloudshard extends Model implements Interface_Cloudshard {
 
 	//Own UIN
 	protected $uin;

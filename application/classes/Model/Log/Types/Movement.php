@@ -12,18 +12,23 @@ class Model_Log_Types_Movement extends Model_Log_Message {
      * Creates a message that a player has entered or left the place
      * @param number $type
      * @param null|number|String $pid PID or translatable name
+     * @param bool $npc
+     * @throws Exception
      */
-	public function __construct($type, $pid = null) {
+	public function __construct($type, $pid = null, $npc = false) {
         /** @global Model_Player $player */
         global $player;
 
-        if ($pid === null)
+        if ($pid === null && $npc)
+            throw new Exception('NPC ID missing!');
+        elseif ($pid === null)
             $pid = $player->id();
 
         if (is_numeric($pid))
             parent::__construct([
                 'id' => (int)$pid,
-                'class' => $type
+                'class' => $type,
+                'npc' => $npc
             ]);
         else parent::__construct([
             'id' => -1,
@@ -33,15 +38,14 @@ class Model_Log_Types_Movement extends Model_Log_Message {
 	}
 
     protected function postprocess($data) {
-        /** @global Model_Player $player */
         /** @global Model_Game $game */
-        global $player, $game;
+        global $game;
 
         if (isset($data['name'])) {
             $data['self'] = false;
             $data['name'] = __($data['name']);
         } else
-            $data['name'] = $game->get_player($data['id'])->name();
+            $data['name'] = $data['npc'] ? $game->get_npc($data['id'])->name() : $game->get_player($data['id'])->name();
 
         return $data;
     }

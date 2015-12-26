@@ -48,6 +48,7 @@ class Init_Game {
 
         //Players
         $set->players = Array();
+        $set->npcs = Array();
         $set->graveyard = Array();
         $set->ghuls = Array();
 

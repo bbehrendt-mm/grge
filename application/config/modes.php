@@ -362,9 +362,6 @@ return array(
 
                         //Hero items
                         $player->inventory()->add(new Model_Items_Virtual_Hero_Common());
-
-                        if (Kohana::$config->load('server.debug.deploy_magic_box'))
-                            $player->inventory()->add(new Model_Items_Magicbox);
                     }
             )
         ),

@@ -46,15 +46,21 @@ class Model_Items_Flashlight extends Model_Items_Abstract_Item implements Interf
         return ($this->fillrate > 0);
     }
 
-    public function tick($pid, $player_tick = true) {
+    public function tick($pid, $type = Interface_Tickable::IT_TYPE_PLAYER) {
         /** @global Model_Game $game */
         global $game;
 
         if ($this->fillrate <= 0)
             return;
 
-        if ($player = $game->get_player($pid))
-            $this->fillrate--;
+        switch ($type) {
+            case Interface_Tickable::IT_TYPE_PLAYER:
+                if ($game->get_player($pid)) $this->fillrate--;
+                break;
+            case Interface_Tickable::IT_TYPE_NPC:
+                if ($game->get_npc($pid)) $this->fillrate--;
+                break;
+        }
     }
 
     public function render($pid) {

@@ -85,6 +85,7 @@ class Controller_Game extends Controller {
                     'name' => __($location->name()),
                     'icon' => $location->icon(),
                 ];
+                /** TODO: Add NPCs */
                 if ($id == $lid) {
                     $mp_current = $tmp;
                     $mp_current['zombies'] = $location->zombie_pop();
@@ -806,22 +807,6 @@ class Controller_Game extends Controller {
         ]);
     }
 
-    public function render_npcs() {
-        /**
-         * @global $player Model_Player
-         */
-        global $player;
-
-        $tmp = [];
-
-        foreach ($player->location()->get_npc() as $id => $npc)
-            /** @var Model_Npc $npc */
-            $tmp[$id] = ['name' => __($npc->name()), 'actions' => $this->prepare_actionlist($npc->convert("npc::$id"))];
-
-        if ($tmp)
-            $this->add_data('location', ['npcs' => $tmp]);
-    }
-
     /**
      * Renderer API
      * @throws Kohana_Exception
@@ -848,7 +833,6 @@ class Controller_Game extends Controller {
         $this->render_rpg();
         $this->render_log();
         $this->render_mp();
-        $this->render_npcs();
         $this->render_specials();
         $this->render_epics();
         $this->render_notifications();

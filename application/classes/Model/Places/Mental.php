@@ -11,7 +11,8 @@ class Model_Places_Mental extends Model_Places_Abstract_Place {
 	private $mentalstate = 0;
 	
 	public function pretick() {
-		global $game;
+		/** @global Model_Game $game */
+        global $game;
 
         if (mt_rand(0,10) > 3) return true;
 		if (count(Tool_Scripts::at_location($this->uin())) <= 0) return true;
@@ -43,13 +44,15 @@ class Model_Places_Mental extends Model_Places_Abstract_Place {
 			case 5:
                 $this->log->add(new Model_Log_Types_Text('Erforschung der Irrenanstalt', 'Erschreckende Ereignisse...', 'Du fühlst erneut einen Luftzug, dann spürst du wie sich etwas von hinten nähert. Noch während du dich umdrehst siehst du etwas aufblitzen, dann fühlst du etwas Kaltes an deinem Hals. Dann wird alles um dich herum schwarz. Herzlichen Glückwunsch, du bist tot.'));
 			
-                $s_player = Tool_Scripts::at_location($this->uin());
+                $s_player = Tool_Scripts::at_location($this->uin(), true, true);
                 $s_player = $s_player[mt_rand(0, count($s_player) - 1)];
 
-                $s_player->achievements()->achieve(Model_Achievement::MA_SLASHER_KILLER);
-
-                $s_player->set_cod("Serienkiller-Opfer");
+                if ($s_player->type() == Interface_Plentity::IC_NPC_NONPC) {
+                    $s_player->achievements()->achieve(Model_Achievement::MA_SLASHER_KILLER);
+                    $s_player->set_cod("Serienkiller-Opfer");
                     $s_player->get_status()->retrieve('heartbeat')->unbuff();
+                } else $s_player->kill();
+
                 $this->mentalstate = 4;
 			    break;
             default:
@@ -59,92 +62,4 @@ class Model_Places_Mental extends Model_Places_Abstract_Place {
 		$this->mentalstate++;
 		return true;
 	}
-
-    protected function create_npcs() {
-        global $game;
-        $ret = parent::create_npcs();
-
-        if (Tool_Events::current($game->next_tick()) == 'halloween' && $this->has_patient)
-            $ret['halloween'] = Model_Npc::factory()->name('Verstörter Patient')
-                ->add_action('Ansehen', Model_Action::factory()
-                        ->effect(Model_Effect::factory()
-                                ->message('Er sieht wie ein Patient dieser Einrichtung aus. Sein Hemd ist voller Blut, und er umklammert irgend etwas mit beiden Händen während er mit leerem Blick die Gänge der Anstalt schleicht. Auf Zurufe reagiert er nicht... anscheinend nimmt er dich nicht einmal wahr. Was er da wohl dabei hat... du könntest versuchen, es ihm wegzunehmen. Immerhin sieht er nicht sehr wehrhaft aus.')
-                        )
-                )
-                ->add_action('Bestehlen', Model_Action::factory()
-                        ->show_as(Model_Effect::factory()
-                                ->ambiguous_effect()
-                        )
-                        ->effect(Model_Effect::factory()
-                                ->custom(function($p) {
-                                    /** @var Model_Player $p */
-                                    Tool_Scripts::combat([[$p], [Model_Combat_Zombies_Patient::factory()]], false, 3, $this, 'Als du versuchst nach ihm zu greifen, beginnt der Patient markerschütternd zu schreien und greift an!');
-
-                                    if ($p->alive()) {
-                                        $items = array();
-                                        $b = new Model_Items_Body('Verstörter Patient', 'Der Patient trägt ein Identifikationsarmband, auf dem sich ein Barcode sowie ein Name befindet. Du wirst wohl nie erfahren, wer das war oder was mit ihm in der Irrenanstalt geschehen ist. Wobei... vermutlich willst du das auch lieber gar nicht wissen.');
-                                        $b->give_name(Model_User::random_names(1)[0]);
-                                        $items[] = $b;
-                                        $items[] = new Model_Items_Hacksaw();
-                                        $num = mt_rand(5,20);
-                                        for ($i = 0; $i < $num; $i++)
-                                            $items[] = new Model_Items_Fleshfood();
-
-                                        Tool_Scripts::place_new_item($items, 'Der Patient hat sich mächtig gewehrt, aber letztendlich bist du doch an seine Gegenstände gekommen.');
-                                        $this->has_patient = false;
-                                    }
-                                })
-                        )
-                )
-                ->add_action('Teddy geben', Model_Action::factory()
-                        ->requirement("Model_Items_Generic_Teddy", 1)
-                        ->effect(Model_Effect::factory()
-                                ->custom(function($p) {
-                                    /** @var Model_Player $p */
-                                    $p->log()->add('Du hälst ihm deinen Teddy hin. Er sieht ihn mit glasigen Augen an, und greift nach ein paar Sekunden zu. Irgendetwas scheint ihn enttäuscht zu haben, denn er schleicht mit hängenden Schultern davon.');
-
-                                    $items = array();
-                                    $items[] = new Model_Items_Hacksaw();
-                                    $num = mt_rand(5,20);
-                                    for ($i = 0; $i < $num; $i++)
-                                        $items[] = new Model_Items_Fleshfood();
-
-                                    $this->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_LEAVE, 'Verstörter Patient'));
-                                    Tool_Scripts::place_new_item($items, 'Der Patient hat seine Gegenstände fallen gelassen, als du ihm den Teddy gegeben hast.');
-                                    $this->has_patient = false;
-                                })
-                        )
-                )
-                ->add_action('Anderen Teddy geben', Model_Action::factory()
-                        ->requirement("Model_Items_Generic_Cursed", 1)
-                        ->effect(Model_Effect::factory()
-                                ->custom(function($p) {
-                                    global $game;
-
-                                    /** @var Model_Player $p */
-                                    $p->log()->add('Du hälst ihm deinen Teddy hin. Eine Träne läuft ihm aus dem Auge, dann greift er zu und drückt den Teddy fest an sich. Eine Weile verharrt er regungslos, dann zeigt er mit dem Finger auf einen dunklen Gang, der dir bisher verborgen geblieben ist. Als du dich wieder zu ihm umdrehst, ist er verschwunden...');
-
-                                    $items = array();
-                                    $items[] = new Model_Items_Hacksaw();
-                                    $num = mt_rand(5,20);
-                                    for ($i = 0; $i < $num; $i++)
-                                        $items[] = new Model_Items_Fleshfood();
-
-                                    $this->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_LEAVE, 'Verstörter Patient'));
-                                    Tool_Scripts::place_new_item($items, 'Der Patient hat seine Gegenstände fallen gelassen, als du ihm den Teddy gegeben hast.');
-                                    $this->has_patient = false;
-
-                                    $slid = $game->register_map("submap_ashide_{$this->uin()}", 'ashide');
-                                    if ($slid) {
-                                        $this->register_doorway($slid);
-                                        $game->location($slid)->register_doorway($this->uin());
-                                    }
-                                })
-                        )
-                )
-            ;
-        return $ret;
-    }
-
-
 }	

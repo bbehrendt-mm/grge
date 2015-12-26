@@ -297,7 +297,8 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
      * @return Model_Player|null
      */
     public function get_player($pid = NULL) {
-    	global $user;
+    	/** @global $user Model_Euser */
+        global $user;
     	if ($pid === NULL) {
             if ($user) $pid = $user->uid();
             else return null;
@@ -322,7 +323,54 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
     }
 
     /**
-     * Adds a type value tot he name doubling storage
+     * @param $npcid
+     * @return Interface_Plentity|null
+     */
+    public function get_npc($npcid) {
+        if (!isset($this->set['gamedata']->npcs[$npcid])) return null;
+        else return $this->set['gamedata']->uin->get($this->set['gamedata']->npcs[$npcid], 'Interface_Plentity');
+    }
+
+    /**
+     * @param bool $limit_alive
+     * @return Interface_Plentity[]
+     */
+    public function npcs($limit_alive = true) {
+        $ret = Array();
+        foreach ($this->set['gamedata']->npcs as $npc_id => $nid)
+            if (!$this->get_npc($npc_id)) continue;
+            elseif (!$limit_alive || $this->get_npc($npc_id)->alive()) $ret[] = $this->get_npc($npc_id);
+
+        return $ret;
+    }
+
+    /**
+     * @param Interface_Plentity $npc
+     * @param null $id
+     * @return bool
+     */
+    public function add_npc(Interface_Plentity $npc, $id = null) {
+        if ($id === null) {
+            $id = count($this->set['gamedata']->npcs);
+            while (isset($this->set['gamedata']->npcs[$id])) $id++;
+        }
+
+        if (isset($this->set['gamedata']->npcs[$id])) return false;
+
+        if (!$npc->uin()) $this->uin()->set($npc);
+        return $this->set['gamedata']->npcs[$id] = $npc->uin();
+    }
+
+    /**
+     * @param bool $limit_alive
+     * @return Interface_Plentity[]
+     */
+    public function playable_entities($limit_alive = true) {
+        return array_merge($this->players($limit_alive), $this->npcs($limit_alive));
+    }
+
+    /**
+     * Adds a type value to the name doubling storage
      * @param string $id Reference ID
      * @param int $type Name ID
      */

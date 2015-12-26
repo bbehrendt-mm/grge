@@ -199,7 +199,7 @@ class Tool_Scripts
             $proto = array_merge($proto, $player->location()->inventory()->get($classname));
 
         if ($other_players)
-            foreach (Tool_Scripts::at_location() as $s_player)
+            foreach (Tool_Scripts::at_location($player->location_class(), true, true) as $s_player)
                 if ($s_player->uin() != $player->uin())
                     $proto = array_merge($proto, $s_player->inventory()->get($classname));
 
@@ -226,9 +226,11 @@ class Tool_Scripts
     /**
      * Returns a list of players, who currently stay at the location specified by $lid
      * @param number $lid Location; default is the active players location
-     * @return Model_Player[]
+     * @param bool $include_players Include players
+     * @param bool $include_npcs Include NPCs
+     * @return Interface_Plentity[]|Model_Player[]
      */
-    public static function at_location($lid = null)
+    public static function at_location($lid = null, $include_players = true, $include_npcs = true)
     {
         /**
          * @global $game Model_Game
@@ -236,12 +238,18 @@ class Tool_Scripts
          */
         global $player, $game;
 
+        if (!$include_players && !$include_npcs) return [];
         if ($lid === null) $lid = $player->location_class();
 
-        $ret = Array();
-        foreach ($game->players(true) as $s_player)
-            if ($s_player->alive() && $s_player->location_class() == $lid)
-                $ret[] = $s_player;
+        $ret = [];
+        if ($include_players)
+            foreach ($game->players(true) as $s_player)
+                if ($s_player->alive() && $s_player->location_class() == $lid)
+                    $ret[] = $s_player;
+        if ($include_npcs)
+            foreach ($game->npcs(true) as $s_player)
+                if ($s_player->alive() && $s_player->location_class() == $lid)
+                    $ret[] = $s_player;
 
         return $ret;
     }
@@ -251,7 +259,7 @@ class Tool_Scripts
      * @param number $lid Location; default is the active players location
      * @return Model_Player[]
      */
-    public static function comrades($lid = null)
+    public static function comrades($lid = null, $include_players = true, $include_npcs = false)
     {
         /**
          * @global $game Model_Game
@@ -261,9 +269,9 @@ class Tool_Scripts
 
         if ($lid === null) $lid = $player->location_class();
 
-        $ret = Array();
-        foreach (static::at_location($lid) as $p)
-            if (static::check_comrade($p->id()))
+        $ret = [];
+        foreach (static::at_location($lid, $include_players, $include_npcs) as $p)
+            if (static::check_comrade($p))
                 $ret[] = $p;
 
         return $ret;
@@ -271,7 +279,7 @@ class Tool_Scripts
 
     /**
      * Returns true if the player specified by $pid is a comrade
-     * @param number $pid Player
+     * @param number|Model_Player|Interface_Plentity $pid Player
      * @return Model_Player|boolean
      */
     public static function check_comrade($pid)
@@ -283,7 +291,10 @@ class Tool_Scripts
         global $player, $game;
 
         //Check if PID is valid
-        if (!$pid || $pid == $player->id() || !($r = $game->get_player($pid))) return false;
+        if (!is_object($pid)) {
+            if (!$pid || $pid == $player->id() || !($r = $game->get_player($pid))) return false;
+        } else $r = $pid;
+
         $lid = $player->location_class();
 
         //Check if player is in companion mode
@@ -291,9 +302,8 @@ class Tool_Scripts
             return false;
 
         //Check if both players share the same location
-        foreach ($game->players(true) as $s_player)
-            if ($s_player->id() == $pid)
-                return ($s_player->location_class() == $lid) ? $r : false;
+        if ($r->location_class() != $player->location_class())
+            return false;
 
         //Fallback case
         return false;

@@ -8,41 +8,45 @@ class Model_Places_House_Secondfloor extends Model_Places_Abstract_Place {
 
 	protected static $weight_limit = 60;
 	
-	public function can_enter($pid = null, $ignore_zombies = false) {
+	public function can_enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
 		/** @global Model_Game $game */
         global $game;
-		if (!$pid) global $player;
-		else $player = $game->get_player($pid);
-		if ($player->inventory()->weight() > static::$weight_limit)
+
+        if (!$pid) global $player;
+        elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = $game->get_player($pid);
+        else $player = $game->get_npc($pid);
+
+        if ($player->inventory()->weight() > static::$weight_limit)
 		{
 			$this->log->add(new Model_Log_Types_Text(null, null, 'Du versuchst, die Treppe in die erste Etage hinaufzusteigen. Das Holz knirscht unter deinen Füßen und du merkst, wie der Boden langsam nachgibt. Sofort springst du zurück - du bist zu schwer beladen, um hier hochzulaufen. Lege ein paar schwere Sachen aus deinem Rucksack ab und versuche es dann erneut.'));
 			return false;
 		}	
-		return parent::can_enter($pid, $ignore_zombies);
+		return parent::can_enter($pid, $type);
 	}
 	
 	//Enter location
-	public function enter($pid = null) {
+	public function enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
         /** @global Model_Game $game */
         global $game;
-		if (!$pid) global $player;
-		else $player = $game->get_player($pid);
-		parent::enter($pid);
+        if (!$pid) global $player;
+        elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = $game->get_player($pid);
+        else $player = $game->get_npc($pid);
+		parent::enter($pid, $type);
 		
 		$player->inventory()->temporal_limit(static::$weight_limit);
 	}
 
     //Leave location
-    public function leave($pid = null) {
+    public function leave($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
         /**
          * @global $game Model_Game
          */
         global $game;
         if (!$pid) global $player;
-        else $player = $game->get_player($pid);
-        parent::leave($pid);
-        /** @var $iw Model_Inventory */
-        $iw = $player->inventory();
-        $iw->temporal_limit(NULL);
+        elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = $game->get_player($pid);
+        else $player = $game->get_npc($pid);
+
+        parent::leave($pid, $type);
+        $player->inventory()->temporal_limit(NULL);
     }
 }	

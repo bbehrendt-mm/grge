@@ -18,29 +18,4 @@ class Model_Places_Store extends Model_Places_Abstract_Place {
 
         return $t;
     }
-
-    protected function create_npcs() {
-        global $game;
-
-        $ret = parent::create_npcs();
-        if (Tool_Events::current($game->next_tick()) == 'halloween'  && !$game->setting_mode(2000))
-            $ret['halloween'] = Model_Npc::factory()->name('Vermodernder Händler')
-                ->add_action('Ansprechen', Model_Action::factory()
-                        ->effect(Model_Effect::factory()
-                                ->message('Guten Abend, werter Kunde! Haben Sie Interesse, GEHIIIIIIIIIIRNE zu erwerben? GEHIIIIRNE sind eine wundervolle Geldanlage und außerdem noch sehr nützlich im täglichen Leben! Nur hier bekommen Sie GEHIIIIIIIRNE zum absoluten Hammerpreis!')
-                        )
-                )
-                ->add_action('Gehirne kaufen', Model_Action::factory()
-                        ->requirement('Model_Items_Money', 1)
-                        ->show_as(Model_Effect::factory()
-                                ->ambiguous_effect()
-                        )
-                        ->effect(Model_Effect::factory()
-                                ->spawn('Model_Items_Brainbox', 1)
-                                ->message('Vielen Dank für Ihren Einkauf! Hier sind ihre GEHIIIIRNE. Bitte beehren Sie uns bald wieder!')
-                        )
-                )
-            ;
-        return $ret;
-    }
 }	

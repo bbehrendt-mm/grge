@@ -226,7 +226,7 @@ class Model_Places_Motorhome extends Model_Places_Home {
         return $raw_kmh ? $speed : $speed/12;
     }
 
-    public function tick() {
+    public function tick($type = Interface_Tickable::IT_TYPE_PLAYER) {
         if (!$this->driving) {
             foreach (Tool_Scripts::at_location($this->uin()) as $p)
                 $p->get_status()->remove('fragile/driver');
@@ -246,12 +246,13 @@ class Model_Places_Motorhome extends Model_Places_Home {
                 if (mt_rand(0,100) > $kc) {
 
                     $this->log()->add(':name hat einen Unfall gebaut! Die Insassen haben Verletzungen davon getragen und der Wohnwagen wurde schwer beschädigt!', array(':name' => $p->name()));
-                    foreach (Tool_Scripts::at_location($this->uin()) as $ps) {
+                    foreach (Tool_Scripts::at_location($this->uin(), true, true) as $ps) {
                         $ps->set_cod('Autounfall');
                         $ps->get_status()->modify(Model_Status::MS_STAT_HEALTH, -mt_rand(10,80));
-                        if ($ps->id() != $p->id())
+                        if ($ps->id() != $p->id() && $ps->type() == Interface_Plentity::IC_NPC_NONPC)
                             $ps->log()->add('Du hast gerade eben noch friedlich aus dem Fenster geschaut, jetzt liegst du plötzlich in einem Trümmerhaufen aus Blech und Blut. :name, dieser verblödete Idiot, hat anscheinend einen Unfall gebaut.', array(':name' => $p->name()));
                     }
+
                     $p->get_status()->modify(Model_Status::MS_STAT_HEALTH, -mt_rand(20,50));
                     $p->log()->add('Tja, sowas passiert wenn man in deinem Zustand autofährt. Vielleicht hättest du das jemand anderen tun lassen sollen, zum Beispiel jemandem der nicht das einzige Fahrzeugwrack auf der Straße im Umkreis von 10 Kilometern frontal rammt?');
 

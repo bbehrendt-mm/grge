@@ -20,7 +20,7 @@ class Model_Places_House_Hobby extends Model_Places_Abstract_Place {
 
     public function pretick() {
         if (mt_rand(0,10) > 2) return true;
-        if (count(Tool_Scripts::at_location($this->uin())) <= 0) return true;
+        if (count(Tool_Scripts::at_location($this->uin(), true, true)) <= 0) return true;
 
         switch ($this->mentalstate)
         {
@@ -42,13 +42,16 @@ class Model_Places_House_Hobby extends Model_Places_Abstract_Place {
             case 4:
                 $this->log->add(new Model_Log_Types_Text('Hobbykeller', 'Erschreckende Ereignisse...', 'Du fühlst erneut einen Luftzug, dann spürst du wie sich etwas von hinten nähert. Noch während du dich umdrehst siehst du etwas aufblitzen, dann fühlst du etwas Kaltes an deinem Hals. Dann wird alles um dich herum schwarz. Herzlichen Glückwunsch, du bist tot.'));
 
-                $s_player = Tool_Scripts::at_location($this->uin());
+                $s_player = Tool_Scripts::at_location($this->uin(), true, true);
                 $s_player = $s_player[mt_rand(0, count($s_player) - 1)];
 
-                $s_player->achievements()->achieve(Model_Achievement::MA_SLASHER_KILLER);
+                if ($s_player->type() == Interface_Plentity::IC_NPC_NONPC) {
+                    $s_player->achievements()->achieve(Model_Achievement::MA_SLASHER_KILLER);
 
-                $s_player->set_cod("Serienkiller-Opfer");
-                $s_player->get_status()->retrieve('heartbeat')->unbuff();
+                    $s_player->set_cod("Serienkiller-Opfer");
+                    $s_player->get_status()->retrieve('heartbeat')->unbuff();
+                } else $s_player->kill();
+
                 $this->mentalstate = 3;
                 break;
             default:

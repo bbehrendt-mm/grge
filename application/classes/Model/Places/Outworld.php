@@ -55,106 +55,19 @@ class Model_Places_Outworld extends Model_Places_Abstract_Node {
             parent::pretick();
     }
 
-	public function tick() {
+	public function tick($type = Interface_Tickable::IT_TYPE_PLAYER) {
         /**
          * @global $game Model_Game
+         * @global $player Interface_Plentity
          */
-        global $game;
+        global $game, $player;
 					
-		if (!$this->initial_supply && ($game->config('places.outworld.spawn_stranger') || $game->config('places.outworld.alt_spawn_stranger')))
+		if ($player->can(Interface_Plentity::IC_TRIGGER_SUPPLIES) && !$this->initial_supply && ($game->config('places.outworld.spawn_stranger') || $game->config('places.outworld.alt_spawn_stranger')))
 		{
 			$this->initial_supply();
 			return true;	
 		}
 
-		return parent::tick();
+		return parent::tick($type);
 	}
-
-    protected function create_npcs() {
-        /** @global Model_Game $game */
-        global $game;
-
-        $ret = parent::create_npcs();
-
-        if (Tool_Events::current($game->next_tick()) == 'halloween' && !$game->setting_mode(2000))
-            $ret['halloween'] = Model_Npc::factory()->name('Seelensammler')
-                ->add_action('Ansprechen', Model_Action::factory()
-                        ->condition(function($p) {
-                            /** @var Model_Player $p */
-                            return !(bool)$p->get_status()->retrieve('soulcatcher');
-                        })
-                        ->fail_message('... Träger des Zeichens ... begib dich auf deine Reise ... die gequälten Seelen zu befreien.')
-                        ->effect(Model_Effect::factory()
-                                ->message('... Wanderer ... der du über dieses grausame Land schreitest ... hilf mir, gequälte Seelen zu reinigen und du sollst ... belohnt werden.')
-                        )
-                )
-                ->add_action('Seelenfänger werden', Model_Action::factory()
-                        ->condition(function($p) {
-                            /** @var Model_Player $p */
-                            return !(bool)$p->get_status()->retrieve('soulcatcher');
-                        })
-                        ->fail_message('... du trägst das Zeichen des Seelenfängers ... bereits!')
-                        ->effect(Model_Effect::factory()
-                                ->buff('Model_Buffs_Soulcatcher')
-                                ->message('... so gehe nun hinaus in die Welt ... und verrichte mein Werk ...')
-                        )
-                )
-                ->add_action('Seelen übergeben', Model_Action::factory()
-                        ->condition(function($p) {
-                            /** @var Model_Player $p */
-                            return (Tool_Scripts::count_available_items('Model_Items_Soul', true, false, false, $p) + Tool_Scripts::count_available_items('Model_Items_Soul2', true, false, false, $p) > 0);
-                        })
-                        ->fail_message('... du hast keine Seelen ... bei dir.')
-                        ->effect(Model_Effect::factory()
-                                ->custom(function($p) {
-                                    /** @global Model_Euser $user */
-                                    global $user;
-
-                                    /** @var Model_Player $p */
-                                    $ws = Tool_Scripts::count_available_items('Model_Items_Soul', true, false, false, $p);
-                                    $ss = Tool_Scripts::count_available_items('Model_Items_Soul2', true, false, false, $p);
-
-                                    Tool_Scripts::consume_available_items(array('Model_Items_Soul' => $ws, 'Model_Items_Soul2' => $ss), true, false, false, $p);
-                                    $points = $ws + 5 * $ss;
-
-                                    $user->award_coins($p->id(), $points);
-                                    $p->log()->add(new Model_Log_Types_Text(null, null, 'Du hast :total Seelen die Freiheit geschenkt und wirst dafür mit :usp BrainCoins belohnt!', array(':total' => $ws + $ss, ':usp' => $points)));
-                                })
-                        )
-                )
-            ;
-
-        if (Tool_Events::current($game->next_tick()) == 'xmas' && !$game->setting_mode(2000))
-            $ret['xmas'] = Model_Npc::factory()->name('Der Schaffner')
-                ->add_action('Ticket übergeben', Model_Action::factory()
-
-                        ->requirement('Model_Items_Generic_Ticket', 1)
-                        ->effect(Model_Effect::factory()
-                                ->message('Du schließt für einen Moment deine Augen... als du sie wieder öffnest, stehst du plötzlich auf einem verlassenen Weihnachtsmarkt! In der Mitte des Markts steht eine leere Weihnachtsbaum-Halterung. Wie traurig... du solltest dich vom Geist der Weihnacht erfüllen lassen und dort einen wunderschön geschmückten Weihnachtsbaum aufstellen! Sicherlich wirst du dafür genug Materialien hier finden...')
-                                ->custom(function($p)  {
-                                    /** @var Model_Player $p */
-                                    /** @global Model_Game $game */
-                                    global $game;
-
-                                    $tid = time() . '_' . mt_rand();
-                                    $mapid = "xmasmap_{$tid}";
-                                    $xmas_id = $game->register_map($mapid, 'xmas', 'xmas');
-                                    $xmasfair = $game->location($xmas_id);
-                                    $xmasfair->register_doorway($this->uin);
-
-                                    $this->leave_map($p->id());
-                                    $p->location_class($xmas_id);
-                                    $xmasfair->enter_map($p->id());
-
-
-                                    $game->map($xmas_id)->movement_modifier(0.1);
-                                    if (!$p->get_status()->retrieve('freeze'))
-                                        new Model_Buffs_Freeze($p->id());
-                                })
-                        )
-                )
-            ;
-
-        return $ret;
-    }
 }	

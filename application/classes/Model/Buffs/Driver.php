@@ -7,6 +7,8 @@ class Model_Buffs_Driver extends Model_Buffs_Abstract_Fragile {
     protected static $icon = 'driver';
     protected static $alt_id = 'driver';
 
+    protected static $allow_npc_assoc = false;
+
     protected static $abortable = false;
 
     protected $effects = Array(

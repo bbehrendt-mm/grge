@@ -484,7 +484,7 @@ class Controller_Gamemaster extends Controller {
             // Get players
             $entry['players'] = array();
             foreach ($local_game_obj->players(false) as $p) if ($p) {
-                $entry['players'][] = array('name' => $p->name(), 'id' => (int)$p->id(), 'job' => $p->job(), 'cod' => $p->alive() ? null : __($p->get_cod()));
+                $entry['players'][] = array('name' => $p->name(), 'id' => (int)$p->id(), 'job' => $p->job(), 'cod' => $p->get_status()->alive() ? null : __($p->get_status()->get_cause_of_death()));
                 if ($p->id() == $user->uid())
                     $entry['locked'] = true;
             } else $entry['locked'] = true;

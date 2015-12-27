@@ -3,7 +3,7 @@
 abstract class Model_Combat_Zombies_Zombie extends Model_Combat_Actor {
 
     protected $type = Model_Combat_Actor::MCA_TYPE_ZOMBIE;
-    protected $pseudoplayer;
+    protected $nano_npc;
 
     protected static $num_str = 1;
 
@@ -11,7 +11,9 @@ abstract class Model_Combat_Zombies_Zombie extends Model_Combat_Actor {
         /** @global Model_Player $player */
         global $player;
         parent::__construct();
-        $this->pseudoplayer = new Model_Pseudoplayer([Model_Status::MS_STAT_ENERGY => 50], $player ? $player->location_class() : -1);
+        $this->nano_npc = new Model_NPC_Nano($this->name());
+        $this->nano_npc->get_status()->set(Model_Status::MS_STAT_ENERGY, 50);
+        $this->nano_npc->location_class($player->location_class());
     }
 
     public static function get_strength_quantifier() {
@@ -24,7 +26,7 @@ abstract class Model_Combat_Zombies_Zombie extends Model_Combat_Actor {
      */
     public function add_weapon($weapon) {
         if (!is_array($weapon)) {
-            $weapon->register($this->pseudoplayer);
+            $weapon->register($this->nano_npc);
             $weapon->ignore_equip();
         }
 

@@ -49,7 +49,7 @@ class Model_Places_Mental extends Model_Places_Abstract_Place {
 
                 if ($s_player->type() == Interface_Plentity::IC_NPC_NONPC) {
                     $s_player->achievements()->achieve(Model_Achievement::MA_SLASHER_KILLER);
-                    $s_player->set_cod("Serienkiller-Opfer");
+                    $s_player->get_status()->set_cause_of_death("Serienkiller-Opfer");
                     $s_player->get_status()->retrieve('heartbeat')->unbuff();
                 } else $s_player->kill();
 

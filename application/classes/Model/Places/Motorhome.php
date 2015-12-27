@@ -64,8 +64,8 @@ class Model_Places_Motorhome extends Model_Places_Home {
         foreach ($game->players(false) as $p) {
             /** @var Model_Player $p */
             if ($p->location_class() != $this->uin()) {
-                if ($p->alive()) {
-                    $p->set_cod('Zurückgelassen');
+                if ($p->get_status()->alive()) {
+                    $p->get_status()->set_cause_of_death('Zurückgelassen');
                     $p->kill();
                 }
                 $p->location_class($this->uin());
@@ -247,7 +247,7 @@ class Model_Places_Motorhome extends Model_Places_Home {
 
                     $this->log()->add(':name hat einen Unfall gebaut! Die Insassen haben Verletzungen davon getragen und der Wohnwagen wurde schwer beschädigt!', array(':name' => $p->name()));
                     foreach (Tool_Scripts::at_location($this->uin(), true, true) as $ps) {
-                        $ps->set_cod('Autounfall');
+                        $ps->get_status()->set_cause_of_death('Autounfall');
                         $ps->get_status()->modify(Model_Status::MS_STAT_HEALTH, -mt_rand(10,80));
                         if ($ps->id() != $p->id() && $ps->type() == Interface_Plentity::IC_NPC_NONPC)
                             $ps->log()->add('Du hast gerade eben noch friedlich aus dem Fenster geschaut, jetzt liegst du plötzlich in einem Trümmerhaufen aus Blech und Blut. :name, dieser verblödete Idiot, hat anscheinend einen Unfall gebaut.', array(':name' => $p->name()));

@@ -37,7 +37,7 @@ class Controller_Admin_Games extends Controller_Admin_Admin {
                         $tmp['mode'] = Tool_Gamemodes::get_board_by_id($local_game_obj->setting_mode());
                         $tmp['alive'] = [];
                         foreach ($local_game_obj->players(false) as $p)
-                            $tmp['playerlib'][$p->uin()] = $p->alive();
+                            $tmp['playerlib'][$p->uin()] = $p->get_status()->alive();
                     }
                 } catch (Exception $e) {
                     $tmp['error'] = $e->getMessage();

@@ -35,12 +35,8 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
 
     protected $broken = false;
 
-    /** @var Model_Player|Model_Pseudoplayer */
+    /** @var Interface_Plentity */
     protected $registered_user;
-
-    protected function actual_player_registration() {
-        return $this->registered_user && Tool_System::instance_of($this->registered_user, 'Model_Player');
-    }
 
     public function ignore_equip() {
         $this->ignore_equip = true;
@@ -91,7 +87,7 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
     }
 
     /**
-     * @param Model_Player|Model_Pseudoplayer $p
+     * @param Interface_Plentity $p
      * @return Model_Combat_Weapon
      */
     public function register($p) {

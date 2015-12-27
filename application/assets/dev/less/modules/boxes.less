@@ -35,13 +35,24 @@
 
 .impactbox(@border-color, @base-color) {border-radius: 5px; background: @base-color; border: 1px solid @border-color; border-bottom: 4px solid @border-color; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.8);}
 
+@playerbox-npc-dark: #26445a;
+@playerbox-npc-main: #346185;
+@playerbox-npc-light: #5f7785;
+
 .playerbox {
-  &.escort {.impactbox(@zv-color-main, @zv-color-main-light)}
+  &.escort {
+    &:not(.npc)   {.impactbox(@zv-color-main, @zv-color-main-light)}
+    &.npc         {.impactbox(@playerbox-npc-main, @playerbox-npc-light)}
+  }
   &.unknown {
     .impactbox(@whitebox-color-border, @whitebox-color-bg);
     > b {color: @zv-color-main}
   }
-  &:not(.escort):not(.unknown) {.impactbox(@zv-color-main-dark, @zv-color-main)}
+  &:not(.escort):not(.unknown) {
+    &:not(.npc)   {.impactbox(@zv-color-main-dark, @zv-color-main)}
+    &.npc         {.impactbox(@playerbox-npc-dark, @playerbox-npc-main)}
+  }
+
   >b {display: block; font-size: 16px; color: @zv-color-secondary; text-align: center; padding: 5px;}
 }
 

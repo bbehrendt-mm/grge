@@ -37,10 +37,16 @@ class Model_Status {
     protected $status_bars = [];
     protected $scaling_effects = [];
 
+    protected $cod = null;
+    protected $alive = true;
+
     public function __wakeup() {
         //Reset above-threshold bars
         foreach ($this->status_bars as $key => &$value)
             if ($key >= Model_Status::MS_THRESHOLD) $value = 1;
+
+        if ($this->alive())
+            $this->clear_cause_of_death();
     }
 
     /**
@@ -300,5 +306,23 @@ class Model_Status {
     /** @return Model_Buffs_Abstract_Buff[] */
     public function buffs() {
         return $this->buffs;
+    }
+
+    public function get_cause_of_death() {
+        return $this->cod;
+    }
+
+    public function set_cause_of_death($d) {
+        if ($this->alive())
+            $this->cod = $d;
+    }
+
+    public function clear_cause_of_death() {
+        $this->set_cause_of_death(null);
+    }
+
+    public function alive($set = null) {
+        if ($set !== null) $this->alive = $set;
+        return $this->alive;
     }
 }

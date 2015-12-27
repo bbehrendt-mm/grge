@@ -41,7 +41,7 @@ class Controller_Admin_Cron extends Controller {
 
                 $dropped = 0;
                 foreach ($game->players(false) as $p)
-                    if (!$p->alive())
+                    if (!$p->get_status()->alive())
                         if ($game->retire($p->id(), true)) {
                             $dropped++;
                             DB::update('users')->set(array('session' => '#'))->where('uid', '=', $p->id())->execute();

@@ -1,6 +1,8 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Player extends Model_Cloudshard implements Interface_Plentity {
+class Model_Player extends Model_NPC_Nano implements Interface_Plentity {
+
+    protected static $entity_type = Interface_Plentity::IC_NPC_NONPC;
 
     const MP_SETTINGS_BATTLE_NOENERGY = 1;
     const MP_SETTINGS_BATTLE_NOSELFAMMO = 2;
@@ -13,15 +15,8 @@ class Model_Player extends Model_Cloudshard implements Interface_Plentity {
 
     private $companion = false;
     private $beacon = 0;
-	
-	private $user_id;
-	private $name;
-    private $status;
+
     private $temp_registry;
-	private $alive;
-	private $location;
-	private $inventory;
-	private $cod = null;
     private $points = null;
     private $braincoins = 0;
 
@@ -30,7 +25,6 @@ class Model_Player extends Model_Cloudshard implements Interface_Plentity {
     private $messages = array();
 	
 	private $achievements;
-	private $livetime = 0;
 
     private $timevote = 4;
     private $timelock = 0;
@@ -54,15 +48,12 @@ class Model_Player extends Model_Cloudshard implements Interface_Plentity {
 		/** @global Model_Euser $user */
 		global $user;
 		
-		if ($user && $user->uid() == $this->user_id) {
+		if ($user && $user->uid() == $this->id) {
 			global $player;
 			$player = $this;
 		}
 
         $this->temp_registry = array();
-
-		if ($this->alive())
-			$this->cod = null;
 	}
 
     public function set_escape_target($e = null) {
@@ -117,10 +108,11 @@ class Model_Player extends Model_Cloudshard implements Interface_Plentity {
 	final public function __construct($user_id, $name, $mode, $job, $level) {
 		/** @global Model_Euser $user */
 		global $user;
-		
+
+        parent::__construct($name);
+
 		//Set user ID and name
-		$this->user_id = $user_id;
-		$this->name = $name;
+		$this->id = $user_id;
 		
 		//Set mode, job and level
 		$this->mode = $mode;
@@ -131,17 +123,15 @@ class Model_Player extends Model_Cloudshard implements Interface_Plentity {
             $this->set_battle_settings(true, false, false, 2, array());
 		
 		//Init
-		$this->alive = true;
-		$this->inventory = new Model_Inventory(null, true);
 		$this->log = new Model_Log_Log();
 		$this->achievements = new Model_Achievement();
-        $this->status = new Model_Status();
+
 		
 		//Init all gameplay data
 		$this->kickoff();
 		
 		//Bind global player variable
-		if ($user->uid() == $this->user_id) {
+		if ($user->uid() == $this->id) {
 			global $player;
 			$player = $this;
 		}
@@ -171,13 +161,6 @@ class Model_Player extends Model_Cloudshard implements Interface_Plentity {
 	}
 
     /**
-     * @return Model_Inventory
-     */
-    final public function inventory() {
-		return $this->inventory;
-	}
-
-    /**
      * Enables the player to escape a blockade
      */
     final public function enable_escape() {
@@ -200,121 +183,47 @@ class Model_Player extends Model_Cloudshard implements Interface_Plentity {
     }
 	
 	/**
-	 * Returns player name
-	 * @return string
-	 */
-	final public function name() {
-		return $this->name;
-	}
-	
-	/**
-	 * Returns player id
-	 * @return int
-	 */
-	final public function id() {
-		return $this->user_id;
-	}
-	
-	/**
 	 * Returns player location id or changes it
 	 * @param int $newval Set if you want to change locations; the return value will be the new location
 	 * @return int
 	 */
-	final public function location_class($newval = NULL) {
-		if ($newval !== NULL) {
-            $this->location = $newval;
+	public function location_class($newval = NULL) {
+		if ($newval !== NULL)
             $this->escape = 0;
-        }
-		return $this->location;
-	}
-	
-	/**
-	 * Returns player location object
-	 * @return Model_Places_Abstract_Place
-	 */
-	final public function location() {
-        /**
-         * @global $game Model_Game
-         */
-        global $game;
 
-        if (!$game->location($this->location))
-            $this->location_class($game->map_main()->resolve_fixed_id(1));
-
-        return $game->location($this->location);
-	}
-
-    /**
-     * Returns true if player is alive, or kills him if $set is false
-     * @return bool
-     */
-	final public function alive() {
-		return $this->alive;
+		return parent::location_class($newval);
 	}
 
     final public function get_braincoins() {
         return $this->braincoins;
     }
-	
+
+
+    protected function generate_dead_body() {
+        return new Model_Items_Body('[nt]' . $this->name, 'Dies ist alles, was von eurem Freund übrig geblieben ist... Naja, immerhin kann man noch eine Suppe draus kochen.');
+    }
+
+    protected function generate_zombified_body() {
+        // ToDo: NPC?
+        return Model_Combat_Zombies_Ghul::factory()->zombiefied_player_id($this->id)->name($this->name())->register_inventory($this->inventory())->strength(Model_Status::MS_STAT_ZOMBIFY, 100, 1);
+    }
+
 	/**
 	 * Kills player
 	 */
-	final public function kill() {
+	public function kill() {
         /**
          * @global $game Model_Game
          */
 		global $game;
-		$this->log()->add(new Model_Log_Types_String('Du bist tot!','Du hast soeben deinen letzten Atemzug getan... Du bist auf die folgende schreckliche Art von dieser Welt gegangen: :cod!',[':cod' => [$this->cod]]));
+
+		$this->log()->add(new Model_Log_Types_String('Du bist tot!','Du hast soeben deinen letzten Atemzug getan... Du bist auf die folgende schreckliche Art von dieser Welt gegangen: :cod!',[':cod' => [$this->get_status()->get_cause_of_death()]]));
 		$this->calculate_static_achievements();
-		$this->alive = false;
 
-        $this->points = $game->points($this->user_id);
-        $this->braincoins = Tool_Scripts::count_available_items('Model_Items_Braincoin', true, false, false, $this->id());
+        $this->points = $game->points($this->id);
+        $this->braincoins = Tool_Scripts::count_available_items('Model_Items_Braincoin', true, false, false, $this->id);
 
-		if ($game->config('modules.multiplayer')) {
-			$drop = array();
-			foreach ($this->inventory->get() as $item)
-				if ($dropping = $item->drop_dead()) {
-					if (is_array($dropping)) foreach ($dropping as $d_drop) $drop[] = $d_drop;
-					else $drop[] = $dropping;
-				}
-				
-			$drop[] = new Model_Items_Body('[nt]' . $this->name, 'Dies ist alles, was von eurem Freund übrig geblieben ist... Naja, immerhin kann man noch eine Suppe draus kochen.');
-
-            if ($this->get_status()->get(Model_Status::MS_STAT_ZOMBIFY) >= 50) {
-                $ti = new Model_Inventory();
-
-                foreach ($drop as $d)
-                   $ti->add($d);
-
-                $this->location()->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_ZOMBIFY, array(), $this->id()));
-				$game->register_ghul($this->location_class(), Model_Combat_Zombies_Ghul::factory()->zombiefied_player_id($this->id())->name($this->name())->register_inventory($this->inventory())->strength(Model_Status::MS_STAT_ZOMBIFY, 100, 1));
-            } else {
-                foreach ($drop as $d)
-                    $this->location()->inventory()->add($d);
-
-                $this->location()->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_DEATH, $drop, $this->id()));
-            }
-
-
-			if (count(Tool_Scripts::at_location($this->location_class(), true, true)) == 0) $this->location()->vacate();
-		}
-	}
-	
-	/**
-	 * Set cause of death
-	 * @param String $new_cod New cause of death
-	 */
-	public function set_cod($new_cod) {
-		if ($this->alive) $this->cod = $new_cod;
-	}
-	
-	public function get_cod() {
-		return $this->cod;
-	}
-
-	final public function is_actual_player() {
-		return true;
+        parent::kill();
 	}
 
     /**
@@ -329,21 +238,15 @@ class Model_Player extends Model_Cloudshard implements Interface_Plentity {
 	 * Tick actions
 	 */
 	public function tick() {
-        /**
-         * @var $buff Model_Buffs_Abstract_Buff
-         */
-        if (!$this->alive()) return;
+        if (!$this->get_status()->alive()) return;
 
-		$this->livetime++;
+        parent::tick();
+
         if ($this->escape > 0)
             $this->escape--;
-		
-		$this->set_cod("Multiorganversagen");
-		$this->get_status()->tick();
-		$this->set_cod(null);
 
         //Death fix
-        if ($this->alive && !$this->get_status()->retrieve('heartbeat'))
+        if ($this->get_status()->alive() && !$this->get_status()->retrieve('heartbeat'))
             $this->kill();
         else {
             //Tick achievements
@@ -357,13 +260,6 @@ class Model_Player extends Model_Cloudshard implements Interface_Plentity {
                 $this->achievements->achieve(Model_Achievement::MA_GAMEMONTH);
         }
 	}
-
-    /**
-     * @return Model_Status
-     */
-    public function get_status() {
-        return $this->status;
-    }
 
 	public function create_combatant() {
 		if ($this->job == 1040 && $this->level >= 5 && mt_rand(0,15) == 2)
@@ -432,15 +328,15 @@ class Model_Player extends Model_Cloudshard implements Interface_Plentity {
         global $game;
 
         if ($this->points === null)
-            $this->points = $game->points($this->user_id);
+            $this->points = $game->points($this->id);
 		//Create ranking entry if game is rankable and player has more than zero points
 		try
 		{
 			if ($rank && $this->points > 0)
 			{				
 				$this->calculate_static_achievements();
-				DB::insert('ranking', array('season', 'gameid', 'uid', 'points', 'ticks', 'job', 'board', 'flow', 'start', 'end'))->values(array($season, $gameid, $this->user_id, $this->points, $this->livetime, $this->job, $this->mode, $game->timeflow(), $start, $end))->execute();
-				$this->achievements->award($this->user_id, $gameid, $season);
+				DB::insert('ranking', array('season', 'gameid', 'uid', 'points', 'ticks', 'job', 'board', 'flow', 'start', 'end'))->values(array($season, $gameid, $this->id, $this->points, $this->livetime, $this->job, $this->mode, $game->timeflow(), $start, $end))->execute();
+				$this->achievements->award($this->id, $gameid, $season);
 			}	
 		}
 		catch (exception $e)
@@ -566,13 +462,7 @@ class Model_Player extends Model_Cloudshard implements Interface_Plentity {
         else return $this->last_action;
     }
 
-    public function ai() {/* Player Object has no AI */}
-
     public function can($type) {
         return true;
-    }
-
-    public function type() {
-        return static::IC_NPC_NONPC;
     }
 }

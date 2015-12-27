@@ -21,7 +21,7 @@ class Controller_Game extends Controller {
         if ($this->request->param('jaction') == 'fixlink') return parent::action_japi();
 
         if (!$game || !$player) return $this->render(['redirect' => 'landing/redirect']);
-        if (!$player->alive() && !in_array($this->request->param('jaction'), static::$death_allowed_actions)) {
+        if (!$player->get_status()->alive() && !in_array($this->request->param('jaction'), static::$death_allowed_actions)) {
             $this->render_notifications();
             return $this->render(['redirect' => 'game/redirect']);
         }
@@ -509,7 +509,7 @@ class Controller_Game extends Controller {
         global $game, $player;
 
         $this->add_data('clock', [
-            'show' => $game->is_alive() && !$game->paused() && $player && $player->alive() && !Tool_Events::is_april_fools(),
+            'show' => $game->is_alive() && !$game->paused() && $player && $player->get_status()->alive() && !Tool_Events::is_april_fools(),
             'next_tick' => $game->next_tick(),
             'last_tick' => $game->now(),
             'current' => time(),
@@ -752,8 +752,6 @@ class Controller_Game extends Controller {
          */
         global $game, $player;
 
-        if (!$game->config('modules.multiplayer')) return;
-
         $speeds = [15,30,60,120,300,600,900];
         $jokes = [
             'Letzter Unterhosenwechsel' => 'Vor 12 Wochen',
@@ -772,12 +770,7 @@ class Controller_Game extends Controller {
 
             $joke = array_keys($jokes)[($game->id() + $p->id()) % count($jokes)];
 
-            $local = $p->alive() && $p->location_class() == $player->location_class();
-            if ($local)
-                for ($type = 1; $type <= Model_Status::MS_STATUS_COUNT; $type++)
-                    if ($type <= 5 || $player->get_status()->get($type))
-                        $cache[$type] = $this->status($type);
-
+            $local = $p->get_status()->alive() && $p->location_class() == $player->location_class();
 
             $players[$p->id()] = [
                 'name' => $p->name(),
@@ -790,6 +783,7 @@ class Controller_Game extends Controller {
                 'escort' => $local ? $p->companion() : false,
                 'last_seen' => $p->last_action(),
                 'job' => __(Tool_Gamemodes::get_job_by_id($p->job())),
+                'npc' => false,
                 'joke' => [
                     0 => __($joke),
                     1 => __($jokes[$joke])
@@ -797,7 +791,23 @@ class Controller_Game extends Controller {
             ];
         }
 
+        foreach ($game->npcs(true) as $n) {
+            if (!$n->get_status()->alive() || $n->location_class() != $player->location_class()) continue;
+
+            $players[$n->id()] = [
+                'name' => $n->name(),
+                'id' => $n->id(),
+                'local' => true,
+                'loner' => false,
+                'stats' => $this->render_status($n),
+                'inventory' => ($n->companion()) ? $this->render_inventory($n) : false,
+                'escort' => $n->companion(),
+                'npc' => true
+            ];
+        }
+
         $this->add_data('players', [
+            'multiplayer' => $game->config('modules.multiplayer'),
             'messages' => count($player->get_messages(false,true)) > 0,
             'others' => $players,
             'self' => [
@@ -817,7 +827,7 @@ class Controller_Game extends Controller {
          */
         global $player;
 
-        if (!$player->alive()) {
+        if (!$player->get_status()->alive()) {
             $this->render_notifications();
             return $this->render(['redirect' => 'game/redirect']);
         }
@@ -880,7 +890,7 @@ class Controller_Game extends Controller {
         }
 
         //Check if player is alive
-        if ($player->alive()) {
+        if ($player->get_status()->alive()) {
             $player->last_action(true);
 
             if ($game->paused())
@@ -921,7 +931,7 @@ class Controller_Game extends Controller {
                 ->set('rankable', $game->is_rankable())
                 ->set('time', Tool_Numerics::duration_to_string($game->get_player($player->id())->get_lifetime()))
                 ->set('split_time', Tool_Numerics::duration_to_split($game->get_player($player->id())->get_lifetime()))
-                ->set('cause_of_death', $player->get_cod())
+                ->set('cause_of_death', $player->get_status()->get_cause_of_death())
                 ->set('braincoins', $player->get_braincoins() * ($player->get_lifetime() >= 288 ? 1 : -1))
                 ->set('braincoins_account', Model_User::get_coins($player->id()))
                 ->set('ratings', $player_ratings ? $player_ratings : null)
@@ -940,7 +950,7 @@ class Controller_Game extends Controller {
         global $game, $player, $user;
 
         //Redirect
-        if (!$game || !$user->get_current_game() || !$player || !$player->alive() || !$game->config('modules.multiplayer'))
+        if (!$game || !$user->get_current_game() || !$player || !$player->get_status()->alive() || !$game->config('modules.multiplayer'))
             $this->redirect(URL::site('game/redirect', 'http'));
 
         $players = [];
@@ -964,7 +974,7 @@ class Controller_Game extends Controller {
         global $game, $user, $player;
 
         //Check if player is still alive
-        if (!$player->alive())
+        if (!$player->get_status()->alive())
         {
             if ($r = $this->request->post('ratings') && $game->is_rankable() && $game->points($player->id()) > 0)
                 foreach ($game->players(false) as $p) if ($p->id() != $player->id() && isset($r[$p->id()]) && is_numeric($r[$p->id()]))

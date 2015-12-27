@@ -255,7 +255,7 @@ class Model_Effect {
         $this->call_custom_func($player, static::CFUNC_PROCESS_PRE, $argument);
 
         if ($this->cod)
-            $player->set_cod($this->cod);
+            $player->get_status()->set_cause_of_death($this->cod);
 
         $accum = [];
         foreach ($this->effects as $stat => $dif) if ($stat >= 0) {
@@ -270,7 +270,7 @@ class Model_Effect {
         $this->call_custom_func($player, static::CFUNC_PROCESS_POST, $argument);
 
         if ($this->cod)
-            $player->set_cod(null);
+            $player->get_status()->clear_cause_of_death();
     }
 
     /**

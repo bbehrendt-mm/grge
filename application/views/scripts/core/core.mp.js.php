@@ -1,12 +1,12 @@
 (function() {
     var render_others = function(data, target, messages) {
-        target.append($('<h3 />').text(<?=__j('Andere Spieler')?>));
+        target.append($('<h3 />').text(core.last.players.multiplayer ? <?=__j('Andere Spieler und NPCs')?> : <?=__j('NPCs in deiner Umgebung')?>));
 
         var row = NF.row().appendTo(target);
         var found = false;
         $.each(data, function(id, player) {
             found = true;
-            var box = $('<div />').addClass('playerbox' + (player.escort ? ' escort' : '') + (player.local ? '' : ' unknown')).appendTo($('<div />').addClass('cell rw-4 rw-lg-6 rw-md-4 rw-sm-12 padded').appendTo(row));
+            var box = $('<div />').addClass('playerbox' + (player.escort ? ' escort' : '') + (player.local ? '' : ' unknown') + (player.npc ? ' npc' : '')).appendTo($('<div />').addClass('cell rw-4 rw-lg-6 rw-md-4 rw-sm-12 padded').appendTo(row));
 
             box.append($('<b />').text(player.name));
             var bars = NF.row().appendTo(box);
@@ -22,23 +22,29 @@
 
                     var date = new Date(player.last_seen * 1000);
 
-                    NF.row()
-                        .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Beruf')?>))
-                        .append($('<div />').addClass('cell rw-6 padded left').text(player.job))
-                        .appendTo(content);
+                    if (player.npc)
+                        NF.row()
+                            .append(NF.cell(true, 12).text(<?=__j('Dies ist ein computergesteuerter Charakter (NPC)!')?>))
+                            .appendTo(content);
+                    else {
+                        NF.row()
+                            .append(NF.cell(true, 6, 0, 'b right').text(<?=__j('Beruf')?>))
+                            .append(NF.cell(true, 6, 0, 'left').text(player.job))
+                            .appendTo(content);
+                        NF.row()
+                            .append(NF.cell(true, 6, 0, 'b right').text(<?=__j('Spielgeschwindigkeit')?>))
+                            .append(NF.cell(true, 6, 0, 'left').text(core.snippets.timestr(player.speed)))
+                            .appendTo(content);
+                        NF.row()
+                            .append(NF.cell(true, 6, 0, 'b right').text(<?=__j('Letzte Aktivität')?>))
+                            .append(NF.cell(true, 6, 0, 'left').text(date.toLocaleString()))
+                            .appendTo(content);
+                        NF.row()
+                            .append(NF.cell(true, 6, 0, 'b right').text(player.joke[0]))
+                            .append(NF.cell(true, 6, 0, 'left').text(player.joke[1]))
+                            .appendTo(content);
+                    }
 
-                    NF.row()
-                        .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Spielgeschwindigkeit')?>))
-                        .append($('<div />').addClass('cell rw-6 padded left').text(core.snippets.timestr(player.speed)))
-                        .appendTo(content);
-                    NF.row()
-                        .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Letzte Aktivität')?>))
-                        .append($('<div />').addClass('cell rw-6 padded left').text(date.toLocaleString()))
-                        .appendTo(content);
-                    NF.row()
-                        .append($('<div />').addClass('cell rw-6 padded b right').text(player.joke[0]))
-                        .append($('<div />').addClass('cell rw-6 padded left').text(player.joke[1]))
-                        .appendTo(content);
                 }
             }));
 
@@ -46,14 +52,15 @@
                 core.parts.status_bars(bars, player.stats, true);
         });
 
-        if (!found) row.append($('<div />').addClass('cell rw-12 padded center').text(<?=__j('Hier scheint niemand zu sein ...')?>));
+        if (!found) row.append(NF.cell(true, 12, 0, 'center').text(<?=__j('Hier scheint niemand zu sein ...')?>));
 
-        row.append($('<div />').addClass('cell rw-12 padded').append(
-            NF.row()
-                .append($('<div />').addClass('cell rw-4 rw-md-5 rw-sm-12 padded').append($('<div />').addClass('btn btn-zv').text(<?=__j('Post')?>).prepend(messages ? $('<img />').attr('src','media/icons/new.png') : false).click(function() {
-                    game.network.load('game/pm');
-                })))
-        ));
+        if (core.last.players.multiplayer)
+            row.append(NF.cell(true, 12).append(
+                NF.row()
+                    .append($('<div />').addClass('cell rw-4 rw-md-5 rw-sm-12 padded').append($('<div />').addClass('btn btn-zv').text(<?=__j('Post')?>).prepend(messages ? $('<img />').attr('src','media/icons/new.png') : false).click(function() {
+                        game.network.load('game/pm');
+                    })))
+            ));
     };
 
     var render_self = function(data, target) {
@@ -80,10 +87,12 @@
 
     core.parts.mp_players = function(data, target) {
 
-        var player_info = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-4 rw-lg-6 rw-md-12 padded').appendTo(target));
-        render_self(data.self, player_info);
+        if (core.last.players.multiplayer) {
+            var player_info = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-4 rw-lg-6 rw-md-12 padded').appendTo(target));
+            render_self(data.self, player_info);
+        }
 
-        var others_info = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-8 rw-lg-6 rw-md-12 padded').appendTo(target));
+        var others_info = $('<div />').addClass('flatbox').appendTo($('<div />').addClass(core.last.players.multiplayer ? 'cell rw-8 rw-lg-6 rw-md-12 padded' : 'cell rw-8 ro-2 rw-lg-10 ro-lg-1 rw-md-12 ro-md-0 padded').appendTo(target));
         render_others(data.others, others_info, data.messages);
 
     };

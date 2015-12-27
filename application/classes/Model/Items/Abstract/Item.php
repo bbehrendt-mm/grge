@@ -271,14 +271,14 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
         global $player;
 
         $hid = $this->hid();
-        $player->set_cod("Vergiftung");
+        $player->get_status()->set_cause_of_death("Vergiftung");
         if ($hid->can($action)) {
             return $hid->perform($action, $player, $side_player, $argument);
         } else {
             $method = "interaction_{$action}";
             if (method_exists($this, $method)) {
                 $r = $this->$method($argument);
-                $player->set_cod(null);
+                $player->get_status()->clear_cause_of_death();
             } else return false;
 
             return $r;

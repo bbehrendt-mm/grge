@@ -96,7 +96,7 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
         else global $player;
 		
 		if (!$pid) $duration = $this->duration();
-		elseif (!$player->alive() && $player->get_points() !== null)
+		elseif (!$player->get_status()->alive() && $player->get_points() !== null)
             return $player->get_points();
         else $duration = $this->get_player($pid)->get_lifetime();
 		

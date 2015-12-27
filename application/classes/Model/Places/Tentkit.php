@@ -40,7 +40,7 @@ class Model_Places_Tentkit extends Model_Places_Abstract_Hideout {
                 if ($p->type() == Interface_Plentity::IC_NPC_NONPC) {
                     $p->log()->add('Gerade hast du es dir bequem gemacht, da hörst du hinter dir plötzlich die Zeltplane reißen. Noch bevor du dich umdrehen kannst spürst du einen stechenden Schmerz im Rücken - herzlichen Glückwunsch, du bist tot.');
                     $p->achievements()->achieve(Model_Achievement::MA_SLASHER_KILLER);
-                    $p->set_cod("Serienkiller-Opfer");
+                    $p->get_status()->set_cause_of_death("Serienkiller-Opfer");
                     $p->get_status()->retrieve('heartbeat')->unbuff();
                 } else $p->kill();
         }

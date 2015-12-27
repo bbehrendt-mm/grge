@@ -61,13 +61,22 @@ class Model_Places_Outworld extends Model_Places_Abstract_Node {
          * @global $player Interface_Plentity
          */
         global $game, $player;
-					
-		if ($player->can(Interface_Plentity::IC_TRIGGER_SUPPLIES) && !$this->initial_supply && ($game->config('places.outworld.spawn_stranger') || $game->config('places.outworld.alt_spawn_stranger')))
-		{
-			$this->initial_supply();
-			return true;	
-		}
 
-		return parent::tick($type);
+        if ($player->can(Interface_Plentity::IC_TRIGGER_SUPPLIES)) {
+            if (!$this->initial_supply && ($game->config('places.outworld.spawn_stranger') || $game->config('places.outworld.alt_spawn_stranger')))
+            {
+                $this->initial_supply();
+                return true;
+            }
+
+            if ($game->config('places.outworld.spawn_dogmeat') && !$game->get_npc('dogmeat')) {
+                $dogmeat = new Model_NPC_Dog('Dogmeat');
+                $dogmeat->location_class($this->uin());
+                $game->add_npc($dogmeat, 'dogmeat');
+                $this->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $dogmeat->id(), true));
+            }
+        }
+
+        return parent::tick($type);
 	}
 }	

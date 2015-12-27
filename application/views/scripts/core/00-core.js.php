@@ -118,7 +118,7 @@ core = {
             .append((game.storage.get('settings','heroid_ui') == 'tab') ? $('<option />').val('#inv_heroics').text(<?=__j('Heldentaten')?>) : null)
             .append($('<option />').val('#settings_container').text(<?=__j('Zeitfluss & Verhalten')?>))
             .append($('<option />').val('#game_info').text(<?=__j('Spieldetails')?>))
-            .append(data.players ? $('<option />').val('#mp_container').text((data.players.messages ? '[!!!] ' : '') + <?=__j('Spielerübersicht')?>) : false)
+            .append(data.players ? $('<option />').val('#mp_container').text(data.players.multiplayer ? ((data.players.messages ? '[!!!] ' : '') + <?=__j('Spieler & NPCs')?>) : <?=__j('NPCs')?>) : false)
             .change(function() {
                 $('[data-toggle="' + $(this).val() + '"]').click();
             })
@@ -130,7 +130,7 @@ core = {
             .append((game.storage.get('settings','heroid_ui') == 'tab') ? $('<li>').attr('data-toggle', '#inv_heroics').text(<?=__j('Heldentaten')?>) : null)
             .append($('<li>').attr('data-toggle', '#settings_container').text(<?=__j('Zeitfluss & Verhalten')?>))
             .append($('<li>').attr('data-toggle', '#game_info').text(<?=__j('Spieldetails')?>))
-            .append(data.players ? $('<li>').attr('data-toggle', '#mp_container').text(<?=__j('Spielerübersicht')?>).prepend(data.players.messages ? $('<img />').attr('src','media/icons/new.png') : false) : false)
+            .append(data.players ? $('<li>').attr('data-toggle', '#mp_container').text(data.players.multiplayer ? <?=__j('Spieler & NPCs')?> : <?=__j('NPCs')?>).prepend(data.players.multiplaye && data.players.messages ? $('<img />').attr('src','media/icons/new.png') : false) : false)
             .find('>li').click(function() {
                 var t = $($(this).data('toggle'));
                 auto_select.val($(this).data('toggle')).selectric();

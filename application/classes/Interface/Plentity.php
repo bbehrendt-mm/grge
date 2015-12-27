@@ -9,7 +9,8 @@ interface Interface_Plentity extends Interface_Cloudshard {
     const IC_TRIGGER_SUPPLIES = 5;
 
     const IC_NPC_NONPC = 0;
-    const IC_NPC_ANIMAL = 1;
+    const IC_NPC_GENERIC = 1;
+    const IC_NPC_ANIMAL = 2;
 
     /**
      * @return Model_Status
@@ -17,6 +18,8 @@ interface Interface_Plentity extends Interface_Cloudshard {
     public function get_status();
 
     public function name();
+
+    public function set_id($new);
 
     public function location_class();
 
@@ -28,8 +31,6 @@ interface Interface_Plentity extends Interface_Cloudshard {
 
     public function kill();
 
-    public function alive();
-
     public function tick();
 
     public function ai();
@@ -40,5 +41,5 @@ interface Interface_Plentity extends Interface_Cloudshard {
 
     public function type();
 
-    public function companion();
+    public function companion($newval = null);
 }

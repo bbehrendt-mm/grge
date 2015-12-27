@@ -147,7 +147,7 @@ class Model_Places_Colosseum extends Model_Places_Abstract_Place {
 		
 		$this->battle();
 		
-		if ($player->alive()) {
+		if ($player->get_status()->alive()) {
 			$player->log()->add(new Model_Log_Types_Text('Kampf', 'Du hast den Kampf überstanden!', 'Herzlichen Glückwunsch, du hast eine weitere Ebene des Kolosseums gemeistert! Weiter so! Als Belohnung für deinen triumphalen Sieg hast du einige Gegenstände erhalten.'));
 			$this->reward();
 			Tool_Scripts::home()->set_map_points($this->stage);

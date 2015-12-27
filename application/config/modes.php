@@ -15,6 +15,7 @@ return array(
                     'zombies.cowardly'                      => false,
                     'zombies.escape_threshold'              => 10,
                     'places.dryout_factor'                  => 1,
+                    'places.outworld.spawn_dogmeat'         => true,
                     'places.outworld.spawn_stranger'        => false,
                     'places.outworld.alt_spawn_stranger'    => false,
                     'places.outworld.location_density'      => 1,

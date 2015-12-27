@@ -71,7 +71,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
 	 */
 	public function is_alive() {
 		$tmp = false;
-		foreach (array_keys($this->set['gamedata']->players) as $remote_player) $tmp = $tmp || ($this->get_player($remote_player) && $this->get_player($remote_player)->alive());
+		foreach (array_keys($this->set['gamedata']->players) as $remote_player) $tmp = $tmp || ($this->get_player($remote_player) && $this->get_player($remote_player)->get_status()->alive());
 		
 		return $tmp;
 	}
@@ -293,8 +293,8 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
 
     /**
      * Returns the player object associated with $pid; if $pid is not passed, the active player will be returned
-     * @param null $pid
-     * @return Model_Player|null
+     * @param number|string|null $pid
+     * @return Model_Player|Interface_Plentity|null
      */
     public function get_player($pid = NULL) {
     	/** @global $user Model_Euser */
@@ -302,7 +302,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
     	if ($pid === NULL) {
             if ($user) $pid = $user->uid();
             else return null;
-        }
+        } elseif (!is_numeric($pid)) return $this->get_npc($pid);
 
     	if (!isset($this->set['gamedata']->players[$pid])) return null;
     	else return $this->set['gamedata']->uin->get($this->set['gamedata']->players[$pid], 'Model_Player');
@@ -317,7 +317,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
     	$ret = Array();
     	foreach ($this->set['gamedata']->players as $player_id => $pid)
             if (!$this->get_player($player_id)) continue;
-    		elseif (!$limit_alive || $this->get_player($player_id)->alive()) $ret[] = $this->get_player($player_id);
+    		elseif (!$limit_alive || $this->get_player($player_id)->get_status()->alive()) $ret[] = $this->get_player($player_id);
     
     	return $ret;
     }
@@ -339,26 +339,35 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
         $ret = Array();
         foreach ($this->set['gamedata']->npcs as $npc_id => $nid)
             if (!$this->get_npc($npc_id)) continue;
-            elseif (!$limit_alive || $this->get_npc($npc_id)->alive()) $ret[] = $this->get_npc($npc_id);
+            elseif (!$limit_alive || $this->get_npc($npc_id)->get_status()->alive()) $ret[] = $this->get_npc($npc_id);
 
         return $ret;
     }
 
     /**
      * @param Interface_Plentity $npc
-     * @param null $id
+     * @param null|number|string $id
      * @return bool
      */
     public function add_npc(Interface_Plentity $npc, $id = null) {
+        if ($id === null)
+            $id = $npc->id();
+
         if ($id === null) {
             $id = count($this->set['gamedata']->npcs);
-            while (isset($this->set['gamedata']->npcs[$id])) $id++;
-        }
+            while (isset($this->set['gamedata']->npcs["npc_$id"])) $id++;
+            $id = "npc_$id";
+        } elseif (is_numeric($id))
+            $id = "npc_$id";
 
         if (isset($this->set['gamedata']->npcs[$id])) return false;
 
         if (!$npc->uin()) $this->uin()->set($npc);
-        return $this->set['gamedata']->npcs[$id] = $npc->uin();
+
+        $npc->set_id($id);
+        $this->set['gamedata']->npcs[$id] = $npc->uin();
+
+        return $id;
     }
 
     /**

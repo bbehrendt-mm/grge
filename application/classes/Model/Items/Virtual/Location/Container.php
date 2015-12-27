@@ -20,7 +20,7 @@ class Model_Items_Virtual_Location_Container extends Model_Items_Abstract_Virtua
 
                     Tool_Scripts::simple_battle(mt_rand(2, 10),0, "Eine Gruppe Zombies stürmt aus dem Container und greift an!", false, false);
 
-                    if ($p->alive())
+                    if ($p->get_status()->alive())
                     {
                         $r_lbs = mt_rand(1, 5);
                         $r_chairs = mt_rand(0, 2);

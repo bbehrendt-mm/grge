@@ -188,7 +188,7 @@ class Tool_Scripts
             $player = $perspective;
         else global $player;
 
-        if (!$player->is_actual_player())
+        if ($player->type() != Interface_Plentity::IC_NPC_NONPC)
             $active_location = $other_players = false;
 
         $proto = [];
@@ -244,11 +244,11 @@ class Tool_Scripts
         $ret = [];
         if ($include_players)
             foreach ($game->players(true) as $s_player)
-                if ($s_player->alive() && $s_player->location_class() == $lid)
+                if ($s_player->get_status()->alive() && $s_player->location_class() == $lid)
                     $ret[] = $s_player;
         if ($include_npcs)
             foreach ($game->npcs(true) as $s_player)
-                if ($s_player->alive() && $s_player->location_class() == $lid)
+                if ($s_player->get_status()->alive() && $s_player->location_class() == $lid)
                     $ret[] = $s_player;
 
         return $ret;
@@ -291,22 +291,22 @@ class Tool_Scripts
         global $player, $game;
 
         //Check if PID is valid
-        if (!is_object($pid)) {
-            if (!$pid || $pid == $player->id() || !($r = $game->get_player($pid))) return false;
-        } else $r = $pid;
+        $r = null;
+        if (is_numeric($pid))
+            $r = $game->get_player($pid);
+        elseif (is_string($pid))
+            $r = $game->get_npc($pid);
+        elseif (is_object($pid))
+            $r = $pid;
 
-        $lid = $player->location_class();
+        if (!$r) return false;
 
         //Check if player is in companion mode
         if (!$r->companion())
             return false;
 
         //Check if both players share the same location
-        if ($r->location_class() != $player->location_class())
-            return false;
-
-        //Fallback case
-        return false;
+        return ($r->location_class() == $player->location_class()) ? $r : false;
     }
 
     /**
@@ -509,7 +509,10 @@ class Tool_Scripts
     }
 
     public static function calculate_find_chances($pid = null) {
-        /** @global Model_Game $game */
+        /**
+         * @global Model_Game $game
+         * @global Interface_Plentity|Model_Player $player
+         */
         global $game;
         if ($pid === null)
             global $player;
@@ -537,13 +540,13 @@ class Tool_Scripts
         $c *= (1 - ($player->get_status()->get(Model_Status::MS_STAT_DRUNK)/100));
 
         //Survivalist Boni
-        if ($player->job(1060)) {
+        if ($player->type() == Interface_Plentity::IC_NPC_NONPC && $player->job(1060)) {
             if ($player->job(1060, 5, false)) $c *= 1.15;
             elseif ($player->job(1060, 2, false)) $c *= 1.05;
         }
 
         //Child Bonus
-        if ($player->job(1080)) $c *= 1.5;
+        if ($player->type() == Interface_Plentity::IC_NPC_NONPC && $player->job(1080)) $c *= 1.5;
 
         return $c;
     }

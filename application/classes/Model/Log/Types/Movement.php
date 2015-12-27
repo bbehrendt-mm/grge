@@ -24,9 +24,9 @@ class Model_Log_Types_Movement extends Model_Log_Message {
         elseif ($pid === null)
             $pid = $player->id();
 
-        if (is_numeric($pid))
+        if (is_numeric($pid) || $npc)
             parent::__construct([
-                'id' => (int)$pid,
+                'id' => $npc ? $pid : (int)$pid,
                 'class' => $type,
                 'npc' => $npc
             ]);
@@ -44,8 +44,11 @@ class Model_Log_Types_Movement extends Model_Log_Message {
         if (isset($data['name'])) {
             $data['self'] = false;
             $data['name'] = __($data['name']);
-        } else
-            $data['name'] = $data['npc'] ? $game->get_npc($data['id'])->name() : $game->get_player($data['id'])->name();
+        } else {
+            $obj = $data['npc'] ? $game->get_npc($data['id']) : $game->get_player($data['id']);
+            $data['name'] = $obj ? $obj->name() : "UNKNOWN [{$data['id']}]";
+            if ($data['npc']) $data['self'] = false;
+        }
 
         return $data;
     }

@@ -118,7 +118,7 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
 			global $player;
 			$player = $pl;
 			
-			if ($player->alive()) {
+			if ($player->get_status()->alive()) {
                 // Tick items
                 foreach ($player->inventory()->get('Interface_Tickable') as $item)
                     /** @var $item Interface_Tickable */

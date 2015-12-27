@@ -52,7 +52,7 @@ class Controller_Player extends Controller_Game {
          * @global $player Model_Player
          */
         global $game, $player;
-        if (!$player->alive() || !$game->config('modules.multiplayer'))
+        if (!$player->get_status()->alive() || !$game->config('modules.multiplayer'))
             return $this->render(['success' => 0]);
 
         $action = $this->request->post('action');

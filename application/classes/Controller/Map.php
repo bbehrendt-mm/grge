@@ -21,7 +21,7 @@ class Controller_Map extends Controller_Game {
             return false;
 
         if ($follow)
-            $companion[$player->id() . '_' . $player->type()] = $player;
+            $companion[$player->id()] = $player;
         $support = ($follow && $support);
 
         //Check if any player is passed out or performs a fragile action
@@ -41,7 +41,7 @@ class Controller_Map extends Controller_Game {
         $map_type = $game->map($lid)->get_map_type();
 
         if (!$sub) {
-            if ($map_type == Model_Map_Abstract::MMA_TYPE_LABYRINTH) $companion = [($player->id() . '_' . $player->type()) => $player];
+            if ($map_type == Model_Map_Abstract::MMA_TYPE_LABYRINTH) $companion = [($player->id()) => $player];
 
             //Check route
             if (!($route = $game->map($lid)->get_route($lid, $did, $map_type == Model_Map_Abstract::MMA_TYPE_LABYRINTH ? 2 : null))) {
@@ -161,20 +161,18 @@ class Controller_Map extends Controller_Game {
                 if (!$sub && $map_type == Model_Map_Abstract::MMA_TYPE_LABYRINTH) {
                     if (!Tool_System::instance_of($destination, 'Interface_Corridor'))
                         $current->log()->add('Du tastest dich ein Stück vorran und und befindest dich jetzt in/im :location.', array(), array(':location' => $destination->name()));
-                } elseif (count($companion) == 1 && $current == $player)
+                } elseif (count($companion) == 1 && $current->id() == $player->id())
                     $current->log()->add('Du machst dich auf den Weg zu/zur/zum :location.', array(), array(':location' => $destination->name()));
-                elseif (count($companion) > 1 && $current == $player)
+                elseif (count($companion) > 1 && $current->id() == $player->id())
                     $current->log()->add('Ihr macht euch auf den Weg zu/zur/zum :location.', array(), array(':location' => $destination->name()));
-                elseif (count($companion) > 1 && $current != $player)
+                elseif (count($companion) > 1 && $current->id() != $player->id())
                     $current->log()->add(':name hat dich gebeten, ihn nach :location zu begleiten.', array(':name' => $player->name()), array(':location' => $destination->name()));
                 else {
                     $current->log()->add(':name hat dich angewiesen, bei :location nach dem Rechten zu sehen.', array(':name' => $player->name()), array(':location' => $destination->name()));
                     if ($player->type() == Interface_Plentity::IC_NPC_NONPC)
                         $player->log()->add('Du entsendest :name nach :location, um dort nach dem Rechten zu sehen.', array(':name' => $current->name()), array(':location' => $destination->name()));
                 }
-            } elseif ($player->type() == Interface_Plentity::IC_NPC_NONPC)
-                $player->log()->add('Du entsendest :name nach :location, um dort nach dem Rechten zu sehen.', array(':name' => $current->name()), array(':location' => $destination->name()));
-
+            }
 
             if ($transport = Tool_Scripts::get_active_transport($current))
                 $transport->trigger_after($current, $distance);
@@ -202,7 +200,7 @@ class Controller_Map extends Controller_Game {
         $cc = $this->request->post('co');
         if (is_array($cc))
             foreach ($cc as $comid)
-                if ($tmp = Tool_Scripts::check_comrade((int)$comid))
+                if ($tmp = Tool_Scripts::check_comrade($comid))
                     $companion[$tmp->id()] = $tmp;
 
         $follow = (int)$this->request->post('follow') != 0;
@@ -232,14 +230,10 @@ class Controller_Map extends Controller_Game {
         if ($player->get_status()->retrieve('passout') || $player->get_status()->retrieve('fragile'))
             $read_only = true;
 
-
-        $rmp = Tool_Scripts::check_comrade((int)$this->request->param('id'));
-
         $lid = $player->location_class();
         if ($lid < 0) $lid = $game->map()->resolve_fixed_id(-$lid);
 
         if ($lid === null) return false;
-
 
 
         $locations = $game->map($lid)->build_route_array($lid, $limit_view);
@@ -304,7 +298,6 @@ class Controller_Map extends Controller_Game {
             'locations' => $pass,
             'doorways' => $doorways,
             'current' => $lid,
-            'escort' => $rmp,
             'companions' => $companions,
             'radius' => $player->get_status()->get(Model_Status::MS_STAT_ENERGY)
         ]);

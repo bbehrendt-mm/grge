@@ -569,45 +569,24 @@
 
         if (core.last.players) {
             var area = [];
+            var area_npc = [];
             $.each(core.last.players.others, function(id, player) {
-                if (player.local && !player.loner) area.push(player.name);
+                if (player.local && !player.loner) {
+                    if (player.npc) area_npc.push(player.name)
+                    else area.push(player.name);
+                }
             });
 
-            if (area.length) {
+            if (area.length + area_npc.length) {
                 var p = $('<p />').appendTo(desc).attr('title',<?=__j('Hier siehst du Spieler, die sich momentan in deiner Nähe befinden. Um mehr Details zu erfahren, klicke "Spielerübersicht".')?>).qtip(game.render.html.qtip.ingame('bottom'));
                 $.each(area, function(k,name) {
                     p.append($('<span />').addClass('inline-player').text(name));
                 });
+                $.each(area_npc, function(k,name) {
+                    p.append($('<span />').addClass('inline-npc green').text(name));
+                });
 
             }
-        }
-
-        if (data.npcs) {
-            var pp = $('<p />').appendTo(desc);
-            $.each(data.npcs, function(k,obj) {
-                pp.append($('<span />').addClass('inline-npc green').text(obj.name).attr('title','-').qtip(game.render.html.qtip.ingame('bottom',{
-                    render: function(event,api) {
-                        var content = $(this).find('.qtip-content').empty();
-
-                        content.append(
-                            $('<b />').addClass('header').text(obj.name)
-                        );
-
-                        if (obj.desc)
-                            content.append(obj.desc).append('<span class="separator" />');
-
-                        content.append($('<div />').addClass('note').text(<?=__j('Dies ist ein vom Computer gesteuerter Charakter (NPC). Du kannst ihn nicht wie einen menschlichen Spieler herumkommandieren, dafür bietet er dir aber andere, einzigartige Interaktionsmöglichkeiten.')?>)).append('<span class="separator" />');
-
-                        $.each(obj.actions, function(k,v) {
-                            content.append(
-                                core.snippets.button(v, false, 'nested')
-                            )
-                        });
-                    }
-                })));
-
-
-            });
         }
 
         $.each(data.actions, function(k,v) {

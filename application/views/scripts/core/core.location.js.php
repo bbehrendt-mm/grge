@@ -704,7 +704,7 @@
 
                             if (core.last.players.others)
                                 $.each(core.last.players.others, function(id, player) {
-                                    if (player.escort)
+                                    if (player.allow === true || player.allow[<?=Interface_Plentity::IC_ALLOW_MOVE?>])
                                         check_row.append($('<div />').addClass('cell rw-6 padded').append(
                                             $('<label />').text(player.name).prepend($('<input />').attr('type','checkbox').attr('data-id', player.id))
                                         ))

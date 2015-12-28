@@ -4,6 +4,11 @@ class Model_Player extends Model_NPC_Nano implements Interface_Plentity {
 
     protected static $entity_type = Interface_Plentity::IC_NPC_NONPC;
 
+    protected static $escort_functions = [
+        Interface_Plentity::IC_ALLOW_ITEM_PICKUP, Interface_Plentity::IC_ALLOW_ITEMS_SIDEUSE,
+        Interface_Plentity::IC_ALLOW_SHOW_INVENTORY, Interface_Plentity::IC_ALLOW_MOVE
+    ];
+
     const MP_SETTINGS_BATTLE_NOENERGY = 1;
     const MP_SETTINGS_BATTLE_NOSELFAMMO = 2;
     const MP_SETTINGS_BATTLE_DISTANCE_DAMAGE_SHIFT = 3;
@@ -13,16 +18,11 @@ class Model_Player extends Model_NPC_Nano implements Interface_Plentity {
 	private $job;
 	private $level;
 
-    private $companion = false;
-    private $beacon = 0;
-
     private $temp_registry;
     private $points = null;
     private $braincoins = 0;
 
     private $escape_target_location = null;
-
-    private $messages = array();
 	
 	private $achievements;
 
@@ -33,6 +33,8 @@ class Model_Player extends Model_NPC_Nano implements Interface_Plentity {
 
     private $april = false;
     private $got_ticket = false;
+
+    protected $postbox;
 
     private $battle_settings = array(
         Model_Player::MP_SETTINGS_BATTLE_NOENERGY => false,
@@ -125,7 +127,7 @@ class Model_Player extends Model_NPC_Nano implements Interface_Plentity {
 		//Init
 		$this->log = new Model_Log_Log();
 		$this->achievements = new Model_Achievement();
-
+        $this->postbox = new Model_Postbox();
 		
 		//Init all gameplay data
 		$this->kickoff();
@@ -346,16 +348,6 @@ class Model_Player extends Model_NPC_Nano implements Interface_Plentity {
 		}
 	}
 
-    /**
-     * Returns the companion state, or sets it when newval is given
-     * @param null $newval
-     * @return bool
-     */
-    public function companion($newval = null) {
-        if ($newval === null) return $this->companion;
-        else return $this->companion = $newval;
-    }
-
 	/**
 	 * @param null|number $filter
 	 * @param bool $primary
@@ -370,63 +362,10 @@ class Model_Player extends Model_NPC_Nano implements Interface_Plentity {
 	}
 
     /**
-     * Activates the chat beacon for a given amount of time, or returns the beacon status
-     * @param null $minutes Null to return beacon state; negative number to reset beacon state; positive number to activate beacon
-     * @return bool|number
+     * @return Model_Postbox
      */
-    public function chat_beacon($minutes = null) {
-        if ($minutes === null) return ($this->beacon >= time());
-        elseif ($minutes < 0) return $this->beacon = 0;
-        else return $this->beacon = time() + $minutes * 60;
-    }
-
-    /**
-     * Receive a message
-     * @param int $uid User id
-     * @param string $message
-     * @param string $title
-     */
-    public function add_message($uid, $message, $title) {
-        $id = time() . mt_rand(0,99);
-        $this->messages[$id] = array('uid' => $uid, 'message' => $message, 'title' => $title, 'timestamp' => time(), 'read' => false, 'mid' => $id);
-        while (count($this->messages) > 50) {
-            $d = array_keys($this->messages);
-            $this->delete_message($d[0]);
-        }
-    }
-
-    /**
-     * Delete a message
-     * @param $id
-     */
-    public function delete_message($id) {
-
-        unset($this->messages[$id]);
-    }
-
-    /**
-     * Mark message as read
-     * @param $id
-     */
-    public function read_message($id) {
-        if (isset($this->messages[$id])) $this->messages[$id]['read'] = true;
-    }
-
-    /**
-     * Returns all messages
-     * @param bool $reverse
-     * @param bool $filter_read
-     * @return array
-     */
-    public function get_messages($reverse = true, $filter_read = false) {
-        if ($filter_read) {
-            $ret = array();
-            foreach ($this->messages as $msg)
-                if (!$msg['read'])
-                    $ret[] = $msg;
-        } else $ret = $this->messages;
-
-        return $reverse ? array_reverse($ret) : $ret;
+    public function get_postbox() {
+        return $this->postbox;
     }
 
     /**

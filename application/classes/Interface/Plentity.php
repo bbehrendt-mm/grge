@@ -8,6 +8,14 @@ interface Interface_Plentity extends Interface_Cloudshard {
     const IC_TRIGGER_LOCATION_FINDINGS = 4;
     const IC_TRIGGER_SUPPLIES = 5;
 
+    const IC_ALLOW_ANY = 0;
+    const IC_ALLOW_SHOW_INVENTORY = 1;
+    const IC_ALLOW_ITEM_PICKUP = 2;
+    const IC_ALLOW_ITEM_DROP = 3;
+    const IC_ALLOW_ITEMS_SIDEUSE = 4;
+    const IC_ALLOW_ITEMS_USE = 5;
+    const IC_ALLOW_MOVE = 6;
+
     const IC_NPC_NONPC = 0;
     const IC_NPC_GENERIC = 1;
     const IC_NPC_ANIMAL = 2;
@@ -42,4 +50,6 @@ interface Interface_Plentity extends Interface_Cloudshard {
     public function type();
 
     public function companion($newval = null);
+
+    public function allow($type = null);
 }

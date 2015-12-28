@@ -916,7 +916,7 @@ core = {
 
             if (core.last.players) {
                 $.each(core.last.players.others, function(k,v) {
-                    if (!v.escort) return;
+                    if (!(v.allow === true || v.allow[1])) return;
 
                     var remote_inv;
                     iv_a.after(remote_inv = $('<div />').addClass('row inventory flatbox inventory_player'));
@@ -1667,7 +1667,7 @@ core = {
 
                             if (core.last.players.others)
                                 $.each(core.last.players.others, function(id, player) {
-                                    if (player.escort)
+                                    if (player.allow === true || player.allow[6])
                                         check_row.append($('<div />').addClass('cell rw-6 padded').append(
                                             $('<label />').text(player.name).prepend($('<input />').attr('type','checkbox').attr('data-id', player.id))
                                         ))
@@ -2734,7 +2734,7 @@ core = {
 
                             if (core.last.players.others)
                                 $.each(core.last.players.others, function(id, player) {
-                                    if (player.escort)
+                                    if (player.allow === true ||player.allow[6])
                                         check_row.append($('<div />').addClass('cell rw-6 padded').append(
                                             $('<label />').text(player.name).prepend($('<input />').attr('type','checkbox').attr('data-id', player.id))
                                         ))
@@ -3381,8 +3381,8 @@ core = {
                         if (core.last.players.others)
                             $.each(core.last.players.others, function(id, player) {
                                 popup.append(NF.row().append($('<div />').addClass('cell rw-12 padded').append(
-                                    $('<div />').addClass('btn btn-zv' + (player.escort ? '' : ' disabled')).text(player.name).click(function() {
-                                        if (!player.escort || !confirm(game.i18n("Bist du sicher, dass du diese Aktion auf :name anwenden m\u00f6chtest?", {':name': player.name}))) return;
+                                    $('<div />').addClass('btn btn-zv' + ((player.allow === true || player.allow[4]) ? '' : ' disabled')).text(player.name).click(function() {
+                                        if (!(player.allow === true || player.allow[4]) || !confirm(game.i18n("Bist du sicher, dass du diese Aktion auf :name anwenden m\u00f6chtest?", {':name': player.name}))) return;
 
                                         popup.trigger('unpop');
                                         core.command('act/item', {action: action.action, item: action.target, co: player.id, coarg: arg});

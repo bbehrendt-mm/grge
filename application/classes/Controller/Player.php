@@ -67,17 +67,17 @@ class Controller_Player extends Controller_Game {
                     return $this->render(['success' => 0]);
 
                 if ($to == -1) {
-                    foreach ($game->players() as $p) if ($p->id() != $player->id()) $p->add_message($player->id(), $message, $title);
+                    foreach ($game->players() as $p) if ($p->id() != $player->id()) $p->get_postbox()->add($player->id(), $message, $title);
                 } else {
                     if (!($p = $game->get_player($to)) || $p->id() == $player->id())
                         return $this->render(['success' => 0]);
-                    $p->add_message($player->id(),$message, $title);
+                    $p->get_postbox()->add($player->id(),$message, $title);
                 }
 
                 $player->achievements()->achieve(Model_Achievement::MA_LETTERS);
                 return $this->render(['success' => 1]);
             case 'delete':
-                $player->delete_message($this->request->post('mid'));
+                $player->get_postbox()->remove($this->request->post('mid'));
                 return $this->render(['success' => 1]);
             default: return $this->render(['success' => 0]);
         }
@@ -157,8 +157,8 @@ class Controller_Player extends Controller_Game {
         $escort = (int)$this->request->post('escort');
         $ping = (int)$this->request->post('ping');
 
-        if ($player->chat_beacon() && !$ping) $player->chat_beacon(0);
-        elseif (!$player->chat_beacon() && $ping) $player->chat_beacon(15);
+        if ($player->get_postbox()->beacon() && !$ping) $player->get_postbox()->beacon(0);
+        elseif (!$player->get_postbox()->beacon() && $ping) $player->get_postbox()->beacon(15);
 
         $player->companion((bool)$escort);
         return $this->render(['success' => 1]);

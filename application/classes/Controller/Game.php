@@ -771,6 +771,13 @@ class Controller_Game extends Controller {
             $joke = array_keys($jokes)[($game->id() + $p->id()) % count($jokes)];
 
             $local = $p->get_status()->alive() && $p->location_class() == $player->location_class();
+            $companion = (bool)Tool_Scripts::check_comrade($p);
+            $allow = [];
+            if ($p->allow(Interface_Plentity::IC_ALLOW_ANY))
+                $allow = true;
+            else
+                foreach ($p->allow() as $tag)
+                    $allow[$tag] = true;
 
             $players[$p->id()] = [
                 'name' => $p->name(),
@@ -779,8 +786,9 @@ class Controller_Game extends Controller {
                 'local' => $local,
                 'loner' => (bool)$p->get_status()->retrieve('tr_loner'),
                 'stats' => $local ? $this->render_status($p) : false,
-                'inventory' => ($local && $p->companion()) ? $this->render_inventory($p) : false,
-                'escort' => $local ? $p->companion() : false,
+                'inventory' => $p->allow(Interface_Plentity::IC_ALLOW_SHOW_INVENTORY) ? $this->render_inventory($p) : false,
+                'escort' => $companion,
+                'allow' => $allow,
                 'last_seen' => $p->last_action(),
                 'job' => __(Tool_Gamemodes::get_job_by_id($p->job())),
                 'npc' => false,
@@ -794,6 +802,13 @@ class Controller_Game extends Controller {
         foreach ($game->npcs(true) as $n) {
             if (!$n->get_status()->alive() || $n->location_class() != $player->location_class()) continue;
 
+            $allow = [];
+            if ($n->allow(Interface_Plentity::IC_ALLOW_ANY))
+                $allow = true;
+            else
+                foreach ($n->allow() as $tag)
+                    $allow[$tag] = true;
+
             $players[$n->id()] = [
                 'name' => $n->name(),
                 'id' => $n->id(),
@@ -802,17 +817,18 @@ class Controller_Game extends Controller {
                 'stats' => $this->render_status($n),
                 'inventory' => ($n->companion()) ? $this->render_inventory($n) : false,
                 'escort' => $n->companion(),
+                'allow' => $allow,
                 'npc' => true
             ];
         }
 
         $this->add_data('players', [
             'multiplayer' => $game->config('modules.multiplayer'),
-            'messages' => count($player->get_messages(false,true)) > 0,
+            'messages' => count($player->get_postbox()->get(false,true)) > 0,
             'others' => $players,
             'self' => [
                 'escort' => $player->companion(),
-                'ping' => $player->chat_beacon()
+                'ping' => $player->get_postbox()->beacon()
             ]
         ]);
     }
@@ -958,9 +974,9 @@ class Controller_Game extends Controller {
             if ($p->id() != $player->id())
                 $players[$p->id()] = $p->name();
 
-        $this->add_widget(View::factory('pages/pm')->set('messages', $player->get_messages())->set('players', $players)->render());
-        foreach ($player->get_messages(false,true) as $msg)
-            $player->read_message($msg['mid']);
+        $this->add_widget(View::factory('pages/pm')->set('messages', $player->get_postbox()->get())->set('players', $players)->render());
+        foreach ($player->get_postbox()->get(false,true) as $msg)
+            $player->get_postbox()->read($msg['mid']);
 
         return $this->render();
     }

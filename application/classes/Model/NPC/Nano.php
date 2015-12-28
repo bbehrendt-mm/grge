@@ -9,8 +9,10 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
     protected $inventory;
     protected $livetime = 0;
     protected $id = null;
+    protected $escort = false;
 
     protected static $entity_type = Interface_Plentity::IC_NPC_GENERIC;
+    protected static $escort_functions = [];
 
     public function __construct($name) {
         $this->name = $name;
@@ -141,13 +143,24 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
         return static::$entity_type;
     }
 
+    /**
+     * Returns the companion state, or sets it when newval is given
+     * @param null $newval
+     * @return bool
+     */
     public function companion($newval = null) {
-        return false;
+        if ($newval === null) return $this->escort;
+        else return $this->escort = $newval;
     }
 
     public function set_id($new) {
         if ($this->id !== null && $this->id != $new)
             throw new Exception('Attempt to rebind PE ID!');
         $this->id = $new;
+    }
+
+    public function allow($type = null) {
+        if ($type === null) return $this->escort ? static::$escort_functions : [];
+        return $this->escort ? (in_array($type, static::$escort_functions) || in_array(Interface_Plentity::IC_ALLOW_ANY, static::$escort_functions)) : false;
     }
 }

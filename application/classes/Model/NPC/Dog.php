@@ -3,6 +3,7 @@
 class Model_NPC_Dog extends Model_NPC_Nano
 {
     protected static $entity_type = Interface_Plentity::IC_NPC_ANIMAL;
+    protected static $escort_functions = [Interface_Plentity::IC_ALLOW_ANY];
 
     public function __construct($name) {
         parent::__construct($name);
@@ -30,6 +31,8 @@ class Model_NPC_Dog extends Model_NPC_Nano
         new Model_Buffs_Transport($this);
         new Model_Buffs_Daytime($this);
         new Model_Buffs_Freeze($this);
+
+        $this->companion(true);
     }
 
     /**

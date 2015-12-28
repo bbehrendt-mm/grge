@@ -35,7 +35,7 @@
             <div class="cell rw-4 rw-md-12 padded">
 
                 <label for="input"><b><?=__('Eingabegerät');?></b></label><br />
-                <select id="quality" data-associated-setting="input-device"  data-default="auto">
+                <select id="input" data-associated-setting="input-device"  data-default="auto">
                     <option value="auto"><?=__('Automatisch');?></option>
                     <option value="mouse"><?=__('Maus');?></option>
                     <option value="touch"><?=__('Touchscreen');?></option>
@@ -56,6 +56,16 @@
                 <select id="heroic_ui" data-associated-setting="heroid_ui"  data-default="inline">
                     <option value="inline"><?=__('Im Inventar-Tab');?></option>
                     <option value="tab"><?=__('In eigenem Tab');?></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="cell rw-4 rw-md-12 padded">
+                <label for="travel_confirm"><b><?=__('Bestätigung beim Reisen');?></b></label><br />
+                <select id="travel_confirm" data-associated-setting="travel_confirm"  data-default="always">
+                    <option value="always"><?=__('Immer bestätigen');?></option>
+                    <option value="auto"><?=__('Nur bei Gefahr bestätigen');?></option>
                 </select>
             </div>
         </div>
@@ -147,6 +157,7 @@
             if ($(this).data('handler') && game.w[$(this).data('handler')])
                 game.w[$(this).data('handler')]($(this).val());
             else game.storage.set('settings',setting,$(this).val());
+            alert(<?=__j('Deine Einstellung wurde gespeichert.')?>);
         })
     });
 

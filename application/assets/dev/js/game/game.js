@@ -102,7 +102,6 @@ game = {
         quality: function(v) {
             game.storage.set('settings','ui-quality', v);
             game.update_ui_quality();
-
         }
     }
 };

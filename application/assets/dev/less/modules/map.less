@@ -10,14 +10,16 @@ div.map-close {position: absolute; right: 0; top: 0; width: 32px; text-align: ce
 @map_panel_border: 1px solid fade(@map_panel_color, 60%);
 
 div.map.panel {
-  position: absolute; background: fade(@map_panel_color, 50%); color: @map_panel_text; box-shadow: 0 0 8px fade(@map_panel_color, 40%);
+  position: absolute; background: fade(@map_panel_color, 50%); box-shadow: 0 0 8px fade(@map_panel_color, 40%);
   background: linear-gradient(to bottom, fade(@map_panel_color, 50%) 0%,fade(@map_panel_color, 60%) 100%); transition: all 0.4s;
   h3 {.center; margin: 2px; padding: 0}
   img + * {margin-left: 3px;}
 
-  &.hide {opacity: 0}
+  &.hide {opacity: 0; .no-interaction}
 
   ul {margin: 0; padding-left: 16px}
+
+  &:not(.manual-color), &.manual-color .auto-color  {color: @map_panel_text;}
 
   &.bottom {bottom: 0; left: 32%; right: 32%; &.hide {bottom: -50px} .incomplete-border-definition(@map_panel_border, true, true, false, true);}
   &.left {bottom: 0; top: 30px; left: 0; width: 30%; &.hide {left: -50px} .incomplete-border-definition(@map_panel_border, true, false, true, true);}

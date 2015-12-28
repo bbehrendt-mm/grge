@@ -40,8 +40,8 @@ NF.separator = function(n) {
     return NF.n(n ? n : 'span', 'separator');
 };
 
-NF.img = function(src) {
-    return NF.n('img').attr('src', src);
+NF.img = function(src, classes) {
+    return NF.n('img').attr('src', src).addClass(classes ? classes : '');
 };
 
 NF.fa = function(name) {

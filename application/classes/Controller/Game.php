@@ -357,14 +357,15 @@ class Controller_Game extends Controller {
     }
 
     /**
-     * @param bool|Model_Player $remote
+     * @param bool|Interface_Plentity $remote
      * @return array|void
      */
-    private function render_inventory($remote = false) {
+    private function render_inventory($remote = false, $full_data = false) {
         /**
          * @global $player Model_Player
          */
         global $player;
+        $full_data = !(bool)$remote || $full_data;
         $p = $remote ? $remote : $player;
 
         // Get heroic actions
@@ -387,7 +388,7 @@ class Controller_Game extends Controller {
         /** @noinspection PhpVoidFunctionResultUsedInspection */
         /** @noinspection PhpUndefinedMethodInspection */
         $tmp = [
-            'player' => $this->group_itemlist($p->inventory()->get(), $remote ? true : false),
+            'player' => $this->group_itemlist($p->inventory()->get(), $remote ? !$full_data : false),
             'weight' => [$p->inventory()->weight(),$p->inventory()->limit()],
             'location' => $remote ? [] : $this->group_itemlist($p->location()->inventory()->get()),
             'home' => $remote ? false : (bool)Tool_Scripts::current_location_hideout(),
@@ -815,7 +816,7 @@ class Controller_Game extends Controller {
                 'local' => true,
                 'loner' => false,
                 'stats' => $this->render_status($n),
-                'inventory' => ($n->companion()) ? $this->render_inventory($n) : false,
+                'inventory' => ($n->allow(Interface_Plentity::IC_ALLOW_SHOW_INVENTORY)) ? $this->render_inventory($n, $n->allow(Interface_Plentity::IC_ALLOW_ITEMS_USE)) : false,
                 'escort' => $n->companion(),
                 'allow' => $allow,
                 'npc' => true

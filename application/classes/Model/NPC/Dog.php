@@ -49,12 +49,4 @@ class Model_NPC_Dog extends Model_NPC_Nano
     public function ai() {
 
     }
-
-    public function can($type) {
-        return true;
-    }
-
-    public function companion($newval = null) {
-        return true;
-    }
 }

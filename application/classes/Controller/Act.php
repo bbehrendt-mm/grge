@@ -24,8 +24,15 @@ class Controller_Act extends Controller_Game {
                 if (!($item = $game->uin()->get($itemid, 'Model_Items_Abstract_Item'))) continue;
 
                 if (Tool_System::instance_of($item, 'Model_Items_Abstract_Ammo') && $p->id() != $player->id()) {
-                    /** @var $item Model_Items_Abstract_Ammo */
-                    if (!$item->remoteTake($p->id(), count($items) > 1)) continue;
+                    /** @var $belt Model_Items_Ammobelt[] */
+                    $belt = $p->inventory()->get('Model_Items_Ammobelt');
+                    if (!$belt) {
+                        if (count($items) <= 1) $player->log()->add('Dein Freund benötigt einen Munitionsgürtel, um diesen Gegenstand mitführen zu können.');
+                        continue;
+                    }
+
+                    /** @var Model_Items_Abstract_Ammo $item */
+                    $belt[0]->add($item);
                 } else
                     if (!$item->take(count($items) > 1)) continue;
 
@@ -293,16 +300,27 @@ class Controller_Act extends Controller_Game {
         if (!$p->location()) return;
 
         //Check params
-        if (!in_array($action, ($p->id() != $player->id()) ? ['take'] : ['take','drop','fill','defill','spill','mix','pilldrop','pilltake','belt','label','equip','unequip','equip_primary']))
+        if (!in_array($action, ['take','drop','fill','defill','spill','mix','pilldrop','pilltake','belt','label','equip','unequip','equip_primary']))
             return;
 
+        // Remote player
+        if ($p->id() != $player->id())
+            if (!$p->allow(Interface_Plentity::IC_ALLOW_SHOW_INVENTORY))
+                return;
+            else switch ($action) {
+                case 'take': case 'pilltake': case 'fill': if (!$p->allow(Interface_Plentity::IC_ALLOW_ITEM_PICKUP)) return; break;
+                case 'drop': case 'pilldrop': case 'belt': case 'spill': if (!$p->allow(Interface_Plentity::IC_ALLOW_ITEM_DROP)) return; break;
+                case 'label': case 'mix': case 'defill': if (!$p->allow(Interface_Plentity::IC_ALLOW_ITEMS_USE)) return; break;
+                case 'equip': case 'unequip': case 'equip_primary': default: return;
+            }
+
         $lost = false;
-        if (!count($items)) return;
         foreach ($items as $i => $iid)
-            if (!$game->item_available((int)$iid)) {
+            if (!$game->item_available((int)$iid, $p)) {
                 unset($items[$i]);
                 $lost = true;
             }
+        if (!count($items)) return;
 
         //Transfer items
         if (in_array($action, ['take','drop']))

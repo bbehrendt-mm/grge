@@ -87,15 +87,21 @@ abstract class Model_Gamelayer_Logic extends Model_Gamelayer_Io {
 			
 		return true;
 	}
-	
-	//Returns TRUE, if given UIN can be used as an item (based on the inventory the item currently resides in)
-	final public function item_available($uin) {
-        /**
-         * @global $player Model_Player
-         */
+
+    /**
+     * Returns TRUE, if given UIN can be used as an item (based on the inventory the item currently resides in)
+     * @param number $uin
+     * @param Interface_Plentity $perspective
+     * @return bool
+     */
+	final public function item_available($uin, $perspective = null) {
+        /** @global $player Model_Player */
         global $player;
 		
 		//Check player inventory and location inventory
-		return ($player->inventory()->has($uin) || (($this->location()) ? $this->location()->inventory()->has($uin) : false));
+		return (
+            $player->inventory()->has($uin) ||
+            (($this->location()) ? $this->location()->inventory()->has($uin) : false) ||
+            ($perspective && $perspective->allow(Interface_Plentity::IC_ALLOW_SHOW_INVENTORY)));
 	}
 }

@@ -19,22 +19,6 @@ abstract class Model_Items_Abstract_Ammo extends Model_Items_Abstract_Stackable 
         }
         $this->count = ceil($this->count * $bonus);
 	}
-
-    public function remoteTake($pid, $silent = false) {
-        global $game, $player;
-
-        $p = $game->get_player($pid);
-
-        /** @var $belt Model_Items_Ammobelt[] */
-        $belt = $p->inventory()->get('Model_Items_Ammobelt');
-        if (!$belt) {
-            if (!$silent) $player->log()->add(new Model_Log_Types_Text(null, null, 'Dein Freund benötigt einen Munitionsgürtel, um diesen Gegenstand mitführen zu können.'));
-            return false;
-        }
-
-        $belt[0]->add($this);
-        return true;
-    }
 	
 	public function take($silent = false) {
         /**

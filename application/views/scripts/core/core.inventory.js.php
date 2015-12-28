@@ -16,7 +16,7 @@
                 $.each(data, function(k,v) {
                     cache = cache.concat($.objToArray(v.set, true));
                 });
-                core.command('act/inventory',{action: rucksack ? 'drop' : 'take', items: cache, player: rucksack ? 0 : $('.inventory_player[data-pid-selected=1]').data('pid')});
+                core.command('act/inventory',{action: rucksack ? 'drop' : 'take', items: cache, player: $('.inventory_player[data-pid-selected=1]').data('pid')});
             }).qtip(game.render.html.qtip.ingame('top')));
 
         $.each($.objToArray(data, true).sort(function(a,b) {return (a.addr < b.addr) ? -1 : (a.addr == b.addr ? 0 : 1)}) , function(k,v) {
@@ -30,7 +30,7 @@
                         var o;
                         if (o = $(this).data('click-override'))
                             o(this);
-                        else if (!game.touch() || force) core.command('act/inventory',{action: rucksack ? 'drop' : 'take', items: [v.uin], player: rucksack ? 0 : $('.inventory_player[data-pid-selected=1]').data('pid')});
+                        else if (!game.touch() || force) core.command('act/inventory',{action: rucksack ? 'drop' : 'take', items: [v.uin], player: $('.inventory_player[data-pid-selected=1]').data('pid')});
                     });
                 else
                     container.click(function() {
@@ -39,8 +39,9 @@
                             return o(this);
 
                         cancel();
-                        $('.inventory_self').click();
-                        var inventories = $('.inventory_location, .inventory_self');
+                        if ($('[data-pid-selected="1"]').attr('data-allow-access') != "true")
+                            $('.inventory_self').click();
+                        var inventories = $('.inventory_location, .inventory_player[data-allow-access="true"]');
                         inventories.find('li.control').addClass('disabled');
                         var items = inventories.find('li[data-id]');
                         var hint = game.render.html.hint(true);
@@ -54,7 +55,7 @@
                             if ($(this).is('[data-is-fillable="true"]')) {
                                 $(this).addClass('marked-target');
                                 $(this).data('click-override', function(o) {
-                                    core.command('act/inventory',{action: 'fill', items: [v.uin, $(o).data('id')]});
+                                    core.command('act/inventory',{action: 'fill', items: [v.uin, $(o).data('id')], player: $('[data-pid-selected="1"]').attr('data-pid')});
                                     cancel();
                                 });
 
@@ -124,7 +125,7 @@
                                             if (e.keyCode == 13) {
                                                 e.preventDefault();
                                                 api.hide();
-                                                core.command('act/inventory',{action: 'label', items: [v.uin], text: $(this).val()});
+                                                core.command('act/inventory',{action: 'label', items: [v.uin], text: $(this).val(), player: $('[data-pid-selected="1"]').attr('data-pid')});
                                             }
                                         }))
                                 )
@@ -165,7 +166,7 @@
                                     if ($(this).data('id') != v.uin || v.static > 1) {
                                         $(this).addClass('marked-target');
                                         $(this).data('click-override', function(o) {
-                                            core.command('act/inventory',{action: 'mix', items: [v.uin, $(o).data('id')]});
+                                            core.command('act/inventory',{action: 'mix', items: [v.uin, $(o).data('id')], player: $('[data-pid-selected="1"]').attr('data-pid')});
                                             cancel();
                                         });
 
@@ -183,15 +184,16 @@
                         for (i = 0; i < v.count; i++)
                             fillbox.append($('<div />').addClass('fillbox fillbox-filled ' + (v.fill.fixed ? 'fillbox-fixed' : '')).click(function() {
                                 if (!v.fill.fixed)
-                                    core.command('act/inventory',{action: 'spill', items: [v.uin]});
+                                    core.command('act/inventory',{action: 'spill', items: [v.uin], player: $('[data-pid-selected="1"]').attr('data-pid')});
                             }));
                         for (i = v.count; i < v.fill.capacity; i++)
                             fillbox.append($('<div />').addClass('fillbox pointer').click(function() {
                                 container.qtip().hide();
 
                                 cancel();
-                                $('.inventory_self').click();
-                                var items = $('.inventory_location, .inventory_self').find('li[data-id]');
+                                if ($('[data-pid-selected="1"]').attr('data-allow-access') != "true")
+                                    $('.inventory_self').click();
+                                var items = $('.inventory_location, .inventory_player[data-allow-access="true"]').find('li[data-id]');
                                 var hint = game.render.html.hint(true);
                                 hint.append(
                                     $('<span />').text(<?=__j('Wähle eine Flüssigkeit oder einen anderen Behälter aus, um diesen Behälter zu füllen.')?>)
@@ -203,7 +205,7 @@
                                     if ($(this).is('[data-is-spillable="true"]') && $(this).data('id') != v.uin) {
                                         $(this).addClass('marked-target');
                                         $(this).data('click-override', function(o) {
-                                            core.command('act/inventory',{action: $(o).is('[data-is-fillable]') ? 'defill' : 'fill', items: [v.uin, $(o).data('id')]});
+                                            core.command('act/inventory',{action: $(o).is('[data-is-fillable]') ? 'defill' : 'fill', items: [v.uin, $(o).data('id')], player: $('[data-pid-selected="1"]').attr('data-pid')});
                                             cancel();
                                         });
 
@@ -299,7 +301,7 @@
                                     num = parseInt(num);
                                     if (isFinite(num) && num >= 1 && num <= vin.count) ok = true;
                                 }
-                                if (ok) core.command('act/inventory',{action: 'belt', items: [v.uin], count: num, addr: vin.addr});
+                                if (ok) core.command('act/inventory',{action: 'belt', items: [v.uin], count: num, addr: vin.addr, player: $('[data-pid-selected="1"]').attr('data-pid')});
                             }))
                         });
 
@@ -307,7 +309,7 @@
 
                     if (v.static > 1 && !v.is_water) {
                         content.append('<span class="separator" />').append(core.snippets.button(rucksack ? <?=__j('Alle ablegen')?> : <?=__j('Alle mitnehmen')?>, function() {
-                            core.command('act/inventory',{action: rucksack ? 'drop' : 'take', items: $.objToArray(v.set, true), player: rucksack ? 0 : $('.inventory_player[data-pid-selected=1]').data('pid')});
+                            core.command('act/inventory',{action: rucksack ? 'drop' : 'take', items: $.objToArray(v.set, true), player: $('.inventory_player[data-pid-selected=1]').data('pid')});
                         }));
                     }
 
@@ -329,7 +331,7 @@
 
                         $('<div />').addClass('cell rw-6 padded').append(
                             $('<div />').addClass('btn').text(<?=__j('Auffüllen')?>).click(function() {
-                                core.command('act/inventory',{action: 'pilltake', items: [v.uin]});
+                                core.command('act/inventory',{action: 'pilltake', items: [v.uin], player: $('[data-pid-selected="1"]').attr('data-pid')});
                             })
                         ).appendTo(pillrow);
 
@@ -343,7 +345,7 @@
                                     num = parseInt(num);
                                     if (isFinite(num) && num >= 1 && num <= v.count - 1) ok = true;
                                 }
-                                if (ok) core.command('act/inventory',{action: 'pilldrop', items: [v.uin], count: num});
+                                if (ok) core.command('act/inventory',{action: 'pilldrop', items: [v.uin], count: num, player: $('[data-pid-selected="1"]').attr('data-pid')});
                             })
                         ).appendTo(pillrow);
                     }
@@ -480,12 +482,21 @@
                     var remote_inv;
                     iv_a.after(remote_inv = $('<div />').addClass('row inventory flatbox inventory_player'));
 
-                    render_block(v.inventory.player, remote_inv, game.i18n(<?=__j('Rucksack von :name')?>, {':name': v.name}), true, true);
+                    render_block(v.inventory.player, remote_inv, game.i18n(<?=__j('Rucksack von :name')?>, {':name': v.name}), true, !(v.allow === true || v.allow[<?=Interface_Plentity::IC_ALLOW_ITEM_DROP?>]));
 
                     remote_inv.append(NF.row().append($('<div />').addClass('cell rw-12 padded').append($('<div />').addClass('weightbar').append($('<div />').css('width', (100*v.inventory.weight[0]/v.inventory.weight[1]) + '%')))));
-                    remote_inv.attr('data-pid', v.id).attr('data-pid-selected', 0).click(iv_switch).children('.row').hide();
+                    remote_inv.attr({
+                        'data-pid': v.id,
+                        'data-pid-selected': 0,
+                        'data-allow-access': (v.allow === true || v.allow[<?=Interface_Plentity::IC_ALLOW_ITEMS_USE?>])
+                    }).click(iv_switch).children('.row').hide();
                 });
-                iv_a.attr('data-pid',0).click(iv_switch).children('.row').hide();
+
+                iv_a.attr({
+                    'data-pid': 0,
+                    'data-pid-selected': 0,
+                    'data-allow-access': true
+                }).click(iv_switch).children('.row').hide();
 
                 var opener = $('.inventory_player[data-pid=' + core.session('main.mp.inventory.open') + ']');
                 if (opener.length != 1) opener = iv_a;

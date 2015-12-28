@@ -457,7 +457,7 @@ core = {
                 $.each(data, function(k,v) {
                     cache = cache.concat($.objToArray(v.set, true));
                 });
-                core.command('act/inventory',{action: rucksack ? 'drop' : 'take', items: cache, player: rucksack ? 0 : $('.inventory_player[data-pid-selected=1]').data('pid')});
+                core.command('act/inventory',{action: rucksack ? 'drop' : 'take', items: cache, player: $('.inventory_player[data-pid-selected=1]').data('pid')});
             }).qtip(game.render.html.qtip.ingame('top')));
 
         $.each($.objToArray(data, true).sort(function(a,b) {return (a.addr < b.addr) ? -1 : (a.addr == b.addr ? 0 : 1)}) , function(k,v) {
@@ -471,7 +471,7 @@ core = {
                         var o;
                         if (o = $(this).data('click-override'))
                             o(this);
-                        else if (!game.touch() || force) core.command('act/inventory',{action: rucksack ? 'drop' : 'take', items: [v.uin], player: rucksack ? 0 : $('.inventory_player[data-pid-selected=1]').data('pid')});
+                        else if (!game.touch() || force) core.command('act/inventory',{action: rucksack ? 'drop' : 'take', items: [v.uin], player: $('.inventory_player[data-pid-selected=1]').data('pid')});
                     });
                 else
                     container.click(function() {
@@ -480,8 +480,9 @@ core = {
                             return o(this);
 
                         cancel();
-                        $('.inventory_self').click();
-                        var inventories = $('.inventory_location, .inventory_self');
+                        if ($('[data-pid-selected="1"]').attr('data-allow-access') != "true")
+                            $('.inventory_self').click();
+                        var inventories = $('.inventory_location, .inventory_player[data-allow-access="true"]');
                         inventories.find('li.control').addClass('disabled');
                         var items = inventories.find('li[data-id]');
                         var hint = game.render.html.hint(true);
@@ -495,7 +496,7 @@ core = {
                             if ($(this).is('[data-is-fillable="true"]')) {
                                 $(this).addClass('marked-target');
                                 $(this).data('click-override', function(o) {
-                                    core.command('act/inventory',{action: 'fill', items: [v.uin, $(o).data('id')]});
+                                    core.command('act/inventory',{action: 'fill', items: [v.uin, $(o).data('id')], player: $('[data-pid-selected="1"]').attr('data-pid')});
                                     cancel();
                                 });
 
@@ -565,7 +566,7 @@ core = {
                                             if (e.keyCode == 13) {
                                                 e.preventDefault();
                                                 api.hide();
-                                                core.command('act/inventory',{action: 'label', items: [v.uin], text: $(this).val()});
+                                                core.command('act/inventory',{action: 'label', items: [v.uin], text: $(this).val(), player: $('[data-pid-selected="1"]').attr('data-pid')});
                                             }
                                         }))
                                 )
@@ -606,7 +607,7 @@ core = {
                                     if ($(this).data('id') != v.uin || v.static > 1) {
                                         $(this).addClass('marked-target');
                                         $(this).data('click-override', function(o) {
-                                            core.command('act/inventory',{action: 'mix', items: [v.uin, $(o).data('id')]});
+                                            core.command('act/inventory',{action: 'mix', items: [v.uin, $(o).data('id')], player: $('[data-pid-selected="1"]').attr('data-pid')});
                                             cancel();
                                         });
 
@@ -624,15 +625,16 @@ core = {
                         for (i = 0; i < v.count; i++)
                             fillbox.append($('<div />').addClass('fillbox fillbox-filled ' + (v.fill.fixed ? 'fillbox-fixed' : '')).click(function() {
                                 if (!v.fill.fixed)
-                                    core.command('act/inventory',{action: 'spill', items: [v.uin]});
+                                    core.command('act/inventory',{action: 'spill', items: [v.uin], player: $('[data-pid-selected="1"]').attr('data-pid')});
                             }));
                         for (i = v.count; i < v.fill.capacity; i++)
                             fillbox.append($('<div />').addClass('fillbox pointer').click(function() {
                                 container.qtip().hide();
 
                                 cancel();
-                                $('.inventory_self').click();
-                                var items = $('.inventory_location, .inventory_self').find('li[data-id]');
+                                if ($('[data-pid-selected="1"]').attr('data-allow-access') != "true")
+                                    $('.inventory_self').click();
+                                var items = $('.inventory_location, .inventory_player[data-allow-access="true"]').find('li[data-id]');
                                 var hint = game.render.html.hint(true);
                                 hint.append(
                                     $('<span />').text("W\u00e4hle eine Fl\u00fcssigkeit oder einen anderen Beh\u00e4lter aus, um diesen Beh\u00e4lter zu f\u00fcllen.")
@@ -644,7 +646,7 @@ core = {
                                     if ($(this).is('[data-is-spillable="true"]') && $(this).data('id') != v.uin) {
                                         $(this).addClass('marked-target');
                                         $(this).data('click-override', function(o) {
-                                            core.command('act/inventory',{action: $(o).is('[data-is-fillable]') ? 'defill' : 'fill', items: [v.uin, $(o).data('id')]});
+                                            core.command('act/inventory',{action: $(o).is('[data-is-fillable]') ? 'defill' : 'fill', items: [v.uin, $(o).data('id')], player: $('[data-pid-selected="1"]').attr('data-pid')});
                                             cancel();
                                         });
 
@@ -740,7 +742,7 @@ core = {
                                     num = parseInt(num);
                                     if (isFinite(num) && num >= 1 && num <= vin.count) ok = true;
                                 }
-                                if (ok) core.command('act/inventory',{action: 'belt', items: [v.uin], count: num, addr: vin.addr});
+                                if (ok) core.command('act/inventory',{action: 'belt', items: [v.uin], count: num, addr: vin.addr, player: $('[data-pid-selected="1"]').attr('data-pid')});
                             }))
                         });
 
@@ -748,7 +750,7 @@ core = {
 
                     if (v.static > 1 && !v.is_water) {
                         content.append('<span class="separator" />').append(core.snippets.button(rucksack ? "Alle ablegen" : "Alle mitnehmen", function() {
-                            core.command('act/inventory',{action: rucksack ? 'drop' : 'take', items: $.objToArray(v.set, true), player: rucksack ? 0 : $('.inventory_player[data-pid-selected=1]').data('pid')});
+                            core.command('act/inventory',{action: rucksack ? 'drop' : 'take', items: $.objToArray(v.set, true), player: $('.inventory_player[data-pid-selected=1]').data('pid')});
                         }));
                     }
 
@@ -770,7 +772,7 @@ core = {
 
                         $('<div />').addClass('cell rw-6 padded').append(
                             $('<div />').addClass('btn').text("Auff\u00fcllen").click(function() {
-                                core.command('act/inventory',{action: 'pilltake', items: [v.uin]});
+                                core.command('act/inventory',{action: 'pilltake', items: [v.uin], player: $('[data-pid-selected="1"]').attr('data-pid')});
                             })
                         ).appendTo(pillrow);
 
@@ -784,7 +786,7 @@ core = {
                                     num = parseInt(num);
                                     if (isFinite(num) && num >= 1 && num <= v.count - 1) ok = true;
                                 }
-                                if (ok) core.command('act/inventory',{action: 'pilldrop', items: [v.uin], count: num});
+                                if (ok) core.command('act/inventory',{action: 'pilldrop', items: [v.uin], count: num, player: $('[data-pid-selected="1"]').attr('data-pid')});
                             })
                         ).appendTo(pillrow);
                     }
@@ -921,12 +923,21 @@ core = {
                     var remote_inv;
                     iv_a.after(remote_inv = $('<div />').addClass('row inventory flatbox inventory_player'));
 
-                    render_block(v.inventory.player, remote_inv, game.i18n("Rucksack von :name", {':name': v.name}), true, true);
+                    render_block(v.inventory.player, remote_inv, game.i18n("Rucksack von :name", {':name': v.name}), true, !(v.allow === true || v.allow[3]));
 
                     remote_inv.append(NF.row().append($('<div />').addClass('cell rw-12 padded').append($('<div />').addClass('weightbar').append($('<div />').css('width', (100*v.inventory.weight[0]/v.inventory.weight[1]) + '%')))));
-                    remote_inv.attr('data-pid', v.id).attr('data-pid-selected', 0).click(iv_switch).children('.row').hide();
+                    remote_inv.attr({
+                        'data-pid': v.id,
+                        'data-pid-selected': 0,
+                        'data-allow-access': (v.allow === true || v.allow[5])
+                    }).click(iv_switch).children('.row').hide();
                 });
-                iv_a.attr('data-pid',0).click(iv_switch).children('.row').hide();
+
+                iv_a.attr({
+                    'data-pid': 0,
+                    'data-pid-selected': 0,
+                    'data-allow-access': true
+                }).click(iv_switch).children('.row').hide();
 
                 var opener = $('.inventory_player[data-pid=' + core.session('main.mp.inventory.open') + ']');
                 if (opener.length != 1) opener = iv_a;
@@ -2640,13 +2651,13 @@ core = {
     },
 
     map: function() {
-        var popup = core.popup.spawn(804).css('overflow','hidden');
+        var popup = core.popup.spawn(804, 604).css('overflow','hidden');
 
         popup.attr('tabindex', 1).append(core.snippets.wait()).focus();
 
         var init = function(data) {
 
-            var overlay, help, dbl1, dbl2;
+            var overlay, help, list, list_inner, dbl1, dbl2;
 
             popup.empty()
                 .append($('<canvas />').attr({id: 'gamemap', height: 600, width: 800}))
@@ -2680,9 +2691,48 @@ core = {
                             dbl1.addClass('fa-angle-double-right').removeClass('fa-angle-double-left')
                         }
                     })
+                ).append(
+                    list = $('<div />').addClass('map panel right manual-color hide').css('overflow-y','auto').append(NF.row().append(list_inner = NF.cell(true, 12)))
+                ).append($('<div />').addClass('map panel right-top center')
+                    .append(NF.n('span', 'b', "Orte"))
+                    .append(dbl2 = NF.fa('angle-double-left').addClass('pointer').css('float', 'left'))
+                    .click(function() {
+                        if (list.hasClass('hide')) {
+                            list.removeClass('hide');
+                            dbl2.removeClass('fa-angle-double-left').addClass('fa-angle-double-right')
+                        } else {
+                            list.addClass('hide');
+                            dbl2.addClass('fa-angle-double-left').removeClass('fa-angle-double-right')
+                        }
+                    })
                 );
 
             var map = new Gamemap('gamemap', data);
+
+            $.each(data.locations, function(id, location) {
+                if (id == data.current) return;
+                list_inner.append(NF.row().append(NF.cell(false, 12, 0, 'hotbox').on('mouseover', function() {map.hover(id);}).on('mouseout', function() {map.unhover(id);}).on('click', function() {map.handler(id, 'click')})
+                    .append(NF.row('center').append(NF.cell(true, 12).append(NF.n('b', '', location.name)).append(NF.img('media/icons/places/' + location.icon).css('float','left'))))
+                    .append(NF.row('center').append(
+                        NF.cell(false, 3)
+                            .append(NF.img('media/icons/distance.gif'))
+                            .append(NF.n('span','',location.distance))
+                        ).append(
+                        NF.cell(false, 3)
+                            .append(NF.img('media/icons/status_energy.gif'))
+                            .append(NF.n('span','',location.energy))
+                        ).append(
+                        NF.cell(false, 3)
+                            .append(NF.img('media/icons/zombie.gif'))
+                            .append(NF.n('span','',location.zombies))
+                        ).append(
+                        NF.cell(false, 3)
+                            .append(NF.img('media/icons/status_weight.gif'))
+                            .append(NF.n('span','',location.weight === null ? 0 : location.weight))
+                        )
+                    )
+                ))
+            });
 
             popup.on('close', function() {
                 map.end();
@@ -2720,7 +2770,7 @@ core = {
                         });
                         if (route_zombies.length && !confirm(game.i18n("Auf dem Weg zu diesem Ort befinden sich Zombies (:locations). Du wirst gegen sie k\u00e4mpfen m\u00fcssen, wenn du dorthin m\u00f6chtest. Weiter?",{':locations': route_zombies.join(', ')}))) return;
 
-                        if (core.last.players) {
+                        if (game.storage.get('settings','travel_confirm') != 'auto') {
                             var esc_popup = core.popup.spawn({desktop: 400, sm: '100%'});
 
                             var title;
@@ -2732,7 +2782,7 @@ core = {
 
                             var check_row = $('<form />').addClass('row').appendTo(esc_popup);
 
-                            if (core.last.players.others)
+                            if (core.last.players && core.last.players.others)
                                 $.each(core.last.players.others, function(id, player) {
                                     if (player.allow === true ||player.allow[6])
                                         check_row.append($('<div />').addClass('cell rw-6 padded').append(

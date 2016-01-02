@@ -59,6 +59,8 @@
 </div>
 <script type="application/javascript">
 // ## JS COMPRESS BEGIN ## //
+    game.storage.set('news','last-seen',Date.now());
+
     $('#game-btn').click(function() {
         game.network.load('<?=$ingame ? 'game/redirect' : 'gamemaster/lobby' ?>');
     });

@@ -73,7 +73,7 @@
             $(this).hide();
             $('#new_msg_area').show();
         });
-        $('#new_msg_area').hide().find('select').selectric();
+        $('#new_msg_area').hide().find('select').val(-1).selectric();
 
         $('[data-return]').click(function() {
             game.network.load('game/redirect');
@@ -155,7 +155,7 @@
             $('#new_msg').click();
 
             $('#new_msg_title').val('RE: ' + $(this).parents('.article').find('>div:first-child>b').text());
-            $('#new_msg_address').val($(this).attr('data-uid'));
+            $('#new_msg_address').val($(this).attr('data-uid')).selectric();
             window.scrollTo(0,0);
         });
     })();

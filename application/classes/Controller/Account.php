@@ -288,6 +288,7 @@ class Controller_Account extends Controller {
     public function japi_login($uid = null) {
 
         $nw = 1;
+        $skip = (int)$this->request->current()->post('skip');
 
         if ($uid == null) {
             //Get key
@@ -334,7 +335,7 @@ class Controller_Account extends Controller {
         //Check if user is banned
         if ($wl == 'DENY')
             return $this->error(\grge\E_AUTH_ACCOUNT_BANNED);
-        else if (Kohana::$config->load('basic.access.whitelisting') && $wl != 'ALLOW')
+        else if (Kohana::$environment != Kohana::DEVELOPMENT && Kohana::$config->load('basic.access.whitelisting') && $wl != 'ALLOW')
             return $this->error(\grge\E_AUTH_WHITELISTING_FAILED);
 
         //Create user object and try to read from database
@@ -361,7 +362,7 @@ class Controller_Account extends Controller {
             }
 
             $this->render([
-                'redirect' => $nw === 2 ? 'lobby/newuser' : 'lobby/main',
+                'redirect' => $nw === 2 ? 'lobby/newuser' : ($skip && $user->get_current_game() ? 'game/redirect' : 'lobby/main'),
                 'login' => [
                     'user' => $user->uid(),
                     'name' => $user->name(),

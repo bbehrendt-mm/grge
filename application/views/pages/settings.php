@@ -31,6 +31,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="cell rw-4 rw-md-12 padded">
 
@@ -46,7 +47,21 @@
                     <?=__('Die Benutzeroberfläche erkennt normalerweise automatisch, ob du mit Maus oder Touchscreen spielst, und optimiert die Eingabefunkionen dementsprechend. Sollte das bei dir nicht funktionieren (z.B. weil du ein Gerät nutzt, das sowohl über eine Maus, als auch einen Touchscreen verfügt), kannst du die automatische Erkennung außer Kraft setzen.');?>
                 </div>
             </div>
+        </div>
 
+        <div class="row">
+            <div class="cell rw-4 rw-md-12 padded">
+                <label for="news"><b><?=__('Nach dem Login');?></b></label><br />
+                <select id="news" data-associated-setting="show-news"  data-default="news">
+                    <option value="news"><?=__('Zur Neuigkeiten-Seite');?></option>
+                    <option value="game"><?=__('Direkt zum Spiel');?></option>
+                </select>
+            </div>
+            <div class="cell rw-8 rw-md-12 padded">
+                <div class="note">
+                    <?=__('Hier kannst du einstellen, welche Seite nach dem Login aufgerufen werden soll. Auch wenn du die Option "Direkt zum Spiel" aktiviert hast, wirst du einmal pro Tag auf die Neuigkeiten-Seite geleitet.');?>
+                </div>
+            </div>
         </div>
 
         <div class="row">
@@ -157,8 +172,8 @@
             if ($(this).data('handler') && game.w[$(this).data('handler')])
                 game.w[$(this).data('handler')]($(this).val());
             else game.storage.set('settings',setting,$(this).val());
-            alert(<?=__j('Deine Einstellung wurde gespeichert.')?>);
-        })
+            game.render.html.notify('success', <?=__j('Die Änderungen wurden gespeichert.')?>)
+        });
     });
 
     $('#content').find('select').selectric();

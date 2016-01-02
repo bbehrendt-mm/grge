@@ -114,7 +114,7 @@ if (!isset($preset_zvid)) $preset_zvid = -1;
     $('<?=($preset_legacy_key && $preset_legacy_service) ? '#login_legacy_preset' : '#login_legacy'?>').show();
 
     var login = function(key, service,remember, fail_callback) {
-        game.network.query('japi/account/login', {key: key, service: service}, function(data) {
+        game.network.query('japi/account/login', {key: key, service: service, skip: (game.storage.get('settings','show-news') == 'game' && game.storage.get('news','last-seen') > (Date.now() - 86400000)) ? 1 : 0}, function(data) {
             if (data.error) {
                 if (fail_callback && !fail_callback(data.error.code))
                     alert(data.error.code + ' [' + data.error.name + ']: ' + data.error.message);

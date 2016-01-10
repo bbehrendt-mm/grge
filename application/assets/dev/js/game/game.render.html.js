@@ -40,7 +40,13 @@ game.render.html = {
         var target = $('#notifications');
         target.css('z-index',z+1);
 
-        var notification  = $('<div class="' + type + '"><div></div><div>' + content + '</div></div>');
+        if (target.children().length > 3)
+            target.children('[data-created]').each(function() {
+                if ($(this).attr('data-created') < (Date.now() - (1500 / (target.children().length - 3))))
+                    $(this).click();
+            });
+
+        var notification  = $('<div class="' + type + '"><div></div><div>' + content + '</div></div>').attr('data-created', Date.now());
         if (title)
             notification.find('> div:last-child').prepend('<b class="headline">' + title + '</b>');
 

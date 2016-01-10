@@ -27,9 +27,9 @@ abstract class Model_Items_Abstract_Virtual extends Model_Items_Abstract_Item {
         else return (int)$this->remaining[$action];
     }
 
-    public function interact($action, $argument = NULL, $side_player = null) {
+    public function interact($action, $player, $argument = NULL, $side_player = null) {
         if ($this->remaining_actions($action)) {
-            $preserve = !parent::interact($action, $argument, $side_player) && static::$graceful_fail;
+            $preserve = !parent::interact($action, $player, $argument, $side_player) && static::$graceful_fail;
             if ($this->remaining !== false && !$preserve && $this->remaining[$action] < PHP_INT_MAX)
                 $this->remaining[$action]--;
         }

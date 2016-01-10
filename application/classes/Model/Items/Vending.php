@@ -2,6 +2,7 @@
 
 class Model_Items_Vending extends Model_Items_Abstract_Item {
 
+    /** @var  Model_Factory_Items $factory */
 	protected $factory;
     private $chem_rand_type = null;
 	
@@ -24,6 +25,7 @@ class Model_Items_Vending extends Model_Items_Abstract_Item {
         $this->basetype = $basecfg;
 		$this->basename = $name;
 
+        /** @noinspection PhpUndefinedMethodInspection */
         $this->factory = Model_Factory_Items::read($basecfg, $game->config('game.config.itemset'))->set_decay_factor(0);
 		parent::__construct();
 	}
@@ -34,19 +36,18 @@ class Model_Items_Vending extends Model_Items_Abstract_Item {
 	}
 
     protected function hid() {
-        $php53pb = $this;
         return parent::hid()
             ->add_action('Geld einwerfen', Model_Action::factory()
-                    ->requirement('Model_Items_Money', 4)
-                    ->effect(
-                        Model_Effect::factory()
-                            ->ambiguous_effect()
-                            ->achieve(Model_Achievement::MA_CAPITALISM)
-                            ->custom(function($p) use ($php53pb) {
-                                /** @var Model_Items_Vending $php53pb */
-                                $php53pb->vend($p);
-                            })
-                    )
+                ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
+                ->requirement('Model_Items_Money', 4)
+                ->effect(
+                    Model_Effect::factory()
+                        ->ambiguous_effect()
+                        ->achieve(Model_Achievement::MA_CAPITALISM)
+                        ->custom(function($p) {
+                            $this->vend($p);
+                        })
+                )
             );
     }
 	
@@ -66,6 +67,7 @@ class Model_Items_Vending extends Model_Items_Abstract_Item {
 	}
 
     public function mixchem($chemval) {
+        /** @global Model_Player $player */
         global $player;
 
         if ($this->chem_rand_type === null)

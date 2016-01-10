@@ -17,6 +17,6 @@ class Model_Buffs_Backpack extends Model_Buffs_Abstract_Passive {
 			);
 	
 	protected function activator() {
-		return (($this->assoc_player->inventory()->weight() / $this->assoc_player->inventory()->global_limit()) >= 0.9);
+        return ($this->assoc_player->inventory()->global_limit() > 0) ? (($this->assoc_player->inventory()->weight() / $this->assoc_player->inventory()->global_limit()) >= 0.9) : false;
 	}
 }

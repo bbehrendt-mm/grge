@@ -23,16 +23,17 @@ class Controller_Act extends Controller_Game {
             } elseif ($action == 'take') {
                 if (!($item = $game->uin()->get($itemid, 'Model_Items_Abstract_Item'))) continue;
 
-                if (Tool_System::instance_of($item, 'Model_Items_Abstract_Ammo') && $p->id() != $player->id()) {
-                    /** @var $belt Model_Items_Ammobelt[] */
-                    $belt = $p->inventory()->get('Model_Items_Ammobelt');
+                if (Tool_System::instance_of($item, 'Model_Items_Abstract_Ammo')) {
+                    /** @var $belt Model_Items_Ammobelt */
+                    $belt = Tool_Scripts::first_available_item(Model_Items_Ammobelt::cls(), true, false, false, $p);
                     if (!$belt) {
-                        if (count($items) <= 1) $player->log()->add('Dein Freund benötigt einen Munitionsgürtel, um diesen Gegenstand mitführen zu können.');
+                        if (count($items) <= 1) $player->log()->add($p->id() == $player->id() ? 'Du benötigst einen Munitionsgürtel, um diesen Gegenstand mitführen zu können.' : 'Dein Freund benötigt einen Munitionsgürtel, um diesen Gegenstand mitführen zu können.');
                         continue;
                     }
 
                     /** @var Model_Items_Abstract_Ammo $item */
-                    $belt[0]->add($item);
+                    if ($item->take(count($items) > 1))
+                        $belt->add($item);
                 } else
                     if (!$item->take(count($items) > 1)) continue;
 
@@ -259,7 +260,8 @@ class Controller_Act extends Controller_Game {
 
                     foreach ($player->inventory()->get(get_class($item)) as $ep)
                         /** @var Model_Items_Abstract_Equipable $ep */
-                        $ep->equip($player);
+                        if ($ep->uin() != $item->uin())
+                            $ep->equip($player);
                 break;
             case 'unequip':
                 $item->unequip();
@@ -267,7 +269,8 @@ class Controller_Act extends Controller_Game {
 
                     foreach ($player->inventory()->get(get_class($item)) as $ep)
                         /** @var Model_Items_Abstract_Equipable $ep */
-                        $ep->unequip();
+                        if ($ep->uin() != $item->uin())
+                            $ep->unequip();
                 break;
             case 'equip_primary':
                 if ($item->allows_primary() && $item->is_equipped())
@@ -380,31 +383,43 @@ class Controller_Act extends Controller_Game {
         //Get UIN
         $id = $this->request->post('item');
         $action = $this->request->post('action');
-        if ($coid = $this->request->post('coitem')) {
-            $argument = $game->uin()->get($coid, 'Model_Items_Abstract_Item');
-            if (!$game->item_available($coid) || !$argument) {
-                $player->log()->add('Die Aktion konnte nicht vollständig ausgeführt werden, da eines oder mehrere der ausgewählten Gegenstände nicht länger in deiner Reichweite sind.');
-                return $this->japi_data();
-            }
-        } else $argument = $this->request->post('coarg');
+        $argument = $this->request->post('coarg');
+        $user = $this->request->post('player');
+        $user = $user ? $game->get_player($user) : null;
 
         if ($side_id = $this->request->post('co')) {
-            if (!Tool_Scripts::check_comrade($side_id)) {
-                $player->log()->add('Dieser Spieler befindet sich nicht in deiner Nähe.');
+            if ($user && $side_id) return $this->japi_data();
+
+            $side_player = $game->get_player($side_id);
+
+            if (!$side_player || !Tool_Scripts::check_comrade($side_id) || !$side_player->allow(Interface_Plentity::IC_ALLOW_ITEMS_SIDEUSE)) {
+                $player->log()->add('Du kannst aktuell keine Gegenstände auf diesem Spieler anwenden.');
                 return $this->japi_data();
             }
 
             $side = $game->get_player($side_id);
         } else $side = null;
 
+        //Block sleeping (again)
+        if ($user && (!$user->allow(Interface_Plentity::IC_ALLOW_ITEMS_USE) || $user->get_status()->retrieve('passout') || $user->get_status()->retrieve('fragile'))) {
+            $player->log()->add('Dieser Spieler kann aktuell keinen Gegenstand verwenden.');
+            return $this->japi_data();
+        }
+
         //Get Item, or throw Exception if this UIN does not resolve to a valid item
         $item = $game->uin()->get((int)$id, 'Model_Items_Abstract_Item');
-        if (!$game->item_available((int)$id) || !$item) {
+        if (!$game->item_available((int)$id, $user ? $user : null) || !$item) {
             $player->log()->add('Die Aktion konnte nicht vollständig ausgeführt werden, da eines oder mehrere der ausgewählten Gegenstände nicht länger in deiner Reichweite sind.');
             return $this->japi_data();
         }
-        $item->interact($action, $argument, $side);
 
+        // Prevent the remote use of Virtual Items
+        if ($user && Tool_System::instance_of($item, Model_Items_Abstract_Virtual::cls()))
+            return $this->japi_data();
+
+        $r = $item->interact($action, $user ? $user : $player, $argument, $side);
+        if ($user)
+            $player->log()->add($r ? ':name hat deinen Befehl befolgt und :item eingesetzt!' : ':name konnte :item nicht einsetzen...', [':name' => $user->name()], [':item' => $item->name()]);
 
         return $this->japi_data();
     }

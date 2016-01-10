@@ -14,12 +14,12 @@ class Model_Items_Cookie extends Model_Items_Abstract_Item implements Interface_
     protected function hid() {
         return parent::hid()
             ->add_action('Essen', Model_Action::factory()
-                    ->effect(
-                        Model_Effect::factory()
-                            ->effect(Model_Status::MS_STAT_HUNGER, 5)
-                            ->consume($this)
-                            ->message('Der gebackene Teig zerläuft in deinem Mund, und du bist angefüllt mir Weihnachtsgefühlen. Wie wunderbar!')
-                    )
+                ->effect(
+                    Model_Effect::factory()
+                        ->effect(Model_Status::MS_STAT_HUNGER, 5)
+                        ->consume($this)
+                        ->message('Der gebackene Teig zerläuft in deinem Mund, und du bist angefüllt mir Weihnachtsgefühlen. Wie wunderbar!')
+                )
             );
     }
 	

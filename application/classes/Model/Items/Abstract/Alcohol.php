@@ -89,10 +89,11 @@ abstract class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
                         if (Tool_Events::current($game->next_tick()) == 'halloween' && Tool_Gambling::random(0.08))
                             return 'horror';
 
-                        $ca = $p->get_status()->get(Model_Status::MS_STAT_DRUNK) + $a;
+                        $ca = $p->get_status()->simulate(Model_Status::MS_STAT_DRUNK, $a, Model_Status::MS_EFFECT_ITEM, false);
+                        $as_child = ($p->type() == Interface_Plentity::IC_NPC_ANIMAL || (!Tool_Scripts::is_npc($p) && $p->job(1080)));
                         if ($ca > 100) return 's2';
-                        if ($ca > 90) return ($p->job(1080)) ? 's5' : 's4';
-                        return ($p->job(1080)) ? 's3' : 's1';
+                        if ($ca > 90) return $as_child ? 's5' : 's4';
+                        return $as_child ? 's3' : 's1';
                     })
                     ->export('s1')
             );

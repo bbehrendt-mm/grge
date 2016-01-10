@@ -99,8 +99,9 @@ class Model_Effect {
             }, static::CFUNC_PROCESS_POST);
         else
             return $this->custom(function($p) use ($achievement, $num) {
-                /** @var Model_Player $p */
-                $p->achievements()->achieve($achievement, $num);
+                /** @var Model_Player|Interface_Plentity $p */
+                if (!Tool_Scripts::is_npc($p))
+                    $p->achievements()->achieve($achievement, $num);
             }, static::CFUNC_PROCESS_POST);
     }
 
@@ -264,7 +265,7 @@ class Model_Effect {
         }
         $player->get_status()->modify($accum, Model_Status::MS_EFFECT_ITEM);
 
-        if ($this->message)
+        if ($this->message && !Tool_Scripts::is_npc($player))
             $player->log()->add($this->message, $this->m_variables, $this->m_translateables);
 
         $this->call_custom_func($player, static::CFUNC_PROCESS_POST, $argument);

@@ -37,7 +37,7 @@ class Model_Places_Tentkit extends Model_Places_Abstract_Hideout {
             $this->set_decay(1,true);
             foreach (Tool_Scripts::at_location($this->uin(), true, true) as $p)
                 /** @var Model_Player $p */
-                if ($p->type() == Interface_Plentity::IC_NPC_NONPC) {
+                if (!Tool_Scripts::is_npc($p)) {
                     $p->log()->add('Gerade hast du es dir bequem gemacht, da hörst du hinter dir plötzlich die Zeltplane reißen. Noch bevor du dich umdrehen kannst spürst du einen stechenden Schmerz im Rücken - herzlichen Glückwunsch, du bist tot.');
                     $p->achievements()->achieve(Model_Achievement::MA_SLASHER_KILLER);
                     $p->get_status()->set_cause_of_death("Serienkiller-Opfer");

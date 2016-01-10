@@ -42,6 +42,7 @@ class Model_Combat_Actor extends Named {
     protected $ai_volatile = 0.8;
     protected $ai_brashness = 0.7;
 
+    protected static $is_unique = true;
 
     /** @var Model_Combat_Weapon[] */
     protected $weapons = [];
@@ -61,6 +62,10 @@ class Model_Combat_Actor extends Named {
     public static function factory() {
         $s = get_called_class();
         return new $s;
+    }
+
+    public function unique() {
+        return static::$is_unique;
     }
 
     public function get_avatar() {

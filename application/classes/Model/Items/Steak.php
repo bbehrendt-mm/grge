@@ -14,12 +14,12 @@ class Model_Items_Steak extends Model_Items_Abstract_Item implements Interface_S
     protected function hid() {
         return parent::hid()
             ->add_action('Essen', Model_Action::factory()
-                    ->effect(
-                        Model_Effect::factory()
-                            ->effect(Model_Status::MS_STAT_HUNGER, 35)
-                            ->consume($this)
-                            ->message('Wirklich lecker, wenn man bedenkt, woraus dieses Steak gemacht wurde...')
-                    )
+                ->effect(
+                    Model_Effect::factory()
+                        ->effect(Model_Status::MS_STAT_HUNGER, 35)
+                        ->consume($this)
+                        ->message('Wirklich lecker, wenn man bedenkt, woraus dieses Steak gemacht wurde...')
+                )
             );
     }
 }	

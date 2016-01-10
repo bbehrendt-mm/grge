@@ -97,8 +97,10 @@ abstract class Model_Items_Abstract_Stackable extends Model_Items_Abstract_Item 
 		if ($targets === null) $targets = Tool_Scripts::available_items(get_class($this));
 		
 		//Iterate over all targets; do nothing if this stack or the target stack is full
-		foreach ($targets as $target) if (!($this == $target || $this->is_stack_full() || $target->is_stack_full()))
-			$this->count += $target->consume( (static::$max_size == 0) ? PHP_INT_MAX : (static::$max_size - $this->count) );
+		/** @var Model_Items_Abstract_Stackable $target */
+        foreach ($targets as $target)
+            if (!($this == $target || $this->is_stack_full() || $target->is_stack_full()))
+			    $this->count += $target->consume( (static::$max_size == 0) ? PHP_INT_MAX : (static::$max_size - $this->count) );
 	}
 	
 	/**

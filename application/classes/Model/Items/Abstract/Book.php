@@ -60,12 +60,9 @@ abstract class Model_Items_Abstract_Book extends Model_Items_Abstract_Item {
     }
 
     protected function hid() {
-        $php53pb = $this;
-        $effects = static::$effects;
         if ($this->get_uses() >= $this->pages)
             return parent::hid();
         else {
-
             $show_eff = Model_Effect::factory();
             foreach (static::$effects as $stat => $value) {
                 if ($value < -1) $s = '---';
@@ -80,12 +77,13 @@ abstract class Model_Items_Abstract_Book extends Model_Items_Abstract_Item {
             return parent::hid()
                 ->add_action('Lesen',
                     Model_Action::factory()
-                        ->condition(function($p) use ($php53pb) {
+                        ->allow_for(Interface_Plentity::IC_NPC_NONPC)
+                        ->condition(function($p) {
                             /** @var Model_Player $p */
                             /** @noinspection PhpUndefinedMethodInspection */
                             if ((Tool_Scripts::location_type($p->location_class()) != 2) || $p->location()->get_defense() < 1)
                                 return "hideout";
-                            if (!$p->inventory()->has($php53pb->uin()))
+                            if (!$p->inventory()->has($this->uin()))
                                 return "noinv";
                             return true;
                         })
@@ -94,10 +92,10 @@ abstract class Model_Items_Abstract_Book extends Model_Items_Abstract_Item {
                         ->show_as($show_eff)
                         ->effect(
                             Model_Effect::factory()
-                                ->custom(function($p) use ($php53pb, $effects) {
+                                ->custom(function($p) {
                                     /** @var Model_Player $p */
                                     /** @noinspection PhpParamsInspection */
-                                    new Model_Buffs_Read($php53pb->uin(), $effects, $php53pb->remaining_ticks($p->id(), $p->id()));
+                                    new Model_Buffs_Read($this->uin(), static::$effects, $this->remaining_ticks($p->id()));
                                 })
                                 ->message('Zeit zu lesen! Dieses Buch wird dir sicherlich helfen, all die schlimmen Dinge in dieser Welt für einen Augenblick zu vergessen.')
                         )

@@ -188,7 +188,7 @@ class Tool_Scripts
             $player = $perspective;
         else global $player;
 
-        if ($player->type() != Interface_Plentity::IC_NPC_NONPC)
+        if (Tool_Scripts::is_npc($player))
             $active_location = $other_players = false;
 
         $proto = [];
@@ -540,13 +540,13 @@ class Tool_Scripts
         $c *= (1 - ($player->get_status()->get(Model_Status::MS_STAT_DRUNK)/100));
 
         //Survivalist Boni
-        if ($player->type() == Interface_Plentity::IC_NPC_NONPC && $player->job(1060)) {
+        if (!Tool_Scripts::is_npc($player) && $player->job(1060)) {
             if ($player->job(1060, 5, false)) $c *= 1.15;
             elseif ($player->job(1060, 2, false)) $c *= 1.05;
         }
 
         //Child Bonus
-        if ($player->type() == Interface_Plentity::IC_NPC_NONPC && $player->job(1080)) $c *= 1.5;
+        if (!Tool_Scripts::is_npc($player) && $player->job(1080)) $c *= 1.5;
 
         return $c;
     }
@@ -590,5 +590,16 @@ class Tool_Scripts
         }
 
         return $selected;
+    }
+
+    /**
+     * @param null|Model_Player|Interface_Plentity $player
+     * @return Model_Items_Abstract_Transport|null
+     */
+    public static function is_npc($player = null) {
+        if ($player === null)
+            global $player;
+
+        return $player->type() != Interface_Plentity::IC_NPC_NONPC;
     }
 }

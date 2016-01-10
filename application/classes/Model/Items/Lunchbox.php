@@ -18,13 +18,13 @@ class Model_Items_Lunchbox extends Model_Items_Abstract_Stackable {
     protected function hid() {
         return parent::hid()
             ->add_action('Eine Ration essen', Model_Action::factory()
-                    ->effect(
-                        Model_Effect::factory()
-                            ->effect(Model_Status::MS_STAT_HUNGER, 25)
-                            ->effect(Model_Status::MS_STAT_ENERGY, 8)
-                            ->consume($this)
-                            ->message('Es geht doch nichts über belegte Brote. Dein Hunger ist gestillt und du fühlst neue Kraft. ' . (($this->count > 2) ? 'Jetzt sind noch :num Rationen in der Box.' : (($this->count == 2) ? 'Du hast deine Nahrungsrationen fast aufgebraucht. Eine Ration befindet sich noch in der Box.' : 'Die Box ist leer!')), array(':num' => $this->count - 1))
-                    )
+                ->effect(
+                    Model_Effect::factory()
+                        ->effect(Model_Status::MS_STAT_HUNGER, 25)
+                        ->effect(Model_Status::MS_STAT_ENERGY, 8)
+                        ->consume($this)
+                        ->message('Es geht doch nichts über belegte Brote. Dein Hunger ist gestillt und du fühlst neue Kraft. ' . (($this->count > 2) ? 'Jetzt sind noch :num Rationen in der Box.' : (($this->count == 2) ? 'Du hast deine Nahrungsrationen fast aufgebraucht. Eine Ration befindet sich noch in der Box.' : 'Die Box ist leer!')), array(':num' => $this->count - 1))
+                )
             );
     }
 }	

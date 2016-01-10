@@ -16,7 +16,7 @@ class Model_Items_Briefcase extends Model_Items_Abstract_Item {
 		/** @global Model_Player $player */
 		global $player;
 	
-		if (!$silent) $player->log()->add(new Model_Log_Types_Text(null, null, 'Gehts noch? Welche Frau gibt denn bitte ihre Tasche aus der Hand?'));
+		if (!$silent && !Tool_Scripts::is_npc($player)) $player->log()->add(new Model_Log_Types_Text(null, null, 'Gehts noch? Welche Frau gibt denn bitte ihre Tasche aus der Hand?'));
 		return false;
 	}
 	

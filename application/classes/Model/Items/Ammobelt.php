@@ -28,7 +28,7 @@ class Model_Items_Ammobelt extends Model_Items_Abstract_Item {
 		$this->content['Model_Items_Ammo'] = mt_rand($game->config('items.ammobelt.startup_blt.min'), $game->config('items.ammobelt.startup_blt.max'));
 		
 		//JOB BONUS Soldier
-		if ($player->job(1020)) switch ($player->job(false))
+		if ($player && !Tool_Scripts::is_npc() && $player->job(1020)) switch ($player->job(false))
 		{
 			case 4: $this->content['Model_Items_Ammo'] += mt_rand(5, 10); break;
 			case 5: $this->content['Model_Items_Ammo'] += mt_rand(10, 20); break;

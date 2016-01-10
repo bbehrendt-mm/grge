@@ -75,6 +75,9 @@
 
             var g = ext_mode == 'tooltip' ? 12 : 6;
 
+            if (action.user != '0')
+                ext.append(NF.cell(false, 12).html(game.i18n(<?=__j(':other wird diese Aktion durchführen!')?>, {':other': '<b>' + core.last.players.others[action.user]['name'] + '</b>'})));
+
             if (action.remaining != 0) {
                 if ($.objToArray(action.requires).length) {
 
@@ -130,10 +133,10 @@
             } else button.addClass('disabled');
 
             button
-                .addClass('btn btn-zv ' + (action.skin ? 'btn-zv-skinned-' + action.skin : '') )
-                .append(
-                    $('<span />').text(action.description)
-                ).click(function (e,arg) {
+                .addClass('btn btn-zv ' + (action.skin ? 'btn-zv-skinned-' + action.skin : '') + (action.user != '0' ? ' btn-icon' : '') )
+                .append(action.user != '0' ? NF.n('span','btn-icon-inner', NF.fa('external-link-square')) : '')
+                .append(NF.n('span', '', action.description))
+                .click(function (e,arg) {
                     // Hide all QTips
                     $('.qtip').qtip('hide');
 
@@ -171,7 +174,7 @@
                             }))
                         ));
 
-                    } else core.command('act/item', {action: action.action, item: action.target, coarg: arg});
+                    } else core.command('act/item', {action: action.action, item: action.target, coarg: arg, player: action.user});
                 });
 
             if (game.touch()) ext_mode = 'static';

@@ -2007,7 +2007,7 @@ core = {
             box.append($('<b />').text(player.name));
             var bars = NF.row().appendTo(box);
 
-            box.attr('title', '-').qtip(game.render.html.qtip.ingame('bottom', {
+            box.children('b').css('cursor', 'default').attr('title', '-').qtip(game.render.html.qtip.ingame('bottom', {
                 render: function(event,api) {
                     var content = $(this).find('.qtip-content').empty().css('width', 360);
 
@@ -3087,7 +3087,7 @@ core = {
                     core.command('act/inventory', {action: equipped ? 'unequip' : 'equip', items: [v.uin]});
                 }).qtt('bottom', function() {
                     $(this)
-                        .append(NF.n('b', 'header', v.name))
+                        .append(NF.n('b', 'header hold', v.name))
                         .append(render_effect_list(v.rpg))
                         .append(NF.separator());
 
@@ -3204,64 +3204,24 @@ core = {
     var fill_battleai = function(target, data) {
         var button;
 
-        target.empty().append($('<h3 />').text("Kampfverhalten"));
-
-        var bhav_select, bhav = NF.row().appendTo(target);
-        bhav.append($('<b />').text("Kampfstrategie"));
-        bhav.append($('<div />').addClass('cell rw-6 rw-lg-8 rw-md-6 rw-sm-12 padded').append($('<label />').attr('title',"Der ausgew\u00e4hlte Kampfstil beeinflusst deine Waffen- und Gegnerauswahl. Offensive Spieler werden versuchen, so viel Schaden anzurichten wie m\u00f6glich. Defensive Spieler werden versuchen, Zombies so gut es geht auf Abstand zu halten.").qtip(game.render.html.qtip.ingame('top')).prepend(bhav_select = $('<select />'))));
-
-        bhav_select
-            .append($('<option />').text("Defensiv").attr('value','1'))
-            .append($('<option />').text("Ausgeglichen").attr('value','2'))
-            .append($('<option />').text("Offensiv").attr('value','3'))
-            .val(data.type).on('change', function() {
-                button.removeClass('disabled')
-            }).selectric();
-
-        var sw_energy, sw_breakable, sw_ammocache;
-        var sw = NF.row().appendTo(target);
-        sw.append($('<b />').text("Verwendung einzelner Waffenarten sperren"));
-        sw
-            .append($('<div />').addClass('cell rw-6 rw-sm-12 padded').append($('<label />').attr('title',"Ist diese Option aktiviert, wirst du im Kampf keine Waffen einsetzen, die Energie verbrauchen.").qtip(game.render.html.qtip.ingame('top')).text("Energiewaffen").prepend(sw_energy = $('<input />').attr('type', 'checkbox').prop('checked', data.weapons.energy).prop('disabled', (data.weapons.energy === 'locked')))))
-            .append($('<div />').addClass('cell rw-6 rw-sm-12 padded').append($('<label />').attr('title',"Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die beim Einsatz zerst\u00f6rt werden (z.B. Wasserbombe).").qtip(game.render.html.qtip.ingame('top')).text("Wurfgeschosse").prepend(sw_breakable = $('<input />').attr('type', 'checkbox').prop('checked', data.weapons.throw))))
-            .append($('<div />').addClass('cell rw-6 rw-sm-12 padded').append($('<label />').attr('title',"Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die einen internen Munitionsspeicher haben (z.B. Wasserpistole).").qtip(game.render.html.qtip.ingame('top')).text("Verbrauchswaffen").prepend(sw_ammocache = $('<input />').attr('type', 'checkbox').prop('checked', data.weapons.tank))));
-
-        var mun = NF.row().appendTo(target);
-        mun.append($('<b />').text("Verwendung einzelner Munitionstypen sperren"));
-
-        var mun_elems = {};
-
-        $.each(data.ammo, function(k,v) {
-            mun.append($('<div />').addClass('cell rw-2 padded rw-lg-4 rw-md-2 rw-sm-4').append($('<label />').attr('title', game.i18n("Ist diese Option aktiviert, werden im Kampf keine Waffen verwendet, die diese Munition (:item) verwenden.", {':item': v.name})).qtip(game.render.html.qtip.ingame('top')).append($('<img />').attr('src', 'media/icons/'+ v.icon + '.gif')).prepend(mun_elems[k] = $('<input />').attr('type', 'checkbox').prop('checked', v.locked))))
-        });
-
-        target.find(':checkbox').click(function() {
-            button.removeClass('disabled')
-        }).customRadioCheck();
-
-        target.append(NF.row().append($('<div />').addClass('cell rw-6 ro-6').append(
-            button = $('<div />').addClass('btn btn-icon disabled')
-                .append($('<span />').addClass('btn-icon-inner').append($('<i />').addClass('fa fa-check')))
-                .append($('<span />').text("Speichern"))
-                .click(function() {
-                    var ammo = {};
-                    $.each(mun_elems, function(k,v) {
-                        ammo[k] = v.prop('checked') ? 1 : 0;
-                    });
-                    core.command('player/ai', {
-                        'ai': bhav_select.val(),
-                        'wp_energy': sw_energy.prop('checked') ? 1 : 0,
-                        'wp_throw': sw_breakable.prop('checked') ? 1 : 0,
-                        'wp_tank': sw_ammocache.prop('checked') ? 1 : 0,
-                        'wp_ammo': ammo
-                    }, true, function(ret) {
-                        if (!ret.success) {
-                            game.render.html.notify('error', "Beim Speichern der Einstellungen ist ein Fehler aufgetreten.");
-                            fill_battleai(target, data);
-                        } else button.addClass('disabled')
+        target.empty()
+            .append($('<h3 />').text("Kampfverhalten"))
+            .append(NF.row().append(NF.cell(true, 12, 0, 'center').text('COMING SOON')))
+            .append(NF.row().append(NF.cell(false, 6, 6).append(
+                button = $('<div />').addClass('btn btn-icon disabled')
+                    .append($('<span />').addClass('btn-icon-inner').append($('<i />').addClass('fa fa-check')))
+                    .append($('<span />').text("Speichern"))
+                    .click(function() {
+                        core.command('player/ai', {
+                            //ToDo: AI
+                        }, true, function(ret) {
+                            if (!ret.success) {
+                                game.render.html.notify('error', "Beim Speichern der Einstellungen ist ein Fehler aufgetreten.");
+                                fill_battleai(target, data);
+                            } else button.addClass('disabled')
+                        })
                     })
-                })
-        )));
+            )));
 
     };
 
@@ -3350,6 +3310,9 @@ core = {
 
             var g = ext_mode == 'tooltip' ? 12 : 6;
 
+            if (action.user != '0')
+                ext.append(NF.cell(false, 12).html(game.i18n(":other wird diese Aktion durchf\u00fchren!", {':other': '<b>' + core.last.players.others[action.user]['name'] + '</b>'})));
+
             if (action.remaining != 0) {
                 if ($.objToArray(action.requires).length) {
 
@@ -3405,10 +3368,10 @@ core = {
             } else button.addClass('disabled');
 
             button
-                .addClass('btn btn-zv ' + (action.skin ? 'btn-zv-skinned-' + action.skin : '') )
-                .append(
-                    $('<span />').text(action.description)
-                ).click(function (e,arg) {
+                .addClass('btn btn-zv ' + (action.skin ? 'btn-zv-skinned-' + action.skin : '') + (action.user != '0' ? ' btn-icon' : '') )
+                .append(action.user != '0' ? NF.n('span','btn-icon-inner', NF.fa('external-link-square')) : '')
+                .append(NF.n('span', '', action.description))
+                .click(function (e,arg) {
                     // Hide all QTips
                     $('.qtip').qtip('hide');
 
@@ -3446,7 +3409,7 @@ core = {
                             }))
                         ));
 
-                    } else core.command('act/item', {action: action.action, item: action.target, coarg: arg});
+                    } else core.command('act/item', {action: action.action, item: action.target, coarg: arg, player: action.user});
                 });
 
             if (game.touch()) ext_mode = 'static';
@@ -3889,6 +3852,15 @@ core = {
             $('<div />').addClass('varbar').append(
                 $('<div />').css({width: value + '%', background: num_decode_color(type)})
             )
+        ).attr('title','-').qtip(game.render.html.qtip.ingame('bottom', {
+                render: function (event, api) {
+                    $(this).find('.qtip-content').empty().append(
+                        $('<b />').addClass('header hold').text(num_decode_title(type))
+                    ).append(
+                        $('<div />').addClass('info center').append(make_bar(type, value, null, true))
+                    );
+                }
+            })
         );
     };
 
@@ -3940,28 +3912,29 @@ core = {
 
             $.each(hidden,function(k,v) {
                 v = parseInt(v);
-                $('<img />').addClass('status').attr('src','media/icons/status_' + num_decode_str(v) + '.gif').attr('title',small ? '' : '-').qtip(game.render.html.qtip.ingame('bottom', {
+                $('<img />').addClass('status').attr('src','media/icons/status_' + num_decode_str(v) + '.gif').attr('title','-').qtip(game.render.html.qtip.ingame('bottom', {
                         render: function (event, api) {
                             var content = $(this).find('.qtip-content').empty().append(
-                                $('<b />').addClass('header').text(num_decode_title(v))
+                                $('<b />').addClass('header hold').text(num_decode_title(v))
                             ).append(
                                 NF.row().append(make_bar(v,bars[v].value,bars[v].buffs, true))
-                            ).append(
-                                $('<div />').addClass('info center').text(game.i18n("Aktueller Wert: :num", {':num': Math.round(100*bars[v].value)/100}))
-                            ).append(
-                                $('<span />').addClass('separator')
-                            ).append(
-                                $('<span />').text(num_decode_description(v))
-                            ).append(
-                                $('<span />').addClass('separator')
-                            ).append(make_buff_table(bars[v].buffs, num_decode_inverse(v)));
+                            );
+
+                            if (!small)
+                                content.append(
+                                    $('<span />').addClass('separator')
+                                ).append(
+                                    $('<span />').text(num_decode_description(v))
+                                ).append(
+                                    $('<span />').addClass('separator')
+                                ).append(make_buff_table(bars[v].buffs, num_decode_inverse(v)));
                         }
                     })
                 ).appendTo(target);
             });
 
             $.each(buffs, function(k,v) {
-                $('<img />').addClass('buff').attr('src','media/icons/' + v.icon + '.gif').attr('title',small ? '' : '-').qtip(game.render.html.qtip.ingame('bottom', {
+                $('<img />').addClass('buff').attr('src','media/icons/' + v.icon + '.gif').attr('title','-').qtip(game.render.html.qtip.ingame('bottom', {
                         render: function (event, api) {
                             var content = $(this).find('.qtip-content').empty().append(
                                 $('<b />').addClass('header').text(v.name)

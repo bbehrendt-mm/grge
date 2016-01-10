@@ -5,6 +5,8 @@ abstract class Model_Combat_Zombies_Zombie extends Model_Combat_Actor {
     protected $type = Model_Combat_Actor::MCA_TYPE_ZOMBIE;
     protected $nano_npc;
 
+    protected static $is_unique = false;
+
     protected static $num_str = 1;
 
     public function __construct() {

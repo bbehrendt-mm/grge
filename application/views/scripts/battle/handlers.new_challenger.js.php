@@ -1,8 +1,9 @@
 (function() {
-    Battle.prototype.events[<?=Model_Combat_Scene::MCS_EV_NEW_CHALLENGER?>] = function(id, group, name, avatar, type, pos, strength, stats) {
+    Battle.prototype.events[<?=Model_Combat_Scene::MCS_EV_NEW_CHALLENGER?>] = function(id, group, name, unique, avatar, type, pos, strength, stats) {
         this.combatants[id] = {
             group: group,
             name: name,
+            unique: unique,
             avatar: avatar,
             type: type,
             pos: {x: pos[0], y: pos[1]},

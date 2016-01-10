@@ -144,12 +144,13 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
 		
 		$this->lifetime = $lifetime;
 
-        if (!$association || is_numeric($association))
-		    $this->assoc_player = $game->get_player($association);
-        elseif (Tool_System::instance_of($association, 'Model_Player') || (static::$allow_npc_assoc && Tool_System::instance_of($association, 'Interface_Plentity')))
+        if ($association === null)
+            $this->assoc_player = $game->get_player();
+        elseif (is_object($association) && Tool_System::instance_of($association, 'Interface_Plentity'))
             $this->assoc_player = $association;
-        else
-            throw new Exception('Invalid buff association!');
+        else $this->assoc_player = $game->get_player($association);
+
+        if (!$this->assoc_player) throw new Exception('Invalid buff association!');
 
         $this->assoc_player->get_status()->add($this);
 

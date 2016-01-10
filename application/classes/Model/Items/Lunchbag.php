@@ -14,12 +14,12 @@ class Model_Items_Lunchbag extends Model_Items_Abstract_Item implements Interfac
     protected function hid() {
         return parent::hid()
             ->add_action('Essen', Model_Action::factory()
-                    ->effect(
-                        Model_Effect::factory()
-                            ->effect(Model_Status::MS_STAT_HUNGER, 15)
-                            ->consume($this)
-                            ->message('Gierig schlingst du den Inhalt des Lunchbags herunter. Dein Hunger ist wieder etwas gestillt.')
-                    )
+                ->effect(
+                    Model_Effect::factory()
+                        ->effect(Model_Status::MS_STAT_HUNGER, 15)
+                        ->consume($this)
+                        ->message('Gierig schlingst du den Inhalt des Lunchbags herunter. Dein Hunger ist wieder etwas gestillt.')
+                )
             );
     }
 

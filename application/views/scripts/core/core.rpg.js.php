@@ -184,7 +184,7 @@
                     core.command('act/inventory', {action: equipped ? 'unequip' : 'equip', items: [v.uin]});
                 }).qtt('bottom', function() {
                     $(this)
-                        .append(NF.n('b', 'header', v.name))
+                        .append(NF.n('b', 'header hold', v.name))
                         .append(render_effect_list(v.rpg))
                         .append(NF.separator());
 

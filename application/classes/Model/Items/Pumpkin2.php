@@ -14,14 +14,14 @@ class Model_Items_Pumpkin2 extends Model_Items_Abstract_Item implements Interfac
     protected function hid() {
         return parent::hid()
             ->add_action('Essen', Model_Action::factory()
-                    ->effect(
-                        Model_Effect::factory()
-                            ->effect(Model_Status::MS_STAT_HUNGER, 80)
-                            ->effect(Model_Status::MS_STAT_ENERGY, -10)
-                            ->effect(Model_Status::MS_STAT_HEALTH, -45)
-                            ->consume($this)
-                            ->message('Dieser Kürbis lässt sich relativ leicht öffnen. Mit geschlossenen Augen und zuhealtener Nase lässt er sich zudem sogar fast leicht essen.')
-                    )
+                ->effect(
+                    Model_Effect::factory()
+                        ->effect(Model_Status::MS_STAT_HUNGER, 80)
+                        ->effect(Model_Status::MS_STAT_ENERGY, -10)
+                        ->effect(Model_Status::MS_STAT_HEALTH, -45)
+                        ->consume($this)
+                        ->message('Dieser Kürbis lässt sich relativ leicht öffnen. Mit geschlossenen Augen und zuhealtener Nase lässt er sich zudem sogar fast leicht essen.')
+                )
             );
     }
 }	

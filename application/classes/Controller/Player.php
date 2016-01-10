@@ -122,26 +122,8 @@ class Controller_Player extends Controller_Game {
          */
         global $player;
 
-        $lock_energy = (int)$this->request->post('wp_energy');
-        $lock_throw = (int)$this->request->post('wp_throw');
-        $lock_tank = (int)$this->request->post('wp_tank');
-        $aitype = (int)$this->request->post('ai');
+        //ToDo: Battle AI settings
 
-        if ($aitype < 1 || $aitype > 3) return $this->render(['success' => 0]);
-
-        $ammo_data = [];
-        $wp_ammo = $this->request->post('wp_ammo');
-
-        if (!is_array($wp_ammo)) return $this->render(['success' => 0]);
-
-        foreach (Controller_Player::battle_ai_ammo_types() as $key => $ammo) {
-            /** @var Model_Items_Abstract_Ammo|string $ammo */
-            if ((int)$wp_ammo[$key]) $ammo_data[] = $ammo;
-        };
-
-        //var_dump($lock_energy, $lock_throw, $lock_tank); die;
-
-        $player->set_battle_settings((bool)$lock_energy, (bool)$lock_throw, (bool)(bool)$lock_tank, $aitype, $ammo_data);
         $player->log()->add('Du hast dein Kampfverhalten angepasst.');
 
         $this->render_notifications();

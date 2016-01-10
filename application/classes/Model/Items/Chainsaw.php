@@ -27,18 +27,19 @@ class Model_Items_Chainsaw extends Model_Combat_Weapons_Fillable implements Inte
     protected function hid() {
         return parent::hid()
             ->add_action('Tank befüllen', Model_Action::factory()
-                    ->requirement('Model_Items_Generic_Jerrycan', 1)
-                    ->condition(function() {
-                        return $this->fillrate < 10;
-                    })
-                    ->fail_message('Der Tank ist zu voll, als dass er einen weiteren Kanister Benzin aufnehmen könnte.')
-                    ->effect(
-                        Model_Effect::factory()
-                            ->custom(function () {
-                                $this->fillrate += 10;
-                            })
-                            ->message('Du hast die Kettensäge mit Benzin aufgefüllt, jetzt schnurrt sie wie ein (tödliches) Kätzchen. Zombies und böse Dämonen haben keine Chance mehr - Groovy!')
-                    )
+                ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
+                ->requirement('Model_Items_Generic_Jerrycan', 1)
+                ->condition(function() {
+                    return $this->fillrate < 10;
+                })
+                ->fail_message('Der Tank ist zu voll, als dass er einen weiteren Kanister Benzin aufnehmen könnte.')
+                ->effect(
+                    Model_Effect::factory()
+                        ->custom(function () {
+                            $this->fillrate += 10;
+                        })
+                        ->message('Du hast die Kettensäge mit Benzin aufgefüllt, jetzt schnurrt sie wie ein (tödliches) Kätzchen. Zombies und böse Dämonen haben keine Chance mehr - Groovy!')
+                )
             );
     }
 	

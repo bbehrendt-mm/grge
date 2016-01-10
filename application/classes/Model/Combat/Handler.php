@@ -44,13 +44,13 @@ class Model_Combat_Handler {
 
     public static function get_battle_from_gallery($bid, $pid) {
         if ($data = DB::select('battle.data')->from('battle_gallery')->join('battle','LEFT')->on('battle_gallery.video','=','battle.bid')->where('battle_gallery.id','=',$bid)->where('battle_gallery.user','=',$pid)->execute()->get('data'))
-            return unserialize(gzuncompress($data));
+            return Model_Combat_Scene::vitalize(unserialize(gzuncompress($data)));
         return null;
     }
 
     public static function get_battle($bid) {
         if ($data = DB::select('data')->from('battle')->where('bid','=',$bid)->execute()->get('data'))
-            return unserialize(gzuncompress($data));
+            return Model_Combat_Scene::vitalize(unserialize(gzuncompress($data)));
         return null;
     }
 

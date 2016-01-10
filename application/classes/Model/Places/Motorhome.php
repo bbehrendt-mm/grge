@@ -249,7 +249,7 @@ class Model_Places_Motorhome extends Model_Places_Home {
                     foreach (Tool_Scripts::at_location($this->uin(), true, true) as $ps) {
                         $ps->get_status()->set_cause_of_death('Autounfall');
                         $ps->get_status()->modify(Model_Status::MS_STAT_HEALTH, -mt_rand(10,80));
-                        if ($ps->id() != $p->id() && $ps->type() == Interface_Plentity::IC_NPC_NONPC)
+                        if ($ps->id() != $p->id() && !Tool_Scripts::is_npc($ps))
                             $ps->log()->add('Du hast gerade eben noch friedlich aus dem Fenster geschaut, jetzt liegst du plötzlich in einem Trümmerhaufen aus Blech und Blut. :name, dieser verblödete Idiot, hat anscheinend einen Unfall gebaut.', array(':name' => $p->name()));
                     }
 

@@ -15,29 +15,33 @@ class Model_Items_Holybook extends Model_Items_Abstract_Item implements Interfac
 	public $nextuse = 0;
 
     protected function hid() {
-        $php53pb = $this;
         return parent::hid()
             ->add_action('Kraft schöpfen', Model_Action::factory()
-                    ->condition(function() use ($php53pb) {
-                        /** @global Model_Game $game */
-                        global $game;
-                        return ($php53pb->nextuse <= $game->duration());
-                    })
-                    ->fail_message('Du kannst maximal einmal pro Stunde Kraft aus einem Gebet schöpfen!')
-                    ->effect(
-                        Model_Effect::factory()
-                            ->effect(Model_Status::MS_STAT_ENERGY, 4, 11)
-                            ->message('Du schließt die Augen, kniest nieder und spürst die göttliche Kraft, die durch deinen Körper fließt.')
-                            ->custom(function() use ($php53pb) {
-                                /** @global Model_Game $game */
-                                global $game;
-                                $php53pb->nextuse = $game->duration() + 12;
-                            })
-                    )
+                ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
+                ->condition(function() {
+                    /** @global Model_Game $game */
+                    global $game;
+                    return ($this->nextuse <= $game->duration());
+                })
+                ->fail_message('Du kannst maximal einmal pro Stunde Kraft aus einem Gebet schöpfen!')
+                ->effect(
+                    Model_Effect::factory()
+                        ->effect(Model_Status::MS_STAT_ENERGY, 4, 11)
+                        ->message('Du schließt die Augen, kniest nieder und spürst die göttliche Kraft, die durch deinen Körper fließt.')
+                        ->custom(function() {
+                            /** @global Model_Game $game */
+                            global $game;
+                            $this->nextuse = $game->duration() + 12;
+                        })
+                )
             );
     }
 	
 	public function drop_dead() {
 		return null;
 	}
+
+    public function drop($silent = false) {
+        return false;
+    }
 }	

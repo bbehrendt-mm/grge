@@ -78,6 +78,8 @@
     };
 
     CanvasAnimationModule.prototype.getResource = function(name) {
+        if (this.ressources[name] === undefined)
+            console.warn('Attempt to access unknown asset: ' + name);
         return this.ressources[name];
     };
 

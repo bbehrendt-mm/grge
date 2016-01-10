@@ -71,7 +71,7 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
                     if ($s_player->get_status()->retrieve('sleep_cozy')) {
                         $s_player->get_status()->retrieve('sleep_cozy')->unbuff();
                         new Model_Buffs_Exited($s_player, 4);
-                        if ($s_player->type() == Interface_Plentity::IC_NPC_NONPC)
+                        if (!Tool_Scripts::is_npc($s_player))
                             $s_player->log()->add('Du hörst den Alarmdraht klingen und springst aus dem Bett, um dich gegen Zombies zu verteidigen!');
                     }
             }
@@ -107,7 +107,7 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
             Array('chance' => 1, 'value' => 3));	//random big energy gain
 
         //Act accordingly
-        if ($player->type() == Interface_Plentity::IC_NPC_NONPC) {
+        if (!Tool_Scripts::is_npc()) {
             $sleeping = $player->get_status()->retrieve('sleep_cozy');
             switch (Tool_Gambling::roulette($chance))
             {

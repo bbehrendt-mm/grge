@@ -42,7 +42,7 @@ class Model_Hid {
 
     /**
      * @param $id
-     * @param Model_Player $player
+     * @param Interface_Plentity|Model_Player $player
      * @param null|Model_Player $side_player
      * @param null|mixed $argument
      * @return bool
@@ -66,9 +66,10 @@ class Model_Hid {
 
     /**
      * @param $uid
+     * @param Interface_Plentity[]|null $list_of_players
      * @return array
      */
-    public function convert($uid = null) {
+    public function convert($uid = null, $list_of_players = null) {
         /**
          * @global Model_Game $game
          * @global Model_Player $player
@@ -85,17 +86,27 @@ class Model_Hid {
             if ($a->has_side_effect() && !$game->config('modules.multiplayer'))
                 continue;
 
-            $tmp[] = array_merge($a->convert_effects($player), array(
-                'description' => $action['desc'],
-                'tooltip'     => $a->description(),
-                'action' => $action['id'],
-                'popup' => $a->popup(),
-                'target' => $uid,
-                'escort' => $a->has_side_effect(),
-                'requires' => $a->convert_requires($player),
-                'skin' => $a->has_side_effect() ? ('multiplayer ' . $a->buttonskin()) : $a->buttonskin(),
-                'flags' => $a->flag()
-            ));
+            if ($list_of_players === null)
+                $list_of_players = [$player];
+
+            foreach ($list_of_players as $p) {
+                if ($a->denied_for($p->type()) || ($p->id() != $player->id() && ($a->has_side_effect() || !$a->allow_remote() || !$p->allow(Interface_Plentity::IC_ALLOW_ITEMS_USE)))) continue;
+
+                $tmp[] = array_merge($a->convert_effects($p), array(
+                    'description' => $action['desc'],
+                    'tooltip'     => $a->description(),
+                    'action' => $action['id'],
+                    'popup' => $a->popup(),
+                    'target' => $uid,
+                    'user' => $p->id() == $player->id() ? 0 : $p->id(),
+                    'escort' => $a->has_side_effect(),
+                    'requires' => $a->convert_requires($p),
+                    'skin' => $a->has_side_effect() ? ('multiplayer ' . $a->buttonskin()) : $a->buttonskin(),
+                    'flags' => $a->flag()
+                ));
+            }
+
+
         }
         return $tmp;
     }

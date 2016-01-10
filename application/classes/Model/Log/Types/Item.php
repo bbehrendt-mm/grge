@@ -37,8 +37,10 @@ class Model_Log_Types_Item extends Model_Log_Message {
 
         $time = $game->now();
 
+        $usr = $game->get_player($uin);
+
         parent::__construct([
-            'primary' => !is_numeric($uin) ? $uin : $game->get_player($uin)->name(),
+            'primary' => $usr ? $uin : $usr->name(),
             'class' => $type,
             'content' => [$time =>[$uin => $tmp]]
         ], $uin);

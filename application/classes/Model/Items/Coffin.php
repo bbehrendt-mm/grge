@@ -13,20 +13,20 @@ class Model_Items_Coffin extends Model_Items_Abstract_Item implements Interface_
     protected static $energy = 8;
 
     protected function hid() {
-        $php53pb = $this;
         return parent::hid()
             ->add_action('Öffnen', Model_Action::factory()
-                    ->requirement(Model_Status::MS_STAT_ENERGY, static::$energy)
-                    ->effect(
-                        Model_Effect::factory()
-                            ->ambiguous_effect()
-                            ->consume($this)
-                            ->achieve(Model_Achievement::MA_GRAVEROBBER)
-                            ->custom(function($p) use ($php53pb) {
-                                /** @var Model_Items_Coffin $php53pb */
-                                $php53pb->open($p);
-                            })
-                    )
+                ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
+                ->requirement(Model_Status::MS_STAT_ENERGY, static::$energy)
+                ->effect(
+                    Model_Effect::factory()
+                        ->ambiguous_effect()
+                        ->consume($this)
+                        ->achieve(Model_Achievement::MA_GRAVEROBBER)
+                        ->custom(function($p) {
+                            /** @var Model_Items_Coffin $php53pb */
+                            $this->open($p);
+                        })
+                )
             );
     }
 	

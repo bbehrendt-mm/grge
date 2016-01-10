@@ -24,7 +24,9 @@ abstract class Model_Items_Abstract_Easteregg extends Model_Items_Abstract_Ammo 
     }
 
     public function take($silent = false) {
-        parent::take($silent);
-        $this->new = false;
+        if (parent::take($silent)) {
+            $this->new = false;
+            return true;
+        } else return false;
     }
 }	

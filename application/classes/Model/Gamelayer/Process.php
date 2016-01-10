@@ -122,14 +122,14 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
                 // Tick items
                 foreach ($player->inventory()->get('Interface_Tickable') as $item)
                     /** @var $item Interface_Tickable */
-                    $item->tick($player->id(), $player->type() == Interface_Plentity::IC_NPC_NONPC ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC);
+                    $item->tick($player->id(), !Tool_Scripts::is_npc($player) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC);
 
                 foreach ($player->location()->inventory()->get('Interface_Tickable') as $item)
                     /** @var $item Interface_Tickable */
                     $item->tick($player->location_class(), false);
 
                 $player->tick();
-                $player->location()->tick($player->type() == Interface_Plentity::IC_NPC_NONPC ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC);
+                $player->location()->tick(!Tool_Scripts::is_npc($player) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC);
 			}
 		}
 

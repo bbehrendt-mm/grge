@@ -42,6 +42,7 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
             )
             ->add_action('Micropur hineinwerfen',
                 Model_Action::factory()
+                    ->allow_remote(false)
                     ->requirement('Model_Items_Generic_Micropur', 1)
                     ->condition(function() use ($php53pb) {
                         /** @var Model_Items_Abstract_Bottle $php53pb */
@@ -64,6 +65,7 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
             )
             ->add_action('Untersuchen ...',
                 Model_Action::factory()
+                    ->allow_remote(false)
                     ->condition(function() use ($php53pb) {
                         /** @var Model_Items_Abstract_Bottle $php53pb */
                         return $php53pb->fillrate() > 0;

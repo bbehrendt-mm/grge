@@ -3,6 +3,7 @@
      * @var string $path
      * @var int|null $pid
      * @var int $bid
+     * @var string $lang
      */
 if (!isset($path)) $path = '';
 ?>
@@ -59,6 +60,9 @@ if (!isset($path)) $path = '';
 
     <script type="text/javascript">
         (function() {
+            var lang = JSON.parse(localStorage.getItem('grge.settings.language'));
+            if (!lang) lang = '<?=$lang?>';
+
             window.addEventListener('load',function(){
                 var battle;
                 var controls = $('#controls');
@@ -76,6 +80,7 @@ if (!isset($path)) $path = '';
                         cache: false,
                         type: 'POST',
                         data: {v: <?=$bid?>, g: <?=$pid === null ? 0 : $pid?>},
+                        headers: {'X-Request-Lang' : lang},
                         timeout: 45000
                     }).done(function(data) {
                         receiver(data);
@@ -137,7 +142,7 @@ if (!isset($path)) $path = '';
                 $('#play').show().click(function() {
                     $(this).hide();
                     $('#loading').show();
-                    $.getScript('../web/battle/?l=' + 'de', function() {
+                    $.getScript('../web/battle/?l=' + lang, function() {
                         loader();
                     }).fail(function( jqxhr, settings, exception ) {
                         $('#error').show().text('Compiler error: ' + exception.message);

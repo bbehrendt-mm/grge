@@ -15,22 +15,24 @@ class Model_Items_Flashlight extends Model_Items_Abstract_Item implements Interf
     protected function hid() {
         return parent::hid()
             ->add_action('Batterie wechseln', Model_Action::factory()
-                    ->requirement('Model_Items_Battery', 1)
-                    ->effect(
-                        Model_Effect::factory()
-                            ->custom(function () {
-                                $this->fillrate = 12;
-                            })
-                            ->message('Du hast eine neue Batterie in deine Taschenlampe eingelegt. Sie leuchtet nun wieder mit voller Kraft.')
-                    )
+                ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
+                ->requirement('Model_Items_Battery', 1)
+                ->effect(
+                    Model_Effect::factory()
+                        ->custom(function () {
+                            $this->fillrate = 12;
+                        })
+                        ->message('Du hast eine neue Batterie in deine Taschenlampe eingelegt. Sie leuchtet nun wieder mit voller Kraft.')
+                )
             )->add_action('Supercharger einlegen', Model_Action::factory()
-                    ->requirement('Model_Items_Generic_Supercharger', 1)
-                    ->effect(
-                        Model_Effect::factory()
-                            ->consume($this)
-                            ->spawn('Model_Items_Flashlight2')
-                            ->message('Du hast eine Supercharger-Batterie in diese Taschenlampe eingebaut. Mal sehen, was man aus diesem alten Teil noch alles rausquetschen kann!')
-                    )
+                ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
+                ->requirement('Model_Items_Generic_Supercharger', 1)
+                ->effect(
+                    Model_Effect::factory()
+                        ->consume($this)
+                        ->spawn('Model_Items_Flashlight2')
+                        ->message('Du hast eine Supercharger-Batterie in diese Taschenlampe eingebaut. Mal sehen, was man aus diesem alten Teil noch alles rausquetschen kann!')
+                )
             );
     }
 	

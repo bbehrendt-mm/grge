@@ -16,6 +16,8 @@ class Model_Combat_Zombies_Ghul extends Model_Combat_Zombies_Zombie {
 
     protected $player_id;
 
+    protected static $is_unique = true;
+
     /**
      * @return Model_Combat_Zombies_Ghul
      */

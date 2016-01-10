@@ -29,6 +29,7 @@ class Controller_Embed extends Controller {
         $this->response->body(
             View::factory('battle')
                 ->set('path', URL::base(null, true))
+                ->set('lang', I18n::lang())
                 ->set('pid', $gallery_id)
                 ->set('bid', $video_id)
         );

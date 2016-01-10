@@ -20,13 +20,13 @@ class Model_Items_Fleshfood extends Model_Items_Abstract_Item implements Interfa
     protected function hid() {
         return parent::hid()
             ->add_action('Essen', Model_Action::factory()
-                    ->effect(
-                        Model_Effect::factory()
-                            ->effect(Model_Status::MS_STAT_HUNGER, 2)
-                            ->effect(Model_Status::MS_STAT_HEALTH, -5)
-                            ->consume($this)
-                            ->message('Hm.... das hat ein bisschen wie Döner geschmeckt, nur ohne das Pferdefleisch.')
-                    )
+                ->effect(
+                    Model_Effect::factory()
+                        ->effect(Model_Status::MS_STAT_HUNGER, 2)
+                        ->effect(Model_Status::MS_STAT_HEALTH, -5)
+                        ->consume($this)
+                        ->message('Hm.... das hat ein bisschen wie Döner geschmeckt, nur ohne das Pferdefleisch.')
+                )
             );
     }
 	

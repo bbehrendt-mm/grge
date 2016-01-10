@@ -9,11 +9,6 @@ class Model_Player extends Model_NPC_Nano implements Interface_Plentity {
         Interface_Plentity::IC_ALLOW_SHOW_INVENTORY, Interface_Plentity::IC_ALLOW_MOVE
     ];
 
-    const MP_SETTINGS_BATTLE_NOENERGY = 1;
-    const MP_SETTINGS_BATTLE_NOSELFAMMO = 2;
-    const MP_SETTINGS_BATTLE_DISTANCE_DAMAGE_SHIFT = 3;
-    const MP_SETTINGS_BATTLE_NOTANKAMMO = 4;
-
 	private $mode;
 	private $job;
 	private $level;
@@ -35,13 +30,6 @@ class Model_Player extends Model_NPC_Nano implements Interface_Plentity {
     private $got_ticket = false;
 
     protected $postbox;
-
-    private $battle_settings = array(
-        Model_Player::MP_SETTINGS_BATTLE_NOENERGY => false,
-        Model_Player::MP_SETTINGS_BATTLE_NOSELFAMMO => false,
-        Model_Player::MP_SETTINGS_BATTLE_NOTANKAMMO => false,
-        Model_Player::MP_SETTINGS_BATTLE_DISTANCE_DAMAGE_SHIFT => 2,
-    );
 	
 	private $log;
 
@@ -73,33 +61,6 @@ class Model_Player extends Model_NPC_Nano implements Interface_Plentity {
     }
 
     /**
-     * @param bool $noenergy Avoid energy usage
-     * @param bool $noselfammo Avoid throwing weapons
-     * @param bool $notankammo Avoid tank weapons
-     * @param int $ddshift DDSHIFT array
-     * @param string[] $avoid Ammo types to avoid
-     */
-    public function set_battle_settings($noenergy, $noselfammo, $notankammo, $ddshift, $avoid) {
-        $tmp = array(
-            Model_Player::MP_SETTINGS_BATTLE_NOENERGY => ($this->job == 1080) ? true : $noenergy,
-            Model_Player::MP_SETTINGS_BATTLE_NOSELFAMMO => $noselfammo,
-            Model_Player::MP_SETTINGS_BATTLE_NOTANKAMMO => $notankammo,
-            Model_Player::MP_SETTINGS_BATTLE_DISTANCE_DAMAGE_SHIFT => $ddshift
-        );
-
-        foreach ($avoid as $item) if (Tool_System::instance_of($item, 'Model_Items_Abstract_Ammo'))
-            $tmp[$item] = true;
-
-        $this->battle_settings = $tmp;
-    }
-
-    public function get_battle_settings() {
-        if (!isset($this->battle_settings[Model_Player::MP_SETTINGS_BATTLE_NOTANKAMMO]))
-            $this->battle_settings[Model_Player::MP_SETTINGS_BATTLE_NOTANKAMMO] = $this->battle_settings[Model_Player::MP_SETTINGS_BATTLE_NOSELFAMMO];
-        return $this->battle_settings;
-    }
-
-    /**
      * Constructs a logical player that is linked to an user
      * @param int $user_id
      * @param string $name
@@ -120,9 +81,6 @@ class Model_Player extends Model_NPC_Nano implements Interface_Plentity {
 		$this->mode = $mode;
 		$this->job = $job;
 		$this->level = $level;
-
-        if ($this->job == 1080)
-            $this->set_battle_settings(true, false, false, 2, array());
 		
 		//Init
 		$this->log = new Model_Log_Log();

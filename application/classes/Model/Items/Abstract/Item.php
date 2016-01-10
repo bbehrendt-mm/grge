@@ -229,10 +229,11 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 
     /**
      * Returns the autoaction-list
+     * @param Interface_Plentity[]|null $players
      * @return array
      */
-    public function auto_actions() {
-        return static::hid()->convert($this->uin());
+    public function auto_actions($players = null) {
+        return static::hid()->convert($this->uin(), $players);
     }
 
     /**
@@ -260,29 +261,18 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
     /**
      * Runs any of the items interaction_ functions
      * @param string $action Action to execute
+     * @param Interface_Plentity $player
      * @param null|mixed $argument Optional argument
      * @param null|Model_Player $side_player
      * @return mixed Return value of the called interaction function
      */
-    public function interact($action, $argument = NULL, $side_player = null) {
-        /**
-         * @global $player Model_Player
-         */
-        global $player;
-
+    public function interact($action, $player, $argument = NULL, $side_player = null) {
         $hid = $this->hid();
         $player->get_status()->set_cause_of_death("Vergiftung");
-        if ($hid->can($action)) {
+        if ($hid->can($action))
             return $hid->perform($action, $player, $side_player, $argument);
-        } else {
-            $method = "interaction_{$action}";
-            if (method_exists($this, $method)) {
-                $r = $this->$method($argument);
-                $player->get_status()->clear_cause_of_death();
-            } else return false;
-
-            return $r;
-        }
+        $player->get_status()->clear_cause_of_death();
+        return false;
 	}
 
     /**

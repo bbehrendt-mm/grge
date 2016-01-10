@@ -14,22 +14,23 @@ class Model_Items_Vending2 extends Model_Items_Abstract_Item {
     protected function hid() {
         return parent::hid()
             ->add_action('Flasche einwerfen', Model_Action::factory()
-                    ->condition(function($p) {
-                        /** @var $p Model_Player */
-                        foreach (Tool_Scripts::available_items('Model_Items_Smallbottle', true, true, false, $p) as $bottle)
-                            /** @var Model_Items_Smallbottle $bottle */
-                            if ($bottle->fillrate() == 0) {
-                                $bottle->grind();
-                                return true;
-                            }
-                        return false;
-                    })
-                    ->fail_message('Du benötigst eine leere Flasche, die du hineinwerfen kannst.')
-                    ->effect(
-                        Model_Effect::factory()
-                            ->spawn(new Model_Items_Money(1))
-                            ->message('Der Automat hat deine Flasche geschluckt und etwas Geld dafür ausgespuckt.')
-                    )
+                ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
+                ->condition(function($p) {
+                    /** @var $p Model_Player */
+                    foreach (Tool_Scripts::available_items('Model_Items_Smallbottle', true, true, false, $p) as $bottle)
+                        /** @var Model_Items_Smallbottle $bottle */
+                        if ($bottle->fillrate() == 0) {
+                            $bottle->grind();
+                            return true;
+                        }
+                    return false;
+                })
+                ->fail_message('Du benötigst eine leere Flasche, die du hineinwerfen kannst.')
+                ->effect(
+                    Model_Effect::factory()
+                        ->spawn(new Model_Items_Money(1))
+                        ->message('Der Automat hat deine Flasche geschluckt und etwas Geld dafür ausgespuckt.')
+                )
             );
     }
 }

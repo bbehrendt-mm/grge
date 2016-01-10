@@ -15,13 +15,14 @@ class Model_Items_Bodybag3 extends Model_Items_Abstract_Item implements Interfac
     protected function hid() {
         return parent::hid()
             ->add_action('Leiche herausholen', Model_Action::factory()
-                    ->requirement(Model_Status::MS_STAT_ENERGY, 5)
-                    ->effect(
-                        Model_Effect::factory()
-                            ->consume($this)
-                            ->spawn(new Model_Items_Body('Zerknautschte Leiche', 'Naja, die Form hat beim Transport im Leichensack etwas gelitten... Aber man erkennt, dass es mal so was ähnliches wie ein Mensch war!'))
-                            ->spawn('Model_Items_Bodybag2')
-                    )
+                ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
+                ->requirement(Model_Status::MS_STAT_ENERGY, 5)
+                ->effect(
+                    Model_Effect::factory()
+                        ->consume($this)
+                        ->spawn(new Model_Items_Body('Zerknautschte Leiche', 'Naja, die Form hat beim Transport im Leichensack etwas gelitten... Aber man erkennt, dass es mal so was ähnliches wie ein Mensch war!'))
+                        ->spawn('Model_Items_Bodybag2')
+                )
             );
     }
 }	

@@ -17,6 +17,7 @@ class Model_Items_Bandage extends Model_Items_Abstract_Item implements Interface
         return parent::hid()
             ->add_action('Wunden versorgen',
                 Model_Action::factory()
+                    ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
                     ->condition(function($p) {
                             /** @var Model_Player $p */
                             return $p->get_status()->get(Model_Status::MS_STAT_HEALTH) <= 50 || (bool)$p->get_status()->retrieve('blood');
@@ -33,6 +34,7 @@ class Model_Items_Bandage extends Model_Items_Abstract_Item implements Interface
             )
             ->add_action('Jmd. verbinden',
                 Model_Action::factory()
+                    ->allow_remote(false)
                     ->condition(function($p, $s) {
                         /** @var Model_Player $s */
                         return $s->get_status()->get(Model_Status::MS_STAT_HEALTH) <= 50 || $s->get_status()->retrieve('blood');

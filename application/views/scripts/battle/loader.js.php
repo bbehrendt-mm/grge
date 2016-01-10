@@ -9,10 +9,13 @@
 
         $.each(this.data, function(k,v) {
             if (v[0] == <?=Model_Combat_Scene::MCS_EV_NEW_CHALLENGER?>) {
-                if (v[4])
-                    alias.queueResource(v[4], v[4]);
 
-                switch (v[5]) {
+                console.log(v[4]);
+
+                if (v[5])
+                    alias.queueResource(v[5], v[5]);
+
+                switch (v[6]) {
                     case <?=Model_Combat_Actor::MCA_TYPE_PLAYER?>:
                         alias.addResource('player.gif', 'player_dead.gif');
                         break;

@@ -2,7 +2,7 @@
 
 class Model_Combat_Scene {
 
-    const MCS_EV_NEW_CHALLENGER = 1;           // [ID, Group, Name, Avatar, Type, [x, y], [Health, Max Health, Count], [Ini, Dmg, Res, Acc]]
+    const MCS_EV_NEW_CHALLENGER = 1;           // [ID, Group, Name, Unique, Avatar, Type, [x, y], [Health, Max Health, Count], [Ini, Dmg, Res, Acc]]
     const MCS_EV_NEXT = 2;                     // [ID]
     const MCS_EV_ATTACK = 3;                   // [Atk-ID, Def-ID, [Ammo-Icons ...], [Wpn-Name, Wpn-Icon, Wpn-Anim], damage]
     const MCS_EV_DAMAGE = 4;                   // [ID, Damage, Kills, Death]
@@ -18,6 +18,41 @@ class Model_Combat_Scene {
         return $this->log_data;
     }
 
+    public static function vitalize($log_data = []) {
+        return array_map(
+            function($e) {
+                 return static::translate_entry($e);
+            },
+            array_values(array_filter($log_data,
+                function($e) {
+                    switch ($e[0]) {
+                        case static::MCS_EV_DBG_AI: return Kohana::$environment != Kohana::DEVELOPMENT;
+                        default: return true;
+                    }
+                }
+        )));
+    }
+
+    private static function translate_entry($entry) {
+        $type = $entry[0];
+
+        switch ($type) {
+            case static::MCS_EV_NEW_CHALLENGER:
+                $entry[3] = $entry[4] ? $entry[3] : __($entry[3]);
+                break;
+            case static::MCS_EV_ATTACK:
+                $entry[4][0] = __($entry[4][0]);
+                break;
+            case static::MCS_EV_INJURY: case static::MCS_EV_SWITCH: case static::MCS_EV_BREAK:
+                $entry[2][0] = __($entry[2][0]);
+                break;
+
+            default: break;
+        }
+
+        return $entry;
+    }
+
     public function __toString() {
         return implode("\r\n",array_map(function($v) {return $this->entry_to_string($v);}, $this->log_data));
     }
@@ -28,14 +63,14 @@ class Model_Combat_Scene {
 
         switch ($type) {
             case static::MCS_EV_NEW_CHALLENGER:
-                list($id, $group, $name, $avatar, $atype, list($x, $y), list($health, $max, $count), list($ini, $dmg, $res, $acc)) = $entry;
+                list($id, $group, $name, /* $unique */, /* $avatar */, $atype, list($x, $y), list($health, $max, $count), list($ini, $dmg, $res, $acc)) = $entry;
                 switch ($atype) {
                     case Model_Combat_Actor::MCA_TYPE_PLAYER:
                         $tmp = "Player $name"; break;
                     case Model_Combat_Actor::MCA_TYPE_NPC:
                         $tmp = "NPC $name"; break;
                     case Model_Combat_Actor::MCA_TYPE_PET:
-                        $tmp = "Battle Pet $name"; break;
+                        $tmp = "Pet $name"; break;
                     case Model_Combat_Actor::MCA_TYPE_ZOMBIE:
                         $tmp = "$count Zombies ($name)"; break;
                     default: $tmp = "Unknown $count x $name";
@@ -89,6 +124,7 @@ class Model_Combat_Scene {
             $combatant->id(),
             $combatant->group(),
             $combatant->name(),
+            $combatant->unique(),
             $combatant->get_avatar(),
             $combatant->get_type(),
             $combatant->position(),

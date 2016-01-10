@@ -75,6 +75,32 @@ class Model_Status {
     }
 
     /**
+     * Simulates a stat change and returns the final stat value. Does not actually modify any stats!
+     * @param number $stat The stat to modify,
+     * @param number $effect Effect value
+     * @param int $type Scaling type (unscaled by default)
+     * @param bool $normalize True, if you want the return value to be bound between 0 and 100
+     * @return number
+     */
+    public function simulate($stat, $effect, $type = Model_Status::MS_EFFECT_UNSCALE, $normalize = true) {
+        $v = 0;
+
+        //Check if value is set already and calculate change
+        if (!isset($this->status_bars[$stat]))
+            $v = ($stat >= Model_Status::MS_THRESHOLD) ? 1 : 0;
+        else $v = $this->status_bars[$stat];
+
+        $v += $effect * $this->scaling($stat, $type);
+
+        //Enforce bounds (0/100)
+        if ($normalize)
+            $v = min(max($v,0),100);
+
+        return $v;
+
+    }
+
+    /**
      * Sets players stats (ignoring their previous values) and rebuilds buffers afterwards
      * @param number|array $args,... Supposed to be in this format: [stat1, newval1, stat2, newval2, ...]
      * @throws Exception When $args is wrong format

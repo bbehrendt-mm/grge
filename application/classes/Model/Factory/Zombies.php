@@ -144,7 +144,7 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
 
         if (!$accum_count && $force) {
             $accum_count = 1;
-            $accum_army = ['count' => 1, 'class' => Model_Combat_Zombies_Shambler::cls()];
+            $accum_army = [['count' => 1, 'class' => Model_Combat_Zombies_Shambler::cls()]];
         } elseif (!$accum_count)
             return null;
 

@@ -3,6 +3,7 @@
 abstract class Model_Combat_Weapons_Energy extends Model_Combat_Weapon {
 
     protected static $energy = 1;
+    protected static $usable_by_child = false;
 
     public function energy() {
         return static::$energy;
@@ -23,6 +24,21 @@ abstract class Model_Combat_Weapons_Energy extends Model_Combat_Weapon {
         if ($this->registered_user)
             $this->registered_user->get_status()->modify(Model_Status::MS_STAT_ENERGY, -$this->energy(), Model_Status::MS_EFFECT_REQUIREMENT);
         return parent::trigger_usage($me, $opponent, $damage, $scene);
+    }
+
+    public function equip($p = null) {
+        /** @global Model_Player $player */
+        if ($p === null)
+            global $player;
+        else $player = $p;
+
+        if (!Tool_Scripts::is_npc($player) && $player->job(1080)) {
+            $player->log()->add('Als Kind kannst du diese Waffe nicht ausrüsten!');
+            return;
+        }
+
+
+        parent::equip($p);
     }
 
 }

@@ -21,24 +21,25 @@ class Model_Items_Bmt extends Model_Items_Abstract_Item {
 	}
 
     protected function hid() {
-        $php53pb = $this;
         return parent::hid()
+
             ->add_action('Einsetzen', Model_Action::factory()
-                    ->requirement('Model_Items_Battery', 1)
-                    ->condition(function() use ($php53pb)  {
-                        return ($php53pb->power < count($php53pb->health_list));
-                    })
-                    ->fail_message('Das kannst du nicht tun!')
-                    ->effect(
-                        Model_Effect::factory()
-                            ->effect(Model_Status::MS_STAT_HEALTH, ($php53pb->power >= count($php53pb->health_list)) ? -PHP_INT_MAX : -$this->health_list[$this->power])
-                            ->effect(Model_Status::MS_STAT_ENERGY, static::$energy_base)
-                            ->remove('Model_Items_Battery', 1)
-                            ->custom(function() use ($php53pb) {
-                                $php53pb->power++;
-                            }, Model_Effect::CFUNC_PROCESS_POST)
-                            ->message('Uuuh, das hat gezwiebelt. Aber deine Energie ist wieder aufgeladen. Leider ist der Bauchmuskeltrainer jetzt etwas angekokelt...')
-                    )
+                ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
+                ->requirement('Model_Items_Battery', 1)
+                ->condition(function()  {
+                    return ($this->power < count($this->health_list));
+                })
+                ->fail_message('Das kannst du nicht tun!')
+                ->effect(
+                    Model_Effect::factory()
+                        ->effect(Model_Status::MS_STAT_HEALTH, ($this->power >= count($this->health_list)) ? -PHP_INT_MAX : -$this->health_list[$this->power])
+                        ->effect(Model_Status::MS_STAT_ENERGY, static::$energy_base)
+                        ->remove('Model_Items_Battery', 1)
+                        ->custom(function() {
+                            $this->power++;
+                        }, Model_Effect::CFUNC_PROCESS_POST)
+                        ->message('Uuuh, das hat gezwiebelt. Aber deine Energie ist wieder aufgeladen. Leider ist der Bauchmuskeltrainer jetzt etwas angekokelt...')
+                )
             );
     }
 	

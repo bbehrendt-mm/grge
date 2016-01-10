@@ -14,25 +14,26 @@ class Model_Items_Bodybag2 extends Model_Items_Abstract_Item implements Interfac
     protected function hid() {
         return parent::hid()
             ->add_action('Leiche einsacken', Model_Action::factory()
-                    ->requirement('Model_Items_Body', 1)
-                    ->requirement(Model_Status::MS_STAT_ENERGY, 5)
-                    ->effect(
-                        Model_Effect::factory()
-                            ->consume($this)
-                            ->spawn('Model_Items_Bodybag3')
-                            ->message('Du musst ein bisschen drücken, quetschen und pressen, aber irgendwann steckt diese Leiche komplett in deinem Leichensack. Jetzt kannst du sie viel einfacher transportieren, hurra!')
-                    , 'succ')
-                    ->effect(
-                        Model_Effect::factory()
-                            ->consume($this)
-                            ->spawn('Model_Items_Bodybag4')
-                            ->spawn(new Model_Items_Body('Zerknautschte Leiche', 'Naja, die Form hat beim Transport im Leichensack etwas gelitten... Aber man erkennt, dass es mal so was ähnliches wie ein Mensch war!'))
-                            ->message('Verflucht! gerade hast du die Leiche mühsam verstaut, reißt der Leichensack komplett auseinander! Transportieren kannst du damit nichts mehr...')
-                    , 'fail')
-                    ->decider(function() {
-                        return (mt_rand(0, 9) <= 3) ? 'fail' : 'succ';
-                    })
-                    ->export('succ')
+                ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
+                ->requirement('Model_Items_Body', 1)
+                ->requirement(Model_Status::MS_STAT_ENERGY, 5)
+                ->effect(
+                    Model_Effect::factory()
+                        ->consume($this)
+                        ->spawn('Model_Items_Bodybag3')
+                        ->message('Du musst ein bisschen drücken, quetschen und pressen, aber irgendwann steckt diese Leiche komplett in deinem Leichensack. Jetzt kannst du sie viel einfacher transportieren, hurra!')
+                , 'succ')
+                ->effect(
+                    Model_Effect::factory()
+                        ->consume($this)
+                        ->spawn('Model_Items_Bodybag4')
+                        ->spawn(new Model_Items_Body('Zerknautschte Leiche', 'Naja, die Form hat beim Transport im Leichensack etwas gelitten... Aber man erkennt, dass es mal so was ähnliches wie ein Mensch war!'))
+                        ->message('Verflucht! gerade hast du die Leiche mühsam verstaut, reißt der Leichensack komplett auseinander! Transportieren kannst du damit nichts mehr...')
+                , 'fail')
+                ->decider(function() {
+                    return (mt_rand(0, 9) <= 3) ? 'fail' : 'succ';
+                })
+                ->export('succ')
             );
     }
 }	

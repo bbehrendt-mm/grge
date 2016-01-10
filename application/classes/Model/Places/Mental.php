@@ -47,7 +47,7 @@ class Model_Places_Mental extends Model_Places_Abstract_Place {
                 $s_player = Tool_Scripts::at_location($this->uin(), true, true);
                 $s_player = $s_player[mt_rand(0, count($s_player) - 1)];
 
-                if ($s_player->type() == Interface_Plentity::IC_NPC_NONPC) {
+                if (!Tool_Scripts::is_npc($s_player)) {
                     $s_player->achievements()->achieve(Model_Achievement::MA_SLASHER_KILLER);
                     $s_player->get_status()->set_cause_of_death("Serienkiller-Opfer");
                     $s_player->get_status()->retrieve('heartbeat')->unbuff();

@@ -15,10 +15,6 @@ abstract class Model_Items_Abstract_Liquid extends Model_Items_Abstract_Item imp
 	}
 	
 	public function take($silent = false) {
-		/** @var Model_Player $player */
-		global $player;
-		
-		if (!$silent) $player->log()->add(new Model_Log_Types_Text(null, null, 'Du benötigst ein Gefäß, um diese Flüssigkeit transportieren zu können.'));
 		return false;
 	}
 }	

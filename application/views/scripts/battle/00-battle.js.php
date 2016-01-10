@@ -119,7 +119,7 @@
         var type = event[0];
 
         var tmp = [], i = 1, c;
-        while (c = event[i++])
+        while ((c = event[i++]) !== undefined)
             tmp.push(c);
         event = tmp;
 
@@ -128,6 +128,7 @@
             window.setTimeout(function() {
                 console.log(type, event);
                 alias.events[type].apply(alias, event);
+
             }, this.idle * factor);
         else alias.proceed();
     }

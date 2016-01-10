@@ -35,7 +35,7 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
 
     protected $broken = false;
 
-    /** @var Interface_Plentity */
+    /** @var Interface_Plentity|Model_Player */
     protected $registered_user;
 
     public function ignore_equip() {

@@ -14,28 +14,30 @@ class Model_Items_Uniheal2 extends Model_Items_Abstract_Item implements Interfac
     protected function hid() {
         return parent::hid()
             ->add_action('Applizieren', Model_Action::factory()
-                    ->show_as(
-                        Model_Effect::factory()
-                            ->buff('Model_Buffs_Drug1', false, 144)
-                            ->buff('Model_Buffs_Immune', false, 288)
-                    )
-                    ->decider(function($p) {
-                        /** @var Model_Player $p */
-                        return ($p->get_status()->get(Model_Status::MS_STAT_ZOMBIFY) > 0) ? 0 : 1;
-                    })
-                    ->effect(
-                        Model_Effect::factory()
-                            ->buff('Model_Buffs_Drug1', false, 144)
-                            ->consume($this)
-                            ->message('Du spritzt dir das Medikament... aber es scheint keine Wirkung zu haben!')
-                    )
-                    ->effect(
-                        Model_Effect::factory()
-                            ->buff('Model_Buffs_Drug1', false, 144)
-                            ->buff('Model_Buffs_Immune', false, 288)
-                            ->consume($this)
-                            ->message('Du spritzt dir das Medikament... aber so wirklich passieren tut nichts. Tja, da wirst du wohl einfach hoffen müssen dass du nun immun bist.')
-                    )
+                ->allow_remote(false)
+                ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
+                ->show_as(
+                    Model_Effect::factory()
+                        ->buff('Model_Buffs_Drug1', false, 144)
+                        ->buff('Model_Buffs_Immune', false, 288)
+                )
+                ->decider(function($p) {
+                    /** @var Model_Player $p */
+                    return ($p->get_status()->get(Model_Status::MS_STAT_ZOMBIFY) > 0) ? 0 : 1;
+                })
+                ->effect(
+                    Model_Effect::factory()
+                        ->buff('Model_Buffs_Drug1', false, 144)
+                        ->consume($this)
+                        ->message('Du spritzt dir das Medikament... aber es scheint keine Wirkung zu haben!')
+                )
+                ->effect(
+                    Model_Effect::factory()
+                        ->buff('Model_Buffs_Drug1', false, 144)
+                        ->buff('Model_Buffs_Immune', false, 288)
+                        ->consume($this)
+                        ->message('Du spritzt dir das Medikament... aber so wirklich passieren tut nichts. Tja, da wirst du wohl einfach hoffen müssen dass du nun immun bist.')
+                )
             );
     }
 }	

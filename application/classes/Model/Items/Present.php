@@ -12,18 +12,18 @@ class Model_Items_Present extends Model_Items_Abstract_Item implements Interface
 	protected static $weight = 0;
 
     protected function hid() {
-        $php53pb = $this;
         return parent::hid()
             ->add_action('Auspacken', Model_Action::factory()
-                    ->effect(
-                        Model_Effect::factory()
-                            ->ambiguous_effect()
-                            ->consume($this)
-                            ->custom(function($p) use ($php53pb) {
-                                /** @var Model_Items_Present $php53pb */
-                                $php53pb->open($p);
-                            })
-                    )
+                ->allow_remote(false)
+                ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
+                ->effect(
+                    Model_Effect::factory()
+                        ->ambiguous_effect()
+                        ->consume($this)
+                        ->custom(function($p) {
+                            $this->open($p);
+                        })
+                )
             );
     }
 	

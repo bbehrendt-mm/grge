@@ -20,13 +20,15 @@ class Model_Items_Cyanide extends Model_Items_Abstract_Item implements Interface
     protected function hid() {
         return parent::hid()
             ->add_action('Schlucken', Model_Action::factory()
-                    ->effect(
-                        Model_Effect::factory()
-                            ->buff('Model_Buffs_Heartbeat', true)
-                            ->effect(Model_Status::MS_STAT_HUNGER, 1)
-                            ->consume($this)
-                            ->message('Alles ist so furchtbar! Überall Tod, Verderben, Leid, Zombies und RTL-Kamerateams! Tja, da kann die Hölle ja nicht wirklich viel schlimmer sein, also runter mit dem Zyanid!')
-                    )
+                ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
+                ->allow_remote(false)
+                ->effect(
+                    Model_Effect::factory()
+                        ->buff('Model_Buffs_Heartbeat', true)
+                        ->effect(Model_Status::MS_STAT_HUNGER, 1)
+                        ->consume($this)
+                        ->message('Alles ist so furchtbar! Überall Tod, Verderben, Leid, Zombies und RTL-Kamerateams! Tja, da kann die Hölle ja nicht wirklich viel schlimmer sein, also runter mit dem Zyanid!')
+                )
             );
     }
 }	

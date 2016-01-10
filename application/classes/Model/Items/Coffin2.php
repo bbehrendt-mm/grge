@@ -29,10 +29,8 @@ class Model_Items_Coffin2 extends Model_Items_Coffin implements Interface_Static
 
     public function open($player = null) {
         /**
-         * @global $game Model_Game
          * @global $player Model_Player
          */
-        global $game;
         if ($player === null)
             global $player;
 		

@@ -152,6 +152,15 @@
             $('<div />').addClass('varbar').append(
                 $('<div />').css({width: value + '%', background: num_decode_color(type)})
             )
+        ).attr('title','-').qtip(game.render.html.qtip.ingame('bottom', {
+                render: function (event, api) {
+                    $(this).find('.qtip-content').empty().append(
+                        $('<b />').addClass('header hold').text(num_decode_title(type))
+                    ).append(
+                        $('<div />').addClass('info center').append(make_bar(type, value, null, true))
+                    );
+                }
+            })
         );
     };
 
@@ -203,28 +212,29 @@
 
             $.each(hidden,function(k,v) {
                 v = parseInt(v);
-                $('<img />').addClass('status').attr('src','media/icons/status_' + num_decode_str(v) + '.gif').attr('title',small ? '' : '-').qtip(game.render.html.qtip.ingame('bottom', {
+                $('<img />').addClass('status').attr('src','media/icons/status_' + num_decode_str(v) + '.gif').attr('title','-').qtip(game.render.html.qtip.ingame('bottom', {
                         render: function (event, api) {
                             var content = $(this).find('.qtip-content').empty().append(
-                                $('<b />').addClass('header').text(num_decode_title(v))
+                                $('<b />').addClass('header hold').text(num_decode_title(v))
                             ).append(
                                 NF.row().append(make_bar(v,bars[v].value,bars[v].buffs, true))
-                            ).append(
-                                $('<div />').addClass('info center').text(game.i18n(<?=__j('Aktueller Wert: :num')?>, {':num': Math.round(100*bars[v].value)/100}))
-                            ).append(
-                                $('<span />').addClass('separator')
-                            ).append(
-                                $('<span />').text(num_decode_description(v))
-                            ).append(
-                                $('<span />').addClass('separator')
-                            ).append(make_buff_table(bars[v].buffs, num_decode_inverse(v)));
+                            );
+
+                            if (!small)
+                                content.append(
+                                    $('<span />').addClass('separator')
+                                ).append(
+                                    $('<span />').text(num_decode_description(v))
+                                ).append(
+                                    $('<span />').addClass('separator')
+                                ).append(make_buff_table(bars[v].buffs, num_decode_inverse(v)));
                         }
                     })
                 ).appendTo(target);
             });
 
             $.each(buffs, function(k,v) {
-                $('<img />').addClass('buff').attr('src','media/icons/' + v.icon + '.gif').attr('title',small ? '' : '-').qtip(game.render.html.qtip.ingame('bottom', {
+                $('<img />').addClass('buff').attr('src','media/icons/' + v.icon + '.gif').attr('title','-').qtip(game.render.html.qtip.ingame('bottom', {
                         render: function (event, api) {
                             var content = $(this).find('.qtip-content').empty().append(
                                 $('<b />').addClass('header').text(v.name)

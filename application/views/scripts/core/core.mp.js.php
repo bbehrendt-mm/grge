@@ -11,7 +11,7 @@
             box.append($('<b />').text(player.name));
             var bars = NF.row().appendTo(box);
 
-            box.attr('title', '-').qtip(game.render.html.qtip.ingame('bottom', {
+            box.children('b').css('cursor', 'default').attr('title', '-').qtip(game.render.html.qtip.ingame('bottom', {
                 render: function(event,api) {
                     var content = $(this).find('.qtip-content').empty().css('width', 360);
 

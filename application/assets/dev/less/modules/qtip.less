@@ -34,13 +34,19 @@
   .qtip-content > div.consequence {.consequence(@qtip-help-consequence-background, @qtip-help-consequence-border, @qtip-help-consequence-border-top)}
 }
 
+@qtip-max-width: 360px;
+
 .qtip-custom-ingame {
-  max-width: 360px;
+  max-width: @qtip-max-width;
 
   .qtip-content {
     text-align: justify; font-size: 14px; line-height: 18px; overflow: visible;
 
-    b.header {display: block; margin-bottom: 7px; border-bottom: 1px solid @qtip-yellow-seperator; text-align: center; font-size: 14px;}
+    b.header {
+      display: block; margin-bottom: 7px; border-bottom: 1px solid @qtip-yellow-seperator; text-align: center; font-size: 14px;
+      &.hold {width: @qtip-max-width - 20px}
+    }
+
     span.separator {
       display: block; margin-top: 4px; margin-bottom: 4px; background: @qtip-yellow-seperator; height: 1px; overflow: hidden;
       &:last-child {display: none}

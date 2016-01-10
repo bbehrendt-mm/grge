@@ -37,7 +37,7 @@ class Controller_Admin_Files extends Controller_Admin_Admin {
     }
 
     private function legacy_grl_import($lang, $data) {
-        if (!($orig = I18n::load($lang)) || !$data || !is_array($data)) die(Error::m(\grge\E_HTTP_REQUEST_POINTLESS));
+        if (!$data || !is_array($data)) die(Error::m(\grge\E_HTTP_REQUEST_POINTLESS));
 
         echo "GRGE LANGUAGE FILE IMPORTER<br />-----<br />Importing \"{$_FILES['grl']['name']}\" ({$_FILES['grl']['size']} bytes) into local package \"{$lang}\"<br />-----<br />";
         echo "Language Pack contains " . count($data) . " entries.<br />-----<br />";
@@ -48,10 +48,11 @@ class Controller_Admin_Files extends Controller_Admin_Admin {
         $conflicts = 0;
 
         foreach ($data as $key => $translation) {
-            if (!isset($orig[$key]))
+
+            if (!I18n::has($key, $lang))
                 $added++;
 
-            $original = __($key, -1, $lang);
+            $original = I18n::get_native($key, $lang);
             if ($translation === $original) {
                 $ignored++;
                 continue;

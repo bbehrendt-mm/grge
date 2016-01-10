@@ -32,14 +32,14 @@ class Model_Items_Fastfood extends Model_Items_Abstract_Item implements Interfac
     protected function hid() {
         return parent::hid()
             ->add_action('Essen', Model_Action::factory()
-                    ->effect(
-                        Model_Effect::factory()
-                            ->effect(Model_Status::MS_STAT_HUNGER, 30)
-                            ->effect(Model_Status::MS_STAT_ENERGY, -5)
-                            ->effect(Model_Status::MS_STAT_HEALTH, -1)
-                            ->consume($this)
-                            ->message('Das war lecker. Leider fühlst du dich jetzt etwas aufgepumpt, und verlierst etwas Energie.')
-                    )
+                ->effect(
+                    Model_Effect::factory()
+                        ->effect(Model_Status::MS_STAT_HUNGER, 30)
+                        ->effect(Model_Status::MS_STAT_ENERGY, -5)
+                        ->effect(Model_Status::MS_STAT_HEALTH, -1)
+                        ->consume($this)
+                        ->message('Das war lecker. Leider fühlst du dich jetzt etwas aufgepumpt, und verlierst etwas Energie.')
+                )
             );
     }
 	

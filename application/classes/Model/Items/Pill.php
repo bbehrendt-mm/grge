@@ -16,144 +16,142 @@ class Model_Items_Pill extends Model_Items_Abstract_Item implements Interface_St
          */
         global $game, $player;
 
-        $child_effects = $player->job(1080);
+        $child_effects = !Tool_Scripts::is_npc() && $player->job(1080);
 
-        $php53pb = $this;
         return parent::hid()
             ->add_action('Runter damit!', Model_Action::factory()
-                    ->show_as(
-                        Model_Effect::factory()
-                            ->ambiguous_effect()
-                            ->achieve(Model_Achievement::MA_PILL_EATER)
-                            ->buff('Model_Buffs_Drug1', false, 48)
-                            ->consume($this)
-                    , null, true)
-                    ->decider(function() use ($php53pb) {
-                        /**
-                         * @global Model_Game $game
-                         * @global Model_User $user
-                         */
-                        global $game, $user;
+                ->show_as(
+                    Model_Effect::factory()
+                        ->ambiguous_effect()
+                        ->achieve(Model_Achievement::MA_PILL_EATER)
+                        ->buff('Model_Buffs_Drug1', false, 48)
+                        ->consume($this)
+                , null, true)
+                ->decider(function() {
+                    /**
+                     * @global Model_Game $game
+                     * @global Model_User $user
+                     */
+                    global $game, $user;
 
-                        /** @var Model_Items_Abstract_Item $php53pb */
-                        return (!$game->config('items.pill.use_default_effect_proc')) ? (($php53pb->type + $user->uid()) % $php53pb->variants()) : $php53pb->type;
-                    })
-                    //Red pill
-                    ->effect(
-                        Model_Effect::factory()
-                            ->effect(Model_Status::MS_STAT_ENERGY, 100)
-                            ->effect(Model_Status::MS_STAT_SLEEPY, 100)
-                            ->message('Augen zu und durch! Du schluckst die Pille herunter - und eine ungeahnte Energie durchströhmt dich! Du fühlst dich, als könntest du Bäume ausreißen!')
-                    )
-                    //Blue pill
-                    ->effect(
-                        Model_Effect::factory()
-                            ->effect(Model_Status::MS_STAT_HUNGER, 100)
-                            ->effect(Model_Status::MS_STAT_THIRST, 100)
-                            ->message('Augen zu und durch! Du schluckst die Pille herunter - und fühlst plötzlich weder Hunger noch Durst! Das Zeug war ja der Hammer!')
-                    )
-                    //Green pill
-                    ->effect(
-                        Model_Effect::factory()
-                            ->effect(Model_Status::MS_STAT_ENERGY, $child_effects ? -80 : -35)
-                            ->effect(Model_Status::MS_STAT_SLEEPY, $child_effects ? -100 : -80)
-                            ->message('Augen zu und durch! Du schluckst die Pille herunter - und wirst plötzlich unglaublich müde.')
-                    )
-                    //Orange pill
-                    ->effect(
-                        Model_Effect::factory()
-                            ->effect(Model_Status::MS_STAT_HEALTH, $child_effects ? -100 : -35)
-                            ->message('Augen zu und durch! Du schluckst die Pille herunter - sofort durchzucken Krämpfe deinen Körper! Was immer das war, du hättest es besser nicht schlucken sollen!')
-                    )
-                    //White pill
-                    ->effect(
-                        Model_Effect::factory()
-                            ->effect(Model_Status::MS_STAT_HEALTH, $child_effects ? 20 : 15)
-                            ->effect(Model_Status::MS_STAT_SLEEPY, $child_effects ? -20 : -5)
-                            ->effect(Model_Status::MS_STAT_DRUNK, $child_effects ? 5 : 0)
-                            ->message('Augen zu und durch! Du schluckst die Pille herunter - und merkst sofort, wie sich dein Körper entspannt. Das fühlt sich gut an!')
-                    )
-                    //Green + Red pill
-                    ->effect(
-                        Model_Effect::factory()
-                            ->effect(Model_Status::MS_STAT_HUNGER, -15)
-                            ->effect(Model_Status::MS_STAT_THIRST, -25)
-                            ->message('Augen zu und durch! Du schluckst die Pille herunter - und übrgibst dich direkt danach!')
-                    )
-                    //Black pill
-                    ->effect(
-                        Model_Effect::factory()
-                            ->custom(function($p) {
-                                /** @var Model_Player $p */
-                                foreach ($p->inventory()->get() as $item)
-                                    if (!$item->is_essential()) $item->grind();
-                            })
-                            ->message('Augen zu und durch! Du schluckst die Pille herunter. Was danach passiert, weißt du nicht mehr - aber dein ganzer Rucksack ist plötzlich leer! Wär hätte denn ahnen können dass ' . ((!$game->config('items.pill.use_default_effect_proc')) ? 'diese ' : 'die schwarze') . ' Pille Blackouts verursachen kann ...')
-                    )
-                    //Yellow pill
-                    ->effect(
-                        Model_Effect::factory()
-                            ->message('Augen zu und durch! Du schluckst die Pille herunter - plötzlich tut dein rechter Backenzahn weh. Wie unangenehm!')
-                    )
-                    //Red + Blue pill
-                    ->effect(
-                        Model_Effect::factory()
-                            ->buff('Model_Buffs_Heartbeat', true)
-                            ->message('Augen zu und durch! ' . ((!$game->config('items.pill.use_default_effect_proc')) ? 'Eigentlich sieht sie sehr gesund aus, daher' : 'In der Hoffung, dies wäre eine Twinoid-Kapsel,') . ' schluckst du die Pille herunter. Tja, und wenn du das überlebt hättest, hättest du wohl gelernt dass das Aussehen auch täuschen kann.')
-                    )
-                    //Rose pill
-                    ->effect(
-                        Model_Effect::factory()
-                            ->effect(Model_Status::MS_STAT_HEALTH, ($game->duration() & 1) ? 25 : -50 )
-                            ->effect(Model_Status::MS_STAT_ENERGY, ($game->duration() & 1) ? 25 : -50 )
-                            ->effect(Model_Status::MS_STAT_HUNGER, ($game->duration() & 1) ? 25 : 0 )
-                            ->effect(Model_Status::MS_STAT_THIRST, ($game->duration() & 1) ? 25 : 0 )
-                            ->message(($game->duration() & 1)
-                                ? 'Augen zu und durch! Du schluckst die Pille herunter - wenige Sekunden später spürst du, wie sich eine angenehme Wärme in dir ausbreitet. Welch ein schönes Gefühl ...'
-                                : 'Augen zu und durch! Du schluckst die Pille herunter - wenige Sekunden später beginnst du, dich unruhig und unwohl zu fühlen. Schmerzen zucken durch deinen Körper, während du dich auf dem Boden krümmst und hoffst, dass die Wirkung der Pille bald nachlässt.'
-                            )
-                    )
-                    //Marine pill
-                    ->effect(
-                        Model_Effect::factory()
-                            ->effect(Model_Status::MS_STAT_HEALTH, ($game->duration() & 1) ? -50 : 25 )
-                            ->effect(Model_Status::MS_STAT_ENERGY, ($game->duration() & 1) ? -50 : 25 )
-                            ->effect(Model_Status::MS_STAT_HUNGER, ($game->duration() & 1) ? 0 : 25 )
-                            ->effect(Model_Status::MS_STAT_THIRST, ($game->duration() & 1) ? 0 : 25 )
-                            ->message(($game->duration() & 1)
-                                    ? 'Augen zu und durch! Du schluckst die Pille herunter - wenige Sekunden später beginnst du, dich unruhig und unwohl zu fühlen. Schmerzen zucken durch deinen Körper, während du dich auf dem Boden krümmst und hoffst, dass die Wirkung der Pille bald nachlässt.'
-                                    : 'Augen zu und durch! Du schluckst die Pille herunter - wenige Sekunden später spürst du, wie sich eine angenehme Wärme in dir ausbreitet. Welch ein schönes Gefühl ...'
-                            )
-                    )
-                    //Beige pill
-                    ->effect(
-                        Model_Effect::factory()
-                            ->effect(Model_Status::MS_STAT_DRUNK, 100)
-                            ->effect(Model_Status::MS_STAT_ENERGY, 100)
-                            ->effect(Model_Status::MS_STAT_HUNGER, 100)
-                            ->effect(Model_Status::MS_STAT_THIRST, 100)
-                            ->message('Augen zu und durch! Du schluckst die Pille herunter - für einen kurzen Moment fühlst du dich großartig, danach fängt alles um dich herum an sich zu drehen ...')
-                    )
-                    //Black + White pill
-                    ->effect(
-                        Model_Effect::factory()
-                            ->effect(Model_Status::MS_STAT_DRUNK, -100)
-                            ->effect(Model_Status::MS_STAT_HEALTH, 10)
-                            ->message('Augen zu und durch! Du schluckst die Pille herunter - sofort fühlst du, wie die Pille dich von innen reinigt. Sehr angenehm!')
-                    )
-                    //Pink pill
-                    ->effect(
-                        Model_Effect::factory()
-                            ->effect(Model_Status::MS_STAT_HUNGER, 100)
-                            ->buff('Model_Buffs_Nom', false, 120)
-                            ->message('Augen zu und durch! Du schluckst die Pille herunter - und mit einem mal fühlst du dich extrem satt! Anscheinend war das irgend eine Nährstoffpille!')
-                    )
-                    //Red + Pink pill
-                    ->effect(
-                        Model_Effect::factory()
-                            ->buff('Model_Buffs_Hallucinations', false, $child_effects ? 48 : 24)
-                            ->message('Augen zu und durch! Du schluckst die Pille herunter - aber es scheint nichts zu passieren. Moment... war die dreiköpfige Giraffe da hinten schon immer da?')
-                    )
+                    return (!$game->config('items.pill.use_default_effect_proc')) ? (($this->type + $user->uid()) % $this->variants()) : $this->type;
+                })
+                //Red pill
+                ->effect(
+                    Model_Effect::factory()
+                        ->effect(Model_Status::MS_STAT_ENERGY, 100)
+                        ->effect(Model_Status::MS_STAT_SLEEPY, 100)
+                        ->message('Augen zu und durch! Du schluckst die Pille herunter - und eine ungeahnte Energie durchströhmt dich! Du fühlst dich, als könntest du Bäume ausreißen!')
+                )
+                //Blue pill
+                ->effect(
+                    Model_Effect::factory()
+                        ->effect(Model_Status::MS_STAT_HUNGER, 100)
+                        ->effect(Model_Status::MS_STAT_THIRST, 100)
+                        ->message('Augen zu und durch! Du schluckst die Pille herunter - und fühlst plötzlich weder Hunger noch Durst! Das Zeug war ja der Hammer!')
+                )
+                //Green pill
+                ->effect(
+                    Model_Effect::factory()
+                        ->effect(Model_Status::MS_STAT_ENERGY, $child_effects ? -80 : -35)
+                        ->effect(Model_Status::MS_STAT_SLEEPY, $child_effects ? -100 : -80)
+                        ->message('Augen zu und durch! Du schluckst die Pille herunter - und wirst plötzlich unglaublich müde.')
+                )
+                //Orange pill
+                ->effect(
+                    Model_Effect::factory()
+                        ->effect(Model_Status::MS_STAT_HEALTH, $child_effects ? -100 : -35)
+                        ->message('Augen zu und durch! Du schluckst die Pille herunter - sofort durchzucken Krämpfe deinen Körper! Was immer das war, du hättest es besser nicht schlucken sollen!')
+                )
+                //White pill
+                ->effect(
+                    Model_Effect::factory()
+                        ->effect(Model_Status::MS_STAT_HEALTH, $child_effects ? 20 : 15)
+                        ->effect(Model_Status::MS_STAT_SLEEPY, $child_effects ? -20 : -5)
+                        ->effect(Model_Status::MS_STAT_DRUNK, $child_effects ? 5 : 0)
+                        ->message('Augen zu und durch! Du schluckst die Pille herunter - und merkst sofort, wie sich dein Körper entspannt. Das fühlt sich gut an!')
+                )
+                //Green + Red pill
+                ->effect(
+                    Model_Effect::factory()
+                        ->effect(Model_Status::MS_STAT_HUNGER, -15)
+                        ->effect(Model_Status::MS_STAT_THIRST, -25)
+                        ->message('Augen zu und durch! Du schluckst die Pille herunter - und übrgibst dich direkt danach!')
+                )
+                //Black pill
+                ->effect(
+                    Model_Effect::factory()
+                        ->custom(function($p) {
+                            /** @var Model_Player $p */
+                            foreach ($p->inventory()->get() as $item)
+                                if (!$item->is_essential()) $item->grind();
+                        })
+                        ->message('Augen zu und durch! Du schluckst die Pille herunter. Was danach passiert, weißt du nicht mehr - aber dein ganzer Rucksack ist plötzlich leer! Wär hätte denn ahnen können dass ' . ((!$game->config('items.pill.use_default_effect_proc')) ? 'diese ' : 'die schwarze') . ' Pille Blackouts verursachen kann ...')
+                )
+                //Yellow pill
+                ->effect(
+                    Model_Effect::factory()
+                        ->message('Augen zu und durch! Du schluckst die Pille herunter - plötzlich tut dein rechter Backenzahn weh. Wie unangenehm!')
+                )
+                //Red + Blue pill
+                ->effect(
+                    Model_Effect::factory()
+                        ->buff('Model_Buffs_Heartbeat', true)
+                        ->message('Augen zu und durch! ' . ((!$game->config('items.pill.use_default_effect_proc')) ? 'Eigentlich sieht sie sehr gesund aus, daher' : 'In der Hoffung, dies wäre eine Twinoid-Kapsel,') . ' schluckst du die Pille herunter. Tja, und wenn du das überlebt hättest, hättest du wohl gelernt dass das Aussehen auch täuschen kann.')
+                )
+                //Rose pill
+                ->effect(
+                    Model_Effect::factory()
+                        ->effect(Model_Status::MS_STAT_HEALTH, ($game->duration() & 1) ? 25 : -50 )
+                        ->effect(Model_Status::MS_STAT_ENERGY, ($game->duration() & 1) ? 25 : -50 )
+                        ->effect(Model_Status::MS_STAT_HUNGER, ($game->duration() & 1) ? 25 : 0 )
+                        ->effect(Model_Status::MS_STAT_THIRST, ($game->duration() & 1) ? 25 : 0 )
+                        ->message(($game->duration() & 1)
+                            ? 'Augen zu und durch! Du schluckst die Pille herunter - wenige Sekunden später spürst du, wie sich eine angenehme Wärme in dir ausbreitet. Welch ein schönes Gefühl ...'
+                            : 'Augen zu und durch! Du schluckst die Pille herunter - wenige Sekunden später beginnst du, dich unruhig und unwohl zu fühlen. Schmerzen zucken durch deinen Körper, während du dich auf dem Boden krümmst und hoffst, dass die Wirkung der Pille bald nachlässt.'
+                        )
+                )
+                //Marine pill
+                ->effect(
+                    Model_Effect::factory()
+                        ->effect(Model_Status::MS_STAT_HEALTH, ($game->duration() & 1) ? -50 : 25 )
+                        ->effect(Model_Status::MS_STAT_ENERGY, ($game->duration() & 1) ? -50 : 25 )
+                        ->effect(Model_Status::MS_STAT_HUNGER, ($game->duration() & 1) ? 0 : 25 )
+                        ->effect(Model_Status::MS_STAT_THIRST, ($game->duration() & 1) ? 0 : 25 )
+                        ->message(($game->duration() & 1)
+                                ? 'Augen zu und durch! Du schluckst die Pille herunter - wenige Sekunden später beginnst du, dich unruhig und unwohl zu fühlen. Schmerzen zucken durch deinen Körper, während du dich auf dem Boden krümmst und hoffst, dass die Wirkung der Pille bald nachlässt.'
+                                : 'Augen zu und durch! Du schluckst die Pille herunter - wenige Sekunden später spürst du, wie sich eine angenehme Wärme in dir ausbreitet. Welch ein schönes Gefühl ...'
+                        )
+                )
+                //Beige pill
+                ->effect(
+                    Model_Effect::factory()
+                        ->effect(Model_Status::MS_STAT_DRUNK, 100)
+                        ->effect(Model_Status::MS_STAT_ENERGY, 100)
+                        ->effect(Model_Status::MS_STAT_HUNGER, 100)
+                        ->effect(Model_Status::MS_STAT_THIRST, 100)
+                        ->message('Augen zu und durch! Du schluckst die Pille herunter - für einen kurzen Moment fühlst du dich großartig, danach fängt alles um dich herum an sich zu drehen ...')
+                )
+                //Black + White pill
+                ->effect(
+                    Model_Effect::factory()
+                        ->effect(Model_Status::MS_STAT_DRUNK, -100)
+                        ->effect(Model_Status::MS_STAT_HEALTH, 10)
+                        ->message('Augen zu und durch! Du schluckst die Pille herunter - sofort fühlst du, wie die Pille dich von innen reinigt. Sehr angenehm!')
+                )
+                //Pink pill
+                ->effect(
+                    Model_Effect::factory()
+                        ->effect(Model_Status::MS_STAT_HUNGER, 100)
+                        ->buff('Model_Buffs_Nom', false, 120)
+                        ->message('Augen zu und durch! Du schluckst die Pille herunter - und mit einem mal fühlst du dich extrem satt! Anscheinend war das irgend eine Nährstoffpille!')
+                )
+                //Red + Pink pill
+                ->effect(
+                    Model_Effect::factory()
+                        ->buff('Model_Buffs_Hallucinations', false, $child_effects ? 48 : 24)
+                        ->message('Augen zu und durch! Du schluckst die Pille herunter - aber es scheint nichts zu passieren. Moment... war die dreiköpfige Giraffe da hinten schon immer da?')
+                )
 
             );
     }

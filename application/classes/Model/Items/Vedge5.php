@@ -14,14 +14,14 @@ class Model_Items_Vedge5 extends Model_Combat_Weapons_Throwable implements Inter
     protected function hid() {
         return parent::hid()
             ->add_action('Essen', Model_Action::factory()
-                    ->effect(
-                        Model_Effect::factory()
-                            ->effect(Model_Status::MS_STAT_ENERGY, 100)
-                            ->effect(Model_Status::MS_STAT_SLEEPY, 100)
-                            ->effect(Model_Status::MS_STAT_HEALTH, -85)
-                            ->consume($this)
-                            ->message('Nachdem du dieses Ding heruntergewürgt hast brennt dein Hals und dein Magen wie Feuer. Deinen Hunger oder Durst hat das nicht gestillt, aber zumindest bist du jetzt hellwach.')
-                    )
+                ->effect(
+                    Model_Effect::factory()
+                        ->effect(Model_Status::MS_STAT_ENERGY, 100)
+                        ->effect(Model_Status::MS_STAT_SLEEPY, 100)
+                        ->effect(Model_Status::MS_STAT_HEALTH, -85)
+                        ->consume($this)
+                        ->message('Nachdem du dieses Ding heruntergewürgt hast brennt dein Hals und dein Magen wie Feuer. Deinen Hunger oder Durst hat das nicht gestillt, aber zumindest bist du jetzt hellwach.')
+                )
             );
     }
 

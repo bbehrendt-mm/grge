@@ -28,7 +28,8 @@ class Model_Items_Chem extends Model_Items_Abstract_Item implements Interface_St
 	protected static $weight = 0.2;
 	
 	public function __construct($target = null) {
-		global $game;
+		/** @global Model_Game $game */
+        global $game;
         parent::__construct();
 		
 		if ($target === NULL)

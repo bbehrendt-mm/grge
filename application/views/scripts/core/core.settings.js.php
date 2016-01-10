@@ -74,64 +74,24 @@
     var fill_battleai = function(target, data) {
         var button;
 
-        target.empty().append($('<h3 />').text(<?=__j('Kampfverhalten')?>));
-
-        var bhav_select, bhav = NF.row().appendTo(target);
-        bhav.append($('<b />').text(<?=__j('Kampfstrategie')?>));
-        bhav.append($('<div />').addClass('cell rw-6 rw-lg-8 rw-md-6 rw-sm-12 padded').append($('<label />').attr('title',<?=__j('Der ausgewählte Kampfstil beeinflusst deine Waffen- und Gegnerauswahl. Offensive Spieler werden versuchen, so viel Schaden anzurichten wie möglich. Defensive Spieler werden versuchen, Zombies so gut es geht auf Abstand zu halten.')?>).qtip(game.render.html.qtip.ingame('top')).prepend(bhav_select = $('<select />'))));
-
-        bhav_select
-            .append($('<option />').text(<?=__j('Defensiv')?>).attr('value','1'))
-            .append($('<option />').text(<?=__j('Ausgeglichen')?>).attr('value','2'))
-            .append($('<option />').text(<?=__j('Offensiv')?>).attr('value','3'))
-            .val(data.type).on('change', function() {
-                button.removeClass('disabled')
-            }).selectric();
-
-        var sw_energy, sw_breakable, sw_ammocache;
-        var sw = NF.row().appendTo(target);
-        sw.append($('<b />').text(<?=__j('Verwendung einzelner Waffenarten sperren')?>));
-        sw
-            .append($('<div />').addClass('cell rw-6 rw-sm-12 padded').append($('<label />').attr('title',<?=__j('Ist diese Option aktiviert, wirst du im Kampf keine Waffen einsetzen, die Energie verbrauchen.')?>).qtip(game.render.html.qtip.ingame('top')).text(<?=__j('Energiewaffen')?>).prepend(sw_energy = $('<input />').attr('type', 'checkbox').prop('checked', data.weapons.energy).prop('disabled', (data.weapons.energy === 'locked')))))
-            .append($('<div />').addClass('cell rw-6 rw-sm-12 padded').append($('<label />').attr('title',<?=__j('Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die beim Einsatz zerstört werden (z.B. Wasserbombe).')?>).qtip(game.render.html.qtip.ingame('top')).text(<?=__j('Wurfgeschosse')?>).prepend(sw_breakable = $('<input />').attr('type', 'checkbox').prop('checked', data.weapons.throw))))
-            .append($('<div />').addClass('cell rw-6 rw-sm-12 padded').append($('<label />').attr('title',<?=__j('Ist diese Option aktiviert, wirst du im Kampf keine Waffen verwenden, die einen internen Munitionsspeicher haben (z.B. Wasserpistole).')?>).qtip(game.render.html.qtip.ingame('top')).text(<?=__j('Verbrauchswaffen')?>).prepend(sw_ammocache = $('<input />').attr('type', 'checkbox').prop('checked', data.weapons.tank))));
-
-        var mun = NF.row().appendTo(target);
-        mun.append($('<b />').text(<?=__j('Verwendung einzelner Munitionstypen sperren')?>));
-
-        var mun_elems = {};
-
-        $.each(data.ammo, function(k,v) {
-            mun.append($('<div />').addClass('cell rw-2 padded rw-lg-4 rw-md-2 rw-sm-4').append($('<label />').attr('title', game.i18n(<?=__j('Ist diese Option aktiviert, werden im Kampf keine Waffen verwendet, die diese Munition (:item) verwenden.')?>, {':item': v.name})).qtip(game.render.html.qtip.ingame('top')).append($('<img />').attr('src', 'media/icons/'+ v.icon + '.gif')).prepend(mun_elems[k] = $('<input />').attr('type', 'checkbox').prop('checked', v.locked))))
-        });
-
-        target.find(':checkbox').click(function() {
-            button.removeClass('disabled')
-        }).customRadioCheck();
-
-        target.append(NF.row().append($('<div />').addClass('cell rw-6 ro-6').append(
-            button = $('<div />').addClass('btn btn-icon disabled')
-                .append($('<span />').addClass('btn-icon-inner').append($('<i />').addClass('fa fa-check')))
-                .append($('<span />').text(<?=__j('Speichern')?>))
-                .click(function() {
-                    var ammo = {};
-                    $.each(mun_elems, function(k,v) {
-                        ammo[k] = v.prop('checked') ? 1 : 0;
-                    });
-                    core.command('player/ai', {
-                        'ai': bhav_select.val(),
-                        'wp_energy': sw_energy.prop('checked') ? 1 : 0,
-                        'wp_throw': sw_breakable.prop('checked') ? 1 : 0,
-                        'wp_tank': sw_ammocache.prop('checked') ? 1 : 0,
-                        'wp_ammo': ammo
-                    }, true, function(ret) {
-                        if (!ret.success) {
-                            game.render.html.notify('error', <?=__j('Beim Speichern der Einstellungen ist ein Fehler aufgetreten.')?>);
-                            fill_battleai(target, data);
-                        } else button.addClass('disabled')
+        target.empty()
+            .append($('<h3 />').text(<?=__j('Kampfverhalten')?>))
+            .append(NF.row().append(NF.cell(true, 12, 0, 'center').text('COMING SOON')))
+            .append(NF.row().append(NF.cell(false, 6, 6).append(
+                button = $('<div />').addClass('btn btn-icon disabled')
+                    .append($('<span />').addClass('btn-icon-inner').append($('<i />').addClass('fa fa-check')))
+                    .append($('<span />').text(<?=__j('Speichern')?>))
+                    .click(function() {
+                        core.command('player/ai', {
+                            //ToDo: AI
+                        }, true, function(ret) {
+                            if (!ret.success) {
+                                game.render.html.notify('error', <?=__j('Beim Speichern der Einstellungen ist ein Fehler aufgetreten.')?>);
+                                fill_battleai(target, data);
+                            } else button.addClass('disabled')
+                        })
                     })
-                })
-        )));
+            )));
 
     };
 

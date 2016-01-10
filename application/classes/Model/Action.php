@@ -19,6 +19,9 @@ class Model_Action {
     private $argument = null;
     private $description = null;
     private $skin = null;
+    private $allow_remote_execution = true;
+    private $prevent_user_type = [];
+    private $allowed_user_type = [];
 
     private $additional_flags = [];
 
@@ -32,6 +35,48 @@ class Model_Action {
      */
     public static function factory() {
         return new Model_Action();
+    }
+
+    /**
+     * @param null|bool $v
+     * @return Model_Action|bool
+     */
+    public function allow_remote($v = null) {
+        if ($v === null) return $this->allow_remote_execution;
+        else $this->allow_remote_execution = $v;
+        return $this;
+    }
+
+    /**
+     * @param number $args,...
+     * @return Model_Action
+     */
+    public function deny_for($args) {
+        if (!is_array($args))
+            $args = func_get_args();
+
+        $this->prevent_user_type = array_merge($this->prevent_user_type, $args);
+        return $this;
+    }
+
+    /**
+     * @param number $args,...
+     * @return Model_Action
+     */
+    public function allow_for($args) {
+        if (!is_array($args))
+            $args = func_get_args();
+
+        $this->allowed_user_type = array_merge($this->allowed_user_type, $args);
+        return $this;
+    }
+
+    /**
+     * @param $type
+     * @return bool
+     */
+    public function denied_for($type) {
+        return in_array($type, $this->prevent_user_type) || (count($this->allowed_user_type) && !in_array($type, $this->allowed_user_type));
     }
 
     /**
@@ -198,7 +243,7 @@ class Model_Action {
     }
 
     /**
-     * @param Model_Player $player
+     * @param Model_Player|Interface_Plentity $player
      * @param null|Model_Player $side_player
      * @param null|mixed $argument
      * @return boolean
@@ -206,12 +251,13 @@ class Model_Action {
     public function execute($player, $side_player = null, $argument = null) {
 
         if ($this->popup) return false;
+        $no_player = Tool_Scripts::is_npc($player);
 
         if ($this->condition !== null) {
             /** @var callable $cf */
             $cf = $this->condition;
             if (($r = $cf($player, $side_player, $argument)) !== true) {
-                if ($this->failmsg)
+                if ($this->failmsg && !$no_player)
                     $player->log()->add(is_array($this->failmsg) ? $this->failmsg[$r] : $this->failmsg);
                 return false;
             }
@@ -219,12 +265,12 @@ class Model_Action {
 
         foreach ($this->get_stat_requirements() as $stat => $value)
             if (!$player->get_status()->has($stat, $value, Model_Status::MS_EFFECT_REQUIREMENT)) {
-                $player->log()->add('Du bist derzeit nicht in der Lage diese Aktion durchzuführen.');
+                if (!$no_player) $player->log()->add('Du bist derzeit nicht in der Lage diese Aktion durchzuführen.');
                 return false;
             }
 
         if (!Tool_Scripts::consume_available_items($this->get_item_requirements(), true, true, false, $player, $this->consume_by_grind)) {
-            $player->log()->add('Dir fehlen Gegenstände, um diese Aktion durchzuführen.');
+            if (!$no_player) $player->log()->add('Dir fehlen Gegenstände, um diese Aktion durchzuführen.');
             return false;
         }
 

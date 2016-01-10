@@ -27,7 +27,7 @@ class Controller_Map extends Controller_Game {
         //Check if any player is passed out or performs a fragile action
         foreach ($companion as $current)
             if ($current->get_status()->retrieve('passout') || $current->get_status()->retrieve('fragile')) {
-                if ($player->type() == Interface_Plentity::IC_NPC_NONPC)
+                if (!Tool_Scripts::is_npc())
                     $player->log()->add(($current == $player) ? 'Du kannst dich zur Zeit nicht bewegen...' : ':name kann sich zur Zeit nicht bewegen...', array(':name' => $current->name()));
                 return false;
             }
@@ -45,7 +45,7 @@ class Controller_Map extends Controller_Game {
 
             //Check route
             if (!($route = $game->map($lid)->get_route($lid, $did, $map_type == Model_Map_Abstract::MMA_TYPE_LABYRINTH ? 2 : null))) {
-                if ($player->type() == Interface_Plentity::IC_NPC_NONPC)
+                if (!Tool_Scripts::is_npc())
                     $player->log()->add('Diesen Ort kannst du von hier aus nicht erreichen ...');
                 return false;
             }
@@ -59,12 +59,12 @@ class Controller_Map extends Controller_Game {
                     break;
                 foreach ($companion as $current)
                     if (
-                        !$last_pass->can_leave($current->id(), Tool_System::instance_of($lp,'Model_Places_Tentkit'), $current->type() == Interface_Plentity::IC_NPC_NONPC ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC) ||
-                        !$lp->can_enter($current->id(), $current->type() == Interface_Plentity::IC_NPC_NONPC ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC))
+                        !$last_pass->can_leave($current->id(), Tool_System::instance_of($lp,'Model_Places_Tentkit'), !Tool_Scripts::is_npc($current) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC) ||
+                        !$lp->can_enter($current->id(), !Tool_Scripts::is_npc($current) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC))
                         break 2;
                 $last_pass = $lp;
                 foreach ($companion as $current)
-                    if ($current->type() == Interface_Plentity::IC_NPC_NONPC)
+                    if (!Tool_Scripts::is_npc($current))
                         $current->disable_escape();
             }
 
@@ -84,18 +84,19 @@ class Controller_Map extends Controller_Game {
             $distance = $route['distance'];
         } else {
             foreach ($companion as $current)
-                if (!$location->can_leave_map($current->id(), $current->type() == Interface_Plentity::IC_NPC_NONPC ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC) || !$destination->can_enter_map($current->id(), $current->type() == Interface_Plentity::IC_NPC_NONPC ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC)) {
-                    if ($current->id() == $player->id() && $current->type() == Interface_Plentity::IC_NPC_NONPC) $player->log()->add(((count($companion) == 1) ? 'Du kannst diese Reise nicht antreten.' : 'Ihr könnt diese Reise nicht antreten.'));
+                if (!$location->can_leave_map($current->id(), !Tool_Scripts::is_npc($current) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC) || !$destination->can_enter_map($current->id(), !Tool_Scripts::is_npc($current) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC)) {
+                    if ($current->id() == $player->id() && !Tool_Scripts::is_npc($current)) $player->log()->add(((count($companion) == 1) ? 'Du kannst diese Reise nicht antreten.' : 'Ihr könnt diese Reise nicht antreten.'));
                     return false;
                 }
 
             // If we're switching between labyrinth and other map types, update escape ID
             if ($game->map($did)->get_map_type() == Model_Map_Abstract::MMA_TYPE_LABYRINTH && $game->map($lid)->get_map_type() != Model_Map_Abstract::MMA_TYPE_LABYRINTH)
-                foreach ($companion as $current)
-                    if ($current->type() == Interface_Plentity::IC_NPC_NONPC) $current->set_escape_target($did);
+                foreach ($companion as $current) {
+                    if (!Tool_Scripts::is_npc($current)) $current->set_escape_target($did);
+                }
             elseif ($game->map($did)->get_map_type() != Model_Map_Abstract::MMA_TYPE_LABYRINTH && $game->map($lid)->get_map_type() == Model_Map_Abstract::MMA_TYPE_LABYRINTH)
                 foreach ($companion as $current)
-                    if ($current->type() == Interface_Plentity::IC_NPC_NONPC) $current->set_escape_target(null);
+                    if (!Tool_Scripts::is_npc($current)) $current->set_escape_target(null);
 
             $distance = 0;
             $route = [];
@@ -109,7 +110,7 @@ class Controller_Map extends Controller_Game {
             if (!$current->get_status()->has(Model_Status::MS_STAT_ENERGY, $energy, Model_Status::MS_EFFECT_MOVEMENT)) {
                 if ($support) $overhead += $current->get_status()->miss(Model_Status::MS_STAT_ENERGY, $energy, Model_Status::MS_EFFECT_MOVEMENT);
                 else {
-                    if ($player->type() == Interface_Plentity::IC_NPC_NONPC)
+                    if (!Tool_Scripts::is_npc())
                         $player->log()->add(($current == $player) ? 'Du hast nicht genug Energie, um diesen Ort zu erreichen ...' : ':name hat nicht genug Energie, um diesen Ort zu erreichen ...', array(':name' => $current->name()));
                     return false;
                 }
@@ -118,7 +119,7 @@ class Controller_Map extends Controller_Game {
 
         $energy = floor($distance * $player->get_status()->get(Model_Status::MS_CHAR_DISTANCING) * $modifier);
         if (!$player->get_status()->has(Model_Status::MS_STAT_ENERGY, $energy + $overhead * 1.2, Model_Status::MS_EFFECT_MOVEMENT)) {
-            if ($player->type() == Interface_Plentity::IC_NPC_NONPC)
+            if (!Tool_Scripts::is_npc())
                 $player->log()->add('Du hast nicht genug Energie um diesen Weg zu bewältigen während du jemand anderem hilfst.');
             return false;
         }
@@ -129,16 +130,16 @@ class Controller_Map extends Controller_Game {
             if ($transport = Tool_Scripts::get_active_transport($current))
                 $transport->trigger_before($current, $distance);
 
-            $location->leave($current->id(), $current->type() == Interface_Plentity::IC_NPC_NONPC ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC);
+            $location->leave($current->id(), !Tool_Scripts::is_npc($current) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC);
             $current->get_status()->modify(Model_Status::MS_STAT_ENERGY, -$energy, Model_Status::MS_EFFECT_MOVEMENT);
             if (Tool_Scripts::get_timeofday() == "day")
                 $current->get_status()->modify(Model_Status::MS_STAT_THIRST, -$energy * 0.2, Model_Status::MS_EFFECT_MOVEMENT);
-            $destination->enter($current->id(), $current->type() == Interface_Plentity::IC_NPC_NONPC ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC);
+            $destination->enter($current->id(), !Tool_Scripts::is_npc($current) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC);
             $current->location_class($did);
 
             if ($sub) {
-                $location->leave_map($current->id(), $current->type() == Interface_Plentity::IC_NPC_NONPC ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC);
-                $destination->enter_map($current->id(), $current->type() == Interface_Plentity::IC_NPC_NONPC ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC);
+                $location->leave_map($current->id(), !Tool_Scripts::is_npc($current) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC);
+                $destination->enter_map($current->id(), !Tool_Scripts::is_npc($current) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC);
             }
 
             //Passes
@@ -148,7 +149,7 @@ class Controller_Map extends Controller_Game {
 
             //Tumbles
             if (($sub || $map_type != Model_Map_Abstract::MMA_TYPE_LABYRINTH) && Tool_Gambling::tumble($current)) {
-                if ($current->type() == Interface_Plentity::IC_NPC_NONPC)
+                if (!Tool_Scripts::is_npc($current))
                     $current->log()->add('Du bist gestolpert und hast dir das Knie aufgeschlagen! Vielleicht solltest du deinen Alkoholkonsum zügeln ...');
                 $current->get_status()->modify(Model_Status::MS_STAT_HEALTH, -mt_rand(3, 10), Model_Status::MS_EFFECT_MOVEMENT);
             }
@@ -157,7 +158,7 @@ class Controller_Map extends Controller_Game {
             $current->get_status()->remove('move');
 
             //Messages
-            if ($current->type() == Interface_Plentity::IC_NPC_NONPC) {
+            if (!Tool_Scripts::is_npc($current)) {
                 if (!$sub && $map_type == Model_Map_Abstract::MMA_TYPE_LABYRINTH) {
                     if (!Tool_System::instance_of($destination, 'Interface_Corridor'))
                         $current->log()->add('Du tastest dich ein Stück vorran und und befindest dich jetzt in/im :location.', array(), array(':location' => $destination->name()));
@@ -169,7 +170,7 @@ class Controller_Map extends Controller_Game {
                     $current->log()->add(':name hat dich gebeten, ihn nach :location zu begleiten.', array(':name' => $player->name()), array(':location' => $destination->name()));
                 else {
                     $current->log()->add(':name hat dich angewiesen, bei :location nach dem Rechten zu sehen.', array(':name' => $player->name()), array(':location' => $destination->name()));
-                    if ($player->type() == Interface_Plentity::IC_NPC_NONPC)
+                    if (!Tool_Scripts::is_npc())
                         $player->log()->add('Du entsendest :name nach :location, um dort nach dem Rechten zu sehen.', array(':name' => $current->name()), array(':location' => $destination->name()));
                 }
             }

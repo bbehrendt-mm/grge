@@ -29,6 +29,9 @@ abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item 
         if ($player === null)
             global $player;
 
+        if (Tool_Scripts::is_npc($player))
+            return;
+
         if (!static::$allow_multi_equip)
             foreach ($player->get_equipment($this->get_equipment_type()) as $item)
                 $item->unequip();
@@ -115,6 +118,9 @@ abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item 
         /** @global Model_Player $player */
         if ($player === null)
             global $player;
+
+        if (Tool_Scripts::is_npc($player))
+            return;
 
         foreach ($player->get_equipment($this->get_equipment_type(), true) as $item)
             $item->equipped_primary = false;

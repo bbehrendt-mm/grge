@@ -13,7 +13,7 @@ abstract class Model_Items_Abstract_Chair extends Model_Combat_Weapons_Close {
 
 	protected function weapon_break(Model_Combat_Actor $me, Model_Combat_Actor $opponent, $damage, Model_Combat_Scene $scene) {
 		parent::weapon_break($me, $opponent, $damage, $scene);
-		if ($this->registered_user)
+		if ($this->registered_user && !Tool_Scripts::is_npc($this->registered_user))
 			$this->registered_user->achievements()->achieve(Model_Achievement::MA_BROKEN_CHAIRS, 1);
 	}
 }	

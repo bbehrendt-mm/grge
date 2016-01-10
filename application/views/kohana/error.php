@@ -78,7 +78,7 @@
     </script>
 </head>
 
-<body onload="jQuery('.lang-dep').hide(); jQuery('.lang-en').show();">
+<body onload="$('.lang-dep').hide(); $('.lang-en').show();">
 <div id="wrapper">
     <div></div>
     <div id="content">

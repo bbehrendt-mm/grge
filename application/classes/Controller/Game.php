@@ -201,9 +201,10 @@ class Controller_Game extends Controller {
     /**
      * @param $itemlist Model_Items_Abstract_Item[]
      * @param bool $short
+     * @param Interface_Plentity[]|null $players
      * @return array
      */
-    private function group_itemlist($itemlist, $short = false) {
+    private function group_itemlist($itemlist, $short = false, $players = null) {
         $grouping = Array();
         $cache = Array();
 
@@ -211,7 +212,7 @@ class Controller_Game extends Controller {
         foreach ($itemlist as $item)
         {
             // Create category array
-            if (!isset($grouping[$item->cat()])) $grouping[$item->cat()] = Array('items' => Array(), 'name' => '');
+            if (!isset($grouping[$item->cat()])) $grouping[$item->cat()] = ['items' => [], 'name' => ''];
 
             // Check if our item supports static stacking
             $static = Tool_System::instance_of($item, 'Interface_Static');
@@ -245,7 +246,7 @@ class Controller_Game extends Controller {
                 'description' => $short ? '' : __($item->description()),
                 'icon' => $item->icon(),
                 'weight' => $item->weight(),
-                'actions' => $short ? [] : $this->prepare_actionlist($item->auto_actions()),
+                'actions' => $short ? [] : $this->prepare_actionlist($item->auto_actions($players)),
                 'addr' => Tool_System::getClassID($item),
                 'flags' => $flags,
                 'uin' => $item->uin(),
@@ -385,12 +386,14 @@ class Controller_Game extends Controller {
             ];
         }
 
+        $ap_list = $remote ? [] : array_merge([$p], Tool_Scripts::comrades($p->location_class(), true, true));
+
         /** @noinspection PhpVoidFunctionResultUsedInspection */
         /** @noinspection PhpUndefinedMethodInspection */
         $tmp = [
-            'player' => $this->group_itemlist($p->inventory()->get(), $remote ? !$full_data : false),
+            'player' => $this->group_itemlist($p->inventory()->get(), $remote ? !$full_data : false, [$p]),
             'weight' => [$p->inventory()->weight(),$p->inventory()->limit()],
-            'location' => $remote ? [] : $this->group_itemlist($p->location()->inventory()->get()),
+            'location' => $remote ? [] : $this->group_itemlist($p->location()->inventory()->get(), false, $ap_list),
             'home' => $remote ? false : (bool)Tool_Scripts::current_location_hideout(),
             'heroics' => $a,
             'action' => $action
@@ -444,7 +447,7 @@ class Controller_Game extends Controller {
     }
 
     /**
-     * @param bool|Model_Player $remote
+     * @param bool|Interface_Plentity $remote
      * @return array|void
      */
     private function render_status($remote = false) {
@@ -460,7 +463,7 @@ class Controller_Game extends Controller {
 
         $buffs = [];
         foreach ($p->get_status()->buffs() as $buff) if ($buff->visible() && (!$remote || $buff->visible(true)))
-            $buffs[] = ['icon' => $buff->icon(), 'name' => __($buff->name()), 'desc' => $remote ? '' : __($buff->description()), 'time' => $remote ? false : ($buff->lifetime() < 0 ? false : Tool_Numerics::duration_to_string($buff->lifetime()))];
+            $buffs[] = ['icon' => $buff->icon(), 'name' => __($buff->name()), 'desc' => $remote ? '' : __($buff->description()), 'time' => $buff->lifetime() < 0 ? false : Tool_Numerics::duration_to_string($buff->lifetime())];
 
         $tmp = [
             'bars' => $cache,
@@ -556,17 +559,6 @@ class Controller_Game extends Controller {
         $lock = (($game->timeflow() == 0) ? ($game->pauselock() + Kohana::$config->load('balancing.pause.min_interval')) : $player->vote_time(true)) - time();
         if ($lock < 0) $lock = false;
 
-        $battle_ai = $player->get_battle_settings();
-
-        $ammo_data = [];
-        foreach (Controller_Player::battle_ai_ammo_types() as $ammo) {
-            /** @var Model_Items_Abstract_Ammo|string $ammo */
-            $ammo_data[] = [
-                'icon' => $ammo::static_icon(),
-                'name' => __($ammo::static_name()),
-                'locked' => isset($battle_ai[$ammo]) ? (bool)$battle_ai[$ammo] : false
-            ];
-        }
 
         $this->add_data('settings', [
             'clock' => [
@@ -574,15 +566,7 @@ class Controller_Game extends Controller {
                 'time_settings' => $tmp,
                 'locked' => $lock
             ],
-            'ai' => [
-                'type' => $battle_ai[Model_Player::MP_SETTINGS_BATTLE_DISTANCE_DAMAGE_SHIFT],
-                'weapons' => [
-                    'energy' => $player->job(1080) ? 'locked' : $battle_ai[Model_Player::MP_SETTINGS_BATTLE_NOENERGY],
-                    'throw' => $battle_ai[Model_Player::MP_SETTINGS_BATTLE_NOSELFAMMO],
-                    'tank' => $battle_ai[Model_Player::MP_SETTINGS_BATTLE_NOTANKAMMO],
-                ],
-                'ammo' => $ammo_data
-            ]
+            'ai' => null //ToDo: Battle AI settings
         ]);
     }
 

@@ -4,6 +4,7 @@
             <img class="pointer" src="media/icons/lang/de.png" alt="de" title="<b>Deutsch</b><br />Standartsprache" />
             <img class="pointer" src="media/icons/lang/en.png" alt="en" title="<b>English</b><br />Translation by Brainbox" />
             <img class="pointer" src="media/icons/lang/es.png" alt="es" title="<b>Español</b><br />Sin terminar! Si usted desea ayudar, por favor póngase en contacto con Brainbox." />
+            <img class="pointer" src="media/icons/lang/fr.png" alt="fr" title="<b>Français</b><br />Non terminé! Pour vous aider, contactez Brainbox!" />
         </div>
 
         <div class="navsection navtext" id="main-menu" data-toggle="0"></div>

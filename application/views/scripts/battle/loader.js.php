@@ -15,14 +15,19 @@
                 if (v[5])
                     alias.queueResource(v[5], v[5]);
 
-                switch (v[6]) {
-                    case <?=Model_Combat_Actor::MCA_TYPE_PLAYER?>:
-                        alias.addResource('player.gif', 'player_dead.gif');
-                        break;
-                    case <?=Model_Combat_Actor::MCA_TYPE_ZOMBIE?>:
-                        alias.addResource('zombie.gif', 'zombie_dead.gif');
-                        break;
-                }
+                var sprites = v[10];
+                if (!sprites[0] || !sprites[1])
+                    switch (v[6]) {
+                        case <?=Model_Combat_Actor::MCA_TYPE_PLAYER?>:
+                            if (!sprites[0]) sprites[0] = 'player.gif';
+                            if (!sprites[1]) sprites[1] = 'player_dead.gif';
+                            break;
+                        case <?=Model_Combat_Actor::MCA_TYPE_ZOMBIE?>:
+                            if (!sprites[0]) sprites[0] = 'zombie.gif';
+                            if (!sprites[1]) sprites[1] = 'zombie_dead.gif';
+                            break;
+                    }
+                alias.addResource('sprites/' + sprites[0], 'sprites/' + sprites[1]);
             }
 
             if (v[0] == <?=Model_Combat_Scene::MCS_EV_SWITCH?>)

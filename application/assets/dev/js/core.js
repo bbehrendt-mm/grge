@@ -571,7 +571,9 @@ core = {
                                         }))
                                 )
                             )
-                            .append($('<div />').addClass('note').text("Du kannst diesen Gegenstand beliebig beschriften. Best\u00e4tige deine Beschriftung mit der Eingabetaste."))
+                            .append(
+                                NF.row().append(NF.cell(true, 12).append($('<div />').addClass('note').text("Du kannst diesen Gegenstand beliebig beschriften. Best\u00e4tige deine Beschriftung mit der Eingabetaste.")))
+                            )
                             .append('<span class="separator" />');
                     }
 
@@ -621,7 +623,9 @@ core = {
                         var fillbox, i;
                         content.append(
                             fillbox = $('<div />').addClass('center')
-                        ).append($('<div />').addClass('note').text("Klicke einen leeren Slot an, um Wasser aus einer anderen Quelle hinzuzugeben. Klicke einen gef\u00fcllten Slot an, um Wasser auszusch\u00fctten. Schwarz gef\u00e4rbte Slots k\u00f6nnen nicht ausgeleert werden."));
+                        ).append(
+                            NF.row().append(NF.cell(true, 12).append($('<div />').addClass('note').text("Klicke einen leeren Slot an, um Wasser aus einer anderen Quelle hinzuzugeben. Klicke einen gef\u00fcllten Slot an, um Wasser auszusch\u00fctten. Schwarz gef\u00e4rbte Slots k\u00f6nnen nicht ausgeleert werden.")))
+                        );
                         for (i = 0; i < v.count; i++)
                             fillbox.append($('<div />').addClass('fillbox fillbox-filled ' + (v.fill.fixed ? 'fillbox-fixed' : '')).click(function() {
                                 if (!v.fill.fixed)
@@ -655,6 +659,11 @@ core = {
                             }
                         ));
 
+                        if (v.count > 1 && !v.fill.fixed)
+                            fillbox.append($('<div />').addClass('fillbox pointer').css('vertical-align', 'top').append(NF.fa('arrow-down')).click(function() {
+                                core.command('act/inventory',{action: 'spill', items: [v.uin], all: true, player: $('[data-pid-selected="1"]').attr('data-pid')});
+                            }));
+
                         content.append('<span class="separator" />');
                     }
 
@@ -664,13 +673,26 @@ core = {
 
                     if (v.armor) {
                         content.append('<span class="separator" />');
+
+                        var bar_col = '';
+                        if (v.armor.hp >= 1) bar_col = 'blue';
+                        else if (v.armor.hp >= 0.7) bar_col = 'green';
+                        else if (v.armor.hp >= 0.4) bar_col = 'yellow';
+                        else if (v.armor.hp >= 0.2) bar_col = 'orange';
+                        else bar_col = 'red';
+
                         NF.row()
-                            .append($('<div />').addClass('cell rw-6 padded b right').text("Typ"))
-                            .append($('<div />').addClass('cell rw-6 padded left').text(v.armor.type))
+                            .append(NF.cell(true, 6, 0, 'b right').text("Typ"))
+                            .append(NF.cell(true, 6, 0, 'left').text(v.armor.type))
                             .appendTo(content);
                         NF.row()
-                            .append($('<div />').addClass('cell rw-6 padded b right').text("Zustand"))
-                            .append($('<div />').addClass('cell rw-6 padded left').text(v.armor.condition))
+                            .append(NF.cell(true, 6, 0, 'b right').text("Zustand"))
+                            .append(NF.cell(true, 6, 0, 'left').text(v.armor.condition))
+                            .appendTo(content);
+                        NF.row()
+                            .append(NF.cell(true, 6, 6, 'left').append(
+                                $('<div />').addClass('genbar ' + bar_col).append($('<div />').css('width', (v.armor.hp * 100) + '%'))
+                            ))
                             .appendTo(content);
                     }
 
@@ -1839,13 +1861,43 @@ core = {
                         )
                 });
 
-            sub.append(NF.row()
-                    .append($('<div />').addClass('cell rw-12').text(data.bdy))
-                    .append($('<div />').addClass('cell rw-7 rw-md-6 rw-sm-12 padded').append($('<div />').addClass('b').text("Kampfzusammenfassung")))
-                    .append($('<div />').addClass('cell rw-5 rw-md-6 rw-sm-12 padded').append(
-                        $('<div />').addClass('note').text("Keine Lust auf langweilige Kampfstatistiken? Dann schau dir doch einfach ein Video des Kampfes an!").append(videobtn)
-                    ))
-            );
+            var current_row;
+            sub
+                .append(NF.row().append(NF.cell(true, 12).text(data.bdy)))
+                .append(current_row = NF.row());
+
+            current_row.append($('<div />').addClass('cell rw-4 rw-md-6 rw-sm-12 padded').append(
+                $('<div />').addClass('note').text("Keine Lust auf langweilige Kampfstatistiken? Dann schau dir doch einfach ein Video des Kampfes an!").append(videobtn)
+            ));
+
+            console.log(data.sum);
+            $.each(data.sum, function(k, grp) {
+                $.each(grp, function(ki, line) {
+                    current_row.append($('<div />').addClass('cell rw-4 rw-md-6 rw-sm-12 padded').append(entry = NF.row()));
+
+                    var injuries, items;
+
+                    entry.css('opacity', line.count <= line.death ? 0.75 : 1)
+                        .append(NF.cell(false, 12, 0, 'center').text(line.unique && line.count == 1 ? line.name : (line.count + ' ' + line.name)))
+                        .append(NF.cell(false, 6, 0, 'center')
+                            .append(line.death > 0 ? NF.icon('media/icons/death.gif', line.death) : null)
+                            .append(NF.icon('media/icons/damage.gif', Math.round10(Number(line.dmg_taken), -1)))
+                            .append(NF.icon('media/icons/status_energy.gif', Math.round10(Number(line.energy), -1)))
+                        ).append(injuries = NF.cell(false, 6, 0, 'center')).append(items = NF.cell(false, 12, 0, 'center'))
+
+                    $.each(line.injuries, function(aicon, adata) {
+                        injuries.append(NF.icon(aicon, '+')).attr('title', adata[1]);
+                    });
+                    $.each(line.used_ammo, function(aicon, acount) {
+                        items.append(NF.icon(aicon, '-' + acount));
+                    });
+                    $.each(line.damaged_items, function(aicon, adata) {
+                        items.append(NF.icon(aicon, '-' + adata[0])).attr('title', adata[1]);
+                    });
+                });
+
+                sub.append(current_row = NF.row())
+            });
 
             return title;
         };

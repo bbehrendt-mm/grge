@@ -45,6 +45,12 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
         $this->player->get_status()->modify(Model_Status::MS_STAT_HEALTH, -$damage, Model_Status::MS_EFFECT_UNSCALE);
     }
 
+    public function customSprite($death_sprite = false) {
+        if (!$death_sprite && $this->player->job(1080))
+            return 'child.gif';
+        else return parent::customSprite($death_sprite);
+    }
+
     /**
      * @param Model_Combat_Weapon|Model_Combat_Weapon[] $weapon
      * @return Model_Combat_Actor

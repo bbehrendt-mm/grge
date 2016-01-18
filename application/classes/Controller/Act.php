@@ -161,7 +161,7 @@ class Controller_Act extends Controller_Game {
         else $player->achievements()->achieve(Model_Achievement::MA_NOSCIENCE);
     }
 
-    private function inventory_spill($items) {
+    private function inventory_spill($items, $all = false) {
         /**
          * @global Model_Game $game
          * @var Model_Items_Abstract_Item $item
@@ -173,7 +173,7 @@ class Controller_Act extends Controller_Game {
         /** @var Model_Items_Abstract_Bottle $item */
         if (!($item = $game->uin()->get($items[0], 'Model_Items_Abstract_Bottle'))) return;
 
-        $item->interaction_extract();
+        $item->interaction_extract($all);
     }
 
     private function inventory_pill($action, $items, $count) {
@@ -335,7 +335,7 @@ class Controller_Act extends Controller_Game {
         elseif ($action == 'defill')
             $this->inventory_defill($items);
         elseif ($action == 'spill')
-            $this->inventory_spill($items);
+            $this->inventory_spill($items, (bool)$this->request->post('all'));
         elseif ($action == 'mix')
             $this->inventory_mix($items);
         elseif ($action == 'belt')

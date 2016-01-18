@@ -1,6 +1,5 @@
 @import (once) "../zombvival";
 
-
 @inventory-structure-color-highlight: @flatbox-color-bold;
 @inventory-structure-color: lighten(@inventory-structure-color-highlight, 35%);
 @inventory-item-counter-color: white;
@@ -24,7 +23,7 @@
   &:not(.control)>img {filter: @inventory-item-filter; -webkit-filter: @inventory-item-filter;}
   &:not(.remote) {
     cursor: pointer;
-    &:not(.control):hover {background: darken(fade(@background,10%), 10%)}
+    &:not(.control):hover {background: darken(@background, 10%)}
   }
 
   &>.staticCount, &>.instanceCount {
@@ -42,7 +41,7 @@
   ul {
     padding: 0; margin: 2px;
     li {
-      .item(fade(white, 0%));
+      .item(white);
       &.control {
         color: @inventory-structure-color; transition: color 0.4s ease;
         &:hover {color: @inventory-structure-color-highlight;}
@@ -70,7 +69,7 @@
 }
 
 div.item {
-  .item(fade(white, 0%));
+  &:not(.equipped) {.item(fade(white, 0%))};
   &.equipped {.item(@inventory-item-tag-equipped)}
 }
 body.q-low .inventory ul li.marked-target {animation: bubble-low 0.3s ease infinite alternate;}

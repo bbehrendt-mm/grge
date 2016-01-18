@@ -45,3 +45,17 @@
 .gardenbar.water.dry {.progress(@zv-color-main-dark,@gardenbar-red-color)}
 .gardenbar.growth {.progress(@zv-color-main-dark,@gardenbar-brown-color)}
 .gardenbar.fertilizer {.progress(@zv-color-main-dark,@gardenbar-pink-color)}
+
+@genbar-blue: #00d1c7;
+@genbar-green: #a1ff00;
+@genbar-yellow: #fff200;
+@genbar-orange: #eda303;
+@genbar-red: #ff3f00;
+
+.generic_bar(@bg) {.progress(rgba(0,0,0,0.3), @bg)}
+
+.genbar.blue {.generic_bar(@genbar-blue)}
+.genbar.green {.generic_bar(@genbar-green)}
+.genbar.yellow {.generic_bar(@genbar-yellow)}
+.genbar.orange {.generic_bar(@genbar-orange)}
+.genbar.red {.generic_bar(@genbar-red)}

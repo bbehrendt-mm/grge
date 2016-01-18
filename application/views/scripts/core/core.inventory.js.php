@@ -130,7 +130,9 @@
                                         }))
                                 )
                             )
-                            .append($('<div />').addClass('note').text(<?=__j('Du kannst diesen Gegenstand beliebig beschriften. Bestätige deine Beschriftung mit der Eingabetaste.')?>))
+                            .append(
+                                NF.row().append(NF.cell(true, 12).append($('<div />').addClass('note').text(<?=__j('Du kannst diesen Gegenstand beliebig beschriften. Bestätige deine Beschriftung mit der Eingabetaste.')?>)))
+                            )
                             .append('<span class="separator" />');
                     }
 
@@ -180,7 +182,9 @@
                         var fillbox, i;
                         content.append(
                             fillbox = $('<div />').addClass('center')
-                        ).append($('<div />').addClass('note').text(<?=__j('Klicke einen leeren Slot an, um Wasser aus einer anderen Quelle hinzuzugeben. Klicke einen gefüllten Slot an, um Wasser auszuschütten. Schwarz gefärbte Slots können nicht ausgeleert werden.')?>));
+                        ).append(
+                            NF.row().append(NF.cell(true, 12).append($('<div />').addClass('note').text(<?=__j('Klicke einen leeren Slot an, um Wasser aus einer anderen Quelle hinzuzugeben. Klicke einen gefüllten Slot an, um Wasser auszuschütten. Schwarz gefärbte Slots können nicht ausgeleert werden.')?>)))
+                        );
                         for (i = 0; i < v.count; i++)
                             fillbox.append($('<div />').addClass('fillbox fillbox-filled ' + (v.fill.fixed ? 'fillbox-fixed' : '')).click(function() {
                                 if (!v.fill.fixed)
@@ -214,6 +218,11 @@
                             }
                         ));
 
+                        if (v.count > 1 && !v.fill.fixed)
+                            fillbox.append($('<div />').addClass('fillbox pointer').css('vertical-align', 'top').append(NF.fa('arrow-down')).click(function() {
+                                core.command('act/inventory',{action: 'spill', items: [v.uin], all: true, player: $('[data-pid-selected="1"]').attr('data-pid')});
+                            }));
+
                         content.append('<span class="separator" />');
                     }
 
@@ -223,13 +232,26 @@
 
                     if (v.armor) {
                         content.append('<span class="separator" />');
+
+                        var bar_col = '';
+                        if (v.armor.hp >= 1) bar_col = 'blue';
+                        else if (v.armor.hp >= 0.7) bar_col = 'green';
+                        else if (v.armor.hp >= 0.4) bar_col = 'yellow';
+                        else if (v.armor.hp >= 0.2) bar_col = 'orange';
+                        else bar_col = 'red';
+
                         NF.row()
-                            .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Typ')?>))
-                            .append($('<div />').addClass('cell rw-6 padded left').text(v.armor.type))
+                            .append(NF.cell(true, 6, 0, 'b right').text(<?=__j('Typ')?>))
+                            .append(NF.cell(true, 6, 0, 'left').text(v.armor.type))
                             .appendTo(content);
                         NF.row()
-                            .append($('<div />').addClass('cell rw-6 padded b right').text(<?=__j('Zustand')?>))
-                            .append($('<div />').addClass('cell rw-6 padded left').text(v.armor.condition))
+                            .append(NF.cell(true, 6, 0, 'b right').text(<?=__j('Zustand')?>))
+                            .append(NF.cell(true, 6, 0, 'left').text(v.armor.condition))
+                            .appendTo(content);
+                        NF.row()
+                            .append(NF.cell(true, 6, 6, 'left').append(
+                                $('<div />').addClass('genbar ' + bar_col).append($('<div />').css('width', (v.armor.hp * 100) + '%'))
+                            ))
                             .appendTo(content);
                     }
 

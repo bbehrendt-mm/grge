@@ -30,17 +30,7 @@
         this.addTargetCard(id, line);
 
         if (death) {
-            var body;
-            switch (this.combatants[id].type) {
-                case <?=Model_Combat_Actor::MCA_TYPE_PLAYER?>:
-                    body = new createjs.Bitmap(alias.getResource('player_dead.gif'));
-                    break;
-                case <?=Model_Combat_Actor::MCA_TYPE_ZOMBIE?>:
-                    body = new createjs.Bitmap(alias.getResource('zombie_dead.gif'));
-                    break;
-                default:
-                    console.error('Unknown actor type ' + this.combatants[id].type);
-            }
+            var body = new createjs.Bitmap(alias.getResource('sprites/' + this.combatants[id].sprites[1]));
 
             body.x = body.y = -8;
             body.alpha = 0;

@@ -464,7 +464,7 @@ class Tool_Scripts
 
         //Upload to DB
         $vid = Model_Combat_Handler::upload($game->id(), $game->season(), $battle);
-        $location->log()->add(new Model_Log_Types_Battle($title, $text, $vid));
+        $location->log()->add(new Model_Log_Types_Battle($title, $text, $vid, $battle->get_scene()->summarize()));
         //$location->log()->add(new Model_Log_Types_Raw('' . $battle->get_scene()));
 
         return $battle;

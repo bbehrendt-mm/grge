@@ -2,7 +2,7 @@
 
 class Model_Combat_Scene {
 
-    const MCS_EV_NEW_CHALLENGER = 1;           // [ID, Group, Name, Unique, Avatar, Type, [x, y], [Health, Max Health, Count], [Ini, Dmg, Res, Acc]]
+    const MCS_EV_NEW_CHALLENGER = 1;           // [ID, Group, Name, Unique, Avatar, Type, [x, y], [Health, Max Health, Count], [Ini, Dmg, Res, Acc], [Norm. Sprite, Death Sprite]]
     const MCS_EV_NEXT = 2;                     // [ID]
     const MCS_EV_ATTACK = 3;                   // [Atk-ID, Def-ID, [Ammo-Icons ...], [Wpn-Name, Wpn-Icon, Wpn-Anim], damage]
     const MCS_EV_DAMAGE = 4;                   // [ID, Damage, Kills, Death]
@@ -16,6 +16,78 @@ class Model_Combat_Scene {
 
     public function export() {
         return $this->log_data;
+    }
+
+    public function summarize() {
+        $tmp = [];
+        $groups = [];
+
+        foreach ($this->log_data as $entry) {
+
+            $type = $entry[0];
+            $entry = array_slice($entry, 1);
+
+            switch ($type) {
+                case static::MCS_EV_NEW_CHALLENGER:
+                    list($id, $group, $name, $unique, /* $avatar */, $atype, list($x, $y), list($health, $max, $count), list($ini, $dmg, $res, $acc), list($sprite, $sprite_death)) = $entry;
+
+                    if (!isset($tmp[$group])) $tmp[$group] = [];
+                    $groups[$id] = $group;
+                    $tmp[$group][$id] = [
+                        'name' => $name,
+                        'unique' => $unique,
+                        'count' => $count,
+                        'icon' => $sprite,
+
+                        'death' => 0,
+                        'dmg_dealt' => 0,
+                        'dmg_taken' => 0,
+                        'injuries' => [],
+
+                        'used_ammo' => [],
+                        'damaged_items' => []
+                    ];
+
+                    break;
+
+                case static::MCS_EV_ATTACK:
+                    list($atk, $def, $ammo, list($name, $icon, $animation), $damage) = $entry;
+
+                    $tmp[$groups[$atk]][$atk]['dmg_dealt'] += $damage;
+                    foreach ($ammo as $a)
+                        if (!isset($tmp[$groups[$atk]][$atk]['used_ammo'][$a]))
+                            $tmp[$groups[$atk]][$atk]['used_ammo'][$a] = 1;
+                        else $tmp[$groups[$atk]][$atk]['used_ammo'][$a]++;
+
+                    break;
+
+                case static::MCS_EV_DAMAGE:
+                    list($id, $damage, $kills, $death) = $entry;
+
+                    $tmp[$groups[$id]][$id]['dmg_taken'] += $damage;
+                    $tmp[$groups[$id]][$id]['death'] += $kills;
+                    break;
+
+                case static::MCS_EV_INJURY:
+                    list($id, list($name, $icon)) = $entry;
+
+                    if (!isset($tmp[$groups[$id]][$id]['injuries'][$icon]))
+                        $tmp[$groups[$id]][$id]['injuries'][$icon] = [1, $name];
+                    else $tmp[$groups[$id]][$id]['injuries'][$icon][0]++;
+                    break;
+
+                case static::MCS_EV_BREAK:
+                    list($id, list($wpn_name, $wpn_icon)) = $entry;
+
+                    if (!isset($tmp[$groups[$id]][$id]['damaged_items'][$wpn_icon]))
+                        $tmp[$groups[$id]][$id]['damaged_items'][$wpn_icon] = [1, $wpn_name];
+                    else $tmp[$groups[$id]][$id]['damaged_items'][$wpn_icon][0]++;
+                    break;
+            }
+
+        }
+
+        return $tmp;
     }
 
     public static function vitalize($log_data = []) {
@@ -63,7 +135,7 @@ class Model_Combat_Scene {
 
         switch ($type) {
             case static::MCS_EV_NEW_CHALLENGER:
-                list($id, $group, $name, /* $unique */, /* $avatar */, $atype, list($x, $y), list($health, $max, $count), list($ini, $dmg, $res, $acc)) = $entry;
+                list($id, $group, $name, /* $unique */, /* $avatar */, $atype, list($x, $y), list($health, $max, $count), list($ini, $dmg, $res, $acc), list($sprite, $sprite_death)) = $entry;
                 switch ($atype) {
                     case Model_Combat_Actor::MCA_TYPE_PLAYER:
                         $tmp = "Player $name"; break;
@@ -130,6 +202,10 @@ class Model_Combat_Scene {
             $combatant->position(),
             $combatant->strength(),
             $combatant->stats(),
+            [
+                $combatant->customSprite(false),
+                $combatant->customSprite(true)
+            ]
         ];
     }
 

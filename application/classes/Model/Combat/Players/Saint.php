@@ -2,6 +2,8 @@
 
 class Model_Combat_Players_Saint extends Model_Combat_Players_Player {
 
+    public static $custom_sprite = 'saint.gif';
+
     public function __construct() {
         parent::__construct();
         $this->current_weapon = new Model_Items_Godsword();

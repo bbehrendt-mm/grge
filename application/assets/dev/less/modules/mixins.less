@@ -78,6 +78,7 @@ iframe {border: 0 none white}
 .resize-hv, .resize-vh, .resize-both, .resize, .resize-h.resize-v {resize: both;}
 .resize-none {resize: none;}
 .b {font-weight: bold}
+.i {font-style: italic}
 .margin {margin: 3px;}
 .margin-left {margin-left: 5px;}
 .margin-right {margin-right: 5px;}
@@ -89,3 +90,8 @@ iframe {border: 0 none white}
 .text-red {color: #913d40}
 .text-green {color: #005d0f}
 .text-stroke(@size, @color) {text-shadow: -@size -@size 0 @color, @size -@size 0 @color, -@size @size 0 @color, @size @size 0 @color}
+
+.mlicon {
+  text-align: center; display: inline-block; padding: 3px;
+  &>span {display: block; font-size: 10px; font-family: "Exo 2",sans-serif;}
+}

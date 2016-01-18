@@ -3,6 +3,7 @@
      * @var string[] $js
      * @var string[] $css
      * @var string $sid
+     * @var bool $dev
      */
 ?>
 <html>
@@ -66,4 +67,5 @@
     // ## JS COMPRESS END ## //
     </script>
 </body>
+
 </html>

@@ -24,7 +24,7 @@ class Controller_Web extends Controller {
         foreach (scandir(APPPATH . 'assets/css') as $f) if (!in_array($f, ['.','..'])) $css[] = $f;
 
         $sid = $this->request->post('vcsid') ? $this->request->post('vcsid') : $this->session->id();
-        $this->response->body(View::factory('framework')->set('js',$js)->set('css',$css)->set('sid', $sid));
+        $this->response->body(View::factory('framework')->set('js',$js)->set('css',$css)->set('sid', $sid)->set('dev', Kohana::$environment == Kohana::DEVELOPMENT));
     }
 
     private function compile_js_module($name, $debug = false, $base_module = []) {

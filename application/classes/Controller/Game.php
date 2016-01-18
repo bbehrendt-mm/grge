@@ -275,6 +275,7 @@ class Controller_Game extends Controller {
             if (Tool_System::instance_of($item, 'Model_Items_Abstract_Armor'))
                 $data['armor'] = [
                     'condition' => __($item->convertStringProtection()),
+                    'hp' => $item->get_hp(),
                     'type' => __($item->convertStringType())
                 ];
 

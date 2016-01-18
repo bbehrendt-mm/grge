@@ -3,6 +3,8 @@
 abstract class Model_Items_Abstract_Armor extends Model_Items_Abstract_Equipable {
 
     protected $protection = 1;
+    protected $current_protection;
+
     protected static $destroyed = null;
 
     public function convertStringProtection() {
@@ -15,8 +17,17 @@ abstract class Model_Items_Abstract_Armor extends Model_Items_Abstract_Equipable
         else return "Desolat";
     }
 
+    /**
+     * Item constructor
+     * Will randomly select a subtype if subtypes are defined for this item class
+     */
+    public function __construct($type = null) {
+        parent::__construct($type);
+        $this->current_protection = $this->protection;
+    }
+
     public function is_destroyed() {
-        return ($this->protection <= 0);
+        return ($this->get_protection() <= 0);
     }
 
     public function get_destroyed_class() {
@@ -24,7 +35,11 @@ abstract class Model_Items_Abstract_Armor extends Model_Items_Abstract_Equipable
     }
 
     public function get_protection() {
-        return $this->protection;
+        return min($this->protection, $this->current_protection);
+    }
+
+    public function get_hp() {
+        return min(1, max(0, $this->current_protection/$this->protection));
     }
 
     public function drop_dead() {
@@ -37,8 +52,8 @@ abstract class Model_Items_Abstract_Armor extends Model_Items_Abstract_Equipable
      * @param number $damage
      */
     public function take_damage($damage) {
-        $this->protection -= $damage;
-        if ($this->protection <= 0)
+        $this->current_protection -= $damage;
+        if ($this->get_protection() <= 0)
             $this->unequip();
     }
 }	

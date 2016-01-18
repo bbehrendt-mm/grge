@@ -15,6 +15,9 @@ class Model_Combat_Actor extends Named {
     /** @var  Model_Combat_Scene */
     protected $scene;
 
+    protected static $custom_sprite = null;
+    protected static $custom_death_sprite = null;
+
     protected $name;
     protected $type;
     protected $max_health;
@@ -70,6 +73,10 @@ class Model_Combat_Actor extends Named {
 
     public function get_avatar() {
         return null;
+    }
+
+    public function customSprite($death_sprite = false) {
+        return $death_sprite ? static::$custom_death_sprite : static::$custom_sprite;
     }
 
     public function __construct() {

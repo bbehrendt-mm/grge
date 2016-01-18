@@ -210,18 +210,20 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
 		return true;
 	}
 	
-	public function interaction_extract() {
+	public function interaction_extract($all = false) {
         /** @global Model_Player $player */
         global $player;
 	
-		if ($this->fillrate <= 0)
-		{
+		if ($this->fillrate <= 0) {
 			$player->log()->add(new Model_Log_Types_Text(null, null, 'Diese Flasche ist leider leer...'));
 			return true;
 		}
-	
-		$player->location()->inventory()->add(new Model_Items_Generic_Waterv($this->toxicity()));
-		$this->consume();
+
+        $t = $all ? 0 : ($this->fillrate - 1);
+        while ($this->fillrate > $t) {
+            $player->location()->inventory()->add(new Model_Items_Generic_Waterv($this->toxicity()));
+            $this->consume();
+        }
 	
 		return true;
 	}

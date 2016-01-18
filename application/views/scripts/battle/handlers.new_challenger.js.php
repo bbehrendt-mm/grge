@@ -1,11 +1,25 @@
 (function() {
-    Battle.prototype.events[<?=Model_Combat_Scene::MCS_EV_NEW_CHALLENGER?>] = function(id, group, name, unique, avatar, type, pos, strength, stats) {
+    Battle.prototype.events[<?=Model_Combat_Scene::MCS_EV_NEW_CHALLENGER?>] = function(id, group, name, unique, avatar, type, pos, strength, stats, sprites) {
+        if (!sprites) sprites = [];
+        if (!sprites[0] || !sprites[1])
+            switch (type) {
+                case <?=Model_Combat_Actor::MCA_TYPE_PLAYER?>:
+                    if (!sprites[0]) sprites[0] = 'player.gif';
+                    if (!sprites[1]) sprites[1] = 'player_dead.gif';
+                    break;
+                case <?=Model_Combat_Actor::MCA_TYPE_ZOMBIE?>:
+                    if (!sprites[0]) sprites[0] = 'zombie.gif';
+                    if (!sprites[1]) sprites[1] = 'zombie_dead.gif';
+                    break;
+            }
+
         this.combatants[id] = {
             group: group,
             name: name,
             unique: unique,
             avatar: avatar,
             type: type,
+            sprites: sprites,
             pos: {x: pos[0], y: pos[1]},
             health: {
                 health: strength[0],
@@ -28,16 +42,7 @@
 
         var inverse = pos[0] > 32;
 
-        switch (this.combatants[id].type) {
-            case <?=Model_Combat_Actor::MCA_TYPE_PLAYER?>:
-                this.combatants[id].actor = new createjs.Bitmap(this.getResource('player.gif'));
-                break;
-            case <?=Model_Combat_Actor::MCA_TYPE_ZOMBIE?>:
-                this.combatants[id].actor = new createjs.Bitmap(this.getResource('zombie.gif'));
-                break;
-            default:
-                console.error('Unknown actor type ' + this.combatants[id].type);
-        }
+        this.combatants[id].actor = new createjs.Bitmap(this.getResource('sprites/' + sprites[0]));
         this.combatants[id].actor.shadow = new createjs.Shadow("rgba(0,0,0,0.5)", 0, 0, 5);
 
         pos = this.transform(this.combatants[id].pos);

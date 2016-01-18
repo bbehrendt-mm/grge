@@ -44,6 +44,11 @@ NF.img = function(src, classes) {
     return NF.n('img').attr('src', src).addClass(classes ? classes : '');
 };
 
+NF.icon = function(src, txt, classes) {
+    var txt_is_null = !txt && txt !== 0;
+    return NF.n('div', 'mlicon ' + classes).append(NF.img(src)).append(NF.n('span', '', !txt_is_null ? txt : '&nbsp;', txt_is_null))
+};
+
 NF.fa = function(name) {
     return NF.n('i', 'fa ' + ((name.substr(0, 3) == 'fa-') ? name : ('fa-' + name)));
 };

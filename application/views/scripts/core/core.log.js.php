@@ -81,13 +81,43 @@
                         )
                 });
 
-            sub.append(NF.row()
-                    .append($('<div />').addClass('cell rw-12').text(data.bdy))
-                    .append($('<div />').addClass('cell rw-7 rw-md-6 rw-sm-12 padded').append($('<div />').addClass('b').text(<?=__j('Kampfzusammenfassung')?>)))
-                    .append($('<div />').addClass('cell rw-5 rw-md-6 rw-sm-12 padded').append(
-                        $('<div />').addClass('note').text(<?=__j('Keine Lust auf langweilige Kampfstatistiken? Dann schau dir doch einfach ein Video des Kampfes an!')?>).append(videobtn)
-                    ))
-            );
+            var current_row;
+            sub
+                .append(NF.row().append(NF.cell(true, 12).text(data.bdy)))
+                .append(current_row = NF.row());
+
+            current_row.append($('<div />').addClass('cell rw-4 rw-md-6 rw-sm-12 padded').append(
+                $('<div />').addClass('note').text(<?=__j('Keine Lust auf langweilige Kampfstatistiken? Dann schau dir doch einfach ein Video des Kampfes an!')?>).append(videobtn)
+            ));
+
+            console.log(data.sum);
+            $.each(data.sum, function(k, grp) {
+                $.each(grp, function(ki, line) {
+                    current_row.append($('<div />').addClass('cell rw-4 rw-md-6 rw-sm-12 padded').append(entry = NF.row()));
+
+                    var injuries, items;
+
+                    entry.css('opacity', line.count <= line.death ? 0.75 : 1)
+                        .append(NF.cell(false, 12, 0, 'center').text(line.unique && line.count == 1 ? line.name : (line.count + ' ' + line.name)))
+                        .append(NF.cell(false, 6, 0, 'center')
+                            .append(line.death > 0 ? NF.icon('media/icons/death.gif', line.death) : null)
+                            .append(NF.icon('media/icons/damage.gif', Math.round10(Number(line.dmg_taken), -1)))
+                            .append(NF.icon('media/icons/status_energy.gif', Math.round10(Number(line.energy), -1)))
+                        ).append(injuries = NF.cell(false, 6, 0, 'center')).append(items = NF.cell(false, 12, 0, 'center'))
+
+                    $.each(line.injuries, function(aicon, adata) {
+                        injuries.append(NF.icon(aicon, '+')).attr('title', adata[1]);
+                    });
+                    $.each(line.used_ammo, function(aicon, acount) {
+                        items.append(NF.icon(aicon, '-' + acount));
+                    });
+                    $.each(line.damaged_items, function(aicon, adata) {
+                        items.append(NF.icon(aicon, '-' + adata[0])).attr('title', adata[1]);
+                    });
+                });
+
+                sub.append(current_row = NF.row())
+            });
 
             return title;
         };

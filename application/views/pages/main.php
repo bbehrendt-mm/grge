@@ -73,11 +73,11 @@
 
     var load_news = function(p, first) {
         $('#newstmp').remove();
-        $('#newsboard').append('<div id="newstmp" class="center"><i class="fa fa-spin fa-circle-o-notch"></i><br /><?=__('Ladevorgang');?></div>');
+        $('#newsboard').append($('<div id="newstmp" class="center"><i class="fa fa-spin fa-circle-o-notch"></i><br /></div>').append($('<span />').text(<?=__j('Ladevorgang');?>)));
         game.network.query('japi/lobby/feedproxy', {page: p}, function(data) {
             $('#newstmp').remove();
             if (data.error) {
-                $('#newsboard').append($('<div id="newstmp" class="center"><?=__('Der Nachrichtendienst steht derzeit nicht zur Verfügung.');?></div>').append('<br />').append($('<div class="btn small"><?=__('Erneut versuchen');?></div>').click(function() {
+                $('#newsboard').append($('<div id="newstmp" class="center" />').text(<?=__j('Der Nachrichtendienst steht derzeit nicht zur Verfügung.');?>).append('<br />').append($('<div class="btn small" />').text(<?=__j('Erneut versuchen');?>).click(function() {
                     load_news(p);
                 })));
             } else {
@@ -97,11 +97,11 @@
                             $('<div/>').html(this.content.text)
                         ).append(
                             $('<div/>').append(
-                                $('<span class="pointer"><i class="fa fa-comment"></i> ' + (!this.posts ? '<?=__('Keine Kommentare');?>' : (this.posts == 1 ? '<?=__('1 Kommentar');?>' : game.i18n('<?=__(':num Kommentare');?>', {':num': this.posts}))) + '</span>').click(function() {
+                                $('<span class="pointer"><i class="fa fa-comment"></i> ' + (!this.posts ? <?=__j('Keine Kommentare');?> : (this.posts == 1 ? <?=__j('1 Kommentar');?> : game.i18n(<?=__j(':num Kommentare');?>, {':num': this.posts}))) + '</span>').click(function() {
                                     window.open(view);
                                 })
                             ).append(
-                                $('<span class="pointer"><?=__('Kommentieren');?></span>').click(function() {
+                                $('<span class="pointer" />').text(<?=__j('Kommentieren');?>).click(function() {
                                     window.open(response);
                                 })
                             )
@@ -110,11 +110,11 @@
                 });
 
                 if (i==0 && first)
-                    $('#newsboard').append('<div id="newstmp" class="center"><?=__('Es gibt gerade nichts Neues.');?></div>');
+                    $('#newsboard').append($('<div id="newstmp" class="center" />').text(<?=__j('Es gibt gerade nichts Neues.');?>));
                 else if (i==0)
-                    $('#newsboard').append('<div id="newstmp" class="center"><?=__('Es gibt keine weiteren Neuigkeiten.');?></div>');
+                    $('#newsboard').append($('<div id="newstmp" class="center" />').text(<?=__j('Es gibt keine weiteren Neuigkeiten.');?>));
                 else
-                    $('#newsboard').append($('<div id="newstmp" class="center"></div>').append($('<div class="btn"><?=__('Ältere Artikel anzeigen');?></div>').click(function() {
+                    $('#newsboard').append($('<div id="newstmp" class="center"></div>').append($('<div class="btn">').text(<?=__j('Ältere Artikel anzeigen');?>).click(function() {
                         load_news(p+1);
                     })));
             }

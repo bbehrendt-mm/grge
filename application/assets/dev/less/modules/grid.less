@@ -55,7 +55,7 @@
   background: @zv-content-background-color;
   &.padded {margin: 5px;}
   &.row-table-borders {border: 2px solid @zv-color-main-dark; border-radius: 2px;}
-  &.row-table-striped > .row:nth-child(odd):not(.marked) {background: darken(@zv-content-background-color, 5%)}
+  &.row-table-striped > .row:nth-child(odd) {background: darken(@zv-content-background-color, 5%)}
   &.row-table-interact > .row:hover:not(.marked), .row-table.row-table-interact > .row.selected:not(.marked) {background: darken(@zv-content-background-color, 10%);}
   > .row:first-child {background: @zv-color-main-dark !important; color: white; font-weight: bold;}
   > .row.marked {color: @table-marking-color; font-weight: bold}

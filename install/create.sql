@@ -54,10 +54,10 @@ CREATE TABLE IF NOT EXISTS ___PREFIX___karma (
 CREATE TABLE IF NOT EXISTS ___PREFIX___language (
   `id` int(11) NOT NULL,
   `hash` binary(16) NOT NULL,
-  `de` text NOT NULL,
-  `en` text,
-  `es` text,
-  `fr` text
+  `de` mediumtext NOT NULL,
+  `en` mediumtext,
+  `es` mediumtext,
+  `fr` mediumtext
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS ___PREFIX___mentor (

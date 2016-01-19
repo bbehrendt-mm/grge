@@ -306,7 +306,13 @@
                 $('#ranking_target').empty();
                 if (data.ranking) {
                     var table = $('<div class="row-table padded row-table-borders row-table-striped row-table-interact"></div>').appendTo('#ranking_target');
-                    $('<div class="row"><div class="cell padded rw-2 rw-lg-1 rw-sm-2"><span class="hide-md hide-sm"><?=__('Platz')?></span><span class="hide-desktop hide-lg">#</span></div><div class="cell padded rw-1 rw-sm-0"><?=__('Punkte')?></div><div class="cell padded rw-2 rw-md-0"><?=__('Spieldauer')?></div><div class="cell padded rw-3 rw-md-5"><?=__('Spielmodus')?></div><div class="cell padded rw-4"><?=__('Beruf')?></div></div>').appendTo(table);
+
+                    NF.row().appendTo(table)
+                        .append($('<div class="cell padded rw-2 rw-lg-1 rw-sm-2" />').append($('<span class="hide-md hide-sm">').text(<?=__j('Platz')?>)).append($('<span class="hide-desktop hide-lg" />').text('#')))
+                        .append($('<div class="cell padded rw-1 rw-sm-0" />').text(<?=__j('Punkte')?>))
+                        .append($('<div class="cell padded rw-2 rw-md-0" />').text(<?=__j('Spieldauer')?>))
+                        .append($('<div class="cell padded rw-3 rw-md-5" />').text(<?=__j('Spielmodus')?>))
+                        .append($('<div class="cell padded rw-4" />').text(<?=__j('Beruf')?>));
 
                     $.each(data.ranking, function(p, elem) {
                         var entry = $('<div class="row pointer"></div>');
@@ -333,7 +339,13 @@
 
                 if (data.ranking_mp) {
                     var table_mp = $('<div class="row-table padded row-table-borders row-table-striped row-table-interact"></div>').appendTo('#ranking_target');
-                    $('<div class="row"><div class="cell padded rw-2 rw-lg-1"><span class="hide-md hide-sm"><?=__('Platz')?></span><span class="hide-desktop hide-lg">#</span></div><div class="cell padded rw-1 rw-md-0"><?=__('Punkte')?></div><div class="cell padded rw-3 rw-md-4 rw-sm-0"><?=__('Name')?></div><div class="cell padded rw-2 rw-lg-3 rw-sm-5"><?=__('Spielmodus')?></div><div class="cell padded rw-4 rw-sm-6"><?=__('Spieler')?></div></div>').appendTo(table_mp);
+
+                    NF.row().appendTo(table_mp)
+                        .append($('<div class="cell padded rw-2 rw-lg-1" />').append($('<span class="hide-md hide-sm">').text(<?=__j('Platz')?>)).append($('<span class="hide-desktop hide-lg" />').text('#')))
+                        .append($('<div class="cell padded rw-1 rw-sm-0" />').text(<?=__j('Punkte')?>))
+                        .append($('<div class="cell padded rw-3 rw-md-4 rw-sm-0" />').text(<?=__j('Name')?>))
+                        .append($('<div class="cell padded rw-2 rw-lg-3 rw-sm-5" />').text(<?=__j('Spielmodus')?>))
+                        .append($('<div class="cell padded rw-4 rw-sm-6" />').text(<?=__j('Spieler')?>));
 
                     $.each(data.ranking_mp, function(p, elem) {
                         var entry = $('<div class="row pointer"></div>');
@@ -357,13 +369,13 @@
                                 has_players = true;
                                 var player = $('<span class="inline-player">' + v.name + '</span>').appendTo(pl);
 
-                                var qtmp = $('<div class="row"></div>');
-                                $('<div class="cell padded rw-4 right"><b><?=__('Beruf');?></b></div>').appendTo(qtmp);
-                                $('<div class="cell padded rw-8 center"></div>').html(v.job).appendTo(qtmp);
-                                $('<div class="cell padded rw-4 right"><b><?=__('Überlebt');?></b></div>').appendTo(qtmp);
-                                $('<div class="cell padded rw-8 center"></div>').html(v.life).appendTo(qtmp);
-                                $('<div class="cell padded rw-4 right"><b><?=__('Punkte');?></b></div>').appendTo(qtmp);
-                                $('<div class="cell padded rw-8 center"></div>').html(v.score).appendTo(qtmp);
+                                var qtmp = NF.row();
+                                NF.cell(true, 4, 0, 'right').append($('<b />').text(<?=__j('Beruf');?>)).appendTo(qtmp);
+                                NF.cell(true, 8, 0, 'center').text(v.job).appendTo(qtmp);
+                                NF.cell(true, 4, 0, 'right').append($('<b />').text(<?=__j('Überlebt');?>)).appendTo(qtmp);
+                                NF.cell(true, 8, 0, 'center').text(v.life).appendTo(qtmp);
+                                NF.cell(true, 4, 0, 'right').append($('<b />').text(<?=__j('Punkte');?>)).appendTo(qtmp);
+                                NF.cell(true, 8, 0, 'center').text(v.score).appendTo(qtmp);
 
                                 player.attr('title', $('<div>').append(qtmp).html()).qtip(game.render.html.qtip.player('top'));
                             });
@@ -377,7 +389,7 @@
                     });
                 }
 
-                if (!data.ranking && !data.ranking_mp) $('<span><?=$own_soul ? __('Du hast es in dieser Season nicht ins Ranking geschafft.') : __(':name hat es in dieser Season nicht ins Ranking geschafft.',[':name' => $soul_owner])?></span>').appendTo('#ranking_target');
+                if (!data.ranking && !data.ranking_mp) $('<span />').text(<?=$own_soul ? __j('Du hast es in dieser Season nicht ins Ranking geschafft.') : __j(':name hat es in dieser Season nicht ins Ranking geschafft.',[':name' => $soul_owner])?>).appendTo('#ranking_target');
 
             });
         };
@@ -395,7 +407,7 @@
 
                     content
                         .append($('<b>').addClass('header').text(<?=__j($achievement['name'])?>))
-                        .append($('<span />').html(game.i18n(<?=__j('Diese Auszeichnung ist ::i:: :num  Punkte::/i:: wert.')?>, {':num' : <?=__($achievement['points'])?>})));
+                        .append($('<span />').html(game.i18n(<?=__j('Diese Auszeichnung ist ::i:: :num  Punkte::/i:: wert.')?>, {':num' : <?=$achievement['points']?>})));
                 }
             })).click(function() {window.open('ranking/global/<?=$achievement['id']?>')});
         <?php } ?>

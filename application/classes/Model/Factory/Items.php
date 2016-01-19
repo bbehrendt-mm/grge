@@ -13,7 +13,11 @@ class Model_Factory_Items extends Model_Factory_Abstract {
      * @return Model_Factory_Items
      */
     public function set_decay_factor($d) {
-        $this->decay = $d;
+        /** @global Model_Game $game*/
+        global $game;
+        $df = $game ? $game->config('places.dryout_factor') : 1;
+
+        $this->decay = $d * $df;
         return $this;
     }
 

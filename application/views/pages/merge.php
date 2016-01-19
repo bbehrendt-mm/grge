@@ -50,9 +50,9 @@
 
                 if (data.success) {
                     game.network.load('lobby/main');
-                    game.render.html.notify('smile', game.i18n('<?=__('Herzlichen Glückwunsch! Du kannst dich jetzt auch über :service in deinen ZombVival-Account einloggen.');?>', {':service': '<?=$service?>'}), '<?=__('Verknüpfung erfolgreich!');?>', 4000);
+                    game.render.html.notify('smile', game.i18n('<?=__j('Herzlichen Glückwunsch! Du kannst dich jetzt auch über :service in deinen ZombVival-Account einloggen.');?>', {':service': '<?=$service?>'}), '<?=__j('Verknüpfung erfolgreich!');?>', 4000);
                 } else
-                    game.render.html.notify('smile', game.i18n('<?=__('Die Verknüpfung deines ZombVival-Accounts mit :service ist fehlgeschlagen...');?>', {':service': '<?=$service?>'}), '<?=__('Fehlgeschlagen');?>', 4000);
+                    game.render.html.notify('smile', game.i18n('<?=__j('Die Verknüpfung deines ZombVival-Accounts mit :service ist fehlgeschlagen...');?>', {':service': '<?=$service?>'}), '<?=__j('Fehlgeschlagen');?>', 4000);
             }
         });
     });

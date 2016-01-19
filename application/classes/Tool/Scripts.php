@@ -340,10 +340,22 @@ class Tool_Scripts
         $try_to_take = Tool_System::instance_of($item, 'Interface_Autotaker');
 
         if ($try_to_take) {
-            $player->inventory()->add($item);
-            if (!$item->take(true))
-                $player->inventory()->remove($item->uin());
-            else return true;
+
+            if (Tool_System::instance_of($item, 'Model_Items_Abstract_Ammo')) {
+                /** @var $belt Model_Items_Ammobelt */
+                $belt = Tool_Scripts::first_available_item(Model_Items_Ammobelt::cls(), true, false, false);
+                /** @var Model_Items_Abstract_Ammo $item */
+                if ($belt && $item->take()) {
+                    $belt->add($item);
+                    return true;
+                }
+
+            } else {
+                $player->inventory()->add($item);
+                if (!$item->take(true))
+                    $player->inventory()->remove($item->uin());
+                else return true;
+            }
         }
 
         if ($location->inventory()->add($item) === false) return true;

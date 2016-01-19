@@ -82,9 +82,13 @@
             $('#ranking_target').empty();
             if (data.ranking) {
                 var table = $('<div class="row-table row-table-borders row-table-striped row-table-interact"></div>').appendTo('#ranking_target');
-                $('<div class="row"><div class="cell padded rw-3"><span class="hide-md hide-sm"><?=__('Platz')?></span><span class="hide-desktop hide-lg">#</span></div><div class="cell padded rw-6"><?=__('Spieler')?></div><div class="cell padded rw-3"><?=__('Punkte')?></div></div>').appendTo(table);
 
-            } else $('<span><?=__('Es wurden keine Spiele im Ranking gefunden, die deinen Suchkriterien entsprechen.')?></span>').appendTo('#ranking_target');
+                NF.row().appendTo(table)
+                    .append($('<div class="cell padded rw-3" />').append($('<span class="hide-md hide-sm">').text(<?=__j('Platz')?>)).append($('<span class="hide-desktop hide-lg" />').text('#')))
+                    .append($('<div class="cell padded rw-6" />').text(<?=__j('Spieler')?>))
+                    .append($('<div class="cell padded rw-3" />').text(<?=__j('Platz')?>));
+
+            } else $('<span />').text(<?=__j('Es wurden keine Spiele im Ranking gefunden, die deinen Suchkriterien entsprechen.')?>).appendTo('#ranking_target');
 
             if (data.user) {
                 if (data.user.pos < offset) {
@@ -140,13 +144,13 @@
             }
 
             $(navigation.get(2)).removeClass('btn-disabled').click(function () {
-                var entry = prompt('<?=__('Zu welcher Seite möchtest du springen?')?>', current_page + 1);
+                var entry = prompt('<?=__j('Zu welcher Seite möchtest du springen?')?>', current_page + 1);
                 if (entry == null)
                     return;
                 var p = parseInt(entry);
                 if (!isNaN(p) && p > 0 && p != (current_page + 1) && p <= max_offset / 20 + 1)
                     read_fetch((p - 1) * 20)();
-            }).html(game.i18n('<?=__('Seite :c/:m')?>', {':c': current_page + 1, ':m': max_offset / 20 + 1}));
+            }).html(game.i18n('<?=__j('Seite :c/:m')?>', {':c': current_page + 1, ':m': max_offset / 20 + 1}));
 
             if (offset < max_offset) {
                 $(navigation.get(3)).removeClass('btn-disabled').click(read_fetch(offset + 20));
@@ -174,9 +178,13 @@
             $('#ranking_target').empty();
             if (data.ranking) {
                 var table = $('<div class="row-table row-table-borders row-table-striped row-table-interact"></div>').appendTo('#ranking_target');
-                $('<div class="row"><div class="cell padded rw-3"><span class="hide-md hide-sm"><?=__('Platz')?></span><span class="hide-desktop hide-lg">#</span></div><div class="cell padded rw-6"><?=__('Spieler')?></div><div class="cell padded rw-3"><?=__('SP')?></div></div>').appendTo(table);
 
-            } else $('<span><?=__('Es wurden keine Spiele im Ranking gefunden, die deinen Suchkriterien entsprechen.')?></span>').appendTo('#ranking_target');
+                NF.row().appendTo(table)
+                    .append($('<div class="cell padded rw-3" />').append($('<span class="hide-md hide-sm">').text(<?=__j('Platz')?>)).append($('<span class="hide-desktop hide-lg" />').text('#')))
+                    .append($('<div class="cell padded rw-6" />').text(<?=__j('Spieler')?>))
+                    .append($('<div class="cell padded rw-3" />').text(<?=__j('SP')?>));
+
+            } else $('<span />').text(<?=__j('Es wurden keine Spiele im Ranking gefunden, die deinen Suchkriterien entsprechen.')?>).appendTo('#ranking_target');
 
             if (data.user) {
                 if (data.user.pos < offset) {
@@ -232,13 +240,13 @@
             }
 
             $(navigation.get(2)).removeClass('btn-disabled').click(function () {
-                var entry = prompt('<?=__('Zu welcher Seite möchtest du springen?')?>', current_page + 1);
+                var entry = prompt('<?=__j('Zu welcher Seite möchtest du springen?')?>', current_page + 1);
                 if (entry == null)
                     return;
                 var p = parseInt(entry);
                 if (!isNaN(p) && p > 0 && p != (current_page + 1) && p <= max_offset / 20 + 1)
                     read_fetch((p - 1) * 20)();
-            }).html(game.i18n('<?=__('Seite :c/:m')?>', {':c': current_page + 1, ':m': max_offset / 20 + 1}));
+            }).html(game.i18n('<?=__j('Seite :c/:m')?>', {':c': current_page + 1, ':m': max_offset / 20 + 1}));
 
             if (offset < max_offset) {
                 $(navigation.get(3)).removeClass('btn-disabled').click(read_fetch(offset + 20));

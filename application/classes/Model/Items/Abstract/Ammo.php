@@ -3,7 +3,7 @@
 abstract class Model_Items_Abstract_Ammo extends Model_Items_Abstract_Stackable {
 	
 	protected static $boni = Array(1020 => Array(1 => 1, 2 => 1, 3 => 1, 4 => 1.15, 5 => 1.25, 6 => 1.25));
-	
+
 	public function __construct($num = null) {
         /**
          * @global $player Model_Player

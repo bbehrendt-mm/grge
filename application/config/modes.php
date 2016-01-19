@@ -14,7 +14,7 @@ return array(
                     'zombies.accum'                         => 1,
                     'zombies.cowardly'                      => false,
                     'zombies.escape_threshold'              => 10,
-                    'places.dryout_factor'                  => 1,
+                    'places.dryout_factor'                  => 0.5,
                     'places.outworld.spawn_dogmeat'         => true,
                     'places.outworld.spawn_stranger'        => false,
                     'places.outworld.alt_spawn_stranger'    => false,
@@ -95,7 +95,7 @@ return array(
                     'places.outworld.location_density'      => 0.3,
                     'items.water.tox_dirty'                 => 15,
                     'items.water.tox_polluted'              => 45,
-                    'places.dryout_factor'                  => 2,
+                    'places.dryout_factor'                  => 0.75,
                     'items.pill.use_default_effect_proc'    => false,
                     'items.bottle.allow_full_detox'         => false,
 

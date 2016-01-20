@@ -120,7 +120,7 @@ if (!isset($preset_zvid)) $preset_zvid = -1;
                     alert(data.error.code + ' [' + data.error.name + ']: ' + data.error.message);
             } else {
                 game.network.load(data.redirect);
-                game.render.html.notify('smile', '<?=__j('Die Zombies freuen sich schon darauf, dich zu sehen...');?>', game.i18n('<?=__j('Willkommen, :name!');?>', {':name': data.login.name}), 4000);
+                game.render.html.notify('smile', <?=__j('Die Zombies freuen sich schon darauf, dich zu sehen...');?>, game.i18n(<?=__j('Willkommen, :name!');?>, {':name': data.login.name}), 4000);
 
                 if (remember) {
                     var profiles = game.storage.get('login','profiles',{});
@@ -161,7 +161,7 @@ if (!isset($preset_zvid)) $preset_zvid = -1;
     });
 
     $('#delete').click(function() {
-        if (!confirm('<?=__j('Bist du sicher?');?>'))
+        if (!confirm(<?=__j('Bist du sicher?');?>))
             return;
 
         game.storage.set('login','profiles',{});
@@ -226,13 +226,13 @@ if (!isset($preset_zvid)) $preset_zvid = -1;
         var service = $('#service').find('option:selected').val();
 
         if (!key) {
-            alert('<?=__j('Bitte gib deinen Geheimen Schlüssel ein.');?>');
+            alert(<?=__j('Bitte gib deinen Geheimen Schlüssel ein.');?>);
             return;
         }
 
         var alias = $(this);
         alias.addClass('btn-disabled').find('.fa').attr('class','fa fa-spin fa-circle-o-notch');
-        alias.find('#confirm-content').html('<?=__j('Bitte warten...');?>');
+        alias.find('#confirm-content').html(<?=__j('Bitte warten...');?>);
 
         $('#content').find('.form_input').attr('disabled', 'disabled');
 

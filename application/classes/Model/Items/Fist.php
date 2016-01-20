@@ -2,9 +2,9 @@
 
 class Model_Items_Fist extends Model_Combat_Weapon {
 
-    protected static $damage = [0,1];
+    protected static $damage = [1,1];
     protected static $range = [0,0];
-    protected static $accuracy = 0.33;
+    protected static $accuracy = 0.75;
     protected static $use_fixed_accuracy = true;
     protected static $aoe = false;
     protected static $friendly_fire = false;

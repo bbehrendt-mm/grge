@@ -90,7 +90,6 @@
                 $('<div />').addClass('note').text(<?=__j('Keine Lust auf langweilige Kampfstatistiken? Dann schau dir doch einfach ein Video des Kampfes an!')?>).append(videobtn)
             ));
 
-            console.log(data.sum);
             $.each(data.sum, function(k, grp) {
                 $.each(grp, function(ki, line) {
                     current_row.append($('<div />').addClass('cell rw-4 rw-md-6 rw-sm-12 padded').append(entry = NF.row()));
@@ -106,13 +105,13 @@
                         ).append(injuries = NF.cell(false, 6, 0, 'center')).append(items = NF.cell(false, 12, 0, 'center'))
 
                     $.each(line.injuries, function(aicon, adata) {
-                        injuries.append(NF.icon(aicon, '+')).attr('title', adata[1]);
+                        injuries.append(NF.icon('media/icons/' + aicon + '.gif', '+')).attr('title', adata[1]);
                     });
                     $.each(line.used_ammo, function(aicon, acount) {
-                        items.append(NF.icon(aicon, '-' + acount));
+                        items.append(NF.icon('media/icons/' + aicon + '.gif', '-' + acount));
                     });
                     $.each(line.damaged_items, function(aicon, adata) {
-                        items.append(NF.icon(aicon, '-' + adata[0])).attr('title', adata[1]);
+                        items.append(NF.icon('media/icons/' + aicon + '.gif', '-' + adata[0])).attr('title', adata[1]);
                     });
                 });
 

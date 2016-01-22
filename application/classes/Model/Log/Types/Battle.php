@@ -17,9 +17,10 @@ class Model_Log_Types_Battle extends Model_Log_Message {
         /** @global Model_Player $player */
         global $player;
 
-        $data['msg'] = __($data['msg']);
+        $data['msg'] = is_array($data['msg']) ? __($data['msg'][0], $data['msg'][1]) : __($data['msg']);
         if (isset($data['bdy']) && $data['bdy'])
-            $data['bdy'] = __($data['bdy']);
+            $data['bdy'] = is_array($data['bdy']) ? __($data['bdy'][0], $data['bdy'][1]) : __($data['bdy']);
+
         else unset($data['bdy']);
 
         foreach ($data['sum'] as &$group)

@@ -17,7 +17,7 @@
             group: group,
             name: name,
             unique: unique,
-            avatar: avatar,
+            avatar: avatar ? avatar : 'mugshot.png',
             type: type,
             sprites: sprites,
             pos: {x: pos[0], y: pos[1]},

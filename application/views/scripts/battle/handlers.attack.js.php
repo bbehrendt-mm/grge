@@ -4,7 +4,7 @@
         if (!normalize) return r;
         else {
             var l = Math.sqrt(Math.pow(r.x,2) + Math.pow(r.y, 2));
-            return {x: r.x/l, y: r.y/l};
+            return l == 0 ? {x: 1, y: 0} : {x: r.x/l, y: r.y/l};
         }
     };
 

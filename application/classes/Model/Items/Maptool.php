@@ -110,7 +110,7 @@ class Model_Items_Maptool extends Model_Items_Abstract_Item {
 		} else new Model_Buffs_Mapping($steps, $this->calc_duration($steps));
 	}
 	
-	public function drop($silent = false) {
+	public function drop($p = null, $silent = false) {
 		/** @global Model_Player $player */
 		global $player;
 

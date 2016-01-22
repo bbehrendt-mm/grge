@@ -21,7 +21,7 @@ class Model_Items_Pepperspray extends Model_Combat_Weapons_Close implements Inte
 	// INI, ATK, DEF, ACC
 	protected static $effects = [2,0,1,0];
 	
-	public function drop($silent = false) {
+	public function drop($p = null, $silent = false) {
 		/** @global Model_Player $player */
 		global $player;
 

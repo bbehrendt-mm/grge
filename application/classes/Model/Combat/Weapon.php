@@ -62,6 +62,10 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
         return static::$accuracy;
     }
 
+    public function fixed_accuracy() {
+        return static::$use_fixed_accuracy;
+    }
+
     public function get_ammo_icons() {
         return [];
     }

@@ -12,7 +12,7 @@ class Model_Items_Briefcase extends Model_Items_Abstract_Item {
 	protected static $weight = 0;
 	protected static $essential = true;
 	
-	public function drop($silent = false) {
+	public function drop($p = null, $silent = false) {
 		/** @global Model_Player $player */
 		global $player;
 	

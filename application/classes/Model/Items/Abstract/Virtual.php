@@ -39,7 +39,7 @@ abstract class Model_Items_Abstract_Virtual extends Model_Items_Abstract_Item {
         return false;
     }
 
-    public function drop($silent = false) {
+    public function drop($p = null, $silent = false) {
         return false;
     }
 

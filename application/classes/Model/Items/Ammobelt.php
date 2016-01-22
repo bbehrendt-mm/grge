@@ -93,11 +93,14 @@ class Model_Items_Ammobelt extends Model_Items_Abstract_Item {
 		}
 	}
 	
-	public function drop($silent = false) {
+	public function drop($p = null, $silent = false) {
         /**
          * @global $player Model_Player
          */
 		global $player;
+
+        if ($p && Tool_Scripts::is_npc($p)) return true;
+
 		if (!$silent) $player->log()->add(new Model_Log_Types_Text(null, null, 'Du solltest deinen Munitionsgürtel nicht aus der Hand geben ...'));
 		return false;
 	}

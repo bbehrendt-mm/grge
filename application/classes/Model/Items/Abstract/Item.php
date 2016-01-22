@@ -220,10 +220,11 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 
     /**
      * Returns weather this item can be dropped by a player
-	 * @param bool $silent Set true to suppress notifications
+     * @param Model_Plentity|null $p
+     * @param bool $silent Set true to suppress notifications
      * @return bool True, when the item can be dropped
      */
-	public function drop($silent = false) {
+	public function drop($p = null, $silent = false) {
 		return true;
 	}
 

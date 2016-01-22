@@ -9,11 +9,9 @@
 
         $.each(this.data, function(k,v) {
             if (v[0] == <?=Model_Combat_Scene::MCS_EV_NEW_CHALLENGER?>) {
-
-                console.log(v[4]);
-
                 if (v[5])
                     alias.queueResource(v[5], v[5]);
+                else alias.queueResource('mugshot.png', 'media/img/mugshot.png');
 
                 var sprites = v[10];
                 if (!sprites[0] || !sprites[1])

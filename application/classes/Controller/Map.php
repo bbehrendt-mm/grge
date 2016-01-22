@@ -149,9 +149,11 @@ class Controller_Map extends Controller_Game {
 
             //Tumbles
             if (($sub || $map_type != Model_Map_Abstract::MMA_TYPE_LABYRINTH) && Tool_Gambling::tumble($current)) {
+                $current->get_status()->set_cause_of_death('Tödlicher Sturz');
                 if (!Tool_Scripts::is_npc($current))
                     $current->log()->add('Du bist gestolpert und hast dir das Knie aufgeschlagen! Vielleicht solltest du deinen Alkoholkonsum zügeln ...');
                 $current->get_status()->modify(Model_Status::MS_STAT_HEALTH, -mt_rand(3, 10), Model_Status::MS_EFFECT_MOVEMENT);
+                $current->get_status()->clear_cause_of_death();
             }
 
             //Remove movement buffs

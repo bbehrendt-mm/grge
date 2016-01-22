@@ -17,7 +17,7 @@ class Controller_Act extends Controller_Game {
         foreach ($items as $itemid)
             if ($action == 'drop') {
                 if (!($item = $game->uin()->get($itemid, 'Model_Items_Abstract_Item'))) continue;
-                if (!$item->drop()) continue;
+                if (!$item->drop($p)) continue;
                 if (!$p->inventory()->remove($itemid)) continue;
                 if (!$p->location()->inventory()->add($item)) $p->inventory()->add($item);
             } elseif ($action == 'take') {
@@ -40,17 +40,17 @@ class Controller_Act extends Controller_Game {
                 if (!$p->location()->inventory()->remove($itemid)) continue;
                 if (!$p->inventory()->add($item)) $p->location()->inventory()->add($item);
 
-                if (Tool_System::instance_of($item, 'Model_Items_Abstract_Equipable')) {
+                if (Tool_System::instance_of($item, 'Model_Items_Abstract_Equipable') && !Tool_Scripts::is_npc($p)) {
                     /** @var Model_Items_Abstract_Equipable $item */
-                    if (!$player->get_equipment($item->get_equipment_type()))
-                        $item->equip($player);
+                    if (!$p->get_equipment($item->get_equipment_type()))
+                        $item->equip($p);
 
                     if (Tool_System::instance_of($item, 'Interface_Static'))
 
-                        foreach ($player->inventory()->get(get_class($item)) as $ep)
+                        foreach ($p->inventory()->get(get_class($item)) as $ep)
                             /** @var Model_Items_Abstract_Equipable $ep */
                             if ($ep->is_equipped()) {
-                                $item->equip($player);
+                                $item->equip($p);
                                 break;
                             }
 

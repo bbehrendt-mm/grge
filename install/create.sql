@@ -54,6 +54,7 @@ CREATE TABLE IF NOT EXISTS ___PREFIX___karma (
 CREATE TABLE IF NOT EXISTS ___PREFIX___language (
   `id` int(11) NOT NULL,
   `hash` binary(16) NOT NULL,
+  `lock` int(11) NOT NULL DEFAULT '0',
   `de` mediumtext NOT NULL,
   `en` mediumtext,
   `es` mediumtext,

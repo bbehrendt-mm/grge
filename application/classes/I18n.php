@@ -107,6 +107,23 @@ class I18n extends Kohana_I18n {
     }
 
     /**
+     * Changes an existing translation. This function can NOT add a completely new original/translation pair
+     * @param int $id Original string ID
+     * @param string $translation Translated string
+     * @param string $lang Translation language
+     * @return bool True when successfull, otherwise false
+     */
+    public static function set_by_id($id, $translation, $lang) {
+        if (static::$readonly) return true;
+        static::flush_cache();
+
+        if ($lang == static::get_primary_language() || !in_array($lang, static::$lang_list))
+            return false;
+
+        return DB::update('language')->set([$lang => $translation])->where('id', '=', $id)->execute() > 0;
+    }
+
+    /**
      * Marks a string as missing in a certain language
      * @param string $string Missing string
      * @return bool Success
@@ -119,7 +136,7 @@ class I18n extends Kohana_I18n {
             return false;
 
         static::flush_cache();
-        list($id, $rows) = DB::insert('language', ['hash',static::get_primary_language()])->values([$hash,$string])->execute();
+        list(, $rows) = DB::insert('language', ['hash',static::get_primary_language()])->values([$hash,$string])->execute();
         return $rows > 0;
     }
 
@@ -135,15 +152,51 @@ class I18n extends Kohana_I18n {
         return DB::select(static::get_primary_language())->from('language')->where($lang, '=', null)->execute()->as_array(null, static::get_primary_language());
     }
 
+    public static function lock($id) {
+        return DB::update('language')->set(['lock' => time()])->where('id', '=', $id)->execute() > 0;
+    }
+
+    public static function unlock($id) {
+        return DB::update('language')->set(['lock' => 0])->where('id', '=', $id)->execute() > 0;
+    }
+
+    public static function completion($lang) {
+        $tmp = DB::select([DB::expr("COUNT(`$lang`)"), 'translated'], [DB::expr("COUNT(*)"), 'total'])->from('language')->execute()->as_array();
+        return [(int)$tmp[0]['translated'], (int)$tmp[0]['total']];
+    }
+
+    /**
+     * @param $lang
+     * @return mixed
+     */
+    public static function get_next_missing($lang, $min_last_access = 0, $from = 0) {
+        return (int)DB::select('id')->from('language')->limit(1)->where($lang, '=', null)->where('lock', '<=', $min_last_access)->where('id','>',$from)->execute()->get('id', 0);
+    }
+
+    public static function get_by_id($id) {
+        if (!$id) return null;
+        $ret = DB::select()->from('language')->where('id', '=', $id)->execute()->as_array();
+        if (!$ret) return null;
+        else {
+            $tmp = [];
+            foreach (static::$lang_list as $lang)
+                $tmp[$lang] = $ret[0][$lang];
+        }
+
+        return $tmp;
+    }
+
+
+
     /**
      * Removes a string from all translations as well as the cache and missing list. Legacy translations can not be removed!
-     * @param string $string String to remove
+     * @param string $hash ID of string to remove
      * @return bool Success
      */
-    public static function remove($string) {
+    public static function remove($hash) {
         static::flush_cache();
 
-        return DB::delete('language')->where(static::get_primary_language(), '=', $string)->execute() > 0;
+        return DB::delete('language')->where('hash', '=', $hash)->execute() > 0;
     }
 
     /**

@@ -4,8 +4,8 @@ class Controller_Admin_Translate extends Controller_Admin_Admin {
 
     protected static $auto_require = ['TRANSLATE'];
 
-    public function action_main() {
-        $this->add_widget(View::factory('admin/translate')
+    private function loader($url) {
+        $this->add_widget(View::factory($url)
             ->set('base', 'de')
             ->set('langs', ['en','es','fr'])
             ->set('adv_priv', static::priv_allow_all('TRANSLATE_MOD'))
@@ -14,12 +14,56 @@ class Controller_Admin_Translate extends Controller_Admin_Admin {
         $this->render();
     }
 
+    public function action_main() {
+        $this->loader('admin/translate2');
+    }
+
+    public function action_old() {
+        $this->loader('admin/translate');
+    }
+
     public function japi_del() {
         if (!static::priv_allow_all('TRANSLATE_MOD'))
             return $this->error(\grge\E_SERVER_ACCESS_DENIED);
 
         $this->render(['success' => (int)I18n::remove($this->request->post('from'))]);
         return true;
+    }
+
+    public function japi_next() {
+
+        $id = (int)$this->request->post('id');
+        $tr = $this->request->post('translation');
+        $from = $this->request->post('from');
+        $to = $this->request->post('to');
+        $rq_id = (int)$this->request->post('request');
+
+        $b = true;
+        if (trim($tr) && $id && $to) {
+            $this->add_data('success', $b = (bool)I18n::set_by_id($id, $tr, $to));
+        }
+
+        if (!$b) return $this->render();
+        else I18n::unlock($id);
+
+        if (!$rq_id) {
+            $rq_id = I18n::get_next_missing($to, time() - 300, $id);
+            if (!$rq_id) $rq_id = I18n::get_next_missing($to, time() - 60);
+        }
+        $next = I18n::get_by_id($rq_id);
+
+        if ($next) {
+            I18n::lock($rq_id);
+            $this->add_data('next', [
+                'id' => $rq_id,
+                'original' => $next[$from],
+                'translation' => $next[$to]
+            ]);
+        }
+
+        $this->add_data('completion', I18n::completion($to));
+        return $this->render();
+
     }
 
     public function japi_set() {

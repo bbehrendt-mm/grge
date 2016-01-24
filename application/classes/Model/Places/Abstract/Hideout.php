@@ -17,8 +17,6 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
     protected $survival_find = true;
     protected $upgradable = true;
 
-    protected $breakins = 0;
-
     public function uin($uin = NULL) {
         if ($uin === NULL) return parent::uin();
         else $t = parent::uin($uin);
@@ -81,9 +79,8 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
                 /** @var $i Model_Combat_Zombies_Zombie */
                 return $c + $i->count();
             }, 0);
-            Tool_Scripts::combat([Tool_Scripts::at_location($this->uin), $zombies], true, 10, $this, 'Die Zombies haben deine Verteidigung durchbrochen!');
-
-            $this->breakins++;
+            $battle = Tool_Scripts::combat([Tool_Scripts::at_location($this->uin), $zombies], true, 10, $this, 'Die Zombies haben deine Verteidigung durchbrochen!');
+            $this->zombie_factory()->accumulation($battle->count_group_members(2));
 
             foreach (Tool_Scripts::at_location($this->uin) as $s_player)
                 $s_player->achievements()->achieve(Model_Achievement::MA_BREAK_INS, $num);

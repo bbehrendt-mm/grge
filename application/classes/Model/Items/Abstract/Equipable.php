@@ -23,6 +23,7 @@ abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item 
     protected static $effects = [0,0,0,0];
     protected $equipped;
     protected $equipped_primary;
+    protected $player_id = null;
 
     public function equip($player = null) {
         /** @global Model_Player $player */
@@ -43,6 +44,7 @@ abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item 
                 if ($item->equipped_primary)
                     return;
 
+        $this->player_id = $player->id();
         $this->equip_primary($player);
     }
 
@@ -85,6 +87,7 @@ abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item 
 
         $this->equipped = false;
         $this->equipped_primary = false;
+        $this->player_id = null;
 
         if ($rebuild)
             Tool_Scripts::rebuild_primary_equipment($this->get_equipment_type());

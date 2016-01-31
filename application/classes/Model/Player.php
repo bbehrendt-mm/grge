@@ -13,7 +13,6 @@ class Model_Player extends Model_NPC_Nano implements Interface_Plentity {
 	private $job;
 	private $level;
 
-    private $temp_registry;
     private $points = null;
     private $braincoins = 0;
 
@@ -42,8 +41,6 @@ class Model_Player extends Model_NPC_Nano implements Interface_Plentity {
 			global $player;
 			$player = $this;
 		}
-
-        $this->temp_registry = array();
 	}
 
     public function set_escape_target($e = null) {
@@ -52,12 +49,6 @@ class Model_Player extends Model_NPC_Nano implements Interface_Plentity {
 
     public function get_escape_target() {
         return $this->escape_target_location;
-    }
-
-    public function register_temp($type) {
-        if (isset($this->temp_registry[$type]))
-            return false;
-        return $this->temp_registry[$type] = true;
     }
 
     /**

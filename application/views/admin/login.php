@@ -52,13 +52,13 @@
         var pw = $('#password').val();
 
         if (!pw) {
-            alert('<?=__('Bitte gib dein Passwort ein.');?>');
+            alert(<?=__j('Bitte gib dein Passwort ein.');?>);
             return;
         }
 
         var alias = $(this);
         alias.addClass('btn-disabled').find('.fa').attr('class','fa fa-spin fa-circle-o-notch');
-        alias.find('#confirm-content').html('<?=__('Bitte warten...');?>');
+        alias.find('#confirm-content').text(<?=__j('Bitte warten...');?>);
 
         $('#content').find('.form_input').attr('disabled', 'disabled');
 

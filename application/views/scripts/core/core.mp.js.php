@@ -50,6 +50,51 @@
 
             if (player.stats)
                 core.parts.status_bars(bars, player.stats, true);
+
+            //if (!(v.allow === true || v.allow[<?=Interface_Plentity::IC_ALLOW_SHOW_INVENTORY?>])) return;
+            if (player.npc) {
+
+
+                if (player.inventory.action) {
+
+                    var abortable = player.inventory.action.abort && (player.allow === true || player.allow[<?=Interface_Plentity::IC_ALLOW_MANAGE_ACTIVITY?>]);
+                    var action_row = NF.row().appendTo(box);
+
+                    action_row.append(NF.cell(true, abortable ? 8 : 12, 0, 'b center').text(player.inventory.action.name));
+
+                    if (abortable)
+                        action_row.append(NF.cell(true, 4, 0, 'center').append(
+                            $('<div />').addClass('btn small').append(NF.fa('times')).click(function () {
+                                if (confirm(game.i18n(<?=__j('Bist du sicher, dass :name diese Aktion abbrechen soll?')?>, {':name': player.name})))
+                                    core.command('act/cancel', {p: player.id});
+                            })
+                        ));
+
+                    if (player.inventory.action.remaining) {
+                        var d = 1;
+                        for (var i = 1; i <= 3; i++)
+                            if (player.inventory.action.remaining[i] > 0) d = i;
+
+                        if (d) {
+                            var l = 12 / (d + 1);
+                            var timerow;
+                            action_row.append(NF.cell(true, 12).append(timerow = NF.row().addClass('center')));
+
+                            var elems = [<?=__j('Minuten')?>,<?=__j('Stunden')?>,<?=__j('Tage')?>,<?=__j('Wochen')?>];
+
+                            for (i = d; i >= 0; i--)
+                                timerow.append($('<div />').addClass('cell rw-' + l).append(
+                                    $('<div />').append(
+                                        $('<h4 />').text(elems[i])
+                                    ).append(
+                                        $('<span />').text(player.inventory.action.remaining[i])
+                                    )
+                                ))
+                        }
+                    }
+                }
+            }
+
         });
 
         if (!found) row.append(NF.cell(true, 12, 0, 'center').text(<?=__j('Hier scheint niemand zu sein ...')?>));

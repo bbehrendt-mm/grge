@@ -3,7 +3,7 @@
 class Model_Combat_Zombies_Fatass extends Model_Combat_Zombies_Zombie {
 
     protected $name = 'Untote Fleischberge';
-    protected $max_health = 15;
+    protected $max_health = 17;
 
     protected $stat_initiative = 0;
     protected $stat_damage = 2;

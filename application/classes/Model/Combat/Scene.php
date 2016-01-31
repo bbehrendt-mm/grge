@@ -44,6 +44,7 @@ class Model_Combat_Scene {
                         'dmg_taken' => 0,
                         'injuries' => [],
 
+                        'energy' => 0,
                         'used_ammo' => [],
                         'damaged_items' => []
                     ];
@@ -54,10 +55,23 @@ class Model_Combat_Scene {
                     list($atk, $def, $ammo, list($name, $icon, $animation), $damage) = $entry;
 
                     $tmp[$groups[$atk]][$atk]['dmg_dealt'] += $damage;
-                    foreach ($ammo as $a)
-                        if (!isset($tmp[$groups[$atk]][$atk]['used_ammo'][$a]))
-                            $tmp[$groups[$atk]][$atk]['used_ammo'][$a] = 1;
-                        else $tmp[$groups[$atk]][$atk]['used_ammo'][$a]++;
+                    foreach ($ammo as $a) {
+                        if (is_array($a)) {
+                            $c = $a[1];
+                            $a = $a[0];
+                        } else $c = 1;
+
+                        switch ($a) {
+                            case '::energy':
+                                $tmp[$groups[$atk]][$atk]['energy'] += $c;
+                                break;
+                            default:
+                                if (!isset($tmp[$groups[$atk]][$atk]['used_ammo'][$a]))
+                                    $tmp[$groups[$atk]][$atk]['used_ammo'][$a] = $c;
+                                else $tmp[$groups[$atk]][$atk]['used_ammo'][$a] += $c;
+                                break;
+                        }
+                    }
 
                     break;
 

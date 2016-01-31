@@ -15,6 +15,7 @@ interface Interface_Plentity extends Interface_Cloudshard {
     const IC_ALLOW_ITEMS_SIDEUSE = 4;
     const IC_ALLOW_ITEMS_USE = 5;
     const IC_ALLOW_MOVE = 6;
+    const IC_ALLOW_MANAGE_ACTIVITY = 7;
 
     const IC_NPC_NONPC = 0;
     const IC_NPC_GENERIC = 1;

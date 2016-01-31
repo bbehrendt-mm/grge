@@ -283,8 +283,22 @@ class Controller_Game extends Controller {
             if (Tool_System::instance_of($item, 'Model_Combat_Weapon')) {
 
                 $ammo = [];
-                foreach ($item->get_ammo_icons() as $entry)
-                    $ammo[] = $entry;
+                foreach ($item->get_ammo_icons() as $entry) {
+                    $c = 1;
+                    if (is_array($entry)) {
+                        $c = $entry[1];
+                        $entry = $entry[0];
+                    }
+
+                    for ($i = 0; $i < $c; $i++)
+                        switch ($entry) {
+                            case '::energy': break;
+                            default:
+                                $ammo[] = $entry;
+                                break;
+                        }
+                }
+
 
                 /** @var Model_Combat_Weapons_Energy $item */
                 $data['weapon'] = [
@@ -373,19 +387,18 @@ class Controller_Game extends Controller {
         // Get heroic actions
         $a = [];
         $action = false;
-        if (!$remote) {
-            /** @var Model_Buffs_Abstract_Fragile $buff */
-            if (!($buff = $p->get_status()->retrieve('fragile')))
-                foreach (Tool_Scripts::available_items('Model_Items_Abstract_Virtual',true,false,false,$p) as $a_item)
-                    /** @var  Model_Items_Abstract_Virtual $a_item */
-                    $a = array_merge($a,$this->prepare_actionlist($a_item->auto_actions(), $a_item));
-            else $action = [
-                'name' => __($buff->name()),
-                'desc' => __($buff->description()),
-                'abort' => $buff->abortable(),
-                'remaining' => $buff->lifetime() > 0 ? Tool_Numerics::duration_to_split($buff->lifetime()) : false
-            ];
-        }
+
+        /** @var Model_Buffs_Abstract_Fragile $buff */
+        if (!($buff = $p->get_status()->retrieve('fragile')) && !$remote)
+            foreach (Tool_Scripts::available_items('Model_Items_Abstract_Virtual',true,false,false,$p) as $a_item)
+                /** @var  Model_Items_Abstract_Virtual $a_item */
+                $a = array_merge($a,$this->prepare_actionlist($a_item->auto_actions(), $a_item));
+        elseif ($buff) $action = [
+            'name' => __($buff->name()),
+            'desc' => __($buff->description()),
+            'abort' => $buff->abortable(),
+            'remaining' => $buff->lifetime() > 0 ? Tool_Numerics::duration_to_split($buff->lifetime()) : false
+        ];
 
         $ap_list = $remote ? [] : array_merge([$p], Tool_Scripts::comrades($p->location_class(), true, true));
 

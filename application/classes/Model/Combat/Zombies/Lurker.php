@@ -3,7 +3,7 @@
 class Model_Combat_Zombies_Lurker extends Model_Combat_Zombies_Zombie {
 
     protected $name = 'Faulende Patienten';
-    protected $max_health = 4;
+    protected $max_health = 5;
 
     protected static $num_str = 4;
 

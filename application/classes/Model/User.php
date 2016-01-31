@@ -38,7 +38,9 @@ class Model_User extends Model {
     public static function avatar_by_id($uid) {
         $set = DB::select('avatar')->from('users')->where('uid', '=', $uid)->execute()->as_array();
         if (!isset($set[0])) return NULL;
-        return ($set[0]['avatar']);
+        $avatar = $set[0]['avatar'];
+        if (substr($avatar,0,5) == 'http:') $avatar = substr($avatar,5);
+        return $avatar;
     }
 	
 	public function read($uid) {

@@ -82,7 +82,7 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
             $battle = Tool_Scripts::combat([Tool_Scripts::at_location($this->uin), $zombies], true, 10, $this, 'Die Zombies haben deine Verteidigung durchbrochen!');
             $this->zombie_factory()->accumulation($battle->count_group_members(2));
 
-            foreach (Tool_Scripts::at_location($this->uin) as $s_player)
+            foreach (Tool_Scripts::at_location($this->uin, true, false) as $s_player)
                 $s_player->achievements()->achieve(Model_Achievement::MA_BREAK_INS, $num);
         }
     }

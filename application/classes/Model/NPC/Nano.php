@@ -13,6 +13,7 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
 
     protected static $entity_type = Interface_Plentity::IC_NPC_GENERIC;
     protected static $escort_functions = [];
+    protected static $abillities = [];
 
     public function __construct($name) {
         $this->name = $name;
@@ -131,8 +132,7 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
     public function ai() {/** NANO NPC must NOT implement any AI! */}
 
     public function can($type) {
-        // NANO does not do anything on it's own!
-        return false;
+        return in_array($type, static::$abillities);
     }
 
     public function id() {

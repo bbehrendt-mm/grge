@@ -11,9 +11,20 @@ class Model_Items_Flashlight extends Model_Items_Abstract_Item implements Interf
 
 	protected static $weight = 3;
 	public $fillrate = 0;
+    protected $on = true;
 
     protected function hid() {
         return parent::hid()
+            ->add_action(!$this->on ? 'Einschalten' : 'Ausschalten', Model_Action::factory()
+                ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
+                ->effect(
+                    Model_Effect::factory()
+                        ->custom(function () {
+                            $this->on = !$this->on;
+                        })
+                        ->message('Du hast den Schalter an der Taschenlampe betätigt.')
+                )
+            )
             ->add_action('Batterie wechseln', Model_Action::factory()
                 ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
                 ->requirement('Model_Items_Battery', 1)
@@ -41,18 +52,18 @@ class Model_Items_Flashlight extends Model_Items_Abstract_Item implements Interf
 	}
 
     public function icon() {
-        return "items/flashlight_" . ($this->fillrate > 0 ? 'on' : 'off');
+        return "items/flashlight_" . ($this->active() ? 'on' : 'off');
     }
 
     public function active() {
-        return ($this->fillrate > 0);
+        return ($this->fillrate > 0) && $this->on;
     }
 
     public function tick($pid, $type = Interface_Tickable::IT_TYPE_PLAYER) {
         /** @global Model_Game $game */
         global $game;
 
-        if ($this->fillrate <= 0)
+        if ($this->fillrate <= 0 || !$this->active())
             return;
 
         switch ($type) {
@@ -62,16 +73,6 @@ class Model_Items_Flashlight extends Model_Items_Abstract_Item implements Interf
             case Interface_Tickable::IT_TYPE_NPC:
                 if ($game->get_npc($pid)) $this->fillrate--;
                 break;
-        }
-    }
-
-    public function render($pid) {
-        /** @global Model_Game $game */
-        global $game;
-
-        if ($player = $game->get_player($pid)) {
-            if (Tool_Scripts::get_timeofday() != 'night' && !$player->location()->is_outside() && $player->register_temp('flashlight'))
-                $player->get_status()->modify(Model_Status::MS_CHAR_LOCATION_SPAWNRATE, 0.2);
         }
     }
 }

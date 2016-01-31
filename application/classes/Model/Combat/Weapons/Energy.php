@@ -26,6 +26,10 @@ abstract class Model_Combat_Weapons_Energy extends Model_Combat_Weapon {
         return parent::trigger_usage($me, $opponent, $damage, $scene);
     }
 
+    public function get_ammo_icons() {
+        return array_merge(parent::get_ammo_icons(), [['::energy', $this->energy()]]);
+    }
+
     public function equip($p = null) {
         /** @global Model_Player $player */
         if ($p === null)

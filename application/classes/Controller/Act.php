@@ -39,22 +39,22 @@ class Controller_Act extends Controller_Game {
 
                 if (!$p->location()->inventory()->remove($itemid)) continue;
                 if (!$p->inventory()->add($item)) $p->location()->inventory()->add($item);
+                else
+                    if (Tool_System::instance_of($item, 'Model_Items_Abstract_Equipable') && !Tool_Scripts::is_npc($p)) {
+                        /** @var Model_Items_Abstract_Equipable $item */
+                        if (!$p->get_equipment($item->get_equipment_type()))
+                            $item->equip($p);
 
-                if (Tool_System::instance_of($item, 'Model_Items_Abstract_Equipable') && !Tool_Scripts::is_npc($p)) {
-                    /** @var Model_Items_Abstract_Equipable $item */
-                    if (!$p->get_equipment($item->get_equipment_type()))
-                        $item->equip($p);
+                        if (Tool_System::instance_of($item, 'Interface_Static'))
 
-                    if (Tool_System::instance_of($item, 'Interface_Static'))
+                            foreach ($p->inventory()->get(get_class($item)) as $ep)
+                                /** @var Model_Items_Abstract_Equipable $ep */
+                                if ($ep->is_equipped()) {
+                                    $item->equip($p);
+                                    break;
+                                }
 
-                        foreach ($p->inventory()->get(get_class($item)) as $ep)
-                            /** @var Model_Items_Abstract_Equipable $ep */
-                            if ($ep->is_equipped()) {
-                                $item->equip($p);
-                                break;
-                            }
-
-                }
+                    }
             }
     }
 
@@ -354,13 +354,17 @@ class Controller_Act extends Controller_Game {
     public function japi_cancel() {
         /**
          * @global $player Model_Player
+         * @global $game Model_Game
          * @var $item Model_Items_Abstract_Item
          */
-        global $player;
+        global $player, $game;
 
-        //Block sleeping
+        if ((($pid = $this->request->post('p')) && ($p = $game->get_player($pid)))) {
+            if (!$p->allow(Interface_Plentity::IC_ALLOW_MANAGE_ACTIVITY)) return $this->japi_data();
+        } else $p = $player;
+
         /** @var Model_Buffs_Abstract_Fragile $buff */
-        if (!($buff = $player->get_status()->retrieve('fragile')) || !$buff->abortable())
+        if (!($buff = $p->get_status()->retrieve('fragile')) || !$buff->abortable())
             return $this->japi_data();
         else {
             $buff->cancel();

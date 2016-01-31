@@ -3,7 +3,7 @@
 class Model_Combat_Zombies_Runner extends Model_Combat_Zombies_Zombie {
 
     protected $name = 'Wahnsinnige Ghule';
-    protected $max_health = 1;
+    protected $max_health = 2;
 
     protected $stat_initiative = 10;
     protected $stat_damage = 5;

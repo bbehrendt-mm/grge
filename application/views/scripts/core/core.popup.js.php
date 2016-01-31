@@ -414,7 +414,14 @@ core.popup = {
                         });
                         if (route_zombies.length && !confirm(game.i18n(<?=__j('Auf dem Weg zu diesem Ort befinden sich Zombies (:locations). Du wirst gegen sie kämpfen müssen, wenn du dorthin möchtest. Weiter?')?>,{':locations': route_zombies.join(', ')}))) return;
 
-                        if (game.storage.get('settings','travel_confirm') != 'auto') {
+                        var escortables = false;
+                        if (core.last.players && core.last.players.others)
+                            $.each(core.last.players.others, function(id, player) {
+                                if (player.allow === true || player.allow[<?=Interface_Plentity::IC_ALLOW_MOVE?>])
+                                    escortables = true;
+                            });
+
+                        if (game.storage.get('settings','travel_confirm') != 'auto' || escortables) {
                             var esc_popup = core.popup.spawn({desktop: 400, sm: '100%'});
 
                             var title;
@@ -426,7 +433,7 @@ core.popup = {
 
                             var check_row = $('<form />').addClass('row').appendTo(esc_popup);
 
-                            if (core.last.players && core.last.players.others)
+                            if (escortables && core.last.players && core.last.players.others)
                                 $.each(core.last.players.others, function(id, player) {
                                     if (player.allow === true ||player.allow[<?=Interface_Plentity::IC_ALLOW_MOVE?>])
                                         check_row.append($('<div />').addClass('cell rw-6 padded').append(

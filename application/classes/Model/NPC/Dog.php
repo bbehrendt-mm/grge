@@ -4,6 +4,12 @@ class Model_NPC_Dog extends Model_NPC_Nano
 {
     protected static $entity_type = Interface_Plentity::IC_NPC_ANIMAL;
     protected static $escort_functions = [Interface_Plentity::IC_ALLOW_ANY];
+    protected static $abillities = [
+        Interface_Plentity::IC_TRIGGER_ITEM_TICKS,
+        Interface_Plentity::IC_TRIGGER_ITEM_FINDINGS,
+        Interface_Plentity::IC_TRIGGER_LOCATION_FINDINGS,
+        Interface_Plentity::IC_TRIGGER_LOCATION_TICKS
+    ];
 
     public function __construct($name) {
         parent::__construct($name);
@@ -47,6 +53,17 @@ class Model_NPC_Dog extends Model_NPC_Nano
     }
 
     public function ai() {
+        $busy = $this->get_status()->retrieve('passout') || $this->get_status()->retrieve('fragile');
 
+        if (($hideout = Tool_Scripts::current_location_hideout()) && $hideout->get_defense() > 0) {
+            // At home
+
+            // Go to sleep
+            if ($this->get_status()->get(Model_Status::MS_STAT_SLEEPY) < 75 && !$busy)
+                new Model_Buffs_Presleep($this->id(), 3, 2);
+
+        } else {
+            // Other location
+        }
     }
 }

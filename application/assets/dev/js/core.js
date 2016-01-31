@@ -6,7 +6,7 @@ core = {
     parts: {},
     snippets: {},
 
-    version: '2.1.0-0-0-233',
+    version: '2.1.0-0-0-234',
 
     last: {},
     plugins: {},
@@ -776,15 +776,37 @@ core = {
                         }));
                     }
 
-                    var actions = [];
-                    $.each(v.actions, function(k,v) {actions.push(v)});
-
-                    if (actions.length) content.append('<span class="separator" />');
+                    var actions = []; var targets = {};
                     $.each(v.actions, function(k,v) {
-                        content.append(
-                            core.snippets.button(v, false, 'nested')
-                        )
+                        btn = core.snippets.button(v, false, 'nested');
+                        targets[btn.attr('data-target')] = true;
+                        actions.push(btn)
                     });
+                    targets = $.objToArray(targets);
+
+                    if (actions.length) {
+                        content.append('<span class="separator" />');
+
+                        var auto_tab = $('<ul />').addClass('tabline hide-mobile').appendTo(content);
+
+                        content.append($('<div />').addClass('btn').hide());
+                        $.each(actions, function(k,v) {
+                            content.append(v);
+                        });
+
+                        $.each(targets, function(kt, tar) {
+                                auto_tab.append($('<li>').attr('data-toggle-target', tar).text(tar))
+                        });
+                        auto_tab.find('>li').click(function() {
+                            var tar = $(this).attr('data-toggle-target');
+                            $.each(actions, function(ka, act) {
+                                act.toggle(act.attr('data-target') == tar);
+                            });
+                            $(this).addClass('active').siblings().removeClass('active');
+                        }).first().click();
+
+                        if (targets.length <= 1) auto_tab.hide();
+                    }
 
                     if (v.is_pillbox) {
                         var pillrow;
@@ -1872,7 +1894,7 @@ core = {
 
             $.each(data.sum, function(k, grp) {
                 $.each(grp, function(ki, line) {
-                    current_row.append($('<div />').addClass('cell rw-4 rw-md-6 rw-sm-12 padded').append(entry = NF.row()));
+                    current_row.append($('<div />').addClass('cell rw-4 rw-md-6 rw-sm-12 padded').append($('<div />').addClass('flatbox').append(entry = NF.row())));
 
                     var injuries, items;
 
@@ -2097,6 +2119,51 @@ core = {
 
             if (player.stats)
                 core.parts.status_bars(bars, player.stats, true);
+
+            //if (!(v.allow === true || v.allow[1])) return;
+            if (player.npc) {
+
+
+                if (player.inventory.action) {
+
+                    var abortable = player.inventory.action.abort && (player.allow === true || player.allow[7]);
+                    var action_row = NF.row().appendTo(box);
+
+                    action_row.append(NF.cell(true, abortable ? 8 : 12, 0, 'b center').text(player.inventory.action.name));
+
+                    if (abortable)
+                        action_row.append(NF.cell(true, 4, 0, 'center').append(
+                            $('<div />').addClass('btn small').append(NF.fa('times')).click(function () {
+                                if (confirm(game.i18n("Bist du sicher, dass :name diese Aktion abbrechen soll?", {':name': player.name})))
+                                    core.command('act/cancel', {p: player.id});
+                            })
+                        ));
+
+                    if (player.inventory.action.remaining) {
+                        var d = 1;
+                        for (var i = 1; i <= 3; i++)
+                            if (player.inventory.action.remaining[i] > 0) d = i;
+
+                        if (d) {
+                            var l = 12 / (d + 1);
+                            var timerow;
+                            action_row.append(NF.cell(true, 12).append(timerow = NF.row().addClass('center')));
+
+                            var elems = ["Minuten","Stunden","Tage","Wochen"];
+
+                            for (i = d; i >= 0; i--)
+                                timerow.append($('<div />').addClass('cell rw-' + l).append(
+                                    $('<div />').append(
+                                        $('<h4 />').text(elems[i])
+                                    ).append(
+                                        $('<span />').text(player.inventory.action.remaining[i])
+                                    )
+                                ))
+                        }
+                    }
+                }
+            }
+
         });
 
         if (!found) row.append(NF.cell(true, 12, 0, 'center').text("Hier scheint niemand zu sein ..."));
@@ -2821,7 +2888,14 @@ core = {
                         });
                         if (route_zombies.length && !confirm(game.i18n("Auf dem Weg zu diesem Ort befinden sich Zombies (:locations). Du wirst gegen sie k\u00e4mpfen m\u00fcssen, wenn du dorthin m\u00f6chtest. Weiter?",{':locations': route_zombies.join(', ')}))) return;
 
-                        if (game.storage.get('settings','travel_confirm') != 'auto') {
+                        var escortables = false;
+                        if (core.last.players && core.last.players.others)
+                            $.each(core.last.players.others, function(id, player) {
+                                if (player.allow === true || player.allow[6])
+                                    escortables = true;
+                            });
+
+                        if (game.storage.get('settings','travel_confirm') != 'auto' || escortables) {
                             var esc_popup = core.popup.spawn({desktop: 400, sm: '100%'});
 
                             var title;
@@ -2833,7 +2907,7 @@ core = {
 
                             var check_row = $('<form />').addClass('row').appendTo(esc_popup);
 
-                            if (core.last.players && core.last.players.others)
+                            if (escortables && core.last.players && core.last.players.others)
                                 $.each(core.last.players.others, function(id, player) {
                                     if (player.allow === true ||player.allow[6])
                                         check_row.append($('<div />').addClass('cell rw-6 padded').append(
@@ -3420,6 +3494,7 @@ core = {
 
             button
                 .addClass('btn btn-zv ' + (action.skin ? 'btn-zv-skinned-' + action.skin : '') + (action.user != '0' ? ' btn-icon' : '') )
+                .attr('data-target', action.user == '0' ? "Du" : core.last.players.others[action.user]['name'])
                 .append(action.user != '0' ? NF.n('span','btn-icon-inner', NF.fa('external-link-square')) : '')
                 .append(NF.n('span', '', action.description))
                 .click(function (e,arg) {

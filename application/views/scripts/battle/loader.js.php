@@ -33,6 +33,20 @@
 
             if (v[0] == <?=Model_Combat_Scene::MCS_EV_ATTACK?>) {
                 alias.queueResource(v[4][1], 'media/icons/' + v[4][1] + '.gif');
+                $.each(v[3], function(k, icn) {
+                    if (typeof icn == "object")
+                        icn = icn[0];
+
+                    switch (icn) {
+                        case '::energy':
+                            alias.queueResource(icn, 'media/icons/status_energy.gif');
+                            break;
+                        default:
+                            alias.queueResource(icn, 'media/icons/' + icn + '.gif');
+                            break;
+                    }
+
+                });
                 switch(v[4][2]) {
                     case <?=Model_Combat_Weapon::MCW_ANIMATION_SHOT_BAT?>:
                         alias.addResource('ammo/battery.gif');

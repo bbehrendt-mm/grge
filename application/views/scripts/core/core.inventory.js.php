@@ -335,15 +335,37 @@
                         }));
                     }
 
-                    var actions = [];
-                    $.each(v.actions, function(k,v) {actions.push(v)});
-
-                    if (actions.length) content.append('<span class="separator" />');
+                    var actions = []; var targets = {};
                     $.each(v.actions, function(k,v) {
-                        content.append(
-                            core.snippets.button(v, false, 'nested')
-                        )
+                        btn = core.snippets.button(v, false, 'nested');
+                        targets[btn.attr('data-target')] = true;
+                        actions.push(btn)
                     });
+                    targets = $.objToArray(targets);
+
+                    if (actions.length) {
+                        content.append('<span class="separator" />');
+
+                        var auto_tab = $('<ul />').addClass('tabline hide-mobile').appendTo(content);
+
+                        content.append($('<div />').addClass('btn').hide());
+                        $.each(actions, function(k,v) {
+                            content.append(v);
+                        });
+
+                        $.each(targets, function(kt, tar) {
+                                auto_tab.append($('<li>').attr('data-toggle-target', tar).text(tar))
+                        });
+                        auto_tab.find('>li').click(function() {
+                            var tar = $(this).attr('data-toggle-target');
+                            $.each(actions, function(ka, act) {
+                                act.toggle(act.attr('data-target') == tar);
+                            });
+                            $(this).addClass('active').siblings().removeClass('active');
+                        }).first().click();
+
+                        if (targets.length <= 1) auto_tab.hide();
+                    }
 
                     if (v.is_pillbox) {
                         var pillrow;

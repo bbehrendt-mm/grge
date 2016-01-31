@@ -329,9 +329,21 @@
     };
 
     Battle.prototype.events[<?=Model_Combat_Scene::MCS_EV_ATTACK?>] = function(id_atk, id_def, ammo, weapon, damage) {
+        var alias = this;
+
         this.checkNewChar(id_atk, true);
         this.showActorCard(id_atk, this.formatVariantLine([this.getResource(weapon[1]), weapon[0]], "bold 12px Arial", "#ffffff"));
         this.addTargetCard(id_def);
+
+        $.each(ammo, function(k, icn) {
+            var count = 1;
+            if (typeof icn == "object"){
+                count = icn[1];
+                icn = icn[0];
+            }
+            if (count > 0)
+                alias.characterPopupMessage(id_atk, count == 1 ? '-' : ('-' + count) , icn);
+        });
 
         if (animations[weapon[2]])
             animations[weapon[2]].call(this, id_atk, id_def, Math.max(0,Math.min(1,damage/10)), weapon[1], damage);

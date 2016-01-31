@@ -134,6 +134,7 @@
 
             button
                 .addClass('btn btn-zv ' + (action.skin ? 'btn-zv-skinned-' + action.skin : '') + (action.user != '0' ? ' btn-icon' : '') )
+                .attr('data-target', action.user == '0' ? <?=__j('Du')?> : core.last.players.others[action.user]['name'])
                 .append(action.user != '0' ? NF.n('span','btn-icon-inner', NF.fa('external-link-square')) : '')
                 .append(NF.n('span', '', action.description))
                 .click(function (e,arg) {

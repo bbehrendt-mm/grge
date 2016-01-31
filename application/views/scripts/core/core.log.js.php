@@ -92,7 +92,7 @@
 
             $.each(data.sum, function(k, grp) {
                 $.each(grp, function(ki, line) {
-                    current_row.append($('<div />').addClass('cell rw-4 rw-md-6 rw-sm-12 padded').append(entry = NF.row()));
+                    current_row.append($('<div />').addClass('cell rw-4 rw-md-6 rw-sm-12 padded').append($('<div />').addClass('flatbox').append(entry = NF.row())));
 
                     var injuries, items;
 

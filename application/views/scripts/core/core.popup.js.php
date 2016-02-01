@@ -404,7 +404,7 @@ core.popup = {
                     case 'click':
                         if ((data.read_only && !data.locations[id].skip_ro) || data.locations[id].energy > data.radius || id == data.current) return;
 
-                        if (data.locations[id].zombies && !confirm(game.i18n(<?=__j('Dieser Ort wird von :zombies Zombies belagert. Wenn du diesen Ort betrittst, wirst du kämpfen müssen. Weiter?')?>, {':zombies': v.zombies}))) return;
+                        if (data.locations[id].zombies && !confirm(game.i18n(<?=__j('Dieser Ort wird von :zombies Zombies belagert. Wenn du diesen Ort betrittst, wirst du kämpfen müssen. Weiter?')?>, {':zombies': data.locations[id].zombies}))) return;
 
                         var route_zombies = [];
                         $.each(data.locations[id].route, function(rkey, rval) {

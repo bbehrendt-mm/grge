@@ -6,7 +6,7 @@ core = {
     parts: {},
     snippets: {},
 
-    version: '2.1.0-0-0-234',
+    version: '2.1.0-0-0-240',
 
     last: {},
     plugins: {},
@@ -2878,7 +2878,7 @@ core = {
                     case 'click':
                         if ((data.read_only && !data.locations[id].skip_ro) || data.locations[id].energy > data.radius || id == data.current) return;
 
-                        if (data.locations[id].zombies && !confirm(game.i18n("Dieser Ort wird von :zombies Zombies belagert. Wenn du diesen Ort betrittst, wirst du k\u00e4mpfen m\u00fcssen. Weiter?", {':zombies': v.zombies}))) return;
+                        if (data.locations[id].zombies && !confirm(game.i18n("Dieser Ort wird von :zombies Zombies belagert. Wenn du diesen Ort betrittst, wirst du k\u00e4mpfen m\u00fcssen. Weiter?", {':zombies': data.locations[id].zombies}))) return;
 
                         var route_zombies = [];
                         $.each(data.locations[id].route, function(rkey, rval) {

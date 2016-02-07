@@ -32,7 +32,11 @@
         if (death) {
             var body = new createjs.Bitmap(alias.getResource('sprites/' + this.combatants[id].sprites[1]));
 
-            body.x = body.y = -8;
+            var sph = body.getBounds().height;
+            var spw = body.getBounds().width;
+
+            body.x = -spw/2;
+            body.y = -sph/2;
             body.alpha = 0;
             this.combatants[id].container.addChild(body);
 

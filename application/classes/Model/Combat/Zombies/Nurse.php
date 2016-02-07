@@ -2,6 +2,8 @@
 
 class Model_Combat_Zombies_Nurse extends Model_Combat_Zombies_Shambler {
 
+    public static $custom_sprite = 'zombie_nurse.png';
+
     protected $name = 'Untote sexy Krankenschwester';
     protected $max_health = 6;
 

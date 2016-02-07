@@ -19,4 +19,15 @@ class Model_Items_Claw extends Model_Combat_Weapon {
     );
 
     protected static $weight = 0;
+
+    public function generate_wound($damage) {
+        if ($damage <= 0) return null;
+
+        $injury = mt_rand(0,100);
+        if ($injury < $damage/2)
+            return Model_Buffs_Blood::cls();
+        elseif ($injury < $damage * 5)
+            return Model_Buffs_Bite::cls();
+        else return null;
+    }
 }

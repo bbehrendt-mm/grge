@@ -90,6 +90,10 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
         return $this->range()[1];
     }
 
+    public function generate_wound($damage) {
+        return null;
+    }
+
     /**
      * @param Interface_Plentity $p
      * @return Model_Combat_Weapon

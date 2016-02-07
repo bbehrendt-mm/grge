@@ -2,6 +2,7 @@
 
 class Model_Combat_Zombies_Hallucination extends Model_Combat_Zombies_Zombie {
 
+    public static $custom_sprite = 'zombie_lsd.gif';
     protected $name;
     protected $max_health = 15;
 

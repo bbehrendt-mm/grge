@@ -28,7 +28,7 @@
                 alias.addResource('sprites/' + sprites[0], 'sprites/' + sprites[1]);
             }
 
-            if (v[0] == <?=Model_Combat_Scene::MCS_EV_SWITCH?>)
+            if (v[0] == <?=Model_Combat_Scene::MCS_EV_BREAK?> || v[0] == <?=Model_Combat_Scene::MCS_EV_INJURY?> || v[0] == <?=Model_Combat_Scene::MCS_EV_SWITCH?>)
                 alias.queueResource(v[2][1], 'media/icons/' + v[2][1] + '.gif');
 
             if (v[0] == <?=Model_Combat_Scene::MCS_EV_ATTACK?>) {

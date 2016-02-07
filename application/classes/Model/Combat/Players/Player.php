@@ -65,6 +65,9 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
     public function disengage() {
         foreach ($this->weapons as $weapon)
             $weapon->unregister();
+        /** @var Model_Buffs_Abstract_Buff $w */
+        foreach ($this->wounds as $w)
+            new $w($this->player->id());
     }
 
     /**

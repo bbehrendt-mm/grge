@@ -5,4 +5,5 @@ return Model_Factory_Zombies::factory()
 
     ->add(Model_Combat_Zombies_Shambler::cls(), 5)
     ->add(Model_Combat_Zombies_Fatass::cls(), 1)
+    ->add(Model_Combat_Zombies_Gusher::cls(), 1)
     ->add(Model_Combat_Zombies_Runner::cls(), 1);

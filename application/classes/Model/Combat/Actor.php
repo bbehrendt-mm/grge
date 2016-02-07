@@ -47,6 +47,8 @@ class Model_Combat_Actor extends Named {
 
     protected static $is_unique = true;
 
+    protected $wounds = [];
+
     /** @var Model_Combat_Weapon[] */
     protected $weapons = [];
 
@@ -81,6 +83,16 @@ class Model_Combat_Actor extends Named {
 
     public function __construct() {
         $this->health = $this->max_health;
+    }
+
+    /**
+     * @param Model_Buffs_Abstract_Buff|null $wound
+     */
+    public function inflict_wound($wound) {
+        if ($wound) {
+            $this->scene->injury($this, $wound::static_name(), $wound::static_icon());
+            $this->wounds[] = $wound;
+        }
     }
 
     /**
@@ -321,6 +333,8 @@ class Model_Combat_Actor extends Named {
         if (is_array($foe))
             return min(array_map(function($a) use ($weapon) {return $this->rounds_to_use($weapon, $a);}, $foe));
         else {
+            if ($this->movement_range <= 0) return PHP_INT_MAX;
+
             if ($weapon->in_range($this, $foe))
                 return 0;
 
@@ -408,6 +422,7 @@ class Model_Combat_Actor extends Named {
      * @return array|null
      */
     protected function get_movement_priority($friends, $foes) {
+        if ($this->movement_range <= 0) return [];
         if ($this->current_weapon && ($closest_foe = $this->current_weapon->closest_foe($this, $foes, false))) {
             $tmp = $this->get_attack_priority($friends, [$closest_foe], $this->current_weapon, true);
 
@@ -440,7 +455,7 @@ class Model_Combat_Actor extends Named {
     protected function damage($damage, $from = null, $armor_damage = null) {
         $this->health -= $damage;
 
-        $kills = min($this->count, $this->health == 0 ? 1 : ($this->health < 0 ? -floor($this->health / $this->max_health) : 0));
+        $kills = min($this->count, ($this->health <= 0 ? (-floor($this->health / $this->max_health) + 1) : 0));
         $this->alive = $kills < $this->count;
 
         if ($kills) {
@@ -471,6 +486,8 @@ class Model_Combat_Actor extends Named {
 
     public function enter() {}
 
+    public function idle() {}
+
     /**
      * @param Model_Combat_Actor[] $friends
      * @param Model_Combat_Actor[] $foes
@@ -498,6 +515,7 @@ class Model_Combat_Actor extends Named {
             list($dmg,$dmg_raw) = $this->current_weapon->calculate_damage($this, $target, $this->count, $acc, $atk, $op_res);
             $this->scene->attack($this, $target, $this->current_weapon, $dmg);
             $target->damage($dmg, $this, $dmg_raw);
+            $target->inflict_wound($this->current_weapon->generate_wound($dmg));
             $this->current_weapon->trigger_usage($this, $target, $dmg, $this->scene);
 
         } elseif ($switch && (!$attack || $switch[0] > $attack[0]) && (!$move || $switch[0] > $move[0])) {
@@ -535,7 +553,7 @@ class Model_Combat_Actor extends Named {
             $this->scene->move($this, [$this->pos_x, $this->pos_y], $dist, $target);
         } else {
             // Idle action
-            //TODO: Idle action?
+            $this->idle();
         }
 
         if ($use_second_action) $this->act($friends, $foes, true);

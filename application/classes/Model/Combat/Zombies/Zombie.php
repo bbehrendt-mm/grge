@@ -2,6 +2,7 @@
 
 abstract class Model_Combat_Zombies_Zombie extends Model_Combat_Actor {
 
+    protected static $default_weapon = 'Model_Items_Claw';
     protected $type = Model_Combat_Actor::MCA_TYPE_ZOMBIE;
     protected $nano_npc;
 
@@ -36,8 +37,10 @@ abstract class Model_Combat_Zombies_Zombie extends Model_Combat_Actor {
     }
 
     public static function factory() {
-        return parent::factory()
-            ->add_weapon(new Model_Items_Claw());
+        $tmp = parent::factory();
+        if (static::$default_weapon)
+            $tmp->add_weapon(new static::$default_weapon);
+        return $tmp;
     }
 
     public function get_avatar() {

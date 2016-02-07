@@ -2,6 +2,7 @@
 
 class Model_Combat_Zombies_Lurker extends Model_Combat_Zombies_Zombie {
 
+    public static $custom_sprite = 'zombie_lurker.gif';
     protected $name = 'Faulende Patienten';
     protected $max_health = 5;
 

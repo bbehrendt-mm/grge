@@ -6,7 +6,11 @@ class Model_Buffs_Bite extends Model_Buffs_Abstract_Buff {
 	protected static $icon = 'bite';
 	protected static $desc = 'Du hast im kampf eine Bisswunde davongetragen. Das ist soweit erstmal nichts schlimmes... solange du dir dadurch keine Infektion eingefangen hast.';
 	protected static $bid = 'bite';
-	
+
+    public function __construct($association = NULL) {
+        parent::__construct($association, 1);
+    }
+
 	public function merge($newclass) {
 		$this->lifetime += $newclass->lifetime();
 	}

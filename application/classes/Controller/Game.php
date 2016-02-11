@@ -785,7 +785,7 @@ class Controller_Game extends Controller {
                 'local' => $local,
                 'loner' => (bool)$p->get_status()->retrieve('tr_loner'),
                 'stats' => $local ? $this->render_status($p) : false,
-                'inventory' => $p->allow(Interface_Plentity::IC_ALLOW_SHOW_INVENTORY) ? $this->render_inventory($p) : false,
+                'inventory' => ($local && $p->allow(Interface_Plentity::IC_ALLOW_SHOW_INVENTORY)) ? $this->render_inventory($p) : false,
                 'escort' => $companion,
                 'allow' => $allow,
                 'last_seen' => $p->last_action(),

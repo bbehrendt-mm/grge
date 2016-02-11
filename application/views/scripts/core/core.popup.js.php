@@ -417,7 +417,7 @@ core.popup = {
                         var escortables = false;
                         if (core.last.players && core.last.players.others)
                             $.each(core.last.players.others, function(id, player) {
-                                if (player.allow === true || player.allow[<?=Interface_Plentity::IC_ALLOW_MOVE?>])
+                                if (player.local && (player.allow === true || player.allow[<?=Interface_Plentity::IC_ALLOW_MOVE?>]))
                                     escortables = true;
                             });
 

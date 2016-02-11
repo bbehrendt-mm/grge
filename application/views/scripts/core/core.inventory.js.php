@@ -522,6 +522,7 @@
             if (core.last.players) {
                 $.each(core.last.players.others, function(k,v) {
                     if (!(v.allow === true || v.allow[<?=Interface_Plentity::IC_ALLOW_SHOW_INVENTORY?>])) return;
+                    if (!v.inventory) return;
 
                     var remote_inv;
                     iv_a.after(remote_inv = $('<div />').addClass('row inventory flatbox inventory_player'));

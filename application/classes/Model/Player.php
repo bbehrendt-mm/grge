@@ -155,7 +155,6 @@ class Model_Player extends Model_NPC_Nano implements Interface_Plentity {
     }
 
     protected function generate_zombified_body() {
-        // ToDo: NPC?
         return Model_Combat_Zombies_Ghul::factory()->zombiefied_player_id($this->id)->name($this->name())->register_inventory($this->inventory())->strength(Model_Status::MS_STAT_ZOMBIFY, 100, 1);
     }
 

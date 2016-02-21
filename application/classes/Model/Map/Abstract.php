@@ -501,6 +501,11 @@ abstract class Model_Map_Abstract {
         return (isset($map[$to])) ? $map[$to] : null;
     }
 
+    public function get_distance($from, $to, $max_nodes = null) {
+        $route = $this->get_route($from, $to, $max_nodes);
+        return $route ? $route['distance'] : false;
+    }
+
     /**
      * @return array
      */

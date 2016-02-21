@@ -102,7 +102,7 @@
                             .append(line.death > 0 ? NF.icon('media/icons/death.gif', line.death) : null)
                             .append(NF.icon('media/icons/damage.gif', Math.round10(Number(line.dmg_taken), -1)))
                             .append(NF.icon('media/icons/status_energy.gif', Math.round10(Number(line.energy), -1)))
-                        ).append(injuries = NF.cell(false, 6, 0, 'center')).append(items = NF.cell(false, 12, 0, 'center'))
+                        ).append(injuries = NF.cell(false, 6, 0, 'center')).append(items = NF.cell(false, 12, 0, 'center'));
 
                     $.each(line.injuries, function(aicon, adata) {
                         injuries.append(NF.icon('media/icons/' + aicon + '.gif', '+')).attr('title', adata[1]);
@@ -197,6 +197,37 @@
 
             return title;
         };
+
+    renderers[<?=Model_Log_Message::MLM_TRANSACTION_LOG?>] =
+        function(data) {
+            var header;
+            switch (data['class']) {
+                case <?=Model_Log_Types_Transaction::MLTT_UP?>:
+                    header = data.self ? <?=__j('Du hast :itemdef aufgehoben.')?> : <?=__j(':name hat :itemdef aufgehoben.')?>;
+                    break;
+                case <?=Model_Log_Types_Transaction::MLTT_DOWN?>:
+                    header = data.self ? <?=__j('Du hast :itemdef abgelegt.')?> : <?=__j(':name hat :itemdef abgelegt.')?>;
+                    break;
+                case <?=Model_Log_Types_Transaction::MLTT_USE?>:
+                    header = data.self ? <?=__j('Du hast :itemdef verwendet (:action).')?> : <?=__j(':name hat :itemdef verwendet (:action).')?>;
+                    break;
+            }
+
+
+            var title = $('<div />');
+            header = game.i18n(header, {':name': data.player, ':action': data.action});
+            var pos = header.search(':itemdef');
+            if (pos >= 0) {
+                title.append($('<span />').text(header.slice(0,pos)));
+                $.each(data.items, function(k, item) {
+                    title.append(core.snippets.item(true,item.name,item.icon,data['class'] == <?=Model_Log_Types_Transaction::MLTT_USE?> ? 0 : item.count,false,false));
+                });
+                title.append($('<span />').text(header.slice(pos+8)));
+            }
+
+            return title;
+        };
+
 
     renderers[<?=Model_Log_Message::MLM_CHEM_EXPERIMENT?>] =
         function(data) {

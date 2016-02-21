@@ -238,8 +238,8 @@ class Controller_Account extends Controller {
 
         if (!$user) return $this->render();
 
-        $key = $this->request->post('key');
-        $service = $this->request->post('service');
+        $key = $this->post('key');
+        $service = $this->post('service');
 
         if (!$key || !$service || !($cfg = Kohana::$config->load('mt.links.' . $service))) return $this->render();
 

@@ -2,7 +2,7 @@
 
 class Controller_Map extends Controller_Game {
 
-    private function internal_go($sub, $did, $follow, $support, $companion) {
+    public static function code_go($sub, $did, $follow, $support, $companion) {
 
         /**
          * @global $game Model_Game
@@ -197,19 +197,19 @@ class Controller_Map extends Controller_Game {
          */
         global $player;
 
-        $did = (int)$this->request->post('to');
+        $did = (int)$this->post('to');
         $companion = [];
 
-        $cc = $this->request->post('co');
+        $cc = $this->post('co');
         if (is_array($cc))
             foreach ($cc as $comid)
                 if ($tmp = Tool_Scripts::check_comrade($comid))
                     $companion[$tmp->id()] = $tmp;
 
-        $follow = (int)$this->request->post('follow') != 0;
-        $support = (int)$this->request->post('support') != 0;
+        $follow = (int)$this->post('follow') != 0;
+        $support = (int)$this->post('support') != 0;
 
-        $ret = $this->internal_go(in_array($did, $player->location()->get_doorways()), $did,$follow,$support,$companion);
+        $ret = static::code_go(in_array($did, $player->location()->get_doorways()), $did,$follow,$support,$companion);
 
         //redirect
         $this->render_notifications();

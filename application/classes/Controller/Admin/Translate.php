@@ -26,17 +26,17 @@ class Controller_Admin_Translate extends Controller_Admin_Admin {
         if (!static::priv_allow_all('TRANSLATE_MOD'))
             return $this->error(\grge\E_SERVER_ACCESS_DENIED);
 
-        $this->render(['success' => (int)I18n::remove($this->request->post('from'))]);
+        $this->render(['success' => (int)I18n::remove($this->post('from'))]);
         return true;
     }
 
     public function japi_next() {
 
-        $id = (int)$this->request->post('id');
-        $tr = $this->request->post('translation');
-        $from = $this->request->post('from');
-        $to = $this->request->post('to');
-        $rq_id = (int)$this->request->post('request');
+        $id = (int)$this->post('id');
+        $tr = $this->post('translation');
+        $from = $this->post('from');
+        $to = $this->post('to');
+        $rq_id = (int)$this->post('request');
 
         $b = true;
         if (trim($tr) && $id && $to) {
@@ -68,9 +68,9 @@ class Controller_Admin_Translate extends Controller_Admin_Admin {
 
     public function japi_set() {
         $this->render(['success' => (int)I18n::set(
-                $this->request->post('from'),
-                $this->request->post('to'),
-                $this->request->post('language')
+                $this->post('from'),
+                $this->post('to'),
+                $this->post('language')
         )]);
     }
 
@@ -124,10 +124,10 @@ class Controller_Admin_Translate extends Controller_Admin_Admin {
     }
 
     public function japi_get() {
-        $lang = $this->request->post('language');
-        $mask = $this->request->post('mask');
-        $source = $this->request->post('source');
-        $search = $this->request->post('search');
+        $lang = $this->post('language');
+        $mask = $this->post('mask');
+        $source = $this->post('source');
+        $search = $this->post('search');
 
         switch ($source) {
             case 'prefetch': return $this->get_missing($lang,$mask);

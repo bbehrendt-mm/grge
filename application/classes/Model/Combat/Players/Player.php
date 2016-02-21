@@ -4,7 +4,7 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
 
     /** @var Model_Player */
     protected $player;
-
+    protected static $show_weapon_switch = true;
 
     /**
      * @param null|Model_Player $p
@@ -91,6 +91,6 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
 
     public function enter() {
         parent::enter();
-        $this->scene->switch_weapon($this, $this->current_weapon);
+        if (static::$show_weapon_switch) $this->scene->switch_weapon($this, $this->current_weapon);
     }
 }

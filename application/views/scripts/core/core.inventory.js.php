@@ -529,7 +529,17 @@
 
                     render_block(v.inventory.player, remote_inv, game.i18n(<?=__j('Rucksack von :name')?>, {':name': v.name}), true, !(v.allow === true || v.allow[<?=Interface_Plentity::IC_ALLOW_ITEM_DROP?>]));
 
-                    remote_inv.append(NF.row().append($('<div />').addClass('cell rw-12 padded').append($('<div />').addClass('weightbar').append($('<div />').css('width', (100*v.inventory.weight[0]/v.inventory.weight[1]) + '%')))));
+                    remote_inv.append(NF.row().append($('<div />').addClass('cell rw-12 padded').append($('<div />').addClass('weightbar').append($('<div />').css('width', (100*v.inventory.weight[0]/v.inventory.weight[1]) + '%'))))
+                        .attr('title','-').qtip(game.render.html.qtip.ingame('bottom', {
+                            render: function(event,api) {
+                                var content = $(this).find('.qtip-content').empty();
+
+                                content
+                                    .append($('<b />').addClass('header').text(<?=__j('Gewicht')?>))
+                                    .append($('<div />').addClass('center').text(<?=__j('Aktueller Wert')?> + ': ' + Math.round10(v.inventory.weight[0],-2) + ' / ' + Math.round10(v.inventory.weight[1], -2)))
+                            }
+                        }))
+                    );
                     remote_inv.attr({
                         'data-pid': v.id,
                         'data-pid-selected': 0,

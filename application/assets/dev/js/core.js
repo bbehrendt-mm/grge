@@ -6,7 +6,7 @@ core = {
     parts: {},
     snippets: {},
 
-    version: '2.1.0-0-0-241',
+    version: '2.1.0-0-0-242',
 
     last: {},
     plugins: {},
@@ -970,7 +970,17 @@ core = {
 
                     render_block(v.inventory.player, remote_inv, game.i18n("Rucksack von :name", {':name': v.name}), true, !(v.allow === true || v.allow[3]));
 
-                    remote_inv.append(NF.row().append($('<div />').addClass('cell rw-12 padded').append($('<div />').addClass('weightbar').append($('<div />').css('width', (100*v.inventory.weight[0]/v.inventory.weight[1]) + '%')))));
+                    remote_inv.append(NF.row().append($('<div />').addClass('cell rw-12 padded').append($('<div />').addClass('weightbar').append($('<div />').css('width', (100*v.inventory.weight[0]/v.inventory.weight[1]) + '%'))))
+                        .attr('title','-').qtip(game.render.html.qtip.ingame('bottom', {
+                            render: function(event,api) {
+                                var content = $(this).find('.qtip-content').empty();
+
+                                content
+                                    .append($('<b />').addClass('header').text("Gewicht"))
+                                    .append($('<div />').addClass('center').text("Aktueller Wert" + ': ' + Math.round10(v.inventory.weight[0],-2) + ' / ' + Math.round10(v.inventory.weight[1], -2)))
+                            }
+                        }))
+                    );
                     remote_inv.attr({
                         'data-pid': v.id,
                         'data-pid-selected': 0,
@@ -1905,7 +1915,7 @@ core = {
                             .append(line.death > 0 ? NF.icon('media/icons/death.gif', line.death) : null)
                             .append(NF.icon('media/icons/damage.gif', Math.round10(Number(line.dmg_taken), -1)))
                             .append(NF.icon('media/icons/status_energy.gif', Math.round10(Number(line.energy), -1)))
-                        ).append(injuries = NF.cell(false, 6, 0, 'center')).append(items = NF.cell(false, 12, 0, 'center'))
+                        ).append(injuries = NF.cell(false, 6, 0, 'center')).append(items = NF.cell(false, 12, 0, 'center'));
 
                     $.each(line.injuries, function(aicon, adata) {
                         injuries.append(NF.icon('media/icons/' + aicon + '.gif', '+')).attr('title', adata[1]);
@@ -2000,6 +2010,37 @@ core = {
 
             return title;
         };
+
+    renderers[7] =
+        function(data) {
+            var header;
+            switch (data['class']) {
+                case 1:
+                    header = data.self ? "Du hast :itemdef aufgehoben." : ":name hat :itemdef aufgehoben.";
+                    break;
+                case 2:
+                    header = data.self ? "Du hast :itemdef abgelegt." : ":name hat :itemdef abgelegt.";
+                    break;
+                case 3:
+                    header = data.self ? "Du hast :itemdef verwendet (:action)." : ":name hat :itemdef verwendet (:action).";
+                    break;
+            }
+
+
+            var title = $('<div />');
+            header = game.i18n(header, {':name': data.player, ':action': data.action});
+            var pos = header.search(':itemdef');
+            if (pos >= 0) {
+                title.append($('<span />').text(header.slice(0,pos)));
+                $.each(data.items, function(k, item) {
+                    title.append(core.snippets.item(true,item.name,item.icon,data['class'] == 3 ? 0 : item.count,false,false));
+                });
+                title.append($('<span />').text(header.slice(pos+8)));
+            }
+
+            return title;
+        };
+
 
     renderers[3] =
         function(data) {
@@ -3233,8 +3274,6 @@ core = {
 
             });
         });
-
-        console.log(tmp);
     };
 
     core.parts.rpg = function(data, inventory, target) {

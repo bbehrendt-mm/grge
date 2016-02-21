@@ -232,11 +232,11 @@ class Model_Combat_Actor extends Named {
      * @param int $type
      * @return Model_Combat_Actor|string
      */
-    public function name($new_name = null, $type = 0) {
+    public function name($new_name = null, $type = null) {
         if ($new_name === null) return $this->name;
         else {
             $this->name = $new_name;
-            $this->type = $type;
+            if ($type !== null) $this->type = $type;
         }
         return $this;
     }
@@ -455,7 +455,7 @@ class Model_Combat_Actor extends Named {
     protected function damage($damage, $from = null, $armor_damage = null) {
         $this->health -= $damage;
 
-        $kills = min($this->count, ($this->health <= 0 ? (-floor($this->health / $this->max_health) + 1) : 0));
+        $kills = min($this->count, ($this->health <= 0 ? (-floor(abs($this->health) / $this->max_health) + 1) : 0));
         $this->alive = $kills < $this->count;
 
         if ($kills) {

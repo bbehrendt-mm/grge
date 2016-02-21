@@ -7,10 +7,11 @@ class Model_Log_Message extends Model {
     const MLM_ITEM_LOG = 2;
     const MLM_CHEM_EXPERIMENT = 3;
     const MLM_LOCATION_LOG = 4;
-
     const MLM_COMBAT = 5;
-
     const MLM_RAW_DATA = 6;
+    const MLM_TRANSACTION_LOG = 7;
+
+
 
     protected $data = [];
     protected $uid;

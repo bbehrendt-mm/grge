@@ -13,8 +13,8 @@ class Controller_Embed extends Controller {
         /** @global Model_Game|null $game */
         global $game;
 
-        $video_id = (int)$this->request->post('v');
-        $gallery_id = (int)$this->request->post('g');
+        $video_id = (int)$this->post('v');
+        $gallery_id = (int)$this->post('g');
 
         if (!$video_id || !($gallery_id || ($chk = Model_Combat_Handler::check_battle($video_id))) || (!$game && !$gallery_id) || (!$gallery_id && $game->id() != $chk))
             return $this->render(['video' => null]);

@@ -5,6 +5,7 @@ class Model_Items_Virtual_Hero_Coach extends Model_Items_Abstract_Virtual {
     protected static $graceful_fail = true;
 
     public function __construct($level = 1) {
+        parent::__construct();
         $this->remaining = array(
             'hero_job_0' => ceil($level/3),
         );

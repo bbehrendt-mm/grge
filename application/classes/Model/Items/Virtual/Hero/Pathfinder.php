@@ -3,6 +3,7 @@
 class Model_Items_Virtual_Hero_Pathfinder extends Model_Items_Abstract_Virtual {
 
     public function __construct($level = 1) {
+        parent::__construct();
         $this->remaining = array(
             'hero_job_0' => 1,
             'hero_job_1' => $level >= 6 ? 1 : 0,

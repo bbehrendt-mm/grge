@@ -95,8 +95,11 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
 	}
 	
 	protected function tick() {
-		//No need to do that if player is already dead
+        //No need to do that if player is already dead
 		if (!$this->is_alive()) return;
+
+        global $player;
+        $bfp = $player;
 
 		//Find and run preticks
 		$active_locations = [];
@@ -115,7 +118,6 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
 		
 		//Run player and NPC ticks
 		foreach ($this->playable_entities(true) as $pl) {
-			global $player;
 			$player = $pl;
 			
 			if ($player->get_status()->alive()) {
@@ -133,6 +135,8 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
 			}
 		}
 
+        $player = $bfp;
+
         //Post-tick events
         foreach ($this->npcs() as $pl) {
             global $player;
@@ -140,5 +144,7 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
 
             $player->ai();
         }
+
+        $player = $bfp;
 	}
 }

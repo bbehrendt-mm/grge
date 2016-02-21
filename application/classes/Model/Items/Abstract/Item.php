@@ -234,7 +234,7 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
      * @return array
      */
     public function auto_actions($players = null) {
-        return static::hid()->convert($this->uin(), $players);
+        return $this->hid()->convert($this->uin(), $players);
     }
 
     /**
@@ -275,6 +275,37 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
         $player->get_status()->clear_cause_of_death();
         return false;
 	}
+
+    /**
+     * Runs the description of an action ID
+     * @param string $action Action
+     * @param Interface_Plentity $player
+     * @return mixed Action description or null, if ID is invalid
+     */
+    public function resolve_action($action, $player) {
+        $hid = static::hid();
+
+        if ($hid->can($action))
+            return $hid->actions()[$action];
+        else return null;
+    }
+
+    public function simple_effects($p = null) {
+        return static::hid()->simple_effects($p);
+    }
+
+    /**
+     * Runs any of the items interaction_ functions
+     * @param string $action Action to execute
+     * @param Interface_Plentity $player
+     * @param null|mixed $argument Optional argument
+     * @param null|Model_Player $side_player
+     * @return mixed Return value of the called interaction function
+     */
+    public function test_interaction($action, $player, $argument = NULL, $side_player = null) {
+        $hid = $this->hid();
+        return $hid->can($action) && $hid->test($action, $player, $side_player, $argument);
+    }
 
     /**
      * This function is called internally when the item is mixed with a chemical substance

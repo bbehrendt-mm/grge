@@ -63,6 +63,35 @@ class Tool_Scripts
      * @param null|callable|callable[] $decider
      * @return bool
      */
+    public static function has_available_items($matrix, $active_player, $active_location, $other_players, $perspective = null, $grind = false, $decider = null) {
+        /**
+         * @param string $cls
+         * @return callable|null
+         */
+        $get_decider = function($cls) use ($decider) {
+            if (!is_array($decider))
+                return $decider;
+            else return isset($decider[$cls]) ? $decider[$cls] : null;
+        };
+
+        foreach ($matrix as $classname => $count) {
+            if (static::count_available_items($classname, $active_player, $active_location, $other_players, $perspective, $get_decider($classname)) < $count)
+                return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param mixed $matrix
+     * @param bool $active_player
+     * @param bool $active_location
+     * @param bool $other_players
+     * @param null|Interface_Plentity $perspective
+     * @param bool $grind
+     * @param null|callable|callable[] $decider
+     * @return bool
+     */
     public static function consume_available_items($matrix, $active_player, $active_location, $other_players, $perspective = null, $grind = false, $decider = null) {
         /**
          * @param string $cls
@@ -189,7 +218,7 @@ class Tool_Scripts
         else global $player;
 
         if (Tool_Scripts::is_npc($player))
-            $active_location = $other_players = false;
+            $other_players = false;
 
         $proto = [];
         if ($active_player)
@@ -464,12 +493,30 @@ class Tool_Scripts
         //TODO: Escapeable battles!
         $battle = Model_Combat_Field::factory();
 
-        foreach ($combatants as $fraction => $group)
+        $non_combatants = [];
+        $actual_combatants = [];
+
+        foreach ($combatants as $fraction => $group) if (count($group) > 0) {
+            $actual_combatants[$fraction] = $non_combatants[$fraction] = [];
+            /** @var Model_Combat_Actor|Model_NPC_Nano $member */
+            foreach ($group as $member) {
+                if (Tool_System::instance_of($member, Model_NPC_Nano::cls()) && $member->get_status()->retrieve('passout'))
+                    $non_combatants[$fraction][] = $member;
+                else $actual_combatants[$fraction][] = $member;
+            }
+        }
+
+        foreach ($actual_combatants as $fraction => $group)
             $battle->add_combatant($fraction + 1, $group);
 
-        //TODO: Sleeping players
-
         $battle->init_positions($distance)->begin();
+
+        foreach ($actual_combatants as $fraction => $group)
+            if ($battle->count_group_members($fraction + 1) == 0)
+                foreach ($non_combatants[$fraction] as $member) {
+                    $member->get_status()->set_cause_of_death('Im Schlaf zerfetzt');
+                    $member->kill();
+                }
 
         if ($location === null)
             $location = $player->location();
@@ -477,7 +524,6 @@ class Tool_Scripts
         //Upload to DB
         $vid = Model_Combat_Handler::upload($game->id(), $game->season(), $battle);
         $location->log()->add(new Model_Log_Types_Battle($title, $text, $vid, $battle->get_scene()->summarize()));
-        //$location->log()->add(new Model_Log_Types_Raw('' . $battle->get_scene()));
 
         return $battle;
     }

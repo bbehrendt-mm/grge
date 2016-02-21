@@ -338,4 +338,21 @@ class Model_Effect {
         return $tmp;
     }
 
+    /**
+     * @param null|Interface_Plentity $player
+     * @return array
+     */
+    public function stat_list($player = null) {
+        $accum = [];
+        foreach ($this->effects as $stat => $dif) if ($stat >= 0) {
+            $dif = is_array($dif) ? ($dif[0] + $dif[1])/2 : (is_numeric($dif) ? $dif : 0);
+            if ($dif == 0) continue;
+
+            if ($player) $dif *= $player->get_status()->scaling($stat, Model_Status::MS_EFFECT_ITEM);
+            $accum[$stat] = $dif;
+        }
+
+        return $accum;
+    }
+
 }

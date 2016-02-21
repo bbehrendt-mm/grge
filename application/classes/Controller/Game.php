@@ -7,6 +7,23 @@ class Controller_Game extends Controller {
 
     protected static $death_allowed_actions = ['end','logs'];
 
+    public static function delegate($p, $action, $post = []) {
+        $post = array_merge($post, ['silent' => 1]);
+
+        /** @global Model_Player $player */
+        global $player;
+
+        $bg_player = $player;
+        $player = $p;
+
+        static::post_push($post);
+        $action();
+        static::post_pop();
+
+        $player = $bg_player;
+        return;
+    }
+
     /**
      * Hook for AJAX calls using JAPI
      * @return bool
@@ -847,6 +864,8 @@ class Controller_Game extends Controller {
             return $this->render(['redirect' => 'game/redirect']);
         }
 
+        if ($this->is_silent() || Tool_Scripts::is_npc($player)) return true;
+
         $player->get_status()->rebuild();
 
         $this->render_info();
@@ -991,7 +1010,7 @@ class Controller_Game extends Controller {
         //Check if player is still alive
         if (!$player->get_status()->alive())
         {
-            if ($r = $this->request->post('ratings') && $game->is_rankable() && $game->points($player->id()) > 0)
+            if ($r = $this->post('ratings') && $game->is_rankable() && $game->points($player->id()) > 0)
                 foreach ($game->players(false) as $p) if ($p->id() != $player->id() && isset($r[$p->id()]) && is_numeric($r[$p->id()]))
                     Model_User::set_karma($p->id(), $player->id(), min(2,max(-2,(int)$r[$p->id()])));
 

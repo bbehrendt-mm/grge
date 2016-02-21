@@ -8,8 +8,8 @@ class Controller_Gallery extends Controller {
         /** @global Model_Euser $user */
         global $user;
 
-        $id = (int)$this->request->post('id');
-        $label = trim($this->request->post('label'));
+        $id = (int)$this->post('id');
+        $label = trim($this->post('label'));
 
         $entry = Model_Combat_Handler::gallery_by_id($id);
         if (!$entry || !$label) return $this->render(['success' => 0]);
@@ -26,7 +26,7 @@ class Controller_Gallery extends Controller {
         /** @global Model_Euser $user */
         global $user;
 
-        $id = (int)$this->request->post('id');
+        $id = (int)$this->post('id');
 
         $entry = Model_Combat_Handler::gallery_by_id($id);
         if (!$entry) return $this->render(['success' => 0]);

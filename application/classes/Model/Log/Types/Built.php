@@ -36,6 +36,10 @@ class Model_Log_Types_Built extends Model implements Interface_Message {
 	}
 	
 	public function render_body() {
+        /**
+         * @global Model_Player $player
+         * @global Model_Game $game
+         */
         global $player, $game;
         $r = "";
 

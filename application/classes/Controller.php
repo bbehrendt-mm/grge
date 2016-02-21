@@ -16,12 +16,33 @@ abstract class Controller extends Kohana_Controller {
 
     protected static $allow_etag_cache = false;
 
+    protected static $post_stack = [];
+
+    protected static function post($key) {
+        if (is_array($key))
+            return static::$post_stack[] = $key;
+
+        if (!static::$post_stack)
+            return Request::initial()->post($key);
+        else return isset(static::$post_stack[$key]) ? static::$post_stack[$key] : null;
+    }
+
+    protected static function post_push($data) {
+        return static::$post_stack[] = $data;
+    }
+
+    protected static function post_pop() {
+        if (static::$post_stack)
+            return array_pop(static::$post_stack);
+        else return null;
+    }
+
     /**
      * Returns true when the current request was made using AJAX calls
      * @return bool
      */
     protected function is_ajax_request() {
-        return ($this->request->headers('X-Requested-With') == 'XMLHttpRequest' );
+        return ($this->request->headers('X-Requested-With') == 'XMLHttpRequest');
     }
 
     /**
@@ -58,9 +79,11 @@ abstract class Controller extends Kohana_Controller {
         // Get user object, check if it is valid
         if (!$this->get_user_obj() || !$user->valid()) {
             // If we don't have a user object, destroy the current session and unbind global registers (just to be sure)
-            Session::instance()->destroy();
-            unset($GLOBALS['game']);
-            unset($GLOBALS['user']);
+            if ($this->request->is_initial()) {
+                Session::instance()->destroy();
+                unset($GLOBALS['game']);
+                unset($GLOBALS['user']);
+            }
 
             // Spawn an error message; if we aren't called via AJAX just die, otherwise call dummy action
             if (!$this->is_ajax_request())
@@ -82,11 +105,12 @@ abstract class Controller extends Kohana_Controller {
         Error::i();
 
         //Load session
-        $vcsid = $this->request->headers('X-Virtual-Cookie');
+        $vcsid = $this->request->is_initial() ? null : $this->request->headers('X-Virtual-Cookie');
         $this->session = Session::instance(null, $vcsid ? $vcsid : null);
 
         // Virtual login
-        $this->perform_virtual_login();
+        if ($this->request->is_initial())
+            $this->perform_virtual_login();
 
         if (!$this->is_ajax_request())
             // Preserve initial get/post parameters
@@ -283,6 +307,10 @@ abstract class Controller extends Kohana_Controller {
         elseif (!$no_override) $this->data[$key] = array_merge_recursive($this->data[$key], $data);
     }
 
+    protected function is_silent() {
+        return (bool)Request::$current->post('silent');
+    }
+
     /**
      * Renders the output chain as JSON data
      * @param null|bool|array $obj Set null to invoke render_defaults(); set to an array to invoke add_data(); set to anything else to just render the existing chain without adding any more data. If the script version indicates this is a beta environment, profiling data is always added regardless of this parameter
@@ -290,6 +318,8 @@ abstract class Controller extends Kohana_Controller {
      * @throws Kohana_Exception
      */
     protected function render($obj = null, $skip_notifications = false) {
+        if ($this->is_silent()) return true;
+
         /** @global Model_Euser $user */
         global $user;
 

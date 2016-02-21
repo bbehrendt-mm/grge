@@ -24,7 +24,7 @@ class Controller_Admin_Account extends Controller_Admin_Admin {
         /** @global Model_Euser $user */
         global $user;
 
-        $pw = $this->request->post('password');
+        $pw = $this->post('password');
         if (!$pw)
             return $this->error(\grge\E_SERVER_LOGIN_REJECTED);
 

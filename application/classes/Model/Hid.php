@@ -32,9 +32,9 @@ class Model_Hid {
      * @return string[]
      */
     public function actions() {
-        $tmp = array();
+        $tmp = [];
         foreach ($this->actions as $id => $action)
-            if (array_search($id, $this->hidden) !== false)
+            if (array_search($id, $this->hidden) === false)
                 $tmp[$id] = $action['desc'];
 
         return $tmp;
@@ -57,11 +57,54 @@ class Model_Hid {
     }
 
     /**
+     * @param $id
+     * @param Interface_Plentity|Model_Player $player
+     * @param null|Model_Player $side_player
+     * @param null|mixed $argument
+     * @return bool
+     */
+    public function test($id, $player, $side_player = null, $argument = null) {
+        if (!isset($this->actions[$id]))
+            return false;
+
+        /** @var Model_Action $action */
+        $action = $this->actions[$id]['action'];
+        return $action->test($player, $side_player, $argument);
+    }
+
+    /**
      * @param string|null $id
      * @return bool|int
      */
     public function can($id = null) {
         return ($id === null) ? count($this->actions) : isset($this->actions[$id]);
+    }
+
+    /**
+     * @param Interface_Plentity $p
+     * @return array
+     */
+    public function simple_effects($p = null) {
+        /**
+         * @global Model_Game $game
+         * @global Model_Player $player
+         */
+        global $player;
+
+        if ($p === null) $p = $player;
+
+        $tmp = [];
+        foreach ($this->actions as $id => $action) {
+            if (array_search($id, $this->hidden) !== false)
+                continue;
+
+            /** @var Model_Action $a */
+            $a = $action['action'];
+
+            if ($a->has_side_effect() || $a->has_requirements() || $a->denied_for($p->type())) continue;
+            $tmp[$id] = $a->list_effects($p);
+        }
+        return $tmp;
     }
 
     /**
@@ -82,9 +125,6 @@ class Model_Hid {
                 continue;
             /** @var Model_Action $a */
             $a = $action['action'];
-
-            if ($a->has_side_effect() && !$game->config('modules.multiplayer'))
-                continue;
 
             if ($list_of_players === null)
                 $list_of_players = [$player];

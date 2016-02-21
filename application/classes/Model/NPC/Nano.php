@@ -83,6 +83,10 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
         return null;
     }
 
+    public function create_combatant() {
+        return null;
+    }
+
     public function kill() {
         /** @global Model_Game $game */
         global $game;

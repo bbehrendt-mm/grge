@@ -25,27 +25,27 @@ abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item 
     protected $equipped_primary;
     protected $player_id = null;
 
-    public function equip($player = null) {
+    public function equip($player = null, $force = false, $force_primary = false) {
         /** @global Model_Player $player */
         if ($player === null)
             global $player;
 
-        if (Tool_Scripts::is_npc($player))
+        if (!$force && Tool_Scripts::is_npc($player))
             return;
 
-        if (!static::$allow_multi_equip)
+        if (!$force && !static::$allow_multi_equip)
             foreach ($player->get_equipment($this->get_equipment_type()) as $item)
                 $item->unequip();
 
         $this->equipped = true;
+        $this->player_id = $player->id();
 
-        if (static::$allow_primary_equip)
+        if (!$force_primary && static::$allow_primary_equip)
             foreach ($player->get_equipment($this->get_equipment_type()) as $item)
                 if ($item->equipped_primary)
                     return;
 
-        $this->player_id = $player->id();
-        $this->equip_primary($player);
+        $this->equip_primary($player, $force_primary);
     }
 
     public static function convertStringType() {
@@ -114,7 +114,7 @@ abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item 
         return $r;
     }
 
-    public function equip_primary($player = null) {
+    public function equip_primary($player = null, $force = false) {
         if (!static::$allow_primary_equip)
             return;
 
@@ -122,11 +122,12 @@ abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item 
         if ($player === null)
             global $player;
 
-        if (Tool_Scripts::is_npc($player))
+        if (!$force && Tool_Scripts::is_npc($player))
             return;
 
-        foreach ($player->get_equipment($this->get_equipment_type(), true) as $item)
-            $item->equipped_primary = false;
+        if (!$force)
+            foreach ($player->get_equipment($this->get_equipment_type(), true) as $item)
+                $item->equipped_primary = false;
 
         $this->equipped_primary = true;
     }

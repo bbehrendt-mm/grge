@@ -3,6 +3,7 @@
 class Model_Items_Virtual_Hero_Woman extends Model_Items_Abstract_Virtual {
 
     public function __construct($level = 1) {
+        parent::__construct();
         $this->remaining = array(
             'hero_job_0' => ceil($level/3),
         );
@@ -30,7 +31,7 @@ class Model_Items_Virtual_Hero_Woman extends Model_Items_Abstract_Virtual {
                     Model_Effect::factory()
                         ->custom(function($p) {
                             /** @var Model_Player $p */
-                            foreach (Tool_Scripts::at_location($p->location_class()) as $ps) if ($ps->id() != $p->id()) {
+                            foreach (Tool_Scripts::at_location($p->location_class(), true, false) as $ps) if ($ps->id() != $p->id()) {
                                 if ($ps->job(1080))
                                     $ps->log()->add('Diese Erwachsenen werden auch immer wunderlicher... Gerade hat sich :p das T-Shirt ausgezogen und irgendwas auf ihre Brüste geschrieben, jetzt läuft sie schreiend und wild gestikulierend durch die Gegend. Ob sie von einem Skorpion gestochen wurde...?', array(':p' => $p->name()));
                                 elseif (!$ps->get_status()->retrieve('fragile')) {

@@ -4,6 +4,9 @@ class Model_NPC_Dog extends Model_NPC_Nano
 {
     protected static $entity_type = Interface_Plentity::IC_NPC_ANIMAL;
     protected static $escort_functions = [Interface_Plentity::IC_ALLOW_ANY];
+
+    protected $last_hideout = null;
+
     protected static $abillities = [
         Interface_Plentity::IC_TRIGGER_ITEM_TICKS,
         Interface_Plentity::IC_TRIGGER_ITEM_FINDINGS,
@@ -49,14 +52,42 @@ class Model_NPC_Dog extends Model_NPC_Nano
     }
 
     protected function generate_zombified_body() {
-        return null;
+        return Model_Combat_Zombies_Ghuldog::factory()->zombiefied_player_id($this->id)->name($this->name())->register_inventory($this->inventory())->strength($this->get_status()->get(Model_Status::MS_STAT_ZOMBIFY)/2, 50, 1);
+    }
+
+    public function create_combatant() {
+        return Model_Combat_Players_Dog::create_linked_actor($this);
     }
 
     public function ai() {
+        /** @global Model_Game $game */
+        global $game;
+
         $busy = $this->get_status()->retrieve('passout') || $this->get_status()->retrieve('fragile');
+
+        // Item Consumption
+        if (!$busy)
+            foreach ([Model_Status::MS_STAT_HUNGER, Model_Status::MS_STAT_THIRST, Model_Status::MS_STAT_HEALTH] as $stat)
+                if ($this->get_status()->get($stat) <= 30) {
+
+                    $ic = Tool_Npc::get_satisfactory_item($this, true, true, $stat ,
+                        [Model_Status::MS_STAT_HEALTH => [false, -$this->get_status()->get($stat)/2]],
+                        [$stat => [100 - $this->get_status()->get($stat), false], Model_Status::MS_STAT_ZOMBIFY => [0, false]]
+                    );
+
+                    if ($ic) {
+                        /** @var Model_Items_Abstract_Item $item */
+                        list($item, $action) = $ic;
+                        Controller_Game::delegate($this, function() use ($item, $action) {
+                            Controller_Act::code_item($item->uin(), $action);
+                        });
+                    }
+                }
+
 
         if (($hideout = Tool_Scripts::current_location_hideout()) && $hideout->get_defense() > 0) {
             // At home
+            $this->last_hideout = $this->location_class();
 
             // Go to sleep
             if ($this->get_status()->get(Model_Status::MS_STAT_SLEEPY) < 75 && !$busy)
@@ -64,6 +95,18 @@ class Model_NPC_Dog extends Model_NPC_Nano
 
         } else {
             // Other location
+
+            // Going home
+            if (!$busy && $this->last_hideout && !count(Tool_Scripts::at_location($this->location_class(), true, false))) {
+                $home_distance = $game->map($this->location_class())->get_distance($this->location_class(), $this->last_hideout);
+
+                if ($home_distance !== false) {
+                    $home_distance *= $game->map($this->location_class())->movement_modifier() * $this->get_status()->get(Model_Status::MS_CHAR_DISTANCING);
+
+                    if ($this->get_status()->get(Model_Status::MS_STAT_ENERGY) >= $home_distance && ($this->get_status()->get(Model_Status::MS_STAT_HEALTH) <= 30 || $this->get_status()->get(Model_Status::MS_STAT_ENERGY) < $home_distance + 10))
+                        Controller_Map::code_go(false, $this->last_hideout, true, false, []);
+                }
+            }
         }
     }
 }

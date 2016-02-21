@@ -36,11 +36,8 @@ class Model_Log_Types_Item extends Model_Log_Message {
             $tmp[] = new Model_Struct_Item($single);
 
         $time = $game->now();
-
-        $usr = $game->get_player($uin);
-
         parent::__construct([
-            'primary' => $usr ? $usr->name() : $uin,
+            'primary' => $uin,
             'class' => $type,
             'content' => [$time =>[$uin => $tmp]]
         ], $uin);
@@ -53,6 +50,9 @@ class Model_Log_Types_Item extends Model_Log_Message {
          */
         global $game, $player;
 
+        $primary =  $game->get_player($data['primary']);
+        $data['primary'] = $primary ? $primary->name() : __($data['primary']);
+
         foreach ($data['content'] as $tc => &$sub)
             foreach ($sub as $uin => &$lists) {
                 foreach ($lists as &$item)
@@ -62,9 +62,11 @@ class Model_Log_Types_Item extends Model_Log_Message {
                         'icon' => $item->getIcon(),
                         'count' => $item->getCount()
                     ];
+
+                $pl = $game->get_player($uin);
                 $lists = [
-                    'player' => !is_numeric($uin) ? __($uin) : $game->get_player($uin)->name(),
-                    'self' => !is_numeric($uin) ? false : ($uin == $player->id()),
+                    'player' => $pl ? $pl->name() : __($uin),
+                    'self' => $pl ? ($uin == $player->id()) : false,
                     'items' => $lists
                 ];
             }

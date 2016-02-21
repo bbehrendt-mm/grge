@@ -36,7 +36,7 @@ class Model_Combat_Field {
 
     /**
      * @param int $group
-     * @param Model_Combat_Actor|Model_Combat_Actor[]|Model_Player|Model_Player[] $combatant
+     * @param Model_Combat_Actor|Model_Combat_Actor[]|Model_NPC_Nano|Model_NPC_Nano[] $combatant
      * @return Model_Combat_Field
      */
     public function add_combatant($group, $combatant) {
@@ -44,8 +44,10 @@ class Model_Combat_Field {
             foreach ($combatant as $c)
                 $this->add_combatant($group, $c);
         }
-        elseif (Tool_System::instance_of($combatant, 'Model_Player'))
-            return $this->add_combatant($group, $combatant->create_combatant());
+        elseif (Tool_System::instance_of($combatant, 'Model_NPC_Nano')) {
+            $c = $combatant->create_combatant();
+            return $c ? $this->add_combatant($group, $c) : $this;
+        }
         elseif (Tool_System::instance_of($combatant, 'Model_Combat_Actor'))
             $this->combatants[] = $combatant->set_scene($this->scene)->group($group)->id(count($this->combatants) + 1);
 

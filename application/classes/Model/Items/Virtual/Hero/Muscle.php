@@ -3,6 +3,7 @@
 class Model_Items_Virtual_Hero_Muscle extends Model_Items_Abstract_Virtual {
 
     public function __construct($level = 1) {
+        parent::__construct();
         $this->remaining = array(
             'hero_job_0' => 1,
             'hero_job_1' => $level >= 6 ? 1 : 0,
@@ -14,6 +15,7 @@ class Model_Items_Virtual_Hero_Muscle extends Model_Items_Abstract_Virtual {
     );
 
     protected function hid() {
+        /** @global Model_Player $player */
         global $player;
         return parent::hid()
             ->add_action('Workout', Model_Action::factory()

@@ -87,7 +87,7 @@ class Controller_Admin_Files extends Controller_Admin_Admin {
         echo "GRGE EVIO LANGUAGE IMPORTER V" . static::$evio_version . "<br /><br />";
 
         if (!isset($data['data']) || !isset($data['meta']) || !is_array($data['meta'])) {
-            if (!($lang = $this->request->post('lang'))) die(Error::m(\grge\E_HTTP_REQUEST_INCOMPLETE));
+            if (!($lang = $this->post('lang'))) die(Error::m(\grge\E_HTTP_REQUEST_INCOMPLETE));
 
             echo "This seems to be a legacy GRL Package. Now switching to legacy import system ...<br /><br />";
             return $this->legacy_grl_import($lang, $data);

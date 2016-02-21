@@ -20,11 +20,15 @@
                             if (!sprites[0]) sprites[0] = 'player.gif';
                             if (!sprites[1]) sprites[1] = 'player_dead.gif';
                             break;
-                        case <?=Model_Combat_Actor::MCA_TYPE_ZOMBIE?>:
+                        case <?=Model_Combat_Actor::MCA_TYPE_ZOMBIE?>:default:
                             if (!sprites[0]) sprites[0] = 'zombie.gif';
                             if (!sprites[1]) sprites[1] = 'zombie_dead.gif';
                             break;
                     }
+
+                console.log(sprites);
+
+
                 alias.addResource('sprites/' + sprites[0], 'sprites/' + sprites[1]);
             }
 

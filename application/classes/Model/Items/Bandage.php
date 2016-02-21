@@ -14,6 +14,9 @@ class Model_Items_Bandage extends Model_Items_Abstract_Item implements Interface
     protected function hid() {
         /** @global Model_Player $player */
         global $player;
+
+        $is_doc = !Tool_Scripts::is_npc($player) && $player->job(10030);
+
         return parent::hid()
             ->add_action('Wunden versorgen',
                 Model_Action::factory()
@@ -35,6 +38,7 @@ class Model_Items_Bandage extends Model_Items_Abstract_Item implements Interface
             ->add_action('Jmd. verbinden',
                 Model_Action::factory()
                     ->allow_remote(false)
+                    ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
                     ->condition(function($p, $s) {
                         /** @var Model_Player $s */
                         return $s->get_status()->get(Model_Status::MS_STAT_HEALTH) <= 50 || $s->get_status()->retrieve('blood');
@@ -47,7 +51,7 @@ class Model_Items_Bandage extends Model_Items_Abstract_Item implements Interface
                             ->message('Du wickelst die Bandage straff um die Verletzungen deines Freundes. Mit den Bandagen im Gesicht sieht er gleich viel besser aus...')
                     , null, null,
                         Model_Effect::factory()
-                            ->effect(Model_Status::MS_STAT_HEALTH, 50 + ($player->job(10030) ? 2 : 0) * $player->job(false, null))
+                            ->effect(Model_Status::MS_STAT_HEALTH, 50 + (!$is_doc ? 0 : (2 * $player->job(false, null))))
                             ->buff('Model_Buffs_Blood', true)
                             ->achieve(Model_Achievement::MA_BANDAGE_MUMMY)
                             ->message(':name hat eine Bandage um deine Verletzungen gewickelt.', array(':name' => $player->name()))

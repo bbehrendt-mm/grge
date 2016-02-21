@@ -15,7 +15,7 @@ class Controller_Player extends Controller_Game {
         global $game, $player;
         if ($game->timeflow() != 1) return false;
 
-        $to = (int)$this->request->post('set');
+        $to = (int)$this->post('set');
         if ($to < 0 || $to > 6 || $player->vote_time() == $to) return false;
 
         if (!$player->vote_time($to, (int)Kohana::$config->load('balancing.pause.min_interval')))
@@ -36,8 +36,8 @@ class Controller_Player extends Controller_Game {
          */
         global $game, $player;
 
-        $video_id = (int)$this->request->post('v');
-        $label = mb_substr($this->request->post('l'), 0, 127);
+        $video_id = (int)$this->post('v');
+        $label = mb_substr($this->post('l'), 0, 127);
 
         if (!$video_id || !$label || !($chk = Model_Combat_Handler::check_battle($video_id)) || ($game->id() != $chk))
             return $this->render(['success' => 0]);
@@ -55,13 +55,13 @@ class Controller_Player extends Controller_Game {
         if (!$player->get_status()->alive() || !$game->config('modules.multiplayer'))
             return $this->render(['success' => 0]);
 
-        $action = $this->request->post('action');
+        $action = $this->post('action');
 
         switch ($action) {
             case 'new':
-                $title = $this->request->post('title');
-                $message = $this->request->post('body');
-                $to = (int)$this->request->post('to');
+                $title = $this->post('title');
+                $message = $this->post('body');
+                $to = (int)$this->post('to');
 
                 if (strlen($title) < 2 || strlen($title) > 64 || strlen($message) < 5 || strlen($message) > 2048)
                     return $this->render(['success' => 0]);
@@ -77,7 +77,7 @@ class Controller_Player extends Controller_Game {
                 $player->achievements()->achieve(Model_Achievement::MA_LETTERS);
                 return $this->render(['success' => 1]);
             case 'delete':
-                $player->get_postbox()->remove($this->request->post('mid'));
+                $player->get_postbox()->remove($this->post('mid'));
                 return $this->render(['success' => 1]);
             default: return $this->render(['success' => 0]);
         }
@@ -92,7 +92,7 @@ class Controller_Player extends Controller_Game {
         global $game, $player;
         if ($game->timeflow() != 0) return false;
 
-        $set = (int)$this->request->post('set');
+        $set = (int)$this->post('set');
 
         if ($set) {
             if ($game->paused()) return false;
@@ -136,8 +136,8 @@ class Controller_Player extends Controller_Game {
          */
         global $player;
 
-        $escort = (int)$this->request->post('escort');
-        $ping = (int)$this->request->post('ping');
+        $escort = (int)$this->post('escort');
+        $ping = (int)$this->post('ping');
 
         if ($player->get_postbox()->beacon() && !$ping) $player->get_postbox()->beacon(0);
         elseif (!$player->get_postbox()->beacon() && $ping) $player->get_postbox()->beacon(15);

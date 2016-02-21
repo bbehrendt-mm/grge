@@ -42,7 +42,7 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
 
         if (!$game || !$player) return;
 
-        $z = (int)$this->request->post('z');
+        $z = (int)$this->post('z');
         if ($z >= 0)
             $player->location()->zombie_factory()->accumulation($z);
 
@@ -68,8 +68,8 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
 
         if (!$game || !$player) return;
 
-        $target_inv = $this->request->post('inventory');
-        $sets = $this->request->post('data');
+        $target_inv = $this->post('inventory');
+        $sets = $this->post('data');
 
         if (!$sets) return;
 
@@ -122,7 +122,7 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
 
         if (!$game || !$player) return;
 
-        $ticks = (int)$this->request->post('ticks');
+        $ticks = (int)$this->post('ticks');
         if ($ticks > 0)
             $game->fast_forward($ticks);
 
@@ -133,7 +133,7 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
         /** @global Model_Player $player */
         global $player;
 
-        $config = $this->request->post('data');
+        $config = $this->post('data');
         $zombies = [];
 
         foreach ($config as $entry) {

@@ -204,8 +204,6 @@
 
             });
         });
-
-        console.log(tmp);
     };
 
     core.parts.rpg = function(data, inventory, target) {

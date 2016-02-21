@@ -28,7 +28,7 @@ abstract class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
                     ,'s1')
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Status::MS_STAT_DRUNK, -12)
+                            ->effect(Model_Status::MS_STAT_DRUNK, static::$alcohol*0.75)
                             ->effect(Model_Status::MS_STAT_ENERGY, 5)
                             ->effect(Model_Status::MS_STAT_THIRST, -20)
                             ->effect(Model_Status::MS_STAT_HUNGER, -40)

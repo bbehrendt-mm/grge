@@ -46,7 +46,7 @@ class Controller_Location extends Controller_Game {
             /** @var Model_Items_Maptool $mapper */
             $mapper = $player->inventory()->get('Model_Items_Maptool'); $mapper = $mapper[0];
 
-            $mp_lv =  $this->request->post('speed');
+            $mp_lv =  $this->post('speed');
             if ($mp_lv == 'item') $mp_lv = true;
             else {
                 $mp_lv = (int)$mp_lv;
@@ -102,7 +102,7 @@ class Controller_Location extends Controller_Game {
 
         $blueprints = Model_Blueprints::factory($player->location(), 'upgrades');
 
-        if ($build = $this->request->post('build'))
+        if ($build = $this->post('build'))
             $player->achievements()->achieve(Model_Achievement::MA_CONSTRUCTIONS, $this->exec_build($blueprints, $build) ? 1 : 0);
 
         $this->add_data('blueprints', $this->compile_builder($blueprints));
@@ -120,7 +120,7 @@ class Controller_Location extends Controller_Game {
         $blueprints = Model_Blueprints::factory($player->location(), 'items');
         $externals = Model_Blueprints::factory($player->location(), 'upgrades')->externalize();
 
-        if ($build = $this->request->post('build'))
+        if ($build = $this->post('build'))
             $this->exec_build($blueprints, $build);
 
         $blueprints->merge($externals)->validate();
@@ -139,7 +139,7 @@ class Controller_Location extends Controller_Game {
         $blueprints = Model_Blueprints::factory($player->location(), 'attack');
         $externals = Model_Blueprints::factory($player->location(), 'upgrades')->externalize();
 
-        if ($build = $this->request->post('build'))
+        if ($build = $this->post('build'))
             $this->exec_build($blueprints, $build);
 
         $blueprints->merge($externals)->validate();
@@ -162,11 +162,11 @@ class Controller_Location extends Controller_Game {
             /** @var Model_Places_Motorhome $motorhome */
             $motorhome = $player->location();
 
-            $action = $this->request->post('do');
+            $action = $this->post('do');
             switch ($action) {
                 case 'repair':
-                    $count = (int)$this->request->post('count');
-                    $addr = $this->request->post('addr');
+                    $count = (int)$this->post('count');
+                    $addr = $this->post('addr');
                     if (!$count || !$addr || $count <= 0) return;
                     $motorhome->repair($addr,$count);
                     break;
@@ -193,8 +193,8 @@ class Controller_Location extends Controller_Game {
          */
         global $player;
 
-        $action = $this->request->post('do');
-        $arg = $this->request->post('arg');
+        $action = $this->post('do');
+        $arg = $this->post('arg');
 
         $player->location()->interact($action, $arg);
         $this->japi_data();

@@ -14,13 +14,16 @@ class Model_Items_Powderpack extends Model_Items_Abstract_Item implements Interf
     protected function hid() {
         /** @global Model_Player $player */
         global $player;
+
+        $child_effects = !Tool_Scripts::is_npc() && $player->job(1080);
+
         return parent::hid()
             ->add_action('"Verwenden"', Model_Action::factory()
                 ->effect(
                     Model_Effect::factory()
-                        ->effect(Model_Status::MS_STAT_HEALTH, -40 * ($player->job(1080) ? 2 : 1))
+                        ->effect(Model_Status::MS_STAT_HEALTH, -40 * ($child_effects ? 2 : 1))
                         ->effect(Model_Status::MS_STAT_DRUNK, 25)
-                        ->buff($player->job(1080) ? 'Model_Buffs_Exited' : null,false,10)
+                        ->buff($child_effects ? 'Model_Buffs_Exited' : null,false,10)
                         ->effect(Model_Status::MS_STAT_ENERGY, 40)
                         ->achieve(Model_Achievement::MA_PILL_EATER)
                         ->consume($this)

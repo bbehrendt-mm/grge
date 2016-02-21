@@ -248,8 +248,34 @@ class Model_Action {
      * @param null|mixed $argument
      * @return boolean
      */
-    public function execute($player, $side_player = null, $argument = null) {
+    public function test($player, $side_player = null, $argument = null) {
+        if ($this->popup) return false;
+        $no_player = Tool_Scripts::is_npc($player);
 
+        if ($this->condition !== null) {
+            /** @var callable $cf */
+            $cf = $this->condition;
+            if (($r = $cf($player, $side_player, $argument)) !== true)
+                return false;
+        }
+
+        foreach ($this->get_stat_requirements() as $stat => $value)
+            if (!$player->get_status()->has($stat, $value, Model_Status::MS_EFFECT_REQUIREMENT))
+                return false;
+
+        if (!Tool_Scripts::has_available_items($this->get_item_requirements(), true, true, false, $player, $this->consume_by_grind))
+            return false;
+
+        return true;
+    }
+
+    /**
+     * @param Model_Player|Interface_Plentity $player
+     * @param null|Model_Player $side_player
+     * @param null|mixed $argument
+     * @return boolean
+     */
+    public function execute($player, $side_player = null, $argument = null) {
         if ($this->popup) return false;
         $no_player = Tool_Scripts::is_npc($player);
 
@@ -352,6 +378,32 @@ class Model_Action {
 
         /** @noinspection PhpUndefinedMethodInspection */
         return ($r !== null && isset($this->effects[$r])) ? array('effects' => $this->effects[$r]['effect']->convert($player), 'sides' => $this->effects[$r]['side_effect'] ? $this->effects[$r]['side_effect']->convert() : null) : array('effect' => array(array('value' => '???')));
+    }
+
+    public function list_effects($player = null) {
+        if ($this->show_as !== null)
+            /** @noinspection PhpUndefinedMethodInspection */
+            return $this->show_as['e']->stat_list($player);
+
+        if (!$this->effects)
+            return [];
+
+        if ($this->export && is_string($this->export))
+            $r = $this->export;
+        elseif ($this->export) {
+            /** @var callable $tmp */
+            $tmp = $this->export;
+            $r = $tmp($player);
+        } elseif (count($this->effects) == 1)
+            $r = 0;
+        else $r = null;
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        return ($r !== null && isset($this->effects[$r])) ? $this->effects[$r]['effect']->stat_list($player) : [];
+    }
+
+    public function has_requirements() {
+        return count($this->get_stat_requirements()) || count($this->get_item_requirements());
     }
 
     /**

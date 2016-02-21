@@ -19,9 +19,9 @@ class Controller_Admin_Users extends Controller_Admin_Admin {
     }
 
     public function japi_achievements() {
-        $users = $this->request->post('users');
-        $aid = (int)$this->request->post('aid');
-        $count = (int)$this->request->post('count');
+        $users = $this->post('users');
+        $aid = (int)$this->post('aid');
+        $count = (int)$this->post('count');
         if (!$users || !$aid || !$count || !is_array($users))
             return $this->render([
                 'success' => 0
@@ -47,8 +47,8 @@ class Controller_Admin_Users extends Controller_Admin_Admin {
         /** @global Model_Euser $user */
         global $user;
 
-        $users = $this->request->post('users');
-        $changes = $this->request->post('set');
+        $users = $this->post('users');
+        $changes = $this->post('set');
 
         foreach ($changes as $flag => $change)
             if ($flag == 'ROOT' && (!static::priv_allow_all('ROOT') || in_array($user->uid(), $users))) {
@@ -74,7 +74,7 @@ class Controller_Admin_Users extends Controller_Admin_Admin {
     }
 
     public function japi_info() {
-        $user = $this->request->post('id');
+        $user = $this->post('id');
 
         $flags_a = $flags_d = [];
         foreach (DB::select('data','relation')->from('user_flags')->where('user','=',$user)->and_where('relation','IN',['ALLOW','DENY'])->execute()->as_array() as $flag)
@@ -97,8 +97,8 @@ class Controller_Admin_Users extends Controller_Admin_Admin {
         /** @global Model_Euser $user */
         global $user;
 
-        $users = $this->request->post('users');
-        $to = $this->request->post('set');
+        $users = $this->post('users');
+        $to = $this->post('set');
 
         // Prevent user from resetting own password
         if (in_array($user->uid(), $users) && !$to)
@@ -118,7 +118,7 @@ class Controller_Admin_Users extends Controller_Admin_Admin {
     }
 
     public function japi_search() {
-        $query = explode(':', $this->request->post('query'));
+        $query = explode(':', $this->post('query'));
         list($limit,$query) = (count($query) > 1) ? $query : ['n',$query[0]];
 
         if (!in_array($limit,['i','n','r']))

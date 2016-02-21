@@ -3,6 +3,7 @@
 class Model_Items_Virtual_Hero_Child extends Model_Items_Abstract_Virtual {
 
     public function __construct($level = 1) {
+        parent::__construct();
         $this->remaining = array(
             'hero_job_0' => 4,
         );
@@ -22,7 +23,7 @@ class Model_Items_Virtual_Hero_Child extends Model_Items_Abstract_Virtual {
                         ->custom(function($p) {
                             /** @var Model_Player $p */
                             $ha = $ta = 0;
-                            foreach (Tool_Scripts::at_location($p->location_class()) as $ps) if ($ps->id() != $p->id()) {
+                            foreach (Tool_Scripts::at_location($p->location_class(), true, false) as $ps) if ($ps->id() != $p->id()) {
                                 $h = floor($ps->get_status()->get(Model_Status::MS_STAT_HUNGER)/10);
                                 $t = floor($ps->get_status()->get(Model_Status::MS_STAT_THIRST)/10);
                                 $ha+=$h; $ta+=$t;

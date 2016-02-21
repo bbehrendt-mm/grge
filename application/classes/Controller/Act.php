@@ -20,6 +20,7 @@ class Controller_Act extends Controller_Game {
                 if (!$item->drop($p)) continue;
                 if (!$p->inventory()->remove($itemid)) continue;
                 if (!$p->location()->inventory()->add($item)) $p->inventory()->add($item);
+                else $p->location()->log()->add(new Model_Log_Types_Transaction(Model_Log_Types_Transaction::MLTT_DOWN, $item, $p->id()));
             } elseif ($action == 'take') {
                 if (!($item = $game->uin()->get($itemid, 'Model_Items_Abstract_Item'))) continue;
 
@@ -32,29 +33,33 @@ class Controller_Act extends Controller_Game {
                     }
 
                     /** @var Model_Items_Abstract_Ammo $item */
-                    if ($item->take(count($items) > 1))
+                    if ($item->take(count($items) > 1)) {
+                        $p->location()->log()->add(new Model_Log_Types_Transaction(Model_Log_Types_Transaction::MLTT_UP, $item, $p->id()));
                         $belt->add($item);
-                } else
-                    if (!$item->take(count($items) > 1)) continue;
-
-                if (!$p->location()->inventory()->remove($itemid)) continue;
-                if (!$p->inventory()->add($item)) $p->location()->inventory()->add($item);
-                else
-                    if (Tool_System::instance_of($item, 'Model_Items_Abstract_Equipable') && !Tool_Scripts::is_npc($p)) {
-                        /** @var Model_Items_Abstract_Equipable $item */
-                        if (!$p->get_equipment($item->get_equipment_type()))
-                            $item->equip($p);
-
-                        if (Tool_System::instance_of($item, 'Interface_Static'))
-
-                            foreach ($p->inventory()->get(get_class($item)) as $ep)
-                                /** @var Model_Items_Abstract_Equipable $ep */
-                                if ($ep->is_equipped()) {
-                                    $item->equip($p);
-                                    break;
-                                }
-
                     }
+
+                } else {
+                    if (!$item->take(count($items) > 1)) continue;
+                    if (!$p->location()->inventory()->remove($itemid)) continue;
+                    if (!$p->inventory()->add($item)) $p->location()->inventory()->add($item);
+                    else
+                        $p->location()->log()->add(new Model_Log_Types_Transaction(Model_Log_Types_Transaction::MLTT_UP, $item, $p->id()));
+                        if (Tool_System::instance_of($item, 'Model_Items_Abstract_Equipable') && !Tool_Scripts::is_npc($p)) {
+                            /** @var Model_Items_Abstract_Equipable $item */
+                            if (!$p->get_equipment($item->get_equipment_type()))
+                                $item->equip($p);
+
+                            if (Tool_System::instance_of($item, 'Interface_Static'))
+
+                                foreach ($p->inventory()->get(get_class($item)) as $ep)
+                                    /** @var Model_Items_Abstract_Equipable $ep */
+                                    if ($ep->is_equipped()) {
+                                        $item->equip($p);
+                                        break;
+                                    }
+
+                        }
+                }
             }
     }
 
@@ -291,10 +296,10 @@ class Controller_Act extends Controller_Game {
             return;
 
         //Get params
-        $action = $this->request->post('action');
-        $items = $this->request->post('items');
-        $p = Tool_Scripts::check_comrade($this->request->post('player'));
-        if (!$p && $this->request->post('player'))
+        $action = $this->post('action');
+        $items = $this->post('items');
+        $p = Tool_Scripts::check_comrade($this->post('player'));
+        if (!$p && $this->post('player'))
             return;
 
         if (!$p) $p = $player;
@@ -329,19 +334,19 @@ class Controller_Act extends Controller_Game {
         if (in_array($action, ['take','drop']))
             $this->inventory_take_drop($action,$items,$p);
         elseif (in_array($action, ['pilldrop','pilltake']))
-            $this->inventory_pill($action,$items,(int)$this->request->post('count'));
+            $this->inventory_pill($action,$items,(int)$this->post('count'));
         elseif ($action == 'fill')
             $this->inventory_fill($items);
         elseif ($action == 'defill')
             $this->inventory_defill($items);
         elseif ($action == 'spill')
-            $this->inventory_spill($items, (bool)$this->request->post('all'));
+            $this->inventory_spill($items, (bool)$this->post('all'));
         elseif ($action == 'mix')
             $this->inventory_mix($items);
         elseif ($action == 'belt')
-            $this->inventory_belt($items[0],$this->request->post('addr'),(int)$this->request->post('count'));
+            $this->inventory_belt($items[0],$this->post('addr'),(int)$this->post('count'));
         elseif ($action == 'label')
-            $this->inventory_label($items[0],$this->request->post('text'));
+            $this->inventory_label($items[0],$this->post('text'));
         elseif (in_array($action, ['equip','unequip','equip_primary']))
             $this->inventory_equip($items[0], $action);
 
@@ -359,7 +364,7 @@ class Controller_Act extends Controller_Game {
          */
         global $player, $game;
 
-        if ((($pid = $this->request->post('p')) && ($p = $game->get_player($pid)))) {
+        if ((($pid = $this->post('p')) && ($p = $game->get_player($pid)))) {
             if (!$p->allow(Interface_Plentity::IC_ALLOW_MANAGE_ACTIVITY)) return $this->japi_data();
         } else $p = $player;
 
@@ -372,7 +377,7 @@ class Controller_Act extends Controller_Game {
         }
     }
 
-    public function japi_item() {
+    public static function code_item($id, $action, $side_id = null, $argument = null, $user = null) {
         /**
          * @global $game Model_Game
          * @global $player Model_Player
@@ -382,23 +387,18 @@ class Controller_Act extends Controller_Game {
 
         //Block sleeping
         if ($player->get_status()->retrieve('passout') || $player->get_status()->retrieve('fragile'))
-            return $this->japi_data();
+            return;
 
-        //Get UIN
-        $id = $this->request->post('item');
-        $action = $this->request->post('action');
-        $argument = $this->request->post('coarg');
-        $user = $this->request->post('player');
         $user = $user ? $game->get_player($user) : null;
 
-        if ($side_id = $this->request->post('co')) {
-            if ($user && $side_id) return $this->japi_data();
+        if ($side_id) {
+            if ($user && $side_id) return;
 
             $side_player = $game->get_player($side_id);
 
             if (!$side_player || !Tool_Scripts::check_comrade($side_id) || !$side_player->allow(Interface_Plentity::IC_ALLOW_ITEMS_SIDEUSE)) {
                 $player->log()->add('Du kannst aktuell keine Gegenstände auf diesem Spieler anwenden.');
-                return $this->japi_data();
+                return;
             }
 
             $side = $game->get_player($side_id);
@@ -407,24 +407,29 @@ class Controller_Act extends Controller_Game {
         //Block sleeping (again)
         if ($user && (!$user->allow(Interface_Plentity::IC_ALLOW_ITEMS_USE) || $user->get_status()->retrieve('passout') || $user->get_status()->retrieve('fragile'))) {
             $player->log()->add('Dieser Spieler kann aktuell keinen Gegenstand verwenden.');
-            return $this->japi_data();
+            return;
         }
 
         //Get Item, or throw Exception if this UIN does not resolve to a valid item
         $item = $game->uin()->get((int)$id, 'Model_Items_Abstract_Item');
         if (!$game->item_available((int)$id, $user ? $user : null) || !$item) {
             $player->log()->add('Die Aktion konnte nicht vollständig ausgeführt werden, da eines oder mehrere der ausgewählten Gegenstände nicht länger in deiner Reichweite sind.');
-            return $this->japi_data();
+            return;
         }
 
         // Prevent the remote use of Virtual Items
         if ($user && Tool_System::instance_of($item, Model_Items_Abstract_Virtual::cls()))
-            return $this->japi_data();
+            return;
 
-        $r = $item->interact($action, $user ? $user : $player, $argument, $side);
+        if ($r = $item->interact($action, $user ? $user : $player, $argument, $side))
+            $player->location()->log()->add(new Model_Log_Types_Transaction(Model_Log_Types_Transaction::MLTT_USE, $item, $user ? $user->id() : $player->id(), $item->resolve_action($action, $user ? $user : $player)));
+
         if ($user)
             $player->log()->add($r ? ':name hat deinen Befehl befolgt und :item eingesetzt!' : ':name konnte :item nicht einsetzen...', [':name' => $user->name()], [':item' => $item->name()]);
+    }
 
+    public function japi_item() {
+        static::code_item($this->post('item'), $this->post('action'), $this->post('co'), $this->post('coarg'), $this->post('player'));
         return $this->japi_data();
     }
 

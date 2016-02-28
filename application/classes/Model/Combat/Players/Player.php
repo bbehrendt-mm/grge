@@ -34,6 +34,14 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
             ->register_inventory($p->inventory())
             ->add_weapon($unarmed);
 
+        $ai = $p->ai();
+        /** @var Model_Combat_Players_Player $ret */
+
+        $ret->ai_selfishness    = $ai[0] == '-' ? 1.0 : ($ai[0] == '+' ? 9.0 : 3.0 );
+        $ret->ai_comradely      = $ai[1] == '-' ? 0.1 : ($ai[1] == '+' ? 1.5 : 0.5 );
+        $ret->ai_volatile       = $ai[2] == '-' ? 0.5 : ($ai[2] == '+' ? 1.0 : 0.8 );
+        $ret->ai_brashness      = $ai[3] == '-' ? 0.4 : ($ai[3] == '+' ? 0.9 : 0.7 );
+
         //TODO Implement stats
 
         return $ret;

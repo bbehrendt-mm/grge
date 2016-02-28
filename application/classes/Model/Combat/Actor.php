@@ -455,7 +455,7 @@ class Model_Combat_Actor extends Named {
     protected function damage($damage, $from = null, $armor_damage = null) {
         $this->health -= $damage;
 
-        $kills = min($this->count, ($this->health <= 0 ? (-floor(abs($this->health) / $this->max_health) + 1) : 0));
+        $kills = min($this->count, ($this->health <= 0 ? (floor(abs($this->health) / $this->max_health) + 1) : 0));
         $this->alive = $kills < $this->count;
 
         if ($kills) {

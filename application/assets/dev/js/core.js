@@ -6,7 +6,7 @@ core = {
     parts: {},
     snippets: {},
 
-    version: '2.1.0-0-0-242',
+    version: '2.1.0-0-0-250',
 
     last: {},
     plugins: {},
@@ -3369,16 +3369,41 @@ core = {
     var fill_battleai = function(target, data) {
         var button;
 
+        var sel_clone = NF.n('select')
+            .append(NF.n('option', '', "Hohe Priorit\u00e4t").attr('value','+'))
+            .append(NF.n('option', '', "Normale Priorit\u00e4t").attr('value','0'))
+            .append(NF.n('option', '', "Geringe Priorit\u00e4t").attr('value','-'));
+
         target.empty()
             .append($('<h3 />').text("Kampfverhalten"))
-            .append(NF.row().append(NF.cell(true, 12, 0, 'center').text('COMING SOON')))
+
+            .append(NF.row().attr('title', "Steuert die Priorit\u00e4t, Zombies zu attackieren, die f\u00fcr dich selbst eine Bedrohung darstellen.").qtip(game.render.html.qtip.ingame('top'))
+                .append(NF.cell(true, 6, 0, 'right').text("Selbstverteidigung"))
+                .append(NF.cell(true, 6, 0, 'left').append(sel_clone.clone().attr('id', 'bhav_self').find('option[value="' + data[0] + '"]').attr('selected','selected').end()))
+            )
+
+            .append(NF.row().attr('title', "Steuert die Priorit\u00e4t, Zombies zu attackieren, die f\u00fcr deine Kameraden eine Bedrohung darstellen.").qtip(game.render.html.qtip.ingame('top'))
+                .append(NF.cell(true, 6, 0, 'right').text("Teamverteidigung"))
+                .append(NF.cell(true, 6, 0, 'left').append(sel_clone.clone().attr('id', 'bhav_team').find('option[value="' + data[1] + '"]').attr('selected','selected').end()))
+            )
+
+            .append(NF.row().attr('title', "Steuert die Priorit\u00e4t, im Kampf zu einer besseren Waffe zu wechseln.").qtip(game.render.html.qtip.ingame('top'))
+                .append(NF.cell(true, 6, 0, 'right').text("Waffenauswahl"))
+                .append(NF.cell(true, 6, 0, 'left').append(sel_clone.clone().attr('id', 'bhav_wpn').find('option[value="' + data[2] + '"]').attr('selected','selected').end()))
+            )
+
+            .append(NF.row().attr('title', "Steuert die Priorit\u00e4t, die optimale Angriffsdistanz zu den Zombies f\u00fcr die aktuelle Waffe herzustellen.").qtip(game.render.html.qtip.ingame('top'))
+                .append(NF.cell(true, 6, 0, 'right').text("Kampfdistanz"))
+                .append(NF.cell(true, 6, 0, 'left').append(sel_clone.clone().attr('id', 'bhav_move').find('option[value="' + data[3] + '"]').attr('selected','selected').end()))
+            )
+
             .append(NF.row().append(NF.cell(false, 6, 6).append(
                 button = $('<div />').addClass('btn btn-icon disabled')
                     .append($('<span />').addClass('btn-icon-inner').append($('<i />').addClass('fa fa-check')))
                     .append($('<span />').text("Speichern"))
                     .click(function() {
                         core.command('player/ai', {
-                            //ToDo: AI
+                            ai: $('#bhav_self').val() + $('#bhav_team').val() + $('#bhav_wpn').val() + $('#bhav_move').val()
                         }, true, function(ret) {
                             if (!ret.success) {
                                 game.render.html.notify('error', "Beim Speichern der Einstellungen ist ein Fehler aufgetreten.");
@@ -3386,8 +3411,7 @@ core = {
                             } else button.addClass('disabled')
                         })
                     })
-            )));
-
+            ))).find('select').on('change', function() {button.removeClass('disabled');}).selectric();
     };
 
     core.parts.settings = function(data, target) {

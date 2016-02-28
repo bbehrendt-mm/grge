@@ -129,8 +129,8 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
 		
 		DB::delete('xref_game_player')->where('uid', '=', $uid)->execute();
 
-        $lobby_data = DB::select('gameid')->from('multiplayer_lobby')->where('gameid', '=', $this->set['gameid'])->and_where('slots', '>', 0)->execute()->as_array();
-        if (count($lobby_data) > 0 && $this->get_player($uid)->get_lifetime() < 288 && Kohana::$config->load('build.version.stage') < 3)
+        $lobby_open = DB::delete('multiplayer_lobby')->where('gameid', '=', $this->set['gameid'])->and_where('slots', '>', 0)->execute() > 0;
+        if ($lobby_open && $this->get_player($uid)->get_lifetime() < 288 && Kohana::$config->load('build.version.stage') < 3)
             DB::insert('mp_lockouts', array('uid', 'timestamp'))->values(array($uid, time()))->execute();
 
         if ($this->get_player($uid)->get_lifetime() >= 288 && $this->get_player($uid)->get_braincoins())

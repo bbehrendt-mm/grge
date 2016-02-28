@@ -25,7 +25,7 @@ class Tool_Npc {
 
         $fc = function($val, $ar) {
             list($min, $max) = $ar;
-            if ($min === false) $min = PHP_INT_MIN;
+            if ($min === false) $min = -PHP_INT_MAX;
             if ($max === false) $max = PHP_INT_MAX;
 
             return $val >= $min && $val <= $max;

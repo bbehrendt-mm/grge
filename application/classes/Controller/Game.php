@@ -597,7 +597,7 @@ class Controller_Game extends Controller {
                 'time_settings' => $tmp,
                 'locked' => $lock
             ],
-            'ai' => null //ToDo: Battle AI settings
+            'ai' => $player->ai()
         ]);
     }
 

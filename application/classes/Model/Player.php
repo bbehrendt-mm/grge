@@ -28,6 +28,8 @@ class Model_Player extends Model_NPC_Nano implements Interface_Plentity {
     private $april = false;
     private $got_ticket = false;
 
+    private $ai_str = "0000";
+
     protected $postbox;
 	
 	private $log;
@@ -49,6 +51,17 @@ class Model_Player extends Model_NPC_Nano implements Interface_Plentity {
 
     public function get_escape_target() {
         return $this->escape_target_location;
+    }
+
+    public function ai($s = null) {
+        if ($s === null) return $this->ai_str;
+
+        if (strlen($s) != 4) return false;
+        for ($i = 0; $i < 4; $i++)
+            if (!in_array($s[$i], ['+','-','0']))
+                $s[$i] = '0';
+
+        return $this->ai_str = $s;
     }
 
     /**
@@ -276,6 +289,8 @@ class Model_Player extends Model_NPC_Nano implements Interface_Plentity {
          * @global $game Model_Game
          */
         global $game;
+
+        $this->get_status()->alive(false);
 
         if ($this->points === null)
             $this->points = $game->points($this->id);

@@ -122,7 +122,9 @@ class Controller_Player extends Controller_Game {
          */
         global $player;
 
-        //ToDo: Battle AI settings
+        $s = $this->post('ai');
+        if (!$s || !$player->ai($s))
+            return $this->render(['success' => 0]);
 
         $player->log()->add('Du hast dein Kampfverhalten angepasst.');
 

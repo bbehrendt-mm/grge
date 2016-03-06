@@ -30,7 +30,7 @@ interface Interface_Plentity extends Interface_Cloudshard {
 
     public function set_id($new);
 
-    public function location_class();
+    public function location_class($lc = null);
 
     /** @return Model_Places_Abstract_Place */
     public function location();

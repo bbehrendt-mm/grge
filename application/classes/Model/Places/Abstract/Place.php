@@ -54,6 +54,10 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
         return static::$outside;
     }
 
+    public function battle_location_type() {
+        return $this->is_outside() ? 'outside' : 'inside';
+    }
+
     public function get_doorways() {
         return $this->doorway;
     }

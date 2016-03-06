@@ -12,7 +12,6 @@ class Model_Items_Uniheal extends Model_Items_Abstract_Item implements Interface
 	protected static $weight = 1;
 
     protected function hid() {
-        //ToDo: Side Use
         return parent::hid()
             ->add_action('Applizieren', Model_Action::factory()
                 ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)

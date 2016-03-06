@@ -422,7 +422,9 @@ return array(
             'setup' => array('inherit' => array(1010), 'f' => function($mode, $level) {
                     /** @global Model_Player $player */
                     global $player;
-                    $player->inventory()->add(new Model_Items_Miniknife());
+                    $item = new Model_Items_Miniknife();
+                    $player->inventory()->add($item);
+                    $item->equip($player);
                 }),
         ),
         1012 => array(
@@ -465,11 +467,16 @@ return array(
                     global $player;
                     new Model_Buffs_Job_Soldier(null, $level);
                     $player->inventory()->add(new Model_Items_Virtual_Hero_Soldier($level));
-                    switch ($level)
-                    {
-                        case 3: case 4:	$player->inventory()->add(new Model_Items_Handgun); break;
-                        case 5:			$player->inventory()->add(new Model_Items_Rifle); break;
+                    $item = null;
+                    switch ($level) {
+                        case 3: case 4:	$item = new Model_Items_Handgun(); break;
+                        case 5:			$item = new Model_Items_Rifle(); break;
                     }
+                    if ($item) {
+                        $player->inventory()->add($item);
+                        $item->equip($player);
+                    }
+
                 }),
         ),
         1030 => array(
@@ -668,8 +675,12 @@ return array(
             'setup' => array('inherit' => array(2000), 'f' => function($mode, $level) {
                     /** @global Model_Player $player */
                     global $player;
-                    $player->inventory()->add(new Model_Items_Machete3);
-                    $player->inventory()->add(new Model_Items_Batgun);
+                    $items = [new Model_Items_Machete3(), new Model_Items_Batgun()];
+                    /** @var Model_Items_Abstract_Equipable $item */
+                    foreach ($items as $item) {
+                        $player->inventory()->add($item);
+                        $item->equip($player);
+                    }
                 }),
         ),
         2020 => array(
@@ -689,8 +700,12 @@ return array(
             'setup' => array('inherit' => array(2000), 'f' => function($mode, $level) {
                     /** @global Model_Player $player */
                     global $player;
-                    $player->inventory()->add(new Model_Items_Machete);
-                    $player->inventory()->add(new Model_Items_Batgun4);
+                    $items = [new Model_Items_Machete(), new Model_Items_Batgun4()];
+                    /** @var Model_Items_Abstract_Equipable $item */
+                    foreach ($items as $item) {
+                        $player->inventory()->add($item);
+                        $item->equip($player);
+                    }
                 }),
         ),
         2030 => array(
@@ -710,8 +725,12 @@ return array(
             'setup' => array('inherit' => array(2000), 'f' => function($mode, $level) {
                     /** @global Model_Player $player */
                     global $player;
-                    $player->inventory()->add(new Model_Items_Machete2);
-                    $player->inventory()->add(new Model_Items_Batgun3);
+                    $items = [new Model_Items_Machete2(), new Model_Items_Batgun3()];
+                    /** @var Model_Items_Abstract_Equipable $item */
+                    foreach ($items as $item) {
+                        $player->inventory()->add($item);
+                        $item->equip($player);
+                    }
                 }),
         ),
         3000 => array(
@@ -730,9 +749,14 @@ return array(
                     $player->inventory()->add(new Model_Items_Ammobelt);
                     $player->inventory()->add(new Model_Items_Maptool);
                     $player->inventory()->add(new Model_Items_Lunchbox);
-                    $player->inventory()->add(new Model_Items_Machete);
-                    $player->inventory()->add(new Model_Items_Batgun);
                     $player->inventory()->add(new Model_Items_Cyanide);
+
+                    $items = [new Model_Items_Machete(), new Model_Items_Batgun()];
+                    /** @var Model_Items_Abstract_Equipable $item */
+                    foreach ($items as $item) {
+                        $player->inventory()->add($item);
+                        $item->equip($player);
+                    }
                 }),
         ),
         3010 => array(
@@ -816,8 +840,11 @@ return array(
 
                     $player->inventory()->add(new Model_Items_Paracetoid);
                     $player->inventory()->add(new Model_Items_Paracetin);
-                    $player->inventory()->add(new Model_Items_Miniknife);
                     $player->inventory()->add(new Model_Items_Cyanide);
+
+                    $item = new Model_Items_Miniknife();
+                    $player->inventory()->add($item);
+                    $item->equip($player);
 
                     $game->map()->add_location('Model_Places_Colosseum');
             }),
@@ -828,7 +855,10 @@ return array(
                     global $player;
                     $player->inventory()->add(new Model_Items_Bottle);
                     $player->inventory()->add(new Model_Items_Ammobelt());
-                    $player->inventory()->add(new Model_Items_Batgun());
+
+                    $item = new Model_Items_Batgun();
+                    $player->inventory()->add($item);
+                    $item->equip($player);
                 }),
         ),
         10010 => array(
@@ -848,7 +878,9 @@ return array(
             'setup' => array('inherit' => array(10000), 'f' => function($mode, $level) {
                     /** @global Model_Player $player */
                     global $player;
-                    $player->inventory()->add(new Model_Items_Machete());
+                    $item = new Model_Items_Machete();
+                    $player->inventory()->add($item);
+                    $item->equip($player);
                 }),
         ),
         10020 => array(
@@ -869,7 +901,9 @@ return array(
                     /** @global Model_Player $player */
                     global $player;
                     $player->inventory()->add(new Model_Items_Virtual_Hero_Coach($level));
-                    $player->inventory()->add(new Model_Items_Machete());
+                    $item = new Model_Items_Machete();
+                    $player->inventory()->add($item);
+                    $item->equip($player);
                     new Model_Buffs_Job_Coach(null, $level);
                 }),
         ),
@@ -891,7 +925,9 @@ return array(
                     /** @global Model_Player $player */
                     global $player;
                     $player->inventory()->add(new Model_Items_Virtual_Hero_Student($level));
-                    $player->inventory()->add(new Model_Items_Machete());
+                    $item = new Model_Items_Machete();
+                    $player->inventory()->add($item);
+                    $item->equip($player);
                     $player->inventory()->add(new Model_Items_Bandage());
                 }),
         ),
@@ -913,7 +949,9 @@ return array(
                     /** @global Model_Player $player */
                     global $player;
                     $player->inventory()->add(new Model_Items_Virtual_Hero_Woman($level));
-                    $player->inventory()->add(new Model_Items_Pepperspray());
+                    $item = new Model_Items_Pepperspray();
+                    $player->inventory()->add($item);
+                    $item->equip($player);
                     new Model_Buffs_Job_Woman(null, $level);
                 }),
         ),

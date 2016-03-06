@@ -11,6 +11,7 @@ class Model_Combat_Scene {
     const MCS_EV_SWITCH = 7;                   // [ID, [Wpn-Name, Wpn-Icon]]
     const MCS_EV_DBG_AI = 8;                   // [ID, [P_ATK, P_SWC, P_MOV]]
     const MCS_EV_BREAK = 9;                    // [ID, [Wpn-Name, Wpn-Icon]]
+    const MCS_ATMOSPHERE = 10;                 // [Location]
 
     private $log_data = [];
 
@@ -383,6 +384,13 @@ class Model_Combat_Scene {
                 $ai_mov ? $ai_mov[0] : '-',
             ]
 
+        ];
+    }
+
+    public function set_atmosphere($location) {
+        $this->log_data[] = [
+            static::MCS_ATMOSPHERE,
+            $location
         ];
     }
 }

@@ -26,7 +26,7 @@ class Controller_Map extends Controller_Game {
 
         //Check if any player is passed out or performs a fragile action
         foreach ($companion as $current)
-            if ($current->get_status()->retrieve('passout') || $current->get_status()->retrieve('fragile')) {
+            if (($current->id() != $player->id() && !$current->allow(Interface_Plentity::IC_ALLOW_MOVE)) || $current->get_status()->retrieve('passout') || $current->get_status()->retrieve('fragile')) {
                 if (!Tool_Scripts::is_npc())
                     $player->log()->add(($current == $player) ? 'Du kannst dich zur Zeit nicht bewegen...' : ':name kann sich zur Zeit nicht bewegen...', array(':name' => $current->name()));
                 return false;
@@ -41,7 +41,13 @@ class Controller_Map extends Controller_Game {
         $map_type = $game->map($lid)->get_map_type();
 
         if (!$sub) {
-            if ($map_type == Model_Map_Abstract::MMA_TYPE_LABYRINTH) $companion = [($player->id()) => $player];
+            if ($map_type == Model_Map_Abstract::MMA_TYPE_LABYRINTH) {
+                $tmp = [($player->id()) => $player];
+                foreach ($companion as $current)
+                    if ($current->id() != $player->id() && Tool_Scripts::is_npc($current))
+                        $tmp[$current->id()] = $current;
+                $companion = $tmp;
+            }
 
             //Check route
             if (!($route = $game->map($lid)->get_route($lid, $did, $map_type == Model_Map_Abstract::MMA_TYPE_LABYRINTH ? 2 : null))) {

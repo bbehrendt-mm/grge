@@ -300,7 +300,7 @@ class Tool_Scripts
 
         $ret = [];
         foreach (static::at_location($lid, $include_players, $include_npcs) as $p)
-            if (static::check_comrade($p))
+            if ($p->id() != $player->id() && static::check_comrade($p))
                 $ret[] = $p;
 
         return $ret;
@@ -520,6 +520,8 @@ class Tool_Scripts
 
         if ($location === null)
             $location = $player->location();
+
+        $battle->get_scene()->set_atmosphere($location->battle_location_type());
 
         //Upload to DB
         $vid = Model_Combat_Handler::upload($game->id(), $game->season(), $battle);

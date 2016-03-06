@@ -481,7 +481,7 @@
 
         if (data.lomap) {
 
-            var lomap,mapbg;
+            var lomap,mapbg,esc;
 
             $(target).append(
                 lomap = $('<div />').addClass('cell padded rw-4 rw-lg-6 rw-md-12')
@@ -490,7 +490,9 @@
             var d = lomap.width();
             var sc = 6;
 
-            lomap.append(mapbg = $('<div />').addClass('lomap').css({height: d, width: d}));
+            lomap
+                .append(mapbg = $('<div />').addClass('row lomap').css({height: d, width: d}))
+                .append(esc = NF.row().attr('title', <?=__j('Wähle die NPCs aus, die dich begleiten sollen.')?>).qtip(game.render.html.qtip.ingame('top')));
             mapbg.append($('<canvas />').attr({height: d, width: d}));
 
             var renderer = core.cache_get('minimap_stage');
@@ -504,7 +506,13 @@
                 return function() {
                     lomap.find('.navbtn').fadeOut(200);
                     $('#content').addClass('disabled');
-                    core.command('map/go', {to: lid, follow: 1}, true, function(data) {
+
+                    var nids = [];
+                    esc.find(':checkbox').each(function() {
+                        if ($(this).prop('checked')) nids.push($(this).attr('data-nid'));
+                    });
+
+                    core.command('map/go', {to: lid, follow: 1, co: nids, support: 1}, true, function(data) {
                         if (data.success) {
                             if (data.preview && (slidex != 0 || slidey != 0)) {
 
@@ -525,6 +533,16 @@
                     });
                 }
             };
+
+            $.each(data.lomap.current.npcs, function(k, nid) {
+                esc.append(NF.cell(true, 12)
+                    .append(
+                        $('<label />').attr('for', 'lomap_esc_' + nid).text(core.last.players.others[nid].name)
+                            .prepend($('<input />').attr({type: 'checkbox', id: 'lomap_esc_' + nid, checked: 'checked', 'data-nid': nid}))
+                    )
+                );
+            });
+            esc.find(':checkbox').customRadioCheck();
 
             if (data.lomap.left)    mapbg.append($('<div />').click(go(data.lomap.left.id, -1, 0)).addClass('navbtn nav-left').css({top: d/sc, bottom: d/sc, left: 0, width: d/sc}));
             if (data.lomap.top)     mapbg.append($('<div />').click(go(data.lomap.top.id, 0, -1)).addClass('navbtn nav-top').css({top: 0, right: d/sc, left: d/sc, height: d/sc}));

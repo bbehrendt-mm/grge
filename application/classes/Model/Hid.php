@@ -117,7 +117,7 @@ class Model_Hid {
          * @global Model_Game $game
          * @global Model_Player $player
          */
-        global $game, $player;
+        global $player;
 
         $tmp = array();
         foreach ($this->actions as $id => $action) {

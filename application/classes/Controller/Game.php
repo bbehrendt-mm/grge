@@ -102,11 +102,15 @@ class Controller_Game extends Controller {
                     'name' => __($location->name()),
                     'icon' => $location->icon(),
                 ];
-                /** TODO: Add NPCs */
+
                 if ($id == $lid) {
                     $mp_current = $tmp;
                     $mp_current['zombies'] = $location->zombie_pop();
-                    $mp_current['players'] = max(0,count(Tool_Scripts::at_location($lid)) - 1);
+                    $mp_current['players'] = max(0,count(Tool_Scripts::at_location($lid, true, false)) - 1);
+                    $mp_current['npcs'] = [];
+                    foreach (Tool_Scripts::at_location($lid, false, true) as $npc)
+                        if ($npc->allow(Interface_Plentity::IC_ALLOW_MOVE))
+                            $mp_current['npcs'][] = $npc->id();
                 } elseif ($pos['x'] == $master['x'] && $pos['y'] == $master['y'] && (!$in_corridor || !$is_corridor))
                     $mp_others[] = $tmp;
                 elseif ($is_corridor && $pos['x'] == $master['x'] && $pos['y'] > $master['y'])

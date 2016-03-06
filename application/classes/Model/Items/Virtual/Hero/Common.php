@@ -83,7 +83,6 @@ class Model_Items_Virtual_Hero_Common extends Model_Items_Abstract_Virtual {
                 , 'hero_unaddict')
             ;
 
-        // TODO: Allow animals to somehow escape, too!
         if ($player->get_escape_target() && $player->get_escape_target() != $player->location_class())
             $tmp->add_action('Überstürzte Flucht', Model_Action::factory()
                 ->buttonskin('context')
@@ -99,21 +98,31 @@ class Model_Items_Virtual_Hero_Common extends Model_Items_Abstract_Virtual {
                             return;
                         }
 
-                        $damage = min($p->get_status()->get(Model_Status::MS_STAT_HEALTH) - 1, $p->location()->zombie_pop() * 20);
-                        $injury = mt_rand(0,100) < (50 + $damage);
+                        /** @var Interface_Plentity[] $pl */
+                        $pl = [$p];
 
-                        foreach ($p->inventory()->get() as $item)
-                            if (!$item->is_essential() && $item->drop()) {
-                                $p->inventory()->remove($item->uin());
-                                $p->location()->inventory()->add($item);
-                            }
+                        if (count(Tool_Scripts::at_location($p->location_class(), true, false)) <= 1)
+                            foreach (Tool_Scripts::at_location($p->location_class(), false, true) as $npc)
+                                if ($npc->allow(Interface_Plentity::IC_ALLOW_MOVE))
+                                    $pl[] = $npc;
 
-                        $p->get_status()->modify(Model_Status::MS_STAT_HEALTH, -$damage);
-                        if ($injury) new Model_Buffs_Blood($p->id());
+                        foreach ($pl as $pc) {
+                            $damage = min($pc->get_status()->get(Model_Status::MS_STAT_HEALTH) - 1, $pc->location()->zombie_pop() * 20);
+                            $injury = mt_rand(0,100) < (50 + $damage);
 
-                        $p->location()->leave($p->id(), Interface_Tickable::IT_TYPE_PLAYER);
-                        $game->location($did)->enter($p->id(), Interface_Tickable::IT_TYPE_PLAYER);
-                        $p->location_class($did);
+                            foreach ($pc->inventory()->get() as $item)
+                                if (!$item->is_essential() && $item->drop()) {
+                                    $pc->inventory()->remove($item->uin());
+                                    $pc->location()->inventory()->add($item);
+                                }
+
+                            $pc->get_status()->modify(Model_Status::MS_STAT_HEALTH, -$damage);
+                            if ($injury) new Model_Buffs_Blood($pc->id());
+
+                            $pc->location()->leave($pc->id(), Interface_Tickable::IT_TYPE_PLAYER);
+                            $game->location($did)->enter($pc->id(), Tool_Scripts::is_npc($pc) ? Interface_Tickable::IT_TYPE_NPC : Interface_Tickable::IT_TYPE_PLAYER);
+                            $pc->location_class($did);
+                        }
 
                         $p->log()->add('Puuh, das war eine ganz schön wilde Flucht... aber jetzt scheinst du erst einmal in Sicherheit zu sein.');
                     })

@@ -2,7 +2,9 @@
 
     Battle.prototype.load = function() {
         var alias = this;
-        this.addResource('field.png', 'grunge.png', 'resist.gif', 'damage.gif', 'kill.gif', 'health.gif', 'arrow_r.gif');
+        this.addResource('resist.gif', 'damage.gif', 'kill.gif', 'health.gif', 'arrow_r.gif');
+
+        var location = 'outside';
 
         for (var i = 1; i <= this.splatter_count; i++)
             this.addResource('splatter/splat' + i + '.png')
@@ -25,9 +27,6 @@
                             if (!sprites[1]) sprites[1] = 'zombie_dead.gif';
                             break;
                     }
-
-                console.log(sprites);
-
 
                 alias.addResource('sprites/' + sprites[0], 'sprites/' + sprites[1]);
             }
@@ -76,8 +75,14 @@
                 }
             }
 
+            if (v[0] == <?=Model_Combat_Scene::MCS_ATMOSPHERE?>) {
+                location = v[1];
+            }
 
         });
+
+        alias.queueResource('field.png', 'media/icons/battle/fields/' + location + '/floor.png');
+        alias.queueResource('atmosphere.png', 'media/icons/battle/fields/' + location + '/atmosphere.png');
     };
 
 

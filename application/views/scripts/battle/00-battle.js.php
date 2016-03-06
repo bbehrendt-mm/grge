@@ -23,6 +23,8 @@
 
         this.card = null;
         this.card_target = null;
+
+        this.start_timeout = 0;
     };
 
     Battle.prototype = Object.create(CanvasAnimationModule.prototype);
@@ -39,13 +41,13 @@
         background.z = -100;
         this.stage.addChild(background);
 
-        var grunge = this.getResource('grunge.png');
+        var grunge = this.getResource('atmosphere.png');
         var grunge_layer = new createjs.Bitmap(grunge);
         grunge_layer.scaleX = 650/grunge.width;
         grunge_layer.scaleY = 410/grunge.height;
         grunge_layer.x = grunge_layer.y = -5;
         grunge_layer.z = -99;
-        grunge_layer.filters = [new createjs.BlurFilter(5, 5, 1)];
+        grunge_layer.filters = [new createjs.BlurFilter(3, 3, 1)];
         grunge_layer.cache(0,0,650,410,1);
 
         this.stage.addChild(grunge_layer);
@@ -82,13 +84,13 @@
 
     Battle.prototype.reset = function() {
         createjs.Tween.removeAllTweens();
+        window.clearTimeout(this.start_timeout);
         this.current = 0;
         this.combatants = {};
         this.card = null;
         this.card_target = null;
 
         this.stage.removeAllChildren();
-        this.initUI();
         this.begin();
     };
 
@@ -125,10 +127,8 @@
 
         var alias = this;
         if (alias.events[type])
-            window.setTimeout(function() {
-                console.log(type, event);
+            alias.start_timeout = window.setTimeout(function() {
                 alias.events[type].apply(alias, event);
-
             }, this.idle * factor);
         else alias.proceed();
     }

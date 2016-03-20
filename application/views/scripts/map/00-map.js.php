@@ -5,7 +5,7 @@
 ?>
 
 (function() {
-    Gamemap = function(canvas, data) {
+    Gamemap = function(canvas, data, width, heigth) {
         var alias = this;
         CanvasAnimationModule.call(this, canvas, 60, 'media/icons/',
             function() {alias.grid_cache = {};},
@@ -15,7 +15,7 @@
         this.stage.enableMouseOver(10);
 
         this.data = data;
-        this.dimensions = [800,600];
+        this.dimensions = [width === undefined ? 800 : width, heigth === undefined ? 600 : heigth];
         this.transform = [0,0];
 
         this.scale = 1;

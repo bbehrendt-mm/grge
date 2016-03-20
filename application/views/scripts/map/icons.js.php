@@ -40,7 +40,7 @@
 
         var alias = this;
 
-        var containerSize = 20;
+        var containerSize = game.touch() ? 52 : 20;
 
         $.each(this.data.locations, function(id, location) {
 

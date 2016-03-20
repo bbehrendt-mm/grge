@@ -21,13 +21,18 @@ div.map.panel {
 
   &:not(.manual-color), &.manual-color .auto-color  {color: @map_panel_text;}
 
-  &.bottom {bottom: 0; left: 32%; right: 32%; &.hide {bottom: -50px} .incomplete-border-definition(@map_panel_border, true, true, false, true);}
-  &.left {bottom: 0; top: 30px; left: 0; width: 30%; &.hide {left: -50px} .incomplete-border-definition(@map_panel_border, true, false, true, true);}
-  &.right {bottom: 0; top: 30px; right: 0; width: 30%; &.hide {right: -50px} .incomplete-border-definition(@map_panel_border, true, true, true, false);}
-  &.left-top {height: 24px; top: 0; left: 0; width: 30%; &.hide {left: -50px} .incomplete-border-definition(@map_panel_border, true, false, true, true);}
-  &.right-top {height: 24px; top: 0; right: 0; width: 30%; &.hide {right: -50px} .incomplete-border-definition(@map_panel_border, true, true, true, false);}
+  &.bottom {bottom: 0; left: 32%; right: 32%; &.wide {left: 0; right: 0;} &.hide {bottom: -50px} .incomplete-border-definition(@map_panel_border, true, true, false, true);}
+  &.left {bottom: 0; top: 30px; left: 0; width: 30%; &.wide {width: 50%; min-width: 320px} &.hide {left: -50px} .incomplete-border-definition(@map_panel_border, true, false, true, true);}
+  &.right {bottom: 0; top: 30px; right: 0; width: 30%; &.wide {width: 50%; min-width: 320px} &.hide {right: -50px} .incomplete-border-definition(@map_panel_border, true, true, true, false);}
+  &.left-top {height: 24px; top: 0; left: 0; width: 30%; &.wide {width: 50%; min-width: 320px} &.hide {left: -50px} .incomplete-border-definition(@map_panel_border, true, false, true, true);}
+  &.right-top {height: 24px; top: 0; right: 0; width: 30%; &.wide {width: 50%; min-width: 320px} &.hide {right: -50px} .incomplete-border-definition(@map_panel_border, true, true, true, false);}
 
   &.left-top, &.right-top {.fa {font-size: 20px; padding-left: 5px; padding-right: 5px;}}
+
+  .panelbtn {
+    height: 64px; font-size: 48px;
+    &:hover {color: @zv-background-color}
+  }
 }
 
 div.lomap {

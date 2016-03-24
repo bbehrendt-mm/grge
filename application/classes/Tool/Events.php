@@ -29,10 +29,10 @@ class Tool_Events {
         if ( (static::get(static::TE_MONTH, $time) == 12 && static::get(static::TE_DAY, $time) >= 30) || (static::get(static::TE_MONTH, $time) == 1 && static::get(static::TE_DAY, $time) <= 2) )
             return 'newyear';
 
-        //Detect easter (18.04.2014 - 24.04.2014)
+        //Detect easter (25.03.2016 - 01.04.2016)
         switch (static::get(static::TE_YEAR, $time)) {
-            case 2014:
-                if (static::get(static::TE_MONTH, $time) == 4 && static::get(static::TE_DAY, $time) >= 18 && static::get(static::TE_DAY, $time) <= 24 ) return 'easter';
+            case 2016:
+                if (static::get(static::TE_MONTH, $time) == 3 && static::get(static::TE_DAY, $time) >= 25) return 'easter';
                 break;
         }
 

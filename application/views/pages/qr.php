@@ -44,7 +44,7 @@ if (!isset($fill_key)) $fill_key = null;
 
             } else {
                 game.network.load(data.redirect);
-                game.render.html.notify('smile', '<?=__j('Deine Login-Daten wurden erfolgreich auf diesem Gerät hinterlegt. In Zukunft kannst du dich ohne QR-Codes, Pins oder Keys auf diesem gerät einloggen.');?>', game.i18n('<?=__j('Willkommen, :name!');?>', {':name': data.login.name}), 4000);
+                game.render.html.notify('smile', <?=__j('Deine Login-Daten wurden erfolgreich auf diesem Gerät hinterlegt. In Zukunft kannst du dich ohne QR-Codes, Pins oder Keys auf diesem gerät einloggen.');?>, game.i18n(<?=__j('Willkommen, :name!');?>, {':name': data.login.name}), 4000);
 
                 var profiles = game.storage.get('login','profiles',{});
                 profiles[data.login.user] = data.login;
@@ -57,13 +57,13 @@ if (!isset($fill_key)) $fill_key = null;
         var key = $('#key').val();
 
         if (!key) {
-            alert('<?=__j('Bitte gib deinen PIN ein.');?>');
+            alert(<?=__j('Bitte gib deinen PIN ein.');?>);
             return;
         }
 
         var alias = $(this);
         alias.addClass('btn-disabled').find('.fa').attr('class','fa fa-spin fa-circle-o-notch');
-        alias.find('#confirm-content').html('<?=__j('Bitte warten...');?>');
+        alias.find('#confirm-content').html(<?=__j('Bitte warten...');?>);
 
         $('#content').find('.form_input').attr('disabled', 'disabled');
 

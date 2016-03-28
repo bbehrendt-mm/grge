@@ -84,7 +84,7 @@
     });
 
     $(window).scroll(function() {
-        var scroll = $('body').scrollTop();
+        var scroll = $(document).scrollTop();
         var p = $('#persistent');
         if (scroll > (95 - p.height()))
             p.addClass('float');

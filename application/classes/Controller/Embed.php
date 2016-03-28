@@ -23,8 +23,8 @@ class Controller_Embed extends Controller {
     }
 
     public function action_battle() {
-        $video_id = (int)$this->request->query('v');
-        $gallery_id = (int)$this->request->query('p');
+        $video_id = (int)$this->request->param('v', $this->request->query('v'));
+        $gallery_id = (int)$this->request->param('p', $this->request->query('p'));
 
         $this->response->body(
             View::factory('battle')
@@ -32,6 +32,7 @@ class Controller_Embed extends Controller {
                 ->set('lang', I18n::lang())
                 ->set('pid', $gallery_id)
                 ->set('bid', $video_id)
+                ->set('url', URL::base(true))
         );
     }
 }

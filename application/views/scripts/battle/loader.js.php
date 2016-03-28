@@ -13,7 +13,7 @@
             if (v[0] == <?=Model_Combat_Scene::MCS_EV_NEW_CHALLENGER?>) {
                 if (v[5])
                     alias.queueResource(v[5], v[5]);
-                else alias.queueResource('mugshot.png', 'media/img/mugshot.png');
+                else alias.queueResource('mugshot.png', '<?=URL::base('http')?>media/img/mugshot.png');
 
                 var sprites = v[10];
                 if (!sprites[0] || !sprites[1])
@@ -32,20 +32,20 @@
             }
 
             if (v[0] == <?=Model_Combat_Scene::MCS_EV_BREAK?> || v[0] == <?=Model_Combat_Scene::MCS_EV_INJURY?> || v[0] == <?=Model_Combat_Scene::MCS_EV_SWITCH?>)
-                alias.queueResource(v[2][1], 'media/icons/' + v[2][1] + '.gif');
+                alias.queueResource(v[2][1], '<?=URL::base('http')?>media/icons/' + v[2][1] + '.gif');
 
             if (v[0] == <?=Model_Combat_Scene::MCS_EV_ATTACK?>) {
-                alias.queueResource(v[4][1], 'media/icons/' + v[4][1] + '.gif');
+                alias.queueResource(v[4][1], '<?=URL::base('http')?>media/icons/' + v[4][1] + '.gif');
                 $.each(v[3], function(k, icn) {
                     if (typeof icn == "object")
                         icn = icn[0];
 
                     switch (icn) {
                         case '::energy':
-                            alias.queueResource(icn, 'media/icons/status_energy.gif');
+                            alias.queueResource(icn, '<?=URL::base('http')?>media/icons/status_energy.gif');
                             break;
                         default:
-                            alias.queueResource(icn, 'media/icons/' + icn + '.gif');
+                            alias.queueResource(icn, '<?=URL::base('http')?>media/icons/' + icn + '.gif');
                             break;
                     }
 
@@ -81,8 +81,8 @@
 
         });
 
-        alias.queueResource('field.png', 'media/icons/battle/fields/' + location + '/floor.png');
-        alias.queueResource('atmosphere.png', 'media/icons/battle/fields/' + location + '/atmosphere.png');
+        alias.queueResource('field.png', '<?=URL::base('http')?>media/icons/battle/fields/' + location + '/floor.png');
+        alias.queueResource('atmosphere.png', '<?=URL::base('http')?>media/icons/battle/fields/' + location + '/atmosphere.png');
     };
 
 

@@ -47,11 +47,14 @@
                 .append($('<span />').text(<?=__j('Kampf ansehen')?>))
                 .click(function(e) {
                     e.stopPropagation();
-                    var popup = core.popup.spawn(644);
+
+                    var h = $(window).height(); var w = $(window).width();
+                    var sscn = (h < 650 || w < 410);
+                    var popup = sscn ? core.popup.spawn(w,h) : core.popup.spawn(644);
 
                     var fav = (data.gallery || videobtn.data('nogallery')) ? $('<div />').addClass('b').text(<?=__j('Dieses Video befindet sich bereits in deiner Gallerie.')?>) : $('<div />').addClass('btn').text(<?=__j('In meine Kampfgallerie aufnehmen')?>)
                         .click(function() {
-                            var label = prompt(<?=__j('Bitte gib deinem Kampf einen Titel, unter dem er in deiner Gallerie erscheinen soll.')?>, game.i18n(<?=__j('Kampf #:id')?>, {':id': data.bid}))
+                            var label = prompt(<?=__j('Bitte gib deinem Kampf einen Titel, unter dem er in deiner Gallerie erscheinen soll.')?>, game.i18n(<?=__j('Kampf #:id')?>, {':id': data.bid}));
 
                             if (label) {
                                 fav.addClass('disabled');
@@ -70,7 +73,7 @@
                         });
 
                     popup
-                        .append($('<iframe>').attr({src: 'embed/battle?v=' + data.bid, sandbox: 'allow-scripts allow-same-origin', seamless: 'seamless', height: 400, width: 640}))
+                        .append($('<iframe>').attr({src: 'embed/battle?v=' + data.bid, allowfullscreen: true, sandbox: 'allow-scripts allow-same-origin', seamless: 'seamless', height: sscn ? h - 52 : 400, width: sscn ? w - 4 : 640}))
                         .append($('<br />'))
                         .append(NF.row()
                             .append($('<div />').addClass('cell rw-12 padded').append(

@@ -19,6 +19,7 @@
  * @var string|bool $mentor_ref
  * @var bool $allow_mentor
  * @var array $gallery
+ * @var string $url
  */
 ?>
 
@@ -496,17 +497,73 @@
         switch ($(this).data('gallery-action')) {
             case 'view':
 
-                var popup = core.popup.spawn(644);
+                var h = $(window).height(); var w = $(window).width();
+                var sscn = (h < 650 || w < 410);
+                var popup = sscn ? core.popup.spawn(w,h) : core.popup.spawn(644);
+
+                var vid = $(this).data('videoid'); var gid = $(this).data('gallery');
+
+                var generate_frame = function(ih,iw,fs,so, return_html) {
+                    var f = $('<iframe>').attr({src: '<?=$url?>embed/battle?v=' + vid + '&p=' + gid, allowfullscreen: fs, sandbox: so ? 'allow-scripts allow-same-origin' : 'allow-scripts', seamless: 'seamless', height: ih, width: iw});
+                    return return_html ? f.get(0).outerHTML : f;
+                };
 
                 popup
-                    .append($('<iframe>').attr({src: 'embed/battle?v=' + $(this).data('videoid') + '&p=' + $(this).data('gallery'), sandbox: 'allow-scripts allow-same-origin', seamless: 'seamless', height: 400, width: 640}))
+                    .append(generate_frame(sscn ? h - 52 : 400, sscn ? w - 4 : 640, true, true, false))
                     .append($('<br />'))
                     .append(NF.row()
-                        .append($('<div />').addClass('cell rw-12 padded').append(
+                        .append(NF.cell(true, 6).append(
                             $('<div />').addClass('btn')
                                 .text(<?=__j('Schließen')?>)
                                 .click(function() {
                                     popup.trigger('unpop');
+                                })
+                        )).append(NF.cell(true, 6).append(
+                            $('<div />').addClass('btn')
+                                .text(<?=__j('Teilen')?>)
+                                .click(function() {
+
+                                    var update_framecode = function() {
+                                        var h = parseInt($('#if_size').val());
+                                        if (!h || isNaN(h)) return;
+                                        $('#if_framecode').text(generate_frame(Math.round(h),Math.round(h * 1.6),$('#if_allowfs').prop('checked'),false,true));
+                                    };
+
+                                    var res = {};
+                                    $.each([200,300,375,400,480,500,540,600,640,670,720,750,800,850,875,1000,1050,1200,1280,1600,1750,2000,2150,2400,2560,3200,4000,4800,9600], function(i,v) {
+                                        res[v] = Math.round(v * 1.6) + ' × ' + Math.round(v) + ' px';
+                                    });
+
+                                    var share_popup =  core.popup.spawn(500);
+                                    share_popup
+                                        .append(NF.row()
+                                            .append(NF.cell(false, 6)
+                                                .append(NF.row().append(NF.cell(true, 12).append($('<b />').text(<?=__j('Direkter Link')?>))))
+                                                .append(NF.row().append(NF.cell(true, 12).append($('<pre />').css('overflow-x','auto').addClass('small').text('<?=$url?>b/' + gid + '/' + vid))))
+                                            ).append(NF.cell(false, 6)
+                                                .append(NF.row().append(NF.cell(true, 12).append(NF.n('div', 'note', <?=__j('Dieser Link führt direkt zum Video. Du kannst ihn beispielsweise an deine Freunde schicken oder bei Facebook posten.')?>))))
+                                            )
+                                        ).append(NF.row()
+                                            .append(NF.cell(false, 6)
+                                                .append(NF.row().append(NF.cell(true, 12).append($('<b />').text(<?=__j('Eingebetteter Player')?>))))
+
+                                                .append(NF.row().append(NF.cell(true, 12).append(NF.n('label').text(<?=__j('Erlaube Vollbild')?>).prepend(NF.n('input').attr({id: 'if_allowfs', type: 'checkbox'}).prop('checked', true)))))
+                                                .append(NF.row()
+                                                    .append(NF.cell(true, 4).text(<?=__j('Größe')?>))
+                                                    .append(NF.cell(true, 8).append(NF.select(res, 400).attr('id', 'if_size')))
+                                                )
+
+                                                .append(NF.row().append(NF.cell(true, 12).append($('<pre />').attr('id', 'if_framecode').css('overflow-x','auto').addClass('small'))))
+                                            ).append(NF.cell(false, 6)
+                                                .append(NF.row().append(NF.cell(true, 12).append(NF.n('div', 'note', <?=__j('Füge diesen Code in deine Homepage ein, um einen eingebetteten Player zu erhalten.')?>))))
+                                            )
+                                        );
+
+                                    update_framecode();
+
+                                    $('#if_size').change(update_framecode).selectric().closest('.row').attr('title', <?=__j('Hier kannst du die Größe des eingebetteten Players festlegen. Diese Einstellung hat keinen Einfluss auf die Qualität bzw. Auflösung des Videos - dieses wird immer in einer Auflösung von 640 × 400px gerendert und dann auf die Größe des Players skaliert.')?>).qtip(game.render.html.qtip.ingame('top'));
+                                    $('#if_allowfs').click(update_framecode).customRadioCheck().parent('label').attr('title', <?=__j('Diese Option erlaubt es Besuchern deiner Homepage, das eingebettete Video im Vollbild-Modus anzusehen.')?>).qtip(game.render.html.qtip.ingame('top'));
+
                                 })
                         ))
                     );

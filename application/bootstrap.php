@@ -157,6 +157,11 @@ Route::set('qr_short', 'm(/(<key>))')
         'action'     => 'qr',
         'key'        => ''
     ));
+Route::set('battle_short', 'b/<p>/<v>')
+    ->defaults(array(
+        'controller' => 'embed',
+        'action'     => 'battle',
+    ));
 Route::set('default', '(<controller>(/<action>(/<id>)))', ['id' => '[^.,;?\n]++'])
 	->defaults(array(
 		'controller' => 'web',

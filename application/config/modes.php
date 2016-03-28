@@ -15,10 +15,11 @@ return array(
                     'zombies.cowardly'                      => false,
                     'zombies.escape_threshold'              => 10,
                     'places.dryout_factor'                  => 1,
-                    'places.outworld.spawn_dogmeat'         => true,
+                    'places.outworld.spawn_dogmeat'         => false,
                     'places.outworld.spawn_stranger'        => false,
                     'places.outworld.alt_spawn_stranger'    => false,
                     'places.outworld.location_density'      => 1,
+                    'places.bar.spawn_winchester'           => false,
                     'items.bottle.allow_full_detox'         => true,
                     'items.water.tox_dirty'                 => 8,
                     'items.water.tox_polluted'              => 15,
@@ -56,6 +57,8 @@ return array(
                 'inherit' => array(0),
                 'config' => array(
                     'places.outworld.spawn_stranger'        => true,
+                    'places.outworld.spawn_dogmeat'         => true,
+                    'places.bar.spawn_winchester'           => true,
 
                     'ranking.points.zombie_kills.factor'    => 0,
                     'ranking.points.zombie_kills.offset'    => 0,
@@ -232,6 +235,8 @@ return array(
                 'config' => array(
                     'places.outworld.spawn_stranger'    =>  false,
                     'places.outworld.alt_spawn_stranger'=>  true,
+                    'places.outworld.spawn_dogmeat'     => true,
+                    'places.bar.spawn_winchester'       => true,
 
                     'ranking.points.zombie_kills.factor'=>  0,
                     'ranking.points.zombie_kills.offset'=>  0,
@@ -307,6 +312,8 @@ return array(
                 'config' => array(
                     'game.config.map' => 'roadtrip_init',
                     'game.config.itemset' => 'roadtrip',
+                    'places.outworld.spawn_dogmeat'     => false,
+                    'places.bar.spawn_winchester'       => false,
 
                     'ranking.points.zombie_kills.factor'=> 0,
                     'ranking.points.zombie_kills.offset'=> 0,
@@ -856,6 +863,7 @@ return array(
                     $player->inventory()->add(new Model_Items_Bottle);
                     $player->inventory()->add(new Model_Items_Ammobelt());
 
+                    $player->inventory()->add(new Model_Items_Cyanide());
                     $item = new Model_Items_Batgun();
                     $player->inventory()->add($item);
                     $item->equip($player);

@@ -67,7 +67,7 @@
                 alias.begin();
         };
 
-        this.ressources[name].src = /^(\w*?):\/\//.test(path) ? path : ('../' + path);
+        this.ressources[name].src = /^(\w*?):\/\//.test(path) ? path : ('<?=URL::base('http')?>' + path);
     };
 
     CanvasAnimationModule.prototype.addResource = function() {

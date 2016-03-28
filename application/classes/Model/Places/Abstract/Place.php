@@ -289,7 +289,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 		global $game, $player;
 
         // Spawn ticket
-        if (!$return && Tool_Events::ticket_event($game->next_tick()) && !$player->golden_ticket()) {
+        if (!$return && Tool_Events::ticket_event($game->next_tick()) && !Tool_Scripts::is_npc($player) && !$player->golden_ticket()) {
             $num = max(1,mt_rand(1,3) - mt_rand(0,2));
             $tmp = array();
             for ($i = 0; $i < $num; $i++)

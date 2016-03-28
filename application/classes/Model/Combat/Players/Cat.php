@@ -1,33 +1,33 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Combat_Players_Dog extends Model_Combat_Players_Player {
+class Model_Combat_Players_Cat extends Model_Combat_Players_Player {
 
-    protected $max_health = 50;
+    protected $max_health = 25;
 
-    protected $stat_initiative = 12;
-    protected $stat_damage = 4;
-    protected $stat_resistance = 0;
-    protected $stat_accuracy = 12;
+    protected $stat_initiative = 15;
+    protected $stat_damage = 8;
+    protected $stat_resistance = 2;
+    protected $stat_accuracy = 15;
 
-    protected $movement_range = 10;
-    protected $avatar;
+    protected $movement_range = 13;
 
     protected static $show_weapon_switch = false;
+    protected $avatar;
 
     /**
      * @param Interface_Plentity $p
      * @param string $avatar
      * @return Model_Combat_Players_Dog
      */
-    public static function create_linked_actor($p, $avatar = 'dogmeat.jpg') {
+    public static function create_linked_actor($p, $avatar = 'winchester.jpg') {
         /** @noinspection PhpUndefinedMethodInspection */
         $ret = static::factory()
             ->player($p)
             ->name($p->name(), Model_Combat_Actor::MCA_TYPE_PLAYER)
-            ->strength($p->get_status()->get(Model_Status::MS_STAT_HEALTH)/2, 50, 1)
-            ->add_weapon(new Model_Items_Dogbite());
+            ->strength($p->get_status()->get(Model_Status::MS_STAT_HEALTH)/4, 25, 1)
+            ->add_weapon(new Model_Items_Catclaw());
 
-        /** @var $ret Model_Combat_Players_Dog */
+        /** @var $ret Model_Combat_Players_Cat */
         $ret->avatar = $avatar;
 
         return $ret;
@@ -36,11 +36,11 @@ class Model_Combat_Players_Dog extends Model_Combat_Players_Player {
     protected function damage($damage, $from = null, $armor_damage = null) {
         parent::damage($damage, $from, $armor_damage);
 
-        $this->player->get_status()->modify(Model_Status::MS_STAT_HEALTH, -$damage * 2, Model_Status::MS_EFFECT_UNSCALE);
+        $this->player->get_status()->modify(Model_Status::MS_STAT_HEALTH, -$damage * 4, Model_Status::MS_EFFECT_UNSCALE);
     }
 
     public function customSprite($death_sprite = false) {
-        return $death_sprite ? 'pet_dead.gif' : 'dog.gif';
+        return $death_sprite ? 'pet_dead.gif' : 'cat.gif';
     }
 
     /**

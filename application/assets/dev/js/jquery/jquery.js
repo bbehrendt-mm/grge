@@ -8,6 +8,38 @@
         else if (this.text() != str) this.text(str);
     };
 
+    $.fullscreenAllowed = function() {
+        return document.fullscreenEnabled || document.webkitFullscreenEnabled ||
+            document.mozFullScreenEnabled || document.msFullscreenEnabled;
+    };
+
+    $.exitFullscreen = function() {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    };
+
+    $.fn.fullscreen = function() {
+        if ($(this).length < 1) return;
+        var elem = $(this).get(0);
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.msRequestFullscreen) {
+            elem.msRequestFullscreen();
+        } else if (elem.mozRequestFullScreen) {
+            elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullscreen) {
+            elem.webkitRequestFullscreen();
+        } else alert('Sorry, your browser does not seem to support switching to fullscreen.');
+    };
+
+
     $.fn.customRadioCheck = function() {
 
         return this.each(function() {
@@ -42,7 +74,7 @@
     var injectCleaner = function(jqFuncName) {
         var backup = jQuery.fn[jqFuncName];
         jQuery.fn[jqFuncName] = function() {
-            $(this).find('*[data-hasqtip]').qtip('destroy',true);
+            if (jQuery.fn.qtip) $(this).find('*[data-hasqtip]').qtip('destroy',true);
             return backup.apply(this,arguments);
         };
     };

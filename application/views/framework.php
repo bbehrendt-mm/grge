@@ -6,6 +6,7 @@
      * @var bool $dev
      */
 ?>
+<!DOCTYPE html>
 <html>
 <head>
     <!-- Meta -->

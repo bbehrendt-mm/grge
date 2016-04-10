@@ -6,7 +6,7 @@ core = {
     parts: {},
     snippets: {},
 
-    version: '2.1.0-0-0-256',
+    version: '2.1.0-0-0-260',
 
     last: {},
     plugins: {},
@@ -2974,7 +2974,16 @@ core = {
         map.setHandler(function(id, event) {
             switch (event) {
                 case 'click':
-                    if ((data.read_only && !data.locations[id].skip_ro) || data.locations[id].energy > data.radius || id == data.current) return;
+                    var escortables = false;
+                    if (core.last.players && core.last.players.others)
+                        $.each(core.last.players.others, function(id, player) {
+                            if (player.local && (player.allow === true || player.allow[6]))
+                                escortables = true;
+                        });
+
+                    if ((data.read_only && !data.locations[id].skip_ro) || (data.locations[id].energy > data.radius && !escortables) || id == data.current) return;
+
+                    var only_remote = data.locations[id].energy > data.radius;
 
                     if (data.locations[id].zombies && !confirm(game.i18n("Dieser Ort wird von :zombies Zombies belagert. Wenn du diesen Ort betrittst, wirst du k\u00e4mpfen m\u00fcssen. Weiter?", {':zombies': data.locations[id].zombies}))) return;
 
@@ -2986,12 +2995,7 @@ core = {
                     });
                     if (route_zombies.length && !confirm(game.i18n("Auf dem Weg zu diesem Ort befinden sich Zombies (:locations). Du wirst gegen sie k\u00e4mpfen m\u00fcssen, wenn du dorthin m\u00f6chtest. Weiter?",{':locations': route_zombies.join(', ')}))) return;
 
-                    var escortables = false;
-                    if (core.last.players && core.last.players.others)
-                        $.each(core.last.players.others, function(id, player) {
-                            if (player.local && (player.allow === true || player.allow[6]))
-                                escortables = true;
-                        });
+
 
                     if (game.storage.get('settings','travel_confirm') != 'auto' || escortables || game.touch()) {
                         var esc_popup = core.popup.spawn({desktop: 400, sm: '100%'});
@@ -3034,6 +3038,11 @@ core = {
                             });
 
 
+                        if (only_remote)
+                            esc_popup.append(
+                                NF.row().append(NF.cell(true, 12, 0, 'center b text-red').text("Dieser Ort ist zu weit f\u00fcr dich entfernt!"))
+                            );
+
                         if (check_row.children().length) {
                             var bhav;
 
@@ -3042,10 +3051,10 @@ core = {
                                 .append($('<div />').addClass('cell rw-12 padded').append($('<b />').text("Und wie siehts mit dir aus?")))
                                 .append($('<div />').addClass('cell rw-12 padded').append(
                                     bhav = $('<select />')
-                                        .append($('<option />').val('2').text("Mitgehen und helfen"))
-                                        .append($('<option />').val('1').text("Nur mitgehen"))
+                                        .append($('<option />').val('2').prop('disabled', only_remote).text("Mitgehen und helfen"))
+                                        .append($('<option />').val('1').prop('disabled', only_remote).text("Nur mitgehen"))
                                         .append($('<option />').val('0').text("Die Stellung halten"))
-                                        .val('1')
+                                        .val(only_remote ? '0' : '1')
                                 ));
 
                             bhav.selectric();
@@ -3053,9 +3062,10 @@ core = {
 
                         } else title.text("Bist du sicher, dass du diesen Ort betreten m\u00f6chtest? Er ist weit weg, und riecht auch bestimmt nicht sehr gut...");
 
+                        var confirm_btn;
                         esc_popup.append(NF.row()
                             .append($('<div />').addClass('cell rw-8 rw-sm-12 padded').append(
-                                $('<div />').addClass('btn').text("Los gehts!").click(function() {
+                                confirm_btn = $('<div />').addClass('btn').toggleClass('disabled', only_remote).text("Los gehts!").click(function() {
 
                                     var cfg = {to: id, follow: 1};
                                     if (check_row.children().length) {
@@ -3082,6 +3092,18 @@ core = {
                                     esc_popup.trigger('unpop');
                                 })))
                         );
+
+                        $.each(check_row.find(':checkbox'), function() {
+                                $(this).click(function() {
+                                    var ok = false;
+                                    $.each(check_row.find(':checkbox:checked'), function() {
+                                        ok = true;
+                                    });
+                                    confirm_btn.toggleClass('disabled', only_remote && !ok);
+
+                                })
+                            });
+
                     } else {
                         popup.addClass('disabled');
                         core.command('map/go', {to: id, follow: 1}, true, function(data) {

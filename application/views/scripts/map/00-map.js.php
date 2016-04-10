@@ -80,7 +80,6 @@
 
         this.renderRoads();
         this.renderIcons();
-        console.log(this.data);
     };
 
     Gamemap.prototype.scroll = function(x, y) {

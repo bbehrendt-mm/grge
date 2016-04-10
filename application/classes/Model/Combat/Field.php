@@ -29,7 +29,7 @@ class Model_Combat_Field {
     private function get_distinct_groups($limit_alive = true) {
         $gp = [];
         foreach ($this->combatants as $combatant)
-            if (!$limit_alive || $combatant->alive())
+            if ((!$limit_alive || $combatant->alive()) && !$combatant->is_escaped())
                 $gp[$combatant->group()] = true;
         return count($gp);
     }
@@ -60,17 +60,17 @@ class Model_Combat_Field {
     private function jump_next_move() {
         $a = min(array_map(function($a) {
             /** @var $a Model_Combat_Actor */
-            return $a->alive() ? $a->next_step_counter() : PHP_INT_MAX;
+            return ($a->alive() && !$a->is_escaped()) ? $a->next_step_counter() : PHP_INT_MAX;
         }, $this->combatants));
 
         if ($a == PHP_INT_MAX) return null;
 
         foreach ($this->combatants as $combatant)
-            if ($combatant->alive())
+            if ($combatant->alive() && !$combatant->is_escaped())
                 $combatant->next_step_counter(-$a);
 
         foreach ($this->combatants as $combatant)
-            if ($combatant->alive() && !$combatant->next_step_counter())
+            if ($combatant->alive() && !$combatant->is_escaped() && !$combatant->next_step_counter())
                 return $combatant;
 
         return null;
@@ -79,13 +79,44 @@ class Model_Combat_Field {
     /**
      * @return Model_Combat_Field
      */
-    public function begin() {
+    public function begin($allow_escape = false) {
         // Add combatants to the scene
         foreach ($this->combatants as $combatant) {
             $this->scene->add_combatant($combatant);
             $combatant->enter();
         }
+        
+        // Escape calculations
+        if ($allow_escape) {
+            $gsc = []; $gs_prev = []; $gs_allow = [];
+            foreach ($this->combatants as $c) {
+                if (!isset($gsc[$c->group()])) $gsc[$c->group()] = [];
+                if (!isset($gs_prev[$c->group()])) $gs_prev[$c->group()] = 0;
+                if (!isset($gs_allow[$c->group()])) $gs_allow[$c->group()] = PHP_INT_MAX;
 
+                $gs_prev[$c->group()] = max($gs_prev[$c->group()], $c->stats()[0]);
+                if ($c->can_escape()) {
+                    $gsc[$c->group()][] = $c;
+                    $gs_allow[$c->group()] = min($gs_allow[$c->group()], $c->stats()[0] * $c->get_escape_modifier());
+                }
+            }
+
+            foreach ($gs_allow as $group => &$v)
+                if ($v == PHP_INT_MAX) $v = 0;
+                else {
+                    $mx = 0;
+                    foreach ($gs_prev as $pgroup => $pv)
+                        if ($pgroup != $group)
+                            $mx = max($mx, $pv);
+                    $v = min(max(0, $v - $mx) * 0.05, 0.80);
+                }
+
+            foreach ($gs_allow as $group => $chance)
+                if ($chance > 0 && Tool_Gambling::random($chance))
+                    foreach ($gsc[$group] as $escapist)
+                        /** @var Model_Combat_Actor $escapist */
+                        $escapist->escape();            
+        }
 
         $round = 0;
         while ($round < 512 && $this->get_distinct_groups() > 1) {
@@ -97,10 +128,10 @@ class Model_Combat_Field {
             $this->scene->next_combatant($next);
             $next->act(array_filter($this->combatants, function($a) use ($next) {
                 /** @var $a Model_Combat_Actor */
-                return $a->alive() && $a->group() == $next->group();
+                return $a->alive() && !$a->is_escaped() && $a->group() == $next->group();
             }), array_filter($this->combatants, function($a) use ($next) {
                 /** @var $a Model_Combat_Actor */
-                return $a->alive() && $a->group() != $next->group();
+                return $a->alive() && !$a->is_escaped() && $a->group() != $next->group();
             }));
         }
 
@@ -167,7 +198,7 @@ class Model_Combat_Field {
         if ($this->get_distinct_groups(true) !== 1) return null;
 
         foreach ($this->combatants as $combatant)
-            if ($combatant->alive())
+            if ($combatant->alive() && !$combatant->is_escaped())
                 return $combatant->group();
 
         return null;
@@ -182,7 +213,7 @@ class Model_Combat_Field {
         $c = 0;
 
         foreach ($this->combatants as $combatant)
-            if ($combatant->alive() && ($group === null || $combatant->group() == $group))
+            if ($combatant->alive() && !$combatant->is_escaped() && ($group === null || $combatant->group() == $group))
                 $c += $instances ? 1 : $combatant->count();
 
         return $c;

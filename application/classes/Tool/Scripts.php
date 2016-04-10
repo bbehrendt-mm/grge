@@ -490,18 +490,21 @@ class Tool_Scripts
 
         global $game, $player;
 
-        //TODO: Escapeable battles!
         $battle = Model_Combat_Field::factory();
 
         $non_combatants = [];
         $actual_combatants = [];
+        $no_nc = true;
 
         foreach ($combatants as $fraction => $group) if (count($group) > 0) {
             $actual_combatants[$fraction] = $non_combatants[$fraction] = [];
             /** @var Model_Combat_Actor|Model_NPC_Nano $member */
             foreach ($group as $member) {
-                if (Tool_System::instance_of($member, Model_NPC_Nano::cls()) && $member->get_status()->retrieve('passout'))
+                if (Tool_System::instance_of($member, Model_NPC_Nano::cls()) && $member->get_status()->retrieve('passout')) {
                     $non_combatants[$fraction][] = $member;
+                    $no_nc = false;
+                }
+                    
                 else $actual_combatants[$fraction][] = $member;
             }
         }
@@ -509,7 +512,7 @@ class Tool_Scripts
         foreach ($actual_combatants as $fraction => $group)
             $battle->add_combatant($fraction + 1, $group);
 
-        $battle->init_positions($distance)->begin();
+        $battle->init_positions($distance)->begin($escapeable && $no_nc);
 
         foreach ($actual_combatants as $fraction => $group)
             if ($battle->count_group_members($fraction + 1) == 0)

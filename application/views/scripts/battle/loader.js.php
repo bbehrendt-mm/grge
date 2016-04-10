@@ -79,6 +79,9 @@
                 location = v[1];
             }
 
+            if (v[0] == <?=Model_Combat_Scene::MCS_EV_ESCAPE?>) {
+                alias.addResource('escape.gif');
+            }
         });
 
         alias.queueResource('field.png', '<?=URL::base('http')?>media/icons/battle/fields/' + location + '/floor.png');

@@ -30,6 +30,8 @@ class Model_Player extends Model_NPC_Nano implements Interface_Plentity {
 
     private $ai_str = "0000";
 
+    protected $battle_player_stats = [5,5,5,5];
+
     protected $postbox;
 	
 	private $log;
@@ -237,7 +239,15 @@ class Model_Player extends Model_NPC_Nano implements Interface_Plentity {
 	public function achievements() {
 		return $this->achievements;
 	}
-	
+
+    public function battle_stats($new = null) {
+        if ($new !== null)
+            for ($i = 0; $i < 4; $i++)
+                if ($new[$i] !== null)
+                    $this->battle_player_stats[$i] = $new[$i];
+        return $this->battle_player_stats;
+    }
+
 	/**
 	 * Returns player lifetime
 	 * @return number

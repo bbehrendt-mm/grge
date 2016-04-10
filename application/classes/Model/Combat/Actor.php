@@ -18,6 +18,8 @@ class Model_Combat_Actor extends Named {
     protected static $custom_sprite = null;
     protected static $custom_death_sprite = null;
 
+    protected static $escape = false;
+
     protected $name;
     protected $type;
     protected $max_health;
@@ -27,6 +29,7 @@ class Model_Combat_Actor extends Named {
     protected $alive = true;
     protected $pos_x;
     protected $pos_y;
+    protected $escaped = false;
 
     protected $next_move = 100;
 
@@ -34,6 +37,8 @@ class Model_Combat_Actor extends Named {
     protected $stat_damage = 5;         // Each point increases damage dealt by 5%
     protected $stat_resistance = 5;     // Each point reduces damage received by 5%
     protected $stat_accuracy = 5;       // Each point increases accuracy by 5%
+
+    protected $escape_modifier = 1;
 
     protected $movement_range = 5;
 
@@ -75,6 +80,25 @@ class Model_Combat_Actor extends Named {
 
     public function get_avatar() {
         return null;
+    }
+
+    public function can_escape() {
+        return static::$escape;
+    }
+
+    public function is_escaped() {
+        return $this->escaped;
+    }
+
+    public function escape($chance = 1) {
+        if ($this->can_escape()) {
+            $this->scene->escape($this, $chance);
+            return $this->escaped = true;
+        } else return false;
+    }
+
+    public function get_escape_modifier() {
+        return $this->escape_modifier;
     }
 
     public function customSprite($death_sprite = false) {

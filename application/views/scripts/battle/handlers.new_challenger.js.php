@@ -21,6 +21,7 @@
             type: type,
             sprites: sprites,
             pos: {x: pos[0], y: pos[1]},
+            escaped: false,
             health: {
                 health: strength[0],
                 max: strength[1],

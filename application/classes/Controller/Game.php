@@ -618,11 +618,12 @@ class Controller_Game extends Controller {
             Model_Items_Abstract_Equipable::MIAE_STAT_ACC => 5,
         ];
 
+        $char_stats = $player->battle_stats();
         $stats = [
-            Model_Items_Abstract_Equipable::MIAE_STAT_INI => [['type' => 0, 'value' => 5, 'all' => $tmp_all]],
-            Model_Items_Abstract_Equipable::MIAE_STAT_ATK => [['type' => 0, 'value' => 5, 'all' => $tmp_all]],
-            Model_Items_Abstract_Equipable::MIAE_STAT_DEF => [['type' => 0, 'value' => 5, 'all' => $tmp_all]],
-            Model_Items_Abstract_Equipable::MIAE_STAT_ACC => [['type' => 0, 'value' => 5, 'all' => $tmp_all]],
+            Model_Items_Abstract_Equipable::MIAE_STAT_INI => [['type' => 0, 'value' => $char_stats[0], 'all' => $tmp_all]],
+            Model_Items_Abstract_Equipable::MIAE_STAT_ATK => [['type' => 0, 'value' => $char_stats[1], 'all' => $tmp_all]],
+            Model_Items_Abstract_Equipable::MIAE_STAT_DEF => [['type' => 0, 'value' => $char_stats[2], 'all' => $tmp_all]],
+            Model_Items_Abstract_Equipable::MIAE_STAT_ACC => [['type' => 0, 'value' => $char_stats[3], 'all' => $tmp_all]],
         ];
         foreach ($player->get_equipment(null, true) as $equipment)
             foreach ([Model_Items_Abstract_Equipable::MIAE_STAT_INI,Model_Items_Abstract_Equipable::MIAE_STAT_ATK,Model_Items_Abstract_Equipable::MIAE_STAT_DEF,Model_Items_Abstract_Equipable::MIAE_STAT_ACC] as $k)

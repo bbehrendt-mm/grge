@@ -6,6 +6,8 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
     protected $player;
     protected static $show_weapon_switch = true;
 
+    protected static $escape = true;
+
     /**
      * @param null|Model_Player $p
      * @return Model_Combat_Players_Player|Model_Player
@@ -42,8 +44,9 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
         $ret->ai_volatile       = $ai[2] == '-' ? 0.5 : ($ai[2] == '+' ? 1.0 : 0.8 );
         $ret->ai_brashness      = $ai[3] == '-' ? 0.4 : ($ai[3] == '+' ? 0.9 : 0.7 );
 
-        //TODO Implement stats
-
+        list($ret->stat_initiative, $ret->stat_damage, $ret->stat_resistance, $ret->stat_accuracy) = $p->battle_stats();
+        $ret->escape_modifier = $p->get_status()->get(Model_Status::MS_CHAR_EVASIVENESS);
+        
         return $ret;
     }
 

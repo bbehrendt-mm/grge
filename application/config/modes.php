@@ -432,6 +432,7 @@ return array(
                     $item = new Model_Items_Miniknife();
                     $player->inventory()->add($item);
                     $item->equip($player);
+                    $player->battle_stats([4,6,null,null]); // INI ATK DEF ACC
                 }),
         ),
         1012 => array(
@@ -453,6 +454,7 @@ return array(
                     global $player;
                     $player->inventory()->limit(110);
                     $player->inventory()->add(new Model_Items_Briefcase);
+                    $player->battle_stats([6,4,null,null]); // INI ATK DEF ACC
                 }),
         ),
         1020 => array(
@@ -475,9 +477,10 @@ return array(
                     new Model_Buffs_Job_Soldier(null, $level);
                     $player->inventory()->add(new Model_Items_Virtual_Hero_Soldier($level));
                     $item = null;
+                    $player->battle_stats([null,6,null,null]); // INI ATK DEF ACC
                     switch ($level) {
-                        case 3: case 4:	$item = new Model_Items_Handgun(); break;
-                        case 5:			$item = new Model_Items_Rifle(); break;
+                        case 3: case 4:	$item = new Model_Items_Handgun(); $player->battle_stats([null,null,null,6]); break;
+                        case 5:			$item = new Model_Items_Rifle(); $player->battle_stats([null,null,null,8]); break;
                     }
                     if ($item) {
                         $player->inventory()->add($item);
@@ -505,6 +508,7 @@ return array(
                     global $player;
                     $player->inventory()->add(new Model_Items_Virtual_Hero_Pathfinder($level));
                     new Model_Buffs_Job_Pathfinder(null, $level);
+                    $player->battle_stats([7,null,null,null]); // INI ATK DEF ACC
                 }),
         ),
         1040 => array(
@@ -529,6 +533,7 @@ return array(
                     global $player, $game;
                     $player->inventory()->add(new Model_Items_Holybook);
                     $player->inventory()->add(new Model_Items_Virtual_Hero_Missionary($level));
+                    $player->battle_stats([6,4,4,4]); // INI ATK DEF ACC
                     if ($level >= 2)
                         for ($i = 0; $i < 6; $i++) $player->location()->inventory()->add(new Model_Items_Wine);
                     if ($level >= 3)
@@ -588,6 +593,7 @@ return array(
                     /** @global Model_Player $player */
                     global $player;
                     $player->inventory()->add(new Model_Items_Virtual_Hero_Survivalist($level));
+                    $player->battle_stats([null,null,6,null]); // INI ATK DEF ACC
                 }),
         ),
         1070 => array(
@@ -614,6 +620,7 @@ return array(
                         case 5:			$player->inventory()->limit(150); break;
                         case 6:			$player->inventory()->limit(166); break;
                     }
+                    $player->battle_stats([null,8,3,4]); // INI ATK DEF ACC
                     $player->inventory()->add(new Model_Items_Virtual_Hero_Muscle($level));
                     if ($level > 1 && $level < 5)
                         $player->inventory()->add(new Model_Items_Bmt);
@@ -644,6 +651,7 @@ return array(
                     $player->inventory()->add(new Model_Items_Generic_Teddy());
 
                     $player->get_status()->scaling_add(Model_Status::MS_STAT_DRUNK, Model_Status::MS_EFFECT_GLOBAL, 'child_booze', 2.5);
+                    $player->battle_stats([12,2,2,null]); // INI ATK DEF ACC
                 }),
         ),
         2000 => array(
@@ -913,6 +921,7 @@ return array(
                     $player->inventory()->add($item);
                     $item->equip($player);
                     new Model_Buffs_Job_Coach(null, $level);
+                    $player->battle_stats([null,null,5 + floor($level/2),null]); // INI ATK DEF ACC
                 }),
         ),
         10030 => array(
@@ -960,6 +969,7 @@ return array(
                     $item = new Model_Items_Pepperspray();
                     $player->inventory()->add($item);
                     $item->equip($player);
+                    $player->battle_stats([null,5 + floor($level/2),null,null]); // INI ATK DEF ACC
                     new Model_Buffs_Job_Woman(null, $level);
                 }),
         ),

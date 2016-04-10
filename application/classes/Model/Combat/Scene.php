@@ -12,6 +12,7 @@ class Model_Combat_Scene {
     const MCS_EV_DBG_AI = 8;                   // [ID, [P_ATK, P_SWC, P_MOV]]
     const MCS_EV_BREAK = 9;                    // [ID, [Wpn-Name, Wpn-Icon]]
     const MCS_ATMOSPHERE = 10;                 // [Location]
+    const MCS_EV_ESCAPE = 11;                  // [ID, Chance]
 
     private $log_data = [];
 
@@ -196,6 +197,10 @@ class Model_Combat_Scene {
             case static::MCS_EV_BREAK:
                 list($id, list($wpn_name, $wpn_icon)) = $entry;
                 return "Combatant $id's' weapon $wpn_name broke!";
+
+            case static::MCS_EV_ESCAPE:
+                list($id, $chance) = $entry;
+                return "Combatant $id's' has escaped ($chance)!";
 
             default: return "UNKNOWN SCENE INSTRUCTION ($type)!!! Data is " . json_encode($entry);
         }
@@ -391,6 +396,19 @@ class Model_Combat_Scene {
         $this->log_data[] = [
             static::MCS_ATMOSPHERE,
             $location
+        ];
+    }
+
+    /**
+     * @param Model_Combat_Actor  $combatant
+     * @param float $chance
+     */
+    public function escape($combatant, $chance) {
+        $this->log_data[] = [
+            static::MCS_EV_ESCAPE,
+
+            $combatant->id(),
+            $chance
         ];
     }
 }

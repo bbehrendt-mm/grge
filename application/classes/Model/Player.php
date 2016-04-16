@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Player extends Model_NPC_Nano implements Interface_Plentity {
+class Model_Player extends Model_NPC_Nano {
 
     protected static $entity_type = Interface_Plentity::IC_NPC_NONPC;
 
@@ -376,5 +376,23 @@ class Model_Player extends Model_NPC_Nano implements Interface_Plentity {
 
     public function can($type) {
         return true;
+    }
+
+    public function entity_species() {
+        return 'Mensch';
+    }
+
+    public function entity_profession() {
+        return Tool_Modes::get_job_by_id($this->job);
+    }
+
+    public function entity_action() {
+        if ($buff = $this->get_status()->retrieve('fragile'))
+            return $buff->name();
+        else return "Bereit";
+    }
+
+    public function entity_description() {
+        return 'Dieser Charakter wird von einem anderen Spieler kontrolliert.';
     }
 }

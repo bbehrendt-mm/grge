@@ -6,7 +6,7 @@ core = {
     parts: {},
     snippets: {},
 
-    version: '2.1.0-0-0-260',
+    version: '2.1.0-0-0-270',
 
     last: {},
     plugins: {},
@@ -787,7 +787,7 @@ core = {
                     if (actions.length) {
                         content.append('<span class="separator" />');
 
-                        var auto_tab = $('<ul />').addClass('tabline hide-mobile').appendTo(content);
+                        var auto_tab = $('<ul />').addClass('tabline').appendTo(content);
 
                         content.append($('<div />').addClass('btn').hide());
                         $.each(actions, function(k,v) {

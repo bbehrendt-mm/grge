@@ -34,7 +34,7 @@ abstract class Model_Items_Abstract_Pillbox extends Model_Items_Abstract_Stackab
                     , 'fail')
                     ->effect($this->create_effect(false), 'succ')
             )
-            ->add_action('Ganze Schachtel schlucken', Model_Action::factory()->effect($this->create_effect(true)));
+            ->add_action('Ganze Schachtel schlucken', Model_Action::factory()->effect($this->create_effect(true))->allow_auto(false));
     }
 
     private function create_effect($full = false) {

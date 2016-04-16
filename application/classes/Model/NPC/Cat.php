@@ -47,4 +47,22 @@ class Model_NPC_Cat extends Model_NPC_Animal
     public function create_combatant() {
         return Model_Combat_Players_Cat::create_linked_actor($this, 'winchester.jpg');
     }
+
+    public function entity_species() {
+        return 'Katze';
+    }
+
+    public function entity_profession() {
+        return 'Haustier';
+    }
+
+    public function entity_action() {
+        if ($buff = $this->get_status()->retrieve('fragile'))
+            return $buff->name();
+        else return "Bereit";
+    }
+
+    public function entity_description() {
+        return 'Du hast Winchester in einer Bar gefunden und es nicht übers Herz gebracht, ihn dort einfach alleine zurückzulassen.';
+    }
 }

@@ -290,8 +290,8 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
         else return null;
     }
 
-    public function simple_effects($p = null) {
-        return static::hid()->simple_effects($p);
+    public function simple_effects($p = null, $auto = false) {
+        return static::hid()->simple_effects($p, $auto);
     }
 
     /**

@@ -45,4 +45,22 @@ class Model_NPC_Dog extends Model_NPC_Animal
     public function create_combatant() {
         return Model_Combat_Players_Dog::create_linked_actor($this, 'dogmeat.jpg');
     }
+
+    public function entity_species() {
+        return 'Hund';
+    }
+
+    public function entity_profession() {
+        return 'Haustier';
+    }
+
+    public function entity_action() {
+        if ($buff = $this->get_status()->retrieve('fragile'))
+            return $buff->name();
+        else return "Bereit";
+    }
+
+    public function entity_description() {
+        return 'Dogmeat ist dir in der Umgebung deines Verstecks zugelaufen und weicht dir seither nicht mehr von der Seite.';
+    }
 }

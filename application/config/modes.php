@@ -696,6 +696,7 @@ return array(
                         $player->inventory()->add($item);
                         $item->equip($player);
                     }
+                    $player->battle_stats([null,6,6,4]); // INI ATK DEF ACC
                 }),
         ),
         2020 => array(
@@ -717,6 +718,7 @@ return array(
                     global $player;
                     $items = [new Model_Items_Machete(), new Model_Items_Batgun4()];
                     /** @var Model_Items_Abstract_Equipable $item */
+                    $player->battle_stats([6,4,null,6]); // INI ATK DEF ACC
                     foreach ($items as $item) {
                         $player->inventory()->add($item);
                         $item->equip($player);
@@ -742,6 +744,7 @@ return array(
                     global $player;
                     $items = [new Model_Items_Machete2(), new Model_Items_Batgun3()];
                     /** @var Model_Items_Abstract_Equipable $item */
+                    $player->battle_stats([null,6,null,6]); // INI ATK DEF ACC
                     foreach ($items as $item) {
                         $player->inventory()->add($item);
                         $item->equip($player);
@@ -772,6 +775,8 @@ return array(
                         $player->inventory()->add($item);
                         $item->equip($player);
                     }
+
+                    $player->battle_stats([10,4,4,7]); // INI ATK DEF ACC
                 }),
         ),
         3010 => array(
@@ -860,6 +865,8 @@ return array(
                     $item = new Model_Items_Miniknife();
                     $player->inventory()->add($item);
                     $item->equip($player);
+
+                    $player->battle_stats([6,6,6,6]); // INI ATK DEF ACC
 
                     $game->map()->add_location('Model_Places_Colosseum');
             }),

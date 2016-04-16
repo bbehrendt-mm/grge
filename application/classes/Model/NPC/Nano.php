@@ -167,4 +167,20 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
         if ($type === null) return $this->escort ? static::$escort_functions : [];
         return $this->escort ? (in_array($type, static::$escort_functions) || in_array(Interface_Plentity::IC_ALLOW_ANY, static::$escort_functions)) : false;
     }
+
+    public function entity_species() {
+        return '';
+    }
+
+    public function entity_profession() {
+        return '';
+    }
+
+    public function entity_action() {
+        return '';
+    }
+
+    public function entity_description() {
+        return '';
+    }
 }

@@ -611,14 +611,15 @@ class Controller_Game extends Controller {
          */
         global $player;
 
+        $char_stats = $player->battle_stats();
         $tmp_all = [
-            Model_Items_Abstract_Equipable::MIAE_STAT_INI => 5,
-            Model_Items_Abstract_Equipable::MIAE_STAT_ATK => 5,
-            Model_Items_Abstract_Equipable::MIAE_STAT_DEF => 5,
-            Model_Items_Abstract_Equipable::MIAE_STAT_ACC => 5,
+            Model_Items_Abstract_Equipable::MIAE_STAT_INI => $char_stats[0],
+            Model_Items_Abstract_Equipable::MIAE_STAT_ATK => $char_stats[1],
+            Model_Items_Abstract_Equipable::MIAE_STAT_DEF => $char_stats[2],
+            Model_Items_Abstract_Equipable::MIAE_STAT_ACC => $char_stats[3],
         ];
 
-        $char_stats = $player->battle_stats();
+
         $stats = [
             Model_Items_Abstract_Equipable::MIAE_STAT_INI => [['type' => 0, 'value' => $char_stats[0], 'all' => $tmp_all]],
             Model_Items_Abstract_Equipable::MIAE_STAT_ATK => [['type' => 0, 'value' => $char_stats[1], 'all' => $tmp_all]],

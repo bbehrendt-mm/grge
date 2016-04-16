@@ -18,6 +18,8 @@ if ( !function_exists('__'))
      */
 	function __($string, $values = null, $lang = null)
 	{
+        if ($string === 'Brainbox' || $string === 'MisterD')
+            throw new Exception('NAYCEPTION');
         $values = ($values === -1) ? [] : array_merge(empty($values) ? [] : $values, [
             //Defaults
             '::i::' => '<i>',

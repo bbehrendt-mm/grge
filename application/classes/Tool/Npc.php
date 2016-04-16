@@ -34,7 +34,7 @@ class Tool_Npc {
         $tmp = null;
         foreach ($ilist as $item) {
 
-            foreach ($item->simple_effects($p) as $action => $effects) {
+            foreach ($item->simple_effects($p, true) as $action => $effects) {
                 $avs = 0;
                 $sss = 0;
                 foreach ($satisfy as $stat => $arr)

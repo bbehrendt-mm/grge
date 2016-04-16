@@ -16,6 +16,7 @@ abstract class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
         $a = static::$alcohol * (Tool_Scripts::get_timeofday() == "evening" ? 0.75 : 1);
         return parent::hid()
             ->add_action('Trinken', Model_Action::factory()
+                    ->allow_auto(false)
                     ->effect(
                         Model_Effect::factory()
                             ->effect(Model_Status::MS_STAT_DRUNK, $a)

@@ -82,9 +82,10 @@ class Model_Hid {
 
     /**
      * @param Interface_Plentity $p
+     * @param bool $auto
      * @return array
      */
-    public function simple_effects($p = null) {
+    public function simple_effects($p = null, $auto = false) {
         /**
          * @global Model_Game $game
          * @global Model_Player $player
@@ -101,7 +102,7 @@ class Model_Hid {
             /** @var Model_Action $a */
             $a = $action['action'];
 
-            if ($a->has_side_effect() || $a->has_requirements() || $a->denied_for($p->type())) continue;
+            if ($a->has_side_effect() || $a->has_requirements() || $a->denied_for($p->type()) || ($auto && !$a->allow_auto())) continue;
             $tmp[$id] = $a->list_effects($p);
         }
         return $tmp;

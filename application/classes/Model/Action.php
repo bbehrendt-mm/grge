@@ -20,6 +20,7 @@ class Model_Action {
     private $description = null;
     private $skin = null;
     private $allow_remote_execution = true;
+    private $allow_autonomous_execution = true;
     private $prevent_user_type = [];
     private $allowed_user_type = [];
 
@@ -44,6 +45,12 @@ class Model_Action {
     public function allow_remote($v = null) {
         if ($v === null) return $this->allow_remote_execution;
         else $this->allow_remote_execution = $v;
+        return $this;
+    }
+
+    public function allow_auto($v = null) {
+        if ($v === null) return $this->allow_autonomous_execution;
+        else $this->allow_autonomous_execution = $v;
         return $this;
     }
 
@@ -250,7 +257,6 @@ class Model_Action {
      */
     public function test($player, $side_player = null, $argument = null) {
         if ($this->popup) return false;
-        $no_player = Tool_Scripts::is_npc($player);
 
         if ($this->condition !== null) {
             /** @var callable $cf */

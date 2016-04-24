@@ -386,12 +386,6 @@ class Model_Player extends Model_NPC_Nano {
         return Tool_Modes::get_job_by_id($this->job);
     }
 
-    public function entity_action() {
-        if ($buff = $this->get_status()->retrieve('fragile'))
-            return $buff->name();
-        else return "Bereit";
-    }
-
     public function entity_description() {
         return 'Dieser Charakter wird von einem anderen Spieler kontrolliert.';
     }

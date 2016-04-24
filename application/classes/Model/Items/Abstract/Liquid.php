@@ -17,4 +17,24 @@ abstract class Model_Items_Abstract_Liquid extends Model_Items_Abstract_Item imp
 	public function take($silent = false) {
 		return false;
 	}
+
+    protected function hid() {
+        $php53pb = $this;
+        return parent::hid()
+            ->add_action('Auflecken',
+                Model_Action::factory()
+                    ->allow_for(Interface_Plentity::IC_NPC_ANIMAL)
+                    ->show_as(
+                        Model_Effect::factory()
+                            ->effect(Model_Status::MS_STAT_THIRST, 20)
+                            ->ambiguous_effect(Model_Status::MS_STAT_HEALTH)
+                    )
+                    ->effect(
+                        Model_Effect::factory()
+                            ->effect(Model_Status::MS_STAT_THIRST, 20)
+                            ->effect(Model_Status::MS_STAT_HEALTH, -$this->toxicity)
+                            ->consume($this)
+                    )
+            );
+    }
 }	

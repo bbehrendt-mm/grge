@@ -10,4 +10,6 @@
         ->add('gp_literature'               , 2)
         ->add('Model_Items_Helmet'          , 1)
         ->add('Model_Items_Jacket'          , 1)
+
+        ->add(Model_Items_Virtual_Invoke_Animal::cls()        , 1)
         ;

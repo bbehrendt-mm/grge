@@ -4,12 +4,11 @@ class Model_Combat_Players_Cat extends Model_Combat_Players_Player {
 
     protected $max_health = 25;
 
-    protected $stat_initiative = 15;
-    protected $stat_damage = 8;
-    protected $stat_resistance = 2;
-    protected $stat_accuracy = 15;
-
-    protected $movement_range = 13;
+    protected $stat_initiative = 10;
+    protected $stat_damage = 4;
+    protected $stat_resistance = 1;
+    protected $stat_accuracy = 10;
+    protected $movement_range = 10;
 
     protected static $show_weapon_switch = false;
     protected $avatar;
@@ -19,7 +18,7 @@ class Model_Combat_Players_Cat extends Model_Combat_Players_Player {
      * @param string $avatar
      * @return Model_Combat_Players_Dog
      */
-    public static function create_linked_actor($p, $avatar = 'winchester.jpg') {
+    public static function create_linked_actor($p, $avatar = 'cat.jpg') {
         /** @noinspection PhpUndefinedMethodInspection */
         $ret = static::factory()
             ->player($p)

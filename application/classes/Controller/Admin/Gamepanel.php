@@ -76,7 +76,7 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
         $instances = 0;
 
         foreach ($sets as $set) {
-            $classname = 'Model_Items_' . str_replace(['0::','v::'],['Generic_','Virtual_'],$set['id']);
+            $classname = 'Model_Items_' . str_replace(['0::','v::','t::'],['Generic_','Virtual_','Virtual_Invoke_'],$set['id']);
 
             if (!class_exists($classname) ||
                 !Tool_System::instance_of($classname, 'Model_Items_Abstract_Item')) {
@@ -104,10 +104,18 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
                     continue(2);
                 }
 
-                if ($target_inv == 'true') $player->inventory()->add($item);
-                else $player->location()->inventory()->add($item);
-                $instances++;
+                if (Tool_System::instance_of($item, Model_Items_Virtual_Invoke_Abstract::cls())) {
+                    /** @var $item Model_Items_Virtual_Invoke_Abstract */
+                    $item->trigger_spawn($player->location(), $player);
+                    $item->grind();
+                    $item = null;
+                } else {
+                    if ($target_inv == 'true') $player->inventory()->add($item);
+                    else $player->location()->inventory()->add($item);
 
+                }
+
+                $instances++;
             }
         }
 
@@ -201,6 +209,7 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
 
             if (!Tool_System::instance_of($classpath, 'Model_Items_Abstract_Item')) continue;
             $virtual = Tool_System::instance_of($classpath, 'Model_Items_Abstract_Virtual');
+            $trigger = Tool_System::instance_of($classpath, Model_Items_Virtual_Invoke_Abstract::cls());
 
             $tmp = [];
             $parameters = $reflection->getConstructor()->getParameters();
@@ -232,11 +241,11 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
 
 
                 $list[] = [
-                    'id' => str_replace(['Model_Items_Virtual_','Model_Items_Generic_','Model_Items_'],['v::','0::',''],$classpath),
-                    'name' => $virtual ? '[VCI]' : ($use_instances ? __($instance->name()) : __($classpath::static_name())),
+                    'id' => str_replace(['Model_Items_Virtual_Invoke_','Model_Items_Virtual_','Model_Items_Generic_','Model_Items_'],['t::','v::','0::',''],$classpath),
+                    'name' => $virtual ? ($trigger ? '[ITW]' : '[VCI]') : ($use_instances ? __($instance->name()) : __($classpath::static_name())),
                     'desc' => $virtual ? '' : ($use_instances ? __($instance->description()) : __($classpath::static_description())),
-                    'icon' => $virtual ? 'items/any' : ($use_instances ? $instance->icon() : $classpath::static_icon()),
-                    'cat' => $virtual ? 'Virtual Control Items' : __(Model_Items_Abstract_Item::translateCatID($use_instances ? $instance->cat() : $classpath::static_cat())),
+                    'icon' => $virtual ? ($trigger ? 'items/any2' : 'items/any') : ($use_instances ? $instance->icon() : $classpath::static_icon()),
+                    'cat' => $virtual ? ($trigger ? 'Trigger Wrappers' : 'Virtual Control Items') : __(Model_Items_Abstract_Item::translateCatID($use_instances ? $instance->cat() : $classpath::static_cat())),
                     'params' => $tmp
                 ];
             }

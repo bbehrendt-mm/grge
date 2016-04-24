@@ -11,21 +11,43 @@
             box.append($('<b />').text(player.name));
             var bars = NF.row().appendTo(box);
 
+
+
             box.children('b').css('cursor', 'default').attr('title', '-').qtip(game.render.html.qtip.ingame('bottom', {
                 render: function(event,api) {
                     var content = $(this).find('.qtip-content').empty().css('width', 360);
 
-                    var table;
                     content.append(
                         $('<b />').addClass('header').text(player.name)
-                    ).append(table = NF.row());
+                    );
 
                     var date = new Date(player.last_seen * 1000);
 
-                    if (player.npc)
+                    if (player.npc) {
                         NF.row()
                             .append(NF.cell(true, 12).text(<?=__j('Dies ist ein computergesteuerter Charakter (NPC)!')?>))
                             .appendTo(content);
+
+                        if (player.info) {
+                            NF.row()
+                                .append(NF.cell(true, 6, 0, 'b right').text(<?=__j('Spezies')?>))
+                                .append(NF.cell(true, 6, 0, 'left').text(player.info.species))
+                                .appendTo(content);
+                            NF.row()
+                                .append(NF.cell(true, 6, 0, 'b right').text(<?=__j('Typ')?>))
+                                .append(NF.cell(true, 6, 0, 'left').text(player.info.profession))
+                                .appendTo(content);
+                            NF.row()
+                                .append(NF.cell(true, 6, 0, 'b right').text(<?=__j('Zustand')?>))
+                                .append(NF.cell(true, 6, 0, 'left').text(player.info.action))
+                                .appendTo(content);
+                            NF.row()
+                                .append(NF.cell(true, 6, 0, 'b right').text(<?=__j('Beschreibung')?>))
+                                .append(NF.cell(true, 6, 0, 'left').text(player.info.desc))
+                                .appendTo(content);
+                        }
+                    }
+
                     else {
                         NF.row()
                             .append(NF.cell(true, 6, 0, 'b right').text(<?=__j('Beruf')?>))

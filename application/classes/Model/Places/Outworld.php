@@ -70,7 +70,7 @@ class Model_Places_Outworld extends Model_Places_Abstract_Node {
             }
 
             if ($game->config('places.outworld.spawn_dogmeat') && !$game->get_npc('dogmeat')) {
-                $dogmeat = new Model_NPC_Dog('Dogmeat');
+                $dogmeat = new Model_NPC_Special_Dogmeat();
                 $dogmeat->location_class($this->uin());
                 $game->add_npc($dogmeat, 'dogmeat');
                 $this->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $dogmeat->id(), true));

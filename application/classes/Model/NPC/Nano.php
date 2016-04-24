@@ -177,10 +177,16 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
     }
 
     public function entity_action() {
-        return '';
+        if ($buff = $this->get_status()->retrieve('fragile'))
+            return $buff->name();
+        else return null;
     }
 
     public function entity_description() {
         return '';
+    }
+    
+    public function is_fighter() {
+        return true;
     }
 }

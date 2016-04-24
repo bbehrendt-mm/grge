@@ -309,10 +309,10 @@ class Model_Effect {
 
         $factor = ($stat >= 0 && $player) ? $player->get_status()->scaling($stat, Model_Status::MS_EFFECT_ITEM) : 1;
 
-        if (is_array($i)) return ($i[0] * $factor) . " - " . ($i[1] * $factor);
+        if (is_array($i)) return max(-100,min(100, $i[0] * $factor)) . " - " . max(-100,min(100, $i[1] * $factor));
         if ($i == PHP_INT_MAX) return '+∞';
         if ($i == -PHP_INT_MAX) return '-∞';
-        return $i * $factor;
+        return max(-100,min(100, $i * $factor));
     }
 
     /**

@@ -18,6 +18,14 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
 	public function season() {
 		return $this->set['gamedata']->head->season;
 	}
+
+    public function count($type, $num = null) {
+        if ($num === null)
+            return isset($this->set['gamedata']->counters[$type]) ? $this->set['gamedata']->counters[$type] : 0;
+        elseif (isset($this->set['gamedata']->counters[$type]))
+            return $this->set['gamedata']->counters[$type] += $num;
+        else return $this->set['gamedata']->counters[$type] = $num;
+    }
 	
 	/**
 	 * Check if game is paused

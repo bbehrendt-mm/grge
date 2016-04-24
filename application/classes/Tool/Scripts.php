@@ -500,7 +500,7 @@ class Tool_Scripts
             $actual_combatants[$fraction] = $non_combatants[$fraction] = [];
             /** @var Model_Combat_Actor|Model_NPC_Nano $member */
             foreach ($group as $member) {
-                if (Tool_System::instance_of($member, Model_NPC_Nano::cls()) && $member->get_status()->retrieve('passout')) {
+                if (Tool_System::instance_of($member, Model_NPC_Nano::cls()) && ($member->get_status()->retrieve('passout') || !$member->is_fighter())) {
                     $non_combatants[$fraction][] = $member;
                     $no_nc = false;
                 }
@@ -611,6 +611,9 @@ class Tool_Scripts
         //Child Bonus
         if (!Tool_Scripts::is_npc($player) && $player->job(1080)) $c *= 1.5;
 
+        //Item Spawnrate Stat
+        $c *= $player->get_status()->get(Model_Status::MS_CHAR_ITEM_SPAWNRATE);
+        
         return $c;
     }
 

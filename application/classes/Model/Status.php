@@ -22,6 +22,7 @@ class Model_Status {
     const MS_CHAR_BULKYNESS = 516;
     const MS_CHAR_DAMAGE_MULTIPLIER = 517;
     const MS_CHAR_LOCATION_SPAWNRATE = 518;
+    const MS_CHAR_ITEM_SPAWNRATE = 519;
 
     const MS_EFFECT_GENERIC = 0;
     const MS_EFFECT_ITEM = 1;
@@ -37,16 +38,28 @@ class Model_Status {
     protected $status_bars = [];
     protected $scaling_effects = [];
 
+    protected $fixed_thresholds = [];
+    
     protected $cod = null;
     protected $alive = true;
 
     public function __wakeup() {
         //Reset above-threshold bars
         foreach ($this->status_bars as $key => &$value)
-            if ($key >= Model_Status::MS_THRESHOLD) $value = 1;
+            if ($key >= Model_Status::MS_THRESHOLD) $value = $this->get_fixed_threshold($key);
 
         if ($this->alive())
             $this->clear_cause_of_death();
+    }
+    
+    protected function get_fixed_threshold($key) {
+        if ($key > Model_Status::MS_THRESHOLD)
+            return isset($this->fixed_thresholds[$key]) ? $this->fixed_thresholds[$key] : 1;
+        else return 0;
+    }
+    
+    public function set_fixed_threshold($k, $value) {
+        $this->fixed_thresholds[$k] = $value;
     }
 
     /**
@@ -68,7 +81,7 @@ class Model_Status {
      * @return int
      */
     public function get($stat) {
-        if (!isset($this->status_bars[$stat])) return ($stat >= Model_Status::MS_THRESHOLD) ? 1 : 0;
+        if (!isset($this->status_bars[$stat])) return ($stat >= Model_Status::MS_THRESHOLD) ? $this->get_fixed_threshold($stat) : 0;
         elseif ($stat >= Model_Status::MS_THRESHOLD)
             return max(0,1 + $this->buffs_by_stat($stat));
         else return $this->status_bars[$stat];
@@ -87,7 +100,7 @@ class Model_Status {
 
         //Check if value is set already and calculate change
         if (!isset($this->status_bars[$stat]))
-            $v = ($stat >= Model_Status::MS_THRESHOLD) ? 1 : 0;
+            $v = ($stat >= Model_Status::MS_THRESHOLD) ? $this->get_fixed_threshold($stat) : 0;
         else $v = $this->status_bars[$stat];
 
         $v += $effect * $this->scaling($stat, $type);

@@ -32,4 +32,6 @@
         ->add('Model_Items_Flashlight'          , 2)
         ->add('Model_Items_Tentkit'             , 1)
         ->add('Model_Items_Generic_Belt'        , 1)
+
+        ->add(Model_Items_Virtual_Invoke_Animal::cls()        , 1)
         ;

@@ -18,8 +18,6 @@ if ( !function_exists('__'))
      */
 	function __($string, $values = null, $lang = null)
 	{
-        if ($string === 'Brainbox' || $string === 'MisterD')
-            throw new Exception('NAYCEPTION');
         $values = ($values === -1) ? [] : array_merge(empty($values) ? [] : $values, [
             //Defaults
             '::i::' => '<i>',
@@ -136,6 +134,19 @@ class I18n extends Kohana_I18n {
         $hash = md5($string, true);
         if (DB::select('id')->from('language')->where('hash','=', $hash)->execute()->count())
             return false;
+
+        if (Kohana::$environment === Kohana::DEVELOPMENT) {
+            $file = fopen('dbg_translate.list', 'a');
+            fwrite($file, "{$string}\n");
+            foreach (debug_backtrace() as $entry) {
+                $entry = array_merge(['file' => 'UNKNOWN FILE', 'line' => -1, 'function' => 'UNKNOWN'],$entry);
+                if (preg_match('/I18n.php$/', $entry['file'])) continue;
+                fwrite($file, "\t{$entry['file']} [{$entry['line']}] in {$entry['function']}\n");
+            }
+
+            fwrite($file, '[' . base64_encode($hash) . '] ' . date('r') . "\n\n");
+            fclose($file);
+        }
 
         static::flush_cache();
         list(, $rows) = DB::insert('language', ['hash',static::get_primary_language()])->values([$hash,$string])->execute();

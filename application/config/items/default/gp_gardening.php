@@ -10,4 +10,6 @@
         ->add('Model_Items_Helmet'          ,1)
         ->add('Model_Items_Generic_Bike'    ,1)
         ->add('Model_Items_Generic_Belt'    ,1)
+
+        ->add(Model_Items_Virtual_Invoke_Animal::cls()        , 1)
         ;

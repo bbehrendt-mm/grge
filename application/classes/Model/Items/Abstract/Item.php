@@ -75,7 +75,7 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 	}
 
 	public static function getNumberOfTypes() {
-		return count(static::$instances_info) - 1;
+		return count(static::$instances_info);
 	}
 
     /**

@@ -20,6 +20,8 @@ return array(
                     'places.outworld.alt_spawn_stranger'    => false,
                     'places.outworld.location_density'      => 1,
                     'places.bar.spawn_winchester'           => false,
+                    'places.toilet.spawn_sherri'            => false,
+                    'places.general.spawn_random_animals'   => true,
                     'items.bottle.allow_full_detox'         => true,
                     'items.water.tox_dirty'                 => 8,
                     'items.water.tox_polluted'              => 15,
@@ -59,6 +61,7 @@ return array(
                     'places.outworld.spawn_stranger'        => true,
                     'places.outworld.spawn_dogmeat'         => true,
                     'places.bar.spawn_winchester'           => true,
+                    'places.toilet.spawn_sherri'            => true,
 
                     'ranking.points.zombie_kills.factor'    => 0,
                     'ranking.points.zombie_kills.offset'    => 0,
@@ -237,6 +240,7 @@ return array(
                     'places.outworld.alt_spawn_stranger'=>  true,
                     'places.outworld.spawn_dogmeat'     => true,
                     'places.bar.spawn_winchester'       => true,
+                    'places.toilet.spawn_sherri'        => true,
 
                     'ranking.points.zombie_kills.factor'=>  0,
                     'ranking.points.zombie_kills.offset'=>  0,
@@ -314,6 +318,7 @@ return array(
                     'game.config.itemset' => 'roadtrip',
                     'places.outworld.spawn_dogmeat'     => false,
                     'places.bar.spawn_winchester'       => false,
+                    'places.toilet.spawn_sherri'        => false,
 
                     'ranking.points.zombie_kills.factor'=> 0,
                     'ranking.points.zombie_kills.offset'=> 0,

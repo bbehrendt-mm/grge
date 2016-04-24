@@ -840,7 +840,13 @@ class Controller_Game extends Controller {
                 'inventory' => ($n->allow(Interface_Plentity::IC_ALLOW_SHOW_INVENTORY)) ? $this->render_inventory($n, $n->allow(Interface_Plentity::IC_ALLOW_ITEMS_USE)) : false,
                 'escort' => $n->companion(),
                 'allow' => $allow,
-                'npc' => true
+                'npc' => true,
+                'info' => [
+                    'species' => __($n->entity_species()),
+                    'profession' => __($n->entity_profession()),
+                    'desc' => __($n->entity_description()),
+                    'action' => $n->entity_action() ? $n->entity_action() : __('Bereit')
+                ]
             ];
         }
 

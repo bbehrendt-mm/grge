@@ -13,6 +13,7 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
         return parent::hid()
             ->add_action('Einen Schluck trinken',
                 Model_Action::factory()
+                   ->allow_auto(false)
                    ->condition(function() use ($php53pb) {
                         /** @var Model_Items_Abstract_Bottle $php53pb */
                         return $php53pb->fillrate() > 0;

@@ -27,7 +27,7 @@ class Init_Game {
 		$set->head->season = Kohana::$config->load('server.season');
 		$set->head->next_uin = 1;
 		$set->head->ticks = 0;
-		$set->head->params = Array();
+		$set->head->params = [];
 		$set->head->paused = false;
 		$set->head->pauselock = 0;
         $set->head->name = $name;
@@ -38,7 +38,7 @@ class Init_Game {
             $game->config($key, $value);
 
         //NDP Storage
-        $set->ndp = array();
+        $set->ndp = [];
 		
 		//Contest info
 		$set->head->contest = Model_Game::get_contest_data($contest);
@@ -47,10 +47,13 @@ class Init_Game {
 		$set->uin = new Model_Uinmanager($gameid);
 
         //Players
-        $set->players = Array();
-        $set->npcs = Array();
-        $set->graveyard = Array();
-        $set->ghuls = Array();
+        $set->players = [];
+        $set->npcs = [];
+        $set->graveyard = [];
+        $set->ghuls = [];
+
+        //Counters
+        $set->counters = [];
 
 		//Map
 		$set->maps['main'] = Model_Map_Abstract::factory($config_data['config']['game.config.map']);

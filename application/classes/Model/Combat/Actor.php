@@ -341,7 +341,7 @@ class Model_Combat_Actor extends Named {
         return $this;
     }
 
-    private function reset_steps() {
+    protected function reset_steps() {
         list($this->next_move) = $this->actual_stats();
     }
 
@@ -552,9 +552,9 @@ class Model_Combat_Actor extends Named {
             /** @var Model_Combat_Actor $target */
             $target = $move[1];
 
-            $d = $this->distance_from($target);
+            $d = max(0.5, $this->distance_from($target));
             $d_min = $d - ($move[2] > 0 ? $this->current_weapon->max_range() : $this->current_weapon->min_range());
-
+            
             $old_x = $this->pos_x;
             $old_y = $this->pos_y;
 
@@ -581,7 +581,6 @@ class Model_Combat_Actor extends Named {
         }
 
         if ($use_second_action) $this->act($friends, $foes, true);
-
     }
 
     public function disengage() {

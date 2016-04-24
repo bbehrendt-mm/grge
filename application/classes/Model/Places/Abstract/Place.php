@@ -306,6 +306,14 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 
 		if (!$return && ($player->get_status()->retrieve('fragile') || $player->get_status()->retrieve('passout'))) return true;
 		$item = $this->item_factory->spawn($force, true, Tool_Scripts::calculate_find_chances($player->id()));
+
+        if (Tool_System::instance_of($item, Model_Items_Virtual_Invoke_Abstract::cls())) {
+            /** @var $item Model_Items_Virtual_Invoke_Abstract */
+            $item->trigger_spawn($this, $player);
+            $item->grind();
+            $item = null;
+        }
+
         if ($item && !$return) {
             Tool_Scripts::place_new_item($item);
             return true;

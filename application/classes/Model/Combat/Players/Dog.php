@@ -4,12 +4,11 @@ class Model_Combat_Players_Dog extends Model_Combat_Players_Player {
 
     protected $max_health = 50;
 
-    protected $stat_initiative = 12;
-    protected $stat_damage = 4;
+    protected $stat_initiative = 10;
+    protected $stat_damage = 3;
     protected $stat_resistance = 0;
-    protected $stat_accuracy = 12;
-
-    protected $movement_range = 10;
+    protected $stat_accuracy = 5;
+    protected $movement_range = 8;
     protected $avatar;
 
     protected static $show_weapon_switch = false;
@@ -19,7 +18,7 @@ class Model_Combat_Players_Dog extends Model_Combat_Players_Player {
      * @param string $avatar
      * @return Model_Combat_Players_Dog
      */
-    public static function create_linked_actor($p, $avatar = 'dogmeat.jpg') {
+    public static function create_linked_actor($p, $avatar = 'dog.jpg') {
         /** @noinspection PhpUndefinedMethodInspection */
         $ret = static::factory()
             ->player($p)

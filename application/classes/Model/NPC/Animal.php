@@ -10,7 +10,29 @@ abstract class Model_NPC_Animal extends Model_NPC_Nano
     protected static $inventory_size = 100;
     protected static $comfort_threshold = 50;
 
-    public function __construct($name) {
+    protected static $namelist = [];
+
+    public function __construct($name = null) {
+        /** @global Model_Game $game */
+        global $game;
+
+        if (static::$namelist) {
+            $list = array();
+            for ($i = 0; $i < count(static::$namelist); $i++)
+                if ($game->ndp_check(get_called_class(), $i))
+                    $list[] = $i;
+
+            if (!$list) {
+                $game->ndp_purge(get_called_class());
+                $type = mt_rand(0, count(static::$namelist) - 1);
+            } else $type = $list[mt_rand(0, count($list) - 1)];
+
+            $name = static::$namelist[$type];
+            $game->ndp_register(get_called_class(), $type);
+        }
+
+        if (!$name) $name = $this->entity_species();
+
         parent::__construct($name);
 
         $this->get_status()->set(
@@ -40,6 +62,10 @@ abstract class Model_NPC_Animal extends Model_NPC_Nano
         $this->companion(true);
     }
 
+    protected function is_drunk() {
+        return $this->status->get(Model_Status::MS_STAT_DRUNK) > max(5,(100 - static::$comfort_threshold));
+    }
+
     public function ai() {
         /** @global Model_Game $game */
         global $game;
@@ -49,7 +75,7 @@ abstract class Model_NPC_Animal extends Model_NPC_Nano
         // Item Consumption
         if (!$busy)
             foreach ([Model_Status::MS_STAT_HUNGER, Model_Status::MS_STAT_THIRST, Model_Status::MS_STAT_HEALTH] as $stat)
-                if ($this->get_status()->get($stat) <= static::$comfort_threshold) {
+                if ($this->get_status()->get($stat) <= static::$comfort_threshold || ($this->is_drunk() && Tool_Gambling::random(0.1))) {
 
                     $ic = Tool_Npc::get_satisfactory_item($this, true, true, $stat ,
                         [Model_Status::MS_STAT_HEALTH => [false, -$this->get_status()->get($stat)/2]],
@@ -90,4 +116,23 @@ abstract class Model_NPC_Animal extends Model_NPC_Nano
             }
         }
     }
+
+    public function can($type) {
+        if ($this->is_drunk() && in_array($type, [Interface_Plentity::IC_TRIGGER_ITEM_FINDINGS, Interface_Plentity::IC_TRIGGER_LOCATION_FINDINGS, Interface_Plentity::IC_TRIGGER_SUPPLIES]))
+            return false;
+        return parent::can($type);
+    }
+
+    public function entity_action() {
+        if ($p = parent::entity_action())
+            return $p;
+
+        if ($this->is_drunk()) return 'Betrunken';
+        return null;
+    }
+
+    public function entity_profession() {
+        return 'Haustier';
+    }
+
 }

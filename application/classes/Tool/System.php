@@ -92,4 +92,57 @@ class Tool_System {
 
         return substr(md5($class . '__salt'), 0, 5);
     }
+
+    /**
+     * @param string|Model_Items_Abstract_Item $cls 
+     * @param int $inst
+     * @return null
+     */
+    public static function getItemInstanceName($cls, $inst = -1) {
+        if (!Tool_System::instance_of($cls, Model_Items_Abstract_Item::cls()))
+            return null;
+
+        $reflection = new ReflectionClass($cls);
+        $parameters = $reflection->getConstructor()->getParameters();
+        
+        /** @var Model_Items_Abstract_Item $instance */
+        $instance =
+            ($reflection->isInstantiable() && $cls::getNumberOfTypes() > 0) && ($reflection->getConstructor()->getNumberOfRequiredParameters() == 0) && ($parameters[0]->getName() == 'type')
+                ? new $cls($inst < 0 || $inst > ($cls::getNumberOfTypes() - 1) ? 0 : $inst) : null;
+        $singular = $cls::getNumberOfTypes() == 1;
+
+        if ($cls < 0 && $cls::static_name()) return $cls::static_name();
+        
+        if ($instance && ($inst >= 0 || $singular || !$cls::static_name())) return $instance->name();
+        elseif ($cls::static_name()) return $cls::static_name();
+        else return null;
+    }
+
+    /**
+     * @param string|Model_Items_Abstract_Item $cls
+     * @param int $inst
+     * @return null
+     */
+    public static function getItemInstanceIcon($cls, $inst = -1) {
+        if (!Tool_System::instance_of($cls, Model_Items_Abstract_Item::cls()))
+            return null;
+
+        $reflection = new ReflectionClass($cls);
+        $parameters = $reflection->getConstructor()->getParameters();
+
+        /** @var Model_Items_Abstract_Item $instance */
+        $instance =
+            ($reflection->isInstantiable() && $cls::getNumberOfTypes() > 0) && ($reflection->getConstructor()->getNumberOfRequiredParameters() == 0) && (isset($parameters[0]) && $parameters[0]->getName() == 'type')
+                ? new $cls($inst < 0 || $inst > ($cls::getNumberOfTypes() - 1) ? 0 : $inst) : null;
+
+        if (!$instance && $inst >= 0) return null;
+
+        $singular = $cls::getNumberOfTypes() == 1;
+
+        if ($cls < 0 && $cls::static_icon()) return $cls::static_icon();
+
+        if ($instance && ($inst >= 0 || $singular || !$cls::static_icon())) return $instance->icon();
+        elseif ($cls::static_icon()) return $cls::static_icon();
+        else return null;
+    }
 }

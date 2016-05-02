@@ -151,7 +151,7 @@ class Controller_Map extends Controller_Game {
             //Passes
             if (!$sub)
                 foreach ($route['tail'] as $pass) if ($pass != $lid && $pass != $did)
-                    $game->location($pass)->pass($current->id());
+                    $game->location($pass)->pass($current->id(), !Tool_Scripts::is_npc($current) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC);
 
             //Tumbles
             if (($sub || $map_type != Model_Map_Abstract::MMA_TYPE_LABYRINTH) && Tool_Gambling::tumble($current)) {

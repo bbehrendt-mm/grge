@@ -43,8 +43,6 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 	
 	protected static $weight;
 	protected static $essential = false;
-	
-	protected static $associated_view = 'auto';
 
     public function is_carrier_item() {
         return static::$carrier_item;

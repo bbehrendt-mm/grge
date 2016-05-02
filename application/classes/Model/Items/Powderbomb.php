@@ -10,7 +10,6 @@ class Model_Items_Powderbomb extends Model_Items_Abstract_Escape implements Inte
 	);
 	
 	protected static $weight = 5;
-	
-	protected static $associated_view = 'escape';	
+    
 	protected static $esc_value = 10;
 }	

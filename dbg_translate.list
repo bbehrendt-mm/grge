@@ -50,3 +50,13 @@ Mäuse können zwar nicht gegen Zombies kämpfen, dafür helfen sie dir aber bei
 	D:\xampp\htdocs\grge\index.php [116] in execute
 [vJKi19IlDnlmg+opyqbVbg==] Sun, 24 Apr 2016 18:11:00 +0200
 
+item_name
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Wiki.php [172] in __
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_items
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[nQMHuo6ykP8OFY/BvKf65w==] Mon, 02 May 2016 16:51:52 +0200
+

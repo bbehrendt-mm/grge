@@ -373,7 +373,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
         $zombies = $this->zombie_factory->release();
         $zc = 0;
         foreach ($zombies as $zombie) $zc += $zombie->count();
-        $battle = Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $zombies], true, 10, $this, 'Du greifst die Zombies an, die den Weg versperren!');
+        $battle = Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $zombies], false, 10, $this, 'Du greifst die Zombies an, die den Weg versperren!');
         $this->zombie_factory()->accumulation($battle->count_group_members(2));
 
 		return true;	

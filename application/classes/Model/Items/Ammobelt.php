@@ -11,7 +11,6 @@ class Model_Items_Ammobelt extends Model_Items_Abstract_Item {
 
 	protected static $weight = 0;
 	protected static $essential = true;
-	protected static $associated_view = 'ammobelt';
 	
 	private $content = Array();
 	

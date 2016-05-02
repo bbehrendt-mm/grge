@@ -8,8 +8,7 @@ class Model_Items_Maptool extends Model_Items_Abstract_Item {
 			'description' => 'Dieses Sammlung nützlicher Dinge enthält alles, was du zum Kartographieren von Ruinen benötigst! ... nagut, es besteht aus einem Stapel Papier und einem Bleistift. Aber der ist immerhin spitz! Also hör auf dich zu beschweren!',
 			'category' => Model_Items_Abstract_Item::MIAI_CAT_GEAR,
 	);
-	
-	protected static $associated_view = 'mapper';
+    
 	protected static $weight = 0;
 	protected static $essential = true;
 	

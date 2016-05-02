@@ -147,7 +147,116 @@ class Controller_Admin_Wiki extends Controller_Admin_Admin {
     }
 
     public function action_main() {
+        $this->add_widget(View::factory('admin/wiki/main')
+            ->render());
+        $this->render();
+    }
 
+    public function action_items() {
+        $item_list = $this->get_model_list('Items', false);
+        $items = [];
+
+        foreach ($item_list as $item_class) {
+            /** @var Model_Items_Abstract_Item|string $item_class */
+            $reflection = new ReflectionClass($item_class);
+            if (!$reflection->isInstantiable()) continue;
+
+            $parameters = $reflection->getConstructor()->getParameters();
+            /** @var Model_Items_Abstract_Item $instance */
+            $instance =
+                ($item_class::getNumberOfTypes() > 0) && ($reflection->getConstructor()->getNumberOfRequiredParameters() == 0) && ($parameters[0]->getName() == 'type')
+                ? new $item_class() : null;
+            $singular = $item_class::getNumberOfTypes() == 1;
+
+            $virtual = Tool_System::instance_of($item_class, Model_Items_Abstract_Virtual::cls());
+            $trigger = Tool_System::instance_of($item_class, Model_Items_Virtual_Invoke_Abstract::cls());
+
+            if ($virtual) $name = ($trigger ? "[T]" : "[V]") . " " . str_replace($trigger ? 'Model_Items_Virtual_Invoke_' : 'Model_Items_Virtual_','',$item_class);
+            else $name = __(Tool_System::getItemInstanceName($item_class));
+            if (!$name) $name = $item_class;
+
+
+            if ($virtual) $icon = $trigger ? 'items/any2' : 'items/any';
+            else $icon = Tool_System::getItemInstanceIcon($item_class);
+            if (!$icon) $icon = 'items/any';
+
+            $ancestors = [];
+            $class = $reflection;
+
+            $trn = [
+                Model_Items_Abstract_Item::cls() => 'GRGE Item Base Class',
+                Model_Combat_Weapon::cls() => 'Combat Weapon',
+                Model_Items_Virtual_Invoke_Abstract::cls() => 'Wrapped Trigger'
+            ];
+
+            do {
+                $cn = $class->getName();
+
+                if (isset($trn[$cn])) $cn = $trn[$cn];
+                else $cn = str_replace(['Model_Items_Abstract_','Model_Items_','Model_Combat_Weapons_'],['','','Weapon Class '], $cn);
+
+                if ($class->isAbstract()) $cn = "[$cn]";
+
+                $ancestors[] = $cn;
+                if ($class->getName() == Model_Items_Abstract_Item::cls()) break;
+            } while ($class = $class->getParentClass());
+
+            $alias = [];
+            if ($item_class::getNumberOfTypes() > 1)
+                for ($t = 0; $t < $item_class::getNumberOfTypes(); $t++) {
+                    $aname = Tool_System::getItemInstanceName($item_class, $t);
+                    $aicon = Tool_System::getItemInstanceIcon($item_class, $t);
+
+                    if (!$aname && !$aicon) continue;
+                    $alias[] = [$aname ? __($aname) : $name, $aicon ? $aicon : $icon];
+                }
+            
+
+            $code = [];
+            foreach ($reflection->getMethods() as $method)
+                if ($method->getDeclaringClass()->getName() == $item_class) {
+                    $mth = [
+                        'name' => $method->getName(),
+                        'custom' => !$reflection->getParentClass() || !$reflection->getParentClass()->hasMethod($method->getName()),
+                    ];
+                    $code[] = $mth;
+                }
+
+            $static = [];
+            $skp = ['static_info','instances_info'];
+            foreach ($reflection->getStaticProperties() as $propertyName => $value)
+                if ($value !== null && !in_array($propertyName, $skp)) {
+                    ob_start();
+                    var_dump($value);
+                    $static[$propertyName] = ob_get_clean();
+                }
+                    
+
+            $tmp = [
+                'info' => [
+                    'name' => $name,
+                    'icon' => $icon,
+                    'alias' => $alias,
+                ],
+                'lineage' => $ancestors,
+                'code' => $code,
+                'properties' => $static
+            ];
+
+            $items[$item_class] = $tmp;
+        }
+
+        uasort($items, function($a,$b) {
+            return strcmp($a['info']['name'], $b['info']['name']);
+        });
+
+        $this->add_widget(View::factory('admin/wiki/items')
+            ->set('items', $items)
+            ->render());
+        $this->render();
+    }
+    
+    public function action_main_old() {
         $locations = $this->get_model_list('Places');
 
         $loc_names = [];

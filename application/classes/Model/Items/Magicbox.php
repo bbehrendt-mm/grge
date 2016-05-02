@@ -10,6 +10,5 @@ class Model_Items_Magicbox extends Model_Items_Abstract_Item {
 	);
 	
 	protected static $weight = 0;
-	protected static $essential = true;	
-	protected static $associated_view = 'magicbox';
+	protected static $essential = true;
 }	

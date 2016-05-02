@@ -17,6 +17,7 @@ class Model_NPC_Mouse extends Model_NPC_Animal
     
     protected static $abillities = [
         Interface_Plentity::IC_TRIGGER_ITEM_TICKS,
+        Interface_Plentity::IC_TRIGGER_ITEM_FINDINGS,
         Interface_Plentity::IC_TRIGGER_LOCATION_TICKS
     ];
 

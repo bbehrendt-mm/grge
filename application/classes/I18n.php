@@ -203,13 +203,13 @@ class I18n extends Kohana_I18n {
 
     /**
      * Removes a string from all translations as well as the cache and missing list. Legacy translations can not be removed!
-     * @param string $hash ID of string to remove
+     * @param string $id ID of string to remove
      * @return bool Success
      */
-    public static function remove($hash) {
+    public static function remove($id) {
         static::flush_cache();
 
-        return DB::delete('language')->where('hash', '=', $hash)->execute() > 0;
+        return DB::delete('language')->where('id', '=', $id)->execute() > 0;
     }
 
     /**

@@ -40,13 +40,6 @@ class Model_NPC_Mouse extends Model_NPC_Animal
         $this->get_status()->set_fixed_threshold(Model_Status::MS_CHAR_ITEM_SPAWNRATE, 4);
     }
 
-    /**
-     * @return Model_Items_Abstract_Item|null
-     */
-    protected function generate_dead_body() {
-        return new Model_Items_Body3();
-    }
-
     protected function generate_zombified_body() {
         return false;
     }

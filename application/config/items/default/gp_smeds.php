@@ -12,4 +12,5 @@
         ->add('Model_Items_Meds'            , 2)
         ->add('Model_Items_Uniheal'         , 1)
         ->add('Model_Items_Uniheal2'        , 1)
+        ->add('Model_Items_Morphine'        , 1)
         ;

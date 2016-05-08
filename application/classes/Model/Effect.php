@@ -87,7 +87,7 @@ class Model_Effect {
      * @return Model_Effect
      */
     public function achieve($achievement, $num = 1, $all = false) {
-        if ($achievement < 0) return $this;
+        if ($achievement < 0 || $num == 0) return $this;
 
         if ($all)
             return $this->custom(function() use ($achievement, $num) {
@@ -146,7 +146,8 @@ class Model_Effect {
 
         /** @var Model_Buffs_Abstract_Buff $buff */
         if ($buff::static_visible())
-            $this->buffs[$buff::static_icon()] = $remove ? '-' : ($lifetime > 0 ? "+" . $lifetime * 5 . "M" : '+');
+            $this->buffs[$buff::static_icon()] = $remove ? '-' : ($lifetime > 0 ? "+" . Tool_Numerics::duration_to_string($lifetime) : '+');
+
 
         return $this->custom(function($p) use ($buff, $remove, $lifetime) {
             /** @var Model_Player $p */

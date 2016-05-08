@@ -254,6 +254,8 @@ class Controller_Game extends Controller {
             /** @noinspection PhpUndefinedMethodInspection */
             if (Tool_System::instance_of($item, 'Model_Items_Abstract_Equipable') && $item->is_equipped())      $flags[] = 'equipped';
             /** @noinspection PhpUndefinedMethodInspection */
+            if (Tool_System::instance_of($item, Model_Items_Leash::cls()) && $item->is_active())                $flags[] = 'equipped';
+            /** @noinspection PhpUndefinedMethodInspection */
             if (Tool_System::instance_of($item, 'Model_Items_Abstract_Equipable') && $item->allows_primary() && $item->is_equipped_primary()) $flags[] = 'primary';
             if (Tool_System::instance_of($item, 'Model_Items_Abstract_Armor'))                          $flags[] = 'armor';
             if (Tool_System::instance_of($item, 'Model_Combat_Weapon'))                                 $flags[] = 'weapon';
@@ -328,7 +330,7 @@ class Controller_Game extends Controller {
                     'shots' => Tool_System::instance_of($item, 'Model_Combat_Weapons_Fillable') ? $item->count() : false,
                     'energy' => Tool_System::instance_of($item, 'Model_Combat_Weapons_Energy') ? $item->energy() : 0,
                     'accuracy' => $item->fixed_accuracy() ? $item->accuracy() * 100 : true,
-                    'breakable' => $item->durabillity() < 1,
+                    'breakable' => ($item->durabillity() < 1) || Tool_System::instance_of($item, 'Model_Combat_Weapons_Throwable'),
                 ];
             }
 

@@ -30,14 +30,28 @@ class Model_NPC_Dog extends Model_NPC_Animal
             Model_Status::MS_STAT_THIRST, mt_rand(45,70),
             Model_Status::MS_STAT_SLEEPY, 85
         );
+        
+        $this->inventory()->add(new Model_Items_Leash());
     }
 
+    
+    protected function is_leashed() {
+        /** @var Model_Items_Leash $leash */
+        $leash = $this->inventory()->get(Model_Items_Leash::cls());
+        if ($leash) $leash = $leash[0];
+        
+        return $leash ? $leash->is_active() : false;
+    }
 
-    /**
-     * @return Model_Items_Abstract_Item|null
-     */
-    protected function generate_dead_body() {
-        return new Model_Items_Body3();
+    public function allow($type = null) {
+        if ($type == Interface_Plentity::IC_ALLOW_MOVE && $this->is_leashed())
+            return false;
+        else return parent::allow($type);
+    }
+
+    public function ai() {
+        if ($this->is_leashed()) return;
+        else parent::ai();
     }
 
     protected function generate_zombified_body() {
@@ -54,5 +68,9 @@ class Model_NPC_Dog extends Model_NPC_Animal
 
     public function entity_description() {
         return 'Der beste Freund des Menschen ist auch in der Zombie-Apokalypse ein nützlicher Begleiter. Hunde transportieren Gegenstände und helfen dir im Kampf.';
+    }
+
+    public function is_fighter() {
+        return !$this->is_leashed() && parent::is_fighter();
     }
 }

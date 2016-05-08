@@ -62,7 +62,7 @@
                 <div class="cell rw-2">
                     <i id="tl_next" class="fa fa-arrow-right pointer" title="<?=__('Überspringen');?>"></i>
                 </div>
-                <div class="cell rw-2" class="<?=$adv_priv ? '' : 'disabled'?>">
+                <div class="cell rw-2 <?=$adv_priv ? '' : 'disabled'?>">
                     <i id="tl_delete" class="fa fa-trash pointer" title="<?=__('Löschen');?>"></i>
                 </div>
                 <div class="cell rw-2">
@@ -183,9 +183,11 @@
         <?php if ($adv_priv) { ?>
             if (!confirm(<?=__j('Der Eintrag wird aus allen Übersetzungsdateien entfernt. Sicher?')?>)) return;
 
-            connect('del', {}, function(data) {
-                if (data.success)
+            connect('del', {id: current_id}, function(data) {
+                if (data.success) {
                     game.render.html.notify('success', <?=__j('Der Eintrag wurde entfernt.');?>, <?=__j('Vielen Dank!');?>);
+                    next();
+                }
                 else game.render.html.notify('error', <?=__j('Ein Fehler ist aufgetreten...');?>, <?=__j('Oops');?>);
             });
         <?php } ?>

@@ -212,7 +212,9 @@
                     header = data.self ? <?=__j('Du hast :itemdef abgelegt.')?> : <?=__j(':name hat :itemdef abgelegt.')?>;
                     break;
                 case <?=Model_Log_Types_Transaction::MLTT_USE?>:
-                    header = data.self ? <?=__j('Du hast :itemdef verwendet (:action).')?> : <?=__j(':name hat :itemdef verwendet (:action).')?>;
+                    if (data.action)
+                        header = data.self ? <?=__j('Du hast :itemdef verwendet (:action).')?> : <?=__j(':name hat :itemdef verwendet (:action).')?>;
+                    else header = data.self ? <?=__j('Du hast :itemdef verwendet.')?> : <?=__j(':name hat :itemdef verwendet.')?>;
                     break;
             }
 

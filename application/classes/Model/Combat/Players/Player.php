@@ -51,9 +51,9 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
     }
 
     protected function damage($damage, $from = null, $armor_damage = null) {
-        parent::damage($damage, $from, $armor_damage);
+        parent::damage($this->player->get_status()->scaling(Model_Status::MS_STAT_HEALTH, Model_Status::MS_EFFECT_BATTLE) * $damage, $from, $armor_damage);
 
-        $this->player->get_status()->modify(Model_Status::MS_STAT_HEALTH, -$damage, Model_Status::MS_EFFECT_UNSCALE);
+        $this->player->get_status()->modify(Model_Status::MS_STAT_HEALTH, -$damage, Model_Status::MS_EFFECT_BATTLE);
     }
 
     public function customSprite($death_sprite = false) {

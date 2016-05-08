@@ -26,7 +26,7 @@ class Controller_Admin_Translate extends Controller_Admin_Admin {
         if (!static::priv_allow_all('TRANSLATE_MOD'))
             return $this->error(\grge\E_SERVER_ACCESS_DENIED);
 
-        $this->render(['success' => (int)I18n::remove($this->post('from'))]);
+        $this->render(['success' => (int)I18n::remove($this->post('id'))]);
         return true;
     }
 

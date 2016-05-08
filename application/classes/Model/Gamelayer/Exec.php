@@ -117,9 +117,13 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
 	}
 	
 	abstract public function duration();
-	
+
+    public function is_retired($uid) {
+        return isset($this->set["gamedata"]->graveyard[$uid]);
+    }
+
 	public function retire($uid, $as_batch = false) {
-        if (isset($this->set["gamedata"]->graveyard[$uid]))
+        if ($this->is_retired($uid))
             return false;
 
 		//Create ranking entry if game is rankable and player has more than zero points

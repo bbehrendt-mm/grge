@@ -60,3 +60,198 @@ item_name
 	D:\xampp\htdocs\grge\index.php [116] in execute
 [nQMHuo6ykP8OFY/BvKf65w==] Mon, 02 May 2016 16:51:52 +0200
 
+Kopfschuss
+	D:\xampp\htdocs\grge\application\views\pages\death.php [57] in __
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
+	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [984] in render
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_redirect
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[Evpp9pmNgNL4buL9bo/lcw==] Sat, 07 May 2016 15:04:53 +0200
+
+Hundeleine
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [266] in __
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [429] in group_itemlist
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [840] in render_inventory
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [891] in render_mp
+	D:\xampp\htdocs\grge\application\classes\Controller.php [249] in japi_data
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [46] in action_japi
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_japi
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[dKspg6+0LM4senJllWL6kA==] Sun, 08 May 2016 15:01:14 +0200
+
+Mit der Hundeleine kannst du verhindern, dass sich dein Vierbeiner an gefährlichen Zombiekämpfen beteiligt, die Zone wechselt oder dir deine Gegenstände wegfrisst.
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [267] in __
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [429] in group_itemlist
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [840] in render_inventory
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [891] in render_mp
+	D:\xampp\htdocs\grge\application\classes\Controller.php [249] in japi_data
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [46] in action_japi
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_japi
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[fZ47cBi7WRR2f2Qbgx8WBQ==] Sun, 08 May 2016 15:01:14 +0200
+
+Du hast :itemdef verwendet.
+	D:\xampp\htdocs\grge\application\views\scripts\core\core.log.js.php [217] in __j
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
+	D:\xampp\htdocs\grge\application\classes\JView.php [27] in render
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [228] in render
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [66] in __toString
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [77] in compile_js_module
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [83] in modscript
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_core
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[5sVWtYz2zJHvZCUweBTrzw==] Sun, 08 May 2016 15:09:28 +0200
+
+:name hat :itemdef verwendet.
+	D:\xampp\htdocs\grge\application\views\scripts\core\core.log.js.php [217] in __j
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
+	D:\xampp\htdocs\grge\application\classes\JView.php [27] in render
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [228] in render
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [66] in __toString
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [77] in compile_js_module
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [83] in modscript
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_core
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[K2KGmTG4hsG4XNEM6rl6uA==] Sun, 08 May 2016 15:09:28 +0200
+
+Betonstücke
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Gamepanel.php [245] in __
+	D:\xampp\htdocs\grge\application\classes\Controller.php [249] in japi_list_items
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_japi
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[WmBNpLLR+Tceo6X6jnUMoA==] Sun, 08 May 2016 17:54:22 +0200
+
+Betonstücke - die einfachste Methode, jede Demonstration aus dem Ruder laufen zu lassen. Jetzt erhältlich in den Trendfarben Dunkelweiß, Grau und Hellschwarz.
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Gamepanel.php [246] in __
+	D:\xampp\htdocs\grge\application\classes\Controller.php [249] in japi_list_items
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_japi
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[R6kTFeNyAHe0l6HUqMy28A==] Sun, 08 May 2016 17:54:22 +0200
+
+Göttliches Schwert
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Gamepanel.php [245] in __
+	D:\xampp\htdocs\grge\application\classes\Controller.php [249] in japi_list_items
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_japi
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[H+DzkkSqKijwjgFXC6nCdw==] Sun, 08 May 2016 17:54:22 +0200
+
+Morphium
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Gamepanel.php [245] in __
+	D:\xampp\htdocs\grge\application\classes\Controller.php [249] in japi_list_items
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_japi
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[HmDl4aH1xOJ3lQepI2ARtA==] Sun, 08 May 2016 18:38:07 +0200
+
+Mit einer ordentlichen Dosis Morphium fühlt sich die Zombie-Apokalypse wie ein Ponyhof und ein abgerissener Arm wie ein kleiner Kratzer an. Deine Schmerztoleranz wird während der Wirkdauer massiv erhöht, allerdings musst du dafür erhöhte Müdigkeit sowie eine sofortige Drogenabhängigkeit in Kauf nehmen. Apropos Abhängigkeit: Von einer Überdosis Morphium ist allgemein eher abzuraten...
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Gamepanel.php [246] in __
+	D:\xampp\htdocs\grge\application\classes\Controller.php [249] in japi_list_items
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_japi
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[sGNoU9sOS0Gffs1qbLR6Rw==] Sun, 08 May 2016 18:38:07 +0200
+
+Du stehst unter dem Einfluss von Morphium. Deine Schmerztoleranz ist stark erhöht.
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [503] in __
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [888] in render_status
+	D:\xampp\htdocs\grge\application\classes\Controller\Act.php [433] in japi_data
+	D:\xampp\htdocs\grge\application\classes\Controller.php [249] in japi_item
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [46] in action_japi
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_japi
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[BX6MQZP2JCIo8DkQg3bwBQ==] Sun, 08 May 2016 18:48:30 +0200
+
+Du spritzt dir eine Dosis Morphium. Deine Schmerzen verschwinden, doch dein ganzer Körper fühlt sich auf einmal taub an...
+	D:\xampp\htdocs\grge\application\classes\Model\Log\Types\String.php [43] in __
+	D:\xampp\htdocs\grge\application\classes\Model\Log\Types\String.php [26] in postprocess
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [524] in as_notification
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [896] in render_notifications
+	D:\xampp\htdocs\grge\application\classes\Controller\Act.php [433] in japi_data
+	D:\xampp\htdocs\grge\application\classes\Controller.php [249] in japi_item
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [46] in action_japi
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_japi
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[9MPkQKVF/giiE7mCEVxPbQ==] Sun, 08 May 2016 18:48:30 +0200
+
+Morphium-Überdosis
+	D:\xampp\htdocs\grge\application\classes\Model\Log\Types\String.php [40] in __
+	D:\xampp\htdocs\grge\application\classes\Model\Log\Types\String.php [26] in postprocess
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [524] in as_notification
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [877] in render_notifications
+	D:\xampp\htdocs\grge\application\classes\Controller\Act.php [433] in japi_data
+	D:\xampp\htdocs\grge\application\classes\Controller.php [249] in japi_item
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [46] in action_japi
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_japi
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[pWmAGoWHlDGIT1Wc/llfWg==] Sun, 08 May 2016 18:49:06 +0200
+
+Du spürst, wie deine Muskeln erschlaffen und dein Bewusstsein dich verlässt. Am Ende bleibt dir nichts als Dunkelheit. Herzlichen Glückwunsch, du bist tot.
+	D:\xampp\htdocs\grge\application\classes\Model\Log\Types\String.php [43] in __
+	D:\xampp\htdocs\grge\application\classes\Model\Log\Types\String.php [26] in postprocess
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [524] in as_notification
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [877] in render_notifications
+	D:\xampp\htdocs\grge\application\classes\Controller\Act.php [433] in japi_data
+	D:\xampp\htdocs\grge\application\classes\Controller.php [249] in japi_item
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [46] in action_japi
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_japi
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[cbiPkMg8xebEjLvG9yhDyA==] Sun, 08 May 2016 18:49:06 +0200
+

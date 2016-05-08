@@ -34,13 +34,6 @@ class Model_NPC_Cat extends Model_NPC_Animal
         );
     }
 
-    /**
-     * @return Model_Items_Abstract_Item|null
-     */
-    protected function generate_dead_body() {
-        return new Model_Items_Body3();
-    }
-
     protected function generate_zombified_body() {
         return Model_Combat_Zombies_Ghuldog::factory()->zombiefied_player_id($this->id)->name($this->name())->register_inventory($this->inventory())->strength($this->get_status()->get(Model_Status::MS_STAT_ZOMBIFY)/4, 25, 1);
     }

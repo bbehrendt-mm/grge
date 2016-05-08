@@ -6,7 +6,7 @@ core = {
     parts: {},
     snippets: {},
 
-    version: '2.1.0-0-0-271',
+    version: '2.1.0-0-0-281',
 
     last: {},
     plugins: {},
@@ -2043,7 +2043,9 @@ core = {
                     header = data.self ? "Du hast :itemdef abgelegt." : ":name hat :itemdef abgelegt.";
                     break;
                 case 3:
-                    header = data.self ? "Du hast :itemdef verwendet (:action)." : ":name hat :itemdef verwendet (:action).";
+                    if (data.action)
+                        header = data.self ? "Du hast :itemdef verwendet (:action)." : ":name hat :itemdef verwendet (:action).";
+                    else header = data.self ? "Du hast :itemdef verwendet." : ":name hat :itemdef verwendet.";
                     break;
             }
 

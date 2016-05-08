@@ -30,7 +30,9 @@ class Model_Status {
     const MS_EFFECT_MOVEMENT = 3;
     const MS_EFFECT_GLOBAL = 4;
     const MS_EFFECT_UNSCALE = 5;
-    const MS_EFFECT_REQUIREMENT = 5;
+    const MS_EFFECT_REQUIREMENT = 6;
+    const MS_EFFECT_BATTLE = 7;
+
 
     /** @var Model_Buffs_Abstract_Buff[] */
     protected $buffs = [];

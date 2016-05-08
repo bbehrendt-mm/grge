@@ -11,7 +11,12 @@ class Model_Items_Body3 extends Model_Items_Abstract_Item implements Interface_S
 	);
 	
 	protected static $weight = 30;
+    protected $peta_achievement = false;
 
+    public function __construct($pet = false) {
+        $this->peta_achievement = $pet;
+        parent::__construct(null);
+    }
 
     protected function hid() {
         return parent::hid()
@@ -22,6 +27,7 @@ class Model_Items_Body3 extends Model_Items_Abstract_Item implements Interface_S
                             ->effect(Model_Status::MS_STAT_HEALTH, -30)
                             ->consume($this)
                             ->achieve(Model_Achievement::MA_BODY_EATER)
+                            ->achieve(Model_Achievement::MA_PETA, $this->peta_achievement ? 1 : 0)
                             ->spawn('Model_Items_Bone')
                             ->message('Nachdem du das runtergeschlungen hast dreht sich dir der Magen um - aber wenigstens ist er wieder voll. Hoffentlich ist deine Hausapotheke das auch ...')
                     )

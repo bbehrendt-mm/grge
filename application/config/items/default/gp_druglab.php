@@ -18,6 +18,7 @@
         ->add('Model_Items_Helmet'          , 2)
         ->add('Model_Items_Jacket'          , 1)
         ->add('Model_Items_Shield3'         , 1)
+        ->add('Model_Items_Morphine'        , 1)
 
         ->add(Model_Items_Virtual_Invoke_Animal::cls()        , 1)
         ;

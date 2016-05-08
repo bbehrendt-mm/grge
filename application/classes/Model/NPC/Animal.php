@@ -16,7 +16,7 @@ abstract class Model_NPC_Animal extends Model_NPC_Nano
         /** @global Model_Game $game */
         global $game;
 
-        if (static::$namelist) {
+        if (static::$namelist && $name === null) {
             $list = array();
             for ($i = 0; $i < count(static::$namelist); $i++)
                 if ($game->ndp_check(get_called_class(), $i))
@@ -64,6 +64,13 @@ abstract class Model_NPC_Animal extends Model_NPC_Nano
 
     protected function is_drunk() {
         return $this->status->get(Model_Status::MS_STAT_DRUNK) > max(5,(100 - static::$comfort_threshold));
+    }
+
+    /**
+     * @return Model_Items_Abstract_Item|null
+     */
+    protected function generate_dead_body() {
+        return new Model_Items_Body3(true);
     }
 
     public function ai() {

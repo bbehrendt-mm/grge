@@ -100,7 +100,7 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
                     /** @var Model_Items_Abstract_Item $item */
                     $item = $reflector->newInstanceArgs($set['params']);
                 } catch (Exception $e) {
-                    $this->add_note('error',"Failed to instantiable {$set['id']}! " . $e->getMessage());
+                    $this->add_note('error',"Failed to instantiate {$set['id']}! " . $e->getMessage());
                     continue(2);
                 }
 

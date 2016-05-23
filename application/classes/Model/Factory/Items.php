@@ -39,6 +39,10 @@ class Model_Factory_Items extends Model_Factory_Abstract {
         if (!$this->equalized || (!$force && (mt_rand()/mt_getrandmax() > ($this->fillrate * $chances_modifier))) || !($k = $this->get_element()))
             return null;
 
+        /** @var Model_Items_Virtual_Invoke_Abstract|string $k */
+        if (Tool_System::instance_of($k, Model_Items_Virtual_Invoke_Abstract::cls()) && !$k->countAsItem())
+            $apply_decay = false;
+
         if ($apply_decay) {
             $this->fillrate -= $this->fillrate * $this->decay;
             $this->equalized[$k] -= $this->equalized[$k] * $this->decay;

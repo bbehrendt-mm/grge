@@ -11,6 +11,7 @@ class Model_Log_Types_Item extends Model_Log_Message {
     const MLTI_SOUL = 6;
     const MLTI_VENDING = 7;
     const MLTI_RAVEN = 8;
+    const MLTI_BOX = 9;
 
     protected static $type = Model_Log_Message::MLM_ITEM_LOG;
 

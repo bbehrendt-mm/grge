@@ -145,9 +145,30 @@
 
 @hotbox-title-color: #004352;
 @hotbox-subtitle-color: #7b7b7b;
+@hotbox-special-color: #a5056a;
+
+@keyframes rotate_a {
+  from {transform: rotate(0deg);}
+  to {transform: rotate(360deg);}
+}
+@keyframes rotate_b {
+  from {transform: rotate(0deg);}
+  to {transform: rotate(-360deg);}
+}
 
 .hotbox {
-  .whitebox; .no-select;
+  .whitebox; .no-select; overflow: hidden;
+
+  &.special>.head {
+    margin-left: 20px; position: relative;
+    &::before, &::after {
+      .font-awesome; color: @hotbox-special-color; display: inline-block; font-style: normal; font-weight: normal; content: "\f005"; pointer-events: none;
+      position: absolute; left: -20px; top: 4px; opacity: 0.5;
+    }
+    &::before {animation: rotate_a 4s linear 0s infinite}
+    &::after {animation: rotate_b 4s linear 0s infinite}
+  }
+
   margin: 3px; padding: 5px; cursor: pointer; transition: background 250ms ease, border-color 500ms ease; vertical-align: bottom;
   &:hover {.whitebox(5%)}
   &.active {.colorbox(@zv-color-main, @zv-color-main-dark)}

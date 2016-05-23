@@ -164,7 +164,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 	 */
 	public function zombie_factory() {
 		return $this->zombie_factory;
-	}
+	}    
 	
 	public function log() {
 		return $this->log;
@@ -323,8 +323,8 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
         else return true;
 	}
 
-    public function hero_replensish() {
-        $this->item_factory->replenish(0.75);
+    public function hero_replensish($val = 0.75) {
+        $this->item_factory->replenish($val);
     }
 	
 	public function break_out($fight) {
@@ -422,7 +422,6 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 	public function zombie_pop($reset = false) {
 		if ($reset) $this->zombie_factory->accumulation(0);
 		else return $this->zombie_factory->accumulation();
-        return true;
 	}
 
 	//Return description

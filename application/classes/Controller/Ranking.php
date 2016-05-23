@@ -345,7 +345,7 @@ class Controller_Ranking extends Controller {
         $this->add_widget(View::factory('pages/ranking')
             ->set('season', Kohana::$config->load('server.season'))
             ->set('sp_modes', array_map($converter, Tool_Modes::config_get_modes('single')))
-            ->set('mp_modes', array_map($converter, Tool_Modes::config_get_modes(['multi_auto','multi_custom'])))
+            ->set('mp_modes', array_map($converter, Tool_Modes::config_get_modes(['multi_auto','multi_custom','special_multi_auto'])))
             ->render()
         );
         $this->render();

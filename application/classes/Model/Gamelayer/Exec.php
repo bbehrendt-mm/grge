@@ -122,6 +122,16 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
         return isset($this->set["gamedata"]->graveyard[$uid]);
     }
 
+    public function register_death($uid) {
+        if ($this->config('game.lobby.persistent'))
+            $lobby_open = DB::select([DB::expr('COUNT(`gameid`)'), 'games'])->from('multiplayer_lobby')->where('gameid', '=', $this->set['gameid'])->and_where('slots', '>', 0)->execute()->get('games') > 0;
+        else
+            $lobby_open = DB::delete('multiplayer_lobby')->where('gameid', '=', $this->set['gameid'])->and_where('slots', '>', 0)->execute() > 0;
+
+        if ($lobby_open && $this->get_player($uid)->get_lifetime() < 288 && Kohana::$config->load('build.version.stage') < 3)
+            DB::insert('mp_lockouts', array('uid', 'timestamp'))->values(array($uid, time()))->execute();
+    }
+    
 	public function retire($uid, $as_batch = false) {
         if ($this->is_retired($uid))
             return false;
@@ -132,10 +142,6 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
         $this->set["gamedata"]->graveyard[$uid] = $this->setting_mode(11000) ? $this->get_player($uid)->get_points() : $this->get_player($uid)->get_lifetime();
 		
 		DB::delete('xref_game_player')->where('uid', '=', $uid)->execute();
-
-        $lobby_open = DB::delete('multiplayer_lobby')->where('gameid', '=', $this->set['gameid'])->and_where('slots', '>', 0)->execute() > 0;
-        if ($lobby_open && $this->get_player($uid)->get_lifetime() < 288 && Kohana::$config->load('build.version.stage') < 3)
-            DB::insert('mp_lockouts', array('uid', 'timestamp'))->values(array($uid, time()))->execute();
 
         if ($this->get_player($uid)->get_lifetime() >= 288 && $this->get_player($uid)->get_braincoins())
             Model_User::award_coins($uid, $this->get_player($uid)->get_braincoins());
@@ -162,7 +168,7 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
     abstract public function config($adress, $value = null);
 
 	public function check_players() {
-		if (count($this->set["gamedata"]->players) == count($this->set["gamedata"]->graveyard)) {
+        if (count($this->set["gamedata"]->players) == count($this->set["gamedata"]->graveyard)) {
 			
 			//Create contest ranking
 			if (isset($this->set['gamedata']->head->contest) && $this->set['gamedata']->head->contest)

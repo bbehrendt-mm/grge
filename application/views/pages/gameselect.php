@@ -70,6 +70,16 @@
                         </div>
                     <?php } ?>
 
+                    <?php foreach ($database['modes'] as $mid => $data) if ($data['type'] == 'special_multi_auto') { ?>
+                        <div data-special="<?=$mid?>" class="cell rw-6 rw-lg-12 padded">
+                            <div class="<?=$data['locked'] ? 'hotbox disabled' : 'hotbox special' ?>">
+                                <b class="head"><?=__($data['meta']['name'])?></b>
+                                <i class="subtitle"><?=__('Spezial-Modus');?></i>
+                                <?=__($data['meta']['caption'])?>
+                            </div>
+                        </div>
+                    <?php } ?>
+
                     <?php foreach($games as $game) { ?>
                         <div class="cell rw-6 rw-sm-12 padded">
                             <div data-modeset="<?=$game['mode']?>" data-set='{"mode":<?=$game['mode']?>,"id":<?=$game['gameid']?>,"protect":"","name":"","slots":"0","password":<?=$game['password'] ? 'false' : '""'?>,"flow":-1,"init":0}' data-caption="<?=__($database['modes'][$game['mode']]['meta']['name'])?> (<?=$game['name']?>)" class="<?=$game['locked'] ? 'hotbox disabled' : 'hotbox' ?>">
@@ -372,7 +382,6 @@
     var games = <?=json_encode($games)?>;
     var database = <?=json_encode($database)?>;
 
-
     var rebuild = function() {
         var has = $('#data-container').find('> input').map(function() {
             return $(this).attr('name');
@@ -555,6 +564,10 @@
         $.each(lobby.players, function(k, player) {
             $('[data-id=player-' + lobby.gameid + '-' + player.id + ']').addClass(player.cod ? 'red' : '').attr('title', player.cod ? player.cod : database.jobs[player.job].meta.name).qtip(game.render.html.qtip.player('top'));
         })
+    });
+
+    $('[data-special]').click(function() {
+        game.network.load('gamemaster/lobby/' + $(this).data('special'))
     });
 
     $('[data-modeset]').click(function() {

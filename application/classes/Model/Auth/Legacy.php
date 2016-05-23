@@ -38,22 +38,49 @@ abstract class Model_Auth_Legacy extends Model_Auth_Interface {
         return $created ? 2 : true;
     }
 
-    private function login_remote($secret_key) {
+    public static function fetch_player_xml($pid, $city = true) {
+        $k = static::user_get_values($pid);
+        return (!$k || !$k[0]) ? null : static::fetch_xml($k[0]);
+    }
+
+    private static function fetch_xml($k, $city = true) {
         // Check host and build URL
         if (!Kohana::$config->load('mt.links.' . static::$host))
-            return 'invalid_host';
+            return null;
         $sk = Kohana::$config->load('mt.links.' . static::$host . '.token');
-        $url = 'http://' . Kohana::$config->load('mt.links.' . static::$host . '.url') . "/xml/?k={$secret_key};sk={$sk}";
+        $url = 'http://' . Kohana::$config->load('mt.links.' . static::$host . '.url') . "/xml/" . ($city ? '' : 'ghost') ."?k={$k};sk={$sk}";
 
         // Get XML
         $context = stream_context_create(['http'=> ['timeout' => 10]]);
         $xml = new DOMDocument( );
         try {
-            if (!$xml->loadXML(file_get_contents($url, false, $context)))
-                return 'protocol_failed';
+            if (!$xml->loadXML(mb_convert_encoding(file_get_contents($url, false, $context), "UTF-8", "UTF-8")))
+                return null;
+            return $xml;
         } catch (Exception $e) {
-            return 'connection_failed';
+            return null;
         }
+    }
+
+    public static function getLegacyTownInfo($pid) {
+        if ($xml = self::fetch_player_xml($pid)) {
+
+            $xpath = new DOMXPath($xml);
+            $error = $xpath->evaluate('string(//error/@code)');
+            if ($error == 'not_in_game')
+                return [-1,null,null];
+            elseif ($error) return [-2,null,null];
+
+            $id = (int)$xpath->evaluate('string(//game/@id)');
+            $name = $xpath->evaluate('string(//city/@city)');
+            $job = $xpath->evaluate('string(//owner/citizen/@job)');
+
+            return [$id,$name,$job];
+        } else return [null,null,null];
+    }
+
+    private function login_remote($secret_key) {
+        $xml = static::fetch_xml($secret_key);
 
         //Create xpath selector
         $xpath = new DOMXPath($xml);

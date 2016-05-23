@@ -35,6 +35,7 @@ return array(
                     'modules.additionalchems'               => true,
                     'modules.multiplayer'                   => false,
                     'game.bhav.infections'                  => false,
+                    'game.lobby.persistent'                 => false,
                     'game.config.map'                       => 'default',
                     'game.config.itemset'                   => 'default',
                     'game.config.spawn'                     => 'default'
@@ -328,6 +329,46 @@ return array(
                     'ranking.points.home.offset'        => 0,
                     'ranking.points.home.stretch'       => 200000,
                     'ranking.points.home.threshold'     => -15,
+                ),
+                'spawn' => array(),
+            ),
+        ),
+        12000 => array(
+            'meta' => array(
+                'name' => 'Townships!',
+                'caption' => 'Spiel und Spaß für die ganze Stadt!',
+                'headline' => '',
+                'body' => ''
+            ),
+            'type' => 'special_multi_auto',
+            'requirements' => array('mode' => array(),'job' => array(),'ext' => array(),'ext_note' => array()),
+
+            'jobs' => array(12010,12020,12030,12040,12050,12060,12070,12080),
+            'unstartable_jobs' => array(),
+
+            'setup' => array(
+                'inherit' => array(0),
+                'config' => array(
+                    'places.outworld.spawn_stranger'    =>  false,
+                    'places.outworld.alt_spawn_stranger'=>  true,
+                    'places.outworld.spawn_dogmeat'     => true,
+                    'places.bar.spawn_winchester'       => true,
+                    'places.toilet.spawn_sherri'        => true,
+
+                    'ranking.points.zombie_kills.factor'=>  0,
+                    'ranking.points.zombie_kills.offset'=>  0,
+                    'ranking.points.survival.factor'    =>  1,
+                    'ranking.points.survival.offset'    =>  0,
+                    'ranking.points.home.factor'        =>  0,
+                    'ranking.points.home.offset'        =>  0,
+                    'ranking.points.home.stretch'       =>  1,
+                    'ranking.points.home.threshold'     =>  0,
+
+                    'game.lobby.persistent'             =>  true,
+                    'modules.multiplayer'               =>  true,
+                    'game.bhav.infections'              =>  true,
+
+                    'game.config.map'                   => 'township',
                 ),
                 'spawn' => array(),
             ),
@@ -984,6 +1025,199 @@ return array(
                     $player->battle_stats([null,5 + floor($level/2),null,null]); // INI ATK DEF ACC
                     new Model_Buffs_Job_Woman(null, $level);
                 }),
+        ),
+
+        12000 => array(
+            'setup' => array('inherit' => array(0), 'f' => function($mode, $level) {
+                /** @global Model_Player $player */
+                global $player;
+                $player->inventory()->add(new Model_Items_Bottle);
+                $player->inventory()->add(new Model_Items_Ammobelt());
+
+                $player->inventory()->add(new Model_Items_Cyanide());
+
+                $item = new Model_Items_Batgun();
+                $player->inventory()->add($item);
+                $item->equip($player);
+
+                $item2 = new Model_Items_Machete();
+                $player->inventory()->add($item2);
+                $item2->equip($player);
+            }),
+        ),
+        12010 => array(
+            'meta' => array(
+                'name' => 'Bürger',
+                'caption' => 'Du bist das Rückrad jeder Stadt. Du verfügst über keine besonderen Fähigkeiten, daher eignest du dich perfekt für Selbstmord-Aktionen und als Zombiefutter!',
+                'sign' => 'basic',
+            ),
+            'requirements' => array(
+                'mode' => array(),
+                'job' => array(),
+                'ext' => array(),
+                'ext_note' => array(),
+            ),
+            'levels' => array(10,100,500,1000,2000,5000),
+            'setup' => array('inherit' => array(12000), 'f' => function($mode, $level) {
+                /** @global Model_Player $player */
+                global $player;
+
+                $player->inventory()->add(new Model_Items_Stash(min(6,$level*2)));
+                if ($level >= 3) $player->inventory()->add(new Model_Items_Stash2(min(6,($level-2)*2)));
+                if ($level >= 6) $player->inventory()->add(new Model_Items_Stash3(min(6,($level-5)*3)));
+                
+            }),
+        ),
+        12020 => array(
+            'meta' => array(
+                'name' => 'Buddler',
+                'caption' => 'Deine Erfahrung im Finden von Gegenständen macht dich zu einem wertvollen Mitglied der Gesellschaft. Und wenns mal nichts mehr zu finden gibt, kannst du den Zombies mit deiner Schaufel immer noch irgendlich die Visage umfurchen.',
+                'sign' => 'collec',
+            ),
+            'requirements' => array(
+                'mode' => array(),
+                'job' => array(),
+                'ext' => array(),
+                'ext_note' => array(),
+            ),
+            'levels' => array(10,100,500,1000,2000,5000),
+            'setup' => array('inherit' => array(12000), 'f' => function($mode, $level) {
+                /** @global Model_Player $player */
+                global $player;
+
+                $player->get_status()->set_fixed_threshold(Model_Status::MS_CHAR_ITEM_SPAWNRATE, 1 + 0.15 * $level);
+            }),
+        ),
+        12030 => array(
+            'meta' => array(
+                'name' => 'Wächter',
+                'caption' => 'Mit deinem mächtigen Schild verteidigst du deine Mitbürger tapfer vor heranrückenden Zombiemeuten. Außerdem ist das Teil ein großartiger Sonnenschutz!',
+                'sign' => 'guardian',
+            ),
+            'requirements' => array(
+                'mode' => array(),
+                'job' => array(),
+                'ext' => array(),
+                'ext_note' => array(),
+            ),
+            'levels' => array(10,100,500,1000,2000,5000),
+            'setup' => array('inherit' => array(12000), 'f' => function($mode, $level) {
+                /** @global Model_Player $player */
+                global $player;
+
+                $player->inventory()->add($item = new Model_Items_Guardshield($level));
+                $item->equip($player);
+            }),
+        ),
+        12040 => array(
+            'meta' => array(
+                'name' => 'Einsiedler',
+                'caption' => 'Du warst nie ein Freund größerer Menschenmengen und hast Siedlungen bisher immer gemieden. Daher hast du gelernt, dich von dem Tau von Blättern und den Insekten in deinem Bart zu ernähren.',
+                'sign' => 'hunter',
+            ),
+            'requirements' => array(
+                'mode' => array(),
+                'job' => array(),
+                'ext' => array(),
+                'ext_note' => array(),
+            ),
+            'levels' => array(10,100,500,1000,2000,5000),
+            'setup' => array('inherit' => array(12000), 'f' => function($mode, $level) {
+                /** @global Model_Player $player */
+                global $player;
+
+                $player->inventory()->add(new Model_Items_Virtual_Hero_Hunter($level));
+            }),
+        ),
+        12050 => array(
+            'meta' => array(
+                'name' => 'Aufklärer',
+                'caption' => 'Lautlos wie ein Schatten schleichst du an Zombiehorden vorbei. Leider machst du dich damit nur bedingt bei deinen Mitbürgern beliebt, die du umzingelt zurücklässt...',
+                'sign' => 'eclair',
+            ),
+            'requirements' => array(
+                'mode' => array(),
+                'job' => array(),
+                'ext' => array(),
+                'ext_note' => array(),
+            ),
+            'levels' => array(10,100,500,1000,2000,5000),
+            'setup' => array('inherit' => array(12000), 'f' => function($mode, $level) {
+                /** @global Model_Player $player */
+                global $player;
+
+                $player->get_status()->set_fixed_threshold(Model_Status::MS_CHAR_LOCATION_SPAWNRATE, 1 + 0.15 * $level);
+                $player->inventory()->add(new Model_Items_Virtual_Hero_Eclair($level));
+            }),
+        ),
+
+        12060 => array(
+            'meta' => array(
+                'name' => 'Dompteur',
+                'caption' => 'Dein Malteser ist dein treuster Begleiter, der dir Gegenstände hinterherschleppt und dich vor Zombies verteidigt. Und wenn mal die Nahrung knapp wird, schmeckt er bestimmt auch ganz passabel...',
+                'sign' => 'tamer',
+            ),
+            'requirements' => array(
+                'mode' => array(),
+                'job' => array(),
+                'ext' => array(),
+                'ext_note' => array(),
+            ),
+            'levels' => array(10,100,500,1000,2000,5000),
+            'setup' => array('inherit' => array(12000), 'f' => function($mode, $level) {
+                /**
+                 * @global Model_Player $player
+                 * @global Model_Game $game
+                 */
+                global $player, $game;
+
+                $npc = new Model_NPC_Special_Doodle($level);
+                $npc->location_class($player->location_class());
+                $game->add_npc($npc);
+                $player->location()->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $npc->id(), true));
+            }),
+        ),
+
+        12070 => array(
+            'meta' => array(
+                'name' => 'Techniker',
+                'caption' => 'Du kennst die Unterschiede zwischen Mutter und Schraube, Pluspol und Minuspol, Linux und Unix und weist, dass man niemals die Ströme kreuzen sollte. Für so jemanden sind ein paar Versteck-Upgrades doch eine Kleinigkeit!',
+                'sign' => 'tech',
+            ),
+            'requirements' => array(
+                'mode' => array(),
+                'job' => array(),
+                'ext' => array(),
+                'ext_note' => array(),
+            ),
+            'levels' => array(10,100,500,1000,2000,5000),
+            'setup' => array('inherit' => array(12000), 'f' => function($mode, $level) {
+                /** @global Model_Player $player */
+                global $player;
+
+                $player->get_status()->scaling_add(Model_Status::MS_STAT_ENERGY, Model_Status::MS_EFFECT_REQUIREMENT, 'tech', 1 - 0.1 * $level);
+            }),
+        ),
+
+        12080 => array(
+            'meta' => array(
+                'name' => 'Schamane',
+                'caption' => 'Du hast vor ein paar Jahren im Urlaub in Brasilien mal einen 2tägigen Voodoo-Kurs besucht und dir danach im Kostümgeschäft eine billige Plastik-Schamanenmaske gekauft. Im Prinzip ist das doch alles, was man als Qualifikation benötigt, oder?',
+                'sign' => 'shaman',
+            ),
+            'requirements' => array(
+                'mode' => array(),
+                'job' => array(),
+                'ext' => array(),
+                'ext_note' => array(),
+            ),
+            'levels' => array(10,100,500,1000,2000,5000),
+            'setup' => array('inherit' => array(12000), 'f' => function($mode, $level) {
+                /** @global Model_Player $player */
+                global $player;
+
+                $player->inventory()->add(new Model_Items_Mask($level));
+            }),
         ),
     )
 );

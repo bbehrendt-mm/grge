@@ -187,6 +187,7 @@ class Model_Player extends Model_NPC_Nano {
 
         $this->points = $game->points($this->id);
         $this->braincoins = Tool_Scripts::count_available_items('Model_Items_Braincoin', true, false, false, $this->id);
+        $game->register_death($this->id);
 
         parent::kill();
 	}

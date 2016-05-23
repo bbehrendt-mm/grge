@@ -70,6 +70,10 @@ abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item 
     public function get_equipment_type() {
         return static::$equipment_type;
     }
+    
+    protected function get_effects() {
+        return static::$effects;
+    }
 
     public function get_stats($type = null) {
         if ($type === true)
@@ -79,7 +83,7 @@ abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item 
                 static::MIAE_STAT_DEF => $this->get_stats(static::MIAE_STAT_DEF),
                 static::MIAE_STAT_ACC => $this->get_stats(static::MIAE_STAT_ACC),
             ];
-        else return $type === null ? static::$effects : static::$effects[$type - 1];
+        else return $type === null ? $this->get_effects() : $this->get_effects()[$type - 1];
     }
 
     public function unequip() {

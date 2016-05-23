@@ -374,6 +374,8 @@ abstract class Controller extends Kohana_Controller {
             'details' => $additional_data,
         ));
 
+        if (Controller::$dumps) $tmp['var_dump'] = Controller::$dumps;
+
         $this->response->body(json_encode($tmp, JSON_FORCE_OBJECT));
         return false;
     }

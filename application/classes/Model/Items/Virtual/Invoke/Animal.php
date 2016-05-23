@@ -6,7 +6,7 @@ class Model_Items_Virtual_Invoke_Animal extends Model_Items_Virtual_Invoke_Abstr
         /** @global Model_Game $game */
         global $game;
         
-        if (!Tool_Gambling::random(1.0/(1+$game->count('rnd_animals')))) return;
+        if (!Tool_Gambling::random(0.3/(1+$game->count('rnd_animals')))) return;
         $game->count('rnd_animals', 1);
 
         if ($game->config('places.general.spawn_random_animals')) {

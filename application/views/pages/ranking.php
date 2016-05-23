@@ -60,11 +60,11 @@
         switch ($(this).val()) {
             case "1":
                 modes = <?=json_encode($sp_modes, JSON_FORCE_OBJECT)?>;
-                gt.html('<option value="0"><?=__j('Klassischer Zeitfluss')?></option><option value="1"><?=__j('Variabler Zeitfluss')?></option>');
+                gt.html('<option value="0"><?=__('Klassischer Zeitfluss')?></option><option value="1"><?=__('Variabler Zeitfluss')?></option>');
                 break;
             case "2":
                 modes = <?=json_encode($mp_modes, JSON_FORCE_OBJECT)?>;
-                gt.html('<option value="1"><?=__j('Variabler Zeitfluss')?></option>');
+                gt.html('<option value="1"><?=__('Variabler Zeitfluss')?></option>');
                 break;
             default:
                 break;
@@ -73,7 +73,7 @@
             $('<option value="' + id + '">' + name + '</option>').appendTo(gm);
         });
         for (var i = ($(this).val() == "2" ? 4 : 0); i <= <?=$season?>; i++)
-            $('<option value="' + i + '">' + game.i18n('<?=__j('Season :num');?>', {':num': i}) + '</option>').prependTo(gs);
+            $('<option value="' + i + '">' + game.i18n('<?=__('Season :num');?>', {':num': i}) + '</option>').prependTo(gs);
         gs.val(season_backup);
 
         $('#content').find('select').selectric('refresh');

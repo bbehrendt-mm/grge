@@ -111,16 +111,32 @@ class Tool_Gamemodes {
         return $r;
     }
 
-    public static function compile_mode_database($short = false) {
-        global $user;
+    public static function is_special_mode($mode, $type = null) {
+        if ($type === null) {
+            $ret = (array)Kohana::$config->load('modes');
+            if (!isset($ret['modes'][$mode])) return false;
+            $type = $ret['modes'][$mode]['type'];
+        }
 
+        return substr($type, 0, 7) == 'special';
+    }
+
+    public static function compile_mode_database($short = false, $custom_mode_callback = null) {
         $ret = (array)Kohana::$config->load('modes');
-        $joblist = array();
+        $joblist = [];
+
+        if (!$custom_mode_callback || !is_callable($custom_mode_callback))
+            $custom_mode_callback = function() {return true;};
 
         unset($ret['modes']['default']);
 
         //Modes
-        foreach ($ret['modes'] as &$mode) {
+        foreach ($ret['modes'] as $mid => &$mode) {
+            if (!$custom_mode_callback($mid, $mode)) {
+                unset($ret['modes'][$mid]);
+                continue;
+            }
+
             $mode['locked'] = !static::compile_requirements($mode['requirements']);
             foreach ($mode['jobs'] as $jid)
                 $joblist[$jid] = true;

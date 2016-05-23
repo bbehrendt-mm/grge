@@ -128,7 +128,7 @@
         function(data) {
             var header;
             switch (data['class']) {
-                case <?=Model_Log_Types_Item::MLTI_DIGUP?>:
+                case <?=Model_Log_Types_Item::MLTI_DIGUP?>: case <?=Model_Log_Types_Item::MLTI_BOX?>:
                     header = <?=__j(':itemdef gefunden!')?>;
                     break;
                 case <?=Model_Log_Types_Item::MLTI_EAGLE?>:

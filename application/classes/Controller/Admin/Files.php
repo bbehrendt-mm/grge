@@ -36,46 +36,6 @@ class Controller_Admin_Files extends Controller_Admin_Admin {
         echo $data;
     }
 
-    private function legacy_grl_import($lang, $data) {
-        if (!$data || !is_array($data)) die(Error::m(\grge\E_HTTP_REQUEST_POINTLESS));
-
-        echo "GRGE LANGUAGE FILE IMPORTER<br />-----<br />Importing \"{$_FILES['grl']['name']}\" ({$_FILES['grl']['size']} bytes) into local package \"{$lang}\"<br />-----<br />";
-        echo "Language Pack contains " . count($data) . " entries.<br />-----<br />";
-
-        $added = 0;
-        $ignored = 0;
-        $changed = 0;
-        $conflicts = 0;
-
-        foreach ($data as $key => $translation) {
-
-            if (!I18n::has($key, $lang))
-                $added++;
-
-            $original = I18n::get_native($key, $lang);
-            if ($translation === $original) {
-                $ignored++;
-                continue;
-            }
-
-            if ($original != $key) {
-                echo "CONFLICT DETECTED!<br />Key<pre>{$key}</pre>Local Translation<pre>{$original}</pre>Remote Translation<pre>{$translation}</pre><br /><br />";
-                $conflicts++;
-                continue;
-            }
-
-            I18n::set($key, $translation, $lang);
-            $changed++;
-        }
-
-        echo "-----<br />";
-        echo ($added + $changed == 0) ? "No changes were made.<br />" : "Added $added new entries, updated $changed entries.<br />";
-        echo "$ignored entries were ignored due to being identical with the local ones.<br />";
-        if ($conflicts > 0) echo "!! $conflicts merge conflicts were detected. Please consult the log for more details and resolve them manually. !!<br />";
-
-        echo "DONE";
-    }
-
     public function action_import_translations() {
         if (!$this->priv_allow_all(['TRANSLATE_MOD'])) die(Error::m(\grge\E_SERVER_ACCESS_DENIED));
 
@@ -89,8 +49,8 @@ class Controller_Admin_Files extends Controller_Admin_Admin {
         if (!isset($data['data']) || !isset($data['meta']) || !is_array($data['meta'])) {
             if (!($lang = $this->post('lang'))) die(Error::m(\grge\E_HTTP_REQUEST_INCOMPLETE));
 
-            echo "This seems to be a legacy GRL Package. Now switching to legacy import system ...<br /><br />";
-            return $this->legacy_grl_import($lang, $data);
+            echo "This seems to be a legacy GRL Package. It cannot be imported ...<br /><br />";
+            die;
         }
 
 
@@ -120,13 +80,13 @@ class Controller_Admin_Files extends Controller_Admin_Admin {
             if (!in_array($l, $data['meta']['languages']))
                 echo "WARNING: Package is missing entries for language '$l'.<br />";
 
-        echo "Package information: " . count($data) . " entries, EVIO version {$data['meta']['version']}, created " . date('c', $data['meta']['timestamp']) . "<br />-----<br />";
+        echo "Package information: " . count($data['data']) . " entries, EVIO version {$data['meta']['version']}, created " . date('c', $data['meta']['timestamp']) . "<br />-----<br />";
 
         $compare = I18n::export();
 
         $conflicts = [];
 
-        foreach ($data as $hash => $line) {
+        foreach ($data['data'] as $hash => $line) {
 
             if (!isset($line[$primary]))
                 continue;

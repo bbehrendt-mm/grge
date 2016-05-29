@@ -371,8 +371,9 @@
 
         foreach ($database['jobs'] as &$jb_entry) {
             unset($jb_entry['levels']);
-            foreach ($jb_entry['meta'] as &$jb_meta)
-                $jb_meta = __($jb_meta);
+            foreach ($jb_entry['meta'] as $t => &$jb_meta)
+                if ($t != 'sign')
+                    $jb_meta = __($jb_meta);
         }
 
         foreach ($games as &$game_entry)

@@ -321,17 +321,35 @@ class Controller_Gamemaster extends Controller {
         // Get POST stuff
         $service = $this->request->current()->post('service');
 
-        switch ($service) {
-            case 'Die Verdammten':
-                list($id, $name, $jobsign) = Model_Auth_Hordesde::getLegacyTownInfo($user->uid());
-                $lang = 'de';
-                break;
-            case 'Die2Nite':
-                list($id, $name, $jobsign) = Model_Auth_Hordesen::getLegacyTownInfo($user->uid());
-                $lang = 'en';
-                break;
-            default: return $this->error(\grge\E_STARTER_INVALID_SETUP);
-        }
+        $database = Tool_Gamemodes::compile_mode_database(true, function($mid) {
+            return $mid == 12000;
+        });
+
+        if (Kohana::$config->load('build.version.stage') < 3 && substr($service, 0, 3) == 'DBG') {
+
+
+            $job_num = (int)substr($service, 4);
+
+            if (!isset($database['jobs'][$job_num])) return $this->error(\grge\E_STARTER_INVALID_SETUP);
+            $job = $database['jobs'][$job_num];
+
+            $id = 1;
+            $jobsign = $job['meta']['sign'];
+            $name = 'CNV TOWN ' . bin2hex(hash('adler32', $jobsign, true)) . ' ' . mb_strtoupper($jobsign);
+            $lang = 'en';
+
+        } else
+            switch ($service) {
+                case 'Die Verdammten':
+                    list($id, $name, $jobsign) = Model_Auth_Hordesde::getLegacyTownInfo($user->uid());
+                    $lang = 'de';
+                    break;
+                case 'Die2Nite':
+                    list($id, $name, $jobsign) = Model_Auth_Hordesen::getLegacyTownInfo($user->uid());
+                    $lang = 'en';
+                    break;
+                default: return $this->error(\grge\E_STARTER_INVALID_SETUP);
+            }
 
         if ($id < 0 || $id === null || !$name)
             return $this->error(\grge\E_STARTER_INVALID_SETUP);
@@ -341,9 +359,7 @@ class Controller_Gamemaster extends Controller {
 
         $internal_id = DB::select('gameid')->from('multiplayer_lobby')->where('slots', '>', 0)->where('name','=',$internal_name)->execute()->get('gameid', -1);
 
-        $database = Tool_Gamemodes::compile_mode_database(true, function($mid) {
-            return $mid == 12000;
-        });
+
 
         $job = 12010;
         foreach ($database['jobs'] as $jid => $db_job)
@@ -600,6 +616,21 @@ class Controller_Gamemaster extends Controller {
         $results = [];
         foreach ($prv as $provider)
             $results[$provider::get_service_name()] = $provider::getLegacyTownInfo($user->uid());
+
+        if (Kohana::$config->load('build.version.stage') < 3) {
+
+            $database = Tool_Gamemodes::compile_mode_database(true, function($mid, $mode) {
+                return $mid == 12000;
+            });
+            foreach ($database['jobs'] as $jid => $db_job)
+                if (!$db_job['locked']) {
+                    $results['DBG ' . $jid] = [
+                        $jid, 'CNV TOWN ' . bin2hex(hash('adler32', $db_job['meta']['sign'], true)) . ' ' . mb_strtoupper($db_job['meta']['sign']), $db_job['meta']['sign']
+                    ];
+                }
+            
+        }
+
 
         $towndata = [];
         foreach ($results as $service => $links) {

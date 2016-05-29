@@ -40,7 +40,7 @@ class Model_Factory_Items extends Model_Factory_Abstract {
             return null;
 
         /** @var Model_Items_Virtual_Invoke_Abstract|string $k */
-        if (Tool_System::instance_of($k, Model_Items_Virtual_Invoke_Abstract::cls()) && !$k->countAsItem())
+        if (Tool_System::instance_of($k, Model_Items_Virtual_Invoke_Abstract::cls()) && !$k::countAsItem())
             $apply_decay = false;
 
         if ($apply_decay) {

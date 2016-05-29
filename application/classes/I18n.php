@@ -75,7 +75,12 @@ class I18n extends Kohana_I18n {
     }
 
     public static function export() {
-        return array_map(function($a) {unset($a['hash']); return $a;}, (new Database_Query_Builder_Select(array_merge(['hash'],static::$lang_list)))->from('language')->execute()->as_array('hash'));
+        return array_map(function($a) {
+            foreach (array_keys($a) as $col)
+                if (!in_array($col, static::$lang_list))
+                    unset($a[$col]);
+            return $a;
+        }, DB::select()->from('language')->execute()->as_array('hash'));
     }
 
     /**

@@ -6,7 +6,7 @@ abstract class Model_Items_Virtual_Invoke_Abstract extends Model_Items_Abstract_
     
     abstract public function trigger_spawn(Model_Places_Abstract_Place $location, Interface_Plentity $player);
     
-    public function countAsItem() {
+    public static function countAsItem() {
         return static::$count_as_item;
     }
 }	

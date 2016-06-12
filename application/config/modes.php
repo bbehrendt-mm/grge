@@ -317,9 +317,10 @@ return array(
                 'config' => array(
                     'game.config.map' => 'roadtrip_init',
                     'game.config.itemset' => 'roadtrip',
-                    'places.outworld.spawn_dogmeat'     => false,
-                    'places.bar.spawn_winchester'       => false,
-                    'places.toilet.spawn_sherri'        => false,
+                    'places.outworld.spawn_dogmeat'     => true,
+                    'places.bar.spawn_winchester'       => true,
+                    'places.toilet.spawn_sherri'        => true,
+                    'places.general.spawn_random_animals' => true,
 
                     'ranking.points.zombie_kills.factor'=> 0,
                     'ranking.points.zombie_kills.offset'=> 0,
@@ -1105,7 +1106,8 @@ return array(
                 /** @global Model_Player $player */
                 global $player;
 
-                $player->inventory()->add($item = new Model_Items_Guardshield($level));
+                $item = new Model_Items_Guardshield($level);
+                $player->inventory()->add($item);
                 $item->equip($player);
             }),
         ),

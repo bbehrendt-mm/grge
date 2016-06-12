@@ -20,6 +20,7 @@
  * @var bool $allow_mentor
  * @var array $gallery
  * @var string $url
+ * @var array $titles
  */
 ?>
 
@@ -261,10 +262,10 @@
         <div class="cell rw-12 center">
             <h2><?=$own_soul ? __('Deine Ranking-Highlights') : __(':name\'s Ranking-Highlights', [':name' => $soul_owner])?></h2>
         </div>
-        <div class="cell rw-2 ro-5 rw-lg-4 ro-lg-4 rw-sm-12 ro-sm-0">
+        <div class="cell rw-6 ro-3 rw-md-8 ro-md-3 rw-sm-12 ro-sm-0">
             <label for="game_season"></label><select class="form_input" id="game_season" data-container="body">
                 <?php for ($i = $season; $i >= 0; $i--) { ?>
-                    <option value="<?=$i;?>"><?=__('Season :num', [':num' => $i]);?></option>
+                    <option value="<?=$i;?>"><?=__('Season :num', [':num' => $i]);?> - <?=$titles[$i]?></option>
                 <?php } ?>
 
             </select>

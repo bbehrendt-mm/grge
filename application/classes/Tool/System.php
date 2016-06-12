@@ -145,4 +145,18 @@ class Tool_System {
         elseif ($cls::static_icon()) return $cls::static_icon();
         else return null;
     }
+
+    public static function getSeasonTitle($num_season = null) {
+        $titles = Kohana::$config->load('server.titles');
+        $season = Kohana::$config->load('server.season');
+
+        if ($num_season !== null && $num_season > $season) return null;
+        elseif ($num_season !== null)
+            return isset($titles[$num_season]) ? $titles[$num_season] : 'Mysteriöse Season';
+        else {
+            for ($i = 0; $i <= $season; $i++)
+                if (!isset($titles[$i])) $titles[$i] = 'Mysteriöse Season';
+            return $titles;
+        }
+    }
 }

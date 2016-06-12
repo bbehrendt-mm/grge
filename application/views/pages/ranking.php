@@ -2,34 +2,40 @@
 /**
  * @var array $sp_modes Single player modes
  * @var array $mp_modes Multiplayer modes
+ * @var array $titles
  * @var number $season Current season
  */
 ?>
 
 <h1 class="noclick"><i class="fa fa-arrow-circle-right"></i><?=__('Season-Ranking');?></h1>
 
-<div class="row">
-    <h2><?=__('Bitte wähle, welches Ranking du sehen möchtest.');?></h2>
+<h2><?=__('Bitte wähle, welches Ranking du sehen möchtest.');?></h2>
 
-    <div class="cell rw-3 rw-md-6 padded">
+<div class="row">
+    <div class="cell rw-4 padded">
         <label for="game_type"></label><select class="form_input" id="game_type" data-container="body">
             <option value="1"><?=__('Einzelspieler');?></option>
             <option value="2"><?=__('Mehrspieler');?></option>
         </select>
     </div>
 
-    <div class="cell rw-3 rw-md-6 padded">
+    <div class="cell rw-4 padded">
+        <label for="game_mode"></label><select class="form_input" id="game_mode" data-container="body"></select>
+    </div>
+    <div class="cell rw-4 padded">
+        <label for="game_time"></label><select class="form_input" id="game_time" data-container="body"></select>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="cell  ro-3 rw-6 ro-md-2 rw-md-8 ro-sm-0 rw-sm-12 padded">
         <label for="game_season"></label><select class="form_input" id="game_season" data-container="body">
             <option value="<?=$season;?>"><?=__('Season :num', [':num' => $season]);?></option>
         </select>
     </div>
-    <div class="cell rw-3 rw-md-6 padded">
-        <label for="game_mode"></label><select class="form_input" id="game_mode" data-container="body"></select>
-    </div>
-    <div class="cell rw-3 rw-md-6 padded">
-        <label for="game_time"></label><select class="form_input" id="game_time" data-container="body"></select>
-    </div>
-
+</div>
+<div>
     <div class="cell rw-12 right">
         <div id="btn_switch_global" class="btn small"><?=__('Zum globalen Ranking wechseln');?></div>
     </div>
@@ -72,8 +78,9 @@
         $.each(modes, function (id, name) {
             $('<option value="' + id + '">' + name + '</option>').appendTo(gm);
         });
+        var titles = <?=json_encode($titles, JSON_FORCE_OBJECT);?>;
         for (var i = ($(this).val() == "2" ? 4 : 0); i <= <?=$season?>; i++)
-            $('<option value="' + i + '">' + game.i18n('<?=__('Season :num');?>', {':num': i}) + '</option>').prependTo(gs);
+            $('<option value="' + i + '">' + game.i18n('<?=__('Season :num');?>', {':num': i}) + ' - ' + titles[i] + '</option>').prependTo(gs);
         gs.val(season_backup);
 
         $('#content').find('select').selectric('refresh');
@@ -189,7 +196,7 @@
                 var p = parseInt(entry);
                 if (!isNaN(p) && p > 0 && p != (current_page + 1) && p <= max_offset / 20 + 1)
                     read_fetch((p - 1) * 20)();
-            }).html(game.i18n('<?=__j('Seite :c/:m')?>', {':c': current_page + 1, ':m': max_offset / 20 + 1}));
+            }).html(game.i18n(<?=__j('Seite :c/:m')?>, {':c': current_page + 1, ':m': max_offset / 20 + 1}));
 
             if (offset < max_offset) {
                 $(navigation.get(3)).removeClass('btn-disabled').click(read_fetch(offset + 20));

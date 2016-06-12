@@ -72,8 +72,8 @@ NF.icon = function(src, txt, classes) {
     return NF.n('div', 'mlicon ' + classes).append(NF.img(src)).append(NF.n('span', '', !txt_is_null ? txt : '&nbsp;', txt_is_null))
 };
 
-NF.fa = function(name) {
-    return NF.n('i', 'fa ' + ((name.substr(0, 3) == 'fa-') ? name : ('fa-' + name)));
+NF.fa = function(name, spin) {
+    return NF.n('i', 'fa ' + ((name.substr(0, 3) == 'fa-') ? name : ('fa-' + name)) + (spin ? ' fa-spin' : ''));
 };
 
 NF.select = function(options, preselect) {

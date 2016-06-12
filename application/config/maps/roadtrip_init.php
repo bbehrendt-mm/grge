@@ -24,7 +24,7 @@ return [
 
         'Model_Places_Plaza'                => Array('auto' => true, 'sub' => null, 'iteration' =>  1, 'distance' => array(10,15), 'num' =>  2, 'max_local' =>  1, 'contortion' => -3, 'chance' =>   3, 'obvious' => true, 'branchable' => true,  'root' => array('Model_Places_Outworld', 'Model_Places_Plaza')),
         'Model_Places_Roadtrip_Roadblock'   => Array('auto' => true, 'sub' => null, 'iteration' =>  1, 'distance' => array( 1,50), 'num' =>  3, 'max_local' =>  1, 'contortion' => -3, 'chance' =>   3, 'obvious' => true, 'branchable' => true,  'root' => array('Model_Places_Outworld', 'Model_Places_Plaza')),
-
+        
         'Model_Places_Hospital'				=> Array('auto' => true, 'sub' => null, 'iteration' => 10, 'distance' => array(10,20), 'num' =>  1, 'max_local' =>  1, 'contortion' =>  3, 'chance' =>   3, 'obvious' => true, 'branchable' => true,  'root' => array('Model_Places_Outworld', 'Model_Places_Plaza')),
         'Model_Places_Hospital_Lobby'	    => Array('auto' => false,'sub' => 'hospital', 'num' =>   1, 'max_local' => 0, 'contortion' =>  0, 'obvious' => true, 'root' => [], 'fixed' => 1),
         'Model_Places_Hospital_Er'			=> Array('auto' => true, 'sub' => 'hospital', 'num' =>   1, 'max_local' => 1, 'contortion' =>  0, 'obvious' => true, 'root' => [Model_Map_Labyrinth::MML_FAR]),
@@ -40,7 +40,8 @@ return [
         'Model_Places_Pharmacy'				=> Array('auto' => true, 'sub' => null, 'iteration' => 10, 'distance' => array( 2, 5), 'num' =>  1, 'max_local' =>  1, 'contortion' =>  0, 'chance' =>   5, 'obvious' => true, 'branchable' => true,  'root' => array('Model_Places_Outworld', 'Model_Places_Plaza')),
         'Model_Places_Weaponshop'			=> Array('auto' => true, 'sub' => null, 'iteration' => 10, 'distance' => array( 3,10), 'num' =>  1, 'max_local' =>  1, 'contortion' =>  0, 'chance' =>   4, 'obvious' => true, 'branchable' => true,  'root' => array('Model_Places_Outworld', 'Model_Places_Plaza')),
         'Model_Places_Store'				=> Array('auto' => true, 'sub' => null, 'iteration' => 10, 'distance' => array( 2, 5), 'num' =>  1, 'max_local' =>  1, 'contortion' =>  0, 'chance' =>   6, 'obvious' => true, 'branchable' => true,  'root' => array('Model_Places_Outworld', 'Model_Places_Plaza')),
-
+        'Model_Places_Petshop'				=> Array('auto' => true, 'sub' => null, 'iteration' => 10, 'distance' => array( 1, 5), 'num' =>  1, 'max_local' =>  1, 'contortion' =>  0, 'chance' =>   6, 'obvious' => true, 'branchable' => true,  'root' => array('Model_Places_Plaza')),
+        
         'Model_Places_Constructionsite'		=> Array('auto' => true, 'sub' => null, 'iteration' => 10, 'distance' => array( 5,15), 'num' =>  1, 'max_local' =>  1, 'contortion' =>  0, 'chance' =>   3, 'obvious' => true, 'branchable' => true,  'root' => array('Model_Places_Plaza', 'Model_Places_Outworld')),
         'Model_Places_Diy'					=> Array('auto' => true, 'sub' => null, 'iteration' => 10, 'distance' => array( 5,15), 'num' =>  1, 'max_local' =>  1, 'contortion' =>  0, 'chance' =>   3, 'obvious' => true, 'branchable' => true,  'root' => array('Model_Places_Plaza', 'Model_Places_Outworld')),
         'Model_Places_Roadtrip_Garage'  	=> Array('auto' => true, 'sub' => null, 'iteration' => 10, 'distance' => array( 5,15), 'num' =>  1, 'max_local' =>  1, 'contortion' =>  0, 'chance' =>   3, 'obvious' => true, 'branchable' => true,  'root' => array('Model_Places_Plaza', 'Model_Places_Outworld')),

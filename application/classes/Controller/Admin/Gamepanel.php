@@ -203,16 +203,16 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
 
             /** @var Model_Items_Abstract_Item $classpath */
             $classpath = 'Model_Items' . substr(str_replace('/','_',$filepath), 0, -4);
-
             $reflection = new ReflectionClass($classpath);
             if (!$reflection->isInstantiable()) continue;
-
             if (!Tool_System::instance_of($classpath, 'Model_Items_Abstract_Item')) continue;
             $virtual = Tool_System::instance_of($classpath, 'Model_Items_Abstract_Virtual');
             $trigger = Tool_System::instance_of($classpath, Model_Items_Virtual_Invoke_Abstract::cls());
 
             $tmp = [];
             $parameters = $reflection->getConstructor()->getParameters();
+
+
 
             $use_instances = ($classpath::getNumberOfTypes() > 0) && ($reflection->getConstructor()->getNumberOfRequiredParameters() == 0) && ($parameters[0]->getName() == 'type');
 

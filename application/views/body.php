@@ -1,3 +1,10 @@
+<?php
+/**
+ * @var int $season
+ * @var string $title
+ * @var bool $beta
+ */
+?>
 <div id="static">
     <div id="navbar">
         <div class="navsection navtext" id="lang-select">
@@ -18,6 +25,10 @@
 
     <div id="wrapper">
         <div>
+            <div id="infoband">
+                <span><?=__('Season :num', [':num' => '<b>' . $season . ($beta ? ' BETA' : '') . '</b>']);?></span>
+                <span class="hide-mobile"> - <i><?=__($title);?></i></span>
+            </div>
             <div id="persistent"></div>
         </div>
 

@@ -13,6 +13,8 @@
 @zv-content-background-size: 90px;
 @zv-content-background-color: @zv-color-secondary;
 
+@zv-band-color: #ffc029;
+
 #static {
   transition: all 2s ease;
   &.fade {transition: all 6s ease; -webkit-filter: contrast(300%) blur(30px) sepia(100%); filter: contrast(300%) blur(30px) sepia(100%); opacity: 0;}
@@ -42,11 +44,22 @@ footer {text-align: center; padding: 20px 0; font-family: "Strait",sans-serif; c
   border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; margin: 0 auto; width: 900px; position: relative;
 
   >*:first-child {
-    height: 111px; width: 100%; background: url(@zv-header-background) center top; background-size: cover;
+    height: 111px; width: 100%; background: url(@zv-header-background) center top; background-size: cover; position: relative;
     &::after {
       display: block; width: 910px; height: 5px; position: relative; top: 111px; left: -5px; background-color: @zv-color-main;
       content: " "; box-shadow: 0 0 2px black; z-index: 90;
     }
+  }
+}
+
+#infoband {
+  position: absolute; right: -4px; bottom: 5px; background: @zv-band-color; border: 2px solid darken(@zv-band-color, 10%);
+  padding: 2px 8px; font-size: 10px; pointer-events: none;
+
+  &::after {
+    content: ' '; position: absolute; width: 0; height: 0; bottom: -8px; border-width: 3px 2px; border-style: solid; z-index: 50;
+    right: -2px;
+    border-color: darken(@zv-band-color, 20%) transparent transparent darken(@zv-band-color, 20%);
   }
 }
 

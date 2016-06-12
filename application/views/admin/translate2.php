@@ -114,6 +114,8 @@
         game.network.load('admin/translate/old');
     });
 
+    var current_request;
+
     var lang_from = null, lang_to = null, current_id = null;
 
     var sel_from = $('#lng-from');
@@ -131,7 +133,8 @@
         if (!(args.from = lang_from) || !(args.to = lang_to)) return;
 
         $('.tools').addClass('disabled');
-        game.network.query('admin/japi/translate/' + action, args, function(data) {
+        if (current_request) current_request.abort();
+        current_request = game.network.query('admin/japi/translate/' + action, args, function(data) {
             if (data.error) {
                 alert(data.error.code + ' [' + data.error.name + ']: ' + data.error.message);
                 return;
@@ -140,7 +143,7 @@
             callback(data);
         }, function() {
             $('.tools').removeClass('disabled');
-        })
+        });
     };
 
     var display = function(id, original, translation) {
@@ -210,7 +213,35 @@
     });
 
     $('#tl_search').click(function() {
-        alert('Coming soon!');
+        var popup = core.popup.spawn({desktop: 600, md: '100%'});
+
+        var tar;
+
+        popup.append(
+            NF.row()
+                .append(NF.cell(true, 12).append($('<input />').addClass('form_input').attr({type: 'text', placeholder: <?=__j('Suchbegriff eingeben...');?>}).keyup(function() {
+                    var query = $(this).val();
+                    if (query.length < 4) return;
+                    $(tar).empty().append(NF.row().append(NF.cell(true, 12, 0, 'center').append(NF.fa('circle-o-notch', true))));
+                    connect('search', {from: lang_from, to: lang_to, q: query}, function(data) {
+                        $(tar).empty();
+                        var has = false;
+                        $.each(data.result, function(id, entry) {
+                            has = true;
+                            $(tar).append(NF.cell(false, 12).append(
+                                $('<div />').addClass('hotbox').css({'font-size': 12, 'font-family': 'monospace'}).append(NF.row()
+                                    .append(NF.cell(true, 6).text(entry.from))
+                                    .append(NF.cell(true, 6).text(entry.to))
+                            ).click(function() {
+                                popup.trigger('unpop');
+                                display(entry.id, entry.from, entry.to)
+                            })))
+                        });
+                        if (!has) $(tar).text(<?=__j('Es wurden keine Übersetzungen gefunden.');?>);
+                    })
+                })))
+                .append(NF.cell(true, 12).append(tar = NF.row().css({'max-height': 300, 'overflow': 'auto'})))
+        )
     });
 
     $('#tl_save').click(function() {next(true)});

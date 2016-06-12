@@ -3,6 +3,18 @@
 return array(
 	'season' => 8,
 
+    'titles' => [
+        0 => 'Fröhliche Betazeit',
+        1 => 'Der Anfang',
+        2 => 'Gender-Mainstreaming',
+        3 => 'Kriegszustand',
+        4 => 'Tod unter Freunden',
+        5 => 'Unter freiem Himmel',
+        6 => 'Heldenhafte Kinder',
+        7 => 'Evolution',
+        8 => 'Freunde und Feinde'
+    ],
+
     'downtime' => [[10,15]],        // ONE downtime, starting 10 minutes after midnight, lasting until 15 minutes after midnight
 
     'externals' => array(
@@ -24,9 +36,6 @@ return array(
 			'compression_level' => 9,
             'output_compression' => true,
 		),
-	),
-	'debug' => array(
-		'deploy_magic_box' => true,
 	),
 );
 

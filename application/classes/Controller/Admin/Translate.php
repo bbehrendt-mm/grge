@@ -66,6 +66,20 @@ class Controller_Admin_Translate extends Controller_Admin_Admin {
 
     }
 
+    public function japi_search() {
+        $q = trim($this->post('q'));
+        if (strlen($q) < 4) return $this->render(['result' => []]);
+
+        return $this->render(['result' => array_map(function($id) {
+            $entry = I18n::get_by_id($id);
+            return [
+                'id' => $id,
+                'from' => $entry[$this->post('from')],
+                'to'  => $entry[$this->post('to')]
+            ];
+        }, I18n::search($q, [$this->post('from'), $this->post('to')]))]);
+    }
+    
     public function japi_set() {
         $this->render(['success' => (int)I18n::set(
                 $this->post('from'),

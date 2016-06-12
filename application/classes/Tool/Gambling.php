@@ -47,5 +47,18 @@ class Tool_Gambling {
     public static function tumble($p) {
         return (mt_rand(15, 100) <= $p->get_status()->get(Model_Status::MS_STAT_DRUNK));
     }
+
+    /**
+     * @param int $min
+     * @param int $max
+     * @param callable $func
+     * @return int
+     */
+    public static function repeat($min, $max, callable $func) {
+        if ($min > $max || $max <= 0) return 0;
+        $count = mt_rand($min,$max);
+        for ($i = 0; $i < $count; $i++) $func();
+        return $count;
+    }
 		
 }	

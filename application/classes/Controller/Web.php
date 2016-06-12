@@ -93,7 +93,16 @@ class Controller_Web extends Controller {
 
     public function action_body() {
         $this->force_ajax();
-        $this->add_widget(':body', View::factory('body')->render());
+        
+        $season = (int)Kohana::$config->load('server.season');
+        $title = Tool_System::getSeasonTitle($season);
+        $beta = Kohana::$config->load('build.version.stage') < 3;
+        
+        $this->add_widget(':body', View::factory('body')
+            ->set('season', Kohana::$config->load('server.season'))
+            ->set('title', $title)
+            ->set('beta', $beta)
+            ->render());
         $this->modify_current_url('');
         $this->render(null, true);
     }

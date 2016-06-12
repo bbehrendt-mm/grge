@@ -19,7 +19,6 @@ abstract class Model_Items_Abstract_Liquid extends Model_Items_Abstract_Item imp
 	}
 
     protected function hid() {
-        $php53pb = $this;
         return parent::hid()
             ->add_action('Auflecken',
                 Model_Action::factory()

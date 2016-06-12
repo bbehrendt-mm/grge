@@ -1,6 +1,20 @@
-Der beste Freund des Menschen ist auch in der Zombie-Apokalypse ein nützlicher Begleiter. Hunde transportieren Gegenstände und helfen dir im Kampf.
-	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [847] in __
-	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [891] in render_mp
+Freunde und Feinde
+	D:\xampp\htdocs\grge\application\views\body.php [30] in __
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
+	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [105] in render
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_body
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[vyaT/IILq342Oonwjl1THw==] Sun, 12 Jun 2016 15:04:44 +0200
+
+Zoohandlung
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [190] in __
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [886] in render_location
 	D:\xampp\htdocs\grge\application\classes\Controller.php [249] in japi_data
 	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [46] in action_japi
 	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_japi
@@ -9,11 +23,11 @@ Der beste Freund des Menschen ist auch in der Zombie-Apokalypse ein nützlicher 
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[uUeNrenGRoYTFZQI7tjvVQ==] Sun, 24 Apr 2016 17:59:00 +0200
+[40ekw/HJLdDNEZK1s/3wHQ==] Sun, 12 Jun 2016 15:04:45 +0200
 
-Katze
-	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [845] in __
-	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [891] in render_mp
+In dieser Zoohandlung konnte man früher kuschelige Tiere kaufen... inzwischen sind die Käfige jedoch leer. Dafür liegen allerlei menschliche Skelette in der Gegend herum. Wo die wohl herkommen?
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [191] in __
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [886] in render_location
 	D:\xampp\htdocs\grge\application\classes\Controller.php [249] in japi_data
 	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [46] in action_japi
 	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_japi
@@ -22,11 +36,12 @@ Katze
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[zmd5/za9MZB3q722qBz35g==] Sun, 24 Apr 2016 18:09:34 +0200
+[e5F1hfDr+sVa/D9VNSEspg==] Sun, 12 Jun 2016 15:04:45 +0200
 
-Eine niedliche Katze, die im Kampf auch mal die Krallen zeigt.
-	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [847] in __
-	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [891] in render_mp
+Verkaufsautomat (Pettington 40K)
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [268] in __
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [433] in group_itemlist
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [887] in render_inventory
 	D:\xampp\htdocs\grge\application\classes\Controller.php [249] in japi_data
 	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [46] in action_japi
 	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_japi
@@ -35,11 +50,12 @@ Eine niedliche Katze, die im Kampf auch mal die Krallen zeigt.
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[quH9bJ7ZTPbP8xCTLTECFQ==] Sun, 24 Apr 2016 18:09:34 +0200
+[HC0F0gBwQXkMNEArSNUN3w==] Sun, 12 Jun 2016 15:04:45 +0200
 
-Mäuse können zwar nicht gegen Zombies kämpfen, dafür helfen sie dir aber beim Finden von Gegenständen und Vertilgen von Nahrungsmitteln.
-	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [847] in __
-	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [891] in render_mp
+Tierfutter
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [268] in __
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [433] in group_itemlist
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [887] in render_inventory
 	D:\xampp\htdocs\grge\application\classes\Controller.php [249] in japi_data
 	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [46] in action_japi
 	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_japi
@@ -48,37 +64,12 @@ Mäuse können zwar nicht gegen Zombies kämpfen, dafür helfen sie dir aber bei
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[vJKi19IlDnlmg+opyqbVbg==] Sun, 24 Apr 2016 18:11:00 +0200
+[w39RL0F51W8YOKYmo/OTLg==] Sun, 12 Jun 2016 15:04:45 +0200
 
-item_name
-	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Wiki.php [172] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_items
-	UNKNOWN FILE [-1] in execute
-	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
-	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
-	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
-	D:\xampp\htdocs\grge\index.php [116] in execute
-[nQMHuo6ykP8OFY/BvKf65w==] Mon, 02 May 2016 16:51:52 +0200
-
-Kopfschuss
-	D:\xampp\htdocs\grge\application\views\pages\death.php [57] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [984] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_redirect
-	UNKNOWN FILE [-1] in execute
-	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
-	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
-	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
-	D:\xampp\htdocs\grge\index.php [116] in execute
-[Evpp9pmNgNL4buL9bo/lcw==] Sat, 07 May 2016 15:04:53 +0200
-
-Hundeleine
-	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [266] in __
-	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [429] in group_itemlist
-	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [840] in render_inventory
-	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [891] in render_mp
+Das sieht ... lecker aus. Bist du sicher, dass du das Zeug nicht vielleicht für deine vierbeinigen Freunde aufheben möchtest?
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [269] in __
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [433] in group_itemlist
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [887] in render_inventory
 	D:\xampp\htdocs\grge\application\classes\Controller.php [249] in japi_data
 	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [46] in action_japi
 	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_japi
@@ -87,13 +78,12 @@ Hundeleine
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[dKspg6+0LM4senJllWL6kA==] Sun, 08 May 2016 15:01:14 +0200
+[xRGigURO+kFewpdfA7UGrw==] Sun, 12 Jun 2016 15:04:45 +0200
 
-Mit der Hundeleine kannst du verhindern, dass sich dein Vierbeiner an gefährlichen Zombiekämpfen beteiligt, die Zone wechselt oder dir deine Gegenstände wegfrisst.
-	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [267] in __
-	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [429] in group_itemlist
-	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [840] in render_inventory
-	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [891] in render_mp
+Power-Tierfutter
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [268] in __
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [433] in group_itemlist
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [887] in render_inventory
 	D:\xampp\htdocs\grge\application\classes\Controller.php [249] in japi_data
 	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [46] in action_japi
 	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_japi
@@ -102,102 +92,13 @@ Mit der Hundeleine kannst du verhindern, dass sich dein Vierbeiner an gefährlic
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[fZ47cBi7WRR2f2Qbgx8WBQ==] Sun, 08 May 2016 15:01:14 +0200
+[s7zUVlW16ohvxRFO7YPxnA==] Sun, 12 Jun 2016 15:04:45 +0200
 
-Du hast :itemdef verwendet.
-	D:\xampp\htdocs\grge\application\views\scripts\core\core.log.js.php [217] in __j
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\JView.php [27] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [228] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [66] in __toString
-	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [77] in compile_js_module
-	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [83] in modscript
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_core
-	UNKNOWN FILE [-1] in execute
-	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
-	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
-	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
-	D:\xampp\htdocs\grge\index.php [116] in execute
-[5sVWtYz2zJHvZCUweBTrzw==] Sun, 08 May 2016 15:09:28 +0200
-
-:name hat :itemdef verwendet.
-	D:\xampp\htdocs\grge\application\views\scripts\core\core.log.js.php [217] in __j
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\JView.php [27] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [228] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [66] in __toString
-	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [77] in compile_js_module
-	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [83] in modscript
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_core
-	UNKNOWN FILE [-1] in execute
-	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
-	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
-	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
-	D:\xampp\htdocs\grge\index.php [116] in execute
-[K2KGmTG4hsG4XNEM6rl6uA==] Sun, 08 May 2016 15:09:28 +0200
-
-Betonstücke
-	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Gamepanel.php [245] in __
-	D:\xampp\htdocs\grge\application\classes\Controller.php [249] in japi_list_items
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_japi
-	UNKNOWN FILE [-1] in execute
-	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
-	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
-	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
-	D:\xampp\htdocs\grge\index.php [116] in execute
-[WmBNpLLR+Tceo6X6jnUMoA==] Sun, 08 May 2016 17:54:22 +0200
-
-Betonstücke - die einfachste Methode, jede Demonstration aus dem Ruder laufen zu lassen. Jetzt erhältlich in den Trendfarben Dunkelweiß, Grau und Hellschwarz.
-	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Gamepanel.php [246] in __
-	D:\xampp\htdocs\grge\application\classes\Controller.php [249] in japi_list_items
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_japi
-	UNKNOWN FILE [-1] in execute
-	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
-	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
-	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
-	D:\xampp\htdocs\grge\index.php [116] in execute
-[R6kTFeNyAHe0l6HUqMy28A==] Sun, 08 May 2016 17:54:22 +0200
-
-Göttliches Schwert
-	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Gamepanel.php [245] in __
-	D:\xampp\htdocs\grge\application\classes\Controller.php [249] in japi_list_items
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_japi
-	UNKNOWN FILE [-1] in execute
-	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
-	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
-	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
-	D:\xampp\htdocs\grge\index.php [116] in execute
-[H+DzkkSqKijwjgFXC6nCdw==] Sun, 08 May 2016 17:54:22 +0200
-
-Morphium
-	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Gamepanel.php [245] in __
-	D:\xampp\htdocs\grge\application\classes\Controller.php [249] in japi_list_items
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_japi
-	UNKNOWN FILE [-1] in execute
-	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
-	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
-	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
-	D:\xampp\htdocs\grge\index.php [116] in execute
-[HmDl4aH1xOJ3lQepI2ARtA==] Sun, 08 May 2016 18:38:07 +0200
-
-Mit einer ordentlichen Dosis Morphium fühlt sich die Zombie-Apokalypse wie ein Ponyhof und ein abgerissener Arm wie ein kleiner Kratzer an. Deine Schmerztoleranz wird während der Wirkdauer massiv erhöht, allerdings musst du dafür erhöhte Müdigkeit sowie eine sofortige Drogenabhängigkeit in Kauf nehmen. Apropos Abhängigkeit: Von einer Überdosis Morphium ist allgemein eher abzuraten...
-	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Gamepanel.php [246] in __
-	D:\xampp\htdocs\grge\application\classes\Controller.php [249] in japi_list_items
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_japi
-	UNKNOWN FILE [-1] in execute
-	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
-	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
-	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
-	D:\xampp\htdocs\grge\index.php [116] in execute
-[sGNoU9sOS0Gffs1qbLR6Rw==] Sun, 08 May 2016 18:38:07 +0200
-
-Du stehst unter dem Einfluss von Morphium. Deine Schmerztoleranz ist stark erhöht.
-	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [503] in __
-	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [888] in render_status
-	D:\xampp\htdocs\grge\application\classes\Controller\Act.php [433] in japi_data
-	D:\xampp\htdocs\grge\application\classes\Controller.php [249] in japi_item
+Dieses Tierfutter leuchtet im Dunklen... das ist sicher ein gutes Zeichen! Aber, nur um sicher zu gehen, solltest du es lieber an deine Haustiere verfüttern...
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [269] in __
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [433] in group_itemlist
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [887] in render_inventory
+	D:\xampp\htdocs\grge\application\classes\Controller.php [249] in japi_data
 	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [46] in action_japi
 	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_japi
 	UNKNOWN FILE [-1] in execute
@@ -205,15 +106,13 @@ Du stehst unter dem Einfluss von Morphium. Deine Schmerztoleranz ist stark erhö
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[BX6MQZP2JCIo8DkQg3bwBQ==] Sun, 08 May 2016 18:48:30 +0200
+[1A3o9yBRkLks4mhFiDDjow==] Sun, 12 Jun 2016 15:04:45 +0200
 
-Du spritzt dir eine Dosis Morphium. Deine Schmerzen verschwinden, doch dein ganzer Körper fühlt sich auf einmal taub an...
-	D:\xampp\htdocs\grge\application\classes\Model\Log\Types\String.php [43] in __
-	D:\xampp\htdocs\grge\application\classes\Model\Log\Types\String.php [26] in postprocess
-	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [524] in as_notification
-	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [896] in render_notifications
-	D:\xampp\htdocs\grge\application\classes\Controller\Act.php [433] in japi_data
-	D:\xampp\htdocs\grge\application\classes\Controller.php [249] in japi_item
+Abgelaufenes Tierfutter
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [268] in __
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [433] in group_itemlist
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [887] in render_inventory
+	D:\xampp\htdocs\grge\application\classes\Controller.php [249] in japi_data
 	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [46] in action_japi
 	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_japi
 	UNKNOWN FILE [-1] in execute
@@ -221,15 +120,13 @@ Du spritzt dir eine Dosis Morphium. Deine Schmerzen verschwinden, doch dein ganz
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[9MPkQKVF/giiE7mCEVxPbQ==] Sun, 08 May 2016 18:48:30 +0200
+[lJAk7c2zc/tmyljtyc8pNA==] Sun, 12 Jun 2016 15:04:45 +0200
 
-Morphium-Überdosis
-	D:\xampp\htdocs\grge\application\classes\Model\Log\Types\String.php [40] in __
-	D:\xampp\htdocs\grge\application\classes\Model\Log\Types\String.php [26] in postprocess
-	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [524] in as_notification
-	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [877] in render_notifications
-	D:\xampp\htdocs\grge\application\classes\Controller\Act.php [433] in japi_data
-	D:\xampp\htdocs\grge\application\classes\Controller.php [249] in japi_item
+Ist es eigentlich normal, dass dieses Tierfutter sich von selbst bewegt... und außerdem anfängt, die Dose in der es sich befindet aufzulösen?
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [269] in __
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [433] in group_itemlist
+	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [887] in render_inventory
+	D:\xampp\htdocs\grge\application\classes\Controller.php [249] in japi_data
 	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [46] in action_japi
 	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_japi
 	UNKNOWN FILE [-1] in execute
@@ -237,497 +134,431 @@ Morphium-Überdosis
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[pWmAGoWHlDGIT1Wc/llfWg==] Sun, 08 May 2016 18:49:06 +0200
+[AsuV/bgFr1zWoyJVtwgl0Q==] Sun, 12 Jun 2016 15:04:45 +0200
 
-Du spürst, wie deine Muskeln erschlaffen und dein Bewusstsein dich verlässt. Am Ende bleibt dir nichts als Dunkelheit. Herzlichen Glückwunsch, du bist tot.
-	D:\xampp\htdocs\grge\application\classes\Model\Log\Types\String.php [43] in __
-	D:\xampp\htdocs\grge\application\classes\Model\Log\Types\String.php [26] in postprocess
-	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [524] in as_notification
-	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [877] in render_notifications
-	D:\xampp\htdocs\grge\application\classes\Controller\Act.php [433] in japi_data
-	D:\xampp\htdocs\grge\application\classes\Controller.php [249] in japi_item
-	D:\xampp\htdocs\grge\application\classes\Controller\Game.php [46] in action_japi
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_japi
+Fröhliche Betazeit
+	D:\xampp\htdocs\grge\application\classes\Controller\Ranking.php [345] in __
+	UNKNOWN FILE [-1] in {closure}
+	D:\xampp\htdocs\grge\application\classes\Controller\Ranking.php [345] in array_map
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lists
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[cbiPkMg8xebEjLvG9yhDyA==] Sun, 08 May 2016 18:49:06 +0200
+[JlpfEwwYNy/N8q7wZRfQ4Q==] Sun, 12 Jun 2016 15:05:30 +0200
 
-Townships!
-	D:\xampp\htdocs\grge\application\views\pages\gameselect.php [359] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [515] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Der Anfang
+	D:\xampp\htdocs\grge\application\classes\Controller\Ranking.php [345] in __
+	UNKNOWN FILE [-1] in {closure}
+	D:\xampp\htdocs\grge\application\classes\Controller\Ranking.php [345] in array_map
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lists
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[IlXr3KdflCZSPN7QEzpkQQ==] Sat, 14 May 2016 14:00:11 +0200
+[mzTIWR8F3yG5qfgcqBmFcg==] Sun, 12 Jun 2016 15:05:30 +0200
 
-Spezial-Modus
-	D:\xampp\htdocs\grge\application\views\pages\gameselect.php [77] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [515] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Gender-Mainstreaming
+	D:\xampp\htdocs\grge\application\classes\Controller\Ranking.php [345] in __
+	UNKNOWN FILE [-1] in {closure}
+	D:\xampp\htdocs\grge\application\classes\Controller\Ranking.php [345] in array_map
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lists
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[Bzqn+w2rqx6iDzf9kk+kxg==] Sat, 14 May 2016 14:08:07 +0200
+[Yy9f+pZY7rFWfVv8QUjq1g==] Sun, 12 Jun 2016 15:05:30 +0200
 
-Spiel und Spaß für die ganze Stadt!
-	D:\xampp\htdocs\grge\application\views\pages\gameselect.php [78] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [515] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Kriegszustand
+	D:\xampp\htdocs\grge\application\classes\Controller\Ranking.php [345] in __
+	UNKNOWN FILE [-1] in {closure}
+	D:\xampp\htdocs\grge\application\classes\Controller\Ranking.php [345] in array_map
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lists
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[uzRFC4kPyCGmDeGhI7InkA==] Sat, 14 May 2016 14:08:07 +0200
+[pFg5c5Wr9EHU/RscOKT3TA==] Sun, 12 Jun 2016 15:05:30 +0200
 
-Freund von PETA
-	D:\xampp\htdocs\grge\application\views\pages\ranking_global.php [271] in __j
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Ranking.php [376] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_global
+Tod unter Freunden
+	D:\xampp\htdocs\grge\application\classes\Controller\Ranking.php [345] in __
+	UNKNOWN FILE [-1] in {closure}
+	D:\xampp\htdocs\grge\application\classes\Controller\Ranking.php [345] in array_map
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lists
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[g2rKIGXqJyd7lN3qmKuUmQ==] Sat, 14 May 2016 14:12:16 +0200
+[QOqKL/nrHicEuyR87IBx5w==] Sun, 12 Jun 2016 15:05:30 +0200
 
-Chaostage
-	D:\xampp\htdocs\grge\application\views\pages\ranking_global.php [271] in __j
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Ranking.php [376] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_global
+Unter freiem Himmel
+	D:\xampp\htdocs\grge\application\classes\Controller\Ranking.php [345] in __
+	UNKNOWN FILE [-1] in {closure}
+	D:\xampp\htdocs\grge\application\classes\Controller\Ranking.php [345] in array_map
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lists
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[iDVl0bWdKCskm7QQDGTtgw==] Sat, 14 May 2016 14:12:16 +0200
+[9UpHIRuyNg8Zy3DO4Gf6tg==] Sun, 12 Jun 2016 15:05:30 +0200
 
-Spezial-Modus: :name
-	D:\xampp\htdocs\grge\application\views\pages\games\12000.php [7] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [522] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Heldenhafte Kinder
+	D:\xampp\htdocs\grge\application\classes\Controller\Ranking.php [345] in __
+	UNKNOWN FILE [-1] in {closure}
+	D:\xampp\htdocs\grge\application\classes\Controller\Ranking.php [345] in array_map
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lists
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[dbimNTOmB/fm9IYdVfWi7g==] Sat, 14 May 2016 15:03:13 +0200
+[beY5GG3WXiRwiXbHKnZYEA==] Sun, 12 Jun 2016 15:05:30 +0200
 
-In diesem Modus spielst du zusammen mit den anderen Bürgern deiner aktuellen DieVerdammten oder Die2Nite Stadt. Dein Beruf bei dieser Partie wird automatisch anhand deines Berufes in der Stadt festgelegt.
-	D:\xampp\htdocs\grge\application\views\pages\games\12000.php [15] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [522] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Evolution
+	D:\xampp\htdocs\grge\application\classes\Controller\Ranking.php [345] in __
+	UNKNOWN FILE [-1] in {closure}
+	D:\xampp\htdocs\grge\application\classes\Controller\Ranking.php [345] in array_map
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lists
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[qJW9tlzC5dzNuseZSfy9wg==] Sat, 14 May 2016 15:12:03 +0200
+[QvDXYqhYfbs2Td3k9qT8bQ==] Sun, 12 Jun 2016 15:05:30 +0200
 
-Es kann nicht mehr als eine Partie pro Stadt gleichzeitig laufen. Wird die Partie jedoch beendet, kann mit derselben Stadt eine neue Partie gestartet werden.
-	D:\xampp\htdocs\grge\application\views\pages\games\12000.php [16] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [522] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+winchester
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[osIyA8uoscPYWRh1YYZkbw==] Sat, 14 May 2016 15:12:03 +0200
+[x+dXHkJNXvZDBX1zybAbqQ==] Sun, 12 Jun 2016 15:12:42 +0200
 
-Stirbst du während der Partie in DV bzw. D2N, so hat dies keinen Einfluss auf die Partie.
-	D:\xampp\htdocs\grge\application\views\pages\games\12000.php [17] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [522] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Kiste
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[P9aUVzpRHUZRNzNF/M6yxQ==] Sat, 14 May 2016 15:12:03 +0200
+[Qd/CVZQyHZj6wl9RQAU6uQ==] Sun, 12 Jun 2016 15:12:42 +0200
 
-Verfügbare Partien
-	D:\xampp\htdocs\grge\application\views\pages\games\12000.php [23] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [525] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Diese Kiste sieht so aus, als würde sie nützliche Gegenstände enthalten. Warum schaust du nicht mal hinein?
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[Zn9VJxPGMvjzOJfXyEPUng==] Sat, 14 May 2016 15:57:24 +0200
+[Ji7LTPEt5wM3vRDJF5hG7g==] Sun, 12 Jun 2016 15:12:42 +0200
 
-:num1 Spieler
-	D:\xampp\htdocs\grge\application\views\pages\games\12000.php [32] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [525] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Item entnehmen
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[0Kf7516x73Cygo9T0V2vFg==] Sat, 14 May 2016 17:05:40 +0200
+[3D4VvudzOE6GRzfFGH/9cg==] Sun, 12 Jun 2016 15:12:43 +0200
 
-Dein ZV-Profil ist nicht mit :service verknüpft, daher kann deine aktuelle Stadt nicht abgerufen werden.
-	D:\xampp\htdocs\grge\application\views\pages\games\12000.php [35] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [525] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Du hast einen Gegenstand erhalten.
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[EueCbuqAvSJO9NGGtCg42Q==] Sat, 14 May 2016 17:10:04 +0200
+[S0AbOEo4PxM9foDV7SRS3g==] Sun, 12 Jun 2016 15:12:43 +0200
 
-Buddler
-	D:\xampp\htdocs\grge\application\views\pages\gameselect.php [190] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [528] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Schamanenmaske
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[lT0Ta2ovqBcbfQHmnA0iEw==] Mon, 16 May 2016 13:39:03 +0200
+[ZROndaEEiXzSBAtopNKpug==] Sun, 12 Jun 2016 15:12:43 +0200
 
-Wächter
-	D:\xampp\htdocs\grge\application\views\pages\gameselect.php [190] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [528] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Diese Schamanenmaske wurde seit Generationen in deiner Familie vererbt. Man sagt, ihr wohnen mystische Kräfte inne... hey, ist das da auf der Rückseite ein Made-In-China-Schriftzug?
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[5yxdvyGPBD4N8L6RwRm1rA==] Mon, 16 May 2016 13:39:03 +0200
+[OtfEDrTBBMUjCwFYP5yAyw==] Sun, 12 Jun 2016 15:12:43 +0200
 
-Einsiedler
-	D:\xampp\htdocs\grge\application\views\pages\gameselect.php [190] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [528] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Sprühregen
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[cFxL3Z/TRDY9EisTtIoohQ==] Mon, 16 May 2016 13:39:03 +0200
+[8vji0EwA/6gzvel3hz8k1Q==] Sun, 12 Jun 2016 15:12:43 +0200
 
-Aufklärer
-	D:\xampp\htdocs\grge\application\views\pages\gameselect.php [190] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [528] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Erzeugt einen spontanen Sprühregen, der belagernde Zombies tötet.
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[Qnyniobxzcidqo9XNPyGgg==] Mon, 16 May 2016 13:39:03 +0200
+[+92S0+7Nc6y2MBFaOuusrA==] Sun, 12 Jun 2016 15:12:43 +0200
 
-Dompteur
-	D:\xampp\htdocs\grge\application\views\pages\gameselect.php [190] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [528] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Platzregen
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[1BZoQm07JD+IMoVv9FZOcg==] Mon, 16 May 2016 13:39:04 +0200
+[jPtofCdUT5elxqA4+dRdlg==] Sun, 12 Jun 2016 15:12:43 +0200
 
-Schamane
-	D:\xampp\htdocs\grge\application\views\pages\gameselect.php [190] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [528] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Verursacht heftige Regenfälle, die einiges an Wasser auf dem Boden zurücklassen.
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[Rvj/bVoUSKoM33Q9QPXAlw==] Mon, 16 May 2016 13:39:04 +0200
+[GHvx3GEL0Crk6EPzO7oBkA==] Sun, 12 Jun 2016 15:12:43 +0200
 
-Du bist das Rückrad jeder Stadt. Du verfügst über keine besonderen Fähigkeiten, daher eignest du dich perfekt für Selbstmord-Aktionen und als Zombiefutter!
-	D:\xampp\htdocs\grge\application\views\pages\gameselect.php [375] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [528] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Heilungsritual
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[us6OMqQj2G1Jwwxp7R3QbA==] Mon, 16 May 2016 13:39:04 +0200
+[wEbIA+nARBo0ivV/kSbYrA==] Sun, 12 Jun 2016 15:12:43 +0200
 
-basic
-	D:\xampp\htdocs\grge\application\views\pages\gameselect.php [375] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [528] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Jeder Spieler und jeder NPC in der aktuellen Zone regeneriert Gesundheit.
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[8XqqvCC/4EUHWSeTT+1S0g==] Mon, 16 May 2016 13:39:04 +0200
+[l09i6L20Vi6vNkczAOargg==] Sun, 12 Jun 2016 15:12:43 +0200
 
-Deine Erfahrung im Finden von Gegenständen macht dich zu einem wertvollen Mitglied der Gesellschaft. Und wenns mal nichts mehr zu finden gibt, kannst du den Zombies mit deiner Schaufel immer noch irgendlich die Visage umfurchen.
-	D:\xampp\htdocs\grge\application\views\pages\gameselect.php [375] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [528] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Sandsturm
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[Po9a4G33CdhGpVbzuaPiug==] Mon, 16 May 2016 13:39:04 +0200
+[B2axHOSE7qnmBNdjyUKaNw==] Sun, 12 Jun 2016 15:12:43 +0200
 
-collec
-	D:\xampp\htdocs\grge\application\views\pages\gameselect.php [375] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [528] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Die Zone wird von einem heftigen Sandsturm getroffen, der Spieler und NPCs Schaden zufügt, belagernde Zombies tötet und die Fundchancen der Zone teilweise regeneriert.
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[tC3hOCNmHv9oEHSlKJeEgQ==] Mon, 16 May 2016 13:39:04 +0200
+[LZehDzyM2QQn1U9UdlpwIw==] Sun, 12 Jun 2016 15:12:43 +0200
 
-Mit deinem mächtigen Schild verteidigst du deine Mitbürger tapfer vor heranrückenden Zombiemeuten. Außerdem ist das Teil ein großartiger Sonnenschutz!
-	D:\xampp\htdocs\grge\application\views\pages\gameselect.php [375] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [528] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Du setzt die Maske auf und fühlst, wie dich mystische Kräfte durchströhmen. Die Maske hat deinen Wunsch erhört!
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[JohB5adwiX9+xbDo5dIP6g==] Mon, 16 May 2016 13:39:04 +0200
+[Wvg7DMlEr2Fh5fNTAiECKg==] Sun, 12 Jun 2016 15:12:43 +0200
 
-guardian
-	D:\xampp\htdocs\grge\application\views\pages\gameselect.php [375] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [528] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Du kannst die Maske maximal einmal am Tag anwenden.
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[2FNi+q513b7DPUhwGRxy6Q==] Mon, 16 May 2016 13:39:04 +0200
+[0Ye6J/auiUhDvpFl/6LyYg==] Sun, 12 Jun 2016 15:12:43 +0200
 
-Du warst nie ein Freund größerer Menschenmengen und hast Siedlungen bisher immer gemieden. Daher hast du gelernt, dich von dem Tau von Blättern und den Insekten in deinem Bart zu ernähren.
-	D:\xampp\htdocs\grge\application\views\pages\gameselect.php [375] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [528] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Selbstversorgung
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[JCVeavlnxP7Pm8zDnbgXmQ==] Mon, 16 May 2016 13:39:04 +0200
+[aqKCOriarHWUScybV2MCBA==] Sun, 12 Jun 2016 15:12:43 +0200
 
-hunter
-	D:\xampp\htdocs\grge\application\views\pages\gameselect.php [375] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [528] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Regeneriert Hunger und Durst.
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[axs2y7BLQUkL/Aqyv6Jvhg==] Mon, 16 May 2016 13:39:04 +0200
+[skG076YOi6N9uSzIiNTOQA==] Sun, 12 Jun 2016 15:12:43 +0200
 
-Lautlos wie ein Schatten schleichst du an Zombiehorden vorbei. Leider machst du dich damit nur bedingt bei deinen Mitbürgern beliebt, die du umzingelt zurücklässt...
-	D:\xampp\htdocs\grge\application\views\pages\gameselect.php [375] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [528] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Taktischer Rückzug
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[W5CoVbEdHask+r6afPJpPA==] Mon, 16 May 2016 13:39:04 +0200
+[9piySxfRYvzt3EqfjDZnZA==] Sun, 12 Jun 2016 15:12:43 +0200
 
-eclair
-	D:\xampp\htdocs\grge\application\views\pages\gameselect.php [375] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [528] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Ermöglicht dir die Flucht aus einer von Zombies belagerten Zone, wirkt sich jedoch nicht auf andere Spieler auf deiner Zone aus!
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[KOzJS9B1Uk3l+5xhGiYIhQ==] Mon, 16 May 2016 13:39:04 +0200
+[CgCmK/n9a732nPVeCFRbFQ==] Sun, 12 Jun 2016 15:12:43 +0200
 
-Dein Malteser ist dein treuster Begleiter, der dir Gegenstände hinterherschleppt und dich vor Zombies verteidigt. Und wenn mal die Nahrung knapp wird, schmeckt er bestimmt auch ganz passabel...
-	D:\xampp\htdocs\grge\application\views\pages\gameselect.php [375] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [528] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Geheimnisvolle Kisten 1
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[La6nBwXFP5HyP0iBt+kD7g==] Mon, 16 May 2016 13:39:04 +0200
+[3ae0s6NNUXmLYt5mfztK1w==] Sun, 12 Jun 2016 15:12:43 +0200
 
-tamer
-	D:\xampp\htdocs\grge\application\views\pages\gameselect.php [375] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [528] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Habseligkeiten eines Bürgers
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[jXqylS++Hdsl9jDck1id/A==] Mon, 16 May 2016 13:39:04 +0200
+[AkIwibgLZy2eKXX0bKksmQ==] Sun, 12 Jun 2016 15:12:43 +0200
 
-Du kennst die Unterschiede zwischen Mutter und Schraube, Pluspol und Minuspol, Linux und Unix und weist, dass man niemals die Ströme kreuzen sollte. Für so jemanden sind ein paar Versteck-Upgrades doch eine Kleinigkeit!
-	D:\xampp\htdocs\grge\application\views\pages\gameselect.php [375] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [528] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Was in diesen Kisten steckt? Keine Ahnung! Finde es doch selbst heraus, wenn du dich traust (und es dir leisten kannst).
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[LcJZNFCfs9bMw+s8iJ0CZw==] Mon, 16 May 2016 13:39:04 +0200
+[aO2mtnh9fGrUZpis1qnOhw==] Sun, 12 Jun 2016 15:12:43 +0200
 
-tech
-	D:\xampp\htdocs\grge\application\views\pages\gameselect.php [375] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [528] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Geheimnisvolle Kisten 2
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[2fkTP7EgzWCWhwvCtJaAWw==] Mon, 16 May 2016 13:39:04 +0200
+[fN22q7LN0dSE2RmjtguYLQ==] Sun, 12 Jun 2016 15:12:43 +0200
 
-Du hast vor ein paar Jahren im Urlaub in Brasilien mal einen 2tägigen Voodoo-Kurs besucht und dir danach im Kostümgeschäft eine billige Plastik-Schamanenmaske gekauft. Im Prinzip ist das doch alles, was man als Qualifikation benötigt, oder?
-	D:\xampp\htdocs\grge\application\views\pages\gameselect.php [375] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [528] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Habseligkeiten eines erfahrenen Bürgers
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[wyc6vfAalgCQ63LoOVD+ZQ==] Mon, 16 May 2016 13:39:04 +0200
+[BoSO8mGkFIxDG4Zu4eWrAw==] Sun, 12 Jun 2016 15:12:43 +0200
 
-shaman
-	D:\xampp\htdocs\grge\application\views\pages\gameselect.php [375] in __
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
-	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
-	D:\xampp\htdocs\grge\application\classes\View.php [7] in render
-	D:\xampp\htdocs\grge\application\classes\Controller\Gamemaster.php [528] in render
-	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_lobby
+Beim Abrufen deiner aktuellen Stadt von :service ist ein Fehler aufgetreten. Bitte versuche es später erneut.
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
 	UNKNOWN FILE [-1] in execute
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
 	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
 	D:\xampp\htdocs\grge\index.php [116] in execute
-[UG7trlHQvcO+k8axyAqISA==] Mon, 16 May 2016 13:39:04 +0200
+[7HUlmzeIBd2ujNlUxMLLKA==] Sun, 12 Jun 2016 15:12:43 +0200
+
+Wächterschild
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[bin0h2/J3zkIY6stOk2SnA==] Sun, 12 Jun 2016 15:12:43 +0200
+
+Dieser Schild ist eine Spezialanfertigung für Wächter und praktisch unzerstörbar. Er kann alternativ auch für ein Captain America Cosplay verwendet werden.
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[FIzEc882Emf1W3BA4DO2/A==] Sun, 12 Jun 2016 15:12:43 +0200
+
+Sehr stabil
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[Dt8D2/GkD7vPF2dG7dvNDw==] Sun, 12 Jun 2016 15:12:43 +0200
+
+Ohne deinen Schild fühlst du dich ziemlich nackt; hauptsächlich, weil du hinter dem Schild tatsächlich keine Kleidung trägst. Du solltest ihn also besser nicht ablegen...
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[/dhIXjIXDwc+RzeFUXeOog==] Sun, 12 Jun 2016 15:12:43 +0200
+
+In dieser Kiste ist alles gesammelt, was man fürs erfolgreiche Überleben in der Postapokalypse benötigt.
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[iEgAJYwXOQBNAR+xpku1Fg==] Sun, 12 Jun 2016 15:12:43 +0200
+
+Diese Kiste enthält seltene Items, die dir das Überleben in der Postapokalypse sicherlich erleichtern werden.
+	D:\xampp\htdocs\grge\application\classes\Controller\Admin\Files.php [97] in set_missing
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_import_translations
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[87CXtYxRLGyMy8S5f47fRg==] Sun, 12 Jun 2016 15:12:43 +0200
 

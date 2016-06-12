@@ -66,7 +66,7 @@ class Model_Items_Basefood extends Model_Items_Abstract_Item implements Interfac
                 return true;
             default:
                 Tool_Scripts::chem_reaction(
-                    'Du tunkst das Essen in die Chemikalie - und beginnt zu blubbern und löst sich vor deinen Augen in seine Bestandteile auf! Zurück bleibt nur eine große glibbrige Masse Nährschleim. Lecker ...',
+                    'Du tunkst das Essen in die Chemikalie - und beginnt zu blubbern und löst sich vor deinen Augen in seine Bestandteile auf! Zurück bleibt nur eine kleine glibbrige Masse Nährschleim. Lecker ...',
                     $chemval,$this, new Model_Items_Nutrient);
                 return true;
         }

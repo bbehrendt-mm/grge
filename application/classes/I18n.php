@@ -191,6 +191,16 @@ class I18n extends Kohana_I18n {
         return (int)DB::select('id')->from('language')->limit(1)->where($lang, '=', null)->where('lock', '<=', $min_last_access)->where('id','>',$from)->execute()->get('id', 0);
     }
 
+    public static function search($query, $langs = null) {
+        if (!$langs) $langs = static::$lang_list;
+        $q = DB::select('id')->from('language');
+        foreach ($langs as $lang)
+            if (in_array($lang, static::$lang_list))
+                $q->or_where($lang, 'LIKE', "%{$query}%");
+        
+        return $q->execute()->as_array(null,'id');
+    }
+
     public static function get_by_id($id) {
         if (!$id) return null;
         $ret = DB::select()->from('language')->where('id', '=', $id)->execute()->as_array();

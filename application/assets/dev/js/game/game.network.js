@@ -17,7 +17,7 @@ game.network = {
             send_headers['X-Virtual-Cookie'] = game.vcsid;
 
         game.network.ai++;
-        game.network.queries[ajax_id] = $.ajax(url, {
+        return game.network.queries[ajax_id] = $.ajax(url, {
             cache: true,
             type: 'POST',
             data: args,

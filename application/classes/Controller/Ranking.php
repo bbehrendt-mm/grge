@@ -335,15 +335,18 @@ class Controller_Ranking extends Controller {
         ]);
     }
 
-
     public function action_lists() {
 
         $converter = function($meta) {
             return __($meta['name']);
         };
 
+        $season = Kohana::$config->load('server.season');
+        $titles = array_map(function($t) {return __($t);}, Tool_System::getSeasonTitle());
+
         $this->add_widget(View::factory('pages/ranking')
-            ->set('season', Kohana::$config->load('server.season'))
+            ->set('season', $season)
+            ->set('titles', $titles)
             ->set('sp_modes', array_map($converter, Tool_Modes::config_get_modes('single')))
             ->set('mp_modes', array_map($converter, Tool_Modes::config_get_modes(['multi_auto','multi_custom','special_multi_auto'])))
             ->render()
@@ -548,8 +551,12 @@ class Controller_Ranking extends Controller {
             ];
         else $mcash = false;
 
+        $season = Kohana::$config->load('server.season');
+        $titles = Tool_System::getSeasonTitle();
+
         $this->add_widget(View::factory('pages/soul')
-            ->set('season', Kohana::$config->load('server.season'))
+            ->set('season', $season)
+            ->set('titles', $titles)
             ->set('own_soul', $uid == $user->uid())
             ->set('soul_owner', $name)
             ->set('soul_id', $uid)

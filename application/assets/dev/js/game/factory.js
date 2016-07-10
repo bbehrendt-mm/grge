@@ -59,6 +59,10 @@ NF.n = function(node, classes, content, html) {
     else return tmp.append(content);
 };
 
+NF.input = function(type, content) {
+    return NF.n('input', 'form_input').val(content).attr('type',type);
+};
+
 NF.separator = function(n) {
     return NF.n(n ? n : 'span', 'separator');
 };

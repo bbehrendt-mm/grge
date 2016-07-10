@@ -4,6 +4,8 @@ abstract class Model_Map_Abstract {
 
     const MMA_TYPE_OVERVIEW = 1;
     const MMA_TYPE_LABYRINTH = 2;
+    
+    const MMA_NUMBER_OF_TAGS = 16;
 
     protected static $map_type;
     protected static $map_grid_size = 2;
@@ -13,6 +15,10 @@ abstract class Model_Map_Abstract {
 
     protected $paths = Array();
     protected $sublocation = null;
+
+    protected $loc_notes = Array(
+        /* 15 => Array('tag' => 0, 'text' => '') */
+    );
 
     protected $loc_assoc = Array(
          /* 15 => Array('class' => 'Model_Places_Someplace', 'x' => 1, 'y' => 12, 'direction' => 12, 'visible' => false, 'dry' => 2) */
@@ -65,6 +71,19 @@ abstract class Model_Map_Abstract {
         $this->mapname = $map;
         $this->sublocation = $sub;
         $this->sub_routing = new Model_Routing(static::$map_grid_size);
+    }
+
+    public function get_location_notes($id) {
+        return isset($this->loc_notes[$id]) ? $this->loc_notes[$id] : ['tag' => 0, 'text' => ''];
+    }
+
+    public function set_location_notes($id, $tag, $text) {
+        if ($tag < 0 || $tag > Model_Map_Abstract::MMA_NUMBER_OF_TAGS) $tag = 0;
+        if (isset($this->loc_assoc[$id])) {
+            $this->loc_notes[$id] = ['tag' => $tag, 'text' => $tag > 0 ? $text : ''];
+            return true;
+        } else return false;
+
     }
 
     public function get_mapname() {

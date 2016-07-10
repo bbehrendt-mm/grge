@@ -195,6 +195,25 @@ class Controller_Map extends Controller_Game {
         return true;
     }
 
+    public function japi_tag() {
+        /**
+         * @global $game Model_Game
+         * @global $player Model_Player
+         * @var $current Model_Player
+         */
+        global $game, $player;
+
+        $lid = (int)$this->post('id');
+        $tag = (int)$this->post('tag');
+        $txt = mb_substr($this->post('text'), 0, 32);
+
+        $r = ($tag >= 0 && $tag <= Model_Map_Abstract::MMA_NUMBER_OF_TAGS)
+            ? $game->map($player->location_class())->set_location_notes($lid, $tag, $txt)
+            : false;
+
+        return $this->render(['success' => $r]);
+    }
+
     public function japi_go() {
 
         /**
@@ -270,7 +289,7 @@ class Controller_Map extends Controller_Game {
             $pass[$id]['zombies'] = $location->zombie_pop();
             $pass[$id]['name'] = __($location->name());
             $pass[$id]['icon'] = $location->icon();
-
+            $pass[$id]['note'] = $game->map($lid)->get_location_notes($id);
             $pass[$id]['skip_ro'] = (count($data['tail']) == 2) && Tool_System::instance_of($location,'Model_Places_Tentkit');
 
             $pass[$id]['classes'] = array();

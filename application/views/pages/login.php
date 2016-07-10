@@ -180,7 +180,7 @@ if (!isset($preset_zvid)) $preset_zvid = -1;
         var mugshot = $('<div class="mugshot"><span class="mugshot-fill"><i class="fa fa-spin fa-circle-o-notch"></i></span><img alt="" /><span class="mugshot-append" /></div>');
         mugshot.find('img').attr('src', v.avatar || 'media/img/mugshot.png').end().find('.mugshot-append').text(v.name);
         mugshot.find('.mugshot-fill').hide();
-        mugshot.find('img').error(function() {
+        mugshot.find('img').on('error',function() {
             $(this).attr('src', 'media/img/mugshot.png').off('error');
         });
         mugshot.click(function() {

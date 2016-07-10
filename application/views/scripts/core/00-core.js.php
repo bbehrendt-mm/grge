@@ -132,12 +132,19 @@ core = {
             .append($('<li>').attr('data-toggle', '#game_info').text(<?=__j('Spieldetails')?>))
             .append(data.players ? $('<li>').attr('data-toggle', '#mp_container').text(data.players.multiplayer ? <?=__j('Spieler & NPCs')?> : <?=__j('NPCs')?>).prepend(data.players.multiplaye && data.players.messages ? $('<img />').attr('src','media/icons/new.png') : false) : false)
             .find('>li').click(function() {
+                if ($(this).hasClass('active')) return;
                 var t = $($(this).data('toggle'));
                 auto_select.val($(this).data('toggle')).selectric();
                 core.session('main.tabs.open', $(this).data('toggle'));
                 $(this).addClass('active').siblings().removeClass('active');
-                action_box.children('div:not(.control)').hide();
-                t.show();
+                if (game.s.quality() > 1) {
+                    action_box.children('div:not(.control)').stop().slideUp({queue: false, duration: 200}).css({opacity: 1}).animate({opacity: 0}, 200);
+                    t.stop().insertAfter(t.siblings('ul')).slideDown({queue: false, duration: 200}).css('opacity',0).animate({opacity: 1}, 200);
+                } else {
+                    action_box.children('div:not(.control)').hide();
+                    t.show();
+                }
+
             }).first();
 
         if (data.inventory) {

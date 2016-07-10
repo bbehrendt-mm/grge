@@ -4,7 +4,9 @@ goog.require('game.render');
 
 game.render.html = {
     put: function(id, content) {
+        var use_blend = false;
 
+        var blend = false;
         var target;
         switch (id) {
             case ':body':
@@ -12,15 +14,25 @@ game.render.html = {
                 break;
             case ':footer':
                 target = $('footer');
-                if (!target.size())
+                if (!target.length)
                     $('html').append(target = $('<footer />'));
+                break;
+            case 'content':
+                target = $('#content');
+                blend = use_blend && game.s.quality() >= 2;
                 break;
             default: target = $('#'+id); break;
         }
 
         if (!target.length) return;
 
-        target.empty().html(content);
+        if (blend) {
+            var o = target.css('opacity');
+            target.animate({opacity: 0}, 250, 'swing', function() {
+                target.empty().html(content).animate({opacity: o}, 250);
+            });
+        }
+        else target.empty().html(content);
     },
 
     hint: function(show) {

@@ -58,7 +58,9 @@
 
 <script type="application/javascript">
 // ## JS COMPRESS BEGIN ## //
+
 (function() {
+
     var read_fetch = function (offset) {
         return function () {
             switch ($('#ranking_type').val()) {
@@ -259,8 +261,8 @@
         render: function(event,api) {
             $(this).find('.qtip-content')
                 .empty()
-                .append($('<b />').addClass('header').text('???'))
-                .append($('<p />').text(<?=__j('Bisher hat es noch niemand geschafft, diese Auszeichnung zu erhalten...')?>))
+                .append($('<b>').addClass('header').text('???'))
+                .append($('<p>').text(<?=__j('Bisher hat es noch niemand geschafft, diese Auszeichnung zu erhalten...')?>));
         }
     }));
     <?php foreach ($achievements as $achievement) { ?>
@@ -268,8 +270,8 @@
             render: function(event,api) {
                 $(this).find('.qtip-content')
                     .empty()
-                    .append($('<b />').addClass('header').text(<?=__j($achievement['name'])?>))
-                    .append($('<p />').text(<?=__j('Diese Auszeichnung wurde bereits :num mal verliehen!', [':num' => $achievement['count']])?>))
+                    .append($('<b>').addClass('header').text(<?=__j($achievement['name'])?>))
+                    .append($('<p>').text(<?=__j('Diese Auszeichnung wurde bereits :num mal verliehen!', [':num' => $achievement['count']])?>))
             }
         }));
     <?php } ?>
@@ -308,6 +310,8 @@
     });
 
     (read_fetch(0)())
+
 })();
+
 // ## JS COMPRESS END ## //
 </script>

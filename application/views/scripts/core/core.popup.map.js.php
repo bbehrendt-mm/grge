@@ -12,12 +12,22 @@ core.popup.map = function() {
 
     var init = function(data) {
 
-        var overlay, help, list, list_inner, dbl1, dbl2, control;
+        var overlay, help, list, list_inner, dbl1, dbl2, control, tagtog;
+
+        var markers = {
+            0 : <?=__j('Keine Notiz');?>,
+            1 : <?=__j('Achtung');?>, 2: <?=__j('Rohstoffe');?>, 3: <?=__j('Gegenstände');?>, 4: <?=__j('Wichtige Gegenstände');?>,
+            5 : <?=__j('Leergesucht');?>, 6: <?=__j('Gesichert');?>, 7: <?=__j('Unerkundet');?>, 8: <?=__j('Gefährlich');?>,
+            9 : <?=__j('Sehr gefährlich');?>, 10: <?=__j('Übernachtung');?>, 11: <?=__j('Erkundet');?>, 12: <?=__j('Schwere Gegenstände');?>,
+            13: <?=__j('Nicht betreten!');?>, 14: <?=__j('Gesichertes Versteck');?>, 15: <?=__j('Brenzlige Situation');?>, 16: <?=__j('HÜHNCHEN!');?>
+        };
 
         popup.empty()
-            .append($('<canvas />').attr({id: 'gamemap', height: win_d[1] - 4, width: win_d[0] - 4}))
+            .append($('<canvas />').contextmenu(function() {return false;}).attr({id: 'gamemap', height: win_d[1] - 4, width: win_d[0] - 4}))
             .append(
                 overlay = $('<div />').addClass('map panel bottom hide no-interaction').addClass(win_d[0] < 804 ? 'wide' : '')
+            ).append(
+                tagtog = $('<div />').addClass('map panel top pointer').addClass(win_d[0] < 804 ? 'hide' : '').text(<?=__j('Symbole umschalten')?>)
             ).append(
                 control = $('<div />').addClass('map panel bottom').addClass(!game.touch() ? 'hide' : '' ).addClass(win_d[0] < 804 ? 'wide' : '')
             ).append(
@@ -34,6 +44,8 @@ core.popup.map = function() {
                             .append(NF.n('li', '', <?=__j('::b::Pfeiltasten::/b:: benutzen, um den Kartenausschnitt zu verschieben.')?>, true))
                             .append(NF.n('li', '', <?=__j('::b::+::/b:: und ::b::-::/b::-Tasten verwenden, um zu zoomen.')?>, true))
                             .append(NF.n('li', '', <?=__j('::b::0::/b:: oder ::b::R::/b::-Tasten verwenden, um die Karte zurückzusetzen.')?>, true))
+                            .append(NF.n('li', '', <?=__j('::b::ESC::/b:: oder ::b::X::/b::-Tasten verwenden, um die Karte zu schließen.')?>, true))
+                            .append(NF.n('li', '', <?=__j('::b::T::/b::-Taste verwenden, um Symbole umzuschalten.')?>, true))
                         ))
                     )
             ).append(game.touch() || win_d[0] < 640 ? null : $('<div />').addClass('map panel left-top center').addClass(win_d[0] < 804 ? 'wide' : '')
@@ -76,10 +88,19 @@ core.popup.map = function() {
             .append(NF.scell(true, 3, 0, 'panelbtn').click(function() {map.scroll(-48,0);}).append(NF.fa('arrow-right')))
         );
 
+        tagtog.click(function() {map.toggleTagMode()});
+
         $.each(data.locations, function(id, location) {
             if (id == data.current) return;
             list_inner.append(NF.row().append(NF.cell(false, 12, 0, 'hotbox').addClass(location.energy > data.radius ? 'disabled' : '').on('mouseover', function() {map.hover(id);}).on('mouseout', function() {map.unhover(id);}).on('click', function() {map.handler(id, 'click')})
                 .append(NF.row('center').append(NF.cell(true, 12).append(NF.n('b', '', location.name)).append(NF.img('media/icons/places/' + location.icon).css('float','left'))))
+                .append(
+                    location.note.tag == 0 ? null : NF.row('center').append(
+                        NF.cell(false, 12)
+                            .append(NF.img('media/icons/places/tags/tag_' + location.note.tag + '.gif'))
+                            .append(NF.n('span','', location.note.text ? location.note.text : markers[location.note.tag]))
+                        )
+                )
                 .append(NF.row('center').append(
                     NF.cell(false, 3)
                         .append(NF.img('media/icons/distance.gif'))
@@ -98,11 +119,11 @@ core.popup.map = function() {
                         .append(NF.n('span','',location.weight === null ? 0 : location.weight))
                     )
                 )
-            ).attr('data-sort',true).attr('data-sort-type', location.icon).attr('data-sort-cron', id).attr('data-sort-dist', location.distance).attr('data-sort-name', location.name))
+            ).attr('data-sort',true).attr('data-sort-tag', -location.note.tag).attr('data-sort-type', location.icon).attr('data-sort-cron', id).attr('data-sort-dist', location.distance).attr('data-sort-name', location.name))
         });
 
         list_inner.prepend(NF.row('center').append(NF.cell(true, 12).append(
-            NF.select({'dist': <?=__j('Entfernung')?>, 'name': <?=__j('Name')?>, 'type': <?=__j('Typ')?>, 'cron': <?=__j('Chronologisch')?>}, 'dist')
+            NF.select({'dist': <?=__j('Entfernung')?>, 'tag': <?=__j('Markierung')?>, 'name': <?=__j('Name')?>, 'type': <?=__j('Typ')?>, 'cron': <?=__j('Chronologisch')?>}, 'dist')
         ))).find('select').on('change', function() {
             var by = $(this).val();
             var items = list_inner.children('[data-sort]').sort(function(a, b) {
@@ -126,11 +147,14 @@ core.popup.map = function() {
             if (event.which == 2) map.zoom(0);
         }).on('keydown', function(event) {
             switch (event.key) {
+                case 't': map.toggleTagMode(); return;
+                case "x": popup.trigger('unpop'); return;
                 case "+": map.zoom(1); return;
                 case "-": map.zoom(-1); return;
                 case "0":case "r": map.zoom(0); return;
             }
             switch (event.which) {
+                case 27: popup.trigger('unpop'); return;                    //ESC
                 case 37: map.scroll(-24,0); event.preventDefault(); return; //LEFT
                 case 38: map.scroll(0,-24); event.preventDefault(); return; //UP
                 case 39: map.scroll(24,0); event.preventDefault(); return; //RIGHT
@@ -141,7 +165,8 @@ core.popup.map = function() {
         map.load();
         map.setHandler(function(id, event) {
             switch (event) {
-                case 'click':
+                case 'click': case 'altclick':
+
                     var escortables = false;
                     if (core.last.players && core.last.players.others)
                         $.each(core.last.players.others, function(id, player) {
@@ -149,11 +174,17 @@ core.popup.map = function() {
                                 escortables = true;
                         });
 
-                    if ((data.read_only && !data.locations[id].skip_ro) || (data.locations[id].energy > data.radius && !escortables) || id == data.current) return;
+                    var no_go = false;
+                    if ((data.read_only && !data.locations[id].skip_ro) || (data.locations[id].energy > data.radius && !escortables) || id == data.current) {
+                        if (event == 'altclick')
+                            no_go = true;
+                        else return;
+                    }
 
                     var only_remote = data.locations[id].energy > data.radius;
 
-                    if (data.locations[id].zombies && !confirm(game.i18n(<?=__j('Dieser Ort wird von :zombies Zombies belagert. Wenn du diesen Ort betrittst, wirst du kämpfen müssen. Weiter?')?>, {':zombies': data.locations[id].zombies}))) return;
+                    if (!no_go)
+                        if (data.locations[id].zombies && !confirm(game.i18n(<?=__j('Dieser Ort wird von :zombies Zombies belagert. Wenn du diesen Ort betrittst, wirst du kämpfen müssen. Weiter?')?>, {':zombies': data.locations[id].zombies}))) return;
 
                     var route_zombies = [];
                     $.each(data.locations[id].route, function(rkey, rval) {
@@ -163,9 +194,7 @@ core.popup.map = function() {
                     });
                     if (route_zombies.length && !confirm(game.i18n(<?=__j('Auf dem Weg zu diesem Ort befinden sich Zombies (:locations). Du wirst gegen sie kämpfen müssen, wenn du dorthin möchtest. Weiter?')?>,{':locations': route_zombies.join(', ')}))) return;
 
-
-
-                    if (game.storage.get('settings','travel_confirm') != 'auto' || escortables || game.touch()) {
+                    if (game.storage.get('settings','travel_confirm') != 'auto' || escortables || game.touch() || event == 'altclick') {
                         var esc_popup = core.popup.spawn({desktop: 400, sm: '100%'});
 
                         var title;
@@ -210,6 +239,10 @@ core.popup.map = function() {
                             esc_popup.append(
                                 NF.row().append(NF.cell(true, 12, 0, 'center b text-red').text(<?=__j('Dieser Ort ist zu weit für dich entfernt!')?>))
                             );
+                        else if (no_go)
+                            esc_popup.append(
+                                NF.row().append(NF.cell(true, 12, 0, 'center b text-red').text(<?=__j('Du kannst dich momentan nicht bewegen.')?>))
+                            );
 
                         if (check_row.children().length) {
                             var bhav;
@@ -221,7 +254,7 @@ core.popup.map = function() {
                                     bhav = $('<select />')
                                         .append($('<option />').val('2').prop('disabled', only_remote).text(<?=__j('Mitgehen und helfen')?>))
                                         .append($('<option />').val('1').prop('disabled', only_remote).text(<?=__j('Nur mitgehen')?>))
-                                        .append($('<option />').val('0').text(<?=__j('Die Stellung halten')?>))
+                                        .append($('<option />').val('0').prop('disabled', no_go).text(<?=__j('Die Stellung halten')?>))
                                         .val(only_remote ? '0' : '1')
                                 ));
 
@@ -230,10 +263,73 @@ core.popup.map = function() {
 
                         } else title.text(<?=__j('Bist du sicher, dass du diesen Ort betreten möchtest? Er ist weit weg, und riecht auch bestimmt nicht sehr gut...')?>);
 
+                        var marker_tx, no_marker_tx, marker;
+                        var open_editor = function() {
+                            marker_tx.hide(); no_marker_tx.hide();
+                            marker.show();
+                        };
+
+                        no_marker_tx = NF.row()
+                            .append(NF.cell(true, 12, 0, 'pointer').click(open_editor).text(' ' + <?=__j('Kartenmarkierung hinzufügen')?>).prepend(NF.fa('plus')))
+                            .appendTo(esc_popup);
+                        marker_tx = NF.row()
+                            .append(NF.cell(true, 8).text(data.locations[id].note.text ? data.locations[id].note.text : markers[data.locations[id].note.tag]).prepend(NF.img('media/icons/places/tags/tag_' + data.locations[id].note.tag + '.gif')))
+                            .append(NF.cell(true, 4, 0, 'pointer').click(open_editor).text(' ' + <?=__j('Bearbeiten')?>).prepend(NF.fa('pencil')))
+                            .appendTo(esc_popup);
+
+                        if (data.locations[id].note.tag == 0)
+                            marker_tx.hide();
+                        else no_marker_tx.hide();
+
+                        marker = NF.n('div', 'flatbox').appendTo(NF.cell(true, 12).appendTo(NF.row().appendTo(esc_popup)));
+                        var selector, noteblock, tagpic, savebtn;
+                        marker.append(NF.row()
+                            .append(NF.cell(true, 2, 0, 'right').append(NF.n('div').css('padding-top', 10).append(tagpic = NF.img('media/icons/places/tags/tag_0.gif'))))
+                            .append(NF.cell(true, 10).append(selector = NF.select(markers, data.locations[id].note.tag)))
+                            .append(NF.cell(true, 10).append(noteblock = NF.input('text', data.locations[id].note.text).attr('maxlength', 32).attr('placeholder',<?=__j('Zusätzliche Informationen (optional)')?>)))
+                            .append(NF.cell(true, 2).append(savebtn = NF.n('button','btn disabled').append(NF.fa('save'))))
+                        ).hide();
+                        noteblock.keyup(function() {
+                            if ($(this).val() != data.locations[id].note.text)
+                                savebtn.removeClass('disabled');
+                            else savebtn.addClass('disabled');
+                        });
+                        selector.change(function() {
+                            if ($(this).val() == 0)
+                                noteblock.text('').addClass('disabled');
+                            else noteblock.removeClass('disabled');
+
+                            if ($(this).val() != data.locations[id].note.tag)
+                                savebtn.removeClass('disabled');
+                            else savebtn.addClass('disabled');
+                            tagpic.attr('src', 'media/icons/places/tags/tag_' + $(this).val() + '.gif')
+                        }).change().selectric({
+                            optionsItemBuilder: function(a) {
+                                return a.value == 0 ? '[' + a.text + ']' : '<table><tr><td><img src="media/icons/places/tags/tag_' + a.value + '.gif" alt="" /></td><td style="line-height: 10px;">' +  a.text + '</td></tr></table>';
+                            }
+                        });
+                        savebtn.click(function() {
+                            $(savebtn).addClass('disabled');
+                            var new_tx = noteblock.val();
+                            var new_tg = selector.val();
+                            core.command('map/tag', {id: id, tag: new_tg, text: new_tx}, true, function(retval) {
+                                if (retval.success) {
+                                    game.render.html.notify('success', <?=__j('Die Kartenmarkierung wurde aktualisiert.')?>);
+                                    data.locations[id].note.text = new_tx;
+                                    data.locations[id].note.tag = new_tg;
+                                    map.addIconTag(id, new_tg, game.touch());
+                                }
+
+                            });
+                        });
+
                         var confirm_btn;
                         esc_popup.append(NF.row()
                             .append($('<div />').addClass('cell rw-8 rw-sm-12 padded').append(
-                                confirm_btn = $('<div />').addClass('btn').toggleClass('disabled', only_remote).text(<?=__j('Los gehts!')?>).click(function() {
+                                confirm_btn = $('<div />').addClass('btn').toggleClass('disabled', no_go).text(<?=__j('Los gehts!')?>).click(function() {
+
+                                    if (marker.is(':visible') && !savebtn.hasClass('disabled') && !confirm(<?=__j('Der Kartenmarker wurde noch nicht gespeichert. Bist du sicher, dass du den ausgewählten Ort besuchen möchtest?')?>))
+                                        return;
 
                                     var cfg = {to: id, follow: 1};
                                     if (check_row.children().length) {
@@ -288,6 +384,12 @@ core.popup.map = function() {
                     if (!game.touch())
                         overlay.empty().append(
                             $('<h3 />').text(data.locations[id].name)
+                        ).append(
+                            data.locations[id].note.tag == 0 ? null : NF.row('center').append(
+                                NF.cell(false, 12)
+                                    .append(NF.img('media/icons/places/tags/tag_' + data.locations[id].note.tag + '.gif'))
+                                    .append(NF.n('span','', data.locations[id].note.text ? data.locations[id].note.text : markers[data.locations[id].note.tag]))
+                            )
                         ).append(
                             NF.row('center').append(
                                 NF.cell(false, 3)

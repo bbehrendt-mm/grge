@@ -19,7 +19,7 @@
             <div class="cell padded rw-1"><?=$game['id']?></div>
             <div id="error-hover-<?=$game['id']?>" class="cell padded rw-1"><?=$game['loadable'] ? 'OK' : 'ERROR'?></div>
             <?php if ($game['loadable']) { ?>
-                <div id="name-hover-<?=$game['id']?>" class="cell padded rw-3"><?=$game['name'] ? $game['name'] : '[Unnamed]'?></div>
+                <div id="name-hover-<?=$game['id']?>" class="cell padded rw-3"><?=$game['name'] ? (is_array($game['name']) ? "{$game['name'][0]} ({$game['name'][1]})" : $game['name']) : '[Unnamed]'?></div>
                 <div class="cell padded rw-2"><?=__($game['mode']);?></div>
                 <div class="cell padded rw-5">
                     <?php foreach ($game['players'] as $pid => $p) { ?>

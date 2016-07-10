@@ -34,19 +34,48 @@
         });
     };
 
+    Gamemap.prototype.toggleTagMode = function() {
+        var tg = (this.tagmode = !this.tagmode);
+        var big = game.touch();
+
+        $.each(this.icons, function(id, icon) {
+            createjs.Tween.get(icon.img_links.icon, {loop: false})
+                .to(tg ? {alpha: 0.25} : {alpha: 1}, 200);
+            if (icon.img_links.tag)
+                createjs.Tween.get(icon.img_links.tag, {loop: false})
+                    .to(tg ? {x: 0, y: 0, scaleX: 1, scaleY: 1} : {x: big ? 12 : 8, y: big ? 12 : 8, scaleX: big ? 1 : 0.75, scaleY: big ? 1 : 0.75}, 200);
+        });
+    };
+
+    Gamemap.prototype.addIconTag = function(id, tag, big_icons) {
+        if (this.icons[id].img_links.tag) {
+            this.icons[id].removeChild(this.icons[id].img_links.tag);
+            this.icons[id].img_links.tag = null;
+        }
+
+        if (tag > 0) {
+            this.icons[id].img_links.tag = this.createCentralizedBitmapContainer('places/tags/tag_' + tag + '.gif');
+            this.icons[id].img_links.tag.scaleX = this.icons[id].img_links.tag.scaleY = big_icons ? 1 : 0.75;
+            this.icons[id].img_links.tag.x = this.icons[id].img_links.tag.y = big_icons ? 12 : 8;
+            this.icons[id].addChild(this.icons[id].img_links.tag);
+        }
+    };
+
     Gamemap.prototype.renderIcons = function() {
         this.iconLayer.removeAllChildren();
         this.icons = {};
 
         var alias = this;
 
-        var containerSize = game.touch() ? 52 : 20;
+        var use_big_icons = game.touch();
+        var containerSize = use_big_icons ? 36 : 20;
 
         $.each(this.data.locations, function(id, location) {
 
             alias.icons[id] = new createjs.Container();
             alias.icons[id].x = alias.icons[id].x_orig = location.x;
             alias.icons[id].y = alias.icons[id].y_orig = location.y;
+            alias.icons[id].alpha = game.s.quality() >= 3 ? 0 : 1;
 
             alias.icons[id].highlight = false;
             alias.icons[id].current_location = (id == alias.data.current);
@@ -66,7 +95,11 @@
             s.setBounds(-containerSize/2,-containerSize/2,containerSize/2,containerSize/2);
             alias.icons[id].addChild(s);
 
-            alias.icons[id].addChild(alias.createCentralizedBitmapContainer('places/' + location.icon));
+            alias.icons[id].img_links = {icon: alias.createCentralizedBitmapContainer('places/' + location.icon), tag: null};
+            alias.icons[id].addChild(alias.icons[id].img_links.icon);
+            if (location.note.tag > 0 && location.note.tag <= <?=Model_Map_Abstract::MMA_NUMBER_OF_TAGS?>)
+                alias.addIconTag(id, location.note.tag, use_big_icons);
+
 
             alias.icons[id].on('tick', function() {
                 this.scaleX = this.scaleY = 1/alias.scale;
@@ -106,9 +139,15 @@
 
             });
             alias.iconLayer.addChild(alias.icons[id]);
-
-            alias.icons[id].on('click', function() {
-                alias.handler(id, 'click');
+            alias.icons[id].on('contextmenu', function() {return false;});
+            alias.icons[id].on('click', function(e) {
+                switch (e.nativeEvent.button) {
+                    case 0: alias.handler(id, 'click'); break;
+                    case 1: case 2: alias.handler(id, 'altclick'); break;
+                    default: alias.handler(id, 'anyclick'); break;
+                }
+                e.preventDefault();
+                return false;
             });
 
             alias.icons[id].on('rollover', function() {
@@ -118,6 +157,12 @@
             alias.icons[id].on('rollout', function() {
                 alias.unhover(id, true);
             });
+
+            if (game.s.quality() >= 3)
+                createjs.Tween.get(alias.icons[id], {loop: false})
+                    .to({alpha: 0}, 50 + Math.random() * 500)
+                    .to({alpha: 1}, 200)
+
         });
     };
 })();

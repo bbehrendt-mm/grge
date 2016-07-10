@@ -19,6 +19,7 @@
         this.transform = [0,0];
 
         this.scale = 1;
+        this.tagmode = false;
 
         this.title = null;
         this.mapLayer = new createjs.Container();
@@ -75,7 +76,7 @@
 
         this.stage.addChild(this.title);
         createjs.Tween.get(this.title, {loop: false})
-            .to({y: 0, x: (this.dimensions[0] - this.title.getBounds().width)/2}, 0)
+            .to({y: 0, x: (this.dimensions[0] - this.title.getBounds().width)/2, alpha: 0}, 0)
             .to({y: 24, alpha: 0.2}, 1200);
 
         this.renderRoads();
@@ -124,8 +125,10 @@
         var alias = this;
 
         $.each(this.data.locations, function(k, loc) {
-            alias.addResource('places/' + loc.icon)
-        })
+            alias.addResource('places/' + loc.icon);
+        });
+        for (var i = 1; i <= <?=Model_Map_Abstract::MMA_NUMBER_OF_TAGS?>; i++)
+            alias.addResource('places/tags/tag_' + i + '.gif')
 
     };
 })();

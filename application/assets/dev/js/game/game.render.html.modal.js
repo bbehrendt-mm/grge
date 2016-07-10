@@ -22,7 +22,7 @@ game.render.html.modal = {
         if (ignore_qtip === undefined) ignore_qtip = true;
 
         var targetZ = $.topZIndex(ignore_qtip ? ':not(.qtip):not(#notifications)' : ':not(#notifications)') + 1;
-        var blend = $('<div class="doc-blend" id="doc-blend-' + targetZ + '"></div>').css('z-index', targetZ).appendTo('body')
+        var blend = $('<div class="doc-blend" id="doc-blend-' + targetZ + '"></div>').contextmenu(function() {return false}).css('z-index', targetZ).appendTo('body')
             .css('opacity', 0).animate({
                 opacity: 1
             }, 500).on('callback', function()

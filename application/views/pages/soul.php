@@ -456,7 +456,7 @@
     });
 
 
-    $('#avatar').error(function() {
+    $('#avatar').on('error',function() {
         $(this).attr('src', 'media/img/mugshot.png').off('error');
     });
 

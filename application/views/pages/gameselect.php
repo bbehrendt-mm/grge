@@ -470,7 +470,7 @@
 
     var get_set = function(value) {
         var node = $('#data-container').find('> input[name=' + value + ']');
-        if (node.size() >= 0)
+        if (node.length >= 0)
             return node.val();
         else return null;
     };
@@ -480,7 +480,7 @@
         $.each(obj, function(k,v) {
             if (v === false || v === undefined || v === null)
                 return;
-            if (container.find('> input[name=' + k + ']').val(v).size() == 0)
+            if (container.find('> input[name=' + k + ']').val(v).length == 0)
                 container.append('<input type="hidden" name="' + k + '" value="' + v + '" />')
 
         });

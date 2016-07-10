@@ -184,10 +184,10 @@
                 case 'none':
                     break;
                 case 'static':
-                    if (ext.children().size()) button.append(ext);
+                    if (ext.children().length) button.append(ext);
                     break;
                 case 'tooltip':case 'nested':
-                    if (!action.tooltip && action.remaining < 0 && !ext.children().size()) break;
+                    if (!action.tooltip && action.remaining < 0 && !ext.children().length) break;
 
                     var template = (ext_mode == 'nested') ? game.render.html.qtip.help : game.render.html.qtip.ingame;
 
@@ -201,7 +201,7 @@
 
                             if (action.tooltip)
                                 content.append($('<span />').text(action.tooltip)).append('<span class="separator" />');
-                            if (ext.children().size())
+                            if (ext.children().length)
                                 content.append(ext).append('<span class="separator" />');
                             if (action.remaining >= 0)
                                 content.append($('<div />').addClass('note').text(game.i18n(<?=__j('Du kannst diese Aktion noch :num mal einsetzen.')?>, {':num': action.remaining})));
@@ -210,9 +210,9 @@
                     break;
                 case 'extend':default:
                     button.append(ext.hide()).mouseenter(function() {
-                        if (ext.children().size()) ext.stop().slideDown('fast');
+                        if (ext.children().length) ext.stop().slideDown('fast');
                     }).mouseleave(function() {
-                        if (ext.children().size()) ext.stop().slideUp('slow');
+                        if (ext.children().length) ext.stop().slideUp('slow');
                     });
                     break;
             }

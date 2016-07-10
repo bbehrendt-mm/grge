@@ -113,7 +113,7 @@
                     if (v.count && !v.fill)  subhead = subhead.add($('<i />').addClass('info center').text(v.count + (v.capacity ? (' / ' + v.capacity + ' ') : ' ' ) + v.stack));
                     if (v.weight) subhead = subhead.add($('<i />').addClass('info center').text(<?=__j('Gewicht')?> + ': ' + v.weight));
 
-                    if (subhead.size())
+                    if (subhead.length)
                         content.append(subhead).append('<span class="separator" />');
 
                     if (v.custom_label) {

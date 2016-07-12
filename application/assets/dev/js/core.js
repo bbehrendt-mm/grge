@@ -164,7 +164,7 @@ core = {
         if (data.log)
             core.parts.log(data.log,$('<div />').addClass('row log_box').appendTo(target));
 
-        var set_tab = auto_tab.parent().children().filter('[data-toggle=' + core.session('main.tabs.open') + ']');
+        var set_tab = auto_tab.parent().children().filter('[data-toggle="' + core.session('main.tabs.open') + '"]');
         if (set_tab.length == 1) set_tab.click();
         else auto_tab.click();
     }

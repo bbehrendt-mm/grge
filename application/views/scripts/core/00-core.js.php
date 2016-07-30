@@ -174,5 +174,8 @@ core = {
         var set_tab = auto_tab.parent().children().filter('[data-toggle="' + core.session('main.tabs.open') + '"]');
         if (set_tab.length == 1) set_tab.click();
         else auto_tab.click();
+
+        if (data.chat)
+            core.parts.chat(data.chat, $('<div />').addClass('chat').appendTo(target));
     }
 };

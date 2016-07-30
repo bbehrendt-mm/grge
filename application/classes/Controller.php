@@ -6,6 +6,7 @@ abstract class Controller extends Kohana_Controller {
      * @var Session $session
      */
     protected $session;
+    protected static $initialize_session = true;
     protected static $force_ajax = true;
     protected static $force_login = false;
     protected static $menu = null;
@@ -105,24 +106,28 @@ abstract class Controller extends Kohana_Controller {
         Error::i();
 
         //Load session
-        $vcsid = $this->request->is_initial() ? null : $this->request->headers('X-Virtual-Cookie');
-        $this->session = Session::instance(null, $vcsid ? $vcsid : null);
+        if (static::$initialize_session) {
+            $vcsid = $this->request->is_initial() ? null : $this->request->headers('X-Virtual-Cookie');
+            $this->session = Session::instance(null, $vcsid ? $vcsid : null);
 
-        // Virtual login
-        if ($this->request->is_initial())
-            $this->perform_virtual_login();
+            // Virtual login
+            if ($this->request->is_initial())
+                $this->perform_virtual_login();
 
-        if (!$this->is_ajax_request())
-            // Preserve initial get/post parameters
-            $this->session->set('request',array_merge($_SERVER,["CLIENT_REQUEST" => $_REQUEST]));
+            if (!$this->is_ajax_request())
+                // Preserve initial get/post parameters
+                $this->session->set('request',array_merge($_SERVER,["CLIENT_REQUEST" => $_REQUEST]));
 
-        //Check AJAX
-        if (static::$force_ajax)
-            $this->force_ajax();
+            //Check AJAX
+            if (static::$force_ajax)
+                $this->force_ajax();
 
-        // Perform session checks
-        if (static::$force_login)
-            $this->force_login();
+            // Perform session checks
+            if (static::$force_login)
+                $this->force_login();            
+        } else $this->session = null;
+        
+
 
         //Cache control
         $this->response->headers(static::$allow_etag_cache ? '' : 'Cache-Control: no-store, must-revalidate');
@@ -346,7 +351,7 @@ abstract class Controller extends Kohana_Controller {
 
         // Add other content in out data chain
         $this->add_data('content', $this->widgets, true);
-        if (!$skip_notifications) {
+        if (!$skip_notifications && static::$initialize_session) {
             $this->add_data('notifications', $this->session->get('notifications',[]), true);
             $this->session->delete('notifications');
         }

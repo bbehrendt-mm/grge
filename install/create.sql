@@ -135,6 +135,15 @@ CREATE TABLE IF NOT EXISTS ___PREFIX___xref_game_player (
   uid int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE IF NOT EXISTS ___PREFIX___chat (
+  `mid` int(11) NOT NULL,
+  `room` int(11) NOT NULL,
+  `sender` int(11) NOT NULL,
+  `receiver` int(11) NOT NULL,
+  `message` text NOT NULL,
+  `timestamp` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 ALTER TABLE ___PREFIX___achievements
   ADD PRIMARY KEY (uid,gameid,season,aid);
 
@@ -209,3 +218,6 @@ ALTER TABLE ___PREFIX___user_flags
 
 ALTER TABLE ___PREFIX___ranking
   ADD CONSTRAINT ___PREFIX___ranking_ibfk_1 FOREIGN KEY (uid) REFERENCES ___PREFIX___users (uid) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE ___PREFIX___chat
+  ADD PRIMARY KEY (mid);

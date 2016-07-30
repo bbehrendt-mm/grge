@@ -852,6 +852,8 @@ class Controller_Game extends Controller {
             ];
         }
 
+        $this->add_data('chat', Gateway\encrypt([time(),$player->id(),$game->id()]));
+
         $this->add_data('players', [
             'multiplayer' => $game->config('modules.multiplayer'),
             'messages' => count($player->get_postbox()->get(false,true)) > 0,

@@ -6,7 +6,7 @@ core = {
     parts: {},
     snippets: {},
 
-    version: '2.1.0-0-0-310',
+    version: '2.1.0-0-0-311',
 
     last: {},
     plugins: {},
@@ -167,6 +167,9 @@ core = {
         var set_tab = auto_tab.parent().children().filter('[data-toggle="' + core.session('main.tabs.open') + '"]');
         if (set_tab.length == 1) set_tab.click();
         else auto_tab.click();
+
+        if (data.chat)
+            core.parts.chat(data.chat, $('<div />').addClass('chat').appendTo(target));
     }
 };(function() {
     var ui_skip_ahead = function() {
@@ -418,6 +421,17 @@ core = {
     };
 })();
 (function() {
+
+    core.parts.chat = function(token, target) {
+
+        $(target).empty();
+
+        core.command('chat/w', {t: token}, true, function(data) {
+            console.log(data);
+        });
+
+    };
+})();(function() {
 
     core.parts.info = function(data, target) {
         var details = $('<div />').addClass('flatbox').appendTo($('<div />').addClass('cell rw-6 ro-3 rw-lg-8 ro-lg-2 rw-md-12 ro-md-0 padded').appendTo(target));

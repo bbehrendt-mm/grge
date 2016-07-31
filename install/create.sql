@@ -140,7 +140,8 @@ CREATE TABLE IF NOT EXISTS ___PREFIX___chat (
   `room` int(11) NOT NULL,
   `sender` int(11) NOT NULL,
   `receiver` int(11) NOT NULL,
-  `message` text NOT NULL,
+  `type` int(11) NOT NULL,
+  `message` text,
   `timestamp` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -221,3 +222,6 @@ ALTER TABLE ___PREFIX___ranking
 
 ALTER TABLE ___PREFIX___chat
   ADD PRIMARY KEY (mid);
+
+ALTER TABLE ___PREFIX___chat
+  MODIFY mid int(11) NOT NULL AUTO_INCREMENT;

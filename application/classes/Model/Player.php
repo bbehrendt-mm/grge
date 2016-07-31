@@ -182,6 +182,10 @@ class Model_Player extends Model_NPC_Nano {
          */
 		global $game;
 
+        // Chat room
+        if ($game->config('modules.multiplayer'))
+            Controller_Chat::revoke_registration($this->id(),$game->id());
+
 		$this->log()->add(new Model_Log_Types_String('Du bist tot!','Du hast soeben deinen letzten Atemzug getan... Du bist auf die folgende schreckliche Art von dieser Welt gegangen: :cod!',[':cod' => [$this->get_status()->get_cause_of_death()]]));
 		$this->calculate_static_achievements();
 

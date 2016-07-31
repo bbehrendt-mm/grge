@@ -286,7 +286,7 @@
             var expandable = rendered.data('expandable');
 
             target.append(
-                $('<div />').addClass('col rw-12 message' + (expandable ? ' pointer' : '')).append(
+                $('<div />').addClass('cell rw-12 message' + (expandable ? ' pointer' : '')).append(
                     $('<div />').addClass(v.new ? 'timestamp new' : 'timestamp').text((new Date(v.time * 1000)).toLocaleTimeString())
                 ).append($('<br />').addClass('hide-desktop'))
                 .append(

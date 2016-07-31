@@ -116,6 +116,10 @@ class Controller_Admin_Files extends Controller_Admin_Admin {
                     echo "Added translation for '$lang' to "  . bin2hex($hash) . "<br />";
                 } elseif ($original !== $line[$lang]) {
                     $conflicts[] = [bin2hex($hash), $key, $original, $line[$lang]];
+                    if (!I18N::set($key, $line[$lang], $lang)) {
+                        echo "ERROR: Unable to add a translation for '$lang' to " . bin2hex($hash) . ". Aborting.";
+                        return false;
+                    }
                     echo "WARNING: Conflict detected in "  . bin2hex($hash) . ". '$lang' contains a different translation.";
                 }
             }

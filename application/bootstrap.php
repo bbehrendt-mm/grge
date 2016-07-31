@@ -147,9 +147,10 @@ Route::set('default_admin', 'admin/(<controller>(/<action>(/<id>)))', ['id' => '
         'directory'  => 'admin',
         'action'     => 'main',
     ));
-Route::set('japi', 'japi/<controller>/<jaction>')
+Route::set('japi', 'japi/<controller>(/<jaction>)')
     ->defaults(array(
         'action'     => 'japi',
+        'jaction'    => 'default'
     ));
 Route::set('qr_short', 'm(/(<key>))')
     ->defaults(array(

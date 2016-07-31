@@ -852,7 +852,7 @@ class Controller_Game extends Controller {
             ];
         }
 
-        $this->add_data('chat', Gateway\encrypt([time(),$player->id(),$game->id()]));
+        $this->add_data('chat', Controller_Chat::tokenize($player->id(),$game->id(),true));
 
         $this->add_data('players', [
             'multiplayer' => $game->config('modules.multiplayer'),

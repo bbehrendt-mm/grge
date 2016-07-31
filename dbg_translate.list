@@ -6207,3 +6207,122 @@ Cannot create instances of abstract :controller
 	C:\xampp\htdocs\grge\index.php [116] in execute
 [TRUpPsAfLJ4JRjVPwWGhVQ==] Sat, 23 Jul 2016 15:42:37 +0200
 
+:name flüstert: :message
+	D:\xampp\htdocs\grge\application\views\scripts\core\core.chat.js.php [28] in __j
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
+	D:\xampp\htdocs\grge\application\classes\JView.php [27] in render
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [228] in render
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [66] in __toString
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [77] in compile_js_module
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [83] in modscript
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_core
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[zXKyaDMzgU9BLUpo1gfiFA==] Sun, 31 Jul 2016 15:47:36 +0200
+
+Geflüstert an :name: :message
+	D:\xampp\htdocs\grge\application\views\scripts\core\core.chat.js.php [44] in __j
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
+	D:\xampp\htdocs\grge\application\classes\JView.php [27] in render
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [228] in render
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [66] in __toString
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [77] in compile_js_module
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [83] in modscript
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_core
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[fnoR6PaKq0HqjNjcnyvOGQ==] Sun, 31 Jul 2016 18:03:19 +0200
+
+Angepinnte Nachricht
+	D:\xampp\htdocs\grge\application\views\scripts\core\core.chat.js.php [30] in __j
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
+	D:\xampp\htdocs\grge\application\classes\JView.php [27] in render
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [228] in render
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [66] in __toString
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [77] in compile_js_module
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [83] in modscript
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_core
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[eJkM9azVCU6yaKA9F1z3wQ==] Sun, 31 Jul 2016 18:44:07 +0200
+
+Chat-Nachricht eingeben
+	D:\xampp\htdocs\grge\application\views\scripts\core\core.chat.js.php [134] in __j
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
+	D:\xampp\htdocs\grge\application\classes\JView.php [27] in render
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [228] in render
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [66] in __toString
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [77] in compile_js_module
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [83] in modscript
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_core
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[QS2sGUrH9el+oBYfXG9upw==] Sun, 31 Jul 2016 18:57:40 +0200
+
+ZombVival-Chat
+	D:\xampp\htdocs\grge\application\views\scripts\core\core.chat.js.php [121] in __j
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
+	D:\xampp\htdocs\grge\application\classes\JView.php [27] in render
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [228] in render
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [66] in __toString
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [77] in compile_js_module
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [83] in modscript
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_core
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[8jnra8FHxJSuLgs4Y5hgmw==] Sun, 31 Jul 2016 19:14:09 +0200
+
+Du kannst eine Nachricht an den Chat anheften, indem du "/pin [DEINE NACHRICHT]" eingibst.
+	D:\xampp\htdocs\grge\application\views\scripts\core\core.chat.js.php [139] in __j
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
+	D:\xampp\htdocs\grge\application\classes\JView.php [27] in render
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [228] in render
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [66] in __toString
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [77] in compile_js_module
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [83] in modscript
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_core
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[NTOHpk/PsUNwrovrfRM7mA==] Sun, 31 Jul 2016 19:21:24 +0200
+
+Du kannst einen Spieler anflüstern, indem du "/whisper [SPIELER] [DEINE NACHRICHT]" eingibst; nur der angegebene Spieler wird die Nachicht lesen können.
+	D:\xampp\htdocs\grge\application\views\scripts\core\core.chat.js.php [140] in __j
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
+	D:\xampp\htdocs\grge\application\classes\JView.php [27] in render
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [228] in render
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [66] in __toString
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [77] in compile_js_module
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [83] in modscript
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_core
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[AjcZDQlbOhXu2BrQmsbcOA==] Sun, 31 Jul 2016 19:22:58 +0200
+

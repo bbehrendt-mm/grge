@@ -51,7 +51,7 @@ core = {
         }, true)
     },
 
-    command: function(url, args, background, callback, no_clean, finished) {
+    command: function(url, args, background, callback, no_clean, finished, always_callback) {
         if (!url)
             url = 'japi/game/data';
         else url = 'japi/' + url;
@@ -85,7 +85,7 @@ core = {
             if (finished) finished(data);
 
             $(document).scrollTop(scroll)
-        });
+        }, always_callback);
     },
 
     render: function(data, target) {
@@ -167,7 +167,10 @@ core = {
 
         if (data.status && data.clock)
             core.parts.status(data.status, data.clock, $('#persistent'));
-        
+
+        if (data.chat)
+            core.parts.chat(data.chat, $('<div />').addClass('row chat').appendTo(target));
+
         if (data.log)
             core.parts.log(data.log,$('<div />').addClass('row log_box').appendTo(target));
 
@@ -175,7 +178,6 @@ core = {
         if (set_tab.length == 1) set_tab.click();
         else auto_tab.click();
 
-        if (data.chat)
-            core.parts.chat(data.chat, $('<div />').addClass('chat').appendTo(target));
+
     }
 };

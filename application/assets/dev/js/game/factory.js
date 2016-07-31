@@ -76,6 +76,13 @@ NF.icon = function(src, txt, classes) {
     return NF.n('div', 'mlicon ' + classes).append(NF.img(src)).append(NF.n('span', '', !txt_is_null ? txt : '&nbsp;', txt_is_null))
 };
 
+NF.button = function(text,small,icon) {
+    var b = NF.n('div','btn' + (small ? ' small' : '') + (icon ? ' btn-icon' : ''),icon ? '' : text);
+    if (icon)
+        b.append(NF.n('span','btn-icon-inner').append(NF.fa(icon))).append(NF.n('span','',text));
+    return b;
+};
+
 NF.fa = function(name, spin) {
     return NF.n('i', 'fa ' + ((name.substr(0, 3) == 'fa-') ? name : ('fa-' + name)) + (spin ? ' fa-spin' : ''));
 };

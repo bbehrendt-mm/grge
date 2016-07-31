@@ -51,7 +51,11 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
     abstract public function playable_entities($limit_alive = true);
 
 	public function join($sub, $level, $contest_id) {
-		global $user, $player;
+        /**
+         * @global Model_Euser $user
+         * @global Model_Player $player
+         */
+	    global $user, $player;
 
         if (isset($this->set['gamedata']->players[$user->uid()])) return false;
 		new Init_Player($this, $this->set['gamedata'], $user->uid(), $user->name(), $sub, $level);
@@ -60,6 +64,10 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
 			$this->retire($user->uid());
 			return false;
 		}
+
+        // Chat room
+        if ($this->config('modules.multiplayer'))
+            Controller_Chat::register_user($player->id(),$this->id());
 
         /** @var Model_Player $p */
         foreach ($this->players(true) as $p) if ($p->id() != $player->id())
@@ -196,7 +204,10 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
     }
 	
 	public function purge() {
-		DB::delete('games')->where('gameid', '=', $this->set['gameid'])->execute();
+        // Chat room
+        if ($this->config('modules.multiplayer'))
+            Controller_Chat::purge_room($this->id());
+	    DB::delete('games')->where('gameid', '=', $this->set['gameid'])->execute();
         $this->delete_lobby();
 		$this->set['gamedata']->uin->clean();
 		Model_Combat_Handler::delete_game($this->set['gameid'], $this->set['gamedata']->head->season);

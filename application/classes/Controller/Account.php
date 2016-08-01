@@ -14,7 +14,7 @@ class Controller_Account extends Controller {
 
         $rq = $this->session->get('request',["CLIENT_REQUEST" => []]);
         $key = isset($rq["CLIENT_REQUEST"]['key']) ? $rq["CLIENT_REQUEST"]['key'] : '';
-        $ref = isset($rq["HTTP_REFERER"]) ? $rq["HTTP_REFERER"] : '';
+        $ref = isset($rq["CLIENT_REQUEST"]['ref']) ? $rq["CLIENT_REQUEST"]['ref'] : (isset($rq["HTTP_REFERER"]) ? $rq["HTTP_REFERER"] : '');
         $pid = -1;
 
         $pre_service = '';

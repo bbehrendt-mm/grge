@@ -77,19 +77,21 @@ class Controller_Chat extends Controller {
             elseif (isset($users[$entry['sender']][0])) $entry['sender'] = $users[$entry['sender']][0];
             else $entry['sender'] = static::CC_VAR_UNKNOWN;
 
-            $entry['message'] = ($entry['message'] === null) ? null : unserialize($entry['message']);
+            $entry['message'] = ($entry['message'] === null) ? null : @unserialize($entry['message']);
 
             switch ($entry['type']) {
                 case static::CC_IGNORE:case static::CC_PING:case static::CC_AUTH:
                     break;
                 case static::CC_PIN:
-                    $d_out[$mid] = ['type' => $entry['type'], 'message' => $entry['message']];
+                    if ($entry['message'])
+                        $d_out[$mid] = ['type' => $entry['type'], 'message' => $entry['message']];
                     break;
                 case static::CC_MESSAGE: case static::CC_STATE:
-                    $d_out[$mid] = ['type' => $entry['type'], 'sender' => $entry['sender'], 'message' => $entry['message'], 'timestamp' => $entry['timestamp']];
+                    if ($entry['message'])
+                        $d_out[$mid] = ['type' => $entry['type'], 'sender' => $entry['sender'], 'message' => $entry['message'], 'timestamp' => $entry['timestamp']];
                     break;
                 case static::CC_WHISPER:
-                    if ($entry['receiver'] == $user || $sender_id == $user)
+                    if ($entry['message'] && ($entry['receiver'] == $user || $sender_id == $user))
                         $d_out[$mid] = ['type' => $entry['type'], 'sender' => $entry['sender'], 'to' => $sender_id == $user ? (isset($users[$entry['receiver']][0]) ? $users[$entry['receiver']][0] : '???') : false, 'message' => $entry['message'], 'timestamp' => $entry['timestamp']];
                     break;
                 default: break;
@@ -110,19 +112,23 @@ class Controller_Chat extends Controller {
         $receiver = -1;
 
         if ($msg[0] === '/') {
-            list($command,$message) = explode(' ', $msg, 2);
+            $tmp_m = explode(' ', $msg, 2);
+            if (count($tmp_m) < 2) $tmp_m[1] = "";
+            list($command,$message) = $tmp_m;
             $msg = $message;
         }
 
         $command = mb_strtolower($command);
 
         if (in_array($command,['/whisper']))  {
-            list($rec,$message) = explode(' ', $msg, 2);
+            if (!$msg) return false;
+            $tmp_m = explode(' ', $msg, 2);
+            if (count($tmp_m) < 2) return false;
+            list($rec,$message) = $tmp_m;
             foreach ($users as $uid => $entry)
                 if (mb_strtolower($entry[0]) == mb_strtolower($rec))
                     $receiver = $uid;
             if ($receiver == -1) return false;
-            $msg = $message;
         }
 
         switch ($command) {

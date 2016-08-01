@@ -30,8 +30,8 @@ if (!isset($path)) $path = '';
 
     <script type="application/javascript" src="<?=$url?>js/jquery.min.js" ></script>
     <script type="application/javascript" src="<?=$url?>js/jquery.ext.min.js" ></script>
-    <script type="application/javascript" src="<?=$url?>js/easeljs-0.8.0.min.js" ></script>
-    <script type="application/javascript" src="<?=$url?>js/tweenjs-0.6.0.min.js" ></script>
+    <script type="application/javascript" src="<?=$url?>js/easeljs-0.8.2.min.js" ></script>
+    <script type="application/javascript" src="<?=$url?>js/tweenjs-0.6.2.min.js" ></script>
 </head>
 <body style="overflow: hidden; padding: 0; margin: 0; background: black">
 

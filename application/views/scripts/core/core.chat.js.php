@@ -26,7 +26,7 @@
         $.each(messages, function(id,msg) {
 
             if (msg.type == <?=Controller_Chat::CC_PIN?>) {
-                pinbox_target.empty()
+                pinbox_target.empty().show()
                     .append(NF.n('div','b small center').text(<?=__j('Angepinnte Nachricht')?>))
                     .append(NF.n('span').text(msg.message));
                 return;
@@ -91,7 +91,10 @@
     };
 
     var transaction = function(from_timer, message, callback) {
-        if (!$('.chat').length) return;
+        if (!$('.chat').length) {
+            cache = {u: {}, p: {}};
+            return;
+        }
 
         if (active) {
             queued.push(message);
@@ -114,6 +117,7 @@
     core.parts.chat = function(tkn, target) {
 
         $(target).empty();
+        cache.u = {};
 
         token = tkn;
 
@@ -121,7 +125,7 @@
             .append(NF.cell(false, 9).addClass('rw-md-12').append(NF.n('div','b small center').text(<?=__j('ZombVival-Chat')?>)).append(message_target = NF.n('div','chatlog')))
             .append(NF.cell(false, 3).addClass('rw-md-12').append(NF.n('div','row chatlog')
                 .append(userbox_target = NF.cell(true,12))
-                .append(NF.cell(true,12).append(pinbox_target = NF.n('div','flatbox')))
+                .append(NF.cell(true,12).append(pinbox_target = NF.n('div','flatbox').hide()))
             ))
             .appendTo(target);
 
@@ -145,10 +149,7 @@
             .append(NF.cell(true, 3).append(sendbutton = NF.button(<?=__j('Senden')?>,false,'send').click(function() {
                 var m = textbox.val();
                 textbox.val('');
-                controls.addClass('disabled');
-                transaction(false, m, function() {
-                    controls.removeClass('disabled');
-                })
+                transaction(false, m);
             })));
 
         draw_messages(cache.p);

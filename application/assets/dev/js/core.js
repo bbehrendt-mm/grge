@@ -6,7 +6,7 @@ core = {
     parts: {},
     snippets: {},
 
-    version: '2.1.0-0-0-311',
+    version: '2.1.0-1-0-321',
 
     last: {},
     plugins: {},
@@ -450,7 +450,7 @@ core = {
         $.each(messages, function(id,msg) {
 
             if (msg.type == 6) {
-                pinbox_target.empty()
+                pinbox_target.empty().show()
                     .append(NF.n('div','b small center').text("Angepinnte Nachricht"))
                     .append(NF.n('span').text(msg.message));
                 return;
@@ -515,7 +515,10 @@ core = {
     };
 
     var transaction = function(from_timer, message, callback) {
-        if (!$('.chat').length) return;
+        if (!$('.chat').length) {
+            cache = {u: {}, p: {}};
+            return;
+        }
 
         if (active) {
             queued.push(message);
@@ -538,6 +541,7 @@ core = {
     core.parts.chat = function(tkn, target) {
 
         $(target).empty();
+        cache.u = {};
 
         token = tkn;
 
@@ -545,7 +549,7 @@ core = {
             .append(NF.cell(false, 9).addClass('rw-md-12').append(NF.n('div','b small center').text("ZombVival-Chat")).append(message_target = NF.n('div','chatlog')))
             .append(NF.cell(false, 3).addClass('rw-md-12').append(NF.n('div','row chatlog')
                 .append(userbox_target = NF.cell(true,12))
-                .append(NF.cell(true,12).append(pinbox_target = NF.n('div','flatbox')))
+                .append(NF.cell(true,12).append(pinbox_target = NF.n('div','flatbox').hide()))
             ))
             .appendTo(target);
 
@@ -569,10 +573,7 @@ core = {
             .append(NF.cell(true, 3).append(sendbutton = NF.button("Senden",false,'send').click(function() {
                 var m = textbox.val();
                 textbox.val('');
-                controls.addClass('disabled');
-                transaction(false, m, function() {
-                    controls.removeClass('disabled');
-                })
+                transaction(false, m);
             })));
 
         draw_messages(cache.p);

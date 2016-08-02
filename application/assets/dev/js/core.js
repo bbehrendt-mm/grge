@@ -6,7 +6,7 @@ core = {
     parts: {},
     snippets: {},
 
-    version: '2.1.0-1-0-321',
+    version: '2.1.0-2-0-322',
 
     last: {},
     plugins: {},
@@ -1920,7 +1920,7 @@ core = {
 
                             if (core.last.players.others)
                                 $.each(core.last.players.others, function(id, player) {
-                                    if (player.allow === true || player.allow[6])
+                                    if (player.local && (player.allow === true || player.allow[6]))
                                         check_row.append($('<div />').addClass('cell rw-6 padded').append(
                                             $('<label />').text(player.name).prepend($('<input />').attr('type','checkbox').attr('data-id', player.id))
                                         ))

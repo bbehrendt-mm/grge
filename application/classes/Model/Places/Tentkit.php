@@ -50,11 +50,15 @@ class Model_Places_Tentkit extends Model_Places_Abstract_Hideout {
         /** @global Model_Game $game */
         global $game;
 
+        $is_player = true;
         if (!$pid) global $player;
         elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = $game->get_player($pid);
-        else $player = $game->get_npc($pid);
+        else {
+            $is_player = false;
+            $player = $game->get_npc($pid);
+        }
 
-        if (Tool_Scripts::at_location($this->uin(), true, true)) {
+        if (Tool_Scripts::at_location($this->uin(), $is_player, !$is_player)) {
             if ($type == Interface_Tickable::IT_TYPE_PLAYER)
                 $player->log()->add('Leider passt nur eine einzige Person in ein InstaZELT™... und dieses ist schon voll.');
             return false;

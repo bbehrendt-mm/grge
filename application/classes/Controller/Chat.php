@@ -22,6 +22,7 @@ class Controller_Chat extends Controller {
     }
 
     private static function detokenize($token) {
+        if (!$token) return null;
         return Gateway\decrypt($token);
     }
 

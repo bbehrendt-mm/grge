@@ -32,6 +32,8 @@
             $cipher = base64_decode($cipher);
             $iv_size = mcrypt_get_iv_size($encryption_mode, MCRYPT_MODE_CBC);
 
+            if (strlen($cipher) < $iv_size) return false;
+
             $data = trim(mcrypt_decrypt($encryption_mode,$key,substr($cipher, $iv_size),MCRYPT_MODE_CBC,substr($cipher, 0, $iv_size)));
 
             $hash = substr($data,-128);

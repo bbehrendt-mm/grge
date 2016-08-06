@@ -12,14 +12,17 @@
     var pinbox_target;
 
     var colorFromName = function(name) {
-        var color = [0,0,0];
-        var brightness = 0;
-        for (var i = 0; i < name.length; i++)
-            color[i%3] += name.charCodeAt(i);
-        for (var j = 0; i < 3; j++)
-            brightness += (color[j] = color[j]%256)/3;
+        var id = name.hashCode();
 
-        return ["#" + ((1 << 24) + (color[0] << 16) + (color[1] << 8) + color[2]).toString(16).slice(1), brightness < 127 ? '#FFFFFF' : '#000000'];
+        var fidelity = 7;
+
+        var color = [
+            ((Math.floor(id/(fidelity*fidelity)) % fidelity) + 1) * Math.floor(256/(fidelity+1)),
+            ((Math.floor(id/fidelity) % fidelity) + 1) * Math.floor(256/(fidelity+1)),
+            ((id % fidelity) + 1) * Math.floor(256/(fidelity+1))
+        ];
+
+        return ["#" + ((1 << 24) + (color[0] << 16) + (color[1] << 8) + color[2]).toString(16).slice(1), color[0]+color[1]+color[2] >= 384 ? '#000000' : '#FFFFFF'];
     };
 
     var draw_messages = function(messages) {
@@ -93,6 +96,7 @@
     var transaction = function(from_timer, message, callback) {
         if (!$('.chat').length) {
             cache = {u: {}, p: {}};
+            last = 0;
             return;
         }
 

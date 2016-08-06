@@ -343,6 +343,12 @@ core.popup.map = function() {
 
                                     esc_popup.trigger('unpop');
                                     popup.addClass('disabled');
+
+                                    if (!cfg.follow && !cfg.co.length) {
+                                        popup.trigger('unpop');
+                                        return;
+                                    }
+
                                     core.command('map/go', cfg, true, function(data) {
                                         popup.removeClass('disabled');
                                         if (data.success) {
@@ -367,7 +373,6 @@ core.popup.map = function() {
 
                                 })
                             });
-
                     } else {
                         popup.addClass('disabled');
                         core.command('map/go', {to: id, follow: 1}, true, function(data) {

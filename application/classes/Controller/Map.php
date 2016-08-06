@@ -122,12 +122,13 @@ class Controller_Map extends Controller_Game {
                 }
             }
         }
-
-        $energy = floor($distance * $player->get_status()->get(Model_Status::MS_CHAR_DISTANCING) * $modifier);
-        if (!$player->get_status()->has(Model_Status::MS_STAT_ENERGY, $energy + $overhead * 1.2, Model_Status::MS_EFFECT_MOVEMENT)) {
-            if (!Tool_Scripts::is_npc())
-                $player->log()->add('Du hast nicht genug Energie um diesen Weg zu bewältigen während du jemand anderem hilfst.');
-            return false;
+        if ($support) {
+            $energy = floor($distance * $player->get_status()->get(Model_Status::MS_CHAR_DISTANCING) * $modifier);
+            if (!$player->get_status()->has(Model_Status::MS_STAT_ENERGY, $energy + $overhead * 1.2, Model_Status::MS_EFFECT_MOVEMENT)) {
+                if (!Tool_Scripts::is_npc())
+                    $player->log()->add('Du hast nicht genug Energie um diesen Weg zu bewältigen während du jemand anderem hilfst.');
+                return false;
+            }
         }
 
         //Actually move

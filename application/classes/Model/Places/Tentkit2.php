@@ -28,11 +28,15 @@ class Model_Places_Tentkit2 extends Model_Places_Tentkit {
         /** @global Model_Game $game */
         global $game;
 
+        $is_player = true;
         if (!$pid) global $player;
         elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = $game->get_player($pid);
-        else $player = $game->get_npc($pid);
+        else {
+            $is_player = false;
+            $player = $game->get_npc($pid);
+        }
 
-        if (count(Tool_Scripts::at_location($this->uin(), true, true)) >= 3) {
+        if (count(Tool_Scripts::at_location($this->uin(), $is_player, !$is_player)) >= 3) {
             if ($type == Interface_Tickable::IT_TYPE_PLAYER)
                 $player->log()->add('Das InstaZELT™ Deluxe ist zwar vergleichsweise groß, aber trotzdem passen nur drei Personen gleichzeitig hinein...');
             return false;

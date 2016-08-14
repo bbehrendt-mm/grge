@@ -60,8 +60,9 @@ class Model_Items_Vending extends Model_Items_Abstract_Item {
         if ($player === null)
             global $player;
 		
-		$item = $this->factory->spawn(true);
-		Tool_Scripts::place_new_item($item, false);
+		$item = $this->factory->nd_spawn();
+		if (!$item) $item = new Model_Items_Money(4);
+        Tool_Scripts::place_new_item($item, false);
 		$player->location()->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_VENDING, $item));
         return true;
 	}
@@ -79,13 +80,13 @@ class Model_Items_Vending extends Model_Items_Abstract_Item {
                 $player->get_status()->modify(Model_Status::MS_STAT_HEALTH, -35);
                 Tool_Scripts::chem_reaction(
                     'Du gießt etwas von der Chemikalie in den Münzschlitz... es gibt einen Knall, und der Automat fliegt in die Luft! Du wurdest durch die Explosion verletzt, aber wenigstens hast du ein paar neue gegenstände erhalten...',
-                    $chemval,$this, [$this->factory->spawn(true),$this->factory->spawn(true),$this->factory->spawn(true),$this->factory->spawn(true),$this->factory->spawn(true)]);
+                    $chemval,$this, [$this->factory->nd_spawn(),$this->factory->nd_spawn(),$this->factory->nd_spawn(),$this->factory->nd_spawn(),$this->factory->nd_spawn()]);
                 $this->consume();
                 return true;
             case $this->chem_rand_type:
                 Tool_Scripts::chem_reaction(
                     'Du gießt etwas von der Chemikalie in den Münzschlitz... es klickt, und ein Gegenstand fällt aus dem Automaten!',
-                    $chemval,$this, $this->factory->spawn(true));
+                    $chemval,$this, $this->factory->nd_spawn());
                 return true;
             default:
                 Tool_Scripts::chem_reaction(

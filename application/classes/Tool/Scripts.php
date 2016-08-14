@@ -221,6 +221,7 @@ class Tool_Scripts
             $other_players = false;
 
         $proto = [];
+        if (!$player) return [];
         if ($active_player)
             $proto = array_merge($proto, $player->inventory()->get($classname));
 
@@ -660,12 +661,13 @@ class Tool_Scripts
 
     /**
      * @param null|Model_Player|Interface_Plentity $player
-     * @return Model_Items_Abstract_Transport|null
+     * @return bool
      */
     public static function is_npc($player = null) {
         if ($player === null)
             global $player;
 
+        if (!$player) return false;
         return $player->type() != Interface_Plentity::IC_NPC_NONPC;
     }
 }

@@ -153,7 +153,8 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
             $zombies[] = $classpath::factory()->count((int)$entry['count'])->set_distance((int)$entry['distance']);
         }
 
-        if ($zombies) Tool_Scripts::combat([Tool_Scripts::at_location($player->location_class()), $zombies], true, 20, $player->location());
+        // TODO: Make escapabillity customizable
+        if ($zombies) Tool_Scripts::combat([Tool_Scripts::at_location($player->location_class()), $zombies], false, 20, $player->location());
         $this->render();
     }
 

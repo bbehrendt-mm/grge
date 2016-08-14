@@ -222,7 +222,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 			if ($findings > 0) {
 				$items = [];
 				for ($i = 0; $i < $findings; $i++)
-                    if ($find = $this->item_factory->spawn(true))
+                    if ($find = $this->item_factory->nd_spawn())
                         $items[] = $find;
 				if ($items) {
                     Tool_Scripts::place_new_item($items, false, $this);

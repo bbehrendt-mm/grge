@@ -328,7 +328,7 @@ class Controller_Map extends Controller_Game {
             'doorways' => $doorways,
             'current' => $lid,
             'companions' => $companions,
-            'radius' => $player->get_status()->get(Model_Status::MS_STAT_ENERGY)
+            'radius' => $player->get_status()->get(Model_Status::MS_STAT_ENERGY) * $player->get_status()->scaling(Model_Status::MS_STAT_ENERGY, Model_Status::MS_EFFECT_MOVEMENT)
         ]);
     }
 

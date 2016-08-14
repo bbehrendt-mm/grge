@@ -2,6 +2,8 @@
 
 class Controller_Player extends Controller_Game {
 
+    protected static $death_allowed_actions = ['favbattle'];
+
     public static function battle_ai_ammo_types() {
         return ['Model_Items_Battery','Model_Items_Ammo','Model_Items_Splinter','Model_Items_Bolts'];
     }

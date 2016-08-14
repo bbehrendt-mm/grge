@@ -51,6 +51,9 @@ class Model_Combat_Actor extends Named {
     protected $ai_brashness = 0.7;
 
     protected static $is_unique = true;
+    protected $memory = [
+        'flee' => 0,
+    ];
 
     protected $wounds = [];
 
@@ -450,10 +453,12 @@ class Model_Combat_Actor extends Named {
         if ($this->current_weapon && ($closest_foe = $this->current_weapon->closest_foe($this, $foes, false))) {
             $tmp = $this->get_attack_priority($friends, [$closest_foe], $this->current_weapon, true);
 
+            $retr = $tmp ? ($closest_foe->distance_from($this) < $this->current_weapon->min_range()) : false;
+
             return $tmp ? [
-                ($tmp[0] * $this->ai_brashness)/$this->rounds_to_use($this->current_weapon, $closest_foe),
+                (($tmp[0] * $this->ai_brashness)/$this->rounds_to_use($this->current_weapon, $closest_foe)) * ($retr ? (1/($this->memory["flee"]+1)) : 1),
                 $tmp[1],
-                $closest_foe->distance_from($this) < $this->current_weapon->min_range() ? -1 : 1
+                $retr ? -1 : 1
             ] : [];
         } return [];
     }
@@ -554,7 +559,9 @@ class Model_Combat_Actor extends Named {
 
             $d = max(0.5, $this->distance_from($target));
             $d_min = $d - ($move[2] > 0 ? $this->current_weapon->max_range() : $this->current_weapon->min_range());
-            
+
+            if ($move[2] < 0) $this->memory['flee']++;
+
             $old_x = $this->pos_x;
             $old_y = $this->pos_y;
 

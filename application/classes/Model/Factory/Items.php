@@ -53,6 +53,23 @@ class Model_Factory_Items extends Model_Factory_Abstract {
     }
 
     /**
+     * Forced, non-decay and non-trigger
+     * @param bool $force
+     * @param bool $apply_decay
+     * @return null|Model_Items_Abstract_Item
+     */
+    public function nd_spawn($itd = 0) {
+        if (!$this->equalized || !($k = $this->get_element()) || $itd >= 10)
+            return null;
+
+        /** @var Model_Items_Virtual_Invoke_Abstract|string $k */
+        if (Tool_System::instance_of($k, Model_Items_Virtual_Invoke_Abstract::cls()))
+            return $this->nd_spawn($itd + 1);
+
+        else return new $k;
+    }
+
+    /**
      * Replenishes the dryout. Set factor to 1 to completely reset dryout.
      * @param float $factor Set to 1 for full replenishment, 0 for no effect.
      * @return $this

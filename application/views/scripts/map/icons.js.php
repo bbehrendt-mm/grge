@@ -9,7 +9,7 @@
         this.icons[id].highlight = true;
 
         if (trigger_events) this.handler(id, 'mouseover');
-        var highlight_color = this.data.locations[id].distance > this.data.radius ? '#FF0000' : '#69E7FF';
+        var highlight_color = this.data.locations[id].energy > this.data.radius ? '#FF0000' : '#69E7FF';
 
         var alias = this;
         $.each(this.data.locations[id].nodes, function(i, n) {

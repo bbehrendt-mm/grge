@@ -94,6 +94,7 @@ core = {
         <?php } ?>
 
         core.last = data;
+        $('#hint').empty();
 
         if (core.parts.admin) core.parts.admin.controls($('<div />').addClass('cell rw-12 padded').appendTo(NF.row().appendTo(target)));
 

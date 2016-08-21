@@ -12,6 +12,9 @@ core.popup.map = function() {
 
     var init = function(data) {
 
+        if (data.current != core.last.location.id)
+            return core.command();
+
         var overlay, help, list, list_inner, dbl1, dbl2, control, tagtog;
 
         var markers = {
@@ -168,8 +171,8 @@ core.popup.map = function() {
                 case 'click': case 'altclick':
 
                     var escortables = false;
-                    if (core.last.players && core.last.players.others)
-                        $.each(core.last.players.others, function(id, player) {
+                    if (data.players && data.players.others)
+                        $.each(data.players.others, function(id, player) {
                             if (player.local && (player.allow === true || player.allow[<?=Interface_Plentity::IC_ALLOW_MOVE?>]))
                                 escortables = true;
                         });
@@ -226,8 +229,8 @@ core.popup.map = function() {
 
                         var check_row = $('<form />').addClass('row').appendTo(esc_popup);
 
-                        if (escortables && core.last.players && core.last.players.others)
-                            $.each(core.last.players.others, function(id, player) {
+                        if (escortables && data.players && data.players.others)
+                            $.each(data.players.others, function(id, player) {
                                 if (player.allow === true ||player.allow[<?=Interface_Plentity::IC_ALLOW_MOVE?>])
                                     check_row.append($('<div />').addClass('cell rw-6 padded').append(
                                         $('<label />').text(player.name).prepend($('<input />').attr('type','checkbox').attr('data-id', player.id))

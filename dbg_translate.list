@@ -6326,3 +6326,20 @@ Du kannst einen Spieler anflüstern, indem du "/whisper [SPIELER] [DEINE NACHRIC
 	D:\xampp\htdocs\grge\index.php [116] in execute
 [AjcZDQlbOhXu2BrQmsbcOA==] Sun, 31 Jul 2016 19:22:58 +0200
 
+Deine Pflanzen sind erntebereit!
+	D:\xampp\htdocs\grge\application\views\scripts\core\core.location.js.php [369] in __j
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [61] in include
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [348] in capture
+	D:\xampp\htdocs\grge\application\classes\JView.php [27] in render
+	D:\xampp\htdocs\grge\system\classes\Kohana\View.php [228] in render
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [66] in __toString
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [77] in compile_js_module
+	D:\xampp\htdocs\grge\application\classes\Controller\Web.php [83] in modscript
+	D:\xampp\htdocs\grge\system\classes\Kohana\Controller.php [84] in action_core
+	UNKNOWN FILE [-1] in execute
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client\Internal.php [97] in invoke
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request\Client.php [114] in execute_request
+	D:\xampp\htdocs\grge\system\classes\Kohana\Request.php [986] in execute
+	D:\xampp\htdocs\grge\index.php [116] in execute
+[oPyv4EB3+UyhX2RwZgpfgg==] Fri, 19 Aug 2016 18:10:17 +0200
+

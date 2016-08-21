@@ -186,6 +186,7 @@ class Controller_Game extends Controller {
 
         // Add render data
         $this->add_data('location', [
+            'id' => $player->location_class(),
             'meta' => [
                 'name' => __($player->location()->name()),
                 'desc' => __($player->location()->description()),
@@ -769,7 +770,7 @@ class Controller_Game extends Controller {
             ]]);
     }
 
-    private function render_mp() {
+    protected function render_mp($slim = false) {
         /**
          * @global $game Model_Game
          * @global $player Model_Player
@@ -852,7 +853,7 @@ class Controller_Game extends Controller {
             ];
         }
 
-        $this->add_data('chat', Controller_Chat::tokenize($player->id(),$game->id(),true));
+        if (!$slim) $this->add_data('chat', Controller_Chat::tokenize($player->id(),$game->id(),true));
 
         $this->add_data('players', [
             'multiplayer' => $game->config('modules.multiplayer'),

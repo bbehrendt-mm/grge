@@ -46,6 +46,7 @@ class Controller_Web extends Controller {
         foreach (scandir(APPPATH . 'assets/css') as $f) if (!in_array($f, ['.','..'])) $css[] = $f;
 
         $sid = $this->post('vcsid') ? $this->post('vcsid') : $this->session->id();
+        //$this->response->headers('Content-Security-Policy', "connect-src 'self';");
         $this->response->body(View::factory('framework')->set('js',$js)->set('css',$css)->set('sid', $sid)->set('dev', Kohana::$environment == Kohana::DEVELOPMENT));
     }
 
@@ -97,7 +98,7 @@ class Controller_Web extends Controller {
         $season = (int)Kohana::$config->load('server.season');
         $title = Tool_System::getSeasonTitle($season);
         $beta = Kohana::$config->load('build.version.stage') < 3;
-        
+
         $this->add_widget(':body', View::factory('body')
             ->set('season', Kohana::$config->load('server.season'))
             ->set('title', $title)

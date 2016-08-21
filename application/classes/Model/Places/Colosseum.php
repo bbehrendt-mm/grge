@@ -52,7 +52,7 @@ class Model_Places_Colosseum extends Model_Places_Abstract_Place {
 		global $game, $player;
 
         $zmb = array();
-        if ($this->stage > 15) $zmb[] = new Model_Combat_Zombies_Behemoth();
+        if ($this->stage > 15) $zmb[] = Model_Combat_Zombies_Behemoth::factory()->count($this->stage - 15);
         else foreach (static::$stageconf[$this->stage]['zombies'] as $z => $c)
             /** @var Model_Combat_Zombies_Zombie $z */
             $zmb[] = $z::factory()->count($c);

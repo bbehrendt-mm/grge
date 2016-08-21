@@ -319,6 +319,8 @@ class Controller_Map extends Controller_Game {
                 $companions[$comp->id()] = $comp->name();
         } else $companions = null;
 
+        $this->render_mp(true);
+
         return $this->render([
             'read_only' => $read_only,
             'mapname' => __($game->map($lid)->get_sublocation_description()),

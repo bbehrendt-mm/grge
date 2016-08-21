@@ -45,7 +45,7 @@
         <i class="fa fa-spin fa-circle-o-notch"></i>
     </div>
 
-    <div id="nojs">
+    <noscript id="nojs">
         <b><?=__('JavaScript erforderlich');?></b>
         <i class="fa fa-exclamation-triangle"></i>
         <span><?=__(
@@ -54,7 +54,7 @@
         ':domain' => '<i>zvg.boerde.de</i>',
         ':admin' => '<a href="mailto:kontakt@ruine.dvspot.de">Brainbox</a>',
         ));?></span>
-    </div>
+    </noscript>
 
     <script type="text/javascript">
     // ## JS COMPRESS BEGIN ## //

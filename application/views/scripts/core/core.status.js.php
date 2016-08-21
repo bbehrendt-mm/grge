@@ -351,7 +351,7 @@
             });
             if (i < scm.length)
                 for (i; i < scm.length; i++)
-                    $('<div />').addClass(i ==  (scm.length -1) ? 'hide-md hide-sm' : '').text(scm[i] < 10 ? '0' + scm[i] : scm[i]).appendTo(countdown);
+                    $('<div />').addClass(i ==  (scm.length -1) ? (game.s.quality() < 3 ? 'hidden' : 'hide-md hide-sm') : '').text(scm[i] < 10 ? '0' + scm[i] : scm[i]).appendTo(countdown);
 
             window.requestAnimationFrame(updater);
         };

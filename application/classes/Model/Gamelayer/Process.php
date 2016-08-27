@@ -108,12 +108,13 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
                 $active_locations[$plentity->location_class()] = true;
         $active_locations = array_keys($active_locations);
 
-		foreach ($active_locations as $lid) {
-            $this->location($lid)->pretick();
-            foreach ($this->location($lid)->inventory()->get('Interface_Tickable') as $item)
-                /** @var $item Interface_Tickable */
-                $item->tick($lid, Interface_Tickable::IT_TYPE_LOCATION);
-        }
+		foreach ($active_locations as $lid)
+		    if ($this->location($lid)) {
+                $this->location($lid)->pretick();
+                foreach ($this->location($lid)->inventory()->get('Interface_Tickable') as $item)
+                    /** @var $item Interface_Tickable */
+                    $item->tick($lid, Interface_Tickable::IT_TYPE_LOCATION);
+            }
 
 		
 		//Run player and NPC ticks

@@ -9,6 +9,7 @@
  * @var bool $allow_gamelist Allow game listing
  * @var bool $allow_ranking Allow ranking functions
  * @var bool $allow_wiki Allow reflection atlas
+ * @var bool $allow_logs Allow viewing logs
  */
 
 ?>
@@ -41,6 +42,7 @@
         <div class="tile" data-ref="games" data-icon="gamepad" data-active="<?=$allow_gamelist ? 1 : 0 ?>"></div>
         <div class="tile" data-ref="ranking" data-icon="newspaper-o" data-active="<?=$allow_ranking ? 1 : 0 ?>"></div>
         <div class="tile" data-ref="wiki" data-icon="graduation-cap" data-active="<?=$allow_wiki ? 1 : 0 ?>"></div>
+        <div class="tile" data-ref="logs" data-icon="bug" data-active="<?=$allow_logs ? 1 : 0 ?>"></div>
     </div>
 </div>
 <script type="application/javascript">

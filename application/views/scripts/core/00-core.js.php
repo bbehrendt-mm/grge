@@ -50,7 +50,7 @@ core = {
                 core.parts.log(data.log,$('<div />').addClass('row log_box').appendTo(target.empty()));
         }, true)
     },
-
+    
     command: function(url, args, background, callback, no_clean, finished, always_callback) {
         if (!url)
             url = 'japi/game/data';

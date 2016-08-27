@@ -6,7 +6,7 @@ core = {
     parts: {},
     snippets: {},
 
-    version: '2.1.2-0-0-331',
+    version: '2.1.3-0-0-340',
 
     last: {},
     plugins: {},
@@ -45,7 +45,7 @@ core = {
                 core.parts.log(data.log,$('<div />').addClass('row log_box').appendTo(target.empty()));
         }, true)
     },
-
+    
     command: function(url, args, background, callback, no_clean, finished, always_callback) {
         if (!url)
             url = 'japi/game/data';
@@ -3260,7 +3260,7 @@ core = {
 
                         if (escortables && data.players && data.players.others)
                             $.each(data.players.others, function(id, player) {
-                                if (player.allow === true ||player.allow[6])
+                                if (player.local && (player.allow === true || player.allow[6]))
                                     check_row.append($('<div />').addClass('cell rw-6 padded').append(
                                         $('<label />').text(player.name).prepend($('<input />').attr('type','checkbox').attr('data-id', player.id))
                                     ))
@@ -3989,7 +3989,7 @@ core = {
                         if (core.last.players.others)
                             $.each(core.last.players.others, function(id, player) {
                                 popup.append(NF.row().append($('<div />').addClass('cell rw-12 padded').append(
-                                    $('<div />').addClass('btn btn-zv' + ((player.allow === true || player.allow[4]) ? '' : ' disabled')).text(player.name).click(function() {
+                                    $('<div />').addClass('btn btn-zv' + (player.local && (player.allow === true || player.allow[4]) ? '' : ' disabled')).text(player.name).click(function() {
                                         if (!(player.allow === true || player.allow[4]) || !confirm(game.i18n("Bist du sicher, dass du diese Aktion auf :name anwenden m\u00f6chtest?", {':name': player.name}))) return;
 
                                         popup.trigger('unpop');

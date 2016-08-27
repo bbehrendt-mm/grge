@@ -323,6 +323,7 @@ class Controller_Act extends Controller_Game {
             }
 
         $lost = false;
+        if (!$items) $items = [];
         foreach ($items as $i => $iid)
             if (!$game->item_available((int)$iid, $p)) {
                 unset($items[$i]);

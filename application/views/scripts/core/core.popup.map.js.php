@@ -231,7 +231,7 @@ core.popup.map = function() {
 
                         if (escortables && data.players && data.players.others)
                             $.each(data.players.others, function(id, player) {
-                                if (player.allow === true ||player.allow[<?=Interface_Plentity::IC_ALLOW_MOVE?>])
+                                if (player.local && (player.allow === true || player.allow[<?=Interface_Plentity::IC_ALLOW_MOVE?>]))
                                     check_row.append($('<div />').addClass('cell rw-6 padded').append(
                                         $('<label />').text(player.name).prepend($('<input />').attr('type','checkbox').attr('data-id', player.id))
                                     ))

@@ -160,7 +160,7 @@
                         if (core.last.players.others)
                             $.each(core.last.players.others, function(id, player) {
                                 popup.append(NF.row().append($('<div />').addClass('cell rw-12 padded').append(
-                                    $('<div />').addClass('btn btn-zv' + ((player.allow === true || player.allow[<?=Interface_Plentity::IC_ALLOW_ITEMS_SIDEUSE?>]) ? '' : ' disabled')).text(player.name).click(function() {
+                                    $('<div />').addClass('btn btn-zv' + (player.local && (player.allow === true || player.allow[<?=Interface_Plentity::IC_ALLOW_ITEMS_SIDEUSE?>]) ? '' : ' disabled')).text(player.name).click(function() {
                                         if (!(player.allow === true || player.allow[<?=Interface_Plentity::IC_ALLOW_ITEMS_SIDEUSE?>]) || !confirm(game.i18n(<?=__j('Bist du sicher, dass du diese Aktion auf :name anwenden möchtest?')?>, {':name': player.name}))) return;
 
                                         popup.trigger('unpop');

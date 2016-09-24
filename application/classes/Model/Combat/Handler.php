@@ -42,15 +42,15 @@ class Model_Combat_Handler {
         return DB::select('gameid')->from('battle')->where('bid','=',$bid)->execute()->get('gameid', null);
     }
 
-    public static function get_battle_from_gallery($bid, $pid) {
+    public static function get_battle_from_gallery($bid, $pid, $raw = false) {
         if ($data = DB::select('battle.data')->from('battle_gallery')->join('battle','LEFT')->on('battle_gallery.video','=','battle.bid')->where('battle_gallery.id','=',$bid)->where('battle_gallery.user','=',$pid)->execute()->get('data'))
-            return Model_Combat_Scene::vitalize(unserialize(gzuncompress($data)));
+            return $raw ? unserialize(gzuncompress($data)) : Model_Combat_Scene::vitalize(unserialize(gzuncompress($data)));
         return null;
     }
 
-    public static function get_battle($bid) {
+    public static function get_battle($bid, $raw = false) {
         if ($data = DB::select('data')->from('battle')->where('bid','=',$bid)->execute()->get('data'))
-            return Model_Combat_Scene::vitalize(unserialize(gzuncompress($data)));
+            return $raw ? unserialize(gzuncompress($data)) : Model_Combat_Scene::vitalize(unserialize(gzuncompress($data)));
         return null;
     }
 

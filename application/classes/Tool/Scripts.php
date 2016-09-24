@@ -225,7 +225,7 @@ class Tool_Scripts
         if ($active_player)
             $proto = array_merge($proto, $player->inventory()->get($classname));
 
-        if ($active_location)
+        if ($active_location && $player->location())
             $proto = array_merge($proto, $player->location()->inventory()->get($classname));
 
         if ($other_players)

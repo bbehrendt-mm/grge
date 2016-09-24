@@ -141,11 +141,15 @@ class Model_Combat_Scene {
         return $entry;
     }
 
-    public function __toString() {
-        return implode("\r\n",array_map(function($v) {return $this->entry_to_string($v);}, $this->log_data));
+    public static function printRaw($data) {
+        return implode("\r\n",array_map(function($v) {return static::entry_to_string($v);}, $data));
     }
 
-    private function entry_to_string($entry) {
+    public function __toString() {
+        return implode("\r\n",array_map(function($v) {return static::entry_to_string($v);}, $this->log_data));
+    }
+
+    private static function entry_to_string($entry) {
         $type = $entry[0];
         $entry = array_slice($entry, 1);
 
@@ -172,7 +176,7 @@ class Model_Combat_Scene {
 
             case static::MCS_EV_ATTACK:
                 list($atk, $def, $ammo, list($name, $icon, $animation), $damage) = $entry;
-                return "Combatant $atk attacks Combatant $def using $name." . ($ammo ? " " . implode(', ', $ammo) . " has been consumed as ammo." : '');
+                return "Combatant $atk attacks Combatant $def using $name.";
 
             case static::MCS_EV_DAMAGE:
                 list($id, $damage, $kills, $death) = $entry;

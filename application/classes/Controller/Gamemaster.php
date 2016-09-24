@@ -428,7 +428,7 @@ class Controller_Gamemaster extends Controller {
                 if ($current_payment > $max_payment || $current_payment > $user->coins()) return $this->error(\grge\E_STARTER_INVALID_SETUP);
             }
         }
-
+	$current_payment = max(0,$current_payment);
         // If an ID is given, we want to join a multiplayer game
         if ($id > 0) {
             if ($this->join_multiplayer($id,$job,$level,$pw,$list))

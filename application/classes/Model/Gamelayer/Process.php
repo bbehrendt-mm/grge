@@ -127,12 +127,13 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
                     /** @var $item Interface_Tickable */
                     $item->tick($player->id(), !Tool_Scripts::is_npc($player) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC);
 
-                foreach ($player->location()->inventory()->get('Interface_Tickable') as $item)
-                    /** @var $item Interface_Tickable */
-                    $item->tick($player->location_class(), false);
+                if ($player->location())
+                    foreach ($player->location()->inventory()->get('Interface_Tickable') as $item)
+                        /** @var $item Interface_Tickable */
+                        $item->tick($player->location_class(), false);
 
                 $player->tick();
-                $player->location()->tick(!Tool_Scripts::is_npc($player) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC);
+                if ($player->location()) $player->location()->tick(!Tool_Scripts::is_npc($player) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC);
 			}
 		}
 

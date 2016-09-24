@@ -6,6 +6,19 @@
 
 <h1 class="noclick"><i class="fa fa-arrow-circle-right"></i>Error Logs</h1>
 
+<div class="row">
+    <h3>Battle Logs</h3>
+    <div class="cell rw-4">
+        <input class="form_input" id="blg_bid" text="" type="text" placeholder="Battle ID"/>
+    </div>
+    <div class="cell rw-4">
+        <input class="form_input" id="blg_bstr" text="" type="text" placeholder="Gallery ID"/>
+    </div>
+    <div class="cell rw-4">
+        <button id="blg_go" class="btn">Öffnen</button>
+    </div>
+</div>
+
 <div class="row" data-dist="0">
     <h2>Heute</h2>
 </div>
@@ -27,13 +40,20 @@
 </div>
 
 
-
-
-
-
 <script type="application/javascript">
 // ## JS COMPRESS BEGIN ## //
 (function() {
+
+    $('#blg_go').click(function() {
+        var bid = $('#blg_bid').val();
+        if (!bid) bid = 0;
+        var gid = $('#blg_bstr').val();
+        if (!gid) gid = 0;
+
+        window.open('admin/files/battle_log/' + (bid + '-' + gid));
+    });
+
+
     var list = <?=json_encode($dates)?>;
     list.sort();
     list.reverse();

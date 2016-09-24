@@ -7,6 +7,22 @@ class Controller_Admin_Files extends Controller_Admin_Admin {
 
     private static $evio_version = 2;
 
+    public function action_battle_log() {
+        if (!$this->priv_allow_all(['LOGVIEW'])) die(Error::m(\grge\E_SERVER_ACCESS_DENIED));
+
+        $data = explode('-', $this->request->param('id'));
+        if (count($data) != 2) {
+            echo "Error."; return;
+        }
+
+        $battle = ($data[1]==0) ? Model_Combat_Handler::get_battle((int)$data[0], true) : Model_Combat_Handler::get_battle_from_gallery((int)$data[0],(int)$data[1], true);
+        if (!$battle) {
+            echo "Not found."; return;
+        }
+
+        echo '<pre>' . Model_Combat_Scene::printRaw($battle) . '</pre>';
+    }
+
     public function action_export_translations() {
         if (!$this->priv_allow_all(['TRANSLATE_MOD'])) die(Error::m(\grge\E_SERVER_ACCESS_DENIED));
 

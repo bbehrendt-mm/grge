@@ -111,7 +111,7 @@ abstract class Model_NPC_Animal extends Model_NPC_Nano
             // Other location
 
             // Going home
-            if (!$busy && $this->last_hideout && !count(Tool_Scripts::at_location($this->location_class(), true, false))) {
+            if (!$busy && $this->last_hideout && $this->location() && !count(Tool_Scripts::at_location($this->location_class(), true, false))) {
                 $home_distance = $game->map($this->location_class())->get_distance($this->location_class(), $this->last_hideout);
 
                 if ($home_distance !== false) {

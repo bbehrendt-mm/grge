@@ -343,7 +343,7 @@ class Controller_Map extends Controller_Game {
 
         switch ($game->map($player->location_class())->get_map_type()) {
             case Model_Map_Abstract::MMA_TYPE_OVERVIEW: return $this->mapdata_classic();
-            case Model_Map_Abstract::MMA_TYPE_LABYRINTH: return $this->mapdata_classic(2);
+            case Model_Map_Abstract::MMA_TYPE_LABYRINTH: return null;
             default: throw new Exception('UNKNOWN_MAP_TYPE');
         }
     }

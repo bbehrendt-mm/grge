@@ -535,7 +535,7 @@ class Model_Combat_Actor extends Named {
         list($ini, $atk, $res, $acc) = $this->actual_stats();
         $use_second_action = false;
 
-        if ($attack && (!$switch || $attack[0] > $switch[0]) && (!$move || $attack[0] > $move[0])) {
+        if ($attack && (!$switch || $attack[0] >= $switch[0]) && (!$move || $attack[0] >= $move[0])) {
             // Attack action
             /** @var Model_Combat_Actor $target */
             $target = $attack[1];

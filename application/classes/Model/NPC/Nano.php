@@ -106,17 +106,20 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
 
         $this->inventory = $drop_inv;
 
-        if ($this->get_status()->get(Model_Status::MS_STAT_ZOMBIFY) >= 50 && ($ghul = $this->generate_zombified_body())) {
-            $this->location()->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_ZOMBIFY, [], $this->id()));
-            $game->register_ghul($this->location_class(), $ghul);
-        } else {
-            foreach ($this->inventory()->get() as $d)
-                $this->location()->inventory()->add($d);
+        if ($this->location()) {
+            if ($this->get_status()->get(Model_Status::MS_STAT_ZOMBIFY) >= 50 && ($ghul = $this->generate_zombified_body())) {
+                $this->location()->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_ZOMBIFY, [], $this->id()));
+                $game->register_ghul($this->location_class(), $ghul);
+            } else {
+                foreach ($this->inventory()->get() as $d)
+                    $this->location()->inventory()->add($d);
 
-            $this->location()->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_DEATH, $this->inventory()->get(), $this->id()));
+                $this->location()->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_DEATH, $this->inventory()->get(), $this->id()));
+            }
+
+            if (count(Tool_Scripts::at_location($this->location_class(), true, true)) == 0) $this->location()->vacate();
         }
 
-        if (count(Tool_Scripts::at_location($this->location_class(), true, true)) == 0) $this->location()->vacate();
     }
 
     public function tick()

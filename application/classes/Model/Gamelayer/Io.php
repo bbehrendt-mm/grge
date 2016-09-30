@@ -417,4 +417,42 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
     public function ndp_purge($id) {
         $this->set['gamedata']->ndp[$id] = array();
     }
+
+    /**
+     * @return Model_Events_Event[]
+     */
+    public function get_initialized_events() {
+        if (!isset($this->set['gamedata']->active_events))
+            $this->set['gamedata']->active_events = [];
+        return $this->set['gamedata']->active_events;
+    }
+
+    /**
+     * @param Model_Events_Event|string $e
+     * @return Model_Events_Event|null
+     */
+    public function get_initialized_event($e) {
+        if (Tool_System::instance_of($e,'Model_Events_Event'))
+            $e = $e::get_key();
+        if ($e && is_string($e) && isset(($this->get_initialized_events())[$e]))
+            return ($this->get_initialized_events())[$e];
+        else return null;
+    }
+
+    public function set_event_index(Model_Events_Event $event) {
+        if ($event::is_current() && !$this->get_initialized_event($event)) {
+            if ($event->is_active())
+                $this->set['gamedata']->active_events[$event::get_key()] = $event;
+            return $event->is_active();
+        } else return false;
+    }
+
+    public function unset_event_index($event) {
+        $event = $this->get_initialized_event($event);
+        if (!$event) return false;
+        elseif (!$event->is_active()) {
+            unset($this->set['gamedata']->active_events[$event::get_key()]);
+            return true;
+        } else return false;
+    }
 }	

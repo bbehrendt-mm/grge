@@ -91,10 +91,13 @@ class Model_Buffs_Daytime extends Model_Buffs_Abstract_Buff {
         };
 
         //Control sun buff
-        if ($tod != "day" || !$this->assoc_player->location()->is_outside())
-            $this->assoc_player->get_status()->remove("sun");
-        elseif ($tod == "day" && $this->assoc_player->location()->is_outside() && !$this->assoc_player->get_status()->retrieve("sun"))
-            new Model_Buffs_Sun($this->assoc_player);
+        if ($this->assoc_player->location()) {
+            if ($tod != "day" || !$this->assoc_player->location()->is_outside())
+                $this->assoc_player->get_status()->remove("sun");
+            elseif ($tod == "day" && $this->assoc_player->location()->is_outside() && !$this->assoc_player->get_status()->retrieve("sun"))
+                new Model_Buffs_Sun($this->assoc_player);
+        }
+
 
 		return parent::rebuild();
 	}

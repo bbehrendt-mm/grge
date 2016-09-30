@@ -20,6 +20,7 @@ interface Interface_Plentity extends Interface_Cloudshard {
     const IC_NPC_NONPC = 0;
     const IC_NPC_GENERIC = 1;
     const IC_NPC_ANIMAL = 2;
+    const IC_NPC_HUMANOID = 3;
 
     /**
      * @return Model_Status

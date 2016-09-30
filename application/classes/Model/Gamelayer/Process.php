@@ -11,6 +11,11 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
 	abstract public function paused();
 	abstract public function is_alive();
 
+    /**
+     * @return Model_Events_Event[]
+     */
+    abstract public function get_initialized_events();
+
 	protected static $now_is_real_time = false;
 
     abstract public function recalculate_flow();
@@ -28,6 +33,12 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
 
         //Tick
         $this->tick();
+
+        //Event ticks
+        foreach ($this->get_initialized_events() as $ev)
+            $ev->trigger();
+        foreach ($this->get_initialized_events() as $ev)
+            $ev->tick();
 
         //If no player is alive, stop time progression, otherwise recalculate time votes
         if (!$this->is_alive())

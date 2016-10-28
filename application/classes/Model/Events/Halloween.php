@@ -102,7 +102,7 @@ class Model_Events_Halloween extends Model_Events_Event {
         foreach ($this->item_list as $iuin) {
             /** @var Model_Items_Abstract_Item $i */
             $i = $game->uin()->get($iuin, Model_Items_Abstract_Item::cls());
-            $i->grind();
+            if ($i) $i->grind();
         }
 
         foreach ($game->playable_entities() as $pl) {

@@ -52,7 +52,7 @@ class Model_NPC_Event_Patient extends Model_NPC_Humanoid
 
     public function kill() {
         if ($this->location() && !$this->is_aggresive) $this->location()->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_LEAVE, $this->id(), true));
-        parent::kill();
+        else parent::kill();
     }
 
     protected function handle_death() {

@@ -13,26 +13,6 @@ abstract class Model_NPC_Humanoid extends Model_NPC_Nano
     protected static $buffs_place_various = true;
 
     public function __construct($name = null) {
-        /** @global Model_Game $game */
-        global $game;
-
-        if (static::$namelist && $name === null) {
-            $list = array();
-            for ($i = 0; $i < count(static::$namelist); $i++)
-                if ($game->ndp_check(get_called_class(), $i))
-                    $list[] = $i;
-
-            if (!$list) {
-                $game->ndp_purge(get_called_class());
-                $type = mt_rand(0, count(static::$namelist) - 1);
-            } else $type = $list[mt_rand(0, count($list) - 1)];
-
-            $name = static::$namelist[$type];
-            $game->ndp_register(get_called_class(), $type);
-        }
-
-        if (!$name) $name = $this->entity_species();
-
         parent::__construct($name);
 
         $this->get_status()->set(

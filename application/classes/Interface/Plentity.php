@@ -59,4 +59,7 @@ interface Interface_Plentity extends Interface_Cloudshard {
     public function companion($newval = null);
 
     public function allow($type = null);
+
+    /** @return Model_Hid */
+    public function hid();
 }

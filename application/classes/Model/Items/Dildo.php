@@ -40,10 +40,6 @@ class Model_Items_Dildo extends Model_Items_Abstract_Item implements Interface_S
                 ->decider(function() {
                     /** @global Model_Game $game */
                     global $game;
-
-                    if (Tool_Events::current($game->next_tick()) == 'halloween' && Tool_Gambling::random(0.08))
-                        return 2;
-
                     return Tool_Gambling::random(0.1) ? 1 : 0;
                 })
                 //Success
@@ -64,15 +60,6 @@ class Model_Items_Dildo extends Model_Items_Abstract_Item implements Interface_S
                         ->effect(Model_Status::MS_STAT_ENERGY, 10)
                         ->effect(Model_Status::MS_STAT_SLEEPY, 100)
                         ->message('AAAARGH! GOTT VERDAMMT! Eine falsche Handbewegung, schon leckst du wie ein Weinfass mit Einschussloch!')
-                )
-                //Horror
-                ->effect(
-                    Model_Effect::factory()
-                        ->achieve(Model_Achievement::MA_MASOCHIST)
-                        ->achieve(Model_Achievement::MA_HALLOWEEN_15)
-                        ->spawn('Model_Items_Generic_Cursed', 1, true)
-                        ->buff('Model_Buffs_Exited', false, 15)
-                        ->message('Als du gerade konzentriert "bei der Arbeit" bist, hörst du plötzlich hinter dir ein Kinderlachen. Du drehst dich erschrocken um, findest hinter dir jedoch nur einen Teddybären...')
                 )
             );
     }

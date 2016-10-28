@@ -844,6 +844,7 @@ class Controller_Game extends Controller {
                 'escort' => $n->companion(),
                 'allow' => $allow,
                 'npc' => true,
+                'actions' => $n->hid()->convert("npc//{$n->id()}", [$player]),
                 'info' => [
                     'species' => __($n->entity_species()),
                     'profession' => __($n->entity_profession()),

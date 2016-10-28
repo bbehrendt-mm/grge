@@ -4,9 +4,16 @@ class Model_Hid {
 
     private $actions = array();
     private $hidden = array();
+    private $base_id = null;
+    private $parent = null;
 
-    public static function factory() {
-        return new Model_Hid();
+    public static function factory(Model_Items_Abstract_Item $parent = null, $bs = null) {
+        return new Model_Hid($parent, $bs);
+    }
+
+    public function __construct(Model_Items_Abstract_Item $parent = null, $bs = null) {
+        $this->base_id = $bs ? $bs : 'functional';
+        $this->parent = $parent;
     }
 
     /**
@@ -15,15 +22,16 @@ class Model_Hid {
      * @param null|string $id
      * @return Model_Hid
      */
-    public function add_action($description, $action, $id = null) {
+    public function add_action($description,Model_Action $action, $id = null) {
         if (!$description) {
             if ($id === null) return $this;
             else $this->hidden[] = $id;
         }
 
         if ($id === null)
-            $id = md5("autoid@'{$description}'");
+            $id = md5("autoid.{$this->base_id}@'{$description}'");
 
+        if ($this->parent) $action->setParent($this->parent);
         $this->actions[$id] = array('id' => $id, 'desc' => $description, 'action' => $action);
         return $this;
     }
@@ -48,11 +56,18 @@ class Model_Hid {
      * @return bool
      */
     public function perform($id, $player, $side_player = null, $argument = null) {
+        /**
+         * @global Model_Game $game
+         */
+        global $game;
         if (!isset($this->actions[$id]))
             return false;
 
         /** @var Model_Action $action */
         $action = $this->actions[$id]['action'];
+        if ($game)
+            foreach ($game->get_initialized_events() as $ev)
+                $ev->event_executeHIDAction($this->base_id, $this->actions[$id]['desc'], $action);
         return $action->execute($player, $side_player, $argument);
     }
 

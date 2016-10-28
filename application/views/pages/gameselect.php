@@ -656,7 +656,11 @@
                         );
 
                     if (!jobdata.next_level)
-                        content.append($('<div />').addClass('b center').text(<?=__j('Maximales Level erreicht!')?>));
+                        <?php if ($midness) { ?>
+                            content.append($('<div />').addClass('center').append($('<img />').addClass('midness').attr('src','media/icons/midness.gif')));
+                        <?php } else { ?>
+                            content.append($('<div />').addClass('b center').text(<?=__j('Maximales Level erreicht!')?>));
+                        <?php } ?>
                     else content.append(NF.row()
                             .append($('<div />').addClass('cell rw-6 padded right b').text(<?=__j('Nächstes Level')?>))
                             .append($('<div />').addClass('cell rw-6 padded').append($('<div />').addClass('soulpointbar').append($('<div />').css('width', (100 * jobdata.points/jobdata.next_level) + '%'))).append($('<div />').addClass('center').text(jobdata.points + ' / ' + jobdata.next_level)))

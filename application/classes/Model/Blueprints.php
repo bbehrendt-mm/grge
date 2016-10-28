@@ -16,14 +16,25 @@ class Model_Blueprints {
      * @return Model_Blueprints
      */
     public static function factory($location = null, $category = null) {
+        /** @global Model_Game $game */
+        global $game;
+
         $ret = new Model_Blueprints();
         if (!$location || !$category) return $ret;
         else {
             foreach (Tool_System::get_class_hierarchy($location) as $name) {
                 $name = str_replace('Model_Places_','',$name, $n);
-                if ($n == 1 && $b = Tool_System::simple_config("blueprints/{$category}/" . $name))
-                    /** @var Model_Blueprints $b */
-                    $ret->merge($b,true);
+                if ($n == 1) {
+                    if ($b = Tool_System::simple_config("blueprints/{$category}/" . $name))
+                        /** @var Model_Blueprints $b */
+                        $ret->merge($b,true);
+
+                    if ($game) foreach ($game->get_initialized_events() as $e)
+                        if ($bp = $e->event_blueprintCreation($name,$category))
+                            $ret->merge($bp,true);
+
+                }
+
             }
 
             return $ret;

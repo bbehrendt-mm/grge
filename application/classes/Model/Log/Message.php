@@ -16,6 +16,7 @@ class Model_Log_Message extends Model {
     protected $data = [];
     protected $uid;
     private $timestamp;
+    private $ticks = -1;
     protected static $type;
 
     /**
@@ -31,6 +32,7 @@ class Model_Log_Message extends Model {
         $this->data = $data;
         $this->uid = $uid !== null ? $uid : ($player ? $player->id() : ($user ? $user->uid() : -1));
         $this->timestamp = $game ? $game->now() : time();
+        $this->ticks = $game ? $game->duration() : -1;
     }
 
     protected function postprocess($data) {
@@ -56,6 +58,7 @@ class Model_Log_Message extends Model {
         return [
             'type' => static::$type,
             'time' => $this->timestamp,
+            'gt' => $this->ticks >= 0 ? Tool_Scripts::get_daytime($this->ticks)->getTimestamp() : null,
             'data' => $tmpd
         ];
     }

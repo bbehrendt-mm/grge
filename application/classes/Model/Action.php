@@ -31,11 +31,21 @@ class Model_Action {
     private $has_se = false;
     private $popup = null;
 
+    private $parent = null;
+
     /**
      * @return Model_Action
      */
     public static function factory() {
         return new Model_Action();
+    }
+
+    public function setParent(Model_Items_Abstract_Item $parent) {
+        $this->parent = $parent;
+        foreach ($this->effects as $e) {
+            $e['effect']->setParent($parent);
+            if ($e['side_effect']) $e['side_effect']->setParent($parent);
+        }
     }
 
     /**
@@ -178,9 +188,12 @@ class Model_Action {
      * @param null|Model_Effect $side_effect
      * @return Model_Action
      */
-    public function effect($effect, $id = null, $condition = null, $side_effect = null) {
-        if ($side_effect !== null)
+    public function effect(Model_Effect $effect, $id = null, $condition = null, $side_effect = null) {
+        if ($this->parent) $effect->setParent($this->parent);
+        if ($side_effect !== null) {
             $this->has_se = true;
+            if ($this->parent) $side_effect->setParent($this->parent);
+        }
         if ($id === null)
             $this->effects[] = array('effect' => $effect, 'condition' => $condition, 'side_effect' => $side_effect, 'id' => $id);
         else $this->effects[$id] = array('effect' => $effect, 'condition' => $condition, 'side_effect' => $side_effect, 'id' => $id);

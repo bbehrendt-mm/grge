@@ -429,8 +429,58 @@ class Controller_Act extends Controller_Game {
             $player->log()->add($r ? ':name hat deinen Befehl befolgt und :item eingesetzt!' : ':name konnte :item nicht einsetzen...', [':name' => $user->name()], [':item' => $item->name()]);
     }
 
+    public static function code_npc($id, $action, $side_id = null, $argument = null, $user = null) {
+        /**
+         * @global $game Model_Game
+         * @global $player Model_Player
+         * @var $item Model_Items_Abstract_Item
+         */
+        global $game, $player;
+
+        //Block sleeping
+        if ($player->get_status()->retrieve('passout') || $player->get_status()->retrieve('fragile'))
+            return;
+
+        $user = $user ? $game->get_player($user) : null;
+
+        if ($side_id) {
+            if ($user && $side_id) return;
+
+            $side_player = $game->get_player($side_id);
+
+            if (!$side_player || !Tool_Scripts::check_comrade($side_id) || !$side_player->allow(Interface_Plentity::IC_ALLOW_ITEMS_SIDEUSE)) {
+                $player->log()->add('Du kannst aktuell keine Gegenstände auf diesem Spieler anwenden.');
+                return;
+            }
+
+            $side = $game->get_player($side_id);
+        } else $side = null;
+
+        //Block sleeping (again)
+        if ($user && (!$user->allow(Interface_Plentity::IC_ALLOW_ITEMS_USE) || $user->get_status()->retrieve('passout') || $user->get_status()->retrieve('fragile'))) {
+            $player->log()->add('Dieser Spieler kann aktuell keinen Gegenstand verwenden.');
+            return;
+        }
+
+        //Get NPC, or throw Exception if this UIN does not resolve to a valid npc or the npc is at a different location
+        $npc = $game->get_npc($id);
+        if (!$npc || ($npc->location_class() != $player->location_class())) {
+            $player->log()->add('Die Aktion konnte nicht ausgeführt werden, da der gewählte NPC außerhalb deiner Reichweite ist.');
+            return;
+        }
+
+        $hid = $npc->hid();
+        $player->get_status()->set_cause_of_death("Vergiftung");
+        if ($hid->can($action))
+            $hid->perform($action, $player, $side, $argument);
+        $player->get_status()->clear_cause_of_death();
+    }
+
     public function japi_item() {
-        static::code_item($this->post('item'), $this->post('action'), $this->post('co'), $this->post('coarg'), $this->post('player'));
+        $id = $this->post('item');
+        if (strpos($id, 'npc//') === 0)
+            static::code_npc(substr($id, 5), $this->post('action'), $this->post('co'), $this->post('coarg'), $this->post('player'));
+        else static::code_item($id, $this->post('action'), $this->post('co'), $this->post('coarg'), $this->post('player'));
         return $this->japi_data();
     }
 

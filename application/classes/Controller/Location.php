@@ -113,7 +113,9 @@ class Controller_Location extends Controller_Game {
     }
 
     public function japi_maker() {
-        /** @global Model_Player $player */
+        /**
+         * @global Model_Player $player
+         */
         global $player;
 
 

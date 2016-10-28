@@ -6,13 +6,19 @@ class Model_Places_Mental extends Model_Places_Abstract_Place {
 	protected static $description = 'Vor langer Zeit war dieses Gebäude mal ein normales Krankenhaus. Irgendwann wurde es zu einer "Heilanstalt für Geisteskranke" umfunktioniert. Gerüchte besagen, dass niemand, der dort eingeliefert wurde, jemals wieder herausgekommen ist. Natürlich ist das Gebäude längst verlassen, es gibt also überhaupt keinen Grund vor irgendwas dort drin Angst zu haben. Obwohl es so scheint als würden selbst die Zombies dieses Gebäude meiden ...';
     protected static $icon = 'mental';
     protected static $outside = false;
-    protected $has_patient = false;
 
 	private $mentalstate = 0;
+
+    public function get_mental_state() {
+        return $this->mentalstate;
+    }
 	
 	public function pretick() {
 		/** @global Model_Game $game */
         global $game;
+
+        foreach ($game->get_initialized_events() as $ev)
+            $ev->event_locationTick($this);
 
         if (mt_rand(0,10) > 3) return true;
 		if (count(Tool_Scripts::at_location($this->uin())) <= 0) return true;
@@ -24,10 +30,6 @@ class Model_Places_Mental extends Model_Places_Abstract_Place {
 			    break;
 			case 1:
                 $this->log->add(new Model_Log_Types_Text('Erforschung der Irrenanstalt', 'Merkwürdige Ereignisse...', 'Du siehst Blutspuren an der Wand. Die müssen entstanden sein, als die Anstalt von Zombies überrannt wurde. Allerdings sieht das Blut überraschend frisch aus ...'));
-                if (Tool_Events::current($game->next_tick()) == 'halloween' && !$this->has_patient) {
-                    $this->has_patient = true;
-                    $this->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, 'Verstörter Patient'));
-                }
                 break;
 			case 2:
                 $this->log->add(new Model_Log_Types_Text('Erforschung der Irrenanstalt', 'Merkwürdige Ereignisse...', 'Du hörst ein knackendes Geräusch hinter dir, und spürst einen Luftzug. Du machst dich bereit, auf Zombies zu treffen. Aber nichts geschieht ...'));
@@ -60,6 +62,7 @@ class Model_Places_Mental extends Model_Places_Abstract_Place {
 		}
 		
 		$this->mentalstate++;
+
 		return true;
 	}
 }	

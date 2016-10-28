@@ -4,6 +4,9 @@
 @notification-background: #524d49;
 @notification-color: white;
 
+@notification-event-background: #ffc029;
+@notification-event-color: #a5056a;
+
 #navbar {
   height: @navbar-height; width: 100%; position: fixed; top: 0; background-color: @zv-color-main; border-bottom: 2px solid @zv-color-main-dark; box-shadow: 0 0 5px black; z-index: 100; text-align: center;
   >.navsection {
@@ -44,5 +47,15 @@
     &.success > div:first-child {background: #00ff7f;color: #ffffff; &::after {content: "\f058"}}
     &.daily-login       > div:first-child {background: #f2f000;color: #732e00; &::after {content: "\f15a"}}
     &.daily-login-fail  > div:first-child {background: #710800;color: #ff6300; &::after {content: "\f15a"}}
+
+    &.event {background: @notification-event-background; color: @notification-event-color};
+
+  @notification-event-halloween-background: #000000;
+  @notification-event-halloween-color: #ff4542;
+
+    &.event.halloween {
+      border: 2px solid @notification-event-halloween-color; background: @notification-event-halloween-background; color: @notification-event-halloween-color;
+      &> div:first-child {background: url("media/img/event_halloween.png") no-repeat top center, rgba(0,0,0,0)}
+    }
   }
 }

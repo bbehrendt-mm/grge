@@ -12,6 +12,12 @@ abstract class Model_Items_Abstract_Virtual extends Model_Items_Abstract_Item {
         return static::$manual_ui;
     }
 
+    public function has_action($action) {
+        if ($this->remaining === false) return true;
+
+        return isset($this->remaining[$action]);
+    }
+
     public function remaining_actions($action = null, $set = null) {
         if ($this->remaining === false)
             return PHP_INT_MAX;

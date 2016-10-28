@@ -58,8 +58,5 @@ class Init_Game {
 		//Map
 		$set->maps['main'] = Model_Map_Abstract::factory($config_data['config']['game.config.map']);
         $set->maps['main']->auto_init();
-
-		//Log
-		$set->logstore = new Model_Log;
 	}
 }

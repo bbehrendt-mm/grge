@@ -60,7 +60,19 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
      * @return Model_Hid
      */
     protected function hid() {
-        return Model_Hid::factory();
+        /**
+         * @global $game Model_Game
+         */
+        global $game;
+
+        $hid = Model_Hid::factory($this, get_called_class());
+        if ($game)
+            foreach ($game->get_initialized_events() as $ev)
+                $ev->event_generateHIDStack($this, $hid);
+        return $hid;
+
+
+
     }
 	
 	/**

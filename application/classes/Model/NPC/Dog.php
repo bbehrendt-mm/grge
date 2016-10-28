@@ -50,7 +50,18 @@ class Model_NPC_Dog extends Model_NPC_Animal
     }
 
     public function ai() {
-        if ($this->is_leashed()) return;
+        if ($this->is_leashed()) {
+            $busy = $this->get_status()->retrieve('passout') || $this->get_status()->retrieve('fragile');
+
+            if (($hideout = Tool_Scripts::current_location_hideout()) && $hideout->get_defense() > 0) {
+                // At home
+                $this->last_hideout = $this->location_class();
+
+                // Go to sleep
+                if ($this->get_status()->get(Model_Status::MS_STAT_SLEEPY) < 75 && !$busy)
+                    new Model_Buffs_Presleep($this->id(), 3, 2);
+            }
+        }
         else parent::ai();
     }
 

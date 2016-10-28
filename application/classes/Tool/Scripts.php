@@ -536,15 +536,17 @@ class Tool_Scripts
 
     /**
      * Returns a DateTime object containing the in-universe time and date
+     * @param number $t
      * @return DateTime
      */
-    public static function get_daytime() {
+    public static function get_daytime($t = null) {
         /** @global Model_Game $game */
         global $game;
-        $ticks = $game->duration() + $game->getDaytimeOffset();
+        if ($t === null) $t = $game->duration();
+        $ticks = $t + $game->getDaytimeOffset();
         $days = floor($ticks/288);
         $d = new DateTime();
-        $d->setDate(1998,7,2);
+        $d->setDate(1998,Kohana::$config->load('server.season'),2);
         $d->setTime(floor(($ticks%288)/12), 5 * ($ticks%12), 0);
         $d->add(new DateInterval("P{$days}D"));
 

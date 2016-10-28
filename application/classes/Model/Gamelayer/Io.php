@@ -201,8 +201,15 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
      * @return Model_Map_Abstract|null
      */
     final public function map($lid = null) {
-        if (!($key = $this->mapid($lid)))
-            return null;
+        return $this->map_by_id($this->mapid($lid));
+    }
+
+    /**
+     * @param string $key Map ID to determine map, null to get main map
+     * @return Model_Map_Abstract|null
+     */
+    final public function map_by_id($key) {
+        if (!$key || !isset($this->set['gamedata']->maps[$key])) return null;
         else return $this->set['gamedata']->maps[$key];
     }
 
@@ -291,6 +298,16 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
         return $this->set['gamedata']->maps[$mapid]->resolve_fixed_id(1);
     }
 
+    final public function unregister_map($mapid) {
+        if (!($map = $this->map_by_id($mapid))) return;
+        foreach ($map->get_locations() as $location) {
+                $lobj = $this->location($location);
+                if ($lobj) $lobj->grind();
+                else $this->uin()->remove($location);
+            }
+        unset($this->set['gamedata']->maps[$mapid]);
+    }
+
     /**
      * Returns the chat room name for this game
      * @return string
@@ -375,6 +392,9 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
         $npc->set_id($id);
         $this->set['gamedata']->npcs[$id] = $npc->uin();
 
+        foreach ($this->get_initialized_events() as $ev)
+            $ev->event_playerCreation($npc);
+
         return $id;
     }
 
@@ -434,8 +454,9 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
     public function get_initialized_event($e) {
         if (Tool_System::instance_of($e,'Model_Events_Event'))
             $e = $e::get_key();
-        if ($e && is_string($e) && isset(($this->get_initialized_events())[$e]))
-            return ($this->get_initialized_events())[$e];
+        $events = $this->get_initialized_events();
+        if ($e && is_string($e) && isset($events[$e]))
+            return $events[$e];
         else return null;
     }
 

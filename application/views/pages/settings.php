@@ -11,11 +11,13 @@
 
 <div class="row">
 
-    <div class="cell rw-12 center">
-        <h2><?=__('Benutzeroberfläche')?></h2>
-    </div>
-    <div class="cell rw-12">
+    <div class="cell rw-10 ro-1 rw-lg-12 ro-lg-0">
         <div class="row">
+
+            <div class="cell rw-12 center">
+                <h2><?=__('Benutzeroberfläche')?></h2>
+            </div>
+
             <div class="cell rw-4 rw-md-12 padded">
 
                 <label for="quality"><b><?=__('Darstellungsqualität');?></b></label><br />
@@ -24,15 +26,11 @@
                     <option value="2"><?=__('Mittel');?></option>
                     <option value="1"><?=__('Niedrig');?></option>
                 </select>
-            </div>
-            <div class="cell rw-8 rw-md-12 padded">
-                <div class="note">
-                    <?=__('Durch die Verringerung der Darstellungsqualität werden bestimmte grafische Effekte deaktiviert, umd die Leistung auf Geräten mit schwächerer Hardware zu verbessern.');?>
+                <div data-help-for="quality">
+                    <?=__('Durch die Verringerung der Darstellungsqualität werden bestimmte grafische Effekte deaktiviert, und die Leistung auf Geräten mit schwächerer Hardware zu verbessern.');?>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
             <div class="cell rw-4 rw-md-12 padded">
 
                 <label for="input"><b><?=__('Eingabegerät');?></b></label><br />
@@ -41,41 +39,39 @@
                     <option value="mouse"><?=__('Maus');?></option>
                     <option value="touch"><?=__('Touchscreen');?></option>
                 </select>
-            </div>
-            <div class="cell rw-8 rw-md-12 padded">
-                <div class="note">
+                <div data-help-for="input">
                     <?=__('Die Benutzeroberfläche erkennt normalerweise automatisch, ob du mit Maus oder Touchscreen spielst, und optimiert die Eingabefunkionen dementsprechend. Sollte das bei dir nicht funktionieren (z.B. weil du ein Gerät nutzt, das sowohl über eine Maus, als auch einen Touchscreen verfügt), kannst du die automatische Erkennung außer Kraft setzen.');?>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
             <div class="cell rw-4 rw-md-12 padded">
                 <label for="news"><b><?=__('Nach dem Login');?></b></label><br />
                 <select id="news" data-associated-setting="show-news"  data-default="news">
                     <option value="news"><?=__('Zur Neuigkeiten-Seite');?></option>
                     <option value="game"><?=__('Direkt zum Spiel');?></option>
                 </select>
-            </div>
-            <div class="cell rw-8 rw-md-12 padded">
-                <div class="note">
+                <div data-help-for="news">
                     <?=__('Hier kannst du einstellen, welche Seite nach dem Login aufgerufen werden soll. Auch wenn du die Option "Direkt zum Spiel" aktiviert hast, wirst du einmal pro Tag auf die Neuigkeiten-Seite geleitet.');?>
                 </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="cell rw-4 rw-md-12 padded">
+        <br /><br />
 
+        <div class="row">
+
+            <div class="cell rw-12 center">
+                <h2><?=__('Im Spiel')?></h2>
+            </div>
+
+            <div class="cell rw-4 rw-md-12 padded">
                 <label for="heroic_ui"><b><?=__('Anzeige der Heldentaten');?></b></label><br />
                 <select id="heroic_ui" data-associated-setting="heroid_ui"  data-default="inline">
                     <option value="inline"><?=__('Im Inventar-Tab');?></option>
                     <option value="tab"><?=__('In eigenem Tab');?></option>
                 </select>
             </div>
-        </div>
 
-        <div class="row">
             <div class="cell rw-4 rw-md-12 padded">
                 <label for="travel_confirm"><b><?=__('Bestätigung beim Reisen');?></b></label><br />
                 <select id="travel_confirm" data-associated-setting="travel_confirm"  data-default="always">
@@ -83,9 +79,20 @@
                     <option value="auto"><?=__('Nur bei Gefahr bestätigen');?></option>
                 </select>
             </div>
+
+            <div class="cell rw-4 rw-md-12 padded">
+                <label for="log_time_mode"><b><?=__('Zeitangabe in Log-Einträgen');?></b></label><br />
+                <select id="log_time_mode" data-associated-setting="log_time_mode"  data-default="rt">
+                    <option value="rt"><?=__('Echte Uhrzeit');?></option>
+                    <option value="gt"><?=__('Spielzeit');?></option>
+                </select>
+            </div>
         </div>
     </div>
+
 </div>
+
+<br /><br />
 
 <div class="row">
 
@@ -168,12 +175,30 @@
 
     $('[data-associated-setting]').each(function() {
         var setting = $(this).data('associated-setting');
+        var id = $(this).attr('id');
         $(this).val(($(this).data('handler') && game.s[$(this).data('handler')]) ? game.s[$(this).data('handler')]() : game.storage.get('settings',setting,$(this).data('default'))).change(function() {
             if ($(this).data('handler') && game.w[$(this).data('handler')])
                 game.w[$(this).data('handler')]($(this).val());
             else game.storage.set('settings',setting,$(this).val());
             game.render.html.notify('success', <?=__j('Die Änderungen wurden gespeichert.')?>)
         });
+
+        var label = $(this).siblings('label[for="' + id + '"]');
+        var help = $(this).siblings('div[data-help-for="' + id + '"]');
+
+        if (label.length && help.length) {
+            label.prepend(NF.fa('info-circle').attr('title','-').qtip(game.render.html.qtip.help('bottom', {
+                render: function(event,api) {
+                    var content = $(this).find('.qtip-content').empty();
+
+                    content
+                        .append($('<b />').text(label.text()))
+                        .append($('<div />').text(help.text()));
+                }
+            })));
+            help.remove();
+        }
+
     });
 
     $('#content').find('select').selectric();

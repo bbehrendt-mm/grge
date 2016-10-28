@@ -12,6 +12,8 @@ class Model_Effect {
     private $buffs = array();
     private $custom = array();
 
+    private $parent = null;
+
     private static $translation_effects = array(
         Model_Status::MS_STAT_HEALTH => 'status_health',
         Model_Status::MS_STAT_ENERGY => 'status_energy',
@@ -37,6 +39,10 @@ class Model_Effect {
      */
     public static function factory() {
         return new Model_Effect();
+    }
+
+    public function setParent(Model_Items_Abstract_Item $parent) {
+        $this->parent = $parent;
     }
 
     /**
@@ -68,15 +74,16 @@ class Model_Effect {
     }
 
     /**
-     * @param Model_Items_Abstract_Item $item
+     * @param Model_Items_Abstract_Item|null $item
      * @param bool $grind
      * @return Model_Effect
      */
-    public function consume($item, $grind = false) {
+    public function consume($item = null, $grind = false) {
         return $this->custom(function() use ($item, $grind) {
+            $eitem = $item ? $item : $this->parent;
             if ($grind)
-                $item->grind();
-            else $item->consume();
+                $eitem->grind();
+            else $eitem->consume();
         }, static::CFUNC_PROCESS_POST);
     }
 

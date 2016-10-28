@@ -29,23 +29,37 @@
                             .appendTo(content);
 
                         if (player.info) {
-                            NF.row()
-                                .append(NF.cell(true, 6, 0, 'b right').text(<?=__j('Spezies')?>))
-                                .append(NF.cell(true, 6, 0, 'left').text(player.info.species))
-                                .appendTo(content);
-                            NF.row()
-                                .append(NF.cell(true, 6, 0, 'b right').text(<?=__j('Typ')?>))
-                                .append(NF.cell(true, 6, 0, 'left').text(player.info.profession))
-                                .appendTo(content);
-                            NF.row()
-                                .append(NF.cell(true, 6, 0, 'b right').text(<?=__j('Zustand')?>))
-                                .append(NF.cell(true, 6, 0, 'left').text(player.info.action))
-                                .appendTo(content);
-                            NF.row()
-                                .append(NF.cell(true, 6, 0, 'b right').text(<?=__j('Beschreibung')?>))
-                                .append(NF.cell(true, 6, 0, 'left').text(player.info.desc))
-                                .appendTo(content);
+                            if (player.info.species)
+                                NF.row()
+                                    .append(NF.cell(true, 6, 0, 'b right').text(<?=__j('Spezies')?>))
+                                    .append(NF.cell(true, 6, 0, 'left').text(player.info.species))
+                                    .appendTo(content);
+                            if (player.info.profession)
+                                NF.row()
+                                    .append(NF.cell(true, 6, 0, 'b right').text(<?=__j('Typ')?>))
+                                    .append(NF.cell(true, 6, 0, 'left').text(player.info.profession))
+                                    .appendTo(content);
+                            if (player.info.action)
+                                NF.row()
+                                    .append(NF.cell(true, 6, 0, 'b right').text(<?=__j('Zustand')?>))
+                                    .append(NF.cell(true, 6, 0, 'left').text(player.info.action))
+                                    .appendTo(content);
+                            if (player.info.desc)
+                                NF.row()
+                                    .append(NF.cell(true, player.info.desc.length > 160 ? 12 : 6, 0, player.info.desc.length > 160 ? 'b center' : 'b right').text(<?=__j('Beschreibung')?>))
+                                    .append(NF.cell(true, player.info.desc.length > 160 ? 12 : 6, 0, player.info.desc.length > 160 ? 'justify' : 'left').text(player.info.desc))
+                                    .appendTo(content);
                         }
+                        var ia;
+                        NF.row()
+                            .append(ia = NF.cell(true, 12))
+                            .appendTo(content);
+
+                        $.each(player.actions, function(k,v) {
+                            ia.append(
+                                $('<div />').addClass('cell rw-12 padded').append(core.snippets.button(v, null, 'nested'))
+                            )
+                        });
                     }
 
                     else {

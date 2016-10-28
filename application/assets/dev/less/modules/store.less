@@ -2,6 +2,7 @@
 
 @store-style-color: #b13e18;
 @store-bg-color: #292929;
+@store-text-color: #FFFFFF;
 
 div.store {
   background: url('media/img/store.png'); border-radius: 7px; border: 3px solid @store-style-color; box-shadow: 0 0 4px rgba(0,0,0,0.5);
@@ -36,7 +37,7 @@ div.store {
       }
     }
     >span {
-      display: block; text-align: center; color: @store-style-color; font-weight: bold; color: #ffffff;
+      display: block; text-align: center; font-weight: bold; color: @store-text-color;
       .fa-stack {
         >:first-child {color: @store-style-color}
         >:last-child {color: @store-bg-color}
@@ -55,7 +56,7 @@ div.store {
 }
 
 .qtip-custom-store {
-  padding: 5px; background: @store-bg-color; border: 6px solid mix(@store-bg-color,@store-style-color,50%); box-shadow: 0 0 5px black;
+  padding: 5px; background: @store-bg-color; border: 6px solid mix(@store-bg-color,@store-style-color,50%); box-shadow: 0 0 5px black; color: @store-text-color;
   b.header {display: block; color: @store-style-color; font-weight: bold; text-align: center; font-size: larger}
   p {text-align: justify}
 }

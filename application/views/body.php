@@ -3,6 +3,7 @@
  * @var int $season
  * @var string $title
  * @var bool $beta
+ * @var string $event
  */
 ?>
 <div id="static">
@@ -26,8 +27,13 @@
     <div id="wrapper">
         <div>
             <div id="infoband">
-                <span><?=__('Season :num', [':num' => '<b>' . $season . ($beta ? ' BETA' : '') . '</b>']);?></span>
-                <span class="hide-mobile"> - <i><?=__($title);?></i></span>
+                <?php if ($event) { ?>
+                    <span class="hide-mobile"><?=__('Season :num', [':num' => '<b>' . $season . ($beta ? ' BETA' : '') . '</b>']);?> - </span>
+                    <span><i><b><?=__($event);?></b></i></span>
+                <?php } else { ?>
+                    <span><?=__('Season :num', [':num' => '<b>' . $season . ($beta ? ' BETA' : '') . '</b>']);?></span>
+                    <span class="hide-mobile"> - <i><?=__($title);?></i></span>
+                <?php } ?>
             </div>
             <div id="persistent"></div>
         </div>

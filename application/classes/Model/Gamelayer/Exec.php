@@ -21,6 +21,7 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
 		try 
 		{
 			new Init_Game($this, $this->set['gamedata'], $this->set['gameid'], $mode, $time_mode, $speed, $contest_id, $name);
+            Tool_Events::handle_event_triggers($timestamp);
             $this->write();
 		}
 		catch (Exception $e)

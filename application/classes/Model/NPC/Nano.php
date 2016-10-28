@@ -15,6 +15,10 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
     protected static $escort_functions = [];
     protected static $abillities = [];
 
+    protected static $death_is_enemy = false;
+
+    protected static $handle_death = true;
+
     public function __construct($name) {
         $this->name = $name;
 
@@ -87,39 +91,44 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
         return null;
     }
 
+    protected function handle_death() {
+        return static::$handle_death;
+    }
+
     public function kill() {
         /** @global Model_Game $game */
         global $game;
 
         $this->get_status()->alive(false);
 
-        $drop_inv = new Model_Inventory();
-        foreach ($this->inventory->get() as $item)
-            if ($dropping = $item->drop_dead()) {
+        if ($this->handle_death()) {
+            $drop_inv = new Model_Inventory();
+            foreach ($this->inventory->get() as $item)
+                if ($dropping = $item->drop_dead()) {
 
-                if (is_array($dropping)) foreach ($dropping as $d_drop) $drop_inv->add($d_drop);
-                else $drop_inv->add($dropping);
+                    if (is_array($dropping)) foreach ($dropping as $d_drop) $drop_inv->add($d_drop);
+                    else $drop_inv->add($dropping);
+                }
+
+            $body = $this->generate_dead_body();
+            if ($body) $drop_inv->add($body);
+
+            $this->inventory = $drop_inv;
+
+            if ($this->location()) {
+                if ($this->get_status()->get(Model_Status::MS_STAT_ZOMBIFY) >= 50 && ($ghul = $this->generate_zombified_body())) {
+                    $this->location()->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_ZOMBIFY, [], $this->id()));
+                    $game->register_ghul($this->location_class(), $ghul);
+                } else {
+                    foreach ($this->inventory()->get() as $d)
+                        $this->location()->inventory()->add($d);
+
+                    $this->location()->log()->add(new Model_Log_Types_Item(static::$death_is_enemy ? Model_Log_Types_Item::MLTI_DEATH_ENEMY : Model_Log_Types_Item::MLTI_DEATH, $this->inventory()->get(), $this->id()));
+                }
+
+                if (count(Tool_Scripts::at_location($this->location_class(), true, true)) == 0) $this->location()->vacate();
             }
-
-        $body = $this->generate_dead_body();
-        if ($body) $drop_inv->add($body);
-
-        $this->inventory = $drop_inv;
-
-        if ($this->location()) {
-            if ($this->get_status()->get(Model_Status::MS_STAT_ZOMBIFY) >= 50 && ($ghul = $this->generate_zombified_body())) {
-                $this->location()->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_ZOMBIFY, [], $this->id()));
-                $game->register_ghul($this->location_class(), $ghul);
-            } else {
-                foreach ($this->inventory()->get() as $d)
-                    $this->location()->inventory()->add($d);
-
-                $this->location()->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_DEATH, $this->inventory()->get(), $this->id()));
-            }
-
-            if (count(Tool_Scripts::at_location($this->location_class(), true, true)) == 0) $this->location()->vacate();
         }
-
     }
 
     public function tick()
@@ -191,5 +200,12 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
     
     public function is_fighter() {
         return true;
+    }
+
+    /**
+     * @return Model_Hid|null
+     */
+    public function hid() {
+        return Model_Hid::factory();
     }
 }

@@ -12,6 +12,7 @@ class Model_Log_Types_Item extends Model_Log_Message {
     const MLTI_VENDING = 7;
     const MLTI_RAVEN = 8;
     const MLTI_BOX = 9;
+    const MLTI_DEATH_ENEMY = 10;
 
     protected static $type = Model_Log_Message::MLM_ITEM_LOG;
 
@@ -51,8 +52,12 @@ class Model_Log_Types_Item extends Model_Log_Message {
          */
         global $game, $player;
 
-        $primary =  $game->get_player($data['primary']);
-        $data['primary'] = $primary ? $primary->name() : __($data['primary']);
+        if ($data['primary'] === -1)
+            $data['primary'] = __('Niemand');
+        else {
+            $primary =  $game->get_player($data['primary']);
+            $data['primary'] = $primary ? $primary->name() : __($data['primary']);
+        }
 
         foreach ($data['content'] as $tc => &$sub)
             foreach ($sub as $uin => &$lists) {
@@ -64,9 +69,16 @@ class Model_Log_Types_Item extends Model_Log_Message {
                         'count' => $item->getCount()
                     ];
 
-                $pl = $game->get_player($uin);
+                if ($uin === -1) {
+                    $name = __('Niemand');
+                    $pl = null;
+                } else {
+                    $pl = $game->get_player($uin);
+                    $name = $pl ? $pl->name() : __($uin);
+                }
+
                 $lists = [
-                    'player' => $pl ? $pl->name() : __($uin),
+                    'player' => $name,
                     'self' => $pl ? ($uin == $player->id()) : false,
                     'items' => $lists
                 ];
@@ -80,7 +92,7 @@ class Model_Log_Types_Item extends Model_Log_Message {
      * @return bool
      */
     public function merge($new) {
-        if (is_a($new, get_called_class(), true) && $new->data['class'] == $this->data['class'] && !in_array($this->data['class'], [static::MLTI_DEATH,static::MLTI_GHULKILL,static::MLTI_ZOMBIFY]))
+        if (is_a($new, get_called_class(), true) && $new->data['class'] == $this->data['class'] && !in_array($this->data['class'], [static::MLTI_DEATH,static::MLTI_DEATH_ENEMY,static::MLTI_GHULKILL,static::MLTI_ZOMBIFY]))
             foreach ($new->data['content'] as $tc => $d)
                 if (!isset($this->data['content'][$tc])) $this->data['content'][$tc] = $d;
                 else foreach ($d as $uin => $items)

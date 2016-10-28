@@ -19,6 +19,7 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
 	protected static $now_is_real_time = false;
 
     abstract public function recalculate_flow();
+    abstract public function next_tick();
 
 	final protected function process_step() {
         //Jump processing time
@@ -27,6 +28,9 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
         //MAINTENANCE
         if (Tool_Events::maintenance($this->set['gamedata']->timing->last_point))
             return;
+
+        // Trigger events
+        Tool_Events::handle_event_triggers($this->next_tick());
 
         //Count ticks
         $this->set['gamedata']->head->ticks++;

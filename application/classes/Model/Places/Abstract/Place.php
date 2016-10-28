@@ -59,7 +59,13 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
     }
 
     public function get_doorways() {
-        return $this->doorway;
+        /** @global Model_Game $game */
+        global $game;
+        $ret = [];
+        foreach ($this->doorway as $dw)
+            if ($game->location($dw))
+                $ret[] = $dw;
+        return $ret;
     }
 
     public function register_doorway($lid) {
@@ -114,6 +120,9 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
                 $game->location($slid)->register_doorway($uin);
             }
         }
+
+        foreach ($game->get_initialized_events() as $ev)
+            $ev->event_locationCreation($this);
 
         return $t;
     }
@@ -316,6 +325,8 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 
         if ($item && !$return) {
             Tool_Scripts::place_new_item($item);
+            foreach ($game->get_initialized_events() as $ev)
+                $ev->event_findItem($this, $item);
             return true;
         }
         elseif ($item && $return) return $item;
@@ -407,6 +418,9 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
             $zombies = $this->zombie_factory()->spawn();
             if ($zombies) Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $zombies], true, 20, $this, 'Zombies greifen an!');
         }
+
+        foreach ($game->get_initialized_events() as $ev)
+            $ev->event_locationTick($this);
 	}
 
 	public function tick($type = Interface_Tickable::IT_TYPE_PLAYER) {

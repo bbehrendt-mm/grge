@@ -35,5 +35,8 @@ class Init_Player {
 
         $init = Tool_Gamemodes::compile_startup_job($job);
         $init($game->setting_mode(), $level);
+
+        foreach ($game->get_initialized_events() as $ev)
+            $ev->event_playerCreation($player);
 	}
 }

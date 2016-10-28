@@ -141,8 +141,8 @@ class Model_Achievement extends Model {
             Model_Achievement::MA_RANKING_LONESCOUT	                => array('name' => "Goldene Arschkarte",                    'points' => 100,),
             Model_Achievement::MA_RANKING_COLLOSSEUM                => array('name' => "Titan",                                 'points' => 100,),
             Model_Achievement::MA_RANKING_MULTI_OPEN                => array('name' => "Einer Für Alle!",                       'points' => 50,),
-            Model_Achievement::MA_RANKING_MULTI_PRIVATE_SMALL	    => array('name' => "Elitärer Club",                         'points' => 40,),
-            Model_Achievement::MA_RANKING_MULTI_PRIVATE_LARGE       => array('name' => "Elitärer Club",                         'points' => 40,),
+            Model_Achievement::MA_RANKING_MULTI_PRIVATE_SMALL	    => array('name' => "Kleiner Elitärer Club",                         'points' => 40,),
+            Model_Achievement::MA_RANKING_MULTI_PRIVATE_LARGE       => array('name' => "Großer Elitärer Club",                         'points' => 40,),
             Model_Achievement::MA_RANKING_MULTI_PRIVATE_ROADTRIP    => array('name' => "Roadkill-Experte",                      'points' => 50,)
     );
     

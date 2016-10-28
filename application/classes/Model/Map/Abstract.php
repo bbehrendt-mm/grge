@@ -569,6 +569,18 @@ abstract class Model_Map_Abstract {
         return ($all == 0) ? 1 : $found/$all;
     }
 
+    public function get_adjacent_regions($id) {
+        if (!isset($this->paths[$id]))
+            return [];
+
+        $ret = [];
+        foreach ($this->paths[$id] as $to) {
+            if ($this->loc_assoc[$to]['visible'])
+                $ret[] = $to;
+        }
+        return $ret;
+    }
+
     /**
      * Returns a list of location ids
      * @param null|string $type Restrict location type, or null for all locations

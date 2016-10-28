@@ -4,17 +4,11 @@ class Model_Items_Virtual_Location_Cooler extends Model_Items_Abstract_Virtual {
 
     protected static $graceful_fail = true;
     protected $remaining = array(
-        'cooler_open' => 1,
-        'cooler_open_again' => 0
+        'cooler_open' => 1
     );
 
     protected function hid() {
-        /** @global Model_Game $game */
-        global $game;
-
-        $p = parent::hid();
-
-        $p->add_action('Kühlkammer aufbrechen', Model_Action::factory()
+        return parent::hid()->add_action('Kühlkammer aufbrechen', Model_Action::factory()
             ->buttonskin('location')
             ->description('Der Kühlraum ist fest verschlossen. Es sieht nicht so aus, als wäre er nach der Apokalypse noch einmal geöffnet worden... vielleicht findest du etwas nützliches darin?')
             ->requirement(Model_Status::MS_STAT_ENERGY, 25)
@@ -54,21 +48,5 @@ class Model_Items_Virtual_Location_Cooler extends Model_Items_Abstract_Virtual {
                     })
                 , 'stuff')
         , 'cooler_open');
-
-        if (Tool_Events::current($game->next_tick()) == 'halloween' && $this->remaining_actions('cooler_open_again'))
-            $p->add_action('Kühlkammer erneut öffnen', Model_Action::factory()
-                ->buttonskin('location')
-                ->description('Die Tür der Kühlkammer muss wohl durch einen Windstoß zugefallen sein - immerhin ist hier ja niemand sonst... oder?')
-                ->requirement(Model_Status::MS_STAT_ENERGY, 5)
-                ->show_as(Model_Effect::factory()
-                    ->ambiguous_effect()
-                )
-                ->effect(Model_Effect::factory()
-                    ->message('Als du die Tür öffnest, schlägt dir ein beißender Geruch entgegen. Die gesamte Kühlkammer ist plötzlich voll mit verrottendem Fleisch!')
-                    ->spawn('Model_Items_Fleshfood',mt_rand(4,10), true)
-                )
-            , 'cooler_open_again');
-
-        return $p;
     }
 }	

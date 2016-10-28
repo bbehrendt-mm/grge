@@ -367,6 +367,11 @@
         $.each(blueprint.material_in, f(mt_in));
         $.each(blueprint.material_out, f(mt_out,true));
 
+        if (mt_in.children('.group').length == 1 && mt_out.children('.group').length == 1) {
+            mt_in.removeClass('rw-12').addClass('rw-6');
+            mt_out.removeClass('rw-12').addClass('rw-6');
+        }
+
         button.qtip(game.render.html.qtip.ingame('bottom',{
             render: function() {
                 var content = $(this).find('.qtip-content').empty().append(

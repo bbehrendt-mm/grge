@@ -144,13 +144,16 @@
                     header = <?=__j(':name hat nun endlich seinen ewigen Frieden gefunden...')?>;
                     break;
                 case <?=Model_Log_Types_Item::MLTI_SOUL?>:
-                    header = <?=__j(':itemdef angelockt!')?>;
+                    header = <?=__j(':itemdef erschienen!')?>;
                     break;
                 case <?=Model_Log_Types_Item::MLTI_VENDING?>:
                     header = <?=__j(':itemdef erworben!')?>;
                     break;
                 case <?=Model_Log_Types_Item::MLTI_RAVEN?>:
                     header = <?=__j('Der Rabe hat :itemdef gebracht!')?>;
+                    break;
+                case <?=Model_Log_Types_Item::MLTI_DEATH_ENEMY?>:
+                    header = <?=__j(':name ist besiegt!')?>;
                     break;
                 default:
                     header = <?=__j(':itemdef erhalten!')?>;
@@ -176,6 +179,9 @@
                         break;
                     case <?=Model_Log_Types_Item::MLTI_GHULKILL?>:
                         sub.append($('<p />').text(game.i18n(data.self ? <?=__j('Deine Freunde haben dir endlich den ewigen Frieden geschenkt.')?> : <?=__j('Es ist immer schwer, jemandem den man gekannt hat den Gnadenstoß zu geben. Nur einige sterbliche Überreste sind noch zurück geblieben...')?>,{':name': data.primary})));
+                        break;
+                    case <?=Model_Log_Types_Item::MLTI_DEATH_ENEMY?>:
+                        sub.append($('<p />').text(game.i18n(data.self ? '' : <?=__j('Es war ein harter Kampf, aber ihr konntet :name bezwingen. Alles, was von ihm noch übrig ist, liegt nun ausgebreitet vor euch.')?>,{':name': data.primary})));
                         break;
                 }
 
@@ -285,9 +291,22 @@
             var rendered = renderers[v.type] ? renderers[v.type](v.data) : $('<div />').text('[RENDER ERROR] NO RENDERER PROVIDED FOR GIVEN MTYPE (' + v.type + ')!');
             var expandable = rendered.data('expandable');
 
+            var time;
+            var show_clock_icon = false;
+            if (game.storage.get('settings','log_time_mode') != 'gt')
+                time = (new Date(v.time * 1000)).toLocaleTimeString();
+            else {
+                if (!v.gt) time = '[???]';
+                else {
+                    var time_d = new Date(v.gt * 1000);
+                    time = ' ' + time_d.getHours() + ':' + time_d.getMinutes();
+                    show_clock_icon = true;
+                }
+            }
+
             target.append(
                 $('<div />').addClass('cell rw-12 message' + (expandable ? ' pointer' : '')).append(
-                    $('<div />').addClass(v.new ? 'timestamp new' : 'timestamp').text((new Date(v.time * 1000)).toLocaleTimeString())
+                    $('<div />').addClass(v.new ? 'timestamp new' : 'timestamp').text(time).prepend(show_clock_icon ? NF.fa('clock-o') : null)
                 ).append($('<br />').addClass('hide-desktop'))
                 .append(
                     content = $('<div />').addClass('content').append(rendered)

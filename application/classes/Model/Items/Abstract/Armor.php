@@ -43,6 +43,8 @@ abstract class Model_Items_Abstract_Armor extends Model_Items_Abstract_Equipable
     }
 
     public function drop_dead() {
+        if (static::$destroyed === false)
+            return parent::drop_dead();
         if (static::$destroyed)
             return new static::$destroyed;
         else return null;

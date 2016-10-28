@@ -7,6 +7,7 @@ class Model_Buffs_Metabolism extends Model_Buffs_Abstract_Buff {
 	protected static $desc = 'In deinem Körper laufen jederzeit unglaublich viele biochemische Prozesse ab, die zwar kein Mensch versteht, aber die dich irgendwie am Laufen halten. ';
 	protected static $bid = 'metabolism';
     protected static $remotable = false;
+    protected static $enabled = true;
 	
 	protected $effects = Array(
 				Model_Status::MS_STAT_ENERGY => Array(
@@ -54,13 +55,15 @@ class Model_Buffs_Metabolism extends Model_Buffs_Abstract_Buff {
 			);
 	
 	public function rebuild() {
-		$this->statchange_misc();
-		$this->statchange_energy();
-		$this->statchange_health();
-		$this->statchange_hunger();
-		$this->statchange_sleepy();
-		$this->statchange_thirst();
-		
+		if (static::$enabled) {
+            $this->statchange_misc();
+            $this->statchange_energy();
+            $this->statchange_health();
+            $this->statchange_hunger();
+            $this->statchange_sleepy();
+            $this->statchange_thirst();
+        }
+
 		return parent::rebuild();
 	}
 	

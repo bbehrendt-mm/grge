@@ -103,6 +103,7 @@ class Controller_Web extends Controller {
             ->set('season', Kohana::$config->load('server.season'))
             ->set('title', $title)
             ->set('beta', $beta)
+            ->set('event', Tool_Events::event_extended_name())
             ->render());
         $this->modify_current_url('');
         $this->render(null, true);

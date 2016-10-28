@@ -16,6 +16,37 @@ class Tool_Events {
         return in_array(static::current($time),['xmas','easter']);
     }
 
+    /**
+     * @param string|null $event
+     * @param int|null $time
+     * @return null|string|Model_Events_Event
+     */
+    public static function event_extended_classes($event = null, $time = null) {
+        if ($event === null) $event = static::current($time);
+
+        switch ($event) {
+            case 'halloween': return 'Model_Events_Halloween';
+            default: return null;
+        }
+
+    }
+
+    public static function event_extended_name($event = null, $time = null) {
+        if ($cls = static::event_extended_classes($event, $time))
+            return $cls::name();
+        else return null;
+    }
+
+    public static function handle_event_triggers($time = null) {
+        /** @global Model_Game $game */
+        global $game;
+
+        if (!$game) return;
+        $ev = static::current($time);
+        if (($cls = static::event_extended_classes($ev)) && !$game->get_initialized_event($ev))
+            new $cls;
+    }
+
     public static function current($time = null) {
         //Detect halloween (30.10. - 05.11.)
         if ( (static::get(static::TE_MONTH, $time) == 10 && static::get(static::TE_DAY, $time) >= 30) || (static::get(static::TE_MONTH, $time) == 11 && static::get(static::TE_DAY, $time) <= 5) )

@@ -46,6 +46,9 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
     }
 
     public function pretick() {
+        /** @global Model_Game $game */
+        global $game;
+
         //Decay
         if ($this->decay < 1) {
             $this->set_decay(static::$decay_rate * (1/288) * $this->patchup * (1 + floor($this->zombie_factory->accumulation())/5), false);
@@ -85,17 +88,16 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
             foreach (Tool_Scripts::at_location($this->uin, true, false) as $s_player)
                 $s_player->achievements()->achieve(Model_Achievement::MA_BREAK_INS, $num);
         }
+
+        foreach ($game->get_initialized_events() as $ev)
+            $ev->event_locationTick($this);
     }
 
     public function tick($type = Interface_Tickable::IT_TYPE_PLAYER) {
         /**
-         * @global $game Model_Game
          * @global $player Interface_Plentity|Model_Player
          */
-        global $game, $player;
-
-        if (Tool_Events::current($game->next_tick()) == 'halloween' && !$this->has_upgrade('cursed_hideout'))
-            new Model_Buffs_Scarecrow($player->id());
+        global $player;
 
         //Build chance array
         $chance = Array(Array('chance' => 1500, 'value' => 0),	//Nothing happens
@@ -163,7 +165,6 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         }
 
         if ($buff = $player->get_status()->retrieve('home')) $buff->unbuff();
-        if ($buff = $player->get_status()->retrieve('scarecrow')) $buff->unbuff();
 
         return true;
     }

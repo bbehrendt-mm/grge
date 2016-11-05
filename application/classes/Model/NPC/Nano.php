@@ -14,6 +14,7 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
     protected static $entity_type = Interface_Plentity::IC_NPC_GENERIC;
     protected static $escort_functions = [];
     protected static $abillities = [];
+    protected static $translate_name = false;
 
     protected static $death_is_enemy = false;
 
@@ -38,7 +39,7 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
      * @return string
      */
     public function name() {
-        return $this->name;
+        return static::$translate_name ? __($this->name) : $this->name;
     }
 
     /**

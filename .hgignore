@@ -4,3 +4,4 @@ application/logs/*
 *.orig
 application/cache/*
 store/*
+dbg_translate.list

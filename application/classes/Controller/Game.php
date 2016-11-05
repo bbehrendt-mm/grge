@@ -844,12 +844,12 @@ class Controller_Game extends Controller {
                 'escort' => $n->companion(),
                 'allow' => $allow,
                 'npc' => true,
-                'actions' => $n->hid()->convert("npc//{$n->id()}", [$player]),
+                'actions' => $this->prepare_actionlist($n->hid()->convert("npc//{$n->id()}", [$player])),
                 'info' => [
                     'species' => __($n->entity_species()),
                     'profession' => __($n->entity_profession()),
                     'desc' => __($n->entity_description()),
-                    'action' => $n->entity_action() ? $n->entity_action() : __('Bereit')
+                    'action' => $n->entity_action() ? __($n->entity_action()) : __('Bereit')
                 ]
             ];
         }

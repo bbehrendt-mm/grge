@@ -35,7 +35,7 @@ game.render.html.qtip = {
         }
     },
 
-    generic: function(pos, classes,interactable, delay, events) {
+    generic: function(pos, classes,interactable, delay, events, viewport) {
         var m = game.render.html.qtip.posify(pos);
 
         if (!events) events = {};
@@ -64,10 +64,10 @@ game.render.html.qtip = {
             position: {
                 my: m ? m.my : 'bottom center',
                 at: m ? m.at : 'top center',
-                viewport: $(window),
+                viewport: viewport ? viewport : $(window),
                 container: $('body'),
                 adjust: {
-                    method: 'shift none'
+                    method: 'shift flipinvert'
                 }
             },
             events: events
@@ -93,8 +93,8 @@ game.render.html.qtip = {
         });
     },
 
-    ingame: function(pos, events) {
-        return game.render.html.qtip.generic(pos,'qtip-default qtip-shadow qtip-custom-ingame',true, 500, events);
+    ingame: function(pos, events,viewport) {
+        return game.render.html.qtip.generic(pos,'qtip-default qtip-shadow qtip-custom-ingame',true, 500, events,viewport);
     },
 
     map: function(target, events) {

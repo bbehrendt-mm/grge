@@ -268,7 +268,7 @@ core.popup = {
                             }, 100);
                         })
                     }, true)
-                })));
+                }, popup)));
             });
 
             var tf = frame.data('type-filters');

@@ -11,6 +11,7 @@ abstract class Model_NPC_Humanoid extends Model_NPC_Nano
     protected static $buffs_heartbeat_name = 'Model_Buffs_Heartbeat';
     protected static $buffs_metabolism_name = 'Model_Buffs_Metabolism';
     protected static $buffs_place_various = true;
+    protected static $translate_name = true;
 
     public function __construct($name = null) {
         parent::__construct($name);

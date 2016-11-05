@@ -97,8 +97,11 @@ class Model_NPC_Event_Clown extends Model_NPC_Humanoid
             /** @var Model_Places_Abstract_Place $target */
             $target = Tool_Gambling::select($dest);
 
-            Controller_Map::code_go(false, $target->uin(), true, false, []);
-            $this->last_move = 0;
+            if ($target) {
+                Controller_Map::code_go(false, $target->uin(), true, false, []);
+                $this->last_move = 0;
+            }
+
         }
     }
 

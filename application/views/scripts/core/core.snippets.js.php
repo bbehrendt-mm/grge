@@ -236,7 +236,7 @@
      * @param {Function} callback
      * @returns {*}
      */
-    core.snippets.blueprint = function(blueprint, energy, zombies, lib, callback) {
+    core.snippets.blueprint = function(blueprint, energy, zombies, lib, callback, viewport) {
         var button = $('<div />').addClass('blueprint').attr('title','-').attr('data-bid', blueprint.id);
         var ext = $('<div />').addClass('row details');
 
@@ -454,7 +454,7 @@
                         })
                     }
                 }
-            }})
+            }}, viewport)
         );
 
         var desc;

@@ -299,7 +299,8 @@
                 if (!v.gt) time = '[???]';
                 else {
                     var time_d = new Date(v.gt * 1000);
-                    time = ' ' + time_d.getHours() + ':' + time_d.getMinutes();
+                    var m = time_d.getMinutes();
+                    time = ' ' + time_d.getHours() + ':' + (m >= 10 ? '' : '0') + m;
                     show_clock_icon = true;
                 }
             }

@@ -6,7 +6,7 @@ core = {
     parts: {},
     snippets: {},
 
-    version: '2.1.3-0-0-341',
+    version: '2.1.4-0-0-390',
 
     last: {},
     plugins: {},
@@ -2304,7 +2304,8 @@ core = {
                 if (!v.gt) time = '[???]';
                 else {
                     var time_d = new Date(v.gt * 1000);
-                    time = ' ' + time_d.getHours() + ':' + time_d.getMinutes();
+                    var m = time_d.getMinutes();
+                    time = ' ' + time_d.getHours() + ':' + (m >= 10 ? '' : '0') + m;
                     show_clock_icon = true;
                 }
             }
@@ -3036,7 +3037,7 @@ core = {
                             }, 100);
                         })
                     }, true)
-                })));
+                }, popup)));
             });
 
             var tf = frame.data('type-filters');
@@ -4098,7 +4099,7 @@ core = {
      * @param {Function} callback
      * @returns {*}
      */
-    core.snippets.blueprint = function(blueprint, energy, zombies, lib, callback) {
+    core.snippets.blueprint = function(blueprint, energy, zombies, lib, callback, viewport) {
         var button = $('<div />').addClass('blueprint').attr('title','-').attr('data-bid', blueprint.id);
         var ext = $('<div />').addClass('row details');
 
@@ -4316,7 +4317,7 @@ core = {
                         })
                     }
                 }
-            }})
+            }}, viewport)
         );
 
         var desc;

@@ -20,7 +20,7 @@ abstract class Model_Items_Abstract_Easteregg extends Model_Items_Abstract_Ammo 
 
     public function __construct($num = null, $new = false) {
         $this->new = $new;
-        parent::__construct($num);
+        parent::__construct($num, true);
     }
 
     public function take($silent = false) {

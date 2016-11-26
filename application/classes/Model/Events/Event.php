@@ -54,6 +54,7 @@ abstract class Model_Events_Event {
     abstract public function event_locationTick(Model_Places_Abstract_Place $place);
     abstract public function event_generateHIDStack(Model_Items_Abstract_Item &$item, Model_Hid &$hid);
     abstract public function event_executeHIDAction($cls, $name, Model_Action &$action);
+    abstract public function event_renderHIDAction($cls, $name, Model_Action &$action);
     abstract public function event_findItem(Model_Places_Abstract_Place $place, Model_Items_Abstract_Item &$item);
     abstract public function event_blueprintCreation($config_name, $config_category);
 

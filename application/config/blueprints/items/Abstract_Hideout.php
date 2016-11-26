@@ -92,38 +92,6 @@ return Model_Blueprints::factory()
             ->produces(['Model_Items_Pumpkinsoup' => 5])
     )
 
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('i:xmas1_cookie1')
-            ->requires('ktc3')
-            ->name('Plätzchen backen')
-            ->message('Ein weihnachtlicher Durft erfüllt dein Versteck, als du kleine Figürchen aus dem Teig presst und diese zu Plätzchen backst.')
-            ->material(['Model_Items_Generic_Cookieproto' => 1])
-            ->produces(['Model_Items_Cookie' => 5])
-            ->show_condition(function() {
-                return Tool_Events::current() == 'xmas';
-            })
-            ->effect(Model_Effect::factory()
-                ->achieve(Model_Achievement::MA_XMAS)
-            )
-    )
-
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('i:xmas1_cookie2')
-            ->requires('ktc3')
-            ->name('Besondere Plätzchen backen')
-            ->message('Normale Plätzchen sind langweilig, also fügst du ein paar kreative Extra-Zutaten hinzu...')
-            ->material(['Model_Items_Generic_Cookieproto' => 1, 'Model_Items_Powderpack' => 1])
-            ->produces(['Model_Items_Cookie2' => 5])
-            ->show_condition(function() {
-                return Tool_Events::current() == 'xmas';
-            })
-            ->effect(Model_Effect::factory()
-                ->achieve(Model_Achievement::MA_XMAS)
-            )
-    )
-
     // -- STACK -> All blueprints below NO LONGER need the basic kitchen
     ->pop_stack()
 

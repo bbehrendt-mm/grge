@@ -15,6 +15,7 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
     private $range = [10,30];
 
     private $accumulation = 0;
+    private $last_decay = 0;
 
     /**
      * @param $str
@@ -38,6 +39,26 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
         return $this;
     }
 
+    public function get_strength_factor() {
+        /** @global Model_Game $game */
+        global $game;
+
+        $s = $this->strength_factor;
+        $since = $game->duration() - $this->last_decay;
+
+        return max(0,min(1,$s + $since * 0.0007));
+    }
+
+    public function reduce_strangth_factor($by) {
+        /** @global Model_Game $game */
+        global $game;
+
+        $this->strength_factor = $this->get_strength_factor();
+        $this->last_decay = $game->duration();
+
+        $this->strength_factor -= $this->strength_factor * $by;
+    }
+
     /**
      * @param $min
      * @param $max
@@ -48,8 +69,16 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
         return $this;
     }
 
+    protected function get_game_strength() {
+        /** @global Model_Game $game */
+        global $game;
+
+        return 1 + max(0, ($game->duration()/2016) - 1) * 0.3;
+    }
+
     public function get_strength($include_factor = true) {
-        return $this->strength * ($include_factor ? max(0,min(1,$this->strength_factor)) : 1);
+
+        return $this->strength * ($include_factor ? ($this->get_game_strength() * $this->get_strength_factor()) : 1);
     }
 
     public function get_max_group_count() {
@@ -182,7 +211,7 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
             }
 
         if ($apply_decay)
-            $this->strength_factor -= $this->strength_factor * (($str - $accum_str)/(6 * $str));
+            $this->reduce_strangth_factor(($str - $accum_str)/(6 * $str));
 
         return $ret;
     }

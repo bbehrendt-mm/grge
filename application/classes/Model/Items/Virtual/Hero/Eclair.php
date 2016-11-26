@@ -24,7 +24,6 @@ class Model_Items_Virtual_Hero_Eclair extends Model_Items_Abstract_Virtual {
                             /** @var Model_Player $p */
                             $p->enable_escape();
                         })
-                        ->effect(Model_Status::MS_STAT_THIRST, PHP_INT_MAX)
                 )
             , 'hero_job_0');
     }

@@ -229,7 +229,7 @@ class Controller_Act extends Controller_Game {
                 if (!$belt->get($class, $count))
                     $player->log()->add('Soviele hast du nicht dabei.');
                 else
-                    $player->location()->inventory()->add(new $class($count));
+                    $player->location()->inventory()->add(new $class($count, true));
                 break;
             }
     }

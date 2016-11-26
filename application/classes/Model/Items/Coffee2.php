@@ -20,7 +20,6 @@ class Model_Items_Coffee2 extends Model_Items_Abstract_Item implements Interface
                     Model_Effect::factory()
                         ->effect(Model_Status::MS_STAT_SLEEPY, 50 * ((Tool_Scripts::get_timeofday() == "morning") ? 1.5 : 1))
                         ->effect(Model_Status::MS_STAT_ENERGY, 15 * ((Tool_Scripts::get_timeofday() == "morning") ? 1.5 : 1))
-                        ->effect(Model_Status::MS_STAT_FREEZE, -30 * (Tool_Events::current($game->next_tick()) == 'xmas' ? 1 : 0))
                         ->consume($this)
                         ->message('Aaah, das tut gut. Deine Müdigkeit verschwindet und du bekommst neue Energie.')
                 )

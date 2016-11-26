@@ -111,6 +111,12 @@ abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item 
         return $this->equipped;
     }
 
+    public function drop_dead() {
+        if ($this->is_equipped())
+            $this->unequip();
+        return parent::drop_dead();
+    }
+
     public function drop($p = null, $silent = false) {
         $r = parent::drop($p, $silent);
         if ($r && $this->is_equipped())

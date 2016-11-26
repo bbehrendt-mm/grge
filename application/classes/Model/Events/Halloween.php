@@ -122,12 +122,14 @@ class Model_Events_Halloween extends Model_Events_Event {
         if ($d_loc)
             foreach ($this->maps as $map_id) {
                 $map = $game->map_by_id($map_id);
-                foreach ($map->get_locations() as $subloc)
-                    foreach (Tool_Scripts::at_location($subloc) as $p) {
-                        $game->location($subloc)->leave($p->id(), Tool_Scripts::is_npc($p) ? Interface_Tickable::IT_TYPE_NPC : Interface_Tickable::IT_TYPE_PLAYER);
-                        $p->location_class($d_loc->uin());
-                        $d_loc->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $p->id(), Tool_Scripts::is_npc($p)));
-                    }
+                if ($map) {
+                    foreach ($map->get_locations() as $subloc)
+                        foreach (Tool_Scripts::at_location($subloc) as $p) {
+                            $game->location($subloc)->leave($p->id(), Tool_Scripts::is_npc($p) ? Interface_Tickable::IT_TYPE_NPC : Interface_Tickable::IT_TYPE_PLAYER);
+                            $p->location_class($d_loc->uin());
+                            $d_loc->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $p->id(), Tool_Scripts::is_npc($p)));
+                        }
+                }
                 $game->unregister_map($map_id);
             }
 
@@ -363,4 +365,6 @@ class Model_Events_Halloween extends Model_Events_Event {
         return null;
 
     }
+
+    public function event_renderHIDAction($cls, $name, Model_Action &$action) {}
 }

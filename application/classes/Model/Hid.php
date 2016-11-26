@@ -37,6 +37,20 @@ class Model_Hid {
     }
 
     /**
+     * @param string $id
+     * @param bool $use_auto_id
+     * @return Model_Action|null
+     */
+    public function &get_action($id, $use_auto_id = false) {
+        global $null;
+        $null = null;
+
+        if ($use_auto_id) $id = md5("autoid.{$this->base_id}@'{$id}'");
+        if (isset($this->actions[$id])) return $this->actions[$id];
+        else return $null;
+    }
+
+    /**
      * @return string[]
      */
     public function actions() {
@@ -133,7 +147,7 @@ class Model_Hid {
          * @global Model_Game $game
          * @global Model_Player $player
          */
-        global $player;
+        global $player, $game;
 
         $tmp = array();
         foreach ($this->actions as $id => $action) {
@@ -141,6 +155,9 @@ class Model_Hid {
                 continue;
             /** @var Model_Action $a */
             $a = $action['action'];
+
+            foreach ($game->get_initialized_events() as $ev)
+                $ev->event_renderHIDAction($this->base_id, $action['desc'], $a);
 
             if ($list_of_players === null)
                 $list_of_players = [$player];

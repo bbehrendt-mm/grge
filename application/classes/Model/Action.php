@@ -202,6 +202,18 @@ class Model_Action {
     }
 
     /**
+     * @param string $id
+     * @return Model_Effect|null
+     */
+    public function &get_effect($id) {
+        global $null;
+        $null = null;
+        if (isset($this->effects[$id]))
+            return $this->effects[$id]['effect'];
+        else return $null;
+    }
+
+    /**
      * @return bool
      */
     public function has_side_effect() {

@@ -14,7 +14,7 @@
 @inventory-item-filter: none;
 
 @keyframes bubble {from {transform: scale(1.0);} to {transform: scale(1.5);}}
-@keyframes bubble-low {from {filter: invert(100%); -webkit-filter: invert(100%);} to {filter: invert(0%); -webkit-filter: invert(0%);}}
+@keyframes bubble-low {from {filter: saturate(100%) brightness(100%); -webkit-filter: saturate(100%) brightness(100%);} to {filter: saturate(200%) brightness(150%); -webkit-filter: saturate(200%) brightness(150%);}}
 @keyframes tmp_event {from {border-bottom: 2px solid @inventory-item-tag-temp;} to {border-bottom: 2px solid @inventory-item-tag-event;}}
 
 .item() {.item(rgba(0,0,0,0));}
@@ -72,7 +72,7 @@ div.item {
   &:not(.equipped) {.item(fade(white, 0%))};
   &.equipped {.item(@inventory-item-tag-equipped)}
 }
-body.q-low .inventory ul li.marked-target {animation: bubble-low 0.3s ease infinite alternate;}
+body.q-low .inventory ul li.marked-target {animation: bubble-low 0.8s ease infinite alternate;}
 
 @consequence-green: #8fea00;
 @consequence-red: #ea4803;

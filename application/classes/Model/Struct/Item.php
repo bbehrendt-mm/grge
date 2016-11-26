@@ -5,14 +5,16 @@ class Model_Struct_Item extends Model {
     private $name;
     private $icon;
     private $count;
+    private $variant = null;
 
     /**
      * @param Model_Items_Abstract_Item $item
      */
-    public function __construct($item) {
+    public function __construct($item,$variant = null) {
         $this->name = $item->name();
         $this->icon = $item->icon();
         $this->count = (Tool_System::instance_of($item, 'Interface_Countable')) ? $item->count() : null;
+        $this->variant = $variant;
     }
 
     /**
@@ -37,6 +39,11 @@ class Model_Struct_Item extends Model {
     public function getName()
     {
         return $this->name;
+    }
+
+    public function getVariant()
+    {
+        return $this->variant;
     }
 
 

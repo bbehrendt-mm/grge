@@ -33,9 +33,11 @@ class Model_Log_Types_Item extends Model_Log_Message {
         if (!is_array($item))
             $item = [$item];
 
+        $ticks = $game ? $game->duration() : -1;
+
         $tmp = [];
         foreach ($item as $single)
-            $tmp[] = new Model_Struct_Item($single);
+            $tmp[] = new Model_Struct_Item($single,$ticks);
 
         $time = $game->now();
         parent::__construct([
@@ -66,7 +68,8 @@ class Model_Log_Types_Item extends Model_Log_Message {
                     $item = [
                         'name' => __($item->getName()),
                         'icon' => $item->getIcon(),
-                        'count' => $item->getCount()
+                        'count' => $item->getCount(),
+                        'gt' => ($item->getVariant() !== null && $item->getVariant() >= 0) ? Tool_Scripts::get_daytime($item->getVariant())->getTimestamp() : null,
                     ];
 
                 if ($uin === -1) {

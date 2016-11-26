@@ -197,7 +197,17 @@
                 $.each(data.content, function(timestamp,list) {
                     $.each(list, function(uid, udata) {
                         $.each(udata.items, function(k, item) {
-                            title.append(core.snippets.item(udata.player + ' (' + (new Date(timestamp * 1000)).toLocaleTimeString() + ')',item.name,item.icon,item.count,false,false));
+                            if (game.storage.get('settings','log_time_mode') != 'gt')
+                                time = (new Date(timestamp * 1000)).toLocaleTimeString();
+                            else {
+                                if (!item.gt) time = '[???]';
+                                else {
+                                    var time_d = new Date(item.gt * 1000);
+                                    var m = time_d.getMinutes();
+                                    time = time_d.getHours() + ':' + (m >= 10 ? '' : '0') + m;
+                                }
+                            }
+                            title.append(core.snippets.item(udata.player + ' (' + time + ')',item.name,item.icon,item.count,false,false));
                         });
                     });
                 });

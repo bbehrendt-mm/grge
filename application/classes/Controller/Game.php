@@ -486,7 +486,7 @@ class Controller_Game extends Controller {
 
     /**
      * @param bool|Interface_Plentity $remote
-     * @return array|void
+     * @return array|null
      */
     private function render_status($remote = false) {
         /** @global $player Model_Player */
@@ -816,6 +816,7 @@ class Controller_Game extends Controller {
                 'allow' => $allow,
                 'last_seen' => $p->last_action(),
                 'job' => __(Tool_Gamemodes::get_job_by_id($p->job())),
+                'icon' => $p->icon(),
                 'npc' => false,
                 'joke' => [
                     0 => __($joke),
@@ -845,11 +846,12 @@ class Controller_Game extends Controller {
                 'allow' => $allow,
                 'npc' => true,
                 'actions' => $this->prepare_actionlist($n->hid()->convert("npc//{$n->id()}", [$player])),
+                'icon' => $n->icon(),
                 'info' => [
                     'species' => __($n->entity_species()),
                     'profession' => __($n->entity_profession()),
                     'desc' => __($n->entity_description()),
-                    'action' => $n->entity_action() ? __($n->entity_action()) : __('Bereit')
+                    'action' => $n->entity_action() ? __($n->entity_action()) : __('Bereit'),
                 ]
             ];
         }

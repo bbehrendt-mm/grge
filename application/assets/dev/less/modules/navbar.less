@@ -52,10 +52,18 @@
 
   @notification-event-halloween-background: #000000;
   @notification-event-halloween-color: #ff4542;
+  @notification-event-xmas-background: #ffe1b6;
+  @notification-event-xmas-color: #ab0400;
+
 
     &.event.halloween {
       border: 2px solid @notification-event-halloween-color; background: @notification-event-halloween-background; color: @notification-event-halloween-color;
       &> div:first-child {background: url("media/img/event_halloween.png") no-repeat top center, rgba(0,0,0,0)}
+    }
+
+    &.event.xmas {
+      border: 2px solid @notification-event-xmas-color; background: @notification-event-xmas-background; color: @notification-event-xmas-color;
+      &> div:first-child {background: url("media/img/event_xmas.png") no-repeat top center, rgba(0,0,0,0)}
     }
   }
 }

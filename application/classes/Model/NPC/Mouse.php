@@ -59,4 +59,8 @@ class Model_NPC_Mouse extends Model_NPC_Animal
     public function is_fighter() {
         return false;
     }
+
+    public function icon() {
+        return 'mouse.gif';
+    }
 }

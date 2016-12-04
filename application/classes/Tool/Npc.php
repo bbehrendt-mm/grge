@@ -11,7 +11,7 @@ class Tool_Npc {
      * @param array|int $avoid
      * @return array
      */
-    public static function get_satisfactory_item($p, $own, $location, $satisfy = [], $forbid = [], $avoid = []) {
+    public static function get_satisfactory_item($p, $own, $location, $satisfy = [], $forbid = [], $avoid = [], $auto = true) {
         if (!$satisfy || !($own || $location)) return null;
 
         if (!is_array($satisfy))
@@ -34,7 +34,7 @@ class Tool_Npc {
         $tmp = null;
         foreach ($ilist as $item) {
 
-            foreach ($item->simple_effects($p, true) as $action => $effects) {
+            foreach ($item->simple_effects($p, $auto) as $action => $effects) {
                 $avs = 0;
                 $sss = 0;
                 foreach ($satisfy as $stat => $arr)

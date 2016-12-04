@@ -91,7 +91,9 @@ class Controller_Map extends Controller_Game {
         } else {
             foreach ($companion as $current)
                 if (!$location->can_leave_map($current->id(), !Tool_Scripts::is_npc($current) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC) || !$destination->can_enter_map($current->id(), !Tool_Scripts::is_npc($current) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC)) {
-                    if ($current->id() == $player->id() && !Tool_Scripts::is_npc($current)) $player->log()->add(((count($companion) == 1) ? 'Du kannst diese Reise nicht antreten.' : 'Ihr könnt diese Reise nicht antreten.'));
+                    if ($current->id() == $player->id())
+                        $player->log()->add(((count($companion) == 1) ? 'Du kannst diese Reise nicht antreten.' : 'Ihr könnt diese Reise nicht antreten.'));
+                    else $player->log()->add(':name kann diese Reise nicht antreten.', [':name' => $current->name()]);
                     return false;
                 }
 

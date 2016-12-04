@@ -394,4 +394,8 @@ class Model_Player extends Model_NPC_Nano {
     public function entity_description() {
         return 'Dieser Charakter wird von einem anderen Spieler kontrolliert.';
     }
+
+    public function icon() {
+        return $this->job == 1080 ? 'child.gif' : 'adult.gif';
+    }
 }

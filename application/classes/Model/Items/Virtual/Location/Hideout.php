@@ -75,7 +75,7 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
                     )
                 , 'hideout_couch');
 
-        $tmp->add_action($location->has_upgrade("bedr1") ? 'Ins Bett gehen' : 'Auf dem Boden schlafen', Model_Action::factory()
+        $tmp->add_action($location->has_upgrade("bedr1") ? 'Ins Bett gehen' : ($location->has_upgrade("hay1") ? 'Auf dem Heu schlafem' : 'Auf dem Boden schlafen'), Model_Action::factory()
             ->buttonskin('hideout')
             ->condition(function($p) {
                 /** @var Model_Player $p */
@@ -106,10 +106,10 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
                         $l = $p->location();
                         $d = $l->has_upgrade("bedrlights") ? 2 : 5;
 
-                        if		($l->has_upgrade("bedr3"))	new Model_Buffs_Presleep($p->id(), 3, $d);
-                        elseif	($l->has_upgrade("bedr2"))	new Model_Buffs_Presleep($p->id(), 2, $d);
-                        elseif	($l->has_upgrade("bedr1"))	new Model_Buffs_Presleep($p->id(), 1, $d);
-                        else										new Model_Buffs_Presleep($p->id(), 0, 6);
+                        if		($l->has_upgrade("bedr3") || $l->has_upgrade("hay3")) new Model_Buffs_Presleep($p->id(), $l->has_upgrade("bedr3") ? 3 : -3, $l->has_upgrade("bedr3") ? $d : ($d + 1));
+                        elseif	($l->has_upgrade("bedr2") || $l->has_upgrade("hay2")) new Model_Buffs_Presleep($p->id(), $l->has_upgrade("bedr2") ? 2 : -2, $l->has_upgrade("bedr2") ? $d : ($d + 1));
+                        elseif	($l->has_upgrade("bedr1") || $l->has_upgrade("hay1")) new Model_Buffs_Presleep($p->id(), $l->has_upgrade("bedr1") ? 1 : -1, $l->has_upgrade("bedr1") ? $d : ($d + 1));
+                        else new Model_Buffs_Presleep($p->id(), 0, 6);
                     })
             )
         , 'hideout_sleep');

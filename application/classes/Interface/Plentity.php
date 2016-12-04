@@ -29,6 +29,8 @@ interface Interface_Plentity extends Interface_Cloudshard {
 
     public function name();
 
+    public function icon();
+
     public function entity_species();
     public function entity_profession();
     public function entity_action();

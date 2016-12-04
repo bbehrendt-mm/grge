@@ -16,6 +16,10 @@ class Model_Events_Xmas extends Model_Events_Event {
         $this->item_list[] = $item;
     }
 
+    public function register_event_npc($npc) {
+        $this->npc_list[] = $npc;
+    }
+
     public function place_conductor(Model_Places_Abstract_Place $place) {
         /** @global Model_Game $game */
         global $game;
@@ -33,6 +37,7 @@ class Model_Events_Xmas extends Model_Events_Event {
         global $game;
 
         foreach ($game->playable_entities() as $pl) if (!Tool_Scripts::is_npc($pl)) {
+            new Model_Buffs_Event_Rudolph($pl);
             /** @var $pl Model_Player */
             $pl->log()->add(new Model_Log_Types_Event(static::name(),static::get_key(), true, "Ein warmes Licht kriecht über die eiskalte Landschaft."));
         }
@@ -53,6 +58,7 @@ class Model_Events_Xmas extends Model_Events_Event {
 
         foreach ($game->playable_entities() as $pl) {
             $pl->get_status()->set(Model_Status::MS_STAT_FREEZE,0);
+            $pl->get_status()->remove('rudolph');
             /** @var $pl Model_Player */
             if (!Tool_Scripts::is_npc($pl))
                 $pl->log()->add(new Model_Log_Types_Event(static::name(),static::get_key(), false, "Der Glanz der Tannenbäume erlischt."));
@@ -67,9 +73,11 @@ class Model_Events_Xmas extends Model_Events_Event {
         }
 
         $d_loc = $game->map_main()->get_by_fixed_id(1);
+        Controller::dump('DEAC1', [$this->maps, $d_loc]);
         if ($d_loc)
             foreach ($this->maps as $map_id) {
                 $map = $game->map_by_id($map_id);
+                Controller::dump('DEAC1', [$map]);
                 if ($map) {
                     foreach ($map->get_locations() as $subloc)
                         foreach (Tool_Scripts::at_location($subloc) as $p) {
@@ -86,7 +94,11 @@ class Model_Events_Xmas extends Model_Events_Event {
 
     public function tick() {}
 
-    public function event_playerCreation(Interface_Plentity $entity) {}
+    public function event_playerCreation(Interface_Plentity $entity) {
+        if ($entity->can(Interface_Plentity::IC_TRIGGER_ITEM_FINDINGS))
+            new Model_Buffs_Event_Rudolph($entity);
+
+    }
 
     public function event_locationCreation(Model_Places_Abstract_Place $place) {
         if (Tool_System::instance_of($place, Model_Places_Outworld::cls()))
@@ -118,7 +130,7 @@ class Model_Events_Xmas extends Model_Events_Event {
         }
     }
 
-    public function event_executeHIDAction($cls, $name, Model_Action &$action) {$this->$this->mergedHIDCallback($cls,$name,$action);}
+    public function event_executeHIDAction($cls, $name, Model_Action &$action) {$this->mergedHIDCallback($cls,$name,$action);}
 
     public function event_renderHIDAction($cls, $name, Model_Action &$action) {$this->mergedHIDCallback($cls,$name,$action);}
 

@@ -590,18 +590,22 @@
             var area_npc = [];
             $.each(core.last.players.others, function(id, player) {
                 if (player.local && !player.loner) {
-                    if (player.npc) area_npc.push(player.name)
-                    else area.push(player.name);
+                    if (player.npc) area_npc.push([player.name,player.icon])
+                    else area.push([player.name,player.icon]);
                 }
             });
 
             if (area.length + area_npc.length) {
                 var p = $('<p />').appendTo(desc).attr('title',<?=__j('Hier siehst du Spieler, die sich momentan in deiner Nähe befinden. Um mehr Details zu erfahren, klicke "Spielerübersicht".')?>).qtip(game.render.html.qtip.ingame('bottom'));
-                $.each(area, function(k,name) {
-                    p.append($('<span />').addClass('inline-player').text(name));
+                $.each(area, function(k,obj) {
+                    var name = obj[0];
+                    var icon = obj[1];
+                    p.append($('<span />').addClass('inline-player').text(name).append(icon ? NF.n('div','player_icon').append(NF.img('media/icons/player/' + icon)) : null));
                 });
-                $.each(area_npc, function(k,name) {
-                    p.append($('<span />').addClass('inline-npc green').text(name));
+                $.each(area_npc, function(k,obj) {
+                    var name = obj[0];
+                    var icon = obj[1];
+                    p.append($('<span />').addClass('inline-npc green').text(name).append(icon ? NF.n('div','player_icon').append(NF.img('media/icons/player/' + icon)) : null));
                 });
 
             }

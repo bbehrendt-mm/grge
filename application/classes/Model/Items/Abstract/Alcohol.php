@@ -61,7 +61,7 @@ abstract class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
                         Model_Effect::factory()
                             ->effect(Model_Status::MS_STAT_DRUNK, $a)
                             ->effect(Model_Status::MS_STAT_ENERGY, static::$energy)
-                            ->effect(Model_Status::MS_STAT_HEALTH, -static::$alcohol)
+                            ->effect(Model_Status::MS_STAT_HEALTH, -min(static::$alcohol, 20))
                             ->effect(Model_Status::MS_STAT_THIRST, static::$thirst)
                             ->effect(static::$additional_effects)
                             ->buff('Model_Buffs_Drunk')
@@ -73,7 +73,7 @@ abstract class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
                     ->decider(function($p) use ($a) {
                         /** @var Model_Player $p */
                         $ca = $p->get_status()->simulate(Model_Status::MS_STAT_DRUNK, $a, Model_Status::MS_EFFECT_ITEM, false);
-                        $as_child = ($p->type() == Interface_Plentity::IC_NPC_ANIMAL || (!Tool_Scripts::is_npc($p) && $p->job(1080)));
+                        $as_child = (!Tool_Scripts::is_npc($p) && $p->job(1080));
                         if ($ca > 100) return 's2';
                         if ($ca > 90) return $as_child ? 's5' : 's4';
                         return $as_child ? 's3' : 's1';

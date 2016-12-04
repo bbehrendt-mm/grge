@@ -49,4 +49,8 @@ class Model_NPC_Cat extends Model_NPC_Animal
     public function entity_description() {
         return 'Eine niedliche Katze, die im Kampf auch mal die Krallen zeigt.';
     }
+
+    public function icon() {
+        return 'cat.gif';
+    }
 }

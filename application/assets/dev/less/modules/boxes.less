@@ -42,7 +42,7 @@
 .playerbox {
   &.escort {
     &:not(.npc)   {.impactbox(@zv-color-main, @zv-color-main-light)}
-    &.npc         {.impactbox(@playerbox-npc-main, @playerbox-npc-light)}
+    &.npc         {.impactbox(@playerbox-npc-dark, @playerbox-npc-main)}
   }
   &.unknown {
     .impactbox(@whitebox-color-border, @whitebox-color-bg);
@@ -50,7 +50,7 @@
   }
   &:not(.escort):not(.unknown) {
     &:not(.npc)   {.impactbox(@zv-color-main-dark, @zv-color-main)}
-    &.npc         {.impactbox(@playerbox-npc-dark, @playerbox-npc-main)}
+    &.npc         {.impactbox(@playerbox-npc-main, @playerbox-npc-light)}
   }
 
   >b {display: block; font-size: 16px; color: @zv-color-secondary; text-align: center; padding: 5px;}
@@ -195,10 +195,17 @@
 @player-badge-green-outer: #62825e;
 @player-badge-green-shine: #b1d2a3;
 
+@player-badge-icon-background: #FFFFFF;
+
 .inline-entity(@symbol) {
   display: inline-block; white-space: nowrap; position: relative; background: @player-badge-blue-inner; border: 1px solid @player-badge-blue-outer; font-weight: normal;
   color: @zv-color-secondary; text-shadow: 0 1px 0 rgba(0, 0, 0, 0.80); border-radius: 3px; box-shadow: 0 0 1px 1px fade(@player-badge-blue-shine, 80%) inset, 0 1px 0 rgba(0,0,0,.3);
   cursor: default; padding: 0 4px; margin: 2px;
+
+  > .player_icon {
+    margin-left: 4px; margin-right: 4px; vertical-align: bottom; overflow: hidden; display: inline-block; height: 20px; width: 20px; padding: 2px; border-radius: 9px; background: fade(@player-badge-icon-background, 50%);
+    > img {vertical-align: super;}
+  }
 
   &::before {font-family: FontAwesome; content: @symbol; margin-right: 3px;}
 

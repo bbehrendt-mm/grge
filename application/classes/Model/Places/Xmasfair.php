@@ -109,4 +109,51 @@ class Model_Places_Xmasfair extends Model_Places_Abstract_Xmas {
 
         return $p;
     }
+
+    public function can_leave_map($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER)
+    {
+        /**
+         * @global $game Model_Game
+         */
+        global $game;
+
+        if ($p = $game->get_player($pid)) {
+            if (Tool_System::instance_of($p, Model_NPC_Event_Rudolph::cls())) return false;
+        }
+
+        return parent::can_leave_map($pid, $type);
+    }
+
+    public function leave_map($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
+        /**
+         * @global $game Model_Game
+         * @global $player Model_Player
+         * @global $user Model_User
+         */
+        global $game, $user;
+        if (!$pid) global $player;
+        else $player = $game->get_player($pid);
+        if (!parent::leave($pid, $type)) return false;
+
+        foreach ($player->inventory()->get('Interface_Event') as $i)
+            $i->grind();
+
+        $deco = $this->get_decoration_value();
+        if ($deco > 0) {
+            $user->award_coins($player->id(), $deco);
+            $player->log()->add(new Model_Log_Types_Text(null, null, 'Da du den Weihnachtsbaum so hübsch geschmückt hast, erhälst du als Belohnung :num BrainCoins sowie ein paar Geschenke. Herzlichen Glückwunsch und Frohe Weihnachten!', array(':num' => $deco)));
+
+            $n2 = floor($deco/20);
+            $n1 = ceil(($deco - $n2 * 16)/4);
+            $items = array();
+            for ($i = 0; $i < $n1; $i++)
+                $items[] = new Model_Items_Present('Geschenk', 'Dieses Geschenk hast du als Dank dafür erhalten, dass du den Weihnachtsbaum so schön geschmückt hast. Hoffentlich gefällt dir der Inhalt.', false);
+            for ($i = 0; $i < $n2; $i++)
+                $items[] = new Model_Items_Present('Großes Geschenk', 'Dieses Geschenk hast du als Dank dafür erhalten, dass du beim Schmücken des Weihnachtsbaums dein Allerbestes gegeben hast. Der Inhalt wird dir sicherlich gefallen!', true);
+
+            Tool_Scripts::place_new_item($items);
+        }
+
+        return true;
+    }
 }	

@@ -209,4 +209,8 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
     public function hid() {
         return Model_Hid::factory();
     }
+
+    public function icon() {
+        return null;
+    }
 }

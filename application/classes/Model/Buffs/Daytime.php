@@ -16,7 +16,7 @@ class Model_Buffs_Daytime extends Model_Buffs_Abstract_Buff {
     );
 
     public function name() {
-        switch (Tool_Scripts::get_timeofday($this->associated_to_player() ? $this->assoc_player : null)) {
+        switch (Tool_Scripts::get_timeofday($this->assoc_player)) {
             case "night":
                 return "Tageszeit: Nacht"; break;
             case "morning":
@@ -33,7 +33,7 @@ class Model_Buffs_Daytime extends Model_Buffs_Abstract_Buff {
     }
 
     public function icon() {
-        return static::static_icon(Tool_Scripts::get_timeofday($this->associated_to_player() ? $this->assoc_player : null));
+        return static::static_icon(Tool_Scripts::get_timeofday($this->assoc_player));
     }
 
     public static function static_icon($s = null) {
@@ -55,7 +55,7 @@ class Model_Buffs_Daytime extends Model_Buffs_Abstract_Buff {
     }
 
     public function description() {
-        return static::static_description(Tool_Scripts::get_timeofday($this->associated_to_player() ? $this->assoc_player : null));
+        return static::static_description(Tool_Scripts::get_timeofday($this->assoc_player));
     }
 
     public static function static_description($s = null) {
@@ -78,7 +78,7 @@ class Model_Buffs_Daytime extends Model_Buffs_Abstract_Buff {
 
 
     public function rebuild() {
-        $tod = Tool_Scripts::get_timeofday($this->associated_to_player() ? $this->assoc_player : null);
+        $tod = Tool_Scripts::get_timeofday($this->assoc_player);
 
         switch ($tod) {
             case 'snowynight':
@@ -91,6 +91,7 @@ class Model_Buffs_Daytime extends Model_Buffs_Abstract_Buff {
         };
 
         //Control sun buff
+
         if ($this->assoc_player->location()) {
             if ($tod != "day" || !$this->assoc_player->location()->is_outside())
                 $this->assoc_player->get_status()->remove("sun");

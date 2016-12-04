@@ -84,4 +84,8 @@ class Model_NPC_Dog extends Model_NPC_Animal
     public function is_fighter() {
         return !$this->is_leashed() && parent::is_fighter();
     }
+
+    public function icon() {
+        return 'dog.gif';
+    }
 }

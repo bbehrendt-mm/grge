@@ -30,4 +30,8 @@ class Model_NPC_Special_Doodle extends Model_NPC_Dog
     public function entity_description() {
         return 'Dein treuer, vierbeiniger Freund steht dir auch in der Postapokalypse treu zur Seite.';
     }
+
+    public function icon() {
+        return 'doodle.gif';
+    }
 }

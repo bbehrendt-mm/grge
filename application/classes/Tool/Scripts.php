@@ -586,12 +586,21 @@ class Tool_Scripts
 
         $c = 1;
 
+        $is_night = in_array(static::get_timeofday(), ['night','snowynight']);
+        $is_light = false;
+
         //Flashlight Effect
-        if (static::get_timeofday() != 'night' && !$player->location()->is_outside() && ($fb = $player->get_status()->retrieve('flashlight')) && $fb->active())
+        if (!$is_night && !$player->location()->is_outside() && ($fb = $player->get_status()->retrieve('flashlight')) && $fb->active())
             $c *= 1.2;
+        elseif (($fb = $player->get_status()->retrieve('flashlight')) && $fb->active())
+            $is_light = true;
+
+        // Rudolphs Nose
+        if (($rn = $player->get_status()->retrieve('rudolph')) && $rn->active())
+            $c *= 1.5;
 
         //Night Malus
-        if (static::get_timeofday() == 'night' && isset($fb) && $fb && !$fb->active())
+        if ($is_night && !$is_light)
             $c *= 0.25;
 
         //Fatigue Malus

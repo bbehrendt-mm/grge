@@ -43,6 +43,10 @@ class Model_NPC_Event_Conductor extends Model_NPC_Humanoid
                         /** @global Model_Game $game */
                         global $game;
 
+                        $ev = $game->get_initialized_event(Model_Events_Xmas::get_key());
+                        /** @var $ev Model_Events_Xmas */
+                        if (!$ev) return;
+
                         $tid = time() . '_' . mt_rand();
                         $mapid = "xmasmap_{$tid}";
                         $xmas_id = $game->register_map($mapid, 'xmas', 'xmas');
@@ -54,10 +58,7 @@ class Model_NPC_Event_Conductor extends Model_NPC_Humanoid
                         $xmasfair->enter_map($p->id());
 
                         $game->map($xmas_id)->movement_modifier(0.1);
-
-                        $ev = $game->get_initialized_event(Model_Events_Xmas::get_key());
-                        /** @var $ev Model_Events_Xmas */
-                        if ($ev) $ev->register_event_map($xmas_id);
+                        $ev->register_event_map($mapid);
 
                         if (!$p->get_status()->retrieve('freeze'))
                             new Model_Buffs_Freeze($p->id());

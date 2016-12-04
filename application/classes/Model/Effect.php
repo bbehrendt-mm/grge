@@ -320,7 +320,7 @@ class Model_Effect {
         if (is_array($i)) return max(-100,min(100, $i[0] * $factor)) . " - " . max(-100,min(100, $i[1] * $factor));
         if ($i == PHP_INT_MAX) return '+∞';
         if ($i == -PHP_INT_MAX) return '-∞';
-        return max(-100,min(100, $i * $factor));
+        return max(-100,min(100, round($i * $factor,2)));
     }
 
     /**

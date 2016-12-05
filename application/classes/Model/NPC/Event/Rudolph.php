@@ -27,8 +27,7 @@ class Model_NPC_Event_Rudolph extends Model_NPC_Animal
             Model_Status::MS_STAT_ENERGY, 100,
             Model_Status::MS_STAT_HUNGER, mt_rand(40,75),
             Model_Status::MS_STAT_THIRST, mt_rand(45,75),
-            Model_Status::MS_STAT_SLEEPY, 100,
-            Model_Status::MS_STAT_DRUNK, mt_rand(5,10)
+            Model_Status::MS_STAT_SLEEPY, 100
         );
 
         $this->get_status()->scaling_add(Model_Status::MS_STAT_FREEZE, Model_Status::MS_EFFECT_GLOBAL, 'rudolph_freeze', 0);
@@ -120,7 +119,8 @@ class Model_NPC_Event_Rudolph extends Model_NPC_Animal
             "Ha... hassu das auch gehört?",
             "Binnoch ... totaaaal nü... nü.... nüch betrunken!"];
         $dialog_tumbling = ["Seiwann hab ichn .. Gummibeine... ?", "Kannsu mal ds Karussell.. ausmachen?",
-            "Uuuuuuuh...... alles dreeeeeeeeht sich ...", "Kannich... mich mal kurss... bei dir anlehnen?"];
+            "Uuuuuuuh...... alles dreeeeeeeeht sich ...", "Kannich... mich mal kurss... bei dir anlehnen?",
+            "Der Booooooooden wackelt...", "Wieso... kannsu mit swai Beinen... besssser stehn als wie ich... mi vieeeer...?"];
         $dialog_passout = ["Baaaaaaaaaaaaaaaah.......", "* hicks *", "Uuuuuuuuuuuh......."];
 
         if ($this->get_status()->get(Model_Status::MS_STAT_HEALTH) > 50) {

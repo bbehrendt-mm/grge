@@ -28,8 +28,8 @@ class Model_Places_Xmas_Stables extends Model_Places_Abstract_Hideout {
             $items = [Model_Items_Xmas_Rubbing::cls() => 1, Model_Items_Xmas_Beer::cls() => 2, Model_Items_Xmas_Drink::cls() => 3];
             foreach ($items as $cls => $count)
                 for ($i = 0; $i < $count; $i++) {
-                    $i = new $cls;
-                    $this->inventory()->add($i);
+                    $it = new $cls;
+                    $this->inventory()->add($it);
                 }
         }
 

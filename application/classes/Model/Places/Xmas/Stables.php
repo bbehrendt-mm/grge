@@ -25,8 +25,12 @@ class Model_Places_Xmas_Stables extends Model_Places_Abstract_Hideout {
     public function uin($new = null) {
         if ($new !== null) {
             Model_Blueprints::fast_apply($this, 'upgrades', ['xmas_hideout','hideout_slot','hay1']);
-            $this->inventory()->add(new Model_Items_Bottle());
-            $this->inventory()->add(new Model_Items_Xmas_Rubbing());
+            $items = [Model_Items_Xmas_Rubbing::cls() => 1, Model_Items_Xmas_Beer::cls() => 2, Model_Items_Xmas_Drink::cls() => 3];
+            foreach ($items as $cls => $count)
+                for ($i = 0; $i < $count; $i++) {
+                    $i = new $cls;
+                    $this->inventory()->add($i);
+                }
         }
 
         return parent::uin($new);

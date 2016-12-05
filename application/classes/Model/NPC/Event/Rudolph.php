@@ -16,6 +16,7 @@ class Model_NPC_Event_Rudolph extends Model_NPC_Animal
     protected static $abillities = [
         Interface_Plentity::IC_TRIGGER_ITEM_TICKS,
         Interface_Plentity::IC_TRIGGER_LOCATION_TICKS,
+        Interface_Plentity::IC_TRIGGER_ITEM_FINDINGS
     ];
 
     public function __construct() {
@@ -48,13 +49,26 @@ class Model_NPC_Event_Rudolph extends Model_NPC_Animal
 
         if (!$busy && $this->is_drunk()) {
 
-            if (Tool_Gambling::random(($this->get_status()->get(Model_Status::MS_STAT_DRUNK) - 40) / 200))
+            if (Tool_Gambling::random(($this->get_status()->get(Model_Status::MS_STAT_DRUNK) - 40) / 200)) {
                 new Model_Buffs_Drunk2($this, mt_rand(1,5));
+                $this->location()->log()->add("Ohje... :name hat anscheinend das Gleichgewicht verloren.", [':name' => $this->name()]);
+            } elseif (Tool_Gambling::random(($this->get_status()->get(Model_Status::MS_STAT_DRUNK) - 40) / 75)) {
+
+                $events = [":name hat dir gerade auf deine Schuhe gepinkelt...", ":name stimmt ein anzügliches Lied über weibliche Elfen an...",
+                    ":name hat dir das gesamte Gesicht abgeleckt...", ":name umarmt gerade einen MyLittlePony Werbeaufsteller...",
+                    ":name's Bewegungen erinnern gerade ein bisschen an einen schon sehr vermoderten Zombie...",
+                    ":name stellt gerade enttäuscht fest, dass seine Zunge nicht so weit reicht wie die eines Hundes...",
+                    ":name verprügelt gerade eine Weihnachtsmann-Statue...", ":name beschwert sich bei einem verdorrten Strauch über sein Leben..."
+                ];
+                $this->location()->log()->add(Tool_Gambling::select($events), [':name' => $this->name()]);
+
+            }
+
 
         }
 
         // Item Consumption
-        if (!$busy && $this->is_drunk())
+        if (!$busy && $this->get_status()->get(Model_Status::MS_STAT_DRUNK) > 0)
             if ($this->get_status()->get(Model_Status::MS_STAT_DRUNK) < 90) {
 
                 $ic = Tool_Npc::get_satisfactory_item($this, true, false, Model_Status::MS_STAT_DRUNK,
@@ -96,6 +110,39 @@ class Model_NPC_Event_Rudolph extends Model_NPC_Animal
 
     public function hid() {
         $hid = parent::hid();
+
+        $dialog_sober = ["Hey, wie geht's?", "Schön dich zu sehen.", "Wir sollten dort drüben mal nachsehen.",
+            "Endlich habe ich mal ein bisschen Gesellschaft!","Ist dir nicht kalt?","Soll ich dir beim Tragen helfen?"];
+        $dialog_tipsy = ["Man, hab ich einen Durst...", "Gibt's noch was zu trinken?", "Trinkst du das noch?",
+            "Komm schon, lass uns zum Glühweinstand gehen!","Wie wärs, wenn ich die Getränke trage?",
+            "Angetrunken? Ich? Quatsch...", "Verflucht, schon leer..."];
+        $dialog_drunk = ["Heheee.... deine Naaase is komisch...", "Warsu vorhin auch schon su dritt?",
+            "Ha... hassu das auch gehört?",
+            "Binnoch ... totaaaal nü... nü.... nüch betrunken!"];
+        $dialog_tumbling = ["Seiwann hab ichn .. Gummibeine... ?", "Kannsu mal ds Karussell.. ausmachen?",
+            "Uuuuuuuh...... alles dreeeeeeeeht sich ...", "Kannich... mich mal kurss... bei dir anlehnen?"];
+        $dialog_passout = ["Baaaaaaaaaaaaaaaah.......", "* hicks *", "Uuuuuuuuuuuh......."];
+
+        if ($this->get_status()->get(Model_Status::MS_STAT_HEALTH) > 50) {
+            $dialog_sober = array_merge($dialog_sober, ["Könntest du mich mal am Rücken kratzen?", "Ich fühl mich super!", "Alles bestens, danke der Nachfrage!"]);
+            $dialog_tipsy = array_merge($dialog_tipsy, ["Mein Kopf kribbelt...", "Ich fühl mich leicht..."]);
+            $dialog_drunk = array_merge($dialog_drunk, ["Ich glaub ... einen könnt ich noch ...", "Wusses du, dasss mein Geweih n suuper Arschkratzer is?"]);
+            $dialog_tumbling = array_merge($dialog_tumbling, ["♫ Schneeflöckchen ... ♪ geiles Röckchen ... ♬"]);
+        } else {
+            $dialog_sober = array_merge($dialog_sober, ["Ich fühl mich nicht besonders...", "Autsch... Mach dir keine Sorgen, dass wird sicher wieder..."]);
+            $dialog_tipsy = array_merge($dialog_tipsy, ["Uuuh... ich kann mich nicht konzentrieren...", "Aah... das betäubt den Schmerz."]);
+            $dialog_drunk = array_merge($dialog_drunk, ["Nie... NIE hab isch... Geschenke gekriegt. Aber immer muss... mussich mich für den allen Sack ab.. abrackern!", "Uuuh..... bin su aaalt für solche Partys..."]);
+            $dialog_tumbling = array_merge($dialog_tumbling, ["Urgh... muss... gleich... ko... kotzen..."]);
+        }
+
+        $selection = ["..."];
+        if (($fragile = $this->get_status()->retrieve('fragile')) && Tool_System::instance_of($fragile, 'Model_Buffs_Drunk')) $selection = $dialog_passout;
+        elseif (($fragile = $this->get_status()->retrieve('fragile')) && Tool_System::instance_of($fragile, 'Model_Buffs_Drunk2')) $selection = $dialog_tumbling;
+        elseif ($this->is_drunk()) $selection = $dialog_drunk;
+        elseif ($this->get_status()->get(Model_Status::MS_STAT_DRUNK) > 0) $selection = $dialog_tipsy;
+        else $selection = $dialog_sober;
+
+        $hid->add_action('Ansprechen', Model_Action::factory()->effect(Model_Effect::factory()->message(Tool_Gambling::select($selection))));
 
         if (!$this->dispense_light())
             $hid->add_action('Nasale Beleuchtung aktivieren', Model_Action::factory()

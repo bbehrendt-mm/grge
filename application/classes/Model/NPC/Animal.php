@@ -63,7 +63,7 @@ abstract class Model_NPC_Animal extends Model_NPC_Nano
     }
 
     protected function is_drunk() {
-        return $this->status->get(Model_Status::MS_STAT_DRUNK) > max(5,(100 - static::$comfort_threshold));
+        return $this->status->get(Model_Status::MS_STAT_DRUNK) >= max(5,(100 - static::$comfort_threshold));
     }
 
     /**

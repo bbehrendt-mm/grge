@@ -422,11 +422,15 @@ class Controller_Act extends Controller_Game {
         if ($user && Tool_System::instance_of($item, Model_Items_Abstract_Virtual::cls()))
             return;
 
+        if ($user) $user->item_preaction($item,$action);
         if ($r = $item->interact($action, $user ? $user : $player, $argument, $side))
             $player->location()->log()->add(new Model_Log_Types_Transaction(Model_Log_Types_Transaction::MLTT_USE, $item, $user ? $user->id() : $player->id(), $item->resolve_action($action, $user ? $user : $player)));
 
-        if ($user)
+        if ($user) {
+            $user->item_reaction();
             $player->log()->add($r ? ':name hat deinen Befehl befolgt und :item eingesetzt!' : ':name konnte :item nicht einsetzen...', [':name' => $user->name()], [':item' => $item->name()]);
+        }
+
     }
 
     public static function code_npc($id, $action, $side_id = null, $argument = null, $user = null) {

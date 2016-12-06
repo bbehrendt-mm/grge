@@ -213,4 +213,7 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
     public function icon() {
         return null;
     }
+
+    public function item_reaction() {}
+    public function item_preaction(Model_Items_Abstract_Item $item, $action) {}
 }

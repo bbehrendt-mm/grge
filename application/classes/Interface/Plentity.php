@@ -62,6 +62,9 @@ interface Interface_Plentity extends Interface_Cloudshard {
 
     public function allow($type = null);
 
+    public function item_preaction(Model_Items_Abstract_Item $item,$action);
+    public function item_reaction();
+
     /** @return Model_Hid */
     public function hid();
 }

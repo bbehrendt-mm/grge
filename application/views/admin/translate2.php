@@ -220,7 +220,8 @@
         popup.append(
             NF.row()
                 .append(NF.cell(true, 12).append($('<input />').addClass('form_input').attr({type: 'text', placeholder: <?=__j('Suchbegriff eingeben...');?>}).keyup(function() {
-                    var query = $(this).val();
+                    var query_box = $(this);
+                    var query = query_box.val();
                     if (query.length < 4) return;
                     $(tar).empty().append(NF.row().append(NF.cell(true, 12, 0, 'center').append(NF.fa('circle-o-notch', true))));
                     connect('search', {from: lang_from, to: lang_to, q: query}, function(data) {
@@ -237,7 +238,16 @@
                                 display(entry.id, entry.from, entry.to)
                             })))
                         });
-                        if (!has) $(tar).text(<?=__j('Es wurden keine Übersetzungen gefunden.');?>);
+                        if (!has) $(tar).text(<?=__j('Es wurden keine Übersetzungen gefunden.');?>).append(<?=!$adv_priv ? 'true' : 'false'?> ? null : NF.button('+').click(function() {
+                            connect('add', {from: lang_from, to: lang_to, q: query}, function(data) {
+                                if (data.success > 0) {
+                                    $(tar).empty();
+                                    query_box.val("");
+                                } else {
+                                    game.render.html.notify('error', 'ERROR');
+                                }
+                            });
+                        }));
                     })
                 })))
                 .append(NF.cell(true, 12).append(tar = NF.row().css({'max-height': 300, 'overflow': 'auto'})))

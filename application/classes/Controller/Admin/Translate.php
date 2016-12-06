@@ -79,7 +79,15 @@ class Controller_Admin_Translate extends Controller_Admin_Admin {
             ];
         }, I18n::search($q, [$this->post('from'), $this->post('to')]))]);
     }
-    
+
+    public function japi_add() {
+        if (!static::priv_allow_all('TRANSLATE_MOD'))
+            return $this->error(\grge\E_SERVER_ACCESS_DENIED);
+
+        $this->render(['success' => (int)I18n::set_missing(trim($this->post('q')))]);
+        return true;
+    }
+
     public function japi_set() {
         $this->render(['success' => (int)I18n::set(
                 $this->post('from'),

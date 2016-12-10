@@ -602,7 +602,6 @@ class Tool_Scripts
         //Night Malus
         if ($is_night && !$is_light)
             $c *= 0.25;
-
         //Fatigue Malus
         if ($player->get_status()->get(Model_Status::MS_STAT_SLEEPY) < 50)
             $c *= ($player->get_status()->get(Model_Status::MS_STAT_SLEEPY)/50);
@@ -625,7 +624,7 @@ class Tool_Scripts
 
         //Item Spawnrate Stat
         $c *= $player->get_status()->get(Model_Status::MS_CHAR_ITEM_SPAWNRATE);
-        
+
         return $c;
     }
 

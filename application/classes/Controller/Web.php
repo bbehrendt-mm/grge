@@ -9,7 +9,10 @@ class Controller_Web extends Controller {
 
     public function action_skin() {
         $skin = $this->request->param('skin');
-        if ($skin) {
+        if ($skin == 'auto') {
+            setcookie('skin', '', 0, URL::base());
+            setcookie('skin_cst', '', 0, URL::base());
+        } elseif ($skin) {
             setcookie('skin', $skin, 0, URL::base());
             setcookie('skin_cst', '1', 0, URL::base());
         }

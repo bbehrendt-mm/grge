@@ -14,4 +14,5 @@
         ->add('Model_Items_Generic_Bobblehead'  , 3)
         ->add('Model_Items_Generic_Cloth'       , 3)
         ->add('Model_Items_Xmas_Rubbing'        , 3)
+        ->add('Model_Items_Xmas_Paraspirin'     , 6)
         ;

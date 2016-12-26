@@ -73,11 +73,9 @@ class Model_Events_Xmas extends Model_Events_Event {
         }
 
         $d_loc = $game->map_main()->get_by_fixed_id(1);
-        Controller::dump('DEAC1', [$this->maps, $d_loc]);
         if ($d_loc)
             foreach ($this->maps as $map_id) {
                 $map = $game->map_by_id($map_id);
-                Controller::dump('DEAC1', [$map]);
                 if ($map) {
                     foreach ($map->get_locations() as $subloc)
                         foreach (Tool_Scripts::at_location($subloc) as $p) {
@@ -144,6 +142,7 @@ class Model_Events_Xmas extends Model_Events_Event {
                     Model_Blueprint::factory()
                         ->id('i:xmas1_cookie1')
                         ->requires('ktc3')
+                        ->steps(0)
                         ->name('Plätzchen backen')
                         ->message('Ein weihnachtlicher Durft erfüllt dein Versteck, als du kleine Figürchen aus dem Teig presst und diese zu Plätzchen backst.')
                         ->material(['Model_Items_Generic_Cookieproto' => 1])
@@ -157,6 +156,7 @@ class Model_Events_Xmas extends Model_Events_Event {
                     Model_Blueprint::factory()
                         ->id('i:xmas1_cookie2')
                         ->requires('ktc3')
+                        ->steps(0)
                         ->name('Besondere Plätzchen backen')
                         ->message('Normale Plätzchen sind langweilig, also fügst du ein paar kreative Extra-Zutaten hinzu...')
                         ->material(['Model_Items_Generic_Cookieproto' => 1, 'Model_Items_Powderpack' => 1])

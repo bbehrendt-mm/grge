@@ -6,6 +6,15 @@
 
 <h1 class="noclick"><i class="fa fa-arrow-circle-right"></i>Spieleverwaltung</h1>
 
+<div class="row">
+    <div class="cell ro-1 rw-10">
+        <div class="flatbox">
+            <button class="btn small" data-gid="*" data-action="game_update">Update all</button>
+            <button class="btn small" data-gid="*" data-action="process_tick">Process next tick for all games</button>
+        </div>
+    </div>
+</div>
+
 <div class="row-table padded row-table-borders row-table-striped row-table-interact" id="target_list">
     <div class="row">
         <div class="cell padded rw-1"><b>ID</b></div>
@@ -31,6 +40,7 @@
                     <div class="row">
                         <div class="cell rw-12">
                             <button class="btn small <?=$game['players'] ? '' : 'disabled'?>" data-gid="<?=$game['id']?>" data-action="game_update">Update</button>
+                            <button class="btn small <?=$game['players'] ? '' : 'disabled'?>" data-gid="<?=$game['id']?>" data-action="process_tick">Process next tick</button>
                             <button class="btn small <?=$game['players'] ? '' : 'disabled'?>" data-confirm="Are you sure you want to end game #<?=$game['id']?>?" data-auto="0" data-gid="<?=$game['id']?>" data-action="game_retire">End Gracefully</button>
                             <button class="btn small <?=$game['players'] ? '' : 'disabled'?>" data-confirm="Are you sure you want to end game #<?=$game['id']?>?" data-auto="1" data-gid="<?=$game['id']?>" data-action="game_retire">Remove Gracefully</button>
                             <button class="btn small" data-gid="<?=$game['id']?>" data-confirm="Are you sure you want to end game #<?=$game['id']?>?" data-action="game_delete">Delete</button>

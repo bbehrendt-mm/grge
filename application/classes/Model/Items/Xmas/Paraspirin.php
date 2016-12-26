@@ -9,6 +9,7 @@ class Model_Items_Xmas_Paraspirin extends Model_Items_Abstract_Stackable impleme
 			'category' => Model_Items_Abstract_Item::MIAI_CAT_DRUG,
 	);
 
+    protected static $autoappender = Array('Kapsel', 'Kapseln');
 	protected static $autospawn = Array(5,15);
 	protected static $weight = 1;
 

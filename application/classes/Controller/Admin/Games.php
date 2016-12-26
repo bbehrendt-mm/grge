@@ -4,16 +4,73 @@ class Controller_Admin_Games extends Controller_Admin_Admin {
 
     protected static $auto_require = ['GAMELIST'];
 
+    public function japi_process_tick() {
+        $id = $this->post('gid');
+
+        if ($id === "*")
+            $list = DB::select('gameid')->from('games')->execute()->as_array(null, 'gameid');
+        else $list = [(int)$id];
+
+        $failures = []; $success = [];
+        foreach ($list as $game_id) {
+            if (!$game_id) {
+                $failures[] = $game_id;
+                continue;
+            }
+
+            $local_game_obj = new Model_Game();
+            if (!$local_game_obj->read($game_id, true)) {
+                $failures[] = $game_id;
+                continue;
+            }
+
+            $set_pause = false;
+            if ($local_game_obj->paused()) {
+                $set_pause = true;
+                $local_game_obj->unpause();
+            }
+
+            $local_game_obj->fast_forward(1);
+            if ($set_pause) $local_game_obj->pause();
+
+            $local_game_obj->write();
+            $success[] = $game_id;
+        }
+
+        return $this->render([
+            'success' => (empty($failures) ? 0 : (empty($success) ? -2 : -1)),
+            'summary' => ['completed' => $success, 'failed' => $failures]
+        ]);
+    }
+
     public function japi_game_update() {
-        $game_id = (int)$this->post('gid');
+        $id = $this->post('gid');
 
-        if (!$game_id) return $this->render(['success' => -1]);
+        if ($id === "*")
+            $list = DB::select('gameid')->from('games')->execute()->as_array(null, 'gameid');
+        else $list = [(int)$id];
 
-        $local_game_obj = new Model_Game();
-        if (!$local_game_obj->read($game_id, true)) return $this->render(['success' => -500]);
-        $local_game_obj->write();
+        $failures = []; $success = [];
+        foreach ($list as $game_id) {
+            if (!$game_id) {
+                $failures[] = $game_id;
+                continue;
+            }
 
-        return $this->render(['success' => 0]);
+            $local_game_obj = new Model_Game();
+            if (!$local_game_obj->read($game_id, true)) {
+                $failures[] = $game_id;
+                continue;
+            }
+
+            $local_game_obj->write();
+            $success[] = $game_id;
+        }
+
+        return $this->render([
+            'success' => (empty($failures) ? 0 : (empty($success) ? -2 : -1)),
+            'summary' => ['completed' => $success, 'failed' => $failures]
+        ]);
     }
 
     public function japi_game_retire() {

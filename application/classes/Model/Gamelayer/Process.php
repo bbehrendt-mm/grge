@@ -80,12 +80,13 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
 
 		try {
 			//Prefetch stuff
-            foreach ($this->set['gamedata']->players as $active_player) {
-				$this->set['gamedata']->uin->get($active_player, 'Model_Player')->inventory()->prefetch();
-				$this->set['gamedata']->uin->get($active_player, 'Model_Player')->location()->inventory()->prefetch();
+            foreach ($this->set['gamedata']->players as $active_player) if ($active_player_obj = $this->set['gamedata']->uin->get($active_player, 'Model_Player')) {
+				/** @var  Model_Player $active_player_obj */
+                $active_player_obj->inventory()->prefetch();
+				$active_player_obj->location()->inventory()->prefetch();
 
                 //Rebuild buffs
-                $this->set['gamedata']->uin->get($active_player, 'Model_Player')->get_status()->rebuild();
+                $active_player_obj->get_status()->rebuild();
 			}
 
 			//Call ticks until present time is reached

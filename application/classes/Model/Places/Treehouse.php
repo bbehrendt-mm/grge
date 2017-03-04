@@ -36,7 +36,7 @@ class Model_Places_Treehouse extends Model_Places_Abstract_Hideout {
         if ($type == Interface_Tickable::IT_TYPE_PLAYER && !$player->job(1080))
             $player->log()->add('An der Tür dieses Baumhauses befindet sich ein Schild, auf dem in krakeliger Schrift geschrieben steht: "Führ Erwaksene ferboten!!!". So ein Ärger aber auch...');
 
-        return ($type == Interface_Tickable::IT_TYPE_NPC) || $player->job(1080);
+        return $type == Interface_Tickable::IT_TYPE_PLAYER && $player->job(1080);
     }
 
     public function mapable() {

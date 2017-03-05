@@ -19,7 +19,7 @@ class Controller_Admin_Games extends Controller_Admin_Admin {
             }
 
             $local_game_obj = new Model_Game();
-            if (!$local_game_obj->read($game_id, true)) {
+            if (!$local_game_obj->read($game_id, true, false)) {
                 $failures[] = $game_id;
                 continue;
             }

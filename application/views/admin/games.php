@@ -7,10 +7,13 @@
 <h1 class="noclick"><i class="fa fa-arrow-circle-right"></i>Spieleverwaltung</h1>
 
 <div class="row">
-    <div class="cell ro-1 rw-10">
+    <div class="cell ro-1 rw-10 padded">
         <div class="flatbox">
-            <button class="btn small" data-gid="*" data-action="game_update">Update all</button>
-            <button class="btn small" data-gid="*" data-action="process_tick">Process next tick for all games</button>
+            <h4>Actions for all games</h4>
+            <div class="row">
+                <div class="cell padded rw-4"><div class="btn" data-gid="*" data-action="game_update">Update</div></div>
+                <div class="cell padded rw-4"><div class="btn" data-gid="*" data-action="process_tick">Process once</div></div>
+            </div>
         </div>
     </div>
 </div>
@@ -39,6 +42,7 @@
                     <b>Actions</b><br />
                     <div class="row">
                         <div class="cell rw-12">
+                            <button class="btn small" data-details="<?=$game['id']?>">Details</button>
                             <button class="btn small <?=$game['players'] ? '' : 'disabled'?>" data-gid="<?=$game['id']?>" data-action="game_update">Update</button>
                             <button class="btn small <?=$game['players'] ? '' : 'disabled'?>" data-gid="<?=$game['id']?>" data-action="process_tick">Process next tick</button>
                             <button class="btn small <?=$game['players'] ? '' : 'disabled'?>" data-confirm="Are you sure you want to end game #<?=$game['id']?>?" data-auto="0" data-gid="<?=$game['id']?>" data-action="game_retire">End Gracefully</button>
@@ -122,7 +126,13 @@
         $(this).children(':last-child').slideToggle();
     });
 
-    $('button[data-action]').click(function(e) {
+    $('*.btn[data-details]').click(function(e) {
+        e.stopPropagation();
+
+        game.network.load('admin/game/info/' + $(this).data('details'));
+    });
+
+    $('*.btn[data-action]').click(function(e) {
         e.stopPropagation();
 
         var trns_data = {};
@@ -134,7 +144,9 @@
         if ($(this).data('confirm') && !confirm('This action requires explicit confirmation: ' + $(this).data('confirm')))
             return;
 
+        game.render.html.modal.work();
         game.network.query('admin/japi/games/' + $(this).data('action'), trns_data, function(data) {
+            game.clean(true);
             if (data.success == "0") {
                 game.render.html.notify('success','Operation successfull');
                 game.network.load('admin/games');

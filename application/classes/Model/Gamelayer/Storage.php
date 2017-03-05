@@ -22,7 +22,7 @@ abstract class Model_Gamelayer_Storage extends Model {
 		if (!Kohana::$config->load('server.io.performance.force_main_rewrite')) $ret[] = 'check_hash';
 		return $ret;
 	}
-	
+
 	final public function __wakeup() {
 		/** @global Model_Euser $user */
 		global $user;
@@ -61,8 +61,9 @@ abstract class Model_Gamelayer_Storage extends Model {
      */
     abstract public function uin();
 	
-	final public function read($gameid, $process = true) {
-		$this->read_only = !$process;
+	final public function read($gameid, $write_access = true, $process = null) {
+		$this->read_only = !$write_access;
+		if ($process === null) $process = $write_access;
 
 		//Find
         $chk = DB::select('gameid')->from('games')->where('gameid', '=', $gameid)->execute()->as_array();
@@ -97,12 +98,13 @@ abstract class Model_Gamelayer_Storage extends Model {
 			} catch (Exception $e) {
 				DB::delete('games')->where('gameid', '=', $this->set['gameid'])->execute();
 				DB::delete('games_cloud')->where('gameid', '=', $this->set['gameid'])->execute();
+                DB::delete('multiplayer_lobby')->where('gameid', '=', $this->set['gameid'])->execute();
 				throw new Exception("Entschuldigung, das hätte nicht passieren dürfen! Dein auf dem Server gespeicherter Spielstand ist beschädigt und muss gelöscht werden. Du kannst dein Spiel nicht fortsetzen. Bitte kontaktiere einen Administrator und teile ihm folgende Fehlermeldung mit: " . $e->getMessage());
 			}
 			
 			//Process ticks
 			if ($process) $this->process();
-            else DB::update('games')->set(array('lock' => 0))->where('gameid', '=', $this->set['gameid'])->execute();
+            if ($this->read_only) DB::update('games')->set(array('lock' => 0))->where('gameid', '=', $this->set['gameid'])->execute();
 			
 			return true;
 		} else return false;

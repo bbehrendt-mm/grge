@@ -58,6 +58,8 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
          */
 	    global $user, $player;
 
+	    if ($this->read_only) return false;
+
         if (isset($this->set['gamedata']->players[$user->uid()])) return false;
 		new Init_Player($this, $this->set['gamedata'], $user->uid(), $user->name(), $sub, $level);
 	
@@ -132,6 +134,8 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
     }
 
     public function register_death($uid) {
+        if ($this->read_only) return;
+
         if ($this->config('game.lobby.persistent'))
             $lobby_open = DB::select([DB::expr('COUNT(`gameid`)'), 'games'])->from('multiplayer_lobby')->where('gameid', '=', $this->set['gameid'])->and_where('slots', '>', 0)->execute()->get('games') > 0;
         else
@@ -149,17 +153,19 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
 		$this->get_player($uid)->expire($this->set['gamedata']->head->season, $this->set['gameid'], ($this->set['gamedata']->head->rankable && !(isset($this->set['gamedata']->head->contest) && $this->set['gamedata']->head->contest)), $this->set['gamedata']->timing->game_start, $this->set['gamedata']->timing->last_point);
 
         $this->set["gamedata"]->graveyard[$uid] = $this->setting_mode(11000) ? $this->get_player($uid)->get_points() : $this->get_player($uid)->get_lifetime();
-		
-		DB::delete('xref_game_player')->where('uid', '=', $uid)->execute();
 
-        if ($this->get_player($uid)->get_lifetime() >= 288 && $this->get_player($uid)->get_braincoins())
-            Model_User::award_coins($uid, $this->get_player($uid)->get_braincoins());
+        if (!$this->read_only) {
+            DB::delete('xref_game_player')->where('uid', '=', $uid)->execute();
 
-        if (!$as_batch) {
-            $this->check_players();
-            $this->write();
+            if ($this->get_player($uid)->get_lifetime() >= 288 && $this->get_player($uid)->get_braincoins())
+                Model_User::award_coins($uid, $this->get_player($uid)->get_braincoins());
+
+            if (!$as_batch) {
+                $this->check_players();
+                $this->write();
+            }
         }
-		
+
 		return true;
 	}
 
@@ -177,6 +183,8 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
     abstract public function config($adress, $value = null);
 
 	public function check_players() {
+	    if ($this->read_only) return;
+
         if (count($this->set["gamedata"]->players) == count($this->set["gamedata"]->graveyard)) {
 			
 			//Create contest ranking
@@ -201,11 +209,14 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
 	}
 
     public function delete_lobby() {
-        DB::delete('multiplayer_lobby')->where('gameid', '=', $this->set['gameid'])->execute();
+        if (!$this->read_only)
+	        DB::delete('multiplayer_lobby')->where('gameid', '=', $this->set['gameid'])->execute();
     }
-	
+
 	public function purge() {
-        // Chat room
+        if ($this->read_only) return;
+
+	    // Chat room
         if ($this->config('modules.multiplayer'))
             Controller_Chat::purge_room($this->id());
 	    DB::delete('games')->where('gameid', '=', $this->set['gameid'])->execute();

@@ -456,7 +456,7 @@ class Model_Combat_Actor extends Named {
             $retr = $tmp ? ($closest_foe->distance_from($this) < $this->current_weapon->min_range()) : false;
 
             return $tmp ? [
-                (($tmp[0] * $this->ai_brashness)/$this->rounds_to_use($this->current_weapon, $closest_foe)) * ($retr ? (1/($this->memory["flee"]+1)) : 1),
+                (($tmp[0] * $this->ai_brashness)/max(0.1,$this->rounds_to_use($this->current_weapon, $closest_foe))) * ($retr ? (1/($this->memory["flee"]+1)) : 1),
                 $tmp[1],
                 $retr ? -1 : 1
             ] : [];

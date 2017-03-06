@@ -24,7 +24,9 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 	
 	protected $inventory;
 
-    protected $upgrades = [];
+    //protected $upgrades = [];
+    /** @var Model_Room[]  */
+    protected $rooms = [];
 
     /** @var Model_Factory_Zombies  */
 	protected $zombie_factory;
@@ -76,33 +78,13 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
         return static::$perpetualDaytime;
     }
 
-    public function get_upgrades() {
-        return $this->upgrades;
-    }
-
-    public function add_upgrades($a) {
-        if (is_array($a))
-            foreach ($a as $elem)
-                $this->add_upgrades($elem);
-        elseif (!in_array($a,$this->upgrades))
-            $this->upgrades[] = $a;
-    }
-
-    public function remove_upgrades($a) {
-        if (!is_array($a))
-            $a = [$a];
-        $this->upgrades = array_filter($this->upgrades, function($elem) use ($a) {
-            return !in_array($elem, $a);
-        });
-    }
-
-    public function has_upgrade($a) {
-        if (is_array($a)) {
-            foreach ($a as $elem)
-                if (!$this->has_upgrade($elem))
-                    return false;
-            return true;
-        } else return in_array($a, $this->upgrades);
+    /**
+     * @param int $id
+     * @return Model_Room|null
+     */
+    public function room($id = 0) {
+	    if ($id < 0 || $id >= count($this->rooms)) return null;
+	    else return $this->rooms[$id];
     }
 
     public function uin($uin = NULL) {
@@ -121,10 +103,18 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
             }
         }
 
+        $this->inventory->add(new Model_Items_Virtual_Location_Place());
+
         foreach ($game->get_initialized_events() as $ev)
             $ev->event_locationCreation($this);
 
         return $t;
+    }
+
+    public function setup_additional_rooms() {
+        $this->rooms[] = Model_Room::factory(10,false);
+        $this->rooms[] = Model_Room::factory(10,false);
+        $this->rooms[] = Model_Room::factory(10,false);
     }
 
     public function mapable() {
@@ -141,6 +131,9 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 		global $game;
 			
 		$this->inventory = new Model_Inventory;
+
+        $this->rooms[0] = Model_Room::factory(-1,false);
+        $this->setup_additional_rooms();
 
 		$this->log = new Model_Log_Log();
 		/** @var Model_Factory_Zombies zombie_factory */

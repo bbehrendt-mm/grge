@@ -100,13 +100,16 @@ class Controller_Web extends Controller {
         
         $season = (int)Kohana::$config->load('server.season');
         $title = Tool_System::getSeasonTitle($season);
-        $beta = Kohana::$config->load('build.version.stage') < 3;
+
+        $version_data = Kohana::$config->load('build.version');
+        $beta = $version_data['stage'] < 3;
 
         $this->add_widget(':body', View::factory('body')
             ->set('season', Kohana::$config->load('server.season'))
             ->set('title', $title)
             ->set('beta', $beta)
             ->set('event', Tool_Events::event_extended_name())
+            ->set('version', "GRGE {$version_data['major']}.{$version_data['minor']}.{$version_data['service']}-{$version_data['maintenance']}-{$version_data['stage']}-{$version_data['build']} ({$version_data['date']})")
             ->render());
         $this->modify_current_url('');
         $this->render(null, true);

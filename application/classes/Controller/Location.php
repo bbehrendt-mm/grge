@@ -67,7 +67,7 @@ class Controller_Location extends Controller_Game {
         global $player;
 
         // Translate stuff
-        $data = $blueprints->compile($player->location()->get_upgrades(), $player);
+        $data = $blueprints->compile($player->location()->room()->get_content(), $player);
         foreach ($data as &$blueprint) {
             foreach (['name','description','confirm'] as $key)
                 $blueprint[$key] = __($blueprint[$key]);
@@ -89,7 +89,7 @@ class Controller_Location extends Controller_Game {
         /** @global Model_Player $player */
         global $player;
 
-        $tmp = $blueprints->execute($bid, $player, $player->location()->get_upgrades());
+        $tmp = $blueprints->execute($bid, $player, $player->location()->room()->get_content());
         $this->add_data('result', $tmp);
         $this->render_notifications();
 

@@ -160,7 +160,8 @@ return Model_Blueprints::factory()
     ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires('manu1')->category('Werkbank')->add_modifier(Model_Blueprint::BP_MOD_ENERGY, function($pl,$pre,$e) {/** @var Model_Player $pl */
         /** @var Model_Player $pl */
         $mod = 1;
-        if ($pl->location()->has_upgrade('manuspd')) $mod -= 0.5;           // Suspender Bonus
+        //ToDo: Rooms
+        if ($pl->location()->room()->has_content('manuspd')) $mod -= 0.5;           // Suspender Bonus
         if ($pl->get_status()->retrieve('tr_handyman')) $mod -= 0.1;                     // Handyman Bonus
 
         return max(min(1,$e),floor($e*$mod));

@@ -20,8 +20,8 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
     public function uin($uin = NULL) {
         if ($uin === NULL) return parent::uin();
         else $t = parent::uin($uin);
-
-        $this->inventory->add(new Model_Items_Virtual_Location_Hideout(!$this->has_upgrade('cursed_hideout')));
+        //ToDo: Rooms
+        $this->inventory->add(new Model_Items_Virtual_Location_Hideout(!$this->room()->has_content('cursed_hideout')));
         return $t;
     }
 
@@ -65,9 +65,10 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         $this->zombie_factory->dry_spawn();
 
         /** @var Model_Items_Virtual_Epic_Fence $fence */
+        //ToDO Fix bedrwake for use with multiple rooms
         if (($this->get_defense() > 0) && floor($this->zombie_factory->accumulation()) > $this->get_defense() && (!($fence = Tool_Scripts::first_available_item('Model_Items_Virtual_Epic_Fence', false)) || !$fence->get_status())) {
-            if ($this->has_upgrade("bedrwake")) {
-                $this->remove_upgrades("bedrwake");
+            if ($this->room()->has_content("bedrwake")) {
+                $this->room()->remove_content("bedrwake");
                 foreach (Tool_Scripts::at_location($this->uin(), true, true) as $s_player)
                     if ($s_player->get_status()->retrieve('sleep_cozy')) {
                         $s_player->get_status()->retrieve('sleep_cozy')->unbuff();
@@ -157,10 +158,10 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         else $player = $game->get_npc($pid);
 
         if (!parent::leave($pid, $type)) return false;
-
-        if ($this->has_upgrade('defimp') && !$this->has_upgrade('impaler') && $type == Interface_Tickable::IT_TYPE_PLAYER)
+        //ToDo: Rooms
+        if ($this->room()->has_content('defimp') && !$this->room()->has_content('impaler') && $type == Interface_Tickable::IT_TYPE_PLAYER)
         {
-            $this->add_upgrades('impaler');
+            $this->room()->add_content('impaler');
             $player->log()->add(new Model_Log_Types_Text(null, null, 'Auf dem Weg nach draußen hast du die Fallgrube wieder geschlossen und für einen erneuten Einsatz bereit gemacht.'));
         }
 

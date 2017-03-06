@@ -293,4 +293,8 @@ core.popup = {
     fighter: function() {
         core.popup.genericBlueprintLoader('fighter');
     },
+    
+    rooms: function() {
+        alert('!');
+    }
 };

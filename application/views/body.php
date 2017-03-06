@@ -4,6 +4,7 @@
  * @var string $title
  * @var bool $beta
  * @var string $event
+ * @var string $version
  */
 ?>
 <div id="static">
@@ -26,7 +27,7 @@
 
     <div id="wrapper">
         <div>
-            <div id="infoband">
+            <div id="infoband" title="<?=$version?>">
                 <?php if ($event) { ?>
                     <span class="hide-mobile"><?=__('Season :num', [':num' => '<b>' . $season . ($beta ? ' BETA' : '') . '</b>']);?> - </span>
                     <span><i><b><?=__($event);?></b></i></span>

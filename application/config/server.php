@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
 return array(
-	'season' => 8,
+	'season' => 9,
 
     'titles' => [
         0 => 'Fröhliche Betazeit',
@@ -12,7 +12,8 @@ return array(
         5 => 'Unter freiem Himmel',
         6 => 'Heldenhafte Kinder',
         7 => 'Evolution',
-        8 => 'Freunde und Feinde'
+        8 => 'Freunde und Feinde',
+        9 => 'Schöner sterben'
     ],
 
     'downtime' => [[10,15]],        // ONE downtime, starting 10 minutes after midnight, lasting until 15 minutes after midnight

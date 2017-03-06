@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual {
+class Model_Items_Virtual_Location_Place extends Model_Items_Abstract_Virtual {
 
     protected $remaining = array(
         'hideout_builder' => PHP_INT_MAX,
@@ -10,10 +10,6 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
         'hideout_couch' => PHP_INT_MAX,
     );
 
-    public function __construct($upgradable = true) {
-        if (!$upgradable)
-            $this->remaining['hideout_builder'] = 0;
-    }
 
     protected function hid() {
         /** @global Model_Player $player */

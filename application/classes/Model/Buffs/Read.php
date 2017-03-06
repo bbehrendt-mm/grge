@@ -15,8 +15,8 @@ class Model_Buffs_Read extends Model_Buffs_Abstract_Fragile {
         parent::__construct($player_id, $lifetime);
 
         $this->item_id = $itemid;
-
-        if ($this->assoc_player->location()->has_upgrade("sofa2")) {
+        //ToDO: Fix for use with multiple rooms
+        if ($this->assoc_player->location()->room()->has_content("sofa2")) {
             $f = 1.15;
             if (!isset($effects[Model_Status::MS_STAT_ENERGY])) $effects[Model_Status::MS_STAT_ENERGY] = 0;
             if (!isset($effects[Model_Status::MS_STAT_SLEEPY])) $effects[Model_Status::MS_STAT_SLEEPY] = 0;
@@ -30,7 +30,8 @@ class Model_Buffs_Read extends Model_Buffs_Abstract_Fragile {
                 Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
             );
 
-        if ($this->assoc_player->location()->has_upgrade("sofa2")) {
+        //ToDo: Rooms
+        if ($this->assoc_player->location()->room()->has_content("sofa2")) {
             $this->effects[Model_Status::MS_STAT_ENERGY][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] += 0.20;
             $this->effects[Model_Status::MS_STAT_SLEEPY][Model_Buffs_Abstract_Buff::MB_DROP_ACC] += 0.20;
         }

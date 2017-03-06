@@ -231,9 +231,9 @@ class Model_Blueprints {
             if (is_array($r))
                 foreach ($r as $prj) {
                     if ($prj[0] == '-')
-                        $player->location()->remove_upgrades(substr($prj, 1));
+                        $player->location()->room()->remove_content(substr($prj, 1));
                     else
-                        $player->location()->add_upgrades($prj);
+                        $player->location()->room()->add_content($prj);
                 }
 
             return $r;
@@ -252,16 +252,16 @@ class Model_Blueprints {
         elseif (isset($this->blueprints[$id])) {
             /** @var Model_Blueprint $b */
             $b = $this->blueprints[$id];
-            $r = $b->apply($location, $location->get_upgrades());
+            $r = $b->apply($location, $location->room()->get_content());
         }
         else $r = [$id];
 
         if (is_array($r))
             foreach ($r as $prj) {
                 if ($prj[0] == '-')
-                    $location->remove_upgrades(substr($prj, 1));
+                    $location->room()->remove_content(substr($prj, 1));
                 else
-                    $location->add_upgrades($prj);
+                    $location->room()->add_content($prj);
             }
         return $r;
     }

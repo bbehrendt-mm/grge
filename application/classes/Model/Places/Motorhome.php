@@ -115,10 +115,8 @@ class Model_Places_Motorhome extends Model_Places_Home {
 
         $game->delete_lobby();
         $this->impaler = 0;
-        if ($this->has_upgrade('fence')) {
-            $this->remove_upgrades(['fence','deffence1','deffence2']);
-            $this->defense -= 10;
-        }
+        foreach ($this->rooms as $room)
+            if ($room->is_outside()) $room->clear();
 
         $this->force_nomap = (!$start && $break);
 

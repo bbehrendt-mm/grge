@@ -109,13 +109,22 @@ footer {text-align: center; padding: 20px 0; font-family: "Strait",sans-serif; c
 #loader {display: inline-block; font-size: 50px; position: fixed; color: @zv-loader-color;}
 
 @popup-color: #ffeba5;
-@popup-border-color: darken(@popup-color, 25%);
+@popup-header-color: #cb7857;
+@popup-header-text-color: #ffffff;
+@popup-border-color: darken(@popup-header-color, 10%);
+@popup-header-border-color: darken(@popup-header-color, 15%);
 
 div.popup-wrapper {
   position: fixed; height: 100%; width: 100%; left: 0; top: 0; pointer-events: none; overflow: auto;
   &>div.popup {
     position: relative; pointer-events: all; background: @popup-color; border: 2px solid @popup-border-color; box-shadow: 0 0 15px black;
     &.disabled {filter: blur(2px) sepia(100%); -webkit-filter: blur(2px) sepia(100%);}
+
+    &>.row.head:first-child {
+      background: @popup-header-color; border-bottom: 2px solid @popup-header-border-color; color: @popup-header-text-color;
+      &>.cell:not(:first-child):not(:last-child) {font-weight: bold}
+      &>.cell:first-child .fa + .fa,&>.cell:last-child .fa + .fa {margin-left: 8px;}
+    }
   }
 }
 

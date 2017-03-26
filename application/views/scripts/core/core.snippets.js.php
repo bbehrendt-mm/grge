@@ -234,6 +234,7 @@
      * @param {int} zombies
      * @param {Blueprint[]} lib
      * @param {Function} callback
+     * @param {Object} viewport
      * @returns {*}
      */
     core.snippets.blueprint = function(blueprint, energy, zombies, lib, callback, viewport) {
@@ -400,20 +401,38 @@
                     else if (blueprint.steps_max == 0 && !blueprint.zombies)
                         content.append($('<span />').text(<?=__j('Dieses Projekt kann unbegrenzt oft gebaut werden.')?>)).append('<span class="separator" />');
 
+                    content.append($('<span />').text(<?=__j('Raum')?>));
+
+                    var chk_rm = false;
+                    $.each(blueprint.requires_room, function(k,v) {
+                        content.append($('<div />').addClass('point').addClass(v ? 'success' : 'failure').text(lib[k].name));
+                        chk_rm = true;
+                    });
+
+                    if (!chk_rm) content.append($('<div />').addClass('point success').text(<?=__j('Keine besonderen Vorraussetzungen')?>));
+
                     content.append($('<span />').text(<?=__j('Vorraussetzungen')?>));
 
+                    var rq_sum = [];
+                    $.each(blueprint.requires, function(k,v) {rq_sum.push([false,v])});
+                    $.each(blueprint.requires_local, function(k,v) {rq_sum.push([true,v])});
+
                     var chk_rq = false;
-                    $.each(blueprint.requires, function(k,v) {
+                    $.each(rq_sum, function(k,v_pre) {
+                        var local = v_pre[0];
+                        var v = v_pre[1];
+
                         var cache = [];
                         var ok = false;
                         $.each(v, function(ki,vi) {
                             if (lib[vi]) {
                                 cache.push(lib[vi].name);
-                                if (lib[vi].build) ok = true;
+                                if ((lib[vi].build && !local) || (lib[vi].build_local && local)) ok = true;
                             }
                         });
                         if (cache.length)
-                            content.append($('<div />').addClass('point').addClass(ok ? 'success' : 'failure').text(cache.join(', ')));
+                            content.append($('<div />').addClass('point').addClass(ok ? 'success' : 'failure').text(cache.join(', ') + (local ? (' (' + <?=__j('in diesem Raum')?> + ')') : '')));
+
                         chk_rq = true;
                     });
 

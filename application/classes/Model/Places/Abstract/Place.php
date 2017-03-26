@@ -87,6 +87,27 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 	    else return $this->rooms[$id];
     }
 
+    /**
+     * @param string|null $chk
+     * @return string[]|bool
+     */
+    public function rooms_contain($chk = null) {
+        $accum = [];
+        $res = false;
+        if ($chk === null)
+            foreach ($this->rooms as $room)
+                if ($chk === null) $accum = array_merge($accum, $room->get_content());
+                else $res = $res || $room->check_room_satisfaction($chk);
+        return ($chk === null) ? array_unique($accum) : $res;
+    }
+
+    /**
+     * @return Model_Room[]
+     */
+    public function rooms() {
+        return $this->rooms;
+    }
+
     public function uin($uin = NULL) {
         if ($uin === NULL) return parent::uin();
         else $t = parent::uin($uin);
@@ -132,9 +153,6 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 			
 		$this->inventory = new Model_Inventory;
 
-        $this->rooms[0] = Model_Room::factory(-1,false);
-        $this->setup_additional_rooms();
-
 		$this->log = new Model_Log_Log();
 		/** @var Model_Factory_Zombies zombie_factory */
         $this->zombie_factory = Model_Factory_Zombies::read(get_called_class(), $game->config('game.config.spawn'));
@@ -154,6 +172,11 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
             $this->variant_name = static::$namelist[$type];
             $game->ndp_register(get_called_class(), $type);
         }
+
+        $this->rooms[0] = Model_Room::factory(-1,false);
+        $this->rooms[0]->name($this->name());
+        $this->rooms[0]->upgrade('Allgemein',true, ['common']);
+        $this->setup_additional_rooms();
 	}
 	
 	public function auto_actions() {

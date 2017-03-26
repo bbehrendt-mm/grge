@@ -2782,6 +2782,27 @@ core = {
         return true;
     }
 })();core.popup = {
+    spawn_window : function(title, close_button, dx, dy) {
+        return NF.n('div').addClass('windowed').appendTo(core.popup.spawn(dx,dy).append(NF.row('head')
+            .append(NF.cell(true,2,0,'left'))
+            .append(NF.cell(true,8,0,'center').text(title))
+            .append(NF.cell(true,2,0,'right')
+                .append(close_button ? NF.fa('window-close').addClass('pointer').click(function() {
+                    $(this).trigger('unpop');
+                }) : null)
+            )
+        ));
+    },
+
+    get_window_titlebar: function(pp) {
+        var selected = $();
+        if      ($(pp).hasClass('popup'))    selected = $(pp).children('.row.head:first-child');
+        else if ($(pp).hasClass('windowed')) return core.popup.get_window_titlebar($(pp).parent());
+        else return null;
+
+        return selected.length ? selected : null;
+    },
+
     spawn: function(dx,dy) {
 
         var exp = function(w) {
@@ -2945,69 +2966,68 @@ core = {
         else class_cell.show();
     },
 
-    genericBlueprintLoader: function(type, popup, data, frame, filters, close) {
-        if (!popup) popup = core.popup.spawn({desktop: 700, lg: '100%'},{desktop: 450, lg: '100%'});
+    genericBlueprintLoader: function(type, room, popup, data, frame, filters, ret) {
+        if (!popup) popup = core.popup.spawn_window('', true, {desktop: 700, lg: '100%'},{desktop: 450, lg: '100%'});
 
-        if (!frame || !filters || !close) {
-            popup.empty();
+        var header = core.popup.get_window_titlebar(popup);
+        popup.empty();
 
+        if (!frame)
             frame = NF.row().appendTo(
                 $('<div />').css({
                     position: 'absolute',
                     width: '100%',
                     left: 0,
-                    top: 24,
+                    top: header.outerHeight(),
                     bottom: 0,
                     overflow: 'auto'
                 }).appendTo(popup)
             ).data('type-filters', {
-                    'impossible': {active: false, name: "Unm\u00f6gliche Projekte"},
-                    'locked': {active: true, name: "Gesperrte Projekte"},
-                    'possible': {active: true, name: "Vorbereitete Projekte"},
-                    'ready': {active: true, name: "M\u00f6gliche Projekte"},
-                    'done': {active: true, name: "Abgeschlossene Projekte"},
-                    'categories': {}
+                'impossible': {active: false, name: "Unm\u00f6gliche Projekte"},
+                'locked': {active: true, name: "Gesperrte Projekte"},
+                'possible': {active: true, name: "Vorbereitete Projekte"},
+                'ready': {active: true, name: "M\u00f6gliche Projekte"},
+                'done': {active: true, name: "Abgeschlossene Projekte"},
+                'categories': {}
             }).on('filter', function() {
-                    var typefilters = $(this).data('type-filters');
+                var typefilters = $(this).data('type-filters');
 
-                    $(this).find('.blueprint').parent().hide();
+                $(this).find('.blueprint').parent().hide();
 
-                    var alias = $(this);
-                    var all_enabled = true;
-                    $.each(typefilters.categories, function(name, active) {
-                        if (active)
-                            alias.find('.blueprint[data-cats*="|' + name + '|"]').parent().show();
-                        else all_enabled = false;
-                    });
-                    if (all_enabled) alias.find('.blueprint[data-cats="||"]').parent().show();
+                var alias = $(this);
+                var all_enabled = true;
+                $.each(typefilters.categories, function(name, active) {
+                    if (active)
+                        alias.find('.blueprint[data-cats*="|' + name + '|"]').parent().show();
+                    else all_enabled = false;
+                });
+                if (all_enabled) alias.find('.blueprint[data-cats="||"]').parent().show();
 
-                    if (!typefilters.impossible.active)  $(this).find('.blueprint.red').parent().hide();
-                    if (!typefilters.locked.active)      $(this).find('.blueprint.plain').parent().hide();
-                    if (!typefilters.possible.active)    $(this).find('.blueprint.green').parent().hide();
-                    if (!typefilters.ready.active)       $(this).find('.blueprint.green.active').parent().hide();
-                    if (!typefilters.done.active)        $(this).find('.blueprint.blue').parent().hide();
+                if (!typefilters.impossible.active)  $(this).find('.blueprint.red').parent().hide();
+                if (!typefilters.locked.active)      $(this).find('.blueprint.plain').parent().hide();
+                if (!typefilters.possible.active)    $(this).find('.blueprint.green').parent().hide();
+                if (!typefilters.ready.active)       $(this).find('.blueprint.green.active').parent().hide();
+                if (!typefilters.done.active)        $(this).find('.blueprint.blue').parent().hide();
 
-                    $(this).find('.blueprint-group').each(function() {
-                        $(this).show();
-                        if (!$(this).find('.blueprint:visible').length) $(this).hide();
-                    });
+                $(this).find('.blueprint-group').each(function() {
+                    $(this).show();
+                    if (!$(this).find('.blueprint:visible').length) $(this).hide();
+                });
             });
 
-            NF.row().append(
-                filters = $('<div />').addClass('cell rw-11')
-            ).append(
-                close = $('<div />').addClass('cell rw-1 right')
-            ).appendTo(popup);
-
-            filters.append($('<div />').addClass('btn small btn-exp').text("Angezeigte Projekte filtern...").click(function() {
+        if (!filters)
+            header.children('.left').append(filters = NF.fa('filter').addClass('pointer').attr('title',"Angezeigte Projekte filtern...").click(function() {
                 core.popup.genericFilterLoader(function(a) {
                     frame.data('type-filters', a).trigger('filter');
                 }, JSON.parse(JSON.stringify(frame.data('type-filters'))));
-            }));
-            close.append($('<div />').addClass('btn small').append($('<i/>').addClass('fa fa-times')).click(function() {
-                popup.trigger('unpop');
-            }));
-        }
+            }).qtip(game.render.html.qtip.ingame('bottom')));
+
+        if (!ret)
+            header.children('.left').append(ret = NF.fa('chevron-left').addClass('pointer').attr('title',"Zur\u00fcck zur \u00dcbersicht").click(function() {
+                filters.remove();
+                ret.remove();
+                core.popup.rooms(popup);
+            }).qtip(game.render.html.qtip.ingame('bottom')));
 
         var build_func = function(bdata) {
             frame.empty();
@@ -3040,16 +3060,22 @@ core = {
 
                     var prev_scroll = $('.popup').find('>*:first-child').scrollTop();
                     popup.addClass('disabled');
-                    core.command('location/' + type, {build: k}, true, function(new_data) {
-                        core.popup.genericBlueprintLoader(type,popup,new_data,frame,filters,close);
+                    core.command('location/' + type, {build: k, r: bdata.room}, true, function(new_data) {
                         popup.removeClass('disabled');
-                        frame.trigger('filter');
-                        $('.popup').find('>*:first-child').animate({scrollTop: prev_scroll}, 0);
+
                         popup.off('close').on('close', function() {
                             setTimeout(function() {
                                 core.command();
                             }, 100);
-                        })
+                        });
+
+                        if (type == 'tine') ret.click();
+                        else {
+                            core.popup.genericBlueprintLoader(type,room,popup,new_data,frame,filters,ret);
+                            frame.trigger('filter');
+                            $('.popup').find('>*:first-child').animate({scrollTop: prev_scroll}, 0);
+                        }
+
                     }, true)
                 }, popup)));
             });
@@ -3063,22 +3089,91 @@ core = {
 
         if (!data) {
             frame.append(core.snippets.wait());
-            core.command('location/' + type, {}, true, build_func);
+            core.command('location/' + type, {r: room}, true, build_func);
         } else build_func(data);
     },
 
     builder: function() {
-        core.popup.genericBlueprintLoader('builder');
+        core.popup.genericBlueprintLoader('builder',0);
     },
     maker: function() {
-        core.popup.genericBlueprintLoader('maker');
+        core.popup.genericBlueprintLoader('maker',0);
     },
     fighter: function() {
-        core.popup.genericBlueprintLoader('fighter');
+        core.popup.genericBlueprintLoader('fighter',0);
     },
     
-    rooms: function() {
-        alert('!');
+    rooms: function(popup) {
+        if (!popup) popup = core.popup.spawn_window('', true, {desktop: 700, lg: '100%'},{desktop: 450, lg: '100%'});
+
+        popup.empty().append(core.snippets.wait());
+
+        var titlebar = core.popup.get_window_titlebar(popup);
+        titlebar.children('.center').text("R\u00e4ume");
+
+        core.command('location/rooms', {}, true, function(data) {
+            if (!data.rooms) {
+                popup.trigger('unpop');
+                return;
+            }
+
+            popup.empty();
+
+            popup.append(NF.row().append(
+                NF.cell(true, {lg: 10, md: 12}, {lg: 1, md: 0}).append(
+                    NF.info("Hier kannst du die einzelnen R\u00e4ume deines Versteckes ausbauen oder ihren Typ \u00e4ndern. Au\u00dferdem kannst du mit den Ausbauten der R\u00e4ume interagieren.")
+                )
+            ));
+
+            var main_row = NF.row().appendTo(popup);
+
+            $.each(data.rooms, function(id,room) {
+                var room_identifier = room.name ? room.name : (room.type ? room.type : "Unbenutzter Raum");
+
+                var current;
+                main_row.append(NF.cell(true,6).append(
+                    current = $('<div/>').addClass('flatbox').append(
+                        NF.row()
+                            .append(NF.cell(false,11)
+                                .append(NF.row()
+                                    .append(NF.cell(false,12,0,'center').append($('<h3/>').text(room.name ? room.name : "Namenloser Raum")))
+                                    .append(NF.cell(false,12,0,'center').append(NF.n('div','small i').text(room.type ? room.type : "Unbenutzter Raum")))
+                                )
+                            ).append(room.options.rename ? NF.cell(true, 1,0,'center pointer').append(NF.fa('pencil-square-o')).click(function() {
+                                alert('RENAME');
+                        }) : null)
+                    )
+                ));
+
+                if (room.size !== null)
+                    current.append(NF.row()
+                        .append(NF.cell(true,4,0,  'left').append(NF.n('div','b small').text("Gr\u00f6\u00dfe" + ': ' + room.size + 'm��')))
+                        .append(NF.cell(true,4,0,'center').append(NF.n('div','b small').text("Freier Platz" + ': ' + room.free + 'm��')))
+                        .append(NF.cell(true,4,0, 'right').append(NF.n('div','b small').text(room.outside ? "Au\u00dfen" : "Innen")))
+                    );
+                else current.append(NF.row()
+                    .append(NF.cell(true,8,0, 'left').append(NF.n('div','b small').text("Keine Platzbeschr\u00e4nkung")))
+                    .append(NF.cell(true,4,0,'right').append(NF.n('div','b small').text(room.outside ? "Au\u00dfen" : "Innen")))
+                );
+
+                var btn_add, btn_con, btn_cre;
+
+                current.append(NF.row()
+                    .append(NF.cell(true,{desktop: 4, lg: 6, sm: 12},0,'center').append(btn_add = NF.button("Ausbauen...",true).addClass(room.options.add ? 'block' : 'block disabled')))
+                    .append(NF.cell(true,{desktop: 4, lg: 6, sm: 12},0,'center').append(btn_con = NF.button("Umbauen...",true).addClass(room.options.construct ? 'block' : 'block disabled')))
+                    .append(NF.cell(true,{desktop: 4, lg: 6, sm: 12},0,'center').append(btn_cre = NF.button("Herstellen...",true).addClass(room.options.create ? 'block' : 'block disabled')))
+                );
+
+                btn_add.click(function() {
+                    titlebar.children('.center').text(game.i18n("Ausbauen: :room", {':room': room_identifier}));
+                    core.popup.genericBlueprintLoader('builder',room.id,popup);
+                });
+                btn_con.click(function() {
+                    titlebar.children('.center').text(game.i18n("Umbauen: :room", {':room': room_identifier}));
+                    core.popup.genericBlueprintLoader('tine',room.id,popup);
+                });
+            })
+        });
     }
 };core.popup.map = function() {
 
@@ -4115,6 +4210,7 @@ core = {
      * @param {int} zombies
      * @param {Blueprint[]} lib
      * @param {Function} callback
+     * @param {Object} viewport
      * @returns {*}
      */
     core.snippets.blueprint = function(blueprint, energy, zombies, lib, callback, viewport) {
@@ -4281,20 +4377,38 @@ core = {
                     else if (blueprint.steps_max == 0 && !blueprint.zombies)
                         content.append($('<span />').text("Dieses Projekt kann unbegrenzt oft gebaut werden.")).append('<span class="separator" />');
 
+                    content.append($('<span />').text("Raum"));
+
+                    var chk_rm = false;
+                    $.each(blueprint.requires_room, function(k,v) {
+                        content.append($('<div />').addClass('point').addClass(v ? 'success' : 'failure').text(lib[k].name));
+                        chk_rm = true;
+                    });
+
+                    if (!chk_rm) content.append($('<div />').addClass('point success').text("Keine besonderen Vorraussetzungen"));
+
                     content.append($('<span />').text("Vorraussetzungen"));
 
+                    var rq_sum = [];
+                    $.each(blueprint.requires, function(k,v) {rq_sum.push([false,v])});
+                    $.each(blueprint.requires_local, function(k,v) {rq_sum.push([true,v])});
+
                     var chk_rq = false;
-                    $.each(blueprint.requires, function(k,v) {
+                    $.each(rq_sum, function(k,v_pre) {
+                        var local = v_pre[0];
+                        var v = v_pre[1];
+
                         var cache = [];
                         var ok = false;
                         $.each(v, function(ki,vi) {
                             if (lib[vi]) {
                                 cache.push(lib[vi].name);
-                                if (lib[vi].build) ok = true;
+                                if ((lib[vi].build && !local) || (lib[vi].build_local && local)) ok = true;
                             }
                         });
                         if (cache.length)
-                            content.append($('<div />').addClass('point').addClass(ok ? 'success' : 'failure').text(cache.join(', ')));
+                            content.append($('<div />').addClass('point').addClass(ok ? 'success' : 'failure').text(cache.join(', ') + (local ? (' (' + "in diesem Raum" + ')') : '')));
+
                         chk_rq = true;
                     });
 

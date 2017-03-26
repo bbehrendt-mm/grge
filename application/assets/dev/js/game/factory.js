@@ -59,6 +59,10 @@ NF.n = function(node, classes, content, html) {
     else return tmp.append(content);
 };
 
+NF.info = function(txt) {
+    return NF.n('div','note',txt);
+};
+
 NF.input = function(type, content) {
     return NF.n('input', 'form_input').val(content).attr('type',type);
 };

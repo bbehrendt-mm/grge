@@ -3,11 +3,7 @@
 class Model_Items_Virtual_Location_Place extends Model_Items_Abstract_Virtual {
 
     protected $remaining = array(
-        'hideout_builder' => PHP_INT_MAX,
-        'hideout_maker' => PHP_INT_MAX,
-        'hideout_sleep' => PHP_INT_MAX,
-        'hideout_defense' => PHP_INT_MAX,
-        'hideout_couch' => PHP_INT_MAX,
+        'show_rooms' => PHP_INT_MAX,
     );
 
 
@@ -17,101 +13,10 @@ class Model_Items_Virtual_Location_Place extends Model_Items_Abstract_Virtual {
 
         //ToDo: ROOOOOOOOOOOMS
 
-        /** @var Model_Places_Abstract_Hideout $location */
-        $location = $player->location();
-        /** @noinspection PhpUndefinedMethodInspection */
-        $location_driving = Tool_System::instance_of($location, 'Model_Places_Motorhome') && $location->is_driving();
-
-        $tmp = parent::hid();
-
-        if (!$location_driving)
-            $tmp->add_action('Versteck ausbauen ...', Model_Action::factory()
-                ->buttonskin('hideout')
-                ->description('Dein Versteck sieht etwas langweilig aus... du solltest es mit einigen nützlichen Erweiterungen etwas aufpeppen!')
-                ->popup('builder')
-            , 'hideout_builder');
-
-        if (!$location->room()->has_content("hideout_slot"))
-            return $tmp;
-
-        $tmp->add_action('Gegenstände herstellen ...', Model_Action::factory()
+        return parent::hid()->add_action('Dieser Ort ...', Model_Action::factory()
             ->buttonskin('hideout')
-            ->description('Warum lange nach neuem Zeug suchen, wenn du es einfach selbst herstellen kannst?')
-            ->popup('maker')
-            , 'hideout_maker');
-
-        if (!$location_driving)
-            $tmp->add_action('Verteidigung ...', Model_Action::factory()
-                ->buttonskin('hideout')
-                ->description('Zombies oder Zeugen Jehovas stehen an deiner Tür? Nicht mehr lange...')
-                ->popup('fighter')
-                , 'hideout_defense');
-
-        if ($location->room()->has_content("sofa1"))
-            $tmp->add_action('In der Sitzecke entspannen', Model_Action::factory()
-                    ->buttonskin('hideout')
-                    ->condition(function($p) {
-                        /** @var Model_Player $p */
-                        if ($p->get_status()->retrieve('fragile')) return 'fragile';
-                        return true;
-                    })
-                    ->fail_message('Du bist im Moment beschäftigt.', 'fragile')
-                    ->show_as(Model_Effect::factory()
-                            ->effect(Model_Status::MS_STAT_ENERGY, '++')
-                            ->effect(Model_Status::MS_STAT_SLEEPY, '--')
-                    )
-                    ->effect(Model_Effect::factory()
-                            ->message('Du setzt dich in den Sitz fallen und versuchst, all die schlimmen Ereignisse heute abzuschütteln.')
-                            ->custom(function($p) {
-                                /** @var Model_Player $p */
-                                /** @var Model_Places_Abstract_Hideout $l */
-                                $l = $p->location();
-
-                                if		($l->room()->has_content("sofa2"))	new Model_Buffs_Couch($p->id(), 2);
-                                elseif	($l->room()->has_content("sofa1"))	new Model_Buffs_Couch($p->id(), 1);
-                            })
-                    )
-                , 'hideout_couch');
-
-        $tmp->add_action($location->room()->has_content("bedr1") ? 'Ins Bett gehen' : ($location->room()->has_content("hay1") ? 'Auf dem Heu schlafem' : 'Auf dem Boden schlafen'), Model_Action::factory()
-            ->buttonskin('hideout')
-            ->condition(function($p) {
-                /** @var Model_Player $p */
-                if ($p->get_status()->retrieve('fragile')) return 'fragile';
-                if ($p->get_status()->retrieve('wow')) return 'wow';
-                if ($p->get_status()->get(Model_Status::MS_STAT_THIRST) < 20) return 'thirst';
-                if ($p->get_status()->get(Model_Status::MS_STAT_HUNGER) < 20) return 'hunger';
-                if ($p->get_status()->get(Model_Status::MS_STAT_SLEEPY) > 85) return 'sleepy';
-                if ($p->location()->room()->has_content('hideout_cursed')) return 'cursed';
-                return true;
-            })
-            ->fail_message('Du bist im Moment beschäftigt.', 'fragile')
-            ->fail_message('Dafür bist du im Moment zu aufgeregt.', 'wow')
-            ->fail_message('Du wälzt dich hin und her, aber dein furchtbarer Durst hindert sich am Einschlafen...', 'thirst')
-            ->fail_message('Du wälzt dich hin und her, aber dein furchtbarer Hunger hindert sich am Einschlafen...', 'hunger')
-            ->fail_message('Du wälzt dich hin und her, aber kannst einfach nicht einschlafen... Vielleicht bist du ja gar nicht müde.', 'sleepy')
-            ->fail_message('Du legst dich auf das Bett und versuchst zu schlafen. Allerdings kannst du dich einfach nicht dazu durchringen, in diesem fürchterlichen Raum die Augen zu schließen. Als du dann auch noch jemanden (oder etwas?) in der Ferne durch die Gänge schleichen hörst, springst du wieder auf. Sieht nicht so aus, als könntest du hier schlafen...', 'cursed')
-            ->show_as(Model_Effect::factory()
-                ->effect(Model_Status::MS_STAT_ENERGY, '++')
-                ->effect(Model_Status::MS_STAT_SLEEPY, '++')
-                ->effect(Model_Status::MS_STAT_HEALTH, $location->room()->has_content("bedr1") ? '++' : 0)
-            )
-            ->effect(Model_Effect::factory()
-                ->message('Es war ein langer Tag, und du bist froh wenigstens für ein paar Stunden alles um dich herum vergessen zu können ...')
-                ->custom(function($p) {
-                        /** @var Model_Player $p */
-                        /** @var Model_Places_Abstract_Hideout $l */
-                        $l = $p->location();
-                        $d = $l->room()->has_content("bedrlights") ? 2 : 5;
-
-                        if		($l->room()->has_content("bedr3") || $l->room()->has_content("hay3")) new Model_Buffs_Presleep($p->id(), $l->room()->has_content("bedr3") ? 3 : -3, $l->room()->has_content("bedr3") ? $d : ($d + 1));
-                        elseif	($l->room()->has_content("bedr2") || $l->room()->has_content("hay2")) new Model_Buffs_Presleep($p->id(), $l->room()->has_content("bedr2") ? 2 : -2, $l->room()->has_content("bedr2") ? $d : ($d + 1));
-                        elseif	($l->room()->has_content("bedr1") || $l->room()->has_content("hay1")) new Model_Buffs_Presleep($p->id(), $l->room()->has_content("bedr1") ? 1 : -1, $l->room()->has_content("bedr1") ? $d : ($d + 1));
-                        else new Model_Buffs_Presleep($p->id(), 0, 6);
-                    })
-            )
-        , 'hideout_sleep');
-
-        return $tmp;
+            ->description('Hier kannst du sehen, was es an diesem Ort so zu tun gibt. Möglicherweise kannst du sogar ein paar Ausbauten vornehmen...')
+            ->popup('rooms')
+            , 'show_rooms');
     }
 }	

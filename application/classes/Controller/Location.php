@@ -58,16 +58,44 @@ class Controller_Location extends Controller_Game {
         }
     }
 
+    public function japi_rooms() {
+        /**
+         * @global $player Model_Player
+         */
+        global $player;
+
+        $data = [];
+
+        foreach ($player->location()->rooms() as $id => $room)
+            $data[$id] = [
+                'id' => $id,
+                'name' => $room->name(),
+                'size' => $room->get_space() == PHP_INT_MAX ? null : $room->get_space(),
+                'free' => $room->get_space() == PHP_INT_MAX ? null : $room->get_space(true),
+                'type' => $room->get_usage(),
+                'outside' => $room->is_outside(),
+                'options' => [
+                    'rename' => $id != 0,
+                    'add' => $room->get_usage() != null,
+                    'construct' => $id != 0,
+                    'create' => $room->get_usage() != null,
+                ],
+                'debug' => $room->get_content(),
+            ];
+        $this->render(['rooms' => $data]);
+    }
+
     /**
      * @param Model_Blueprints $blueprints
+     * @param Model_Room $room
      * @return mixed
      */
-    private function compile_builder($blueprints) {
+    private function compile_builder($blueprints, $room) {
         /** @global Model_Player $player */
         global $player;
 
         // Translate stuff
-        $data = $blueprints->compile($player->location()->room()->get_content(), $player);
+        $data = $blueprints->compile($player->location()->rooms_contain(), $room, $player);
         foreach ($data as &$blueprint) {
             foreach (['name','description','confirm'] as $key)
                 $blueprint[$key] = __($blueprint[$key]);
@@ -83,29 +111,59 @@ class Controller_Location extends Controller_Game {
     /**
      * @param Model_Blueprints $blueprints
      * @param string $bid
+     * @param Model_Room $room
      * @return bool
      */
-    private function exec_build($blueprints, $bid) {
+    private function exec_build($blueprints, $bid, $room) {
         /** @global Model_Player $player */
         global $player;
 
-        $tmp = $blueprints->execute($bid, $player, $player->location()->room()->get_content());
+        $tmp = $blueprints->execute($bid, $player, $player->location()->rooms_contain(), $room);
         $this->add_data('result', $tmp);
         $this->render_notifications();
 
         return (bool)$tmp;
     }
 
+    public function japi_tine() {
+        /** @global Model_Player $player */
+        global $player;
+
+        $room_id = (int)$this->post('r');
+        $room = $player->location()->room($room_id);
+        if (!$room) return false;
+
+        $blueprints = Model_Blueprints::factory($player->location(), 'rooms');
+
+        if ($build = $this->post('build'))
+            $player->achievements()->achieve(Model_Achievement::MA_ROOM_BUILDER, $this->exec_build($blueprints, $build, $room) ? 1 : 0);
+
+        $this->add_data('room', $room_id);
+        $this->add_data('blueprints', $this->compile_builder($blueprints, $room));
+        $this->add_data('energy', $player->get_status()->get(Model_Status::MS_STAT_ENERGY));
+        $this->add_data('zombies', $player->location()->zombie_pop());
+        $this->render(false);
+        return true;
+    }
+
     public function japi_builder() {
         /** @global Model_Player $player */
         global $player;
 
+        $room_id = (int)$this->post('r');
+        $room = $player->location()->room($room_id);
+        if (!$room) return false;
+
         $blueprints = Model_Blueprints::factory($player->location(), 'upgrades');
+        $externals = Model_Blueprints::factory($player->location(), 'rooms')->externalize();
 
         if ($build = $this->post('build'))
-            $player->achievements()->achieve(Model_Achievement::MA_CONSTRUCTIONS, $this->exec_build($blueprints, $build) ? 1 : 0);
+            $player->achievements()->achieve(Model_Achievement::MA_CONSTRUCTIONS, $this->exec_build($blueprints, $build, $room) ? 1 : 0);
 
-        $this->add_data('blueprints', $this->compile_builder($blueprints));
+        $blueprints->merge($externals)->validate();
+
+        $this->add_data('room', $room_id);
+        $this->add_data('blueprints', $this->compile_builder($blueprints, $room));
         $this->add_data('energy', $player->get_status()->get(Model_Status::MS_STAT_ENERGY));
         $this->add_data('zombies', $player->location()->zombie_pop());
         $this->render(false);
@@ -118,16 +176,21 @@ class Controller_Location extends Controller_Game {
          */
         global $player;
 
+        $room_id = (int)$this->post('r');
+        $room = $player->location()->room($room_id);
+        if (!$room) return false;
 
         $blueprints = Model_Blueprints::factory($player->location(), 'items');
-        $externals = Model_Blueprints::factory($player->location(), 'upgrades')->externalize();
+        $externals_1 = Model_Blueprints::factory($player->location(), 'upgrades')->externalize();
+        $externals_2 = Model_Blueprints::factory($player->location(), 'rooms')->externalize();
 
         if ($build = $this->post('build'))
-            $this->exec_build($blueprints, $build);
+            $this->exec_build($blueprints, $build, $room);
 
-        $blueprints->merge($externals)->validate();
+        $blueprints->merge($externals_1)->merge($externals_2)->validate();
 
-        $this->add_data('blueprints', $this->compile_builder($blueprints));
+        $this->add_data('room', $room_id);
+        $this->add_data('blueprints', $this->compile_builder($blueprints, $room));
         $this->add_data('energy', $player->get_status()->get(Model_Status::MS_STAT_ENERGY));
         $this->add_data('zombies', $player->location()->zombie_pop());
         $this->render(false);
@@ -138,15 +201,20 @@ class Controller_Location extends Controller_Game {
         /** @global Model_Player $player */
         global $player;
 
+        $room_id = (int)$this->post('r');
+        $room = $player->location()->room($room_id);
+        if (!$room) return false;
+
         $blueprints = Model_Blueprints::factory($player->location(), 'attack');
         $externals = Model_Blueprints::factory($player->location(), 'upgrades')->externalize();
 
         if ($build = $this->post('build'))
-            $this->exec_build($blueprints, $build);
+            $this->exec_build($blueprints, $build, $room);
 
         $blueprints->merge($externals)->validate();
 
-        $this->add_data('blueprints', $this->compile_builder($blueprints));
+        $this->add_data('room', $room_id);
+        $this->add_data('blueprints', $this->compile_builder($blueprints, $room));
         $this->add_data('energy', $player->get_status()->get(Model_Status::MS_STAT_ENERGY));
         $this->add_data('zombies', $player->location()->zombie_pop());
         $this->render(false);

@@ -9,16 +9,24 @@ class Model_Blueprint {
      */
     private $effect;
 
-    private $name;
     private $id;
+    private $is_room = false;
+
+    private $room_clear = true;
+
+    private $name;
     private $description;
 
     private $items = [];
     private $item_deciders = [];
     private $produces = [];
+
     private $requires = [];
+    private $requires_local = [];
     private $provides = [];
     private $removes = [];
+    private $room_requirements = [];
+    private $use_global_blocking = true;
 
     private $energy = 0;
     private $decay = 0;
@@ -103,6 +111,11 @@ class Model_Blueprint {
         }
     }
 
+    public function global_blocking($b = null) {
+        if ($b === null) return $this->use_global_blocking;
+        else $this->use_global_blocking = true;
+    }
+
     /**
      * Setter for the blueprint categories
      * @param array|string $name New category name
@@ -165,6 +178,39 @@ class Model_Blueprint {
             if ($this->id) throw new Exception('Attempt to rebind blueprint ID!');
             $this->id = $id;
             $this->provide($id);
+            return $this;
+        }
+    }
+
+    /**
+     * Setter / Getter for blueprint ID
+     * @param null|string $id
+     * @return Model_Blueprint|string|null
+     * @throws Exception When trying to overwrite a previously set ID
+     */
+    public function room($id = null) {
+        if ($id === null)
+            return $this->is_room ? $this->id : null;
+        else {
+            if ($this->id) throw new Exception('Attempt to rebind blueprint ID!');
+            $this->id = $id;
+            $this->is_room = true;
+            $this->global_blocking(true);
+            return $this;
+        }
+    }
+
+    /**
+     * @param bool|null $v
+     * @return Model_Blueprint|bool
+     * @throws Exception When using this function on a non-room
+     */
+    public function clear_previous_room($v = null) {
+        if (!$this->is_room) throw new Exception("Using CLEAR on non-room!");
+
+        if ($v === null) return $this->room_clear;
+        else {
+            $this->room_clear = $v;
             return $this;
         }
     }
@@ -275,10 +321,10 @@ class Model_Blueprint {
     }
 
     /**
-     * Adds a new previous blueprint requirement. If the given value is an array, all requirements in it are interpreted as alternatives (OR). If called without argument, it returns all IDs this blueprint requires
-     * @param string|string[] $rid,... Requirement (can be a blueprint ID or any string that is provided by any other blueprint
-     * @return Model_Blueprint|string[][]
-     */
+ * Adds a new previous blueprint requirement. If the given value is an array, all requirements in it are interpreted as alternatives (OR). If called without argument, it returns all IDs this blueprint requires
+ * @param string|string[] $rid,... Requirement (can be a blueprint ID or any string that is provided by any other blueprint
+ * @return Model_Blueprint|string[][]
+ */
     public function requires($rid) {
         if (func_num_args() > 1) {
             foreach (func_get_args() as $arg)
@@ -295,15 +341,36 @@ class Model_Blueprint {
     }
 
     /**
-     * Adds a new provided ID. Note that the ID if this blueprint is always provided by default. If called without argument, it returns all IDs this blueprint provides
-     * @param string $rid Provided ID
+     * Adds a new previous blueprint requirement for the same room. If the given value is an array, all requirements in it are interpreted as alternatives (OR). If called without argument, it returns all IDs this blueprint requires
+     * @param string|string[] $rid,... Requirement (can be a blueprint ID or any string that is provided by any other blueprint
+     * @return Model_Blueprint|string[][]
+     */
+    public function requires_local($rid) {
+        if (func_num_args() > 1) {
+            foreach (func_get_args() as $arg)
+                $this->requires_local($arg);
+            return $this;
+        }
+
+        if ($rid === null)
+            return $this->requires_local;
+        if (!is_array($rid)) $rid = [$rid];
+        if (count($rid))
+            $this->requires_local[] = $rid;
+        return $this;
+    }
+
+    /**
+     * Adds new room requirements or returns the current requirements.
+     * @param string|string[] $rid
      * @return Model_Blueprint|string[]
      */
-    public function provide($rid = null) {
+    public function requires_room($rid = null) {
         if ($rid === null)
-            return $this->steps <= 0 ? [] : $this->provides;
-        elseif (!in_array($rid, $this->provides))
-            $this->provides[] = $rid;
+            return $this->room_requirements;
+
+        if (!is_array($rid)) $rid = [$rid];
+        $this->room_requirements = array_unique(array_merge($this->room_requirements, $rid));
         return $this;
     }
 
@@ -311,11 +378,28 @@ class Model_Blueprint {
      * Adds a new provided ID. Note that the ID if this blueprint is always provided by default. If called without argument, it returns all IDs this blueprint provides
      * @param string $rid Provided ID
      * @return Model_Blueprint|string[]
+     * @throws Exception When attempting to add provided IDs to a room blueprint.
+     */
+    public function provide($rid = null) {
+        if ($rid === null)
+            return $this->steps <= 0 ? [] : $this->provides;
+        if ($this->is_room) throw new Exception('Attempt to use PROVIDING with rooms!');
+        if (!in_array($rid, $this->provides))
+            $this->provides[] = $rid;
+        return $this;
+    }
+
+    /**
+     * Adds a new removed ID.
+     * @param string $rid Provided ID
+     * @return Model_Blueprint|string[]
+     * @throws Exception When attempting to add removed IDs to a room blueprint.
      */
     public function remove($rid = null) {
         if ($rid === null)
             return $this->removes;
-        elseif (!in_array($rid, $this->removes))
+        if ($this->is_room) throw new Exception('Attempt to use REMOVING with rooms!');
+        if (!in_array($rid, $this->removes))
             $this->removes[] = $rid;
         return $this;
     }
@@ -383,17 +467,23 @@ class Model_Blueprint {
         return $this;
     }
 
-    private function can_prod($preconditions) {
+    /**
+     * @param string[] $preconditions
+     * @param Model_Room|null $room
+     * @return bool
+     */
+    private function can_prod($preconditions, $room = null) {
         if ($this->steps > 0) {
+            if ($room === null && !$this->global_blocking()) return true;
             foreach ($this->provides as $p)
-                if (in_array($p, $preconditions))
+                if (in_array($p, $this->global_blocking() ? $preconditions : $room->get_content()))
                     return false;
         }
         return true;
     }
 
-    private function can_req($preconditions) {
-        foreach ($this->requires as $r_block) {
+    private function can_req($preconditions, $local = false) {
+        foreach (($local ? $this->requires_local : $this->requires) as $r_block) {
             foreach ($r_block as $requirement)
                 if (in_array($requirement, $preconditions))
                     continue(2);
@@ -403,22 +493,32 @@ class Model_Blueprint {
     }
 
     /**
+     * @param Model_Room $room
+     * @return bool
+     */
+    private function can_room($room) {
+        return $room->check_room_satisfaction($this->requires_room()) && $this->can_req($room->get_content(), true);
+    }
+
+    /**
      * Returns true, when the blueprint can be realized given the preconditions
      * @param string[] $preconditions Realized blueprints
+     * @param Model_Room|null $room
      * @param bool $ignore_blocked_slots Set true if you want to ignore blocked slots
      * @return bool
      */
-    public function can($preconditions, $ignore_blocked_slots = false) {
-        return ($ignore_blocked_slots || $this->can_prod($preconditions)) && $this->can_req($preconditions);
+    public function can($preconditions, $room = null, $ignore_blocked_slots = false) {
+        return ($ignore_blocked_slots || $this->can_prod($preconditions,$room)) && $this->can_req($preconditions) && ($room === null || $this->can_room($room));
     }
 
 
     /**
      * @param Model_Player $player Active player
      * @param string[] $preconditions Realized blueprints
+     * @param Model_Room $room
      * @return bool|string[] Returns if execution failed, or an array containing the newly activated blueprint ids. Note that this function may return an empty array on success!
      */
-    public function execute($player, $preconditions) {
+    public function execute($player, $preconditions, $room) {
         if ($this->show_condition) {
             $c = $this->show_condition;
             if ($c($player) !== true)
@@ -438,7 +538,7 @@ class Model_Blueprint {
             return false;
         }
 
-        if (!$this->can($preconditions)) {
+        if (!$this->can($preconditions, $room)) {
             $player->log()->add('Nicht alle Vorraussetungen für diese Aktion sind erfüllt.');
             return false;
         }
@@ -458,7 +558,7 @@ class Model_Blueprint {
             for ($i = 0; $i < $count; $i++)
                 $player->location()->inventory()->add(new $item());
 
-        $ret = $this->apply($player->location(), $preconditions);
+        $ret = $this->apply($player->location(), $preconditions, $room);
 
         if ($this->effect)
             $this->effect->execute($player, null);
@@ -485,11 +585,24 @@ class Model_Blueprint {
     }
 
     /**
+     * @param Model_Room $room
+     * @return array
+     */
+    private function apply_room($room) {
+        if ($this->clear_previous_room()) $room->clear();
+
+        $room->upgrade($this->name,$this->clear_previous_room(),[$this->id]);
+
+        return [];
+    }
+
+    /**
      * @param Model_Places_Abstract_Place $location
      * @param string[] $preconditions Realized blueprints
-     * @return bool|string[] Returns if execution failed, or an array containing the newly activated blueprint ids. Note that this function may return an empty array on success!
+     * @param Model_Room $room
+     * @return bool|string[] Returns false if execution failed, or an array containing the newly activated blueprint ids. Note that this function may return an empty array on success!
      */
-    public function apply($location, $preconditions) {
+    public function apply($location, $preconditions, $room) {
         if (Tool_System::instance_of($location, 'Model_Places_Abstract_Hideout')) {
             /** @var Model_Places_Abstract_Hideout $location */
             $location->set_decay($this->decay/100, false);
@@ -497,6 +610,8 @@ class Model_Blueprint {
             $location->inc_defense($this->defense);
             $location->deco($this->deco_value);
         }
+
+        if ($this->is_room) return $this->apply_room($room);
 
         if ($this->steps <= 0)
             if ($this->remove()) {
@@ -507,7 +622,7 @@ class Model_Blueprint {
 
         $ret = $this->provide();
 
-        if (($c = $this->completion($preconditions)) !== true)
+        if (($c = $this->completion($this->global_blocking() ? $preconditions : $room->get_content())) !== true)
             foreach ($ret as &$r)
                 $r = $r . ':' . ($c+1);
 
@@ -533,13 +648,14 @@ class Model_Blueprint {
 
     /**
      * @param string[] $preconditions
+     * @param Model_Room $room
      * @param Model_Player $player
      * @return array
      */
-    public function compile($preconditions, $player) {
+    public function compile($preconditions, $room, $player) {
         $current_steps = $this->completion($preconditions);
-        $still_open = $this->can_prod($preconditions);
-        $requirements_fulfilled = $this->can_req($preconditions);
+        $still_open = $this->can_prod($preconditions, $room);
+        $requirements_fulfilled = $this->can_req($preconditions) && $this->can_room($room);
 
         if ($this->zombies) {
             $z = $this->zombies;
@@ -565,12 +681,18 @@ class Model_Blueprint {
             $name = $cls::static_name();
         } else $name = '???';
 
+        $room_data = [];
+        foreach ($this->room_requirements as $rq_room)
+            $room_data[$rq_room] = $room->check_room_satisfaction($rq_room);
+
         return [
             'id' => $this->id,
             'name' => $name,
             'categories' => $this->categories,
             'description' => $this->description,
             'requires' => $this->requires,
+            'requires_room' => $room_data,
+            'requires_local' => $this->requires_local,
             'energy' => $this->energy,
             'repair' => -$this->decay,
             'decay_speed' => $this->decay_speed == 0 ? 0 : ($this->decay_speed > 0 ? 1 : -1),
@@ -579,12 +701,13 @@ class Model_Blueprint {
             'material_in' => $this->materialize($this->items),
             'material_out' => $this->materialize($this->produces),
             'build' => in_array($this->id,$preconditions),
+            'build_local' => in_array($this->id,$room->get_content()),
             'slot_open' => $still_open,
             'build_possible' => $requirements_fulfilled,
             'steps_max' => $this->steps,
             'steps_current' => ($current_steps === true) ? $this->steps - 1 : $current_steps,
             'occupies' => $this->provide(),
-            'hidden' => $hidden,
+            'hidden' => $hidden || !$room->check_room_satisfaction($this->requires_room()),
             'zombies' => $z,
             'confirm' => $this->confirmation
         ];

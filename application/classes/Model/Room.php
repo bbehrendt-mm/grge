@@ -32,7 +32,7 @@ class Model_Room {
      * @return string
      */
     public function name($new_name = null) {
-        if ($new_name === null) return $this->room_name;
+        if ($new_name === null) return $this->room_name ? $this->room_name : null;
         else return $this->room_name = mb_substr($new_name,0,16);
     }
 
@@ -53,11 +53,35 @@ class Model_Room {
     }
 
     /**
-     * @param string $type
+     * @return string|null
+     */
+    public function get_usage() {
+        return $this->usage ? $this->usage : null;
+    }
+
+    /**
+     * @param string $new_usage
+     * @param bool $replace_satisfiers
+     * @param string[] $new_satisfiers
+     */
+    public function upgrade($new_usage, $replace_satisfiers, $new_satisfiers) {
+        $this->usage = $new_usage;
+        if ($replace_satisfiers) $this->satisfies = [];
+        foreach ($new_satisfiers as $s)
+            if (!$this->check_room_satisfaction($s))
+                $this->satisfies[] = $s;
+
+    }
+
+    /**
+     * @param string|string[] $type
      * @return bool
      */
     public function check_room_satisfaction($type) {
-        return $type == "" ? true : in_array($type, $this->satisfies);
+        if (is_array($type)) {
+            foreach ($type as $sub) if (!$this->check_room_satisfaction($sub)) return false;
+            return true;
+        } else return $type == "" ? true : in_array($type, $this->satisfies);
     }
 
     /**
@@ -89,7 +113,7 @@ class Model_Room {
 
         foreach ($a as $elem)
             if (!$this->has_content($elem))
-                $this->contains[] = $a;
+                $this->contains[] = $elem;
 
         return true;
     }

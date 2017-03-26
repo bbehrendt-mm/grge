@@ -52,7 +52,7 @@ class Model_Blueprints {
         if (!is_array($id)) $id = [$id];
         $ret = [];
         foreach ($id as $entry) {
-            $tmp = $b->perform_apply($entry, $location);
+            $tmp = $b->perform_apply($entry, $location, $location->room());
             if (is_array($tmp))
                 $ret = array_merge($ret, $tmp);
         }
@@ -186,7 +186,7 @@ class Model_Blueprints {
             $deadlock = true;
             $cache = array_filter($cache, function($blueprint) use (&$deadlock, &$preconditions) {
                 /** @var Model_Blueprint $blueprint */
-                if ($blueprint->can($preconditions, true)) {
+                if ($blueprint->can($preconditions, null,true)) {
                     $deadlock = false;
                     $preconditions = array_merge($preconditions, $blueprint->provide());
                     return false;
@@ -198,16 +198,22 @@ class Model_Blueprints {
         return $this;
     }
 
-    public function compile($preconditions, $player) {
+    /**
+     * @param string[] $preconditions
+     * @param Model_Room $room
+     * @param Model_Player $player
+     * @return array
+     */
+    public function compile($preconditions, $room, $player) {
         $ret = [];
         foreach ($this->externals as $b)
             /** @var Model_Blueprint $b */
-            $ret[$b->id()] = array_merge($b->compile($preconditions, $player), [
+            $ret[$b->id()] = array_merge($b->compile($preconditions, $room, $player), [
                 'hidden' => true
             ]);
         foreach ($this->blueprints as $b) {
             /** @var Model_Blueprint $b */
-            $tmp = $b->modify($player, $preconditions)->compile($preconditions, $player);
+            $tmp = $b->modify($player, $preconditions)->compile($preconditions, $room, $player);
             if (!$tmp['hidden'])
                 $ret[$b->id()] = $tmp;
         }
@@ -219,21 +225,22 @@ class Model_Blueprints {
      * @param string $id
      * @param Model_Player $player
      * @param string[] $preconditions
+     * @param Model_Room $room
      * @return bool|string[]
      */
-    public function execute($id, $player, $preconditions) {
+    public function execute($id, $player, $preconditions, $room) {
         if (!isset($this->blueprints[$id]))
             return false;
         else {
             /** @var Model_Blueprint $b */
             $b = $this->blueprints[$id];
-            $r = $b->modify($player, $preconditions)->execute($player, $preconditions);
+            $r = $b->modify($player, $preconditions)->execute($player, $preconditions, $room);
             if (is_array($r))
                 foreach ($r as $prj) {
                     if ($prj[0] == '-')
-                        $player->location()->room()->remove_content(substr($prj, 1));
+                        $room->remove_content(substr($prj, 1));
                     else
-                        $player->location()->room()->add_content($prj);
+                        $room->add_content($prj);
                 }
 
             return $r;
@@ -243,25 +250,25 @@ class Model_Blueprints {
     /**
      * @param string $id
      * @param Model_Places_Abstract_Place $location
+     * @param Model_Room $room
      * @return bool|string[]
      */
-    private function perform_apply($id, $location) {
-        $r = false;
+    private function perform_apply($id, $location, $room) {
         if (!isset($this->blueprints[$id]) && !isset($this->externals[$id]))
             return false;
         elseif (isset($this->blueprints[$id])) {
             /** @var Model_Blueprint $b */
             $b = $this->blueprints[$id];
-            $r = $b->apply($location, $location->room()->get_content());
+            $r = $b->apply($location, $location->rooms_contain(), $room);
         }
         else $r = [$id];
 
         if (is_array($r))
             foreach ($r as $prj) {
                 if ($prj[0] == '-')
-                    $location->room()->remove_content(substr($prj, 1));
+                    $room->remove_content(substr($prj, 1));
                 else
-                    $location->room()->add_content($prj);
+                    $room->add_content($prj);
             }
         return $r;
     }

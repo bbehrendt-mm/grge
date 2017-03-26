@@ -22,6 +22,7 @@ return Model_Blueprints::factory()
     ->add_blueprints(
         Model_Blueprint::factory()
             ->id('hideout')
+            ->requires_room('common')
             ->provide('hideout_slot')
             ->name('Versteck')
             ->description('Ermöglicht es dir, diesen Ort als Versteck zu nutzen.')
@@ -36,7 +37,10 @@ return Model_Blueprints::factory()
     ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires('hideout');})
 
     // ++ STACK -> HIDEOUT category
-    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->category('Versteck');})
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires_room('common');})
+
+
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->category('Reparatur');})
 
     ->add_blueprints(
         Model_Blueprint::factory()
@@ -72,206 +76,8 @@ return Model_Blueprints::factory()
             ->decay(0, -0.10)
     )
 
-    // -- ++ STACK -> BEDROOM category
-    ->pop_stack()->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->category('Schlafzimmer');})
-
-
-    // Bedroom
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('bedrwake')
-            ->name('Alarmdraht')
-            ->description('Weckt alle schlafenden Spieler beim Eindringen von Zombies. Wird beim Einsatz zerstört.')
-            ->message('Dieser Alarmdraht macht ordentlich Lärm, wenn Zombies im Begriff sind, dein Versteck zu attackieren. Von jetzt an brauchst du keine Angst mehr zu haben, deinen eigenen Tod zu verschlafen.')
-            ->energy(1)
-            ->material(['Model_Items_Generic_Wire' => 1, 'Model_Items_Generic_Crmetal' => 2])
-    )
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('bedrlights')
-            ->requires('bedr1')
-            ->name('Nachtlicht')
-            ->description('Reduziert die Einschlafzeit.')
-            ->message('Endlich brauchst du dich im Dunklen nicht mehr zu fürchten - dieses neue Nachtlicht hilft dir beim Einschlafen und vertreibt schlimme Träume.')
-            ->deco(2)
-            ->energy(1)
-            ->material(['Model_Items_Generic_Lamp' => 1, 'Model_Items_Energy' => 1])
-    )
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('bedr1')
-            ->name('Schlafecke')
-            ->description('Verbessert Regeneration von Energie und Müdigkeit beim Schlafen. Ermöglicht außerdem die Regeneration von Gesundheit beim Schlafen.')
-            ->message('Endlich musst du nicht mehr auf dem Boden schlafen - mit diesem neuen Bett hat dein Versteck nun endlich die Behaglichkeit einer simplen Crackhütte gewonnen!')
-            ->deco(2)
-            ->energy(5)
-            ->material('Model_Items_Generic_Bed',1)
-    )
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('bedr2')
-            ->requires('bedr1')
-            ->name('Kuschelige Schlafecke')
-            ->description('Verbessert Regeneration von Energie, Müdigkeit und Gesundheit beim Schlafen.')
-            ->message('Mit einer Decke und einem Teddy ist dein Bett gleich viel kuscheliger. Deine Schlafecke sieht jetzt schon richtig gemütlich aus!')
-            ->deco(1)
-            ->energy(5)
-            ->material(['Model_Items_Generic_Teddy' => 1, 'Model_Items_Generic_Cloth' => 3])
-    )
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('bedr3')
-            ->requires('bedr2')
-            ->name('Kingsize-Bett')
-            ->description('Verbessert Regeneration von Energie, Müdigkeit und Gesundheit beim Schlafen.')
-            ->message('Dank deinem neuen KingSize-Bett hast du nun extra viel Platz, dich Nachts vor Angst in deinem Bett herumzuwälzen.')
-            ->deco(1)
-            ->energy(5)
-            ->material(['Model_Items_Generic_Bed' => 1, 'Model_Items_Generic_Cloth' => 3])
-    )
-
-    // -- ++ STACK -> SITTING category
-    ->pop_stack()->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->category('Sitzecke');})
-
-    // Sitting area
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('sofa1')
-            ->name('Sitzecke')
-            ->description('Erhöht bei Benutzung die Energieregeneration. Der Effekt verstärkt sich, wenn die Sitzecke von mehreren Spielern verwendet wird.')
-            ->message('Mit dieser Sitzecke kannst du dich nun endlich vernünftig entspannen ohne dich immer gleich ins Bett legen zu müssen.')
-            ->deco(2)
-            ->energy(3)
-            ->material(['Model_Items_Abstract_Chair' => 3])
-    )
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('sofa2')
-            ->requires('sofa1')
-            ->name('Sesselecke')
-            ->description('Verbessert die Regenerationswirkung der Sitzecke. Verstärkt außerdem die Effekte beim Lesen von Büchern.')
-            ->message('Diese Sessel sehen ein wenig... eigenwillig aus. Aber zumindest sind sie bequem - mehr kann man doch nun wirklich nicht verlangen. Wobei... ein Getränkehalter wäre natürlich schön...')
-            ->deco(1)
-            ->energy(25)
-            ->material(['Model_Items_Abstract_Chair' => 1, 'Model_Items_Generic_Bed' => 1, 'Model_Items_Generic_Cloth' => 4])
-    )
-
-    // -- ++ STACK -> WORKBENCH category
-    ->pop_stack()->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->category('Werkbank');})
-
-    // Workbench
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('manu1')
-            ->name('Werkbank')
-            ->description('Ermöglicht die Herstellung verschiedener Gegenstände.')
-            ->message('Ein Mann ohne Werkbank ist einfach kein richtiger Mann! (Eine Frau ohne Werkbank ist natürlich auch kein richtiger Mann.) Jetzt kannst du endlich viel Geld ausgeben und Zeug bauen, dass viel weniger kosten würde wenn du es einfach fertig kaufen würdest. Hurra!')
-            ->energy(10)
-            ->material(['Model_Items_Generic_Table' => 1, 'Model_Items_Abstract_Chair' => 1])
-    )
-
-    // ++ STACK -> All blueprints below need the workbench
-    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires('manu1');})
-
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('manu2')
-            ->name('Stromversorgung an der Werkbank')
-            ->description('Schaltet zusätzliche Optionen für die Werkbank frei.')
-            ->message('Ohne das Risiko tödlicher Stromschläge macht die Arbeit einfach keinen Spaß! Darum sind offene Drähte ohne Sicherung einfach ein Muss für jede Werkbank!')
-            ->energy(10)
-            ->material(['Model_Items_Generic_Lamp' => 1, 'Model_Items_Generic_Electro' => 3, 'Model_Items_Energy' => 5])
-    )
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('manuspd')
-            ->name('Werkbank-Halterungen')
-            ->description('Reduziert die benötigte Energie für alle Arbeiten an der Werkbank.')
-            ->message('Diese neuen Halterungen werden sich sicher als nützlich erweisen, wenn es mal etwas schweres zu heben gibt. Hoffentlich hast du beim bau nicht gepfuscht, sonst werden sie sich zusätzlich noch als tödlich erweisen...')
-            ->energy(15)
-            ->material(['Model_Items_Generic_Wood' => 3, 'Model_Items_Generic_Sum' => 1])
-    )
-
-    // -- STACK -> All blueprints below NO LONGER need the workbench
     ->pop_stack()
-
-    // -- ++ STACK -> GENERATOR category
-    ->pop_stack()->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->category('Generator');})
-
-    // Generator
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('gen1')
-            ->name('Notstrom-Aggregat')
-            ->description('Ermöglicht es, Strom aus Batterien zu gewinnen.')
-            ->message('Endlich verfügst du über ein Notstrom-Aggregat, jetzt musst du nicht mehr im Dunkeln fernsehen! Yuhuu!')
-            ->deco(-5)
-            ->energy(15)
-            ->material(['Model_Items_Generic_Electro' => 2, 'Model_Items_Generic_Metal' => 5, 'Model_Items_Generic_Tube' => 1])
-    )
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('gen2')
-            ->requires('gen1')
-            ->name('Diesel-Generator')
-            ->description('Ermöglicht es, Strom aus Energie und Benzinkanistern zu gewinnen.')
-            ->message('Alle paar Minuten neue Batterien einzulegen kann schon nerven. Glücklicherweise kannst du diesem Problem mit einem Kanister Benzin vorsorgen. Einziger Haken: Du brauchst einen Kanister Benzin ...')
-            ->deco(-5)
-            ->energy(15)
-            ->material(['Model_Items_Generic_Motor' => 1, 'Model_Items_Generic_Sum' => 5, 'Model_Items_Generic_Metal' => 2])
-    )
-
-    // -- ++ STACK -> KITCHEN category
-    ->pop_stack()->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->category('Küche');})
-
-    // Kitchen
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('ktc1')
-            ->name('Küchentisch')
-            ->description('Ermöglicht die Herstellung verschiedener Speisen.')
-            ->message('Stolz stehst du vor deinem neuen Küchentisch; endlose kulinarische Möglichkeiten tauchen vor deinem geistigen Auge auf, verfliegen allerdings schnell wieder als dir einfällt, dass du für endlose kulinarische Möglichkeiten auch kulinarische Zutaten benötigst. Naja.... so eine verrottete Leiche lässt sich bestimmt auch fantasievoll zubereiten.')
-            ->energy(5)
-            ->material(['Model_Items_Generic_Table' => 1])
-    )
-
-    // ++ STACK -> All blueprints below need the kitchen
-    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires('ktc1');})
-
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('ktc2')
-            ->name('Wasserkocher')
-            ->description('Schaltet zusätzliche Optionen in der Küche frei.')
-            ->message('Das zentrale Utensil jeder Küche - der Wasserkocher - steht nun auch dir zur Verfügung. Nutze ihn Weise, und missbrauche seine Kräfte nicht!')
-            ->energy(2)
-            ->material(['Model_Items_Generic_Boiler' => 1])
-    )
-
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('ktc3')
-            ->name('Küchenutensilien')
-            ->description('Schaltet zusätzliche Optionen in der Küche frei.')
-            ->message('ENDLICH! Nun musst du den Brei nicht mehr mit der Hand kneten und das Fleisch nicht mehr mit Karateschlägen schneiden. Heureka!')
-            ->material(['Model_Items_Generic_Mixer' => 1, 'Model_Items_Knife' => 1])
-    )
-
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('ktc4')
-            ->name('Ofen')
-            ->description('Schaltet zusätzliche Optionen in der Küche frei.')
-            ->message('Die Zeiten von eiskaltem Essen sind vorbei! Vorrausgesetzt natürlich, du kannst etwas Strom auftreiben ...')
-            ->energy(20)
-            ->material(['Model_Items_Generic_Oven' => 1])
-    )
-
-    // -- STACK -> All blueprints below NO LONGER need the kitchen
-    ->pop_stack()
-
-    // -- ++ STACK -> DEFENSE category
-    ->pop_stack()->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->category('Verteidigung');})
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->category('Verteidigung');})
 
     // Defense
     ->add_blueprints(
@@ -289,7 +95,7 @@ return Model_Blueprints::factory()
     ->add_blueprints(
         Model_Blueprint::factory()
             ->id('defwall2')
-            ->requires('defwall1')
+            ->requires_local('defwall1')
             ->name('Barrikade (Fenster)')
             ->description('Verstärkt die Verteidigung des Verstecks.')
             ->message('Überlebenstipp #2 gegen Zombieinvasionen: Eine geschlossene Tür hilft nicht viel, wenn die Fenster noch sperrangelweit offen stehen!')
@@ -303,7 +109,7 @@ return Model_Blueprints::factory()
     ->add_blueprints(
         Model_Blueprint::factory()
             ->id('defwall3')
-            ->requires('defwall2')
+            ->requires_local('defwall2')
             ->name('Barrikade (Wände)')
             ->description('Verstärkt die Verteidigung des Verstecks.')
             ->message('Überlebenstipp #3 gegen Zombieinvasionen: Wenn Zombies keine Löcher in deiner Verteidigung finden, dann machen sie sich selbst welche! Verstärke also besser immer deine Wände.')
@@ -317,7 +123,7 @@ return Model_Blueprints::factory()
     ->add_blueprints(
         Model_Blueprint::factory()
             ->id('defwall4')
-            ->requires('defwall3')
+            ->requires_local('defwall3')
             ->name('Barrikade (Dach)')
             ->description('Verstärkt die Verteidigung des Verstecks.')
             ->message('Überlebenstipp #4 gegen Zombieinvasionen: Wenn Zombies nicht von links, rechts, vorne und hinten kommen können, dann kommen sie eben von oben!')
@@ -331,7 +137,7 @@ return Model_Blueprints::factory()
     ->add_blueprints(
         Model_Blueprint::factory()
             ->id('defwall5')
-            ->requires('defwall4')
+            ->requires_local('defwall4')
             ->name('Barrikaden')
             ->description('Verstärkt die Verteidigung des Verstecks.')
             ->message('Überlebenstipp #4 gegen Zombieinvasionen: Wenn Zombies nicht von links, rechts, vorne und hinten kommen können, dann kommen sie eben von oben!')
@@ -385,7 +191,7 @@ return Model_Blueprints::factory()
     ->add_blueprints(
         Model_Blueprint::factory()
             ->id('deftrench2')
-            ->requires('deftrench')
+            ->requires_local('deftrench')
             ->name('Wassergraben')
             ->description('Verstärkt die Verteidigung des Verstecks.')
             ->message('Nun, da dein Graben voller Wasser ist, bist du praktisch vor Zombieangriffen geschützt - solange du dein Versteck nicht verlässt, versteht sich.')
@@ -394,7 +200,7 @@ return Model_Blueprints::factory()
             ->material(['Model_Items_Generic_Waterv' => 25])
             ->defense(100)
             ->effect(Model_Effect::factory()
-                ->achieve(Model_Achievement::MA_LORD)
+                         ->achieve(Model_Achievement::MA_LORD)
             )
     )
 
@@ -420,12 +226,91 @@ return Model_Blueprints::factory()
             ->material(['Model_Items_Generic_Sum' => 1, 'Model_Items_Generic_Tube' => 2, 'Model_Items_Generic_Metal' => 1])
 
     )
-
-    // -- STACK -> Categories
     ->pop_stack()
 
-    // ++ STACK -> DECO category
-    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->category('Dekoration');})
+    // -- ++ STACK -> BEDROOM category
+    ->pop_stack()->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires_room('bedroom');})
+
+
+    // Bedroom
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('bedrwake')
+            ->name('Alarmdraht')
+            ->description('Weckt alle schlafenden Spieler beim Eindringen von Zombies. Wird beim Einsatz zerstört.')
+            ->message('Dieser Alarmdraht macht ordentlich Lärm, wenn Zombies im Begriff sind, dein Versteck zu attackieren. Von jetzt an brauchst du keine Angst mehr zu haben, deinen eigenen Tod zu verschlafen.')
+            ->energy(1)
+            ->material(['Model_Items_Generic_Wire' => 1, 'Model_Items_Generic_Crmetal' => 2])
+    )
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('bedrlights')
+            ->requires_local('bedr1')
+            ->name('Nachtlicht')
+            ->description('Reduziert die Einschlafzeit.')
+            ->message('Endlich brauchst du dich im Dunklen nicht mehr zu fürchten - dieses neue Nachtlicht hilft dir beim Einschlafen und vertreibt schlimme Träume.')
+            ->deco(2)
+            ->energy(1)
+            ->material(['Model_Items_Generic_Lamp' => 1, 'Model_Items_Energy' => 1])
+    )
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('bedr1')
+            ->name('Schlafecke')
+            ->description('Verbessert Regeneration von Energie und Müdigkeit beim Schlafen. Ermöglicht außerdem die Regeneration von Gesundheit beim Schlafen.')
+            ->message('Endlich musst du nicht mehr auf dem Boden schlafen - mit diesem neuen Bett hat dein Versteck nun endlich die Behaglichkeit einer simplen Crackhütte gewonnen!')
+            ->deco(2)
+            ->energy(5)
+            ->material('Model_Items_Generic_Bed',1)
+    )
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('bedr2')
+            ->requires_local('bedr1')
+            ->name('Kuschelige Schlafecke')
+            ->description('Verbessert Regeneration von Energie, Müdigkeit und Gesundheit beim Schlafen.')
+            ->message('Mit einer Decke und einem Teddy ist dein Bett gleich viel kuscheliger. Deine Schlafecke sieht jetzt schon richtig gemütlich aus!')
+            ->deco(1)
+            ->energy(5)
+            ->material(['Model_Items_Generic_Teddy' => 1, 'Model_Items_Generic_Cloth' => 3])
+    )
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('bedr3')
+            ->requires_local('bedr2')
+            ->name('Kingsize-Bett')
+            ->description('Verbessert Regeneration von Energie, Müdigkeit und Gesundheit beim Schlafen.')
+            ->message('Dank deinem neuen KingSize-Bett hast du nun extra viel Platz, dich Nachts vor Angst in deinem Bett herumzuwälzen.')
+            ->deco(1)
+            ->energy(5)
+            ->material(['Model_Items_Generic_Bed' => 1, 'Model_Items_Generic_Cloth' => 3])
+    )
+
+    // -- ++ STACK -> SITTING category
+    ->pop_stack()->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires_room('community');})
+
+    // Sitting area
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('sofa1')
+            ->name('Sitzecke')
+            ->description('Erhöht bei Benutzung die Energieregeneration. Der Effekt verstärkt sich, wenn die Sitzecke von mehreren Spielern verwendet wird.')
+            ->message('Mit dieser Sitzecke kannst du dich nun endlich vernünftig entspannen ohne dich immer gleich ins Bett legen zu müssen.')
+            ->deco(2)
+            ->energy(3)
+            ->material(['Model_Items_Abstract_Chair' => 3])
+    )
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('sofa2')
+            ->requires_local('sofa1')
+            ->name('Sesselecke')
+            ->description('Verbessert die Regenerationswirkung der Sitzecke. Verstärkt außerdem die Effekte beim Lesen von Büchern.')
+            ->message('Diese Sessel sehen ein wenig... eigenwillig aus. Aber zumindest sind sie bequem - mehr kann man doch nun wirklich nicht verlangen. Wobei... ein Getränkehalter wäre natürlich schön...')
+            ->deco(1)
+            ->energy(25)
+            ->material(['Model_Items_Abstract_Chair' => 1, 'Model_Items_Generic_Bed' => 1, 'Model_Items_Generic_Cloth' => 4])
+    )
 
     ->add_blueprints(
         Model_Blueprint::factory()
@@ -497,45 +382,123 @@ return Model_Blueprints::factory()
             ->material(['Model_Items_Battery' => 15, 'Model_Items_Generic_Wire' => 1])
     )
 
-    // -- STACK -> Categories
+    // -- ++ STACK -> WORKBENCH category
+    ->pop_stack()->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires_room('workshop');})
+
+    // Workbench
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('manu1')
+            ->name('Werkbank')
+            ->description('Ermöglicht die Herstellung verschiedener Gegenstände.')
+            ->message('Ein Mann ohne Werkbank ist einfach kein richtiger Mann! (Eine Frau ohne Werkbank ist natürlich auch kein richtiger Mann.) Jetzt kannst du endlich viel Geld ausgeben und Zeug bauen, dass viel weniger kosten würde wenn du es einfach fertig kaufen würdest. Hurra!')
+            ->energy(10)
+            ->material(['Model_Items_Generic_Table' => 1, 'Model_Items_Abstract_Chair' => 1])
+    )
+
+    // ++ STACK -> All blueprints below need the workbench
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires('manu1');})
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('manu2')
+            ->name('Stromversorgung an der Werkbank')
+            ->description('Schaltet zusätzliche Optionen für die Werkbank frei.')
+            ->message('Ohne das Risiko tödlicher Stromschläge macht die Arbeit einfach keinen Spaß! Darum sind offene Drähte ohne Sicherung einfach ein Muss für jede Werkbank!')
+            ->energy(10)
+            ->material(['Model_Items_Generic_Lamp' => 1, 'Model_Items_Generic_Electro' => 3, 'Model_Items_Energy' => 5])
+    )
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('manuspd')
+            ->name('Werkbank-Halterungen')
+            ->description('Reduziert die benötigte Energie für alle Arbeiten an der Werkbank.')
+            ->message('Diese neuen Halterungen werden sich sicher als nützlich erweisen, wenn es mal etwas schweres zu heben gibt. Hoffentlich hast du beim bau nicht gepfuscht, sonst werden sie sich zusätzlich noch als tödlich erweisen...')
+            ->energy(15)
+            ->material(['Model_Items_Generic_Wood' => 3, 'Model_Items_Generic_Sum' => 1])
+    )
+
+    // -- STACK -> All blueprints below NO LONGER need the workbench
     ->pop_stack()
 
-    //++ STACK -> EPIC FOUNDATIONS
-    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->provide('epic')->requires('slot_epic')->category('Epische Projekte')->confirm('Bist du sicher, dass du die Arbeit an dem epischen Projekt ":name" beginnen möchtest? Denk daran, dass du nur ein episches Projekt pro Versteck errichten kannst!')->message('Du hast die Arbeiten an einem epischen Projekt in deinem Versteck begonnen. Viel Erfolg!')->effect(Model_Effect::factory()->achieve(Model_Achievement::MA_EPIC_BEGIN, 1, true));})
+    // -- ++ STACK -> GENERATOR category
+    ->pop_stack()->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires_room('utilities');})
+
+    // Generator
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('gen1')
+            ->name('Notstrom-Aggregat')
+            ->description('Ermöglicht es, Strom aus Batterien zu gewinnen.')
+            ->message('Endlich verfügst du über ein Notstrom-Aggregat, jetzt musst du nicht mehr im Dunkeln fernsehen! Yuhuu!')
+            ->deco(-5)
+            ->energy(15)
+            ->material(['Model_Items_Generic_Electro' => 2, 'Model_Items_Generic_Metal' => 5, 'Model_Items_Generic_Tube' => 1])
+    )
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('gen2')
+            ->requires_local('gen1')
+            ->name('Diesel-Generator')
+            ->description('Ermöglicht es, Strom aus Energie und Benzinkanistern zu gewinnen.')
+            ->message('Alle paar Minuten neue Batterien einzulegen kann schon nerven. Glücklicherweise kannst du diesem Problem mit einem Kanister Benzin vorsorgen. Einziger Haken: Du brauchst einen Kanister Benzin ...')
+            ->deco(-5)
+            ->energy(15)
+            ->material(['Model_Items_Generic_Motor' => 1, 'Model_Items_Generic_Sum' => 5, 'Model_Items_Generic_Metal' => 2])
+    )
+
+    // -- ++ STACK -> KITCHEN category
+    ->pop_stack()->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->category('Küche')->requires_room('kitchen');})
+
+    // Kitchen
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('ktc1')
+            ->name('Küchentisch')
+            ->description('Ermöglicht die Herstellung verschiedener Speisen.')
+            ->message('Stolz stehst du vor deinem neuen Küchentisch; endlose kulinarische Möglichkeiten tauchen vor deinem geistigen Auge auf, verfliegen allerdings schnell wieder als dir einfällt, dass du für endlose kulinarische Möglichkeiten auch kulinarische Zutaten benötigst. Naja.... so eine verrottete Leiche lässt sich bestimmt auch fantasievoll zubereiten.')
+            ->energy(5)
+            ->material(['Model_Items_Generic_Table' => 1])
+    )
+
+    // ++ STACK -> All blueprints below need the kitchen
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires('ktc1');})
 
     ->add_blueprints(
         Model_Blueprint::factory()
-            ->id('epc_garden')
-            ->name('Kleines Gewächshaus')
-            ->description('Wie Millionen von Pot-Farmern vor dir kannst auch du mit diesem patentierten Gewächshaus-Bausatz deinen grünen Daumen entdecken und verschiedene nützliche Gewächse anpflanzen. Aber Achtung: Ein solcher Garten benötigt viel Aufmerksamkeit und Zeit, bevor du etwas ernten kannst!')
-    )
-
-    /*->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('epc_drill')
-            ->name('Grundwasserversorgung')
-            ->description('Warum gammliges Kondenswasser von alten Bahnhofstoiletten ablecken, wenn du dir frisches Wasser aus dem Boden besorgen kannst? Zwar wird der Bau dieses Projektes dich sehr viel Energie kosten, dafür verfügst du danach über eine (zumindest halbwegs) stetige Wasserversorgung.')
-    )*/
-
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('epc_raven')
-            ->name('Raben-Bootcamp')
-            ->description('Raben sind intelligente (und boshafte) Tiere - aber mit ein bisschen Geschick könntest du sie vielleicht dazu trainieren, für dich nach Gegenständen zu suchen. Du müsstest sie dafür natürlich mit etwas Futter belohnen...')
+            ->id('ktc2')
+            ->name('Wasserkocher')
+            ->description('Schaltet zusätzliche Optionen in der Küche frei.')
+            ->message('Das zentrale Utensil jeder Küche - der Wasserkocher - steht nun auch dir zur Verfügung. Nutze ihn Weise, und missbrauche seine Kräfte nicht!')
+            ->energy(2)
+            ->material(['Model_Items_Generic_Boiler' => 1])
     )
 
     ->add_blueprints(
         Model_Blueprint::factory()
-            ->id('epc_fence')
-            ->name('Laserzaun')
-            ->description('Zombies sind nicht gerade für ihre Geschicklichkeit bekannt - daher kannst du sie mit ein paar Laserbarrieren bestimmt recht zuverlässig von deinem Versteck fernhalten. Vorrausgesetzt natürlich, dir gehen nicht die Batterien aus...')
+            ->id('ktc3')
+            ->name('Küchenutensilien')
+            ->description('Schaltet zusätzliche Optionen in der Küche frei.')
+            ->message('ENDLICH! Nun musst du den Brei nicht mehr mit der Hand kneten und das Fleisch nicht mehr mit Karateschlägen schneiden. Heureka!')
+            ->material(['Model_Items_Generic_Mixer' => 1, 'Model_Items_Knife' => 1])
     )
 
-    // -- STACK -> Categories
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('ktc4')
+            ->name('Ofen')
+            ->description('Schaltet zusätzliche Optionen in der Küche frei.')
+            ->message('Die Zeiten von eiskaltem Essen sind vorbei! Vorrausgesetzt natürlich, du kannst etwas Strom auftreiben ...')
+            ->energy(20)
+            ->material(['Model_Items_Generic_Oven' => 1])
+    )
+
+    // -- STACK -> All blueprints below NO LONGER need the kitchen
     ->pop_stack()
+
 
     //++ STACK -> EPIC FOUNDATIONS / GARDEN
-    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires('epc_garden')->category('Epische Projekte: Kleines Gewächshaus');})
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires_room('epc_garden');})
 
     ->add_blueprints(
         Model_Blueprint::factory()
@@ -580,7 +543,7 @@ return Model_Blueprints::factory()
     ->add_blueprints(
         Model_Blueprint::factory()
             ->id('epc_garden_final')
-            ->requires('epc_garden_floor')->requires('epc_garden_patch')->requires('epc_garden_lights')->requires('epc_garden_water')
+            ->requires_local('epc_garden_floor')->requires_local('epc_garden_patch')->requires_local('epc_garden_lights')->requires_local('epc_garden_water')
             ->produces(['Model_Items_Virtual_Epic_Garden' => 1])
             ->name('Abschließen: Kleines Gewächshaus')
             ->effect(Model_Effect::factory()->upgrade_achieve(Model_Achievement::MA_EPIC_BEGIN, Model_Achievement::MA_EPIC_END, 1, true, true))
@@ -590,7 +553,7 @@ return Model_Blueprints::factory()
     ->pop_stack()
 
     //++ STACK -> EPIC FOUNDATIONS / RAVEN
-    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires('epc_raven')->category('Epische Projekte: Raben-Bootcamp');})
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires_room('epc_raven');})
 
     ->add_blueprints(
         Model_Blueprint::factory()
@@ -623,7 +586,7 @@ return Model_Blueprints::factory()
     ->add_blueprints(
         Model_Blueprint::factory()
             ->id('epc_raven_lure')
-            ->requires('epc_raven_cage')->requires('epc_raven_foodbin')
+            ->requires_local('epc_raven_cage')->requires('epc_raven_foodbin')
             ->name('Raben anlocken')
             ->description('Locke einen Raben an, damit du ihn trainieren kannst.')
             ->material(['Model_Items_Rawmeat' => 6, 'Model_Items_Basefood' => 3])
@@ -633,7 +596,7 @@ return Model_Blueprints::factory()
     ->add_blueprints(
         Model_Blueprint::factory()
             ->id('epc_raven_training')
-            ->requires('epc_raven_lure')
+            ->requires_local('epc_raven_lure')
             ->steps(3)
             ->name('Raben trainieren')
             ->description('Ist zumindest angenehmer, als einen bengalischen Tiger zu trainieren.')
@@ -643,7 +606,7 @@ return Model_Blueprints::factory()
     ->add_blueprints(
         Model_Blueprint::factory()
             ->id('epc_raven_final')
-            ->requires('epc_raven_hole')->requires('epc_raven_lure')->requires('epc_raven_cage')->requires('epc_raven_foodbin')->requires('epc_raven_training')
+            ->requires_local('epc_raven_hole')->requires_local('epc_raven_lure')->requires_local('epc_raven_cage')->requires_local('epc_raven_foodbin')->requires_local('epc_raven_training')
             ->produces(['Model_Items_Virtual_Epic_Raven' => 1])
             ->name('Abschließen: Raben-Bootcamp')
             ->effect(Model_Effect::factory()->upgrade_achieve(Model_Achievement::MA_EPIC_BEGIN, Model_Achievement::MA_EPIC_END, 1, true, true))
@@ -653,7 +616,7 @@ return Model_Blueprints::factory()
     ->pop_stack()
 
     //++ STACK -> EPIC FOUNDATIONS / FENCE
-    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires('epc_fence')->category('Epische Projekte: Laserzaun');})
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires_room('epc_fence');})
 
 
     ->add_blueprints(
@@ -697,7 +660,7 @@ return Model_Blueprints::factory()
     ->add_blueprints(
         Model_Blueprint::factory()
             ->id('epc_fence_final')
-            ->requires('epc_fence_wiring')->requires('epc_fence_fusebox')->requires('epc_fence_technobabble')->requires('epc_fence_lasers')
+            ->requires_local('epc_fence_wiring')->requires_local('epc_fence_fusebox')->requires_local('epc_fence_technobabble')->requires_local('epc_fence_lasers')
             ->produces(['Model_Items_Virtual_Epic_Fence' => 1])
             ->name('Abschließen: Laserzaun')
             ->effect(Model_Effect::factory()->upgrade_achieve(Model_Achievement::MA_EPIC_BEGIN, Model_Achievement::MA_EPIC_END, 1, true, true))

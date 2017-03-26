@@ -67,13 +67,13 @@
                 alias.begin();
         };
 
-        this.ressources[name].src = /^(\w*?):\/\//.test(path) ? path : ('<?=URL::base('http')?>' + path);
+        this.ressources[name].src = /^(\w*?):\/\//.test(path) ? path : ('<?=URL::base(true)?>' + path);
     };
 
     CanvasAnimationModule.prototype.addResource = function() {
         for (var i = 0; i < arguments.length; i++) {
             var name = arguments[i];
-            this.queueResource(name, '<?=URL::base('http')?>' + this.root + name);
+            this.queueResource(name, '<?=URL::base(true)?>' + this.root + name);
         }
     };
 

@@ -933,14 +933,14 @@ class Controller_Game extends Controller {
 
         //Redirect
         if (!$game && !$user->get_current_game())
-            $this->redirect(URL::site('gamemaster/lobby', 'http'));
+            $this->redirect(URL::site('gamemaster/lobby',true));
         elseif (!$game && $user->get_current_game()) {
             $this->add_widget(View::factory('pages/game_error')->render());
             return $this->render();
         }
         if (!$player) {
             $this->session->delete('game');
-            $this->redirect(URL::site('landing/redirect', 'http'));
+            $this->redirect(URL::site('landing/redirect',true));
         }
 
         //Check if player is alive
@@ -1005,7 +1005,7 @@ class Controller_Game extends Controller {
 
         //Redirect
         if (!$game || !$user->get_current_game() || !$player || !$player->get_status()->alive() || !$game->config('modules.multiplayer'))
-            $this->redirect(URL::site('game/redirect', 'http'));
+            $this->redirect(URL::site('game/redirect',true));
 
         $players = [];
         foreach ($game->players(false) as $p)

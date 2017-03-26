@@ -9,7 +9,7 @@ class Controller_Admin_Account extends Controller_Admin_Admin {
         global $user;
 
         if ($this->admin_status_get(0)) {
-            $this->redirect(URL::site('admin/main', 'http'));
+            $this->redirect(URL::site('admin/main',true));
             return;
         }
 

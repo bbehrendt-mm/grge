@@ -23,12 +23,12 @@ class Controller_Landing extends Controller {
                 foreach ($a as $k => $v)
                     if ($k != 'request') $this->session->delete($k);
 
-                $this->redirect(URL::site('account/login', 'http'));
+                $this->redirect(URL::site('account/login',true));
                 return true;
             } else return false;
         } else {
 
-            $this->redirect(URL::site('account/merge', 'http'));
+            $this->redirect(URL::site('account/merge',true));
 
         }
 
@@ -43,14 +43,14 @@ class Controller_Landing extends Controller {
             unset($rq["CLIENT_REQUEST"]['r']);
             $this->session->set('request',$rq);
             if ($url != 'web/body') {
-                $this->redirect(URL::site($url, 'http'));
+                $this->redirect(URL::site($url,true));
                 return;
             }
         }
 
         //Check if user is logged in, and send him to login page if he is not
         if (!$this->session->get('user',NULL))
-            $this->redirect(URL::site('account/login', 'http'));
+            $this->redirect(URL::site('account/login',true));
 
         if (isset($rq['HTTP_REFERER']) && isset($rq["CLIENT_REQUEST"]['key']) && $rq["CLIENT_REQUEST"]['key'])
             if ($this->handle_account_merging($rq["CLIENT_REQUEST"]['key'], $rq['HTTP_REFERER']))
@@ -58,10 +58,10 @@ class Controller_Landing extends Controller {
 
         //Check if user has a game going on, and send him to game setup page if he is not
         if (!$this->session->get('game',NULL))
-            $this->redirect(URL::site('lobby/main', 'http'));
+            $this->redirect(URL::site('lobby/main',true));
 
         //Redirect to game system
-        $this->redirect(URL::site('game/redirect', 'http'));
+        $this->redirect(URL::site('game/redirect',true));
     }
 
 }

@@ -121,7 +121,7 @@ class Controller_Admin_Cron extends Controller {
         // Get version data, append profiling information when this is not a stable version
         $version_data = Kohana::$config->load('build.version');
         $content = View::factory('cron')
-            ->set('baseurl', URL::base('http'))
+            ->set('baseurl', URL::base(true))
             ->set('version', "GRGE {$version_data['major']}.{$version_data['minor']}.{$version_data['service']}-{$version_data['maintenance']}-{$version_data['stage']}-{$version_data['build']} ({$version_data['date']})")
             ->set('autoprc', $auto_proc)
             ->set('garbage', $garbage)

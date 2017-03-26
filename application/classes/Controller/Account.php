@@ -8,7 +8,7 @@ class Controller_Account extends Controller {
      */
     public function action_login() {
         if ($this->session->get('user',NULL)) {
-            $this->redirect(URL::site('lobby/main', 'http'));
+            $this->redirect(URL::site('lobby/main'),true);
             return;
         }
 
@@ -50,7 +50,7 @@ class Controller_Account extends Controller {
 
     public function action_qr() {
         if ($this->session->get('user',NULL)) {
-            $this->redirect(URL::site('lobby/main', 'http'));
+            $this->redirect(URL::site('lobby/main',true));
             return;
         }
 
@@ -178,7 +178,7 @@ class Controller_Account extends Controller {
         global $user;
 
         if (!$this->session->get('user',NULL)) {
-            $this->redirect(URL::site('account/login', 'http'));
+            $this->redirect(URL::site('account/login',true));
             return;
         }
 
@@ -203,7 +203,7 @@ class Controller_Account extends Controller {
         /** @var Model_Auth_Legacy $auth */
         if ($auth)
             $pid = $auth::retrieve_user_id($key);
-        else $this->redirect(URL::site('lobby/main', 'http'));
+        else $this->redirect(URL::site('lobby/main',true));
         /** @var Model_Auth_Legacy $authenticator */
 
         $authenticator = new $auth($key);

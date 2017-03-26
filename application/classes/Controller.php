@@ -227,7 +227,7 @@ abstract class Controller extends Kohana_Controller {
 
     public function action_maintenance() {
         if (!Tool_Events::maintenance())
-            $this->redirect(URL::site('landing/redirect', 'http'));
+            $this->redirect(URL::site('landing/redirect',true));
         else {
             $this->add_widget(View::factory('pages/maintenance')->set('slot', Tool_Events::active_maintenance_period())->render());
             $this->render();

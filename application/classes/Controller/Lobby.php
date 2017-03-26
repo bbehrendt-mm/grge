@@ -35,7 +35,7 @@ class Controller_Lobby extends Controller {
         global $user;
 
         if ($user->soulpoints() > 0 || Model_Euser::mentor_id($user->uid()) !== null) {
-            $this->redirect(URL::site('lobby/main', 'http'));
+            $this->redirect(URL::site('lobby/main',true));
             return false;
         }
 
@@ -97,7 +97,7 @@ class Controller_Lobby extends Controller {
     public function japi_feedproxy() {
         // Get config
         $offset = max(0,(int)$this->request->current()->post('page') - 1) * 5;
-        $url = Kohana::$config->load('services.newsfeed.server');
+        $url = Kohana::$config->load('services.newsfeed.link');
         $fid = Kohana::$config->load('services.newsfeed.topics');
 
         // Get forum ID based on language, or use default if no specific ID is set

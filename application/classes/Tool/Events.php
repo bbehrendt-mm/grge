@@ -27,6 +27,7 @@ class Tool_Events {
         switch ($event) {
             case 'halloween': return 'Model_Events_Halloween'; break;
             case 'xmas': return 'Model_Events_Xmas'; break;
+            case 'easter': return 'Model_Events_Easter'; break;
             default: return null;
         }
 
@@ -65,6 +66,9 @@ class Tool_Events {
         switch (static::get(static::TE_YEAR, $time)) {
             case 2016:
                 if (static::get(static::TE_MONTH, $time) == 3 && static::get(static::TE_DAY, $time) >= 25) return 'easter';
+                break;
+            case 2017:
+                if (static::get(static::TE_MONTH, $time) == 4 && static::get(static::TE_DAY, $time) >= 14 && static::get(static::TE_DAY, $time) <= 20) return 'easter';
                 break;
         }
 

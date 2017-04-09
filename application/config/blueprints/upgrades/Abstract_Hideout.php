@@ -22,7 +22,7 @@ return Model_Blueprints::factory()
     ->add_blueprints(
         Model_Blueprint::factory()
             ->id('hideout')
-            ->requires_room('common')
+            ->requires_room('common_hideout')
             ->provide('hideout_slot')
             ->name('Versteck')
             ->description('Ermöglicht es dir, diesen Ort als Versteck zu nutzen.')
@@ -37,7 +37,7 @@ return Model_Blueprints::factory()
     ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires('hideout');})
 
     // ++ STACK -> HIDEOUT category
-    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires_room('common');})
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires_room('common_hideout');})
 
 
     ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->category('Reparatur');})

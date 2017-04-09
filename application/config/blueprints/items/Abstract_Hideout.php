@@ -8,7 +8,7 @@ return Model_Blueprints::factory()
     ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires('hideout_slot');})
 
     // ++ STACK -> All blueprints below need the basic kitchen
-    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires('ktc1')->category('Küche');})
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires_room('kitchen')->category('Küche');})
 
     ->add_blueprints(
         Model_Blueprint::factory()
@@ -96,7 +96,7 @@ return Model_Blueprints::factory()
     ->pop_stack()
 
     // ++ STACK -> All blueprints below need the basic generator
-    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires('gen1')->category('Generator');})
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires_room('utilities')->category('Generator');})
 
     ->add_blueprints(
         Model_Blueprint::factory()
@@ -157,7 +157,7 @@ return Model_Blueprints::factory()
     ->pop_stack()
 
     // ++ STACK -> All blueprints below need the basic workbench and benefit from suspender upgrade
-    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires('manu1')->category('Werkbank')->add_modifier(Model_Blueprint::BP_MOD_ENERGY, function($pl,$pre,$e) {/** @var Model_Player $pl */
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires_room('workshop')->category('Werkbank')->add_modifier(Model_Blueprint::BP_MOD_ENERGY, function($pl,$pre,$e) {/** @var Model_Player $pl */
         /** @var Model_Player $pl */
         $mod = 1;
         //ToDo: Rooms

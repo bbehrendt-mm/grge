@@ -21,7 +21,10 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         if ($uin === NULL) return parent::uin();
         else $t = parent::uin($uin);
         //ToDo: Rooms
+
         $this->inventory->add(new Model_Items_Virtual_Location_Hideout(!$this->room()->has_content('cursed_hideout')));
+        $this->room()->upgrade('Versteck',false,['common_hideout']);
+        $this->room()->inventory()->add(new Model_Items_Virtual_Location_Room_Defense());
         return $t;
     }
 

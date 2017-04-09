@@ -13,9 +13,19 @@ class Model_Room {
     protected $contains = [];
     protected $used_space = 0;
 
+    protected $inventory;
+
     public function __construct($space = 10, $outside = false) {
         $this->space = $space;
         $this->outside = $outside;
+        $this->inventory = new Model_Inventory();
+    }
+
+    /**
+     * @return Model_Inventory
+     */
+    public function inventory() {
+        return $this->inventory;
     }
 
     /**
@@ -131,6 +141,7 @@ class Model_Room {
         $this->contains = [];
         $this->satisfies = ['free'];
         $this->room_name = "";
+        $this->inventory()->grind();
     }
 
 }

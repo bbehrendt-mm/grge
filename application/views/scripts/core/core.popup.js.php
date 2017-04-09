@@ -373,13 +373,26 @@ core.popup = {
                     .append(NF.cell(true,4,0,'right').append(NF.n('div','b small').text(room.outside ? <?=__j('Außen')?> : <?=__j('Innen')?>)))
                 );
 
-                var btn_add, btn_con, btn_cre;
+                var btn_add, btn_con;
+                var action_row;
 
-                current.append(NF.row()
-                    .append(NF.cell(true,{desktop: 4, lg: 6, sm: 12},0,'center').append(btn_add = NF.button(<?=__j('Ausbauen...')?>,true).addClass(room.options.add ? 'block' : 'block disabled')))
-                    .append(NF.cell(true,{desktop: 4, lg: 6, sm: 12},0,'center').append(btn_con = NF.button(<?=__j('Umbauen...')?>,true).addClass(room.options.construct ? 'block' : 'block disabled')))
-                    .append(NF.cell(true,{desktop: 4, lg: 6, sm: 12},0,'center').append(btn_cre = NF.button(<?=__j('Herstellen...')?>,true).addClass(room.options.create ? 'block' : 'block disabled')))
+                current.append(action_row = NF.row()
+                    .append(NF.cell(true,{desktop: 4, lg: 6, sm: 12},0,'center').append(btn_add = NF.button(<?=__j('Ausbauen...')?>).addClass('btn-zv btn-zv-skinned-location').addClass(room.options.add ? '' : 'disabled')))
+                    .append(NF.cell(true,{desktop: 4, lg: 6, sm: 12},0,'center').append(btn_con =  NF.button(<?=__j('Umbauen...')?>).addClass('btn-zv btn-zv-skinned-location').addClass(room.options.construct ? '' : 'disabled')))
                 );
+                $.each(room.options.actions, function(aid,hid) {
+                    action_row.append(NF.cell(true,{desktop: 4, lg: 6, sm: 12},0,'center').append(core.snippets.button(
+                        hid,
+                        function() {popup.trigger('unpop');},
+                        'tooltip',
+                        function(target) {
+                            if (target == 'maker' || target == 'fighter') {
+                                titlebar.children('.center').text(game.i18n(target == 'fighter' ? <?=__j('Verteidigen: :room')?> : <?=__j('Items herstellen: :room')?>, {':room': room_identifier}));
+                                core.popup.genericBlueprintLoader(target,room.id,popup);
+                            } else alert("ERROR: Invalid transition '" + target + "'. Lazy dev needs to implement generic popup content hand-over for this to work!");
+                        }
+                    )))
+                })
 
                 btn_add.click(function() {
                     titlebar.children('.center').text(game.i18n(<?=__j('Ausbauen: :room')?>, {':room': room_identifier}));

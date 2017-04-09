@@ -51,7 +51,7 @@ class Controller_Game extends Controller {
      * @param Model_Items_Abstract_Virtual $v_item
      * @return mixed
      */
-    private function prepare_actionlist($actions, $v_item = null) {
+    protected function prepare_actionlist($actions, $v_item = null) {
         // Prepare actions
         foreach ($actions as &$action) {
             // Check item

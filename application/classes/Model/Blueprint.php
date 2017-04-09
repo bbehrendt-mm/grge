@@ -20,6 +20,7 @@ class Model_Blueprint {
     private $items = [];
     private $item_deciders = [];
     private $produces = [];
+    private $emplaces = [];
 
     private $requires = [];
     private $requires_local = [];
@@ -425,6 +426,26 @@ class Model_Blueprint {
     }
 
     /**
+     * Adds an item to the emplacement stack
+     * @param string|array $item Item class
+     * @param int $count Item count
+     * @return Model_Blueprint
+     */
+    public function emplaces($item, $count = 1) {
+        if (is_array($item)) {
+            foreach ($item as $i_class => $i_count)
+                $this->emplaces($i_class, $i_count);
+            return $this;
+        }
+
+        if (!isset($this->emplaces[$item]))
+            $this->emplaces[$item] = $count;
+        else $this->emplaces[$item] += $count;
+
+        return $this;
+    }
+
+    /**
      * Getter / Setter for the amount of zombies that are killed by building this blueprint.
      * @param bool $optional Set true if destroying zombies is not the primary function of this blueprint (meaning it can be constructed even if there are no zombies)
      * @param int|array|callable $min Minimal number of kills OR an array containing both min and max numbers as first an second elements OR a function that receives the number of present zombies as well as the active player as an argument and must return a single number or an array containing min/max numbers
@@ -559,6 +580,10 @@ class Model_Blueprint {
                 $player->location()->inventory()->add(new $item());
 
         $ret = $this->apply($player->location(), $preconditions, $room);
+
+        foreach ($this->emplaces as $item => $count)
+            for ($i = 0; $i < $count; $i++)
+                $room->inventory()->add(new $item());
 
         if ($this->effect)
             $this->effect->execute($player, null);

@@ -61,7 +61,7 @@
     };
 
     //Ext mode: extend (default), static, tooltip
-    core.snippets.button = function(action, call, ext_mode) {
+    core.snippets.button = function(action, call, ext_mode, custom_popup_handler) {
         if (typeof action === "string")
             return $('<div />').addClass('btn').text(action).click(call);
         else {
@@ -142,7 +142,9 @@
                     $('.qtip').qtip('hide');
 
                     if (action.popup) {
-                        core.popup[action.popup]();
+                        if (custom_popup_handler)
+                            custom_popup_handler(action.popup);
+                        else core.popup[action.popup]();
                         return;
                     }
 

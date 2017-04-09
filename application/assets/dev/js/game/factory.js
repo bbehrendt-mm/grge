@@ -81,9 +81,10 @@ NF.icon = function(src, txt, classes) {
 };
 
 NF.button = function(text,small,icon) {
-    var b = NF.n('div','btn' + (small ? ' small' : '') + (icon ? ' btn-icon' : ''),icon ? '' : text);
+    var b = NF.n('div','btn' + (small ? ' small' : '') + (icon ? ' btn-icon' : ''));
     if (icon)
         b.append(NF.n('span','btn-icon-inner').append(NF.fa(icon))).append(NF.n('span','',text));
+    else b.append(NF.n('span','',text));
     return b;
 };
 

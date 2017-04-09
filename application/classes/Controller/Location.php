@@ -66,11 +66,17 @@ class Controller_Location extends Controller_Game {
 
         $data = [];
 
-        foreach ($player->location()->rooms() as $id => $room)
+        foreach ($player->location()->rooms() as $id => $room) {
+
+            $hid = [];
+            foreach ($room->inventory()->get('Model_Items_Abstract_Virtual') as $a_item)
+                /** @var  Model_Items_Abstract_Virtual $a_item */
+                $hid = array_merge($hid,$this->prepare_actionlist($a_item->auto_actions(), $a_item));
+
             $data[$id] = [
                 'id' => $id,
                 'name' => $room->name(),
-                'size' => $room->get_space() == PHP_INT_MAX ? null : $room->get_space(),
+                'size' => $room->get_space() == PHP_INT_MAX ? null : ($room->get_space() + count($room->inventory()->get())),
                 'free' => $room->get_space() == PHP_INT_MAX ? null : $room->get_space(true),
                 'type' => $room->get_usage(),
                 'outside' => $room->is_outside(),
@@ -78,10 +84,11 @@ class Controller_Location extends Controller_Game {
                     'rename' => $id != 0,
                     'add' => $room->get_usage() != null,
                     'construct' => $id != 0,
-                    'create' => $room->get_usage() != null,
+                    'actions' => $hid
                 ],
                 'debug' => $room->get_content(),
             ];
+        }
         $this->render(['rooms' => $data]);
     }
 

@@ -9,6 +9,6 @@ return array(
         'build'         => 421,
 
         'stage'         => 0,               //0=nightly, 1=alpha, 2=beta, 3=rc, 4=final
-        'date'	        => '09.03.2017',
+        'date'	        => '09.04.2017',
     ),
 );

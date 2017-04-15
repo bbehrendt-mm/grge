@@ -576,14 +576,30 @@ class Model_Blueprint {
 
         $player->get_status()->modify(Model_Status::MS_STAT_ENERGY, -$this->energy, Model_Status::MS_EFFECT_REQUIREMENT);
         foreach ($this->produces as $item => $count)
-            for ($i = 0; $i < $count; $i++)
-                $player->location()->inventory()->add(new $item());
+            for ($i = 0; $i < $count; $i++) {
+                $instance = new $item();
+                $player->location()->inventory()->add($instance);
+
+                if (Tool_System::instance_of($instance,'Model_Items_Abstract_Virtual')) {
+                    /** @var Model_Items_Abstract_Virtual $instance */
+                    if ($instance::setup_location()) $instance->set_location_info($player->location_class());
+                }
+            }
+
 
         $ret = $this->apply($player->location(), $preconditions, $room);
 
         foreach ($this->emplaces as $item => $count)
-            for ($i = 0; $i < $count; $i++)
-                $room->inventory()->add(new $item());
+            for ($i = 0; $i < $count; $i++) {
+                $instance = new $item();
+                $room->inventory()->add($instance);
+
+                if (Tool_System::instance_of($instance,'Model_Items_Abstract_Virtual')) {
+                    /** @var Model_Items_Abstract_Virtual $instance */
+                    if ($instance::setup_location()) $instance->set_location_info($player->location_class(), $room->id());
+                }
+            }
+
 
         if ($this->effect)
             $this->effect->execute($player, null);

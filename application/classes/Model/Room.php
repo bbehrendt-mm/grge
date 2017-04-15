@@ -2,6 +2,8 @@
 
 class Model_Room {
 
+    protected $local_id = -1;
+
     protected $space;
     protected $outside;
 
@@ -21,6 +23,11 @@ class Model_Room {
         $this->inventory = new Model_Inventory();
     }
 
+    public function id($new_id = null) {
+        if ($new_id === null) return $this->local_id;
+        else $this->local_id = $new_id;
+    }
+
     /**
      * @return Model_Inventory
      */
@@ -33,8 +40,10 @@ class Model_Room {
      * @param bool $outside
      * @return Model_Room
      */
-    static function factory($space = 10, $outside = false) {
-        return new Model_Room($space,$outside);
+    static function factory($id, $space = 10, $outside = false) {
+        $instance = new Model_Room($space,$outside);
+        $instance->id($id);
+        return $instance;
     }
 
     /**

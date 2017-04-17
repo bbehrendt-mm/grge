@@ -97,11 +97,19 @@ abstract class Model_Gamelayer_Logic extends Model_Gamelayer_Io {
 	final public function item_available($uin, $perspective = null) {
         /** @global $player Model_Player */
         global $player;
-		
+
+        $at_loc_rooms = false;
+        if ($this->location()) foreach ($this->location()->rooms() as $r)
+            if ($r->inventory()->has($uin)) {
+                $at_loc_rooms = true;
+                break;
+            }
+
 		//Check player inventory and location inventory
 		return (
             $player->inventory()->has($uin) ||
-            (($this->location()) ? $this->location()->inventory()->has($uin) : false) ||
+            $at_loc_rooms ||
+            ($this->location() ? $this->location()->inventory()->has($uin) : false) ||
             ($perspective && $perspective->allow(Interface_Plentity::IC_ALLOW_SHOW_INVENTORY)));
 	}
 }

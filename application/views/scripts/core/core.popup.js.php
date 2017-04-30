@@ -346,18 +346,31 @@ core.popup = {
 
             $.each(data.rooms, function(id,room) {
                 var room_identifier = room.name ? room.name : (room.type ? room.type : <?=__j('Unbenutzter Raum')?>);
-
-                var current;
+                var room_name = room.name;
+                var current, name_field;
                 main_row.append(NF.cell(true,6).append(
                     current = $('<div/>').addClass('flatbox').append(
                         NF.row()
                             .append(NF.cell(false,11)
                                 .append(NF.row()
-                                    .append(NF.cell(false,12,0,'center').append($('<h3/>').text(room.name ? room.name : <?=__j('Namenloser Raum')?>)))
+                                    .append(NF.cell(false,12,0,'center').append(name_field = $('<h3/>').text(room.name ? room.name : <?=__j('Namenloser Raum')?>)))
                                     .append(NF.cell(false,12,0,'center').append(NF.n('div','small i').text(room.type ? room.type : <?=__j('Unbenutzter Raum')?>)))
                                 )
                             ).append(room.options.rename ? NF.cell(true, 1,0,'center pointer').append(NF.fa('pencil-square-o')).click(function() {
-                                alert('RENAME');
+                                var new_name = prompt(<?=__j('Bitte gib einen neuen Namen ein:')?>, room_name);
+
+                                if (new_name !== null) {
+                                    var alias = $(this);
+                                    alias.empty().append(NF.fa('cog',true)).addClass('disabled');
+                                    core.command('location/rename_room', {r: 0, n: new_name}, true, function(data) {
+                                        alias.empty().removeClass('disabled').append(NF.fa('pencil-square-o'));
+                                        if (!data.success) game.render.html.notify('error',<?=__j('Ein Fehler ist aufgetreten.')?>);
+                                        else {
+                                            room_name = data.result;
+                                            name_field.text(data.result ? data.result : <?=__j('Namenloser Raum')?>);
+                                        }
+                                    });
+                                }
                         }) : null)
                     )
                 ));

@@ -81,7 +81,7 @@ class Controller_Location extends Controller_Game {
                 'type' => $room->get_usage(),
                 'outside' => $room->is_outside(),
                 'options' => [
-                    'rename' => $id != 0,
+                    'rename' => !$room->name_is_fixed(),
                     'add' => $room->get_usage() != null,
                     'construct' => $id != 0,
                     'actions' => $hid,
@@ -90,6 +90,24 @@ class Controller_Location extends Controller_Game {
             ];
         }
         $this->render(['rooms' => $data]);
+    }
+    public function japi_rename_room() {
+        /** @global Model_Player $player */
+        global $player;
+
+        $room_id = $this->post('r');
+        $name = $this->post('n');
+
+        if ($room_id === null)
+            return $this->render(['success' => 0]);
+
+        $room = $player->location()->room((int)$room_id);
+        if ($room === null || $room->name_is_fixed())
+            return $this->render(['success' => 0]);
+
+        $room->name(trim($name));
+
+        return $this->render(['success' => 1, 'result' => $room->name()]);
     }
 
     /**

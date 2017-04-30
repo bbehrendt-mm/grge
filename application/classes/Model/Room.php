@@ -8,6 +8,7 @@ class Model_Room {
     protected $outside;
 
     protected $room_name = "";
+    protected $name_fixed = false;
 
     protected $usage = "";
     protected $satisfies = ['free'];
@@ -58,8 +59,13 @@ class Model_Room {
      * @return string
      */
     public function name($new_name = null) {
-        if ($new_name === null) return $this->room_name ? $this->room_name : null;
+        if ($new_name === null || mb_strlen($new_name) < 2) return $this->room_name ? $this->room_name : null;
         else return $this->room_name = mb_substr($new_name,0,16);
+    }
+
+    public function name_is_fixed($s = null) {
+        if ($s === null) return $this->name_fixed;
+        else return ($this->name_fixed = $s);
     }
 
     /**

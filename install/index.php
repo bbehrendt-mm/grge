@@ -136,9 +136,9 @@
 
                 <?php
                     $p_user = ''; $p_pass = ''; $p_name = ''; $p_prefix = '';
-                    if (file_exists('modules/database/config/database.php')) {
+                    if (file_exists('application/config/database.php')) {
                         define('SYSPATH', true);
-                        $cfg = (include 'modules/database/config/database.php');
+                        $cfg = (include 'application/config/database.php');
 
                         if (isset($cfg['default']) && isset($cfg['default']['type']) && $cfg['default']['type'] === 'MySQL' && isset($cfg['default']['connection'])) {
                             if (isset($cfg['default']['connection']['username'])) $p_user = $cfg['default']['connection']['username'];

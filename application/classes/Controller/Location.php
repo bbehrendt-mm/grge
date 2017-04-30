@@ -84,9 +84,9 @@ class Controller_Location extends Controller_Game {
                     'rename' => $id != 0,
                     'add' => $room->get_usage() != null,
                     'construct' => $id != 0,
-                    'actions' => $hid
-                ],
-                'debug' => $room->get_content(),
+                    'actions' => $hid,
+                    'enabled' => $room->enabled()
+                ]
             ];
         }
         $this->render(['rooms' => $data]);

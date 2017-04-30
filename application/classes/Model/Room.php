@@ -17,6 +17,8 @@ class Model_Room {
 
     protected $inventory;
 
+    protected $is_enabled = true;
+
     public function __construct($space = 10, $outside = false) {
         $this->space = $space;
         $this->outside = $outside;
@@ -26,6 +28,11 @@ class Model_Room {
     public function id($new_id = null) {
         if ($new_id === null) return $this->local_id;
         else $this->local_id = $new_id;
+    }
+
+    public function enabled($new_val = null) {
+        if ($new_val === null) return $this->is_enabled;
+        else return $this->is_enabled = $new_val;
     }
 
     /**

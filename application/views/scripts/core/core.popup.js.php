@@ -376,7 +376,7 @@ core.popup = {
                 var btn_add, btn_con;
                 var action_row;
 
-                current.append(action_row = NF.row()
+                current.append(action_row = NF.row().addClass(room.options.enabled ? '' : 'disabled')
                     .append(NF.cell(true,{desktop: 4, lg: 6, sm: 12},0,'center').append(btn_add = NF.button(<?=__j('Ausbauen...')?>).addClass('btn-zv btn-zv-skinned-location').addClass(room.options.add ? '' : 'disabled')))
                     .append(NF.cell(true,{desktop: 4, lg: 6, sm: 12},0,'center').append(btn_con =  NF.button(<?=__j('Umbauen...')?>).addClass('btn-zv btn-zv-skinned-location').addClass(room.options.construct ? '' : 'disabled')))
                 );

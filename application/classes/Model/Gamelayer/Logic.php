@@ -99,7 +99,7 @@ abstract class Model_Gamelayer_Logic extends Model_Gamelayer_Io {
         global $player;
 
         $at_loc_rooms = false;
-        if ($this->location()) foreach ($this->location()->rooms() as $r)
+        if ($this->location()) foreach ($this->location()->rooms() as $r) if ($r->enabled())
             if ($r->inventory()->has($uin)) {
                 $at_loc_rooms = true;
                 break;

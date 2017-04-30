@@ -28,8 +28,8 @@ class Kohana_Security {
 	 * And then check it when using [Validation]:
 	 *
 	 *     $array->rules('csrf', array(
-	 *         'not_empty'       => NULL,
-	 *         'Security::check' => NULL,
+	 *         array('not_empty'),
+	 *         array('Security::check'),
 	 *     ));
 	 *
 	 * This provides a basic, but effective, method of preventing CSRF attacks.
@@ -81,14 +81,39 @@ class Kohana_Security {
 	 */
 	public static function check($token)
 	{
-		return Security::token() === $token;
+		return Security::slow_equals(Security::token(), $token);
+	}
+	
+	
+	
+	/**
+	 * Compare two hashes in a time-invariant manner.
+	 * Prevents cryptographic side-channel attacks (timing attacks, specifically)
+	 * 
+	 * @param string $a cryptographic hash
+	 * @param string $b cryptographic hash
+	 * @return boolean
+	 */
+	public static function slow_equals($a, $b) 
+	{
+		$diff = strlen($a) ^ strlen($b);
+		for($i = 0; $i < strlen($a) AND $i < strlen($b); $i++)
+		{
+			$diff |= ord($a[$i]) ^ ord($b[$i]);
+		}
+		return $diff === 0; 
 	}
 
+
 	/**
+	 * Deprecated for security reasons.
+	 * See https://github.com/kohana/kohana/issues/107
+	 *
 	 * Remove image tags from a string.
 	 *
 	 *     $str = Security::strip_image_tags($str);
 	 *
+	 * @deprecated since version 3.3.6
 	 * @param   string  $str    string to sanitize
 	 * @return  string
 	 */

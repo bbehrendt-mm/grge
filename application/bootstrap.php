@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 // -- Environment setup --------------------------------------------------------
-//ini_set('display_errors', TRUE);
+
 // Load the core Kohana class
 require SYSPATH.'classes/Kohana/Core'.EXT;
 
@@ -55,6 +55,13 @@ spl_autoload_register(array('Kohana', 'auto_load'));
  */
 ini_set('unserialize_callback_func', 'spl_autoload_call');
 
+/**
+ * Set the mb_substitute_character to "none"
+ *
+ * @link http://www.php.net/manual/function.mb-substitute-character.php
+ */
+mb_substitute_character('none');
+
 // -- Configuration and initialization -----------------------------------------
 
 /**
@@ -73,6 +80,12 @@ $lang_parts = explode('-', $lang);
 if (in_array($lang_parts[0], array('de', 'en','es','fr')))
 	I18n::lang($lang);
 else I18n::lang('en');
+
+if (isset($_SERVER['SERVER_PROTOCOL']))
+{
+	// Replace the default protocol.
+	HTTP::$protocol = $_SERVER['SERVER_PROTOCOL'];
+}
 
 /**
  * Set the environment string by the domain (defaults to Kohana::DEVELOPMENT).
@@ -96,6 +109,7 @@ Kohana::init(array(
 	'base_url'   => '/grge/',
     'caching'    => Kohana::$environment === Kohana::PRODUCTION,
     'profile'    => Kohana::$environment !== Kohana::PRODUCTION,
+    'errors' => false,
 ));
 
 /**

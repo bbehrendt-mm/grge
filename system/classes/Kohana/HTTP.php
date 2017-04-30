@@ -11,8 +11,8 @@
  * @category   HTTP
  * @author     Kohana Team
  * @since      3.1.0
- * @copyright  (c) 2008-2012 Kohana Team
- * @license    http://kohanaphp.com/license
+ * @copyright  (c) 2008-2014 Kohana Team
+ * @license    http://kohanaframework.org/license
  */
 abstract class Kohana_HTTP {
 
@@ -95,7 +95,10 @@ abstract class Kohana_HTTP {
 		if (extension_loaded('http'))
 		{
 			// Use the fast method to parse header string
-			return new HTTP_Header(http_parse_headers($header_string));
+			$headers = version_compare(phpversion('http'), '2.0.0', '>=') ?
+				\http\Header::parse($header_string) :
+				http_parse_headers($header_string);
+			return new HTTP_Header($headers);
 		}
 
 		// Otherwise we use the slower PHP parsing
@@ -160,7 +163,10 @@ abstract class Kohana_HTTP {
 		elseif (extension_loaded('http'))
 		{
 			// Return the much faster method
-			return new HTTP_Header(http_get_request_headers());
+			$headers = version_compare(phpversion('http'), '2.0.0', '>=') ?
+				\http\Env::getRequestHeader() :
+				http_get_request_headers();
+			return new HTTP_Header($headers);
 		}
 
 		// Setup the output
@@ -186,8 +192,8 @@ abstract class Kohana_HTTP {
 				continue;
 			}
 
-			// This is a dirty hack to ensure HTTP_X_FOO_BAR becomes x-foo-bar
-			$headers[str_replace(array('HTTP_', '_'), array('', '-'), $key)] = $value;
+			// This is a dirty hack to ensure HTTP_X_FOO_BAR becomes X-FOO-BAR
+			$headers[str_replace('_', '-', substr($key, 5))] = $value;
 		}
 
 		return new HTTP_Header($headers);

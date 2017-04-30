@@ -7,12 +7,6 @@
 abstract class Kohana_Unittest_TestCase extends PHPUnit_Framework_TestCase {
 	
 	/**
-	 * Whether we should enable work arounds to make the tests compatible with phpunit 3.4
-	 * @var boolean
-	 */
-	protected static $_assert_type_compatability = NULL;
-
-	/**
 	 * Make sure PHPUnit backs up globals
 	 * @var boolean
 	 */
@@ -39,16 +33,6 @@ abstract class Kohana_Unittest_TestCase extends PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		if(self::$_assert_type_compatability === NULL)
-		{
-			if( ! class_exists('PHPUnit_Runner_Version'))
-			{
-				require_once 'PHPUnit/Runner/Version.php';
-			}
-
-			self::$_assert_type_compatability = version_compare(PHPUnit_Runner_Version::id(), '3.5.0', '<=');
-		}
-
 		$this->_helpers = new Unittest_Helpers;
 
 		$this->setEnvironment($this->environmentDefault);
@@ -112,150 +96,75 @@ abstract class Kohana_Unittest_TestCase extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Asserts that a variable is of a given type.
+	 * Evaluate an HTML or XML string and assert its structure and/or contents.
 	 *
-	 * @param string $expected
-	 * @param mixed  $actual
-	 * @param string $message
-	 * @since Method available since Release 3.5.0
-	 */
-	public static function assertInstanceOf($expected, $actual, $message = '')
-	{
-		if(self::$_assert_type_compatability)
-		{
-			return self::assertType($expected, $actual, $message);
-		}
-
-		return parent::assertInstanceOf($expected, $actual, $message);
-	}
-	
-	/**
-	 * Asserts that an attribute is of a given type.
+	 * NOTE:
+	 * Overriding this method to remove the deprecation error
+	 * when tested with PHPUnit 4.2.0+
 	 *
-	 * @param string $expected
-	 * @param string $attributeName
-	 * @param mixed  $classOrObject
+	 * TODO:
+	 * this should be removed when phpunit-dom-assertions gets released
+	 * https://github.com/phpunit/phpunit-dom-assertions
+	 *
+	 * @param array $matcher
+	 * @param string $actual
 	 * @param string $message
-	 * @since Method available since Release 3.5.0
+	 * @param bool $isHtml
+	 * @uses Unittest_TestCase::tag_match
 	 */
-	public static function assertAttributeInstanceOf($expected, $attributeName, $classOrObject, $message = '')
+	public static function assertTag($matcher, $actual, $message = '', $isHtml = true)
 	{
-		if(self::$_assert_type_compatability)
-		{
-			return self::assertAttributeType($expected, $attributeName, $classOrObject, $message);
-		}
+		//trigger_error(__METHOD__ . ' is deprecated', E_USER_DEPRECATED);
 
-		return parent::assertAttributeInstanceOf($expected, $attributeName, $classOrObject, $message);
+		$matched = static::tag_match($matcher, $actual, $message, $isHtml);
+		static::assertTrue($matched, $message);
 	}
 
 	/**
-	 * Asserts that a variable is not of a given type.
+	 * This assertion is the exact opposite of assertTag
 	 *
-	 * @param string $expected
-	 * @param mixed  $actual
+	 * Rather than asserting that $matcher results in a match, it asserts that
+	 * $matcher does not match
+	 *
+	 * NOTE:
+	 * Overriding this method to remove the deprecation error
+	 * when tested with PHPUnit 4.2.0+
+	 *
+	 * TODO:
+	 * this should be removed when phpunit-dom-assertions gets released
+	 * https://github.com/phpunit/phpunit-dom-assertions
+	 *
+	 * @param array $matcher
+	 * @param string $actual
 	 * @param string $message
-	 * @since Method available since Release 3.5.0
+	 * @param bool $isHtml
+	 * @uses Unittest_TestCase::tag_match
 	 */
-	public static function assertNotInstanceOf($expected, $actual, $message = '')
+	public static function assertNotTag($matcher, $actual, $message = '', $isHtml = true)
 	{
-		if(self::$_assert_type_compatability)
-		{
-			return self::assertNotType($expected, $actual, $message);
-		}
+		//trigger_error(__METHOD__ . ' is deprecated', E_USER_DEPRECATED);
 
-		return parent::assertNotInstanceOf($expected, $actual, $message);
+		$matched = static::tag_match($matcher, $actual, $message, $isHtml);
+		static::assertFalse($matched, $message);
 	}
 
 	/**
-	 * Asserts that an attribute is of a given type.
+	 * Helper function to match HTML string tags against certain criteria
 	 *
-	 * @param string $expected
-	 * @param string $attributeName
-	 * @param mixed  $classOrObject
-	 * @param string $message
-	 * @since Method available since Release 3.5.0
-	 */
-	public static function assertAttributeNotInstanceOf($expected, $attributeName, $classOrObject, $message = '')
-	{
-		if(self::$_assert_type_compatability)
-		{
-			return self::assertAttributeNotType($expected, $attributeName, $classOrObject, $message);
-		}
-
-		return parent::assertAttributeNotInstanceOf($expected, $attributeName, $classOrObject, $message);
-	}
-
-	/**
-	 * Asserts that a variable is of a given type.
+	 * TODO:
+	 * this should be removed when phpunit-dom-assertions gets released
+	 * https://github.com/phpunit/phpunit-dom-assertions
 	 *
-	 * @param string $expected
-	 * @param mixed  $actual
+	 * @param array $matcher
+	 * @param string $actual
 	 * @param string $message
-	 * @since Method available since Release 3.5.0
+	 * @param bool $isHtml
+	 * @return bool TRUE if there is a match FALSE otherwise
 	 */
-	public static function assertInternalType($expected, $actual, $message = '')
+	protected static function tag_match($matcher, $actual, $message = '', $isHtml = true)
 	{
-		if(self::$_assert_type_compatability)
-		{
-			return self::assertType($expected, $actual, $message);
-		}
-		
-		return parent::assertInternalType($expected, $actual, $message);
-	}
-
-	/**
-	 * Asserts that an attribute is of a given type.
-	 *
-	 * @param string $expected
-	 * @param string $attributeName
-	 * @param mixed  $classOrObject
-	 * @param string $message
-	 * @since Method available since Release 3.5.0
-	 */
-	public static function assertAttributeInternalType($expected, $attributeName, $classOrObject, $message = '')
-	{
-		if(self::$_assert_type_compatability)
-		{
-			return self::assertAttributeType($expected, $attributeName, $classOrObject, $message);
-		}
-
-		return parent::assertAttributeInternalType($expected, $attributeName, $classOrObject, $message);
-	}
-
-	/**
-	 * Asserts that a variable is not of a given type.
-	 *
-	 * @param string $expected
-	 * @param mixed  $actual
-	 * @param string $message
-	 * @since Method available since Release 3.5.0
-	 */
-	public static function assertNotInternalType($expected, $actual, $message = '')
-	{
-		if(self::$_assert_type_compatability)
-		{
-			return self::assertNotType($expected, $actual, $message);
-		}
-
-		return parent::assertNotInternalType($expected, $actual, $message);
-	}
-
-	/**
-	 * Asserts that an attribute is of a given type.
-	 *
-	 * @param string $expected
-	 * @param string $attributeName
-	 * @param mixed  $classOrObject
-	 * @param string $message
-	 * @since Method available since Release 3.5.0
-	 */
-	public static function assertAttributeNotInternalType($expected, $attributeName, $classOrObject, $message = '')
-	{
-		if(self::$_assert_type_compatability)
-		{
-			return self::assertAttributeNotType($expected, $attributeName, $classOrObject, $message);
-		}
-
-		return parent::assertAttributeNotInternalType($expected, $attributeName, $classOrObject, $message);
+		$dom = PHPUnit_Util_XML::load($actual, $isHtml);
+		$tags = PHPUnit_Util_XML::findNodes($dom, $matcher, $isHtml);
+		return count($tags) > 0 && $tags[0] instanceof DOMNode;
 	}
 }

@@ -7,8 +7,8 @@
  * @package    Kohana
  * @category   Base
  * @author     Kohana Team
- * @copyright  (c) 2008-2012 Kohana Team
- * @license    http://kohanaphp.com/license
+ * @copyright  (c) 2008-2014 Kohana Team
+ * @license    http://kohanaframework.org/license
  * @since      3.1.0
  */
 class Kohana_Response implements HTTP_Response {
@@ -604,7 +604,10 @@ class Kohana_Response implements HTTP_Response {
 		{
 			if (extension_loaded('http'))
 			{
-				$this->_header['set-cookie'] = http_build_cookie($this->_cookies);
+				$cookies = version_compare(phpversion('http'), '2.0.0', '>=') ?
+					(string) new \http\Cookie($this->_cookies) :
+					http_build_cookie($this->_cookies);
+				$this->_header['set-cookie'] = $cookies;
 			}
 			else
 			{

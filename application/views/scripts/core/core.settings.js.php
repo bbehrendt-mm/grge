@@ -84,22 +84,22 @@
 
             .append(NF.row().attr('title', <?=__j('Steuert die Priorität, Zombies zu attackieren, die für dich selbst eine Bedrohung darstellen.')?>).qtip(game.render.html.qtip.ingame('top'))
                 .append(NF.cell(true, 6, 0, 'right').text(<?=__j('Selbstverteidigung')?>))
-                .append(NF.cell(true, 6, 0, 'left').append(sel_clone.clone().attr('id', 'bhav_self').find('option[value="' + data[0] + '"]').attr('selected','selected').end()))
+                .append(NF.cell(true, 6, 0, 'left').append(sel_clone.clone().attr('id', 'bhav_self').find('option[value="' + data[0] + '"]').prop('selected',true).end()))
             )
 
             .append(NF.row().attr('title', <?=__j('Steuert die Priorität, Zombies zu attackieren, die für deine Kameraden eine Bedrohung darstellen.')?>).qtip(game.render.html.qtip.ingame('top'))
                 .append(NF.cell(true, 6, 0, 'right').text(<?=__j('Teamverteidigung')?>))
-                .append(NF.cell(true, 6, 0, 'left').append(sel_clone.clone().attr('id', 'bhav_team').find('option[value="' + data[1] + '"]').attr('selected','selected').end()))
+                .append(NF.cell(true, 6, 0, 'left').append(sel_clone.clone().attr('id', 'bhav_team').find('option[value="' + data[1] + '"]').prop('selected',true).end()))
             )
 
             .append(NF.row().attr('title', <?=__j('Steuert die Priorität, im Kampf zu einer besseren Waffe zu wechseln.')?>).qtip(game.render.html.qtip.ingame('top'))
                 .append(NF.cell(true, 6, 0, 'right').text(<?=__j('Waffenauswahl')?>))
-                .append(NF.cell(true, 6, 0, 'left').append(sel_clone.clone().attr('id', 'bhav_wpn').find('option[value="' + data[2] + '"]').attr('selected','selected').end()))
+                .append(NF.cell(true, 6, 0, 'left').append(sel_clone.clone().attr('id', 'bhav_wpn').find('option[value="' + data[2] + '"]').prop('selected',true).end()))
             )
 
             .append(NF.row().attr('title', <?=__j('Steuert die Priorität, die optimale Angriffsdistanz zu den Zombies für die aktuelle Waffe herzustellen.')?>).qtip(game.render.html.qtip.ingame('top'))
                 .append(NF.cell(true, 6, 0, 'right').text(<?=__j('Kampfdistanz')?>))
-                .append(NF.cell(true, 6, 0, 'left').append(sel_clone.clone().attr('id', 'bhav_move').find('option[value="' + data[3] + '"]').attr('selected','selected').end()))
+                .append(NF.cell(true, 6, 0, 'left').append(sel_clone.clone().attr('id', 'bhav_move').find('option[value="' + data[3] + '"]').prop('selected',true).end()))
             )
 
             .append(NF.row().append(NF.cell(false, 6, 6).append(

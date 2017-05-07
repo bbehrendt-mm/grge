@@ -250,11 +250,13 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
 
     /**
      * Deletes all maps
+     * @param string $map_cfg
      */
     final public function reset_maps($map_cfg) {
         $this->config('game.config.map', $map_cfg);
         $this->set['gamedata']->maps = array();
         $this->set['gamedata']->maps['main'] = Model_Map_Abstract::factory($map_cfg);
+        /** @noinspection PhpUndefinedMethodInspection */
         $this->set['gamedata']->maps['main']->auto_init();
     }
 
@@ -272,14 +274,10 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
      * @return Model_Places_Abstract_Place|null
 	 */
 	final public function location($lid = NULL) {
-        /**
-         * @global $player Model_Player
-         */
-        global $player;
-	
-		$location = ($lid !== NULL) ? $lid : $player->location_class();
+		$location = ($lid !== NULL) ? $lid : Globals::CurrentPlayer()->location_class();
 
         if ($location < 0)
+            /** @noinspection PhpUndefinedMethodInspection */
             return $this->set['gamedata']->maps['main']->get_by_fixed_id(-$location);
 		else return $this->set['gamedata']->uin->get($location, 'Model_Places_Abstract_Place');
 	}
@@ -287,6 +285,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
     /**
      * @param $mapid
      * @param $sublocation
+     * @param string|null $map_cfg
      * @return bool|number
      */
     final public function register_map($mapid, $sublocation, $map_cfg = null) {
@@ -294,7 +293,10 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
             return false;
 
         $this->set['gamedata']->maps[$mapid] = Model_Map_Abstract::factory(($map_cfg == null) ? $this->config('game.config.map') : $map_cfg, $sublocation);
+
+        /** @noinspection PhpUndefinedMethodInspection */
         $this->set['gamedata']->maps[$mapid]->auto_init();
+        /** @noinspection PhpUndefinedMethodInspection */
         return $this->set['gamedata']->maps[$mapid]->resolve_fixed_id(1);
     }
 
@@ -322,10 +324,8 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
      * @return Model_Player|Interface_Plentity|null
      */
     public function get_player($pid = NULL) {
-    	/** @global $user Model_Euser */
-        global $user;
     	if ($pid === NULL) {
-            if ($user) $pid = $user->uid();
+            if (Globals::hasCurrentUser()) $pid = Globals::CurrentUser()->uid();
             else return null;
         } elseif (!is_numeric($pid)) return $this->get_npc($pid);
 

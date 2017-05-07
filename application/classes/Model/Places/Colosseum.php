@@ -49,8 +49,6 @@ class Model_Places_Colosseum extends Model_Places_Abstract_Place {
 	}
 
 	private function battle() {
-		global $game, $player;
-
         $zmb = array();
         if ($this->stage > 15) $zmb[] = Model_Combat_Zombies_Behemoth::factory()->count($this->stage - 15);
         else foreach (static::$stageconf[$this->stage]['zombies'] as $z => $c)
@@ -123,37 +121,26 @@ class Model_Places_Colosseum extends Model_Places_Abstract_Place {
 	}
 	
 	private function check_timer() {
-        /**
-         * @global $game Model_Game
-         * @global $player Model_Player
-         */
-		global $game, $player;
-
-		if ($this->stage == 0 && $game->duration() > 288) {
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Ohje, du hast die Qualifikationsphase des Spiels verpasst. Jetzt kannst du nicht mehr am Turnier teilnehmen...'));
+		if ($this->stage == 0 && Globals::CurrentGame()->duration() > 288) {
+            Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Ohje, du hast die Qualifikationsphase des Spiels verpasst. Jetzt kannst du nicht mehr am Turnier teilnehmen...'));
 			return false;
-		} elseif ($this->stage > 0 && ($game->duration() < (288 * ceil($this->stage/2)))) {
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Die Vorbereitungen für dieses Match laufen noch. Komm frühestens an Tag :day wieder.', array(':day' => 1+ceil($this->stage/2))));
+		} elseif ($this->stage > 0 && (Globals::CurrentGame()->duration() < (288 * ceil($this->stage/2)))) {
+            Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Die Vorbereitungen für dieses Match laufen noch. Komm frühestens an Tag :day wieder.', array(':day' => 1+ceil($this->stage/2))));
 			return false;
 		}	
 		return true;
 	}
 	
 	public function interaction_participate() {
-        /**
-         * @global $player Model_Player
-         */
-		global $player;
-		
 		if (!$this->check_timer()) return false;
 		
 		$this->battle();
 		
-		if ($player->get_status()->alive()) {
-			$player->log()->add(new Model_Log_Types_Text('Kampf', 'Du hast den Kampf überstanden!', 'Herzlichen Glückwunsch, du hast eine weitere Ebene des Kolosseums gemeistert! Weiter so! Als Belohnung für deinen triumphalen Sieg hast du einige Gegenstände erhalten.'));
+		if (Globals::PrimaryPlayer()->get_status()->alive()) {
+            Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text('Kampf', 'Du hast den Kampf überstanden!', 'Herzlichen Glückwunsch, du hast eine weitere Ebene des Kolosseums gemeistert! Weiter so! Als Belohnung für deinen triumphalen Sieg hast du einige Gegenstände erhalten.'));
 			$this->reward();
 			Tool_Scripts::home()->set_map_points($this->stage);
-            $player->achievements()->achieve(Model_Achievement::MA_GLADIATOR);
+            Globals::PrimaryPlayer()->achievements()->achieve(Model_Achievement::MA_GLADIATOR);
 			$this->stage++;
 		}
 		

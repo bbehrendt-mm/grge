@@ -10,25 +10,18 @@ class Model_Items_Virtual_Location_Mapmode extends Model_Items_Abstract_Virtual 
     public $last_news = 0;
 
     protected function hid() {
-        $phpbb53 = $this;
         return parent::hid()->add_action('Kartendaten an deine Stadt übermitteln', Model_Action::factory()
                 ->buttonskin('mapmode')
                 ->effect(Model_Effect::factory()
-                    ->custom(function() use ($phpbb53) {
-                            /**
-                             * @global $player Model_Player
-                             */
-                            global $player;
-
-                            /** @var $items Model_Items_Maptool[] */
-                            if (!($items = $player->inventory()->get('Model_Items_Maptool'))) return;
+                    ->custom(function() {
+                            if (!($items = Globals::PrimaryPlayer()->inventory()->get('Model_Items_Maptool'))) return;
                             $points = $items[0]->retrieve_info(true);
 
-                            if ($points <= 0) $player->log()->add(new Model_Log_Types_Text(null, null, 'Du hast leider keine neuen Informationen, die du an deine Stadt senden könntest...'));
+                            if ($points <= 0) Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Du hast leider keine neuen Informationen, die du an deine Stadt senden könntest...'));
                             else {
 
-                                $player->location()->set_map_points($player->location()->get_map_points() + $points);
-                                $player->log()->add(new Model_Log_Types_Text(null, null, 'Deine Stadt ist dir äußerst dankbar für diese neuen Informationen.'));
+                                Globals::PrimaryPlayer()->location()->set_map_points(Globals::PrimaryPlayer()->location()->get_map_points() + $points);
+                                Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Deine Stadt ist dir äußerst dankbar für diese neuen Informationen.'));
                             }
                         })
                 )
@@ -36,19 +29,13 @@ class Model_Items_Virtual_Location_Mapmode extends Model_Items_Abstract_Virtual 
             ->add_action('Nach Neuigkeiten aus der Stadt fragen', Model_Action::factory()
                     ->buttonskin('mapmode')
                     ->effect(Model_Effect::factory()
-                            ->custom(function() use ($phpbb53) {
-                                /**
-                                 * @global $game Model_Game
-                                 * @global $player Model_Player
-                                 */
-                                global $player, $game;
-
-                                if (($phpbb53->last_news + 288) > $game->duration()) {
-                                    $player->log()->add(new Model_Log_Types_Text(null, null, 'Derzeit gibt es nichts Neues aus der Stadt zu berichten... probiere es in :duration noch einmal!', array(':duration' => Tool_Numerics::duration_to_string($phpbb53->last_news + 288 - $game->duration()))));
+                            ->custom(function() {
+                                if (($this->last_news + 288) > Globals::CurrentGame()->duration()) {
+                                    Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Derzeit gibt es nichts Neues aus der Stadt zu berichten... probiere es in :duration noch einmal!', array(':duration' => Tool_Numerics::duration_to_string($this->last_news + 288 - Globals::CurrentGame()->duration()))));
                                     return;
                                 }
 
-                                $phpbb53->last_news = $game->duration();
+                                $this->last_news = Globals::CurrentGame()->duration();
 
                                 $str = "";
                                 $user = array();
@@ -78,7 +65,7 @@ class Model_Items_Virtual_Location_Mapmode extends Model_Items_Abstract_Virtual 
                                 foreach ($user as $id => $name)
                                     $tmp[":rnd[{$id}]"] = $name;
 
-                                $player->log()->add(new Model_Log_Types_Text(null, null, $str, $tmp));
+                                Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, $str, $tmp));
                             })
                     )
                 , 'hideout_asknews');

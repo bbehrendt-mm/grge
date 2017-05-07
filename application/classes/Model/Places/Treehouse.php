@@ -26,12 +26,9 @@ class Model_Places_Treehouse extends Model_Places_Abstract_Hideout {
     }
 
     public function can_enter_map($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
-        /** @global Model_Game $game */
-        global $game;
-
-        if (!$pid) global $player;
-        elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = $game->get_player($pid);
-        else $player = $game->get_npc($pid);
+        if (!$pid) $player = Globals::CurrentPlayer();
+        elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGame()->get_player($pid);
+        else $player = Globals::CurrentGame()->get_npc($pid);
 
         if ($type == Interface_Tickable::IT_TYPE_PLAYER && !$player->job(1080))
             $player->log()->add('An der Tür dieses Baumhauses befindet sich ein Schild, auf dem in krakeliger Schrift geschrieben steht: "Führ Erwaksene ferboten!!!". So ein Ärger aber auch...');

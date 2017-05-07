@@ -12,10 +12,7 @@ class Model_Items_Bandage2 extends Model_Items_Abstract_Item implements Interfac
 	protected static $weight = 2;
 
     protected function hid() {
-        /** @global Model_Player $player */
-        global $player;
-
-        $is_doc = !Tool_Scripts::is_npc($player) && $player->job(10030);
+        $is_doc = !Globals::shadowPlayerExists() && Globals::PrimaryPlayer()->job(10030);
 
         return parent::hid()
             ->add_action('Wunden versorgen',
@@ -50,10 +47,10 @@ class Model_Items_Bandage2 extends Model_Items_Abstract_Item implements Interfac
                             ->message('Du wickelst die Bandage straff um die Verletzungen deines Freundes. Er ist zwar immer noch Leichenblass, das hat aber nichts mehr mit dem Blutverlust zu tun...')
                     , null, null,
                         Model_Effect::factory()
-                            ->effect(Model_Status::MS_STAT_HEALTH, -24 + (!$is_doc ? 0 : (2 * $player->job(false, null))))
+                            ->effect(Model_Status::MS_STAT_HEALTH, -24 + (!$is_doc ? 0 : (2 * Globals::PrimaryPlayer()->job(false, null))))
                             ->buff('Model_Buffs_Blood', true)
                             ->achieve(Model_Achievement::MA_BANDAGE_MUMMY)
-                            ->message(':name hat eine ziemlich schmutzige Bandage um deine Verletzungen gewickelt... wenigestens weist du jetzt was du ihm wert bist.', array(':name' => $player->name()))
+                            ->message(':name hat eine ziemlich schmutzige Bandage um deine Verletzungen gewickelt... wenigestens weist du jetzt was du ihm wert bist.', array(':name' => Globals::CurrentPlayer()->name()))
                     )
             );
     }

@@ -6,67 +6,45 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
     protected static $allow_skip_login = true;
 
     public function japi_unveil_map() {
-        /** @global Model_Game $game */
-        /** @global Model_Player $player */
-        global $game, $player;
+        if (!Globals::hasCurrentGame() || !Globals::hasPrimaryPlayer()) return;
 
-        if (!$game || !$player) return;
-
-        $game->map($player->location_class())->uncover_all();
+        Globals::CurrentGame()->map(Globals::PrimaryPlayer()->location_class())->uncover_all();
 
         $this->render();
     }
 
     public function japi_force_battle() {
-        /** @global Model_Player $player */
-        global $player;
-
-        $zombies = $player->location()->zombie_factory()->spawn(true);
-        if ($zombies) Tool_Scripts::combat([Tool_Scripts::at_location($player->location_class()), $zombies], true, 20, $player->location());
+        $zombies = Globals::PrimaryPlayer()->location()->zombie_factory()->spawn(true);
+        if ($zombies) Tool_Scripts::combat([Tool_Scripts::at_location(Globals::PrimaryPlayer()->location_class()), $zombies], true, 20, Globals::PrimaryPlayer()->location());
     }
 
     public function japi_purge_log() {
-        /** @global Model_Player $player */
-        global $player;
-
-        $player->log()->clear();
-        $player->location()->log()->clear();
+        Globals::PrimaryPlayer()->log()->clear();
+        Globals::PrimaryPlayer()->location()->log()->clear();
 
         $this->render();
     }
 
     public function japi_siege() {
-        /** @global Model_Game $game */
-        /** @global Model_Player $player */
-        global $game, $player;
-
-        if (!$game || !$player) return;
+        if (!Globals::hasCurrentGame() || !Globals::hasPrimaryPlayer()) return;
 
         $z = (int)$this->post('z');
         if ($z >= 0)
-            $player->location()->zombie_factory()->accumulation($z);
+            Globals::PrimaryPlayer()->location()->zombie_factory()->accumulation($z);
 
         $this->render();
     }
 
     public function japi_regenerate() {
-        /** @global Model_Game $game */
-        /** @global Model_Player $player */
-        global $game, $player;
+        if (!Globals::hasCurrentGame() || !Globals::hasPrimaryPlayer()) return;
 
-        if (!$game || !$player) return;
-
-        $player->get_status()->set(Model_Status::MS_STAT_ENERGY, 100, Model_Status::MS_STAT_HEALTH, 100, Model_Status::MS_STAT_HUNGER, 100, Model_Status::MS_STAT_THIRST, 100, Model_Status::MS_STAT_SLEEPY, 100);
+        Globals::PrimaryPlayer()->get_status()->set(Model_Status::MS_STAT_ENERGY, 100, Model_Status::MS_STAT_HEALTH, 100, Model_Status::MS_STAT_HUNGER, 100, Model_Status::MS_STAT_THIRST, 100, Model_Status::MS_STAT_SLEEPY, 100);
 
         $this->render();
     }
 
     public function japi_spawn_items() {
-        /** @global Model_Game $game */
-        /** @global Model_Player $player */
-        global $game, $player;
-
-        if (!$game || !$player) return;
+        if (!Globals::hasCurrentGame() || !Globals::hasPrimaryPlayer()) return;
 
         $target_inv = $this->post('inventory');
         $sets = $this->post('data');
@@ -106,12 +84,12 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
 
                 if (Tool_System::instance_of($item, Model_Items_Virtual_Invoke_Abstract::cls())) {
                     /** @var $item Model_Items_Virtual_Invoke_Abstract */
-                    $item->trigger_spawn($player->location(), $player);
+                    $item->trigger_spawn(Globals::PrimaryPlayer()->location(), Globals::PrimaryPlayer());
                     $item->grind();
                     $item = null;
                 } else {
-                    if ($target_inv == 'true') $player->inventory()->add($item);
-                    else $player->location()->inventory()->add($item);
+                    if ($target_inv == 'true') Globals::PrimaryPlayer()->inventory()->add($item);
+                    else Globals::PrimaryPlayer()->location()->inventory()->add($item);
 
                 }
 
@@ -124,23 +102,16 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
     }
 
     public function japi_skip() {
-        /** @global Model_Game $game */
-        /** @global Model_Player $player */
-        global $game, $player;
-
-        if (!$game || !$player) return;
+        if (!Globals::hasCurrentGame() || !Globals::hasPrimaryPlayer()) return;
 
         $ticks = (int)$this->post('ticks');
         if ($ticks > 0)
-            $game->fast_forward($ticks);
+            Globals::CurrentGame()->fast_forward($ticks);
 
         $this->render();
     }
 
     public function japi_custom_battle() {
-        /** @global Model_Player $player */
-        global $player;
-
         $config = $this->post('data');
         $zombies = [];
 
@@ -154,7 +125,7 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
         }
 
         // TODO: Make escapabillity customizable
-        if ($zombies) Tool_Scripts::combat([Tool_Scripts::at_location($player->location_class()), $zombies], false, 20, $player->location());
+        if ($zombies) Tool_Scripts::combat([Tool_Scripts::at_location(Globals::PrimaryPlayer()->location_class()), $zombies], false, 20, Globals::PrimaryPlayer()->location());
         $this->render();
     }
 

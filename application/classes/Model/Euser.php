@@ -10,14 +10,12 @@ class Model_Euser extends Model_User {
 
     public function __wakeup() {
         //Rebind global user variable
-        global $user;
-        $user = $this;
+        Globals::setCurrentUser($this);
     }
 
     public function __construct($session_id) {
         //Bind global user variable
-        global $user;
-        $user = $this;
+        Globals::setCurrentUser($this);
 
         //Save session ID
         $this->sid = $session_id;

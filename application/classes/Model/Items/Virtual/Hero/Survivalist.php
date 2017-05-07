@@ -15,7 +15,6 @@ class Model_Items_Virtual_Hero_Survivalist extends Model_Items_Abstract_Virtual 
     );
 
     protected function hid() {
-        global $player;
         return parent::hid()
             ->add_action('Glücksfund', Model_Action::factory()
                 ->buttonskin('hero hja')

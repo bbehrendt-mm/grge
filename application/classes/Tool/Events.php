@@ -40,12 +40,9 @@ class Tool_Events {
     }
 
     public static function handle_event_triggers($time = null) {
-        /** @global Model_Game $game */
-        global $game;
-
-        if (!$game) return;
+        if (!Globals::hasCurrentGame()) return;
         $ev = static::current($time);
-        if (($cls = static::event_extended_classes($ev)) && !$game->get_initialized_event($ev))
+        if (($cls = static::event_extended_classes($ev)) && !Globals::CurrentGame()->get_initialized_event($ev))
             new $cls;
     }
 
@@ -83,12 +80,7 @@ class Tool_Events {
     }
 
     public static function is_april_fools() {
-        /**
-         * @global Model_Game $game
-         * @global Model_Player $player
-         */
-        global $game, $player;
-        return (static::get(static::TE_MONTH) == 4 && static::get(static::TE_DAY) == 1) && ($game->duration() > 300) && !$player->april_fools();
+        return (static::get(static::TE_MONTH) == 4 && static::get(static::TE_DAY) == 1) && (Globals::CurrentGame()->duration() > 300) && !Globals::PrimaryPlayer()->april_fools();
     }
 
     public static function is_october_midness() {

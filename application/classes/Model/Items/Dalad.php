@@ -12,7 +12,6 @@ class Model_Items_Dalad extends Model_Items_Abstract_Item implements Interface_S
 	protected static $weight = 3;
 
     protected function hid() {
-        global $player;
         return parent::hid()
             ->add_action('... Essen?', Model_Action::factory()
                 ->effect(
@@ -44,7 +43,7 @@ class Model_Items_Dalad extends Model_Items_Abstract_Item implements Interface_S
                             ->effect(Model_Status::MS_STAT_HEALTH, 5)
                             ->effect(Model_Status::MS_STAT_RADIATION, 15)
                             ->achieve(Model_Achievement::MA_DALAD)
-                            ->message(':name hat dir etwas Dalad Jelly verabreicht... Herzlichen Glückwunsch?', array(':name' => $player->name()))
+                            ->message(':name hat dir etwas Dalad Jelly verabreicht... Herzlichen Glückwunsch?', array(':name' => Globals::CurrentPlayer()->name()))
                     )
             );
     }

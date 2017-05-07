@@ -8,11 +8,8 @@ class Tool_Scripts
      * @param Model_Player|null $p
      */
     public static function rebuild_primary_equipment($t, $p = null) {
-        /** @global Model_Game $game */
-        global $game;
-
         if (!$p)
-            foreach ($game->players() as $player)
+            foreach (Globals::CurrentGame()->players() as $player)
                 static::rebuild_primary_equipment($t, $player);
         else {
             $items = $p->get_equipment($t);
@@ -142,12 +139,9 @@ class Tool_Scripts
             }
         }
 
-        /**
-         * @global $player Model_Player
-         */
         if (is_object($perspective))
             $player = $perspective;
-        else global $player;
+        else $player = Globals::CurrentPlayer();
 
         if ($active_player) $player->inventory()->reset_weight();
         if ($active_location) $player->location()->inventory()->reset_weight();
@@ -160,14 +154,8 @@ class Tool_Scripts
     }
 
     public static function getBrainCoinLikelinessLevel($lid = null) {
-        /**
-         * @global Model_Game $game
-         * @global Model_Player $player
-         */
-        global $game, $player;
-
         // Get Radar data
-        list($radar_min, $radar_max, $radar_prop, $radar_increase) = $lid ? $game->location($lid)->zombie_factory()->get_radar_data() : $player->location()->zombie_factory()->get_radar_data();
+        list($radar_min, $radar_max, $radar_prop, $radar_increase) = $lid ? Globals::CurrentGame()->location($lid)->zombie_factory()->get_radar_data() : Globals::CurrentPlayer()->location()->zombie_factory()->get_radar_data();
 
         // Check if we're at a hideout with active defenses
         $hideout = Tool_Scripts::current_location_hideout();
@@ -210,12 +198,9 @@ class Tool_Scripts
      */
     public static function available_items($classname = null, $active_player = true, $active_location = true, $other_players = false, $perspective = null, $decider = null)
     {
-        /**
-         * @global $player Model_Player
-         */
         if (is_object($perspective))
             $player = $perspective;
-        else global $player;
+        else $player = Globals::CurrentPlayer();
 
         if (Tool_Scripts::is_npc($player))
             $other_players = false;
@@ -262,22 +247,16 @@ class Tool_Scripts
      */
     public static function at_location($lid = null, $include_players = true, $include_npcs = true)
     {
-        /**
-         * @global $game Model_Game
-         * @global $player Model_Player
-         */
-        global $player, $game;
-
         if (!$include_players && !$include_npcs) return [];
-        if ($lid === null) $lid = $player->location_class();
+        if ($lid === null) $lid = Globals::CurrentPlayer()->location_class();
 
         $ret = [];
         if ($include_players)
-            foreach ($game->players(true) as $s_player)
+            foreach (Globals::CurrentGame()->players(true) as $s_player)
                 if ($s_player->get_status()->alive() && $s_player->location_class() == $lid)
                     $ret[] = $s_player;
         if ($include_npcs)
-            foreach ($game->npcs(true) as $s_player)
+            foreach (Globals::CurrentGame()->npcs(true) as $s_player)
                 if ($s_player->get_status()->alive() && $s_player->location_class() == $lid)
                     $ret[] = $s_player;
 
@@ -291,17 +270,11 @@ class Tool_Scripts
      */
     public static function comrades($lid = null, $include_players = true, $include_npcs = false)
     {
-        /**
-         * @global $game Model_Game
-         * @global $player Model_Player
-         */
-        global $player;
-
-        if ($lid === null) $lid = $player->location_class();
+        if ($lid === null) $lid = Globals::CurrentPlayer()->location_class();
 
         $ret = [];
         foreach (static::at_location($lid, $include_players, $include_npcs) as $p)
-            if ($p->id() != $player->id() && static::check_comrade($p))
+            if ($p->id() != Globals::CurrentPlayer()->id() && static::check_comrade($p))
                 $ret[] = $p;
 
         return $ret;
@@ -314,18 +287,12 @@ class Tool_Scripts
      */
     public static function check_comrade($pid)
     {
-        /**
-         * @global $player Model_Player
-         * @global $game Model_Game
-         */
-        global $player, $game;
-
         //Check if PID is valid
         $r = null;
         if (is_numeric($pid))
-            $r = $game->get_player($pid);
+            $r = Globals::CurrentGame()->get_player($pid);
         elseif (is_string($pid))
-            $r = $game->get_npc($pid);
+            $r = Globals::CurrentGame()->get_npc($pid);
         elseif (is_object($pid))
             $r = $pid;
 
@@ -336,7 +303,7 @@ class Tool_Scripts
             return false;
 
         //Check if both players share the same location
-        return ($r->location_class() == $player->location_class()) ? $r : false;
+        return ($r->location_class() == Globals::CurrentPlayer()->location_class()) ? $r : false;
     }
 
     /**
@@ -348,12 +315,7 @@ class Tool_Scripts
      */
     public static function place_new_item($item, $log = true, $use_location = null)
     {
-        /**
-         * @global $player Model_Player
-         */
-        global $player;
-
-        $location = $use_location ? $use_location : $player->location();
+        $location = $use_location ? $use_location : Globals::CurrentPlayer()->location();
 
         //Fix single element arrays
         if (is_array($item) && count($item) == 1)
@@ -381,9 +343,9 @@ class Tool_Scripts
                 }
 
             } else {
-                $player->inventory()->add($item);
+                Globals::CurrentPlayer()->inventory()->add($item);
                 if (!$item->take(true))
-                    $player->inventory()->remove($item->uin());
+                    Globals::CurrentPlayer()->inventory()->remove($item->uin());
                 else return true;
             }
         }
@@ -403,11 +365,7 @@ class Tool_Scripts
      */
     public static function simple_battle($num_zmb, $distance, $headline = "Ein Kampf!", $limit_to_player = false, $escapeable = false)
     {
-        /**
-         * @global $player Model_Player
-         */
-        global $player;
-        Tool_Scripts::combat([$limit_to_player ? [$player] : Tool_Scripts::at_location(), [Model_Combat_Zombies_Shambler::factory()->count($num_zmb)]], $escapeable, $distance, $player->location(), $headline);
+        Tool_Scripts::combat([$limit_to_player ? [Globals::CurrentPlayer()] : Tool_Scripts::at_location(), [Model_Combat_Zombies_Shambler::factory()->count($num_zmb)]], $escapeable, $distance, Globals::CurrentPlayer()->location(), $headline);
     }
 
     /**
@@ -416,10 +374,7 @@ class Tool_Scripts
      * @return Model_Places_Home
      */
     public static function home($game = null) {
-        /**
-         * @global $game Model_Game
-         */
-        if ($game === null) global $game;
+        if ($game === null) $game = Globals::CurrentGame();
         return $game->location(-2);
     }
 
@@ -429,14 +384,9 @@ class Tool_Scripts
      * @return Model_Items_Abstract_Item[]
      */
     public static function get_home_items($type = null) {
-        /**
-         * @global $game Model_Game
-         */
-        global $game;
-
         $ret = array();
-        foreach ($game->maps() as $map) foreach ($map->get_locations('Model_Places_Abstract_Hideout') as $id)
-            foreach ($game->location($id)->inventory()->get($type) as $item)
+        foreach (Globals::CurrentGame()->maps() as $map) foreach ($map->get_locations('Model_Places_Abstract_Hideout') as $id)
+            foreach (Globals::CurrentGame()->location($id)->inventory()->get($type) as $item)
                 $ret[] = $item;
         return $ret;
     }
@@ -447,12 +397,7 @@ class Tool_Scripts
      * @return bool|int false, if the location id is invalid; 0 for a standart location; 1 for a location node, 2 for a hideout
      */
     public static function location_type($lid) {
-        /**
-         * @global $game Model_Game
-         */
-        global $game;
-
-        if (!($location = $game->location($lid)))
+        if (!($location = Globals::CurrentGame()->location($lid)))
             return false;
 
         if (Tool_System::instance_of($location, 'Model_Places_Abstract_Hideout'))
@@ -467,9 +412,8 @@ class Tool_Scripts
      * @return Model_Places_Abstract_Hideout|null
      */
     public static function current_location_hideout($p = null) {
-        /** @global $player Model_Player */
         if ($p === null)
-            global $player;
+            $player = Globals::CurrentPlayer();
         else $player = $p;
 
         if (static::location_type($player->location_class()) == 2)
@@ -484,13 +428,6 @@ class Tool_Scripts
      * @return Model_Combat_Field
      */
     public static function combat($combatants, $escapeable, $distance = 10, $location = null, $title = 'Ein Kampf!', $text = null) {
-        /**
-         * @global Model_Player $player
-         * @global Model_Game $game
-         */
-
-        global $game, $player;
-
         $battle = Model_Combat_Field::factory();
 
         $non_combatants = [];
@@ -523,12 +460,12 @@ class Tool_Scripts
                 }
 
         if ($location === null)
-            $location = $player->location();
+            $location = Globals::CurrentPlayer()->location();
 
         $battle->get_scene()->set_atmosphere($location->battle_location_type());
 
         //Upload to DB
-        $vid = Model_Combat_Handler::upload($game->id(), $game->season(), $battle);
+        $vid = Model_Combat_Handler::upload(Globals::CurrentGame()->id(), Globals::CurrentGame()->season(), $battle);
         $location->log()->add(new Model_Log_Types_Battle($title, $text, $vid, $battle->get_scene()->summarize()));
 
         return $battle;
@@ -540,10 +477,8 @@ class Tool_Scripts
      * @return DateTime
      */
     public static function get_daytime($t = null) {
-        /** @global Model_Game $game */
-        global $game;
-        if ($t === null) $t = $game->duration();
-        $ticks = $t + $game->getDaytimeOffset();
+        if ($t === null) $t = Globals::CurrentGame()->duration();
+        $ticks = $t + Globals::CurrentGame()->getDaytimeOffset();
         $days = floor($ticks/288);
         $d = new DateTime();
         $d->setDate(1998,Kohana::$config->load('server.season'),2);
@@ -575,14 +510,9 @@ class Tool_Scripts
     }
 
     public static function calculate_find_chances($pid = null) {
-        /**
-         * @global Model_Game $game
-         * @global Interface_Plentity|Model_Player $player
-         */
-        global $game;
         if ($pid === null)
-            global $player;
-        else $player = $game->get_player($pid);
+            $player = Globals::CurrentPlayer();
+        else $player = Globals::CurrentGame()->get_player($pid);
 
         $c = 1;
 
@@ -636,17 +566,14 @@ class Tool_Scripts
      * @param number|null $p Player ID
      */
     public static function chem_reaction($message, $cv, $item, $results = array(), $p = null) {
-        /** @global Model_Game $game */
-        global $game;
-
         if ($p === null)
-            $p = $game->get_player()->id();
+            $p = Globals::CurrentGame()->get_player()->id();
 
         if ($message)
-            $game->get_player($p)->log()->add($message);
+            Globals::CurrentGame()->get_player($p)->log()->add($message);
 
-        $game->get_player($p)->location()->log()->add(new Model_Log_Types_Chem($cv, $item, $results, $p));
-        static::place_new_item($results, false, $game->get_player($p)->location());
+        Globals::CurrentGame()->get_player($p)->location()->log()->add(new Model_Log_Types_Chem($cv, $item, $results, $p));
+        static::place_new_item($results, false, Globals::CurrentGame()->get_player($p)->location());
     }
 
     /**
@@ -655,7 +582,7 @@ class Tool_Scripts
      */
     public static function get_active_transport($player = null) {
         if ($player === null)
-            global $player;
+            $player = Globals::CurrentPlayer();
 
         $selected = null;
         $items = $player->inventory()->get('Model_Items_Abstract_Transport');
@@ -675,7 +602,7 @@ class Tool_Scripts
      */
     public static function is_npc($player = null) {
         if ($player === null)
-            global $player;
+            $player = Globals::CurrentPlayer();
 
         if (!$player) return false;
         return $player->type() != Interface_Plentity::IC_NPC_NONPC;

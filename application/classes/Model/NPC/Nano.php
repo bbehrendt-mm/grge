@@ -2,6 +2,7 @@
 
 class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
 {
+    private $escape_target_location = null;
 
     protected $name;
     protected $status;
@@ -10,6 +11,7 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
     protected $livetime = 0;
     protected $id = null;
     protected $escort = false;
+    protected $escape = 0;
 
     protected static $entity_type = Interface_Plentity::IC_NPC_GENERIC;
     protected static $escort_functions = [];
@@ -48,8 +50,10 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
      * @return int
      */
     public function location_class($newval = NULL) {
-        if ($newval !== NULL)
+        if ($newval !== NULL) {
             $this->location = $newval;
+            $this->escape = 0;
+        }
 
         return $this->location;
     }
@@ -59,15 +63,10 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
      * @return Model_Places_Abstract_Place
      */
     final public function location() {
-        /**
-         * @global $game Model_Game
-         */
-        global $game;
+        if (!Globals::CurrentGame()->location($this->location))
+            $this->location_class(Globals::CurrentGame()->map_main()->resolve_fixed_id(1));
 
-        if (!$game->location($this->location))
-            $this->location_class($game->map_main()->resolve_fixed_id(1));
-
-        return $game->location($this->location);
+        return Globals::CurrentGame()->location($this->location);
     }
 
     /**
@@ -97,9 +96,6 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
     }
 
     public function kill() {
-        /** @global Model_Game $game */
-        global $game;
-
         $this->get_status()->alive(false);
 
         if ($this->handle_death()) {
@@ -119,7 +115,7 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
             if ($this->location()) {
                 if ($this->get_status()->get(Model_Status::MS_STAT_ZOMBIFY) >= 50 && ($ghul = $this->generate_zombified_body())) {
                     $this->location()->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_ZOMBIFY, [], $this->id()));
-                    $game->register_ghul($this->location_class(), $ghul);
+                    Globals::CurrentGame()->register_ghul($this->location_class(), $ghul);
                 } else {
                     foreach ($this->inventory()->get() as $d)
                         $this->location()->inventory()->add($d);
@@ -130,6 +126,28 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
                 if (count(Tool_Scripts::at_location($this->location_class(), true, true)) == 0) $this->location()->vacate();
             }
         }
+    }
+
+    /**
+     * Enables the player to escape a blockade
+     */
+    final public function enable_escape() {
+        $this->escape = 2;
+    }
+
+    /**
+     * Forbids the player to escape a blockade
+     */
+    final public function disable_escape() {
+        $this->escape = 0;
+    }
+
+    /**
+     * True, when the player is capable of escaping
+     * @return bool
+     */
+    final public function can_escape() {
+        return ($this->escape > 0);
     }
 
     public function tick()
@@ -212,6 +230,14 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
 
     public function icon() {
         return null;
+    }
+
+    public function set_escape_target($e = null) {
+        $this->escape_target_location = $e;
+    }
+
+    public function get_escape_target() {
+        return $this->escape_target_location;
     }
 
     public function item_reaction() {}

@@ -22,24 +22,18 @@ class Model_Log_Types_Item extends Model_Log_Message {
      * @param int|null|string $uin
      */
     public function __construct($type, $item, $uin = null) {
-        /**
-         * @global Model_Game $game
-         * @global Model_Player $player
-         */
-        global $game, $player;
-
-        if (!$uin) $uin =  $player->id();
+        if (!$uin) $uin =  Globals::PrimaryPlayer()->id();
 
         if (!is_array($item))
             $item = [$item];
 
-        $ticks = $game ? $game->duration() : -1;
+        $ticks = Globals::hasCurrentGame() ? Globals::CurrentGame()->duration() : -1;
 
         $tmp = [];
         foreach ($item as $single)
             $tmp[] = new Model_Struct_Item($single,$ticks);
 
-        $time = $game->now();
+        $time = Globals::CurrentGame()->now();
         parent::__construct([
             'primary' => $uin,
             'class' => $type,
@@ -48,16 +42,10 @@ class Model_Log_Types_Item extends Model_Log_Message {
     }
 
     protected function postprocess($data) {
-        /**
-         * @global Model_Game $game
-         * @global Model_Player $player
-         */
-        global $game, $player;
-
         if ($data['primary'] === -1)
             $data['primary'] = __('Niemand');
         else {
-            $primary =  $game->get_player($data['primary']);
+            $primary =  Globals::CurrentGame()->get_player($data['primary']);
             $data['primary'] = $primary ? $primary->name() : __($data['primary']);
         }
 
@@ -76,13 +64,13 @@ class Model_Log_Types_Item extends Model_Log_Message {
                     $name = __('Niemand');
                     $pl = null;
                 } else {
-                    $pl = $game->get_player($uin);
+                    $pl = Globals::CurrentGame()->get_player($uin);
                     $name = $pl ? $pl->name() : __($uin);
                 }
 
                 $lists = [
                     'player' => $name,
-                    'self' => $pl ? ($uin == $player->id()) : false,
+                    'self' => $pl ? ($uin == Globals::PrimaryPlayer()->id()) : false,
                     'items' => $lists
                 ];
             }

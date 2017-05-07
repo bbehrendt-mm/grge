@@ -12,9 +12,7 @@ abstract class Model_Items_Abstract_Box extends Model_Items_Abstract_Item implem
     protected $open;
 
     public function __construct($count = null) {
-        /** @global Model_Game $game */
-        global $game;
-        $this->item_factory = Model_Factory_Items::read(static::$config, $game->config('game.config.itemset'));
+        $this->item_factory = Model_Factory_Items::read(static::$config, Globals::CurrentGame()->config('game.config.itemset'));
         $this->remaining = $count > 0 ? $count : static::$content;
         $this->open = static::$energy <= 0;
         

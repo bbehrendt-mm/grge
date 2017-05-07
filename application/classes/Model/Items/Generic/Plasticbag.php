@@ -12,28 +12,19 @@ class Model_Items_Generic_Plasticbag extends Model_Items_Abstract_Item implement
 	protected static $weight = 1;
 	
 	private function produce_waterbomb() {
-        /**
-         * @global $player Model_Player
-         */
-        global $player;
 		$this->consume();
 		
-		if ($player->job(1040, 4, false))
-			$player->location()->inventory()->add(new Model_Items_Hwaterbomb);
-		else $player->location()->inventory()->add(new Model_Items_Waterbomb);		
+		if (!Globals::shadowPlayerExists() && Globals::PrimaryPlayer()->job(1040, 4, false))
+			Globals::CurrentPlayer()->location()->inventory()->add(new Model_Items_Hwaterbomb);
+		else Globals::CurrentPlayer()->location()->inventory()->add(new Model_Items_Waterbomb);
 	}
 	
 	public function interaction_fillfrom($item) {
-        /**
-         * @global $player Model_Player
-         */
-        global $player;
-		
 		if (Tool_System::instance_of($item, 'Model_Items_Abstract_Bottle'))
 		{
 			/** @var $item Model_Items_Abstract_Bottle */
             if ($item->get_water(1)) $this->produce_waterbomb();
-			else $player->log()->add(new Model_Log_Types_Text(null, null, 'Leider ist in dieser Flasche nicht mehr genug Wasser, um die Plastiktüte zu füllen ...'));
+			else Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Leider ist in dieser Flasche nicht mehr genug Wasser, um die Plastiktüte zu füllen ...'));
 		}
 		else return false;
         return false;

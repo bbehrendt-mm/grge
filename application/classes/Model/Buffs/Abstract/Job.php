@@ -8,7 +8,6 @@ abstract class Model_Buffs_Abstract_Job extends Model_Buffs_Abstract_Buff {
 	protected $level = 1;
 	
 	public function __construct($player_id = NULL, $level) {
-		global $game, $player;
 		$this->level = $level;
 		parent::__construct($player_id, -1);
 		

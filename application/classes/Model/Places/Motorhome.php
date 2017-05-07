@@ -58,10 +58,7 @@ class Model_Places_Motorhome extends Model_Places_Home {
     }
 
     private function mapcontrol($populate) {
-        /** @global Model_Game $game */
-        global $game;
-
-        foreach ($game->players(false) as $p) {
+        foreach (Globals::CurrentGame()->players(false) as $p) {
             /** @var Model_Player $p */
             if ($p->location_class() != $this->uin()) {
                 if ($p->get_status()->alive()) {
@@ -72,48 +69,42 @@ class Model_Places_Motorhome extends Model_Places_Home {
             }
         }
 
-        foreach ($game->locations() as $location)
+        foreach (Globals::CurrentGame()->locations() as $location)
             if ($location != $this->uin()) {
-                $lobj = $game->location($location);
+                $lobj = Globals::CurrentGame()->location($location);
                 if ($lobj) $lobj->grind();
-                else $game->uin()->remove($location);
+                else Globals::CurrentGame()->uin()->remove($location);
             }
 
         if ($populate) {
             if ($this->progress <= 2)
-                $game->reset_maps('roadtrip_easy');
+                Globals::CurrentGame()->reset_maps('roadtrip_easy');
             elseif ($this->progress <= 5)
-                $game->reset_maps('roadtrip_medium');
-            else $game->reset_maps('roadtrip_hard');
-        } else $game->reset_maps('roadtrip_driving');
+                Globals::CurrentGame()->reset_maps('roadtrip_medium');
+            else Globals::CurrentGame()->reset_maps('roadtrip_hard');
+        } else Globals::CurrentGame()->reset_maps('roadtrip_driving');
 
-        $game->map_main()->insert_location($this);
+        Globals::CurrentGame()->map_main()->insert_location($this);
     }
 
     private function drivecontrol($start, $break = false) {
-        /**
-         * @global Model_Game $game
-         * @global Model_Player $player
-         */
-        global $player, $game;
-
         if ($start == $this->driving)
             return;
 
         if (!$start && !$break) {
             $this->progress++;
-            $game->config('zombies.accum', $game->config('zombies.accum') + 0.15);
-            $game->config('places.dryout_factor', $game->config('places.dryout_factor') + 0.15);
-            $game->config('places.outworld.location_density', $game->config('places.outworld.location_density') + 0.05);
-            $game->config('places.outworld.alt_spawn_stranger', false);
+            Globals::CurrentGame()->config('zombies.accum', Globals::CurrentGame()->config('zombies.accum') + 0.15);
+            Globals::CurrentGame()->config('places.dryout_factor', Globals::CurrentGame()->config('places.dryout_factor') + 0.15);
+            Globals::CurrentGame()->config('places.outworld.location_density', Globals::CurrentGame()->config('places.outworld.location_density') + 0.05);
+            Globals::CurrentGame()->config('places.outworld.alt_spawn_stranger', false);
         }
 
         if (!$start)
             foreach (Tool_Scripts::at_location($this->uin()) as $p)
                 $p->get_status()->remove('fragile/driver');
-        else new Model_Buffs_Driver($player->id());
+        else new Model_Buffs_Driver(Globals::CurrentPlayer()->id());
 
-        $game->delete_lobby();
+        Globals::CurrentGame()->delete_lobby();
         $this->impaler = 0;
         foreach ($this->rooms as $room)
             if ($room->is_outside()) $room->clear();
@@ -134,10 +125,8 @@ class Model_Places_Motorhome extends Model_Places_Home {
     }
 
     public function weight() {
-        /** @global Model_Game $game */
-        global $game;
         $w = $this->inventory()->weight();
-        foreach ($game->players(false) as $p)
+        foreach (Globals::CurrentGame()->players(false) as $p)
             /** @var Model_Player $p */
             $w += $p->inventory()->weight() + ($p->job(1080) ? 25 : 50);
 
@@ -149,38 +138,32 @@ class Model_Places_Motorhome extends Model_Places_Home {
     }
 
     public function stop_break() {
-        /** @global Model_Player $player */
-        global $player;
-        $player->log()->add('Du fährst deinen Wohnwagen auf den Standstreifen und hälst an. Eine kleine Pause tut gut...');
+        Globals::PrimaryPlayer()->log()->add('Du fährst deinen Wohnwagen auf den Standstreifen und hälst an. Eine kleine Pause tut gut...');
         $this->drivecontrol(false, true);
     }
 
     public function stop() {
-        /** @global Model_Player $player */
-        global $player;
-        $player->log()->add('Du suchst einen geeigneten Parkplatz und hälst das Wohnmobil an. Tja, Zeit sich hier mal etwas umzusehen...');
+        Globals::PrimaryPlayer()->log()->add('Du suchst einen geeigneten Parkplatz und hälst das Wohnmobil an. Tja, Zeit sich hier mal etwas umzusehen...');
         $this->drivecontrol(false);
     }
 
     public function repair($addr, $count) {
-        /** @global Model_Player $player */
-        global $player;
         if ($this->driving) return false;
-        if ($player->get_status()->retrieve('fragile')) return false;
+        if (Globals::PrimaryPlayer()->get_status()->retrieve('fragile')) return false;
 
         foreach ($this->parts as $part => &$data) {
             if (Tool_System::getClassID($part) == $addr) {
                 $num = min($count, $data[1] - $data[0]);
 
                 if ($num <= 0) {
-                    $player->log()->add('Eigentlich sieht hier alles gut in Schuss aus... an diesen Teilen brauchst du nichts zu reparieren.');
+                    Globals::PrimaryPlayer()->log()->add('Eigentlich sieht hier alles gut in Schuss aus... an diesen Teilen brauchst du nichts zu reparieren.');
                     return true;
                 }
 
                 if (Tool_Scripts::consume_available_items(array($part => $num), true, true, false)) {
                     $data[0] += $num;
-                    $player->log()->add('Sehr gut, die Ersatzteile haben genau gepasst. Du hast den Wohnwagen repariert.');
-                } else $player->log()->add('Leider fehlen dir hierfür die Ersatzteile...');
+                    Globals::PrimaryPlayer()->log()->add('Sehr gut, die Ersatzteile haben genau gepasst. Du hast den Wohnwagen repariert.');
+                } else Globals::PrimaryPlayer()->log()->add('Leider fehlen dir hierfür die Ersatzteile...');
 
                 break;
             }
@@ -190,30 +173,27 @@ class Model_Places_Motorhome extends Model_Places_Home {
     }
 
     public function start() {
-        /** @global Model_Player $player */
-        global $player;
-
         if ($this->driving)
             return;
-        if ($player->get_status()->retrieve('fragile'))
+        if (Globals::PrimaryPlayer()->get_status()->retrieve('fragile'))
             return;
 
-        if ($player->job(1080)) {
-            $player->log()->add('Es hat diverse Vorteile, ein Kind zu sein. Die Tatsache, dass du nicht Autofahren kannst, ist keiner davon.');
+        if (Globals::PrimaryPlayer()->job(1080)) {
+            Globals::PrimaryPlayer()->log()->add('Es hat diverse Vorteile, ein Kind zu sein. Die Tatsache, dass du nicht Autofahren kannst, ist keiner davon.');
             return;
         }
 
         if ($this->motor_status() <= 0) {
-            $player->log()->add('Du drehst den Zündschlüssel und hörst ein Klappern, aber der Motor springt nicht an. Irgend etwas muss da kaputt sein...');
+            Globals::PrimaryPlayer()->log()->add('Du drehst den Zündschlüssel und hörst ein Klappern, aber der Motor springt nicht an. Irgend etwas muss da kaputt sein...');
             return;
         }
 
         if (!$this->force_nomap && $this->weight() > static::$max_weight) {
-            $player->log()->add('Du drehst den Zündschlüssel und trittst auf das Gaspedal. Der Motor ächzt, aber du kommst keinen Meter vorran. Anscheinend ist das Wohnmobil überladen...');
+            Globals::PrimaryPlayer()->log()->add('Du drehst den Zündschlüssel und trittst auf das Gaspedal. Der Motor ächzt, aber du kommst keinen Meter vorran. Anscheinend ist das Wohnmobil überladen...');
             return;
         }
 
-        $player->log()->add('Du drehst den Zündschlüssel und trittst auf das Gaspedal. Mit beeindruckendem Tempo siehst du den Parkplatz im Rückspiegel verschwinden. Hier wirst du wohl nie wieder hinkommen.... gut so!');
+        Globals::PrimaryPlayer()->log()->add('Du drehst den Zündschlüssel und trittst auf das Gaspedal. Mit beeindruckendem Tempo siehst du den Parkplatz im Rückspiegel verschwinden. Hier wirst du wohl nie wieder hinkommen.... gut so!');
         $this->zombie_factory()->accumulation(0);
         $this->drivecontrol(true);
     }

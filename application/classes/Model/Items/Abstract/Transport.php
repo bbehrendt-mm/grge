@@ -16,7 +16,7 @@ abstract class Model_Items_Abstract_Transport extends Model_Items_Abstract_Item 
     }
 
     /**
-     * @param Model_Player $p
+     * @param Interface_Plentity $p
      * @param number $d
      * @return bool
      */
@@ -25,7 +25,7 @@ abstract class Model_Items_Abstract_Transport extends Model_Items_Abstract_Item 
     }
 
     /**
-     * @param Model_Player $p
+     * @param Interface_Plentity $p
      * @param number $d
      * @return bool
      */

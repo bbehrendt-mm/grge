@@ -21,13 +21,13 @@ class Model_Items_Generic_Cursed extends Model_Items_Abstract_Item {
     private $got_ack = false;
 	
 	public function take($silent = false) {
-		global $game, $player;
 		if (parent::take($silent))
 		{
 			if (!$this->got_ack) 
             {
                 $this->got_ack = true;
-                $player->achievements()->achieve(Model_Achievement::MA_HORROR);
+                if (!Globals::shadowPlayerExists())
+                    Globals::PrimaryPlayer()->achievements()->achieve(Model_Achievement::MA_HORROR);
             }
 			return true;
 		} else return false;

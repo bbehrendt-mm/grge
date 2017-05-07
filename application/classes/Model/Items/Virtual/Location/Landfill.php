@@ -12,8 +12,7 @@ class Model_Items_Virtual_Location_Landfill extends Model_Items_Abstract_Virtual
     );
 
     protected function hid() {
-        global $player;
-        $tar = floor($player->location()->splinters()/10);
+        $tar = floor(Globals::CurrentPlayer()->location()->splinters()/10);
         return parent::hid()->add_action('Splitter zählen', Model_Action::factory()
             ->buttonskin('location')
             ->effect(Model_Effect::factory()->custom(function($p) {

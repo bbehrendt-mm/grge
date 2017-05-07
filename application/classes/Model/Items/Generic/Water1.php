@@ -10,7 +10,6 @@ class Model_Items_Generic_Water1 extends Model_Items_Abstract_Liquid implements 
 	);
 	
 	public function __construct() {
-		global $game, $player;
-		parent::__construct($game->config('items.water.tox_dirty'));
+		parent::__construct(Globals::CurrentGame()->config('items.water.tox_dirty'));
 	}
 }	

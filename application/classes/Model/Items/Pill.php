@@ -10,13 +10,7 @@ class Model_Items_Pill extends Model_Items_Abstract_Item implements Interface_St
 	);
 
     protected function hid() {
-        /**
-         * @global Model_Game $game
-         * @global Model_Player $player
-         */
-        global $game, $player;
-
-        $child_effects = !Tool_Scripts::is_npc() && $player->job(1080);
+        $child_effects = !Globals::shadowPlayerExists() && Globals::PrimaryPlayer()->job(1080);
 
         return parent::hid()
             ->add_action('Runter damit!', Model_Action::factory()
@@ -28,13 +22,7 @@ class Model_Items_Pill extends Model_Items_Abstract_Item implements Interface_St
                         ->consume($this)
                 , null, true)
                 ->decider(function() {
-                    /**
-                     * @global Model_Game $game
-                     * @global Model_User $user
-                     */
-                    global $game, $user;
-
-                    return (!$game->config('items.pill.use_default_effect_proc')) ? (($this->type + $user->uid()) % $this->variants()) : $this->type;
+                    return (!Globals::CurrentGame()->config('items.pill.use_default_effect_proc')) ? (($this->type + Globals::CurrentUser()->uid()) % $this->variants()) : $this->type;
                 })
                 //Red pill
                 ->effect(
@@ -86,7 +74,7 @@ class Model_Items_Pill extends Model_Items_Abstract_Item implements Interface_St
                             foreach ($p->inventory()->get() as $item)
                                 if (!$item->is_essential()) $item->grind();
                         })
-                        ->message('Augen zu und durch! Du schluckst die Pille herunter. Was danach passiert, weißt du nicht mehr - aber dein ganzer Rucksack ist plötzlich leer! Wär hätte denn ahnen können dass ' . ((!$game->config('items.pill.use_default_effect_proc')) ? 'diese ' : 'die schwarze') . ' Pille Blackouts verursachen kann ...')
+                        ->message('Augen zu und durch! Du schluckst die Pille herunter. Was danach passiert, weißt du nicht mehr - aber dein ganzer Rucksack ist plötzlich leer! Wär hätte denn ahnen können dass ' . ((!Globals::CurrentGame()->config('items.pill.use_default_effect_proc')) ? 'diese ' : 'die schwarze') . ' Pille Blackouts verursachen kann ...')
                 )
                 //Yellow pill
                 ->effect(
@@ -97,16 +85,16 @@ class Model_Items_Pill extends Model_Items_Abstract_Item implements Interface_St
                 ->effect(
                     Model_Effect::factory()
                         ->buff('Model_Buffs_Heartbeat', true)
-                        ->message('Augen zu und durch! ' . ((!$game->config('items.pill.use_default_effect_proc')) ? 'Eigentlich sieht sie sehr gesund aus, daher' : 'In der Hoffung, dies wäre eine Twinoid-Kapsel,') . ' schluckst du die Pille herunter. Tja, und wenn du das überlebt hättest, hättest du wohl gelernt dass das Aussehen auch täuschen kann.')
+                        ->message('Augen zu und durch! ' . ((!Globals::CurrentGame()->config('items.pill.use_default_effect_proc')) ? 'Eigentlich sieht sie sehr gesund aus, daher' : 'In der Hoffung, dies wäre eine Twinoid-Kapsel,') . ' schluckst du die Pille herunter. Tja, und wenn du das überlebt hättest, hättest du wohl gelernt dass das Aussehen auch täuschen kann.')
                 )
                 //Rose pill
                 ->effect(
                     Model_Effect::factory()
-                        ->effect(Model_Status::MS_STAT_HEALTH, ($game->duration() & 1) ? 25 : -50 )
-                        ->effect(Model_Status::MS_STAT_ENERGY, ($game->duration() & 1) ? 25 : -50 )
-                        ->effect(Model_Status::MS_STAT_HUNGER, ($game->duration() & 1) ? 25 : 0 )
-                        ->effect(Model_Status::MS_STAT_THIRST, ($game->duration() & 1) ? 25 : 0 )
-                        ->message(($game->duration() & 1)
+                        ->effect(Model_Status::MS_STAT_HEALTH, (Globals::CurrentGame()->duration() & 1) ? 25 : -50 )
+                        ->effect(Model_Status::MS_STAT_ENERGY, (Globals::CurrentGame()->duration() & 1) ? 25 : -50 )
+                        ->effect(Model_Status::MS_STAT_HUNGER, (Globals::CurrentGame()->duration() & 1) ? 25 : 0 )
+                        ->effect(Model_Status::MS_STAT_THIRST, (Globals::CurrentGame()->duration() & 1) ? 25 : 0 )
+                        ->message((Globals::CurrentGame()->duration() & 1)
                             ? 'Augen zu und durch! Du schluckst die Pille herunter - wenige Sekunden später spürst du, wie sich eine angenehme Wärme in dir ausbreitet. Welch ein schönes Gefühl ...'
                             : 'Augen zu und durch! Du schluckst die Pille herunter - wenige Sekunden später beginnst du, dich unruhig und unwohl zu fühlen. Schmerzen zucken durch deinen Körper, während du dich auf dem Boden krümmst und hoffst, dass die Wirkung der Pille bald nachlässt.'
                         )
@@ -114,11 +102,11 @@ class Model_Items_Pill extends Model_Items_Abstract_Item implements Interface_St
                 //Marine pill
                 ->effect(
                     Model_Effect::factory()
-                        ->effect(Model_Status::MS_STAT_HEALTH, ($game->duration() & 1) ? -50 : 25 )
-                        ->effect(Model_Status::MS_STAT_ENERGY, ($game->duration() & 1) ? -50 : 25 )
-                        ->effect(Model_Status::MS_STAT_HUNGER, ($game->duration() & 1) ? 0 : 25 )
-                        ->effect(Model_Status::MS_STAT_THIRST, ($game->duration() & 1) ? 0 : 25 )
-                        ->message(($game->duration() & 1)
+                        ->effect(Model_Status::MS_STAT_HEALTH, (Globals::CurrentGame()->duration() & 1) ? -50 : 25 )
+                        ->effect(Model_Status::MS_STAT_ENERGY, (Globals::CurrentGame()->duration() & 1) ? -50 : 25 )
+                        ->effect(Model_Status::MS_STAT_HUNGER, (Globals::CurrentGame()->duration() & 1) ? 0 : 25 )
+                        ->effect(Model_Status::MS_STAT_THIRST, (Globals::CurrentGame()->duration() & 1) ? 0 : 25 )
+                        ->message((Globals::CurrentGame()->duration() & 1)
                                 ? 'Augen zu und durch! Du schluckst die Pille herunter - wenige Sekunden später beginnst du, dich unruhig und unwohl zu fühlen. Schmerzen zucken durch deinen Körper, während du dich auf dem Boden krümmst und hoffst, dass die Wirkung der Pille bald nachlässt.'
                                 : 'Augen zu und durch! Du schluckst die Pille herunter - wenige Sekunden später spürst du, wie sich eine angenehme Wärme in dir ausbreitet. Welch ein schönes Gefühl ...'
                         )

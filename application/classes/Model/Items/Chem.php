@@ -28,12 +28,10 @@ class Model_Items_Chem extends Model_Items_Abstract_Item implements Interface_St
 	protected static $weight = 0.2;
 	
 	public function __construct($target = null) {
-		/** @global Model_Game $game */
-        global $game;
         parent::__construct();
 		
 		if ($target === NULL)
-            $this->type = mt_rand(0, 1) + ($game->config('modules.additionalchems') ? 1 : 0) * mt_rand(0,1) * 6;
+            $this->type = mt_rand(0, 1) + (Globals::CurrentGame()->config('modules.additionalchems') ? 1 : 0) * mt_rand(0,1) * 6;
 		else $this->type = $target - 1;
 	}
 	
@@ -43,13 +41,6 @@ class Model_Items_Chem extends Model_Items_Abstract_Item implements Interface_St
 	}
 
 	public function mixchem($chemval) {
-        /**
-         * @global $game Model_Game
-         * @global $player Model_Player
-         */
-		global $game, $player;
-
-        $d = 0;
         $mixed = false;
         $ot = $this->chem_value();
 
@@ -76,7 +67,7 @@ class Model_Items_Chem extends Model_Items_Abstract_Item implements Interface_St
             $damage = -20 - ($d - 1) * 9;
             $drunk = ($d - 1) * 20;
 
-            $player->get_status()->modify(Model_Status::MS_STAT_HEALTH, $damage, Model_Status::MS_STAT_DRUNK, $drunk, Model_Status::MS_EFFECT_ITEM);
+            Globals::CurrentPlayer()->get_status()->modify(Model_Status::MS_STAT_HEALTH, $damage, Model_Status::MS_STAT_DRUNK, $drunk, Model_Status::MS_EFFECT_ITEM);
 
             Tool_Scripts::chem_reaction(
                 'Du mischt beide Chemikalien zusammen. Mit einem Schlag gibt es einen lauten Knall, das Reagenzglas zerspringt und du findest dich in einer bestialisch stinkenden Wolke wieder. Diese beiden Stoffe zu mischen scheint keine allzu gute Idee gewesen zu sein...',
@@ -88,7 +79,7 @@ class Model_Items_Chem extends Model_Items_Abstract_Item implements Interface_St
             $damage = -5 - ($d - 1) * 4;
             $radiation = ($d - 1) * 15;
 
-            $player->get_status()->modify(Model_Status::MS_STAT_HEALTH, $damage, Model_Status::MS_STAT_RADIATION, $radiation, Model_Status::MS_EFFECT_ITEM);
+            Globals::CurrentPlayer()->get_status()->modify(Model_Status::MS_STAT_HEALTH, $damage, Model_Status::MS_STAT_RADIATION, $radiation, Model_Status::MS_EFFECT_ITEM);
 
             Tool_Scripts::chem_reaction(
                 'Du mischt beide Chemikalien zusammen. Mit einem Schlag gibt es einen lauten Knall, das Reagenzglas zerspringt und du findest dich in einer bestialisch stinkenden Wolke wieder. Diese beiden Stoffe zu mischen scheint keine allzu gute Idee gewesen zu sein...',
@@ -102,7 +93,7 @@ class Model_Items_Chem extends Model_Items_Abstract_Item implements Interface_St
                 $chemval, new Model_Items_Chem($ot), new Model_Items_Chem($this->chem_value())
             );
 
-            $player->log()->add(new Model_Log_Types_Text(null, null, 'Du mischt beide Chemikalien zusammen. Es blubbert ein wenig, aber nachdem sich die Blasen gelegt haben stellst du fest, dass du soeben ein Fläschchen mit :result hergestellt hast! Herzlichen Glückwunsch!', array(), array(':result' => $this->name())));
+            if (!Globals::shadowPlayerExists()) Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Du mischt beide Chemikalien zusammen. Es blubbert ein wenig, aber nachdem sich die Blasen gelegt haben stellst du fest, dass du soeben ein Fläschchen mit :result hergestellt hast! Herzlichen Glückwunsch!', array(), array(':result' => $this->name())));
 			return true;
 		}
 	}

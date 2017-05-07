@@ -21,42 +21,33 @@ class Model_Events_Xmas extends Model_Events_Event {
     }
 
     public function place_conductor(Model_Places_Abstract_Place $place) {
-        /** @global Model_Game $game */
-        global $game;
-
         $conductor = new Model_NPC_Event_Conductor();
         $conductor->location_class($place->uin());
-        $game->add_npc($conductor);
+        Globals::CurrentGame()->add_npc($conductor);
         $place->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $conductor->id(), true));
         $this->npc_list[] = $conductor->id();
     }
 
     protected function trigger_activation()
     {
-        /** @global Model_Game $game */
-        global $game;
-
-        foreach ($game->playable_entities() as $pl) if (!Tool_Scripts::is_npc($pl)) {
+        foreach (Globals::CurrentGame()->playable_entities() as $pl) if (!Tool_Scripts::is_npc($pl)) {
             new Model_Buffs_Event_Rudolph($pl);
             /** @var $pl Model_Player */
             $pl->log()->add(new Model_Log_Types_Event(static::name(),static::get_key(), true, "Ein warmes Licht kriecht über die eiskalte Landschaft."));
         }
 
-        $this->place_conductor($game->location($game->map_main()->resolve_fixed_id(1)));
+        $this->place_conductor(Globals::CurrentGame()->location(Globals::CurrentGame()->map_main()->resolve_fixed_id(1)));
         return true;
     }
 
     protected function trigger_deactivation() {
-        /** @global Model_Game $game */
-        global $game;
-
         foreach ($this->item_list as $iuin) {
             /** @var Model_Items_Abstract_Item $i */
-            $i = $game->uin()->get($iuin, Model_Items_Abstract_Item::cls());
+            $i = Globals::CurrentGame()->uin()->get($iuin, Model_Items_Abstract_Item::cls());
             if ($i) $i->grind();
         }
 
-        foreach ($game->playable_entities() as $pl) {
+        foreach (Globals::CurrentGame()->playable_entities() as $pl) {
             $pl->get_status()->set(Model_Status::MS_STAT_FREEZE,0);
             $pl->get_status()->remove('rudolph');
             /** @var $pl Model_Player */
@@ -67,24 +58,24 @@ class Model_Events_Xmas extends Model_Events_Event {
         }
 
         foreach ($this->npc_list as $npc) {
-            $npc_inst = $game->get_npc($npc);
+            $npc_inst = Globals::CurrentGame()->get_npc($npc);
             if ($npc_inst && $npc_inst->get_status()->alive())
                 $npc_inst->kill();
         }
 
-        $d_loc = $game->map_main()->get_by_fixed_id(1);
+        $d_loc = Globals::CurrentGame()->map_main()->get_by_fixed_id(1);
         if ($d_loc)
             foreach ($this->maps as $map_id) {
-                $map = $game->map_by_id($map_id);
+                $map = Globals::CurrentGame()->map_by_id($map_id);
                 if ($map) {
                     foreach ($map->get_locations() as $subloc)
                         foreach (Tool_Scripts::at_location($subloc) as $p) {
-                            $game->location($subloc)->leave($p->id(), Tool_Scripts::is_npc($p) ? Interface_Tickable::IT_TYPE_NPC : Interface_Tickable::IT_TYPE_PLAYER);
+                            Globals::CurrentGame()->location($subloc)->leave($p->id(), Tool_Scripts::is_npc($p) ? Interface_Tickable::IT_TYPE_NPC : Interface_Tickable::IT_TYPE_PLAYER);
                             $p->location_class($d_loc->uin());
                             $d_loc->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $p->id(), Tool_Scripts::is_npc($p)));
                         }
                 }
-                $game->unregister_map($map_id);
+                Globals::CurrentGame()->unregister_map($map_id);
             }
 
         return true;

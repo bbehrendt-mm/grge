@@ -86,9 +86,8 @@ class Model_Items_Present extends Model_Items_Abstract_Item implements Interface
 	}	
 	
 	public function open($player = null) {
-		/** @global Model_Player $player */
         if ($player === null)
-            global $player;
+            $player = Globals::PrimaryPlayer();
 				
 		$classname = Tool_Gambling::roulette(($this->is_awesome) ? static::$content_awesome : static::$content_crummy);
 		if (!class_exists($classname)) throw new Exception("Item Class '$classname' is not valid!", 1);

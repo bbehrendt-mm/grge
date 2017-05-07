@@ -98,10 +98,7 @@ class Model_Effect {
 
         if ($all)
             return $this->custom(function() use ($achievement, $num) {
-                /** @global Model_Game $game */
-                global $game;
-
-                foreach ($game->players() as $p)
+                foreach (Globals::CurrentGame()->players() as $p)
                     $p->achievements()->achieve($achievement, $num);
             }, static::CFUNC_PROCESS_POST);
         else
@@ -125,10 +122,7 @@ class Model_Effect {
 
         if ($all)
             return $this->custom(function() use ($from, $to, $block, $num) {
-                /** @global Model_Game $game */
-                global $game;
-
-                foreach ($game->players() as $p)
+                foreach (Globals::CurrentGame()->players() as $p)
                     $p->achievements()->upgrade_achieve($from, $to, $num, $block);
             }, static::CFUNC_PROCESS_POST);
         else
@@ -193,9 +187,7 @@ class Model_Effect {
             return $this;
 
         return $this->custom(function() use ($item, $count) {
-            /** @global Model_Game $game */
-            global $game;
-            $game->mass_consume(Array($item => $count));
+            Globals::CurrentGame()->mass_consume(Array($item => $count));
         }, static::CFUNC_PROCESS_POST);
     }
 

@@ -9,18 +9,12 @@ class Model_Places_Toilet extends Model_Places_Abstract_Place
     protected static $outside = false;
 
     public function tick($type = Interface_Tickable::IT_TYPE_PLAYER) {
-        /**
-         * @global $game Model_Game
-         * @global $player Interface_Plentity
-         */
-        global $game, $player;
+        if (Globals::CurrentPlayer()->can(Interface_Plentity::IC_TRIGGER_SUPPLIES)) {
 
-        if ($player->can(Interface_Plentity::IC_TRIGGER_SUPPLIES)) {
-
-            if ($game->config('places.toilet.spawn_sherri') && !$game->get_npc('sherri')) {
+            if (Globals::CurrentGame()->config('places.toilet.spawn_sherri') && !Globals::CurrentGame()->get_npc('sherri')) {
                 $sherri = new Model_NPC_Special_Sherri();
                 $sherri->location_class($this->uin());
-                $game->add_npc($sherri, 'sherri');
+                Globals::CurrentGame()->add_npc($sherri, 'sherri');
                 $this->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $sherri->id(), true));
             }
         }

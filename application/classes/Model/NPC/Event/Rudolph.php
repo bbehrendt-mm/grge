@@ -100,9 +100,9 @@ class Model_NPC_Event_Rudolph extends Model_NPC_Animal
                 if ($ic) {
                     /** @var Model_Items_Abstract_Item $item */
                     list($item, $action) = $ic;
-                    Controller_Game::delegate($this, function() use ($item, $action) {
-                        Controller_Act::code_item($item->uin(), $action);
-                    });
+                    Globals::setCurrentPlayer($this);
+                    Controller_Act::code_item($item->uin(), $action);
+                    Globals::restorePrimaryPlayer();
                     $auto = true;
                 }
             }
@@ -133,9 +133,6 @@ class Model_NPC_Event_Rudolph extends Model_NPC_Animal
     }
 
     public function hid() {
-        /** @global Model_Player $player */
-        global $player;
-
         $hid = parent::hid();
         $selection = [];
 
@@ -185,7 +182,7 @@ class Model_NPC_Event_Rudolph extends Model_NPC_Animal
                 $dialog_tumbling = array_merge($dialog_tumbling, ["Urgh... muss... gleich... ko... kotzen..."]);
             }
 
-            if ($player && $player->get_status()->get(Model_Status::MS_STAT_DRUNK) >= 50) {
+            if (Globals::hasCurrentPlayer() && Globals::CurrentPlayer()->get_status()->get(Model_Status::MS_STAT_DRUNK) >= 50) {
                 $dialog_sober = array_merge($dialog_sober, ["Oh je... du bist betrunken, nicht wahr?", "Ist.. alles OK mit dir?", "Ähm... willst du dich vielleicht bei mir anlehnen?"]);
                 $dialog_tipsy = array_merge($dialog_tipsy, ["In Gesellschaft trinkt es sich einfach schöner!", "Aber lass mir was übrig, ok?"]);
                 $dialog_drunk = array_merge($dialog_drunk, ["Hehe... du bisss besoffen... *hicks*", "Heyeyyy... nimmsu... nimmsu die Hand da weg!!!"]);

@@ -251,15 +251,14 @@ class Tool_Admin {
         if (!static::head('Erzeuge MP-Partie: ' . $lang . '/' . $name . ', ' . $slots . ' Slots'))
             return false;
 
-        global $game;
-        $tmp = $game;
+        $tmp = Globals::CurrentGame(false);
 
         Syslogd::sprint("Erzeuge Index...");
-        $game = new Model_Game(false);
+        $game = new Model_Game();
         $id = $game->start(10000, 1, 300, null, $name);
         Syslogd::sprintln("OK; ID: " . $id);
 
-        $game = $tmp;
+        if ($tmp) Globals::setCurrentGame($tmp);
 
         Syslogd::sprint("Erzeuge Lobbyeintrag...");
         DB::insert('multiplayer_lobby', array('gameid', 'lang', 'slots', 'name', 'timestamp'))->values(array($id, $lang, $slots, $name, time()))->execute() ;

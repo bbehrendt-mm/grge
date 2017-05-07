@@ -7,32 +7,17 @@ class Model_Events_Easter extends Model_Events_Event {
 
     private $corax_id = -1;
 
-    private function spawn_scarecrow(Model_Places_Abstract_Place $place) {
-        /** @global Model_Game $game */
-        global $game;
-
-        $scarecrow = new Model_NPC_Event_Scarecrow();
-        $scarecrow->location_class($place->uin());
-        $game->add_npc($scarecrow);
-        $place->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $scarecrow->id(), true));
-        $this->npc_list[] = $scarecrow->id();
-    }
-
-
     protected function trigger_activation() {
-        /** @global Model_Game $game */
-        global $game;
-
-        $home = $game->map_main()->resolve_fixed_id(2);
+        $home = Globals::CurrentGame()->map_main()->resolve_fixed_id(2);
         if ($home === null) return false;
 
         $corax = new Model_NPC_Event_Crow();
         $corax->location_class($home);
-        $game->add_npc($corax);
-        $game->location($home)->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $corax->id(), true));
+        Globals::CurrentGame()->add_npc($corax);
+        Globals::CurrentGame()->location($home)->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $corax->id(), true));
         $this->corax_id = $corax->id();
 
-        foreach ($game->playable_entities() as $pl) if (!Tool_Scripts::is_npc($pl)) {
+        foreach (Globals::CurrentGame()->playable_entities() as $pl) if (!Tool_Scripts::is_npc($pl)) {
             /** @var $pl Model_Player */
             $pl->log()->add(new Model_Log_Types_Event(static::name(),static::get_key(), true, "Der Frühling zeigt seine ersten Blüten."));
         }
@@ -41,16 +26,13 @@ class Model_Events_Easter extends Model_Events_Event {
     }
 
     protected function trigger_deactivation() {
-        /** @global Model_Game $game */
-        global $game;
-
-        foreach ($game->playable_entities() as $pl) {
+        foreach (Globals::CurrentGame()->playable_entities() as $pl) {
             /** @var $pl Model_Player */
             if (!Tool_Scripts::is_npc($pl))
                 $pl->log()->add(new Model_Log_Types_Event(static::name(),static::get_key(), false, "Tja, das wars wohl für dieses Jahr."));
         }
 
-        $npc_inst = $game->get_npc($this->corax_id);
+        $npc_inst = Globals::CurrentGame()->get_npc($this->corax_id);
         if ($npc_inst && $npc_inst->get_status()->alive())
             $npc_inst->kill();
 

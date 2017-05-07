@@ -75,9 +75,6 @@ class Model_NPC_Event_Clown extends Model_NPC_Humanoid
     }
 
     public function ai() {
-        /** @global Model_Game $game */
-        global $game;
-
         $busy = $this->get_status()->retrieve('passout') || $this->get_status()->retrieve('fragile');
 
         if (!count(Tool_Scripts::at_location($this->location_class(), true, false)) && Tool_Gambling::random(0.12)) {
@@ -88,9 +85,9 @@ class Model_NPC_Event_Clown extends Model_NPC_Humanoid
         if (!$busy && $this->last_move >= 12) {
 
             $dest = [];
-            foreach ($game->map($this->location_class())->get_adjacent_regions($this->location_class()) as $lid) {
-                $l = $game->location($lid);
-                if (!$l || Tool_System::instance_of($l, Model_Places_Abstract_Hideout::cls()) || $this->get_status()->get(Model_Status::MS_STAT_ENERGY) < $game->map($this->location_class())->get_distance($this->location_class(), $lid)) continue;
+            foreach (Globals::CurrentGame()->map($this->location_class())->get_adjacent_regions($this->location_class()) as $lid) {
+                $l = Globals::CurrentGame()->location($lid);
+                if (!$l || Tool_System::instance_of($l, Model_Places_Abstract_Hideout::cls()) || $this->get_status()->get(Model_Status::MS_STAT_ENERGY) < Globals::CurrentGame()->map($this->location_class())->get_distance($this->location_class(), $lid)) continue;
                     $dest[] = $l;
             }
 

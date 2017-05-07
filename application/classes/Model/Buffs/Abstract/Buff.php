@@ -137,18 +137,13 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
      * @throws Exception
      */
     public function __construct($association = NULL, $lifetime = -1) {
-        /**
-         * @global $game Model_Game
-         */
-        global $game;
-		
 		$this->lifetime = $lifetime;
 
         if ($association === null)
-            $this->assoc_player = $game->get_player();
+            $this->assoc_player = Globals::CurrentGame()->get_player();
         elseif (is_object($association) && Tool_System::instance_of($association, 'Interface_Plentity'))
             $this->assoc_player = $association;
-        else $this->assoc_player = $game->get_player($association);
+        else $this->assoc_player = Globals::CurrentGame()->get_player($association);
 
         if (!$this->assoc_player) throw new Exception('Invalid buff association!');
 

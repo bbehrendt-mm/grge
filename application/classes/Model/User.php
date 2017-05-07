@@ -4,25 +4,6 @@ class Model_User extends Model {
 
 	protected $set;
     protected $sid;
-
-	public function __sleep() {
-		return array('set', 'sid');
-	}
-	
-	public function __wakeup() {
-		//Rebind global user variable
-		global $user;
-		$user = $this;
-	}
-	
-	public function __construct($session_id) {
-		//Bind global user variable
-		global $user;
-		$user = $this;	
-		
-		//Save session ID
-		$this->sid = $session_id;	
-	}
 	
 	public function valid() {
 		$ret = DB::select('session')->from('users')->where('uid', '=', $this->set['uid'])->execute()->get('session',null);

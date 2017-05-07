@@ -22,10 +22,7 @@ class Model_Items_Pepperspray extends Model_Combat_Weapons_Close implements Inte
 	protected static $effects = [2,0,1,0];
 	
 	public function drop($p = null, $silent = false) {
-		/** @global Model_Player $player */
-		global $player;
-
-		if (!$silent) $player->log()->add(new Model_Log_Types_Text(null, null, 'Bist du verrückt? Womit willst du dich wehren, wenn dir einer deiner Mitverdammten ein Kompliment über dein Aussehen machen möchte?'));
+		if (!$silent) Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Bist du verrückt? Womit willst du dich wehren, wenn dir einer deiner Mitverdammten ein Kompliment über dein Aussehen machen möchte?'));
 		return false;
 	}
 	

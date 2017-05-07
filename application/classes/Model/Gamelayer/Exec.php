@@ -52,33 +52,28 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
     abstract public function playable_entities($limit_alive = true);
 
 	public function join($sub, $level, $contest_id) {
-        /**
-         * @global Model_Euser $user
-         * @global Model_Player $player
-         */
-	    global $user, $player;
-
 	    if ($this->read_only) return false;
 
-        if (isset($this->set['gamedata']->players[$user->uid()])) return false;
-		new Init_Player($this, $this->set['gamedata'], $user->uid(), $user->name(), $sub, $level);
+        if (isset($this->set['gamedata']->players[Globals::CurrentUser()->uid()])) return false;
+        /** @noinspection PhpParamsInspection */
+        new Init_Player($this, $this->set['gamedata'], Globals::CurrentUser()->uid(), Globals::CurrentUser()->name(), $sub, $level);
 	
-		if (!DB::insert('xref_game_player', array('gameid', 'uid'))->values(array($this->set['gameid'], $user->uid()))->execute()) {
-			$this->retire($user->uid());
+		if (!DB::insert('xref_game_player', array('gameid', 'uid'))->values(array($this->set['gameid'], Globals::CurrentUser()->uid()))->execute()) {
+			$this->retire(Globals::CurrentUser()->uid());
 			return false;
 		}
 
         // Chat room
         if ($this->config('modules.multiplayer'))
-            Controller_Chat::register_user($player->id(),$this->id());
+            Controller_Chat::register_user(Globals::PrimaryPlayer()->id(),$this->id());
 
         /** @var Model_Player $p */
-        foreach ($this->players(true) as $p) if ($p->id() != $player->id())
-            $p->log()->add(new Model_Log_Types_Text(null, null, ':name ist soeben der Partie beigetreten.', array(':name' => $player->name())));
+        foreach ($this->players(true) as $p) if ($p->id() != Globals::PrimaryPlayer()->id())
+            $p->log()->add(new Model_Log_Types_Text(null, null, ':name ist soeben der Partie beigetreten.', array(':name' => Globals::PrimaryPlayer()->name())));
 		
 		//Create contest ranking
 		if ($contest_id)
-			if (!DB::insert('contests', array('contest_id', 'user_id', 'game_id', 'points'))->values(array($contest_id, $user->uid(), $this->set['gameid'], 0))->execute())
+			if (!DB::insert('contests', array('contest_id', 'user_id', 'game_id', 'points'))->values(array($contest_id, Globals::CurrentUser()->uid(), $this->set['gameid'], 0))->execute())
 				$contest_id = null;
 		
 		return true;
@@ -104,7 +99,7 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
 	public function points($pid = null) {	
 		if ($pid)
             $player = $this->get_player($pid);
-        else global $player;
+        else $player = Globals::PrimaryPlayer();
 		
 		if (!$pid) $duration = $this->duration();
 		elseif (!$player->get_status()->alive() && $player->get_points() !== null)
@@ -118,7 +113,8 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
 			return $this->set['gamedata']->head->contest['points'];
 		}
 
-		$tmp = $this->set['gamedata']->maps['main']->get_by_fixed_id(2)->get_map_points();
+        /** @noinspection PhpUndefinedMethodInspection */
+        $tmp = $this->set['gamedata']->maps['main']->get_by_fixed_id(2)->get_map_points();
 		$ac_p = 0;
 		$ac_p += $this->config('ranking.points.zombie_kills.offset') + floor($player->achievements()->get_achievements(Model_Achievement::MA_KILLED_ZOMBIES) * $this->config('ranking.points.zombie_kills.factor'));
 		$ac_p += $this->config('ranking.points.survival.offset') + floor(Tool_Numerics::duration_to_points($duration) * $this->config('ranking.points.survival.factor'));

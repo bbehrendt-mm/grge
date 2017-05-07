@@ -15,19 +15,13 @@ class Model_Items_Ammobelt extends Model_Items_Abstract_Item {
 	private $content = Array();
 	
 	public function __construct() {
-        /**
-         * @global $game Model_Game
-         * @global $player Model_Player
-         */
-        global $game, $player;
-			
 		parent::__construct();
 		
-		$this->content['Model_Items_Battery'] = mt_rand($game->config('items.ammobelt.startup_bat.min'), $game->config('items.ammobelt.startup_bat.max'));
-		$this->content['Model_Items_Ammo'] = mt_rand($game->config('items.ammobelt.startup_blt.min'), $game->config('items.ammobelt.startup_blt.max'));
+		$this->content['Model_Items_Battery'] = mt_rand(Globals::CurrentGame()->config('items.ammobelt.startup_bat.min'), Globals::CurrentGame()->config('items.ammobelt.startup_bat.max'));
+		$this->content['Model_Items_Ammo'] = mt_rand(Globals::CurrentGame()->config('items.ammobelt.startup_blt.min'), Globals::CurrentGame()->config('items.ammobelt.startup_blt.max'));
 		
 		//JOB BONUS Soldier
-		if ($player && !Tool_Scripts::is_npc() && $player->job(1020)) switch ($player->job(false))
+		if (Globals::CurrentPlayer() && !Tool_Scripts::is_npc() && Globals::CurrentPlayer()->job(1020)) switch (Globals::CurrentPlayer()->job(false))
 		{
 			case 4: $this->content['Model_Items_Ammo'] += mt_rand(5, 10); break;
 			case 5: $this->content['Model_Items_Ammo'] += mt_rand(10, 20); break;
@@ -93,14 +87,9 @@ class Model_Items_Ammobelt extends Model_Items_Abstract_Item {
 	}
 	
 	public function drop($p = null, $silent = false) {
-        /**
-         * @global $player Model_Player
-         */
-		global $player;
-
         if ($p && Tool_Scripts::is_npc($p)) return true;
 
-		if (!$silent) $player->log()->add(new Model_Log_Types_Text(null, null, 'Du solltest deinen Munitionsgürtel nicht aus der Hand geben ...'));
+		if (!$silent) Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Du solltest deinen Munitionsgürtel nicht aus der Hand geben ...'));
 		return false;
 	}
 	

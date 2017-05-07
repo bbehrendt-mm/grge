@@ -12,8 +12,6 @@ class Model_Items_Coffee2 extends Model_Items_Abstract_Item implements Interface
 	protected static $weight = 2;
 
     protected function hid() {
-        /** @global Model_Game $game */
-        global $game;
         return parent::hid()
             ->add_action('Trinken', Model_Action::factory()
                 ->effect(

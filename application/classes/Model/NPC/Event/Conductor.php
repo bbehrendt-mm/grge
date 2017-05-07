@@ -40,24 +40,22 @@ class Model_NPC_Event_Conductor extends Model_NPC_Humanoid
                     ->message('Du schließt für einen Moment deine Augen... als du sie wieder öffnest, stehst du plötzlich auf einem verlassenen Weihnachtsmarkt! In der Mitte des Markts steht eine leere Weihnachtsbaum-Halterung. Wie traurig... du solltest dich vom Geist der Weihnacht erfüllen lassen und dort einen wunderschön geschmückten Weihnachtsbaum aufstellen! Sicherlich wirst du dafür genug Materialien hier finden...')
                     ->custom(function($p)  {
                         /** @var Model_Player $p */
-                        /** @global Model_Game $game */
-                        global $game;
 
-                        $ev = $game->get_initialized_event(Model_Events_Xmas::get_key());
+                        $ev = Globals::CurrentGame()->get_initialized_event(Model_Events_Xmas::get_key());
                         /** @var $ev Model_Events_Xmas */
                         if (!$ev) return;
 
                         $tid = time() . '_' . mt_rand();
                         $mapid = "xmasmap_{$tid}";
-                        $xmas_id = $game->register_map($mapid, 'xmas', 'xmas');
-                        $xmasfair = $game->location($xmas_id);
+                        $xmas_id = Globals::CurrentGame()->register_map($mapid, 'xmas', 'xmas');
+                        $xmasfair = Globals::CurrentGame()->location($xmas_id);
                         $xmasfair->register_doorway($p->location_class());
 
                         $p->location()->leave_map($p->id());
                         $p->location_class($xmas_id);
                         $xmasfair->enter_map($p->id());
 
-                        $game->map($xmas_id)->movement_modifier(0.1);
+                        Globals::CurrentGame()->map($xmas_id)->movement_modifier(0.1);
                         $ev->register_event_map($mapid);
 
                         if (!$p->get_status()->retrieve('freeze'))

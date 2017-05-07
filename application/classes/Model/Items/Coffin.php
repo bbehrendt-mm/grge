@@ -43,13 +43,8 @@ class Model_Items_Coffin extends Model_Items_Abstract_Item implements Interface_
 	);
 	
 	public function open($player = null) {
-        /**
-         * @global $game Model_Game
-         * @global $player Model_Player
-         */
-        global $game;
         if ($player === null)
-            global $player;
+            $player = Globals::CurrentPlayer();
 		
 		$inset = null;
 		$txt = 'Zum Glück ist der Sarg schon ziemlich verrottet, daher lässt er sich leicht öffnen. ';
@@ -84,7 +79,7 @@ class Model_Items_Coffin extends Model_Items_Abstract_Item implements Interface_
 			} else $txt .= 'Leider scheint hier sonst nichts von Wert drin zu sein.';
 		}
 		
-		$player->log()->add(new Model_Log_Types_Text(null, null, $txt, array(), $inset ? array(':item' => $inset) : array()));
+		if (!Globals::shadowPlayerExists()) Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, $txt, array(), $inset ? array(':item' => $inset) : array()));
 		
 		return true;
 	}

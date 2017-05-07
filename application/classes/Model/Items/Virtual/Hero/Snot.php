@@ -15,7 +15,6 @@ class Model_Items_Virtual_Hero_Snot extends Model_Items_Abstract_Virtual {
     );
 
     protected function hid() {
-        global $player;
         return parent::hid()
             ->add_action('Spontane Deflation', Model_Action::factory()
                 ->buttonskin('hero hja')

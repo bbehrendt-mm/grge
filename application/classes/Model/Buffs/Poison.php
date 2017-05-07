@@ -33,9 +33,7 @@ class Model_Buffs_Poison extends Model_Buffs_Abstract_Buff {
 	}
 	
 	public function tick() {
-        /** @global Model_Game $game */
-		global $game;
-        if ($game->config('game.bhav.infections') && !$this->assoc_player->get_status()->retrieve('immune') && $this->assoc_player->get_status()->get(Model_Status::MS_STAT_ZOMBIFY) <= 0 && (mt_rand(0,100) <= 8)) {
+        if (Globals::CurrentGame()->config('game.bhav.infections') && !$this->assoc_player->get_status()->retrieve('immune') && $this->assoc_player->get_status()->get(Model_Status::MS_STAT_ZOMBIFY) <= 0 && (mt_rand(0,100) <= 8)) {
             $this->assoc_player->get_status()->set(Model_Status::MS_STAT_ZOMBIFY, 5);
             if ($this->associated_to_player()) $this->assoc_player->log()->add('Deine Vergiftungssymptome sind schlimmer geworden... offenbar hast du dich mit dem Zombievirus infiziert!');
         }

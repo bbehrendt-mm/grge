@@ -25,24 +25,19 @@ class Model_Items_Maptool extends Model_Items_Abstract_Item {
 	}
 	
 	public function get_map_details() {
-        /** @global Model_Player $player */
-        global $player;
-		$location = $player->location_class();
+		$location = Globals::CurrentPlayer()->location_class();
 		if (!isset($this->datamem[$location])) return 0;
 		else return $this->datamem[$location];
 	}
 	
 	public function calc_duration($step) {
-        /** @global Model_Player $player */
-        global $player;
-		
 		$cfg = Array( 	0 => Array( 0 => Array(1 => 4, 2 => 7, 3 => 13), 1 => Array(1 => 7, 2 => 13), 2 => Array(1 => 10) ), 
 						1 => Array( 0 => Array(1 => 3, 2 => 6, 3 => 12), 1 => Array(1 => 6, 2 => 12), 2 => Array(1 =>  9) ),
 						2 => Array( 0 => Array(1 => 3, 2 => 5, 3 => 10), 1 => Array(1 => 5, 2 => 10), 2 => Array(1 =>  8) ),
 						3 => Array( 0 => Array(1 => 2, 2 => 4, 3 =>  8), 1 => Array(1 => 4, 2 =>  8), 2 => Array(1 =>  8) ),
 				);
 
-		$level = $player->job(3020) ? $player->job(false, null) : 0;
+		$level = Globals::PrimaryPlayer()->job(3020) ? Globals::PrimaryPlayer()->job(false, null) : 0;
 		$current = $this->get_map_details();
 		
 		if (!isset($cfg[$level][$current][$step])) return -1;
@@ -54,9 +49,7 @@ class Model_Items_Maptool extends Model_Items_Abstract_Item {
 	}
 
 	public function score($p) {
-        /** @global Model_Player $player */
-        global $player;
-		$location = $player->location_class();
+		$location = Globals::PrimaryPlayer()->location_class();
 		
 		if (isset($this->datamem[$location]) && $this->datamem[$location] >= 3) return;
 		if (!isset($this->datamem[$location])) $this->datamem[$location] = 0;
@@ -64,56 +57,48 @@ class Model_Items_Maptool extends Model_Items_Abstract_Item {
 		$p = min(3 - $this->datamem[$location], $p);
 		$this->datamem[$location] += $p;		
 
-        if (Tool_System::instance_of($player->location(), 'Model_Places_Abstract_Hideout')) $points = 1;
-        elseif (Tool_System::instance_of($player->location(), 'Model_Places_Abstract_Node')) $points = 5;
+        if (Tool_System::instance_of(Globals::PrimaryPlayer()->location(), 'Model_Places_Abstract_Hideout')) $points = 1;
+        elseif (Tool_System::instance_of(Globals::PrimaryPlayer()->location(), 'Model_Places_Abstract_Node')) $points = 5;
         else $points = 10;
 
         $this->information += $p * $points;
 		
 		switch ($p) {
-			case 0: $player->log()->add(new Model_Log_Types_Text(null, null, 'Leider hast du deiner Karte keine neuen Informationen hinzufügen können...')); break;
-			case 1: $player->log()->add(new Model_Log_Types_Text(null, null, 'Du hast ein paar zusätzliche Details in deine Karte aufgenommen.')); break;
-			case 2: $player->log()->add(new Model_Log_Types_Text(null, null, 'Sehr schön! Du hast einige neue Informationen in deine Karte aufnehmen können!')); break;
-			case 3: $player->log()->add(new Model_Log_Types_Text(null, null, 'Wow! Du hast diesen Ort bis ins kleinste Detail ausgekundschaftet und jedes einzelne Staubkorn in deine Karte gezeichnet.')); break;
+			case 0: Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Leider hast du deiner Karte keine neuen Informationen hinzufügen können...')); break;
+			case 1: Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Du hast ein paar zusätzliche Details in deine Karte aufgenommen.')); break;
+			case 2: Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Sehr schön! Du hast einige neue Informationen in deine Karte aufnehmen können!')); break;
+			case 3: Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Wow! Du hast diesen Ort bis ins kleinste Detail ausgekundschaftet und jedes einzelne Staubkorn in deine Karte gezeichnet.')); break;
 		}
 	}
 	
 	public function start_mapping($steps) {
-        /**
-         * @global Model_Player $player
-         * @global Model_Game $game
-         */
-        global $player, $game;
-		if ($player->get_status()->retrieve('fragile')) {
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Du bist momentan beschäftigt!'));
+		if (Globals::PrimaryPlayer()->get_status()->retrieve('fragile')) {
+            Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Du bist momentan beschäftigt!'));
 			return;
 		}
 		
 		if ($this->calc_duration($steps) < 0) {
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Das kannst du momentan nicht tun!'));
+            Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Das kannst du momentan nicht tun!'));
 			return;
 		}
 		
 		if ($steps === true) {
 			
-			if (!$game->mass_consume(Array('Model_Items_Generic_Lasermapper' => 1))) {
-				$player->log()->add(new Model_Log_Types_Text(null, null, 'Du scheinst kein Lasermessgerät dabei zu haben...'));
+			if (!Globals::CurrentGame()->mass_consume(Array('Model_Items_Generic_Lasermapper' => 1))) {
+                Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Du scheinst kein Lasermessgerät dabei zu haben...'));
 				return;
 			}
 			
 			$steps = 1;
-			if ($player->job(3030)) $steps++;
-			if ($player->job(3030, 2, false)) $steps++;
+			if (Globals::PrimaryPlayer()->job(3030)) $steps++;
+			if (Globals::PrimaryPlayer()->job(3030, 2, false)) $steps++;
 			
 			$this->score($steps);
 		} else new Model_Buffs_Mapping($steps, $this->calc_duration($steps));
 	}
 	
 	public function drop($p = null, $silent = false) {
-		/** @global Model_Player $player */
-		global $player;
-
-		if (!$silent) $player->log()->add(new Model_Log_Types_Text(null, null, 'Das kannst du nicht ablegen...'));
+		if (!$silent) Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Das kannst du nicht ablegen...'));
 		return false;
 	}
 	

@@ -33,7 +33,7 @@ abstract class Model_Combat_Weapons_Energy extends Model_Combat_Weapon {
     public function equip($p = null) {
         /** @global Model_Player $player */
         if ($p === null)
-            global $player;
+            $player = Globals::PrimaryPlayer();
         else $player = $p;
 
         if (!Tool_Scripts::is_npc($player) && $player->job(1080)) {

@@ -17,12 +17,8 @@ abstract class Model_Items_Abstract_Book extends Model_Items_Abstract_Item {
     }
 
 	private function get_uses($pid = null) {
-        /**
-         * @global Model_Player $player
-         */
-        global $player;
         if ($pid === null)
-            $pid = $player->id();
+            $pid = Globals::CurrentPlayer()->id();
 
         return (isset($this->uses[$pid]) ? $this->uses[$pid] : 0);
     }
@@ -36,12 +32,8 @@ abstract class Model_Items_Abstract_Book extends Model_Items_Abstract_Item {
     }
 
     public function read($pid = null) {
-        /**
-         * @global Model_Player $player
-         */
-        global $player;
         if ($pid === null)
-            $pid = $player->id();
+            $pid = Globals::CurrentPlayer()->id();
 
 
         if (!isset($this->uses[$pid]))

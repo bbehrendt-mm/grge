@@ -30,12 +30,10 @@ class Model_Places_Home extends Model_Places_Abstract_Hideout {
 
 
     public function uin($new = null) {
-        /** @global Model_Game $game */
-        global $game;
         if ($new !== null) {
             Model_Blueprints::fast_apply($this, 'upgrades', ['hideout', 'outside','outside_space','slot_epic']);
 
-            if ($game->config('modules.mapping'))
+            if (Globals::CurrentGame()->config('modules.mapping'))
                 $this->inventory->add(new Model_Items_Virtual_Location_Mapmode());
         }
         return parent::uin($new);

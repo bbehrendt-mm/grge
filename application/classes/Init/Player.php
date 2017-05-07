@@ -23,20 +23,17 @@ class Init_Player {
      * @param $level number
      */
 	private function init(&$game, &$set, $userid, $name, $job, $level) {
-        /** @global $player Model_Player */
-        global $player;
-		
-		$player = new Model_Player($userid, $name, $set->head->mode, $job, $level);
-		$set->players[$userid] = $set->uin->set($player);
+		Globals::setPrimaryPlayer(new Model_Player($userid, $name, $set->head->mode, $job, $level));
+		$set->players[$userid] = $set->uin->set(Globals::PrimaryPlayer());
 		
 		//Enter home
         $set->maps['main']->get_by_fixed_id(2)->enter();
-		$player->location_class($set->maps['main']->get_by_fixed_id(2)->uin());
+        Globals::PrimaryPlayer()->location_class($set->maps['main']->get_by_fixed_id(2)->uin());
 
         $init = Tool_Gamemodes::compile_startup_job($job);
         $init($game->setting_mode(), $level);
 
         foreach ($game->get_initialized_events() as $ev)
-            $ev->event_playerCreation($player);
+            $ev->event_playerCreation(Globals::PrimaryPlayer());
 	}
 }

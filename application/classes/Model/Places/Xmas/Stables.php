@@ -37,18 +37,15 @@ class Model_Places_Xmas_Stables extends Model_Places_Abstract_Hideout {
     }
 
     public function enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
-        /** @global $game Model_Game */
-        global $game;
-
         if (!$this->spawned_rudolph) {
-            $ev = $game->get_initialized_event(Model_Events_Xmas::get_key());
+            $ev = Globals::CurrentGame()->get_initialized_event(Model_Events_Xmas::get_key());
             /** @var $ev Model_Events_Xmas */
 
             if ($ev) {
                 $this->spawned_rudolph = true;
                 $rudolph = new Model_NPC_Event_Rudolph();
                 $rudolph->location_class($this->uin());
-                $game->add_npc($rudolph);
+                Globals::CurrentGame()->add_npc($rudolph);
 
                 $ev->register_event_npc($rudolph->id());
             }

@@ -44,14 +44,11 @@ class Controller_Admin_Users extends Controller_Admin_Admin {
     }
 
     public function japi_flag() {
-        /** @global Model_Euser $user */
-        global $user;
-
         $users = $this->post('users');
         $changes = $this->post('set');
 
         foreach ($changes as $flag => $change)
-            if ($flag == 'ROOT' && (!static::priv_allow_all('ROOT') || in_array($user->uid(), $users))) {
+            if ($flag == 'ROOT' && (!static::priv_allow_all('ROOT') || in_array(Globals::CurrentUser()->uid(), $users))) {
                 return $this->render([
                     'success' => 0
                 ]);
@@ -94,14 +91,11 @@ class Controller_Admin_Users extends Controller_Admin_Admin {
     }
 
     public function japi_password() {
-        /** @global Model_Euser $user */
-        global $user;
-
         $users = $this->post('users');
         $to = $this->post('set');
 
         // Prevent user from resetting own password
-        if (in_array($user->uid(), $users) && !$to)
+        if (in_array(Globals::CurrentUser()->uid(), $users) && !$to)
             return $this->render([
                 'success' => 0
             ]);

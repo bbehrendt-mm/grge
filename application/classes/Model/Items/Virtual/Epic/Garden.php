@@ -40,15 +40,11 @@ class Model_Items_Virtual_Epic_Garden extends Model_Items_Abstract_Virtual {
     }
 
     public function get_harvest_state() {
-        /** @global Model_Game $game */
-        global $game;
-        return $this->planted && ($game->duration() >= $this->harvest_at);
+        return $this->planted && (Globals::CurrentGame()->duration() >= $this->harvest_at);
     }
 
     public function get_time_to_harvest() {
-        /** @global Model_Game $game */
-        global $game;
-        return $this->get_harvest_state() ? 0 : ($this->get_planted_state() ? $this->harvest_at - $game->duration() : -1);
+        return $this->get_harvest_state() ? 0 : ($this->get_planted_state() ? $this->harvest_at - Globals::CurrentGame()->duration() : -1);
     }
 
     public function get_harvest_prc() {
@@ -56,29 +52,18 @@ class Model_Items_Virtual_Epic_Garden extends Model_Items_Abstract_Virtual {
     }
 
     public function get_water_prc() {
-        /** @global Model_Game $game */
-        global $game;
-
-        return $this->get_planted_state() ? max(0,$this->next_watering_end - $game->duration())/42 : 0;
+        return $this->get_planted_state() ? max(0,$this->next_watering_end - Globals::CurrentGame()->duration())/42 : 0;
     }
 
     public function get_time_to_water($begin = true) {
-        /** @global Model_Game $game */
-        global $game;
-        return $this->get_harvest_state() ? -1 : (($begin ? $this->next_watering_begin : $this->next_watering_end) - $game->duration());
+        return $this->get_harvest_state() ? -1 : (($begin ? $this->next_watering_begin : $this->next_watering_end) - Globals::CurrentGame()->duration());
     }
 
     private function dryout() {
-        /** @global Model_Game $game */
-        global $game;
-
-        return max(0, 0.01 * ($game->duration() - $this->next_watering_end));
+        return max(0, 0.01 * (Globals::CurrentGame()->duration() - $this->next_watering_end));
     }
 
     public function get_quality() {
-        /** @global Model_Game $game */
-        global $game;
-
         return max(0, $this->quality - $this->dryout());
     }
 
@@ -89,17 +74,12 @@ class Model_Items_Virtual_Epic_Garden extends Model_Items_Abstract_Virtual {
      * @param $effect
      */
     private function register_fertilizer(&$hid, $id, $items, $effect) {
-        $desc = '[nt]';
-
         $action = Model_Action::factory()
             ->buttonskin('epic')
             ->flag('as','fertilize')
             ->effect(Model_Effect::factory()
                 ->message('Du hast die Pflanzen gedüngt. Mal sehen, was hier jetzt wachsen wird...')
                 ->custom(function() use ($effect) {
-                    /** @global Model_Game $game */
-                    global $game;
-
                     foreach ($effect as $eid => $ecount)
                         if (!isset($this->fertilizer[$eid])) $this->fertilizer[$eid] = $ecount;
                         else $this->fertilizer[$eid] += $ecount;
@@ -119,9 +99,6 @@ class Model_Items_Virtual_Epic_Garden extends Model_Items_Abstract_Virtual {
     }
 
     protected function hid() {
-        /** @global Model_Game $game */
-        global $game;
-
         $hid = parent::hid();
 
         if (!$this->get_planted_state())
@@ -130,14 +107,11 @@ class Model_Items_Virtual_Epic_Garden extends Model_Items_Abstract_Virtual {
                 ->description('Bringe die Saat in deinem kleinen Gewächshaus aus, damit du in 24 Stunden ernten kannst. Denke daran, dass du ab dem Aussähen alle 3 Stunden gießen musst, um eine optimale Ernte einfahren zu können.')
                 ->effect(Model_Effect::factory()
                     ->custom(function() {
-                        /** @global Model_Game $game */
-                        global $game;
-
                         $this->planted = true;
                         $this->quality = 0.5;
                         $this->fertilizer = [];
 
-                        $this->next_watering_begin = $game->duration() + 30;
+                        $this->next_watering_begin = Globals::CurrentGame()->duration() + 30;
                         $this->next_watering_end = $this->next_watering_begin + 12;
                         $this->harvest_at = $game->duration() + 288;
                     })
@@ -152,17 +126,15 @@ class Model_Items_Virtual_Epic_Garden extends Model_Items_Abstract_Virtual {
                     ->description('Endlich ist es zeit, die Früchte deiner Arbeit zu ernten. Beeil dich lieber, sonst verdorren sie.')
                     ->effect(Model_Effect::factory()
                         ->custom(function() {
-                            /** @global Model_Player $player */
-                            global $player;
                             $count = floor($this->get_quality() * 8);
 
                             $level = $this->get_fertilizer_status();
                             $this->planted = false;
 
                             if ($count <= 0) {
-                                $player->log()->add('Das war wohl nichts... Deine Pflanzen sind total vertrocknet und absolut nutzlos. Da musst du wohl nochmal von vorne beginnen.');
+                                Globals::PrimaryPlayer()->log()->add('Das war wohl nichts... Deine Pflanzen sind total vertrocknet und absolut nutzlos. Da musst du wohl nochmal von vorne beginnen.');
                                 return;
-                            } else $player->log()->add('Na, da hat sich das warten doch gelohnt. Du hast soeben :num Pflanzen ernten können.', [':num' => $count]);
+                            } else Globals::PrimaryPlayer()->log()->add('Na, da hat sich das warten doch gelohnt. Du hast soeben :num Pflanzen ernten können.', [':num' => $count]);
 
 
                             $fertilize = $this->normalize_fertilizer();
@@ -180,7 +152,7 @@ class Model_Items_Virtual_Epic_Garden extends Model_Items_Abstract_Virtual {
                     )
                     , 'harvest');
 
-            elseif ($game->duration() >= $this->next_watering_begin)
+            elseif (Globals::CurrentGame()->duration() >= $this->next_watering_begin)
                 $hid
                     ->add_action('Gießen', Model_Action::factory()
                         ->buttonskin('epic')
@@ -188,14 +160,11 @@ class Model_Items_Virtual_Epic_Garden extends Model_Items_Abstract_Virtual {
                         ->description('Wenn du deine Pflanzen nicht rechtzeitig und regelmäßig gießt, sinkt ihre Qualität oder die vertrocknen ganz.')
                         ->effect(Model_Effect::factory()
                             ->custom(function() {
-                                /** @global Model_Game $game */
-                                global $game;
-
                                 $this->quality = max(0, $this->quality - $this->dryout());
-                                if ($game->duration() < $this->next_watering_end)
+                                if (Globals::CurrentGame()->duration() < $this->next_watering_end)
                                     $this->quality = min(1,$this->quality + 0.08);
 
-                                $this->next_watering_begin = $game->duration() + 30;
+                                $this->next_watering_begin = Globals::CurrentGame()->duration() + 30;
                                 $this->next_watering_end = $this->next_watering_begin + 12;
                             })
                         )

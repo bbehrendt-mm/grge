@@ -50,9 +50,6 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
     }
 
     public function pretick() {
-        /** @global Model_Game $game */
-        global $game;
-
         //Decay
         if ($this->decay < 1) {
             $this->set_decay(static::$decay_rate * (1/288) * $this->patchup * (1 + floor($this->zombie_factory->accumulation())/5), false);
@@ -94,16 +91,11 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
                 $s_player->achievements()->achieve(Model_Achievement::MA_BREAK_INS, $num);
         }
 
-        foreach ($game->get_initialized_events() as $ev)
+        foreach (Globals::CurrentGame()->get_initialized_events() as $ev)
             $ev->event_locationTick($this);
     }
 
     public function tick($type = Interface_Tickable::IT_TYPE_PLAYER) {
-        /**
-         * @global $player Interface_Plentity|Model_Player
-         */
-        global $player;
-
         //Build chance array
         $chance = Array(Array('chance' => 1500, 'value' => 0),	//Nothing happens
             Array('chance' => 5, 'value' => 1),		//random small energy gain
@@ -112,21 +104,21 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
 
         //Act accordingly
         if (!Tool_Scripts::is_npc()) {
-            $sleeping = $player->get_status()->retrieve('sleep_cozy');
+            $sleeping = Globals::CurrentPlayer()->get_status()->retrieve('sleep_cozy');
             switch (Tool_Gambling::roulette($chance))
             {
                 case 1:
-                    if ($sleeping) $player->log()->add('Du hattest eben einen schönen Traum. Das hat dir etwas zusätzliche Energie verschafft.');
-                    else $player->log()->add('Du hast soeben die Antwort auf eine philosophische Frage gefunden, die dich schon seit Jahren quält. Das hat dir etwas zusätzliche Energie verschafft.');
-                    $player->get_status()->modify(Model_Status::MS_STAT_ENERGY, 5);
+                    if ($sleeping) Globals::CurrentPlayerActual()->log()->add('Du hattest eben einen schönen Traum. Das hat dir etwas zusätzliche Energie verschafft.');
+                    else Globals::CurrentPlayerActual()->log()->add('Du hast soeben die Antwort auf eine philosophische Frage gefunden, die dich schon seit Jahren quält. Das hat dir etwas zusätzliche Energie verschafft.');
+                    Globals::CurrentPlayerActual()->get_status()->modify(Model_Status::MS_STAT_ENERGY, 5);
                     break;
                 case 2:
-                    if ($sleeping) $player->log()->add('Du hast die perfekte Ruheposition gefunden. Weil du jetzt so bequem liegst erhälst du einen Energieschub.');
-                    else $player->log()->add('In deiner Hose findest du eine alte Kinokarte von einem Film, den du dir mit Freunden angesehen hast. Diese schöne Erinnerung verschafft dir einen Energieschub.');
-                    $player->get_status()->modify(Model_Status::MS_STAT_ENERGY, 15);
+                    if ($sleeping) Globals::CurrentPlayerActual()->log()->add('Du hast die perfekte Ruheposition gefunden. Weil du jetzt so bequem liegst erhälst du einen Energieschub.');
+                    else Globals::CurrentPlayerActual()->log()->add('In deiner Hose findest du eine alte Kinokarte von einem Film, den du dir mit Freunden angesehen hast. Diese schöne Erinnerung verschafft dir einen Energieschub.');
+                    Globals::CurrentPlayerActual()->get_status()->modify(Model_Status::MS_STAT_ENERGY, 15);
                     break;
-                case 3: $player->log()->add('Eine Sternschnuppe! So eine hast du schon ewig nicht mehr gesehen. Dieser wunderschöne Anblick gibt dir Hoffnung und einen gewaltigen Energieschub!');
-                    $player->get_status()->modify(Model_Status::MS_STAT_ENERGY, 50);
+                case 3: Globals::CurrentPlayerActual()->log()->add('Eine Sternschnuppe! So eine hast du schon ewig nicht mehr gesehen. Dieser wunderschöne Anblick gibt dir Hoffnung und einen gewaltigen Energieschub!');
+                    Globals::CurrentPlayerActual()->get_status()->modify(Model_Status::MS_STAT_ENERGY, 50);
                     break;
             }
         }
@@ -138,28 +130,18 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
 
 
     public function enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
-        /**
-         * @global $game Model_Game
-         * @global $player Model_Player
-         */
-        global $game;
-        if (!$pid) global $player;
-        elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = $game->get_player($pid);
-        else $player = $game->get_npc($pid);
+        if (!$pid) $player = Globals::CurrentPlayer();
+        elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGame()->get_player($pid);
+        else $player = Globals::CurrentGame()->get_npc($pid);
 
         parent::enter($pid, $type);
         new Model_Buffs_Home($player);
     }
 
     public function leave($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
-        /**
-         * @global $game Model_Game
-         * @global $player Model_Player
-         */
-        global $game;
-        if (!$pid) global $player;
-        elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = $game->get_player($pid);
-        else $player = $game->get_npc($pid);
+        if (!$pid) $player = Globals::CurrentPlayer();
+        elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGame()->get_player($pid);
+        else $player = Globals::CurrentGame()->get_npc($pid);
 
         if (!parent::leave($pid, $type)) return false;
         //ToDo: Rooms

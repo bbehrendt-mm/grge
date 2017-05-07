@@ -20,18 +20,12 @@ class Model_Items_Waterbomb extends Model_Combat_Weapons_Throwable implements In
 	protected static $energy = 1;
 	
 	public function interaction_fillfrom($id) {
-		/** @global Model_Player $player */
-		global $player;
-
-		$player->log()->add('Diese Wasserbombe ist bereits gefüllt.');
+        Globals::PrimaryPlayer()->log()->add('Diese Wasserbombe ist bereits gefüllt.');
 		return false;
 	}
 	
 	public function interaction_fill($liquid_id) {
-		/** @global Model_Player $player */
-		global $player;
-
-		$player->log()->add('Diese Wasserbombe ist bereits gefüllt.');
+        Globals::PrimaryPlayer()->log()->add('Diese Wasserbombe ist bereits gefüllt.');
 		return false;
 	}
 	

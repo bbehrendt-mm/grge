@@ -4,9 +4,6 @@ class Model_Items_Virtual_Location_Room_Community extends Model_Items_Abstract_V
 
 
     protected function hid() {
-        /** @global Model_Player $player */
-        global $player;
-
         $tmp = parent::hid();
 
         if ($this->room()->has_content("sofa1"))

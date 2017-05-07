@@ -36,14 +36,9 @@ class Model_Log_Types_Built extends Model implements Interface_Message {
 	}
 	
 	public function render_body() {
-        /**
-         * @global Model_Player $player
-         * @global Model_Game $game
-         */
-        global $player, $game;
         $r = "";
 
-        if ($player->id() == $this->player)
+        if (Globals::PrimaryPlayer()->id() == $this->player)
             switch ($this->type) {
                 case static::MLTB_BUILD:
                     $r = 'Du hast dieses Versteck durch ein/eine/einen :project aufgewertet!';
@@ -85,7 +80,7 @@ class Model_Log_Types_Built extends Model implements Interface_Message {
                 break;
         }
 
-        return __($r, array(':name' => $game->get_player($this->player)->name(), ':project' => __($this->project), ':attv' => $this->effects));
+        return __($r, array(':name' => Globals::CurrentGame()->get_player($this->player)->name(), ':project' => __($this->project), ':attv' => $this->effects));
 	}
 	
 	public function timecode() {

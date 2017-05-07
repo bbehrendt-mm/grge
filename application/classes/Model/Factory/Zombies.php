@@ -40,21 +40,15 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
     }
 
     public function get_strength_factor() {
-        /** @global Model_Game $game */
-        global $game;
-
         $s = $this->strength_factor;
-        $since = $game->duration() - $this->last_decay;
+        $since = Globals::CurrentGame()->duration() - $this->last_decay;
 
         return max(0,min(1,$s + $since * 0.0007));
     }
 
     public function reduce_strangth_factor($by) {
-        /** @global Model_Game $game */
-        global $game;
-
         $this->strength_factor = $this->get_strength_factor();
-        $this->last_decay = $game->duration();
+        $this->last_decay = Globals::CurrentGame()->duration();
 
         $this->strength_factor -= $this->strength_factor * $by;
     }
@@ -70,10 +64,7 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
     }
 
     protected function get_game_strength() {
-        /** @global Model_Game $game */
-        global $game;
-
-        return 1 + max(0, ($game->duration()/2016) - 1) * 0.3;
+        return 1 + max(0, (Globals::CurrentGame()->duration()/2016) - 1) * 0.3;
     }
 
     public function get_strength($include_factor = true) {

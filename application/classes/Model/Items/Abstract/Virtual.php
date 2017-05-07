@@ -13,11 +13,7 @@ abstract class Model_Items_Abstract_Virtual extends Model_Items_Abstract_Item {
     protected $remaining = false;
 
     protected function location() {
-        /**
-         * @global Model_Game $game
-         */
-        global $game;
-        return $this->loc_id >= 0 ? $game->location($this->loc_id) : null;
+        return $this->loc_id >= 0 ? Globals::CurrentGame()->location($this->loc_id) : null;
     }
 
     protected function room() {

@@ -20,18 +20,15 @@ class Model_Items_Vending extends Model_Items_Abstract_Item {
 	protected static $weight = 120;
 
 	public function __construct($basecfg, $name) {
-		/** @global Model_Game $game */
-        global $game;
         $this->basetype = $basecfg;
 		$this->basename = $name;
 
         /** @noinspection PhpUndefinedMethodInspection */
-        $this->factory = Model_Factory_Items::read($basecfg, $game->config('game.config.itemset'))->set_decay_factor(0);
+        $this->factory = Model_Factory_Items::read($basecfg, Globals::CurrentGame()->config('game.config.itemset'))->set_decay_factor(0);
 		parent::__construct();
 	}
 	
 	public function name() {
-		$c = $this->basetype;
 		return parent::name() . " (" . $this->basename . ")";
 	}
 
@@ -52,13 +49,8 @@ class Model_Items_Vending extends Model_Items_Abstract_Item {
     }
 	
 	public function vend($player = null) {
-        /**
-         * @global $game Model_Game
-         * @global $player Model_Player
-         */
-		global $game;
         if ($player === null)
-            global $player;
+            $player = Globals::CurrentPlayer();
 		
 		$item = $this->factory->nd_spawn();
 		if (!$item) $item = new Model_Items_Money(4);
@@ -68,16 +60,13 @@ class Model_Items_Vending extends Model_Items_Abstract_Item {
 	}
 
     public function mixchem($chemval) {
-        /** @global Model_Player $player */
-        global $player;
-
         if ($this->chem_rand_type === null)
             $this->chem_rand_type = mt_rand(8,12);
 
         switch ($chemval)
         {
             case 7:
-                $player->get_status()->modify(Model_Status::MS_STAT_HEALTH, -35);
+                Globals::CurrentPlayer()->get_status()->modify(Model_Status::MS_STAT_HEALTH, -35);
                 Tool_Scripts::chem_reaction(
                     'Du gießt etwas von der Chemikalie in den Münzschlitz... es gibt einen Knall, und der Automat fliegt in die Luft! Du wurdest durch die Explosion verletzt, aber wenigstens hast du ein paar neue gegenstände erhalten...',
                     $chemval,$this, [$this->factory->nd_spawn(),$this->factory->nd_spawn(),$this->factory->nd_spawn(),$this->factory->nd_spawn(),$this->factory->nd_spawn()]);

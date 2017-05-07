@@ -10,15 +10,10 @@ class Model_Log_Types_Building extends Model_Log_Message {
      * @param int $uid
      */
 	public function __construct($ruin, $uid = null) {
-        /**
-         * @global Model_Game $game
-         * @global Model_Player $player
-         */
-        global $game, $player;
-        if ($uid === null) $uid = $player->id();
+        if ($uid === null) $uid = Globals::CurrentPlayer()->id();
 
         parent::__construct([
-            'name' => $game->get_player($uid)->name(),
+            'name' => Globals::CurrentGame()->get_player($uid)->name(),
             'ruin' => $ruin->name(),
             'icon' => $ruin->icon()
         ], $uid);

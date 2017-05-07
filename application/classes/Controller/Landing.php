@@ -3,9 +3,6 @@
 class Controller_Landing extends Controller {
 
     private function handle_account_merging($key, $referrer) {
-        /** @global Model_Euser $user */
-        global $user;
-
         // Get service
         $auth = false;
         foreach (Kohana::$config->load('mt.links') as $v)
@@ -16,8 +13,8 @@ class Controller_Landing extends Controller {
         /** @var Model_Auth_Legacy $auth */
 
         // Check if user is connected via this service
-        if ($auth::user_is_connected($user->uid())) {
-            if ($auth::retrieve_user_id($key) != $user->uid()) {
+        if ($auth::user_is_connected(Globals::CurrentUser()->uid())) {
+            if ($auth::retrieve_user_id($key) != Globals::CurrentUser()->uid()) {
 
                 $a = $this->session->as_array();
                 foreach ($a as $k => $v)
@@ -26,11 +23,8 @@ class Controller_Landing extends Controller {
                 $this->redirect(URL::site('account/login',true));
                 return true;
             } else return false;
-        } else {
-
+        } else
             $this->redirect(URL::site('account/merge',true));
-
-        }
 
         return false;
     }

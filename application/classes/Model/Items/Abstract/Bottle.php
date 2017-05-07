@@ -9,14 +9,12 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
 	public $toxicity;
 
     protected function hid() {
-        $php53pb = $this;
         return parent::hid()
             ->add_action('Einen Schluck trinken',
                 Model_Action::factory()
                    ->allow_auto(false)
-                   ->condition(function() use ($php53pb) {
-                        /** @var Model_Items_Abstract_Bottle $php53pb */
-                        return $php53pb->fillrate() > 0;
+                   ->condition(function() {
+                        return $this->fillrate() > 0;
                    })
                     ->fail_message('Du führst die Flasche an deinen Mund, um zu trinken - aber sie ist leer.')
                     ->show_as(
@@ -29,12 +27,9 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
                             ->effect(Model_Status::MS_STAT_THIRST, 25)
                             ->effect(Model_Status::MS_STAT_HEALTH, -$this->toxicity)
                             ->ambiguous_effect(Model_Status::MS_STAT_HEALTH)
-                            ->custom(function($p) use ($php53pb) {
-                                /**
-                                 * @var Model_Items_Abstract_Bottle $php53pb
-                                 * @var Model_Player $p
-                                 */
-                                if ($php53pb->toxicity() > 50 && $p->get_status()->get(Model_Status::MS_STAT_HEALTH) > $php53pb->toxicity())
+                            ->custom(function($p) {
+                                /** @var Model_Player $p */
+                                if ($this->toxicity() > 50 && $p->get_status()->get(Model_Status::MS_STAT_HEALTH) > $this->toxicity())
                                     $p->achievements()->achieve(Model_Achievement::MA_POISON_DRINK);
                             })
                             ->consume($this)
@@ -45,21 +40,15 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
                 Model_Action::factory()
                     ->allow_remote(false)
                     ->requirement('Model_Items_Generic_Micropur', 1)
-                    ->condition(function() use ($php53pb) {
-                        /** @var Model_Items_Abstract_Bottle $php53pb */
-                        return $php53pb->fillrate() > 0;
+                    ->condition(function() {
+                        return $this->fillrate() > 0;
                     })
                     ->fail_message('Du musst Wasser in der Flasche haben, damit du sie reinigen kannst!')
                     ->effect(
                         Model_Effect::factory()
-                            ->custom(function() use ($php53pb) {
-                                /**
-                                 * @var Model_Items_Abstract_Bottle $php53pb
-                                 * @global Model_Game $game
-                                 */
-                                global $game;
-                                if ($game->config('items.bottle.allow_full_detox')) $php53pb->toxicity = 0;
-                                else $php53pb->toxicity = max($php53pb->toxicity - 50, 0);
+                            ->custom(function() {
+                                if (Globals::CurrentGame()->config('items.bottle.allow_full_detox')) $this->toxicity = 0;
+                                else $this->toxicity = max($this->toxicity - 50, 0);
                             })
                             ->message($this->cleanmsg())
                     )
@@ -67,9 +56,8 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
             ->add_action('Untersuchen ...',
                 Model_Action::factory()
                     ->allow_remote(false)
-                    ->condition(function() use ($php53pb) {
-                        /** @var Model_Items_Abstract_Bottle $php53pb */
-                        return $php53pb->fillrate() > 0;
+                    ->condition(function() {
+                        return $this->fillrate() > 0;
                     })
                     ->fail_message('Diese Flasche ist leer.')
                     ->effect(
@@ -142,9 +130,7 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
     }
 
     private function cleanmsg() {
-        /** @global Model_Game $game */
-        global $game;
-        $tox = max(0, $game->config('items.bottle.allow_full_detox') ? 0 : $this->toxicity - 50);
+        $tox = max(0, Globals::CurrentGame()->config('items.bottle.allow_full_detox') ? 0 : $this->toxicity - 50);
         if ($tox <= 2)		return 'Du wirfst die Tablette ins Wasser - es sprudelt ein wenig, danach verbreitet sich angenehmer Zitronenduft. Deine Wasserflasche ist wieder komplett gereinigt!';
         elseif ($tox <= 10)	return 'Du wirfst die Tablette ins Wasser - es sprudelt ein wenig, danach verbreitet sich angenehmer Zitronenduft. Zwar ist das Wasser noch immer nicht ganz sauber, aber wesentlich trinkbarer als zuvor!';
         elseif ($tox <= 30)	return 'Du wirfst die Tablette ins Wasser - es sprudelt ein wenig, danach mischt sich angenehmer Zitronenduft in den Güllegeruch des Wassers. Naja, besser als nichts...';
@@ -166,12 +152,9 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
      * @return bool
      */
     public function interaction_fill($item) {
-		/** @global Model_Player $player */
-        global $player;
-		
 		if ($this->fillrate >= static::$capacity)
 		{
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Diese Flasche ist bereits bis zum Rand gefüllt. Du kannst unmöglich eine weitere Ration Wasser darin unterbringen.'));
+            Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Diese Flasche ist bereits bis zum Rand gefüllt. Du kannst unmöglich eine weitere Ration Wasser darin unterbringen.'));
 			return true;
 		}
 		
@@ -191,12 +174,10 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
      * @return bool
      */
     public function interaction_fillfrom($item) {
-        /** @global Model_Player $player */
-        global $player;
 	
 		if ($this->fillrate >= static::$capacity)
 		{
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Diese Flasche ist bereits bis zum Rand gefüllt. Du kannst unmöglich eine weitere Ration Wasser darin unterbringen.'));
+            Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Diese Flasche ist bereits bis zum Rand gefüllt. Du kannst unmöglich eine weitere Ration Wasser darin unterbringen.'));
 			return true;
 		}
 	
@@ -212,17 +193,14 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
 	}
 	
 	public function interaction_extract($all = false) {
-        /** @global Model_Player $player */
-        global $player;
-	
 		if ($this->fillrate <= 0) {
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Diese Flasche ist leider leer...'));
+            Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Diese Flasche ist leider leer...'));
 			return true;
 		}
 
         $t = $all ? 0 : ($this->fillrate - 1);
         while ($this->fillrate > $t) {
-            $player->location()->inventory()->add(new Model_Items_Generic_Waterv($this->toxicity()));
+            Globals::PrimaryPlayer()->location()->inventory()->add(new Model_Items_Generic_Waterv($this->toxicity()));
             $this->consume();
         }
 	
@@ -230,21 +208,18 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
 	}
 		
 	public function mixchem($chemval) {
-        /** @global Model_Player $player */
-        global $player;
-
         if ($this->fillrate == 0) return parent::mixchem($chemval);
 
         switch ($chemval)
         {
             case 6:
                 $this->toxicity = 0;
-                $player->log()->add(new Model_Log_Types_Text(null, null, 'Zunächst hörst du ein Zischen aus deiner Flasche, danach stellst du fest dass die Chemikalie dein Wasser gereinigt hat! Hurra!'));
+                Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Zunächst hörst du ein Zischen aus deiner Flasche, danach stellst du fest dass die Chemikalie dein Wasser gereinigt hat! Hurra!'));
                 return true;
             case 10:
                 $res = [];
                 while ($this->fillrate(1))
-                    $res[] = $player->job(1040) ? new Model_Items_Wine() : new Model_Items_Beer();
+                    $res[] = Globals::PrimaryPlayer()->job(1040) ? new Model_Items_Wine() : new Model_Items_Beer();
                 $this->toxicity = 0;
 
                 Tool_Scripts::chem_reaction(
@@ -252,7 +227,7 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
                     $chemval,$this, $res);
                 return true;
             default:
-                $player->log()->add(new Model_Log_Types_Text(null, null, 'Zunächst hörst du ein Zischen aus deiner Flasche, danach bemerkst du einen beissenden Geruch. Willst du das Zeug jetzt wirklich noch trinken ... ?'));
+                Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Zunächst hörst du ein Zischen aus deiner Flasche, danach bemerkst du einen beissenden Geruch. Willst du das Zeug jetzt wirklich noch trinken ... ?'));
                 $this->toxicity += 9 * $chemval;
                 return false;
         }

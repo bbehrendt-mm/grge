@@ -50,9 +50,7 @@ class Model_Buffs_Read extends Model_Buffs_Abstract_Fragile {
 	}
 
     public function tick() {
-        /** @global Model_Game $game */
-        global $game;
-        if (!$game->item_available($this->item_id) || !($item = $game->uin()->get($this->item_id, 'Model_Items_Abstract_Book'))) {
+        if (!Globals::CurrentGame()->item_available($this->item_id) || !($item = Globals::CurrentGame()->uin()->get($this->item_id, 'Model_Items_Abstract_Book'))) {
             $this->cancel();
             return;
         }

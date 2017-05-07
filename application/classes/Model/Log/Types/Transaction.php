@@ -15,13 +15,7 @@ class Model_Log_Types_Transaction extends Model_Log_Message {
      * @param null|string $action
      */
     public function __construct($type, $item, $uin = null, $action = null) {
-        /**
-         * @global Model_Game $game
-         * @global Model_Player $player
-         */
-        global $game, $player;
-
-        if (!$uin) $uin =  $player->id();
+        if (!$uin) $uin =  Globals::PrimaryPlayer()->id();
 
         if (!is_array($item))
             $item = [$item];
@@ -39,12 +33,6 @@ class Model_Log_Types_Transaction extends Model_Log_Message {
     }
 
     protected function postprocess($data) {
-        /**
-         * @global Model_Game $game
-         * @global Model_Player $player
-         */
-        global $game, $player;
-
         foreach ($data['items'] as &$item)
             /** @var Model_Struct_Item $item */
             $item = [
@@ -53,8 +41,8 @@ class Model_Log_Types_Transaction extends Model_Log_Message {
                 'count' => $item->getCount()
             ];
 
-        $data['player'] = $game->get_player($data['uin'])->name();
-        $data['self'] = $data['uin'] == $player->id();
+        $data['player'] = Globals::CurrentGame()->get_player($data['uin'])->name();
+        $data['self'] = $data['uin'] == Globals::PrimaryPlayer()->id();
         $data['action'] = __($data['action']);
         unset($data['uin']);
 

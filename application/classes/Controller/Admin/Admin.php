@@ -130,13 +130,11 @@ abstract class Controller_Admin_Admin extends Controller {
     }
 
     public function before() {
-        /** @global Model_Euser $user */
-        global $user;
         parent::before();
 
         //Check admin privileges
-        if ($user && static::$force_admin) {
-            static::priv_get($user->uid());
+        if (Globals::hasCurrentUser() && static::$force_admin) {
+            static::priv_get(Globals::CurrentUser()->uid());
             $this->force_admin();
         }
     }

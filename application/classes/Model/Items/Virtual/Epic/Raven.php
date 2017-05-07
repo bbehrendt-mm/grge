@@ -20,10 +20,7 @@ class Model_Items_Virtual_Epic_Raven extends Model_Items_Abstract_Virtual {
     }
 
     public function get_rest() {
-        /** @global Model_Game $game */
-        global $game;
-
-        $a = $this->rest - $game->duration();
+        $a = $this->rest - Globals::CurrentGame()->duration();
         return $a > 0 ? $a : false;
     }
 
@@ -49,9 +46,6 @@ class Model_Items_Virtual_Epic_Raven extends Model_Items_Abstract_Virtual {
                 ->flag('as','fetch')
                 ->effect(Model_Effect::factory()
                     ->custom(function($p, $a) {
-                        /** @global Model_Game $game */
-                        global $game;
-
                         /** @var Model_Player $p */
                         $arg = max(0,min((int)$a,2));
 
@@ -67,12 +61,9 @@ class Model_Items_Virtual_Epic_Raven extends Model_Items_Abstract_Virtual {
 
 
                         $current_location = $p->location_class();
-                        $locations = array_filter($game->map()->build_route_array($current_location), function($location) use ($current_location, $a) {
-                            /** @global Model_Game $game */
-                            global $game;
-
+                        $locations = array_filter(Globals::CurrentGame()->map()->build_route_array($current_location), function($location) use ($current_location, $a) {
                             if ($location['id'] == $current_location || $a[0] > $location['distance'] || $a[1] < $location['distance']) return false;
-                            $obj = $game->location($location['id']);
+                            $obj = Globals::CurrentGame()->location($location['id']);
                             if (!$obj || Tool_System::instance_of($obj, ['Model_Places_Abstract_Hideout', 'Model_Places_Abstract_Node'])) return false;
                             return true;
                         });
@@ -87,7 +78,7 @@ class Model_Items_Virtual_Epic_Raven extends Model_Items_Abstract_Virtual {
                             return;
                         }
 
-                        $location = $game->location(Tool_Gambling::select(array_keys($locations)));
+                        $location = Globals::CurrentGame()->location(Tool_Gambling::select(array_keys($locations)));
 
                         $p->location()->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_LEAVE, 'Corax der Rabe'));
                         $location->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, 'Corax der Rabe'));
@@ -130,7 +121,7 @@ class Model_Items_Virtual_Epic_Raven extends Model_Items_Abstract_Virtual {
                             $p->log()->add('Dein Rabe hat :location besucht und dort auch etwas gefunden, konnte es jedoch nicht hierher tragen...',[],[':location' => $location->name()]);
                         else $p->log()->add('Dein Rabe hat :location besucht, ist jedoch mit leeren Krallen zurückgekehrt...',[],[':location' => $location->name()]);
 
-                        $this->rest = $game->duration() + ($this->doped ? 24 : 12);
+                        $this->rest = Globals::CurrentGame()->duration() + ($this->doped ? 24 : 12);
                         $this->doped = false;
                     })
                 )

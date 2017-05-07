@@ -28,11 +28,8 @@ class Model_Items_Coffin2 extends Model_Items_Coffin implements Interface_Static
 	protected static $cat = Model_Items_Abstract_Item::MIAI_CAT_MISC;
 
     public function open($player = null) {
-        /**
-         * @global $player Model_Player
-         */
         if ($player === null)
-            global $player;
+            $player = Globals::CurrentPlayer();
 		
 		$inset = null;
 		$txt = 'Das Ding ist ganz schön fest verschlossen... beinahe so, als hätten die Angehörigen Angst vor einem Wiedersehen mit dem Verstorbenen gehabt. Nach einigen Krafakten gelingt es dir dann allerdings doch, den Sarg aufzubrechen. ';
@@ -64,7 +61,7 @@ class Model_Items_Coffin2 extends Model_Items_Coffin implements Interface_Static
 			} else $txt .= 'Leider scheint hier sonst nichts von Wert drin zu sein.';
 		}
 		
-		$player->log()->add(new Model_Log_Types_Text(null, null, $txt, array(), $inset ? array(':item' => $inset) : array()));
+		if (!Globals::shadowPlayerExists()) Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, $txt, array(), $inset ? array(':item' => $inset) : array()));
 		
 		return true;
 	}

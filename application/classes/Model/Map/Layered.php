@@ -56,11 +56,6 @@ class Model_Map_Layered extends Model_Map_Circular {
      * @throws Exception
      */
     public function place_location($location, $visible, $dry = 0, $fixed_id = null) {
-        /**
-         * @global $game Model_Game
-         */
-        global $game;
-
         if (is_string($location) && $visible)
             $location = new $location;
 

@@ -16,9 +16,6 @@ class Model_Blueprints {
      * @return Model_Blueprints
      */
     public static function factory($location = null, $category = null) {
-        /** @global Model_Game $game */
-        global $game;
-
         $ret = new Model_Blueprints();
         if (!$location || !$category) return $ret;
         else {
@@ -29,14 +26,11 @@ class Model_Blueprints {
                         /** @var Model_Blueprints $b */
                         $ret->merge($b,true);
 
-                    if ($game) foreach ($game->get_initialized_events() as $e)
+                    if (Globals::hasCurrentGame()) foreach (Globals::CurrentGame()->get_initialized_events() as $e)
                         if ($bp = $e->event_blueprintCreation($name,$category))
                             $ret->merge($bp,true);
-
                 }
-
             }
-
             return $ret;
         }
     }

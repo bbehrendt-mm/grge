@@ -19,10 +19,7 @@ class Model_Places_House_Hobby extends Model_Places_Abstract_Place {
     }
 
     public function pretick() {
-        /** @global Model_Game $game */
-        global $game;
-
-        foreach ($game->get_initialized_events() as $ev)
+        foreach (Globals::CurrentGame()->get_initialized_events() as $ev)
             $ev->event_locationTick($this);
 
         if (mt_rand(0,10) > 2) return true;

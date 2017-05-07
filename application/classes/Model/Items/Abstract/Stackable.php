@@ -88,8 +88,6 @@ abstract class Model_Items_Abstract_Stackable extends Model_Items_Abstract_Item 
 	 * @param array $targets Target stacks to merge with; if omitted, the available_items script (default parameters) will be used
 	 */
 	public function merge($targets = null) {
-		global $game;
-		
 		//Do nothing if stack is already full
 		if ($this->is_stack_full()) return;
 		
@@ -99,7 +97,7 @@ abstract class Model_Items_Abstract_Stackable extends Model_Items_Abstract_Item 
 		//Iterate over all targets; do nothing if this stack or the target stack is full
 		/** @var Model_Items_Abstract_Stackable $target */
         foreach ($targets as $target)
-            if (!($this == $target || $this->is_stack_full() || $target->is_stack_full()))
+            if (!($this->uin() == $target->uin() || $this->is_stack_full() || $target->is_stack_full()))
 			    $this->count += $target->consume( (static::$max_size == 0) ? PHP_INT_MAX : (static::$max_size - $this->count) );
 	}
 	

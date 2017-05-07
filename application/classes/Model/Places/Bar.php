@@ -8,18 +8,12 @@ class Model_Places_Bar extends Model_Places_Abstract_Place {
     protected static $outside = false;
 
     public function tick($type = Interface_Tickable::IT_TYPE_PLAYER) {
-        /**
-         * @global $game Model_Game
-         * @global $player Interface_Plentity
-         */
-        global $game, $player;
+        if (Globals::CurrentPlayer()->can(Interface_Plentity::IC_TRIGGER_SUPPLIES)) {
 
-        if ($player->can(Interface_Plentity::IC_TRIGGER_SUPPLIES)) {
-
-            if ($game->config('places.bar.spawn_winchester') && !$game->get_npc('winchester')) {
+            if (Globals::CurrentGame()->config('places.bar.spawn_winchester') && !Globals::CurrentGame()->get_npc('winchester')) {
                 $winchester = new Model_NPC_Special_Winchester();
                 $winchester->location_class($this->uin());
-                $game->add_npc($winchester, 'winchester');
+                Globals::CurrentGame()->add_npc($winchester, 'winchester');
                 $this->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $winchester->id(), true));
             }
         }

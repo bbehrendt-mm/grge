@@ -11,12 +11,7 @@ class Model_Log_Types_Chem extends Model_Log_Message {
      * @param null $uid
      */
     public function __construct($chemvalue, $item, $results, $uid = null) {
-        /**
-         * @global Model_Game $game
-         * @global Model_Player $player
-         */
-        global $game, $player;
-        if ($uid === null) $uid = $player->id();
+        if ($uid === null) $uid = Globals::PrimaryPlayer()->id();
 
         if (!is_array($results))
             $results = [$results];
@@ -26,7 +21,7 @@ class Model_Log_Types_Chem extends Model_Log_Message {
             $tmp[] = new Model_Struct_Item($single);
 
         parent::__construct([
-            'name' => $game->get_player($uid)->name(),
+            'name' => Globals::CurrentGame()->get_player($uid)->name(),
             'chem' => new Model_Struct_Item(new Model_Items_Chem($chemvalue)),
             'item' => new Model_Struct_Item($item),
             'results' => $tmp,
@@ -64,23 +59,4 @@ class Model_Log_Types_Chem extends Model_Log_Message {
 
         return $data;
     }
-
-    /**
-     * Renders a body, or returns null
-     * @return string|NULL Body as string or null if no body applies
-     */
-    /*public function render_body()
-    {
-        global $game, $player;
-
-        if (empty($this->results))
-            $s = ($player->id() != $this->uid)
-                ? ':name hat erfolglos :item mit :chem kombiniert...'
-                : 'Du hast erfolglos :item mit :chem kombiniert...';
-        else $s = ($player->id() != $this->uid)
-            ? ':name hat :item mit :chem kombiniert, und dabei :list erhalten.'
-            : 'Du hast :item mit :chem kombiniert, und dabei :list erhalten.';
-
-        return __($s, array(':name' => $game->get_player($this->uid)->name(), ':chem' => $this->render_item($this->chem), ':item' => $this->render_item($this->item), ':list' => $this->render_item($this->results)));
-    }*/
 }

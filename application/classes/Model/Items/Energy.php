@@ -12,10 +12,7 @@ class Model_Items_Energy extends Model_Items_Abstract_Item implements Interface_
 	protected static $weight = 0;	
 	
 	public function take($silent = false) {
-		/** @global Model_Player $player */
-        global $player;
-
-		if (!$silent && !Tool_Scripts::is_npc()) $player->log()->add(new Model_Log_Types_Text(null, null, 'Du kannst Energie nicht transportieren.'));
+		if (!$silent && !Tool_Scripts::is_npc()) Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Du kannst Energie nicht transportieren.'));
 		return false;
 	}
 }	

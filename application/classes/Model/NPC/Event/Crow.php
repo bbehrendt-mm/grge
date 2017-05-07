@@ -34,14 +34,11 @@ class Model_NPC_Event_Crow extends Model_NPC_Humanoid
     public function hid() {
         $item_gen = function($p)  {
             /** @var $p Model_Player */
-            /** @global Model_Game $game */
-            global $game;
-
-            $locations = $game->map()->build_route_array($p->location()->uin());
+            $locations = Globals::CurrentGame()->map()->build_route_array($p->location()->uin());
             foreach ($locations as $key => $data) {
                 if (Tool_Scripts::location_type($key) !== 0)
                     unset($locations[$key]);
-                elseif (count($game->location($key)->inventory()->get('Model_Items_Abstract_Easteregg')) > 0)
+                elseif (count(Globals::CurrentGame()->location($key)->inventory()->get('Model_Items_Abstract_Easteregg')) > 0)
                     unset($locations[$key]);
             }
             $locations = array_keys($locations);
@@ -57,7 +54,7 @@ class Model_NPC_Event_Crow extends Model_NPC_Humanoid
                     $put = mt_rand(min($left, ceil(count($locations)/5)), min($left, ceil(count($locations)/2)));
                     $left -= $put;
                     for ($i = 0; $i < $put; $i++)
-                        $game->location($key)->inventory()->add(new Model_Items_Generic_Egg1(1,true));
+                        Globals::CurrentGame()->location($key)->inventory()->add(new Model_Items_Generic_Egg1(1,true));
                 }
                 $placed1 = $num - $left;
 
@@ -66,7 +63,7 @@ class Model_NPC_Event_Crow extends Model_NPC_Humanoid
                 $left = $num = mt_rand(0, floor(count($locations)/4));
                 foreach ($locations as $key) if ($left > 0) {
                     $left -= 1;
-                    $game->location($key)->inventory()->add(new Model_Items_Generic_Egg2(1,true));
+                    Globals::CurrentGame()->location($key)->inventory()->add(new Model_Items_Generic_Egg2(1,true));
                 }
                 $placed2 = $num - $left;
 
@@ -75,17 +72,17 @@ class Model_NPC_Event_Crow extends Model_NPC_Humanoid
                 $left = $num = mt_rand(0, floor(count($locations)/10));
                 foreach ($locations as $key) if ($left > 0) {
                     $left -= 1;
-                    $game->location($key)->inventory()->add(new Model_Items_Generic_Egg3(1,true));
+                    Globals::CurrentGame()->location($key)->inventory()->add(new Model_Items_Generic_Egg3(1,true));
                 }
 
                 $placed3 = $num - $left;
 
                 //Place egg0
                 foreach ($locations as $key)
-                    if (!$game->location($key)->inventory()->get('Model_Items_Abstract_Easteregg'))
-                        $game->location($key)->inventory()->add(new Model_Items_Generic_Egg0(1,true));
+                    if (!Globals::CurrentGame()->location($key)->inventory()->get('Model_Items_Abstract_Easteregg'))
+                        Globals::CurrentGame()->location($key)->inventory()->add(new Model_Items_Generic_Egg0(1,true));
 
-                foreach ($game->players() as $pl)
+                foreach (Globals::CurrentGame()->players() as $pl)
                     if ($pl->id() == $p->id()) $pl->log()->add(new Model_Log_Types_Text(null,null,'KRAAH! Danke sehr! Ich habe :e1 farbige, :e2 prächtige und :e3 Designer-Eier für dich versteckt. Viel Spaß beim Suchen, KRAHRAH!', array(':e1' => $placed1,':e2' => $placed2,':e3' => $placed3)));
                     else $pl->log()->add(new Model_Log_Types_Text(null,null,'Du hörst ein lautes Krähen in der Ferne...'));
             }
@@ -114,9 +111,6 @@ class Model_NPC_Event_Crow extends Model_NPC_Humanoid
             ->add_action('Gesammelte Eier eintauschen', Model_Action::factory()
                 ->effect(Model_Effect::factory()
                              ->custom(function($p) {
-                                 /** @global Model_Euser $user */
-                                 global $user;
-
                                  /** @var $p Model_Player */
                                  $e1 = Tool_Scripts::count_available_items('Model_Items_Generic_Egg1', true, false, false, $p);
                                  $e2 = Tool_Scripts::count_available_items('Model_Items_Generic_Egg2', true, false, false, $p);
@@ -124,7 +118,7 @@ class Model_NPC_Event_Crow extends Model_NPC_Humanoid
                                  if (Tool_Scripts::consume_available_items(array('Model_Items_Generic_Egg1' => $e1, 'Model_Items_Generic_Egg2' => $e2, 'Model_Items_Generic_Egg3' => $e3), true, false, false, $p)) {
                                      $c = floor($e1 * Model_Items_Generic_Egg1::getValue() + $e2 * Model_Items_Generic_Egg2::getValue() + $e3 * Model_Items_Generic_Egg3::getValue());
                                      if ($c > 0) {
-                                         $user->award_coins($p->id(), $c);
+                                         Globals::CurrentUser()->award_coins($p->id(), $c);
                                          $p->log()->add(new Model_Log_Types_Text(null,null,'KRAAAAH! Glückwunsch! Für die Eier, die du gesammelt hast, bekommst du :num BrainCoins! KRARAH!', array(':num' => $c)));
                                      } else $p->log()->add(new Model_Log_Types_Text(null,null,'KRARAHAHAHA! Zu schade! Du hast nicht genug Eier gesammelt um Punkte zu bekommen! KRAAH!'));
                                  }

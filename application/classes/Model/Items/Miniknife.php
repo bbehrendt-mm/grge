@@ -22,10 +22,7 @@ class Model_Items_Miniknife extends Model_Combat_Weapons_Close implements Interf
 	protected static $effects = [2,0,0,0];
 	
 	public function drop($p = null, $silent = false) {
-		/** @global Model_Player $player */
-		global $player;
-
-        if (!$silent) $player->log()->add(new Model_Log_Types_Text(null, null, 'Du fühlst dich ohne dein Taschenmesser ziemlich nackt ... du solltest es wirklich nicht einfach ablegen!'));
+        if (!$silent) Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Du fühlst dich ohne dein Taschenmesser ziemlich nackt ... du solltest es wirklich nicht einfach ablegen!'));
 		return false;
 	}
 	

@@ -44,14 +44,9 @@ class Model_Places_Asylumhideout extends Model_Places_Abstract_Hideout implement
     }
 
     public function enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
-        /**
-         * @global $game Model_Game
-         * @global $player Model_Player
-         */
-        global $game;
-        if (!$pid) global $player;
-        elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = $game->get_player($pid);
-        else $player = $game->get_npc($pid);
+        if (!$pid) $player = Globals::CurrentPlayer();
+        elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGame()->get_player($pid);
+        else $player = Globals::CurrentGame()->get_npc($pid);
 
         parent::enter($pid, $type);
         new Model_Buffs_Home2($player);

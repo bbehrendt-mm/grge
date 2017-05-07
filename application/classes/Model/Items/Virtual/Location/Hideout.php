@@ -16,13 +16,10 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
     }
 
     protected function hid() {
-        /** @global Model_Player $player */
-        global $player;
-
         //ToDo: ROOOOOOOOOOOMS
 
         /** @var Model_Places_Abstract_Hideout $location */
-        $location = $player->location();
+        $location = Globals::CurrentPlayer()->location();
         /** @noinspection PhpUndefinedMethodInspection */
         $location_driving = Tool_System::instance_of($location, 'Model_Places_Motorhome') && $location->is_driving();
 

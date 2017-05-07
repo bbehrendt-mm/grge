@@ -15,18 +15,16 @@ class Model_Items_Virtual_Hero_Common extends Model_Items_Abstract_Virtual {
 	);
 
     protected function hid() {
-        /** @global $player Model_Player */
-        global $player;
         $tmp = parent::hid()
             ->add_action('Kraft sammeln', Model_Action::factory()
                     ->buttonskin('hero')
                     ->description('Reduziert jede deiner Statusleisten um 15% und fügt die abgezogenen Punkte deiner Energie hinzu.')
                     ->effect(
                         Model_Effect::factory()
-                            ->effect(Model_Status::MS_STAT_HUNGER, $t_h = -floor(0.15 * $player->get_status()->get(Model_Status::MS_STAT_HUNGER)))
-                            ->effect(Model_Status::MS_STAT_THIRST, $t_d = -floor(0.15 * $player->get_status()->get(Model_Status::MS_STAT_THIRST)))
-                            ->effect(Model_Status::MS_STAT_HEALTH, $t_g = -floor(0.15 * $player->get_status()->get(Model_Status::MS_STAT_HEALTH)))
-                            ->effect(Model_Status::MS_STAT_SLEEPY, $t_m = -floor(0.15 * $player->get_status()->get(Model_Status::MS_STAT_SLEEPY)))
+                            ->effect(Model_Status::MS_STAT_HUNGER, $t_h = -floor(0.15 * Globals::CurrentPlayer()->get_status()->get(Model_Status::MS_STAT_HUNGER)))
+                            ->effect(Model_Status::MS_STAT_THIRST, $t_d = -floor(0.15 * Globals::CurrentPlayer()->get_status()->get(Model_Status::MS_STAT_THIRST)))
+                            ->effect(Model_Status::MS_STAT_HEALTH, $t_g = -floor(0.15 * Globals::CurrentPlayer()->get_status()->get(Model_Status::MS_STAT_HEALTH)))
+                            ->effect(Model_Status::MS_STAT_SLEEPY, $t_m = -floor(0.15 * Globals::CurrentPlayer()->get_status()->get(Model_Status::MS_STAT_SLEEPY)))
                             ->effect(Model_Status::MS_STAT_ENERGY, abs($t_h) + abs($t_d) + abs($t_g) + abs($t_m))
                             ->message('Du wirst nicht sterben... nicht hier, und auch nicht auf diese Weise! Mit diesem Mantra hast du deine letzten Kräfte mobilisiert und neue Energie gewonnen.')
                     )
@@ -83,17 +81,15 @@ class Model_Items_Virtual_Hero_Common extends Model_Items_Abstract_Virtual {
                 , 'hero_unaddict')
             ;
 
-        if ($player->get_escape_target() && $player->get_escape_target() != $player->location_class())
+        if (Globals::CurrentPlayer()->get_escape_target() && Globals::CurrentPlayer()->get_escape_target() != Globals::CurrentPlayer()->location_class())
             $tmp->add_action('Überstürzte Flucht', Model_Action::factory()
                 ->buttonskin('context')
                 ->description('Hast du dich in einer Ruine verlaufen, dann verwende diese Aktion um aus deiner misslichen Lage zu befreien und zum Eingang zurückzukehren. ACHTUNG: Du wirst während der Flucht die meisten deiner Gegenstände verlieren und dir sehr wahrscheinlich eine Verletzung zuziehen. Wird der Fluchtweg von Zombies blockiert, verlierst du 20 Gesundheit für jeden Zombie - du behälst jedoch mindestens 1 Gesundheitspunkt nach der Flucht. Die Zombies werden durch diese Aktion nicht getötet!')
                 ->effect(Model_Effect::factory()
                     ->custom(function($p) {
                         /** @var Model_Player $p */
-                        /** @global Model_Game $game */
-                        global $game;
                         if (!($did = $p->get_escape_target())) return;
-                        if ($did == $p->location_class() || !$p->location()->can_leave($p->id(), true, Interface_Tickable::IT_TYPE_PLAYER) || !$game->location($did)->can_enter($p->id(), Interface_Tickable::IT_TYPE_PLAYER)) {
+                        if ($did == $p->location_class() || !$p->location()->can_leave($p->id(), true, Interface_Tickable::IT_TYPE_PLAYER) || !Globals::CurrentGame()->location($did)->can_enter($p->id(), Interface_Tickable::IT_TYPE_PLAYER)) {
                             $p->log()->add('Eine Flucht scheint im Moment aussichtslos...');
                             return;
                         }
@@ -120,7 +116,7 @@ class Model_Items_Virtual_Hero_Common extends Model_Items_Abstract_Virtual {
                             if ($injury) new Model_Buffs_Blood($pc->id());
 
                             $pc->location()->leave($pc->id(), Interface_Tickable::IT_TYPE_PLAYER);
-                            $game->location($did)->enter($pc->id(), Tool_Scripts::is_npc($pc) ? Interface_Tickable::IT_TYPE_NPC : Interface_Tickable::IT_TYPE_PLAYER);
+                            Globals::CurrentGame()->location($did)->enter($pc->id(), Tool_Scripts::is_npc($pc) ? Interface_Tickable::IT_TYPE_NPC : Interface_Tickable::IT_TYPE_PLAYER);
                             $pc->location_class($did);
                         }
 

@@ -9,14 +9,11 @@ class Controller_Gamemaster extends Controller {
      * Makes sure we don't try to use game starter with a game already running
      */
     public function before() {
-        /** @global Model_User $user */
-        global $user;
-
         //Do all the other before stuff
         parent::before();
 
         //Check if user already has a running game
-        if ($user && $user->get_current_game()) {
+        if (Globals::hasCurrentUser() && Globals::CurrentUser()->get_current_game()) {
             $this->error(\grge\E_STARTER_GAME_RUNNING);
             $this->request->action('noaction');
         }
@@ -79,27 +76,25 @@ class Controller_Gamemaster extends Controller {
      * @throws Exception
      */
     private function start_singleplayer($mode,$speed,$job,$level,$store) {
-        global $player;
-
         // Make a new game
-        $game = new Model_Game();
-        if (!$game->start($mode, ($speed < 0) ? 1 : 0, ($speed < 0) ? 300 : $speed, null))
+        new Model_Game();
+        if (!Globals::CurrentGame()->start($mode, ($speed < 0) ? 1 : 0, ($speed < 0) ? 300 : $speed, null))
             return $this->error(\grge\E_STARTER_CREATION_FAILED);
 
         foreach ($store as $elem)
             $elem::trigger_player_before_init($job,$level);
 
         // Join newly created game
-        if (!$game->join($job, $level, null))
+        if (!Globals::CurrentGame()->join($job, $level, null))
             return $this->error(\grge\E_STARTER_JOIN_FAILED);
 
         foreach ($store as $elem) {
-            $elem::trigger_game_after_init($game);
-            $elem::trigger_player_after_init($player);
+            $elem::trigger_game_after_init(Globals::CurrentGame());
+            $elem::trigger_player_after_init(Globals::PrimaryPlayer());
         }
 
         // Update session and redirect
-        $this->session->set('game',$game);
+        $this->session->set('game',Globals::CurrentGame());
         $this->render(['redirect' => 'game/redirect']);
         return true;
     }
@@ -119,8 +114,6 @@ class Controller_Gamemaster extends Controller {
      * @throws Kohana_Exception
      */
     private function start_multiplayer($mode,$job,$level,$name,$lang,$slots,$pw,$store = []) {
-        global $player;
-
         // Check if lang is valid
         if (!in_array($lang, array_keys(static::get_lang_flags())))
             return $this->error(\grge\E_STARTER_INVALID_SETUP);
@@ -128,26 +121,26 @@ class Controller_Gamemaster extends Controller {
         list($name_game, $name_lobby) = is_array($name) ? $name : [$name,$name];
 
         // Create game
-        $game = new Model_Game();
-        if (($id = $game->start($mode, 1, 300, null, $name_game)) && DB::insert('multiplayer_lobby', array('gameid', 'lang', 'slots', 'name', 'timestamp', 'password'))->values(array($id, $lang, $slots, $name_lobby, time(), $pw ? hash('sha256', $pw, false) : null))->execute() ) {
+        new Model_Game();
+        if (($id = Globals::CurrentGame()->start($mode, 1, 300, null, $name_game)) && DB::insert('multiplayer_lobby', array('gameid', 'lang', 'slots', 'name', 'timestamp', 'password'))->values(array($id, $lang, $slots, $name_lobby, time(), $pw ? hash('sha256', $pw, false) : null))->execute() ) {
 
             foreach ($store as $elem)
                 $elem::trigger_player_before_init($job,$level);
 
             //Join game
-            if (!$game->join($job, $level, null))
+            if (!Globals::CurrentGame()->join($job, $level, null))
                 return $this->error(\grge\E_STARTER_JOIN_FAILED);
 
             foreach ($store as $elem) {
-                $elem::trigger_game_after_init($game);
-                $elem::trigger_player_after_init($player);
+                $elem::trigger_game_after_init(Globals::CurrentGame());
+                $elem::trigger_player_after_init(Globals::PrimaryPlayer());
             }
 
             DB::update('multiplayer_lobby')->set(array('slots' => $slots - 1))->where('gameid', '=', $id)->execute();
         } else return $this->error(\grge\E_STARTER_CREATION_FAILED);
 
         // Update session and redirect
-        $this->session->set('game',$game);
+        $this->session->set('game',Globals::CurrentGame());
         $this->render(['redirect' => 'game/redirect']);
         return true;
     }
@@ -163,17 +156,12 @@ class Controller_Gamemaster extends Controller {
      * @throws Exception
      */
     private function join_multiplayer($id,$job,$level,$pw,$store = []) {
-        /**
-         * @global Model_EUser $user
-         */
-        global $user, $player;
-
         // Check password
         if (!$this->check_password($id,$pw,false))
             return $this->error(\grge\E_STARTER_INVALID_SETUP);
 
         // Check banns
-        if (!$pw && $user->lockouts_is_locked())
+        if (!$pw && Globals::CurrentUser()->lockouts_is_locked())
             return $this->error(\grge\E_STARTER_PLAYER_BANNED);
 
         //Check slots
@@ -185,21 +173,21 @@ class Controller_Gamemaster extends Controller {
             $elem::trigger_player_before_init($job,$level);
 
         // Load game
-        $game = new Model_Game;
-        if (!$game->read($id))
+        new Model_Game();
+        if (!Globals::CurrentGame()->read($id))
             return $this->error(\grge\E_STARTER_FETCH_FAILED);
 
         // Join player
-        if (!$game->join($job, $level, null))
+        if (!Globals::CurrentGame()->join($job, $level, null))
             return $this->error(\grge\E_STARTER_JOIN_FAILED);
 
         foreach ($store as $elem) {
-            $elem::trigger_game_after_init($game);
-            $elem::trigger_player_after_init($player);
+            $elem::trigger_game_after_init(Globals::CurrentGame());
+            $elem::trigger_player_after_init(Globals::PrimaryPlayer());
         }
 
         // Update session and redirect
-        $this->session->set('game',$game);
+        $this->session->set('game',Globals::CurrentGame());
         $this->render(['redirect' => 'game/redirect']);
         return true;
     }
@@ -210,8 +198,6 @@ class Controller_Gamemaster extends Controller {
      * @throws Kohana_Exception
      */
     private function fill_multiplayer_lobby() {
-        global $game;
-
         // Get games matching the auto-fill language that have no password
         foreach (Kohana::$config->load('basic.multiplayer.parallel_games') as $lang => $count) {
             $num = DB::select(array(DB::expr('COUNT(*)'), 'num'))->from('multiplayer_lobby')->where('slots', '>', 0)->where('lang', '=', $lang)->and_where('password','=',null)->execute()->as_array();
@@ -221,10 +207,9 @@ class Controller_Gamemaster extends Controller {
             while($num < $count) {
                 $name = static::create_gamename($lang);
                 $game = new Model_Game(false);
-                if (($id = $game->start(10000, 1, 300, null, $name)) && DB::insert('multiplayer_lobby', array('gameid', 'lang', 'slots', 'name', 'timestamp'))->values(array($id, $lang, Kohana::$config->load('basic.multiplayer.capacity'), $name, time()))->execute() ) {
+                if (($id = $game->start(10000, 1, 300, null, $name)) && DB::insert('multiplayer_lobby', array('gameid', 'lang', 'slots', 'name', 'timestamp'))->values(array($id, $lang, Kohana::$config->load('basic.multiplayer.capacity'), $name, time()))->execute() )
                     $num++;
-                    $game = null;
-                } else break;
+                else break;
             }
         }
     }
@@ -313,11 +298,6 @@ class Controller_Gamemaster extends Controller {
     }
 
     private function start_special_township() {
-        /**
-         * @global Model_EUser $user
-         */
-        global $user;
-
         // Get POST stuff
         $service = $this->request->current()->post('service');
 
@@ -341,11 +321,11 @@ class Controller_Gamemaster extends Controller {
         } else
             switch ($service) {
                 case 'Die Verdammten':
-                    list($id, $name, $jobsign) = Model_Auth_Hordesde::getLegacyTownInfo($user->uid());
+                    list($id, $name, $jobsign) = Model_Auth_Hordesde::getLegacyTownInfo(Globals::CurrentUser()->uid());
                     $lang = 'de';
                     break;
                 case 'Die2Nite':
-                    list($id, $name, $jobsign) = Model_Auth_Hordesen::getLegacyTownInfo($user->uid());
+                    list($id, $name, $jobsign) = Model_Auth_Hordesen::getLegacyTownInfo(Globals::CurrentUser()->uid());
                     $lang = 'en';
                     break;
                 default: return $this->error(\grge\E_STARTER_INVALID_SETUP);
@@ -358,8 +338,6 @@ class Controller_Gamemaster extends Controller {
         $password = md5("{$service}|{$id}|zvgpw");
 
         $internal_id = DB::select('gameid')->from('multiplayer_lobby')->where('slots', '>', 0)->where('name','=',$internal_name)->execute()->get('gameid', -1);
-
-
 
         $job = 12010;
         foreach ($database['jobs'] as $jid => $db_job)
@@ -384,11 +362,6 @@ class Controller_Gamemaster extends Controller {
      * @return bool
      */
     public function japi_start() {
-        /**
-         * @global Model_EUser $user
-         */
-        global $user;
-
         // Check special
         $special = (int)$this->request->current()->post('special');
         if ($special) switch ($special) {
@@ -425,25 +398,25 @@ class Controller_Gamemaster extends Controller {
                     }
 
                 $current_payment = max(0,$current_payment);
-                if ($current_payment > $max_payment || $current_payment > $user->coins()) return $this->error(\grge\E_STARTER_INVALID_SETUP);
+                if ($current_payment > $max_payment || $current_payment > Globals::CurrentUser()->coins()) return $this->error(\grge\E_STARTER_INVALID_SETUP);
             }
         }
 	$current_payment = max(0,$current_payment);
         // If an ID is given, we want to join a multiplayer game
         if ($id > 0) {
             if ($this->join_multiplayer($id,$job,$level,$pw,$list))
-                return $user->remove_coins($user->uid(),$current_payment);
+                return Globals::CurrentUser()->remove_coins(Globals::CurrentUser()->uid(),$current_payment);
             else return false;
         }
         // If a name is given, we want to create a multiplayer game
         if ($name) {
             if ($this->start_multiplayer($mode,$job,$level,$name,$lang,$slots,$protect,$list))
-                return $user->remove_coins($user->uid(),$current_payment);
+                return Globals::CurrentUser()->remove_coins(Globals::CurrentUser()->uid(),$current_payment);
             else return false;
         }
         // Otherwise, we probably want to create a single player game
         if ($this->start_singleplayer($mode,$flow,$job,$level,$list))
-            return $user->remove_coins($user->uid(),$current_payment);
+            return Globals::CurrentUser()->remove_coins(Globals::CurrentUser()->uid(),$current_payment);
         else return false;
     }
 
@@ -524,9 +497,6 @@ class Controller_Gamemaster extends Controller {
      * @throws Kohana_Exception
      */
     public function action_lobby() {
-        /** @global Model_Euser $user */
-        global $user, $game;
-
         $special_id = $this->request->param('id', 0);
         if (!Tool_Gamemodes::is_special_mode($special_id)) $special_id = 0;
 
@@ -535,7 +505,7 @@ class Controller_Gamemaster extends Controller {
 
         // Get active games; if user is banned, filter out public ones
         $data = DB::select()->from('multiplayer_lobby')->where('slots', '>', 0);
-        if ($user->lockouts_is_locked()) $data->where('password', 'IS NOT', NULL);
+        if (Globals::CurrentUser()->lockouts_is_locked()) $data->where('password', 'IS NOT', NULL);
         $data = $data->order_by('password', 'ASC')->order_by('lang')->execute()->as_array();
 
         // Iterate over each entry
@@ -550,7 +520,7 @@ class Controller_Gamemaster extends Controller {
 
             // Load game to get more info
             $entry['locked'] = false;
-            $local_game_obj = new Model_Game();
+            $local_game_obj = new Model_Game(false);
             // If we can't load the game, lock it
             if (!$local_game_obj->read($entry['gameid'], false)) {
                 unset($data[$k]);
@@ -569,13 +539,12 @@ class Controller_Gamemaster extends Controller {
             $entry['players'] = array();
             foreach ($local_game_obj->players(false) as $p) if ($p) {
                 $entry['players'][] = array('name' => $p->name(), 'id' => (int)$p->id(), 'job' => $p->job(), 'cod' => $p->get_status()->alive() ? null : __($p->get_status()->get_cause_of_death()));
-                if ($p->id() == $user->uid())
+                if ($p->id() == Globals::CurrentUser()->uid())
                     $entry['locked'] = true;
             } else $entry['locked'] = true;
         }
-        $game = null;
 
-        $database = Tool_Gamemodes::compile_mode_database(true, function($mid, $mode) use ($special_id) {
+        $database = Tool_Gamemodes::compile_mode_database(true, function($mid) use ($special_id) {
             return $special_id == 0 || $mid == $special_id;
         });
 
@@ -593,13 +562,13 @@ class Controller_Gamemaster extends Controller {
                 ->set('database', $database)
                 ->set('games', $data)
                 ->set('languages', static::get_lang_flags())
-                ->set('lock_count', $user->lockouts_get_count())
+                ->set('lock_count', Globals::CurrentUser()->lockouts_get_count())
                 ->set('lock_max', Kohana::$config->load('basic.multiplayer.mp_lockouts.max_count'))
-                ->set('lock', $user->lockouts_is_locked())
-                ->set('lock_timerange', $user->lockouts_get_time_range())
+                ->set('lock', Globals::CurrentUser()->lockouts_is_locked())
+                ->set('lock_timerange', Globals::CurrentUser()->lockouts_get_time_range())
                 ->set('show_shop', Kohana::$config->load('balancing.shop.enabled'))
                 ->set('freecoins',Kohana::$config->load('balancing.shop.free_coins'))
-                ->set('braincoins', $user->coins())
+                ->set('braincoins', Globals::CurrentUser()->coins())
                 ->set('midness', Tool_Events::is_october_midness())
                 ->render()
         );
@@ -607,19 +576,16 @@ class Controller_Gamemaster extends Controller {
     }
 
     private function lobby_special_township(View &$view) {
-        /** @global Model_Euser $user */
-        global $user;
-
         /** @var Model_Auth_Legacy[] $prv */
         $prv = ['Model_Auth_Hordesde', 'Model_Auth_Hordesen'];
 
         $results = [];
         foreach ($prv as $provider)
-            $results[$provider::get_service_name()] = $provider::getLegacyTownInfo($user->uid());
+            $results[$provider::get_service_name()] = $provider::getLegacyTownInfo(Globals::CurrentUser()->uid());
 
         if (Kohana::$config->load('build.version.stage') < 3) {
 
-            $database = Tool_Gamemodes::compile_mode_database(true, function($mid, $mode) {
+            $database = Tool_Gamemodes::compile_mode_database(true, function($mid) {
                 return $mid == 12000;
             });
             foreach ($database['jobs'] as $jid => $db_job)
@@ -653,20 +619,19 @@ class Controller_Gamemaster extends Controller {
                     $local_game_obj = new Model_Game();
                     // If we can't load the game, lock it
                     if (!$local_game_obj->read($gme, false))
-                        $gme = -1;
-
-                    $details['players'] = [count($local_game_obj->players(true)), count($local_game_obj->players(false))];
-                    $details['locked'] = (bool)$local_game_obj->get_player($user->uid());
+                        $details['locked'] = true;
+                    else {
+                        $details['players'] = [count($local_game_obj->players(true)), count($local_game_obj->players(false))];
+                        $details['locked'] = (bool)$local_game_obj->get_player(Globals::CurrentUser()->uid());
+                    }
                 }
 
                 $towndata[$service] = $details;
             }
         }
 
-        static::dump('towns', $towndata);
-
         foreach ($results as $service => $links) {
-            list($id, $name, $job) = $links;
+            list($id) = $links;
 
             if (!isset($towndata[$service]))
                 $towndata[$service] = $id;

@@ -12,10 +12,7 @@ class Model_Items_Powderpack extends Model_Items_Abstract_Item implements Interf
 	protected static $weight = 1;
 
     protected function hid() {
-        /** @global Model_Player $player */
-        global $player;
-
-        $child_effects = !Tool_Scripts::is_npc() && $player->job(1080);
+        $child_effects = !Globals::shadowPlayerExists() && Globals::PrimaryPlayer()->job(1080);
 
         return parent::hid()
             ->add_action('"Verwenden"', Model_Action::factory()

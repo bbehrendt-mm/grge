@@ -69,11 +69,9 @@ class Controller_Account extends Controller {
     }
 
     public function japi_mkqr() {
-        /** @global Model_Euser $user */
-        global $user;
-        if (!$user) return;
+        if (!Globals::hasCurrentUser()) return;
 
-        $pin = DB::select('pin')->from('qr')->where('uid','=',$user->uid())->where('timestamp', '>', time() - 300)->execute()->get('pin', false);
+        $pin = DB::select('pin')->from('qr')->where('uid','=',Globals::CurrentUser()->uid())->where('timestamp', '>', time() - 300)->execute()->get('pin', false);
 
         while (!$pin) {
             $pin = '';
@@ -90,8 +88,8 @@ class Controller_Account extends Controller {
             $chk = DB::select('pin')->from('qr')->where('pin','=',$pin)->where('timestamp', '>', time() - 604800)->execute()->get('pin', false);
             if ($chk) $pin = null;
             else {
-                DB::delete('qr')->where('pin','=',$pin)->or_where('uid','=',$user->uid())->execute();
-                DB::insert('qr', ['uid','pin','timestamp'])->values([$user->uid(),$pin,time()])->execute();
+                DB::delete('qr')->where('pin','=',$pin)->or_where('uid','=',Globals::CurrentUser()->uid())->execute();
+                DB::insert('qr', ['uid','pin','timestamp'])->values([Globals::CurrentUser()->uid(),$pin,time()])->execute();
             }
         }
 
@@ -109,11 +107,7 @@ class Controller_Account extends Controller {
     }
 
     public function japi_mentorize() {
-        /** @global Model_Euser $user */
-        global $user;
-        if (!$user) return $this->render(['success' => 0]);
-
-
+        if (!Globals::hasCurrentUser()) return $this->render(['success' => 0]);
 
         $uid = $this->request->current()->post('uid');
         if (!$uid && $this->request->current()->post('mrk'))
@@ -121,24 +115,22 @@ class Controller_Account extends Controller {
 
         if ($uid == -1)
             return $this->render([
-                'success' => (int)$user->set_mentor_id(-1)
+                'success' => (int)Globals::CurrentUser()->set_mentor_id(-1)
             ]);
 
 
-        if (!$uid || !Model_Euser::check_mentor($user->uid(), $uid)) return $this->render(['success' => 0, 'a' => $uid]);
+        if (!$uid || !Model_Euser::check_mentor(Globals::CurrentUser()->uid(), $uid)) return $this->render(['success' => 0, 'a' => $uid]);
         else return $this->render([
-            'success' => (int)$user->set_mentor_id($uid)
+            'success' => (int)Globals::CurrentUser()->set_mentor_id($uid)
         ]);
     }
 
     public function japi_cashout() {
-        /** @global Model_Euser $user */
-        global $user;
-        if (!$user) return $this->render(['success' => 0]);
+        if (!Globals::hasCurrentUser()) return $this->render(['success' => 0]);
 
-        $cash = Model_Euser::get_mentor_braincoins($user->uid(), null, false);
-        if ($cash && Model_Euser::reset_mentor_braincoins($user->uid(), null)) {
-            Model_Euser::award_coins($user->uid(), $cash);
+        $cash = Model_Euser::get_mentor_braincoins(Globals::CurrentUser()->uid(), null, false);
+        if ($cash && Model_Euser::reset_mentor_braincoins(Globals::CurrentUser()->uid(), null)) {
+            Model_Euser::award_coins(Globals::CurrentUser()->uid(), $cash);
             return $this->render(['success' => 1]);
         } else return $this->render(['success' => 0]);
     }
@@ -161,11 +153,9 @@ class Controller_Account extends Controller {
     }
 
     public function japi_remove_tokens() {
-        /** @global Model_Euser $user */
-        global $user;
-        if (!$user) return false;
+        if (!Globals::hasCurrentUser()) return false;
 
-        Model_Auth_Token::user_unlink($user->uid());
+        Model_Auth_Token::user_unlink(Globals::CurrentUser()->uid());
 
         return $this->japi_logout();
     }
@@ -175,8 +165,6 @@ class Controller_Account extends Controller {
      * @throws Kohana_Exception
      */
     public function action_merge() {
-        global $user;
-
         if (!$this->session->get('user',NULL)) {
             $this->redirect(URL::site('account/login',true));
             return;
@@ -233,10 +221,7 @@ class Controller_Account extends Controller {
      * @throws Kohana_Exception
      */
     public function japi_merge() {
-        /** @global Model_Euser $user */
-        global $user;
-
-        if (!$user) return $this->render();
+        if (!Globals::hasCurrentUser()) return $this->render();
 
         $key = $this->post('key');
         $service = $this->post('service');
@@ -256,7 +241,7 @@ class Controller_Account extends Controller {
 
         if ($allow) {
             $authenticator::user_unlink_all($pid);
-            $authenticator->connectToLocal($user->uid());
+            $authenticator->connectToLocal(Globals::CurrentUser()->uid());
         }
 
         return $this->render(['success' => $allow ? 1 : 0]);

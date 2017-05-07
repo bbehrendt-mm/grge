@@ -17,9 +17,7 @@ class Model_Items_Whiskey extends Model_Items_Abstract_Alcohol implements Interf
 	);
 
     protected function hid() {
-        /** @global Model_Player $player */
-        global $player;
-        return (!Tool_Scripts::is_npc($player) && !$player->job(10030)) ? parent::hid() : parent::hid()
+        return (!Globals::shadowPlayerExists() && !Globals::PrimaryPlayer()->job(10030)) ? parent::hid() : parent::hid()
             ->add_action('Jmd. Wunde auswaschen',
                 Model_Action::factory()
                     ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
@@ -39,7 +37,7 @@ class Model_Items_Whiskey extends Model_Items_Abstract_Alcohol implements Interf
                             ->effect(Model_Status::MS_STAT_HEALTH, -10)
                             ->effect(Model_Status::MS_STAT_DRUNK, 10)
                             ->buff('Model_Buffs_Blood', true)
-                            ->message(':name hat deine Wunde mithilfe von Alkohol ausgewaschen.', array(':name' => $player->name()))
+                            ->message(':name hat deine Wunde mithilfe von Alkohol ausgewaschen.', array(':name' => Globals::CurrentPlayer()->name()))
                     )
             );
     }

@@ -104,9 +104,6 @@ class Model_NPC_Event_Patient extends Model_NPC_Humanoid
                 ->requirement("Model_Items_Generic_Cursed", 1)
                 ->effect(Model_Effect::factory()
                     ->custom(function($p) {
-                        /** @global Model_Game $game */
-                        global $game;
-
                         /** @var Model_Player $p */
                         $p->log()->add('Du hälst ihm deinen Teddy hin. Eine Träne läuft ihm aus dem Auge, dann greift er zu und drückt den Teddy fest an sich. Eine Weile verharrt er regungslos, dann zeigt er mit dem Finger auf einen dunklen Gang, der dir bisher verborgen geblieben ist. Als du dich wieder zu ihm umdrehst, ist er verschwunden...');
 
@@ -119,13 +116,13 @@ class Model_NPC_Event_Patient extends Model_NPC_Humanoid
                         Tool_Scripts::place_new_item($items, 'Der Patient hat seine Gegenstände fallen gelassen, als du ihm den Teddy gegeben hast.');
 
                         $mid = "submap_ashide_{$this->location()->uin()}";
-                        $slid = $game->register_map($mid, 'ashide');
+                        $slid = Globals::CurrentGame()->register_map($mid, 'ashide');
                         if ($slid) {
                             $this->location()->register_doorway($slid);
-                            $game->location($slid)->register_doorway($this->location()->uin());
+                            Globals::CurrentGame()->location($slid)->register_doorway($this->location()->uin());
                         }
 
-                        $ev = $game->get_initialized_event(Model_Events_Halloween::get_key());
+                        $ev = Globals::CurrentGame()->get_initialized_event(Model_Events_Halloween::get_key());
                         /** @var $ev Model_Events_Halloween */
                         if ($ev) $ev->register_event_map($mid);
 

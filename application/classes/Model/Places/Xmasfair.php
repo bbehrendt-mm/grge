@@ -73,21 +73,15 @@ class Model_Places_Xmasfair extends Model_Places_Abstract_Xmas {
     }
 
     public function interaction_xmas($project) {
-        /**
-         * @global Model_Game $game
-         * @global Model_Player $player
-         */
-        global $game, $player;
-
         if (!isset($this->status[$project]))
             return false;
 
         if ($this->status[$project]['current'][0] >= $this->status[$project]['current'][1])
             return false;
 
-        if ($game->mass_consume($this->status[$project]['items'])) {
+        if (Globals::CurrentGame()->mass_consume($this->status[$project]['items'])) {
             $this->status[$project]['current'][0]++;
-            $player->log()->add(new Model_Log_Types_Text(null, null, 'Du hast den Weihnachtsbaum dekoriert. Gut gemacht!'));
+            Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Du hast den Weihnachtsbaum dekoriert. Gut gemacht!'));
             if ($project == 'tree' || $project == 'treesize') {
                 $this->status['treesize']['current'][1] = 9;
                 $this->status['needles']['current'][1] += 1;
@@ -97,7 +91,7 @@ class Model_Places_Xmasfair extends Model_Places_Abstract_Xmas {
                 $this->status['bauble']['current'][1] += 1;
                 $this->status['mistle']['current'][1] += 3;
             }
-        } else $player->log()->add(new Model_Log_Types_Text(null, null, 'Du hast nicht genug Material, um den Baum zu dekorieren.'));
+        } else Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Du hast nicht genug Material, um den Baum zu dekorieren.'));
 
         return true;
     }
@@ -112,12 +106,7 @@ class Model_Places_Xmasfair extends Model_Places_Abstract_Xmas {
 
     public function can_leave_map($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER)
     {
-        /**
-         * @global $game Model_Game
-         */
-        global $game;
-
-        if ($p = $game->get_player($pid)) {
+        if ($p = Globals::CurrentGame()->get_player($pid)) {
             if (Tool_System::instance_of($p, Model_NPC_Event_Rudolph::cls())) return false;
         }
 
@@ -125,14 +114,8 @@ class Model_Places_Xmasfair extends Model_Places_Abstract_Xmas {
     }
 
     public function leave_map($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
-        /**
-         * @global $game Model_Game
-         * @global $player Model_Player
-         * @global $user Model_User
-         */
-        global $game, $user;
-        if (!$pid) global $player;
-        else $player = $game->get_player($pid);
+        if (!$pid) $player = Globals::CurrentPlayer();
+        else $player = Globals::CurrentGame()->get_player($pid);
         if (!parent::leave($pid, $type)) return false;
 
         foreach ($player->inventory()->get('Interface_Event') as $i)
@@ -140,7 +123,7 @@ class Model_Places_Xmasfair extends Model_Places_Abstract_Xmas {
 
         $deco = $this->get_decoration_value();
         if ($deco > 0) {
-            $user->award_coins($player->id(), $deco);
+            Globals::CurrentUser()->award_coins($player->id(), $deco);
             $player->log()->add(new Model_Log_Types_Text(null, null, 'Da du den Weihnachtsbaum so hübsch geschmückt hast, erhälst du als Belohnung :num BrainCoins sowie ein paar Geschenke. Herzlichen Glückwunsch und Frohe Weihnachten!', array(':num' => $deco)));
 
             $n2 = floor($deco/20);

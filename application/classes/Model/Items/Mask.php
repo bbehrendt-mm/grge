@@ -28,12 +28,9 @@ class Model_Items_Mask extends Model_Items_Abstract_Item implements Interface_St
                 ->description('Erzeugt einen spontanen Sprühregen, der belagernde Zombies tötet.')
                 ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
                 ->condition(function($p) {
-                    /** @global Model_Game $game */
-                    global $game;
-
                     /** @var Model_Player $p */
 
-                    if ($this->nextuse > $game->duration()) return 'time';
+                    if ($this->nextuse > Globals::CurrentGame()->duration()) return 'time';
                     if ($p->location()->zombie_pop() <= 0) return 'zombies';
                     return true;
                 })
@@ -48,9 +45,7 @@ class Model_Items_Mask extends Model_Items_Abstract_Item implements Interface_St
                             $p->location()->zombie_factory()->accumulation($p->location()->zombie_pop() - $kills);
                             $p->achievements()->achieve(Model_Achievement::MA_KILLED_ZOMBIES, $kills);
 
-                            /** @global Model_Game $game */
-                            global $game;
-                            $this->nextuse = $game->duration() + 288;
+                            $this->nextuse = Globals::CurrentGame()->duration() + 288;
                         })
                 )
             );
@@ -60,12 +55,9 @@ class Model_Items_Mask extends Model_Items_Abstract_Item implements Interface_St
                 ->description('Verursacht heftige Regenfälle, die einiges an Wasser auf dem Boden zurücklassen.')
                 ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
                 ->condition(function($p) {
-                    /** @global Model_Game $game */
-                    global $game;
-
                     /** @var Model_Player $p */
 
-                    if ($this->nextuse > $game->duration()) return 'time';
+                    if ($this->nextuse > Globals::CurrentGame()->duration()) return 'time';
                     return true;
                 })
                 ->fail_message('Du kannst die Maske maximal einmal am Tag anwenden.', 'time')
@@ -78,9 +70,7 @@ class Model_Items_Mask extends Model_Items_Abstract_Item implements Interface_St
                             for ($i = 0; $i < $splats; $i++)
                                 $p->location()->inventory()->add(new Model_Items_Generic_Water0());
 
-                            /** @global Model_Game $game */
-                            global $game;
-                            $this->nextuse = $game->duration() + 288;
+                            $this->nextuse = Globals::CurrentGame()->duration() + 288;
                         })
                 )
             );
@@ -90,12 +80,9 @@ class Model_Items_Mask extends Model_Items_Abstract_Item implements Interface_St
                 ->description('Jeder Spieler und jeder NPC in der aktuellen Zone regeneriert Gesundheit.')
                 ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
                 ->condition(function($p) {
-                    /** @global Model_Game $game */
-                    global $game;
-
                     /** @var Model_Player $p */
 
-                    if ($this->nextuse > $game->duration()) return 'time';
+                    if ($this->nextuse > Globals::CurrentGame()->duration()) return 'time';
                     return true;
                 })
                 ->fail_message('Du kannst die Maske maximal einmal am Tag anwenden.', 'time')
@@ -107,9 +94,7 @@ class Model_Items_Mask extends Model_Items_Abstract_Item implements Interface_St
                             foreach (Tool_Scripts::at_location($p->location_class(), true, true) as $pl)
                                 $pl->get_status()->modify([Model_Status::MS_STAT_HEALTH, mt_rand(5, $this->level >= 6 ? 50 : 25)], Model_Status::MS_EFFECT_UNSCALE);
 
-                            /** @global Model_Game $game */
-                            global $game;
-                            $this->nextuse = $game->duration() + 288;
+                            $this->nextuse = Globals::CurrentGame()->duration() + 288;
                         })
                 )
             );
@@ -119,12 +104,9 @@ class Model_Items_Mask extends Model_Items_Abstract_Item implements Interface_St
                 ->description('Die Zone wird von einem heftigen Sandsturm getroffen, der Spieler und NPCs Schaden zufügt, belagernde Zombies tötet und die Fundchancen der Zone teilweise regeneriert.')
                 ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
                 ->condition(function($p) {
-                    /** @global Model_Game $game */
-                    global $game;
-
                     /** @var Model_Player $p */
 
-                    if ($this->nextuse > $game->duration()) return 'time';
+                    if ($this->nextuse > Globals::CurrentGame()->duration()) return 'time';
                     return true;
                 })
                 ->fail_message('Du kannst die Maske maximal einmal am Tag anwenden.', 'time')
@@ -142,9 +124,7 @@ class Model_Items_Mask extends Model_Items_Abstract_Item implements Interface_St
 
                             $p->location()->hero_replensish(0.5);
 
-                            /** @global Model_Game $game */
-                            global $game;
-                            $this->nextuse = $game->duration() + 288;
+                            $this->nextuse = Globals::CurrentGame()->duration() + 288;
                         })
                 )
             );

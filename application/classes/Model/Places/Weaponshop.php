@@ -9,15 +9,13 @@ class Model_Places_Weaponshop extends Model_Places_Abstract_Place {
     protected static $outside = false;
 
 	public function uin($uin = NULL) {
-		/** @global Model_Game $game */
-		global $game;
 		if ($uin === NULL) return parent::uin();
 		else $t = parent::uin($uin);
 
 		$this->inventory->add(new Model_Items_Vending(get_class($this), "ApocaliCorp. Hunting Supply"));
         $this->inventory->add(new Model_Items_Virtual_Location_Ffgunsmith());
         Model_Blueprints::fast_apply($this, 'items', 'manu_wpn1');
-		if ($game->config('modules.armory'))
+		if (Globals::CurrentGame()->config('modules.armory'))
             Model_Blueprints::fast_apply($this, 'items', 'manu_wpn2');
 
         return $t;

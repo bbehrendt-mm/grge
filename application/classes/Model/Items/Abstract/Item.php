@@ -60,15 +60,10 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
      * @return Model_Hid
      */
     protected function hid() {
-        /**
-         * @global $game Model_Game
-         */
-        global $game;
-
         $hid = Model_Hid::factory($this, get_called_class());
 
-        if ($game)
-            foreach ($game->get_initialized_events() as $ev)
+        if (Globals::hasCurrentGame())
+            foreach (Globals::CurrentGame()->get_initialized_events() as $ev)
                 $ev->event_generateHIDStack($this, $hid);
         return $hid;
 
@@ -252,22 +247,14 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
      * Destroys the item; this function can be overridden by an upstream class to incorperate additional effects or replace the destruction completely
      */
     public function consume() {
-        /**
-         * @global $game Model_Game
-         */
-        global $game;
-		if ($this->uin) $game->uin()->remove($this->uin);
+		if ($this->uin) Globals::CurrentGame()->uin()->remove($this->uin);
 	}
 
     /**
      * Destroys the item; this function may not be overridden as it exists to make sure there is a method to completely destroy an item without regard of the items state
      */
     public function grind() {
-        /**
-         * @global $game Model_Game
-         */
-        global $game;
-		if ($this->uin) $game->uin()->remove($this->uin);
+		if ($this->uin) Globals::CurrentGame()->uin()->remove($this->uin);
 	}
 
     /**
@@ -324,12 +311,7 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
      * @return bool True, to award the positive chem achievement, false to award the negative one
      */
     public function mixchem($chemval) {
-        /**
-         * @global $player Model_Player
-         */
-        global $player;
-
-        $player->log()->add(new Model_Log_Types_Text(null, null, 'Du schüttest die Chemikalie über diesem Gegenstand aus. Es riecht ein wenig komisch, aber sonst geschieht nichts... Schade.'));
+        Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Du schüttest die Chemikalie über diesem Gegenstand aus. Es riecht ein wenig komisch, aber sonst geschieht nichts... Schade.'));
 		return false;
 	}
 	

@@ -19,15 +19,12 @@ class Model_Log_Log extends Model {
 	}
 
 	private function unread($set = null) {
-		/** @global Model_Player $player */
-		global $player;
-
-		if (!isset($this->new[$player->id()]))
-			$this->new[$player->id()] = 0;
+		if (!isset($this->new[Globals::PrimaryPlayer()->id()]))
+			$this->new[Globals::PrimaryPlayer()->id()] = 0;
 
 		if ($set !== null)
-			return $this->new[$player->id()] = $set;
-		else return $this->new[$player->id()];
+			return $this->new[Globals::PrimaryPlayer()->id()] = $set;
+		else return $this->new[Globals::PrimaryPlayer()->id()];
 	}
 	
 	/**

@@ -16,9 +16,6 @@ class Model_Items_Virtual_Epic_Fence extends Model_Items_Abstract_Virtual implem
     }
 
     protected function hid() {
-        /** @global Model_Game $game */
-        global $game;
-
         $hid = parent::hid();
 
         if (!$this->on && $this->power)

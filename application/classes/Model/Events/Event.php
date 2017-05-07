@@ -15,9 +15,7 @@ abstract class Model_Events_Event {
     }
 
     protected static function get_game_time() {
-        /** @global Model_Game $game */
-        global $game;
-        return $game ? $game->next_tick() : time();
+        return Globals::hasCurrentGame() ? Globals::CurrentGame()->next_tick() : time();
     }
 
     public static function is_current() {
@@ -33,16 +31,14 @@ abstract class Model_Events_Event {
     }
 
     public function trigger() {
-        /** @global  Model_Game $game */
-        global $game;
         if (static::is_current() && !$this->is_active()) {
             $this->active = $this->trigger_activation();
-            if ($this->active) $game->set_event_index($this);
+            if ($this->active) Globals::CurrentGame()->set_event_index($this);
         }
 
         elseif (!static::is_current() && $this->is_active()) {
             $this->active = !$this->trigger_deactivation();
-            if (!$this->active) $game->unset_event_index($this);
+            if (!$this->active) Globals::CurrentGame()->unset_event_index($this);
         }
     }
 

@@ -16,10 +16,8 @@ class Model_Items_Generic_Egg0 extends Model_Items_Abstract_Easteregg implements
     }
 
     public function take($silent = false) {
-        global $player;
-
-        if ($this->new)
-            $player->achievements()->achieve(Model_Achievement::MA_EASTER_BAD);
+        if ($this->new && !Globals::shadowPlayerExists())
+            Globals::PrimaryPlayer()->achievements()->achieve(Model_Achievement::MA_EASTER_BAD);
 
         parent::take($silent);
     }

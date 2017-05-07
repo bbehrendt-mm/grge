@@ -17,25 +17,8 @@ abstract class Controller extends Kohana_Controller {
 
     protected static $allow_etag_cache = false;
 
-    protected static $post_stack = [];
-
     protected static function post($key) {
-        if (is_array($key))
-            return static::$post_stack[] = $key;
-
-        if (!static::$post_stack)
-            return Request::initial()->post($key);
-        else return isset(static::$post_stack[$key]) ? static::$post_stack[$key] : null;
-    }
-
-    protected static function post_push($data) {
-        return static::$post_stack[] = $data;
-    }
-
-    protected static function post_pop() {
-        if (static::$post_stack)
-            return array_pop(static::$post_stack);
-        else return null;
+        return Request::initial()->post($key);
     }
 
     /**
@@ -63,27 +46,21 @@ abstract class Controller extends Kohana_Controller {
      * @return bool
      */
     private function get_user_obj() {
-        global $user;
-        if (empty($user))
-            $user = $this->session->get('user',NULL);
-
-        return !empty($user);
+        if (!Globals::hasCurrentUser())
+            Globals::setCurrentUser($this->session->get('user',NULL));
+        return Globals::hasCurrentUser();
     }
 
     /**
      * This function will cause the script to abort when the user is not logged in
      */
     private function force_login() {
-        /** @global Model_Euser $user */
-        global $user;
-
         // Get user object, check if it is valid
-        if (!$this->get_user_obj() || !$user->valid()) {
+        if (!$this->get_user_obj() || !Globals::CurrentUser()->valid()) {
             // If we don't have a user object, destroy the current session and unbind global registers (just to be sure)
             if ($this->request->is_initial()) {
                 Session::instance()->destroy();
-                unset($GLOBALS['game']);
-                unset($GLOBALS['user']);
+                Globals::resetCurrentUser();
             }
 
             // Spawn an error message; if we aren't called via AJAX just die, otherwise call dummy action
@@ -167,16 +144,13 @@ abstract class Controller extends Kohana_Controller {
     }
 
     private function daily_login_bonus() {
-        /** @global  Model_Euser $user */
-        global $user;
-
-        $last = (int)DB::select('dailylogin')->from('users')->where('uid','=',$user->uid())->execute()->get('dailylogin',0);
-        $num = (int)DB::select('logincount')->from('users')->where('uid','=',$user->uid())->execute()->get('logincount',0);
+        $last = (int)DB::select('dailylogin')->from('users')->where('uid','=',Globals::CurrentUser()->uid())->execute()->get('dailylogin',0);
+        $num = (int)DB::select('logincount')->from('users')->where('uid','=',Globals::CurrentUser()->uid())->execute()->get('logincount',0);
         $today = floor(time()/86400);
 
         if ($last == $today) return;
         elseif ($last == ($today - 1)) {
-            DB::update('users')->set(['dailylogin' => $today, 'logincount' => $num+1])->where('uid','=',$user->uid())->execute();
+            DB::update('users')->set(['dailylogin' => $today, 'logincount' => $num+1])->where('uid','=',Globals::CurrentUser()->uid())->execute();
             $lv = ceil($num/7);
 
             $n = 0;
@@ -199,18 +173,15 @@ abstract class Controller extends Kohana_Controller {
                 $this->add_note('daily-login',__('Seit nunmehr :days Tagen kommst du täglich vorbei - wirklich beeindruckend! Damit hast du dir :num BrainCoins redlich verdient. Viel Vergnügen damit!', [':days' => $num+1,':num' => $n]),__('Täglicher Login'));
             }
 
-            $user->award_coins($user->uid(),$n);
+            Globals::CurrentUser()->award_coins(Globals::CurrentUser()->uid(),$n);
         } else {
-            DB::update('users')->set(['dailylogin' => $today, 'logincount' => 0])->where('uid','=',$user->uid())->execute();
+            DB::update('users')->set(['dailylogin' => $today, 'logincount' => 0])->where('uid','=',Globals::CurrentUser()->uid())->execute();
             if ($num > 1)
                 $this->add_note('daily-login-fail',__('Du hast dich seit :mdays Tagen nicht mehr eingeloggt. Das bedeutet leider, dass dein seit :days Tagen laufender Login-Bonus abgebrochen wird...', [':mdays' => $today - $last, ':days' => $num]),__('Täglicher Login abgebrochen...'));
         }
     }
 
     public function perform_virtual_login() {
-        /** @global Model_Euser $user */
-        global $user;
-
         if (!$this->get_user_obj()) return;
         $last_update = $this->session->get('last_virtual_login',0);
 
@@ -324,9 +295,6 @@ abstract class Controller extends Kohana_Controller {
      */
     protected function render($obj = null, $skip_notifications = false) {
         if ($this->is_silent()) return true;
-
-        /** @global Model_Euser $user */
-        global $user;
 
         $this->response->headers('Content-Type', 'application/json');
 

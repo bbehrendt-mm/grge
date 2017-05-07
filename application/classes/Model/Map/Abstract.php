@@ -290,11 +290,6 @@ abstract class Model_Map_Abstract {
      * @throws Exception
      */
     public function implant_location($location,$x, $y, $relative, $direction, $branchable, $root, $visible, $dry, $fixed_id) {
-        /**
-         * @global $game Model_Game
-         */
-        global $game;
-
         if ($relative) {
             $x += $this->loc_assoc[$root]['x'];
             $y += $this->loc_assoc[$root]['y'];
@@ -302,8 +297,8 @@ abstract class Model_Map_Abstract {
 
         $is_reserved = is_string($location);
         if (is_string($location))
-            $uin = $game->uin()->reserve();
-        elseif (!$location->uin()) $uin = $game->uin()->set($location);
+            $uin = Globals::CurrentGame()->uin()->reserve();
+        elseif (!$location->uin()) $uin = Globals::CurrentGame()->uin()->set($location);
         else $uin = $location->uin();
 
         $this->catalog_location($uin, is_string($location) ? $location : get_class($location), $x, $y, $direction, $visible, $dry, $is_reserved, $fixed_id);
@@ -326,13 +321,8 @@ abstract class Model_Map_Abstract {
      * @return Model_Places_Abstract_Place|null
      */
     public function get_by_fixed_id($fixed_id) {
-        /**
-         * @global $game Model_Game
-         */
-        global $game;
-
         if (isset($this->fixed_id_assoc[$fixed_id]))
-            return $game->uin()->get($this->fixed_id_assoc[$fixed_id], 'Model_Places_Abstract_Place');
+            return Globals::CurrentGame()->uin()->get($this->fixed_id_assoc[$fixed_id], 'Model_Places_Abstract_Place');
         else return null;
     }
 
@@ -380,13 +370,11 @@ abstract class Model_Map_Abstract {
     }
 
     public function uncover_all() {
-        /** @global Model_Game $game */
-        global $game;
         foreach ($this->loc_assoc as $lid => &$data) if (!$data['visible']) {
             $data['visible'] = true;
             if ($data['reserved']) {
                 $class = $data['class'];
-                $game->uin()->fill_reservation($lid, new $class);
+                Globals::CurrentGame()->uin()->fill_reservation($lid, new $class);
             }
         }
     }
@@ -398,11 +386,6 @@ abstract class Model_Map_Abstract {
      * @return bool|Model_Places_Abstract_Place|null false, when no location can be unvailed from here; null, when no location was unvailed, otherwise location object
      */
     public function attempt_unvail($id, $factor = 1) {
-        /**
-         * @global $game Model_Game
-         */
-        global $game;
-
         if (!isset($this->loc_assoc[$id]))
             return false;
         if (!isset($this->paths[$id]))
@@ -432,11 +415,11 @@ abstract class Model_Map_Abstract {
             $this->loc_assoc[$spawn]['visible'] = true;
             if ($this->loc_assoc[$spawn]['reserved']) {
                 $class = $this->loc_assoc[$spawn]['class'];
-                $game->uin()->fill_reservation($spawn, new $class);
+                Globals::CurrentGame()->uin()->fill_reservation($spawn, new $class);
             }
 
             $this->loc_assoc[$id]['dry'] += $dst_config['chance'];
-            return $game->location($spawn);
+            return Globals::CurrentGame()->location($spawn);
         } else return null;
     }
 

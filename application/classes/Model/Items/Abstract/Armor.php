@@ -54,11 +54,9 @@ abstract class Model_Items_Abstract_Armor extends Model_Items_Abstract_Equipable
      * @param number $damage
      */
     public function take_damage($damage) {
-        /** @global Model_Game $game */
-        global $game;
         $this->current_protection -= $damage;
         if ($this->get_protection() <= 0) {
-            if ($this->get_destroyed_class() && $this->player_id && ($p = $game->get_player($this->player_id))) {
+            if ($this->get_destroyed_class() && $this->player_id && ($p = Globals::CurrentGame()->get_player($this->player_id))) {
                 $tmp = $this->get_destroyed_class();
                 $p->location()->inventory()->add(new $tmp);
             }

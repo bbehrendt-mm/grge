@@ -21,20 +21,17 @@ class Controller_Web extends Controller {
     }
 
     public function action_key() {
-        /** @global Model_Euser $user */
-        global $user;
-
-        if (!$user) {
+        if (!Globals::CurrentUser()) {
             $this->response->body("Not logged in!");
             return;
         }
 
         $entries = [];
-        foreach (Model_Auth_Interface::get_all_providers($user->uid()) as $provider => $variables)
+        foreach (Model_Auth_Interface::get_all_providers(Globals::CurrentUser()->uid()) as $provider => $variables)
             /** @var Model_Auth_Interface $provider */
             $entries[$provider::get_service_name()] = [$variables['var1'],$variables['var2']];
 
-        $ret = "Stored login keys for " . $user->name() . ".<br /><br />";
+        $ret = "Stored login keys for " . Globals::CurrentUser()->name() . ".<br /><br />";
         foreach ($entries as $name => $line)
             $ret .= "<b>$name</b> <i>{$line[0]}</i> <i>{$line[1]}</i><br />";
 

@@ -5,13 +5,10 @@ class Tool_Gamemodes {
     private static $usp_cache = array('job' => array(), 'mode' => array());
 
     private static function get_sp_mode($mode) {
-        /** @global Model_User $user */
-        global $user;
-
         $accum = 0;
         foreach (explode(',', $mode) as $imode) {
             if (!isset(static::$usp_cache['mode'][$imode]))
-                static::$usp_cache['mode'][$imode] = (int)$user->soulpoints(null, null, $imode);
+                static::$usp_cache['mode'][$imode] = (int)Globals::CurrentUser()->soulpoints(null, null, $imode);
             $accum += static::$usp_cache['mode'][$imode];
         }
 
@@ -19,13 +16,10 @@ class Tool_Gamemodes {
     }
 
     private static function get_sp_job($job) {
-        /** @global Model_User $user */
-        global $user;
-
         $accum = 0;
         foreach (explode(',', $job) as $ijob) {
             if (!isset(static::$usp_cache['job'][$ijob]))
-                static::$usp_cache['job'][$ijob] = (int)$user->soulpoints(null, $ijob, null);
+                static::$usp_cache['job'][$ijob] = (int)Globals::CurrentUser()->soulpoints(null, $ijob, null);
             $accum += static::$usp_cache['job'][$ijob];
         }
         return $accum;

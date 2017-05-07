@@ -200,13 +200,11 @@ class Model_Combat_Actor extends Named {
      * @return Model_Combat_Actor
      */
     public function add_weapon($weapon) {
-        /** @global Model_Game $game */
-        global $game;
         if (is_array($weapon))
             foreach ($weapon as $w)
                 $this->add_weapon($w);
         else {
-            if (!$weapon->uin()) $game->uin()->set($weapon);
+            if (!$weapon->uin()) Globals::CurrentGame()->uin()->set($weapon);
             if (!$this->current_weapon || $weapon->is_equipped_primary())
                 $this->current_weapon = $weapon;
             $this->weapons[$weapon->uin()] = $weapon;

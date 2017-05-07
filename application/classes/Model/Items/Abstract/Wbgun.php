@@ -16,33 +16,23 @@ abstract class Model_Items_Abstract_Wbgun extends Model_Combat_Weapons_Fillable 
 	}
 	
 	public function interaction_fillfrom($item) {
-        /**
-         * @global $player Model_Player
-         */
-		global $player;
-	
 		if ($this->fillrate() >= static::$capacity) {
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Der Wasserbehälter dieser Waffe ist leider voll...'));
+            Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Der Wasserbehälter dieser Waffe ist leider voll...'));
 			return false;
 		}	
 		
 		if (Tool_System::instance_of($item, 'Model_Items_Abstract_Bottle')) {
 			/** @var $item Model_Items_Abstract_Bottle */
             if ($item->get_water(1)) $this->fillrate+= 10;
-			else $player->log()->add(new Model_Log_Types_Text(null, null, 'Leider ist in dieser Flasche nicht mehr genug Wasser, um diesen Gegenstand zu füllen ...'));
+			else Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Leider ist in dieser Flasche nicht mehr genug Wasser, um diesen Gegenstand zu füllen ...'));
 
             return true;
 		} else return false;
 	}
 	
 	public function interaction_fill($item) {
-        /**
-         * @global $player Model_Player
-         */
-		global $player;
-	
 		if ($this->fillrate() >= static::$capacity) {
-			$player->log()->add(new Model_Log_Types_Text(null, null, 'Der Wasserbehälter dieser Waffe ist leider voll...'));
+            Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Der Wasserbehälter dieser Waffe ist leider voll...'));
 			return false;
 		}
 

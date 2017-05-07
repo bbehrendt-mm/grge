@@ -15,15 +15,12 @@ class Model_Player extends Model_NPC_Nano {
 
     private $points = null;
     private $braincoins = 0;
-
-    private $escape_target_location = null;
 	
 	private $achievements;
 
     private $timevote = 4;
     private $timelock = 0;
     private $last_action = 0;
-    private $escape = 0;
 
     private $april = false;
     private $got_ticket = false;
@@ -38,22 +35,9 @@ class Model_Player extends Model_NPC_Nano {
 
 	public function __wakeup() {
 		//Rebind global player variable
-		/** @global Model_Euser $user */
-		global $user;
-		
-		if ($user && $user->uid() == $this->id) {
-			global $player;
-			$player = $this;
-		}
+		if (Globals::hasCurrentUser() && Globals::CurrentUser()->uid() == $this->id)
+		    Globals::setPrimaryPlayer($this);
 	}
-
-    public function set_escape_target($e = null) {
-        $this->escape_target_location = $e;
-    }
-
-    public function get_escape_target() {
-        return $this->escape_target_location;
-    }
 
     public function ai($s = null) {
         if ($s === null) return $this->ai_str;
@@ -75,9 +59,6 @@ class Model_Player extends Model_NPC_Nano {
      * @param int $level
      */
 	final public function __construct($user_id, $name, $mode, $job, $level) {
-		/** @global Model_Euser $user */
-		global $user;
-
         parent::__construct($name);
 
 		//Set user ID and name
@@ -97,10 +78,8 @@ class Model_Player extends Model_NPC_Nano {
 		$this->kickoff();
 		
 		//Bind global player variable
-		if ($user->uid() == $this->id) {
-			global $player;
-			$player = $this;
-		}
+		if (Globals::hasCurrentUser() && Globals::CurrentUser()->uid() == $this->id)
+		    Globals::setCurrentPlayer($this);
 	}
 
     final public function april_fools($set = null) {
@@ -126,40 +105,6 @@ class Model_Player extends Model_NPC_Nano {
 		else $this->log->add(new Model_Log_Types_Text('Das Spiel beginnt...', 'Deine Vorräte sind aufgebraucht!', 'Du öffnest die Augen und lässt deinen Blick durch dein karges Versteck schweifen. Deine Vorräte sind aufgebraucht, du kannst dich also nicht länger einfach verschanzen...'));
 	}
 
-    /**
-     * Enables the player to escape a blockade
-     */
-    final public function enable_escape() {
-        $this->escape = 2;
-    }
-
-    /**
-     * Forbids the player to escape a blockade
-     */
-    final public function disable_escape() {
-        $this->escape = 0;
-    }
-
-    /**
-     * True, when the player is capable of escaping
-     * @return bool
-     */
-    final public function can_escape() {
-        return ($this->escape > 0);
-    }
-	
-	/**
-	 * Returns player location id or changes it
-	 * @param int $newval Set if you want to change locations; the return value will be the new location
-	 * @return int
-	 */
-	public function location_class($newval = NULL) {
-		if ($newval !== NULL)
-            $this->escape = 0;
-
-		return parent::location_class($newval);
-	}
-
     final public function get_braincoins() {
         return $this->braincoins;
     }
@@ -177,21 +122,16 @@ class Model_Player extends Model_NPC_Nano {
 	 * Kills player
 	 */
 	public function kill() {
-        /**
-         * @global $game Model_Game
-         */
-		global $game;
-
         // Chat room
-        if ($game->config('modules.multiplayer'))
-            Controller_Chat::revoke_registration($this->id(),$game->id());
+        if (Globals::CurrentGame()->config('modules.multiplayer'))
+            Controller_Chat::revoke_registration($this->id(),Globals::CurrentGame()->id());
 
 		$this->log()->add(new Model_Log_Types_String('Du bist tot!','Du hast soeben deinen letzten Atemzug getan... Du bist auf die folgende schreckliche Art von dieser Welt gegangen: :cod!',[':cod' => [$this->get_status()->get_cause_of_death()]]));
 		$this->calculate_static_achievements();
 
-        $this->points = $game->points($this->id);
+        $this->points = Globals::CurrentGame()->points($this->id);
         $this->braincoins = Tool_Scripts::count_available_items('Model_Items_Braincoin', true, false, false, $this->id);
-        $game->register_death($this->id);
+        Globals::CurrentGame()->register_death($this->id);
 
         parent::kill();
 	}
@@ -300,15 +240,10 @@ class Model_Player extends Model_NPC_Nano {
      * @param int $end
      */
     public function expire($season, $gameid, $rank = false, $start = 0, $end = 0) {
-        /**
-         * @global $game Model_Game
-         */
-        global $game;
-
         $this->get_status()->alive(false);
 
         if ($this->points === null)
-            $this->points = $game->points($this->id);
+            $this->points = Globals::CurrentGame()->points($this->id);
 		//Create ranking entry if game is rankable and player has more than zero points
 		try
 		{
@@ -353,9 +288,6 @@ class Model_Player extends Model_NPC_Nano {
      * @return bool|int
      */
     public function vote_time($vote = null, $lock_duration = null) {
-        /** @global Model_Game $game */
-        global $game;
-
         if ($vote === null)
             return $this->timevote;
 
@@ -367,7 +299,7 @@ class Model_Player extends Model_NPC_Nano {
 
         $this->timevote = $vote;
 
-        if ($game->duration())
+        if (Globals::CurrentGame()->duration())
             $this->timelock = time() + $lock_duration;
 
         return true;

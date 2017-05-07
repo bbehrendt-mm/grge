@@ -13,9 +13,7 @@ class Model_Items_Dildo extends Model_Items_Abstract_Item implements Interface_S
 	protected static $weight = 1;
 
     protected function hid() {
-        /** @global $player Model_Player */
-        global $player;
-        if (Tool_Scripts::is_npc() || $player->job(1080))
+        if (Tool_Scripts::is_npc() || (!Globals::shadowPlayerExists() && Globals::PrimaryPlayer()->job(1080)))
             return parent::hid();
         return parent::hid()
             ->add_action('Benutzen', Model_Action::factory()
@@ -38,8 +36,6 @@ class Model_Items_Dildo extends Model_Items_Abstract_Item implements Interface_S
                         ->effect(Model_Status::MS_STAT_SLEEPY, 10)
                     , null, false)
                 ->decider(function() {
-                    /** @global Model_Game $game */
-                    global $game;
                     return Tool_Gambling::random(0.1) ? 1 : 0;
                 })
                 //Success

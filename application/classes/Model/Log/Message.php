@@ -25,14 +25,10 @@ class Model_Log_Message extends Model {
      * @param int $uid User ID (optional)
      */
     public function __construct($data, $uid = null) {
-        /** @global Model_Game $game */
-        /** @global Model_Player $player */
-        /** @global Model_Euser $user */
-        global $game, $player, $user;
         $this->data = $data;
-        $this->uid = $uid !== null ? $uid : ($player ? $player->id() : ($user ? $user->uid() : -1));
-        $this->timestamp = $game ? $game->now() : time();
-        $this->ticks = $game ? $game->duration() : -1;
+        $this->uid = $uid !== null ? $uid : (Globals::hasPrimaryPlayer() ? Globals::PrimaryPlayer()->id() : (Globals::hasCurrentUser() ? Globals::CurrentUser()->uid() : -1));
+        $this->timestamp = Globals::CurrentGame() ? Globals::CurrentGame()->now() : time();
+        $this->ticks = Globals::CurrentGame() ? Globals::CurrentGame()->duration() : -1;
     }
 
     protected function postprocess($data) {
@@ -44,16 +40,12 @@ class Model_Log_Message extends Model {
      * @return array
      */
     public function render($plain_data = false) {
-        /** @global Model_Player $player */
-        /** @global Model_Euser $user */
-        global $player, $user;
-
         $tmpd = $this->postprocess($this->data);
         if ($plain_data)
             return $tmpd;
 
         if (is_array($tmpd) && !isset($tmpd['self']))
-            $tmpd['self'] = ($player->id() === $this->uid || $user->uid() === $this->uid);
+            $tmpd['self'] = (Globals::PrimaryPlayer()->id() === $this->uid || Globals::CurrentUser()->uid() === $this->uid);
 
         return [
             'type' => static::$type,

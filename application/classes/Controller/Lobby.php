@@ -8,19 +8,15 @@ class Controller_Lobby extends Controller {
      * News Renderer
      */
     public function action_main() {
-        /**
-         * @global Model_EUser $user
-         */
-        global $user;
         $this->add_menu('logout');
         $this->add_widget(View::factory('pages/main')
-            ->set('ingame', (bool)$user->get_current_game())
-            ->set('avatar', Model_Euser::avatar_by_id($user->uid()))
-            ->set('name', $user->name())
-            ->set('mentor', Model_Euser::get_mentoring_ref($user->uid()))
-            ->set('cashout', Model_Euser::get_mentor_braincoins($user->uid(), null, false))
-            ->set('pupils', count($user->get_apprentice_id()))
-            ->set('bc', Model_Euser::get_coins($user->uid()))
+            ->set('ingame', (bool)Globals::CurrentUser()->get_current_game())
+            ->set('avatar', Model_Euser::avatar_by_id(Globals::CurrentUser()->uid()))
+            ->set('name', Globals::CurrentUser()->name())
+            ->set('mentor', Model_Euser::get_mentoring_ref(Globals::CurrentUser()->uid()))
+            ->set('cashout', Model_Euser::get_mentor_braincoins(Globals::CurrentUser()->uid(), null, false))
+            ->set('pupils', count(Globals::CurrentUser()->get_apprentice_id()))
+            ->set('bc', Model_Euser::get_coins(Globals::CurrentUser()->uid()))
             ->render());
         $this->render();
     }
@@ -29,24 +25,17 @@ class Controller_Lobby extends Controller {
      * New user landing page
      */
     public function action_newuser() {
-        /**
-         * @global Model_EUser $user
-         */
-        global $user;
-
-        if ($user->soulpoints() > 0 || Model_Euser::mentor_id($user->uid()) !== null) {
+        if (Globals::CurrentUser()->soulpoints() > 0 || Model_Euser::mentor_id(Globals::CurrentUser()->uid()) !== null) {
             $this->redirect(URL::site('lobby/main',true));
             return false;
         }
 
         $this->add_menu('logout');
         $this->add_widget(View::factory('pages/newuser')
-            ->set('name', $user->name())
+            ->set('name', Globals::CurrentUser()->name())
             ->render());
         return $this->render();
     }
-
-
 
     private function get_feed($fid, $length, $offset) {
 

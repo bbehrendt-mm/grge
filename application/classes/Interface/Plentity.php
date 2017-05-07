@@ -67,4 +67,11 @@ interface Interface_Plentity extends Interface_Cloudshard {
 
     /** @return Model_Hid */
     public function hid();
+
+    public function set_escape_target($e = null);
+    public function get_escape_target();
+
+    public function enable_escape();
+    public function disable_escape();
+    public function can_escape();
 }

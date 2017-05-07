@@ -12,7 +12,8 @@ class Model_Blueprint {
     private $id;
     private $is_room = false;
 
-    private $room_clear = true;
+    private $room_clear = false;
+    private $room_clear_sat = true;
 
     private $name;
     private $description;
@@ -25,6 +26,7 @@ class Model_Blueprint {
     private $requires = [];
     private $requires_local = [];
     private $provides = [];
+    private $provides_room = [];
     private $removes = [];
     private $room_requirements = [];
     private $use_global_blocking = true;
@@ -196,6 +198,7 @@ class Model_Blueprint {
             if ($this->id) throw new Exception('Attempt to rebind blueprint ID!');
             $this->id = $id;
             $this->is_room = true;
+            $this->provide_room($id);
             $this->global_blocking(true);
             return $this;
         }
@@ -212,6 +215,21 @@ class Model_Blueprint {
         if ($v === null) return $this->room_clear;
         else {
             $this->room_clear = $v;
+            return $this;
+        }
+    }
+
+    /**
+     * @param bool|null $v
+     * @return Model_Blueprint|bool
+     * @throws Exception When using this function on a non-room
+     */
+    public function replace_room_satisfaction($v = null) {
+        if (!$this->is_room) throw new Exception("Using FULL_REPLACE on non-room!");
+
+        if ($v === null) return $this->room_clear_sat;
+        else {
+            $this->room_clear_sat = $v;
             return $this;
         }
     }
@@ -363,10 +381,16 @@ class Model_Blueprint {
 
     /**
      * Adds new room requirements or returns the current requirements.
-     * @param string|string[] $rid
+     * @param string|string[] $rid,...
      * @return Model_Blueprint|string[]
      */
     public function requires_room($rid = null) {
+        if (func_num_args() > 1) {
+            foreach (func_get_args() as $arg)
+                $this->requires_room($arg);
+            return $this;
+        }
+
         if ($rid === null)
             return $this->room_requirements;
 
@@ -387,6 +411,24 @@ class Model_Blueprint {
         if ($this->is_room) throw new Exception('Attempt to use PROVIDING with rooms!');
         if (!in_array($rid, $this->provides))
             $this->provides[] = $rid;
+        return $this;
+    }
+
+    /**
+     * Adds a new provided ID. Note that the ID if this blueprint is always provided by default. If called without argument, it returns all IDs this blueprint provides
+     * @param string|string[] $rids Provided ID or IDs
+     * @return Model_Blueprint|string[]
+     * @throws Exception When attempting to add provided IDs to a room blueprint.
+     */
+    public function provide_room($rids = null) {
+        if ($rids === null)
+            return $this->provides_room;
+        if (!$this->is_room) throw new Exception('Attempt to use ROOM-PROVIDING with non-rooms!');
+        if (!is_array($rids)) $rids = [$rids];
+
+        foreach ($rids as $rid)
+            if (!in_array($rid, $this->provides_room))
+                $this->provides_room[] = $rid;
         return $this;
     }
 
@@ -489,17 +531,30 @@ class Model_Blueprint {
     }
 
     /**
-     * @param string[] $preconditions
-     * @param Model_Room|null $room
-     * @return bool
-     */
+ * @param string[] $preconditions
+ * @param Model_Room|null $room
+ * @return bool
+ */
     private function can_prod($preconditions, $room = null) {
+        if ($this->is_room) return $this->can_prod_room($room);
         if ($this->steps > 0) {
             if ($room === null && !$this->global_blocking()) return true;
             foreach ($this->provides as $p)
                 if (in_array($p, $this->global_blocking() ? $preconditions : $room->get_content()))
                     return false;
         }
+        return true;
+    }
+
+    /**
+     * @param Model_Room|null $room
+     * @return bool
+     */
+    private function can_prod_room($room = null) {
+        if ($room === null) return true;
+        foreach ($this->provides_room as $p)
+            if (!in_array($p, $this->requires_room()) && $room->check_room_satisfaction($p))
+                return false;
         return true;
     }
 
@@ -632,7 +687,7 @@ class Model_Blueprint {
     private function apply_room($room) {
         if ($this->clear_previous_room()) $room->clear();
 
-        $room->upgrade($this->name,$this->clear_previous_room(),[$this->id]);
+        $room->upgrade($this->name,$this->clear_previous_room() || $this->replace_room_satisfaction() ? true : $this->requires_room(),$this->provide_room());
 
         return [];
     }
@@ -725,9 +780,15 @@ class Model_Blueprint {
         $room_data = [];
         foreach ($this->room_requirements as $rq_room)
             $room_data[$rq_room] = $room->check_room_satisfaction($rq_room);
+        $room_occ_data = [];
+        foreach ($this->provide_room() as $occ_room)
+            if (!in_array($occ_room, $this->requires_room()))
+                $room_occ_data[$occ_room] = !$room->check_room_satisfaction($occ_room);
 
         return [
             'id' => $this->id,
+            'is_room' => $this->is_room,
+            'globally_blocked' => $this->global_blocking(),
             'name' => $name,
             'categories' => $this->categories,
             'description' => $this->description,
@@ -748,7 +809,8 @@ class Model_Blueprint {
             'steps_max' => $this->steps,
             'steps_current' => ($current_steps === true) ? $this->steps - 1 : $current_steps,
             'occupies' => $this->provide(),
-            'hidden' => $hidden || !$room->check_room_satisfaction($this->requires_room()),
+            'occupies_room' => $room_occ_data,
+            'hidden' => $hidden,
             'zombies' => $z,
             'confirm' => $this->confirmation
         ];

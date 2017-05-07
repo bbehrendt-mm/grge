@@ -59,7 +59,7 @@ class Controller_Location extends Controller_Game {
 
             $data[$id] = [
                 'id' => $id,
-                'name' => $room->name(),
+                'name' => $room->name_is_custom() ? $room->name() : __($room->name()),
                 'size' => $room->get_space() == PHP_INT_MAX ? null : ($room->get_space() + count($room->inventory()->get())),
                 'free' => $room->get_space() == PHP_INT_MAX ? null : $room->get_space(true),
                 'type' => $room->get_usage(),
@@ -87,6 +87,7 @@ class Controller_Location extends Controller_Game {
             return $this->render(['success' => 0]);
 
         $room->name(trim($name));
+        $room->name_is_custom(true);
 
         return $this->render(['success' => 1, 'result' => $room->name()]);
     }
@@ -131,9 +132,12 @@ class Controller_Location extends Controller_Game {
         if (!$room) return false;
 
         $blueprints = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'rooms');
+        $externals = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'upgrades')->externalize();
 
         if ($build = $this->post('build'))
             Globals::PrimaryPlayer()->achievements()->achieve(Model_Achievement::MA_ROOM_BUILDER, $this->exec_build($blueprints, $build, $room) ? 1 : 0);
+
+        $blueprints->merge($externals)->validate();
 
         $this->add_data('room', $room_id);
         $this->add_data('blueprints', $this->compile_builder($blueprints, $room));

@@ -23,10 +23,20 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         //ToDo: Rooms
 
         $this->inventory->add(new Model_Items_Virtual_Location_Hideout(!$this->room()->has_content('cursed_hideout')));
-        $this->room()->upgrade('Versteck',false,['common_hideout']);
-        $this->room()->name_is_fixed(true);
-        $this->room()->inventory()->add(new Model_Items_Virtual_Location_Room_Defense());
         return $t;
+    }
+
+    public function setup_primary_rooms() {
+        $room = parent::setup_primary_rooms();
+        $room->upgrade('Versteck',false,['common_hideout']);
+        $room->inventory()->add(new Model_Items_Virtual_Location_Room_Defense());
+
+        return $room;
+    }
+
+    public function setup_additional_rooms() {
+        parent::setup_additional_rooms();
+        $this->create_new_room(10,false);
     }
 
     private function calculate_item_deco() {

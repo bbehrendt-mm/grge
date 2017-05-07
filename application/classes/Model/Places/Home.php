@@ -6,6 +6,12 @@ class Model_Places_Home extends Model_Places_Abstract_Hideout {
     protected static $description = 'In deinem Versteck bist du vor Zombieangriffen geschützt und kannst dich von deinen Aktionen in der Aussenwelt erholen - zumindest, wenn du dich gut verbarrikadiert hast! Unglücklicherweise kannst du nicht für immer hier sitzen bleiben - das wirst du spätestens dann merken, wenn deine gesammelten Vorräte aufgebraucht sind ...';
     protected static $icon = 'home';
 
+    public function setup_additional_rooms() {
+        parent::setup_additional_rooms();
+        $this->create_new_room(15,false);
+        $this->create_new_room(20,true);
+    }
+
     //Base deco value
     protected static $base_deco_value = -20;
 

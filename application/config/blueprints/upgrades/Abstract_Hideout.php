@@ -1,12 +1,6 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
 return Model_Blueprints::factory()
-    // External stuff
-    ->add_blueprints(Model_Blueprint::factory()->id('hideout_slot')->name('Sicheres Versteck'), true)
-    ->add_blueprints(Model_Blueprint::factory()->id('outside')->name('Bebaubarer Aussenbereich'), true)
-    ->add_blueprints(Model_Blueprint::factory()->id('outside_space')->name('Großflächiger Aussenbereich'), true)
-    ->add_blueprints(Model_Blueprint::factory()->id('impaler')->name('Vorbereitete Fallgruben'), true)
-    ->add_blueprints(Model_Blueprint::factory()->id('slot_epic')->name('Bauplatz für epische Projekte'), true)
 
     // ++ STACK -> All blueprints below benefit from daytime and handyman bonus, and give builder achievement
     ->push_stack(function(&$b) {/** @var Model_Blueprint $b */
@@ -494,7 +488,7 @@ return Model_Blueprints::factory()
     )
 
     // -- STACK -> All blueprints below NO LONGER need the kitchen
-    ->pop_stack()
+    ->pop_stack(2)
 
 
     //++ STACK -> EPIC FOUNDATIONS / GARDEN
@@ -668,6 +662,4 @@ return Model_Blueprints::factory()
 
     // -- STACK -> EPIC FOUNDATIONS / FENCE
     ->pop_stack()
-
-
-    ->validate();
+    ;

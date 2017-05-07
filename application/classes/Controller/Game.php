@@ -818,7 +818,7 @@ class Controller_Game extends Controller {
      */
     public function action_redirect() {
         //Redirect
-        if (!Globals::CurrentGame() && !Globals::CurrentUser()->get_current_game())
+        if (!Globals::hasCurrentGame() && !Globals::CurrentUser()->get_current_game())
             $this->redirect(URL::site('gamemaster/lobby',true));
         elseif (!Globals::CurrentGame() && Globals::CurrentUser()->get_current_game()) {
             $this->add_widget(View::factory('pages/game_error')->render());

@@ -46,5 +46,4 @@ return Model_Blueprints::factory()
     )
 
     ->pop_stack()
-
-    ->validate();
+    ;

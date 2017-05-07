@@ -9,6 +9,7 @@ class Model_Room {
 
     protected $room_name = "";
     protected $name_fixed = false;
+    protected $name_custom = false;
 
     protected $usage = "";
     protected $satisfies = ['free'];
@@ -68,6 +69,11 @@ class Model_Room {
         else return ($this->name_fixed = $s);
     }
 
+    public function name_is_custom($b = null) {
+        if ($b === null) return $this->name_custom;
+        else return ($this->name_custom = $b);
+    }
+
     /**
      * @return string[]
      */
@@ -93,12 +99,19 @@ class Model_Room {
 
     /**
      * @param string $new_usage
-     * @param bool $replace_satisfiers
+     * @param bool|string[] $replace_satisfiers
      * @param string[] $new_satisfiers
      */
     public function upgrade($new_usage, $replace_satisfiers, $new_satisfiers) {
         $this->usage = $new_usage;
-        if ($replace_satisfiers) $this->satisfies = [];
+        if ($replace_satisfiers === true) $this->satisfies = [];
+        elseif (is_array($replace_satisfiers)) {
+            $tmp = [];
+            foreach ($this->satisfies as $sat)
+                if (!in_array($sat,$replace_satisfiers))
+                    $tmp[] = $sat;
+            $this->satisfies = $tmp;
+        }
         foreach ($new_satisfiers as $s)
             if (!$this->check_room_satisfaction($s))
                 $this->satisfies[] = $s;

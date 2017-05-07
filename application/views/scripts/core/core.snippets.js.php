@@ -375,7 +375,7 @@
             mt_out.removeClass('rw-12').addClass('rw-6');
         }
 
-        button.qtip(game.render.html.qtip.ingame('bottom',{
+        button.qtip(game.render.html.qtip.ingame('top',{
             render: function() {
                 var content = $(this).find('.qtip-content').empty().append(
                     $('<b />').addClass('header').text(blueprint.name)
@@ -411,6 +411,13 @@
                         chk_rm = true;
                     });
 
+                    $.each(blueprint.occupies_room, function(k,v) {
+                        if (k != blueprint.id) {
+                            content.append($('<div />').addClass('point').addClass(v ? 'success' : 'failure').text(game.i18n(<?=__j('Kein Upgrade auf :name')?>, {':name': lib[k].name})));
+                            chk_rm = true;
+                        }
+                    });
+
                     if (!chk_rm) content.append($('<div />').addClass('point success').text(<?=__j('Keine besonderen Vorraussetzungen')?>));
 
                     content.append($('<span />').text(<?=__j('Vorraussetzungen')?>));
@@ -443,14 +450,28 @@
                     content.append('<span class="separator" />');
 
                     var cache = [];
-                    $.each(lib,function(key,bp) {
-                        $.each(bp.requires,function(k,req) {
-                            $.each(req,function(k,vi) {
+                    if (blueprint.is_room)
+                        $.each(lib,function(key,bp) {
+                            $.each(bp.requires_room,function(vi,v) {
                                 if (vi == blueprint.id)
                                     cache.push(bp.name);
                             });
                         });
-                    });
+                    else
+                        $.each(lib,function(key,bp) {
+                            $.each(bp.requires_local,function(k,req) {
+                                $.each(req,function(k,vi) {
+                                    if (vi == blueprint.id)
+                                        cache.push(bp.name + " (" + <?=__j('in diesem Raum')?> + ")");
+                                });
+                            });
+                            $.each(bp.requires,function(k,req) {
+                                $.each(req,function(k,vi) {
+                                    if (vi == blueprint.id)
+                                        cache.push(bp.name);
+                                });
+                            });
+                        });
 
                     if (cache.length) {
                         content.append($('<span />').text(<?=__j('Ermöglicht')?>));
@@ -461,17 +482,25 @@
                     }
 
                     cache = [];
-                    $.each(blueprint.occupies, function(k,occ) {
-                        $.each(lib, function(key, bp) {
-                            if (bp.id != blueprint.id && !bp.hidden && $.inArray(bp.id, cache) < 0 && $.inArray(occ, $.objToArray(bp.occupies, true)) >= 0)
-                                cache.push(bp.id)
+                    if (blueprint.is_room)
+                        $.each(blueprint.occupies_room, function(occ,v) {
+                            $.each(lib, function(key, bp) {
+                                if (bp.is_room && bp.id != blueprint.id && !bp.hidden && $.inArray(bp.id, cache) < 0 && $.inArray(occ, $.objToArray(bp.occupies_room, false)) >= 0)
+                                    cache.push(bp.name + " (" + <?=__j('in diesem Raum')?> + ")");
+                            });
                         });
-                    });
+                    else
+                        $.each(blueprint.occupies, function(k,occ) {
+                            $.each(lib, function(key, bp) {
+                                if (bp.id != blueprint.id && !bp.hidden && $.inArray(bp.id, cache) < 0 && $.inArray(occ, $.objToArray(bp.occupies, true)) >= 0)
+                                    cache.push(bp.name + (bp.globally_blocked ? '' : (" (" + <?=__j('in diesem Raum')?> + ")")))
+                            });
+                        });
 
                     if (cache.length) {
                         content.append($('<span />').text(<?=__j('Verhindert')?>));
                         $.each(cache, function(k,v) {
-                            content.append($('<div />').addClass('point').text(lib[v].name));
+                            content.append($('<div />').addClass('point').text(v));
                         })
                     }
                 }

@@ -127,12 +127,22 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
         return $t;
     }
 
-    public function setup_additional_rooms() {
-        $c = count($this->rooms);
-        $this->rooms[$c  ] = Model_Room::factory($c,10,false);
-        $this->rooms[$c+1] = Model_Room::factory($c+1,10,false);
-        $this->rooms[$c+2] = Model_Room::factory($c+2,10,false);
+    public function create_new_room($space = -1, $outside = false) {
+        return $this->rooms[] = Model_Room::factory(count($this->rooms),$space,$outside);
     }
+
+    /**
+     * @return Model_Room
+     */
+    public function setup_primary_rooms() {
+        $room = $this->create_new_room();
+        $room->name($this->name());
+        $room->upgrade('Allgemein',true, ['common']);
+        $room->name_is_fixed(true);
+        return $room;
+    }
+
+    public function setup_additional_rooms() {}
 
     public function mapable() {
         return true;
@@ -164,9 +174,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
             Globals::CurrentGame()->ndp_register(get_called_class(), $type);
         }
 
-        $this->rooms[0] = Model_Room::factory(0,-1,false);
-        $this->rooms[0]->name($this->name());
-        $this->rooms[0]->upgrade('Allgemein',true, ['common']);
+        $this->setup_primary_rooms();
         $this->setup_additional_rooms();
 	}
 	

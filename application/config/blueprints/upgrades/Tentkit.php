@@ -11,4 +11,4 @@ return Model_Blueprints::factory()
             ->decay(-100)
             ->category('Versteck')
     )
-    ->validate();
+    ;

@@ -31,7 +31,8 @@ class Model_Blueprints {
                             $ret->merge($bp,true);
                 }
             }
-            return $ret;
+
+            return $ret->validate();
         }
     }
 

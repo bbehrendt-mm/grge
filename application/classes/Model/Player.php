@@ -250,7 +250,7 @@ class Model_Player extends Model_NPC_Nano {
 			if ($rank && $this->points > 0)
 			{				
 				$this->calculate_static_achievements();
-				DB::insert('ranking', array('season', 'gameid', 'uid', 'points', 'ticks', 'job', 'board', 'flow', 'start', 'end'))->values(array($season, $gameid, $this->id, $this->points, $this->livetime, $this->job, $this->mode, $game->timeflow(), $start, $end))->execute();
+				DB::insert('ranking', array('season', 'gameid', 'uid', 'points', 'ticks', 'job', 'board', 'flow', 'start', 'end'))->values(array($season, $gameid, $this->id, $this->points, $this->livetime, $this->job, $this->mode, Globals::CurrentGame()->timeflow(), $start, $end))->execute();
 				$this->achievements->award($this->id, $gameid, $season);
 			}	
 		}

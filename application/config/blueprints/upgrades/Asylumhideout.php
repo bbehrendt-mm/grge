@@ -18,4 +18,4 @@ return Model_Blueprints::factory()
             ->description('Die hier herumliegenden Küchenutensilien lassen dir einen kalten Schauer über den Rücken laufen...')
             ->category('Küche')
     )
-    ->validate();
+    ;

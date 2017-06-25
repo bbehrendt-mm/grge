@@ -136,7 +136,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
      */
     public function setup_primary_rooms() {
         $room = $this->create_new_room();
-        $room->name($this->name());
+        $room->name($this->name(), true);
         $room->upgrade('Allgemein',true, ['common']);
         $room->name_is_fixed(true);
         return $room;

@@ -14,4 +14,9 @@ class Model_Places_Pharmacy extends Model_Places_Abstract_Place {
         }
         return parent::uin($uin);
 	}
-}	
+
+    public function setup_additional_rooms() {
+        parent::setup_additional_rooms();
+        $this->create_new_room(8,false);
+    }
+}

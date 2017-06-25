@@ -15,7 +15,7 @@ class Model_Blueprints {
      * @param string|null $category
      * @return Model_Blueprints
      */
-    public static function factory($location = null, $category = null) {
+    public static function factory($location = null, $category = null, $skip_validation = false) {
         $ret = new Model_Blueprints();
         if (!$location || !$category) return $ret;
         else {
@@ -32,7 +32,7 @@ class Model_Blueprints {
                 }
             }
 
-            return $ret->validate();
+            return $skip_validation ? $ret : $ret->validate();
         }
     }
 
@@ -189,7 +189,11 @@ class Model_Blueprints {
             });
         }
 
-        if ($deadlock) throw new Exception('Unable to compile blueprint group: Group contains blueprints with unresolvable requirements.');
+        if ($deadlock) {
+            $info = [];
+            foreach ($cache as $blueprint) $info[] = $blueprint->id();
+            throw new Exception('Unable to compile blueprint group: Group contains blueprints with unresolvable requirements. (' . implode(", ", $info) . ')');
+        }
         return $this;
     }
 

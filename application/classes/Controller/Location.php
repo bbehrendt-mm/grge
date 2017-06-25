@@ -131,8 +131,8 @@ class Controller_Location extends Controller_Game {
         $room = Globals::PrimaryPlayer()->location()->room($room_id);
         if (!$room) return false;
 
-        $blueprints = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'rooms');
-        $externals = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'upgrades')->externalize();
+        $blueprints = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'rooms', true);
+        $externals = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'upgrades', true)->externalize();
 
         if ($build = $this->post('build'))
             Globals::PrimaryPlayer()->achievements()->achieve(Model_Achievement::MA_ROOM_BUILDER, $this->exec_build($blueprints, $build, $room) ? 1 : 0);
@@ -152,8 +152,8 @@ class Controller_Location extends Controller_Game {
         $room = Globals::PrimaryPlayer()->location()->room($room_id);
         if (!$room) return false;
 
-        $blueprints = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'upgrades');
-        $externals = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'rooms')->externalize();
+        $blueprints = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'upgrades',true);
+        $externals = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'rooms',true)->externalize();
 
         if ($build = $this->post('build'))
             Globals::PrimaryPlayer()->achievements()->achieve(Model_Achievement::MA_CONSTRUCTIONS, $this->exec_build($blueprints, $build, $room) ? 1 : 0);
@@ -173,9 +173,9 @@ class Controller_Location extends Controller_Game {
         $room = Globals::PrimaryPlayer()->location()->room($room_id);
         if (!$room) return false;
 
-        $blueprints = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'items');
-        $externals_1 = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'upgrades')->externalize();
-        $externals_2 = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'rooms')->externalize();
+        $blueprints = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'items', true);
+        $externals_1 = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'upgrades', true)->externalize();
+        $externals_2 = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'rooms', true)->externalize();
 
         if ($build = $this->post('build'))
             $this->exec_build($blueprints, $build, $room);
@@ -195,8 +195,8 @@ class Controller_Location extends Controller_Game {
         $room = Globals::PrimaryPlayer()->location()->room($room_id);
         if (!$room) return false;
 
-        $blueprints = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'attack');
-        $externals = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'upgrades')->externalize();
+        $blueprints = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'attack', true);
+        $externals = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'upgrades', true)->externalize();
 
         if ($build = $this->post('build'))
             $this->exec_build($blueprints, $build, $room);

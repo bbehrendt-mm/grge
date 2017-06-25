@@ -25,4 +25,13 @@ class Model_Places_Hotel extends Model_Places_Abstract_Hideout {
         return parent::uin($new);
     }
 
+    public function setup_additional_rooms() {
+        parent::setup_additional_rooms();
+        $this->create_new_room(8,false);
+        $this->create_new_room(8,false);
+        $this->create_new_room(8,false);
+        $this->create_new_room(8,false);
+        $this->create_new_room(8,false);
+        $this->create_new_room(8,false);
+    }
 }	

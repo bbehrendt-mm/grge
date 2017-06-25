@@ -20,4 +20,10 @@ class Model_Places_Bar extends Model_Places_Abstract_Place {
 
         return parent::tick($type);
     }
+
+    public function setup_additional_rooms() {
+        parent::setup_additional_rooms();
+        $this->create_new_room( 5,false);
+        $this->create_new_room(10,false);
+    }
 }	

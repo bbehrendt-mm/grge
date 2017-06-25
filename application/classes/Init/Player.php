@@ -24,16 +24,17 @@ class Init_Player {
      */
 	private function init(&$game, &$set, $userid, $name, $job, $level) {
 		Globals::setPrimaryPlayer(new Model_Player($userid, $name, $set->head->mode, $job, $level));
-		$set->players[$userid] = $set->uin->set(Globals::PrimaryPlayer());
+		$player_obj = Globals::PrimaryPlayer();
+		$set->players[$userid] = $set->uin->set($player_obj);
 		
 		//Enter home
         $set->maps['main']->get_by_fixed_id(2)->enter();
-        Globals::PrimaryPlayer()->location_class($set->maps['main']->get_by_fixed_id(2)->uin());
+        $player_obj->location_class($set->maps['main']->get_by_fixed_id(2)->uin());
 
         $init = Tool_Gamemodes::compile_startup_job($job);
         $init($game->setting_mode(), $level);
 
         foreach ($game->get_initialized_events() as $ev)
-            $ev->event_playerCreation(Globals::PrimaryPlayer());
+            $ev->event_playerCreation($player_obj);
 	}
 }

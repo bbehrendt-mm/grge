@@ -59,9 +59,9 @@ class Model_Room {
      * @param string|null $new_name
      * @return string
      */
-    public function name($new_name = null) {
+    public function name($new_name = null, $force = false) {
         if ($new_name === null || mb_strlen($new_name) < 2) return $this->room_name ? $this->room_name : null;
-        else return $this->room_name = mb_substr($new_name,0,16);
+        else return $this->room_name = $force ? $new_name :  mb_substr($new_name,0,16);
     }
 
     public function name_is_fixed($s = null) {

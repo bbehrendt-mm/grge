@@ -15,4 +15,10 @@ class Model_Places_Cathedral extends Model_Places_Abstract_Place {
 		for ($i = 0; $i < $count; $i++) $this->inventory->add(new Model_Items_Body('Zerfetztes Gemeindemitglied', 'Es gibt Momente, da kann der Glaube Berge versetzen und selbst die größten Probleme klein erscheinen lassen. Und dann gibt es Momente, in denen sollte man seine Gebete lieber beim Laufen sprechen, anstatt starr auf einer Kirchenbank zu verharren!'));
 	    return $t;
     }
+
+    public function setup_additional_rooms() {
+        parent::setup_additional_rooms();
+        $this->create_new_room(10,false);
+        $this->create_new_room(50,false);
+    }
 }	

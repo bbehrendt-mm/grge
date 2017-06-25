@@ -266,4 +266,10 @@ class Model_Places_Motorhome extends Model_Places_Home {
         if ($this->is_driving())
             $this->zombie_factory()->accumulation(0);
     }
+
+    public function setup_additional_rooms() {
+        parent::setup_additional_rooms();
+        $this->create_new_room(25,true);
+        $this->create_new_room(8,false);
+    }
 }	

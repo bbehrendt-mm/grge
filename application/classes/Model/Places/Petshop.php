@@ -18,4 +18,10 @@ class Model_Places_Petshop extends Model_Places_Abstract_Place {
 		$this->inventory->add(new Model_Items_Vending(get_class($this), "Pettington 40K"));
         return $t;
 	}
+
+    public function setup_additional_rooms() {
+        parent::setup_additional_rooms();
+        $this->create_new_room(10,false);
+        $this->create_new_room(10,false);
+    }
 }	

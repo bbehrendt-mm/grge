@@ -6,39 +6,10 @@ return Model_Blueprints::factory()
         $b->add_modifier(Model_Blueprint::BP_MOD_ENERGY, function($pl,$pre,$e) { /** @var Model_Player $pl */
             $mod = 1;
             if (Tool_Scripts::get_timeofday($pl) == 'morning') $mod -= 0.25;    // Daytime bonus
-            if ($pl->get_status()->retrieve('tr_handyman')) $mod -= 0.1;                     // Handyman Bonus
+            if ($pl->get_status()->retrieve('tr_handyman')) $mod -= 0.1;    // Handyman Bonus
             return max(min(1,$e),floor($e*$mod));
         });
     })
-
-    ->add_blueprints(Model_Blueprint::factory()->room('kitchen_lv1')->name('Ausgebaute Küche'), true)
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->room('kitchen')
-            ->requires_room('free')
-            ->name('Küche')
-            ->emplaces('Model_Items_Virtual_Location_Room_Kitchen')
-            ->description('In einer Küche kannst du aus diversen Gegenständen Nahrungsmittel zubereiten. Für deren Geschmack wird jedoch keine Garantie übernommen...')
-            ->energy(5)
-    )
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->room('kitchen_slaughter')
-            ->requires_room('kitchen')
-            ->provide_room(['kitchen','kitchen_lv1'])
-            ->name('Schlachthaus')
-            ->description('Es gibt überraschend viele Dinge, die sich zwecks Nahrungsgewinnung schlachten lassen (meist jedoch unfreiwillig). Eine Vorraussetzung dafür ist natürlich der Bau eines Schlachthauses.')
-            ->energy(15)
-    )
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->room('kitchen_meth')
-            ->requires_room('kitchen')
-            ->provide_room(['kitchen','kitchen_lv1'])
-            ->name('Drogenküche')
-            ->description('Warum sollte man nur Nahrungsmittel kochen? Mit ein wenig zusätzlicher Ausrüstung kannst du auch leckere 5-Sterne-Drogen zubereiten!')
-            ->energy(15)
-    )
 
     ->add_blueprints(
         Model_Blueprint::factory()
@@ -57,16 +28,6 @@ return Model_Blueprints::factory()
             ->name('Gemeinschaftsraum')
             ->emplaces('Model_Items_Virtual_Location_Room_Community')
             ->description('In diesem Raum kannst du deine Zeit verbringen, wenn du mit Schlafen, Zombies töten sowie deiner Steuererklärung fertig bist.')
-            ->energy(5)
-    )
-
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->room('workshop')
-            ->requires_room('free')
-            ->name('Werkstatt')
-            ->emplaces('Model_Items_Virtual_Location_Maker')
-            ->description('Die Werkstatt kann mit vielerlei Werkzeugen und Geräten ausgestattet werden, die für alltägliche Bastelarbeiten erforderlich sind.')
             ->energy(5)
     )
 

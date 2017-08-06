@@ -5,7 +5,7 @@ class Model_Room {
     protected $local_id = -1;
 
     protected $space;
-    protected $outside;
+    protected $tags = [];
 
     protected $room_name = "";
     protected $name_fixed = false;
@@ -21,9 +21,17 @@ class Model_Room {
 
     protected $is_enabled = true;
 
-    public function __construct($space = 10, $outside = false) {
+    protected static $tag_info = [
+        'inside' => 'Innen',
+        'outside' => 'Außen',
+        'primary' => 'Hauptraum'
+    ];
+
+    public function __construct($space = 10, $tags = []) {
         $this->space = $space;
-        $this->outside = $outside;
+        foreach ($tags as $tag)
+            if (!isset(static::$tag_info[$tag])) throw new Exception("Room Config Error: Unknown tag '" . $tag . "'!");
+        $this->tags = $tags;
         $this->inventory = new Model_Inventory();
     }
 
@@ -46,11 +54,11 @@ class Model_Room {
 
     /**
      * @param int $space
-     * @param bool $outside
+     * @param array $tags
      * @return Model_Room
      */
-    static function factory($id, $space = 10, $outside = false) {
-        $instance = new Model_Room($space,$outside);
+    static function factory($id, $space = 10, $tags = []) {
+        $instance = new Model_Room($space,$tags);
         $instance->id($id);
         return $instance;
     }
@@ -127,6 +135,38 @@ class Model_Room {
             foreach ($type as $sub) if (!$this->check_room_satisfaction($sub)) return false;
             return true;
         } else return $type == "" ? true : in_array($type, $this->satisfies);
+    }
+
+    /**
+     * @return array
+     */
+    public function get_tags() {
+        return $this->tags;
+    }
+
+    /**
+     * @param string $tag
+     * @return string|null
+     */
+    public static function tag_info($tag) {
+        return isset(static::$tag_info[$tag]) ? __(static::$tag_info[$tag]) : null;
+    }
+
+    /**
+     * @return array
+     */
+    public function get_friendly_tags() {
+        $r = [];
+        foreach ($this->tags as $tag) $r[$tag] = static::tag_info($tag);
+        return $r;
+    }
+
+    /**
+     * @param string $tag
+     * @return bool
+     */
+    public function has_tag($tag) {
+        return in_array($tag,$this->tags);
     }
 
     /**

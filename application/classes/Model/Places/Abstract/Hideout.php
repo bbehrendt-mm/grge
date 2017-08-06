@@ -36,7 +36,7 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
 
     public function setup_additional_rooms() {
         parent::setup_additional_rooms();
-        $this->create_new_room(10,false);
+        $this->create_new_room(10,['inside']);
     }
 
     private function calculate_item_deco() {

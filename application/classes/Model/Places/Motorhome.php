@@ -107,7 +107,7 @@ class Model_Places_Motorhome extends Model_Places_Home {
         Globals::CurrentGame()->delete_lobby();
         $this->impaler = 0;
         foreach ($this->rooms as $room)
-            if ($room->is_outside()) $room->clear();
+            if ($room->has_tag('outside')) $room->clear();
 
         $this->force_nomap = (!$start && $break);
 
@@ -269,7 +269,7 @@ class Model_Places_Motorhome extends Model_Places_Home {
 
     public function setup_additional_rooms() {
         parent::setup_additional_rooms();
-        $this->create_new_room(25,true);
-        $this->create_new_room(8,false);
+        $this->create_new_room(25,['outside']);
+        $this->create_new_room(8,['inside']);
     }
 }	

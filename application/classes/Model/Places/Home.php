@@ -8,8 +8,8 @@ class Model_Places_Home extends Model_Places_Abstract_Hideout {
 
     public function setup_additional_rooms() {
         parent::setup_additional_rooms();
-        $this->create_new_room(15,false);
-        $this->create_new_room(20,true);
+        $this->create_new_room(15,['inside']);
+        $this->create_new_room(20,['outside']);
     }
 
     //Base deco value

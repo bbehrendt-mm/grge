@@ -375,16 +375,23 @@ core.popup = {
                     )
                 ));
 
+                var tag_list;
+
                 if (room.size !== null)
                     current.append(NF.row()
                         .append(NF.cell(true,4,0,  'left').append(NF.n('div','b small').text(<?=__j('Größe')?> + ': ' + room.size + 'm²')))
                         .append(NF.cell(true,4,0,'center').append(NF.n('div','b small').text(<?=__j('Freier Platz')?> + ': ' + room.free + 'm²')))
-                        .append(NF.cell(true,4,0, 'right').append(NF.n('div','b small').text(room.outside ? <?=__j('Außen')?> : <?=__j('Innen')?>)))
+                        .append(tag_list = NF.cell(true,4,0, 'right'))
                     );
                 else current.append(NF.row()
                     .append(NF.cell(true,8,0, 'left').append(NF.n('div','b small').text(<?=__j('Keine Platzbeschränkung')?>)))
-                    .append(NF.cell(true,4,0,'right').append(NF.n('div','b small').text(room.outside ? <?=__j('Außen')?> : <?=__j('Innen')?>)))
+                    .append(tag_list = NF.cell(true,4,0, 'right'))
                 );
+
+                if (tag_list)
+                    $.each(room.tags, function(k,v) {
+                        tag_list.append(NF.img('media/icons/places/rtags/' + k + '.gif').attr('title',v).qtip(game.render.html.qtip.ingame('bottom')));
+                    });
 
                 var btn_add, btn_con;
                 var action_row;

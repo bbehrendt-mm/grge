@@ -127,15 +127,15 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
         return $t;
     }
 
-    public function create_new_room($space = -1, $outside = false) {
-        return $this->rooms[] = Model_Room::factory(count($this->rooms),$space,$outside);
+    public function create_new_room($space = -1, $tags = []) {
+        return $this->rooms[] = Model_Room::factory(count($this->rooms),$space,$tags);
     }
 
     /**
      * @return Model_Room
      */
     public function setup_primary_rooms() {
-        $room = $this->create_new_room();
+        $room = $this->create_new_room(-1,['inside','primary']);
         $room->name($this->name(), true);
         $room->upgrade('Allgemein',true, ['common']);
         $room->name_is_fixed(true);

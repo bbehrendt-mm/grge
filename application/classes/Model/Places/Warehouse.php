@@ -28,9 +28,9 @@ class Model_Places_Warehouse extends Model_Places_Abstract_Hideout {
 
     public function setup_additional_rooms() {
         parent::setup_additional_rooms();
-        $this->create_new_room(30,false);
-        $this->create_new_room(30,false);
-        $this->create_new_room(30,false);
+        $this->create_new_room(30,['inside']);
+        $this->create_new_room(30,['inside']);
+        $this->create_new_room(30,['inside']);
     }
 
 }	

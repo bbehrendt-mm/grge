@@ -3158,16 +3158,23 @@ core = {
                     )
                 ));
 
+                var tag_list;
+
                 if (room.size !== null)
                     current.append(NF.row()
                         .append(NF.cell(true,4,0,  'left').append(NF.n('div','b small').text("Gr\u00f6\u00dfe" + ': ' + room.size + 'm��')))
                         .append(NF.cell(true,4,0,'center').append(NF.n('div','b small').text("Freier Platz" + ': ' + room.free + 'm��')))
-                        .append(NF.cell(true,4,0, 'right').append(NF.n('div','b small').text(room.outside ? "Au\u00dfen" : "Innen")))
+                        .append(tag_list = NF.cell(true,4,0, 'right'))
                     );
                 else current.append(NF.row()
                     .append(NF.cell(true,8,0, 'left').append(NF.n('div','b small').text("Keine Platzbeschr\u00e4nkung")))
-                    .append(NF.cell(true,4,0,'right').append(NF.n('div','b small').text(room.outside ? "Au\u00dfen" : "Innen")))
+                    .append(tag_list = NF.cell(true,4,0, 'right'))
                 );
+
+                if (tag_list)
+                    $.each(room.tags, function(k,v) {
+                        tag_list.append(NF.img('media/icons/places/rtags/' + k + '.gif').attr('title',v).qtip(game.render.html.qtip.ingame('bottom')));
+                    });
 
                 var btn_add, btn_con;
                 var action_row;
@@ -4294,6 +4301,10 @@ core = {
         };
 
         var all_rq_ok = rq_all_check(blueprint);
+        var all_tg_ok = true;
+        $.each(blueprint.requires_tag, function(k,v) {
+            if (!v.b) all_tg_ok = false;
+        })
 
         if (blueprint.build && blueprint.build_local)
             button.addClass('blue');
@@ -4312,7 +4323,7 @@ core = {
                     });
             }
         }
-        else if (!blueprint.slot_open || !all_rq_ok)
+        else if (!blueprint.slot_open || !all_rq_ok || !all_tg_ok)
             button.addClass('red');
         else button.addClass('plain');
 
@@ -4426,6 +4437,11 @@ core = {
                         content.append($('<span />').text("Dieses Projekt kann unbegrenzt oft gebaut werden.")).append('<span class="separator" />');
 
                     content.append($('<span />').text("Raum"));
+
+                    $.each(blueprint.requires_tag, function(k,v) {
+                        content.append($('<div />').addClass('point').addClass(v.b ? 'success' : 'failure').text(game.i18n("Raumtyp: :type", {':type': v.name})));
+                        chk_rm = true;
+                    });
 
                     var chk_rm = false;
                     $.each(blueprint.requires_room, function(k,v) {

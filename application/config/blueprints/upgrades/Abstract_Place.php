@@ -48,28 +48,6 @@ return Model_Blueprints::factory()
 
     ->add_blueprints(
         Model_Blueprint::factory()
-            ->id('manu1')
-            ->name('Werkbank')
-            ->description('Ermöglicht die Herstellung verschiedener Gegenstände.')
-            ->message('Ein Mann ohne Werkbank ist einfach kein richtiger Mann! (Eine Frau ohne Werkbank ist natürlich auch kein richtiger Mann.) Jetzt kannst du endlich viel Geld ausgeben und Zeug bauen, dass viel weniger kosten würde wenn du es einfach fertig kaufen würdest. Hurra!')
-            ->energy(10)
-            ->material(['Model_Items_Generic_Table' => 1, 'Model_Items_Abstract_Chair' => 1])
-    )
-
-    // ++ STACK -> All blueprints below need the workbench
-    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires('manu1');})
-
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('manu2')
-            ->name('Stromversorgung an der Werkbank')
-            ->description('Schaltet zusätzliche Optionen für die Werkbank frei.')
-            ->message('Ohne das Risiko tödlicher Stromschläge macht die Arbeit einfach keinen Spaß! Darum sind offene Drähte ohne Sicherung einfach ein Muss für jede Werkbank!')
-            ->energy(10)
-            ->material(['Model_Items_Generic_Lamp' => 1, 'Model_Items_Generic_Electro' => 3, 'Model_Items_Energy' => 5])
-    )
-    ->add_blueprints(
-        Model_Blueprint::factory()
             ->id('manuspd')
             ->name('Werkbank-Halterungen')
             ->description('Reduziert die benötigte Energie für alle Arbeiten an der Werkbank.')

@@ -27,12 +27,12 @@ class Model_Places_House extends Model_Places_Abstract_Hideout {
 
     public function setup_additional_rooms() {
         parent::setup_additional_rooms();
-        $this->create_new_room( 5,false);
-        $this->create_new_room( 5,false);
-        $this->create_new_room(10,false);
-        $this->create_new_room(12,false);
-        $this->create_new_room(12,false);
-        $this->create_new_room(15,false);
+        $this->create_new_room( 5,['inside']);
+        $this->create_new_room( 5,['inside']);
+        $this->create_new_room(10,['inside']);
+        $this->create_new_room(12,['inside']);
+        $this->create_new_room(12,['inside']);
+        $this->create_new_room(15,['inside']);
     }
 
 }	

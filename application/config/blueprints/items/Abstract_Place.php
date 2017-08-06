@@ -99,11 +99,11 @@ return Model_Blueprints::factory()
     ->pop_stack()
 
     // ++ STACK -> All blueprints below need the basic workbench and benefit from suspender upgrade
-    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires_room('workshop')->category('Werkbank')->add_modifier(Model_Blueprint::BP_MOD_ENERGY, function($pl,$pre,$e) {/** @var Model_Player $pl */
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires_room('workshop')->category('Werkbank')->add_modifier(Model_Blueprint::BP_MOD_ENERGY, function($pl,$pre,$e,$room) {/** @var Model_Player $pl */
         /** @var Model_Player $pl */
+        /** @var Model_Room $room */
         $mod = 1;
-        //ToDo: Rooms
-        if ($pl->location()->room()->has_content('manuspd')) $mod -= 0.5;           // Suspender Bonus
+        if ($room->has_content('manuspd')) $mod -= 0.5;           // Suspender Bonus
         if ($pl->get_status()->retrieve('tr_handyman')) $mod -= 0.1;                     // Handyman Bonus
 
         return max(min(1,$e),floor($e*$mod));
@@ -197,7 +197,6 @@ return Model_Blueprints::factory()
     ->add_blueprints(
         Model_Blueprint::factory()
             ->id('i:crmetal2')
-            ->requires('manu2')
             ->message('Gäbe es einen Gott für Recycling, er wäre sicherlich stolz auf dich!')
             ->material(['Model_Items_Generic_Crmetal' => 4, 'Model_Items_Energy' => 2])
             ->produces(['Model_Items_Generic_Metal' => 3])
@@ -290,7 +289,6 @@ return Model_Blueprints::factory()
     ->add_blueprints(
         Model_Blueprint::factory()
             ->id('i:batgun2')
-            ->requires('manu2')
             ->message('Mit ein paar kleinen Verbesserungen kann man die Effektivität eines Batteriewerfers ungemein erhöhen. Der neue Druckregler passt die Abschussgeschwindigkeit genau der Entfernung an und erhöht so deine Treffsicherheit. Mit ein wenig Glück kannst du mit einer Baterie sogar zwei Zombies erwischen!')
             ->energy(5)
             ->material(['Model_Items_Generic_Pressure' => 1, 'Model_Items_Generic_Sum' => 2, 'Model_Items_Generic_Tube' => 1, 'Model_Items_Batgun2' => 1])
@@ -303,7 +301,6 @@ return Model_Blueprints::factory()
     ->add_blueprints(
         Model_Blueprint::factory()
             ->id('i:splintergun1')
-            ->requires('manu2')
             ->message('Was kann man mit einer verrückten Waffe machen? Sie NOCH verrückter machen, natürlich! Was denn sonst?')
             ->energy(25)
             ->material(['Model_Items_Generic_Pressure' => 1, 'Model_Items_Generic_Sum' => 2, 'Model_Items_Generic_Tube' => 1, 'Model_Items_Generic_Metal' => 3, 'Model_Items_Splintergun' => 1])
@@ -316,7 +313,6 @@ return Model_Blueprints::factory()
     ->add_blueprints(
         Model_Blueprint::factory()
             ->id('i:aquagun1')
-            ->requires('manu2')
             ->message('Es ist wirklich überhaupt nicht bizarr, wenn erwachsene Überlebende einer Apokalypse durch die Ruinen der Zivilisation rennen und mit militärischen Wasserpistolen um sich spritzen! Hört auch zu lachen!')
             ->energy(5)
             ->material(['Model_Items_Generic_Pressure' => 1, 'Model_Items_Generic_Sum' => 1, 'Model_Items_Generic_Tube' => 4, 'Model_Items_Watergun' => 1])
@@ -368,6 +364,39 @@ return Model_Blueprints::factory()
             ->material(['Model_Items_Helmet' => 1, 'Model_Items_Generic_Metal' => 4, 'Model_Items_Generic_Sum' => 1])
             ->produces(['Model_Items_Helmet2' => 1])
     )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:pbomb')
+            ->message('Vorsichtig füllst du das Schwarzpulver in eine Plastiktüte... BINGO! Perfekte Schwarzpulverbombe! Dieses Teil wird dir sicher irgendwann einmal das Leben retten.')
+            ->energy(1)
+            ->material(['Model_Items_Generic_Ducttape' => 1, 'Model_Items_Generic_Gunpowder' => 1, 'Model_Items_Generic_Plasticbag' => 1])
+            ->produces(['Model_Items_Powderbomb' => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:pkbomb')
+            ->message('So ein Kürbis kann sicher toll explodieren, wenn man ihn bis zum Rand mit Schwarzpulver vollstopft! Und das Gesicht.... naja, der Kürbis hätt halt ohne einfach doof ausgesehen.')
+            ->energy(10)
+            ->material(['Model_Items_Generic_Pumpkin' => 1, 'Model_Items_Generic_Gunpowder' => 5])
+            ->produces(['Model_Items_Pumpkinbomb' => 1])
+            ->effect(Model_Effect::factory()
+                ->achieve(Model_Achievement::MA_PUMPKINHEAD)
+            )
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:bandage')
+            ->message('Also, so richtig hygienisch sieht das jetzt nicht aus...')
+            ->energy(5)
+            ->material(['Model_Items_Generic_Cloth' => 2, 'Model_Items_Whiskey' => 1])
+            ->produces(['Model_Items_Bandage2' => 1, 'Model_Items_Smallbottle' => 1])
+    )
+
+    // ++ STACK -> All blueprints below need the furniture workshop
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires_room('workshop_furniture');})
 
     ->add_blueprints(
         Model_Blueprint::factory()
@@ -442,35 +471,7 @@ return Model_Blueprints::factory()
             ->produces(['Model_Items_Generic_Metal' => 5, 'Model_Items_Generic_Sum' => 5, 'Model_Items_Generic_Cloth' => 2])
     )
 
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('i:pbomb')
-            ->message('Vorsichtig füllst du das Schwarzpulver in eine Plastiktüte... BINGO! Perfekte Schwarzpulverbombe! Dieses Teil wird dir sicher irgendwann einmal das Leben retten.')
-            ->energy(1)
-            ->material(['Model_Items_Generic_Ducttape' => 1, 'Model_Items_Generic_Gunpowder' => 1, 'Model_Items_Generic_Plasticbag' => 1])
-            ->produces(['Model_Items_Powderbomb' => 1])
-    )
-
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('i:pkbomb')
-            ->message('So ein Kürbis kann sicher toll explodieren, wenn man ihn bis zum Rand mit Schwarzpulver vollstopft! Und das Gesicht.... naja, der Kürbis hätt halt ohne einfach doof ausgesehen.')
-            ->energy(10)
-            ->material(['Model_Items_Generic_Pumpkin' => 1, 'Model_Items_Generic_Gunpowder' => 5])
-            ->produces(['Model_Items_Pumpkinbomb' => 1])
-            ->effect(Model_Effect::factory()
-                ->achieve(Model_Achievement::MA_PUMPKINHEAD)
-            )
-    )
-
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('i:bandage')
-            ->message('Also, so richtig hygienisch sieht das jetzt nicht aus...')
-            ->energy(5)
-            ->material(['Model_Items_Generic_Cloth' => 2, 'Model_Items_Whiskey' => 1])
-            ->produces(['Model_Items_Bandage2' => 1, 'Model_Items_Smallbottle' => 1])
-    )
+    ->pop_stack()
 
     // -- STACK -> All blueprints below NO LONGER need the basic workbench
     ->pop_stack()

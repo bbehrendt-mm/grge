@@ -25,6 +25,7 @@ class Model_Blueprint {
 
     private $requires = [];
     private $requires_local = [];
+    private $requires_tags = [];
     private $provides = [];
     private $provides_room = [];
     private $removes = [];
@@ -65,9 +66,9 @@ class Model_Blueprint {
     public function add_modifier($mod, $f) {
         switch ($mod) {
             case static::BP_MOD_ENERGY:
-                $this->modifiers[] = function($player, $pre) use ($f) {
+                $this->modifiers[] = function($player, $pre, $room) use ($f) {
                     /** @var Model_Blueprint $bp */
-                    $this->energy = $f($player, $pre, $this->energy);
+                    $this->energy = $f($player, $pre, $this->energy, $room);
                 };
         };
         return $this;
@@ -79,9 +80,9 @@ class Model_Blueprint {
      * @param string[] $pre
      * @return Model_Blueprint
      */
-    public function modify($player, $pre) {
+    public function modify($player, $pre, $room) {
         foreach ($this->modifiers as $mod)
-            $mod($player, $pre);
+            $mod($player, $pre, $room);
         $this->modifiers = [];
         return $this;
     }
@@ -400,6 +401,26 @@ class Model_Blueprint {
     }
 
     /**
+     * Adds new room tag requirements or returns the current requirements.
+     * @param string|string[] $tags,...
+     * @return Model_Blueprint|string[]
+     */
+    public function requires_room_tag($tags = null) {
+        if (func_num_args() > 1) {
+            foreach (func_get_args() as $arg)
+                $this->requires_room_tag($arg);
+            return $this;
+        }
+
+        if ($tags === null)
+            return $this->requires_tags;
+
+        if (!is_array($tags)) $tags = [$tags];
+        $this->requires_tags = array_unique(array_merge($this->requires_tags, $tags));
+        return $this;
+    }
+
+    /**
      * Adds a new provided ID. Note that the ID if this blueprint is always provided by default. If called without argument, it returns all IDs this blueprint provides
      * @param string $rid Provided ID
      * @return Model_Blueprint|string[]
@@ -573,7 +594,9 @@ class Model_Blueprint {
      * @return bool
      */
     private function can_room($room) {
-        return $room->check_room_satisfaction($this->requires_room()) && $this->can_req($room->get_content(), true);
+        $t = true;
+        foreach ($this->requires_tags as $tag) if (!$room->has_tag($tag)) $t = false;
+        return $t &&  $room->check_room_satisfaction($this->requires_room()) && $this->can_req($room->get_content(), true);
     }
 
     /**
@@ -777,9 +800,15 @@ class Model_Blueprint {
             $name = $cls::static_name();
         } else $name = '???';
 
-        $room_data = [];
+        $room_data = $tag_data = [];
         foreach ($this->room_requirements as $rq_room)
             $room_data[$rq_room] = $room->check_room_satisfaction($rq_room);
+        foreach ($this->requires_tags as $tag) {
+            $tag_data[$tag] = ['name' => Model_Room::tag_info($tag), 'b' => $room->has_tag($tag)];
+            if (!$room->has_tag($tag)) $requirements_fulfilled = false;
+        }
+
+
         $room_occ_data = [];
         foreach ($this->provide_room() as $occ_room)
             if (!in_array($occ_room, $this->requires_room()))
@@ -794,6 +823,7 @@ class Model_Blueprint {
             'description' => $this->description,
             'requires' => $this->requires,
             'requires_room' => $room_data,
+            'requires_tag' => $tag_data,
             'requires_local' => $this->requires_local,
             'energy' => $this->energy,
             'repair' => -$this->decay,

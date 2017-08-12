@@ -8,19 +8,18 @@ class Model_Places_Burgerjoint extends Model_Places_Abstract_Place {
     protected static $icon = 'restaurant';
     protected static $outside = false;
 
-    public function uin($new = null) {
-        if ($new !== null) {
-            $this->inventory->add(new Model_Items_Virtual_Location_Cooler());
-            $this->inventory->add(new Model_Items_Virtual_Location_Ffkitchen());
-            Model_Blueprints::fast_apply($this, 'items', 'ktc_burgerjoint');
-        }
-        return parent::uin($new);
-    }
-
     public function setup_additional_rooms() {
         parent::setup_additional_rooms();
-        $this->create_new_room(10,['inside']);
-        $this->create_new_room(10,['inside']);
+        $r_kitchen = $this->create_new_room(10,['inside']);
+
+        //Model_Blueprints::fast_apply($this,'rooms','kitchen', $r_kitchen);
+        Model_Blueprints::fast_apply($this,'rooms',['kitchen','kitchen_burgerjoint'], $r_kitchen);
+        $r_kitchen->name("Küchenbereich");
+
+        $r_cooler = $this->create_new_room(10,['inside']);
+        Model_Blueprints::fast_apply($this,'rooms','cooler_closed', $r_cooler);
+        $r_cooler->name("Kühlkammer");
+
         $this->create_new_room(20,['inside']);
     }
 }	

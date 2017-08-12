@@ -3,12 +3,7 @@
 return Model_Blueprints::factory()
     // ++ STACK -> All blueprints below benefit from daytime and handyman bonus, and give builder achievement
     ->push_stack(function(&$b) {/** @var Model_Blueprint $b */
-        $b->add_modifier(Model_Blueprint::BP_MOD_ENERGY, function($pl,$pre,$e) { /** @var Model_Player $pl */
-            $mod = 1;
-            if (Tool_Scripts::get_timeofday($pl) == 'morning') $mod -= 0.25;    // Daytime bonus
-            if ($pl->get_status()->retrieve('tr_handyman')) $mod -= 0.1;    // Handyman Bonus
-            return max(min(1,$e),floor($e*$mod));
-        });
+        $b->add_modifier_builder();
     })
 
     ->add_blueprints(
@@ -38,7 +33,7 @@ return Model_Blueprints::factory()
             ->requires_room('free')
             ->requires_room_tag('inside')
             ->name('Wirtschaftsraum')
-            ->emplaces('Model_Items_Virtual_Location_Maker')
+            ->emplaces_action()
             ->description('Hier kannst du alle möglichen großen Geräte unterbringen, die deinem Versteck die Annehmlichkeiten einer luxoriösen 5-Sterne-Bruchbude verleihen.')
             ->energy(5)
     )

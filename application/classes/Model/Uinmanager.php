@@ -47,7 +47,7 @@ class Model_Uinmanager extends Model {
      * @param Interface_Cloudshard $obj
      * @param bool $no_hash Create a hash for the new object
      */
-	private function cache_set(Interface_Cloudshard &$obj, $no_hash = false) {
+	private function cache_set(Interface_Cloudshard &$obj = null, $no_hash = false) {
         if (!$obj) return;
         if (isset($this->cleanup[$obj->uin()])) return;
         if (isset($this->reserved[$obj->uin()])) unset($this->reserved[$obj->uin()]);

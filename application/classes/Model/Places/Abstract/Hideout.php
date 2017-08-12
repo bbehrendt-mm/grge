@@ -29,7 +29,7 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
     public function setup_primary_rooms() {
         $room = parent::setup_primary_rooms();
         $room->upgrade('Versteck',false,['common_hideout']);
-        $room->inventory()->add(new Model_Items_Virtual_Location_Room_Defense());
+        $room->inventory()->add(new Model_Items_Virtual_Location_Room_Generic("Verteidigen...", null, "fighter"));
 
         return $room;
     }

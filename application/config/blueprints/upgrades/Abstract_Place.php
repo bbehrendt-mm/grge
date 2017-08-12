@@ -8,6 +8,11 @@ return Model_Blueprints::factory()
     ->add_blueprints(Model_Blueprint::factory()->id('impaler')->name('Vorbereitete Fallgruben'), true)
     ->add_blueprints(Model_Blueprint::factory()->id('slot_epic')->name('Bauplatz für epische Projekte'), true)
 
+    // ++ STACK -> All blueprints below benefit from daytime and handyman bonus, and give builder achievement
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */
+        $b->add_modifier_builder();
+    })
+
     // Kitchen
     ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->category('Küche')->requires_room('kitchen');})
 
@@ -59,4 +64,5 @@ return Model_Blueprints::factory()
     // -- STACK -> All blueprints below NO LONGER need the workbench
     ->pop_stack()
 
+    ->pop_stack()
     ;

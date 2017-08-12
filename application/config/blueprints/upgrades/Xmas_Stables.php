@@ -1,6 +1,12 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
 return Model_Blueprints::factory()
+
+    // ++ STACK -> All blueprints below benefit from daytime and handyman bonus, and give builder achievement
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */
+        $b->add_modifier_builder();
+    })
+
     ->add_blueprints(
         Model_Blueprint::factory()
             ->id('xmas_hideout')
@@ -44,6 +50,8 @@ return Model_Blueprints::factory()
             ->energy(5)
             ->material(['Model_Items_Generic_Lametta' => 5])
     )
+
+    ->pop_stack()
 
     ->pop_stack()
     ;

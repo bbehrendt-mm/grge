@@ -22,6 +22,7 @@ class Model_Blueprint {
     private $item_deciders = [];
     private $produces = [];
     private $emplaces = [];
+    private $emplaces_action_data = [];
 
     private $requires = [];
     private $requires_local = [];
@@ -72,6 +73,15 @@ class Model_Blueprint {
                 };
         };
         return $this;
+    }
+
+    public function add_modifier_builder($daytime_bonus = 0.25, $handyman_bonus = 0.1) {
+        $this->add_modifier(Model_Blueprint::BP_MOD_ENERGY, function($pl,$pre,$e) use ($daytime_bonus,$handyman_bonus) { /** @var Model_Player $pl */
+            $mod = 1;
+            if ($daytime_bonus  !== false && Tool_Scripts::get_timeofday($pl) == 'morning')  $mod -= $daytime_bonus;   // Daytime bonus
+            if ($handyman_bonus !== false && $pl->get_status()->retrieve('tr_handyman')) $mod -= $handyman_bonus;  // Handyman Bonus
+            return max(min(1,$e),floor($e*$mod));
+        });
     }
 
     /**
@@ -509,6 +519,19 @@ class Model_Blueprint {
     }
 
     /**
+     * Adds an item to the emplacement stack
+     * @param string $text
+     * @param null $text_desc
+     * @param string $custom_popup
+     * @param string $custom_action_id
+     * @return Model_Blueprint
+     */
+    public function emplaces_action($text = "Herstellen...", $text_desc = null, $custom_popup = "maker", $custom_action_id = "lc_lazy_maker") {
+        $this->emplaces_action_data[] = [$text,$text_desc,$custom_popup,$custom_action_id];
+        return $this;
+    }
+
+    /**
      * Getter / Setter for the amount of zombies that are killed by building this blueprint.
      * @param bool $optional Set true if destroying zombies is not the primary function of this blueprint (meaning it can be constructed even if there are no zombies)
      * @param int|array|callable $min Minimal number of kills OR an array containing both min and max numbers as first an second elements OR a function that receives the number of present zombies as well as the active player as an argument and must return a single number or an array containing min/max numbers
@@ -667,17 +690,6 @@ class Model_Blueprint {
 
         $ret = $this->apply($player->location(), $preconditions, $room);
 
-        foreach ($this->emplaces as $item => $count)
-            for ($i = 0; $i < $count; $i++) {
-                $instance = new $item();
-                $room->inventory()->add($instance);
-
-                if (Tool_System::instance_of($instance,'Model_Items_Abstract_Virtual')) {
-                    /** @var Model_Items_Abstract_Virtual $instance */
-                    if ($instance::setup_location()) $instance->set_location_info($player->location_class(), $room->id());
-                }
-            }
-
 
         if ($this->effect)
             $this->effect->execute($player, null);
@@ -705,12 +717,30 @@ class Model_Blueprint {
 
     /**
      * @param Model_Room $room
+     * @param Model_Places_Abstract_Place $location
      * @return array
      */
-    private function apply_room($room) {
+    private function apply_room($room,$location) {
         if ($this->clear_previous_room()) $room->clear();
 
         $room->upgrade($this->name,$this->clear_previous_room() || $this->replace_room_satisfaction() ? true : $this->requires_room(),$this->provide_room());
+
+        foreach ($this->emplaces_action_data as $action_data) {
+            list($text,$text_desc,$custom_popup,$custom_action_id) = $action_data;
+            $room->inventory()->add(new Model_Items_Virtual_Location_Room_Generic($text,$text_desc,$custom_popup,$custom_action_id));
+        }
+
+
+        foreach ($this->emplaces as $item => $count)
+            for ($i = 0; $i < $count; $i++) {
+                $instance = new $item();
+                $room->inventory()->add($instance);
+
+                if (Tool_System::instance_of($instance,'Model_Items_Abstract_Virtual')) {
+                    /** @var Model_Items_Abstract_Virtual $instance */
+                    if ($instance::setup_location()) $instance->set_location_info($location->uin(), $room->id());
+                }
+            }
 
         return [];
     }
@@ -730,7 +760,7 @@ class Model_Blueprint {
             $location->deco($this->deco_value);
         }
 
-        if ($this->is_room) return $this->apply_room($room);
+        if ($this->is_room) return $this->apply_room($room,$location);
 
         if ($this->steps <= 0)
             if ($this->remove()) {

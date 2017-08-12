@@ -374,7 +374,8 @@ abstract class Model_Map_Abstract {
             $data['visible'] = true;
             if ($data['reserved']) {
                 $class = $data['class'];
-                Globals::CurrentGame()->uin()->fill_reservation($lid, new $class);
+                $cls = new $class;
+                Globals::CurrentGame()->uin()->fill_reservation($lid, $cls);
             }
         }
     }

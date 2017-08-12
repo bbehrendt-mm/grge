@@ -40,14 +40,16 @@ class Model_Blueprints {
      * @param Model_Places_Abstract_Place|null $location
      * @param string|null $category
      * @param string|string[] $id
+     * @param Model_Room|null $room
      * @return bool|string[]
      */
-    public static function fast_apply($location, $category, $id) {
-        $b = static::factory($location, $category);
+    public static function fast_apply($location, $category, $id, $room = null) {
+        $b = static::factory($location, $category, true);
         if (!is_array($id)) $id = [$id];
+        if ($room === null) $room = $location->room();
         $ret = [];
         foreach ($id as $entry) {
-            $tmp = $b->perform_apply($entry, $location, $location->room());
+            $tmp = $b->perform_apply($entry, $location, $room);
             if (is_array($tmp))
                 $ret = array_merge($ret, $tmp);
         }

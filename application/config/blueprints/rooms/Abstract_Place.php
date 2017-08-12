@@ -13,12 +13,7 @@ return Model_Blueprints::factory()
 
     // ++ STACK -> All blueprints below benefit from daytime and handyman bonus, and give builder achievement
     ->push_stack(function(&$b) {/** @var Model_Blueprint $b */
-        $b->add_modifier(Model_Blueprint::BP_MOD_ENERGY, function($pl,$pre,$e) { /** @var Model_Player $pl */
-            $mod = 1;
-            if (Tool_Scripts::get_timeofday($pl) == 'morning') $mod -= 0.25;    // Daytime bonus
-            if ($pl->get_status()->retrieve('tr_handyman')) $mod -= 0.1;    // Handyman Bonus
-            return max(min(1,$e),floor($e*$mod));
-        });
+        $b->add_modifier_builder();
     })
 
     /** KITCHEN */
@@ -30,7 +25,7 @@ return Model_Blueprints::factory()
             ->requires_room('free')
             ->material([Model_Items_Generic_Table::cls() => 1])
             ->name('Küche')
-            ->emplaces('Model_Items_Virtual_Location_Room_Kitchen')
+            ->emplaces_action('Kochen')
             ->description('In einer Küche kannst du aus diversen Gegenständen Nahrungsmittel zubereiten. Für deren Geschmack wird jedoch keine Garantie übernommen...')
             ->energy(5)
     )
@@ -66,7 +61,7 @@ return Model_Blueprints::factory()
             ->requires_room('free')
             ->material([Model_Items_Generic_Table::cls() => 1, Model_Items_Abstract_Chair::cls() => 1])
             ->name('Werkstatt')
-            ->emplaces('Model_Items_Virtual_Location_Maker')
+            ->emplaces_action()
             ->description('Die Werkstatt kann mit vielerlei Werkzeugen und Geräten ausgestattet werden, die für alltägliche Bastelarbeiten erforderlich sind.')
             ->energy(5)
     )

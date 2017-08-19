@@ -15,14 +15,13 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
 
     protected $extensions = Array();
     protected $survival_find = true;
-    protected $upgradable = true;
 
     public function uin($uin = NULL) {
         if ($uin === NULL) return parent::uin();
         else $t = parent::uin($uin);
         //ToDo: Rooms
 
-        $this->inventory->add(new Model_Items_Virtual_Location_Hideout(!$this->room()->has_content('cursed_hideout')));
+        $this->inventory->add(new Model_Items_Virtual_Location_Hideout());
         return $t;
     }
 

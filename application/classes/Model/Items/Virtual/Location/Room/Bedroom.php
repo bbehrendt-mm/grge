@@ -11,10 +11,10 @@ class Model_Items_Virtual_Location_Room_Bedroom extends Model_Items_Abstract_Vir
                 /** @var Model_Player $p */
                 if ($p->get_status()->retrieve('fragile')) return 'fragile';
                 if ($p->get_status()->retrieve('wow')) return 'wow';
-                if ($p->get_status()->get(Model_Status::MS_STAT_THIRST) < 20) return 'thirst';
-                if ($p->get_status()->get(Model_Status::MS_STAT_HUNGER) < 20) return 'hunger';
-                if ($p->get_status()->get(Model_Status::MS_STAT_SLEEPY) > 85) return 'sleepy';
-                if ($p->location()->room()->has_content('hideout_cursed')) return 'cursed';
+                if ($p->get_status()->get(Model_Status::MS_STAT_THIRST) < 20)      return 'thirst';
+                if ($p->get_status()->get(Model_Status::MS_STAT_HUNGER) < 20)      return 'hunger';
+                if ($p->get_status()->get(Model_Status::MS_STAT_SLEEPY) > 85)      return 'sleepy';
+                if ($this->room()->check_room_satisfaction('bedroom_cursed')) return 'cursed';
                 return true;
             })
             ->fail_message('Du bist im Moment beschäftigt.', 'fragile')

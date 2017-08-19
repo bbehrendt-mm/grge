@@ -8,7 +8,7 @@ class Model_Places_Asylumhideout extends Model_Places_Abstract_Hideout implement
     protected static $name = 'Patientenzimmer';
     protected static $description = 'Dieses Zimmer befindet sich in einem abgelegenen Flügel der Irrenanstalt... du hättest es nie gefunden, wenn dir der Patient nicht den Weg gezeigt hätte. Es ist überraschend groß, und hat ein schönes Erkerfenster mit Blick auf einen überwucherten Garten. Man könnte es fast als schön bezeichnen... wären die Wände nicht mit schauderhaften Fingerzeichnungen aus Blut übersäht. Es hilft auch nicht, dass hier diverse Foltergeräte und Autopsiewerkzeuge herumstehen. Das grauenhafteste in diesem Raum ist jedoch ohne Frage der DVD-Spieler mit eingelegter Helene-Fischer-DVD. Der pure Horror...';
     protected static $icon = 'mental';
-    protected $upgradable = false;
+    protected static $upgradable = false;
 
     //Base defense
     protected $defense = 0;
@@ -21,8 +21,6 @@ class Model_Places_Asylumhideout extends Model_Places_Abstract_Hideout implement
 
     public function uin($new = null) {
         if ($new !== null) {
-            Model_Blueprints::fast_apply($this, 'upgrades', ['cursed_hideout','hideout_slot','bedr1','bedr2','bedr3','ktc1','ktc3','ktc_cursed']);
-
             $f1 = mt_rand(1,4);
             $f2 = mt_rand(2,20);
             $f3 = mt_rand(3,10);
@@ -50,5 +48,18 @@ class Model_Places_Asylumhideout extends Model_Places_Abstract_Hideout implement
 
         parent::enter($pid, $type);
         new Model_Buffs_Home2($player);
+    }
+
+    public function setup_additional_rooms() {
+        $r_kitchen = $this->create_new_room(10,['inside']);
+
+        Model_Blueprints::fast_apply($this,'rooms',['kitchen','kitchen_cursed'], $r_kitchen);
+        Model_Blueprints::fast_apply($this,'upgrades',['ktc2','ktc3','ktc4'], $r_kitchen);
+        $r_kitchen->name("Küchenbereich");
+
+        $r_bedr = $this->create_new_room(10,['inside']);
+        Model_Blueprints::fast_apply($this,'rooms',['bedroom','bedroom_cursed'], $r_bedr);
+        Model_Blueprints::fast_apply($this,'upgrades',['bedr1','bedr2','bedr3'], $r_bedr);
+        $r_bedr->name("Schlafzimmer");
     }
 }	

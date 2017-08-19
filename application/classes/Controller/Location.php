@@ -65,9 +65,9 @@ class Controller_Location extends Controller_Game {
                 'type' => $room->get_usage(),
                 'tags' => $room->get_friendly_tags(),
                 'options' => [
-                    'rename' => !$room->name_is_fixed(),
-                    'add' => $room->get_usage() != null,
-                    'construct' => $id != 0,
+                    'rename' => Globals::PrimaryPlayer()->location()->is_upgradable() && !$room->name_is_fixed(),
+                    'add' => Globals::PrimaryPlayer()->location()->is_upgradable() && $room->get_usage() != null,
+                    'construct' => Globals::PrimaryPlayer()->location()->is_upgradable() && ($id != 0),
                     'actions' => $hid,
                     'enabled' => $room->enabled()
                 ]
@@ -134,7 +134,7 @@ class Controller_Location extends Controller_Game {
         $blueprints = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'rooms', true);
         $externals = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'upgrades', true)->externalize();
 
-        if ($build = $this->post('build'))
+        if (Globals::PrimaryPlayer()->location()->is_upgradable() && $build = $this->post('build'))
             Globals::PrimaryPlayer()->achievements()->achieve(Model_Achievement::MA_ROOM_BUILDER, $this->exec_build($blueprints, $build, $room) ? 1 : 0);
 
         $blueprints->merge($externals)->validate();
@@ -155,7 +155,7 @@ class Controller_Location extends Controller_Game {
         $blueprints = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'upgrades',true);
         $externals = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'rooms',true)->externalize();
 
-        if ($build = $this->post('build'))
+        if (Globals::PrimaryPlayer()->location()->is_upgradable() && $build = $this->post('build'))
             Globals::PrimaryPlayer()->achievements()->achieve(Model_Achievement::MA_CONSTRUCTIONS, $this->exec_build($blueprints, $build, $room) ? 1 : 0);
 
         $blueprints->merge($externals)->validate();

@@ -9,7 +9,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
     protected static $outside = true;
 
     protected static $custom_style = null;
-
+    protected static $upgradable = true;
     protected static $perpetualDaytime = null;
 
 	protected static $widget_list = Array(
@@ -43,6 +43,10 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 	public function widget_list() {
 		return static::$widget_list;
 	}
+
+	public function is_upgradable() {
+	    return static::$upgradable;
+    }
 
     public static function get_namelist() {
         return (static::$namelist) ? static::$namelist : [static::$name];

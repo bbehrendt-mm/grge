@@ -10,11 +10,6 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
         'hideout_couch' => PHP_INT_MAX,
     );
 
-    public function __construct($upgradable = true) {
-        if (!$upgradable)
-            $this->remaining['hideout_builder'] = 0;
-    }
-
     protected function hid() {
         //ToDo: ROOOOOOOOOOOMS
 
@@ -29,9 +24,6 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
             // ToDo: Prevent hideout upgrades here!
             // ToDo: Prevent defense here!
         }
-
-        if (!$location->room()->has_content("hideout_slot"))
-            return $tmp;
 
         return $tmp;
     }

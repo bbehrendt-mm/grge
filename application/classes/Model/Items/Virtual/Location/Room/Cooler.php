@@ -3,10 +3,7 @@
 class Model_Items_Virtual_Location_Room_Cooler extends Model_Items_Abstract_Virtual {
 
     protected function self_upgrade() {
-        $location = Globals::CurrentGame()->location($this->loc_id);
-        $room = $location->room($this->room_id);
-
-        Model_Blueprints::fast_apply($location,'rooms','cooler', $room);
+        Model_Blueprints::fast_apply($this->location(),'rooms','cooler', $this->room());
     }
 
     protected function hid() {

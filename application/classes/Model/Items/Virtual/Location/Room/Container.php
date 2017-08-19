@@ -1,20 +1,16 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Items_Virtual_Location_Container extends Model_Items_Abstract_Virtual {
-
-    protected $remaining = array(
-        'container_open' => 3
-    );
+class Model_Items_Virtual_Location_Room_Container extends Model_Items_Abstract_Virtual {
 
     protected function hid() {
-        $phpbb53 = $this;
-        return parent::hid()->add_action('Einen Container öffnen', Model_Action::factory()
+        return parent::hid()->add_action('Container öffnen', Model_Action::factory()
             ->buttonskin('location')
-            ->description('Hier stehen einige Container herum. Da du nicht hereinschauen kannst, musst du sie wohl aufmachen, um herauszufinden, was drin ist.')
+            ->description('Hier steht ein verschlossener Baucontainer. Da du nicht hereinschauen kannst, musst du ihn wohl aufmachen, um herauszufinden, was drin ist.')
             ->show_as(Model_Effect::factory()
                 ->ambiguous_effect()
             )
             ->effect(Model_Effect::factory()
+                ->consume($this)
                 ->custom(function($p) {
                     /** @var Model_Player $p */
 
@@ -33,8 +29,10 @@ class Model_Items_Virtual_Location_Container extends Model_Items_Abstract_Virtua
 
                         Tool_Scripts::place_new_item($items);
                     }
+
+                    Model_Blueprints::fast_apply($this->location(),'rooms','free', $this->room());
                 })
             )
-        , 'container_open');
+        );
     }
 }	

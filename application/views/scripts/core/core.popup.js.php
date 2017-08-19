@@ -336,19 +336,36 @@ core.popup = {
 
             popup.empty();
 
-            popup.append(NF.row().append(
+            var frame = NF.row().appendTo(
+                $('<div />').css({
+                    position: 'absolute',
+                    width: '100%',
+                    left: 0,
+                    top: titlebar.outerHeight(),
+                    bottom: 0,
+                    overflow: 'auto'
+                }).appendTo(popup)
+            );
+
+            frame.append(NF.row().append(
                 NF.cell(true, {lg: 10, md: 12}, {lg: 1, md: 0}).append(
                     NF.info(<?=__j('Hier kannst du die einzelnen Räume deines Versteckes ausbauen oder ihren Typ ändern. Außerdem kannst du mit den Ausbauten der Räume interagieren.')?>)
                 )
             ));
 
-            var main_row = NF.row().appendTo(popup);
+            var main_row = NF.row().appendTo(frame);
+            var rc = 0;
 
             $.each(data.rooms, function(id,room) {
+                if (rc >= 2) {
+                    rc = 0;
+                    main_row = NF.row().appendTo(frame);
+                }
+
                 var room_identifier = room.name ? room.name : (room.type ? room.type : <?=__j('Unbenutzter Raum')?>);
                 var room_name = room.name;
                 var current, name_field;
-                main_row.append(NF.cell(true,6).append(
+                main_row.append(NF.cell(true,{desktop: 6, md: 12}).append(
                     current = $('<div/>').addClass('flatbox').append(
                         NF.row()
                             .append(NF.cell(false,11)
@@ -422,6 +439,8 @@ core.popup = {
                     titlebar.children('.center').text(game.i18n(<?=__j('Umbauen: :room')?>, {':room': room_identifier}));
                     core.popup.genericBlueprintLoader('tine',room.id,popup);
                 });
+
+                rc++
             })
         });
     }

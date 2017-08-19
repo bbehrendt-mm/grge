@@ -8,8 +8,7 @@ return Model_Blueprints::factory()
     ->add_blueprints(Model_Blueprint::factory()->id('impaler')->name('Vorbereitete Fallgruben'), true)
     ->add_blueprints(Model_Blueprint::factory()->id('slot_epic')->name('Bauplatz für epische Projekte'), true)
 
-    ->add_blueprints(Model_Blueprint::factory()->requires_room('invalid')->room('free')->name('Unbenutzter Raum'), true)
-    ->add_blueprints(Model_Blueprint::factory()->requires_room('invalid')->room('used')->name('Eingerichteter Raum'), true)
+    ->add_blueprints(Model_Blueprint::factory()->requires_room('invalid')->room('free')->name('Unbenutzter Raum'))
 
     // ++ STACK -> All blueprints below benefit from daytime and handyman bonus, and give builder achievement
     ->push_stack(function(&$b) {/** @var Model_Blueprint $b */

@@ -10,14 +10,15 @@ class Model_Places_Burgerjoint extends Model_Places_Abstract_Place {
 
     public function setup_additional_rooms() {
         parent::setup_additional_rooms();
-        $r_kitchen = $this->create_new_room(10,['inside']);
 
-        Model_Blueprints::fast_apply($this,'rooms',['kitchen','kitchen_burgerjoint'], $r_kitchen);
-        $r_kitchen->name("Küchenbereich");
-
-        $r_cooler = $this->create_new_room(10,['inside']);
-        Model_Blueprints::fast_apply($this,'rooms','cooler_closed', $r_cooler);
-        $r_cooler->name("Kühlkammer");
+        $this->setup_new_room($this->create_new_room(10,['inside']),
+                              ['kitchen','kitchen_burgerjoint'],
+                              [],
+                              "Küchenbereich");
+        $this->setup_new_room($this->create_new_room(10,['inside']),
+                              ['cooler_closed'],
+                              [],
+                              "Kühlkammer");
 
         $this->create_new_room(20,['inside']);
     }

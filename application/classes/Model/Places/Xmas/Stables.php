@@ -24,7 +24,7 @@ class Model_Places_Xmas_Stables extends Model_Places_Abstract_Hideout {
 
     public function uin($new = null) {
         if ($new !== null) {
-            Model_Blueprints::fast_apply($this, 'upgrades', ['xmas_hideout','hideout_slot','hay1']);
+            Model_Blueprints::fast_apply($this, 'upgrades', ['xmas_hideout','hideout_slot']);
             $items = [Model_Items_Xmas_Rubbing::cls() => 1, Model_Items_Xmas_Beer::cls() => 2, Model_Items_Xmas_Drink::cls() => 3];
             foreach ($items as $cls => $count)
                 for ($i = 0; $i < $count; $i++) {
@@ -34,6 +34,14 @@ class Model_Places_Xmas_Stables extends Model_Places_Abstract_Hideout {
         }
 
         return parent::uin($new);
+    }
+
+    public function setup_additional_rooms() {
+        $this->setup_new_room($this->create_new_room(20,['inside']),
+                              ['stables'],
+                              ['hay1'],
+                              "Stall");
+        $this->create_new_room(20,['inside']);
     }
 
     public function enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {

@@ -51,15 +51,13 @@ class Model_Places_Asylumhideout extends Model_Places_Abstract_Hideout implement
     }
 
     public function setup_additional_rooms() {
-        $r_kitchen = $this->create_new_room(10,['inside']);
-
-        Model_Blueprints::fast_apply($this,'rooms',['kitchen','kitchen_cursed'], $r_kitchen);
-        Model_Blueprints::fast_apply($this,'upgrades',['ktc2','ktc3','ktc4'], $r_kitchen);
-        $r_kitchen->name("Küchenbereich");
-
-        $r_bedr = $this->create_new_room(10,['inside']);
-        Model_Blueprints::fast_apply($this,'rooms',['bedroom','bedroom_cursed'], $r_bedr);
-        Model_Blueprints::fast_apply($this,'upgrades',['bedr1','bedr2','bedr3'], $r_bedr);
-        $r_bedr->name("Schlafzimmer");
+        $this->setup_new_room($this->create_new_room(10,['inside']),
+                              ['kitchen','kitchen_cursed'],
+                              ['ktc2','ktc3','ktc4'],
+                              "Küchenbereich");
+        $this->setup_new_room($this->create_new_room(10,['inside']),
+                              ['bedroom','bedroom_cursed'],
+                              ['bedr1','bedr2','bedr3'],
+                              "Schlafzimmer");
     }
 }	

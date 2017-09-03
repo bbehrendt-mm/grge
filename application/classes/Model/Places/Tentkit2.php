@@ -18,10 +18,13 @@ class Model_Places_Tentkit2 extends Model_Places_Tentkit {
     protected static $decay_exp = 0;
 
     public function uin($new = null) {
-        if ($new !== null)
-            Model_Blueprints::fast_apply($this, 'upgrades', 'bedr2');
+        $t = parent::uin($new);
 
-        return parent::uin($new);
+        if ($new !== null)
+            $this->setup_new_room($this->room(),
+                                  [],
+                                  ['bedr2']);
+        return $t;
     }
 
     public function can_enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {

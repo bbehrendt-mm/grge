@@ -50,11 +50,14 @@ class Model_Places_Motorhome extends Model_Places_Home {
         return !$this->driving && !$this->force_nomap;
     }
 
-    public function uin($new = null) {
-        if ($new !== null)
-            Model_Blueprints::fast_apply($this, 'upgrades', ['bedr1','sofa1','manu1','gen1','gen2','ktc1','outside']);
+    public function setup_additional_rooms() {
+        parent::setup_additional_rooms();
+        $this->create_new_room(25,['outside']);
 
-        return parent::uin($new);
+        $this->setup_new_room($this->create_new_room(15,['inside']),
+                              ['motorhome'],
+                              ['bedr1','sofa1','gen1','gen2','ktc2'],
+                              "Wohnmobil");
     }
 
     private function mapcontrol($populate) {
@@ -265,11 +268,5 @@ class Model_Places_Motorhome extends Model_Places_Home {
 
         if ($this->is_driving())
             $this->zombie_factory()->accumulation(0);
-    }
-
-    public function setup_additional_rooms() {
-        parent::setup_additional_rooms();
-        $this->create_new_room(25,['outside']);
-        $this->create_new_room(8,['inside']);
     }
 }	

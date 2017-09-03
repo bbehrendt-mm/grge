@@ -1,10 +1,8 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
 return Model_Blueprints::factory()
-    ->add_blueprints(Model_Blueprint::factory()->id('manu_northpole')->name('Werkbank des Weihnachtsmanns'), true)
-
     // ++ STACK -> All blueprints below can be produced indefinitely and require local facilities
-    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->steps(0)->requires('manu_northpole');})
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->steps(0)->requires_room('manu_northpole');})
 
     ->add_blueprints(
         Model_Blueprint::factory()

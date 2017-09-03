@@ -12,10 +12,10 @@ class Model_Places_Constructionsite extends Model_Places_Abstract_Place {
         $this->create_new_room(40,['outside']);
         $this->create_new_room(40,['outside']);
 
-        for ($i = 0; $i < 3; $i++) {
-            $b = $this->create_new_room(6,['inside']);
-            Model_Blueprints::fast_apply($this,'rooms','container_closed', $b);
-            $b->name("Container");
-        }
+        for ($i = 0; $i < 3; $i++)
+            $this->setup_new_room($this->create_new_room(6,['inside']),
+                                  ['container_closed'],
+                                  [],
+                                  "Container");
     }
 }	

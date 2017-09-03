@@ -20,18 +20,31 @@ class Model_Places_House extends Model_Places_Abstract_Hideout {
 
     public function uin($new = null) {
         if ($new !== null)
-            Model_Blueprints::fast_apply($this, 'upgrades', ['bedr1', 'bedr2', 'bedr3', 'manu1', 'gen1', 'ktc1', 'ktc2', 'deffence1', 'outside', 'outside_space', 'slot_epic']);
+            Model_Blueprints::fast_apply($this, 'upgrades', ['deffence1']);
 
         return parent::uin($new);
     }
 
     public function setup_additional_rooms() {
-        parent::setup_additional_rooms();
         $this->create_new_room( 5,['inside']);
-        $this->create_new_room( 5,['inside']);
-        $this->create_new_room(10,['inside']);
-        $this->create_new_room(12,['inside']);
-        $this->create_new_room(12,['inside']);
+
+        $this->setup_new_room($this->create_new_room( 5,['inside']),
+                              ['utilities'],
+                              ['gen1'],
+                              "Keller");
+        $this->setup_new_room($this->create_new_room( 10,['inside']),
+                              ['bedroom'],
+                              ['bedr1', 'bedr2', 'bedr3'],
+                              "Schlafzimmer");
+        $this->setup_new_room($this->create_new_room( 12,['inside']),
+                              ['kitchen'],
+                              ['ktc2', 'ktc3', 'ktc4'],
+                              "Küche");
+        $this->setup_new_room($this->create_new_room( 12,['inside']),
+                              ['workshop'],
+                              [],
+                              "Werkstatt");
+
         $this->create_new_room(15,['inside']);
     }
 

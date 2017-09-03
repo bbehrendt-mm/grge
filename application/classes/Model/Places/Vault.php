@@ -18,19 +18,24 @@ class Model_Places_Vault extends Model_Places_Abstract_Hideout {
     //Exp: 8% per day
     protected static $decay_exp = 0.01;
 
-    public function uin($new = null) {
-        if ($new !== null)
-            Model_Blueprints::fast_apply($this, 'upgrades', ['bedr1','manu1','gen1','slot_epic']);
-
-        return parent::uin($new);
-    }
-
     public function setup_additional_rooms() {
-        parent::setup_additional_rooms();
-        $this->create_new_room(8,['inside']);
-        $this->create_new_room(8,['inside']);
-        $this->create_new_room(8,['inside']);
-        $this->create_new_room(8,['inside']);
+        $this->setup_new_room($this->create_new_room( 5,['inside']),
+                              ['utilities'],
+                              ['gen1','gen2'],
+                              "Reaktorraum");
+        $this->setup_new_room($this->create_new_room( 8,['inside']),
+                              ['bedroom'],
+                              ['bedr1'],
+                              "Schlafzimmer");
+        $this->setup_new_room($this->create_new_room( 8,['inside']),
+                              ['kitchen'],
+                              [],
+                              "Küche");
+        $this->setup_new_room($this->create_new_room( 8,['inside']),
+                              ['workshop'],
+                              [],
+                              "Werkstatt");
+
         $this->create_new_room(8,['inside']);
         $this->create_new_room(8,['inside']);
         $this->create_new_room(8,['inside']);

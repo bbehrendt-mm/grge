@@ -7,7 +7,7 @@ class Model_Places_Home extends Model_Places_Abstract_Hideout {
     protected static $icon = 'home';
 
     public function setup_additional_rooms() {
-        parent::setup_additional_rooms();
+        $this->create_new_room(10,['inside']);
         $this->create_new_room(15,['inside']);
         $this->create_new_room(20,['outside']);
     }
@@ -37,7 +37,7 @@ class Model_Places_Home extends Model_Places_Abstract_Hideout {
 
     public function uin($new = null) {
         if ($new !== null) {
-            Model_Blueprints::fast_apply($this, 'upgrades', ['hideout', 'outside','outside_space','slot_epic']);
+            Model_Blueprints::fast_apply($this, 'upgrades', ['hideout']);
 
             if (Globals::CurrentGame()->config('modules.mapping'))
                 $this->inventory->add(new Model_Items_Virtual_Location_Mapmode());

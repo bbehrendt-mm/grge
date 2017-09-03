@@ -135,6 +135,13 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
         return $this->rooms[] = Model_Room::factory(count($this->rooms),$space,$tags);
     }
 
+    public function setup_new_room(Model_Room $room, $rtype = [], $upgrades = [], $name = null) {
+        Model_Blueprints::fast_apply($this, 'rooms', $rtype, $room);
+        Model_Blueprints::fast_apply($this, 'upgrades', $upgrades, $room);
+        if ($name !== null) $room->name($name);
+        return $room;
+    }
+
     /**
      * @return Model_Room
      */

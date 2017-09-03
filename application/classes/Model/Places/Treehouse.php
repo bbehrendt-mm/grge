@@ -5,6 +5,7 @@ class Model_Places_Treehouse extends Model_Places_Abstract_Hideout {
     protected static $name = 'Baumhaus';
     protected static $description = 'Aufgrund der mangelhaften Kletterfähigkeiten von Zombies gibt dieses Baumhaus ein überraschend gutes Versteck ab. Im Brandfall solltest du es jedoch lieber nicht verwenden...';
     protected static $icon = 'treehouse';
+    protected static $upgradable = false;
 
     //Base deco value
     protected static $base_deco_value = 15;
@@ -20,7 +21,9 @@ class Model_Places_Treehouse extends Model_Places_Abstract_Hideout {
 
     public function uin($new = null) {
         if ($new !== null)
-            Model_Blueprints::fast_apply($this, 'upgrades', 'bedr1');
+            $this->setup_new_room($this->room(),
+                                  ['bedroom'],
+                                  ['bedr1']);
 
         return parent::uin($new);
     }

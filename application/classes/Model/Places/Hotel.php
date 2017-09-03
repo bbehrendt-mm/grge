@@ -18,20 +18,11 @@ class Model_Places_Hotel extends Model_Places_Abstract_Hideout {
     //Exp: 8% per day
     protected static $decay_exp = 0.02;
 
-    public function uin($new = null) {
-        if ($new !== null)
-            Model_Blueprints::fast_apply($this, 'upgrades', ['bedr1','bedr2','bedr3']);
-
-        return parent::uin($new);
-    }
-
     public function setup_additional_rooms() {
-        parent::setup_additional_rooms();
-        $this->create_new_room(8,['inside']);
-        $this->create_new_room(8,['inside']);
-        $this->create_new_room(8,['inside']);
-        $this->create_new_room(8,['inside']);
-        $this->create_new_room(8,['inside']);
-        $this->create_new_room(8,['inside']);
+        for ($i = 0; $i < 6; $i++)
+            $this->setup_new_room($this->create_new_room(8,['inside']),
+                                  ['bedroom'],
+                                  ['bedr1','bedr2','bedr3'],
+                                  "Hotelzimmer");
     }
 }	

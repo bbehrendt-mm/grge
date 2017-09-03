@@ -5,6 +5,7 @@ class Model_Places_Hospital_Private extends Model_Places_Abstract_Hideout {
     protected static $name = 'Einzelzimmer';
     protected static $description = 'Privatpatienten haben mehr Geld, also sind sie die besseren Menschen und verdienen bessere medizinische Versorgung. Dazu gehört auch dieses Luxuszimmer, mit Besuchersessel aus Leder, Heimkinoanlage und natürlich einer gut bestückten Bar. Eigentlich könntest du dich auch selbst hier "einliefern" lassen und diesen Ort zu einem Versteck umbauen...';
     protected static $icon = 'hospital_private';
+    protected static $upgradable = false;
 
     //Base defense
     protected $defense = 2;
@@ -17,7 +18,7 @@ class Model_Places_Hospital_Private extends Model_Places_Abstract_Hideout {
 
     public function uin($new = null) {
         if ($new !== null)
-            Model_Blueprints::fast_apply($this, 'upgrades', ['bedr1','bedr2','bedr3']);
+            $this->setup_new_room($this->room(), ['bedroom'], ['bedr1','bedr2','bedr3']);
 
         return parent::uin($new);
     }

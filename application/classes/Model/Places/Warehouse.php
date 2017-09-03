@@ -19,13 +19,6 @@ class Model_Places_Warehouse extends Model_Places_Abstract_Hideout {
     //Exp: 8% per day
     protected static $decay_exp = 0.10;
 
-    public function uin($new = null) {
-        if ($new !== null)
-            Model_Blueprints::fast_apply($this, 'upgrades', 'slot_epic');
-
-        return parent::uin($new);
-    }
-
     public function setup_additional_rooms() {
         parent::setup_additional_rooms();
         $this->create_new_room(30,['inside']);

@@ -11,6 +11,16 @@ return Model_Blueprints::factory()
 
     ->add_blueprints(
         Model_Blueprint::factory()
+            ->id('xmas_hideout')
+            ->provide('hideout_slot')
+            ->name('Stall (Versteck)')
+            ->description('Naja, immerhin kann man hier den Sohn Gottes zur Welt bringen...')
+            ->decay(-100)
+            ->category('Versteck')
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
             ->id('hay1')
             ->name('Heu')
             ->description('Immerhin besser, als auf dem Boden zu schlafen...')

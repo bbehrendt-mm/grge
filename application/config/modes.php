@@ -594,9 +594,10 @@ return array(
                     if ($level >= 3)
                         Globals::CurrentGame()->map()->add_location('Model_Places_Villa');
 
-                    //TODO: FIX DIS
-                    if ($level >= 4)
-                        Model_Blueprints::fast_apply(Tool_Scripts::home(Globals::CurrentGame()), 'upgrades', ['bedr1','manu1']);
+                    if ($level >= 4) {
+                        Tool_Scripts::home(Globals::CurrentGame())->setup_new_room(Tool_Scripts::home(Globals::CurrentGame())->create_new_room(10, ['inside']), ['bedroom'], ['bedr1']);
+                        Tool_Scripts::home(Globals::CurrentGame())->setup_new_room(Tool_Scripts::home(Globals::CurrentGame())->create_new_room(10, ['inside']), ['workshop'], []);
+                    }
                 }),
         ),
         1060 => array(

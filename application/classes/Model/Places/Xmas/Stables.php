@@ -5,6 +5,8 @@ class Model_Places_Xmas_Stables extends Model_Places_Abstract_Hideout {
     protected static $name = 'Weihnachts-Stall';
     protected static $description = 'In diesem Stall wurden die gut behandelten und definitiv nicht mit Drogen ruhig gestellten Ponys gehalten, auf denen die Kinder reiten konnten. Eigentlich sieht es hier ganz gemütlich aus... von den verrottenden Pferdekadavern mal abgesehen, natürlich.';
     protected static $icon = 'home';
+    protected static $starts_built = true;
+    protected static $alternative_default_hideout = 'xmas_hideout';
 
     protected static $perpetualDaytime = 'snowynight';
 
@@ -24,7 +26,6 @@ class Model_Places_Xmas_Stables extends Model_Places_Abstract_Hideout {
 
     public function uin($new = null) {
         if ($new !== null) {
-            Model_Blueprints::fast_apply($this, 'upgrades', ['xmas_hideout','hideout_slot']);
             $items = [Model_Items_Xmas_Rubbing::cls() => 1, Model_Items_Xmas_Beer::cls() => 2, Model_Items_Xmas_Drink::cls() => 3];
             foreach ($items as $cls => $count)
                 for ($i = 0; $i < $count; $i++) {

@@ -6,6 +6,7 @@ class Model_Places_Tentkit extends Model_Places_Abstract_Hideout {
     protected static $description = 'Das InstaZELT™ ist die perfekte mobile Unterkunft für Campingtrips, mehrtägige Open-Air-Konzerte und iPhone-Releases. Leider stellen die meisten Käufer eines InstaZELT™s relativ schnell fest, dass sich dieses Zelt zwar kinderleicht aufbauen, danach aber nicht mehr abbauen lässt. Manche würde das als einen Designfehler bezeichnen... ';
     protected static $icon = 'itent';
     protected static $upgradable = false;
+    protected static $starts_built = false;
 
     protected $cursed;
 

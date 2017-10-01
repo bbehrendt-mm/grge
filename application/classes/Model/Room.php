@@ -162,18 +162,14 @@ class Model_Room {
     }
 
     /**
-     * @param string $tag
+     * @param string|string[] $tags
      * @return bool
      */
-    public function has_tag($tag) {
-        return in_array($tag,$this->tags);
-    }
-
-    /**
-     * @return bool
-     */
-    public function is_outside() {
-        return $this->outside;
+    public function has_tag($tags) {
+        if (is_array($tags)) {
+            foreach ($tags as $tag) if (!$this->has_tag($tag)) return false;
+            return true;
+        } else return $tags == "" ? true : in_array($tags,$this->tags);;
     }
 
     /**

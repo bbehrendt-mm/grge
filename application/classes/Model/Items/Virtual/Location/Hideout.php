@@ -11,8 +11,6 @@ class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual 
     );
 
     protected function hid() {
-        //ToDo: ROOOOOOOOOOOMS
-
         /** @var Model_Places_Abstract_Hideout $location */
         $location = Globals::CurrentPlayer()->location();
         /** @noinspection PhpUndefinedMethodInspection */

@@ -35,12 +35,12 @@ class Model_Buffs_Drunk extends Model_Buffs_Abstract_Fragile {
 
     protected function action_on_complete() {
         if ($this->associated_to_player() && Tool_Scripts::location_type($this->assoc_player->location_class()) == 2) {
-            //ToDO: Fix for use with multiple rooms
+
             $l = $this->assoc_player->location();
-            if		($l->room()->has_content('bedr3'))	new Model_Buffs_Sleep($this->assoc_player, 3);
-            elseif	($l->room()->has_content('bedr2'))	new Model_Buffs_Sleep($this->assoc_player, 2);
-            elseif	($l->room()->has_content('bedr1'))	new Model_Buffs_Sleep($this->assoc_player, 1);
-            else								new Model_Buffs_Sleep($this->assoc_player, 0);
+            if		($l->has_room('bedroom','bedr3'))	new Model_Buffs_Sleep($this->assoc_player, 3);
+            elseif	($l->has_room('bedroom','bedr2'))	new Model_Buffs_Sleep($this->assoc_player, 2);
+            elseif	($l->has_room('bedroom','bedr1'))	new Model_Buffs_Sleep($this->assoc_player, 1);
+            else new Model_Buffs_Sleep($this->assoc_player, 0);
         }
 
     }

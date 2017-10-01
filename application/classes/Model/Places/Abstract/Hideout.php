@@ -3,6 +3,8 @@
 abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place {
 
     protected static $outside = false;
+    protected static $starts_built = false;
+    protected static $alternative_default_hideout = null;
 
     protected static $base_deco_value = 0;
     private $deco_value = 0;
@@ -19,7 +21,8 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
     public function uin($uin = NULL) {
         if ($uin === NULL) return parent::uin();
         else $t = parent::uin($uin);
-        //ToDo: Rooms
+
+        if (static::$starts_built) $this->setup_new_room($this->room(),[], static::$alternative_default_hideout ? [static::$alternative_default_hideout] : ['hideout']);
 
         $this->inventory->add(new Model_Items_Virtual_Location_Hideout());
         return $t;
@@ -75,10 +78,9 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         $this->zombie_factory->dry_spawn();
 
         /** @var Model_Items_Virtual_Epic_Fence $fence */
-        //ToDO Fix bedrwake for use with multiple rooms
         if (($this->get_defense() > 0) && floor($this->zombie_factory->accumulation()) > $this->get_defense() && (!($fence = Tool_Scripts::first_available_item('Model_Items_Virtual_Epic_Fence', false)) || !$fence->get_status())) {
-            if ($this->room()->has_content("bedrwake")) {
-                $this->room()->remove_content("bedrwake");
+            if ($br = $this->find_rooms('bedroom','bedrwake')) {
+                $br[0]->remove_content("bedrwake");
                 foreach (Tool_Scripts::at_location($this->uin(), true, true) as $s_player)
                     if ($s_player->get_status()->retrieve('sleep_cozy')) {
                         $s_player->get_status()->retrieve('sleep_cozy')->unbuff();
@@ -153,11 +155,12 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         else $player = Globals::CurrentGame()->get_npc($pid);
 
         if (!parent::leave($pid, $type)) return false;
-        //ToDo: Rooms
-        if ($this->room()->has_content('defimp') && !$this->room()->has_content('impaler') && $type == Interface_Tickable::IT_TYPE_PLAYER)
-        {
-            $this->room()->add_content('impaler');
-            $player->log()->add(new Model_Log_Types_Text(null, null, 'Auf dem Weg nach draußen hast du die Fallgrube wieder geschlossen und für einen erneuten Einsatz bereit gemacht.'));
+        if ($dr = $this->find_rooms('','defimp') && $type == Interface_Tickable::IT_TYPE_PLAYER) {
+            /** @var Model_Room[] $dr */
+            if (!$dr[0]->has_content('impaler')) {
+                $dr[0]->add_content('impaler');
+                $player->log()->add(new Model_Log_Types_Text(null, null, 'Auf dem Weg nach draußen hast du die Fallgrube wieder geschlossen und für einen erneuten Einsatz bereit gemacht.'));
+            }
         }
 
         if ($buff = $player->get_status()->retrieve('home')) $buff->unbuff();

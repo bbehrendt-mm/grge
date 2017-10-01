@@ -8,8 +8,6 @@ class Model_Items_Virtual_Location_Place extends Model_Items_Abstract_Virtual {
 
 
     protected function hid() {
-        //ToDo: ROOOOOOOOOOOMS
-
         return parent::hid()->add_action('Dieser Ort ...', Model_Action::factory()
             ->buttonskin('hideout')
             ->description('Hier kannst du sehen, was es an diesem Ort so zu tun gibt. Möglicherweise kannst du sogar ein paar Ausbauten vornehmen...')

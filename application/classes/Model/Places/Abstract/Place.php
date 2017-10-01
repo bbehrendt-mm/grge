@@ -110,6 +110,30 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
         return $this->rooms;
     }
 
+    /**
+     * @param string|string[] $room_type
+     * @param string|string[] $contains
+     * @param string|string[] $tags
+     * @return bool
+     */
+    public function has_room($room_type = "", $contains = "", $tags = "") {
+        return count($this->find_rooms($room_type,$contains,$tags)) > 0;
+    }
+
+    /**
+     * @param string|string[] $room_type
+     * @param string|string[] $contains
+     * @param string|string[] $tags
+     * @return Model_Room[]
+     */
+    public function find_rooms($room_type = "", $contains = "", $tags = "") {
+        $ret = [];
+        foreach ($this->rooms() as $room)
+            if ($room->check_room_satisfaction($room_type) && $room->has_content($contains) && $room->has_tag($tags))
+                $ret[] = $room;
+        return $ret;
+    }
+
     public function uin($uin = NULL) {
         if ($uin === NULL) return parent::uin();
         else $t = parent::uin($uin);

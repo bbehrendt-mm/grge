@@ -149,6 +149,12 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         new Model_Buffs_Home($player);
     }
 
+    /**
+     * @param null $pid
+     * @param int $type
+     * @return bool
+     * @throws Exception
+     */
     public function leave($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
         if (!$pid) $player = Globals::CurrentPlayer();
         elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGame()->get_player($pid);

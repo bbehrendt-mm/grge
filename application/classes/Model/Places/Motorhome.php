@@ -102,10 +102,14 @@ class Model_Places_Motorhome extends Model_Places_Home {
             Globals::CurrentGame()->config('places.outworld.alt_spawn_stranger', false);
         }
 
-        if (!$start)
+        if (!$start) {
+            $this->room()->enabled(true);
             foreach (Tool_Scripts::at_location($this->uin()) as $p)
                 $p->get_status()->remove('fragile/driver');
-        else new Model_Buffs_Driver(Globals::CurrentPlayer()->id());
+        } else {
+            $this->room()->enabled(false);
+            new Model_Buffs_Driver(Globals::CurrentPlayer()->id());
+        }
 
         Globals::CurrentGame()->delete_lobby();
         $this->impaler = 0;
@@ -176,10 +180,8 @@ class Model_Places_Motorhome extends Model_Places_Home {
     }
 
     public function start() {
-        if ($this->driving)
-            return;
-        if (Globals::PrimaryPlayer()->get_status()->retrieve('fragile'))
-            return;
+        if ($this->driving) return;
+        if (Globals::PrimaryPlayer()->get_status()->retrieve('fragile')) return;
 
         if (Globals::PrimaryPlayer()->job(1080)) {
             Globals::PrimaryPlayer()->log()->add('Es hat diverse Vorteile, ein Kind zu sein. Die Tatsache, dass du nicht Autofahren kannst, ist keiner davon.');
@@ -268,5 +270,9 @@ class Model_Places_Motorhome extends Model_Places_Home {
 
         if ($this->is_driving())
             $this->zombie_factory()->accumulation(0);
+    }
+
+    public function is_upgradable() {
+        return !$this->is_driving() && parent::is_upgradable();
     }
 }	

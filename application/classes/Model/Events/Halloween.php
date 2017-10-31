@@ -220,7 +220,8 @@ class Model_Events_Halloween extends Model_Events_Event {
     public function event_generateHIDStack(Model_Items_Abstract_Item &$item, Model_Hid &$hid) {
 
         // Cooler closing
-        if (Tool_System::instance_of($item, Model_Items_Virtual_Location_Cooler::cls())) {
+        // ToDo: Fix dis!
+        if (Tool_System::instance_of($item, "Model_Items_Virtual_Location_Cooler")) {
             /** @var $item Model_Items_Virtual_Location_Cooler */
             if ($item->has_action('cooler_open_again_2')) {
                 $hid->add_action('Kühlkammer erneut öffnen', Model_Action::factory()

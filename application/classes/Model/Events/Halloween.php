@@ -165,6 +165,10 @@ class Model_Events_Halloween extends Model_Events_Event {
         }
     }
 
+    /**
+     * @param Model_Places_Abstract_Place $place
+     * @throws Exception
+     */
     private function handle_horrorActions(Model_Places_Abstract_Place $place) {
         // Cooler closing
         if (Tool_System::instance_of($place, Model_Places_Burgerjoint::cls()) && !in_array($place->uin(), $this->horror_list) && Tool_Gambling::random(0.1)) {
@@ -212,6 +216,10 @@ class Model_Events_Halloween extends Model_Events_Event {
         }
     }
 
+    /**
+     * @param Model_Places_Abstract_Place $place
+     * @throws Exception
+     */
     public function event_locationTick(Model_Places_Abstract_Place $place) {
         $this->handle_soulSpawn($place);
         $this->handle_horrorActions($place);
@@ -221,23 +229,23 @@ class Model_Events_Halloween extends Model_Events_Event {
 
         // Cooler closing
         // ToDo: Fix dis!
-        if (Tool_System::instance_of($item, "Model_Items_Virtual_Location_Cooler")) {
-            /** @var $item Model_Items_Virtual_Location_Cooler */
-            if ($item->has_action('cooler_open_again_2')) {
-                $hid->add_action('Kühlkammer erneut öffnen', Model_Action::factory()
-                    ->buttonskin('location')
-                    ->description('Die Tür der Kühlkammer muss wohl durch einen Windstoß zugefallen sein - immerhin ist hier ja niemand sonst... oder?')
-                    ->requirement(Model_Status::MS_STAT_ENERGY, 5)
-                    ->show_as(Model_Effect::factory()
-                        ->ambiguous_effect()
-                    )
-                    ->effect(Model_Effect::factory()
-                        ->message('Als du die Tür öffnest, schlägt dir ein beißender Geruch entgegen. Die gesamte Kühlkammer ist plötzlich voll mit verrottendem Fleisch!')
-                        ->spawn('Model_Items_Fleshfood',mt_rand(4,10), true)
-                    )
-                    , 'cooler_open_again_2');
-            }
-        }
+        //if (Tool_System::instance_of($item, "Model_Items_Virtual_Location_Cooler")) {
+        //    /** @var $item Model_Items_Virtual_Location_Cooler */
+        //    if ($item->has_action('cooler_open_again_2')) {
+        //        $hid->add_action('Kühlkammer erneut öffnen', Model_Action::factory()
+        //            ->buttonskin('location')
+        //            ->description('Die Tür der Kühlkammer muss wohl durch einen Windstoß zugefallen sein - immerhin ist hier ja niemand sonst... oder?')
+        //            ->requirement(Model_Status::MS_STAT_ENERGY, 5)
+        //            ->show_as(Model_Effect::factory()
+        //                ->ambiguous_effect()
+        //            )
+        //            ->effect(Model_Effect::factory()
+        //                ->message('Als du die Tür öffnest, schlägt dir ein beißender Geruch entgegen. Die gesamte Kühlkammer ist plötzlich voll mit verrottendem Fleisch!')
+        //                ->spawn('Model_Items_Fleshfood',mt_rand(4,10), true)
+        //            )
+        //            , 'cooler_open_again_2');
+        //    }
+        //}
     }
 
     public function event_executeHIDAction($cls, $name, Model_Action &$action) {

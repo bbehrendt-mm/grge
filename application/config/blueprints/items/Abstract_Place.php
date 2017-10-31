@@ -44,22 +44,6 @@ return Model_Blueprints::factory()
             ->produces(['Model_Items_Generic_Water0' => 1])
     )
 
-
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('i:body1')
-            ->requires_local('ktc3')
-            ->name('Ausgenommene Leiche')
-            ->message('Du benutzt deine Machete, um die Leiche in kleine Stücke zu schneiden. Das macht sie zwar nicht genießbarer, aber zumindest handlicher.')
-            ->energy(15)
-            ->material(['Model_Items_Body' => 1])
-            ->produces(['Model_Items_Rawmeat' => 8, 'Model_Items_Generic_Waterb' => 3])
-            ->effect(
-                Model_Effect::factory()
-                    ->achieve(Model_Achievement::MA_BLOODSUCKER)
-            )
-    )
-
     ->add_blueprints(
         Model_Blueprint::factory()
             ->id('i:nom1')
@@ -92,6 +76,92 @@ return Model_Blueprints::factory()
     )
 
     // SLAUGHTERHOUSE
+    // ++ STACK -> All blueprints below need the SLAUGHTERHOUSE kitchen
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires_room('kitchen_slaughter');})
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:body1')
+            ->name('Ausgenommene Leiche')
+            ->message('Du benutzt deine Machete, um die Leiche in kleine Stücke zu schneiden. Das macht sie zwar nicht genießbarer, aber zumindest handlicher.')
+            ->energy(15)
+            ->material([Model_Items_Body::cls() => 1])
+            ->produces([Model_Items_Rawmeat::cls() => 8, Model_Items_Generic_Waterb::cls() => 3])
+            ->effect(
+                Model_Effect::factory()
+                    ->achieve(Model_Achievement::MA_BLOODSUCKER)
+            )
+    )
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:body1_org')
+            ->requires_local('ktc3')
+            ->name('Organentnahme')
+            ->message('Mit dem richtigen Werkzeug kannst du aus dieser Leiche nicht nur Fleisch herausschneiden, sondern auch ein transplantations-geeignetes Organ!')
+            ->energy(15)
+            ->material([Model_Items_Body::cls() => 1])
+            ->produces([Model_Items_Rawmeat::cls() => 2, Model_Items_Organ::cls() => 2, Model_Items_Generic_Waterb::cls() => 3])
+            ->effect(
+                Model_Effect::factory()
+                    ->achieve(Model_Achievement::MA_BLOODSUCKER)
+            )
+    )
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:body3')
+            ->name('Ausgenommener Zombie')
+            ->message('Du benutzt deine Machete, um die Leiche in kleine Stücke zu schneiden. Das macht sie zwar nicht genießbarer, aber zumindest handlicher.')
+            ->energy(25)
+            ->material([Model_Items_Body2::cls() => 1])
+            ->produces([Model_Items_Rawmeat3::cls() => 7, Model_Items_Generic_Waterb::cls() => 4])
+            ->effect(
+                Model_Effect::factory()
+                    ->achieve(Model_Achievement::MA_BLOODSUCKER)
+            )
+    )
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:body3_org')
+            ->requires_local('ktc3')
+            ->name('Organentnahme')
+            ->message('Mit dem richtigen Werkzeug kannst du aus dieser Leiche nicht nur Fleisch herausschneiden, sondern auch ein transplantations-geeignetes Organ!')
+            ->energy(25)
+            ->material([Model_Items_Body2::cls() => 1])
+            ->produces([Model_Items_Rawmeat3::cls() => 2, Model_Items_Organ3::cls() => 2, Model_Items_Generic_Waterb::cls() => 3])
+            ->effect(
+                Model_Effect::factory()
+                    ->achieve(Model_Achievement::MA_BLOODSUCKER)
+            )
+    )
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:body4')
+            ->name('Ausgenommener Tierkadaver')
+            ->message('Meh... immer noch besser als Fastfood.')
+            ->energy(10)
+            ->material([Model_Items_Body3::cls() => 1])
+            ->produces([Model_Items_Rawmeat::cls() => 4, Model_Items_Generic_Waterb::cls() => 1])
+            ->effect(
+                Model_Effect::factory()
+                    ->achieve(Model_Achievement::MA_BLOODSUCKER)
+            )
+    )
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:body4_org')
+            ->requires_local('ktc3')
+            ->name('Organentnahme')
+            ->message('Mit dem richtigen Werkzeug kannst du aus dieser Leiche nicht nur Fleisch herausschneiden, sondern auch ein transplantations-geeignetes Organ!')
+            ->energy(20)
+            ->material([Model_Items_Body3::cls() => 1])
+            ->produces([Model_Items_Rawmeat::cls() => 1, Model_Items_Organ2::cls() => 2, Model_Items_Generic_Waterb::cls() => 1])
+            ->effect(
+                Model_Effect::factory()
+                    ->achieve(Model_Achievement::MA_BLOODSUCKER)
+            )
+    )
+
+    ->pop_stack()
 
     // CHEMLAB
 
@@ -468,6 +538,38 @@ return Model_Blueprints::factory()
     )
 
     ->pop_stack()
+
+    // ++ STACK -> All blueprints below need the bio workshop
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires_room('workshop_bio');})
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:aug_1')
+            ->energy(20)
+            ->material([Model_Items_Organ::cls() => 1,Model_Items_Generic_Metal::cls() => 1, Model_Items_Generic_Electro::cls() => 1])
+            ->produces([Model_Items_Augments_Class1::cls() => 1])
+    )
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:aug_2')
+            ->energy(20)
+            ->material([Model_Items_Organ3::cls() => 1,Model_Items_Generic_Metal::cls() => 1, Model_Items_Generic_Electro::cls() => 1])
+            ->produces([Model_Items_Augments_Cclass1::cls() => 1])
+    )
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:aug_3')
+            ->energy(30)
+            ->material([Model_Items_Organ::cls() => 1,Model_Items_Organ2::cls() => 2,Model_Items_Generic_Metal::cls() => 2, Model_Items_Generic_Electro::cls() => 1, Model_Items_Generic_Sum::cls()])
+            ->produces([Model_Items_Augments_Class2::cls() => 1])
+    )
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:aug_4')
+            ->energy(30)
+            ->material([Model_Items_Organ3::cls() => 1,Model_Items_Organ2::cls() => 2,Model_Items_Generic_Metal::cls() => 2, Model_Items_Generic_Electro::cls() => 1, Model_Items_Generic_Sum::cls()])
+            ->produces([Model_Items_Augments_Cclass2::cls() => 1])
+    )
 
     // -- STACK -> All blueprints below NO LONGER need the basic workbench
     ->pop_stack()

@@ -3735,6 +3735,7 @@ core = {
                     case 1:
                     case 3:
                     case 4:
+                    case 6:
                         b.append($('<img />').attr('src','media/icons/' + elem.icon + '.gif')).qtt('top', function() {
                             $(this)
                                 .append(NF.n('b','header',elem.name))

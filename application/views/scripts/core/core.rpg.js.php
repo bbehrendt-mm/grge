@@ -61,6 +61,7 @@
                     case <?=Model_Items_Abstract_Equipable::MIAE_ARMOR_HELMET?>:
                     case <?=Model_Items_Abstract_Equipable::MIAE_ARMOR_SHIELD?>:
                     case <?=Model_Items_Abstract_Equipable::MIAE_ARMOR_CAPE?>:
+                    case <?=Model_Items_Abstract_Equipable::MIAE_ARMOR_ORGAN?>:
                         b.append($('<img />').attr('src','media/icons/' + elem.icon + '.gif')).qtt('top', function() {
                             $(this)
                                 .append(NF.n('b','header',elem.name))

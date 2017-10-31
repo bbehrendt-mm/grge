@@ -7,6 +7,7 @@ abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item 
     const MIAE_ARMOR_SHIELD = 3;
     const MIAE_ARMOR_CAPE = 4;
     const MIAE_WEAPON = 5;
+    const MIAE_ARMOR_ORGAN = 6;
 
     const MIAE_STAT_INI = 1;
     const MIAE_STAT_ATK = 2;
@@ -50,11 +51,12 @@ abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item 
 
     public static function convertStringType() {
         switch (static::$equipment_type) {
-            case static::MIAE_ARMOR_BODY: return 'Rüstung';
+            case static::MIAE_ARMOR_BODY:   return 'Rüstung';
             case static::MIAE_ARMOR_HELMET: return 'Helm';
             case static::MIAE_ARMOR_SHIELD: return 'Schild';
-            case static::MIAE_ARMOR_CAPE: return 'Umhang';
-            case static::MIAE_WEAPON: return 'Waffe';
+            case static::MIAE_ARMOR_CAPE:   return 'Umhang';
+            case static::MIAE_WEAPON:       return 'Waffe';
+            case static::MIAE_ARMOR_ORGAN:  return 'Organ';
             default: return 'Unbekannt';
         }
     }

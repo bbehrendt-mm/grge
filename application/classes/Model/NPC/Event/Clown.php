@@ -63,9 +63,10 @@ class Model_NPC_Event_Clown extends Model_NPC_Humanoid
         foreach (Tool_Scripts::at_location($this->location_class()) as $npl)
             if (Tool_System::instance_of($npl, Model_NPC_Event_Clown::cls()))
                 $cpl2[] = $npl;
-            else $cpl1[] = $npl;
+            else if ($npl->is_fighter()) $cpl1[] = $npl;
 
-        Tool_Scripts::combat([$cpl1,$cpl2],false,2,$this->location(),'Der Clown greift an!');
+        if (count($cpl1) > 0 && count($cpl2) > 0) Tool_Scripts::combat([$cpl1,$cpl2],false,2,$this->location(),'Der Clown greift an!');
+        $this->is_aggresive = false;
     }
 
     public function tick() {

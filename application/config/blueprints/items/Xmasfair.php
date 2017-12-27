@@ -9,8 +9,8 @@ return Model_Blueprints::factory()
             ->id('i:xmas1')
             ->message('Nichts macht mehr Spaß als an Weihnachten etwas schönes zu basteln. Du hast soeben Dekoration hergestellt.')
             ->energy(5)
-            ->material(['Model_Items_Generic_Cd' => 3])
-            ->produces(['Model_Items_Generic_Lametta' => 1])
+            ->material([Model_Items_Generic_Cd::cls() => 3])
+            ->produces([Model_Items_Generic_Lametta::cls() => 1])
     )
 
     ->add_blueprints(
@@ -18,8 +18,8 @@ return Model_Blueprints::factory()
             ->id('i:xmas2')
             ->message('Nichts macht mehr Spaß als an Weihnachten etwas schönes zu basteln. Du hast soeben Dekoration hergestellt.')
             ->energy(5)
-            ->material(['Model_Items_Generic_Lametta' => 2, 'Model_Items_Generic_Wire' => 1])
-            ->produces(['Model_Items_Generic_Xmasrope' => 1])
+            ->material([Model_Items_Generic_Lametta::cls() => 2, Model_Items_Generic_Wire::cls() => 1])
+            ->produces([Model_Items_Generic_Xmasrope::cls() => 1])
     )
 
     ->add_blueprints(
@@ -27,8 +27,8 @@ return Model_Blueprints::factory()
             ->id('i:xmas3')
             ->message('Nichts macht mehr Spaß als an Weihnachten etwas schönes zu basteln. Du hast soeben Dekoration hergestellt.')
             ->energy(5)
-            ->material(['Model_Items_Generic_Electro' => 1, 'Model_Items_Generic_Wire' => 1, 'Model_Items_Generic_Led' => 10])
-            ->produces(['Model_Items_Generic_Xmaslights' => 1])
+            ->material([Model_Items_Generic_Electro::cls() => 1, Model_Items_Generic_Wire::cls() => 1, Model_Items_Generic_Led::cls() => 10])
+            ->produces([Model_Items_Generic_Xmaslights::cls() => 1])
     )
 
     ->add_blueprints(
@@ -36,8 +36,8 @@ return Model_Blueprints::factory()
             ->id('i:xmas4')
             ->message('Nichts macht mehr Spaß als an Weihnachten etwas schönes zu basteln. Du hast soeben Dekoration hergestellt.')
             ->energy(5)
-            ->material(['Model_Items_Generic_Bauble' => 3, 'Model_Items_Stick' => 2, 'Model_Items_Generic_Ducttape' => 1, 'Model_Items_Generic_Xmasneedles' => 1])
-            ->produces(['Model_Items_Generic_Mistletoe' => 1])
+            ->material([Model_Items_Generic_Bauble::cls() => 3, Model_Items_Stick::cls() => 2, Model_Items_Generic_Ducttape::cls() => 1, Model_Items_Generic_Xmasneedles::cls() => 1])
+            ->produces([Model_Items_Generic_Mistletoe::cls() => 1])
     )
 
     ->drop_stack();

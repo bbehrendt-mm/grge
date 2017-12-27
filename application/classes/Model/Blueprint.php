@@ -15,6 +15,8 @@ class Model_Blueprint {
     private $room_clear = false;
     private $room_clear_sat = true;
 
+    private $space_requirement = 0;
+
     private $name;
     private $description;
 
@@ -95,6 +97,19 @@ class Model_Blueprint {
             $mod($player, $pre, $room);
         $this->modifiers = [];
         return $this;
+    }
+
+    /**
+     * Sets the space requirement
+     * @param number|null $set
+     * @return Model_Blueprint|int
+     */
+    public function space($set = null) {
+        if ($set === null) return $this->space_requirement;
+        else {
+            $this->space_requirement = $set;
+            return $this;
+        }
     }
 
     /**
@@ -665,6 +680,11 @@ class Model_Blueprint {
             return false;
         }
 
+        if ($this->space() > $room->get_space(true)) {
+            $player->log()->add('Für diese Aktion fehlt es an freiem Platz.');
+            return false;
+        }
+
         if ($this->zombies && !$player->location()->zombie_pop() && !$this->zombies_optional) {
             $player->log()->add('Es ist verständlich dass du gerne irgend etwas töten möchtest... nur sind leider gerade keine Zombies in der Nähe.');
             return false;
@@ -760,6 +780,8 @@ class Model_Blueprint {
             $location->deco($this->deco_value);
         }
 
+        $room->deduct_space($this->space());
+
         if ($this->is_room) return $this->apply_room($room,$location);
 
         if ($this->steps <= 0)
@@ -838,6 +860,7 @@ class Model_Blueprint {
             if (!$room->has_tag($tag)) $requirements_fulfilled = false;
         }
 
+        $requirements_fulfilled = $requirements_fulfilled && ($room->get_space(true) >= $this->space());
 
         $room_occ_data = [];
         foreach ($this->provide_room() as $occ_room)
@@ -855,6 +878,7 @@ class Model_Blueprint {
             'requires_room' => $room_data,
             'requires_tag' => $tag_data,
             'requires_local' => $this->requires_local,
+            'space' => $this->space(),
             'energy' => $this->energy,
             'repair' => -$this->decay,
             'decay_speed' => $this->decay_speed == 0 ? 0 : ($this->decay_speed > 0 ? 1 : -1),
@@ -865,6 +889,7 @@ class Model_Blueprint {
             'build' => in_array($this->id,$preconditions),
             'build_local' => in_array($this->id,$room->get_content()),
             'slot_open' => $still_open,
+            'space_open' => $room->get_space(true) >= $this->space(),
             'build_possible' => $requirements_fulfilled,
             'steps_max' => $this->steps,
             'steps_current' => ($current_steps === true) ? $this->steps - 1 : $current_steps,

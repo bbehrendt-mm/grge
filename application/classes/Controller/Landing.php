@@ -36,6 +36,11 @@ class Controller_Landing extends Controller {
             $url = $rq["CLIENT_REQUEST"]['r'];
             unset($rq["CLIENT_REQUEST"]['r']);
             $this->session->set('request',$rq);
+            if ($url == 'dev/null') {
+                $this->error(\grge\E_SERVER_INVALID_SESSION);
+                $this->request->action('noaction');
+                return;
+            }
             if ($url != 'web/body') {
                 $this->redirect(URL::site($url,true));
                 return;

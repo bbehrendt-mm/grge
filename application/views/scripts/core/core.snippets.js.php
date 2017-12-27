@@ -429,6 +429,11 @@
 
                     content.append($('<span />').text(<?=__j('Raum')?>));
 
+                    if (blueprint.space > 0) {
+                        content.append($('<div />').addClass('point').addClass(blueprint.space_open ? 'success' : 'failure').text(<?=__j('Freier Platz')?> + ': ' + blueprint.space + 'm²'));
+                        chk_rm = true;
+                    }
+
                     $.each(blueprint.requires_tag, function(k,v) {
                         content.append($('<div />').addClass('point').addClass(v.b ? 'success' : 'failure').text(game.i18n(<?=__j('Raumtyp: :type')?>, {':type': v.name})));
                         chk_rm = true;

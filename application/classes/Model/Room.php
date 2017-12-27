@@ -98,6 +98,13 @@ class Model_Room {
         return $limit_free ? max(0, $this->space - $this->used_space) : $this->space;
     }
 
+    public function deduct_space($space, $can_fail = true) {
+        if ($space == 0) return true;
+        if ($can_fail && $space < $this->get_space(true)) return false;
+        $this->used_space += $space;
+        return true;
+    }
+
     /**
      * @return string|null
      */

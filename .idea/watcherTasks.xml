@@ -15,6 +15,7 @@
       </option>
       <option name="outputFromStdout" value="false" />
       <option name="program" value="$ProjectFileDir$/application/assets/dev/compiler.jar" />
+      <option name="runOnExternalChanges" value="true" />
       <option name="scopeName" value="Framework JS" />
       <option name="trackOnlyRoot" value="true" />
       <option name="workingDir" value="$ProjectFileDir$" />
@@ -34,6 +35,7 @@
       </option>
       <option name="outputFromStdout" value="false" />
       <option name="program" value="$ProjectFileDir$/application/assets/dev/compiler.jar" />
+      <option name="runOnExternalChanges" value="true" />
       <option name="scopeName" value="jQuery Extensions JS" />
       <option name="trackOnlyRoot" value="true" />
       <option name="workingDir" value="$ProjectFileDir$" />
@@ -53,9 +55,10 @@
       </option>
       <option name="outputFromStdout" value="true" />
       <option name="program" value="$ProjectFileDir$/application/assets/dev/core_compiler.bat" />
+      <option name="runOnExternalChanges" value="true" />
       <option name="scopeName" value="Core JS" />
       <option name="trackOnlyRoot" value="false" />
-      <option name="workingDir" value="$ProjectFileDir$\application\assets" />
+      <option name="workingDir" value="$ProjectFileDir$/application/assets" />
       <envs />
     </TaskOptions>
     <TaskOptions isEnabled="true">
@@ -78,15 +81,16 @@
       </option>
       <option name="outputFromStdout" value="false" />
       <option name="program" value="$ProjectFileDir$/application/assets/dev/less_compiler.bat" />
+      <option name="runOnExternalChanges" value="true" />
       <option name="scopeName" value="LESS" />
       <option name="trackOnlyRoot" value="false" />
-      <option name="workingDir" value="$ProjectFileDir$\application\assets\dev" />
+      <option name="workingDir" value="$ProjectFileDir$/application/assets/dev" />
       <envs />
     </TaskOptions>
     <TaskOptions isEnabled="true">
-      <option name="arguments" value="--compilation_level SIMPLE_OPTIMIZATIONS --js_output_file=&quot;application\assets\skins\halloween\js\dummy.min.js&quot; --js &quot;application\assets\dev\js\game\skins\halloween.js&quot;" />
+      <option name="arguments" value="--compilation_level SIMPLE_OPTIMIZATIONS --js_output_file=&quot;application\assets\skins\halloween\js\dummy.min.js&quot; --js &quot;application\assets\dev\js\skins\halloween.js&quot;" />
       <option name="checkSyntaxErrors" value="true" />
-      <option name="description" value="Compiles .js files" />
+      <option name="description" />
       <option name="exitCodeBehavior" value="ERROR" />
       <option name="fileExtension" value="js" />
       <option name="immediateSync" value="false" />
@@ -97,15 +101,16 @@
       </option>
       <option name="outputFromStdout" value="false" />
       <option name="program" value="$ProjectFileDir$/application/assets/dev/compiler.jar" />
+      <option name="runOnExternalChanges" value="true" />
       <option name="scopeName" value="Framework MODs" />
       <option name="trackOnlyRoot" value="true" />
       <option name="workingDir" value="$ProjectFileDir$" />
       <envs />
     </TaskOptions>
     <TaskOptions isEnabled="true">
-      <option name="arguments" value="--compilation_level SIMPLE_OPTIMIZATIONS --js_output_file=&quot;application\assets\skins\xmas\js\dummy.min.js&quot; --js &quot;application\assets\dev\js\game\skins\xmas.js&quot;" />
+      <option name="arguments" value="--compilation_level SIMPLE_OPTIMIZATIONS --js_output_file=&quot;application\assets\skins\xmas\js\dummy.min.js&quot; --js &quot;application\assets\dev\js\skins\xmas.js&quot;" />
       <option name="checkSyntaxErrors" value="true" />
-      <option name="description" value="Compiles .js files" />
+      <option name="description" />
       <option name="exitCodeBehavior" value="ERROR" />
       <option name="fileExtension" value="js" />
       <option name="immediateSync" value="false" />
@@ -116,6 +121,7 @@
       </option>
       <option name="outputFromStdout" value="false" />
       <option name="program" value="$ProjectFileDir$/application/assets/dev/compiler.jar" />
+      <option name="runOnExternalChanges" value="true" />
       <option name="scopeName" value="Framework MODs" />
       <option name="trackOnlyRoot" value="true" />
       <option name="workingDir" value="$ProjectFileDir$" />

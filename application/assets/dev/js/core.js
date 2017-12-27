@@ -4458,6 +4458,11 @@ core = {
 
                     content.append($('<span />').text("Raum"));
 
+                    if (blueprint.space > 0) {
+                        content.append($('<div />').addClass('point').addClass(blueprint.space_open ? 'success' : 'failure').text("Freier Platz" + ': ' + blueprint.space + 'm��'));
+                        chk_rm = true;
+                    }
+
                     $.each(blueprint.requires_tag, function(k,v) {
                         content.append($('<div />').addClass('point').addClass(v.b ? 'success' : 'failure').text(game.i18n("Raumtyp: :type", {':type': v.name})));
                         chk_rm = true;

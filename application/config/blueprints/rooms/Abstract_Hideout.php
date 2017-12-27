@@ -15,6 +15,7 @@ return Model_Blueprints::factory()
             ->emplaces('Model_Items_Virtual_Location_Room_Bedroom')
             ->description('Das Schlafzimmer bietet dir die Möglichkeit, nach einem harten Tag in der Postapokalypse endlich etwas Ruhe und Frieden zu finden.')
             ->energy(5)
+            ->space(5)
     )
 
     ->add_blueprints(
@@ -25,6 +26,7 @@ return Model_Blueprints::factory()
             ->emplaces('Model_Items_Virtual_Location_Room_Community')
             ->description('In diesem Raum kannst du deine Zeit verbringen, wenn du mit Schlafen, Zombies töten sowie deiner Steuererklärung fertig bist.')
             ->energy(5)
+            ->space(5)
     )
 
     ->add_blueprints(
@@ -36,6 +38,7 @@ return Model_Blueprints::factory()
             ->emplaces_action()
             ->description('Hier kannst du alle möglichen großen Geräte unterbringen, die deinem Versteck die Annehmlichkeiten einer luxoriösen 5-Sterne-Bruchbude verleihen.')
             ->energy(5)
+            ->space(1)
     )
 
     //++ STACK -> EPIC FOUNDATIONS
@@ -48,6 +51,7 @@ return Model_Blueprints::factory()
             ->requires_room_tag('inside')
             ->name('Kleines Gewächshaus')
             ->description('Wie Millionen von Pot-Farmern vor dir kannst auch du mit diesem patentierten Gewächshaus-Bausatz deinen grünen Daumen entdecken und verschiedene nützliche Gewächse anpflanzen. Aber Achtung: Ein solcher Garten benötigt viel Aufmerksamkeit und Zeit, bevor du etwas ernten kannst!')
+            ->space(20)
     )
 
     /*->add_blueprints(
@@ -64,6 +68,7 @@ return Model_Blueprints::factory()
             ->requires_room_tag('inside')
             ->name('Raben-Bootcamp')
             ->description('Raben sind intelligente (und boshafte) Tiere - aber mit ein bisschen Geschick könntest du sie vielleicht dazu trainieren, für dich nach Gegenständen zu suchen. Du müsstest sie dafür natürlich mit etwas Futter belohnen...')
+            ->space(20)
     )
 
     ->add_blueprints(
@@ -73,6 +78,7 @@ return Model_Blueprints::factory()
             ->requires_room_tag('outside')
             ->name('Laserzaun')
             ->description('Zombies sind nicht gerade für ihre Geschicklichkeit bekannt - daher kannst du sie mit ein paar Laserbarrieren bestimmt recht zuverlässig von deinem Versteck fernhalten. Vorrausgesetzt natürlich, dir gehen nicht die Batterien aus...')
+            ->space(20)
     )
 
     // -- STACK -> Categories

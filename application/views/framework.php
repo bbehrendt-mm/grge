@@ -51,7 +51,7 @@
         <span><?=__(
         'Bitte lasse die Verwendung von JavaScript für die Domain :domain zu und überprüfe, ob dein Internetbrowser auf dem neusten Stand ist. Solltest du diese Meldung trotz aktiviertem JavaScript und aktuellem Browser angezeigt bekommen, melde dich bitte bei :admin.',
         array(
-        ':domain' => '<i>zvg.boerde.de</i>',
+        ':domain' => '<i>zombvival.de</i>',
         ':admin' => '<a href="mailto:kontakt@ruine.dvspot.de">Brainbox</a>',
         ));?></span>
     </noscript>

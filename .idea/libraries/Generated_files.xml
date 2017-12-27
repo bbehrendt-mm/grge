@@ -6,15 +6,17 @@
         <item url="file://$PROJECT_DIR$/application/assets/js/framework.min.js" />
         <item url="file://$PROJECT_DIR$/application/assets/js/jquery.ext.min.js" />
         <item url="file://$PROJECT_DIR$/application/assets/skins/halloween/js/dummy.min.js" />
+        <item url="file://$PROJECT_DIR$/application/assets/skins/xmas/js/dummy.min.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
       <root url="file://$PROJECT_DIR$/application/assets/js/zombvival.common.min.js" />
       <root url="file://$PROJECT_DIR$/application/assets/js/zombvival.min.js" />
-      <root url="file://$PROJECT_DIR$/application/assets/js/framework.min.js" />
       <root url="file://$PROJECT_DIR$/application/assets/dev/js/core.js" />
-      <root url="file://$PROJECT_DIR$/application/assets/skins/halloween/js/dummy.min.js" />
+      <root url="file://$PROJECT_DIR$/application/assets/js/framework.min.js" />
       <root url="file://$PROJECT_DIR$/application/assets/js/jquery.ext.min.js" />
+      <root url="file://$PROJECT_DIR$/application/assets/skins/halloween/js/dummy.min.js" />
+      <root url="file://$PROJECT_DIR$/application/assets/skins/xmas/js/dummy.min.js" />
     </CLASSES>
     <SOURCES />
   </library>

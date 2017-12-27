@@ -16,7 +16,7 @@ class Controller_Web extends Controller {
             setcookie('skin', $skin, 0, URL::base());
             setcookie('skin_cst', '1', 0, URL::base());
         }
-        $this->response->body(View::factory('redirect')->set('url',URL::base())->set('path','')->set('sid', $this->session->id()));
+        $this->response->body(View::factory('redirect')->set('url',URL::base())->set('path','dev/null')->set('sid', $this->session->id()));
         $this->request->action('noaction');
     }
 

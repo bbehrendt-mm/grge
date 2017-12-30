@@ -21,7 +21,7 @@
         var target = this.transform(nw_pos);
         target.alpha = 0;
 
-        createjs.Tween.get(this.combatants[id].container, {loop: false}).to(target, 500);
+        this.createTween(this.combatants[id].container, {loop: false}).to(target, 500);
         setTimeout(function() {alias.proceed();}, 150)
     };
 })();

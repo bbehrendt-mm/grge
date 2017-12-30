@@ -32,7 +32,7 @@
         this.stage.addChild(slash_container);
 
         var alias = this;
-        createjs.Tween.get(slash, {loop: false})
+        this.createTween(slash, {loop: false})
             .to({x: (factor * -10) - 2, alpha: 0.5}, 20/speed)
             .to({x: (factor * -8) - 2, scaleX: 4 * factor, scaleY: 1.5, alpha: 1}, 20/speed)
             .to({x: (factor * 8) - 2, scaleX: 1, scaleY: 1, alpha: 0.2}, 20/speed)
@@ -51,7 +51,7 @@
 
     var animate_shake = function(id, delta, duration) {
         var o = [this.combatants[id].actor.x, this.combatants[id].actor.y];
-        var holder = createjs.Tween.get(this.combatants[id].actor, {loop: false});
+        var holder = this.createTween(this.combatants[id].actor, {loop: false});
         for (var i = 1; i < Math.floor(duration/20); i++)
             holder.to({x: o[0] + Math.random() * delta, y: o[1] + Math.random() * delta}, 50)
         holder.to({x: o[0], y: o[1]}, 50)
@@ -81,11 +81,11 @@
         this.stage.addChild(p_container);
 
         var alias = this;
-        createjs.Tween.get(p_container, {loop: false})
+        this.createTween(p_container, {loop: false})
             .to({x: end.x, y: end.y, z: this.combatants[to_id].actor.z + 0.1}, time);
-        createjs.Tween.get(projectile, {loop: false})
+        this.createTween(projectile, {loop: false})
             .to({rotation: rotation}, time);
-        createjs.Tween.get(projectile, {loop: false})
+        this.createTween(projectile, {loop: false})
             .to({y: -2 * l, rotation: rotation/2}, time/2, createjs.Ease.cubicOut)
             .to({y: 0, rotation: rotation}, time/2, createjs.Ease.cubicIn)
             .call(function() {
@@ -116,7 +116,7 @@
         this.stage.addChild(projectile);
 
         var alias = this;
-        createjs.Tween.get(projectile, {loop: false})
+        this.createTween(projectile, {loop: false})
             .to({x: end.x, y: end.y, z: this.combatants[to_id].actor.z + 0.1}, time)
             .call(function() {
                 alias.stage.removeChild(projectile);
@@ -139,11 +139,11 @@
         var factor = 1;
 
         var alias = this;
-        createjs.Tween.get(this.combatants[id_atk].actor, {loop: false})
+        this.createTween(this.combatants[id_atk].actor, {loop: false})
             .to({x: o1[0] - d.x * factor, y: o1[1] - d.y * factor}, 250)
             .to({x: o1[0], y: o1[1]}, 100)
             .call(function() {
-                createjs.Tween.get(alias.combatants[id_def].actor, {loop: false})
+                alias.createTween(alias.combatants[id_def].actor, {loop: false})
                     .to({x: o2[0] + d.x * factor, y: o2[1] + d.y * factor}, 100)
                     .to({x: o2[0], y: o2[1]}, 350)
             })
@@ -163,7 +163,7 @@
         var alias = this;
         var splat = damage ? function() {alias.splatter_blob(alias.transform(alias.combatants[id_def].pos), 10, 8);} : function() {};
 
-        createjs.Tween.get(this.combatants[id_atk].actor, {loop: false})
+        this.createTween(this.combatants[id_atk].actor, {loop: false})
             .to({x: o1[0] + 0.9 * d.x, y: o1[1]  + 0.9 * d.y}, 350)
             .call(function() {
                 animate_shake.call(alias, id_def, 1, 500);
@@ -294,7 +294,7 @@
         animate_shake.call(this, id_atk, 1, 1000);
         animate_shake.call(this, id_def, 3, 1000);
 
-        var holder = createjs.Tween.get(this.combatants[id_atk].actor, {loop: false});
+        var holder = this.createTween(this.combatants[id_atk].actor, {loop: false});
         for (var i = 0; i < 10; i++)
             holder.call(splat).call(function() {
                 if (damage > 0)
@@ -316,7 +316,7 @@
                 container.addChild(smoke);
                 alias.stage.addChild(container);
 
-                createjs.Tween.get(container, {loop: false})
+                alias.createTween(container, {loop: false})
                     .to({x: pos.x - d.x * 70 + (10-Math.random() * 20), y: pos.y - d.y * 70 + (10-Math.random() * 20), scaleX: 1, scaleY: 1, alpha: 0}, 2000);
 
                 smoke.addEventListener("animationend", function() {

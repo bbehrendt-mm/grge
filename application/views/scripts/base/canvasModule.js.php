@@ -20,16 +20,29 @@
         this.callback_start = function() {};
         this.callback_finish = function() {};
 
+        this.timelines = {};
+
         this.pretick = pretick_action;
 
-        createjs.Ticker.setFPS(fps);
-        if (pretick_action) createjs.Ticker.addEventListener("tick", this.pretick);
-        createjs.Ticker.addEventListener("tick", this.stage);
+        var alias = this;
+        this.tick_function = function() {
+            Object.keys(alias.timelines).forEach(function(key) {
+                console.log(key, obj[key]);
+            });
+        }
+
+        createjs.Ticker.framerate = fps;
+    };
+
+    CanvasAnimationModule.prototype.rescale = function(h,w,s) {
+        this.stage.canvas.height = h;
+        this.stage.canvas.width = w;
+        this.stage.setTransform(0,0,s,s)
+        this.stage.update();
     };
 
     CanvasAnimationModule.prototype.end = function() {
-        createjs.Ticker.removeEventListener("tick", this.pretick);
-        createjs.Ticker.removeEventListener("tick", this.stage);
+        createjs.Ticker.removeAllEventListeners("tick");
     };
 
     CanvasAnimationModule.prototype.on = function(event, f) {
@@ -45,6 +58,10 @@
     };
 
     CanvasAnimationModule.prototype.begin = function() {
+        if (this.pretick) createjs.Ticker.addEventListener("tick", this.pretick);
+        var alias = this;
+        createjs.Ticker.addEventListener("tick", function() {alias.stage.update();});
+
         if (this.loadstate)
             this.waiting = true;
         else {
@@ -106,4 +123,25 @@
         return container;
     };
 
+    CanvasAnimationModule.prototype.createTween = function(target, props, timeline = "default") {
+        if (typeof this.timelines[timeline] === "undefined")
+            this.timelines[timeline] = new createjs.Timeline({loop: true});
+
+        var tween;
+        var alias = this;
+
+        tween = new createjs.Tween(target,props);
+        var default_paused = tween.paused;
+        this.timelines[timeline].addTween(tween);
+        tween.paused = (typeof default_paused === "undefined") ? false : default_paused;
+        tween.addEventListener('complete',function() {alias.timelines[timeline].removeTween(tween);})
+
+        return tween;
+    }
+
+    CanvasAnimationModule.prototype.getTimeline = function(timeline = "default") {
+        //if (typeof this.timelines[timeline] === "undefined")
+        //    this.timelines[timeline] = new createjs.Timeline();
+        return this.timelines[timeline];
+    }
 })();

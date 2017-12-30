@@ -7,13 +7,17 @@
         var ox = this.getResource(c.avatar).width == dim ? 0 : Math.round((dim - this.getResource(c.avatar).width)/2);
         var oy = this.getResource(c.avatar).height == dim ? 0 : Math.round((dim - this.getResource(c.avatar).height)/2);
 
-        avatar_bmp.cache(-ox, -oy, dim, dim, 64/dim);
+        var scaling = dim/64;
+
+        avatar_bmp.cache(-ox, -oy, dim, dim, /*, 2 * 48/dim*/);
 
         var avatar = new createjs.Shape();
+        var mtx = new createjs.Matrix2D();
+        mtx.identity().translate(8,8).scale(48/dim,48/dim);
         avatar.graphics
             .setStrokeStyle(2)
             .beginStroke("#999999")
-            .beginBitmapFill(avatar_bmp.cacheCanvas)
+            .beginBitmapFill(avatar_bmp.cacheCanvas,"no-repeat",mtx)
             .drawCircle(32,32,24);
 
         var nametxt = new createjs.Text((c.type == <?=Model_Combat_Actor::MCA_TYPE_ZOMBIE?> && c.health.count > 0 ? (c.health.count + ' x ') : '') + c.name, "bold 15px Arial", "#ffffff");
@@ -53,7 +57,7 @@
 
         if (!animate) {
             line_container.alpha = 0;
-            createjs.Tween.get(line_container, {loop: false})
+            this.createTween(line_container, {loop: false})
                 .to({alpha: 1}, 150);
         }
 
@@ -92,7 +96,7 @@
         var alias_card = this.card;
         var alias = this;
         if ((animate || id === false) && alias_card)
-            createjs.Tween.get(alias_card, {loop: false})
+            this.createTween(alias_card, {loop: false})
                 .to({y: alias_card.y <= 10 ? -34 : 370, alpha: 0}, 200)
                 .call(function() {
                     alias.stage.removeChild(alias_card);
@@ -122,7 +126,7 @@
 
         if (animate) {
             this.stage.addChild(this.card);
-            createjs.Tween.get(this.card, {loop: false})
+            this.createTween(this.card, {loop: false})
                 .to({y: invert ? 0 : 336, alpha: 1}, 200);
         }
     };
@@ -136,7 +140,7 @@
         var alias_card = this.card_target;
         var alias = this;
         if (animate && alias_card)
-            createjs.Tween.get(alias_card, {loop: false})
+            this.createTween(alias_card, {loop: false})
                 .to({x: 368, alpha: 0}, 200)
                 .call(function() {
                     alias.card.removeChild(alias_card);
@@ -164,7 +168,7 @@
         if (animate) {
             this.card.addChild(this.card_target);
 
-            createjs.Tween.get(this.card_target, {loop: false})
+            this.createTween(this.card_target, {loop: false})
                 .to({x: 334, alpha: 1}, 200);
         }
 
@@ -200,7 +204,7 @@
             txtcontainer.alpha = 0;
 
             this.combatants[id].container.addChild(txtcontainer);
-            createjs.Tween.get(txtcontainer, {loop: false})
+            this.createTween(txtcontainer, {loop: false})
                 .to({x: -w, y: -30, scaleX: 1, scaleY: 1, alpha: 1}, 800)
                 .call(function() {
                     alias.characterPopupMessage(id);
@@ -212,5 +216,69 @@
                 });
         }
     };
+
+    Battle.prototype.characterDialogMessage = function(id, message) {
+        pos = this.transform(this.combatants[id].pos);
+
+        var dialogbox = new createjs.Container();
+        var txt = new createjs.Text(message, 'bold 10px sans-serif', '#000000');
+
+        var length = txt.getBounds().width;
+        var height = txt.getBounds().height;
+
+        var inverse = this.combatants[id].pos.y >= 10;
+
+        dialogbox.x = 0;
+        dialogbox.y = inverse ? -20 : 10;
+
+        dialogbox.z = 999;
+        dialogbox.alpha = 0;
+
+        txt.x = -length/2;
+        txt.y = 0;
+
+        var bubble = new createjs.Shape();
+
+        bubble.graphics
+            .setStrokeStyle(1)
+            .beginStroke("#e5e5e5")
+            .beginFill("#ffffff");
+        if (!inverse)
+            bubble.graphics
+                .moveTo(-length/2 - 2, -2)
+
+                .lineTo(-3, -2)
+                .lineTo( 0, -5)
+                .lineTo( 3, -2)
+
+                .lineTo( length/2 + 2, -2)
+                .lineTo( length/2 + 2, 2 + height)
+                .lineTo(-length/2 - 2, 2 + height);
+        else
+            bubble.graphics
+                .moveTo(-length/2 - 2, -2)
+                .lineTo( length/2 + 2, -2)
+                .lineTo( length/2 + 2, 2 + height)
+                .lineTo( 3, 2 + height)
+                .lineTo( 0, 5 + height)
+                .lineTo(-3, 2 + height)
+                .lineTo(-length/2 - 2, 2 + height);
+
+        bubble.graphics.closePath();
+
+
+        dialogbox.addChild(bubble);
+        dialogbox.addChild(txt);
+
+        this.combatants[id].container.addChild(dialogbox);
+        var alias = this;
+        this.createTween(dialogbox, {loop: false})
+            .to({y: inverse ? -25 : 15, alpha: 1}, 300)
+            .wait(1500)
+            .to({y: inverse ? -30 : 20, alpha: 0}, 300)
+            .call(function() {
+                alias.combatants[id].container.removeChild(dialogbox);
+            })
+    }
 
 })();

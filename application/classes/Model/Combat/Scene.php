@@ -13,6 +13,9 @@ class Model_Combat_Scene {
     const MCS_EV_BREAK = 9;                    // [ID, [Wpn-Name, Wpn-Icon]]
     const MCS_ATMOSPHERE = 10;                 // [Location]
     const MCS_EV_ESCAPE = 11;                  // [ID, Chance]
+    const MCS_EV_DIALOG = 12;                  // [ID, Text]
+    const MCS_EV_CHARSFX = 13;                  // [ID, Toggle, Name, Strength]
+
 
     private $log_data = [];
 
@@ -413,6 +416,37 @@ class Model_Combat_Scene {
 
             $combatant->id(),
             $chance
+        ];
+    }
+
+    /**
+     * @param Model_Combat_Actor $combatant
+     * @param string $text
+     */
+    public function dialog($combatant, $text) {
+        if (empty($text)) return;
+        $this->log_data[] = [
+            static::MCS_EV_DIALOG,
+
+            $combatant->id(),
+            $text
+        ];
+    }
+
+    /**
+     * @param Model_Combat_Actor $combatant
+     * @param bool $toggle
+     * @param string $name
+     * @param float $strenght
+     */
+    public function character_sfx($combatant, $toggle, $name, $strenght = 1.0) {
+        $this->log_data[] = [
+            static::MCS_EV_CHARSFX,
+
+            $combatant->id(),
+            $toggle,
+            $name,
+            $strenght
         ];
     }
 }

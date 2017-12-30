@@ -11,6 +11,11 @@ class Model_Combat_Players_Dog extends Model_Combat_Players_Player {
     protected $movement_range = 8;
     protected $avatar;
 
+    protected static $taunts = [
+        'drunk' => ['wa.... WAU! *hicks*'],
+        'begin' => ['*grrrrr*','WOOOF!','WAU! WAU!']
+    ];
+
     protected static $show_weapon_switch = false;
 
     /**
@@ -28,6 +33,8 @@ class Model_Combat_Players_Dog extends Model_Combat_Players_Player {
 
         /** @var $ret Model_Combat_Players_Dog */
         $ret->avatar = $avatar;
+
+        if ($p->get_status()->get(Model_Status::MS_STAT_DRUNK) > 25) $ret->add_modifier("drunk", ($p->get_status()->get(Model_Status::MS_STAT_DRUNK)-25)*(4/300));
 
         return $ret;
     }

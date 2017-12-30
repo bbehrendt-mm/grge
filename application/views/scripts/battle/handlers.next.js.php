@@ -14,7 +14,7 @@
             .drawCircle(0, 0, 32);
 
         var alias = this;
-        createjs.Tween.get(blip, {loop: false})
+        this.createTween(blip, {loop: false})
             .to({scaleX: 1, scaleY: 1, alpha: 0}, 300)
             .wait(this.idle)
             .call(function() {

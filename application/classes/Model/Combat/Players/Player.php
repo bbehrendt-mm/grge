@@ -8,6 +8,11 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
 
     protected static $escape = true;
 
+    protected static $taunts = [
+        'drunk' => ['*hicks*'],
+        'begin' => ['Ihr kriegt mich nicht!','Nicht heute!','Verflucht!','ZOMBIES!']
+    ];
+
     /**
      * @param null|Model_Player $p
      * @return Model_Combat_Players_Player|Model_Player
@@ -46,7 +51,9 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
 
         list($ret->stat_initiative, $ret->stat_damage, $ret->stat_resistance, $ret->stat_accuracy) = $p->battle_stats();
         $ret->escape_modifier = $p->get_status()->get(Model_Status::MS_CHAR_EVASIVENESS);
-        
+
+        if ($p->get_status()->get(Model_Status::MS_STAT_DRUNK) > 25) $ret->add_modifier("drunk", ($p->get_status()->get(Model_Status::MS_STAT_DRUNK)-25)*(4/300));
+
         return $ret;
     }
 

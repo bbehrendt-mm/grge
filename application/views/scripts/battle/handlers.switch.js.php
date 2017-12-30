@@ -13,7 +13,7 @@
         this.combatants[id].container.addChild(img);
 
         var alias = this;
-        createjs.Tween.get(img, {loop: false})
+        this.createTween(img, {loop: false})
             .to({y: 0, alpha: 1}, 300)
             .wait(this.idle)
             .to({y: -8, alpha: 0}, 300)

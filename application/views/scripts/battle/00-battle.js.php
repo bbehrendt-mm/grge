@@ -80,6 +80,7 @@
 
     Battle.prototype.unpause = function() {
         createjs.Ticker.paused = false;
+        this.getTimeline().timeScale = 3;
     };
 
     Battle.prototype.reset = function() {
@@ -96,7 +97,7 @@
 
     Battle.prototype.finish = function() {
         var alias = this;
-        createjs.Tween.get(this.stage)
+        this.createTween(this.stage)
             .wait(this.idle * 2)
             .call(function() {
                 alias.showActorCard(false);

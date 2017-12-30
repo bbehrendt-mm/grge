@@ -55,6 +55,9 @@ class Model_Combat_Actor extends Named {
         'flee' => 0,
     ];
 
+    protected $ki_modifiers = [];
+    protected $current_ki_modifiers = [];
+
     protected $wounds = [];
 
     /** @var Model_Combat_Weapon[] */
@@ -69,6 +72,10 @@ class Model_Combat_Actor extends Named {
     /** @var Model_Combat_Weapon */
     protected $current_weapon = null;
 
+    protected static $taunts = [
+        'drunk' => ['*hicks*']
+    ];
+
     /**
      * @return Model_Combat_Actor
      */
@@ -79,6 +86,35 @@ class Model_Combat_Actor extends Named {
 
     public function unique() {
         return static::$is_unique;
+    }
+
+    public function get_random_taunt($cat) {
+        if (empty(static::$taunts[$cat])) return null;
+        else return Tool_Gambling::select(static::$taunts[$cat]);
+    }
+
+    public function add_modifier($name,$chance = 1) {
+        $this->ki_modifiers[$name] = $chance;
+    }
+
+    public function recalculate_ki_modifiers() {
+        $this->current_ki_modifiers = [];
+        foreach ($this->ki_modifiers as $name => $chance)
+            if ($chance > 0) {
+                if ($chance >= 1 || Tool_Gambling::random($chance)) $this->current_ki_modifiers[] = $name;
+            }
+    }
+
+    public function ki_mod_is_active($name) {
+        return in_array($name,$this->current_ki_modifiers);
+    }
+
+    public function ki_mod_strength($name) {
+        return isset($this->ki_modifiers[$name]) ? $this->ki_modifiers[$name] : 0;
+    }
+
+    public function ki_mod_is_registered($name) {
+        return isset($this->ki_modifiers[$name]) && $this->ki_modifiers[$name] > 0;
     }
 
     public function get_avatar() {
@@ -515,14 +551,40 @@ class Model_Combat_Actor extends Named {
 
     public function idle() {}
 
+    public function act_modified_drunk($friends, $foes, $second_act = false) {
+        // ToDO: Barf action
+
+        if ($second_act) return;
+
+        //Move
+        $random_x = mt_rand(-100,100);
+        $random_y = mt_rand(-100,100);
+        if ($random_x == 0 && $random_y == 0) $random_x = 1;
+
+        $length = sqrt($random_x * $random_x + $random_y * $random_y);
+        $dist = (min(4,$this->movement_range * (mt_rand(10,50)/100)));
+
+        $this->pos_x += $random_x * ($dist / $length);
+        $this->pos_y += $random_y * ($dist / $length);
+
+        $this->scene->move($this, [$this->pos_x, $this->pos_y], $dist);
+    }
+
     /**
      * @param Model_Combat_Actor[] $friends
      * @param Model_Combat_Actor[] $foes
      * @param bool $second_act
      */
     public function act($friends, $foes, $second_act = false) {
-        if (!$second_act)
+        if (!$second_act) {
             $this->reset_steps();
+            $this->recalculate_ki_modifiers();
+        }
+
+        if ($this->ki_mod_is_active('drunk') && Tool_Gambling::random(0.8)) {
+            $this->scene->dialog($this,$this->get_random_taunt('drunk'));
+            return $this->act_modified_drunk($friends, $foes, $second_act);
+        }
 
         $attack = $this->get_attack_priority($friends, $foes);
         $switch = $second_act ? [] : $this->get_weapon_priority($friends, $foes);

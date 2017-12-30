@@ -84,6 +84,12 @@ class Model_Combat_Field {
         foreach ($this->combatants as $combatant) {
             $this->scene->add_combatant($combatant);
             $combatant->enter();
+
+            if ($combatant->ki_mod_is_registered('drunk')) {
+                $this->scene->dialog($combatant,$combatant->get_random_taunt('drunk'));
+                $this->scene->character_sfx($combatant,true,'drunk',$combatant->ki_mod_strength('drunk'));
+
+            } else $this->scene->dialog($combatant,$combatant->get_random_taunt('begin'));
         }
         
         // Escape calculations

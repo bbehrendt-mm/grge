@@ -38,7 +38,9 @@
             'new': true,
 
             messages: [],
-            message_processing: false
+            message_processing: false,
+
+            sfx: {}
         };
 
         var inverse = pos[0] > 32;
@@ -89,11 +91,11 @@
         this.stage.addChild(blackbox);
 
         var alias = this;
-        createjs.Tween.get(this.combatants[id].actor, {loop: false})
+        this.createTween(this.combatants[id].actor, {loop: false})
             .to({alpha: 1, scaleX: 1, scaleY: 1, x: spw * -0.5, y: sph * -0.5}, 100)
             .call(function() {
                 alias.showActorCard(id);
-                createjs.Tween.get(blackbox)
+                alias.createTween(blackbox)
                     .to({scaleX: 1, x: inverse ? (pos.x + (spwb/2 - length)) : blackbox.x}, 100)
                     .to({scaleX: 1.1, x: inverse ? (pos.x + (spwb/2 - length * 1.1)) : blackbox.x}, 1000)
                     .call(function() {

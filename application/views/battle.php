@@ -30,8 +30,7 @@ if (!isset($path)) $path = '';
 
     <script type="application/javascript" src="<?=$url?>js/jquery.min.js" ></script>
     <script type="application/javascript" src="<?=$url?>js/jquery.ext.min.js" ></script>
-    <script type="application/javascript" src="<?=$url?>js/easeljs-0.8.2.min.js" ></script>
-    <script type="application/javascript" src="<?=$url?>js/tweenjs-0.6.2.min.js" ></script>
+    <script type="application/javascript" src="<?=$url?>js/createjs.min.js" ></script>
 </head>
 <body style="overflow: hidden; padding: 0; margin: 0; background: black">
 
@@ -78,6 +77,7 @@ if (!isset($path)) $path = '';
     <script type="text/javascript">
         (function() {
             var lang = JSON.parse(localStorage.getItem('grge.settings.language'));
+            var global_scale = 1;
             if (!lang) lang = '<?=$lang?>';
 
             window.addEventListener('load',function(){
@@ -96,10 +96,15 @@ if (!isset($path)) $path = '';
                     var h = $(window).height(); var w = $(window ).width();
                     var scale = Math.min(h/400,w/640);
 
-                    $('#output_container').css({height: 400 * scale, width: 640 * scale, left: (w - 640 * scale)/2, top: (h - 400 * scale)/2});
+                    $('#output_container')
+                        .css({height: 400 * scale, width: 640 * scale, left: (w - 640 * scale)/2, top: (h - 400 * scale)/2});
+
                     $('#finish').css({height: 400 * scale, width: 640 * scale});
                     var rpl = $('#replay');
                     rpl.css({top: (400 * scale)/2 - rpl.height()/2, left: (640 * scale)/2 - rpl.width()/2});
+
+                    global_scale = scale;
+                    if (battle) battle.rescale(400 * scale,640 * scale,scale);
                 }).resize();
 
                 var loader = function() {
@@ -174,6 +179,8 @@ if (!isset($path)) $path = '';
 
                     battle.load();
                     battle.begin();
+
+                    $(window).resize();
 
                     $('#preview').hide();
                 };

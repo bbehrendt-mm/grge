@@ -40,12 +40,12 @@
             body.alpha = 0;
             this.combatants[id].container.addChild(body);
 
-            createjs.Tween.get(this.combatants[id].actor, {loop: false})
+            this.createTween(this.combatants[id].actor, {loop: false})
                 .to({alpha: 0, scaleY: 0.5, y: 0}, 200)
                 .call(function() {
                     alias.combatants[id].container.removeChild(alias.combatants[id].actor);
                 });
-            createjs.Tween.get(body, {loop: false})
+            this.createTween(body, {loop: false})
                 .to({alpha: 1}, 200)
                 .call(function() {
                     alias.proceed(2);
@@ -55,7 +55,7 @@
         } else if (damage > 0) {
             var dist = Math.max(Math.min(Math.ceil(damage / 1.5), 6), 0);
 
-            createjs.Tween.get(this.combatants[id].actor, {loop: false})
+            this.createTween(this.combatants[id].actor, {loop: false})
                 .to({x: dist - 8, y: dist - 8}, 100)
                 .to({x: -dist - 8, y: -dist - 8}, 100)
                 .to({x: -8, y: -8}, 100)

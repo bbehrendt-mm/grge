@@ -62,6 +62,8 @@ class Model_Achievement extends Model {
     const MA_ANONYMOUS = 58;
     const MA_PETA = 59;
     const MA_ROOM_BUILDER = 60;
+
+    const MA_TRANSLATOR_ES = 500;
 	
 	const MA_RANKING_SURVIVAL = 1000;
 	const MA_RANKING_HARDCORE = 1100;
@@ -136,6 +138,8 @@ class Model_Achievement extends Model {
             Model_Achievement::MA_ANONYMOUS                         => array('name' => "Chaostage",                             'points' => 1,),
             Model_Achievement::MA_PETA			                    => array('name' => "Freund von PETA",                       'points' => 15,),
             Model_Achievement::MA_ROOM_BUILDER			            => array('name' => "Bausparvertrag",                        'points' =>  8,),
+
+            Model_Achievement::MA_TRANSLATOR_ES			            => array('name' => "Traductor maestro",                     'points' => 500,),
 
 			Model_Achievement::MA_RANKING_SURVIVAL	                => array('name' => "Berühmter Überlebenskünstler",          'points' => 50,),
 			Model_Achievement::MA_RANKING_HARDCORE	                => array('name' => "Berühmter Hardcore-Überlebenskünstler", 'points' => 75,),

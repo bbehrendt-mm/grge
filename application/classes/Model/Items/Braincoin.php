@@ -1,7 +1,9 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
 class Model_Items_Braincoin extends Model_Items_Abstract_Ammo implements Interface_Autotaker {
-	
+
+    protected static $boni = [];
+
 	protected static $static_info = Array(
 			'name' => 'BrainCoin',
 			'icon' => 'braincoin',

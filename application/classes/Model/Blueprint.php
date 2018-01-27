@@ -23,6 +23,7 @@ class Model_Blueprint {
     private $items = [];
     private $item_deciders = [];
     private $produces = [];
+    private $produces_advanced = [];
     private $emplaces = [];
     private $emplaces_action_data = [];
 
@@ -514,6 +515,23 @@ class Model_Blueprint {
     }
 
     /**
+     * Adds a producer function to the producer stack
+     * @param callable|[callable] $callable
+     * @return Model_Blueprint
+     */
+    public function produces_advanced(callable $callable) {
+        if (is_array($callable)) {
+            foreach ($callable as $func)
+                $this->produces_advanced($func);
+            return $this;
+        }
+
+        $this->produces_advanced[] = $callable;
+
+        return $this;
+    }
+
+    /**
      * Adds an item to the emplacement stack
      * @param string|array $item Item class
      * @param int $count Item count
@@ -695,17 +713,36 @@ class Model_Blueprint {
             return false;
         }
 
-        $player->get_status()->modify(Model_Status::MS_STAT_ENERGY, -$this->energy, Model_Status::MS_EFFECT_REQUIREMENT);
-        foreach ($this->produces as $item => $count)
-            for ($i = 0; $i < $count; $i++) {
-                $instance = new $item();
-                $player->location()->inventory()->add($instance);
+        $raw_item_objects = [];
 
-                if (Tool_System::instance_of($instance,'Model_Items_Abstract_Virtual')) {
-                    /** @var Model_Items_Abstract_Virtual $instance */
-                    if ($instance::setup_location()) $instance->set_location_info($player->location_class());
-                }
+        $player->get_status()->modify(Model_Status::MS_STAT_ENERGY, -$this->energy, Model_Status::MS_EFFECT_REQUIREMENT);
+        $basic_prducer_stack = $this->produces;
+        foreach ($this->produces_advanced as $callable) {
+            $entry = $callable($player,true);
+            if (!is_array($entry)) $entry = [$entry];
+            foreach ($entry as $sub) {
+                if (is_string($sub)) $sub = [$sub => 1];
+
+                if (is_array($sub))
+                    foreach ($sub as $item => $count)
+                        $basic_prducer_stack[$item] = isset($basic_prducer_stack[$item]) ? $basic_prducer_stack[$item] + $count : $count;
+
+                if (is_object($sub) && Tool_System::instance_of($sub,Model_Items_Abstract_Item::cls()))
+                    $raw_item_objects[] = $sub;
             }
+        }
+        foreach ($this->produces as $item => $count)
+            for ($i = 0; $i < $count; $i++)
+                $raw_item_objects[] = new $item();
+
+        foreach ($raw_item_objects as $instance) {
+            $player->location()->inventory()->add($instance);
+
+            if (Tool_System::instance_of($instance, 'Model_Items_Abstract_Virtual')) {
+                /** @var Model_Items_Abstract_Virtual $instance */
+                if ($instance::setup_location()) $instance->set_location_info($player->location_class());
+            }
+        }
 
 
         $ret = $this->apply($player->location(), $preconditions, $room);
@@ -822,6 +859,7 @@ class Model_Blueprint {
      * @param Model_Room $room
      * @param Model_Player $player
      * @return array
+     * @throws Exception
      */
     public function compile($preconditions, $room, $player) {
         $current_steps = $this->completion($preconditions);
@@ -867,6 +905,19 @@ class Model_Blueprint {
             if (!in_array($occ_room, $this->requires_room()))
                 $room_occ_data[$occ_room] = !$room->check_room_satisfaction($occ_room);
 
+        $basic_prducer_stack = $this->produces;
+        foreach ($this->produces_advanced as $callable) {
+            $entry = $callable($player,false);
+            if (!is_array($entry)) $entry = [$entry];
+            foreach ($entry as $sub) {
+                if (is_string($sub)) $sub = [$sub => 1];
+
+                if (is_array($sub))
+                    foreach ($sub as $item => $count)
+                        $basic_prducer_stack[$item] = isset($basic_prducer_stack[$item]) ? $basic_prducer_stack[$item] + $count : $count;
+            }
+        }
+
         return [
             'id' => $this->id,
             'is_room' => $this->is_room,
@@ -885,7 +936,7 @@ class Model_Blueprint {
             'defense' => $this->defense,
             'deco' => $this->deco_value,
             'material_in' => $this->materialize($this->items),
-            'material_out' => $this->materialize($this->produces),
+            'material_out' => $this->materialize($basic_prducer_stack),
             'build' => in_array($this->id,$preconditions),
             'build_local' => in_array($this->id,$room->get_content()),
             'slot_open' => $still_open,

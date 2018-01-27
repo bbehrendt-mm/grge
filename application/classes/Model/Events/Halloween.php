@@ -317,31 +317,31 @@ class Model_Events_Halloween extends Model_Events_Event {
                         ->id('i:soulcn1_0')
                         ->steps(0)
                         ->material([Model_Items_Soul::cls() => $sp_factor * 1])
-                        ->produces([Model_Items_Braincoin1::cls() => 1])
+                        ->produces_advanced(function($p,$do) { return $do ? new Model_Items_Braincoin(1) : [Model_Items_Braincoin::cls() => 1]; })
                 )->add_blueprints(
                     Model_Blueprint::factory()
                         ->id('i:soulcn2_0')
                         ->steps(0)
                         ->material([Model_Items_Soul::cls() => $sp_factor * 5])
-                        ->produces([Model_Items_Braincoin1::cls() => 5])
+                        ->produces_advanced(function($p,$do) { return $do ? new Model_Items_Braincoin(5) : [Model_Items_Braincoin::cls() => 5]; })
                 )->add_blueprints(
                     Model_Blueprint::factory()
                         ->id('i:soulcn3_0')
                         ->steps(0)
                         ->material([Model_Items_Soul::cls() => $sp_factor * 10])
-                        ->produces([Model_Items_Braincoin1::cls() => 10])
+                        ->produces_advanced(function($p,$do) { return $do ? new Model_Items_Braincoin(10) : [Model_Items_Braincoin::cls() => 10]; })
                 )->add_blueprints(
                     Model_Blueprint::factory()
                         ->id('i:soulcn4_0')
                         ->steps(0)
                         ->material([Model_Items_Soul2::cls() => $sp_factor * 1])
-                        ->produces([Model_Items_Braincoin1::cls() => 5])
+                        ->produces_advanced(function($p,$do) { return $do ? new Model_Items_Braincoin(5) : [Model_Items_Braincoin::cls() => 5]; })
                 )->add_blueprints(
                     Model_Blueprint::factory()
                         ->id('i:soulcn5_0')
                         ->steps(0)
                         ->material([Model_Items_Soul2::cls() => $sp_factor * 5])
-                        ->produces([Model_Items_Braincoin1::cls() => 25])
+                        ->produces_advanced(function($p,$do) { return $do ? new Model_Items_Braincoin(25) : [Model_Items_Braincoin::cls() => 25]; })
                 )
                 ;
 

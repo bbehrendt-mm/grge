@@ -15,6 +15,7 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
     const MCW_ANIMATION_CHAINSAW = 10;
     const MCW_ANIMATION_SHOT_BOLT = 11;
     const MCW_ANIMATION_SHOT_SPLINTER = 12;
+    const MCW_ANIMATION_SHOT_RLASER = 13;
 
     protected static $equipment_type = Model_Items_Abstract_Equipable::MIAE_WEAPON;
 

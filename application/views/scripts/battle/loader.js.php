@@ -69,6 +69,9 @@
                     case <?=Model_Combat_Weapon::MCW_ANIMATION_SHOT_BOLT?>:
                         alias.addResource('ammo/bolt.gif');
                         break;
+                    case <?=Model_Combat_Weapon::MCW_ANIMATION_SHOT_RLASER?>:
+                        alias.addResource('ammo/rlaser.gif', 'animations/plasma.png');
+                        break;
                     case <?=Model_Combat_Weapon::MCW_ANIMATION_CHAINSAW?>:
                         alias.addResource('animations/smoke.png');
                         break;

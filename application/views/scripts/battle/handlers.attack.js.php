@@ -285,6 +285,43 @@
         });
     };
 
+    animations[<?=Model_Combat_Weapon::MCW_ANIMATION_SHOT_RLASER?>] = function(id_atk, id_def, scale, wpn_icon, damage) {
+        var alias = this;
+
+        var explosion_anim = function(pro, m) {
+            var explosion = alias.getAnimation('animations/plasma.png', 64, 64);
+
+            var container = new createjs.Container();
+            var pos = alias.transform(alias.combatants[id_def].pos);
+            container.x = pos.x;
+            container.y = pos.y;
+            container.z = 90;
+
+            explosion.x = -32;
+            explosion.y = -32 + m;
+            explosion.framerate = 50;
+            explosion.play();
+            container.addChild(explosion);
+            alias.stage.addChild(container);
+
+            explosion.addEventListener("animationend", function() {
+                alias.stage.removeChild(container);
+                if (pro) alias.proceed();
+            });
+        }
+
+        animation_shoot.call(this, id_atk, id_def, 'ammo/rlaser.gif', 0.5, 3, function() {
+            explosion_anim(false, 8);
+            alias.proceed();
+            //animation_shoot.call(this, id_atk, id_def, 'ammo/rlaser.gif', 0.5, 3, function() {
+            //    explosion_anim(false, 0);
+            //    animation_shoot.call(this, id_atk, id_def, 'ammo/rlaser.gif', 0.5, 3, function() {
+            //        explosion_anim(true, -8);
+            //    });
+            //});
+        });
+    };
+
     animations[<?=Model_Combat_Weapon::MCW_ANIMATION_CHAINSAW?>] = function(id_atk, id_def, scale, wpn_icon, damage) {
         var d = to(this.combatants[id_atk].pos, this.combatants[id_def].pos, true);
 

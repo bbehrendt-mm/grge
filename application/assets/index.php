@@ -102,5 +102,7 @@ if ($not_modified) {
 header('ETag: ' . $etag);
 header('Last-Modified: ' . $last_modified_gmt);
 header('Content-Length: ' . filesize($f));
+header('Cache-Control: no-cache, must-revalidate');
+header('Pragma: no-cache');
 readfile($f);
 exit;

@@ -99,7 +99,7 @@ class Tool_Gamemodes {
 
         //Modes
         foreach ($ret['modes'] as $id => $mode)
-            if ($mode['type'] == 'multi_auto' || $mode['type'] == 'multi_custom')
+            if ($mode['type'] == 'multi_auto' || $mode['type'] == 'multi_custom' || $mode['type'] == 'special_multi_auto')
                 $r[] = $id;
 
         return $r;

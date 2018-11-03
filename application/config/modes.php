@@ -344,7 +344,7 @@ return array(
             'type' => 'special_multi_auto',
             'requirements' => array('mode' => array(),'job' => array(),'ext' => array(),'ext_note' => array()),
 
-            'jobs' => array(12010,12020,12030,12040,12050,12060,12070,12080),
+            'jobs' => array(12010,12020,12030,12040,12050,12060,12070),
             'unstartable_jobs' => array(),
 
             'setup' => array(

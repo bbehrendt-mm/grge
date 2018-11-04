@@ -163,7 +163,24 @@ return Model_Blueprints::factory()
 
     ->pop_stack()
 
-    // CHEMLAB
+    // METHLAB
+    // ++ STACK -> All blueprints below need the METHLAB kitchen
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires_room('kitchen_meth');})
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:cspray1')
+            ->energy(5)
+            ->material(Model_Items_Chem::cls(), 2, null, 0)
+            ->material(Model_Items_Chem::cls(), 1, null, 1)
+            ->produces(Model_Items_Spray::cls(), 1, 0)
+            ->effect(
+                Model_Effect::factory()
+                    ->achieve(Model_Achievement::MA_BLOODSUCKER)
+            )
+    )
+
+    ->pop_stack()
 
     // -- STACK -> All blueprints below NO LONGER need the basic kitchen
     ->pop_stack()

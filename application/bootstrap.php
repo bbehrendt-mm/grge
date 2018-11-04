@@ -46,6 +46,11 @@ setlocale(LC_ALL, 'en_US.utf-8');
  * @see  http://php.net/spl_autoload_register
  */
 spl_autoload_register(array('Kohana', 'auto_load'));
+spl_autoload_register(function($class) {
+    return (strpos($class, 'Struct_') === 0) ?
+        Kohana::auto_load(preg_replace('/^Struct\_(.+?)[A-Z](.*)$/', 'Structs_$1', $class)) :
+        false;
+});
 
 /**
  * Enable the Kohana auto-loader for unserialization.

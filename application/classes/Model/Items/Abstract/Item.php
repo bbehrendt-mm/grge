@@ -100,7 +100,22 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 	public static function static_info($name) {
 		return isset(static::$static_info[$name]) ? static::$static_info[$name] : null;
 	}
-	
+
+    /**
+     * Will return static infos about this class
+     *
+     * @param string $name The type of information (name, icon, description, category)
+     * @param int    $type
+     *
+     * @return string
+     */
+    public static function static_typed_info($name, $type = 0) {
+        //1.Lv: Instance info
+        if (isset(static::$instances_info[$type][$name])) return static::$instances_info[$type][$name];
+        //2.Lv: Static info
+        else return static::static_info($name);
+    }
+
 	/**
 	 * Will return subtype infos about this class instance
 	 * If no subtypes are defined for this class, this acts as a non-static alias for static_info
@@ -125,13 +140,16 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 	public function cat() {
 		return $this->instance_info('category');
 	}
-	
-	/**
-	 * Will return the item static category
-	 * @return int
-	 */
-	public static function static_cat() {
-		return static::static_info('category');
+
+    /**
+     * Will return the item static category
+     *
+     * @param null $type
+     *
+     * @return int
+     */
+	public static function static_cat($type = null) {
+		return $type === null ? static::static_info('category') : static::static_typed_info('category', $type);
 	}
 	
 	/**
@@ -141,13 +159,16 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 	public function name() {
 		return $this->instance_info('name');
 	}
-	
-	/**
-	 * Will return item static name
-	 * @return string
-	 */
-	public static function static_name() {
-		return static::static_info('name');
+
+    /**
+     * Will return item static name
+     *
+     * @param null $type
+     *
+     * @return string
+     */
+	public static function static_name($type = null) {
+        return $type === null ? static::static_info('name') : static::static_typed_info('name', $type);
 	}
 	
 	/**
@@ -157,13 +178,17 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 	public function icon() {
 		return 'items/' . $this->instance_info('icon');
 	}
-	
-	/**
-	 * Will return item static icon path
-	 * @return string
-	 */
-	public static function static_icon() {
-		return ($tmp = static::static_info('icon')) ? "items/$tmp" : '';
+
+    /**
+     * Will return item static icon path
+     *
+     * @param null $type
+     *
+     * @return string
+     */
+	public static function static_icon($type = null) {
+	    $tmp = $type === null ? static::static_info('icon') : static::static_typed_info('icon', $type);
+	    return $tmp ? "items/$tmp" : '';
 	}
 	
 	/**
@@ -173,13 +198,16 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 	public function description() {
 		return $this->instance_info('description');
 	}
-	
-	/**
-	 * Will return item static description
-	 * @return string
-	 */
-	public static function static_description() {
-		return static::static_info('description');
+
+    /**
+     * Will return item static description
+     *
+     * @param null $type
+     *
+     * @return string
+     */
+	public static function static_description($type = null) {
+        return $type === null ? static::static_info('description') : static::static_typed_info('description', $type);
 	}
 
     /**
@@ -192,10 +220,13 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 
     /**
      * Will return item static deco value
+     *
+     * @param null $type
+     *
      * @return int
      */
-    public static function static_deco() {
-        return static::static_info('deco');
+    public static function static_deco($type = null) {
+        return $type === null ? static::static_info('deco') : static::static_typed_info('deco', $type);
     }
 
 	/**

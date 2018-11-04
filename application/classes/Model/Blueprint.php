@@ -9,7 +9,7 @@ class Model_Blueprint {
      */
     private $effect;
 
-    private $id;
+    private $iid;
     private $is_room = false;
 
     private $room_clear = false;
@@ -17,11 +17,12 @@ class Model_Blueprint {
 
     private $space_requirement = 0;
 
-    private $name;
-    private $description;
+    private $obj_name;
+    private $obj_description;
 
+    /** @var Struct_ItemMaterial[] $items  */
     private $items = [];
-    private $item_deciders = [];
+    /** @var Struct_ItemEntry[] $produces  */
     private $produces = [];
     private $produces_advanced = [];
     private $emplaces = [];
@@ -41,16 +42,16 @@ class Model_Blueprint {
     private $decay_speed = 0;
     private $deco_value = 0;
     private $steps = 1;
-    private $condition;
-    private $show_condition;
-    private $message;
+    private $build_condition;
+    private $opt_show_condition;
+    private $user_message;
     private $defense = 0;
     private $categories = [];
     private $modifiers = [];
     private $confirmation = false;
 
     /** @var bool|array|callable|int */
-    private $zombies = false;
+    private $zombie_kills = false;
     private $zombies_optional = false;
 
     /**
@@ -58,7 +59,7 @@ class Model_Blueprint {
      * @return Model_Blueprint
      */
     public static function factory() {
-        return new Model_Blueprint();
+        return new self();
     }
 
     /**
@@ -79,9 +80,9 @@ class Model_Blueprint {
     }
 
     public function add_modifier_builder($daytime_bonus = 0.25, $handyman_bonus = 0.1) {
-        $this->add_modifier(Model_Blueprint::BP_MOD_ENERGY, function($pl,$pre,$e) use ($daytime_bonus,$handyman_bonus) { /** @var Model_Player $pl */
+        $this->add_modifier(self::BP_MOD_ENERGY, function($pl,$pre,$e) use ($daytime_bonus,$handyman_bonus) { /** @var Model_Player $pl */
             $mod = 1;
-            if ($daytime_bonus  !== false && Tool_Scripts::get_timeofday($pl) == 'morning')  $mod -= $daytime_bonus;   // Daytime bonus
+            if ($daytime_bonus  !== false && Tool_Scripts::get_timeofday($pl) === 'morning')  $mod -= $daytime_bonus;   // Daytime bonus
             if ($handyman_bonus !== false && $pl->get_status()->retrieve('tr_handyman')) $mod -= $handyman_bonus;  // Handyman Bonus
             return max(min(1,$e),floor($e*$mod));
         });
@@ -89,8 +90,11 @@ class Model_Blueprint {
 
     /**
      * Applies all modifiers, and clears the modifier cache
+     *
      * @param Model_Player $player
-     * @param string[] $pre
+     * @param string[]     $pre
+     * @param              $room
+     *
      * @return Model_Blueprint
      */
     public function modify($player, $pre, $room) {
@@ -120,9 +124,9 @@ class Model_Blueprint {
      */
     public function name($name = null) {
         if ($name === null)
-            return $this->name;
+            return $this->obj_name;
         else {
-            $this->name = $name;
+            $this->obj_name = $name;
             return $this;
         }
     }
@@ -142,8 +146,10 @@ class Model_Blueprint {
     }
 
     public function global_blocking($b = null) {
-        if ($b === null) return $this->use_global_blocking;
-        else $this->use_global_blocking = true;
+        if ($b === null) {
+            return $this->use_global_blocking;
+        }
+        return $this->use_global_blocking = true;
     }
 
     /**
@@ -153,7 +159,7 @@ class Model_Blueprint {
      */
     public function category($name) {
         if (is_string($name)) {
-            if (!in_array($name, $this->categories))
+            if (!in_array($name, $this->categories, false))
                 $this->categories[] = $name;
         } elseif (is_array($name))
             foreach ($name as $elem)
@@ -167,7 +173,7 @@ class Model_Blueprint {
      * @return Model_Blueprint
      */
     public function condition($c) {
-        $this->condition = $c;
+        $this->build_condition = $c;
         return $this;
     }
 
@@ -177,7 +183,7 @@ class Model_Blueprint {
      * @return Model_Blueprint
      */
     public function show_condition($c) {
-        $this->show_condition = $c;
+        $this->opt_show_condition = $c;
         return $this;
     }
 
@@ -188,9 +194,9 @@ class Model_Blueprint {
      */
     public function description($description = null) {
         if ($description === null)
-            return $this->description;
+            return $this->obj_description;
         else {
-            $this->description = $description;
+            $this->obj_description = $description;
             return $this;
         }
     }
@@ -203,10 +209,10 @@ class Model_Blueprint {
      */
     public function id($id = null) {
         if ($id === null)
-            return $this->id;
+            return $this->iid;
         else {
-            if ($this->id) throw new Exception('Attempt to rebind blueprint ID!');
-            $this->id = $id;
+            if ($this->iid) throw new LogicException('Attempt to rebind blueprint ID!');
+            $this->iid = $id;
             $this->provide($id);
             return $this;
         }
@@ -220,10 +226,10 @@ class Model_Blueprint {
      */
     public function room($id = null) {
         if ($id === null)
-            return $this->is_room ? $this->id : null;
+            return $this->is_room ? $this->iid : null;
         else {
-            if ($this->id) throw new Exception('Attempt to rebind blueprint ID!');
-            $this->id = $id;
+            if ($this->iid) throw new LogicException('Attempt to rebind blueprint ID!');
+            $this->iid = $id;
             $this->is_room = true;
             $this->provide_room($id);
             $this->global_blocking(true);
@@ -237,7 +243,7 @@ class Model_Blueprint {
      * @throws Exception When using this function on a non-room
      */
     public function clear_previous_room($v = null) {
-        if (!$this->is_room) throw new Exception("Using CLEAR on non-room!");
+        if (!$this->is_room) throw new LogicException('Using CLEAR on non-room!');
 
         if ($v === null) return $this->room_clear;
         else {
@@ -252,7 +258,7 @@ class Model_Blueprint {
      * @throws Exception When using this function on a non-room
      */
     public function replace_room_satisfaction($v = null) {
-        if (!$this->is_room) throw new Exception("Using FULL_REPLACE on non-room!");
+        if (!$this->is_room) throw new LogicException('Using FULL_REPLACE on non-room!');
 
         if ($v === null) return $this->room_clear_sat;
         else {
@@ -282,9 +288,9 @@ class Model_Blueprint {
      */
     public function message($m = null) {
         if ($m === null)
-            return $this->message;
+            return $this->user_message;
         else {
-            $this->message = $m;
+            $this->user_message = $m;
             return $this;
         }
     }
@@ -305,11 +311,14 @@ class Model_Blueprint {
 
     /**
      * Returns the completing level of this blueprint
+     *
      * @param string[] $precondition
+     *
      * @return bool|int TRUE, when all conditions are met to make a final build, otherwise a number representing the last completed building step. If no steps were build yet, 0 is returned.
+     * @throws Exception
      */
     private function completion($precondition) {
-        if ($this->steps == 1 || in_array($this->id() . ':' . ($this->steps - 1), $precondition))
+        if ($this->steps === 1 || in_array($this->id() . ':' . ($this->steps - 1), $precondition))
             return true;
         else
             for ($i = $this->steps - 2; $i > 0; $i--)
@@ -353,15 +362,18 @@ class Model_Blueprint {
      * @param null|callable $decider Decider function called for each item instance; will be ignored when items are passed as array!
      * @return Model_Blueprint
      */
-    public function material($class, $count = 1, $decider = null) {
+    public function material($class, $count = 1, $decider = null, $type = null) {
         if (is_array($class))
             foreach ($class as $i_class => $i_count)
-                $this->material($i_class, $i_count);
+                $this->material($i_class, $i_count,$decider,$type);
 
         else  {
-            $this->items[$class] = $count;
-            if ($decider && is_callable($decider))
-                $this->item_deciders[$class] = $decider;
+            $inst = new Struct_ItemMaterial();
+            $inst->class = $class;
+            $inst->count = $count;
+            $inst->type = $type;
+            $inst->decider = is_callable($decider) ? $decider : null;
+            $this->items[] = $inst;
         }
         return $this;
     }
@@ -455,8 +467,8 @@ class Model_Blueprint {
     public function provide($rid = null) {
         if ($rid === null)
             return $this->steps <= 0 ? [] : $this->provides;
-        if ($this->is_room) throw new Exception('Attempt to use PROVIDING with rooms!');
-        if (!in_array($rid, $this->provides))
+        if ($this->is_room) throw new LogicException ('Attempt to use PROVIDING with rooms!');
+        if (!in_array($rid, $this->provides, false))
             $this->provides[] = $rid;
         return $this;
     }
@@ -470,11 +482,11 @@ class Model_Blueprint {
     public function provide_room($rids = null) {
         if ($rids === null)
             return $this->provides_room;
-        if (!$this->is_room) throw new Exception('Attempt to use ROOM-PROVIDING with non-rooms!');
+        if (!$this->is_room) throw new LogicException('Attempt to use ROOM-PROVIDING with non-rooms!');
         if (!is_array($rids)) $rids = [$rids];
 
         foreach ($rids as $rid)
-            if (!in_array($rid, $this->provides_room))
+            if (!in_array($rid, $this->provides_room, false))
                 $this->provides_room[] = $rid;
         return $this;
     }
@@ -488,28 +500,33 @@ class Model_Blueprint {
     public function remove($rid = null) {
         if ($rid === null)
             return $this->removes;
-        if ($this->is_room) throw new Exception('Attempt to use REMOVING with rooms!');
-        if (!in_array($rid, $this->removes))
+        if ($this->is_room) throw new LogicException('Attempt to use REMOVING with rooms!');
+        if (!in_array($rid, $this->removes,false))
             $this->removes[] = $rid;
         return $this;
     }
 
     /**
      * Adds an item to the producer stack
-     * @param string|array $item Item class
-     * @param int $count Item count
+     *
+     * @param string|array $item  Item class
+     * @param int          $count Item count
+     * @param null         $type
+     *
      * @return Model_Blueprint
      */
-    public function produces($item, $count = 1) {
+    public function produces($item, $count = 1, $type = null) {
         if (is_array($item)) {
             foreach ($item as $i_class => $i_count)
                 $this->produces($i_class, $i_count);
             return $this;
         }
 
-        if (!isset($this->produces[$item]))
-            $this->produces[$item] = $count;
-        else $this->produces[$item] += $count;
+        $inst = new Struct_ItemEntry();
+        $inst->class = $item;
+        $inst->count = $count;
+        $inst->type = $type;
+        $this->produces[] = $inst;
 
         return $this;
     }
@@ -559,7 +576,7 @@ class Model_Blueprint {
      * @param string $custom_action_id
      * @return Model_Blueprint
      */
-    public function emplaces_action($text = "Herstellen...", $text_desc = null, $custom_popup = "maker", $custom_action_id = "lc_lazy_maker") {
+    public function emplaces_action($text = 'Herstellen...', $text_desc = null, $custom_popup = 'maker', $custom_action_id = 'lc_lazy_maker') {
         $this->emplaces_action_data[] = [$text,$text_desc,$custom_popup,$custom_action_id];
         return $this;
     }
@@ -578,9 +595,9 @@ class Model_Blueprint {
         $this->zombies_optional = $optional;
 
         if (is_callable($min))
-            $this->zombies = $min;
+            $this->zombie_kills = $min;
         else
-            $this->zombies = ($max !== null) ? [$min,max($min,$max)] : $min;
+            $this->zombie_kills = ($max !== null) ? [$min, max($min,$max)] : $min;
 
         return $this;
     }
@@ -617,7 +634,7 @@ class Model_Blueprint {
         if ($this->steps > 0) {
             if ($room === null && !$this->global_blocking()) return true;
             foreach ($this->provides as $p)
-                if (in_array($p, $this->global_blocking() ? $preconditions : $room->get_content()))
+                if (in_array($p, $this->global_blocking() ? $preconditions : $room->get_content(), false))
                     return false;
         }
         return true;
@@ -630,16 +647,16 @@ class Model_Blueprint {
     private function can_prod_room($room = null) {
         if ($room === null) return true;
         foreach ($this->provides_room as $p)
-            if (!in_array($p, $this->requires_room()) && $room->check_room_satisfaction($p))
+            if (!in_array($p, $this->requires_room(), false) && $room->check_room_satisfaction($p))
                 return false;
         return true;
     }
 
     private function can_req($preconditions, $local = false) {
-        foreach (($local ? $this->requires_local : $this->requires) as $r_block) {
+        foreach ($local ? $this->requires_local : $this->requires as $r_block) {
             foreach ($r_block as $requirement)
-                if (in_array($requirement, $preconditions))
-                    continue(2);
+                if (in_array($requirement, $preconditions, false))
+                    continue 2;
             return false;
         }
         return true;
@@ -672,17 +689,18 @@ class Model_Blueprint {
      * @param string[] $preconditions Realized blueprints
      * @param Model_Room $room
      * @return bool|string[] Returns if execution failed, or an array containing the newly activated blueprint ids. Note that this function may return an empty array on success!
+     * @throws Exception
      */
     public function execute($player, $preconditions, $room) {
-        if ($this->show_condition) {
-            $c = $this->show_condition;
+        if ($this->opt_show_condition) {
+            $c = $this->opt_show_condition;
             if ($c($player) !== true)
                 return false;
         }
 
-        if ($this->condition) {
-            $c = $this->condition;
-            if ($tmp = $c($player) !== true) {
+        if ($this->build_condition) {
+            $c = $this->build_condition;
+            if (($tmp = $c($player)) !== true) {
                 $player->log()->add($tmp);
                 return false;
             }
@@ -703,12 +721,12 @@ class Model_Blueprint {
             return false;
         }
 
-        if ($this->zombies && !$player->location()->zombie_pop() && !$this->zombies_optional) {
+        if ($this->zombie_kills && !$this->zombies_optional &&!$player->location()->zombie_pop()) {
             $player->log()->add('Es ist verständlich dass du gerne irgend etwas töten möchtest... nur sind leider gerade keine Zombies in der Nähe.');
             return false;
         }
 
-        if (!Tool_Scripts::consume_available_items($this->items, true, true, false, $player, true, $this->item_deciders)) {
+        if (!Tool_Scripts::consume_available_item_structs($this->items, true, true, false, $player, true)) {
             $player->log()->add('Dir fehlen Gegenstände, um diese Aktion durchzuführen.');
             return false;
         }
@@ -716,32 +734,47 @@ class Model_Blueprint {
         $raw_item_objects = [];
 
         $player->get_status()->modify(Model_Status::MS_STAT_ENERGY, -$this->energy, Model_Status::MS_EFFECT_REQUIREMENT);
-        $basic_prducer_stack = $this->produces;
+        $basic_producer_stack = $this->produces;
+
+
         foreach ($this->produces_advanced as $callable) {
             $entry = $callable($player,true);
             if (!is_array($entry)) $entry = [$entry];
-            foreach ($entry as $sub) {
-                if (is_string($sub)) $sub = [$sub => 1];
+            foreach ($entry as $id => $sub) {
+                if (Tool_System::instance_of($sub, "Struct_ItemEntry")) {
+                    $basic_producer_stack[] = $sub;
+                    continue;
+                }
 
-                if (is_array($sub))
-                    foreach ($sub as $item => $count)
-                        $basic_prducer_stack[$item] = isset($basic_prducer_stack[$item]) ? $basic_prducer_stack[$item] + $count : $count;
-
-                if (is_object($sub) && Tool_System::instance_of($sub,Model_Items_Abstract_Item::cls()))
+                if (is_object($sub) && Tool_System::instance_of($sub,Model_Items_Abstract_Item::cls())) {
                     $raw_item_objects[] = $sub;
+                    continue;
+                }
+
+                if (is_string($sub)) {
+                    $id = $sub;
+                    $sub = 1;
+                }
+
+                $inst = new Struct_ItemEntry();
+                $inst->class = $id;
+                $inst->count = $sub;
+                $basic_producer_stack[] = $inst;
             }
         }
-        foreach ($this->produces as $item => $count)
-            for ($i = 0; $i < $count; $i++)
-                $raw_item_objects[] = new $item();
+
+        foreach ($this->produces as $item)
+            for ($i = 0; $i < $item->count; $i++)
+                $raw_item_objects[] = new $item->class( $item->type );
 
         foreach ($raw_item_objects as $instance) {
             $player->location()->inventory()->add($instance);
 
-            if (Tool_System::instance_of($instance, 'Model_Items_Abstract_Virtual')) {
-                /** @var Model_Items_Abstract_Virtual $instance */
-                if ($instance::setup_location()) $instance->set_location_info($player->location_class());
-            }
+            if (Tool_System::instance_of(
+                    $instance, 'Model_Items_Abstract_Virtual'
+                )
+                && $instance::setup_location()
+            ) $instance->set_location_info($player->location_class());
         }
 
 
@@ -751,8 +784,8 @@ class Model_Blueprint {
         if ($this->effect)
             $this->effect->execute($player, null);
 
-        if ($this->zombies) {
-            $z = $this->zombies;
+        if ($this->zombie_kills) {
+            $z = $this->zombie_kills;
             if (is_callable($z))
                 $z = $z($player->location()->zombie_pop(), $player);
 
@@ -767,36 +800,38 @@ class Model_Blueprint {
                 $player->achievements()->achieve(Model_Achievement::MA_KILLED_ZOMBIES, $z);
                 $player->location()->zombie_factory()->accumulation($player->location()->zombie_pop() - $z);
             }
-        } elseif ($this->message) $player->log()->add($this->message);
+        } elseif ($this->user_message) $player->log()->add($this->user_message);
 
         return $ret;
     }
 
     /**
-     * @param Model_Room $room
+     * @param Model_Room                  $room
      * @param Model_Places_Abstract_Place $location
+     *
      * @return array
+     * @throws Exception
      */
     private function apply_room($room,$location) {
         if ($this->clear_previous_room()) $room->clear();
 
-        $room->upgrade($this->name,$this->clear_previous_room() || $this->replace_room_satisfaction() ? true : $this->requires_room(),$this->provide_room());
+        $room->upgrade($this->obj_name,$this->clear_previous_room() ? true : ($this->replace_room_satisfaction() ? $this->requires_room() : false),$this->provide_room());
 
-        foreach ($this->emplaces_action_data as $action_data) {
-            list($text,$text_desc,$custom_popup,$custom_action_id) = $action_data;
+        foreach ($this->emplaces_action_data as list($text,$text_desc,$custom_popup,$custom_action_id)) {
             $room->inventory()->add(new Model_Items_Virtual_Location_Room_Generic($text,$text_desc,$custom_popup,$custom_action_id));
         }
-
 
         foreach ($this->emplaces as $item => $count)
             for ($i = 0; $i < $count; $i++) {
                 $instance = new $item();
                 $room->inventory()->add($instance);
 
-                if (Tool_System::instance_of($instance,'Model_Items_Abstract_Virtual')) {
-                    /** @var Model_Items_Abstract_Virtual $instance */
-                    if ($instance::setup_location()) $instance->set_location_info($location->uin(), $room->id());
-                }
+                /** @var Model_Items_Abstract_Virtual $instance */
+                if (Tool_System::instance_of(
+                        $instance, 'Model_Items_Abstract_Virtual'
+                    )
+                    && $instance::setup_location()
+                ) $instance->set_location_info($location->uin(), $room->id());
             }
 
         return [];
@@ -804,9 +839,11 @@ class Model_Blueprint {
 
     /**
      * @param Model_Places_Abstract_Place $location
-     * @param string[] $preconditions Realized blueprints
-     * @param Model_Room $room
+     * @param string[]                    $preconditions Realized blueprints
+     * @param Model_Room                  $room
+     *
      * @return bool|string[] Returns false if execution failed, or an array containing the newly activated blueprint ids. Note that this function may return an empty array on success!
+     * @throws Exception
      */
     public function apply($location, $preconditions, $room) {
         if (Tool_System::instance_of($location, 'Model_Places_Abstract_Hideout')) {
@@ -830,9 +867,12 @@ class Model_Blueprint {
 
         $ret = $this->provide();
 
-        if (($c = $this->completion($this->global_blocking() ? $preconditions : $room->get_content())) !== true)
+        if (($c = $this->completion($this->global_blocking() ? $preconditions : $room->get_content())) !== true) {
             foreach ($ret as &$r)
                 $r = $r . ':' . ($c+1);
+            unset($r);
+        }
+
 
         foreach ($this->remove() as $rem)
             $ret[] = "-{$rem}";
@@ -840,17 +880,31 @@ class Model_Blueprint {
         return $ret;
     }
 
+    /**
+     * @param Struct_ItemEntry[] $data
+     *
+     * @return array
+     */
     private function materialize($data) {
         $tmp = [];
-        foreach ($data as $class => $count)
+        foreach ($data as $entry) {
             /** @var Model_Items_Abstract_Item $class */
-            if (!Tool_System::instance_of($class,'Model_Items_Abstract_Virtual'))
+            $class = $entry->class;
+            if (!Tool_System::instance_of(
+                $class, 'Model_Items_Abstract_Virtual'
+            )
+            ) {
                 $tmp[] = [
-                    'name' => $class::static_name(),
-                    'icon' => $class::static_icon(),
-                    'count' => $count,
-                    'have' => Tool_Scripts::count_available_items($class)
+                    'name' => $entry->name(),
+                    'icon' => $entry->icon(),
+                    'count' => $entry->count,
+                    'have' => Tool_Scripts::count_available_items($class,true,true,false,null,function ($item) use ($entry) {
+                        /** @var Model_Items_Abstract_Item $item */
+                        return $entry->type === null ? true : ($item->type === $entry->type);
+                    })
                 ];
+            }
+        }
         return $tmp;
     }
 
@@ -866,8 +920,8 @@ class Model_Blueprint {
         $still_open = $this->can_prod($preconditions, $room);
         $requirements_fulfilled = $this->can_req($preconditions) && $this->can_room($room);
 
-        if ($this->zombies) {
-            $z = $this->zombies;
+        if ($this->zombie_kills) {
+            $z = $this->zombie_kills;
             if (is_callable($z))
                 $z = $z($player->location()->zombie_pop(), $player);
 
@@ -876,19 +930,17 @@ class Model_Blueprint {
         } else $z = false;
 
         $hidden = false;
-        if ($this->show_condition) {
-            $c = $this->show_condition;
+        if ($this->opt_show_condition) {
+            $c = $this->opt_show_condition;
             if ($c($player) !== true)
                 $hidden = true;
         }
 
-        if ($this->name)
-            $name = $this->name;
-        elseif (count($this->produces)) {
-            /** @var Model_Items_Abstract_Item $cls */
-            $cls = array_keys($this->produces)[0];
-            $name = $cls::static_name();
-        } else $name = '???';
+        if ($this->obj_name)
+            $name = $this->obj_name;
+        elseif (count($this->produces))
+            $name = $this->produces[0]->name();
+        else $name = '???';
 
         $room_data = $tag_data = [];
         foreach ($this->room_requirements as $rq_room)
@@ -902,29 +954,37 @@ class Model_Blueprint {
 
         $room_occ_data = [];
         foreach ($this->provide_room() as $occ_room)
-            if (!in_array($occ_room, $this->requires_room()))
+            if (!in_array($occ_room, $this->requires_room(), false))
                 $room_occ_data[$occ_room] = !$room->check_room_satisfaction($occ_room);
 
-        $basic_prducer_stack = $this->produces;
+        $basic_producer_stack = $this->produces;
         foreach ($this->produces_advanced as $callable) {
             $entry = $callable($player,false);
             if (!is_array($entry)) $entry = [$entry];
-            foreach ($entry as $sub) {
-                if (is_string($sub)) $sub = [$sub => 1];
+            foreach ($entry as $id => $sub) {
+                if (Tool_System::instance_of($sub, "Struct_ItemEntry")) {
+                    $basic_producer_stack[] = $sub;
+                    continue;
+                }
+                if (is_string($sub)) {
+                    $id = $sub;
+                    $sub = 1;
+                }
 
-                if (is_array($sub))
-                    foreach ($sub as $item => $count)
-                        $basic_prducer_stack[$item] = isset($basic_prducer_stack[$item]) ? $basic_prducer_stack[$item] + $count : $count;
+                $inst = new Struct_ItemEntry();
+                $inst->class = $id;
+                $inst->count = $sub;
+                $basic_producer_stack[] = $inst;
             }
         }
 
         return [
-            'id' => $this->id,
+            'id' => $this->iid,
             'is_room' => $this->is_room,
             'globally_blocked' => $this->global_blocking(),
             'name' => $name,
             'categories' => $this->categories,
-            'description' => $this->description,
+            'description' => $this->obj_description,
             'requires' => $this->requires,
             'requires_room' => $room_data,
             'requires_tag' => $tag_data,
@@ -932,13 +992,13 @@ class Model_Blueprint {
             'space' => $this->space(),
             'energy' => $this->energy,
             'repair' => -$this->decay,
-            'decay_speed' => $this->decay_speed == 0 ? 0 : ($this->decay_speed > 0 ? 1 : -1),
+            'decay_speed' => $this->decay_speed === 0 ? 0 : ($this->decay_speed > 0 ? 1 : -1),
             'defense' => $this->defense,
             'deco' => $this->deco_value,
             'material_in' => $this->materialize($this->items),
-            'material_out' => $this->materialize($basic_prducer_stack),
-            'build' => in_array($this->id,$preconditions),
-            'build_local' => in_array($this->id,$room->get_content()),
+            'material_out' => $this->materialize($basic_producer_stack),
+            'build' => in_array($this->iid,$preconditions, false),
+            'build_local' => in_array($this->iid,$room->get_content(), false),
             'slot_open' => $still_open,
             'space_open' => $room->get_space(true) >= $this->space(),
             'build_possible' => $requirements_fulfilled,

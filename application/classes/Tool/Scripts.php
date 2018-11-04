@@ -51,7 +51,7 @@ class Tool_Scripts
     }
 
     /**
-     * @param mixed $matrix
+     * @param mixed|Struct_ItemEntry[]|Struct_ItemMaterial[] $matrix
      * @param bool $active_player
      * @param bool $active_location
      * @param bool $other_players
@@ -62,16 +62,34 @@ class Tool_Scripts
      */
     public static function has_available_items($matrix, $active_player, $active_location, $other_players, $perspective = null, $grind = false, $decider = null) {
         /**
-         * @param string $cls
+         * @param string|Struct_ItemEntry|Struct_ItemMaterial $cls
          * @return callable|null
          */
         $get_decider = function($cls) use ($decider) {
-            if (!is_array($decider))
-                return $decider;
-            else return isset($decider[$cls]) ? $decider[$cls] : null;
+            if (is_string($cls)) {
+                if (!is_array($decider))
+                    return $decider;
+                else return isset($decider[$cls]) ? $decider[$cls] : null;
+            } else {
+
+                $d = Tool_System::instance_of($cls, 'Struct_ItemMaterial') ? $cls->decider : null;
+                if ($d === null) {
+                    if (!is_array($decider))
+                        return $decider;
+                    else return isset($decider[$cls->class]) ? $decider[$cls->class] : null;
+                } else return $d;
+            }
+
         };
 
-        foreach ($matrix as $classname => $count) {
+        foreach ($matrix as $id => $entry) {
+            if (Tool_System::instance_of($entry, 'Struct_ItemEntry')) {
+                $classname = $entry->class;
+                $count = $entry->count;
+            } else {
+                $classname = $id;
+                $count = $entry;
+            }
             if (static::count_available_items($classname, $active_player, $active_location, $other_players, $perspective, $get_decider($classname)) < $count)
                 return false;
         }
@@ -80,14 +98,110 @@ class Tool_Scripts
     }
 
     /**
-     * @param mixed $matrix
-     * @param bool $active_player
-     * @param bool $active_location
-     * @param bool $other_players
-     * @param null|Interface_Plentity $perspective
-     * @param bool $grind
+     * @param Struct_ItemMaterial[]|Struct_ItemEntry[] $matrix
+     * @param bool                     $active_player
+     * @param bool                     $active_location
+     * @param bool                     $other_players
+     * @param null|Interface_Plentity  $perspective
+     * @param bool                     $grind
      * @param null|callable|callable[] $decider
+     *
      * @return bool
+     * @throws Exception
+     */
+    public static function consume_available_item_structs($matrix, $active_player, $active_location, $other_players, $perspective = null, $grind = false, $decider = null) {
+
+        /**
+         * @param Struct_ItemMaterial|Struct_ItemEntry $cls
+         * @return callable|null
+         */
+        $get_decider_in = function($cls) use ($decider) {
+            $d = Tool_System::instance_of($cls, 'Struct_ItemMaterial') ? $cls->decider : null;
+            if ($d !== null) return $d;
+            if (!is_array($decider))
+                return $decider;
+            else return isset($decider[$cls->class]) ? $decider[$cls->class] : null;
+        };
+
+        /**
+         * @param Struct_ItemMaterial|Struct_ItemEntry $cls
+         * @return callable|null
+         */
+        $get_decider = function($cls) use ($get_decider_in) {
+            $d = $get_decider_in($cls);
+            $t = $cls->type === null ? null : function($item) use ($cls) {
+                /** @var $item Model_Items_Abstract_Item */
+                return $item->type === $cls->type;
+            };
+            if ($d !== null && $t !== null)
+                return function($item) use ($d,$t) { return $d($item) && $t($item); };
+            else return $d ?: $t;
+        };
+
+        foreach ($matrix as $item) {
+            if (static::count_available_items($item->class, $active_player, $active_location, $other_players, $perspective, $get_decider($item)) < $item->count)
+                return false;
+        }
+
+        /**
+         * @var $belt Model_Items_Ammobelt
+         * @var $item Model_Items_Abstract_Item
+         */
+        foreach ($matrix as $item_entry) {
+            if (Tool_System::instance_of($item_entry->class, 'Model_Items_Abstract_Ammo')) {
+                foreach (Tool_Scripts::available_items('Model_Items_Ammobelt', $active_player, $active_location, $other_players, $perspective) as $belt)
+                    if ($belt->get($item_entry->class, $item_entry->count)) break;
+                    else {
+                        $item_entry->count -= $belt->has($item_entry->class);
+                        $belt->get($item_entry->class, $belt->has($item_entry->class));
+                    }
+            } elseif (Tool_System::instance_of($item_entry->class, 'Model_Items_Abstract_Stackable')) {
+                foreach (Tool_Scripts::available_items($item_entry->class, $active_player, $active_location, $other_players, $perspective, $get_decider($item_entry)) as $instance)
+                    if ($instance->count() > $item_entry->count) {
+                        for ($i = 0; $i < $item_entry->count; $i++) $instance->consume();
+                        break;
+                    } else if ($instance->count() === $item_entry->count) {
+                        $instance->grind();
+                        break;
+                    } else {
+                        $item_entry->count -= $instance->count();
+                        $instance->grind();
+                    }
+            } else {
+                foreach (static::available_items($item_entry->class, $active_player, $active_location, $other_players, $perspective, $get_decider($item)) as $item) {
+                    if ($grind)
+                        $item->grind();
+                    else $item->consume();
+                    if (--$item_entry->count <= 0) break;
+                }
+            }
+        }
+
+        if (is_object($perspective))
+            $player = $perspective;
+        else $player = Globals::CurrentPlayer();
+
+        if ($active_player) $player->inventory()->reset_weight();
+        if ($active_location) $player->location()->inventory()->reset_weight();
+        if ($other_players)
+            foreach (Tool_Scripts::at_location() as $s_player)
+                if ($s_player->uin() !== $player->uin())
+                    $s_player->inventory()->reset_weight();
+
+        return true;
+    }
+
+    /**
+     * @param mixed                    $matrix
+     * @param bool                     $active_player
+     * @param bool                     $active_location
+     * @param bool                     $other_players
+     * @param null|Interface_Plentity  $perspective
+     * @param bool                     $grind
+     * @param null|callable|callable[] $decider
+     *
+     * @return bool
+     * @throws Exception
      */
     public static function consume_available_items($matrix, $active_player, $active_location, $other_players, $perspective = null, $grind = false, $decider = null) {
         /**

@@ -253,13 +253,18 @@ class Model_Action {
     }
 
     /**
-     * @return array
+     * @return Struct_ItemEntry[]
      */
     private function get_item_requirements() {
         $tmp = array();
         foreach ($this->requirements as $class => $count)
-            if (!is_numeric($class))
-                $tmp[$class] = $count;
+            if (!is_numeric($class)) {
+                $inst = new Struct_ItemEntry();
+                $inst->class = $class;
+                $inst->count = $count;
+                $tmp[] = $inst;
+            }
+
         return $tmp;
     }
 
@@ -326,7 +331,7 @@ class Model_Action {
                 return false;
             }
 
-        if (!Tool_Scripts::consume_available_items($this->get_item_requirements(), true, true, false, $player, $this->consume_by_grind)) {
+        if (!Tool_Scripts::consume_available_item_structs($this->get_item_requirements(), true, true, false, $player, $this->consume_by_grind)) {
             if (!$no_player) $player->log()->add('Dir fehlen Gegenstände, um diese Aktion durchzuführen.');
             return false;
         }
@@ -445,10 +450,13 @@ class Model_Action {
         $t = array();
         foreach ($this->get_stat_requirements() as $stat => $value)
             $t[] = array('icon' => Model_Effect::translate($stat), 'value' => $value * ($player ? $player->get_status()->scaling($stat, Model_Status::MS_EFFECT_REQUIREMENT) : 1));
-        foreach ($this->get_item_requirements() as $class => $value)
+        foreach ($this->get_item_requirements() as $entry) {
+            $class = $entry->class;
             /** @var Model_Items_Abstract_Item $class */
             if (!Tool_System::instance_of($class,'Model_Items_Abstract_Virtual'))
-                $t[] = array('icon' => $class::static_icon(), 'value' => $value);
+                $t[] = array('icon' => $class::static_icon(), 'value' => $entry->count);
+        }
+
         return $t;
     }
 }

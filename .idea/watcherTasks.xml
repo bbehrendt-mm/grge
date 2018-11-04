@@ -61,7 +61,7 @@
       <option name="workingDir" value="$ProjectFileDir$/application/assets" />
       <envs />
     </TaskOptions>
-    <TaskOptions isEnabled="true">
+    <TaskOptions isEnabled="false">
       <option name="arguments" value="" />
       <option name="checkSyntaxErrors" value="true" />
       <option name="description" />

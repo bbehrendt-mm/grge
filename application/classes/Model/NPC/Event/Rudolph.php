@@ -66,6 +66,12 @@ class Model_NPC_Event_Rudolph extends Model_NPC_Animal
         return parent::tick();
     }
 
+    protected function auto_drink() {
+        return
+            $this->get_status()->get(Model_Status::MS_STAT_DRUNK) > 00 &&
+            $this->get_status()->get(Model_Status::MS_STAT_DRUNK) < 90;
+    }
+
     public function ai() {
         $busy = $this->get_status()->retrieve('passout') || $this->get_status()->retrieve('fragile');
 
@@ -89,23 +95,21 @@ class Model_NPC_Event_Rudolph extends Model_NPC_Animal
         $auto = false;
 
         // Item Consumption
-        if (!$busy && $this->get_status()->get(Model_Status::MS_STAT_DRUNK) > 0)
-            if ($this->get_status()->get(Model_Status::MS_STAT_DRUNK) < 90) {
+        if (!$busy && $this->auto_drink()) {
+            $ic = Tool_Npc::get_satisfactory_item($this, true, false, Model_Status::MS_STAT_DRUNK,
+                [Model_Status::MS_STAT_DRUNK => [max(0,100 - $this->get_status()->get(Model_Status::MS_STAT_DRUNK)), false]],
+                [], false
+            );
 
-                $ic = Tool_Npc::get_satisfactory_item($this, true, false, Model_Status::MS_STAT_DRUNK,
-                    [Model_Status::MS_STAT_DRUNK => [max(0,100 - $this->get_status()->get(Model_Status::MS_STAT_DRUNK)), false]],
-                    [], false
-                );
-
-                if ($ic) {
-                    /** @var Model_Items_Abstract_Item $item */
-                    list($item, $action) = $ic;
-                    Globals::setCurrentPlayer($this);
-                    Controller_Act::code_item($item->uin(), $action);
-                    Globals::restorePrimaryPlayer();
-                    $auto = true;
-                }
+            if ($ic) {
+                /** @var Model_Items_Abstract_Item $item */
+                list($item, $action) = $ic;
+                Globals::setCurrentPlayer($this);
+                Controller_Act::code_item($item->uin(), $action);
+                Globals::restorePrimaryPlayer();
+                $auto = true;
             }
+        }
 
         parent::ai();
         $this->set_am_stat();

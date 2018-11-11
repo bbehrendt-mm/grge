@@ -9,7 +9,7 @@
             'Brainbox' => '0758397bf35982c7f07e467e074348730fdd6c80db7473f6d6bd144142731e7059406f62bf549c260ed4aa1b5454e6412f20fcbdd7411e3028310c314f457e1c',
         ];
 
-        $encryption_mode = MCRYPT_RIJNDAEL_256;
+        $encryption_mode = "rijndael-256";
         $encryption_key = '169a3f7b4da04886085949edbe3d70ce204dd7e6c4a9503b1a14f84073a90168';
 
         function encrypt($data) {
@@ -20,7 +20,8 @@
             $data .= hash('sha512',$data,false);
 
             $iv_size = mcrypt_get_iv_size($encryption_mode, MCRYPT_MODE_CBC);
-            $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
+            $iv = mcrypt_create_iv($iv_size, MCRYPT_DEV_RANDOM);
+            if ($iv === false) die('IV UNAVAILABLE!');
 
             return base64_encode($iv . mcrypt_encrypt($encryption_mode,$key,$data,MCRYPT_MODE_CBC,$iv));
         }

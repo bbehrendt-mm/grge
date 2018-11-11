@@ -130,8 +130,11 @@ class I18n extends Kohana_I18n {
 
     /**
      * Marks a string as missing in a certain language
+     *
      * @param string $string Missing string
+     *
      * @return bool Success
+     * @throws Kohana_Exception
      */
     public static function set_missing($string) {
         if (static::$readonly) return true;
@@ -184,7 +187,10 @@ class I18n extends Kohana_I18n {
     }
 
     /**
-     * @param $lang
+     * @param     $lang
+     * @param int $min_last_access
+     * @param int $from
+     *
      * @return mixed
      */
     public static function get_next_missing($lang, $min_last_access = 0, $from = 0) {

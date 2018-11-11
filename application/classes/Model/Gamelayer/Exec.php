@@ -54,26 +54,26 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
 	public function join($sub, $level, $contest_id) {
 	    if ($this->read_only) return false;
 
-        if (isset($this->set['gamedata']->players[Globals::CurrentUser()->uid()])) return false;
+        if (isset($this->set['gamedata']->players[Globals::CurrentUserF()->uid()])) return false;
         /** @noinspection PhpParamsInspection */
-        new Init_Player($this, $this->set['gamedata'], Globals::CurrentUser()->uid(), Globals::CurrentUser()->name(), $sub, $level);
+        new Init_Player($this, $this->set['gamedata'], Globals::CurrentUserF()->uid(), Globals::CurrentUserF()->name(), $sub, $level);
 	
-		if (!DB::insert('xref_game_player', array('gameid', 'uid'))->values(array($this->set['gameid'], Globals::CurrentUser()->uid()))->execute()) {
-			$this->retire(Globals::CurrentUser()->uid());
+		if (!DB::insert('xref_game_player', array('gameid', 'uid'))->values(array($this->set['gameid'], Globals::CurrentUserF()->uid()))->execute()) {
+			$this->retire(Globals::CurrentUserF()->uid());
 			return false;
 		}
 
         // Chat room
         if ($this->config('modules.multiplayer'))
-            Controller_Chat::register_user(Globals::PrimaryPlayer()->id(),$this->id());
+            Controller_Chat::register_user(Globals::PrimaryPlayerF()->id(),$this->id());
 
         /** @var Model_Player $p */
-        foreach ($this->players(true) as $p) if ($p->id() != Globals::PrimaryPlayer()->id())
-            $p->log()->add(new Model_Log_Types_Text(null, null, ':name ist soeben der Partie beigetreten.', array(':name' => Globals::PrimaryPlayer()->name())));
+        foreach ($this->players(true) as $p) if ($p->id() != Globals::PrimaryPlayerF()->id())
+            $p->log()->add(new Model_Log_Types_String(null, ':name ist soeben der Partie beigetreten.', array(':name' => Globals::PrimaryPlayerF()->name())));
 		
 		//Create contest ranking
 		if ($contest_id)
-			if (!DB::insert('contests', array('contest_id', 'user_id', 'game_id', 'points'))->values(array($contest_id, Globals::CurrentUser()->uid(), $this->set['gameid'], 0))->execute())
+			if (!DB::insert('contests', array('contest_id', 'user_id', 'game_id', 'points'))->values(array($contest_id, Globals::CurrentUserF()->uid(), $this->set['gameid'], 0))->execute())
 				$contest_id = null;
 		
 		return true;
@@ -99,16 +99,18 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
 	public function points($pid = null) {	
 		if ($pid)
             $player = $this->get_player($pid);
-        else $player = Globals::PrimaryPlayer();
+        else $player = Globals::PrimaryPlayerF();
 		
 		if (!$pid) $duration = $this->duration();
-		elseif (!$player->get_status()->alive() && $player->get_points() !== null)
+		elseif ($player->get_points() !== null && !$player->get_status()->alive())
             return $player->get_points();
-        else $duration = $this->get_player($pid)->get_lifetime();
+        else $duration = $player->get_lifetime();
 		
 		if (isset($this->set['gamedata']->head->contest) && $this->set['gamedata']->head->contest) {
 			$raw = Kohana::$config->load('contests.' . $this->set['gamedata']->head->contest['id']);
-			if ($this->set['gamedata']->head->contest['start'] < time() && $this->set['gamedata']->head->contest['end'] > time())
+
+			$t = time();
+			if ($this->set['gamedata']->head->contest['start'] < $t && $this->set['gamedata']->head->contest['end'] > $t)
 				$this->set['gamedata']->head->contest['points'] = $raw['result']($this);
 			return $this->set['gamedata']->head->contest['points'];
 		}
@@ -131,13 +133,15 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
 
     public function register_death($uid) {
         if ($this->read_only) return;
+        $p = $this->get_player($uid);
+        if (!$p) return;
 
         if ($this->config('game.lobby.persistent'))
             $lobby_open = DB::select([DB::expr('COUNT(`gameid`)'), 'games'])->from('multiplayer_lobby')->where('gameid', '=', $this->set['gameid'])->and_where('slots', '>', 0)->execute()->get('games') > 0;
         else
             $lobby_open = DB::delete('multiplayer_lobby')->where('gameid', '=', $this->set['gameid'])->and_where('slots', '>', 0)->execute() > 0;
 
-        if ($lobby_open && $this->get_player($uid)->get_lifetime() < 288 && Kohana::$config->load('build.version.stage') < 3)
+        if ($lobby_open && $p->get_lifetime() < 288 && Kohana::$config->load('build.version.stage') < 3)
             DB::insert('mp_lockouts', array('uid', 'timestamp'))->values(array($uid, time()))->execute();
     }
     
@@ -145,16 +149,20 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
         if ($this->is_retired($uid))
             return false;
 
-		//Create ranking entry if game is rankable and player has more than zero points
-		$this->get_player($uid)->expire($this->set['gamedata']->head->season, $this->set['gameid'], ($this->set['gamedata']->head->rankable && !(isset($this->set['gamedata']->head->contest) && $this->set['gamedata']->head->contest)), $this->set['gamedata']->timing->game_start, $this->set['gamedata']->timing->last_point);
+        $p = $this->get_player($uid);
+        if (!$p) return false;
 
-        $this->set["gamedata"]->graveyard[$uid] = $this->setting_mode(11000) ? $this->get_player($uid)->get_points() : $this->get_player($uid)->get_lifetime();
+		//Create ranking entry if game is rankable and player has more than zero points
+        $p->expire($this->set['gamedata']->head->season, $this->set['gameid'],
+            $this->set['gamedata']->head->rankable && !(isset($this->set['gamedata']->head->contest) && $this->set['gamedata']->head->contest), $this->set['gamedata']->timing->game_start, $this->set['gamedata']->timing->last_point);
+
+        $this->set['gamedata']->graveyard[$uid] = $this->setting_mode(11000) ? $p->get_points() : $p->get_lifetime();
 
         if (!$this->read_only) {
             DB::delete('xref_game_player')->where('uid', '=', $uid)->execute();
 
-            if ($this->get_player($uid)->get_lifetime() >= 288 && $this->get_player($uid)->get_braincoins())
-                Model_User::award_coins($uid, $this->get_player($uid)->get_braincoins());
+            if ($p->get_lifetime() >= 288 && $p->get_braincoins())
+                Model_User::award_coins($uid, $p->get_braincoins());
 
             if (!$as_batch) {
                 $this->check_players();

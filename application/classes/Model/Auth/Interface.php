@@ -38,7 +38,7 @@ abstract class Model_Auth_Interface {
      * @return bool True, if the account method is connected
      */
     public static function user_is_connected($id) {
-        return DB::select(array(DB::expr('COUNT(*)'), 'num'))->from('profiles_xref')->where('provider','=', get_called_class())->where('zvid','=',$id)->execute()->get('num',0) == 1;
+        return DB::select(array(DB::expr('COUNT(*)'), 'num'))->from('profiles_xref')->where('provider','=', static::class)->where('zvid','=',$id)->execute()->get('num',0) == 1;
     }
 
     /**
@@ -51,7 +51,7 @@ abstract class Model_Auth_Interface {
 
     protected static function lookup($rid = null, $v1 = null, $v2 = null) {
         if ($rid == null && $v1 == null && $v2 == null) return -1;
-        $query = DB::select('zvid')->from('profiles_xref')->where('provider','=', get_called_class());
+        $query = DB::select('zvid')->from('profiles_xref')->where('provider','=', static::class);
         if ($rid !== null) $query->where('rid','=',$rid);
         if ($v1 !== null) $query->where('var1','=',$v1);
         if ($v2 !== null) $query->where('var2','=',$v2);
@@ -64,7 +64,7 @@ abstract class Model_Auth_Interface {
      * @param int $id ZV User ID
      */
     public static function user_unlink($id) {
-        DB::delete('profiles_xref')->where('provider','=', get_called_class())->where('zvid','=',$id)->execute();
+        DB::delete('profiles_xref')->where('provider','=', static::class)->where('zvid','=',$id)->execute();
     }
 
     /**
@@ -98,7 +98,7 @@ abstract class Model_Auth_Interface {
      */
     protected static function user_get_values($id) {
         if (!static::user_is_connected($id)) return false;
-        $tmp = DB::select('var1','var2')->from('profiles_xref')->where('provider','=', get_called_class())->where('zvid','=',$id)->execute()->as_array();
+        $tmp = DB::select('var1','var2')->from('profiles_xref')->where('provider','=', static::class)->where('zvid','=',$id)->execute()->as_array();
         return [$tmp[0]['var1'],$tmp[0]['var2']];
     }
 
@@ -125,8 +125,8 @@ abstract class Model_Auth_Interface {
      */
     protected static function user_link($zvid, $rid, $v1 = null, $v2 = null) {
         if (static::user_is_connected($zvid))
-            DB::update('profiles_xref')->set(array('var1' => $v1, 'var2' => $v2))->where('provider','=', get_called_class())->where('zvid','=',$zvid)->execute();
-        else DB::insert('profiles_xref', array('provider', 'rid', 'zvid', 'var1', 'var2'))->values(array(get_called_class(), $rid, $zvid, $v1, $v2))->execute();
+            DB::update('profiles_xref')->set(array('var1' => $v1, 'var2' => $v2))->where('provider','=', static::class)->where('zvid','=',$zvid)->execute();
+        else DB::insert('profiles_xref', array('provider', 'rid', 'zvid', 'var1', 'var2'))->values(array(static::class, $rid, $zvid, $v1, $v2))->execute();
         return true;
     }
 

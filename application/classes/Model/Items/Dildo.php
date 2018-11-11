@@ -13,17 +13,17 @@ class Model_Items_Dildo extends Model_Items_Abstract_Item implements Interface_S
 	protected static $weight = 1;
 
     protected function hid() {
-        if (Tool_Scripts::is_npc() || (!Globals::shadowPlayerExists() && Globals::PrimaryPlayer()->job(1080)))
+        if (Tool_Scripts::is_npc() || (!Globals::shadowPlayerExists() && Globals::PrimaryPlayerF()->job(1080)))
             return parent::hid();
         return parent::hid()
             ->add_action('Benutzen', Model_Action::factory()
                 ->allow_remote(false)
                 ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
-                ->requirement('Model_Items_Battery', 1)
+                ->requirement(Model_Items_Battery::cls(), 1)
                 ->condition(function($p) {
                     /** @var Model_Player $p */
                     if (count(Tool_Scripts::at_location($p->location_class(), true, true)) != 1) return 'peek';
-                    elseif ($p->get_status()->retrieve('wow')) return "wow";
+                    elseif ($p->get_status()->retrieve('wow')) return 'wow';
                     else return true;
                 })
                 ->fail_message('Bist du verrückt? Das kannst du doch nicht machen, wenn alle zugucken... Such dir ein ruhigeres Plätzchen.', 'peek')

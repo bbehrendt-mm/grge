@@ -17,8 +17,10 @@ class Tool_Numerics {
 		//Return 0 if both values are identical
 		} elseif ($value_after == $value_before) return 0;
 		$ret = 0;
+
 		//Iterate over all steps and memorize the last crossed step
-		for ($i = 0; $i<count($steps); $i++) {
+		$c = count($steps);
+        for ($i = 0; $i < $c; $i++) {
 			if ($value_before >= $steps[$i] && $value_after < $steps[$i]) $ret = $i+1;
 		}
 

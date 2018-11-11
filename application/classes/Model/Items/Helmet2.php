@@ -15,5 +15,5 @@ class Model_Items_Helmet2 extends Model_Items_Abstract_Armor {
     protected static $effects = [0,0,3,-1];
 
     protected static $equipment_type = Model_Items_Abstract_Equipable::MIAE_ARMOR_HELMET;
-    protected $protection = 50;
+    protected static $protection = 50;
 }	

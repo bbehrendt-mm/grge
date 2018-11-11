@@ -2,7 +2,7 @@
 
 class Model_Places_Greenhouse extends Model_Places_Abstract_Place {
 	
-	protected static $name = 'Gewächshaus "Plants & Zombies"';
+	protected static $location_name = 'Gewächshaus "Plants & Zombies"';
 	protected static $description = 'Die Scheiben um dieses Gewächshauses sind allesamt zersprungen, die meisten Pflanzen sind infolge dessen vertrocknet. Im Zentrum des Gewächshauses steht, von einem kleinen Weg umschlossen, ein riesiges baumartiges Gewächs. Obwohl es wie der Rest der Pflanzen hier ziemlich vertrocknet ist, sieht es irgendwie noch lebendig aus... Vielleicht kannst du es zum Leben erwecken, wenn du es gießt?';
     protected static $icon = 'green';
 

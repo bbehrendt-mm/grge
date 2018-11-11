@@ -2,7 +2,7 @@
 
 class Model_Combat_Zombies_Shambler extends Model_Combat_Zombies_Zombie {
 
-    protected $name = 'Vermodernde Zombies';
+    protected $actor_name = 'Vermodernde Zombies';
     protected $max_health = 4;
 
     protected $stat_initiative = 2;

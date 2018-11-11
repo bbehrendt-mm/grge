@@ -4,7 +4,7 @@ class Model_Combat_Zombies_Starver extends Model_Combat_Zombies_Zombie {
 
     public static $custom_sprite = 'zombie_starver.gif';
 
-    protected $name = 'Hungerer';
+    protected $actor_name = 'Hungerer';
     protected $max_health = 1;
 
     protected $stat_initiative = 0;

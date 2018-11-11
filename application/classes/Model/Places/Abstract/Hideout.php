@@ -31,7 +31,9 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
     public function setup_primary_rooms() {
         $room = parent::setup_primary_rooms();
         $room->upgrade('Versteck',false,['common_hideout']);
-        $room->inventory()->add(new Model_Items_Virtual_Location_Room_Generic("Verteidigen...", null, "fighter"));
+        $room->inventory()->add(new Model_Items_Virtual_Location_Room_Generic(
+            'Verteidigen...', null, 'fighter'
+        ));
 
         return $room;
     }
@@ -78,9 +80,9 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         $this->zombie_factory->dry_spawn();
 
         /** @var Model_Items_Virtual_Epic_Fence $fence */
-        if (($this->get_defense() > 0) && floor($this->zombie_factory->accumulation()) > $this->get_defense() && (!($fence = Tool_Scripts::first_available_item('Model_Items_Virtual_Epic_Fence', false)) || !$fence->get_status())) {
+        if (($this->get_defense() > 0) && floor($this->zombie_factory->accumulation()) > $this->get_defense() && (!($fence = Tool_Scripts::first_available_item(Model_Items_Virtual_Epic_Fence::cls(), false)) || !$fence->get_status())) {
             if ($br = $this->find_rooms('bedroom','bedrwake')) {
-                $br[0]->remove_content("bedrwake");
+                $br[0]->remove_content('bedrwake');
                 foreach (Tool_Scripts::at_location($this->uin(), true, true) as $s_player)
                     if ($s_player->get_status()->retrieve('sleep_cozy')) {
                         $s_player->get_status()->retrieve('sleep_cozy')->unbuff();
@@ -95,14 +97,14 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
                 /** @var $i Model_Combat_Zombies_Zombie */
                 return $c + $i->count();
             }, 0);
-            $battle = Tool_Scripts::combat([Tool_Scripts::at_location($this->uin), $zombies], true, 10, $this, 'Die Zombies haben deine Verteidigung durchbrochen!');
+            $battle = Tool_Scripts::combat([Tool_Scripts::at_location($this->obj_uin), $zombies], true, 10, $this, 'Die Zombies haben deine Verteidigung durchbrochen!');
             $this->zombie_factory()->accumulation($battle->count_group_members(2));
 
-            foreach (Tool_Scripts::at_location($this->uin, true, false) as $s_player)
+            foreach (Tool_Scripts::at_location($this->obj_uin, true, false) as $s_player)
                 $s_player->achievements()->achieve(Model_Achievement::MA_BREAK_INS, $num);
         }
 
-        foreach (Globals::CurrentGame()->get_initialized_events() as $ev)
+        foreach (Globals::CurrentGameF()->get_initialized_events() as $ev)
             $ev->event_locationTick($this);
     }
 
@@ -115,21 +117,21 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
 
         //Act accordingly
         if (!Tool_Scripts::is_npc()) {
-            $sleeping = Globals::CurrentPlayer()->get_status()->retrieve('sleep_cozy');
+            $sleeping = Globals::CurrentPlayerF()->get_status()->retrieve('sleep_cozy');
             switch (Tool_Gambling::roulette($chance))
             {
                 case 1:
-                    if ($sleeping) Globals::CurrentPlayerActual()->log()->add('Du hattest eben einen schönen Traum. Das hat dir etwas zusätzliche Energie verschafft.');
-                    else Globals::CurrentPlayerActual()->log()->add('Du hast soeben die Antwort auf eine philosophische Frage gefunden, die dich schon seit Jahren quält. Das hat dir etwas zusätzliche Energie verschafft.');
-                    Globals::CurrentPlayerActual()->get_status()->modify(Model_Status::MS_STAT_ENERGY, 5);
+                    if ($sleeping) Globals::CurrentPlayerActualF()->log()->add('Du hattest eben einen schönen Traum. Das hat dir etwas zusätzliche Energie verschafft.');
+                    else Globals::CurrentPlayerActualF()->log()->add('Du hast soeben die Antwort auf eine philosophische Frage gefunden, die dich schon seit Jahren quält. Das hat dir etwas zusätzliche Energie verschafft.');
+                    Globals::CurrentPlayerActualF()->get_status()->modify(Model_Status::MS_STAT_ENERGY, 5);
                     break;
                 case 2:
-                    if ($sleeping) Globals::CurrentPlayerActual()->log()->add('Du hast die perfekte Ruheposition gefunden. Weil du jetzt so bequem liegst erhälst du einen Energieschub.');
-                    else Globals::CurrentPlayerActual()->log()->add('In deiner Hose findest du eine alte Kinokarte von einem Film, den du dir mit Freunden angesehen hast. Diese schöne Erinnerung verschafft dir einen Energieschub.');
-                    Globals::CurrentPlayerActual()->get_status()->modify(Model_Status::MS_STAT_ENERGY, 15);
+                    if ($sleeping) Globals::CurrentPlayerActualF()->log()->add('Du hast die perfekte Ruheposition gefunden. Weil du jetzt so bequem liegst erhälst du einen Energieschub.');
+                    else Globals::CurrentPlayerActualF()->log()->add('In deiner Hose findest du eine alte Kinokarte von einem Film, den du dir mit Freunden angesehen hast. Diese schöne Erinnerung verschafft dir einen Energieschub.');
+                    Globals::CurrentPlayerActualF()->get_status()->modify(Model_Status::MS_STAT_ENERGY, 15);
                     break;
-                case 3: Globals::CurrentPlayerActual()->log()->add('Eine Sternschnuppe! So eine hast du schon ewig nicht mehr gesehen. Dieser wunderschöne Anblick gibt dir Hoffnung und einen gewaltigen Energieschub!');
-                    Globals::CurrentPlayerActual()->get_status()->modify(Model_Status::MS_STAT_ENERGY, 50);
+                case 3: Globals::CurrentPlayerActualF()->log()->add('Eine Sternschnuppe! So eine hast du schon ewig nicht mehr gesehen. Dieser wunderschöne Anblick gibt dir Hoffnung und einen gewaltigen Energieschub!');
+                    Globals::CurrentPlayerActualF()->get_status()->modify(Model_Status::MS_STAT_ENERGY, 50);
                     break;
             }
         }
@@ -141,9 +143,9 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
 
 
     public function enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
-        if (!$pid) $player = Globals::CurrentPlayer();
-        elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGame()->get_player($pid);
-        else $player = Globals::CurrentGame()->get_npc($pid);
+        if (!$pid) $player = Globals::CurrentPlayerF();
+        elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGameF()->get_player($pid);
+        else $player = Globals::CurrentGameF()->get_npc($pid);
 
         parent::enter($pid, $type);
         new Model_Buffs_Home($player);
@@ -156,17 +158,17 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
      * @throws Exception
      */
     public function leave($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
-        if (!$pid) $player = Globals::CurrentPlayer();
-        elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGame()->get_player($pid);
-        else $player = Globals::CurrentGame()->get_npc($pid);
+        if (!$pid) $player = Globals::CurrentPlayerF();
+        elseif ($type === Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGameF()->get_player($pid);
+        else $player = Globals::CurrentGameF()->get_npc($pid);
 
         if (!parent::leave($pid, $type)) return false;
-        if ($dr = $this->find_rooms('','defimp') && $type == Interface_Tickable::IT_TYPE_PLAYER) {
-            /** @var Model_Room[] $dr */
-            if (!$dr[0]->has_content('impaler')) {
-                $dr[0]->add_content('impaler');
-                $player->log()->add(new Model_Log_Types_Text(null, null, 'Auf dem Weg nach draußen hast du die Fallgrube wieder geschlossen und für einen erneuten Einsatz bereit gemacht.'));
-            }
+        if ($type === Interface_Tickable::IT_TYPE_PLAYER
+            && ($dr = $this->find_rooms('', 'defimp'))
+            && !$dr[0]->has_content('impaler')
+        ) {
+            $dr[0]->add_content('impaler');
+            $player->log()->add(new Model_Log_Types_String( null, 'Auf dem Weg nach draußen hast du die Fallgrube wieder geschlossen und für einen erneuten Einsatz bereit gemacht.'));
         }
 
         if ($buff = $player->get_status()->retrieve('home')) $buff->unbuff();

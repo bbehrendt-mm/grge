@@ -50,9 +50,12 @@ class Tool_System {
 
     /**
      * Accumulated configuration entries using classnames as key according to a given derived class instance
-     * @param string|array $base Config object to use as base; when given as string, it is interpreted as path to a Kohana config object
+     *
+     * @param string|array  $base    Config object to use as base; when given as string, it is interpreted as path to a Kohana config object
      * @param string|object $subject Class instance
+     *
      * @return array Accumulated data
+     * @throws Kohana_Exception
      */
     public static function config_tree($base, $subject) {
         if (!$subject)
@@ -62,8 +65,9 @@ class Tool_System {
 
         $accum = array();
 
-        if (!is_array($base) && isset(Tool_System::$cache[$base . "." . $subject]))
-            return Tool_System::$cache[$base . "." . $subject];
+        $id = $base . '.' . $subject;
+        if (!is_array($base) && isset(Tool_System::$cache[$id]))
+            return Tool_System::$cache[$base . '.' . $subject];
 
         $tree = Array();
         while ($subject !== false) {
@@ -72,8 +76,8 @@ class Tool_System {
         }
         $tree = array_reverse($tree);
 
-        foreach ($tree as $subject)
-            if ($level = is_array($base) ? (isset($base[$subject]) ? $base[$subject] : array()) : Kohana::$config->load($base . '.' . $subject))
+        foreach ($tree as $entry)
+            if ($level = is_array($base) ? (isset($base[$entry]) ? $base[$entry] : array()) : Kohana::$config->load($base . '.' . $entry))
                 /** @noinspection PhpParamsInspection */
                 $accum = array_merge($accum, $level);
 
@@ -94,10 +98,11 @@ class Tool_System {
     }
 
     /**
-     * @param string|Model_Items_Abstract_Item $cls 
-     * @param int $inst
+     * @param string|Model_Items_Abstract_Item $cls
+     * @param int                              $inst
      * @return null
-     */
+     * @throws ReflectionException
+*/
     public static function getItemInstanceName($cls, $inst = -1) {
         if (!Tool_System::instance_of($cls, Model_Items_Abstract_Item::cls()))
             return null;
@@ -120,9 +125,10 @@ class Tool_System {
 
     /**
      * @param string|Model_Items_Abstract_Item $cls
-     * @param int $inst
+     * @param int                              $inst
      * @return null
-     */
+     * @throws ReflectionException
+*/
     public static function getItemInstanceIcon($cls, $inst = -1) {
         if (!Tool_System::instance_of($cls, Model_Items_Abstract_Item::cls()))
             return null;

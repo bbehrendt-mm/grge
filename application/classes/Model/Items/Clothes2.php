@@ -15,6 +15,6 @@ class Model_Items_Clothes2 extends Model_Items_Abstract_Armor {
     protected static $effects = [0,1,3,0];
 
     protected static $equipment_type = Model_Items_Abstract_Equipable::MIAE_ARMOR_BODY;
-    protected $protection = 50;
+    protected static $protection = 50;
     protected static $destroyed = 'Model_Items_Generic_Clothes';
 }	

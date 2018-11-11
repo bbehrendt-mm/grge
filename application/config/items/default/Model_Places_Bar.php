@@ -5,5 +5,5 @@
         ->add('gp_water', 1)
         ->add('gp_kitchenutils', 1)
         ->add('gp_alcohol', 5)
-        ->add('Model_Items_Generic_Table', 1)
+        ->add(Model_Items_Generic_Table::cls(), 1)
         ;

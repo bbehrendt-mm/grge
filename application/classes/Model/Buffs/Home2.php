@@ -7,8 +7,8 @@ class Model_Buffs_Home2 extends Model_Buffs_Abstract_Buff {
 	protected static $desc = 'Diese gruselige Umgebung stört deine empfindliche Darmflora... dein Wasser- und Nahrungsverbrauch steigt.';
 	protected static $bid = 'home';
     protected static $dominance = Model_Buffs_Abstract_Buff::MBR_PARTIALLY_DOMINANT;
-	
-	protected $effects = Array(		
+
+    protected $effects = Array(
 				Model_Status::MS_STAT_HUNGER => Array(
 					Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,

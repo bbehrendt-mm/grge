@@ -18,7 +18,7 @@ class Model_Buffs_Mapping extends Model_Buffs_Abstract_Fragile {
 	
 	protected function action_on_complete() {
         /** @var Model_Items_Maptool $item */
-        $item = Tool_Scripts::first_available_item('Model_Items_Maptool', true, false, false, $this->assoc_player);
+        $item = Tool_Scripts::first_available_item(Model_Items_Maptool::cls(), true, false, false, $this->assoc_player);
 		if (!$item) $this->assoc_player->log()->add('Das Kartographieren dieses Orts ist fehlgeschlagen...');
 		else $item->score($this->level);
 	}

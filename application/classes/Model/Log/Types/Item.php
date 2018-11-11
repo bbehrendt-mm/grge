@@ -17,23 +17,25 @@ class Model_Log_Types_Item extends Model_Log_Message {
     protected static $type = Model_Log_Message::MLM_ITEM_LOG;
 
     /**
-     * @param mixed $type
+     * @param mixed                                                 $type
      * @param Model_Items_Abstract_Item|Model_Items_Abstract_Item[] $item
-     * @param int|null|string $uin
+     * @param int|null|string                                       $uin
+     *
+     * @throws Exception
      */
     public function __construct($type, $item, $uin = null) {
-        if (!$uin) $uin =  Globals::PrimaryPlayer()->id();
+        if (!$uin) $uin =  Globals::PrimaryPlayerF()->id();
 
         if (!is_array($item))
             $item = [$item];
 
-        $ticks = Globals::hasCurrentGame() ? Globals::CurrentGame()->duration() : -1;
+        $ticks = Globals::hasCurrentGame() ? Globals::CurrentGameF()->duration() : -1;
 
         $tmp = [];
         foreach ($item as $single)
             $tmp[] = new Model_Struct_Item($single,$ticks);
 
-        $time = Globals::CurrentGame()->now();
+        $time = Globals::CurrentGameF()->now();
         parent::__construct([
             'primary' => $uin,
             'class' => $type,
@@ -45,7 +47,7 @@ class Model_Log_Types_Item extends Model_Log_Message {
         if ($data['primary'] === -1)
             $data['primary'] = __('Niemand');
         else {
-            $primary =  Globals::CurrentGame()->get_player($data['primary']);
+            $primary =  Globals::CurrentGameF()->get_player($data['primary']);
             $data['primary'] = $primary ? $primary->name() : __($data['primary']);
         }
 
@@ -59,21 +61,24 @@ class Model_Log_Types_Item extends Model_Log_Message {
                         'count' => $item->getCount(),
                         'gt' => ($item->getVariant() !== null && $item->getVariant() >= 0) ? Tool_Scripts::get_daytime($item->getVariant())->getTimestamp() : null,
                     ];
+                unset($item);
 
                 if ($uin === -1) {
                     $name = __('Niemand');
                     $pl = null;
                 } else {
-                    $pl = Globals::CurrentGame()->get_player($uin);
+                    $pl = Globals::CurrentGameF()->get_player($uin);
                     $name = $pl ? $pl->name() : __($uin);
                 }
 
                 $lists = [
                     'player' => $name,
-                    'self' => $pl ? ($uin == Globals::PrimaryPlayer()->id()) : false,
+                    'self' => $pl ? ($uin == Globals::PrimaryPlayerF()->id()) : false,
                     'items' => $lists
                 ];
+
             }
+        unset($sub,$lists);
 
         return $data;
     }
@@ -83,7 +88,7 @@ class Model_Log_Types_Item extends Model_Log_Message {
      * @return bool
      */
     public function merge($new) {
-        if (is_a($new, get_called_class(), true) && $new->data['class'] == $this->data['class'] && !in_array($this->data['class'], [static::MLTI_DEATH,static::MLTI_DEATH_ENEMY,static::MLTI_GHULKILL,static::MLTI_ZOMBIFY]))
+        if (is_a($new, static::class, true) && $new->data['class'] == $this->data['class'] && !in_array($this->data['class'], [static::MLTI_DEATH,static::MLTI_DEATH_ENEMY,static::MLTI_GHULKILL,static::MLTI_ZOMBIFY]))
             foreach ($new->data['content'] as $tc => $d)
                 if (!isset($this->data['content'][$tc])) $this->data['content'][$tc] = $d;
                 else foreach ($d as $uin => $items)

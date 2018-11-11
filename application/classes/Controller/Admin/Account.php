@@ -11,7 +11,7 @@ class Controller_Admin_Account extends Controller_Admin_Admin {
         }
 
         $this->add_widget(View::factory('admin/login')
-            ->set('user', Globals::CurrentUser()->name())
+            ->set('user', Globals::CurrentUserF()->name())
             ->render());
 
         $this->render();
@@ -22,7 +22,7 @@ class Controller_Admin_Account extends Controller_Admin_Admin {
         if (!$pw)
             return $this->error(\grge\E_SERVER_LOGIN_REJECTED);
 
-        if (static::priv_get(Globals::CurrentUser()->uid(), $pw))
+        if (static::priv_get(Globals::CurrentUserF()->uid(), $pw))
             $this->admin_status_set(Kohana::$environment == Kohana::PRODUCTION ? 30 : 120);
 
         if (!$this->admin_status_get(0))

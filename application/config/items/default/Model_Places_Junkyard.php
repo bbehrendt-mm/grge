@@ -6,5 +6,5 @@
         ->add('gp_gardening', 8)
         ->add('gp_hideout', 4)
         ->add('gp_diy', 6)
-        ->add('Model_Items_Generic_Plasma', 0.5)
+        ->add(Model_Items_Generic_Plasma::cls(), 0.5)
         ;

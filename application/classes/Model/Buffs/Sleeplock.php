@@ -8,9 +8,7 @@ class Model_Buffs_Sleeplock extends Model_Buffs_Abstract_Fragile {
 	
 	protected static $abortable = true;
 	
-	protected function action_on_complete() {
-		return;
-	}
+	protected function action_on_complete() {}
 	
 	public function cancel() {
         if ($buff = $this->assoc_player->get_status()->retrieve('sleep_cozy'))

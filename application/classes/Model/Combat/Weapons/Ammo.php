@@ -29,9 +29,11 @@ abstract class Model_Combat_Weapons_Ammo extends Model_Combat_Weapon
     /**
      * @param Model_Combat_Actor $me
      * @param Model_Combat_Actor $opponent
-     * @param number $damage
+     * @param number             $damage
      * @param Model_Combat_Scene $scene
+     *
      * @return bool
+     * @throws Exception
      */
     public function trigger_usage(Model_Combat_Actor $me, Model_Combat_Actor $opponent, $damage, Model_Combat_Scene $scene) {
         if ($this->registered_user)

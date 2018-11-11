@@ -15,17 +15,18 @@ abstract class Model_NPC_Animal extends Model_NPC_Nano
     public function __construct($name = null) {
         if (static::$namelist && $name === null) {
             $list = array();
-            for ($i = 0; $i < count(static::$namelist); $i++)
-                if (Globals::CurrentGame()->ndp_check(get_called_class(), $i))
+            $c = count(static::$namelist);
+            for ($i = 0; $i < $c; $i++)
+                if (Globals::CurrentGameF()->ndp_check(static::class, $i))
                     $list[] = $i;
 
             if (!$list) {
-                Globals::CurrentGame()->ndp_purge(get_called_class());
-                $type = mt_rand(0, count(static::$namelist) - 1);
-            } else $type = $list[mt_rand(0, count($list) - 1)];
+                Globals::CurrentGameF()->ndp_purge(static::class);
+                $type = random_int(0, count(static::$namelist) - 1);
+            } else $type = $list[random_int(0, count($list) - 1)];
 
             $name = static::$namelist[$type];
-            Globals::CurrentGame()->ndp_register(get_called_class(), $type);
+            Globals::CurrentGameF()->ndp_register(static::class, $type);
         }
 
         if (!$name) $name = $this->entity_species();
@@ -106,10 +107,10 @@ abstract class Model_NPC_Animal extends Model_NPC_Nano
 
             // Going home
             if (!$busy && $this->last_hideout && $this->location() && !count(Tool_Scripts::at_location($this->location_class(), true, false))) {
-                $home_distance = Globals::CurrentGame()->map($this->location_class())->get_distance($this->location_class(), $this->last_hideout);
+                $home_distance = Globals::CurrentGameF()->mapF($this->location_class())->get_distance($this->location_class(), $this->last_hideout);
 
                 if ($home_distance !== false) {
-                    $home_distance *= Globals::CurrentGame()->map($this->location_class())->movement_modifier() * $this->get_status()->get(Model_Status::MS_CHAR_DISTANCING);
+                    $home_distance *= Globals::CurrentGameF()->mapF($this->location_class())->movement_modifier() * $this->get_status()->get(Model_Status::MS_CHAR_DISTANCING);
 
                     if ($this->get_status()->get(Model_Status::MS_STAT_ENERGY) >= $home_distance && ($this->get_status()->get(Model_Status::MS_STAT_HEALTH) <= static::$comfort_threshold || $this->get_status()->get(Model_Status::MS_STAT_ENERGY) < $home_distance + 10))
                         Controller_Map::code_go(false, $this->last_hideout, true, false, []);

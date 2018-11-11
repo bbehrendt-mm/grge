@@ -5,5 +5,5 @@
         ->add('gp_swater', 2)
         ->add('gp_diy', 2)
         ->add('gp_gardening', 3)
-        ->add('Model_Items_Pumpkin', 1)
+        ->add(Model_Items_Pumpkin::cls(), 1)
         ;

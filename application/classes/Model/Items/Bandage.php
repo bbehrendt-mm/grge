@@ -12,7 +12,7 @@ class Model_Items_Bandage extends Model_Items_Abstract_Item implements Interface
 	protected static $weight = 2;
 
     protected function hid() {
-        $is_doc = !Globals::shadowPlayerExists() && Globals::PrimaryPlayer()->job(10030);
+        $is_doc = !Globals::shadowPlayerExists() && Globals::PrimaryPlayerF()->job(10030);
 
         return parent::hid()
             ->add_action('Wunden versorgen',
@@ -48,10 +48,10 @@ class Model_Items_Bandage extends Model_Items_Abstract_Item implements Interface
                             ->message('Du wickelst die Bandage straff um die Verletzungen deines Freundes. Mit den Bandagen im Gesicht sieht er gleich viel besser aus...')
                     , null, null,
                         Model_Effect::factory()
-                            ->effect(Model_Status::MS_STAT_HEALTH, 50 + (!$is_doc ? 0 : (2 * Globals::PrimaryPlayer()->job(false, null))))
+                            ->effect(Model_Status::MS_STAT_HEALTH, 50 + (!$is_doc ? 0 : (2 * Globals::PrimaryPlayerF()->job(false, null))))
                             ->buff('Model_Buffs_Blood', true)
                             ->achieve(Model_Achievement::MA_BANDAGE_MUMMY)
-                            ->message(':name hat eine Bandage um deine Verletzungen gewickelt.', array(':name' => Globals::CurrentPlayer()->name()))
+                            ->message(':name hat eine Bandage um deine Verletzungen gewickelt.', array(':name' => Globals::CurrentPlayerF()->name()))
                     )
             );
     }

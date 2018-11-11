@@ -3,5 +3,5 @@
     return Model_Factory_Items::factory()->set_decay_factor(0.3)
         ->add('gp_meds', 3)
         ->add('gp_druglab', 1)
-        ->add('Model_Items_Chem', 1)
+        ->add(Model_Items_Chem::cls(), 1)
         ;

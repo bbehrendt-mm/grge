@@ -30,7 +30,7 @@ class Model_Items_Virtual_Hero_Soldier extends Model_Items_Abstract_Virtual {
                 ->description('Tötet sämtliche Zombies, die deinen Aufenthaltsort belagern.')
                 ->effect(
                     Model_Effect::factory()
-                        ->achieve(Model_Achievement::MA_KILLED_ZOMBIES, Globals::CurrentPlayer()->location()->zombie_pop())
+                        ->achieve(Model_Achievement::MA_KILLED_ZOMBIES, Globals::CurrentPlayerF()->location()->zombie_pop())
                         ->custom(function($p) {
                             /** @var $p Model_Player */
                             $p->location()->zombie_pop(true);

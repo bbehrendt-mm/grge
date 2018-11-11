@@ -44,16 +44,16 @@ class Model_Items_Coffin extends Model_Items_Abstract_Item implements Interface_
 	
 	public function open($player = null) {
         if ($player === null)
-            $player = Globals::CurrentPlayer();
+            $player = Globals::CurrentPlayerF();
 		
 		$inset = null;
 		$txt = 'Zum Glück ist der Sarg schon ziemlich verrottet, daher lässt er sich leicht öffnen. ';
 		
-		if (mt_rand(0, 100) < 40) {
+		if (random_int(0, 100) < 40) {
 			$txt .= 'Zu deiner Überraschung ist die Leiche im Sarg weniger tot als sie aussieht!';
-			Tool_Scripts::simple_battle(1, 0, "Der Leichnam im Sarg greift an!", true, false);
+			Tool_Scripts::simple_battle(1, 0, 'Der Leichnam im Sarg greift an!', true, false);
 		} else {
-			switch (mt_rand(0, 1)) {
+			switch (random_int(0, 1)) {
 				case 0:
 					$txt .= 'Der im Sarg liegende Leichnam sieht noch ziemlich saftig aus... ';
 					$player->location()->inventory()->add(new Model_Items_Body());
@@ -64,9 +64,9 @@ class Model_Items_Coffin extends Model_Items_Abstract_Item implements Interface_
 					break;
 			}
 			
-			if (mt_rand(0, 100) > 40) {
+			if (random_int(0, 100) > 40) {
                 $classname = Tool_Gambling::roulette(static::$content);
-				if (!class_exists($classname)) throw new Exception("Item Class '$classname' is not valid!", 1);
+				if (!class_exists($classname)) throw new LogicException("Item Class '$classname' is not valid!", 1);
 
                 /**
                  * @var $classname string|Model_Items_Abstract_Item
@@ -79,7 +79,7 @@ class Model_Items_Coffin extends Model_Items_Abstract_Item implements Interface_
 			} else $txt .= 'Leider scheint hier sonst nichts von Wert drin zu sein.';
 		}
 		
-		if (!Globals::shadowPlayerExists()) Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, $txt, array(), $inset ? array(':item' => $inset) : array()));
+		if (!Globals::shadowPlayerExists()) Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String(null, $txt, $inset ? array(':item' => [$inset]) : []));
 		
 		return true;
 	}

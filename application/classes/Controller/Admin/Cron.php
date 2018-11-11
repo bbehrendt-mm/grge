@@ -84,7 +84,7 @@ class Controller_Admin_Cron extends Controller {
         foreach ($lines as $line) {
             if (!preg_match('/(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}) -{3} (\w*): (.*)/', $line, $matches)) {
                 if (!$c1 || !$c2) continue;
-                if (!isset($ret[$c1]) || !isset($ret[$c1][$c2])) continue;
+                if (!isset($ret[$c1], $ret[$c1][$c2])) continue;
             } else {
                 list(,$c1, $c2, $line) = $matches;
                 if (!isset($ret[$c1])) $ret[$c1] = array($c2 => array());

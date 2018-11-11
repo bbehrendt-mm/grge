@@ -8,7 +8,7 @@ class Controller_Admin_Files extends Controller_Admin_Admin {
     private static $evio_version = 2;
 
     public function action_battle_log() {
-        if (!$this->priv_allow_all(['LOGVIEW'])) die(Error::m(\grge\E_SERVER_ACCESS_DENIED));
+        if (!$this->priv_allow_all(['LOGVIEW'])) die(GRGEError::m(\grge\E_SERVER_ACCESS_DENIED));
 
         $data = explode('-', $this->request->param('id'));
         if (count($data) != 2) {
@@ -24,9 +24,9 @@ class Controller_Admin_Files extends Controller_Admin_Admin {
     }
 
     public function action_export_translations() {
-        if (!$this->priv_allow_all(['TRANSLATE_MOD'])) die(Error::m(\grge\E_SERVER_ACCESS_DENIED));
+        if (!$this->priv_allow_all(['TRANSLATE_MOD'])) die(GRGEError::m(\grge\E_SERVER_ACCESS_DENIED));
 
-        if (!($data = I18n::export())) die(Error::m(\grge\E_HTTP_REQUEST_POINTLESS));
+        if (!($data = I18n::export())) die(GRGEError::m(\grge\E_HTTP_REQUEST_POINTLESS));
 
         $data = gzcompress(serialize([
             'data' => $data,
@@ -53,17 +53,17 @@ class Controller_Admin_Files extends Controller_Admin_Admin {
     }
 
     public function action_import_translations() {
-        if (!$this->priv_allow_all(['TRANSLATE_MOD'])) die(Error::m(\grge\E_SERVER_ACCESS_DENIED));
+        if (!$this->priv_allow_all(['TRANSLATE_MOD'])) die(GRGEError::m(\grge\E_SERVER_ACCESS_DENIED));
 
-        if (!($file = file_get_contents($_FILES['grl']['tmp_name']))) die(Error::m(\grge\E_HTTP_REQUEST_INCOMPLETE));
+        if (!($file = file_get_contents($_FILES['grl']['tmp_name']))) die(GRGEError::m(\grge\E_HTTP_REQUEST_INCOMPLETE));
         $data = unserialize(gzuncompress($file));
 
-        if (!$data || !is_array($data)) die(Error::m(\grge\E_HTTP_REQUEST_POINTLESS));
+        if (!$data || !is_array($data)) die(GRGEError::m(\grge\E_HTTP_REQUEST_POINTLESS));
 
         echo "GRGE EVIO LANGUAGE IMPORTER V" . static::$evio_version . "<br /><br />";
 
-        if (!isset($data['data']) || !isset($data['meta']) || !is_array($data['meta'])) {
-            if (!($lang = $this->post('lang'))) die(Error::m(\grge\E_HTTP_REQUEST_INCOMPLETE));
+        if (!isset($data['data'], $data['meta']) || !is_array($data['meta'])) {
+            if (!($lang = $this->post('lang'))) die(GRGEError::m(\grge\E_HTTP_REQUEST_INCOMPLETE));
 
             echo "This seems to be a legacy GRL Package. It cannot be imported ...<br /><br />";
             die;
@@ -72,7 +72,11 @@ class Controller_Admin_Files extends Controller_Admin_Admin {
 
         echo "Importing from \"{$_FILES['grl']['name']}\" ({$_FILES['grl']['size']} bytes)...<br />-----<br />";
 
-        if (!isset($data['meta']['format']) || !isset($data['meta']['version']) || !isset($data['meta']['timestamp']) || !isset($data['meta']['primary']) || !isset($data['meta']['languages'])) {
+        if (!isset($data['meta']['format'], $data['meta']['version'])
+            || !isset($data['meta']['timestamp'])
+            || !isset($data['meta']['primary'])
+            || !isset($data['meta']['languages'])
+        ) {
             echo "ERROR: Package is missing header information. Aborting.";
             return false;
         }

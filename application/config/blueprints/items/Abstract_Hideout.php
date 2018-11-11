@@ -15,8 +15,8 @@ return Model_Blueprints::factory()
             ->id('i:genbat1')
             ->name('1 mAh aus Batterien erzeugen')
             ->message('Es werde Licht! Herzlichen Glückwunsch, du hast etwas Strom für dein Versteck erzeugt!')
-            ->material(['Model_Items_Battery' => 2])
-            ->produces(['Model_Items_Energy' => 1])
+            ->material([Model_Items_Battery::cls() => 2])
+            ->produces([Model_Items_Energy::cls() => 1])
     )
 
     ->add_blueprints(
@@ -24,8 +24,8 @@ return Model_Blueprints::factory()
             ->id('i:genbat2')
             ->name('5 mAh aus Batterien erzeugen')
             ->message('Es werde Licht! Herzlichen Glückwunsch, du hast etwas Strom für dein Versteck erzeugt!')
-            ->material(['Model_Items_Battery' => 10])
-            ->produces(['Model_Items_Energy' => 5])
+            ->material([Model_Items_Battery::cls() => 10])
+            ->produces([Model_Items_Energy::cls() => 5])
     )
 
     ->add_blueprints(
@@ -33,16 +33,16 @@ return Model_Blueprints::factory()
             ->id('i:genbat3')
             ->name('2 mAh aus Supercharger erzeugen')
             ->message('Es werde Licht! Herzlichen Glückwunsch, du hast etwas Strom für dein Versteck erzeugt!')
-            ->material(['Model_Items_Generic_Supercharger' => 1])
-            ->produces(['Model_Items_Energy' => 2])
+            ->material([Model_Items_Generic_Supercharger::cls() => 1])
+            ->produces([Model_Items_Energy::cls() => 2])
     )
 
     ->add_blueprints(
         Model_Blueprint::factory()
             ->id('i:genbat4')
             ->message('Wer glaubt schon an Herstellerangaben! Diese Batterie kann problemlos so stark aufgeladen werden, dass man damit eine Kleinstadt mehrere Tage mit Strom versorgen könnte. Und diese Gerüchte von wegen "Explosionsgefahr" sind bestimmt bloß Panikmache aus den Medien ...')
-            ->material(['Model_Items_Battery' => 1, 'Model_Items_Energy' => 2])
-            ->produces(['Model_Items_Generic_Supercharger' => 1])
+            ->material([Model_Items_Battery::cls() => 1, Model_Items_Energy::cls() => 2])
+            ->produces([Model_Items_Generic_Supercharger::cls() => 1])
     )
 
     ->add_blueprints(
@@ -51,8 +51,8 @@ return Model_Blueprints::factory()
             ->requires('gen2')
             ->name('10 mAh aus Benzin erzeugen')
             ->message('Es werde Licht! Herzlichen Glückwunsch, du hast etwas Strom für dein Versteck erzeugt!')
-            ->material(['Model_Items_Generic_Jerrycan' => 1])
-            ->produces(['Model_Items_Energy' => 10])
+            ->material([Model_Items_Generic_Jerrycan::cls() => 1])
+            ->produces([Model_Items_Energy::cls() => 10])
     )
 
     ->add_blueprints(
@@ -62,7 +62,7 @@ return Model_Blueprints::factory()
             ->name('1 mAh mit Muskelkraft erzeugen')
             ->message('Es werde Licht! Herzlichen Glückwunsch, du hast etwas Strom für dein Versteck erzeugt!')
             ->energy(45)
-            ->produces(['Model_Items_Energy' => 1])
+            ->produces([Model_Items_Energy::cls() => 1])
     )
 
     // -- STACK -> All blueprints below NO LONGER need the basic generator

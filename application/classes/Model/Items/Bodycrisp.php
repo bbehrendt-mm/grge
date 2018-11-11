@@ -21,7 +21,7 @@ class Model_Items_Bodycrisp extends Model_Items_Abstract_Item implements Interfa
                             ->effect(Model_Status::MS_STAT_HEALTH, -20)
                             ->consume($this)
                             ->achieve(Model_Achievement::MA_BODY_EATER)
-                            ->spawn('Model_Items_Generic_Bone3')
+                            ->spawn(Model_Items_Generic_Bone3::cls())
                             ->message('Äußerst delikat ... das Frittierfett ist zwar anscheinend etwas ranzig gewesen, und innen drin war die Leiche noch größtenteils roh - trotzdem eine der leckersten Mahlzeiten die du in letzter Zeit gehabt hast!')
                     )
             );

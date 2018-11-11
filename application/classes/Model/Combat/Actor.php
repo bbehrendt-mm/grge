@@ -20,7 +20,7 @@ class Model_Combat_Actor extends Named {
 
     protected static $escape = false;
 
-    protected $name;
+    protected $actor_name;
     protected $type;
     protected $max_health;
     protected $health;
@@ -77,10 +77,10 @@ class Model_Combat_Actor extends Named {
     ];
 
     /**
-     * @return Model_Combat_Actor
+     * @return self
      */
-    public static function factory() {
-        $s = get_called_class();
+    public static function factory(): self {
+        $s = static::class;
         return new $s;
     }
 
@@ -169,7 +169,10 @@ class Model_Combat_Actor extends Named {
 
     /**
      * @param Model_Inventory $inv
+     * @param bool            $check_equip
+     *
      * @return Model_Combat_Actor
+     * @throws Exception
      */
     public function register_inventory($inv, $check_equip = true) {
         $this->inventory = $inv;
@@ -179,7 +182,7 @@ class Model_Combat_Actor extends Named {
             if (!$check_equip || $w->is_equipped())
                 $this->add_weapon($w);
 
-        foreach ($this->inventory->get('Model_Items_Abstract_Armor') as $a)
+        foreach ($this->inventory->get(Model_Items_Abstract_Armor::cls()) as $a)
             /** @var Model_Items_Abstract_Armor $a */
             if (!$check_equip || $a->is_equipped())
                 $this->add_armor($a);
@@ -227,20 +230,22 @@ class Model_Combat_Actor extends Named {
      * @return Model_Combat_Actor
      */
     public function set_distance($distance, $jitter = 3) {
-        $this->position([$distance + mt_rand(-$jitter, $jitter), 12 + mt_rand(0, $this->field[1] - 12)]);
+        $this->position([$distance + random_int(-$jitter, $jitter), 12 + random_int(0, $this->field[1] - 12)]);
         return $this;
     }
 
     /**
      * @param Model_Combat_Weapon|Model_Combat_Weapon[] $weapon
+     *
      * @return Model_Combat_Actor
+     * @throws Exception
      */
     public function add_weapon($weapon) {
         if (is_array($weapon))
             foreach ($weapon as $w)
                 $this->add_weapon($w);
         else {
-            if (!$weapon->uin()) Globals::CurrentGame()->uin()->set($weapon);
+            if (!$weapon->uin()) Globals::CurrentGameF()->uin()->set($weapon);
             if (!$this->current_weapon || $weapon->is_equipped_primary())
                 $this->current_weapon = $weapon;
             $this->weapons[$weapon->uin()] = $weapon;
@@ -294,9 +299,9 @@ class Model_Combat_Actor extends Named {
      * @return Model_Combat_Actor|string
      */
     public function name($new_name = null, $type = null) {
-        if ($new_name === null) return $this->name;
+        if ($new_name === null) return $this->actor_name;
         else {
-            $this->name = $new_name;
+            $this->actor_name = $new_name;
             if ($type !== null) $this->type = $type;
         }
         return $this;
@@ -490,7 +495,7 @@ class Model_Combat_Actor extends Named {
             $retr = $tmp ? ($closest_foe->distance_from($this) < $this->current_weapon->min_range()) : false;
 
             return $tmp ? [
-                (($tmp[0] * $this->ai_brashness)/max(0.1,$this->rounds_to_use($this->current_weapon, $closest_foe))) * ($retr ? (1/($this->memory["flee"]+1)) : 1),
+                (($tmp[0] * $this->ai_brashness)/max(0.1,$this->rounds_to_use($this->current_weapon, $closest_foe))) * ($retr ? (1/($this->memory['flee']+1)) : 1),
                 $tmp[1],
                 $retr ? -1 : 1
             ] : [];
@@ -511,9 +516,11 @@ class Model_Combat_Actor extends Named {
     protected function score_kills($damage, $kills, $death, $target) {}
 
     /**
-     * @param int $damage
+     * @param int                     $damage
      * @param null|Model_Combat_Actor $from
-     * @param null|int $armor_damage
+     * @param null|int                $armor_damage
+     *
+     * @throws Exception
      */
     protected function damage($damage, $from = null, $armor_damage = null) {
         $this->health -= $damage;
@@ -557,12 +564,12 @@ class Model_Combat_Actor extends Named {
         if ($second_act) return;
 
         //Move
-        $random_x = mt_rand(-100,100);
-        $random_y = mt_rand(-100,100);
+        $random_x = random_int(-100,100);
+        $random_y = random_int(-100,100);
         if ($random_x == 0 && $random_y == 0) $random_x = 1;
 
         $length = sqrt($random_x * $random_x + $random_y * $random_y);
-        $dist = (min(4,$this->movement_range * (mt_rand(10,50)/100)));
+        $dist = min(4,$this->movement_range * (random_int(10,50)/100));
 
         $this->pos_x += $random_x * ($dist / $length);
         $this->pos_y += $random_y * ($dist / $length);
@@ -573,7 +580,10 @@ class Model_Combat_Actor extends Named {
     /**
      * @param Model_Combat_Actor[] $friends
      * @param Model_Combat_Actor[] $foes
-     * @param bool $second_act
+     * @param bool                 $second_act
+     *
+     * @return void
+     * @throws Exception
      */
     public function act($friends, $foes, $second_act = false) {
         if (!$second_act) {
@@ -583,7 +593,8 @@ class Model_Combat_Actor extends Named {
 
         if ($this->ki_mod_is_active('drunk') && Tool_Gambling::random(0.8)) {
             $this->scene->dialog($this,$this->get_random_taunt('drunk'));
-            return $this->act_modified_drunk($friends, $foes, $second_act);
+            $this->act_modified_drunk($friends, $foes, $second_act);
+            return;
         }
 
         $attack = $this->get_attack_priority($friends, $foes);
@@ -640,7 +651,9 @@ class Model_Combat_Actor extends Named {
             $this->pos_x = max(0,min($this->field[0], $this->pos_x));
             $this->pos_y = max(0,min($this->field[1], $this->pos_y));
 
-            $dist = sqrt(pow($old_x - $this->pos_x, 2) + pow($old_y - $this->pos_y, 2));
+            $dist = sqrt(
+                (($old_x - $this->pos_x) ** 2) + (($old_y - $this->pos_y) ** 2)
+            );
             $this->scene->move($this, [$this->pos_x, $this->pos_y], $dist, $target);
         } else {
             // Idle action

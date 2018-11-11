@@ -48,7 +48,7 @@ class Controller_Admin_Users extends Controller_Admin_Admin {
         $changes = $this->post('set');
 
         foreach ($changes as $flag => $change)
-            if ($flag == 'ROOT' && (!static::priv_allow_all('ROOT') || in_array(Globals::CurrentUser()->uid(), $users))) {
+            if ($flag == 'ROOT' && (!static::priv_allow_all('ROOT') || in_array(Globals::CurrentUserF()->uid(), $users))) {
                 return $this->render([
                     'success' => 0
                 ]);
@@ -95,7 +95,7 @@ class Controller_Admin_Users extends Controller_Admin_Admin {
         $to = $this->post('set');
 
         // Prevent user from resetting own password
-        if (in_array(Globals::CurrentUser()->uid(), $users) && !$to)
+        if (in_array(Globals::CurrentUserF()->uid(), $users) && !$to)
             return $this->render([
                 'success' => 0
             ]);
@@ -139,7 +139,7 @@ class Controller_Admin_Users extends Controller_Admin_Admin {
                 /** @var Model_Auth_Interface $provider */
                 $entry['auth'][$provider::get_service_name()] = [$variables['rid'],$variables['var1'],$variables['var2']];
         }
-
+        unset($entry);
 
         $this->render([
             'list' => $result

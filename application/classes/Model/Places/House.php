@@ -2,7 +2,7 @@
 
 class Model_Places_House extends Model_Places_Abstract_Hideout {
 
-    protected static $name = 'Unbewohntes Einfamilienhaus';
+    protected static $location_name = 'Unbewohntes Einfamilienhaus';
     protected static $description = 'Es scheint, als wäre dieses kurz vor der Zombieapokalypse fertig geworden. Es ist zwar vollständig eingerichtet, aber gewohnt hat hier wohl niemand. Dies könnte der ideale Ort für ein Versteck sein... wenn es nicht gerade der Ort wäre, an dem Zombies zuerst nach dir suchen würden.';
     protected static $icon = 'home';
 

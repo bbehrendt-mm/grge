@@ -16,13 +16,18 @@ class Model_Items_Generic_Bike2 extends Model_Items_Abstract_Transport implement
 
     /**
      * @param Model_Player $p
+     *
+     * @param number       $d
+     *
      * @return bool
+     * @throws Exception
      */
-    public function trigger_after($p, $d) {
-        if (mt_rand(0,100) < min(25,round($d/4))) {
+    public function trigger_after($p, $d): bool {
+        if (random_int(0,100) < min(25,round($d/4))) {
             $this->consume();
-            $p->location()->inventory()->add(new Model_Items_Generic_Bike);
+            $p->location()->inventory()->add(new Model_Items_Generic_Bike());
             $p->log()->add('So ein Mist... dein Fahrrad ist auf dem Weg hierher kaputt gegangen...');
         }
+        return true;
     }
 }	

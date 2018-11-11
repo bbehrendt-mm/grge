@@ -14,8 +14,8 @@ class Model_Items_Body2 extends Model_Items_Abstract_Item implements Interface_S
 	
 	public function __construct($name = null, $desc = null) {
 		parent::__construct();
-		if ($name) $this->custom_info["name"] = $name;
-		if ($desc) $this->custom_info["description"] = $desc;	
+		if ($name) $this->custom_info['name'] = $name;
+		if ($desc) $this->custom_info['description'] = $desc;
 	}
 
     protected function hid() {
@@ -28,7 +28,7 @@ class Model_Items_Body2 extends Model_Items_Abstract_Item implements Interface_S
                             ->effect(Model_Status::MS_STAT_ZOMBIFY, 10)
                             ->consume($this)
                             ->achieve(Model_Achievement::MA_BODY_EATER)
-                            ->spawn('Model_Items_Generic_Bone3')
+                            ->spawn(Model_Items_Generic_Bone3::cls())
                             ->message('Ohje, wer hätte das gedacht? Du hast dieses völlig verseuchte Stück Zombiefleisch runtergeschlungen und dich mit der Zombiekrankheit infiziert. Welch eine Überraschung!')
                     )
             );

@@ -39,17 +39,15 @@ class Model_Buffs_Read extends Model_Buffs_Abstract_Fragile {
 	protected function action_on_complete() {
         $this->assoc_player->log()->add('Und wieder hast du ein Buch durchgelesen. Nur das Ende hätte etwas spannender sein können...');
         foreach ($this->effects as $stat => $data) {
-            if ($data[Model_Buffs_Abstract_Buff::MB_RAISE_ACC] != 0)
+            if ($data[Model_Buffs_Abstract_Buff::MB_RAISE_ACC] !== 0)
                 $this->assoc_player->get_status()->modify($stat, $data[Model_Buffs_Abstract_Buff::MB_RAISE_ACC], Model_Status::MS_EFFECT_BUFF);
-            if ($data[Model_Buffs_Abstract_Buff::MB_DROP_ACC] != 0)
+            if ($data[Model_Buffs_Abstract_Buff::MB_DROP_ACC] !== 0)
                 $this->assoc_player->get_status()->modify($stat, -$data[Model_Buffs_Abstract_Buff::MB_DROP_ACC], Model_Status::MS_EFFECT_BUFF);
         }
-
-        return;
 	}
 
     public function tick() {
-        if (!Globals::CurrentGame()->item_available($this->item_id) || !($item = Globals::CurrentGame()->uin()->get($this->item_id, 'Model_Items_Abstract_Book'))) {
+        if (!Globals::CurrentGameF()->item_available($this->item_id) || !($item = Globals::CurrentGameF()->uin()->get($this->item_id, Model_Items_Abstract_Book::cls()))) {
             $this->cancel();
             return;
         }

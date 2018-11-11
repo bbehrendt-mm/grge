@@ -28,12 +28,21 @@ class Globals extends Model {
 
     /**
      * Returns the currently active user object, or NULL if no player object is active.
-     * @param bool $force If true, an exception will be thrown instead of returning NULL when no object is active
      * @return Model_Euser|null
-     * @throws Exception When $force is set to TRUE and no object is active
      */
-    public static function CurrentUser($force = true) {
-        if ($force && static::$current_user === null) throw new Exception("Attempted to fetch the current user object when no user object was bound.");
+    public static function CurrentUser() {
+        return static::$current_user;
+    }
+
+    /**
+     * Returns the currently active user object
+     * @return Model_Euser
+     * @throws Exception When no object is active
+     */
+    public static function CurrentUserF() {
+        if (static::$current_user === null) throw new LogicException(
+            'Attempted to fetch the current user object when no user object was bound.'
+        );
         return static::$current_user;
     }
 
@@ -42,7 +51,7 @@ class Globals extends Model {
      * @return bool
      */
     public static function hasCurrentUser() {
-        return static::CurrentUser(false) !== null;
+        return static::CurrentUser() !== null;
     }
 
     /**
@@ -65,12 +74,21 @@ class Globals extends Model {
 
     /**
      * Returns the currently active game object, or NULL if no game object is active.
-     * @param bool $force If true, an exception will be thrown instead of returning NULL when no object is active
      * @return Model_Game|null
-     * @throws Exception When $force is set to TRUE and no object is active
      */
-    public static function CurrentGame($force = true) {
-        if ($force && static::$current_game === null) throw new Exception("Attempted to fetch the current game object when no game object was bound.");
+    public static function CurrentGame() {
+        return static::$current_game;
+    }
+
+    /**
+     * Returns the currently active game object
+     * @return Model_Game
+     * @throws Exception When no object is active
+     */
+    public static function CurrentGameF() {
+        if (static::$current_game === null) throw new LogicException(
+            'Attempted to fetch the current game object when no game object was bound.'
+        );
         return static::$current_game;
     }
 
@@ -79,7 +97,7 @@ class Globals extends Model {
      * @return bool
      */
     public static function hasCurrentGame() {
-        return static::CurrentGame(false) !== null;
+        return static::CurrentGame() !== null;
     }
 
     /**
@@ -116,36 +134,69 @@ class Globals extends Model {
 
     /**
      * Returns the currently active player object, or NULL if no player object is active.
-     * @param bool $force If true, an exception will be thrown instead of returning NULL when no object is active
      * @return Model_Player|null
+     */
+    public static function PrimaryPlayer() {
+        return static::$primary_player;
+    }
+
+    /**
+     * Returns the currently active player object, or NULL if no player object is active.
+     * @return Model_Player
      * @throws Exception When $force is set to TRUE and no object is active
      */
-    public static function PrimaryPlayer($force = true) {
-        if ($force && static::$primary_player === null) throw new Exception("Attempted to fetch the primary player object when no player object was bound.");
+    public static function PrimaryPlayerF() {
+        if (static::$primary_player === null) throw new LogicException(
+            'Attempted to fetch the primary player object when no player object was bound.'
+        );
         return static::$primary_player;
     }
 
     /**
      * Returns the currently active player object, the primary player object, or NULL if no player object is active.
-     * @param bool $force If true, an exception will be thrown instead of returning NULL when no object is active
      * @return Interface_Plentity|null
-     * @throws Exception When $force is set to TRUE and no object is active
      */
-    public static function CurrentPlayer($force = true) {
-        if ($force && static::$primary_player === null && static::$current_player === null) throw new Exception("Attempted to fetch the current player object when no player object was bound.");
+    public static function CurrentPlayer() {
         return static::$current_player === null ? static::$primary_player : static::$current_player;
     }
 
     /**
      * Returns the currently active player object, the primary player object, or NULL if no player object is active.
-     * @param bool $force If true, an exception will be thrown instead of returning NULL when no object is active
-     * @return Model_Player|null
-     * @throws Exception When $force is set to TRUE and no object is active
+     * @return Interface_Plentity
+     * @throws Exception When no object is active
      */
-    public static function CurrentPlayerActual($force = true) {
-        $p = static::CurrentPlayer($force);
-        if (!$force && $p === null) return null;
-        if (Tool_Scripts::is_npc($p)) throw new Exception("Attempted to fetch the non-npc current player object when an npc player object was bound.");
+    public static function CurrentPlayerF() {
+        if (static::$primary_player === null && static::$current_player === null) throw new LogicException(
+            'Attempted to fetch the current player object when no player object was bound.'
+        );
+        return static::$current_player === null ? static::$primary_player : static::$current_player;
+    }
+
+    /**
+     * Returns the currently active player object, the primary player object, or NULL if no player object is active.
+     * @return Model_Player|null
+     * @throws Exception When  no object is active
+     */
+    public static function CurrentPlayerActual() {
+        $p = static::CurrentPlayer();
+        if (!$p === null) return null;
+        if (Tool_Scripts::is_npc($p)) throw new LogicException(
+            'Attempted to fetch the non-npc current player object when an npc player object was bound.'
+        );
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return $p;
+    }
+
+    /**
+     * Returns the currently active player object, the primary player object, or NULL if no player object is active.
+     * @return Model_Player
+     * @throws Exception When no object is active
+     */
+    public static function CurrentPlayerActualF() {
+        $p = static::CurrentPlayerF();
+        if (Tool_Scripts::is_npc($p)) throw new LogicException(
+            'Attempted to fetch the non-npc current player object when an npc player object was bound.'
+        );
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $p;
     }
@@ -155,7 +206,7 @@ class Globals extends Model {
      * @return bool
      */
     public static function hasPrimaryPlayer() {
-        return static::PrimaryPlayer(false) !== null;
+        return static::PrimaryPlayer() !== null;
     }
 
     /**
@@ -163,7 +214,7 @@ class Globals extends Model {
      * @return bool
      */
     public static function hasCurrentPlayer() {
-        return static::CurrentPlayer(false) !== null;
+        return static::CurrentPlayer() !== null;
     }
 
     /**

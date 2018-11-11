@@ -27,7 +27,7 @@ class Model_Items_Flashlight extends Model_Items_Abstract_Item implements Interf
             )
             ->add_action('Batterie wechseln', Model_Action::factory()
                 ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
-                ->requirement('Model_Items_Battery', 1)
+                ->requirement(Model_Items_Battery::cls(), 1)
                 ->effect(
                     Model_Effect::factory()
                         ->custom(function () {
@@ -37,11 +37,11 @@ class Model_Items_Flashlight extends Model_Items_Abstract_Item implements Interf
                 )
             )->add_action('Supercharger einlegen', Model_Action::factory()
                 ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
-                ->requirement('Model_Items_Generic_Supercharger', 1)
+                ->requirement(Model_Items_Generic_Supercharger::cls(), 1)
                 ->effect(
                     Model_Effect::factory()
                         ->consume($this)
-                        ->spawn('Model_Items_Flashlight2')
+                        ->spawn(Model_Items_Flashlight2::cls())
                         ->message('Du hast eine Supercharger-Batterie in diese Taschenlampe eingebaut. Mal sehen, was man aus diesem alten Teil noch alles rausquetschen kann!')
                 )
             );
@@ -52,7 +52,7 @@ class Model_Items_Flashlight extends Model_Items_Abstract_Item implements Interf
 	}
 
     public function icon() {
-        return "items/flashlight_" . ($this->active() ? 'on' : 'off');
+        return 'items/flashlight_' . ($this->active() ? 'on' : 'off');
     }
 
     public function active() {
@@ -65,10 +65,10 @@ class Model_Items_Flashlight extends Model_Items_Abstract_Item implements Interf
 
         switch ($type) {
             case Interface_Tickable::IT_TYPE_PLAYER:
-                if (Globals::CurrentGame()->get_player($pid)) $this->fillrate--;
+                if (Globals::CurrentGameF()->get_player($pid)) $this->fillrate--;
                 break;
             case Interface_Tickable::IT_TYPE_NPC:
-                if (Globals::CurrentGame()->get_npc($pid)) $this->fillrate--;
+                if (Globals::CurrentGameF()->get_npc($pid)) $this->fillrate--;
                 break;
         }
     }

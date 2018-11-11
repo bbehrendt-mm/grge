@@ -8,19 +8,19 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
     public function japi_unveil_map() {
         if (!Globals::hasCurrentGame() || !Globals::hasPrimaryPlayer()) return;
 
-        Globals::CurrentGame()->map(Globals::PrimaryPlayer()->location_class())->uncover_all();
+        Globals::CurrentGameF()->mapF(Globals::PrimaryPlayerF()->location_class())->uncover_all();
 
         $this->render();
     }
 
     public function japi_force_battle() {
-        $zombies = Globals::PrimaryPlayer()->location()->zombie_factory()->spawn(true);
-        if ($zombies) Tool_Scripts::combat([Tool_Scripts::at_location(Globals::PrimaryPlayer()->location_class()), $zombies], true, 20, Globals::PrimaryPlayer()->location());
+        $zombies = Globals::PrimaryPlayerF()->location()->zombie_factory()->spawn(true);
+        if ($zombies) Tool_Scripts::combat([Tool_Scripts::at_location(Globals::PrimaryPlayerF()->location_class()), $zombies], true, 20, Globals::PrimaryPlayerF()->location());
     }
 
     public function japi_purge_log() {
-        Globals::PrimaryPlayer()->log()->clear();
-        Globals::PrimaryPlayer()->location()->log()->clear();
+        Globals::PrimaryPlayerF()->log()->clear();
+        Globals::PrimaryPlayerF()->location()->log()->clear();
 
         $this->render();
     }
@@ -28,9 +28,9 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
     public function japi_siege() {
         if (!Globals::hasCurrentGame() || !Globals::hasPrimaryPlayer()) return;
 
-        $z = (int)$this->post('z');
+        $z = (int)self::post('z');
         if ($z >= 0)
-            Globals::PrimaryPlayer()->location()->zombie_factory()->accumulation($z);
+            Globals::PrimaryPlayerF()->location()->zombie_factory()->accumulation($z);
 
         $this->render();
     }
@@ -38,7 +38,7 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
     public function japi_regenerate() {
         if (!Globals::hasCurrentGame() || !Globals::hasPrimaryPlayer()) return;
 
-        Globals::PrimaryPlayer()->get_status()->set(Model_Status::MS_STAT_ENERGY, 100, Model_Status::MS_STAT_HEALTH, 100, Model_Status::MS_STAT_HUNGER, 100, Model_Status::MS_STAT_THIRST, 100, Model_Status::MS_STAT_SLEEPY, 100);
+        Globals::PrimaryPlayerF()->get_status()->set(Model_Status::MS_STAT_ENERGY, 100, Model_Status::MS_STAT_HEALTH, 100, Model_Status::MS_STAT_HUNGER, 100, Model_Status::MS_STAT_THIRST, 100, Model_Status::MS_STAT_SLEEPY, 100);
 
         $this->render();
     }
@@ -46,18 +46,18 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
     public function japi_spawn_items() {
         if (!Globals::hasCurrentGame() || !Globals::hasPrimaryPlayer()) return;
 
-        $target_inv = $this->post('inventory');
-        $sets = $this->post('data');
+        $target_inv = self::post('inventory');
+        $sets = self::post('data');
 
         if (!$sets) return;
 
         $instances = 0;
 
         foreach ($sets as $set) {
-            $classname = 'Model_Items_' . str_replace(['0::','v::','t::'],['Generic_','Virtual_','Virtual_Invoke_'],$set['id']);
+            $classname = Model_Items_::cls() . str_replace(['0::','v::','t::'],['Generic_','Virtual_','Virtual_Invoke_'],$set['id']);
 
             if (!class_exists($classname) ||
-                !Tool_System::instance_of($classname, 'Model_Items_Abstract_Item')) {
+                !Tool_System::instance_of($classname, Model_Items_Abstract_Item::cls())) {
                     $this->add_note('error',"{$set['id']} is not a valid item class!");
                     continue;
                 }
@@ -69,29 +69,28 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
                 continue;
             }
 
-            for ($i = 0; $i < min(100,$set['count']); $i++) {
+            $c = min(100,$set['count']);
+            for ($i = 0; $i < $c; $i++) {
                 if (!isset($set['params'])) $set['params'] = [];
                 foreach ($set['params'] as &$v)
                     if ($v === 'null') $v = null;
+                unset($v);
 
                 try {
                     /** @var Model_Items_Abstract_Item $item */
                     $item = $reflector->newInstanceArgs($set['params']);
                 } catch (Exception $e) {
                     $this->add_note('error',"Failed to instantiate {$set['id']}! " . $e->getMessage());
-                    continue(2);
+                    continue 2;
                 }
 
                 if (Tool_System::instance_of($item, Model_Items_Virtual_Invoke_Abstract::cls())) {
                     /** @var $item Model_Items_Virtual_Invoke_Abstract */
-                    $item->trigger_spawn(Globals::PrimaryPlayer()->location(), Globals::PrimaryPlayer());
+                    $item->trigger_spawn(Globals::PrimaryPlayerF()->location(), Globals::PrimaryPlayerF());
                     $item->grind();
                     $item = null;
-                } else {
-                    if ($target_inv == 'true') Globals::PrimaryPlayer()->inventory()->add($item);
-                    else Globals::PrimaryPlayer()->location()->inventory()->add($item);
-
-                }
+                } else if ($target_inv === 'true') Globals::PrimaryPlayerF()->inventory()->add($item);
+                else Globals::PrimaryPlayerF()->location()->inventory()->add($item);
 
                 $instances++;
             }
@@ -104,15 +103,15 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
     public function japi_skip() {
         if (!Globals::hasCurrentGame() || !Globals::hasPrimaryPlayer()) return;
 
-        $ticks = (int)$this->post('ticks');
+        $ticks = (int)self::post('ticks');
         if ($ticks > 0)
-            Globals::CurrentGame()->fast_forward($ticks);
+            Globals::CurrentGameF()->fast_forward($ticks);
 
         $this->render();
     }
 
     public function japi_custom_battle() {
-        $config = $this->post('data');
+        $config = self::post('data');
         $zombies = [];
 
         foreach ($config as $entry) {
@@ -125,7 +124,7 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
         }
 
         // TODO: Make escapabillity customizable
-        if ($zombies) Tool_Scripts::combat([Tool_Scripts::at_location(Globals::PrimaryPlayer()->location_class()), $zombies], false, 20, Globals::PrimaryPlayer()->location());
+        if ($zombies) Tool_Scripts::combat([Tool_Scripts::at_location(Globals::PrimaryPlayerF()->location_class()), $zombies], false, 20, Globals::PrimaryPlayerF()->location());
         $this->render();
     }
 
@@ -177,8 +176,8 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
             $classpath = 'Model_Items' . substr(str_replace('/','_',$filepath), 0, -4);
             $reflection = new ReflectionClass($classpath);
             if (!$reflection->isInstantiable()) continue;
-            if (!Tool_System::instance_of($classpath, 'Model_Items_Abstract_Item')) continue;
-            $virtual = Tool_System::instance_of($classpath, 'Model_Items_Abstract_Virtual');
+            if (!Tool_System::instance_of($classpath, Model_Items_Abstract_Item::cls())) continue;
+            $virtual = Tool_System::instance_of($classpath, Model_Items_Abstract_Virtual::cls());
             $trigger = Tool_System::instance_of($classpath, Model_Items_Virtual_Invoke_Abstract::cls());
 
             $tmp = [];
@@ -208,7 +207,7 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
                         'name' => $parameter->getName(),
                         'optional' => $parameter->isOptional(),
                         'default' => $parameter->isDefaultValueAvailable() ? $parameter->getDefaultValue() : null,
-                        'force' => ($parameter->getName() == 'type' && $classpath::getNumberOfTypes() <= 1),
+                        'force' => $parameter->getName() == 'type' && $classpath::getNumberOfTypes() <= 1,
                     ];
 
 

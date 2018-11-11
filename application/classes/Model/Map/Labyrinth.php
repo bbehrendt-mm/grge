@@ -57,8 +57,8 @@ class Model_Map_Labyrinth extends Model_Map_Abstract {
 
             if (empty($tmp)) return $ret;
             else {
-                if (in_array($dir,$tmp) && mt_rand(0,9) < 7) {}
-                elseif (empty($ret) || mt_rand(0,9) < 6) $dir = Tool_Gambling::select($tmp);
+                if (in_array($dir,$tmp) && random_int(0,9) < 7) {}
+                elseif (empty($ret) || random_int(0,9) < 6) $dir = Tool_Gambling::select($tmp);
                 else return $ret;
 
                 $x += $dir[0]; $y += $dir[1];
@@ -81,7 +81,7 @@ class Model_Map_Labyrinth extends Model_Map_Abstract {
     }
 
     private function build_corridors($limit) {
-        $this->entry = [mt_rand(0,$this->grid),mt_rand(0,$this->grid)];
+        $this->entry = [random_int(0,$this->grid), random_int(0,$this->grid)];
         $this->mapscheme[$this->entry[0]][$this->entry[1]] = static::MML_ENTRYPOINT;
         $walker_points = [[$this->entry[0],$this->entry[1]]];
 

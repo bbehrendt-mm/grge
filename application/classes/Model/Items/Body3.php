@@ -28,7 +28,7 @@ class Model_Items_Body3 extends Model_Items_Abstract_Item implements Interface_S
                             ->consume($this)
                             ->achieve(Model_Achievement::MA_BODY_EATER)
                             ->achieve(Model_Achievement::MA_PETA, $this->peta_achievement ? 1 : 0)
-                            ->spawn('Model_Items_Bone')
+                            ->spawn(Model_Items_Bone::cls())
                             ->message('Nachdem du das runtergeschlungen hast dreht sich dir der Magen um - aber wenigstens ist er wieder voll. Hoffentlich ist deine Hausapotheke das auch ...')
                     )
             );

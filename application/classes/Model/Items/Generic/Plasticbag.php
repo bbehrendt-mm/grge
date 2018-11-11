@@ -14,24 +14,24 @@ class Model_Items_Generic_Plasticbag extends Model_Items_Abstract_Item implement
 	private function produce_waterbomb() {
 		$this->consume();
 		
-		if (!Globals::shadowPlayerExists() && Globals::PrimaryPlayer()->job(1040, 4, false))
-			Globals::CurrentPlayer()->location()->inventory()->add(new Model_Items_Hwaterbomb);
-		else Globals::CurrentPlayer()->location()->inventory()->add(new Model_Items_Waterbomb);
+		if (!Globals::shadowPlayerExists() && Globals::PrimaryPlayerF()->job(1040, 4, false))
+			Globals::CurrentPlayerF()->location()->inventory()->add(new Model_Items_Hwaterbomb);
+		else Globals::CurrentPlayerF()->location()->inventory()->add(new Model_Items_Waterbomb);
 	}
 	
 	public function interaction_fillfrom($item) {
-		if (Tool_System::instance_of($item, 'Model_Items_Abstract_Bottle'))
+		if (Tool_System::instance_of($item, Model_Items_Abstract_Bottle::cls()))
 		{
 			/** @var $item Model_Items_Abstract_Bottle */
             if ($item->get_water(1)) $this->produce_waterbomb();
-			else Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Leider ist in dieser Flasche nicht mehr genug Wasser, um die Plastiktüte zu füllen ...'));
+			else Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String( null, 'Leider ist in dieser Flasche nicht mehr genug Wasser, um die Plastiktüte zu füllen ...'));
 		}
 		else return false;
         return false;
 	}
 	
 	public function interaction_fill($item) {
-		if (Tool_System::instance_of($item, 'Model_Items_Abstract_Liquid')) {
+		if (Tool_System::instance_of($item, Model_Items_Abstract_Liquid::cls())) {
 			/** @var $item Model_Items_Abstract_Liquid */
             $item->consume();
 			$this->produce_waterbomb();

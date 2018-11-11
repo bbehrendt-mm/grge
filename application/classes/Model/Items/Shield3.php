@@ -16,6 +16,5 @@ class Model_Items_Shield3 extends Model_Items_Abstract_Armor {
 
     protected static $equipment_type = Model_Items_Abstract_Equipable::MIAE_ARMOR_SHIELD;
 
-    protected $protection = 100;
-    protected static $destroyed = null;
+    protected static $protection = 100;
 }	

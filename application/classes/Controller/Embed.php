@@ -13,7 +13,7 @@ class Controller_Embed extends Controller {
         $video_id = (int)$this->post('v');
         $gallery_id = (int)$this->post('g');
 
-        if (!$video_id || !($gallery_id || ($chk = Model_Combat_Handler::check_battle($video_id))) || (!Globals::CurrentGame(false) && !$gallery_id) || (!$gallery_id && Globals::CurrentGame()->id() != $chk))
+        if (!$video_id || !($gallery_id || ($chk = Model_Combat_Handler::check_battle($video_id))) || (!Globals::hasCurrentGame() && !$gallery_id) || (!$gallery_id && Globals::CurrentGameF()->id() !== $chk))
             return $this->render(['video' => null]);
 
         return $this->render(['video' => $gallery_id ? Model_Combat_Handler::get_battle_from_gallery($video_id,$gallery_id) : Model_Combat_Handler::get_battle($video_id)]);

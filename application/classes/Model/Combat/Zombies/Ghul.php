@@ -4,7 +4,7 @@ class Model_Combat_Zombies_Ghul extends Model_Combat_Zombies_Zombie {
 
     public static $custom_sprite = 'ghul.gif';
 
-    protected $name;
+    protected $actor_name;
     protected $max_health = 100;
 
     protected $stat_initiative = 4;
@@ -23,7 +23,7 @@ class Model_Combat_Zombies_Ghul extends Model_Combat_Zombies_Zombie {
     /**
      * @return Model_Combat_Zombies_Ghul
      */
-    public static function factory() {
+    public static function factory(): Model_Combat_Actor {
         return parent::factory();
     }
 

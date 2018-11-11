@@ -31,10 +31,10 @@ class Model_Items_Fleshfood extends Model_Items_Abstract_Item implements Interfa
     }
 	
 	public function mixchem($chemval) {
-        $a = mt_rand(1,6);
-        $b = mt_rand(3,6);
-        $c = mt_rand(7,12);
-        $d = mt_rand(9,12);
+        $a = random_int(1,6);
+        $b = random_int(3,6);
+        $c = random_int(7,12);
+        $d = random_int(9,12);
 		$this->consume();
 		if ($chemval == $a || $chemval == $b || $chemval == $c || $chemval == $d) {
 			Tool_Scripts::chem_reaction(

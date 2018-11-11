@@ -10,13 +10,13 @@ class Controller_Lobby extends Controller {
     public function action_main() {
         $this->add_menu('logout');
         $this->add_widget(View::factory('pages/main')
-            ->set('ingame', (bool)Globals::CurrentUser()->get_current_game())
-            ->set('avatar', Model_Euser::avatar_by_id(Globals::CurrentUser()->uid()))
-            ->set('name', Globals::CurrentUser()->name())
-            ->set('mentor', Model_Euser::get_mentoring_ref(Globals::CurrentUser()->uid()))
-            ->set('cashout', Model_Euser::get_mentor_braincoins(Globals::CurrentUser()->uid(), null, false))
-            ->set('pupils', count(Globals::CurrentUser()->get_apprentice_id()))
-            ->set('bc', Model_Euser::get_coins(Globals::CurrentUser()->uid()))
+            ->set('ingame', (bool)Globals::CurrentUserF()->get_current_game())
+            ->set('avatar', Model_Euser::avatar_by_id(Globals::CurrentUserF()->uid()))
+            ->set('name', Globals::CurrentUserF()->name())
+            ->set('mentor', Model_Euser::get_mentoring_ref(Globals::CurrentUserF()->uid()))
+            ->set('cashout', Model_Euser::get_mentor_braincoins(Globals::CurrentUserF()->uid(), null, false))
+            ->set('pupils', count(Globals::CurrentUserF()->get_apprentice_id()))
+            ->set('bc', Model_Euser::get_coins(Globals::CurrentUserF()->uid()))
             ->render());
         $this->render();
     }
@@ -25,14 +25,14 @@ class Controller_Lobby extends Controller {
      * New user landing page
      */
     public function action_newuser() {
-        if (Globals::CurrentUser()->soulpoints() > 0 || Model_Euser::mentor_id(Globals::CurrentUser()->uid()) !== null) {
+        if (Globals::CurrentUserF()->soulpoints() > 0 || Model_Euser::mentor_id(Globals::CurrentUserF()->uid()) !== null) {
             $this->redirect(URL::site('lobby/main',true));
             return false;
         }
 
         $this->add_menu('logout');
         $this->add_widget(View::factory('pages/newuser')
-            ->set('name', Globals::CurrentUser()->name())
+            ->set('name', Globals::CurrentUserF()->name())
             ->render());
         return $this->render();
     }

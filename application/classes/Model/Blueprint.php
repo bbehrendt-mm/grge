@@ -75,7 +75,7 @@ class Model_Blueprint {
                     /** @var Model_Blueprint $bp */
                     $this->energy = $f($player, $pre, $this->energy, $room);
                 };
-        };
+        }
         return $this;
     }
 
@@ -357,9 +357,12 @@ class Model_Blueprint {
 
     /**
      * Adds a new required item to the stack
-     * @param string|array $class Required item class
-     * @param int $count Item count
+     *
+     * @param string|array  $class   Required item class
+     * @param int           $count   Item count
      * @param null|callable $decider Decider function called for each item instance; will be ignored when items are passed as array!
+     * @param null          $type
+     *
      * @return Model_Blueprint
      */
     public function material($class, $count = 1, $decider = null, $type = null) {
@@ -741,7 +744,7 @@ class Model_Blueprint {
             $entry = $callable($player,true);
             if (!is_array($entry)) $entry = [$entry];
             foreach ($entry as $id => $sub) {
-                if (Tool_System::instance_of($sub, "Struct_ItemEntry")) {
+                if (Tool_System::instance_of($sub, 'Struct_ItemEntry')) {
                     $basic_producer_stack[] = $sub;
                     continue;
                 }
@@ -771,7 +774,7 @@ class Model_Blueprint {
             $player->location()->inventory()->add($instance);
 
             if (Tool_System::instance_of(
-                    $instance, 'Model_Items_Abstract_Virtual'
+                    $instance, Model_Items_Abstract_Virtual::cls()
                 )
                 && $instance::setup_location()
             ) $instance->set_location_info($player->location_class());
@@ -792,7 +795,7 @@ class Model_Blueprint {
             if (is_numeric($z))
                 $z = [$z,$z];
 
-            $z = min(mt_rand($z[0],$z[1]), $player->location()->zombie_pop());
+            $z = min(random_int($z[0], $z[1]), $player->location()->zombie_pop());
 
             if (!$z) $player->log()->add('Mist... du hast nicht mal einen einzigen Zombie umgebracht.');
             else {
@@ -828,7 +831,7 @@ class Model_Blueprint {
 
                 /** @var Model_Items_Abstract_Virtual $instance */
                 if (Tool_System::instance_of(
-                        $instance, 'Model_Items_Abstract_Virtual'
+                        $instance, Model_Items_Abstract_Virtual::cls()
                     )
                     && $instance::setup_location()
                 ) $instance->set_location_info($location->uin(), $room->id());
@@ -884,6 +887,7 @@ class Model_Blueprint {
      * @param Struct_ItemEntry[] $data
      *
      * @return array
+     * @throws Exception
      */
     private function materialize($data) {
         $tmp = [];
@@ -891,7 +895,7 @@ class Model_Blueprint {
             /** @var Model_Items_Abstract_Item $class */
             $class = $entry->class;
             if (!Tool_System::instance_of(
-                $class, 'Model_Items_Abstract_Virtual'
+                $class, Model_Items_Abstract_Virtual::cls()
             )
             ) {
                 $tmp[] = [
@@ -962,7 +966,7 @@ class Model_Blueprint {
             $entry = $callable($player,false);
             if (!is_array($entry)) $entry = [$entry];
             foreach ($entry as $id => $sub) {
-                if (Tool_System::instance_of($sub, "Struct_ItemEntry")) {
+                if (Tool_System::instance_of($sub, 'Struct_ItemEntry')) {
                     $basic_producer_stack[] = $sub;
                     continue;
                 }

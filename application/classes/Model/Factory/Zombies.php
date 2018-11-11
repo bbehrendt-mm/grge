@@ -41,14 +41,14 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
 
     public function get_strength_factor() {
         $s = $this->strength_factor;
-        $since = Globals::CurrentGame()->duration() - $this->last_decay;
+        $since = Globals::CurrentGameF()->duration() - $this->last_decay;
 
         return max(0,min(1,$s + $since * 0.0007));
     }
 
     public function reduce_strangth_factor($by) {
         $this->strength_factor = $this->get_strength_factor();
-        $this->last_decay = Globals::CurrentGame()->duration();
+        $this->last_decay = Globals::CurrentGameF()->duration();
 
         $this->strength_factor -= $this->strength_factor * $by;
     }
@@ -64,7 +64,7 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
     }
 
     protected function get_game_strength() {
-        return 1 + max(0, (Globals::CurrentGame()->duration()/2016) - 1) * 0.3;
+        return 1 + max(0, (Globals::CurrentGameF()->duration()/2016) - 1) * 0.3;
     }
 
     public function get_strength($include_factor = true) {
@@ -156,7 +156,7 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
             /** @var Model_Combat_Zombies_Zombie $zclass */
             if (!($max_num = floor($accum_str/$zclass::get_strength_quantifier())))
                 continue;
-            $accum_count += ($num = mt_rand(1, $max_num));
+            $accum_count += ($num = random_int(1, $max_num));
             $accum_str -= $num * $zclass::get_strength_quantifier();
 
             $accum_army[] = ['count' => $num, 'class' => $zclass];
@@ -176,6 +176,7 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
                 $accum_count = 0;
                 foreach ($accum_army as &$entry)
                     $accum_count += ($entry['count'] = ceil($entry['count'] * $f));
+                unset($entry);
             }
 
             $i = 0;
@@ -198,7 +199,7 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
             if ($entry['count'] > 0) {
                 /** @var Model_Combat_Zombies_Zombie $z */
                 $z = $entry['class'];
-                $ret[] = $z::factory()->count($entry['count'])->set_distance(mt_rand($this->range[0], $this->range[1]), 0);
+                $ret[] = $z::factory()->count($entry['count'])->set_distance(random_int($this->range[0], $this->range[1]), 0);
             }
 
         if ($apply_decay)

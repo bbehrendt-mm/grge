@@ -2,60 +2,65 @@
 
 class Model_Places_Xmasfair extends Model_Places_Abstract_Xmas {
 	
-	protected static $name = 'Weihnachtsmarkt';
+	protected static $location_name = 'Weihnachtsmarkt';
 	protected static $description = 'Leckerer Duft nach gerösteten Nüssen und Zuckerwatte... Buden mit bunten Lichtern überall... dieser Ort weckt wahrlich Erinnerungen an die Zeit, als du solche Weihnachtsmärkte immer mit deinen Eltern besucht hast. Für einen Moment fühlst du dich wieder wie ein kleines Kind - dann siehst du einen Zombie durch die Gegend schlurfen. Gottverdammt, warum müssen diese Zombies jeden Moment ruinieren?';
     protected static $icon = 'xmastree';
 
-    private $status = Array(
-        'tree' => Array(
-            'current' => Array(0,1),
-            'items' => Array('Model_Items_Stick' => 5, 'Model_Items_Generic_Ducttape' => 2),
-            'name' => 'Provisorischen Weihnachtsbaum aufstellen',
-            'points' => 0,
-        ),
-        'treesize' => Array(
-            'current' => Array(0,0),
-            'items' => Array('Model_Items_Stick' => 4, 'Model_Items_Generic_Ducttape' => 2),
-            'name' => 'Weitere Zweige hinzufügen',
-            'points' => 0,
-        ),
-        'needles' => Array(
-            'current' => Array(0,0),
-            'items' => Array('Model_Items_Generic_Xmasneedles' => 2),
-            'name' => 'Weihnachtsbaum mit Nadeln bedecken',
-            'points' => 2,
-        ),
-        'lametta' => Array(
-            'current' => Array(0,0),
-            'items' => Array('Model_Items_Generic_Lametta' => 1),
-            'name' => 'Lametta aufhängen',
-            'points' => 1,
-        ),
-        'rope' => Array(
-            'current' => Array(0,0),
-            'items' => Array('Model_Items_Generic_Xmasrope' => 1),
-            'name' => 'Schmuckseil umlegen',
-            'points' => 2,
-        ),
-        'lights' => Array(
-            'current' => Array(0,0),
-            'items' => Array('Model_Items_Generic_Xmaslights' => 1),
-            'name' => 'Lichterkette umlegen',
-            'points' => 5,
-        ),
-        'bauble' => Array(
-            'current' => Array(0,0),
-            'items' => Array('Model_Items_Generic_Bauble' => 10),
-            'name' => 'Baum mit Weihnachtsbaumkugeln schmücken',
-            'points' => 5,
-        ),
-        'mistle' => Array(
-            'current' => Array(0,0),
-            'items' => Array('Model_Items_Generic_Mistletoe' => 1),
-            'name' => 'Mistelzweig aufhängen',
-            'points' => 3,
-        ),
-    );
+    private $status;
+
+    public function __construct() {
+        parent::__construct();
+        $this->status = Array(
+            'tree' => Array(
+                'current' => Array(0,1),
+                'items' => Array(Model_Items_Stick::cls() => 5, Model_Items_Generic_Ducttape::cls() => 2),
+                'name' => 'Provisorischen Weihnachtsbaum aufstellen',
+                'points' => 0,
+            ),
+            'treesize' => Array(
+                'current' => Array(0,0),
+                'items' => Array(Model_Items_Stick::cls() => 4, Model_Items_Generic_Ducttape::cls() => 2),
+                'name' => 'Weitere Zweige hinzufügen',
+                'points' => 0,
+            ),
+            'needles' => Array(
+                'current' => Array(0,0),
+                'items' => Array(Model_Items_Generic_Xmasneedles::cls() => 2),
+                'name' => 'Weihnachtsbaum mit Nadeln bedecken',
+                'points' => 2,
+            ),
+            'lametta' => Array(
+                'current' => Array(0,0),
+                'items' => Array(Model_Items_Generic_Lametta::cls() => 1),
+                'name' => 'Lametta aufhängen',
+                'points' => 1,
+            ),
+            'rope' => Array(
+                'current' => Array(0,0),
+                'items' => Array(Model_Items_Generic_Xmasrope::cls() => 1),
+                'name' => 'Schmuckseil umlegen',
+                'points' => 2,
+            ),
+            'lights' => Array(
+                'current' => Array(0,0),
+                'items' => Array(Model_Items_Generic_Xmaslights::cls() => 1),
+                'name' => 'Lichterkette umlegen',
+                'points' => 5,
+            ),
+            'bauble' => Array(
+                'current' => Array(0,0),
+                'items' => Array(Model_Items_Generic_Bauble::cls() => 10),
+                'name' => 'Baum mit Weihnachtsbaumkugeln schmücken',
+                'points' => 5,
+            ),
+            'mistle' => Array(
+                'current' => Array(0,0),
+                'items' => Array(Model_Items_Generic_Mistletoe::cls() => 1),
+                'name' => 'Mistelzweig aufhängen',
+                'points' => 3,
+            ),
+        );
+    }
 
     public function uin($uin = NULL) {
         if ($uin === NULL) return parent::uin();
@@ -80,9 +85,9 @@ class Model_Places_Xmasfair extends Model_Places_Abstract_Xmas {
         if ($this->status[$project]['current'][0] >= $this->status[$project]['current'][1])
             return false;
 
-        if (Globals::CurrentGame()->mass_consume($this->status[$project]['items'])) {
+        if (Globals::CurrentGameF()->mass_consume($this->status[$project]['items'])) {
             $this->status[$project]['current'][0]++;
-            Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Du hast den Weihnachtsbaum dekoriert. Gut gemacht!'));
+            Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String( null, 'Du hast den Weihnachtsbaum dekoriert. Gut gemacht!'));
             if ($project == 'tree' || $project == 'treesize') {
                 $this->status['treesize']['current'][1] = 9;
                 $this->status['needles']['current'][1] += 1;
@@ -92,7 +97,7 @@ class Model_Places_Xmasfair extends Model_Places_Abstract_Xmas {
                 $this->status['bauble']['current'][1] += 1;
                 $this->status['mistle']['current'][1] += 3;
             }
-        } else Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Du hast nicht genug Material, um den Baum zu dekorieren.'));
+        } else Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String( null, 'Du hast nicht genug Material, um den Baum zu dekorieren.'));
 
         return true;
     }
@@ -107,16 +112,16 @@ class Model_Places_Xmasfair extends Model_Places_Abstract_Xmas {
 
     public function can_leave_map($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER)
     {
-        if ($p = Globals::CurrentGame()->get_player($pid)) {
-            if (Tool_System::instance_of($p, Model_NPC_Event_Rudolph::cls())) return false;
-        }
+        if (($p = Globals::CurrentGameF()->get_player($pid))
+            && Tool_System::instance_of($p, Model_NPC_Event_Rudolph::cls())
+        ) return false;
 
         return parent::can_leave_map($pid, $type);
     }
 
     public function leave_map($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
-        if (!$pid) $player = Globals::CurrentPlayer();
-        else $player = Globals::CurrentGame()->get_player($pid);
+        if (!$pid) $player = Globals::CurrentPlayerF();
+        else $player = Globals::CurrentGameF()->get_player($pid);
         if (!parent::leave($pid, $type)) return false;
 
         foreach ($player->inventory()->get('Interface_Event') as $i)
@@ -124,8 +129,8 @@ class Model_Places_Xmasfair extends Model_Places_Abstract_Xmas {
 
         $deco = $this->get_decoration_value();
         if ($deco > 0) {
-            Globals::CurrentUser()->award_coins($player->id(), $deco);
-            $player->log()->add(new Model_Log_Types_Text(null, null, 'Da du den Weihnachtsbaum so hübsch geschmückt hast, erhälst du als Belohnung :num BrainCoins sowie ein paar Geschenke. Herzlichen Glückwunsch und Frohe Weihnachten!', array(':num' => $deco)));
+            Globals::CurrentUserF()->award_coins($player->id(), $deco);
+            $player->log()->add(new Model_Log_Types_String(null, 'Da du den Weihnachtsbaum so hübsch geschmückt hast, erhälst du als Belohnung :num BrainCoins sowie ein paar Geschenke. Herzlichen Glückwunsch und Frohe Weihnachten!', array(':num' => $deco)));
 
             $n2 = floor($deco/20);
             $n1 = ceil(($deco - $n2 * 16)/4);

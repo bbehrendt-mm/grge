@@ -3,7 +3,7 @@
 class Model extends Kohana_Model {
 
     public static function cls() {
-        return get_called_class();
+        return static::class;
     }
 
 }

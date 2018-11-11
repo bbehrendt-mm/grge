@@ -5,5 +5,5 @@
         ->add('gp_water', 2)
         ->add('gp_diy', 1)
         ->add('gp_hideout', 1)
-        ->add('Model_Items_Generic_Plasma', 1)
+        ->add(Model_Items_Generic_Plasma::cls(), 1)
         ;

@@ -2,7 +2,7 @@
 
 class Model_Effect {
 
-    private $message;
+    private $effect_message;
     private $m_variables = array();
     private $m_translateables = array();
 
@@ -38,7 +38,7 @@ class Model_Effect {
      * @return Model_Effect
      */
     public static function factory() {
-        return new Model_Effect();
+        return new self();
     }
 
     public function setParent(Model_Items_Abstract_Item $parent) {
@@ -52,9 +52,9 @@ class Model_Effect {
      * @return Model_Effect|string
      */
     public function message($msg = null, $variables = array(), $translateables = array()) {
-        if ($msg === null) return $this->message;
+        if ($msg === null) return $this->effect_message;
         else {
-            $this->message = $msg;
+            $this->effect_message = $msg;
             $this->m_variables = $variables;
             $this->m_translateables = $translateables;
             return $this;
@@ -80,10 +80,12 @@ class Model_Effect {
      */
     public function consume($item = null, $grind = false) {
         return $this->custom(function() use ($item, $grind) {
-            $eitem = $item ? $item : $this->parent;
-            if ($grind)
+            /** @var Model_Items_Abstract_Item $eitem */
+            $eitem = $item ?: $this->parent;
+
+            if ($grind && $eitem !== null)
                 $eitem->grind();
-            else $eitem->consume();
+            else if ($eitem !== null) $eitem->consume();
         }, static::CFUNC_PROCESS_POST);
     }
 
@@ -98,7 +100,7 @@ class Model_Effect {
 
         if ($all)
             return $this->custom(function() use ($achievement, $num) {
-                foreach (Globals::CurrentGame()->players() as $p)
+                foreach (Globals::CurrentGameF()->players() as $p)
                     $p->achievements()->achieve($achievement, $num);
             }, static::CFUNC_PROCESS_POST);
         else
@@ -122,7 +124,7 @@ class Model_Effect {
 
         if ($all)
             return $this->custom(function() use ($from, $to, $block, $num) {
-                foreach (Globals::CurrentGame()->players() as $p)
+                foreach (Globals::CurrentGameF()->players() as $p)
                     $p->achievements()->upgrade_achieve($from, $to, $num, $block);
             }, static::CFUNC_PROCESS_POST);
         else
@@ -147,7 +149,8 @@ class Model_Effect {
 
         /** @var Model_Buffs_Abstract_Buff $buff */
         if ($buff::static_visible())
-            $this->buffs[$buff::static_icon()] = $remove ? '-' : ($lifetime > 0 ? "+" . Tool_Numerics::duration_to_string($lifetime) : '+');
+            $this->buffs[$buff::static_icon()] = $remove ? '-' : ($lifetime > 0 ? '+'
+                . Tool_Numerics::duration_to_string($lifetime) : '+');
 
 
         return $this->custom(function($p) use ($buff, $remove, $lifetime) {
@@ -160,11 +163,13 @@ class Model_Effect {
 
     /**
      * @param string|Model_Items_Abstract_Item $item
-     * @param int $count
+     * @param int                              $count
+     * @param bool                             $find
+     *
      * @return Model_Effect
      */
     public function spawn($item, $count = 1, $find = false) {
-        if (!Tool_System::instance_of($item, 'Model_Items_Abstract_Item'))
+        if (!Tool_System::instance_of($item, Model_Items_Abstract_Item::cls()))
             return $this;
 
         return $this->custom(function($p) use ($item, $count, $find) {
@@ -183,45 +188,47 @@ class Model_Effect {
     }
 
     public function remove($item, $count) {
-        if (!Tool_System::instance_of($item, 'Model_Items_Abstract_Item'))
+        if (!Tool_System::instance_of($item, Model_Items_Abstract_Item::cls()))
             return $this;
 
         return $this->custom(function() use ($item, $count) {
-            Globals::CurrentGame()->mass_consume(Array($item => $count));
+            Globals::CurrentGameF()->mass_consume(Array($item => $count));
         }, static::CFUNC_PROCESS_POST);
     }
 
     /**
-     * @param null|int|array $stat
-     * @param null|number|number[]|string $diff
-     * @param null|number $diff2
-     * @return Model_Effect|null|number|number[]
+     * @param null|int $stat
+     * @return number|number[]
      */
-    public function effect($stat = null, $diff = null, $diff2 = null) {
+    public function get_effect($stat = null) {
+        if ($stat === null)
+            return array_keys($this->effects);
+        else
+            return isset($this->effects[$stat]) ? $this->effects[$stat] : null;
+    }
+
+    /**
+     * @param int|array $stat
+     * @param number|number[]|string $diff
+     * @param null|number $diff2
+     * @return Model_Effect
+     */
+    public function effect($stat, $diff, $diff2 = null) {
         if (is_array($stat)) {
             foreach ($stat as $t => $d)
                 $this->effect($t,$d);
             return $this;
         }
 
-        if ($diff === 0 && $diff2 === null)
-            return $this;
-
-        if ($stat === null)
-            return array_keys($this->effects);
-        if ($diff === null)
-            return isset($this->effects[$stat]) ? $this->effects[$stat] : null;
-        else {
-            if (is_numeric($diff) && $diff2 !== null)
-                $diff = array($diff, $diff2);
-            $this->effects[$stat] = $diff;
-            return $this;
-        }
+        if (is_numeric($diff) && $diff2 !== null)
+            $diff = array($diff, $diff2);
+        $this->effects[$stat] = $diff;
+        return $this;
     }
 
     /**
      * @param null|int $stat Display a stat icon in addition to the question marks
-     * @return Model_Effect|null|number|number[]
+     * @return Model_Effect
      */
     public function ambiguous_effect($stat = null) {
         return $this->effect(($stat === null) ? -PHP_INT_MAX : -$stat, 1);
@@ -250,7 +257,9 @@ class Model_Effect {
 
     /**
      * @param Model_Player $player
-     * @param mixed $argument
+     * @param mixed        $argument
+     *
+     * @throws Exception
      */
     public function execute($player, $argument) {
         $this->call_custom_func($player, static::CFUNC_PROCESS_PRE, $argument);
@@ -261,12 +270,12 @@ class Model_Effect {
         $accum = [];
         foreach ($this->effects as $stat => $dif) if ($stat >= 0) {
             $accum[] = $stat;
-            $accum[] = is_array($dif) ? mt_rand($dif[0], $dif[1]) : $dif;
+            $accum[] = is_array($dif) ? random_int($dif[0], $dif[1]) : $dif;
         }
         $player->get_status()->modify($accum, Model_Status::MS_EFFECT_ITEM);
 
-        if ($this->message && !Tool_Scripts::is_npc($player))
-            $player->log()->add($this->message, $this->m_variables, $this->m_translateables);
+        if ($this->effect_message && !Tool_Scripts::is_npc($player))
+            $player->log()->add($this->effect_message, $this->m_variables, $this->m_translateables);
 
         $this->call_custom_func($player, static::CFUNC_PROCESS_POST, $argument);
 
@@ -290,12 +299,12 @@ class Model_Effect {
     private static function color($stat, $dif) {
         if (is_array($dif)) $dif = $dif[0] + $dif[1];
         if (is_string($dif)) {
-            if ($dif[0] == '+') $dif = 1;
-            if ($dif[0] == '-') $dif = -1;
+            if (strpos($dif, '+') === 0) $dif = 1;
+            if (strpos($dif, '-') === 0) $dif = -1;
         }
         if ($dif == 0) return '';
-        elseif ($dif > 0) return (array_search($stat, static::$reversed_colors) === false) ? 'green' : 'red';
-        else return (array_search($stat, static::$reversed_colors) === false) ? 'red' : 'green';
+        elseif ($dif > 0) return (!in_array($stat, static::$reversed_colors, true)) ? 'green' : 'red';
+        else return (!in_array($stat, static::$reversed_colors, true)) ? 'red' : 'green';
     }
 
     /**
@@ -309,7 +318,7 @@ class Model_Effect {
 
         $factor = ($stat >= 0 && $player) ? $player->get_status()->scaling($stat, Model_Status::MS_EFFECT_ITEM) : 1;
 
-        if (is_array($i)) return max(-100,min(100, $i[0] * $factor)) . " - " . max(-100,min(100, $i[1] * $factor));
+        if (is_array($i)) return max(-100,min(100, $i[0] * $factor)) . ' - ' . max(-100,min(100, $i[1] * $factor));
         if ($i == PHP_INT_MAX) return '+∞';
         if ($i == -PHP_INT_MAX) return '-∞';
         return max(-100,min(100, round($i * $factor,2)));
@@ -323,13 +332,11 @@ class Model_Effect {
         $tmp = array();
         foreach ($this->effects as $stat => $dif)
             if ($dif === 0) continue;
-            else {
-                if ($stat >= 0)
-                    $tmp[] = array('icon' => static::translate($stat), 'color' => static::color($stat, $dif), 'value' => $this->convert_val($dif, $stat, $player), 'numeric' => !is_string($dif));
-                elseif ($stat == -PHP_INT_MAX)
-                    $tmp[] = array('value' => '???');
-                else $tmp[] = array('icon' => static::translate(-$stat), 'color' => '', 'value' => '???', 'numeric' => true);
-            }
+            elseif ($stat >= 0)
+                $tmp[] = array('icon' => static::translate($stat), 'color' => static::color($stat, $dif), 'value' => $this->convert_val($dif, $stat, $player), 'numeric' => !is_string($dif));
+            elseif ($stat === -PHP_INT_MAX)
+                $tmp[] = array('value' => '???');
+            else $tmp[] = array('icon' => static::translate(-$stat), 'color' => '', 'value' => '???', 'numeric' => true);
 
 
         foreach ($this->buffs as $icon => $act)

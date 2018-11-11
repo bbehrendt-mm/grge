@@ -13,7 +13,7 @@ class Model_Items_Briefcase extends Model_Items_Abstract_Item {
 	protected static $essential = true;
 	
 	public function drop($p = null, $silent = false) {
-		if (!$silent && !Globals::shadowPlayerExists()) Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Gehts noch? Welche Frau gibt denn bitte ihre Tasche aus der Hand?'));
+		if (!$silent && !Globals::shadowPlayerExists()) Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String(null, 'Gehts noch? Welche Frau gibt denn bitte ihre Tasche aus der Hand?'));
 		return false;
 	}
 	

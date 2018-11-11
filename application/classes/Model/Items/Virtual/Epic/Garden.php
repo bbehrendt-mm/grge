@@ -40,11 +40,11 @@ class Model_Items_Virtual_Epic_Garden extends Model_Items_Abstract_Virtual {
     }
 
     public function get_harvest_state() {
-        return $this->planted && (Globals::CurrentGame()->duration() >= $this->harvest_at);
+        return $this->planted && (Globals::CurrentGameF()->duration() >= $this->harvest_at);
     }
 
     public function get_time_to_harvest() {
-        return $this->get_harvest_state() ? 0 : ($this->get_planted_state() ? $this->harvest_at - Globals::CurrentGame()->duration() : -1);
+        return $this->get_harvest_state() ? 0 : ($this->get_planted_state() ? $this->harvest_at - Globals::CurrentGameF()->duration() : -1);
     }
 
     public function get_harvest_prc() {
@@ -52,15 +52,15 @@ class Model_Items_Virtual_Epic_Garden extends Model_Items_Abstract_Virtual {
     }
 
     public function get_water_prc() {
-        return $this->get_planted_state() ? max(0,$this->next_watering_end - Globals::CurrentGame()->duration())/42 : 0;
+        return $this->get_planted_state() ? max(0,$this->next_watering_end - Globals::CurrentGameF()->duration())/42 : 0;
     }
 
     public function get_time_to_water($begin = true) {
-        return $this->get_harvest_state() ? -1 : (($begin ? $this->next_watering_begin : $this->next_watering_end) - Globals::CurrentGame()->duration());
+        return $this->get_harvest_state() ? -1 : (($begin ? $this->next_watering_begin : $this->next_watering_end) - Globals::CurrentGameF()->duration());
     }
 
     private function dryout() {
-        return max(0, 0.01 * (Globals::CurrentGame()->duration() - $this->next_watering_end));
+        return max(0, 0.01 * (Globals::CurrentGameF()->duration() - $this->next_watering_end));
     }
 
     public function get_quality() {
@@ -111,9 +111,9 @@ class Model_Items_Virtual_Epic_Garden extends Model_Items_Abstract_Virtual {
                         $this->quality = 0.5;
                         $this->fertilizer = [];
 
-                        $this->next_watering_begin = Globals::CurrentGame()->duration() + 30;
+                        $this->next_watering_begin = Globals::CurrentGameF()->duration() + 30;
                         $this->next_watering_end = $this->next_watering_begin + 12;
-                        $this->harvest_at = $game->duration() + 288;
+                        $this->harvest_at = Globals::CurrentGameF()->duration() + 288;
                     })
                 )
             , 'plant');
@@ -132,9 +132,9 @@ class Model_Items_Virtual_Epic_Garden extends Model_Items_Abstract_Virtual {
                             $this->planted = false;
 
                             if ($count <= 0) {
-                                Globals::PrimaryPlayer()->log()->add('Das war wohl nichts... Deine Pflanzen sind total vertrocknet und absolut nutzlos. Da musst du wohl nochmal von vorne beginnen.');
+                                Globals::PrimaryPlayerF()->log()->add('Das war wohl nichts... Deine Pflanzen sind total vertrocknet und absolut nutzlos. Da musst du wohl nochmal von vorne beginnen.');
                                 return;
-                            } else Globals::PrimaryPlayer()->log()->add('Na, da hat sich das warten doch gelohnt. Du hast soeben :num Pflanzen ernten können.', [':num' => $count]);
+                            } else Globals::PrimaryPlayerF()->log()->add('Na, da hat sich das warten doch gelohnt. Du hast soeben :num Pflanzen ernten können.', [':num' => $count]);
 
 
                             $fertilize = $this->normalize_fertilizer();
@@ -147,41 +147,41 @@ class Model_Items_Virtual_Epic_Garden extends Model_Items_Abstract_Virtual {
                                 Model_Status::MS_STAT_SLEEPY => round(5 * ($fertilize[static::FERTILIZER_CHEM] + $fertilize[static::FERTILIZER_ALCOHOL]) * $level)
                             ];
 
-                            $player->location()->inventory()->add(new Model_Items_Fruit($effects,$count));
+                            Globals::CurrentPlayerF()->location()->inventory()->add(new Model_Items_Fruit($effects,$count));
                         })
                     )
                     , 'harvest');
 
-            elseif (Globals::CurrentGame()->duration() >= $this->next_watering_begin)
+            elseif (Globals::CurrentGameF()->duration() >= $this->next_watering_begin)
                 $hid
                     ->add_action('Gießen', Model_Action::factory()
                         ->buttonskin('epic')
-                        ->requirement('Model_Items_Generic_Waterv',1)
+                        ->requirement(Model_Items_Generic_Waterv::cls(),1)
                         ->description('Wenn du deine Pflanzen nicht rechtzeitig und regelmäßig gießt, sinkt ihre Qualität oder die vertrocknen ganz.')
                         ->effect(Model_Effect::factory()
                             ->custom(function() {
                                 $this->quality = max(0, $this->quality - $this->dryout());
-                                if (Globals::CurrentGame()->duration() < $this->next_watering_end)
+                                if (Globals::CurrentGameF()->duration() < $this->next_watering_end)
                                     $this->quality = min(1,$this->quality + 0.08);
 
-                                $this->next_watering_begin = Globals::CurrentGame()->duration() + 30;
+                                $this->next_watering_begin = Globals::CurrentGameF()->duration() + 30;
                                 $this->next_watering_end = $this->next_watering_begin + 12;
                             })
                         )
                     , 'water');
 
-            $this->register_fertilizer($hid,'fertilize_bfood', ['Model_Items_Basefood' => 1],       [static::FERTILIZER_FOOD => 1]);
-            $this->register_fertilizer($hid,'fertilize_nom',   ['Model_Items_Nom' => 1],            [static::FERTILIZER_FOOD => 3]);
-            $this->register_fertilizer($hid,'fertilize_flesh',   ['Model_Items_Fleshfood' => 1],    [static::FERTILIZER_FOOD => 1, static::FERTILIZER_DRUGS => 1]);
+            $this->register_fertilizer($hid,'fertilize_bfood', [Model_Items_Basefood::cls() => 1],       [static::FERTILIZER_FOOD => 1]);
+            $this->register_fertilizer($hid,'fertilize_nom',   [Model_Items_Nom::cls() => 1],            [static::FERTILIZER_FOOD => 3]);
+            $this->register_fertilizer($hid,'fertilize_flesh',   [Model_Items_Fleshfood::cls() => 1],    [static::FERTILIZER_FOOD => 1, static::FERTILIZER_DRUGS => 1]);
 
-            $this->register_fertilizer($hid,'fertilize_pills', ['Model_Items_Pill' => 1],           [static::FERTILIZER_DRUGS => 1]);
-            $this->register_fertilizer($hid,'fertilize_box', ['Model_Items_Abstract_Pillbox' => 1], [static::FERTILIZER_DRUGS => 3]);
+            $this->register_fertilizer($hid,'fertilize_pills', [Model_Items_Pill::cls() => 1],           [static::FERTILIZER_DRUGS => 1]);
+            $this->register_fertilizer($hid,'fertilize_box', [Model_Items_Abstract_Pillbox::cls() => 1], [static::FERTILIZER_DRUGS => 3]);
 
-            $this->register_fertilizer($hid,'fertilize_chem',  ['Model_Items_Chem' => 1],           [static::FERTILIZER_CHEM => 1]);
-            $this->register_fertilizer($hid,'fertilize_nutrient',  ['Model_Items_Nutrient2' => 1],  [static::FERTILIZER_CHEM => 1, static::FERTILIZER_FOOD => 1]);
+            $this->register_fertilizer($hid,'fertilize_chem',  [Model_Items_Chem::cls() => 1],           [static::FERTILIZER_CHEM => 1]);
+            $this->register_fertilizer($hid,'fertilize_nutrient',  [Model_Items_Nutrient2::cls() => 1],  [static::FERTILIZER_CHEM => 1, static::FERTILIZER_FOOD => 1]);
 
-            $this->register_fertilizer($hid,'fertilize_beer',  ['Model_Items_Beer' => 1],           [static::FERTILIZER_ALCOHOL => 1]);
-            $this->register_fertilizer($hid,'fertilize_whiskey',  ['Model_Items_Whiskey' => 1],     [static::FERTILIZER_ALCOHOL => 3]);
+            $this->register_fertilizer($hid,'fertilize_beer',  [Model_Items_Beer::cls() => 1],           [static::FERTILIZER_ALCOHOL => 1]);
+            $this->register_fertilizer($hid,'fertilize_whiskey',  [Model_Items_Whiskey::cls() => 1],     [static::FERTILIZER_ALCOHOL => 3]);
         }
 
         return $hid;

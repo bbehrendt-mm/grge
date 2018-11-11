@@ -71,7 +71,9 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
 
     /**
      * @param Model_Combat_Weapon|Model_Combat_Weapon[] $weapon
+     *
      * @return Model_Combat_Actor
+     * @throws Exception
      */
     public function add_weapon($weapon) {
         if (!is_array($weapon))

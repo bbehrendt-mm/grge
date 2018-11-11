@@ -13,27 +13,39 @@ abstract class Model_Items_Abstract_Virtual extends Model_Items_Abstract_Item {
     protected $remaining = false;
 
     protected function location() {
-        return $this->loc_id >= 0 ? Globals::CurrentGame()->location($this->loc_id) : null;
+        return $this->loc_id >= 0 ? Globals::CurrentGameF()->location($this->loc_id) : null;
     }
 
-    protected function room() {
-        return ($this->loc_id >= 0 && $this->room_id >= 0) ? $this->location()->room($this->room_id) : null;
+    /**
+     * @return Model_Room|null
+     */
+    protected function room(): ?Model_Room {
+        return ($this->loc_id >= 0 && $this->room_id >= 0 && $this->location() !== null) ? $this->location()->room($this->room_id) : null;
     }
 
-    public static function setup_location() {
+    /**
+     * @return Model_Room
+     */
+    protected function roomF(): Model_Room {
+        $r = $this->room();
+        if ($r === null) throw new RuntimeException('Accessed non-specified room property from item.');
+        return $r;
+    }
+
+    public static function setup_location(): bool {
         return static::$store_location_data;
     }
 
-    public function set_location_info($lid, $rid = null) {
+    public function set_location_info($lid, $rid = null): void {
         $this->loc_id = $lid;
         if ($rid !== null)  $this->room_id = $rid;
     }
 
-    public function use_manual_ui() {
+    public function use_manual_ui(): bool {
         return static::$manual_ui;
     }
 
-    public function has_action($action) {
+    public function has_action($action): bool {
         if ($this->remaining === false) return true;
 
         return isset($this->remaining[$action]);

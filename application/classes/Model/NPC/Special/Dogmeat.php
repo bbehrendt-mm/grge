@@ -11,10 +11,10 @@ class Model_NPC_Special_Dogmeat extends Model_NPC_Dog
         parent::__construct('Dogmeat');
 
         $this->get_status()->set(
-            Model_Status::MS_STAT_HEALTH, mt_rand(75,90),
-            Model_Status::MS_STAT_ENERGY, mt_rand(80,100),
-            Model_Status::MS_STAT_HUNGER, mt_rand(50,90),
-            Model_Status::MS_STAT_THIRST, mt_rand(55,90),
+            Model_Status::MS_STAT_HEALTH, random_int(75,90),
+            Model_Status::MS_STAT_ENERGY, random_int(80,100),
+            Model_Status::MS_STAT_HUNGER, random_int(50,90),
+            Model_Status::MS_STAT_THIRST, random_int(55,90),
             Model_Status::MS_STAT_SLEEPY, 100
         );
     }

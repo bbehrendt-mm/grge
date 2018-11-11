@@ -2,7 +2,7 @@
 
 class Model_Places_Motorhome extends Model_Places_Home {
 
-    protected static $name = 'Klappriger Wohnwagen';
+    protected static $location_name = 'Klappriger Wohnwagen';
     protected static $description = 'Als die Zombies kamen haben sich die meisten deiner Nachbarn einfach in ihren Häusern verbarrikadiert. Du hingegen bist mit deinem Wohnmobil geflohen, was sich im Nachhinein leider auch als nicht optimal erwiesen hat. Immerhin musst du regelmäßig Benzin für dieses Teil finden und es in Schuss halten, um weiterfahren zu können.';
     protected static $icon = 'motorhome';
 
@@ -57,11 +57,12 @@ class Model_Places_Motorhome extends Model_Places_Home {
         $this->setup_new_room($this->create_new_room(15,['inside']),
                               ['motorhome'],
                               ['bedr1','sofa1','gen1','gen2','ktc2'],
-                              "Wohnmobil");
+            'Wohnmobil'
+        );
     }
 
     private function mapcontrol($populate) {
-        foreach (Globals::CurrentGame()->players(false) as $p) {
+        foreach (Globals::CurrentGameF()->players(false) as $p) {
             /** @var Model_Player $p */
             if ($p->location_class() != $this->uin()) {
                 if ($p->get_status()->alive()) {
@@ -72,22 +73,22 @@ class Model_Places_Motorhome extends Model_Places_Home {
             }
         }
 
-        foreach (Globals::CurrentGame()->locations() as $location)
+        foreach (Globals::CurrentGameF()->locations() as $location)
             if ($location != $this->uin()) {
-                $lobj = Globals::CurrentGame()->location($location);
+                $lobj = Globals::CurrentGameF()->location($location);
                 if ($lobj) $lobj->grind();
-                else Globals::CurrentGame()->uin()->remove($location);
+                else Globals::CurrentGameF()->uin()->remove($location);
             }
 
         if ($populate) {
             if ($this->progress <= 2)
-                Globals::CurrentGame()->reset_maps('roadtrip_easy');
+                Globals::CurrentGameF()->reset_maps('roadtrip_easy');
             elseif ($this->progress <= 5)
-                Globals::CurrentGame()->reset_maps('roadtrip_medium');
-            else Globals::CurrentGame()->reset_maps('roadtrip_hard');
-        } else Globals::CurrentGame()->reset_maps('roadtrip_driving');
+                Globals::CurrentGameF()->reset_maps('roadtrip_medium');
+            else Globals::CurrentGameF()->reset_maps('roadtrip_hard');
+        } else Globals::CurrentGameF()->reset_maps('roadtrip_driving');
 
-        Globals::CurrentGame()->map_main()->insert_location($this);
+        Globals::CurrentGameF()->map_main()->insert_location($this);
     }
 
     private function drivecontrol($start, $break = false) {
@@ -96,22 +97,22 @@ class Model_Places_Motorhome extends Model_Places_Home {
 
         if (!$start && !$break) {
             $this->progress++;
-            Globals::CurrentGame()->config('zombies.accum', Globals::CurrentGame()->config('zombies.accum') + 0.15);
-            Globals::CurrentGame()->config('places.dryout_factor', Globals::CurrentGame()->config('places.dryout_factor') + 0.15);
-            Globals::CurrentGame()->config('places.outworld.location_density', Globals::CurrentGame()->config('places.outworld.location_density') + 0.05);
-            Globals::CurrentGame()->config('places.outworld.alt_spawn_stranger', false);
+            Globals::CurrentGameF()->config('zombies.accum', Globals::CurrentGameF()->config('zombies.accum') + 0.15);
+            Globals::CurrentGameF()->config('places.dryout_factor', Globals::CurrentGameF()->config('places.dryout_factor') + 0.15);
+            Globals::CurrentGameF()->config('places.outworld.location_density', Globals::CurrentGameF()->config('places.outworld.location_density') + 0.05);
+            Globals::CurrentGameF()->config('places.outworld.alt_spawn_stranger', false);
         }
 
         if (!$start) {
-            $this->room()->enabled(true);
+            $this->roomF()->enabled(true);
             foreach (Tool_Scripts::at_location($this->uin()) as $p)
                 $p->get_status()->remove('fragile/driver');
         } else {
-            $this->room()->enabled(false);
-            new Model_Buffs_Driver(Globals::CurrentPlayer()->id());
+            $this->roomF()->enabled(false);
+            new Model_Buffs_Driver(Globals::CurrentPlayerF()->id());
         }
 
-        Globals::CurrentGame()->delete_lobby();
+        Globals::CurrentGameF()->delete_lobby();
         $this->impaler = 0;
         foreach ($this->rooms as $room)
             if ($room->has_tag('outside')) $room->clear();
@@ -133,7 +134,7 @@ class Model_Places_Motorhome extends Model_Places_Home {
 
     public function weight() {
         $w = $this->inventory()->weight();
-        foreach (Globals::CurrentGame()->players(false) as $p)
+        foreach (Globals::CurrentGameF()->players(false) as $p)
             /** @var Model_Player $p */
             $w += $p->inventory()->weight() + ($p->job(1080) ? 25 : 50);
 
@@ -145,32 +146,32 @@ class Model_Places_Motorhome extends Model_Places_Home {
     }
 
     public function stop_break() {
-        Globals::PrimaryPlayer()->log()->add('Du fährst deinen Wohnwagen auf den Standstreifen und hälst an. Eine kleine Pause tut gut...');
+        Globals::PrimaryPlayerF()->log()->add('Du fährst deinen Wohnwagen auf den Standstreifen und hälst an. Eine kleine Pause tut gut...');
         $this->drivecontrol(false, true);
     }
 
     public function stop() {
-        Globals::PrimaryPlayer()->log()->add('Du suchst einen geeigneten Parkplatz und hälst das Wohnmobil an. Tja, Zeit sich hier mal etwas umzusehen...');
+        Globals::PrimaryPlayerF()->log()->add('Du suchst einen geeigneten Parkplatz und hälst das Wohnmobil an. Tja, Zeit sich hier mal etwas umzusehen...');
         $this->drivecontrol(false);
     }
 
     public function repair($addr, $count) {
         if ($this->driving) return false;
-        if (Globals::PrimaryPlayer()->get_status()->retrieve('fragile')) return false;
+        if (Globals::PrimaryPlayerF()->get_status()->retrieve('fragile')) return false;
 
         foreach ($this->parts as $part => &$data) {
             if (Tool_System::getClassID($part) == $addr) {
                 $num = min($count, $data[1] - $data[0]);
 
                 if ($num <= 0) {
-                    Globals::PrimaryPlayer()->log()->add('Eigentlich sieht hier alles gut in Schuss aus... an diesen Teilen brauchst du nichts zu reparieren.');
+                    Globals::PrimaryPlayerF()->log()->add('Eigentlich sieht hier alles gut in Schuss aus... an diesen Teilen brauchst du nichts zu reparieren.');
                     return true;
                 }
 
                 if (Tool_Scripts::consume_available_items(array($part => $num), true, true, false)) {
                     $data[0] += $num;
-                    Globals::PrimaryPlayer()->log()->add('Sehr gut, die Ersatzteile haben genau gepasst. Du hast den Wohnwagen repariert.');
-                } else Globals::PrimaryPlayer()->log()->add('Leider fehlen dir hierfür die Ersatzteile...');
+                    Globals::PrimaryPlayerF()->log()->add('Sehr gut, die Ersatzteile haben genau gepasst. Du hast den Wohnwagen repariert.');
+                } else Globals::PrimaryPlayerF()->log()->add('Leider fehlen dir hierfür die Ersatzteile...');
 
                 break;
             }
@@ -181,24 +182,24 @@ class Model_Places_Motorhome extends Model_Places_Home {
 
     public function start() {
         if ($this->driving) return;
-        if (Globals::PrimaryPlayer()->get_status()->retrieve('fragile')) return;
+        if (Globals::PrimaryPlayerF()->get_status()->retrieve('fragile')) return;
 
-        if (Globals::PrimaryPlayer()->job(1080)) {
-            Globals::PrimaryPlayer()->log()->add('Es hat diverse Vorteile, ein Kind zu sein. Die Tatsache, dass du nicht Autofahren kannst, ist keiner davon.');
+        if (Globals::PrimaryPlayerF()->job(1080)) {
+            Globals::PrimaryPlayerF()->log()->add('Es hat diverse Vorteile, ein Kind zu sein. Die Tatsache, dass du nicht Autofahren kannst, ist keiner davon.');
             return;
         }
 
         if ($this->motor_status() <= 0) {
-            Globals::PrimaryPlayer()->log()->add('Du drehst den Zündschlüssel und hörst ein Klappern, aber der Motor springt nicht an. Irgend etwas muss da kaputt sein...');
+            Globals::PrimaryPlayerF()->log()->add('Du drehst den Zündschlüssel und hörst ein Klappern, aber der Motor springt nicht an. Irgend etwas muss da kaputt sein...');
             return;
         }
 
         if (!$this->force_nomap && $this->weight() > static::$max_weight) {
-            Globals::PrimaryPlayer()->log()->add('Du drehst den Zündschlüssel und trittst auf das Gaspedal. Der Motor ächzt, aber du kommst keinen Meter vorran. Anscheinend ist das Wohnmobil überladen...');
+            Globals::PrimaryPlayerF()->log()->add('Du drehst den Zündschlüssel und trittst auf das Gaspedal. Der Motor ächzt, aber du kommst keinen Meter vorran. Anscheinend ist das Wohnmobil überladen...');
             return;
         }
 
-        Globals::PrimaryPlayer()->log()->add('Du drehst den Zündschlüssel und trittst auf das Gaspedal. Mit beeindruckendem Tempo siehst du den Parkplatz im Rückspiegel verschwinden. Hier wirst du wohl nie wieder hinkommen.... gut so!');
+        Globals::PrimaryPlayerF()->log()->add('Du drehst den Zündschlüssel und trittst auf das Gaspedal. Mit beeindruckendem Tempo siehst du den Parkplatz im Rückspiegel verschwinden. Hier wirst du wohl nie wieder hinkommen.... gut so!');
         $this->zombie_factory()->accumulation(0);
         $this->drivecontrol(true);
     }
@@ -221,26 +222,27 @@ class Model_Places_Motorhome extends Model_Places_Home {
             if ($p->get_status()->retrieve('fragile/driver')) {
 
                 $kc = 100;
-                if (($s = $p->get_status()->get(Model_Status::MS_STAT_SLEEPY) < 20))
+                if ( ($s = $p->get_status()->get(Model_Status::MS_STAT_SLEEPY)) < 20)
                     $kc *= $s/20;
-                if (($s = $p->get_status()->get(Model_Status::MS_STAT_DRUNK) > 20))
+                if ( ($s = $p->get_status()->get(Model_Status::MS_STAT_DRUNK)) > 20)
                     $kc *= (100-$s)/80;
 
-                if (mt_rand(0,100) > $kc) {
+                if (random_int(0,100) > $kc) {
 
                     $this->log()->add(':name hat einen Unfall gebaut! Die Insassen haben Verletzungen davon getragen und der Wohnwagen wurde schwer beschädigt!', array(':name' => $p->name()));
                     foreach (Tool_Scripts::at_location($this->uin(), true, true) as $ps) {
                         $ps->get_status()->set_cause_of_death('Autounfall');
-                        $ps->get_status()->modify(Model_Status::MS_STAT_HEALTH, -mt_rand(10,80));
+                        $ps->get_status()->modify(Model_Status::MS_STAT_HEALTH, -random_int(10,80));
                         if ($ps->id() != $p->id() && !Tool_Scripts::is_npc($ps))
                             $ps->log()->add('Du hast gerade eben noch friedlich aus dem Fenster geschaut, jetzt liegst du plötzlich in einem Trümmerhaufen aus Blech und Blut. :name, dieser verblödete Idiot, hat anscheinend einen Unfall gebaut.', array(':name' => $p->name()));
                     }
 
-                    $p->get_status()->modify(Model_Status::MS_STAT_HEALTH, -mt_rand(20,50));
+                    $p->get_status()->modify(Model_Status::MS_STAT_HEALTH, -random_int(20,50));
                     $p->log()->add('Tja, sowas passiert wenn man in deinem Zustand autofährt. Vielleicht hättest du das jemand anderen tun lassen sollen, zum Beispiel jemandem der nicht das einzige Fahrzeugwrack auf der Straße im Umkreis von 10 Kilometern frontal rammt?');
 
                     foreach ($this->parts as &$status_value)
                         $status_value[0] = 0;
+                    unset($status_value);
 
                     $this->drivecontrol(false);
                     return;
@@ -249,7 +251,7 @@ class Model_Places_Motorhome extends Model_Places_Home {
             }
 
         $status = $this->motor_status();
-        $damage = (mt_rand(0,110) > ($status * 100));
+        $damage = (random_int(0,110) > ($status * 100));
 
         if (!$damage)
             return;

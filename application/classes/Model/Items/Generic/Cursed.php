@@ -27,7 +27,7 @@ class Model_Items_Generic_Cursed extends Model_Items_Abstract_Item {
             {
                 $this->got_ack = true;
                 if (!Globals::shadowPlayerExists())
-                    Globals::PrimaryPlayer()->achievements()->achieve(Model_Achievement::MA_HORROR);
+                    Globals::PrimaryPlayerF()->achievements()->achieve(Model_Achievement::MA_HORROR);
             }
 			return true;
 		} else return false;

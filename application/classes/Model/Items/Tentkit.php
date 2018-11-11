@@ -18,7 +18,7 @@ class Model_Items_Tentkit extends Model_Items_Abstract_Item implements Interface
                 ->allow_remote(false)
                 ->condition(function($p) {
                     /** @var Model_Player $p */
-                    return (Tool_Scripts::current_location_hideout($p) == null && Globals::CurrentGame()->map($p->location_class())->get_map_type() == Model_Map_Abstract::MMA_TYPE_OVERVIEW && !Tool_System::instance_of($p->location(), 'Model_Places_Abstract_Xmas'));
+                    return (Tool_Scripts::current_location_hideout($p) == null && Globals::CurrentGameF()->map($p->location_class())->get_map_type() == Model_Map_Abstract::MMA_TYPE_OVERVIEW && !Tool_System::instance_of($p->location(), 'Model_Places_Abstract_Xmas'));
                 })
                 ->fail_message('Du kannst an dieser Stelle kein InstaZELT™ aufstellen.')
                 ->effect(
@@ -27,7 +27,7 @@ class Model_Items_Tentkit extends Model_Items_Abstract_Item implements Interface
                             /** @var Model_Player $p */
                             $cursed = Tool_System::instance_of($p->location(), ['Model_Places_Mental','Model_Places_House_Hobby']);
 
-                            $id = Globals::CurrentGame()->map($p->location_class())->implant_location(new Model_Places_Tentkit($cursed),0,0,true,null,false,$p->location_class(),true,true,null);
+                            $id = Globals::CurrentGameF()->map($p->location_class())->implant_location(new Model_Places_Tentkit($cursed),0,0,true,null,false,$p->location_class(),true,true,null);
                             $p->location()->leave($p->id(), Interface_Tickable::IT_TYPE_PLAYER);
                             $p->location_class($id);
                         })

@@ -17,7 +17,7 @@ class Tool_Gambling {
             return null;
 
         //Get a mt_random number (we're using super advanced mt space technologie!) and reset range
-        $rval = mt_rand(1,$range);
+        $rval = random_int(1,$range);
         $range = 0;
 
         //Rien ne va plus
@@ -33,7 +33,7 @@ class Tool_Gambling {
     public static function select(array $array) {
         if (!is_array($array) || count($array) == 0)
             return null;
-        return array_values($array)[mt_rand(0,count($array) - 1)];
+        return array_values($array)[random_int(0,count($array) - 1)];
     }
 
     public static function random($chance) {
@@ -45,7 +45,7 @@ class Tool_Gambling {
      * @return bool
      */
     public static function tumble($p) {
-        return (mt_rand(15, 100) <= $p->get_status()->get(Model_Status::MS_STAT_DRUNK));
+        return (random_int(15, 100) <= $p->get_status()->get(Model_Status::MS_STAT_DRUNK));
     }
 
     /**
@@ -56,7 +56,7 @@ class Tool_Gambling {
      */
     public static function repeat($min, $max, callable $func) {
         if ($min > $max || $max <= 0) return 0;
-        $count = mt_rand($min,$max);
+        $count = random_int($min,$max);
         for ($i = 0; $i < $count; $i++) $func();
         return $count;
     }

@@ -21,19 +21,18 @@ class Model_Combat_Players_Rudolph extends Model_Combat_Players_Player {
     /**
      * @param Interface_Plentity $p
      * @param string $avatar
-     * @return Model_Combat_Players_Dog
+     * @return Model_Combat_Players_Rudolph
      */
-    public static function create_linked_actor($p, $avatar = 'dog.jpg') {
-        /** @noinspection PhpUndefinedMethodInspection */
-        $ret = static::factory()
+    public static function create_linked_actor($p, $avatar = 'dog.jpg'): Model_Combat_Players_Rudolph {
+        /** @var Model_Combat_Players_Rudolph $ret */
+        $ret = static::factory();
+        $ret
             ->player($p)
             ->name($p->name(), Model_Combat_Actor::MCA_TYPE_PLAYER)
             ->strength($p->get_status()->get(Model_Status::MS_STAT_HEALTH) * 2, 200, 1);
 
         if ($p->get_status()->get(Model_Status::MS_STAT_DRUNK) > 50) $ret->add_weapon(new Model_Items_Noselaser());
         $ret->add_weapon(new Model_Items_Hoof());
-
-        /** @var $ret Model_Combat_Players_Dog */
         $ret->avatar = $avatar;
 
         if ($p->get_status()->get(Model_Status::MS_STAT_DRUNK) > 25) $ret->add_modifier("drunk", ($p->get_status()->get(Model_Status::MS_STAT_DRUNK)-25)*(4/300));
@@ -41,7 +40,7 @@ class Model_Combat_Players_Rudolph extends Model_Combat_Players_Player {
         return $ret;
     }
 
-    protected function damage($damage, $from = null, $armor_damage = null) {
+    protected function damage($damage, $from = null, $armor_damage = null): void {
         parent::damage($damage, $from, $armor_damage);
 
         $this->player->get_status()->modify(Model_Status::MS_STAT_HEALTH, -$damage / 2.0, Model_Status::MS_EFFECT_UNSCALE);

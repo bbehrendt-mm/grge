@@ -14,10 +14,11 @@ class Model_Items_Bmt extends Model_Items_Abstract_Item {
 	
 	public $power = 0;
     protected static $energy_base = 30;
-	public $health_list = Array(3,5,8,13,21,34,55,89);
+	public static $health_list = Array(3,5,8,13,21,34,55,89);
 	
 	public function description() {
-		return  parent::description() . ($this->power >= count($this->health_list) ? "<b>Die Kontakte dieses Exemplars sind leider komplett verkohlt... Dieses Ding wirst du wohl nicht mehr einsetzen können!</b>" : "");
+		return  parent::description() . ($this->power >= count(static::$health_list) ? '<b>Die Kontakte dieses Exemplars sind leider komplett verkohlt... Dieses Ding wirst du wohl nicht mehr einsetzen können!</b>'
+                : '');
 	}
 
     protected function hid() {
@@ -25,7 +26,7 @@ class Model_Items_Bmt extends Model_Items_Abstract_Item {
 
             ->add_action('Einsetzen', Model_Action::factory()
                 ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
-                ->requirement('Model_Items_Battery', 1)
+                ->requirement(Model_Items_Battery::cls(), 1)
                 ->condition(function()  {
                     return ($this->power < count($this->health_list));
                 })
@@ -34,7 +35,7 @@ class Model_Items_Bmt extends Model_Items_Abstract_Item {
                     Model_Effect::factory()
                         ->effect(Model_Status::MS_STAT_HEALTH, ($this->power >= count($this->health_list)) ? -PHP_INT_MAX : -$this->health_list[$this->power])
                         ->effect(Model_Status::MS_STAT_ENERGY, static::$energy_base)
-                        ->remove('Model_Items_Battery', 1)
+                        ->remove(Model_Items_Battery::cls(), 1)
                         ->custom(function() {
                             $this->power++;
                         }, Model_Effect::CFUNC_PROCESS_POST)

@@ -30,7 +30,7 @@ class Model_Items_Mask extends Model_Items_Abstract_Item implements Interface_St
                 ->condition(function($p) {
                     /** @var Model_Player $p */
 
-                    if ($this->nextuse > Globals::CurrentGame()->duration()) return 'time';
+                    if ($this->nextuse > Globals::CurrentGameF()->duration()) return 'time';
                     if ($p->location()->zombie_pop() <= 0) return 'zombies';
                     return true;
                 })
@@ -45,7 +45,7 @@ class Model_Items_Mask extends Model_Items_Abstract_Item implements Interface_St
                             $p->location()->zombie_factory()->accumulation($p->location()->zombie_pop() - $kills);
                             $p->achievements()->achieve(Model_Achievement::MA_KILLED_ZOMBIES, $kills);
 
-                            $this->nextuse = Globals::CurrentGame()->duration() + 288;
+                            $this->nextuse = Globals::CurrentGameF()->duration() + 288;
                         })
                 )
             );
@@ -57,7 +57,7 @@ class Model_Items_Mask extends Model_Items_Abstract_Item implements Interface_St
                 ->condition(function($p) {
                     /** @var Model_Player $p */
 
-                    if ($this->nextuse > Globals::CurrentGame()->duration()) return 'time';
+                    if ($this->nextuse > Globals::CurrentGameF()->duration()) return 'time';
                     return true;
                 })
                 ->fail_message('Du kannst die Maske maximal einmal am Tag anwenden.', 'time')
@@ -66,11 +66,11 @@ class Model_Items_Mask extends Model_Items_Abstract_Item implements Interface_St
                         ->message('Du setzt die Maske auf und fühlst, wie dich mystische Kräfte durchströhmen. Die Maske hat deinen Wunsch erhört!')
                         ->custom(function($p) {
                             /** @var Model_Player $p */
-                            $splats = mt_rand(1, $this->level >= 4 ? 4 : 2);
+                            $splats = random_int(1, $this->level >= 4 ? 4 : 2);
                             for ($i = 0; $i < $splats; $i++)
                                 $p->location()->inventory()->add(new Model_Items_Generic_Water0());
 
-                            $this->nextuse = Globals::CurrentGame()->duration() + 288;
+                            $this->nextuse = Globals::CurrentGameF()->duration() + 288;
                         })
                 )
             );
@@ -82,7 +82,7 @@ class Model_Items_Mask extends Model_Items_Abstract_Item implements Interface_St
                 ->condition(function($p) {
                     /** @var Model_Player $p */
 
-                    if ($this->nextuse > Globals::CurrentGame()->duration()) return 'time';
+                    if ($this->nextuse > Globals::CurrentGameF()->duration()) return 'time';
                     return true;
                 })
                 ->fail_message('Du kannst die Maske maximal einmal am Tag anwenden.', 'time')
@@ -92,9 +92,9 @@ class Model_Items_Mask extends Model_Items_Abstract_Item implements Interface_St
                         ->custom(function($p) {
                             /** @var Model_Player $p */
                             foreach (Tool_Scripts::at_location($p->location_class(), true, true) as $pl)
-                                $pl->get_status()->modify([Model_Status::MS_STAT_HEALTH, mt_rand(5, $this->level >= 6 ? 50 : 25)], Model_Status::MS_EFFECT_UNSCALE);
+                                $pl->get_status()->modify([Model_Status::MS_STAT_HEALTH, random_int(5, $this->level >= 6 ? 50 : 25)], Model_Status::MS_EFFECT_UNSCALE);
 
-                            $this->nextuse = Globals::CurrentGame()->duration() + 288;
+                            $this->nextuse = Globals::CurrentGameF()->duration() + 288;
                         })
                 )
             );
@@ -106,7 +106,7 @@ class Model_Items_Mask extends Model_Items_Abstract_Item implements Interface_St
                 ->condition(function($p) {
                     /** @var Model_Player $p */
 
-                    if ($this->nextuse > Globals::CurrentGame()->duration()) return 'time';
+                    if ($this->nextuse > Globals::CurrentGameF()->duration()) return 'time';
                     return true;
                 })
                 ->fail_message('Du kannst die Maske maximal einmal am Tag anwenden.', 'time')
@@ -116,7 +116,7 @@ class Model_Items_Mask extends Model_Items_Abstract_Item implements Interface_St
                         ->custom(function($p) {
                             /** @var Model_Player $p */
                             foreach (Tool_Scripts::at_location($p->location_class(), true, true) as $pl)
-                                $pl->get_status()->modify([Model_Status::MS_STAT_HEALTH, mt_rand(-15, -2)], Model_Status::MS_EFFECT_UNSCALE);
+                                $pl->get_status()->modify([Model_Status::MS_STAT_HEALTH, random_int(-15, -2)], Model_Status::MS_EFFECT_UNSCALE);
 
                             $kills = ceil($p->location()->zombie_pop()/1.5);
                             $p->location()->zombie_factory()->accumulation($p->location()->zombie_pop() - $kills);
@@ -124,7 +124,7 @@ class Model_Items_Mask extends Model_Items_Abstract_Item implements Interface_St
 
                             $p->location()->hero_replensish(0.5);
 
-                            $this->nextuse = Globals::CurrentGame()->duration() + 288;
+                            $this->nextuse = Globals::CurrentGameF()->duration() + 288;
                         })
                 )
             );

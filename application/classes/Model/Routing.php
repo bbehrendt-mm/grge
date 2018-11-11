@@ -111,7 +111,7 @@ class Model_Routing {
      * @return bool
      */
     public function link_nodes($n1, $n2) {
-        if (!isset($this->nodes[$n1]) || !isset($this->nodes[$n2]))
+        if (!isset($this->nodes[$n1], $this->nodes[$n2]))
             return false;
 
         if ($n1 == $n2)
@@ -203,11 +203,11 @@ class Model_Routing {
      * @return bool
      */
     private function check_connection($n1, $n2) {
-        if (!isset($this->nodes[$n1]) || !isset($this->nodes[$n2]))
+        if (!isset($this->nodes[$n1], $this->nodes[$n2]))
             return false;
         if ($n1 == $n2)
             return false;
-        if (!isset($this->links[$n1]) || !isset($this->links[$n2]))
+        if (!isset($this->links[$n1], $this->links[$n2]))
             return false;
         return (in_array($n1, $this->links[$n2]) && in_array($n2, $this->links[$n1]));
     }

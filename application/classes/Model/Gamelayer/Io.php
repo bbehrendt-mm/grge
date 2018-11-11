@@ -79,7 +79,8 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
 	 */
 	public function is_alive() {
 		$tmp = false;
-		foreach (array_keys($this->set['gamedata']->players) as $remote_player) $tmp = $tmp || ($this->get_player($remote_player) && $this->get_player($remote_player)->get_status()->alive());
+		foreach (array_keys($this->set['gamedata']->players) as $remote_player)
+		    $tmp = $tmp || ($this->get_player($remote_player) !== null && $this->get_player($remote_player)->get_status()->alive());
 		
 		return $tmp;
 	}
@@ -159,11 +160,13 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
 		if (!isset($this->set['gamedata']->head->contest)) return null;
 		return $this->set['gamedata']->head->contest;
 	}
-	
-	/**
-	 * Returns all active contests
-	 * @return mixed[]
-	 */
+
+    /**
+     * Returns all active contests
+     *
+     * @return mixed[]
+     * @throws Kohana_Exception
+     */
 	public static function get_active_contests() {
 		$contests = Kohana::$config->load('contests');
 		$tmp = Array();
@@ -192,7 +195,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
 	 * Returns this games UIN Manager
 	 * @return Model_Uinmanager
 	 */
-	final public function uin() {
+	final public function uin(): Model_Uinmanager {
 		return $this->set['gamedata']->uin;
 	}
 
@@ -200,8 +203,28 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
      * @param null $lid Location ID to determine map, null to get main map
      * @return Model_Map_Abstract|null
      */
-    final public function map($lid = null) {
+    final public function map($lid = null): ?Model_Map_Abstract {
         return $this->map_by_id($this->mapid($lid));
+    }
+
+    /**
+     * @param null $lid Location ID to determine map, null to get main map
+     * @return Model_Map_Abstract
+     * @throws RuntimeException
+     */
+    final public function mapF($lid = null): Model_Map_Abstract {
+        $m = $this->map($lid);
+        if ($m === null) throw new RuntimeException(
+            'Attempt to use non-existent map.'
+        );
+        return $m;
+    }
+
+    /**
+     * @return Model_Map_Abstract
+     */
+    final public function main_map(): Model_Map_Abstract {
+        return $this->map_by_id($this->mapid());
     }
 
     /**
@@ -267,20 +290,40 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
         return array_values($this->set['gamedata']->maps);
     }
 
-	/**
-	 * Returns a location by its ID
+    /**
+     * Returns a location by its ID
+     *
      * @param $lid null|number Optional location id, when missing player location is assumed
-	 * @see Model_Gamelayer_Process::location()
+     *
+     * @see Model_Gamelayer_Process::location()
      * @return Model_Places_Abstract_Place|null
-	 */
+     * @throws Exception
+     */
 	final public function location($lid = NULL) {
-		$location = ($lid !== NULL) ? $lid : Globals::CurrentPlayer()->location_class();
+		$location = ($lid !== NULL) ? $lid : Globals::CurrentPlayerF()->location_class();
 
         if ($location < 0)
             /** @noinspection PhpUndefinedMethodInspection */
             return $this->set['gamedata']->maps['main']->get_by_fixed_id(-$location);
 		else return $this->set['gamedata']->uin->get($location, 'Model_Places_Abstract_Place');
 	}
+
+    /**
+     * Returns a location by its ID
+     *
+     * @param $lid null|number Optional location id, when missing player location is assumed
+     *
+     * @see Model_Gamelayer_Process::location()
+     * @return Model_Places_Abstract_Place
+     * @throws Exception
+     */
+    final public function locationF($lid = NULL) {
+        $location = $this->location($lid);
+        if ($location !== null) throw new LogicException(
+            'Requested invalid location.'
+        );
+        return $location;
+    }
 
     /**
      * @param $mapid
@@ -322,15 +365,28 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
      * Returns the player object associated with $pid; if $pid is not passed, the active player will be returned
      * @param number|string|null $pid
      * @return Model_Player|Interface_Plentity|null
+     * @throws Exception
      */
     public function get_player($pid = NULL) {
     	if ($pid === NULL) {
-            if (Globals::hasCurrentUser()) $pid = Globals::CurrentUser()->uid();
+            if (Globals::hasCurrentUser()) $pid = Globals::CurrentUserF()->uid();
             else return null;
         } elseif (!is_numeric($pid)) return $this->get_npc($pid);
 
     	if (!isset($this->set['gamedata']->players[$pid])) return null;
     	else return $this->set['gamedata']->uin->get($this->set['gamedata']->players[$pid], 'Model_Player');
+    }
+
+    /**
+     * Returns the player name associated with $pid; if $pid is not passed, the active player will be used.
+     * If $pid is invalid, ??? will be returned.
+     * @param number|string|null $pid
+     * @return string
+     * @throws Exception
+     */
+    public function get_player_name($pid = NULL): string {
+        $p = $this->get_player($pid);
+        return $p ? $p->name() : '???';
     }
     
     /**
@@ -373,6 +429,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
      * @param Interface_Plentity $npc
      * @param null|number|string $id
      * @return bool
+     * @throws Exception
      */
     public function add_npc(Interface_Plentity $npc, $id = null) {
         if ($id === null)

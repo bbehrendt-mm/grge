@@ -251,7 +251,7 @@ class Tool_Admin {
         if (!static::head('Erzeuge MP-Partie: ' . $lang . '/' . $name . ', ' . $slots . ' Slots'))
             return false;
 
-        $tmp = Globals::CurrentGame(false);
+        $tmp = Globals::CurrentGame();
 
         Syslogd::sprint("Erzeuge Index...");
         $game = new Model_Game();

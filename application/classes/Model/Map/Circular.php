@@ -31,18 +31,18 @@ class Model_Map_Circular extends Model_Map_Abstract {
         else {
             if (!($list = $this->check_placement_limits($spawn, Tool_System::config_tree($this->id_assoc, $root))))
                 return false;
-            $root_location_id = $list[mt_rand(0, count($list) - 1)];
+            $root_location_id = $list[random_int(0, count($list) - 1)];
             $data = $this->loc_assoc[$root_location_id];
         }
 
         $limit = ($distance <= 10) ? 90 : 45;
-        $grad = ($data['direction'] === null) ? mt_rand(0,359) : mt_rand($data['direction'] - $limit, $data['direction'] + $limit);
+        $grad = ($data['direction'] === null) ? random_int(0,359) : random_int($data['direction'] - $limit, $data['direction'] + $limit);
         while ($grad > 359) $grad -= 360;
         while ($grad < 0) $grad += 360;
 
         $rad = ($grad * M_PI / 180);
         if (is_array($distance))
-            $distance = mt_rand($distance[0], $distance[1]);
+            $distance = random_int($distance[0], $distance[1]);
 
         return array('x' => $distance * cos($rad) + $data['x'], 'y' => $distance * sin($rad) + $data['y'], 'root' => $root_location_id, 'direction' => ($root_location_id === null) ? null : $grad);
     }

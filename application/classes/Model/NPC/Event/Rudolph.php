@@ -36,8 +36,8 @@ class Model_NPC_Event_Rudolph extends Model_NPC_Animal
         $this->get_status()->set(
             Model_Status::MS_STAT_HEALTH, 100,
             Model_Status::MS_STAT_ENERGY, 100,
-            Model_Status::MS_STAT_HUNGER, mt_rand(40,75),
-            Model_Status::MS_STAT_THIRST, mt_rand(45,75),
+            Model_Status::MS_STAT_HUNGER, random_int(40,75),
+            Model_Status::MS_STAT_THIRST, random_int(45,75),
             Model_Status::MS_STAT_SLEEPY, 100
         );
 
@@ -78,7 +78,7 @@ class Model_NPC_Event_Rudolph extends Model_NPC_Animal
         if (!$busy && $this->is_drunk()) {
 
             if (Tool_Gambling::random(($this->get_status()->get(Model_Status::MS_STAT_DRUNK) - 40) / 200)) {
-                new Model_Buffs_Drunk2($this, mt_rand(1,5));
+                new Model_Buffs_Drunk2($this, random_int(1,5));
                 $this->location()->log()->add("Ohje... :name hat anscheinend das Gleichgewicht verloren.", [':name' => $this->name()]);
             } elseif (Tool_Gambling::random(($this->get_status()->get(Model_Status::MS_STAT_DRUNK) - 40) / 75)) {
 
@@ -186,7 +186,7 @@ class Model_NPC_Event_Rudolph extends Model_NPC_Animal
                 $dialog_tumbling = array_merge($dialog_tumbling, ["Urgh... muss... gleich... ko... kotzen..."]);
             }
 
-            if (Globals::hasCurrentPlayer() && Globals::CurrentPlayer()->get_status()->get(Model_Status::MS_STAT_DRUNK) >= 50) {
+            if (Globals::hasCurrentPlayer() && Globals::CurrentPlayerF()->get_status()->get(Model_Status::MS_STAT_DRUNK) >= 50) {
                 $dialog_sober = array_merge($dialog_sober, ["Oh je... du bist betrunken, nicht wahr?", "Ist.. alles OK mit dir?", "Ähm... willst du dich vielleicht bei mir anlehnen?"]);
                 $dialog_tipsy = array_merge($dialog_tipsy, ["In Gesellschaft trinkt es sich einfach schöner!", "Aber lass mir was übrig, ok?"]);
                 $dialog_drunk = array_merge($dialog_drunk, ["Hehe... du bisss besoffen... *hicks*", "Heyeyyy... nimmsu... nimmsu die Hand da weg!!!"]);
@@ -230,7 +230,8 @@ class Model_NPC_Event_Rudolph extends Model_NPC_Animal
     public function item_preaction(Model_Items_Abstract_Item $item,$action) {
         $this->set_am_stat();
         $set = $item->simple_effects($this,false);
-        if (isset($set) && isset($set[$action]) && isset($set[$action][Model_Status::MS_STAT_DRUNK])) $this->am_strong = ($set[$action][Model_Status::MS_STAT_DRUNK] >= 30);
+        if (isset($set[$action], $set[$action][Model_Status::MS_STAT_DRUNK])
+        ) $this->am_strong = ($set[$action][Model_Status::MS_STAT_DRUNK] >= 30);
     }
 
     public function item_reaction() {

@@ -24,19 +24,19 @@ class Model_Items_Vending extends Model_Items_Abstract_Item {
 		$this->basename = $name;
 
         /** @noinspection PhpUndefinedMethodInspection */
-        $this->factory = Model_Factory_Items::read($basecfg, Globals::CurrentGame()->config('game.config.itemset'))->set_decay_factor(0);
+        $this->factory = Model_Factory_Items::read($basecfg, Globals::CurrentGameF()->config('game.config.itemset'))->set_decay_factor(0);
 		parent::__construct();
 	}
 	
 	public function name() {
-		return parent::name() . " (" . $this->basename . ")";
+		return parent::name() . ' (' . $this->basename . ')';
 	}
 
     protected function hid() {
         return parent::hid()
             ->add_action('Geld einwerfen', Model_Action::factory()
                 ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
-                ->requirement('Model_Items_Money', 4)
+                ->requirement(Model_Items_Money::cls(), 4)
                 ->effect(
                     Model_Effect::factory()
                         ->ambiguous_effect()
@@ -50,7 +50,7 @@ class Model_Items_Vending extends Model_Items_Abstract_Item {
 	
 	public function vend($player = null) {
         if ($player === null)
-            $player = Globals::CurrentPlayer();
+            $player = Globals::CurrentPlayerF();
 		
 		$item = $this->factory->nd_spawn();
 		if (!$item) $item = new Model_Items_Money(4);
@@ -61,12 +61,12 @@ class Model_Items_Vending extends Model_Items_Abstract_Item {
 
     public function mixchem($chemval) {
         if ($this->chem_rand_type === null)
-            $this->chem_rand_type = mt_rand(8,12);
+            $this->chem_rand_type = random_int(8,12);
 
         switch ($chemval)
         {
             case 7:
-                Globals::CurrentPlayer()->get_status()->modify(Model_Status::MS_STAT_HEALTH, -35);
+                Globals::CurrentPlayerF()->get_status()->modify(Model_Status::MS_STAT_HEALTH, -35);
                 Tool_Scripts::chem_reaction(
                     'Du gießt etwas von der Chemikalie in den Münzschlitz... es gibt einen Knall, und der Automat fliegt in die Luft! Du wurdest durch die Explosion verletzt, aber wenigstens hast du ein paar neue gegenstände erhalten...',
                     $chemval,$this, [$this->factory->nd_spawn(),$this->factory->nd_spawn(),$this->factory->nd_spawn(),$this->factory->nd_spawn(),$this->factory->nd_spawn()]);

@@ -3,10 +3,16 @@
 abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
 
 	/**
-	 * @param null $lid
-	 * @return Model_Places_Abstract_Place
+	 * @param null|number $lid
+	 * @return Model_Places_Abstract_Place|null
 	 */
 	abstract public function location($lid = NULL);
+
+	/**
+     * @param null|number $lid
+     * @return Model_Places_Abstract_Place
+     */
+    abstract public function locationF($lid = NULL);
 
 	abstract public function paused();
 	abstract public function is_alive();
@@ -61,7 +67,7 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
 
         //Restore active player
         if (Globals::hasCurrentUser())
-            Globals::setPrimaryPlayer($this->get_player(Globals::CurrentUser()->uid()));
+            Globals::setPrimaryPlayer($this->get_player(Globals::CurrentUserF()->uid()));
     }
 
 	final protected function process() {
@@ -97,7 +103,7 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
 		
 		//Restore active player
 		if (Globals::hasCurrentUser())
-            Globals::setPrimaryPlayer($this->get_player(Globals::CurrentUser()->uid()));
+            Globals::setPrimaryPlayer($this->get_player(Globals::CurrentUserF()->uid()));
 
 		static::$now_is_real_time = true;
 	}
@@ -126,26 +132,26 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
 		foreach ($this->playable_entities(true) as $pl) {
 			Globals::setCurrentPlayer($pl);
 			
-			if (Globals::CurrentPlayer()->get_status()->alive()) {
+			if (Globals::CurrentPlayerF()->get_status()->alive()) {
                 // Tick items
-                foreach (Globals::CurrentPlayer()->inventory()->get('Interface_Tickable') as $item)
+                foreach (Globals::CurrentPlayerF()->inventory()->get('Interface_Tickable') as $item)
                     /** @var $item Interface_Tickable */
-                    $item->tick(Globals::CurrentPlayer()->id(), !Tool_Scripts::is_npc(Globals::CurrentPlayer()) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC);
+                    $item->tick(Globals::CurrentPlayerF()->id(), !Tool_Scripts::is_npc(Globals::CurrentPlayerF()) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC);
 
-                if (Globals::CurrentPlayer()->location())
-                    foreach (Globals::CurrentPlayer()->location()->inventory()->get('Interface_Tickable') as $item)
+                if (Globals::CurrentPlayerF()->location())
+                    foreach (Globals::CurrentPlayerF()->location()->inventory()->get('Interface_Tickable') as $item)
                         /** @var $item Interface_Tickable */
-                        $item->tick(Globals::CurrentPlayer()->location_class(), false);
+                        $item->tick(Globals::CurrentPlayerF()->location_class(), false);
 
-                Globals::CurrentPlayer()->tick();
-                if (Globals::CurrentPlayer()->location()) Globals::CurrentPlayer()->location()->tick(!Tool_Scripts::is_npc(Globals::CurrentPlayer()) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC);
+                Globals::CurrentPlayerF()->tick();
+                if (Globals::CurrentPlayerF()->location()) Globals::CurrentPlayerF()->location()->tick(!Tool_Scripts::is_npc(Globals::CurrentPlayerF()) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC);
 			}
 		}
 
         //Post-tick events
         foreach ($this->npcs() as $pl) {
             Globals::setCurrentPlayer($pl);
-            Globals::CurrentPlayer()->ai();
+            Globals::CurrentPlayerF()->ai();
         }
 
         Globals::restorePrimaryPlayer();

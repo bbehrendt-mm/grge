@@ -19,12 +19,12 @@ class Model_Log_Log extends Model {
 	}
 
 	private function unread($set = null) {
-		if (!isset($this->new[Globals::PrimaryPlayer()->id()]))
-			$this->new[Globals::PrimaryPlayer()->id()] = 0;
+		if (!isset($this->new[Globals::PrimaryPlayerF()->id()]))
+			$this->new[Globals::PrimaryPlayerF()->id()] = 0;
 
 		if ($set !== null)
-			return $this->new[Globals::PrimaryPlayer()->id()] = $set;
-		else return $this->new[Globals::PrimaryPlayer()->id()];
+			return $this->new[Globals::PrimaryPlayerF()->id()] = $set;
+		else return $this->new[Globals::PrimaryPlayerF()->id()];
 	}
 	
 	/**
@@ -52,6 +52,7 @@ class Model_Log_Log extends Model {
                 $this->messages[] = $new_message;
 
 			foreach ($this->new as &$counter) $counter++;
+			unset($counter);
 
             //Delete oldest messages once counter is reached
             while($this->max_length > 0 && count($this->messages) > $this->max_length) array_shift($this->messages);

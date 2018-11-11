@@ -13,8 +13,8 @@ return Model_Blueprints::factory()
             ->name('Gegrillte Leiche')
             ->message('Mit einem Grill kannst du selbst das ekelhafteste Zeug schmackhaft machen. Herzlichen Glückwunsch, du hast ein paar Steaks erzeugt.')
             ->energy(10)
-            ->material(['Model_Items_Body' => 1])
-            ->produces(['Model_Items_Steak' => 3])
+            ->material([Model_Items_Body::cls() => 1])
+            ->produces([Model_Items_Steak::cls() => 3])
     )
 
     ->add_blueprints(
@@ -23,8 +23,8 @@ return Model_Blueprints::factory()
             ->name('Gegrillter Zombie')
             ->message('Mit einem Grill kannst du selbst das ekelhafteste Zeug schmackhaft machen. Herzlichen Glückwunsch, du hast ein paar Steaks erzeugt.')
             ->energy(10)
-            ->material(['Model_Items_Body2' => 1])
-            ->produces(['Model_Items_Steak' => 2])
+            ->material([Model_Items_Body2::cls() => 1])
+            ->produces([Model_Items_Steak::cls() => 2])
     )
 
     ->add_blueprints(
@@ -33,8 +33,8 @@ return Model_Blueprints::factory()
             ->name('Gegrillter Tierkadaver')
             ->message('Mit einem Grill kannst du selbst das ekelhafteste Zeug schmackhaft machen. Herzlichen Glückwunsch, du hast ein paar Steaks erzeugt.')
             ->energy(5)
-            ->material(['Model_Items_Body3' => 1])
-            ->produces(['Model_Items_Steak' => 1])
+            ->material([Model_Items_Body3::cls() => 1])
+            ->produces([Model_Items_Steak::cls() => 1])
     )
 
     ->drop_stack();

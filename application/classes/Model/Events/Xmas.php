@@ -23,59 +23,63 @@ class Model_Events_Xmas extends Model_Events_Event {
     public function place_conductor(Model_Places_Abstract_Place $place) {
         $conductor = new Model_NPC_Event_Conductor();
         $conductor->location_class($place->uin());
-        Globals::CurrentGame()->add_npc($conductor);
+        Globals::CurrentGameF()->add_npc($conductor);
         $place->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $conductor->id(), true));
         $this->npc_list[] = $conductor->id();
     }
 
     protected function trigger_activation()
     {
-        foreach (Globals::CurrentGame()->playable_entities() as $pl) if (!Tool_Scripts::is_npc($pl)) {
+        foreach (Globals::CurrentGameF()->playable_entities() as $pl) if (!Tool_Scripts::is_npc($pl)) {
             new Model_Buffs_Event_Rudolph($pl);
             /** @var $pl Model_Player */
-            $pl->log()->add(new Model_Log_Types_Event(static::name(),static::get_key(), true, "Ein warmes Licht kriecht über die eiskalte Landschaft."));
+            $pl->log()->add(new Model_Log_Types_Event(static::name(),static::get_key(), true,
+                'Ein warmes Licht kriecht über die eiskalte Landschaft.'
+            ));
         }
 
-        $this->place_conductor(Globals::CurrentGame()->location(Globals::CurrentGame()->map_main()->resolve_fixed_id(1)));
+        $this->place_conductor(Globals::CurrentGameF()->location(Globals::CurrentGameF()->map_main()->resolve_fixed_id(1)));
         return true;
     }
 
     protected function trigger_deactivation() {
         foreach ($this->item_list as $iuin) {
             /** @var Model_Items_Abstract_Item $i */
-            $i = Globals::CurrentGame()->uin()->get($iuin, Model_Items_Abstract_Item::cls());
+            $i = Globals::CurrentGameF()->uin()->get($iuin, Model_Items_Abstract_Item::cls());
             if ($i) $i->grind();
         }
 
-        foreach (Globals::CurrentGame()->playable_entities() as $pl) {
+        foreach (Globals::CurrentGameF()->playable_entities() as $pl) {
             $pl->get_status()->set(Model_Status::MS_STAT_FREEZE,0);
             $pl->get_status()->remove('rudolph');
             /** @var $pl Model_Player */
             if (!Tool_Scripts::is_npc($pl))
-                $pl->log()->add(new Model_Log_Types_Event(static::name(),static::get_key(), false, "Der Glanz der Tannenbäume erlischt."));
+                $pl->log()->add(new Model_Log_Types_Event(static::name(),static::get_key(), false,
+                    'Der Glanz der Tannenbäume erlischt.'
+                ));
             foreach ($pl->inventory()->get('Interface_Event') as $i)
                 $i->grind();
         }
 
         foreach ($this->npc_list as $npc) {
-            $npc_inst = Globals::CurrentGame()->get_npc($npc);
+            $npc_inst = Globals::CurrentGameF()->get_npc($npc);
             if ($npc_inst && $npc_inst->get_status()->alive())
                 $npc_inst->kill();
         }
 
-        $d_loc = Globals::CurrentGame()->map_main()->get_by_fixed_id(1);
+        $d_loc = Globals::CurrentGameF()->map_main()->get_by_fixed_id(1);
         if ($d_loc)
             foreach ($this->maps as $map_id) {
-                $map = Globals::CurrentGame()->map_by_id($map_id);
+                $map = Globals::CurrentGameF()->map_by_id($map_id);
                 if ($map) {
                     foreach ($map->get_locations() as $subloc)
                         foreach (Tool_Scripts::at_location($subloc) as $p) {
-                            Globals::CurrentGame()->location($subloc)->leave($p->id(), Tool_Scripts::is_npc($p) ? Interface_Tickable::IT_TYPE_NPC : Interface_Tickable::IT_TYPE_PLAYER);
+                            Globals::CurrentGameF()->location($subloc)->leave($p->id(), Tool_Scripts::is_npc($p) ? Interface_Tickable::IT_TYPE_NPC : Interface_Tickable::IT_TYPE_PLAYER);
                             $p->location_class($d_loc->uin());
                             $d_loc->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $p->id(), Tool_Scripts::is_npc($p)));
                         }
                 }
-                Globals::CurrentGame()->unregister_map($map_id);
+                Globals::CurrentGameF()->unregister_map($map_id);
             }
 
         return true;
@@ -96,7 +100,7 @@ class Model_Events_Xmas extends Model_Events_Event {
 
     public function event_locationTick(Model_Places_Abstract_Place $place) {}
 
-    public function event_generateHIDStack(Model_Items_Abstract_Item &$item, Model_Hid &$hid) {
+    public function event_generateHIDStack(Model_Items_Abstract_Item $item, Model_Hid $hid) {
         // Coffee
         if (Tool_System::instance_of($item, Model_Items_Coffee2::cls())) {
 
@@ -109,7 +113,7 @@ class Model_Events_Xmas extends Model_Events_Event {
         }
     }
 
-    private function mergedHIDCallback($cls, $name, Model_Action &$action) {
+    private function mergedHIDCallback($cls, $name, Model_Action $action) {
 
         if (Tool_System::instance_of($cls, Model_Items_Coffee2::cls()) && $name == 'Trinken') {
 
@@ -119,11 +123,11 @@ class Model_Events_Xmas extends Model_Events_Event {
         }
     }
 
-    public function event_executeHIDAction($cls, $name, Model_Action &$action) {$this->mergedHIDCallback($cls,$name,$action);}
+    public function event_executeHIDAction($cls, $name, Model_Action $action) {$this->mergedHIDCallback($cls,$name,$action);}
 
-    public function event_renderHIDAction($cls, $name, Model_Action &$action) {$this->mergedHIDCallback($cls,$name,$action);}
+    public function event_renderHIDAction($cls, $name, Model_Action $action) {$this->mergedHIDCallback($cls,$name,$action);}
 
-    public function event_findItem(Model_Places_Abstract_Place $place, Model_Items_Abstract_Item &$item) {}
+    public function event_findItem(Model_Places_Abstract_Place $place, Model_Items_Abstract_Item $item) {}
 
     public function event_blueprintCreation($config_name, $config_category)
     {
@@ -136,8 +140,8 @@ class Model_Events_Xmas extends Model_Events_Event {
                         ->steps(0)
                         ->name('Plätzchen backen')
                         ->message('Ein weihnachtlicher Durft erfüllt dein Versteck, als du kleine Figürchen aus dem Teig presst und diese zu Plätzchen backst.')
-                        ->material(['Model_Items_Generic_Cookieproto' => 1])
-                        ->produces(['Model_Items_Cookie' => 5])
+                        ->material([Model_Items_Generic_Cookieproto::cls() => 1])
+                        ->produces([Model_Items_Cookie::cls() => 5])
                         ->effect(Model_Effect::factory()
                             ->achieve(Model_Achievement::MA_XMAS)
                         )
@@ -150,8 +154,8 @@ class Model_Events_Xmas extends Model_Events_Event {
                         ->steps(0)
                         ->name('Besondere Plätzchen backen')
                         ->message('Normale Plätzchen sind langweilig, also fügst du ein paar kreative Extra-Zutaten hinzu...')
-                        ->material(['Model_Items_Generic_Cookieproto' => 1, 'Model_Items_Powderpack' => 1])
-                        ->produces(['Model_Items_Cookie2' => 5])
+                        ->material([Model_Items_Generic_Cookieproto::cls() => 1, Model_Items_Powderpack::cls() => 1])
+                        ->produces([Model_Items_Cookie2::cls() => 5])
                         ->effect(Model_Effect::factory()
                             ->achieve(Model_Achievement::MA_XMAS)
                         )

@@ -28,7 +28,7 @@ class Model_Items_Chainsaw extends Model_Combat_Weapons_Fillable implements Inte
         return parent::hid()
             ->add_action('Tank befüllen', Model_Action::factory()
                 ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
-                ->requirement('Model_Items_Generic_Jerrycan', 1)
+                ->requirement(Model_Items_Generic_Jerrycan::cls(), 1)
                 ->condition(function() {
                     return $this->fillrate < 10;
                 })

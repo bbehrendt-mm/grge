@@ -8,11 +8,11 @@ class Model_Buffs_Hallucinations extends Model_Buffs_Abstract_Buff {
     protected static $bid = 'hallucination';
 
     public function tick() {
-        if (!$this->assoc_player->get_status()->retrieve('passout') && mt_rand(0,5) > 4) {
+        if (!$this->assoc_player->get_status()->retrieve('passout') && random_int(0,5) > 4) {
             $z = array();
-            $c = mt_rand(1,8);
+            $c = random_int(1,8);
             for ($i = 0; $i < $c; $i++)
-                $z[] = (new Model_Combat_Zombies_Hallucination())->strength(mt_rand(1,13),15,1);
+                $z[] = (new Model_Combat_Zombies_Hallucination())->strength(random_int(1,13),15,1);
 
             Tool_Scripts::combat([[$this->assoc_player], $z], false, 20, $this->assoc_player->location(), 'Ein Kampf ... ?', 'OH GOTT! Du wirst von obskuren Gestalten angegriffen, die eventuell mit deinen schweren Halluzinationen in Zusammenhang stehen!');
         }

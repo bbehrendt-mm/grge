@@ -9,8 +9,8 @@ abstract class Model_Items_Abstract_Label extends Model_Items_Abstract_Item impl
         $new = (bool)$this->label;
         $this->label = mb_substr($new_text, 0, static::$max_label_size);
 
-        if ($this->label == '') Globals::PrimaryPlayer()->log()->add('Du hast die Beschriftung auf diesem Gegenstand weggewischt.');
-        elseif (!$new) Globals::PrimaryPlayer()->log()->add('Du hast diesen Gegenstand mit einer Beschriftung versehen.');
-        else Globals::PrimaryPlayer()->log()->add('Du hast die Beschriftung dieses Gegenstands geändert.');
+        if ($this->label == '') Globals::PrimaryPlayerF()->log()->add('Du hast die Beschriftung auf diesem Gegenstand weggewischt.');
+        elseif (!$new) Globals::PrimaryPlayerF()->log()->add('Du hast diesen Gegenstand mit einer Beschriftung versehen.');
+        else Globals::PrimaryPlayerF()->log()->add('Du hast die Beschriftung dieses Gegenstands geändert.');
     }
 }	

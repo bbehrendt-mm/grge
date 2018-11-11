@@ -23,7 +23,7 @@ class Model_NPC_Event_Patient extends Model_NPC_Humanoid
         );
 
         $this->inventory()->add(new Model_Items_Hacksaw);
-        $num = mt_rand(5,20);
+        $num = random_int(5,20);
         for ($i = 0; $i < $num; $i++)
             $this->inventory()->add(new Model_Items_Fleshfood);
     }
@@ -116,13 +116,13 @@ class Model_NPC_Event_Patient extends Model_NPC_Humanoid
                         Tool_Scripts::place_new_item($items, 'Der Patient hat seine Gegenstände fallen gelassen, als du ihm den Teddy gegeben hast.');
 
                         $mid = "submap_ashide_{$this->location()->uin()}";
-                        $slid = Globals::CurrentGame()->register_map($mid, 'ashide');
+                        $slid = Globals::CurrentGameF()->register_map($mid, 'ashide');
                         if ($slid) {
                             $this->location()->register_doorway($slid);
-                            Globals::CurrentGame()->location($slid)->register_doorway($this->location()->uin());
+                            Globals::CurrentGameF()->locationF($slid)->register_doorway($this->location()->uin());
                         }
 
-                        $ev = Globals::CurrentGame()->get_initialized_event(Model_Events_Halloween::get_key());
+                        $ev = Globals::CurrentGameF()->get_initialized_event(Model_Events_Halloween::get_key());
                         /** @var $ev Model_Events_Halloween */
                         if ($ev) $ev->register_event_map($mid);
 

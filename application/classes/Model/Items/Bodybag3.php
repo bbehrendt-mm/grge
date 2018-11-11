@@ -21,7 +21,7 @@ class Model_Items_Bodybag3 extends Model_Items_Abstract_Item implements Interfac
                     Model_Effect::factory()
                         ->consume($this)
                         ->spawn(new Model_Items_Body('Zerknautschte Leiche', 'Naja, die Form hat beim Transport im Leichensack etwas gelitten... Aber man erkennt, dass es mal so was ähnliches wie ein Mensch war!'))
-                        ->spawn('Model_Items_Bodybag2')
+                        ->spawn(Model_Items_Bodybag2::cls())
                 )
             );
     }

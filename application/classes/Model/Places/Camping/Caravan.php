@@ -2,7 +2,7 @@
 
 class Model_Places_Camping_Caravan extends Model_Places_Abstract_Hideout {
 	
-	protected static $name = 'Gestrandetes Wohnmobil';
+	protected static $location_name = 'Gestrandetes Wohnmobil';
 	protected static $description = 'Die Reifen dieses Wohnmobils sind zerstört, der Motor ist beschädigt und Benzin ist auch nicht mehr im Tank. Ich würde sagen, mit diesem Teil fährst du nirgenwo mehr hin; aber häuslich einrichten kannst du dich da drin natürlich trotzdem.';
     protected static $icon = 'home';
     protected static $outside = false;

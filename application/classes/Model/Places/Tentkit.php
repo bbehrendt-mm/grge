@@ -2,7 +2,7 @@
 
 class Model_Places_Tentkit extends Model_Places_Abstract_Hideout {
 
-    protected static $name = 'InstaZELT™';
+    protected static $location_name = 'InstaZELT™';
     protected static $description = 'Das InstaZELT™ ist die perfekte mobile Unterkunft für Campingtrips, mehrtägige Open-Air-Konzerte und iPhone-Releases. Leider stellen die meisten Käufer eines InstaZELT™s relativ schnell fest, dass sich dieses Zelt zwar kinderleicht aufbauen, danach aber nicht mehr abbauen lässt. Manche würde das als einen Designfehler bezeichnen... ';
     protected static $icon = 'itent';
     protected static $upgradable = false;
@@ -52,11 +52,11 @@ class Model_Places_Tentkit extends Model_Places_Abstract_Hideout {
 
     public function can_enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
         $is_player = true;
-        if (!$pid) $player = Globals::CurrentPlayer();
-        elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGame()->get_player($pid);
+        if (!$pid) $player = Globals::CurrentPlayerF();
+        elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGameF()->get_player($pid);
         else {
             $is_player = false;
-            $player = Globals::CurrentGame()->get_npc($pid);
+            $player = Globals::CurrentGameF()->get_npc($pid);
         }
 
         if (Tool_Scripts::at_location($this->uin(), $is_player, !$is_player)) {

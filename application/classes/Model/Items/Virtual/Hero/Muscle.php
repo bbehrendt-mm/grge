@@ -21,8 +21,8 @@ class Model_Items_Virtual_Hero_Muscle extends Model_Items_Abstract_Virtual {
                 ->description('Bekämpft Müdigkeit und regeneriert Energie. Der Effekt ist abhängig von Hunger, Durst und Gewicht des Rucksacks - je voller der Rucksack, desto besser.')
                 ->effect(
                     Model_Effect::factory()
-                        ->effect(Model_Status::MS_STAT_ENERGY, Globals::CurrentPlayer()->inventory()->weight() * (Globals::CurrentPlayer()->get_status()->get(Model_Status::MS_STAT_HUNGER)/100) * (Globals::CurrentPlayer()->get_status()->get(Model_Status::MS_STAT_THIRST)/100))
-                        ->effect(Model_Status::MS_STAT_SLEEPY, Globals::CurrentPlayer()->inventory()->weight() * (Globals::CurrentPlayer()->get_status()->get(Model_Status::MS_STAT_HUNGER)/100) * (Globals::CurrentPlayer()->get_status()->get(Model_Status::MS_STAT_THIRST)/100))
+                        ->effect(Model_Status::MS_STAT_ENERGY, Globals::CurrentPlayerF()->inventory()->weight() * (Globals::CurrentPlayerF()->get_status()->get(Model_Status::MS_STAT_HUNGER)/100) * (Globals::CurrentPlayerF()->get_status()->get(Model_Status::MS_STAT_THIRST)/100))
+                        ->effect(Model_Status::MS_STAT_SLEEPY, Globals::CurrentPlayerF()->inventory()->weight() * (Globals::CurrentPlayerF()->get_status()->get(Model_Status::MS_STAT_HUNGER)/100) * (Globals::CurrentPlayerF()->get_status()->get(Model_Status::MS_STAT_THIRST)/100))
                         ->message('So ein Workout wirkt Wunder! Nach ein paar Liegestützen und Kniebeugen bist du wieder Fit für den Kampf um Leben und Tod.')
                 )
             , 'hero_job_0')

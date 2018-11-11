@@ -77,7 +77,10 @@ class Model_Combat_Field {
     }
 
     /**
+     * @param bool $allow_escape
+     *
      * @return Model_Combat_Field
+     * @throws Exception
      */
     public function begin($allow_escape = false) {
         // Add combatants to the scene
@@ -96,14 +99,15 @@ class Model_Combat_Field {
         if ($allow_escape) {
             $gsc = []; $gs_prev = []; $gs_allow = [];
             foreach ($this->combatants as $c) {
-                if (!isset($gsc[$c->group()])) $gsc[$c->group()] = [];
-                if (!isset($gs_prev[$c->group()])) $gs_prev[$c->group()] = 0;
-                if (!isset($gs_allow[$c->group()])) $gs_allow[$c->group()] = PHP_INT_MAX;
+                $group = $c->group();
+                if (!isset($gsc[$group])) $gsc[$group] = [];
+                if (!isset($gs_prev[$group])) $gs_prev[$group] = 0;
+                if (!isset($gs_allow[$group])) $gs_allow[$group] = PHP_INT_MAX;
 
-                $gs_prev[$c->group()] = max($gs_prev[$c->group()], $c->stats()[0]);
+                $gs_prev[$group] = max($gs_prev[$group], $c->stats()[0]);
                 if ($c->can_escape()) {
-                    $gsc[$c->group()][] = $c;
-                    $gs_allow[$c->group()] = min($gs_allow[$c->group()], $c->stats()[0] * $c->get_escape_modifier());
+                    $gsc[$group][] = $c;
+                    $gs_allow[$group] = min($gs_allow[$group], $c->stats()[0] * $c->get_escape_modifier());
                 }
             }
 
@@ -116,6 +120,7 @@ class Model_Combat_Field {
                             $mx = max($mx, $pv);
                     $v = min(max(0, $v - $mx) * 0.05, 0.80);
                 }
+            unset($v);
 
             foreach ($gs_allow as $group => $chance)
                 if ($chance > 0 && Tool_Gambling::random($chance))

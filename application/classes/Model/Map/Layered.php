@@ -6,10 +6,14 @@ class Model_Map_Layered extends Model_Map_Circular {
 
     /**
      * Produces a position within $distance from $root
-     * @param int|array $distance Distance; can be a single int value to use as fixed distance, or an array with 2 elements containing boundaries [min,max]
-     * @param string $spawn Spawn class
-     * @param null|int|string|array $root Root position; When omitted, 0/0 is used as position; when given as int, $root is treated as location id; when given as String, $root is interpreted as location classname, if more locations with this classname exist, one will be randomly selected; when given as array, the function will select one of the elements (that can be used to produce a location) randomly or return false when it can't find one
+     *
+     * @param int|array             $distance Distance; can be a single int value to use as fixed distance, or an array with 2 elements containing boundaries [min,max]
+     * @param                       $to
+     * @param string                $spawn    Spawn class
+     * @param null|int|string|array $root     Root position; When omitted, 0/0 is used as position; when given as int, $root is treated as location id; when given as String, $root is interpreted as location classname, if more locations with this classname exist, one will be randomly selected; when given as array, the function will select one of the elements (that can be used to produce a location) randomly or return false when it can't find one
+     *
      * @return array|bool false, if no position could be determined; otherwise an array in the format ['x' => x, 'y' => y, 'root' => root location id|null]
+     * @throws Kohana_Exception
      */
     protected function get_random_location_layered($distance, $to, $spawn, $root = null) {
 
@@ -31,15 +35,15 @@ class Model_Map_Layered extends Model_Map_Circular {
         else {
             if (!($list = $this->check_placement_limits($spawn, Tool_System::config_tree($this->id_assoc, $root))))
                 return false;
-            $root_location_id = $list[mt_rand(0, count($list) - 1)];
+            $root_location_id = $list[random_int(0, count($list) - 1)];
             $data = $this->loc_assoc[$root_location_id];
         }
 
-        $distance = mt_rand($distance[0], $distance[1]);
+        $distance = random_int($distance[0], $distance[1]);
         $factor = ['x' => 0, 'y' => 0];
         switch ($to) {
-            case 'top': case 'bottom': case 'shaft': $factor['y'] = ($to == 'top' || ($to != 'bottom' && mt_rand(0,1))) ? -1 : 1; break;
-            case 'left': case 'right': case 'level': $factor['x'] = ($to == 'right' || ($to != 'left' && mt_rand(0,1))) ? 1 : -1; break;
+            case 'top': case 'bottom': case 'shaft': $factor['y'] = ($to == 'top' || ($to != 'bottom' && random_int(0,1))) ? -1 : 1; break;
+            case 'left': case 'right': case 'level': $factor['x'] = ($to == 'right' || ($to != 'left' && random_int(0,1))) ? 1 : -1; break;
             case 'same': default: $factor = $data['direction']; break;
         }
 

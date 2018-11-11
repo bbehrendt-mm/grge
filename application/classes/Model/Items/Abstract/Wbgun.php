@@ -17,14 +17,14 @@ abstract class Model_Items_Abstract_Wbgun extends Model_Combat_Weapons_Fillable 
 	
 	public function interaction_fillfrom($item) {
 		if ($this->fillrate() >= static::$capacity) {
-            Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Der Wasserbehälter dieser Waffe ist leider voll...'));
+            Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String( null, 'Der Wasserbehälter dieser Waffe ist leider voll...'));
 			return false;
 		}	
 		
-		if (Tool_System::instance_of($item, 'Model_Items_Abstract_Bottle')) {
+		if (Tool_System::instance_of($item, Model_Items_Abstract_Bottle::cls())) {
 			/** @var $item Model_Items_Abstract_Bottle */
             if ($item->get_water(1)) $this->fillrate+= 10;
-			else Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Leider ist in dieser Flasche nicht mehr genug Wasser, um diesen Gegenstand zu füllen ...'));
+			else Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String( null, 'Leider ist in dieser Flasche nicht mehr genug Wasser, um diesen Gegenstand zu füllen ...'));
 
             return true;
 		} else return false;
@@ -32,11 +32,11 @@ abstract class Model_Items_Abstract_Wbgun extends Model_Combat_Weapons_Fillable 
 	
 	public function interaction_fill($item) {
 		if ($this->fillrate() >= static::$capacity) {
-            Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Der Wasserbehälter dieser Waffe ist leider voll...'));
+            Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String( null, 'Der Wasserbehälter dieser Waffe ist leider voll...'));
 			return false;
 		}
 
-		if (Tool_System::instance_of($item, 'Model_Items_Abstract_Liquid')) {
+		if (Tool_System::instance_of($item, Model_Items_Abstract_Liquid::cls())) {
 			/** @var $item Model_Items_Abstract_Liquid */
             $this->fillrate += 10;
 			$item->consume();

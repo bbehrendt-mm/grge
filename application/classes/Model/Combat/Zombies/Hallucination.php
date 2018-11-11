@@ -5,7 +5,7 @@ class Model_Combat_Zombies_Hallucination extends Model_Combat_Zombies_Zombie {
     public static $custom_sprite = 'zombie_lsd.gif';
     public static $custom_death_sprite = 'zombie_lsd_dead.gif';
 
-    protected $name;
+    protected $actor_name;
     protected $max_health = 15;
 
     protected $stat_initiative = 0;
@@ -20,7 +20,7 @@ class Model_Combat_Zombies_Hallucination extends Model_Combat_Zombies_Zombie {
     public function __construct() {
         parent::__construct();
 
-        $this->name = Tool_Gambling::select(['Schnupfophanten', 'Jigsaw-Nudisten', 'Seehofer', 'Genitalmonster', 'Pokémon', 'Schwiegermütter']);
+        $this->actor_name = Tool_Gambling::select(['Schnupfophanten', 'Jigsaw-Nudisten', 'Seehofer', 'Genitalmonster', 'Pokémon', 'Schwiegermütter']);
     }
 
     protected function get_attack_priority($friends, $foes, $weapon = null, $ignore_range = false) {
@@ -53,8 +53,8 @@ class Model_Combat_Zombies_Hallucination extends Model_Combat_Zombies_Zombie {
         $dx = ($target->pos_x - $this->pos_x)/$d * min($this->movement_range, $d);
         $dy = ($target->pos_y - $this->pos_y)/$d * min($this->movement_range, $d);
 
-        $this->pos_x += $dx + ($d < 10 ? mt_rand(-3,3) : 0);
-        $this->pos_y += $dy + ($d < 10 ? mt_rand(-3,3) : 0);
+        $this->pos_x += $dx + ($d < 10 ? random_int(-3,3) : 0);
+        $this->pos_y += $dy + ($d < 10 ? random_int(-3,3) : 0);
 
         $this->pos_x = max(0,min($this->field[0], $this->pos_x));
         $this->pos_y = max(0,min($this->field[1], $this->pos_y));

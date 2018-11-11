@@ -384,9 +384,9 @@ return array(
                 'inherit' => array(),
                 'f' => function($mode, $level) {
                         //Inventory
-                        Globals::CurrentPlayer()->inventory()->limit(100);
+                        Globals::CurrentPlayerF()->inventory()->limit(100);
 
-                        Globals::CurrentPlayer()->get_status()->set(
+                        Globals::CurrentPlayerF()->get_status()->set(
                             Model_Status::MS_STAT_DRUNK,	0,
                             Model_Status::MS_STAT_ENERGY,	100,
                             Model_Status::MS_STAT_HEALTH,	100,
@@ -409,11 +409,11 @@ return array(
 
                         //Clothes
                         $clothes = new Model_Items_Clothes();
-                        Globals::CurrentPlayer()->inventory()->add($clothes);
-                        $clothes->equip(Globals::CurrentPlayer());
+                        Globals::CurrentPlayerF()->inventory()->add($clothes);
+                        $clothes->equip(Globals::CurrentPlayerF());
 
                         //Hero items
-                        Globals::CurrentPlayer()->inventory()->add(new Model_Items_Virtual_Hero_Common());
+                        Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Virtual_Hero_Common());
                     }
             )
         ),
@@ -448,8 +448,8 @@ return array(
             'setup' => array(
                 'inherit' => array(0),
                 'f' => function($mode, $level) {
-                        Globals::CurrentPlayer()->inventory()->add(new Model_Items_Bottle);
-                        Globals::CurrentPlayer()->inventory()->add(new Model_Items_Cyanide);
+                        Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Bottle);
+                        Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Cyanide);
                     }
             )
         ),
@@ -469,9 +469,9 @@ return array(
             'levels' => array(),
             'setup' => array('inherit' => array(1010), 'f' => function($mode, $level) {
                     $item = new Model_Items_Miniknife();
-                    Globals::CurrentPlayer()->inventory()->add($item);
-                    $item->equip(Globals::CurrentPlayer());
-                    Globals::CurrentPlayerActual()->battle_stats([4,6,null,null]); // INI ATK DEF ACC
+                    Globals::CurrentPlayerF()->inventory()->add($item);
+                    $item->equip(Globals::CurrentPlayerF());
+                    Globals::CurrentPlayerActualF()->battle_stats([4,6,null,null]); // INI ATK DEF ACC
                 }),
         ),
         1012 => array(
@@ -489,9 +489,9 @@ return array(
 
             'levels' => array(),
             'setup' => array('inherit' => array(1010), 'f' => function($mode, $level) {
-                    Globals::CurrentPlayer()->inventory()->limit(110);
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Briefcase);
-                    Globals::CurrentPlayerActual()->battle_stats([6,4,null,null]); // INI ATK DEF ACC
+                    Globals::CurrentPlayerF()->inventory()->limit(110);
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Briefcase);
+                    Globals::CurrentPlayerActualF()->battle_stats([6,4,null,null]); // INI ATK DEF ACC
                 }),
         ),
         1020 => array(
@@ -510,16 +510,16 @@ return array(
             'levels' => array(100, 250, 500, 1000, 2000),
             'setup' => array('inherit' => array(1010), 'f' => function($mode, $level) {
                     new Model_Buffs_Job_Soldier(null, $level);
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Virtual_Hero_Soldier($level));
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Virtual_Hero_Soldier($level));
                     $item = null;
-                    Globals::CurrentPlayer()->battle_stats([null,6,null,null]); // INI ATK DEF ACC
+                    Globals::CurrentPlayerF()->battle_stats([null,6,null,null]); // INI ATK DEF ACC
                     switch ($level) {
-                        case 3: case 4:	$item = new Model_Items_Handgun(); Globals::CurrentPlayerActual()->battle_stats([null,null,null,6]); break;
-                        case 5:			$item = new Model_Items_Rifle(); Globals::CurrentPlayerActual()->battle_stats([null,null,null,8]); break;
+                        case 3: case 4:	$item = new Model_Items_Handgun(); Globals::CurrentPlayerActualF()->battle_stats([null,null,null,6]); break;
+                        case 5:			$item = new Model_Items_Rifle(); Globals::CurrentPlayerActualF()->battle_stats([null,null,null,8]); break;
                     }
                     if ($item) {
-                        Globals::CurrentPlayer()->inventory()->add($item);
-                        $item->equip(Globals::CurrentPlayer());
+                        Globals::CurrentPlayerF()->inventory()->add($item);
+                        $item->equip(Globals::CurrentPlayerF());
                     }
 
                 }),
@@ -539,9 +539,9 @@ return array(
 
             'levels' => array(100, 250,  500, 1000, 2000),
             'setup' => array('inherit' => array(1010), 'f' => function($mode, $level) {
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Virtual_Hero_Pathfinder($level));
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Virtual_Hero_Pathfinder($level));
                     new Model_Buffs_Job_Pathfinder(null, $level);
-                    Globals::CurrentPlayerActual()->battle_stats([7,null,null,null]); // INI ATK DEF ACC
+                    Globals::CurrentPlayerActualF()->battle_stats([7,null,null,null]); // INI ATK DEF ACC
                 }),
         ),
         1040 => array(
@@ -559,13 +559,13 @@ return array(
 
             'levels' => array(100, 250,  500, 1000, 2000),
             'setup' => array('inherit' => array(1010), 'f' => function($mode, $level) {
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Holybook);
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Virtual_Hero_Missionary($level));
-                    Globals::CurrentPlayerActual()->battle_stats([6,4,4,4]); // INI ATK DEF ACC
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Holybook);
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Virtual_Hero_Missionary($level));
+                    Globals::CurrentPlayerActualF()->battle_stats([6,4,4,4]); // INI ATK DEF ACC
                     if ($level >= 2)
-                        for ($i = 0; $i < 6; $i++) Globals::CurrentPlayer()->location()->inventory()->add(new Model_Items_Wine);
+                        for ($i = 0; $i < 6; $i++) Globals::CurrentPlayerF()->location()->inventory()->add(new Model_Items_Wine);
                     if ($level >= 3)
-                        Globals::CurrentGame()->map()->add_location('Model_Places_Cathedral');
+                        Globals::CurrentGameF()->main_map()->add_location('Model_Places_Cathedral');
                 }),
         ),
         1050 => array(
@@ -583,20 +583,20 @@ return array(
 
             'levels' => array(100, 250,  500, 1000, 2000),
             'setup' => array('inherit' => array(1010), 'f' => function($mode, $level) {
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Virtual_Hero_Snot($level));
-                    Globals::CurrentPlayer()->get_status()->set(	Model_Status::MS_STAT_HUNGER,100,Model_Status::MS_STAT_THIRST,100);
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Virtual_Hero_Snot($level));
+                    Globals::CurrentPlayerF()->get_status()->set(	Model_Status::MS_STAT_HUNGER,100,Model_Status::MS_STAT_THIRST,100);
 
                     if ($level >= 2)
                     {
-                        Globals::CurrentPlayer()->location()->inventory()->add(new Model_Items_Generic_Gwood);
-                        Globals::CurrentPlayer()->location()->inventory()->add(new Model_Items_Generic_Gmetal);
+                        Globals::CurrentPlayerF()->location()->inventory()->add(new Model_Items_Generic_Gwood);
+                        Globals::CurrentPlayerF()->location()->inventory()->add(new Model_Items_Generic_Gmetal);
                     }
                     if ($level >= 3)
-                        Globals::CurrentGame()->map()->add_location('Model_Places_Villa');
+                        Globals::CurrentGameF()->main_map()->add_location('Model_Places_Villa');
 
                     if ($level >= 4) {
-                        Tool_Scripts::home(Globals::CurrentGame())->setup_new_room(Tool_Scripts::home(Globals::CurrentGame())->create_new_room(10, ['inside']), ['bedroom'], ['bedr1']);
-                        Tool_Scripts::home(Globals::CurrentGame())->setup_new_room(Tool_Scripts::home(Globals::CurrentGame())->create_new_room(10, ['inside']), ['workshop'], []);
+                        Tool_Scripts::home(Globals::CurrentGameF())->setup_new_room(Tool_Scripts::home(Globals::CurrentGameF())->create_new_room(10, ['inside']), ['bedroom'], ['bedr1']);
+                        Tool_Scripts::home(Globals::CurrentGameF())->setup_new_room(Tool_Scripts::home(Globals::CurrentGameF())->create_new_room(10, ['inside']), ['workshop'], []);
                     }
                 }),
         ),
@@ -615,8 +615,8 @@ return array(
 
             'levels' => array(100, 250,  500, 1000, 2000),
             'setup' => array('inherit' => array(1010), 'f' => function($mode, $level) {
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Virtual_Hero_Survivalist($level));
-                    Globals::CurrentPlayerActual()->battle_stats([null,null,6,null]); // INI ATK DEF ACC
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Virtual_Hero_Survivalist($level));
+                    Globals::CurrentPlayerActualF()->battle_stats([null,null,6,null]); // INI ATK DEF ACC
                 }),
         ),
         1070 => array(
@@ -635,18 +635,18 @@ return array(
             'levels' => array(100, 250,  500, 1000, 2000),
             'setup' => array('inherit' => array(1010), 'f' => function($mode, $level) {
                     switch ($level) {
-                        case 1: case 2: Globals::CurrentPlayer()->inventory()->limit(115); break;
-                        case 3:			Globals::CurrentPlayer()->inventory()->limit(125); break;
-                        case 4:			Globals::CurrentPlayer()->inventory()->limit(135); break;
-                        case 5:			Globals::CurrentPlayer()->inventory()->limit(150); break;
-                        case 6:			Globals::CurrentPlayer()->inventory()->limit(166); break;
+                        case 1: case 2: Globals::CurrentPlayerF()->inventory()->limit(115); break;
+                        case 3:			Globals::CurrentPlayerF()->inventory()->limit(125); break;
+                        case 4:			Globals::CurrentPlayerF()->inventory()->limit(135); break;
+                        case 5:			Globals::CurrentPlayerF()->inventory()->limit(150); break;
+                        case 6:			Globals::CurrentPlayerF()->inventory()->limit(166); break;
                     }
-                    Globals::CurrentPlayerActual()->battle_stats([null,8,3,4]); // INI ATK DEF ACC
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Virtual_Hero_Muscle($level));
+                    Globals::CurrentPlayerActualF()->battle_stats([null,8,3,4]); // INI ATK DEF ACC
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Virtual_Hero_Muscle($level));
                     if ($level > 1 && $level < 5)
-                        Globals::CurrentPlayer()->inventory()->add(new Model_Items_Bmt);
+                        Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Bmt);
                     elseif ($level >= 5)
-                        Globals::CurrentPlayer()->inventory()->add(new Model_Items_Bmt2);
+                        Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Bmt2);
                 }),
         ),
         1080 => array(
@@ -665,29 +665,29 @@ return array(
             'levels' => array(),
             'setup' => array('inherit' => array(10000), 'f' => function($mode, $level) {
                     new Model_Buffs_Metabolism2();
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Virtual_Hero_Child($level));
-                    Globals::CurrentPlayer()->inventory()->limit(50);
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Generic_Teddy());
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Virtual_Hero_Child($level));
+                    Globals::CurrentPlayerF()->inventory()->limit(50);
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Generic_Teddy());
 
-                    Globals::CurrentPlayer()->get_status()->scaling_add(Model_Status::MS_STAT_DRUNK, Model_Status::MS_EFFECT_GLOBAL, 'child_booze', 2.5);
-                    Globals::CurrentPlayerActual()->battle_stats([12,2,2,null]); // INI ATK DEF ACC
+                    Globals::CurrentPlayerF()->get_status()->scaling_add(Model_Status::MS_STAT_DRUNK, Model_Status::MS_EFFECT_GLOBAL, 'child_booze', 2.5);
+                    Globals::CurrentPlayerActualF()->battle_stats([12,2,2,null]); // INI ATK DEF ACC
                 }),
         ),
         2000 => array(
             'setup' => array('inherit' => array(0), 'f' => function($mode, $level) {
-                    Globals::CurrentPlayer()->get_status()->set(	Model_Status::MS_STAT_HUNGER,	100,
+                    Globals::CurrentPlayerF()->get_status()->set(	Model_Status::MS_STAT_HUNGER,	100,
                         Model_Status::MS_STAT_THIRST,	100);
 
                     $bottle = new Model_Items_Bottle;
                     $bottle->add_water(4, 0);
-                    Globals::CurrentPlayer()->inventory()->add($bottle);
+                    Globals::CurrentPlayerF()->inventory()->add($bottle);
 
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Paracetoid);
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Paracetin);
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Ammobelt);
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Bottle);
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Bottle);
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Cyanide);
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Paracetoid);
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Paracetin);
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Ammobelt);
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Bottle);
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Bottle);
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Cyanide);
                 }),
         ),
         2010 => array(
@@ -708,10 +708,10 @@ return array(
                     $items = [new Model_Items_Machete3(), new Model_Items_Batgun()];
                     /** @var Model_Items_Abstract_Equipable $item */
                     foreach ($items as $item) {
-                        Globals::CurrentPlayer()->inventory()->add($item);
-                        $item->equip(Globals::CurrentPlayer());
+                        Globals::CurrentPlayerF()->inventory()->add($item);
+                        $item->equip(Globals::CurrentPlayerF());
                     }
-                    Globals::CurrentPlayerActual()->battle_stats([null,6,6,4]); // INI ATK DEF ACC
+                    Globals::CurrentPlayerActualF()->battle_stats([null,6,6,4]); // INI ATK DEF ACC
                 }),
         ),
         2020 => array(
@@ -731,10 +731,10 @@ return array(
             'setup' => array('inherit' => array(2000), 'f' => function($mode, $level) {
                     $items = [new Model_Items_Machete(), new Model_Items_Batgun4()];
                     /** @var Model_Items_Abstract_Equipable $item */
-                    Globals::CurrentPlayerActual()->battle_stats([6,4,null,6]); // INI ATK DEF ACC
+                    Globals::CurrentPlayerActualF()->battle_stats([6,4,null,6]); // INI ATK DEF ACC
                     foreach ($items as $item) {
-                        Globals::CurrentPlayer()->inventory()->add($item);
-                        $item->equip(Globals::CurrentPlayer());
+                        Globals::CurrentPlayerF()->inventory()->add($item);
+                        $item->equip(Globals::CurrentPlayerF());
                     }
                 }),
         ),
@@ -755,37 +755,37 @@ return array(
             'setup' => array('inherit' => array(2000), 'f' => function($mode, $level) {
                     $items = [new Model_Items_Machete2(), new Model_Items_Batgun3()];
                     /** @var Model_Items_Abstract_Equipable $item */
-                    Globals::CurrentPlayerActual()->battle_stats([null,6,null,6]); // INI ATK DEF ACC
+                    Globals::CurrentPlayerActualF()->battle_stats([null,6,null,6]); // INI ATK DEF ACC
                     foreach ($items as $item) {
-                        Globals::CurrentPlayer()->inventory()->add($item);
-                        $item->equip(Globals::CurrentPlayer());
+                        Globals::CurrentPlayerF()->inventory()->add($item);
+                        $item->equip(Globals::CurrentPlayerF());
                     }
                 }),
         ),
         3000 => array(
             'setup' => array('inherit' => array(0), 'f' => function($mode, $level) {
-                    Globals::CurrentPlayer()->get_status()->set(	Model_Status::MS_STAT_HUNGER,	60,
+                    Globals::CurrentPlayerF()->get_status()->set(	Model_Status::MS_STAT_HUNGER,	60,
                         Model_Status::MS_STAT_THIRST,	75);
 
                     $bottle = new Model_Items_Bottle;
                     $bottle->add_water(4, 0);
-                    Globals::CurrentPlayer()->inventory()->add($bottle);
+                    Globals::CurrentPlayerF()->inventory()->add($bottle);
 
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Paracetoid);
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Paracetin);
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Ammobelt);
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Maptool);
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Lunchbox);
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Cyanide);
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Paracetoid);
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Paracetin);
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Ammobelt);
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Maptool);
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Lunchbox);
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Cyanide);
 
                     $items = [new Model_Items_Machete(), new Model_Items_Batgun()];
                     /** @var Model_Items_Abstract_Equipable $item */
                     foreach ($items as $item) {
-                        Globals::CurrentPlayer()->inventory()->add($item);
-                        $item->equip(Globals::CurrentPlayer());
+                        Globals::CurrentPlayerF()->inventory()->add($item);
+                        $item->equip(Globals::CurrentPlayerF());
                     }
 
-                    Globals::CurrentPlayerActual()->battle_stats([10,4,4,7]); // INI ATK DEF ACC
+                    Globals::CurrentPlayerActualF()->battle_stats([10,4,4,7]); // INI ATK DEF ACC
                 }),
         ),
         3010 => array(
@@ -836,8 +836,8 @@ return array(
             'levels' => array(500, 1500),
             'setup' => array('inherit' => array(3000), 'f' => function($mode, $level) {
                     if ($level >= 3) {
-                        Globals::CurrentPlayer()->inventory()->add(new Model_Items_Generic_Lasermapper);
-                        Globals::CurrentPlayer()->inventory()->add(new Model_Items_Generic_Lasermapper);
+                        Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Generic_Lasermapper);
+                        Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Generic_Lasermapper);
                     }
                 }),
         ),
@@ -858,30 +858,30 @@ return array(
             'setup' => array('inherit' => array(0), 'f' => function($mode, $level) {
                     $bottle = new Model_Items_Bottle;
                     $bottle->add_water(2, 16);
-                    Globals::CurrentPlayer()->inventory()->add($bottle);
+                    Globals::CurrentPlayerF()->inventory()->add($bottle);
 
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Paracetoid);
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Paracetin);
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Cyanide);
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Paracetoid);
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Paracetin);
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Cyanide);
 
                     $item = new Model_Items_Miniknife();
-                    Globals::CurrentPlayer()->inventory()->add($item);
-                    $item->equip(Globals::CurrentPlayer());
+                    Globals::CurrentPlayerF()->inventory()->add($item);
+                    $item->equip(Globals::CurrentPlayerF());
 
-                    Globals::CurrentPlayerActual()->battle_stats([6,6,6,6]); // INI ATK DEF ACC
+                    Globals::CurrentPlayerActualF()->battle_stats([6,6,6,6]); // INI ATK DEF ACC
 
-                    Globals::CurrentGame()->map()->add_location('Model_Places_Colosseum');
+                    Globals::CurrentGameF()->main_map()->add_location('Model_Places_Colosseum');
             }),
         ),
         10000 => array(
             'setup' => array('inherit' => array(0), 'f' => function($mode, $level) {
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Bottle);
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Ammobelt());
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Bottle);
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Ammobelt());
 
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Cyanide());
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Cyanide());
                     $item = new Model_Items_Batgun();
-                    Globals::CurrentPlayer()->inventory()->add($item);
-                    $item->equip(Globals::CurrentPlayer());
+                    Globals::CurrentPlayerF()->inventory()->add($item);
+                    $item->equip(Globals::CurrentPlayerF());
                 }),
         ),
         10010 => array(
@@ -900,8 +900,8 @@ return array(
             'levels' => array(),
             'setup' => array('inherit' => array(10000), 'f' => function($mode, $level) {
                     $item = new Model_Items_Machete();
-                    Globals::CurrentPlayer()->inventory()->add($item);
-                    $item->equip(Globals::CurrentPlayer());
+                    Globals::CurrentPlayerF()->inventory()->add($item);
+                    $item->equip(Globals::CurrentPlayerF());
                 }),
         ),
         10020 => array(
@@ -919,12 +919,12 @@ return array(
 
             'levels' => array(100, 200, 300, 500, 800, 1300, 2100, 3400, 5500),
             'setup' => array('inherit' => array(10000), 'f' => function($mode, $level) {
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Virtual_Hero_Coach($level));
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Virtual_Hero_Coach($level));
                     $item = new Model_Items_Machete();
-                    Globals::CurrentPlayer()->inventory()->add($item);
-                    $item->equip(Globals::CurrentPlayer());
+                    Globals::CurrentPlayerF()->inventory()->add($item);
+                    $item->equip(Globals::CurrentPlayerF());
                     new Model_Buffs_Job_Coach(null, $level);
-                    Globals::CurrentPlayerActual()->battle_stats([null,null,5 + floor($level/2),null]); // INI ATK DEF ACC
+                    Globals::CurrentPlayerActualF()->battle_stats([null,null,5 + floor($level/2),null]); // INI ATK DEF ACC
                 }),
         ),
         10030 => array(
@@ -942,11 +942,11 @@ return array(
 
             'levels' => array(100, 200, 300, 500, 800, 1300, 2100, 3400, 5500),
             'setup' => array('inherit' => array(10000), 'f' => function($mode, $level) {
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Virtual_Hero_Student($level));
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Virtual_Hero_Student($level));
                     $item = new Model_Items_Machete();
-                    Globals::CurrentPlayer()->inventory()->add($item);
-                    $item->equip(Globals::CurrentPlayer());
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Bandage());
+                    Globals::CurrentPlayerF()->inventory()->add($item);
+                    $item->equip(Globals::CurrentPlayerF());
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Bandage());
                 }),
         ),
         10040 => array(
@@ -964,29 +964,29 @@ return array(
 
             'levels' => array(100, 200, 300, 500, 800, 1300, 2100, 3400, 5500),
             'setup' => array('inherit' => array(10000), 'f' => function($mode, $level) {
-                    Globals::CurrentPlayer()->inventory()->add(new Model_Items_Virtual_Hero_Woman($level));
+                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Virtual_Hero_Woman($level));
                     $item = new Model_Items_Pepperspray();
-                    Globals::CurrentPlayer()->inventory()->add($item);
-                    $item->equip(Globals::CurrentPlayer());
-                    Globals::CurrentPlayerActual()->battle_stats([null,5 + floor($level/2),null,null]); // INI ATK DEF ACC
+                    Globals::CurrentPlayerF()->inventory()->add($item);
+                    $item->equip(Globals::CurrentPlayerF());
+                    Globals::CurrentPlayerActualF()->battle_stats([null,5 + floor($level/2),null,null]); // INI ATK DEF ACC
                     new Model_Buffs_Job_Woman(null, $level);
                 }),
         ),
 
         12000 => array(
             'setup' => array('inherit' => array(0), 'f' => function($mode, $level) {
-                Globals::CurrentPlayer()->inventory()->add(new Model_Items_Bottle);
-                Globals::CurrentPlayer()->inventory()->add(new Model_Items_Ammobelt());
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Bottle);
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Ammobelt());
 
-                Globals::CurrentPlayer()->inventory()->add(new Model_Items_Cyanide());
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Cyanide());
 
                 $item = new Model_Items_Batgun();
-                Globals::CurrentPlayer()->inventory()->add($item);
-                $item->equip(Globals::CurrentPlayer());
+                Globals::CurrentPlayerF()->inventory()->add($item);
+                $item->equip(Globals::CurrentPlayerF());
 
                 $item2 = new Model_Items_Machete();
-                Globals::CurrentPlayer()->inventory()->add($item2);
-                $item2->equip(Globals::CurrentPlayer());
+                Globals::CurrentPlayerF()->inventory()->add($item2);
+                $item2->equip(Globals::CurrentPlayerF());
             }),
         ),
         12010 => array(
@@ -1004,9 +1004,9 @@ return array(
             'levels' => array(10,100,500,1000,2000,5000),
             'setup' => array('inherit' => array(12000), 'f' => function($mode, $level) {
                 /** @global Model_Player $player */
-                Globals::CurrentPlayer()->inventory()->add(new Model_Items_Stash(min(6,$level*2)));
-                if ($level >= 3) Globals::CurrentPlayer()->inventory()->add(new Model_Items_Stash2(min(6,($level-2)*2)));
-                if ($level >= 6) Globals::CurrentPlayer()->inventory()->add(new Model_Items_Stash3(min(6,($level-5)*3)));
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Stash(min(6,$level*2)));
+                if ($level >= 3) Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Stash2(min(6,($level-2)*2)));
+                if ($level >= 6) Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Stash3(min(6,($level-5)*3)));
                 
             }),
         ),
@@ -1024,7 +1024,7 @@ return array(
             ),
             'levels' => array(10,100,500,1000,2000,5000),
             'setup' => array('inherit' => array(12000), 'f' => function($mode, $level) {
-                Globals::CurrentPlayer()->get_status()->set_fixed_threshold(Model_Status::MS_CHAR_ITEM_SPAWNRATE, 1 + 0.15 * $level);
+                Globals::CurrentPlayerF()->get_status()->set_fixed_threshold(Model_Status::MS_CHAR_ITEM_SPAWNRATE, 1 + 0.15 * $level);
             }),
         ),
         12030 => array(
@@ -1042,8 +1042,8 @@ return array(
             'levels' => array(10,100,500,1000,2000,5000),
             'setup' => array('inherit' => array(12000), 'f' => function($mode, $level) {
                 $item = new Model_Items_Guardshield($level);
-                Globals::CurrentPlayer()->inventory()->add($item);
-                $item->equip(Globals::CurrentPlayer());
+                Globals::CurrentPlayerF()->inventory()->add($item);
+                $item->equip(Globals::CurrentPlayerF());
             }),
         ),
         12040 => array(
@@ -1060,7 +1060,7 @@ return array(
             ),
             'levels' => array(10,100,500,1000,2000,5000),
             'setup' => array('inherit' => array(12000), 'f' => function($mode, $level) {
-                Globals::CurrentPlayer()->inventory()->add(new Model_Items_Virtual_Hero_Hunter($level));
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Virtual_Hero_Hunter($level));
             }),
         ),
         12050 => array(
@@ -1077,8 +1077,8 @@ return array(
             ),
             'levels' => array(10,100,500,1000,2000,5000),
             'setup' => array('inherit' => array(12000), 'f' => function($mode, $level) {
-                Globals::CurrentPlayer()->get_status()->set_fixed_threshold(Model_Status::MS_CHAR_LOCATION_SPAWNRATE, 1 + 0.15 * $level);
-                Globals::CurrentPlayer()->inventory()->add(new Model_Items_Virtual_Hero_Eclair($level));
+                Globals::CurrentPlayerF()->get_status()->set_fixed_threshold(Model_Status::MS_CHAR_LOCATION_SPAWNRATE, 1 + 0.15 * $level);
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Virtual_Hero_Eclair($level));
             }),
         ),
 
@@ -1097,9 +1097,9 @@ return array(
             'levels' => array(10,100,500,1000,2000,5000),
             'setup' => array('inherit' => array(12000), 'f' => function($mode, $level) {
                 $npc = new Model_NPC_Special_Doodle($level);
-                $npc->location_class(Globals::CurrentPlayer()->location_class());
-                Globals::CurrentGame()->add_npc($npc);
-                Globals::CurrentPlayer()->location()->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $npc->id(), true));
+                $npc->location_class(Globals::CurrentPlayerF()->location_class());
+                Globals::CurrentGameF()->add_npc($npc);
+                Globals::CurrentPlayerF()->location()->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $npc->id(), true));
             }),
         ),
 
@@ -1117,7 +1117,7 @@ return array(
             ),
             'levels' => array(10,100,500,1000,2000,5000),
             'setup' => array('inherit' => array(12000), 'f' => function($mode, $level) {
-                Globals::CurrentPlayer()->get_status()->scaling_add(Model_Status::MS_STAT_ENERGY, Model_Status::MS_EFFECT_REQUIREMENT, 'tech', 1 - 0.1 * $level);
+                Globals::CurrentPlayerF()->get_status()->scaling_add(Model_Status::MS_STAT_ENERGY, Model_Status::MS_EFFECT_REQUIREMENT, 'tech', 1 - 0.1 * $level);
             }),
         ),
 
@@ -1135,7 +1135,7 @@ return array(
             ),
             'levels' => array(10,100,500,1000,2000,5000),
             'setup' => array('inherit' => array(12000), 'f' => function($mode, $level) {
-                Globals::CurrentPlayer()->inventory()->add(new Model_Items_Mask($level));
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Mask($level));
             }),
         ),
     )

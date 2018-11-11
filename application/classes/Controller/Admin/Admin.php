@@ -90,9 +90,13 @@ abstract class Controller_Admin_Admin extends Controller {
 
         $admin_state = $this->session->get('admin',null);
 
-        if (!$admin_state || !is_array($admin_state) || !isset($admin_state['ip']) ||
-            !isset($admin_state['client']) || !isset($admin_state['expires']) || $admin_state['expires'] < time() ||
-            $admin_state['ip'] != $_SERVER['REMOTE_ADDR'] || $admin_state['client'] != $_SERVER['HTTP_USER_AGENT'])
+        if (!isset($admin_state['ip'], $admin_state['client']) || !$admin_state
+            || !is_array($admin_state)
+            || !isset($admin_state['expires'])
+            || $admin_state['expires'] < time()
+            || $admin_state['ip'] != $_SERVER['REMOTE_ADDR']
+            || $admin_state['client'] != $_SERVER['HTTP_USER_AGENT']
+        )
         {
             $this->admin_status_revoke();
             return 0;
@@ -116,11 +120,11 @@ abstract class Controller_Admin_Admin extends Controller {
     }
 
     protected function force_admin() {
-        Error::i();
+        GRGEError::i();
         if (!(static::$allow_skip_login || $this->admin_status_get()) || !static::priv_allow_all(static::$auto_require)) {
             if (!$this->is_ajax_request())
                 // Output error message as string
-                die(Error::m(\grge\E_SERVER_ACCESS_DENIED));
+                die(GRGEError::m(\grge\E_SERVER_ACCESS_DENIED));
             else {
                 // Create JSOn error output, then stop the action from being executed by redirecting to noaction
                 $this->error(\grge\E_SERVER_ACCESS_DENIED);
@@ -134,7 +138,7 @@ abstract class Controller_Admin_Admin extends Controller {
 
         //Check admin privileges
         if (Globals::hasCurrentUser() && static::$force_admin) {
-            static::priv_get(Globals::CurrentUser()->uid());
+            static::priv_get(Globals::CurrentUserF()->uid());
             $this->force_admin();
         }
     }

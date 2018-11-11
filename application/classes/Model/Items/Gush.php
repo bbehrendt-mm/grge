@@ -38,7 +38,7 @@ class Model_Items_Gush extends Model_Combat_Weapons_Throwable {
     public function generate_wound($damage) {
         if ($damage <= 0) return null;
 
-        $injury = mt_rand(0,100);
+        $injury = random_int(0,100);
         if ($injury < min(50,$damage * 10))
             return Model_Buffs_Poison::cls();
         else return null;

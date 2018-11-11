@@ -16,9 +16,11 @@ abstract class Model_Combat_Weapons_Energy extends Model_Combat_Weapon {
     /**
      * @param Model_Combat_Actor $me
      * @param Model_Combat_Actor $opponent
-     * @param number $damage
+     * @param number             $damage
      * @param Model_Combat_Scene $scene
+     *
      * @return bool
+     * @throws Exception
      */
     public function trigger_usage(Model_Combat_Actor $me, Model_Combat_Actor $opponent, $damage, Model_Combat_Scene $scene) {
         if ($this->registered_user)
@@ -33,7 +35,7 @@ abstract class Model_Combat_Weapons_Energy extends Model_Combat_Weapon {
     public function equip($p = null) {
         /** @global Model_Player $player */
         if ($p === null)
-            $player = Globals::PrimaryPlayer();
+            $player = Globals::PrimaryPlayerF();
         else $player = $p;
 
         if (!Tool_Scripts::is_npc($player) && $player->job(1080)) {

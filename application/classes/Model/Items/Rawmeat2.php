@@ -19,7 +19,7 @@ class Model_Items_Rawmeat2 extends Model_Items_Abstract_Item implements Interfac
                         ->effect(Model_Status::MS_STAT_HUNGER, 16)
                         ->effect(Model_Status::MS_STAT_HEALTH, -1)
                         ->consume($this)
-                        ->spawn('Model_Items_Bone')
+                        ->spawn(Model_Items_Bone::cls())
                         ->message('Beim Kochen sind nicht nur die meisten Salmonellen, sondern auch fast alle Geschmacksstoffe verloren gegangen. Glücklicherweise handelt es sich hier um einen Knochen mit Fleisch, der Verlust von Geschmack ist also etwas sehr gutes...')
                 )
             );

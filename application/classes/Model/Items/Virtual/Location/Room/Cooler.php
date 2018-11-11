@@ -44,8 +44,8 @@ class Model_Items_Virtual_Location_Room_Cooler extends Model_Items_Abstract_Virt
                     ->consume($this)
                     ->custom(function() {
                         $items = array();
-                        $r_food = mt_rand(2, 10);
-                        $r_drinks = mt_rand(3, 8);
+                        $r_food = random_int(2, 10);
+                        $r_drinks = random_int(3, 8);
                         for ($i = 0; $i < $r_food; $i++) $items[] = new Model_Items_Fastfood();
                         for ($i = 0; $i < $r_drinks; $i++) $items[] = new Model_Items_Softdrink();
                         Tool_Scripts::place_new_item($items);

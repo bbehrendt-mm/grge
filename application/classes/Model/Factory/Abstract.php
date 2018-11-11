@@ -13,7 +13,7 @@ abstract class Model_Factory_Abstract extends Model {
 
     public static function load($location, $group = 'default', $fallback = ['default']) {
         if ($location === null) {
-            $s = get_called_class();
+            $s = static::class;
             return new $s();
         }
         else {
@@ -53,7 +53,7 @@ abstract class Model_Factory_Abstract extends Model {
      * @return $this
      */
     public static function factory($group = 'default', $import_from = null) {
-        $s = get_called_class();
+        $s = static::class;
         return new $s($group, $import_from);
     }
 
@@ -89,7 +89,7 @@ abstract class Model_Factory_Abstract extends Model {
      */
     public function equalize($resolve_import_paths = null) {
         $gs = 0;
-        $s = get_called_class();
+        $s = static::class;
 
         if (!$resolve_import_paths)
             $resolve_import_paths = array_merge([$this->group], $this->import_from ? $this->import_from : []);

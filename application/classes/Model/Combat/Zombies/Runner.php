@@ -3,7 +3,7 @@
 class Model_Combat_Zombies_Runner extends Model_Combat_Zombies_Zombie {
 
     public static $custom_sprite = 'zombie_ghul.gif';
-    protected $name = 'Wahnsinnige Ghule';
+    protected $actor_name = 'Wahnsinnige Ghule';
     protected $max_health = 2;
 
     protected $stat_initiative = 10;

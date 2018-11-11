@@ -47,7 +47,7 @@ abstract class Model_Gamelayer_Logic extends Model_Gamelayer_Io {
         $ret = [];
 
         foreach ($this->set['gamedata']->ghuls as $k => $gob)
-            if (mt_rand(0,100) < (($gob['location'] == $lid) ? 30 : 5)) {
+            if (random_int(0,100) < (($gob['location'] == $lid) ? 30 : 5)) {
                 $ret[$k] = $gob['data'];
                 break;
             }
@@ -74,12 +74,15 @@ abstract class Model_Gamelayer_Logic extends Model_Gamelayer_Io {
 		
 		//Consume items
 		foreach ($data as $class => $count)
-			if (Tool_System::instance_of($class, 'Model_Items_Abstract_Ammo')) {
+			if (Tool_System::instance_of($class, Model_Items_Abstract_Ammo::cls())) {
 				/** @var $belt Model_Items_Ammobelt[] */
-                if ((!$belt = Tool_Scripts::available_items('Model_Items_Ammobelt'))) return false;
+                if (!$belt = Tool_Scripts::available_items(Model_Items_Ammobelt::cls())) return false;
 				$belt[0]->get($class, $count);
 			}
-			else foreach (Tool_Scripts::available_items($class) as $item) if ($count > 0) if ((isset($callbacks) && isset($callbacks[$class]) && $callbacks[$class]($item)) || !isset($callbacks) || !isset($callbacks[$class]))
+			else foreach (Tool_Scripts::available_items($class) as $item) if ($count > 0) if (!isset($callbacks[$class])
+                || ($callbacks !== null && isset($callbacks[$class])
+                    && $callbacks[$class]($item))
+            )
 			{
 				$item->consume();
 				$count--;
@@ -90,9 +93,12 @@ abstract class Model_Gamelayer_Logic extends Model_Gamelayer_Io {
 
     /**
      * Returns TRUE, if given UIN can be used as an item (based on the inventory the item currently resides in)
-     * @param number $uin
+     *
+     * @param number             $uin
      * @param Interface_Plentity $perspective
+     *
      * @return bool
+     * @throws Exception
      */
 	final public function item_available($uin, $perspective = null) {
         $at_loc_rooms = false;
@@ -104,7 +110,7 @@ abstract class Model_Gamelayer_Logic extends Model_Gamelayer_Io {
 
 		//Check player inventory and location inventory
 		return (
-            Globals::CurrentPlayer()->inventory()->has($uin) ||
+            Globals::CurrentPlayerF()->inventory()->has($uin) ||
             $at_loc_rooms ||
             ($this->location() ? $this->location()->inventory()->has($uin) : false) ||
             ($perspective && $perspective->allow(Interface_Plentity::IC_ALLOW_SHOW_INVENTORY)));

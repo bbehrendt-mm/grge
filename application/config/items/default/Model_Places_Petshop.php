@@ -6,5 +6,5 @@
         ->add('gp_hideout', 1)
         ->add('gp_petstuff', 2)
         ->add(Model_Items_Virtual_Invoke_Animal::cls()        , 2)
-        ->add('Model_Items_Money', 2)
+        ->add(Model_Items_Money::cls(), 2)
         ;

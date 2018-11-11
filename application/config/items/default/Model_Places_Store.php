@@ -8,5 +8,5 @@
         ->add('gp_fastfood', 1)
         ->add('gp_ammo', 2)
         ->add('gp_weapons', 1)
-        ->add('Model_Items_Pumpkin', 1)
+        ->add(Model_Items_Pumpkin::cls(), 1)
         ;

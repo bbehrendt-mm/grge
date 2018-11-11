@@ -103,7 +103,7 @@ class Controller_Chat extends Controller {
     }
 
     private function transmute($msg, $user, $room, $users) {
-        if (mb_strlen($msg) == 0) return false;
+        if ($msg === '') return false;
         $msg = mb_substr($msg, 0, 512);
 
         if ($this->count_messages($user,180) >= 50) return false;
@@ -114,22 +114,22 @@ class Controller_Chat extends Controller {
 
         if ($msg[0] === '/') {
             $tmp_m = explode(' ', $msg, 2);
-            if (count($tmp_m) < 2) $tmp_m[1] = "";
-            list($command,$message) = $tmp_m;
+            if (count($tmp_m) < 2) $tmp_m[1] = '';
+            [$command,$message] = $tmp_m;
             $msg = $message;
         }
 
         $command = mb_strtolower($command);
 
-        if (in_array($command,['/whisper']))  {
+        if ($command === '/whisper')  {
             if (!$msg) return false;
             $tmp_m = explode(' ', $msg, 2);
             if (count($tmp_m) < 2) return false;
-            list($rec,$message) = $tmp_m;
+            [$rec,$message] = $tmp_m;
             foreach ($users as $uid => $entry)
-                if (mb_strtolower($entry[0]) == mb_strtolower($rec))
+                if (mb_strtolower($entry[0]) === mb_strtolower($rec))
                     $receiver = $uid;
-            if ($receiver == -1) return false;
+            if ($receiver === -1) return false;
         }
 
         switch ($command) {

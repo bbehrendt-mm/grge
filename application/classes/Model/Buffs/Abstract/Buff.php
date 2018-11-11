@@ -25,7 +25,8 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
 
     /** @var Interface_Plentity  */
 	protected $assoc_player;
-	protected $effects = Array();
+
+	protected $effects = [];
 	protected $lifetime = -1;
 
     /**
@@ -140,10 +141,10 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
 		$this->lifetime = $lifetime;
 
         if ($association === null)
-            $this->assoc_player = Globals::CurrentGame()->get_player();
+            $this->assoc_player = Globals::CurrentGameF()->get_player();
         elseif (is_object($association) && Tool_System::instance_of($association, 'Interface_Plentity'))
             $this->assoc_player = $association;
-        else $this->assoc_player = Globals::CurrentGame()->get_player($association);
+        else $this->assoc_player = Globals::CurrentGameF()->get_player($association);
 
         if (!$this->assoc_player) throw new Exception('Invalid buff association!');
 
@@ -197,7 +198,7 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
      * @return int
      */
     public function effect($stat, $type) {
-		if (isset($this->effects[$stat]) && isset($this->effects[$stat][$type]))
+		if (isset($this->effects[$stat], $this->effects[$stat][$type]))
 			 return $this->effects[$stat][$type];
 		else return 0;
 	}
@@ -214,9 +215,7 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
      * Gets called when a new buff with the same buff identifier is cast on a player; the function is called on the resident buff, with the new one as argument
      * @param Model_Buffs_Abstract_Buff $newclass
      */
-    public function merge($newclass) {
-		return;
-	}
+    public function merge($newclass) {}
 
     /**
      * Returns the buff lifetime

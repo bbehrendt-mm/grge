@@ -37,7 +37,7 @@ class Model_Action {
      * @return Model_Action
      */
     public static function factory() {
-        return new Model_Action();
+        return new self();
     }
 
     public function setParent(Model_Items_Abstract_Item $parent) {
@@ -65,7 +65,7 @@ class Model_Action {
     }
 
     /**
-     * @param number $args,...
+     * @param number|array $args,...
      * @return Model_Action
      */
     public function deny_for($args) {
@@ -77,7 +77,7 @@ class Model_Action {
     }
 
     /**
-     * @param number $args,...
+     * @param number|array $args,...
      * @return Model_Action
      */
     public function allow_for($args) {
@@ -133,15 +133,18 @@ class Model_Action {
     }
 
     /**
-     * @param string|null $flag
-     * @param mixed|null $value
-     * @return Model_Action|mixed|null
+     * @param string $flag
+     * @param mixed $value
+     * @return Model_Action
      */
-    public function flag($flag = null, $value = null) {
-        if ($flag === null) return $this->additional_flags;
-        elseif ($value === null) return isset($this->additional_flags[$flag]) ? $this->additional_flags[$flag] : null;
-        else $this->additional_flags[$flag] = $value;
+    public function flag($flag, $value): Model_Action {
+        $this->additional_flags[$flag] = $value;
         return $this;
+    }
+
+    public function get_flag($flag = null) {
+        if ($flag === null) return $this->additional_flags;
+        else return $this->additional_flags[$flag] ?? null;
     }
 
 
@@ -281,9 +284,11 @@ class Model_Action {
 
     /**
      * @param Model_Player|Interface_Plentity $player
-     * @param null|Model_Player $side_player
-     * @param null|mixed $argument
+     * @param null|Model_Player               $side_player
+     * @param null|mixed                      $argument
+     *
      * @return boolean
+     * @throws Exception
      */
     public function test($player, $side_player = null, $argument = null) {
         if ($this->popup) return false;
@@ -307,9 +312,11 @@ class Model_Action {
 
     /**
      * @param Model_Player|Interface_Plentity $player
-     * @param null|Model_Player $side_player
-     * @param null|mixed $argument
+     * @param null|Model_Player               $side_player
+     * @param null|mixed                      $argument
+     *
      * @return boolean
+     * @throws Exception
      */
     public function execute($player, $side_player = null, $argument = null) {
         if ($this->popup) return false;
@@ -354,7 +361,7 @@ class Model_Action {
             $tmp = $tmp[$func($player, $side_player, array_keys($this->effects))];
         } else {
             $tmp2 = array_keys($tmp);
-            $tmp = $tmp[$tmp2[mt_rand(0, count($tmp) - 1)]];
+            $tmp = $tmp[$tmp2[random_int(0, count($tmp) - 1)]];
         }
 
         /**
@@ -453,7 +460,7 @@ class Model_Action {
         foreach ($this->get_item_requirements() as $entry) {
             $class = $entry->class;
             /** @var Model_Items_Abstract_Item $class */
-            if (!Tool_System::instance_of($class,'Model_Items_Abstract_Virtual'))
+            if (!Tool_System::instance_of($class,Model_Items_Abstract_Virtual::cls()))
                 $t[] = array('icon' => $class::static_icon(), 'value' => $entry->count);
         }
 

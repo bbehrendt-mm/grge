@@ -141,6 +141,7 @@ class Controller_Admin_Wiki extends Controller_Admin_Admin {
 
         foreach ($ret as &$listing)
             arsort($listing['locations']);
+        unset($listing);
         uasort($ret, function($a, $b) {return $b['count'] - $a['count'];});
 
         return $ret;

@@ -29,7 +29,7 @@ abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item 
     public function equip($player = null) {
         /** @global Model_Player $player */
         if ($player === null)
-            $player = Globals::CurrentPlayer();
+            $player = Globals::CurrentPlayerF();
 
         if (Tool_Scripts::is_npc($player))
             return;
@@ -132,7 +132,7 @@ abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item 
 
         /** @global Model_Player $player */
         if ($player === null)
-            $player = Globals::CurrentPlayer();
+            $player = Globals::CurrentPlayerF();
 
         if (Tool_Scripts::is_npc($player))
             return;

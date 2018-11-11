@@ -2,7 +2,7 @@
 
 abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 	
-	protected static $name;
+	protected static $location_name;
     protected static $icon = 'default';
 	protected static $namelist;
 	protected static $description;
@@ -54,7 +54,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
     }
 
     public static function get_namelist() {
-        return (static::$namelist) ? static::$namelist : [static::$name];
+        return static::$namelist ? static::$namelist : [static::$location_name];
     }
 
     public static function getCustomStyle() {
@@ -72,7 +72,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
     public function get_doorways() {
         $ret = [];
         foreach ($this->doorway as $dw)
-            if (Globals::CurrentGame()->location($dw))
+            if (Globals::CurrentGameF()->location($dw))
                 $ret[] = $dw;
         return $ret;
     }
@@ -89,9 +89,19 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
      * @param int $id
      * @return Model_Room|null
      */
-    public function room($id = 0) {
+    public function room($id = 0) : ?Model_Room {
 	    if ($id < 0 || $id >= count($this->rooms)) return null;
 	    else return $this->rooms[$id];
+    }
+
+    /**
+     * @param int $id
+     * @return Model_Room
+     */
+    public function roomF($id = 0) : Model_Room {
+        $r = $this->room($id);
+        if ($r === null) throw new RuntimeException('Attempt to fetch non-existent room.');
+        return $r;
     }
 
     /**
@@ -121,7 +131,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
      * @param string|string[] $tags
      * @return bool
      */
-    public function has_room($room_type = "", $contains = "", $tags = "") {
+    public function has_room($room_type = '', $contains = '', $tags = '') {
         return count($this->find_rooms($room_type,$contains,$tags)) > 0;
     }
 
@@ -131,7 +141,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
      * @param string|string[] $tags
      * @return Model_Room[]
      */
-    public function find_rooms($room_type = "", $contains = "", $tags = "") {
+    public function find_rooms($room_type = '', $contains = '', $tags = '') {
         $ret = [];
         foreach ($this->rooms() as $room)
             if ($room->check_room_satisfaction($room_type) && $room->has_content($contains) && $room->has_tag($tags))
@@ -145,16 +155,16 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 
         //Register sub locations
         foreach (static::$auto_doorways as $dwid) {
-            $slid = Globals::CurrentGame()->register_map("submap_{$dwid}_{$uin}", $dwid);
+            $slid = Globals::CurrentGameF()->register_map("submap_{$dwid}_{$uin}", $dwid);
             if ($slid) {
                 $this->register_doorway($slid);
-                Globals::CurrentGame()->location($slid)->register_doorway($uin);
+                Globals::CurrentGameF()->locationF($slid)->register_doorway($uin);
             }
         }
 
         $this->inventory->add(new Model_Items_Virtual_Location_Place());
 
-        foreach (Globals::CurrentGame()->get_initialized_events() as $ev)
+        foreach (Globals::CurrentGameF()->get_initialized_events() as $ev)
             $ev->event_locationCreation($this);
 
         return $t;
@@ -196,22 +206,23 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 
 		$this->log = new Model_Log_Log();
 		/** @var Model_Factory_Zombies zombie_factory */
-        $this->zombie_factory = Model_Factory_Zombies::read(get_called_class(), Globals::CurrentGame()->config('game.config.spawn'));
-        $this->item_factory = Model_Factory_Items::read(get_called_class(), Globals::CurrentGame()->config('game.config.itemset'))->modify_decay(Globals::CurrentGame()->config('places.dryout_factor'));
+        $this->zombie_factory = Model_Factory_Zombies::read(static::class, Globals::CurrentGameF()->config('game.config.spawn'));
+        $this->item_factory = Model_Factory_Items::read(static::class, Globals::CurrentGameF()->config('game.config.itemset'))->modify_decay(Globals::CurrentGameF()->config('places.dryout_factor'));
 		
 		if (static::$namelist) {
             $list = array();
-            for ($i = 0; $i < count(static::$namelist); $i++)
-                if (Globals::CurrentGame()->ndp_check(get_called_class(), $i))
+            $c = count(static::$namelist);
+            for ($i = 0; $i < $c; $i++)
+                if (Globals::CurrentGameF()->ndp_check(static::class, $i))
                     $list[] = $i;
 
             if (!$list) {
-                Globals::CurrentGame()->ndp_purge(get_called_class());
-                $type = mt_rand(0, count(static::$namelist) - 1);
-            } else $type = $list[mt_rand(0, count($list) - 1)];
+                Globals::CurrentGameF()->ndp_purge(static::class);
+                $type = random_int(0, count(static::$namelist) - 1);
+            } else $type = $list[random_int(0, count($list) - 1)];
 
             $this->variant_name = static::$namelist[$type];
-            Globals::CurrentGame()->ndp_register(get_called_class(), $type);
+            Globals::CurrentGameF()->ndp_register(static::class, $type);
         }
 
         $this->setup_primary_rooms();
@@ -249,7 +260,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 	
 	//Leave location
 	public function can_leave($pid = null, $ignore_zombies = false, $type = Interface_Tickable::IT_TYPE_PLAYER) {
-        return ($ignore_zombies || ($type == Interface_Tickable::IT_TYPE_PLAYER && Globals::CurrentGame()->get_player($pid)->can_escape()) || $this->zombie_factory->accumulation() <= 0);
+        return ($ignore_zombies || ($type == Interface_Tickable::IT_TYPE_PLAYER && Globals::CurrentGameF()->get_player($pid)->can_escape()) || $this->zombie_factory->accumulation() <= 0);
 	}
 
     //Enter map
@@ -264,9 +275,9 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 	
 	//Enter location
 	public function enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
-		if (!$pid) $player = Globals::CurrentPlayer();
-		elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGame()->get_player($pid);
-        else $player = Globals::CurrentGame()->get_npc($pid);
+		if (!$pid) $player = Globals::CurrentPlayerF();
+		elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGameF()->get_player($pid);
+        else $player = Globals::CurrentGameF()->get_npc($pid);
 
 		$this->log->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $pid, $type == Interface_Tickable::IT_TYPE_NPC));
 
@@ -320,7 +331,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 	
 	//Return name
 	public function name() {
-		return $this->variant_name ? $this->variant_name : static::$name;
+		return $this->variant_name ?: static::$location_name;
 	}
 
     /**
@@ -328,7 +339,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
      * @return string
      */
     public function icon() {
-        return static::$icon . ".gif";
+        return static::$icon . '.gif';
     }
 
     /**
@@ -339,14 +350,14 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
      */
 	public function find_item($force = false, $return = false) {
         // Spawn ticket
-        if (!$return && Tool_Events::ticket_event(Globals::CurrentGame()->next_tick()) && !Tool_Scripts::is_npc(Globals::CurrentPlayer()) && !Globals::CurrentPlayerActual()->golden_ticket()) {
-            $num = max(1,mt_rand(1,3) - mt_rand(0,2));
+        if (!$return && Tool_Events::ticket_event(Globals::CurrentGameF()->next_tick()) && !Tool_Scripts::is_npc(Globals::CurrentPlayerF()) && !Globals::CurrentPlayerActualF()->golden_ticket()) {
+            $num = max(1,random_int(1,3) - random_int(0,2));
             $tmp = array();
             for ($i = 0; $i < $num; $i++)
                 $tmp[] = new Model_Items_Generic_Ticket();
 
             Tool_Scripts::place_new_item($tmp);
-            Globals::CurrentPlayerActual()->golden_ticket(true);
+            Globals::CurrentPlayerActualF()->golden_ticket(true);
         }
 
         // Spawn BrainCoins
@@ -354,19 +365,19 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
             Tool_Scripts::place_new_item(new Model_Items_Braincoin());
 
 
-		if (!$return && (Globals::CurrentPlayer()->get_status()->retrieve('fragile') || Globals::CurrentPlayer()->get_status()->retrieve('passout'))) return true;
-		$item = $this->item_factory->spawn($force, true, Tool_Scripts::calculate_find_chances(Globals::CurrentPlayer()->id()));
+		if (!$return && (Globals::CurrentPlayerF()->get_status()->retrieve('fragile') || Globals::CurrentPlayerF()->get_status()->retrieve('passout'))) return true;
+		$item = $this->item_factory->spawn($force, true, Tool_Scripts::calculate_find_chances(Globals::CurrentPlayerF()->id()));
 
-        if (Tool_System::instance_of($item, Model_Items_Virtual_Invoke_Abstract::cls())) {
+        if ($item !== null && Tool_System::instance_of($item, Model_Items_Virtual_Invoke_Abstract::cls())) {
             /** @var $item Model_Items_Virtual_Invoke_Abstract */
-            $item->trigger_spawn($this, Globals::CurrentPlayer());
+            $item->trigger_spawn($this, Globals::CurrentPlayerF());
             $item->grind();
             $item = null;
         }
 
         if ($item && !$return) {
             Tool_Scripts::place_new_item($item);
-            foreach (Globals::CurrentGame()->get_initialized_events() as $ev)
+            foreach (Globals::CurrentGameF()->get_initialized_events() as $ev)
                 $ev->event_findItem($this, $item);
             return true;
         }
@@ -375,20 +386,20 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
         else return true;
 	}
 
-    public function hero_replensish($val = 0.75) {
+    public function hero_replensish($val = 0.75): void {
         $this->item_factory->replenish($val);
     }
 	
-	public function break_out($fight) {
+	public function break_out($fight): bool {
 		if (!$fight) {
 			//Attempt to flee
-			$c = Globals::CurrentGame()->config('zombies.escape_threshold');
-			for ($i = 0; $i < $this->zombie_factory->accumulation(); $i++) $c += mt_rand(0, ceil($this->zombie_factory->accumulation()/5));
+			$c = Globals::CurrentGameF()->config('zombies.escape_threshold');
+			for ($i = 0; $i < $this->zombie_factory->accumulation(); $i++) $c += random_int(0, ceil($this->zombie_factory->accumulation()/5));
 			
-			$c = ceil($c * (1 + (Globals::CurrentPlayer()->get_status()->get(Model_Status::MS_STAT_DRUNK) / 100)));
+			$c = ceil($c * (1 + (Globals::CurrentPlayerF()->get_status()->get(Model_Status::MS_STAT_DRUNK) / 100)));
 			
 			$item_list = Array();
-			while (((Globals::CurrentPlayer()->get_status()->get(Model_Status::MS_STAT_ENERGY) * Globals::CurrentPlayer()->get_status()->get(Model_Status::MS_CHAR_EVASIVENESS)) < $c) && ($items = Tool_Scripts::available_items('Model_Items_Abstract_Escape')))
+			while (((Globals::CurrentPlayerF()->get_status()->get(Model_Status::MS_STAT_ENERGY) * Globals::CurrentPlayerF()->get_status()->get(Model_Status::MS_CHAR_EVASIVENESS)) < $c) && ($items = Tool_Scripts::available_items(Model_Items_Abstract_Escape::cls())))
 			{
 				/** @var $items Model_Items_Abstract_Escape[] */
                 $c -= $items[0]->escape();
@@ -397,22 +408,23 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 				$items[0]->consume();
 			}
 
-            Globals::CurrentPlayer()->get_status()->modify(Model_Status::MS_STAT_ENERGY, -10);
-			if ((Globals::CurrentPlayer()->get_status()->get(Model_Status::MS_STAT_ENERGY) * Globals::CurrentPlayer()->get_status()->get(Model_Status::MS_CHAR_EVASIVENESS)) >= $c) {
+            Globals::CurrentPlayerF()->get_status()->modify(Model_Status::MS_STAT_ENERGY, -10);
+			if ((Globals::CurrentPlayerF()->get_status()->get(Model_Status::MS_STAT_ENERGY) * Globals::CurrentPlayerF()->get_status()->get(Model_Status::MS_CHAR_EVASIVENESS)) >= $c) {
 				$c = $this->zombie_pop();
                 $this->zombie_pop(true);
-				$this->zombie_factory()->accumulation(ceil($c/(1.05 * Globals::CurrentPlayer()->get_status()->get(Model_Status::MS_CHAR_BULKYNESS))));
+				$this->zombie_factory()->accumulation(ceil($c/(1.05 * Globals::CurrentPlayerF()->get_status()->get(Model_Status::MS_CHAR_BULKYNESS))));
 
-                Globals::CurrentPlayer()->enable_escape();
+                Globals::CurrentPlayerF()->enable_escape();
 				
 				$item_accum = Array();
 				if (count($item_list) > 0)
 					foreach ($item_list as $name => $count) $item_accum[] = __($name) . " ({$count})";
 
-                Globals::CurrentPlayerActual()->log()->add(new Model_Log_Types_Text('Erfolgreiche Flucht!', 'Du bist entkommen!', 'Schreiend und mit geschlossenen Augen rennst du auf die Zombies zu. Die sind von dieser Aktion so überrascht, dass du die meisten von ihnen einfach aus dem Weg stoßen kannst. ' . ((empty($item_accum)) ? '' : ('<br /><br />Die Zombies, die du nicht einfach wegstoßen kannst lenkst du durch den geschickten Einsatz folgender Gegenstände ab:<br />:items<br /><br />')) . 'Als du deine Augen wieder öffnest, stellst du fest, dass keine Zombies mehr in deiner Nähe sind.', array(':items' => implode(', ', $item_accum))));
-                Globals::CurrentPlayerActual()->achievements()->achieve(Model_Achievement::MA_CLOSE_ESCAPES);
+                Globals::CurrentPlayerActualF()->log()->add(new Model_Log_Types_String('Erfolgreiche Flucht!', 'Schreiend und mit geschlossenen Augen rennst du auf die Zombies zu. Die sind von dieser Aktion so überrascht, dass du die meisten von ihnen einfach aus dem Weg stoßen kannst. ' . (empty($item_accum)
+                        ? '' : '<br /><br />Die Zombies, die du nicht einfach wegstoßen kannst lenkst du durch den geschickten Einsatz folgender Gegenstände ab:<br />:items<br /><br />') . 'Als du deine Augen wieder öffnest, stellst du fest, dass keine Zombies mehr in deiner Nähe sind.', array(':items' => implode(', ', $item_accum))));
+                Globals::CurrentPlayerActualF()->achievements()->achieve(Model_Achievement::MA_CLOSE_ESCAPES);
 				return true;
-			} else Globals::CurrentPlayerActual()->log()->add(new Model_Log_Types_Text('Fehlgeschlagene Flucht!', 'Der Kampf beginnt!', 'Schreiend und mit geschlossenen Augen rennst du auf die Zombies zu. Die sind von dieser Aktion so überrascht, dass du die meisten von ihnen einfach aus dem Weg stoßen kannst - aber leider nicht alle. Ein Zombie steht dir mitten im Weg, und wirft dich zu Boden als du versuchst, ihn umzurennen. Zwar kannst du schnell wieder aufspringen, bist nun aber von geifernden Zombies umzingelt. Flucht ist keine Option mehr, du wirst kämpfen müssen.'));
+			} else Globals::CurrentPlayerActualF()->log()->add(new Model_Log_Types_String('Fehlgeschlagene Flucht!', 'Schreiend und mit geschlossenen Augen rennst du auf die Zombies zu. Die sind von dieser Aktion so überrascht, dass du die meisten von ihnen einfach aus dem Weg stoßen kannst - aber leider nicht alle. Ein Zombie steht dir mitten im Weg, und wirft dich zu Boden als du versuchst, ihn umzurennen. Zwar kannst du schnell wieder aufspringen, bist nun aber von geifernden Zombies umzingelt. Flucht ist keine Option mehr, du wirst kämpfen müssen.'));
 		}
 
         $zombies = $this->zombie_factory->release();
@@ -426,14 +438,14 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 	
 	public function pretick() {
         //Check for zombie attack
-        if ($ghuls = Globals::CurrentGame()->get_ghuls($this->uin())) {
+        if ($ghuls = Globals::CurrentGameF()->get_ghuls($this->uin())) {
 
             Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $ghuls], false, 15, $this, 'Einer deiner zombifizierten Freunde greift an!');
 
             $battle_won = true;
             if ($battle_won)
                 foreach ($ghuls as $key => $data) {
-                    Globals::CurrentGame()->unregister_ghul($key);
+                    Globals::CurrentGameF()->unregister_ghul($key);
                     $drop = array();
                     foreach ($data->inventory()->get() as $item) {
                         $drop[] = $item;
@@ -448,13 +460,13 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
             if ($zombies) Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $zombies], true, 20, $this, 'Zombies greifen an!');
         }
 
-        foreach (Globals::CurrentGame()->get_initialized_events() as $ev)
+        foreach (Globals::CurrentGameF()->get_initialized_events() as $ev)
             $ev->event_locationTick($this);
 	}
 
 	public function tick($type = Interface_Tickable::IT_TYPE_PLAYER) {
-        if (Globals::CurrentPlayer()->can(Interface_Plentity::IC_TRIGGER_ITEM_FINDINGS)) $this->find_item();
-        if (Globals::CurrentPlayer()->can(Interface_Plentity::IC_TRIGGER_LOCATION_FINDINGS)) $this->find_building();
+        if (Globals::CurrentPlayerF()->can(Interface_Plentity::IC_TRIGGER_ITEM_FINDINGS)) $this->find_item();
+        if (Globals::CurrentPlayerF()->can(Interface_Plentity::IC_TRIGGER_LOCATION_FINDINGS)) $this->find_building();
 
 		return true;
 	}
@@ -473,29 +485,29 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 	public function interact($action, $argument, $force = false) {
 		$method = $force ? "interaction_forced_{$action}" : "interaction_{$action}";
 		if (method_exists($this, $method)) $r = $this->$method($argument);
-		else throw new Exception("Location method '{$action}' (" . ($force ? 'enforced' : 'unenforced') . ") doesnt exist!", 1);
+		else throw new LogicException("Location method '{$action}' (" . ($force ? 'enforced' : 'unenforced') . ') doesnt exist!', 1);
 
 		return $r;
 	}
 
     protected function find_building() {
-        if (Globals::CurrentPlayer()->get_status()->retrieve('fragile')) return false;
-        if (!($building = Globals::CurrentGame()->map($this->uin())->attempt_unvail($this->uin(), Globals::CurrentPlayer()->get_status()->get(Model_Status::MS_CHAR_LOCATION_SPAWNRATE)))) return true;
+        if (Globals::CurrentPlayerF()->get_status()->retrieve('fragile')) return false;
+        if (!($building = Globals::CurrentGameF()->mapF($this->uin())->attempt_unvail($this->uin(), Globals::CurrentPlayerF()->get_status()->get(Model_Status::MS_CHAR_LOCATION_SPAWNRATE)))) return true;
 
         //Mapper
-        if (Globals::CurrentGame()->config('modules.mapping') && ($items = Globals::CurrentPlayer()->inventory()->get('Model_Items_Maptool'))) {
+        if (Globals::CurrentGameF()->config('modules.mapping') && ($items = Globals::CurrentPlayerF()->inventory()->get(Model_Items_Maptool::cls()))) {
             /** @var $items Model_Items_Maptool[] */
-            if (!($items = Globals::CurrentPlayer()->inventory()->get('Model_Items_Maptool'))) return false;
-            $items[0]->common_discovery(mt_rand(5, 15));
-            Globals::CurrentPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Du hast eine neue Ruine entdeckt und eine grobe Karte mit ihrer Position gezeichnet. Diese Informationen sind sicher nützlich für deine Stadt.... besser wäre es natürlich, du würdest diese Ruine genauer erkunden.'));
+            if (!($items = Globals::CurrentPlayerF()->inventory()->get(Model_Items_Maptool::cls()))) return false;
+            $items[0]->common_discovery(random_int(5, 15));
+            Globals::CurrentPlayerF()->log()->add(new Model_Log_Types_String(null, 'Du hast eine neue Ruine entdeckt und eine grobe Karte mit ihrer Position gezeichnet. Diese Informationen sind sicher nützlich für deine Stadt.... besser wäre es natürlich, du würdest diese Ruine genauer erkunden.'));
         }
 
-        $this->log->add(new Model_Log_Types_Building($building, Globals::CurrentPlayer()->id()));
+        $this->log->add(new Model_Log_Types_Building($building, Globals::CurrentPlayerF()->id()));
         return true;
     }
 
     public function grind() {
         $this->inventory()->grind();
-        Globals::CurrentGame()->uin()->remove($this->uin());
+        Globals::CurrentGameF()->uin()->remove($this->uin());
     }
 }	

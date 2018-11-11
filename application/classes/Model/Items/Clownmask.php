@@ -16,5 +16,5 @@ class Model_Items_Clownmask extends Model_Items_Abstract_Armor {
     protected static $effects = [-1,2,8,-2];
 
     protected static $equipment_type = Model_Items_Abstract_Equipable::MIAE_ARMOR_HELMET;
-    protected $protection = 50;
+    protected static $protection = 50;
 }	

@@ -4,7 +4,9 @@ class Tool_Htmlout {
 
     /**
      * @param $id
+     *
      * @return bool|string
+     * @throws Kohana_Exception
      */
     public static function get_external_link($id) {
         /** @var array $links */

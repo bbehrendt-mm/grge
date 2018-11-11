@@ -5,7 +5,7 @@ class Model_Combat_Zombies_Behemoth extends Model_Combat_Zombies_Zombie {
     public static $custom_sprite = 'zombie_behemoth.gif';
     public static $custom_death_sprite = 'zombie_behemoth_dead.gif';
 
-    protected $name = 'Zombie-Behemoth';
+    protected $actor_name = 'Zombie-Behemoth';
     protected $max_health = 100;
 
     protected $stat_initiative = 0;

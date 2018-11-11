@@ -42,7 +42,7 @@ class Model_Items_Virtual_Hero_Woman extends Model_Items_Abstract_Virtual {
                             }
                         })
                         ->effect(Model_Status::MS_STAT_ENERGY, -20)
-                        ->message('Diese Zombieapokalypse ist schlecht für :subject. Die beste Art gegen sowas zu protestieren, ist sich einen dämlichen Spruch auf die Titten zu schreiben und damit in der Öffentlichkeit herumzurennen! ... naja, zumindest die Aufmerksamkeit deiner Mitspieler hast du damit...', array(), array(':subject' => $rnd_n[mt_rand(0,count($rnd_n) - 1)]))
+                        ->message('Diese Zombieapokalypse ist schlecht für :subject. Die beste Art gegen sowas zu protestieren, ist sich einen dämlichen Spruch auf die Titten zu schreiben und damit in der Öffentlichkeit herumzurennen! ... naja, zumindest die Aufmerksamkeit deiner Mitspieler hast du damit...', array(), array(':subject' => $rnd_n[random_int(0,count($rnd_n) - 1)]))
                 )
             , 'hero_job_0');
     }

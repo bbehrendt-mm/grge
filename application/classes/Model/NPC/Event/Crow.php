@@ -34,63 +34,63 @@ class Model_NPC_Event_Crow extends Model_NPC_Humanoid
     public function hid() {
         $item_gen = function($p)  {
             /** @var $p Model_Player */
-            $locations = Globals::CurrentGame()->map()->build_route_array($p->location()->uin());
+            $locations = Globals::CurrentGameF()->main_map()->build_route_array($p->location()->uin());
             foreach ($locations as $key => $data) {
                 if (Tool_Scripts::location_type($key) !== 0)
                     unset($locations[$key]);
-                elseif (count(Globals::CurrentGame()->location($key)->inventory()->get('Model_Items_Abstract_Easteregg')) > 0)
+                elseif (count(Globals::CurrentGameF()->locationF($key)->inventory()->get(Model_Items_Abstract_Easteregg::cls())) > 0)
                     unset($locations[$key]);
             }
             $locations = array_keys($locations);
 
             if (count($locations) < 2) {
-                $p->log()->add(new Model_Log_Types_Text(null,null,'KRAAHAHAHA! So ein Pech! Du kennst nicht genügend Orte! KRARAAAAH!'));
+                $p->log()->add(new Model_Log_Types_String(null,'KRAAHAHAHA! So ein Pech! Du kennst nicht genügend Orte! KRARAAAAH!'));
                 return;
             } else {
                 //Place egg1
                 shuffle($locations);
-                $left = $num = mt_rand(count($locations), 3*count($locations));
+                $left = $num = random_int(count($locations), 3*count($locations));
                 foreach ($locations as $key) {
-                    $put = mt_rand(min($left, ceil(count($locations)/5)), min($left, ceil(count($locations)/2)));
+                    $put = random_int(min($left, ceil(count($locations)/5)), min($left, ceil(count($locations)/2)));
                     $left -= $put;
                     for ($i = 0; $i < $put; $i++)
-                        Globals::CurrentGame()->location($key)->inventory()->add(new Model_Items_Generic_Egg1(1,true));
+                        Globals::CurrentGameF()->locationF($key)->inventory()->add(new Model_Items_Generic_Egg1(1,true));
                 }
                 $placed1 = $num - $left;
 
                 //Place egg2
                 shuffle($locations);
-                $left = $num = mt_rand(0, floor(count($locations)/4));
+                $left = $num = random_int(0, floor(count($locations)/4));
                 foreach ($locations as $key) if ($left > 0) {
-                    $left -= 1;
-                    Globals::CurrentGame()->location($key)->inventory()->add(new Model_Items_Generic_Egg2(1,true));
+                    --$left;
+                    Globals::CurrentGameF()->locationF($key)->inventory()->add(new Model_Items_Generic_Egg2(1,true));
                 }
                 $placed2 = $num - $left;
 
                 //Place egg3
                 shuffle($locations);
-                $left = $num = mt_rand(0, floor(count($locations)/10));
+                $left = $num = random_int(0, floor(count($locations)/10));
                 foreach ($locations as $key) if ($left > 0) {
-                    $left -= 1;
-                    Globals::CurrentGame()->location($key)->inventory()->add(new Model_Items_Generic_Egg3(1,true));
+                    --$left;
+                    Globals::CurrentGameF()->locationF($key)->inventory()->add(new Model_Items_Generic_Egg3(1,true));
                 }
 
                 $placed3 = $num - $left;
 
                 //Place egg0
                 foreach ($locations as $key)
-                    if (!Globals::CurrentGame()->location($key)->inventory()->get('Model_Items_Abstract_Easteregg'))
-                        Globals::CurrentGame()->location($key)->inventory()->add(new Model_Items_Generic_Egg0(1,true));
+                    if (!Globals::CurrentGameF()->locationF($key)->inventory()->get(Model_Items_Abstract_Easteregg::cls()))
+                        Globals::CurrentGameF()->locationF($key)->inventory()->add(new Model_Items_Generic_Egg0(1,true));
 
-                foreach (Globals::CurrentGame()->players() as $pl)
-                    if ($pl->id() == $p->id()) $pl->log()->add(new Model_Log_Types_Text(null,null,'KRAAH! Danke sehr! Ich habe :e1 farbige, :e2 prächtige und :e3 Designer-Eier für dich versteckt. Viel Spaß beim Suchen, KRAHRAH!', array(':e1' => $placed1,':e2' => $placed2,':e3' => $placed3)));
-                    else $pl->log()->add(new Model_Log_Types_Text(null,null,'Du hörst ein lautes Krähen in der Ferne...'));
+                foreach (Globals::CurrentGameF()->players() as $pl)
+                    if ($pl->id() === $p->id()) $pl->log()->add(new Model_Log_Types_String(null,'KRAAH! Danke sehr! Ich habe :e1 farbige, :e2 prächtige und :e3 Designer-Eier für dich versteckt. Viel Spaß beim Suchen, KRAHRAH!', array(':e1' => $placed1,':e2' => $placed2,':e3' => $placed3)));
+                    else $pl->log()->add(new Model_Log_Types_String(null,'Du hörst ein lautes Krähen in der Ferne...'));
             }
         };
 
         return parent::hid()
             ->add_action('Mit Ticket zahlen', Model_Action::factory()
-                ->requirement('Model_Items_Generic_Ticket', 1)
+                ->requirement(Model_Items_Generic_Ticket::cls(), 1)
                 ->effect(Model_Effect::factory()
                              ->custom($item_gen)
                 )
@@ -99,7 +99,7 @@ class Model_NPC_Event_Crow extends Model_NPC_Humanoid
                 ->effect(Model_Effect::factory()
                              ->buff('Model_Buffs_Blood')
                              ->effect(Model_Status::MS_STAT_HEALTH, -95)
-                             ->causeofdeath("Aggressiver Rabe")
+                             ->causeofdeath('Aggressiver Rabe')
                              ->achieve(Model_Achievement::MA_MASOCHIST)
                              ->custom($item_gen)
                              ->custom(function($p) {
@@ -112,15 +112,15 @@ class Model_NPC_Event_Crow extends Model_NPC_Humanoid
                 ->effect(Model_Effect::factory()
                              ->custom(function($p) {
                                  /** @var $p Model_Player */
-                                 $e1 = Tool_Scripts::count_available_items('Model_Items_Generic_Egg1', true, false, false, $p);
-                                 $e2 = Tool_Scripts::count_available_items('Model_Items_Generic_Egg2', true, false, false, $p);
-                                 $e3 = Tool_Scripts::count_available_items('Model_Items_Generic_Egg3', true, false, false, $p);
-                                 if (Tool_Scripts::consume_available_items(array('Model_Items_Generic_Egg1' => $e1, 'Model_Items_Generic_Egg2' => $e2, 'Model_Items_Generic_Egg3' => $e3), true, false, false, $p)) {
+                                 $e1 = Tool_Scripts::count_available_items(Model_Items_Generic_Egg1::cls(), true, false, false, $p);
+                                 $e2 = Tool_Scripts::count_available_items(Model_Items_Generic_Egg2::cls(), true, false, false, $p);
+                                 $e3 = Tool_Scripts::count_available_items(Model_Items_Generic_Egg3::cls(), true, false, false, $p);
+                                 if (Tool_Scripts::consume_available_items(array(Model_Items_Generic_Egg1::cls() => $e1, Model_Items_Generic_Egg2::cls() => $e2, Model_Items_Generic_Egg3::cls() => $e3), true, false, false, $p)) {
                                      $c = floor($e1 * Model_Items_Generic_Egg1::getValue() + $e2 * Model_Items_Generic_Egg2::getValue() + $e3 * Model_Items_Generic_Egg3::getValue());
                                      if ($c > 0) {
-                                         Globals::CurrentUser()->award_coins($p->id(), $c);
-                                         $p->log()->add(new Model_Log_Types_Text(null,null,'KRAAAAH! Glückwunsch! Für die Eier, die du gesammelt hast, bekommst du :num BrainCoins! KRARAH!', array(':num' => $c)));
-                                     } else $p->log()->add(new Model_Log_Types_Text(null,null,'KRARAHAHAHA! Zu schade! Du hast nicht genug Eier gesammelt um Punkte zu bekommen! KRAAH!'));
+                                         Globals::CurrentUserF()->award_coins($p->id(), $c);
+                                         $p->log()->add(new Model_Log_Types_String(null,'KRAAAAH! Glückwunsch! Für die Eier, die du gesammelt hast, bekommst du :num BrainCoins! KRARAH!', array(':num' => $c)));
+                                     } else $p->log()->add(new Model_Log_Types_String(null,'KRARAHAHAHA! Zu schade! Du hast nicht genug Eier gesammelt um Punkte zu bekommen! KRAAH!'));
                                  }
                              })
                 )

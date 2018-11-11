@@ -29,7 +29,7 @@ abstract class Model_Items_Abstract_Transport extends Model_Items_Abstract_Item 
      * @param number $d
      * @return bool
      */
-    public function trigger_after($p, $d) {
+    public function trigger_after($p, $d): bool {
         return true;
     }
 

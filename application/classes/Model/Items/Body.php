@@ -22,8 +22,8 @@ class Model_Items_Body extends Model_Items_Abstract_Item implements Interface_St
 	
 	public function __construct($name = null, $desc = null) {
 		parent::__construct();
-		if ($name) $this->custom_info["name"] = $name;
-		if ($desc) $this->custom_info["description"] = $desc;	
+		if ($name) $this->custom_info['name'] = $name;
+		if ($desc) $this->custom_info['description'] = $desc;
 	}
 
     protected function hid() {
@@ -35,7 +35,7 @@ class Model_Items_Body extends Model_Items_Abstract_Item implements Interface_St
                             ->effect(Model_Status::MS_STAT_HEALTH, -60)
                             ->consume($this)
                             ->achieve(Model_Achievement::MA_BODY_EATER)
-                            ->spawn('Model_Items_Generic_Bone3')
+                            ->spawn(Model_Items_Generic_Bone3::cls())
                             ->message('Nachdem du das runtergeschlungen hast dreht sich dir der Magen um - aber wenigstens ist er wieder voll. Hoffentlich ist deine Hausapotheke das auch ...')
                     )
             );

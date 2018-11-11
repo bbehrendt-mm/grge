@@ -12,9 +12,9 @@ class Controller_Gallery extends Controller {
         if (!$entry || !$label) return $this->render(['success' => 0]);
         else $entry = array_shift($entry);
 
-        if ($entry['pid'] != Globals::CurrentUser()->uid()) return $this->render(['success' => 0]);
+        if ($entry['pid'] != Globals::CurrentUserF()->uid()) return $this->render(['success' => 0]);
 
-        Model_Combat_Handler::add_to_gallery($entry['bid'], Globals::CurrentUser()->uid(), $label);
+        Model_Combat_Handler::add_to_gallery($entry['bid'], Globals::CurrentUserF()->uid(), $label);
 
         return $this->render(['success' => 1]);
     }
@@ -26,7 +26,7 @@ class Controller_Gallery extends Controller {
         if (!$entry) return $this->render(['success' => 0]);
         else $entry = array_shift($entry);
 
-        if ($entry['pid'] != Globals::CurrentUser()->uid()) return $this->render(['success' => 0]);
+        if ($entry['pid'] != Globals::CurrentUserF()->uid()) return $this->render(['success' => 0]);
 
         Model_Combat_Handler::delete_from_gallery($id);
 

@@ -8,10 +8,10 @@ abstract class Model_Items_Abstract_Ammo extends Model_Items_Abstract_Stackable 
 		parent::__construct($num);
 
         $bonus = 1;
-        if (!$no_bonus && Globals::hasCurrentPlayer() && !Globals::shadowPlayerExists() && isset(static::$boni[Globals::PrimaryPlayer()->job()])) {
-            $lv = Globals::PrimaryPlayer()->job(false);
-            while ($lv > 0 && !isset(static::$boni[Globals::PrimaryPlayer()->job()][$lv])) $lv--;
-            $bonus = isset(static::$boni[Globals::PrimaryPlayer()->job()][$lv]) ? static::$boni[Globals::PrimaryPlayer()->job()][$lv] : 1;
+        if (!$no_bonus && Globals::hasCurrentPlayer() && !Globals::shadowPlayerExists() && isset(static::$boni[Globals::PrimaryPlayerF()->job()])) {
+            $lv = Globals::PrimaryPlayerF()->job(false);
+            while ($lv > 0 && !isset(static::$boni[Globals::PrimaryPlayerF()->job()][$lv])) $lv--;
+            $bonus = isset(static::$boni[Globals::PrimaryPlayerF()->job()][$lv]) ? static::$boni[Globals::PrimaryPlayerF()->job()][$lv] : 1;
         }
         $this->count = ceil($this->count * $bonus);
 	}

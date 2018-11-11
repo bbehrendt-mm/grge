@@ -10,22 +10,23 @@ class Model_Items_Bmt2 extends Model_Items_Bmt {
 	);
 
     protected static $energy_base = 40;
-	public $health_list = Array(1,2,3,5,8,13,21,34,55,89);
+	public static $health_list = Array(1,2,3,5,8,13,21,34,55,89);
 	
 	public function description() {
-		return  parent::description() . ($this->power >= count($this->health_list) ? "<b>Die Kontakte dieses Geräts sind etwas angekokelt... normale Batterien werden hier wohl nicht mehr funktionieren.</b>" : "");
+		return  parent::description() . ($this->power >= count(static::$health_list) ? '<b>Die Kontakte dieses Geräts sind etwas angekokelt... normale Batterien werden hier wohl nicht mehr funktionieren.</b>'
+                : '');
 	}
 
     protected function hid() {
         return parent::hid()
             ->add_action('Supercharger verwenden', Model_Action::factory()
                 ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
-                ->requirement('Model_Items_Generic_Supercharger', 1)
+                ->requirement(Model_Items_Generic_Supercharger::cls(), 1)
                 ->effect(
                     Model_Effect::factory()
                         ->effect(Model_Status::MS_STAT_HEALTH, -85)
                         ->effect(Model_Status::MS_STAT_ENERGY, 100)
-                        ->remove('Model_Items_Generic_Supercharger', 1)
+                        ->remove(Model_Items_Generic_Supercharger::cls(), 1)
                         ->message('Das war so ziemlich das schmerzhafteste, was du in den letzten 2 Stunden getan hast. Wenigstens hat sich deine Energie wieder aufgeladen...')
                 )
             );

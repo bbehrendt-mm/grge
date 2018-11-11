@@ -8,7 +8,7 @@ class Tool_Gamemodes {
         $accum = 0;
         foreach (explode(',', $mode) as $imode) {
             if (!isset(static::$usp_cache['mode'][$imode]))
-                static::$usp_cache['mode'][$imode] = (int)Globals::CurrentUser()->soulpoints(null, null, $imode);
+                static::$usp_cache['mode'][$imode] = (int)Globals::CurrentUserF()->soulpoints(null, null, $imode);
             $accum += static::$usp_cache['mode'][$imode];
         }
 
@@ -19,7 +19,7 @@ class Tool_Gamemodes {
         $accum = 0;
         foreach (explode(',', $job) as $ijob) {
             if (!isset(static::$usp_cache['job'][$ijob]))
-                static::$usp_cache['job'][$ijob] = (int)Globals::CurrentUser()->soulpoints(null, $ijob, null);
+                static::$usp_cache['job'][$ijob] = (int)Globals::CurrentUserF()->soulpoints(null, $ijob, null);
             $accum += static::$usp_cache['job'][$ijob];
         }
         return $accum;
@@ -27,7 +27,9 @@ class Tool_Gamemodes {
 
     /**
      * @param $mode
+     *
      * @return array|object
+     * @throws Kohana_Exception
      */
     public static function compile_startup_mode($mode) {
         $ret = (array)Kohana::$config->load('modes.modes.' . $mode . '.setup');
@@ -65,16 +67,19 @@ class Tool_Gamemodes {
                 $ret = false;
             $requirement = array($current, $requirement);
         }
+        unset($requirement);
         foreach ($rqdb['job'] as $key => &$requirement2) {
             if (($current = static::get_sp_job($key)) < $requirement2)
                 $ret = false;
             $requirement2 = array($current, $requirement2);
         }
+        unset($requirement2);
         foreach ($rqdb['ext'] as &$requirement3) {
             if (!($tmp = $requirement3()))
                 $ret = false;
             $requirement3 = $tmp;
         }
+        unset($requirement3);
 
         return $ret;
     }
@@ -120,7 +125,7 @@ class Tool_Gamemodes {
         $joblist = [];
 
         if (!$custom_mode_callback || !is_callable($custom_mode_callback))
-            $custom_mode_callback = function() {return true;};
+            $custom_mode_callback = function($a,$b) {return true;};
 
         unset($ret['modes']['default']);
 
@@ -131,6 +136,7 @@ class Tool_Gamemodes {
                 continue;
             }
 
+
             $mode['locked'] = !static::compile_requirements($mode['requirements']);
             foreach ($mode['jobs'] as $jid)
                 $joblist[$jid] = true;
@@ -139,6 +145,7 @@ class Tool_Gamemodes {
                 unset($mode['setup']);
             }
         }
+        unset($mode);
 
         if ($short)
             foreach ($ret['modes'] as $mid => $m)
@@ -185,10 +192,11 @@ class Tool_Gamemodes {
 
     /**
      * @return Model_Store_Interface[]
+     * @throws ReflectionException
      */
     public static function get_store_classes() {
         $accum = [];
-        foreach (scandir(APPPATH . 'classes/Model/Store/') as $filename) {
+        foreach (scandir(APPPATH . 'classes/Model/Store/', SCANDIR_SORT_ASCENDING) as $filename) {
             if (substr($filename,-4) !== '.php') continue;
             $filename = 'Model_Store_' . substr($filename,0,-4);
             if (!class_exists($filename)) continue;

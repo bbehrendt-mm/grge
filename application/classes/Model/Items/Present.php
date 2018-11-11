@@ -87,16 +87,17 @@ class Model_Items_Present extends Model_Items_Abstract_Item implements Interface
 	
 	public function open($player = null) {
         if ($player === null)
-            $player = Globals::PrimaryPlayer();
+            $player = Globals::PrimaryPlayerF();
 				
-		$classname = Tool_Gambling::roulette(($this->is_awesome) ? static::$content_awesome : static::$content_crummy);
-		if (!class_exists($classname)) throw new Exception("Item Class '$classname' is not valid!", 1);
+		$classname = Tool_Gambling::roulette(
+            $this->is_awesome ? static::$content_awesome : static::$content_crummy);
+		if (!class_exists($classname)) throw new LogicException("Item Class '$classname' is not valid!", 1);
 
         /** @var Model_Items_Abstract_Item $item */
         $item = new $classname;
 		$player->location()->inventory()->add($item);
 
-		$player->log()->add(new Model_Log_Types_Text(null, null, 'Du kannst deine Neugier kaum bremsen und reißt das Geschenk auseinander. Im Inneren befindet sich ein/eine :item! Hurra!', array(), array(':item' => $item->name())));
+		$player->log()->add(new Model_Log_Types_String( null, 'Du kannst deine Neugier kaum bremsen und reißt das Geschenk auseinander. Im Inneren befindet sich ein/eine :item! Hurra!', array(':item' => [$item->name()])));
 		return true;
 	}
 

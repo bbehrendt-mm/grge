@@ -2,7 +2,7 @@
 
 class Model_Places_Hospital_Private extends Model_Places_Abstract_Hideout {
 
-    protected static $name = 'Einzelzimmer';
+    protected static $location_name = 'Einzelzimmer';
     protected static $description = 'Privatpatienten haben mehr Geld, also sind sie die besseren Menschen und verdienen bessere medizinische Versorgung. Dazu gehört auch dieses Luxuszimmer, mit Besuchersessel aus Leder, Heimkinoanlage und natürlich einer gut bestückten Bar. Eigentlich könntest du dich auch selbst hier "einliefern" lassen und diesen Ort zu einem Versteck umbauen...';
     protected static $icon = 'hospital_private';
     protected static $upgradable = false;

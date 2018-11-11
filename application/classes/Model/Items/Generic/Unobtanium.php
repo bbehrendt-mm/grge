@@ -15,6 +15,10 @@ class Model_Items_Generic_Unobtanium extends Model_Items_Abstract_Item implement
     /**
      * Item constructor
      * Will fail.
+     *
+     * @param null $type
+     *
+     * @throws Exception
      */
     public function __construct($type = null) {
         parent::__construct($type);

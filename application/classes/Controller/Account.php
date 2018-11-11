@@ -8,7 +8,7 @@ class Controller_Account extends Controller {
      */
     public function action_login() {
         if ($this->session->get('user',NULL)) {
-            $this->redirect(URL::site('lobby/main'),true);
+            $this->redirect(URL::site('lobby/main',true));
             return;
         }
 
@@ -71,12 +71,12 @@ class Controller_Account extends Controller {
     public function japi_mkqr() {
         if (!Globals::hasCurrentUser()) return;
 
-        $pin = DB::select('pin')->from('qr')->where('uid','=',Globals::CurrentUser()->uid())->where('timestamp', '>', time() - 300)->execute()->get('pin', false);
+        $pin = DB::select('pin')->from('qr')->where('uid','=',Globals::CurrentUserF()->uid())->where('timestamp', '>', time() - 300)->execute()->get('pin', false);
 
         while (!$pin) {
             $pin = '';
             for ($i = 0; $i < 4; $i++) {
-                $c = mt_rand(0,61);
+                $c = random_int(0,61);
                 if ($c >= 36) $c += 61;
                 elseif ($c >= 10) $c += 55;
                 else $c += 48;
@@ -88,8 +88,8 @@ class Controller_Account extends Controller {
             $chk = DB::select('pin')->from('qr')->where('pin','=',$pin)->where('timestamp', '>', time() - 604800)->execute()->get('pin', false);
             if ($chk) $pin = null;
             else {
-                DB::delete('qr')->where('pin','=',$pin)->or_where('uid','=',Globals::CurrentUser()->uid())->execute();
-                DB::insert('qr', ['uid','pin','timestamp'])->values([Globals::CurrentUser()->uid(),$pin,time()])->execute();
+                DB::delete('qr')->where('pin','=',$pin)->or_where('uid','=',Globals::CurrentUserF()->uid())->execute();
+                DB::insert('qr', ['uid','pin','timestamp'])->values([Globals::CurrentUserF()->uid(),$pin,time()])->execute();
             }
         }
 
@@ -115,22 +115,22 @@ class Controller_Account extends Controller {
 
         if ($uid == -1)
             return $this->render([
-                'success' => (int)Globals::CurrentUser()->set_mentor_id(-1)
+                'success' => (int)Globals::CurrentUserF()->set_mentor_id(-1)
             ]);
 
 
-        if (!$uid || !Model_Euser::check_mentor(Globals::CurrentUser()->uid(), $uid)) return $this->render(['success' => 0, 'a' => $uid]);
+        if (!$uid || !Model_Euser::check_mentor(Globals::CurrentUserF()->uid(), $uid)) return $this->render(['success' => 0, 'a' => $uid]);
         else return $this->render([
-            'success' => (int)Globals::CurrentUser()->set_mentor_id($uid)
+            'success' => (int)Globals::CurrentUserF()->set_mentor_id($uid)
         ]);
     }
 
     public function japi_cashout() {
         if (!Globals::hasCurrentUser()) return $this->render(['success' => 0]);
 
-        $cash = Model_Euser::get_mentor_braincoins(Globals::CurrentUser()->uid(), null, false);
-        if ($cash && Model_Euser::reset_mentor_braincoins(Globals::CurrentUser()->uid(), null)) {
-            Model_Euser::award_coins(Globals::CurrentUser()->uid(), $cash);
+        $cash = Model_Euser::get_mentor_braincoins(Globals::CurrentUserF()->uid(), null, false);
+        if ($cash && Model_Euser::reset_mentor_braincoins(Globals::CurrentUserF()->uid(), null)) {
+            Model_Euser::award_coins(Globals::CurrentUserF()->uid(), $cash);
             return $this->render(['success' => 1]);
         } else return $this->render(['success' => 0]);
     }
@@ -155,7 +155,7 @@ class Controller_Account extends Controller {
     public function japi_remove_tokens() {
         if (!Globals::hasCurrentUser()) return false;
 
-        Model_Auth_Token::user_unlink(Globals::CurrentUser()->uid());
+        Model_Auth_Token::user_unlink(Globals::CurrentUserF()->uid());
 
         return $this->japi_logout();
     }
@@ -241,7 +241,7 @@ class Controller_Account extends Controller {
 
         if ($allow) {
             $authenticator::user_unlink_all($pid);
-            $authenticator->connectToLocal(Globals::CurrentUser()->uid());
+            $authenticator->connectToLocal(Globals::CurrentUserF()->uid());
         }
 
         return $this->render(['success' => $allow ? 1 : 0]);
@@ -267,6 +267,9 @@ class Controller_Account extends Controller {
 
     /**
      * Login API
+     *
+     * @param null $uid
+     *
      * @return bool
      * @throws Kohana_Exception
      */

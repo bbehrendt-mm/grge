@@ -21,17 +21,17 @@ class Controller_Web extends Controller {
     }
 
     public function action_key() {
-        if (!Globals::CurrentUser()) {
+        if (!Globals::CurrentUserF()) {
             $this->response->body("Not logged in!");
             return;
         }
 
         $entries = [];
-        foreach (Model_Auth_Interface::get_all_providers(Globals::CurrentUser()->uid()) as $provider => $variables)
+        foreach (Model_Auth_Interface::get_all_providers(Globals::CurrentUserF()->uid()) as $provider => $variables)
             /** @var Model_Auth_Interface $provider */
             $entries[$provider::get_service_name()] = [$variables['var1'],$variables['var2']];
 
-        $ret = "Stored login keys for " . Globals::CurrentUser()->name() . ".<br /><br />";
+        $ret = "Stored login keys for " . Globals::CurrentUserF()->name() . ".<br /><br />";
         foreach ($entries as $name => $line)
             $ret .= "<b>$name</b> <i>{$line[0]}</i> <i>{$line[1]}</i><br />";
 
@@ -42,12 +42,12 @@ class Controller_Web extends Controller {
     public function action_framework() {
         $js = ['jquery.min.js'];
         $css = [];
-        foreach (scandir(APPPATH . 'assets/js') as $f) if (!in_array($f, ['.','..','jquery.min.js'])) $js[] = $f;
-        foreach (scandir(APPPATH . 'assets/css') as $f) if (!in_array($f, ['.','..'])) $css[] = $f;
+        foreach (scandir(APPPATH . 'assets/js', SCANDIR_SORT_ASCENDING) as $f) if (!in_array($f, ['.','..','jquery.min.js'])) $js[] = $f;
+        foreach (scandir(APPPATH . 'assets/css', SCANDIR_SORT_ASCENDING) as $f) if (!in_array($f, ['.','..'])) $css[] = $f;
 
         $sid = $this->post('vcsid') ? $this->post('vcsid') : $this->session->id();
         //$this->response->headers('Content-Security-Policy', "connect-src 'self';");
-        $this->response->body(View::factory('framework')->set('js',$js)->set('css',$css)->set('sid', $sid)->set('dev', Kohana::$environment == Kohana::DEVELOPMENT));
+        $this->response->body(View::factory('framework')->set('js',$js)->set('css',$css)->set('sid', $sid)->set('dev', Kohana::$environment === Kohana::DEVELOPMENT));
     }
 
     private function compile_js_module($name, $debug = false, $base_module = []) {
@@ -61,7 +61,7 @@ class Controller_Web extends Controller {
             $buffer .= $debug ? $jv->disable_compression() : $jv;
         }
 
-        foreach (scandir(APPPATH . "views/scripts/$name/") as $f)
+        foreach (scandir(APPPATH . "views/scripts/$name/", SCANDIR_SORT_ASCENDING) as $f)
             if (!in_array($f, ['.','..'])) {
                 $jv = JView::factory("scripts/$name/" . str_replace('.php','',$f))->set('version_data', $version);
                 $buffer .= $debug ? $jv->disable_compression() : $jv;

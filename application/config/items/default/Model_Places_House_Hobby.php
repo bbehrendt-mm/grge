@@ -5,5 +5,5 @@
         ->add('gp_hideout', 4)
         ->add('gp_alcohol', 6)
         ->add('gp_xmas', 1)
-        ->add('Model_Items_Bandage', 2)
+        ->add(Model_Items_Bandage::cls(), 2)
         ;

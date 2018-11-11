@@ -20,10 +20,12 @@ class Model_Uinmanager extends Model {
         $this->readonly = true;
     }
 
-	/**
-	 * Writes back to DB
-	 * @return string[]
-	 */
+    /**
+     * Writes back to DB
+     *
+     * @return string[]
+     * @throws Kohana_Exception
+     */
 	public function __sleep() {
 		if (!$this->readonly && $this->game_id)	{
 			foreach ($this->data as $uin => $entry) {
@@ -125,11 +127,12 @@ class Model_Uinmanager extends Model {
 		if (isset($this->data[$uin])) return $this->passthrough($this->data[$uin]["obj"], $expected_class, $heritage);
 
 		return null;
-	}
+    }
 
     /**
      * Reserves a cloud slot
      * @return int
+     * @throws Kohana_Exception
      */
     public function reserve() {
         if ($this->readonly) return null;

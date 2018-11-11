@@ -4,5 +4,5 @@
         ->add('gp_hideout', 2)
         ->add('gp_bedroom', 2)
         ->add('gp_smeds', 2)
-        ->add('Model_Items_Morphine', 1)
+        ->add(Model_Items_Morphine::cls(), 1)
         ;

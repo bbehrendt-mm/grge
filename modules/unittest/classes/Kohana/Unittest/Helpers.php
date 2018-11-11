@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 
 /**
  * Unit testing helpers
@@ -81,7 +81,7 @@ class Kohana_Unittest_Helpers {
 	 * @see set_environment
 	 * @var array
 	 */
-	protected $_environment_backup = array();
+	protected $_environment_backup = [];
 
 	/**
 	 * Allows easy setting & backing up of enviroment config
@@ -92,6 +92,7 @@ class Kohana_Unittest_Helpers {
 	 * * Static Variable
 	 * * Config option
 	 *
+	 * @codeCoverageIgnore
 	 * @param array $environment List of environment to set
 	 */
 	public function set_environment(array $environment)
@@ -104,7 +105,7 @@ class Kohana_Unittest_Helpers {
 			$backup_needed = ! array_key_exists($option, $this->_environment_backup);
 
 			// Handle changing superglobals
-			if (in_array($option, array('_GET', '_POST', '_SERVER', '_FILES')))
+			if (in_array($option, ['_GET', '_POST', '_SERVER', '_FILES']))
 			{
 				// For some reason we need to do this in order to change the superglobals
 				global $$option;
@@ -159,6 +160,7 @@ class Kohana_Unittest_Helpers {
 	/**
 	 * Restores the environment to the original state
 	 *
+	 * @codeCoverageIgnore
 	 * @chainable
 	 * @return Kohana_Unittest_Helpers $this 
 	 */

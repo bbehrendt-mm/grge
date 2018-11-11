@@ -6,8 +6,8 @@ class Model_Buffs_Alcohol extends Model_Buffs_Abstract_Buff {
 	protected static $icon = 'alcohol';
 	protected static $bid = 'alcohol';
 	protected static $visible = false;
-	
-	protected $effects = Array(
+
+    protected $effects = Array(
 				Model_Status::MS_STAT_HEALTH => Array(
 					Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,

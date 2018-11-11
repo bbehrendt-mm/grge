@@ -10,10 +10,12 @@ class Model_Factory_Items extends Model_Factory_Abstract {
 
     /**
      * @param number $d
+     *
      * @return Model_Factory_Items
+     * @throws Exception
      */
     public function set_decay_factor($d) {
-        $df = Globals::hasCurrentGame() ? Globals::CurrentGame()->config('places.dryout_factor') : 1;
+        $df = Globals::hasCurrentGame() ? Globals::CurrentGameF()->config('places.dryout_factor') : 1;
 
         $this->decay = $d * $df;
         return $this;
@@ -31,6 +33,8 @@ class Model_Factory_Items extends Model_Factory_Abstract {
     /**
      * @param bool $force
      * @param bool $apply_decay
+     * @param int  $chances_modifier
+     *
      * @return null|Model_Items_Abstract_Item
      */
     public function spawn($force = false, $apply_decay = true, $chances_modifier = 1) {
@@ -52,8 +56,7 @@ class Model_Factory_Items extends Model_Factory_Abstract {
 
     /**
      * Forced, non-decay and non-trigger
-     * @param bool $force
-     * @param bool $apply_decay
+     * @param int $itd
      * @return null|Model_Items_Abstract_Item
      */
     public function nd_spawn($itd = 0) {

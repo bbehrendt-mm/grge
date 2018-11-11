@@ -8,7 +8,5 @@ class Model_Buffs_Drunk2 extends Model_Buffs_Abstract_Fragile {
 
     protected static $abortable = false;
 
-    protected $effects = Array();
-
     protected function action_on_complete() {}
 }

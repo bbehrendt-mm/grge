@@ -20,7 +20,7 @@ class Model_Items_Virtual_Epic_Raven extends Model_Items_Abstract_Virtual {
     }
 
     public function get_rest() {
-        $a = $this->rest - Globals::CurrentGame()->duration();
+        $a = $this->rest - Globals::CurrentGameF()->duration();
         return $a > 0 ? $a : false;
     }
 
@@ -31,7 +31,7 @@ class Model_Items_Virtual_Epic_Raven extends Model_Items_Abstract_Virtual {
             $hid->add_action('Dopen', Model_Action::factory()
                 ->buttonskin('epic')
                 ->description('Mit ein paar Steroiden (und einer Luftpumpe) kannst du deinen Raben zu einem mächtigen Greifen aufpumpen, der auch schwere Gegenstände transportieren kann. Dies erhöht allerdings auch die Erhohlungszeit.')
-                ->requirement('Model_Items_Paracetin', 3)
+                ->requirement(Model_Items_Paracetin::cls(), 3)
                 ->effect(Model_Effect::factory()
                     ->message('Du hast deinem Raben ein paar Pillen in seine Körner gemischt.')
                     ->custom(function() {
@@ -61,9 +61,9 @@ class Model_Items_Virtual_Epic_Raven extends Model_Items_Abstract_Virtual {
 
 
                         $current_location = $p->location_class();
-                        $locations = array_filter(Globals::CurrentGame()->map()->build_route_array($current_location), function($location) use ($current_location, $a) {
+                        $locations = array_filter(Globals::CurrentGameF()->main_map()->build_route_array($current_location), function($location) use ($current_location, $a) {
                             if ($location['id'] == $current_location || $a[0] > $location['distance'] || $a[1] < $location['distance']) return false;
-                            $obj = Globals::CurrentGame()->location($location['id']);
+                            $obj = Globals::CurrentGameF()->location($location['id']);
                             if (!$obj || Tool_System::instance_of($obj, ['Model_Places_Abstract_Hideout', 'Model_Places_Abstract_Node'])) return false;
                             return true;
                         });
@@ -73,12 +73,12 @@ class Model_Items_Virtual_Epic_Raven extends Model_Items_Abstract_Virtual {
                             return;
                         }
 
-                        if (!Tool_Scripts::consume_available_items(['Model_Items_Basefood' => max(1,2*$arg)], true, true, false, $p)) {
+                        if (!Tool_Scripts::consume_available_items([Model_Items_Basefood::cls() => max(1,2*$arg)], true, true, false, $p)) {
                             $p->log()->add('Raben sind keine sonderlich altruistisch eingestellten Tiere... du musst ihn schon ausreichend füttern, wenn du Gegenstände von ihm bekommen möchtest.');
                             return;
                         }
 
-                        $location = Globals::CurrentGame()->location(Tool_Gambling::select(array_keys($locations)));
+                        $location = Globals::CurrentGameF()->location(Tool_Gambling::select(array_keys($locations)));
 
                         $p->location()->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_LEAVE, 'Corax der Rabe'));
                         $location->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, 'Corax der Rabe'));
@@ -92,7 +92,7 @@ class Model_Items_Virtual_Epic_Raven extends Model_Items_Abstract_Virtual {
                         if ($items) $location->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_DIGUP, $items, 'Corax der Rabe'));
                         $location->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_LEAVE, 'Corax der Rabe'));
 
-                        $weight = 0;;
+                        $weight = 0;
                         $final = [];
                         $final_ids = [];
                         shuffle($items);
@@ -100,7 +100,7 @@ class Model_Items_Virtual_Epic_Raven extends Model_Items_Abstract_Virtual {
                             /** @var Model_Items_Abstract_Item $item */
                             if (!in_array($item->uin(), $final_ids)) {
                                 if (count($final) >= $max_capacity || $weight >= $max_weight) break;
-                                if ($item->weight() + $weight < $max_weight && (Tool_System::instance_of($item, 'Model_Items_Abstract_Ammo') || $item->take(true))) {
+                                if ($item->weight() + $weight < $max_weight && (Tool_System::instance_of($item, Model_Items_Abstract_Ammo::cls()) || $item->take(true))) {
                                     $final[] = $item;
                                     $final_ids[] = $item->uin();
                                     $weight += $item->weight();
@@ -121,7 +121,7 @@ class Model_Items_Virtual_Epic_Raven extends Model_Items_Abstract_Virtual {
                             $p->log()->add('Dein Rabe hat :location besucht und dort auch etwas gefunden, konnte es jedoch nicht hierher tragen...',[],[':location' => $location->name()]);
                         else $p->log()->add('Dein Rabe hat :location besucht, ist jedoch mit leeren Krallen zurückgekehrt...',[],[':location' => $location->name()]);
 
-                        $this->rest = Globals::CurrentGame()->duration() + ($this->doped ? 24 : 12);
+                        $this->rest = Globals::CurrentGameF()->duration() + ($this->doped ? 24 : 12);
                         $this->doped = false;
                     })
                 )

@@ -12,7 +12,7 @@ class Model_Postbox {
      * @param string $title
      */
     public function add($uid, $message, $title) {
-        $id = time() . mt_rand(0,99);
+        $id = time() . random_int(0,99);
         $this->messages[$id] = array('uid' => $uid, 'message' => $message, 'title' => $title, 'timestamp' => time(), 'read' => false, 'mid' => $id);
         while (count($this->messages) > 50) {
             $d = array_keys($this->messages);

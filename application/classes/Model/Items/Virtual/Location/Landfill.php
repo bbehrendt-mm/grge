@@ -12,12 +12,12 @@ class Model_Items_Virtual_Location_Landfill extends Model_Items_Abstract_Virtual
     );
 
     protected function hid() {
-        $tar = floor(Globals::CurrentPlayer()->location()->splinters()/10);
+        $tar = floor(Globals::CurrentPlayerF()->location()->splinters()/10);
         return parent::hid()->add_action('Splitter zählen', Model_Action::factory()
             ->buttonskin('location')
             ->effect(Model_Effect::factory()->custom(function($p) {
                     /** @var Model_Player $p */
-                    $p->log()->add(new Model_Log_Types_Text(null,null,'Hier lagern momentan :num Eimer voller Splitter, aus denen du :num2 Splitterkugeln formen könntest.', array(':num' => $p->location()->splinters(), ':num2' => floor($p->location()->splinters()/10))));
+                    $p->log()->add(new Model_Log_Types_String(null,'Hier lagern momentan :num Eimer voller Splitter, aus denen du :num2 Splitterkugeln formen könntest.', array(':num' => $p->location()->splinters(), ':num2' => floor($p->location()->splinters()/10))));
                 }))
             ,'count')
             ->add_action('Schredder verwenden', Model_Action::factory()
@@ -44,8 +44,8 @@ class Model_Items_Virtual_Location_Landfill extends Model_Items_Abstract_Virtual
                         }
 
                         $p->achievements()->achieve(Model_Achievement::MA_GARBAGE_GUY, $g);
-                        if ($g == 1) $p->log()->add(new Model_Log_Types_Text(null, null, 'Eigentlich ist es ja Energieverschwendung, den Schredder für dieses bisschen Müll anzuwerfen... Aber hey, immerhin hast du einen Eimer mit Splittern gefüllt!'));
-                        else $p->log()->add(new Model_Log_Types_Text(null, null, 'Mit unbarmherziger Macht zerstört der Schredder jeden Gegenstand, den du in seinen Schlot wirfst. Am Ende hast du damit :num Eimer mit Splittern gefüllt!', array(':num' => $g)));
+                        if ($g == 1) $p->log()->add(new Model_Log_Types_String(null, 'Eigentlich ist es ja Energieverschwendung, den Schredder für dieses bisschen Müll anzuwerfen... Aber hey, immerhin hast du einen Eimer mit Splittern gefüllt!'));
+                        else $p->log()->add(new Model_Log_Types_String(null, 'Mit unbarmherziger Macht zerstört der Schredder jeden Gegenstand, den du in seinen Schlot wirfst. Am Ende hast du damit :num Eimer mit Splittern gefüllt!', array(':num' => $g)));
 
                         return true;
                     })

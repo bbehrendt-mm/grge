@@ -9,7 +9,7 @@ abstract class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
 	protected static $cat = Model_Items_Abstract_Item::MIAI_CAT_FOOD;
 
     protected function hid() {
-        $a = static::$alcohol * (Tool_Scripts::get_timeofday() == "evening" ? 0.75 : 1);
+        $a = static::$alcohol * (Tool_Scripts::get_timeofday() == 'evening' ? 0.75 : 1);
         return parent::hid()
             ->add_action('Trinken', Model_Action::factory()
                     ->allow_auto(false)
@@ -20,7 +20,7 @@ abstract class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
                             ->effect(Model_Status::MS_STAT_THIRST, static::$thirst)
                             ->effect(static::$additional_effects)
                             ->consume($this)
-                            ->spawn('Model_Items_Smallbottle')
+                            ->spawn(Model_Items_Smallbottle::cls())
                             ->message('Das tut gut ... nach einem ordentlichen Drink sieht die Welt gleich weniger apokalyptisch aus!')
                     ,'s1')
                     ->effect(
@@ -31,7 +31,7 @@ abstract class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
                             ->effect(Model_Status::MS_STAT_HUNGER, -40)
                             ->achieve(Model_Achievement::MA_ALCOHOLIC)
                             ->consume($this)
-                            ->spawn('Model_Items_Smallbottle')
+                            ->spawn(Model_Items_Smallbottle::cls())
                             ->message('Die Welt um dich herum dreht sich bereits mit bedenklicher Geschwindigkeit, aber einer geht sicher noch rein! ... denkst du, kurz bevor sich dir der Magen umdreht und seinen Inhalt zu Tage fördert.')
                     ,'s2')
                     ->effect(
@@ -42,7 +42,7 @@ abstract class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
                             ->effect(Model_Status::MS_STAT_THIRST, static::$thirst)
                             ->effect(static::$additional_effects)
                             ->consume($this)
-                            ->spawn('Model_Items_Smallbottle')
+                            ->spawn(Model_Items_Smallbottle::cls())
                             ->message('Eigentlich kann man ja mit dem Trinken nie früh genug anfangen. Nachdem du die Flasche ausgetrunken hast, stellst du diese Aussage jedoch spontan in Frage - immerhin dreht sich die Welt um dich herum, und dir ist speiübel.')
                         ,'s3')
                     ->effect(
@@ -53,7 +53,7 @@ abstract class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
                             ->effect(static::$additional_effects)
                             ->buff('Model_Buffs_Drunk')
                             ->consume($this)
-                            ->spawn('Model_Items_Smallbottle')
+                            ->spawn(Model_Items_Smallbottle::cls())
                             ->achieve(Model_Achievement::MA_ALCOHOLIC)
                             ->message('Das tut gut ... nach einem ordentlichen Drink sieht die Welt gleich weniger apokalyptisch aus! Aber warum kommt der Boden plötzlich auf dich zugeflogen?')
                         ,'s4')
@@ -66,7 +66,7 @@ abstract class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
                             ->effect(static::$additional_effects)
                             ->buff('Model_Buffs_Drunk')
                             ->consume($this)
-                            ->spawn('Model_Items_Smallbottle')
+                            ->spawn(Model_Items_Smallbottle::cls())
                             ->achieve(Model_Achievement::MA_ALCOHOLIC)
                             ->message('Eigentlich kann man ja mit dem Trinken nie früh genug anfangen. Nachdem du die Flasche ausgetrunken hast, stellst du diese Aussage jedoch spontan in Frage - allerdings nur für einen Augenblick, denn du verlierst kurz darauf das Bewusstsein.')
                         ,'s5')

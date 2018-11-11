@@ -6,14 +6,17 @@ class Model_Log_Types_Building extends Model_Log_Message {
 
     /**
      * Creates a message that a ruin has been found
+     *
      * @param Model_Places_Abstract_Place $ruin Short message title
-     * @param int $uid
+     * @param int                         $uid
+     *
+     * @throws Exception
      */
 	public function __construct($ruin, $uid = null) {
-        if ($uid === null) $uid = Globals::CurrentPlayer()->id();
+        if ($uid === null) $uid = Globals::CurrentPlayerF()->id();
 
         parent::__construct([
-            'name' => Globals::CurrentGame()->get_player($uid)->name(),
+            'name' => Globals::CurrentGameF()->get_player_name($uid),
             'ruin' => $ruin->name(),
             'icon' => $ruin->icon()
         ], $uid);

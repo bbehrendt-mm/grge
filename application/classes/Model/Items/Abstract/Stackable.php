@@ -36,7 +36,7 @@ abstract class Model_Items_Abstract_Stackable extends Model_Items_Abstract_Item 
 		
 		//Set given size size or use autospawn
 		if ($size !== null) $this->count = $size;
-		else $this->count = mt_rand(static::$autospawn[0], static::$autospawn[1]);
+		else $this->count = random_int(static::$autospawn[0], static::$autospawn[1]);
 	}
 	
 	/**
@@ -83,10 +83,13 @@ abstract class Model_Items_Abstract_Stackable extends Model_Items_Abstract_Item 
         return static::$max_size;
     }
 
-	/**
-	 * Will merge all stacks given by $target into this stack
-	 * @param array $targets Target stacks to merge with; if omitted, the available_items script (default parameters) will be used
-	 */
+    /**
+     * Will merge all stacks given by $target into this stack
+     *
+     * @param array $targets Target stacks to merge with; if omitted, the available_items script (default parameters) will be used
+     *
+     * @throws Exception
+     */
 	public function merge($targets = null) {
 		//Do nothing if stack is already full
 		if ($this->is_stack_full()) return;

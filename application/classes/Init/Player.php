@@ -15,16 +15,18 @@ class Init_Player {
 	}
 
     /**
-     * @param $game Model_Game
-     * @param $set Object
+     * @param $game   Model_Game
+     * @param $set    Object
      * @param $userid number
-     * @param $name string
-     * @param $job number
-     * @param $level number
+     * @param $name   string
+     * @param $job    number
+     * @param $level  number
+     *
+     * @throws Exception
      */
 	private function init(&$game, &$set, $userid, $name, $job, $level) {
 		Globals::setPrimaryPlayer(new Model_Player($userid, $name, $set->head->mode, $job, $level));
-		$player_obj = Globals::PrimaryPlayer();
+		$player_obj = Globals::PrimaryPlayerF();
 		$set->players[$userid] = $set->uin->set($player_obj);
 		
 		//Enter home

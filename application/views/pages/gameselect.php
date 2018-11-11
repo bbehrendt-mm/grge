@@ -368,6 +368,7 @@
             foreach ($db_entry['meta'] as &$db_meta)
                 $db_meta = __($db_meta);
         }
+        unset($db_entry,$db_meta);
 
         foreach ($database['jobs'] as &$jb_entry) {
             unset($jb_entry['levels']);
@@ -375,9 +376,11 @@
                 if ($t != 'sign')
                     $jb_meta = __($jb_meta);
         }
+    unset($jb_entry,$jb_meta);
 
-        foreach ($games as &$game_entry)
-            unset($game_entry['locked'],$game_entry['lang'],$game_entry['mode'],$game_entry['password'],$game_entry['slots'],$game_entry['name']);
+    foreach ($games as &$game_entry)
+        unset($game_entry['locked'],$game_entry['lang'],$game_entry['mode'],$game_entry['password'],$game_entry['slots'],$game_entry['name']);
+    unset($game_entry);
      ?>
 
     var games = <?=json_encode($games)?>;

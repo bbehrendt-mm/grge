@@ -23,7 +23,7 @@ return Model_Blueprints::factory()
             ->description('Schaltet zusätzliche Optionen in der Küche frei.')
             ->message('Das zentrale Utensil jeder Küche - der Wasserkocher - steht nun auch dir zur Verfügung. Nutze ihn Weise, und missbrauche seine Kräfte nicht!')
             ->energy(2)
-            ->material(['Model_Items_Generic_Boiler' => 1])
+            ->material([Model_Items_Generic_Boiler::cls() => 1])
     )
 
     ->add_blueprints(
@@ -32,7 +32,7 @@ return Model_Blueprints::factory()
             ->name('Küchenutensilien')
             ->description('Schaltet zusätzliche Optionen in der Küche frei.')
             ->message('ENDLICH! Nun musst du den Brei nicht mehr mit der Hand kneten und das Fleisch nicht mehr mit Karateschlägen schneiden. Heureka!')
-            ->material(['Model_Items_Generic_Mixer' => 1, 'Model_Items_Knife' => 1])
+            ->material([Model_Items_Generic_Mixer::cls() => 1, Model_Items_Knife::cls() => 1])
     )
 
     ->add_blueprints(
@@ -42,7 +42,7 @@ return Model_Blueprints::factory()
             ->description('Schaltet zusätzliche Optionen in der Küche frei.')
             ->message('Die Zeiten von eiskaltem Essen sind vorbei! Vorrausgesetzt natürlich, du kannst etwas Strom auftreiben ...')
             ->energy(20)
-            ->material(['Model_Items_Generic_Oven' => 1])
+            ->material([Model_Items_Generic_Oven::cls() => 1])
     )
 
     // -- STACK -> All blueprints below NO LONGER need the kitchen
@@ -58,7 +58,7 @@ return Model_Blueprints::factory()
             ->description('Reduziert die benötigte Energie für alle Arbeiten an der Werkbank.')
             ->message('Diese neuen Halterungen werden sich sicher als nützlich erweisen, wenn es mal etwas schweres zu heben gibt. Hoffentlich hast du beim bau nicht gepfuscht, sonst werden sie sich zusätzlich noch als tödlich erweisen...')
             ->energy(15)
-            ->material(['Model_Items_Generic_Wood' => 3, 'Model_Items_Generic_Sum' => 1])
+            ->material([Model_Items_Generic_Wood::cls() => 3, Model_Items_Generic_Sum::cls() => 1])
     )
 
     // -- STACK -> All blueprints below NO LONGER need the workbench

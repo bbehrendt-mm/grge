@@ -3,13 +3,16 @@
 class Controller_Location extends Controller_Game {
     /**
      * Break a siege
+     *
      * @param bool $fight True to fight, false to flee
+     *
+     * @throws Kohana_Exception
      */
     private function siege($fight) {
-        if (Globals::PrimaryPlayer()->get_status()->retrieve('passout') || Globals::PrimaryPlayer()->get_status()->retrieve('fragile') || Globals::PrimaryPlayer()->can_escape()) return;
+        if (Globals::PrimaryPlayerF()->get_status()->retrieve('passout') || Globals::PrimaryPlayerF()->get_status()->retrieve('fragile') || Globals::PrimaryPlayerF()->can_escape()) return;
 
-        if (Globals::PrimaryPlayer()->location()->zombie_pop() > 0)
-            Globals::PrimaryPlayer()->location()->break_out($fight);
+        if (Globals::PrimaryPlayerF()->location()->zombie_pop() > 0)
+            Globals::PrimaryPlayerF()->location()->break_out($fight);
 
         $this->japi_data();
     }
@@ -29,13 +32,13 @@ class Controller_Location extends Controller_Game {
     }
 
     public function japi_scout() {
-        if (Globals::PrimaryPlayer()->get_status()->retrieve('fragile')) return;
+        if (Globals::PrimaryPlayerF()->get_status()->retrieve('fragile')) return;
 
-        if (Globals::CurrentGame()->config('modules.mapping') && Globals::PrimaryPlayer()->inventory()->get('Model_Items_Maptool') && !Tool_System::instance_of(Globals::PrimaryPlayer()->location(), 'Model_Places_Abstract_Xmas') && !Tool_System::instance_of(Globals::PrimaryPlayer()->location(), 'Model_Places_Abstract_Hideout') && !Tool_System::instance_of(Globals::PrimaryPlayer()->location(), 'Model_Places_Abstract_Node')) {
+        if (Globals::CurrentGameF()->config('modules.mapping') && Globals::PrimaryPlayerF()->inventory()->get(Model_Items_Maptool::cls()) && !Tool_System::instance_of(Globals::PrimaryPlayerF()->location(), 'Model_Places_Abstract_Xmas') && !Tool_System::instance_of(Globals::PrimaryPlayerF()->location(), 'Model_Places_Abstract_Hideout') && !Tool_System::instance_of(Globals::PrimaryPlayerF()->location(), 'Model_Places_Abstract_Node')) {
             /** @var Model_Items_Maptool $mapper */
-            $mapper = Globals::PrimaryPlayer()->inventory()->get('Model_Items_Maptool'); $mapper = $mapper[0];
+            $mapper = Globals::PrimaryPlayerF()->inventory()->get(Model_Items_Maptool::cls()); $mapper = $mapper[0];
 
-            $mp_lv =  $this->post('speed');
+            $mp_lv =  self::post('speed');
             if ($mp_lv == 'item') $mp_lv = true;
             else {
                 $mp_lv = (int)$mp_lv;
@@ -50,10 +53,10 @@ class Controller_Location extends Controller_Game {
     public function japi_rooms() {
         $data = [];
 
-        foreach (Globals::PrimaryPlayer()->location()->rooms() as $id => $room) {
+        foreach (Globals::PrimaryPlayerF()->location()->rooms() as $id => $room) {
 
             $hid = [];
-            foreach ($room->inventory()->get('Model_Items_Abstract_Virtual') as $a_item)
+            foreach ($room->inventory()->get(Model_Items_Abstract_Virtual::cls()) as $a_item)
                 /** @var  Model_Items_Abstract_Virtual $a_item */
                 $hid = array_merge($hid,$this->prepare_actionlist($a_item->auto_actions(), $a_item));
 
@@ -65,9 +68,9 @@ class Controller_Location extends Controller_Game {
                 'type' => $room->get_usage(),
                 'tags' => $room->get_friendly_tags(),
                 'options' => [
-                    'rename' => Globals::PrimaryPlayer()->location()->is_upgradable() && !$room->name_is_fixed(),
-                    'add' => Globals::PrimaryPlayer()->location()->is_upgradable() && $room->get_usage() != null,
-                    'construct' => Globals::PrimaryPlayer()->location()->is_upgradable() && ($id != 0),
+                    'rename' => Globals::PrimaryPlayerF()->location()->is_upgradable() && !$room->name_is_fixed(),
+                    'add' => Globals::PrimaryPlayerF()->location()->is_upgradable() && $room->get_usage() != null,
+                    'construct' => Globals::PrimaryPlayerF()->location()->is_upgradable() && ($id != 0),
                     'actions' => $hid,
                     'enabled' => $room->enabled()
                 ]
@@ -76,13 +79,13 @@ class Controller_Location extends Controller_Game {
         $this->render(['rooms' => $data]);
     }
     public function japi_rename_room() {
-        $room_id = $this->post('r');
-        $name = $this->post('n');
+        $room_id = self::post('r');
+        $name = self::post('n');
 
         if ($room_id === null)
             return $this->render(['success' => 0]);
 
-        $room = Globals::PrimaryPlayer()->location()->room((int)$room_id);
+        $room = Globals::PrimaryPlayerF()->location()->room((int)$room_id);
         if ($room === null || $room->name_is_fixed())
             return $this->render(['success' => 0]);
 
@@ -94,17 +97,19 @@ class Controller_Location extends Controller_Game {
 
     /**
      * @param Model_Blueprints $blueprints
-     * @param Model_Room $room
+     * @param Model_Room       $room
      * @return mixed
-     */
+     * @throws Exception
+*/
     private function compile_builder($blueprints, $room) {
         // Translate stuff
-        $data = $blueprints->compile(Globals::PrimaryPlayer()->location()->rooms_contain(), $room, Globals::PrimaryPlayer());
+        $data = $blueprints->compile(Globals::PrimaryPlayerF()->location()->rooms_contain(), $room, Globals::PrimaryPlayerF());
         foreach ($data as &$blueprint) {
             foreach (['name','description','confirm'] as $key)
                 $blueprint[$key] = __($blueprint[$key]);
             foreach ($blueprint['categories'] as &$cat)
                 $cat = __($cat);
+            unset($cat);
             foreach (['material_in','material_out'] as $key)
                 foreach ($blueprint[$key] as &$material)
                     $material['name'] = __($material['name']);
@@ -114,12 +119,13 @@ class Controller_Location extends Controller_Game {
 
     /**
      * @param Model_Blueprints $blueprints
-     * @param string $bid
-     * @param Model_Room $room
+     * @param string           $bid
+     * @param Model_Room       $room
      * @return bool
-     */
+     * @throws Exception
+*/
     private function exec_build($blueprints, $bid, $room) {
-        $tmp = $blueprints->execute($bid, Globals::PrimaryPlayer(), Globals::PrimaryPlayer()->location()->rooms_contain(), $room);
+        $tmp = $blueprints->execute($bid, Globals::PrimaryPlayerF(), Globals::PrimaryPlayerF()->location()->rooms_contain(), $room);
         $this->add_data('result', $tmp);
         $this->render_notifications();
 
@@ -127,100 +133,100 @@ class Controller_Location extends Controller_Game {
     }
 
     public function japi_tine() {
-        $room_id = (int)$this->post('r');
-        $room = Globals::PrimaryPlayer()->location()->room($room_id);
+        $room_id = (int)self::post('r');
+        $room = Globals::PrimaryPlayerF()->location()->room($room_id);
         if (!$room) return false;
 
-        $blueprints = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'rooms', true);
-        $externals = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'upgrades', true)->externalize();
+        $blueprints = Model_Blueprints::factory(Globals::PrimaryPlayerF()->location(), 'rooms', true);
+        $externals = Model_Blueprints::factory(Globals::PrimaryPlayerF()->location(), 'upgrades', true)->externalize();
 
-        if (Globals::PrimaryPlayer()->location()->is_upgradable() && $build = $this->post('build'))
-            Globals::PrimaryPlayer()->achievements()->achieve(Model_Achievement::MA_ROOM_BUILDER, $this->exec_build($blueprints, $build, $room) ? 1 : 0);
+        if (Globals::PrimaryPlayerF()->location()->is_upgradable() && $build = self::post('build'))
+            Globals::PrimaryPlayerF()->achievements()->achieve(Model_Achievement::MA_ROOM_BUILDER, $this->exec_build($blueprints, $build, $room) ? 1 : 0);
 
         $blueprints->merge($externals)->validate();
 
         $this->add_data('room', $room_id);
         $this->add_data('blueprints', $this->compile_builder($blueprints, $room));
-        $this->add_data('energy', Globals::PrimaryPlayer()->get_status()->get(Model_Status::MS_STAT_ENERGY));
-        $this->add_data('zombies', Globals::PrimaryPlayer()->location()->zombie_pop());
+        $this->add_data('energy', Globals::PrimaryPlayerF()->get_status()->get(Model_Status::MS_STAT_ENERGY));
+        $this->add_data('zombies', Globals::PrimaryPlayerF()->location()->zombie_pop());
         $this->render(false);
         return true;
     }
 
     public function japi_builder() {
-        $room_id = (int)$this->post('r');
-        $room = Globals::PrimaryPlayer()->location()->room($room_id);
+        $room_id = (int)self::post('r');
+        $room = Globals::PrimaryPlayerF()->location()->room($room_id);
         if (!$room) return false;
 
-        $blueprints = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'upgrades',true);
-        $externals = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'rooms',true)->externalize();
+        $blueprints = Model_Blueprints::factory(Globals::PrimaryPlayerF()->location(), 'upgrades',true);
+        $externals = Model_Blueprints::factory(Globals::PrimaryPlayerF()->location(), 'rooms',true)->externalize();
 
-        if (Globals::PrimaryPlayer()->location()->is_upgradable() && $build = $this->post('build'))
-            Globals::PrimaryPlayer()->achievements()->achieve(Model_Achievement::MA_CONSTRUCTIONS, $this->exec_build($blueprints, $build, $room) ? 1 : 0);
+        if (Globals::PrimaryPlayerF()->location()->is_upgradable() && $build = self::post('build'))
+            Globals::PrimaryPlayerF()->achievements()->achieve(Model_Achievement::MA_CONSTRUCTIONS, $this->exec_build($blueprints, $build, $room) ? 1 : 0);
 
         $blueprints->merge($externals)->validate();
 
         $this->add_data('room', $room_id);
         $this->add_data('blueprints', $this->compile_builder($blueprints, $room));
-        $this->add_data('energy', Globals::PrimaryPlayer()->get_status()->get(Model_Status::MS_STAT_ENERGY));
-        $this->add_data('zombies', Globals::PrimaryPlayer()->location()->zombie_pop());
+        $this->add_data('energy', Globals::PrimaryPlayerF()->get_status()->get(Model_Status::MS_STAT_ENERGY));
+        $this->add_data('zombies', Globals::PrimaryPlayerF()->location()->zombie_pop());
         $this->render(false);
         return true;
     }
 
     public function japi_maker() {
-        $room_id = (int)$this->post('r');
-        $room = Globals::PrimaryPlayer()->location()->room($room_id);
+        $room_id = (int)self::post('r');
+        $room = Globals::PrimaryPlayerF()->location()->room($room_id);
         if (!$room) return false;
 
-        $blueprints = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'items', true);
-        $externals_1 = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'upgrades', true)->externalize();
-        $externals_2 = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'rooms', true)->externalize();
+        $blueprints = Model_Blueprints::factory(Globals::PrimaryPlayerF()->location(), 'items', true);
+        $externals_1 = Model_Blueprints::factory(Globals::PrimaryPlayerF()->location(), 'upgrades', true)->externalize();
+        $externals_2 = Model_Blueprints::factory(Globals::PrimaryPlayerF()->location(), 'rooms', true)->externalize();
 
-        if ($build = $this->post('build'))
+        if ($build = self::post('build'))
             $this->exec_build($blueprints, $build, $room);
 
         $blueprints->merge($externals_1)->merge($externals_2)->validate();
 
         $this->add_data('room', $room_id);
         $this->add_data('blueprints', $this->compile_builder($blueprints, $room));
-        $this->add_data('energy', Globals::PrimaryPlayer()->get_status()->get(Model_Status::MS_STAT_ENERGY));
-        $this->add_data('zombies', Globals::PrimaryPlayer()->location()->zombie_pop());
+        $this->add_data('energy', Globals::PrimaryPlayerF()->get_status()->get(Model_Status::MS_STAT_ENERGY));
+        $this->add_data('zombies', Globals::PrimaryPlayerF()->location()->zombie_pop());
         $this->render(false);
         return true;
     }
 
     public function japi_fighter() {
-        $room_id = (int)$this->post('r');
-        $room = Globals::PrimaryPlayer()->location()->room($room_id);
+        $room_id = (int)self::post('r');
+        $room = Globals::PrimaryPlayerF()->location()->room($room_id);
         if (!$room) return false;
 
-        $blueprints = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'attack', true);
-        $externals = Model_Blueprints::factory(Globals::PrimaryPlayer()->location(), 'upgrades', true)->externalize();
+        $blueprints = Model_Blueprints::factory(Globals::PrimaryPlayerF()->location(), 'attack', true);
+        $externals = Model_Blueprints::factory(Globals::PrimaryPlayerF()->location(), 'upgrades', true)->externalize();
 
-        if ($build = $this->post('build'))
+        if ($build = self::post('build'))
             $this->exec_build($blueprints, $build, $room);
 
         $blueprints->merge($externals)->validate();
 
         $this->add_data('room', $room_id);
         $this->add_data('blueprints', $this->compile_builder($blueprints, $room));
-        $this->add_data('energy', Globals::PrimaryPlayer()->get_status()->get(Model_Status::MS_STAT_ENERGY));
-        $this->add_data('zombies', Globals::PrimaryPlayer()->location()->zombie_pop());
+        $this->add_data('energy', Globals::PrimaryPlayerF()->get_status()->get(Model_Status::MS_STAT_ENERGY));
+        $this->add_data('zombies', Globals::PrimaryPlayerF()->location()->zombie_pop());
         $this->render(false);
         return true;
     }
 
     public function japi_caravan() {
-        if (Tool_System::instance_of(Globals::PrimaryPlayer()->location(), 'Model_Places_Motorhome')) {
+        if (Tool_System::instance_of(Globals::PrimaryPlayerF()->location(), 'Model_Places_Motorhome')) {
             /** @var Model_Places_Motorhome $motorhome */
-            $motorhome = Globals::PrimaryPlayer()->location();
+            $motorhome = Globals::PrimaryPlayerF()->location();
 
-            $action = $this->post('do');
+            $action = self::post('do');
             switch ($action) {
                 case 'repair':
-                    $count = (int)$this->post('count');
-                    $addr = $this->post('addr');
+                    $count = (int)self::post('count');
+                    $addr = self::post('addr');
                     if (!$count || !$addr || $count <= 0) return;
                     $motorhome->repair($addr,$count);
                     break;
@@ -241,10 +247,10 @@ class Controller_Location extends Controller_Game {
     }
 
     public function japi_legacy() {
-        $action = $this->post('do');
-        $arg = $this->post('arg');
+        $action = self::post('do');
+        $arg = self::post('arg');
 
-        Globals::PrimaryPlayer()->location()->interact($action, $arg);
+        Globals::PrimaryPlayerF()->location()->interact($action, $arg);
         $this->japi_data();
     }
 }

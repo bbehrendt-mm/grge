@@ -14,7 +14,7 @@ class Model_Items_Guardshield extends Model_Items_Abstract_Armor {
 
     protected static $equipment_type = Model_Items_Abstract_Equipable::MIAE_ARMOR_SHIELD;
 
-    protected $protection = PHP_INT_MAX;
+    protected static $protection = PHP_INT_MAX;
     protected $level = 1;
 
     public function __construct($stat_level) {
@@ -29,7 +29,7 @@ class Model_Items_Guardshield extends Model_Items_Abstract_Armor {
     }
 
     public function drop($p = null, $silent = false) {
-        if (!$silent) Globals::PrimaryPlayer()->log()->add('Ohne deinen Schild fühlst du dich ziemlich nackt; hauptsächlich, weil du hinter dem Schild tatsächlich keine Kleidung trägst. Du solltest ihn also besser nicht ablegen...');
+        if (!$silent) Globals::PrimaryPlayerF()->log()->add('Ohne deinen Schild fühlst du dich ziemlich nackt; hauptsächlich, weil du hinter dem Schild tatsächlich keine Kleidung trägst. Du solltest ihn also besser nicht ablegen...');
         return false;
     }
 
@@ -40,7 +40,5 @@ class Model_Items_Guardshield extends Model_Items_Abstract_Armor {
     /**
      * @param number $damage
      */
-    public function take_damage($damage) {
-        return;
-    }
+    public function take_damage($damage) {}
 }	

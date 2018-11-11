@@ -8,10 +8,12 @@ class HTTP_Exception_404 extends Kohana_HTTP_Exception_404 {
      * The user should be shown a nice 404 page.
      *
      * @return Response
+     * @throws Kohana_Exception
+     * @throws View_Exception
      */
     public function get_response()
     {
-        Error::i();
+        GRGEError::i();
         $response = Response::factory()->status(200);
 
         if ($this->_request->headers('X-Requested-With') == 'XMLHttpRequest') {
@@ -21,8 +23,8 @@ class HTTP_Exception_404 extends Kohana_HTTP_Exception_404 {
             if ($this->_request->action() == 'japi')
                 $response->body(json_encode(['error' => array(
                     'code' => grge\E_HTTP_REQUEST_INVALID,
-                    'name' => Error::r(grge\E_HTTP_REQUEST_INVALID),
-                    'message' => Error::d(grge\E_HTTP_REQUEST_INVALID),
+                    'name' => GRGEError::r(grge\E_HTTP_REQUEST_INVALID),
+                    'message' => GRGEError::d(grge\E_HTTP_REQUEST_INVALID),
                     'details' => ['uri' => $this->_request->uri()],
                 )], JSON_FORCE_OBJECT));
             else

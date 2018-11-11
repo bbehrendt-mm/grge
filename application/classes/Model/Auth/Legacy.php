@@ -104,7 +104,7 @@ abstract class Model_Auth_Legacy extends Model_Auth_Interface {
         $this->zvid = static::lookup(null, $secret_key);
 
         if ($this->zvid >= 0) {
-            $this->rid = (int)DB::select('rid')->from('profiles_xref')->where('provider','=', get_called_class())->where('zvid','=',$this->zvid)->execute()->get('rid',-1);
+            $this->rid = (int)DB::select('rid')->from('profiles_xref')->where('provider','=', static::class)->where('zvid','=',$this->zvid)->execute()->get('rid',-1);
             $this->name = Model_Euser::name_by_id($this->zvid);
             $this->avatar = Model_Euser::avatar_by_id($this->zvid);
 
@@ -113,7 +113,7 @@ abstract class Model_Auth_Legacy extends Model_Auth_Interface {
     }
 
     public static function retrieve_user_id($key) {
-        return (int)DB::select('zvid')->from('profiles_xref')->where('provider','=', get_called_class())->where('var1','=',$key)->execute()->get('zvid',-1);
+        return (int)DB::select('zvid')->from('profiles_xref')->where('provider','=', static::class)->where('var1','=',$key)->execute()->get('zvid',-1);
     }
 
     public function getRemoteName() {

@@ -22,8 +22,8 @@ class Model_Items_Meds extends Model_Items_Abstract_Stackable implements Interfa
         parent::__construct($type = null);
 
         while (count($this->effects) < 3) {
-            $next = mt_rand(1,6);
-            if (!isset($this->effects[$next]) && ($v = mt_rand(-20,35)))
+            $next = random_int(1,6);
+            if (!isset($this->effects[$next]) && ($v = random_int(-20,35)))
                 $this->effects[$next] = $v;
         }
     }
@@ -40,10 +40,10 @@ class Model_Items_Meds extends Model_Items_Abstract_Stackable implements Interfa
         $c = 0;
         foreach ($this->effects as $stat => $dif) {
             $c++;
-            $eff->effect($stat, $dif * (Globals::PrimaryPlayer()->get_status()->retrieve('tr_dealer') ? 1.2 : 1));
-            if (!Globals::shadowPlayerExists() && Globals::PrimaryPlayer()->job(10030)) {
-                if (Globals::PrimaryPlayer()->job(10030, $c*3, false))
-                    $sha->effect($stat, $dif * (Globals::PrimaryPlayer()->get_status()->retrieve('tr_dealer') ? 1.2 : 1));
+            $eff->effect($stat, $dif * (Globals::PrimaryPlayerF()->get_status()->retrieve('tr_dealer') ? 1.2 : 1));
+            if (!Globals::shadowPlayerExists() && Globals::PrimaryPlayerF()->job(10030)) {
+                if (Globals::PrimaryPlayerF()->job(10030, $c*3, false))
+                    $sha->effect($stat, $dif * (Globals::PrimaryPlayerF()->get_status()->retrieve('tr_dealer') ? 1.2 : 1));
                 else $sha->ambiguous_effect($stat);
             } else $sha->ambiguous_effect();
         }
@@ -65,8 +65,8 @@ class Model_Items_Meds extends Model_Items_Abstract_Stackable implements Interfa
         $new = (bool)$this->label;
         $this->label = mb_substr($new_text, 0, 20);
 
-        if ($this->label == '') Globals::PrimaryPlayer()->log()->add('Du hast die Beschriftung auf diesem Gegenstand weggewischt.');
-        elseif (!$new) Globals::PrimaryPlayer()->log()->add('Du hast diesen Gegenstand mit einer Beschriftung versehen.');
-        else Globals::PrimaryPlayer()->log()->add('Du hast die Beschriftung dieses Gegenstands geändert.');
+        if ($this->label == '') Globals::PrimaryPlayerF()->log()->add('Du hast die Beschriftung auf diesem Gegenstand weggewischt.');
+        elseif (!$new) Globals::PrimaryPlayerF()->log()->add('Du hast diesen Gegenstand mit einer Beschriftung versehen.');
+        else Globals::PrimaryPlayerF()->log()->add('Du hast die Beschriftung dieses Gegenstands geändert.');
     }
 }

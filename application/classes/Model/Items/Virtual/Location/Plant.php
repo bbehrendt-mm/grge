@@ -26,16 +26,16 @@ class Model_Items_Virtual_Location_Plant extends Model_Items_Abstract_Virtual {
                 ->message('Du stemmst dich mit aller Kraft gegen das Ventil. Mit einem Schlag öffnet es sich, und ein Schwall Kühlwasser ergießt sich über dich. Das lindert zwar sofort deinen Durst, leider bist du jetzt auch gewaltig verstrahlt worden...')
                 ->custom(function($p) {
                         /** @var Model_Player $p */
-                        $r_drinks = mt_rand(2, 6);
+                        $r_drinks = random_int(2, 6);
                         for ($i = 0; $i < $r_drinks; $i++) $p->location()->inventory()->add(new Model_Items_Generic_Water2());
-                        $p->get_status()->modify(Model_Status::MS_STAT_RADIATION, mt_rand(20,50), Model_Status::MS_STAT_THIRST, 100);
+                        $p->get_status()->modify(Model_Status::MS_STAT_RADIATION, random_int(20,50), Model_Status::MS_STAT_THIRST, 100);
                 })
             , 'd1')
             ->effect(Model_Effect::factory()
                 ->message('Du stemmst dich mit aller Kraft gegen das Ventil. Als du es endlich geöffnet hast, stellst du fest dass das ganze Kühlwassersystem schon fast leergelaufen war. Naja, wenigstens ein paar Rationen konntest du dir noch sichern...')
                 ->custom(function($p) {
                         /** @var Model_Player $p */
-                        $r_drinks = mt_rand(1, 3);
+                        $r_drinks = random_int(1, 3);
                         for ($i = 0; $i < $r_drinks; $i++) $p->location()->inventory()->add(new Model_Items_Generic_Water1());
                 })
             , 'd2')

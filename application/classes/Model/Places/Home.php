@@ -2,7 +2,7 @@
 
 class Model_Places_Home extends Model_Places_Abstract_Hideout {
 
-    protected static $name = 'Versteck';
+    protected static $location_name = 'Versteck';
     protected static $description = 'In deinem Versteck bist du vor Zombieangriffen geschützt und kannst dich von deinen Aktionen in der Aussenwelt erholen - zumindest, wenn du dich gut verbarrikadiert hast! Unglücklicherweise kannst du nicht für immer hier sitzen bleiben - das wirst du spätestens dann merken, wenn deine gesammelten Vorräte aufgebraucht sind ...';
     protected static $icon = 'home';
     protected static $starts_built = false;
@@ -38,7 +38,7 @@ class Model_Places_Home extends Model_Places_Abstract_Hideout {
 
     public function uin($new = null) {
         if ($new !== null)
-            if (Globals::CurrentGame()->config('modules.mapping'))
+            if (Globals::CurrentGameF()->config('modules.mapping'))
                 $this->inventory->add(new Model_Items_Virtual_Location_Mapmode());
 
         return parent::uin($new);

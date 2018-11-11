@@ -11,10 +11,10 @@ class Model_NPC_Special_Winchester extends Model_NPC_Cat
         parent::__construct('Winchester');
 
         $this->get_status()->set(
-            Model_Status::MS_STAT_HEALTH, mt_rand(90,100),
-            Model_Status::MS_STAT_ENERGY, mt_rand(90,100),
-            Model_Status::MS_STAT_HUNGER, mt_rand(90,100),
-            Model_Status::MS_STAT_THIRST, mt_rand(90,100),
+            Model_Status::MS_STAT_HEALTH, random_int(90,100),
+            Model_Status::MS_STAT_ENERGY, random_int(90,100),
+            Model_Status::MS_STAT_HUNGER, random_int(90,100),
+            Model_Status::MS_STAT_THIRST, random_int(90,100),
             Model_Status::MS_STAT_SLEEPY, 100
         );
     }

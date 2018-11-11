@@ -12,13 +12,13 @@ abstract class Model_Items_Abstract_Book extends Model_Items_Abstract_Item {
 
     public function __construct($type = null) {
         if (static::$pagerange != null)
-            $this->pages = mt_rand(static::$pagerange[0], static::$pagerange[1]);
+            $this->pages = random_int(static::$pagerange[0], static::$pagerange[1]);
         parent::__construct($type);
     }
 
 	private function get_uses($pid = null) {
         if ($pid === null)
-            $pid = Globals::CurrentPlayer()->id();
+            $pid = Globals::CurrentPlayerF()->id();
 
         return (isset($this->uses[$pid]) ? $this->uses[$pid] : 0);
     }
@@ -33,7 +33,7 @@ abstract class Model_Items_Abstract_Book extends Model_Items_Abstract_Item {
 
     public function read($pid = null) {
         if ($pid === null)
-            $pid = Globals::CurrentPlayer()->id();
+            $pid = Globals::CurrentPlayerF()->id();
 
 
         if (!isset($this->uses[$pid]))

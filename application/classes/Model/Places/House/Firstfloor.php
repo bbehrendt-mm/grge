@@ -2,7 +2,7 @@
 
 class Model_Places_House_Firstfloor extends Model_Places_Abstract_Place {
 	
-	protected static $name = 'Erdgeschoss des verbrannten Hauses';
+	protected static $location_name = 'Erdgeschoss des verbrannten Hauses';
 	protected static $description = 'Vorhänge und Tapeten sind versengt und das Haus ist noch immer erfüllt von Brandgeruch... hier musst du dich vorsichtig bewegen, mit jedem Schritt könnte der Boden unter dir wegbrechen.';
     protected static $outside = false;
 

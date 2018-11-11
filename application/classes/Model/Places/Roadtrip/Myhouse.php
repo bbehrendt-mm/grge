@@ -2,7 +2,7 @@
 
 class Model_Places_Roadtrip_Myhouse extends Model_Places_Abstract_Hideout {
 
-    protected static $name = 'Dein Einfamilienhaus';
+    protected static $location_name = 'Dein Einfamilienhaus';
     protected static $description = 'Gerade erst hast du die letzte Rate für dein Haus bezahlt, da musst du es wegen der Zombieapokalypse direkt wieder evakuieren. Hättest du doch damals nur diese Zombieversicherung abgeschlossen...';
     protected static $icon = 'myhouse';
     protected static $starts_built = false;

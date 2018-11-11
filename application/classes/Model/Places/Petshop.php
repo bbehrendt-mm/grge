@@ -2,7 +2,7 @@
 
 class Model_Places_Petshop extends Model_Places_Abstract_Place {
 	
-	protected static $name = 'Zoohandlung';
+	protected static $location_name = 'Zoohandlung';
 	protected static $description = 'In dieser Zoohandlung konnte man früher kuschelige Tiere kaufen... inzwischen sind die Käfige jedoch leer. Dafür liegen allerlei menschliche Skelette in der Gegend herum. Wo die wohl herkommen?';
     protected static $icon = 'petshop';
     protected static $outside = false;

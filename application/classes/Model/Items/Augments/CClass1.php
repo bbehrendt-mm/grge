@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Items_Augments_Cclass1 extends Model_Items_Augments_Augment {
+class Model_Items_Augments_CClass1 extends Model_Items_Augments_Augment {
 
     protected static $static_info = Array(
         'name' => 'Augmentiertes Organ (Infiziert)',

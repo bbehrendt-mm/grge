@@ -3,13 +3,16 @@
 class Tool_Npc {
 
     /**
-     * @param $p
-     * @param $own
-     * @param $location
+     * @param           $p
+     * @param           $own
+     * @param           $location
      * @param array|int $satisfy
      * @param array|int $forbid
      * @param array|int $avoid
+     * @param bool      $auto
+     *
      * @return array
+     * @throws Exception
      */
     public static function get_satisfactory_item($p, $own, $location, $satisfy = [], $forbid = [], $avoid = [], $auto = true) {
         if (!$satisfy || !($own || $location)) return null;

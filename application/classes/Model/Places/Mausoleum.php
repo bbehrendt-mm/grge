@@ -2,7 +2,7 @@
 
 class Model_Places_Mausoleum extends Model_Places_Abstract_Place {
 	
-	protected static $name = 'Mausoleum';
+	protected static $location_name = 'Mausoleum';
 	protected static $description = 'Ob du es glaubst oder nicht - früher sind die meisten Leute nach dem Tod nicht wieder aufgestanden und haben Gehirne gefuttert! Daher brachte man Verstorbene an einen Ort wie diesen, wo sie in Frieden auf ewig ruhen können. Obwohl es heute allein schon wegen der Lebensgefahr nicht mehr üblich ist, Mausoleen zu besuchen, scheinen die Zombies von diesem Ort magisch angezogen zu werden...';
     protected static $icon = 'crypt';
     protected static $outside = false;

@@ -3,7 +3,7 @@
 class Named {
 
     public static function cls() {
-        return get_called_class();
+        return static::class;
     }
 
 }

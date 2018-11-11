@@ -10,8 +10,6 @@ class Model_Buffs_Heartbeat extends Model_Buffs_Abstract_Buff {
 
     protected static $immortal = false;
 	
-	protected $effects = Array();
-	
 	public function rebuild() {
 		if (!static::$immortal && $this->assoc_player->get_status()->get(Model_Status::MS_STAT_HEALTH) < 0.5) $this->unbuff();
 		

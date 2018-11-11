@@ -35,7 +35,7 @@ class Model_Items_Catclaw extends Model_Combat_Weapon {
     public function generate_wound($damage) {
         if ($damage <= 0) return null;
 
-        $injury = mt_rand(0,100);
+        $injury = random_int(0,100);
         if ($injury < $damage * 1)
             return Model_Buffs_Blood::cls();
         elseif ($injury < $damage * 30)

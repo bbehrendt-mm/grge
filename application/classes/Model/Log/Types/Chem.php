@@ -5,13 +5,15 @@ class Model_Log_Types_Chem extends Model_Log_Message {
     protected static $type = Model_Log_Message::MLM_CHEM_EXPERIMENT;
 
     /**
-     * @param number $chemvalue
+     * @param number                    $chemvalue
      * @param Model_Items_Abstract_Item $item
-     * @param $results
-     * @param null $uid
+     * @param                           $results
+     * @param null                      $uid
+     *
+     * @throws Exception
      */
     public function __construct($chemvalue, $item, $results, $uid = null) {
-        if ($uid === null) $uid = Globals::PrimaryPlayer()->id();
+        if ($uid === null) $uid = Globals::PrimaryPlayerF()->id();
 
         if (!is_array($results))
             $results = [$results];
@@ -21,7 +23,7 @@ class Model_Log_Types_Chem extends Model_Log_Message {
             $tmp[] = new Model_Struct_Item($single);
 
         parent::__construct([
-            'name' => Globals::CurrentGame()->get_player($uid)->name(),
+            'name' => Globals::CurrentGameF()->get_player_name($uid),
             'chem' => new Model_Struct_Item(new Model_Items_Chem($chemvalue)),
             'item' => new Model_Struct_Item($item),
             'results' => $tmp,
@@ -47,7 +49,7 @@ class Model_Log_Types_Chem extends Model_Log_Message {
             'count' => $item->getCount()
         ];
 
-        if ($data['results'])
+        if ($data['results']) {
             foreach ($data['results'] as &$res)
                 /** @var Model_Struct_Item $res */
                 $res = [
@@ -55,8 +57,10 @@ class Model_Log_Types_Chem extends Model_Log_Message {
                     'icon' => $res->getIcon(),
                     'count' => $res->getCount()
                 ];
-        else $data['results'] = false;
+            unset($res);
+        }
 
+        else $data['results'] = false;
         return $data;
     }
 }

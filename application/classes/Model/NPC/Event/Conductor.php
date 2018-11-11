@@ -35,27 +35,29 @@ class Model_NPC_Event_Conductor extends Model_NPC_Humanoid
         return parent::hid()
             ->add_action('Ticket übergeben', Model_Action::factory()
 
-                ->requirement('Model_Items_Generic_Ticket', 1)
+                ->requirement(Model_Items_Generic_Ticket::cls(), 1)
                 ->effect(Model_Effect::factory()
                     ->message('Du schließt für einen Moment deine Augen... als du sie wieder öffnest, stehst du plötzlich auf einem verlassenen Weihnachtsmarkt! In der Mitte des Markts steht eine leere Weihnachtsbaum-Halterung. Wie traurig... du solltest dich vom Geist der Weihnacht erfüllen lassen und dort einen wunderschön geschmückten Weihnachtsbaum aufstellen! Sicherlich wirst du dafür genug Materialien hier finden...')
                     ->custom(function($p)  {
                         /** @var Model_Player $p */
 
-                        $ev = Globals::CurrentGame()->get_initialized_event(Model_Events_Xmas::get_key());
+                        $ev = Globals::CurrentGameF()->get_initialized_event(Model_Events_Xmas::get_key());
                         /** @var $ev Model_Events_Xmas */
                         if (!$ev) return;
 
                         $tid = time() . '_' . mt_rand();
                         $mapid = "xmasmap_{$tid}";
-                        $xmas_id = Globals::CurrentGame()->register_map($mapid, 'xmas', 'xmas');
-                        $xmasfair = Globals::CurrentGame()->location($xmas_id);
+                        $xmas_id = Globals::CurrentGameF()->register_map($mapid, 'xmas', 'xmas');
+                        $xmasfair = Globals::CurrentGameF()->location($xmas_id);
+                        if ($xmasfair === null) return;
+
                         $xmasfair->register_doorway($p->location_class());
 
                         $p->location()->leave_map($p->id());
                         $p->location_class($xmas_id);
                         $xmasfair->enter_map($p->id());
 
-                        Globals::CurrentGame()->map($xmas_id)->movement_modifier(0.1);
+                        Globals::CurrentGameF()->mapF($xmas_id)->movement_modifier(0.1);
                         $ev->register_event_map($mapid);
 
                         if (!$p->get_status()->retrieve('freeze'))

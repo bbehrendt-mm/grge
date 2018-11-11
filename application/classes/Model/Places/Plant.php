@@ -2,13 +2,13 @@
 
 class Model_Places_Plant extends Model_Places_Abstract_Place {
 	
-	protected static $name = 'Kernkraftwerksruine';
+	protected static $location_name = 'Kernkraftwerksruine';
 	protected static $description = 'Zäune und Warnschilder umranden die gigantische Stahlbetonkuppel, in der du dich nun befindest. Dieser Kernreaktor hat vor langer Zeit viele Städte mit Energie versorgt, jetzt tut er nicht mehr sonderlich viel (außer die Umgebung zu verstrahlen). Wenn du keine Angst vor Strahlung hast, kannst du hier nach Überresten des Kühlwassers oder nach Ersatzteilen suchen.';
     protected static $icon = 'plant';
     protected static $outside = false;
 	
 	public function tick($type = Interface_Tickable::IT_TYPE_PLAYER) {
-        Globals::CurrentPlayer()->get_status()->modify(Model_Status::MS_STAT_RADIATION, 3.5);
+        Globals::CurrentPlayerF()->get_status()->modify(Model_Status::MS_STAT_RADIATION, 3.5);
 		parent::tick($type);
 	}
 

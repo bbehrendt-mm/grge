@@ -29,8 +29,8 @@ abstract class Model_Gamelayer_Storage extends Model {
 			Globals::setCurrentGame($this);
 			
 			//Activate current player
-			if (isset($this->set['gamedata']->players[Globals::CurrentUser()->uid()]))
-				$this->set['gamedata']->uin->get($this->set['gamedata']->players[Globals::CurrentUser()->uid()], 'Model_Player');
+			if (isset($this->set['gamedata']->players[Globals::CurrentUserF()->uid()]))
+				$this->set['gamedata']->uin->get($this->set['gamedata']->players[Globals::CurrentUserF()->uid()], 'Model_Player');
 		}
 		
 		//Revalidate everything if required

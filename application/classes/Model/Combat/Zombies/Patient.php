@@ -4,7 +4,7 @@ class Model_Combat_Zombies_Patient extends Model_Combat_Zombies_Zombie {
 
     public static $custom_sprite = 'zombie_patient.png';
 
-    protected $name = 'Verstörter Patient';
+    protected $actor_name = 'Verstörter Patient';
     protected $max_health = 35;
 
     protected $stat_initiative = 10;
@@ -16,7 +16,7 @@ class Model_Combat_Zombies_Patient extends Model_Combat_Zombies_Zombie {
 
     protected static $num_str = 15;
 
-    public static function factory() {
+    public static function factory(): Model_Combat_Actor {
         return parent::factory()
             ->add_weapon(new Model_Items_Hacksaw());
     }

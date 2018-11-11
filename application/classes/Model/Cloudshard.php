@@ -3,7 +3,7 @@
 class Model_Cloudshard extends Model implements Interface_Cloudshard {
 
 	//Own UIN
-	protected $uin;
+	protected $obj_uin;
 
     /**
      * Returns the own UIN, or sets a new one
@@ -12,8 +12,8 @@ class Model_Cloudshard extends Model implements Interface_Cloudshard {
      */
     public function uin($new_uin = NULL)
 	{
-		if ($new_uin === NULL) return $this->uin;
-		else return $this->uin = $new_uin;
+		if ($new_uin === NULL) return $this->obj_uin;
+		else return $this->obj_uin = $new_uin;
 	}
 
 }

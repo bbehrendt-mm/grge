@@ -40,11 +40,14 @@ class Model_User extends Model {
 		} else return false;
 	}
 
-	/**
-	 * Returns mentor id; NULL if no mentor is set, false if mentoring is disabled for this user
-	 * @param $uid
-	 * @return bool|NULL|number
-	 */
+    /**
+     * Returns mentor id; NULL if no mentor is set, false if mentoring is disabled for this user
+     *
+     * @param $uid
+     *
+     * @return bool|NULL|number
+     * @throws Kohana_Exception
+     */
 	public static function mentor_id($uid) {
 		//Load from DB
 		$data = DB::select("mentor")->from('mentor')->where('uid', '=', $uid)->execute()->get('mentor');
@@ -171,13 +174,14 @@ class Model_User extends Model {
 		else $query->where('uid','IN',$pupils);
 
 		return (bool)$query->execute();
-	}
-	
-	/**
-	 * Sets mentor id for this user
-	 * @param number $mentor_id
-	 * @return boolean
-	 */
+    }
+
+    /**
+     * Sets mentor id for this user
+     * @param number $mentor_id
+     * @return boolean
+     * @throws Kohana_Exception
+*/
 	public function set_mentor_id($mentor_id) {
 		if ($mentor_id != -1 && !static::check_mentor($this->set['uid'], $mentor_id)) return false;
 		return DB::insert('mentor', array('uid', 'mentor'))->values(array($this->set['uid'], $mentor_id))->execute();
@@ -206,7 +210,7 @@ class Model_User extends Model {
 		$rq = DB::select( 'name')->from('users')->execute()->as_array();
 		$ret = Array();
 		while (count($ret) < $num && count($rq) > 0) {
-			$key = mt_rand(0, count($rq) - 1);
+			$key = random_int(0, count($rq) - 1);
 			$ret[] = $rq[$key]['name'];
 			unset($rq[$key]);
 			$rq = array_values($rq);

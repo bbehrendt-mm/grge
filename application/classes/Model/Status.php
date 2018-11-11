@@ -49,6 +49,7 @@ class Model_Status {
         //Reset above-threshold bars
         foreach ($this->status_bars as $key => &$value)
             if ($key >= Model_Status::MS_THRESHOLD) $value = $this->get_fixed_threshold($key);
+        unset($value);
 
         if ($this->alive())
             $this->clear_cause_of_death();
@@ -169,7 +170,9 @@ class Model_Status {
     }
 
     public function scaling_remove($stat, $type, $name) {
-        if (isset($this->scaling_effects[$stat]) && isset($this->scaling_effects[$stat][$type]) && isset($this->scaling_effects[$stat][$type][$name]))
+        if (isset($this->scaling_effects[$stat], $this->scaling_effects[$stat][$type])
+            && isset($this->scaling_effects[$stat][$type][$name])
+        )
             unset($this->scaling_effects[$stat][$type][$name]);
     }
 
@@ -294,7 +297,9 @@ class Model_Status {
             $tmp = explode('/', $obj);
             $obj = $tmp[0];
 
-            if (isset($this->buffs[$obj]) && isset($tmp[1]) && $this->retrieve($obj)->abid() != $tmp[1])
+            if (isset($this->buffs[$obj], $tmp[1])
+                && $this->retrieve($obj)->abid() != $tmp[1]
+            )
                 return;
 
             if (isset($this->buffs[$obj]))
@@ -314,7 +319,9 @@ class Model_Status {
         $id = $tmp[0];
 
         /** @noinspection PhpUndefinedMethodInspection */
-        if (isset($this->buffs[$id]) && isset($tmp[1]) && $this->buffs[$id]->abid() != $tmp[1])
+        if (isset($this->buffs[$id], $tmp[1])
+            && $this->buffs[$id]->abid() != $tmp[1]
+        )
             return NULL;
 
         if (isset($this->buffs[$id])) return $this->buffs[$id];

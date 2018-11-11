@@ -22,13 +22,15 @@ class Model_Log_Message extends Model {
     /**
      *
      * @param mixed $data Any data
-     * @param int $uid User ID (optional)
+     * @param int   $uid  User ID (optional)
+     *
+     * @throws Exception
      */
     public function __construct($data, $uid = null) {
         $this->data = $data;
-        $this->uid = $uid !== null ? $uid : (Globals::hasPrimaryPlayer() ? Globals::PrimaryPlayer()->id() : (Globals::hasCurrentUser() ? Globals::CurrentUser()->uid() : -1));
-        $this->timestamp = Globals::CurrentGame() ? Globals::CurrentGame()->now() : time();
-        $this->ticks = Globals::CurrentGame() ? Globals::CurrentGame()->duration() : -1;
+        $this->uid = $uid !== null ? $uid : (Globals::hasPrimaryPlayer() ? Globals::PrimaryPlayerF()->id() : (Globals::hasCurrentUser() ? Globals::CurrentUserF()->uid() : -1));
+        $this->timestamp = Globals::CurrentGameF() ? Globals::CurrentGameF()->now() : time();
+        $this->ticks = Globals::CurrentGameF() ? Globals::CurrentGameF()->duration() : -1;
     }
 
     protected function postprocess($data) {
@@ -38,6 +40,7 @@ class Model_Log_Message extends Model {
     /**
      * @param bool $plain_data
      * @return array
+     * @throws Kohana_Exception
      */
     public function render($plain_data = false) {
         $tmpd = $this->postprocess($this->data);
@@ -45,7 +48,7 @@ class Model_Log_Message extends Model {
             return $tmpd;
 
         if (is_array($tmpd) && !isset($tmpd['self']))
-            $tmpd['self'] = (Globals::PrimaryPlayer()->id() === $this->uid || Globals::CurrentUser()->uid() === $this->uid);
+            $tmpd['self'] = (Globals::PrimaryPlayerF()->id() === $this->uid || Globals::CurrentUserF()->uid() === $this->uid);
 
         return [
             'type' => static::$type,

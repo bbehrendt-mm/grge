@@ -31,7 +31,7 @@ class Model_Items_Virtual_Hero_Student extends Model_Items_Abstract_Virtual {
                                     $ps->get_status()->modify(Model_Status::MS_STAT_ZOMBIFY, -$b_heal, Model_Status::MS_EFFECT_ITEM);
                                 else $ps->get_status()->set(Model_Status::MS_STAT_ZOMBIFY, 5);
 
-                                if (!$i && $p->get_status()->get(Model_Status::MS_STAT_ZOMBIFY) <= 0 && mt_rand(0,100) < 15) {
+                                if (!$i && $p->get_status()->get(Model_Status::MS_STAT_ZOMBIFY) <= 0 && random_int(0,100) < 15) {
                                     $i = true;
                                     $p->get_status()->set(Model_Status::MS_STAT_ZOMBIFY, 5);
                                 }

@@ -6,7 +6,7 @@ class Model_Items_Virtual_Location_Room_Community extends Model_Items_Abstract_V
     protected function hid() {
         $tmp = parent::hid();
 
-        if ($this->room()->has_content("sofa1"))
+        if ($this->roomF()->has_content("sofa1"))
             parent::hid()->add_action('In der Sitzecke entspannen', Model_Action::factory()
                     ->buttonskin('hideout')
                     ->condition(function($p) {
@@ -23,8 +23,8 @@ class Model_Items_Virtual_Location_Room_Community extends Model_Items_Abstract_V
                             ->message('Du setzt dich in den Sitz fallen und versuchst, all die schlimmen Ereignisse heute abzuschütteln.')
                             ->custom(function($p) {
                                 /** @var Model_Player $p */
-                                if		($this->room()->has_content("sofa2"))	new Model_Buffs_Couch($p->id(), 2);
-                                elseif	($this->room()->has_content("sofa1"))	new Model_Buffs_Couch($p->id(), 1);
+                                if		($this->roomF()->has_content("sofa2"))	new Model_Buffs_Couch($p->id(), 2);
+                                elseif	($this->roomF()->has_content("sofa1"))	new Model_Buffs_Couch($p->id(), 1);
                             })
                     )
             );

@@ -58,26 +58,29 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 
     /**
      * @return Model_Hid
+     * @throws Exception
      */
     protected function hid() {
-        $hid = Model_Hid::factory($this, get_called_class());
+        $hid = Model_Hid::factory($this, static::class);
 
         if (Globals::hasCurrentGame())
-            foreach (Globals::CurrentGame()->get_initialized_events() as $ev)
+            foreach (Globals::CurrentGameF()->get_initialized_events() as $ev)
                 $ev->event_generateHIDStack($this, $hid);
         return $hid;
 
 
 
     }
-	
-	/**
-	 * Item constructor
-	 * Will randomly select a subtype if subtypes are defined for this item class
-	 */
+
+    /**
+     * Item constructor
+     * Will randomly select a subtype if subtypes are defined for this item class
+     *
+     * @param null $type
+     */
 	public function __construct($type = null) {
 		if (count(static::$instances_info) > 0)
-			$this->type = ($type === null || $type < 0 || $type > (count(static::$instances_info) - 1)) ? mt_rand(0, count(static::$instances_info) - 1) : $type;
+			$this->type = ($type === null || $type < 0 || $type > (count(static::$instances_info) - 1)) ? random_int(0, count(static::$instances_info) - 1) : $type;
 	}
 
 	public static function getNumberOfTypes() {
@@ -278,14 +281,14 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
      * Destroys the item; this function can be overridden by an upstream class to incorperate additional effects or replace the destruction completely
      */
     public function consume() {
-		if ($this->uin) Globals::CurrentGame()->uin()->remove($this->uin);
+		if ($this->obj_uin) Globals::CurrentGameF()->uin()->remove($this->obj_uin);
 	}
 
     /**
      * Destroys the item; this function may not be overridden as it exists to make sure there is a method to completely destroy an item without regard of the items state
      */
     public function grind() {
-		if ($this->uin) Globals::CurrentGame()->uin()->remove($this->uin);
+		if ($this->obj_uin) Globals::CurrentGameF()->uin()->remove($this->obj_uin);
 	}
 
     /**
@@ -338,11 +341,14 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 
     /**
      * This function is called internally when the item is mixed with a chemical substance
+     *
      * @param number $chemval Value of the chemical substance
+     *
      * @return bool True, to award the positive chem achievement, false to award the negative one
+     * @throws Exception
      */
     public function mixchem($chemval) {
-        Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Du schüttest die Chemikalie über diesem Gegenstand aus. Es riecht ein wenig komisch, aber sonst geschieht nichts... Schade.'));
+        Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String(null, 'Du schüttest die Chemikalie über diesem Gegenstand aus. Es riecht ein wenig komisch, aber sonst geschieht nichts... Schade.'));
 		return false;
 	}
 	

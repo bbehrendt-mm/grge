@@ -12,7 +12,7 @@ class Model_Items_Virtual_Epic_Fence extends Model_Items_Abstract_Virtual implem
     }
 
     public function get_remaining_power() {
-        return $this->power + 4 * Tool_Scripts::count_available_items('Model_Items_Energy', false);
+        return $this->power + 4 * Tool_Scripts::count_available_items(Model_Items_Energy::cls(), false);
     }
 
     protected function hid() {
@@ -33,7 +33,7 @@ class Model_Items_Virtual_Epic_Fence extends Model_Items_Abstract_Virtual implem
             $hid->add_action('Einschalten', Model_Action::factory()
                 ->buttonskin('epic')
                 ->description('Aktiviert den Laserzaun. Während der eingeschaltet ist konsumiert er Energie, dafür können Zombies unmöglich in dein Versteck einbrechen.')
-                ->requirement('Model_Items_Energy',1)
+                ->requirement(Model_Items_Energy::cls(),1)
                 ->effect(Model_Effect::factory()
                     ->message('Du hast den Laserzaun aktiviert.')
                     ->custom(function() {
@@ -61,7 +61,7 @@ class Model_Items_Virtual_Epic_Fence extends Model_Items_Abstract_Virtual implem
         if ($type != Interface_Tickable::IT_TYPE_LOCATION) return;
         if ($this->on) {
             if ($this->power >= 1) $this->power--;
-            elseif ($power = Tool_Scripts::first_available_item('Model_Items_Energy',false)) {
+            elseif ($power = Tool_Scripts::first_available_item(Model_Items_Energy::cls(),false)) {
                 $this->power+=3;
                 $power->consume();
             }

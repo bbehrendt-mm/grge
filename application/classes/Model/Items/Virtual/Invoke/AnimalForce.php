@@ -39,7 +39,7 @@ class Model_Items_Virtual_Invoke_AnimalForce extends Model_Items_Virtual_Invoke_
         /** @var Model_NPC_Animal $npc */
         $npc = new $npc();
         $npc->location_class($location->uin());
-        Globals::CurrentGame()->add_npc($npc);
+        Globals::CurrentGameF()->add_npc($npc);
         $location->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $npc->id(), true));
     }
 

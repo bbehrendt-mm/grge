@@ -24,13 +24,14 @@ class Model_Log_Types_Battle extends Model_Log_Message {
             foreach ($group as &$entry) {
                 if (!$entry['unique']) $entry['name'] = __($entry['name']);
                 foreach ($entry['injuries'] as &$inj) $inj[1] = _($inj[1]);
+                unset($inj);
                 foreach ($entry['damaged_items'] as &$itm) $itm[1] = _($itm[1]);
             }
+        unset($group,$entry,$itm);
 
-
-        $data['gallery'] = ($gid = Model_Combat_Handler::in_gallery($data['bid'], Globals::PrimaryPlayer()->id())) ? [
+        $data['gallery'] = ($gid = Model_Combat_Handler::in_gallery($data['bid'], Globals::PrimaryPlayerF()->id())) ? [
             'id' => $gid,
-            'p' => Globals::PrimaryPlayer()->id()
+            'p' => Globals::PrimaryPlayerF()->id()
         ] : null;
 
         return $data;

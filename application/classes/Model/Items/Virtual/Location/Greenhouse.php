@@ -16,8 +16,8 @@ class Model_Items_Virtual_Location_Greenhouse extends Model_Items_Abstract_Virtu
             ->effect(Model_Effect::factory()
                 ->custom(function($p) {
                     /** @var Model_Player $p */
-                        if (!($water = $p->location()->inventory()->get('Model_Items_Abstract_Liquid'))) {
-                            $p->location()->log()->add(new Model_Log_Types_Text(null, null, 'Du benötigst Wasser zum Gießen... Fülle das Wasser, das du verwenden willst, aus deiner Flasche auf den Boden.'));
+                        if (!($water = $p->location()->inventory()->get(Model_Items_Abstract_Liquid::cls()))) {
+                            $p->location()->log()->add(new Model_Log_Types_String( null, 'Du benötigst Wasser zum Gießen... Fülle das Wasser, das du verwenden willst, aus deiner Flasche auf den Boden.'));
                             return;
                         }
 
@@ -27,11 +27,12 @@ class Model_Items_Virtual_Location_Greenhouse extends Model_Items_Abstract_Virtu
                             $item->consume();
                         }
 
-                        $tox = $tox / count($water);
-                        if (count($water) == 1) $p->location()->log()->add(new Model_Log_Types_Text(null, null, 'Du gießt das Wasser auf den Boden um das Gewäch herum. Überraschenderweise passiert nichts spannendes, doch als du dich gerade umdrehen und wieder gehen willst lässt dir das Gewächs eine Frucht vor die Füße fallen... Ob das seine Art war, Danke zu sagen?'));
-                        else $p->location()->log()->add(new Model_Log_Types_Text(null, null, 'Du gießt das Wasser auf den Boden um das Gewäch herum. Überraschenderweise passiert nichts spannendes, doch als du dich gerade umdrehen und wieder gehen willst lässt dir das Gewächs :num Früchte vor die Füße fallen... Ob das seine Art war, Danke zu sagen?', array(':num' => count($water))));
+                        $tox /= count($water);
+                        if (count($water) === 1) $p->location()->log()->add(new Model_Log_Types_String( null, 'Du gießt das Wasser auf den Boden um das Gewäch herum. Überraschenderweise passiert nichts spannendes, doch als du dich gerade umdrehen und wieder gehen willst lässt dir das Gewächs eine Frucht vor die Füße fallen... Ob das seine Art war, Danke zu sagen?'));
+                        else $p->location()->log()->add(new Model_Log_Types_String( null, 'Du gießt das Wasser auf den Boden um das Gewäch herum. Überraschenderweise passiert nichts spannendes, doch als du dich gerade umdrehen und wieder gehen willst lässt dir das Gewächs :num Früchte vor die Füße fallen... Ob das seine Art war, Danke zu sagen?', array(':num' => count($water))));
 
-                        for ($i = 0; $i < count($water); $i++)
+                        $c = count($water);
+                        for ($i = 0; $i < $c; $i++)
                             if		($tox <= 1)		$p->location()->inventory()->add(new Model_Items_Vedge);
                             elseif	($tox <= 8)		$p->location()->inventory()->add(new Model_Items_Vedge2);
                             elseif	($tox <= 16)	$p->location()->inventory()->add(new Model_Items_Vedge3);

@@ -20,8 +20,8 @@ class Model_Items_Flashlight2 extends Model_Items_Abstract_Item {
                 ->effect(
                     Model_Effect::factory()
                         ->consume($this)
-                        ->spawn('Model_Items_Flashlight')
-                        ->spawn('Model_Items_Generic_Supercharger')
+                        ->spawn(Model_Items_Flashlight::cls())
+                        ->spawn(Model_Items_Generic_Supercharger::cls())
                         ->message('Dir war das Risiko, dieses Teil einzusetzen, offensichtlich zu hoch. Tja...')
                 )
             )->add_action('Einschalten', Model_Action::factory()
@@ -46,7 +46,7 @@ class Model_Items_Flashlight2 extends Model_Items_Abstract_Item {
                 )
                 ->effect(
                     Model_Effect::factory()
-                        ->spawn('Model_Items_Generic_Metal')
+                        ->spawn(Model_Items_Generic_Metal::cls())
                         ->message('Du schaltest die Taschenlampe ein. Zuerst geschieht anscheinend nichts... dann beginnt die Lampe, eine unglaubliche Hitze zu entwickeln. Erschrocken lässt du sie fallen, und vor deinen Augen zerschmilzt sie zu einem Metallklumpen.')
                 )
             );

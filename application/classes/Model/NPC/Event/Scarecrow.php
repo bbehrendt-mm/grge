@@ -35,7 +35,7 @@ class Model_NPC_Event_Scarecrow extends Model_NPC_Humanoid
         return parent::hid()
             ->add_action('Gehirn einsetzen', Model_Action::factory()
                 ->grind_requirements(false)
-                ->requirement('Model_Items_Brainbox', 1)
+                ->requirement(Model_Items_Brainbox::cls(), 1)
                 ->condition(function($p) {
                     /** @var Model_Player $p */
                     if ($p->get_status()->retrieve('wow')) return false;

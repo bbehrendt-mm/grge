@@ -10,6 +10,7 @@ class Model_Items_Virtual_Location_Pillboxes extends Model_Items_Abstract_Virtua
     );
 
     public function __construct($twinoid = false) {
+        parent::__construct();
         $this->spawn_twinoid = $twinoid;
     }
 
@@ -25,20 +26,20 @@ class Model_Items_Virtual_Location_Pillboxes extends Model_Items_Abstract_Virtua
                 ->custom(function($p) {
                     /** @var Model_Player $p */
                     $items = Array();
-                    $r_pills = mt_rand(5, 20);
-                    $r_para = mt_rand(0, 6);
+                    $r_pills = random_int(5, 20);
+                    $r_para = random_int(0, 6);
                     for ($i = 0; $i < $r_pills; $i++) $items[] = new Model_Items_Pill();
                     for ($i = 0; $i < $r_para; $i++) {
                         $s = Tool_Gambling::roulette(Array(
-                            Array('chance' => $this->spawn_twinoid ? 2 : 4, 'value' => 'Model_Items_Paracetoid'),
-                            Array('chance' => $this->spawn_twinoid ? 1 : 3, 'value' => 'Model_Items_Paracetin'),
-                            Array('chance' => $this->spawn_twinoid ? 1 : 2, 'value' => 'Model_Items_Foodsupplement'),
-                            Array('chance' => $this->spawn_twinoid ? 4 : 0, 'value' => 'Model_Items_Twinoid'),
+                            Array('chance' => $this->spawn_twinoid ? 2 : 4, 'value' => Model_Items_Paracetoid::cls()),
+                            Array('chance' => $this->spawn_twinoid ? 1 : 3, 'value' => Model_Items_Paracetin::cls()),
+                            Array('chance' => $this->spawn_twinoid ? 1 : 2, 'value' => Model_Items_Foodsupplement::cls()),
+                            Array('chance' => $this->spawn_twinoid ? 4 : 0, 'value' => Model_Items_Twinoid::cls()),
                         ));
                         $items[] = new $s;
                     }
                     Tool_Scripts::place_new_item($items);
-                    $p->log()->add(new Model_Log_Types_Text(null, null, 'Es war eine langwierige Fummelarbeit, aber am Schluss hat es sich gelohnt. Du hast einen ganzen Haufen Pillen zusammentragen können. Jetzt gilt es nur hoch herauszufinden, wofür diese Pillen gut sind ...'));
+                    $p->log()->add(new Model_Log_Types_String( null, 'Es war eine langwierige Fummelarbeit, aber am Schluss hat es sich gelohnt. Du hast einen ganzen Haufen Pillen zusammentragen können. Jetzt gilt es nur hoch herauszufinden, wofür diese Pillen gut sind ...'));
                 })
             )
         , 'find_pills');

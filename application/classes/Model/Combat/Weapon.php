@@ -210,7 +210,7 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
                 if (mt_rand()/mt_getrandmax() > $accuracy) $actual_multiply--;
         }
 
-        $raw = ($actual_multiply <= 0 ? 0 : mt_rand($this->damage()[0] * $actual_multiply, $this->damage()[1] * $actual_multiply));
+        $raw = ($actual_multiply <= 0 ? 0 : random_int($this->damage()[0] * $actual_multiply, $this->damage()[1] * $actual_multiply));
         if (!$this->aoe())
             $raw = min($raw, $opponent->strength()[0]);
         return [$raw * (1 + ($atk - $res)), $raw * $atk];

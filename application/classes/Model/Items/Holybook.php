@@ -19,7 +19,7 @@ class Model_Items_Holybook extends Model_Items_Abstract_Item implements Interfac
             ->add_action('Kraft schöpfen', Model_Action::factory()
                 ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
                 ->condition(function() {
-                    return ($this->nextuse <= Globals::CurrentGame()->duration());
+                    return ($this->nextuse <= Globals::CurrentGameF()->duration());
                 })
                 ->fail_message('Du kannst maximal einmal pro Stunde Kraft aus einem Gebet schöpfen!')
                 ->effect(
@@ -27,7 +27,7 @@ class Model_Items_Holybook extends Model_Items_Abstract_Item implements Interfac
                         ->effect(Model_Status::MS_STAT_ENERGY, 4, 11)
                         ->message('Du schließt die Augen, kniest nieder und spürst die göttliche Kraft, die durch deinen Körper fließt.')
                         ->custom(function() {
-                            $this->nextuse = Globals::CurrentGame()->duration() + 12;
+                            $this->nextuse = Globals::CurrentGameF()->duration() + 12;
                         })
                 )
             );

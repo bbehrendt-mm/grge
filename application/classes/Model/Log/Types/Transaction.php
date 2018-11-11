@@ -9,13 +9,15 @@ class Model_Log_Types_Transaction extends Model_Log_Message {
     protected static $type = Model_Log_Message::MLM_TRANSACTION_LOG;
 
     /**
-     * @param mixed $type
+     * @param mixed                                                 $type
      * @param Model_Items_Abstract_Item|Model_Items_Abstract_Item[] $item
-     * @param int|null|string $uin
-     * @param null|string $action
+     * @param int|null|string                                       $uin
+     * @param null|string                                           $action
+     *
+     * @throws Exception
      */
     public function __construct($type, $item, $uin = null, $action = null) {
-        if (!$uin) $uin =  Globals::PrimaryPlayer()->id();
+        if (!$uin) $uin =  Globals::PrimaryPlayerF()->id();
 
         if (!is_array($item))
             $item = [$item];
@@ -40,9 +42,10 @@ class Model_Log_Types_Transaction extends Model_Log_Message {
                 'icon' => $item->getIcon(),
                 'count' => $item->getCount()
             ];
+        unset($item);
 
-        $data['player'] = Globals::CurrentGame()->get_player($data['uin'])->name();
-        $data['self'] = $data['uin'] == Globals::PrimaryPlayer()->id();
+        $data['player'] = Globals::CurrentGameF()->get_player($data['uin'])->name();
+        $data['self'] = $data['uin'] == Globals::PrimaryPlayerF()->id();
         $data['action'] = __($data['action']);
         unset($data['uin']);
 
@@ -54,7 +57,7 @@ class Model_Log_Types_Transaction extends Model_Log_Message {
      * @return bool
      */
     public function merge($new) {
-        if (is_a($new, get_called_class(), true) && $new->data['class'] == $this->data['class'] && $new->data['uin'] == $this->data['uin'] && in_array($this->data['class'], [static::MLTT_UP,static::MLTT_DOWN]))
+        if (is_a($new, static::class, true) && $new->data['class'] == $this->data['class'] && $new->data['uin'] == $this->data['uin'] && in_array($this->data['class'], [static::MLTT_UP,static::MLTT_DOWN]))
             $this->data['items'] = array_merge($new->data['items'], $this->data['items']);
         else return false;
         return true;

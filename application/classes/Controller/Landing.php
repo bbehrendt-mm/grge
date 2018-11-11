@@ -13,8 +13,8 @@ class Controller_Landing extends Controller {
         /** @var Model_Auth_Legacy $auth */
 
         // Check if user is connected via this service
-        if ($auth::user_is_connected(Globals::CurrentUser()->uid())) {
-            if ($auth::retrieve_user_id($key) != Globals::CurrentUser()->uid()) {
+        if ($auth::user_is_connected(Globals::CurrentUserF()->uid())) {
+            if ($auth::retrieve_user_id($key) != Globals::CurrentUserF()->uid()) {
 
                 $a = $this->session->as_array();
                 foreach ($a as $k => $v)
@@ -51,7 +51,9 @@ class Controller_Landing extends Controller {
         if (!$this->session->get('user',NULL))
             $this->redirect(URL::site('account/login',true));
 
-        if (isset($rq['HTTP_REFERER']) && isset($rq["CLIENT_REQUEST"]['key']) && $rq["CLIENT_REQUEST"]['key'])
+        if (isset($rq['HTTP_REFERER'], $rq["CLIENT_REQUEST"]['key'])
+            && $rq["CLIENT_REQUEST"]['key']
+        )
             if ($this->handle_account_merging($rq["CLIENT_REQUEST"]['key'], $rq['HTTP_REFERER']))
                 return;
 

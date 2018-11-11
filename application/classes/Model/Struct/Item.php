@@ -9,6 +9,7 @@ class Model_Struct_Item extends Model {
 
     /**
      * @param Model_Items_Abstract_Item $item
+     * @param null                      $variant
      */
     public function __construct($item,$variant = null) {
         $this->name = $item->name();

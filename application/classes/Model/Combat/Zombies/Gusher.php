@@ -5,7 +5,7 @@ class Model_Combat_Zombies_Gusher extends Model_Combat_Zombies_Zombie {
     public static $custom_sprite = 'zombie_gusher.gif';
     protected static $default_weapon = 'Model_Items_Gush';
 
-    protected $name = 'Spritzer';
+    protected $actor_name = 'Spritzer';
     protected $max_health = 1;
 
     protected $stat_initiative = 0;

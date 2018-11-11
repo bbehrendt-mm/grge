@@ -26,7 +26,7 @@ abstract class Controller extends Kohana_Controller {
      * @return bool
      */
     protected function is_ajax_request() {
-        return ($this->request->headers('X-Requested-With') == 'XMLHttpRequest');
+        return ($this->request->headers('X-Requested-With') === 'XMLHttpRequest');
     }
 
     /**
@@ -34,8 +34,8 @@ abstract class Controller extends Kohana_Controller {
      */
     protected function force_ajax() {
         if (!$this->is_ajax_request()) {
-            if ($this->request->action() == 'japi')
-                die(Error::m(\grge\E_HTTP_AJAX_REQUIRED));
+            if ($this->request->action() === 'japi')
+                die(GRGEError::m(\grge\E_HTTP_AJAX_REQUIRED));
             $this->response->body(View::factory('redirect')->set('url',URL::base())->set('path',$this->request->uri())->set('sid', $this->session->id()));
             $this->request->action('noaction');
         }
@@ -56,7 +56,7 @@ abstract class Controller extends Kohana_Controller {
      */
     private function force_login() {
         // Get user object, check if it is valid
-        if (!$this->get_user_obj() || !Globals::CurrentUser()->valid()) {
+        if (!$this->get_user_obj() || !Globals::CurrentUserF()->valid()) {
             // If we don't have a user object, destroy the current session and unbind global registers (just to be sure)
             if ($this->request->is_initial()) {
                 Session::instance()->destroy();
@@ -66,7 +66,7 @@ abstract class Controller extends Kohana_Controller {
             // Spawn an error message; if we aren't called via AJAX just die, otherwise call dummy action
             if (!$this->is_ajax_request())
                 // Output error message as string
-                die(Error::m(\grge\E_SERVER_INVALID_SESSION));
+                die(GRGEError::m(\grge\E_SERVER_INVALID_SESSION));
             else {
                 // Create JSON error output, then stop the action from being executed by redirecting to noaction
                 $this->error(\grge\E_SERVER_INVALID_SESSION);
@@ -80,7 +80,7 @@ abstract class Controller extends Kohana_Controller {
      */
     public function before() {
         //Init error class
-        Error::i();
+        GRGEError::i();
 
         //Load session
         if (static::$initialize_session) {
@@ -109,15 +109,15 @@ abstract class Controller extends Kohana_Controller {
         //Cache control
         $this->response->headers(static::$allow_etag_cache ? '' : 'Cache-Control: no-store, must-revalidate');
 
-        if (!(in_array(strtolower($this->request->directory()),['admin']) || in_array(strtolower($this->request->controller()),['web','landing'])) && Tool_Events::maintenance()) {
+        if (Tool_Events::maintenance() && !(strtolower($this->request->directory()) === 'admin' || in_array(strtolower($this->request->controller()),['web', 'landing']))) {
             $this->request->action('noaction');
             if ($this->is_ajax_request()) $this->error(\grge\E_SERVER_LIMITED_MAINTENANCE);
         }
 
         // Skin Check
-        $current_skin = isset($_COOKIE['skin']) ? $_COOKIE['skin'] : null;
+        $current_skin = $_COOKIE['skin'] ?? null;
         $event_skin = Tool_Events::current_skin();
-        if (!isset($_COOKIE['skin_cst']) && $this->is_ajax_request() && $current_skin != $event_skin) {
+        if ($current_skin !== $event_skin && !isset($_COOKIE['skin_cst']) && $this->is_ajax_request()) {
             setcookie('skin', $event_skin, 0, URL::base());
             $this->request->action('noaction');
             $this->error(\grge\E_SERVER_INVALID_SESSION);
@@ -128,38 +128,38 @@ abstract class Controller extends Kohana_Controller {
         if (static::$allow_etag_cache) {
             $resource = $this->response->body();
             $etag = md5($resource);
-            $not_modified = $this->request->headers('X-Skip-ETag') != '1' && (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $etag);
+            $not_modified = $this->request->headers('X-Skip-ETag') !== '1' && (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] === $etag);
 
             if ($not_modified) {
                 header('HTTP/1.1 304 Not Modified');
                 exit;
-            } else {
-                header('ETag: ' . $etag);
             }
+
+            header('ETag: ' . $etag);
         }
     }
 
     public static function dump($title, $object) {
-        Controller::$dumps[$title] = $object;
+        self::$dumps[$title] = $object;
     }
 
     private function daily_login_bonus() {
-        $last = (int)DB::select('dailylogin')->from('users')->where('uid','=',Globals::CurrentUser()->uid())->execute()->get('dailylogin',0);
-        $num = (int)DB::select('logincount')->from('users')->where('uid','=',Globals::CurrentUser()->uid())->execute()->get('logincount',0);
+        $last = (int)DB::select('dailylogin')->from('users')->where('uid','=',Globals::CurrentUserF()->uid())->execute()->get('dailylogin',0);
+        $num = (int)DB::select('logincount')->from('users')->where('uid','=',Globals::CurrentUserF()->uid())->execute()->get('logincount',0);
         $today = floor(time()/86400);
 
-        if ($last == $today) return;
-        elseif ($last == ($today - 1)) {
-            DB::update('users')->set(['dailylogin' => $today, 'logincount' => $num+1])->where('uid','=',Globals::CurrentUser()->uid())->execute();
+        if ($last === $today) return;
+        elseif ($last === ($today - 1)) {
+            DB::update('users')->set(['dailylogin' => $today, 'logincount' => $num+1])->where('uid','=',Globals::CurrentUserF()->uid())->execute();
             $lv = ceil($num/7);
 
             $n = 0;
             if ($lv <= 0) {
 
-            } elseif ($lv == 1) {
+            } elseif ($lv === 1) {
                 $n = 5;
                 $this->add_note('daily-login',__('Du hast dich :days Tage in Folge eingeloggt. Als kleine Belohnung erhälst du dafür :num BrainCoins. Viel Vergnügen damit!', [':days' => $num+1,':num' => $n]),__('Täglicher Login'));
-            } elseif ($lv == 2) {
+            } elseif ($lv === 2) {
                 $n = 10;
                 $this->add_note('daily-login',__('Du hast dich bereits :days Tage in Folge eingeloggt. Als Belohnung erhälst du dafür :num BrainCoins. Viel Vergnügen damit!', [':days' => $num+1,':num' => $n]),__('Täglicher Login'));
             } elseif ($lv <= 4) {
@@ -173,9 +173,9 @@ abstract class Controller extends Kohana_Controller {
                 $this->add_note('daily-login',__('Seit nunmehr :days Tagen kommst du täglich vorbei - wirklich beeindruckend! Damit hast du dir :num BrainCoins redlich verdient. Viel Vergnügen damit!', [':days' => $num+1,':num' => $n]),__('Täglicher Login'));
             }
 
-            Globals::CurrentUser()->award_coins(Globals::CurrentUser()->uid(),$n);
+            Globals::CurrentUserF()->award_coins(Globals::CurrentUserF()->uid(),$n);
         } else {
-            DB::update('users')->set(['dailylogin' => $today, 'logincount' => 0])->where('uid','=',Globals::CurrentUser()->uid())->execute();
+            DB::update('users')->set(['dailylogin' => $today, 'logincount' => 0])->where('uid','=',Globals::CurrentUserF()->uid())->execute();
             if ($num > 1)
                 $this->add_note('daily-login-fail',__('Du hast dich seit :mdays Tagen nicht mehr eingeloggt. Das bedeutet leider, dass dein seit :days Tagen laufender Login-Bonus abgebrochen wird...', [':mdays' => $today - $last, ':days' => $num]),__('Täglicher Login abgebrochen...'));
         }
@@ -289,7 +289,10 @@ abstract class Controller extends Kohana_Controller {
 
     /**
      * Renders the output chain as JSON data
+     *
      * @param null|bool|array $obj Set null to invoke render_defaults(); set to an array to invoke add_data(); set to anything else to just render the existing chain without adding any more data. If the script version indicates this is a beta environment, profiling data is always added regardless of this parameter
+     * @param bool            $skip_notifications
+     *
      * @return bool Always returns true
      * @throws Kohana_Exception
      */
@@ -342,8 +345,8 @@ abstract class Controller extends Kohana_Controller {
         $this->response->headers('Content-Type', 'application/json');
         $tmp = array('error' => array(
             'code' => $c,
-            'name' => Error::r($c),
-            'message' => Error::d($c),
+            'name' => GRGEError::r($c),
+            'message' => GRGEError::d($c),
             'details' => $additional_data,
         ));
 

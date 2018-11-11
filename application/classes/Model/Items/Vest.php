@@ -15,6 +15,5 @@ class Model_Items_Vest extends Model_Items_Abstract_Armor {
     protected static $effects = [0,0,4,0];
 
     protected static $equipment_type = Model_Items_Abstract_Equipable::MIAE_ARMOR_BODY;
-    protected $protection = 100;
-    protected static $destroyed = null;
+    protected static $protection = 100;
 }	

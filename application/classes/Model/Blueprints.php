@@ -12,8 +12,11 @@ class Model_Blueprints {
 
     /**
      * @param Model_Places_Abstract_Place|null $location
-     * @param string|null $category
+     * @param string|null                      $category
+     * @param bool                             $skip_validation
+     *
      * @return Model_Blueprints
+     * @throws Exception
      */
     public static function factory($location = null, $category = null, $skip_validation = false) {
         $ret = new Model_Blueprints();
@@ -26,7 +29,7 @@ class Model_Blueprints {
                         /** @var Model_Blueprints $b */
                         $ret->merge($b,true);
 
-                    if (Globals::hasCurrentGame()) foreach (Globals::CurrentGame()->get_initialized_events() as $e)
+                    if (Globals::hasCurrentGame()) foreach (Globals::CurrentGameF()->get_initialized_events() as $e)
                         if ($bp = $e->event_blueprintCreation($name,$category))
                             $ret->merge($bp,true);
                 }
@@ -86,8 +89,9 @@ class Model_Blueprints {
 
     /**
      * @param Model_Blueprint|string|string[] $blueprint
-     * @param bool $external
+     * @param bool                            $external
      * @return Model_Blueprints
+     * @throws Exception
      */
     public function add_blueprints($blueprint, $external = false) {
         if (is_string($blueprint))
@@ -125,6 +129,7 @@ class Model_Blueprints {
     /**
      * @param string $rid
      * @return Model_Blueprint[]
+     * @throws Exception
      */
     public function find_blueprints($rid) {
         $ret = [];
@@ -200,10 +205,11 @@ class Model_Blueprints {
     }
 
     /**
-     * @param string[] $preconditions
-     * @param Model_Room $room
+     * @param string[]     $preconditions
+     * @param Model_Room   $room
      * @param Model_Player $player
      * @return array
+     * @throws Exception
      */
     public function compile($preconditions, $room, $player) {
         $ret = [];
@@ -223,11 +229,12 @@ class Model_Blueprints {
     }
 
     /**
-     * @param string $id
+     * @param string       $id
      * @param Model_Player $player
-     * @param string[] $preconditions
-     * @param Model_Room $room
+     * @param string[]     $preconditions
+     * @param Model_Room   $room
      * @return bool|string[]
+     * @throws Exception
      */
     public function execute($id, $player, $preconditions, $room) {
         if (!isset($this->blueprints[$id]))
@@ -249,10 +256,11 @@ class Model_Blueprints {
     }
 
     /**
-     * @param string $id
+     * @param string                      $id
      * @param Model_Places_Abstract_Place $location
-     * @param Model_Room $room
+     * @param Model_Room                  $room
      * @return bool|string[]
+     * @throws Exception
      */
     private function perform_apply($id, $location, $room) {
         if (!isset($this->blueprints[$id]) && !isset($this->externals[$id]))

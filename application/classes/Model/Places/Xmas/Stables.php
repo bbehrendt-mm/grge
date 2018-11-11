@@ -2,7 +2,7 @@
 
 class Model_Places_Xmas_Stables extends Model_Places_Abstract_Hideout {
 
-    protected static $name = 'Weihnachts-Stall';
+    protected static $location_name = 'Weihnachts-Stall';
     protected static $description = 'In diesem Stall wurden die gut behandelten und definitiv nicht mit Drogen ruhig gestellten Ponys gehalten, auf denen die Kinder reiten konnten. Eigentlich sieht es hier ganz gemütlich aus... von den verrottenden Pferdekadavern mal abgesehen, natürlich.';
     protected static $icon = 'home';
     protected static $starts_built = true;
@@ -47,14 +47,14 @@ class Model_Places_Xmas_Stables extends Model_Places_Abstract_Hideout {
 
     public function enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
         if (!$this->spawned_rudolph) {
-            $ev = Globals::CurrentGame()->get_initialized_event(Model_Events_Xmas::get_key());
+            $ev = Globals::CurrentGameF()->get_initialized_event(Model_Events_Xmas::get_key());
             /** @var $ev Model_Events_Xmas */
 
             if ($ev) {
                 $this->spawned_rudolph = true;
                 $rudolph = new Model_NPC_Event_Rudolph();
                 $rudolph->location_class($this->uin());
-                Globals::CurrentGame()->add_npc($rudolph);
+                Globals::CurrentGameF()->add_npc($rudolph);
 
                 $ev->register_event_npc($rudolph->id());
             }

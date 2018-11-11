@@ -4,7 +4,7 @@ class Model_Combat_Zombies_Fatass extends Model_Combat_Zombies_Zombie {
 
     public static $custom_sprite = 'zombie_fatso.gif';
 
-    protected $name = 'Untote Fleischberge';
+    protected $actor_name = 'Untote Fleischberge';
     protected $max_health = 17;
 
     protected $stat_initiative = 0;

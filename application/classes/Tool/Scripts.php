@@ -4,12 +4,14 @@ class Tool_Scripts
 {
 
     /**
-     * @param number $t
+     * @param number            $t
      * @param Model_Player|null $p
+     *
+     * @throws Exception
      */
     public static function rebuild_primary_equipment($t, $p = null) {
         if (!$p)
-            foreach (Globals::CurrentGame()->players() as $player)
+            foreach (Globals::CurrentGameF()->players() as $player)
                 static::rebuild_primary_equipment($t, $player);
         else {
             $items = $p->get_equipment($t);
@@ -22,13 +24,16 @@ class Tool_Scripts
 
     /**
      * Counts available items
-     * @param string $classname Restrict items to a specific class and its descendants
-     * @param bool $active_player Include active players inventory
-     * @param bool $active_location Include active locations inventory
-     * @param bool $other_players Include inventory of other players at the active location
+     *
+     * @param string                  $classname       Restrict items to a specific class and its descendants
+     * @param bool                    $active_player   Include active players inventory
+     * @param bool                    $active_location Include active locations inventory
+     * @param bool                    $other_players   Include inventory of other players at the active location
      * @param null|Interface_Plentity $perspective
-     * @param null|callable $decider
+     * @param null|callable           $decider
+     *
      * @return number
+     * @throws Exception
      */
     public static function count_available_items($classname = null, $active_player = true, $active_location = true, $other_players = false, $perspective = null, $decider = null)
     {
@@ -38,27 +43,30 @@ class Tool_Scripts
 
         //Add ammobelt items
         $d = 0;
-        if (Tool_System::instance_of($classname, 'Model_Items_Abstract_Ammo'))
-            foreach (Tool_Scripts::available_items('Model_Items_Ammobelt', $active_player, $active_location, $other_players, $perspective) as $belt)
+        if (Tool_System::instance_of($classname, Model_Items_Abstract_Ammo::cls()))
+            foreach (self::available_items(Model_Items_Ammobelt::cls(), $active_player, $active_location, $other_players, $perspective) as $belt)
                 $d += $belt->has($classname);
         // Add stackable items
-        elseif (Tool_System::instance_of($classname, 'Model_Items_Abstract_Stackable'))
-            foreach (Tool_Scripts::available_items($classname, $active_player, $active_location, $other_players, $perspective, $decider) as $instance)
+        elseif (Tool_System::instance_of($classname, Model_Items_Abstract_Stackable::cls()))
+            foreach (self::available_items($classname, $active_player, $active_location, $other_players, $perspective, $decider) as $instance)
                 $d += $instance->count();
-        else return count(Tool_Scripts::available_items($classname, $active_player, $active_location, $other_players, $perspective, $decider));
+        else return count(
+            self::available_items($classname, $active_player, $active_location, $other_players, $perspective, $decider));
 
         return $d;
     }
 
     /**
      * @param mixed|Struct_ItemEntry[]|Struct_ItemMaterial[] $matrix
-     * @param bool $active_player
-     * @param bool $active_location
-     * @param bool $other_players
-     * @param null|Interface_Plentity $perspective
-     * @param bool $grind
-     * @param null|callable|callable[] $decider
+     * @param bool                                           $active_player
+     * @param bool                                           $active_location
+     * @param bool                                           $other_players
+     * @param null|Interface_Plentity                        $perspective
+     * @param bool                                           $grind
+     * @param null|callable|callable[]                       $decider
+     *
      * @return bool
+     * @throws Exception
      */
     public static function has_available_items($matrix, $active_player, $active_location, $other_players, $perspective = null, $grind = false, $decider = null) {
         /**
@@ -148,15 +156,15 @@ class Tool_Scripts
          * @var $item Model_Items_Abstract_Item
          */
         foreach ($matrix as $item_entry) {
-            if (Tool_System::instance_of($item_entry->class, 'Model_Items_Abstract_Ammo')) {
-                foreach (Tool_Scripts::available_items('Model_Items_Ammobelt', $active_player, $active_location, $other_players, $perspective) as $belt)
+            if (Tool_System::instance_of($item_entry->class, Model_Items_Abstract_Ammo::cls())) {
+                foreach (self::available_items(Model_Items_Ammobelt::cls(), $active_player, $active_location, $other_players, $perspective) as $belt)
                     if ($belt->get($item_entry->class, $item_entry->count)) break;
                     else {
                         $item_entry->count -= $belt->has($item_entry->class);
                         $belt->get($item_entry->class, $belt->has($item_entry->class));
                     }
-            } elseif (Tool_System::instance_of($item_entry->class, 'Model_Items_Abstract_Stackable')) {
-                foreach (Tool_Scripts::available_items($item_entry->class, $active_player, $active_location, $other_players, $perspective, $get_decider($item_entry)) as $instance)
+            } elseif (Tool_System::instance_of($item_entry->class, Model_Items_Abstract_Stackable::cls())) {
+                foreach (self::available_items($item_entry->class, $active_player, $active_location, $other_players, $perspective, $get_decider($item_entry)) as $instance)
                     if ($instance->count() > $item_entry->count) {
                         for ($i = 0; $i < $item_entry->count; $i++) $instance->consume();
                         break;
@@ -179,12 +187,12 @@ class Tool_Scripts
 
         if (is_object($perspective))
             $player = $perspective;
-        else $player = Globals::CurrentPlayer();
+        else $player = Globals::CurrentPlayerF();
 
         if ($active_player) $player->inventory()->reset_weight();
         if ($active_location) $player->location()->inventory()->reset_weight();
         if ($other_players)
-            foreach (Tool_Scripts::at_location() as $s_player)
+            foreach (self::at_location() as $s_player)
                 if ($s_player->uin() !== $player->uin())
                     $s_player->inventory()->reset_weight();
 
@@ -224,15 +232,15 @@ class Tool_Scripts
          * @var $item Model_Items_Abstract_Item
          */
         foreach ($matrix as $classname => $count) {
-            if (Tool_System::instance_of($classname, 'Model_Items_Abstract_Ammo')) {
-                foreach (Tool_Scripts::available_items('Model_Items_Ammobelt', $active_player, $active_location, $other_players, $perspective) as $belt)
+            if (Tool_System::instance_of($classname, Model_Items_Abstract_Ammo::cls())) {
+                foreach (self::available_items(Model_Items_Ammobelt::cls(), $active_player, $active_location, $other_players, $perspective) as $belt)
                     if ($belt->get($classname, $count)) break;
                     else {
                         $count -= $belt->has($classname);
                         $belt->get($classname, $belt->has($classname));
                     }
-            } elseif (Tool_System::instance_of($classname, 'Model_Items_Abstract_Stackable')) {
-                foreach (Tool_Scripts::available_items($classname, $active_player, $active_location, $other_players, $perspective, $get_decider($classname)) as $instance)
+            } elseif (Tool_System::instance_of($classname, Model_Items_Abstract_Stackable::cls())) {
+                foreach (self::available_items($classname, $active_player, $active_location, $other_players, $perspective, $get_decider($classname)) as $instance)
                     if ($instance->count() > $count) {
                         for ($i = 0; $i < $count; $i++) $instance->consume();
                         break;
@@ -255,12 +263,12 @@ class Tool_Scripts
 
         if (is_object($perspective))
             $player = $perspective;
-        else $player = Globals::CurrentPlayer();
+        else $player = Globals::CurrentPlayerF();
 
         if ($active_player) $player->inventory()->reset_weight();
         if ($active_location) $player->location()->inventory()->reset_weight();
         if ($other_players)
-            foreach (Tool_Scripts::at_location() as $s_player)
+            foreach (self::at_location() as $s_player)
                 if ($s_player->uin() != $player->uin())
                     $s_player->inventory()->reset_weight();
 
@@ -269,10 +277,10 @@ class Tool_Scripts
 
     public static function getBrainCoinLikelinessLevel($lid = null) {
         // Get Radar data
-        list($radar_min, $radar_max, $radar_prop, $radar_increase) = $lid ? Globals::CurrentGame()->location($lid)->zombie_factory()->get_radar_data() : Globals::CurrentPlayer()->location()->zombie_factory()->get_radar_data();
+        list($radar_min, $radar_max, $radar_prop, $radar_increase) = $lid ? Globals::CurrentGameF()->location($lid)->zombie_factory()->get_radar_data() : Globals::CurrentPlayerF()->location()->zombie_factory()->get_radar_data();
 
         // Check if we're at a hideout with active defenses
-        $hideout = Tool_Scripts::current_location_hideout();
+        $hideout = self::current_location_hideout();
         $protected_hideout = $hideout && $hideout->get_defense() > 0;
 
         // Calculate approx. number of ticks between each blockade increase and random attack; set random attack value to zero if we're at a hideout
@@ -284,9 +292,9 @@ class Tool_Scripts
         // Calculate danger level
         $danger = ($radar_prop > 0) ? floor($radar_max/4) : 0;              // Base value: Max attack group size
         if (!$protected_hideout && $radar_prop <= 1.5 && $radar_prop > 0)     $danger += 2;    // Increase by 2 if we have a very high attack probability
-        elseif (!$protected_hideout && $radar_prop <= 3 && $radar_prop > 0)   $danger += 1;    // Increase by 1 if we have a high attack probability
-        elseif ($radar_prop <= 15  || $radar_prop == 0)  $danger -= 1;                           // Decrease by 1 if we have a very low attack probability
-        if ($radar_increase != 0 && $radar_increase <= 3)   $danger += 1;   // Increase by 1 if we have a very high blocking speed
+        elseif (!$protected_hideout && $radar_prop <= 3 && $radar_prop > 0)   ++$danger;    // Increase by 1 if we have a high attack probability
+        elseif ($radar_prop <= 15  || $radar_prop == 0)  --$danger;                           // Decrease by 1 if we have a very low attack probability
+        if ($radar_increase != 0 && $radar_increase <= 3)   ++$danger;   // Increase by 1 if we have a very high blocking speed
         $danger = min(5,max(($radar_prop > 0) ? 1 : 0,$danger));            // Confine danger to 0-5 range
 
         switch ($danger) {
@@ -302,21 +310,22 @@ class Tool_Scripts
 
     /**
      * Returns a list of available items
-     * @param string $classname Restrict items to a specific class and its descendants
-     * @param bool $active_player Include active players inventory
-     * @param bool $active_location Include active locations inventory
-     * @param bool $other_players Include inventory of other players at the active location
+     * @param string                  $classname       Restrict items to a specific class and its descendants
+     * @param bool                    $active_player   Include active players inventory
+     * @param bool                    $active_location Include active locations inventory
+     * @param bool                    $other_players   Include inventory of other players at the active location
      * @param null|Interface_Plentity $perspective
-     * @param null|callable $decider
+     * @param null|callable           $decider
      * @return Model_Items_Abstract_Item[]
+     * @throws Exception
      */
     public static function available_items($classname = null, $active_player = true, $active_location = true, $other_players = false, $perspective = null, $decider = null)
     {
         if (is_object($perspective))
             $player = $perspective;
-        else $player = Globals::CurrentPlayer();
+        else $player = Globals::CurrentPlayerF();
 
-        if (Tool_Scripts::is_npc($player))
+        if (self::is_npc($player))
             $other_players = false;
 
         $proto = [];
@@ -328,21 +337,23 @@ class Tool_Scripts
             $proto = array_merge($proto, $player->location()->inventory()->get($classname));
 
         if ($other_players)
-            foreach (Tool_Scripts::at_location($player->location_class(), true, true) as $s_player)
+            foreach (self::at_location($player->location_class(), true, true) as $s_player)
                 if ($s_player->uin() != $player->uin())
                     $proto = array_merge($proto, $s_player->inventory()->get($classname));
 
         return ($decider && is_callable($decider)) ? array_values(array_filter($proto, $decider)) : $proto;
     }
+
     /**
      * Returns the first available item from a list
-     * @param string $classname Restrict items to a specific class and its descendants
-     * @param bool $active_player Include active players inventory
-     * @param bool $active_location Include active locations inventory
-     * @param bool $other_players Include inventory of other players at the active location
+     * @param string                  $classname       Restrict items to a specific class and its descendants
+     * @param bool                    $active_player   Include active players inventory
+     * @param bool                    $active_location Include active locations inventory
+     * @param bool                    $other_players   Include inventory of other players at the active location
      * @param null|Interface_Plentity $perspective
      * @return Model_Items_Abstract_Item
-     */
+     * @throws Exception
+*/
 
     public static function first_available_item($classname, $active_player = true, $active_location = true, $other_players = false, $perspective = null)
     {
@@ -354,23 +365,24 @@ class Tool_Scripts
 
     /**
      * Returns a list of players, who currently stay at the location specified by $lid
-     * @param number $lid Location; default is the active players location
-     * @param bool $include_players Include players
-     * @param bool $include_npcs Include NPCs
+     * @param number $lid             Location; default is the active players location
+     * @param bool   $include_players Include players
+     * @param bool   $include_npcs    Include NPCs
      * @return Interface_Plentity[]|Model_Player[]
+     * @throws Exception
      */
     public static function at_location($lid = null, $include_players = true, $include_npcs = true)
     {
         if (!$include_players && !$include_npcs) return [];
-        if ($lid === null) $lid = Globals::CurrentPlayer()->location_class();
+        if ($lid === null) $lid = Globals::CurrentPlayerF()->location_class();
 
         $ret = [];
         if ($include_players)
-            foreach (Globals::CurrentGame()->players(true) as $s_player)
+            foreach (Globals::CurrentGameF()->players(true) as $s_player)
                 if ($s_player->get_status()->alive() && $s_player->location_class() == $lid)
                     $ret[] = $s_player;
         if ($include_npcs)
-            foreach (Globals::CurrentGame()->npcs(true) as $s_player)
+            foreach (Globals::CurrentGameF()->npcs(true) as $s_player)
                 if ($s_player->get_status()->alive() && $s_player->location_class() == $lid)
                     $ret[] = $s_player;
 
@@ -380,15 +392,18 @@ class Tool_Scripts
     /**
      * Returns a list of players, who currently stay at the location specified by $lid and can be used as comrades
      * @param number $lid Location; default is the active players location
+     * @param bool   $include_players
+     * @param bool   $include_npcs
      * @return Model_Player[]
+     * @throws Exception
      */
     public static function comrades($lid = null, $include_players = true, $include_npcs = false)
     {
-        if ($lid === null) $lid = Globals::CurrentPlayer()->location_class();
+        if ($lid === null) $lid = Globals::CurrentPlayerF()->location_class();
 
         $ret = [];
         foreach (static::at_location($lid, $include_players, $include_npcs) as $p)
-            if ($p->id() != Globals::CurrentPlayer()->id() && static::check_comrade($p))
+            if ($p->id() != Globals::CurrentPlayerF()->id() && static::check_comrade($p))
                 $ret[] = $p;
 
         return $ret;
@@ -396,17 +411,18 @@ class Tool_Scripts
 
     /**
      * Returns true if the player specified by $pid is a comrade
-     * @param number|Model_Player|Interface_Plentity $pid Player
+     * @param number|string|Model_Player|Interface_Plentity $pid Player
      * @return Model_Player|boolean
+     * @throws Exception
      */
     public static function check_comrade($pid)
     {
         //Check if PID is valid
         $r = null;
         if (is_numeric($pid))
-            $r = Globals::CurrentGame()->get_player($pid);
+            $r = Globals::CurrentGameF()->get_player($pid);
         elseif (is_string($pid))
-            $r = Globals::CurrentGame()->get_npc($pid);
+            $r = Globals::CurrentGameF()->get_npc($pid);
         elseif (is_object($pid))
             $r = $pid;
 
@@ -417,19 +433,20 @@ class Tool_Scripts
             return false;
 
         //Check if both players share the same location
-        return ($r->location_class() == Globals::CurrentPlayer()->location_class()) ? $r : false;
+        return ($r->location_class() == Globals::CurrentPlayerF()->location_class()) ? $r : false;
     }
 
     /**
      * Places a newly spawned item in the current locations inventory or tries to add it to the finders inventory
-     * @param Model_Items_Abstract_Item|Model_Items_Abstract_Item[] $item The item (can also be an array of items)
-     * @param boolean $log True if you want a log message to be created
-     * @param Model_Places_Abstract_Place $use_location The location; if not set, the current location is used
+     * @param Model_Items_Abstract_Item|Model_Items_Abstract_Item[] $item         The item (can also be an array of items)
+     * @param boolean                                               $log          True if you want a log message to be created
+     * @param Model_Places_Abstract_Place                           $use_location The location; if not set, the current location is used
      * @return boolean
+     * @throws Exception
      */
     public static function place_new_item($item, $log = true, $use_location = null)
     {
-        $location = $use_location ? $use_location : Globals::CurrentPlayer()->location();
+        $location = $use_location ? $use_location : Globals::CurrentPlayerF()->location();
 
         //Fix single element arrays
         if (is_array($item) && count($item) == 1)
@@ -447,9 +464,9 @@ class Tool_Scripts
 
         if ($try_to_take) {
 
-            if (Tool_System::instance_of($item, 'Model_Items_Abstract_Ammo')) {
+            if (Tool_System::instance_of($item, Model_Items_Abstract_Ammo::cls())) {
                 /** @var $belt Model_Items_Ammobelt */
-                $belt = Tool_Scripts::first_available_item(Model_Items_Ammobelt::cls(), true, false, false);
+                $belt = self::first_available_item(Model_Items_Ammobelt::cls(), true, false, false);
                 /** @var Model_Items_Abstract_Ammo $item */
                 if ($belt && $item->take()) {
                     $belt->add($item);
@@ -457,9 +474,9 @@ class Tool_Scripts
                 }
 
             } else {
-                Globals::CurrentPlayer()->inventory()->add($item);
+                Globals::CurrentPlayerF()->inventory()->add($item);
                 if (!$item->take(true))
-                    Globals::CurrentPlayer()->inventory()->remove($item->uin());
+                    Globals::CurrentPlayerF()->inventory()->remove($item->uin());
                 else return true;
             }
         }
@@ -471,24 +488,26 @@ class Tool_Scripts
 
     /**
      * Starts a simple zombie battle with a number of shamblers
-     * @param number $num_zmb Number of attacking shamblers
-     * @param number $distance Distance of the zombie group
-     * @param string $headline String to use as headline for the battle log message; default is "Ein Kampf!"
+     * @param number  $num_zmb         Number of attacking shamblers
+     * @param number  $distance        Distance of the zombie group
+     * @param string  $headline        String to use as headline for the battle log message; default is "Ein Kampf!"
      * @param boolean $limit_to_player Set true, if you want only the active player to become involved in battle; default is false
-     * @param boolean $escapeable Set true if the battle can be escaped from; default is false
+     * @param boolean $escapeable      Set true if the battle can be escaped from; default is false
+     * @throws Kohana_Exception
      */
-    public static function simple_battle($num_zmb, $distance, $headline = "Ein Kampf!", $limit_to_player = false, $escapeable = false)
+    public static function simple_battle($num_zmb, $distance, $headline = 'Ein Kampf!', $limit_to_player = false, $escapeable = false)
     {
-        Tool_Scripts::combat([$limit_to_player ? [Globals::CurrentPlayer()] : Tool_Scripts::at_location(), [Model_Combat_Zombies_Shambler::factory()->count($num_zmb)]], $escapeable, $distance, Globals::CurrentPlayer()->location(), $headline);
+        self::combat([$limit_to_player ? [Globals::CurrentPlayerF()] : self::at_location(), [Model_Combat_Zombies_Shambler::factory()->count($num_zmb)]], $escapeable, $distance, Globals::CurrentPlayerF()->location(), $headline);
     }
 
     /**
      * Returns the primary hideout object
      * @param null|Model_Game $game
      * @return Model_Places_Home
+     * @throws Exception
      */
     public static function home($game = null) {
-        if ($game === null) $game = Globals::CurrentGame();
+        if ($game === null) $game = Globals::CurrentGameF();
         return $game->location(-2);
     }
 
@@ -496,11 +515,12 @@ class Tool_Scripts
      * Returns items from all hideouts
      * @param null|string $type Item type, or null for all items
      * @return Model_Items_Abstract_Item[]
+     * @throws Exception
      */
     public static function get_home_items($type = null) {
         $ret = array();
-        foreach (Globals::CurrentGame()->maps() as $map) foreach ($map->get_locations('Model_Places_Abstract_Hideout') as $id)
-            foreach (Globals::CurrentGame()->location($id)->inventory()->get($type) as $item)
+        foreach (Globals::CurrentGameF()->maps() as $map) foreach ($map->get_locations('Model_Places_Abstract_Hideout') as $id)
+            foreach (Globals::CurrentGameF()->location($id)->inventory()->get($type) as $item)
                 $ret[] = $item;
         return $ret;
     }
@@ -509,9 +529,10 @@ class Tool_Scripts
      * Returns the type of location specified by $lid
      * @param $lid int Location ID
      * @return bool|int false, if the location id is invalid; 0 for a standart location; 1 for a location node, 2 for a hideout
+     * @throws Exception
      */
     public static function location_type($lid) {
-        if (!($location = Globals::CurrentGame()->location($lid)))
+        if (!($location = Globals::CurrentGameF()->location($lid)))
             return false;
 
         if (Tool_System::instance_of($location, 'Model_Places_Abstract_Hideout'))
@@ -524,10 +545,11 @@ class Tool_Scripts
     /**
      * @param Interface_Plentity $p
      * @return Model_Places_Abstract_Hideout|null
+     * @throws Exception
      */
     public static function current_location_hideout($p = null) {
         if ($p === null)
-            $player = Globals::CurrentPlayer();
+            $player = Globals::CurrentPlayerF();
         else $player = $p;
 
         if (static::location_type($player->location_class()) == 2)
@@ -537,9 +559,13 @@ class Tool_Scripts
 
     /**
      * @param Model_Combat_Actor[][] $combatants
-     * @param bool $escapeable
-     * @param Model_Places_Abstract_Place null $location
+     * @param bool                   $escapeable
+     * @param int                    $distance
+     * @param null                   $location
+     * @param string                 $title
+     * @param null                   $text
      * @return Model_Combat_Field
+     * @throws Kohana_Exception
      */
     public static function combat($combatants, $escapeable, $distance = 10, $location = null, $title = 'Ein Kampf!', $text = null) {
         $battle = Model_Combat_Field::factory();
@@ -574,12 +600,12 @@ class Tool_Scripts
                 }
 
         if ($location === null)
-            $location = Globals::CurrentPlayer()->location();
+            $location = Globals::CurrentPlayerF()->location();
 
         $battle->get_scene()->set_atmosphere($location->battle_location_type());
 
         //Upload to DB
-        $vid = Model_Combat_Handler::upload(Globals::CurrentGame()->id(), Globals::CurrentGame()->season(), $battle);
+        $vid = Model_Combat_Handler::upload(Globals::CurrentGameF()->id(), Globals::CurrentGameF()->season(), $battle);
         $location->log()->add(new Model_Log_Types_Battle($title, $text, $vid, $battle->get_scene()->summarize()));
 
         return $battle;
@@ -589,10 +615,11 @@ class Tool_Scripts
      * Returns a DateTime object containing the in-universe time and date
      * @param number $t
      * @return DateTime
+     * @throws Kohana_Exception
      */
     public static function get_daytime($t = null) {
-        if ($t === null) $t = Globals::CurrentGame()->duration();
-        $ticks = $t + Globals::CurrentGame()->getDaytimeOffset();
+        if ($t === null) $t = Globals::CurrentGameF()->duration();
+        $ticks = $t + Globals::CurrentGameF()->getDaytimeOffset();
         $days = floor($ticks/288);
         $d = new DateTime();
         $d->setDate(1998,Kohana::$config->load('server.season'),2);
@@ -606,27 +633,28 @@ class Tool_Scripts
      * Returns the in-universe time of day
      * @param Model_Player|null $p
      * @return string ("night", "morning", "day", "evening")
-     */
+     * @throws Kohana_Exception
+*/
     public static function get_timeofday($p = null) {
         if ($p && $p->location()->getPerpetualDayTime())
             return $p->location()->getPerpetualDayTime();
         switch (static::get_daytime()->format('G')) {
             case 22:case 23:case 0:case 1:case 2:case 3:case 4:case 5:
-            return "night"; break;
+            return 'night'; break;
             case 6:case 7:case 8:case 9:
-            return "morning"; break;
+            return 'morning'; break;
             case 10:case 11:case 12:case 13:case 14:case 15:case 16:case 17:
-            return "day"; break;
+            return 'day'; break;
             case 18:case 19:case 20:case 21:
-            return "evening"; break;
-            default: return "";
+            return 'evening'; break;
+            default: return '';
         }
     }
 
     public static function calculate_find_chances($pid = null) {
         if ($pid === null)
-            $player = Globals::CurrentPlayer();
-        else $player = Globals::CurrentGame()->get_player($pid);
+            $player = Globals::CurrentPlayerF();
+        else $player = Globals::CurrentGameF()->get_player($pid);
 
         $c = 1;
 
@@ -658,13 +686,13 @@ class Tool_Scripts
         $c *= (1 - ($player->get_status()->get(Model_Status::MS_STAT_DRUNK)/100));
 
         //Survivalist Boni
-        if (!Tool_Scripts::is_npc($player) && $player->job(1060)) {
+        if (!self::is_npc($player) && $player->job(1060)) {
             if ($player->job(1060, 5, false)) $c *= 1.15;
             elseif ($player->job(1060, 2, false)) $c *= 1.05;
         }
 
         //Child Bonus
-        if (!Tool_Scripts::is_npc($player) && $player->job(1080)) $c *= 1.5;
+        if (!self::is_npc($player) && $player->job(1080)) $c *= 1.5;
 
         //Item Spawnrate Stat
         $c *= $player->get_status()->get(Model_Status::MS_CHAR_ITEM_SPAWNRATE);
@@ -673,33 +701,35 @@ class Tool_Scripts
     }
 
     /**
-     * @param string|null $message Message
-     * @param number $cv Chem Value
-     * @param Model_Items_Abstract_Item $item Target item
+     * @param string|null                                           $message Message
+     * @param number                                                $cv      Chem Value
+     * @param Model_Items_Abstract_Item                             $item    Target item
      * @param Model_Items_Abstract_Item|Model_Items_Abstract_Item[] $results Resulting items
-     * @param number|null $p Player ID
+     * @param number|null                                           $p       Player ID
+     * @throws Exception
      */
     public static function chem_reaction($message, $cv, $item, $results = array(), $p = null) {
         if ($p === null)
-            $p = Globals::CurrentGame()->get_player()->id();
+            $p = Globals::CurrentGameF()->get_player()->id();
 
         if ($message)
-            Globals::CurrentGame()->get_player($p)->log()->add($message);
+            Globals::CurrentGameF()->get_player($p)->log()->add($message);
 
-        Globals::CurrentGame()->get_player($p)->location()->log()->add(new Model_Log_Types_Chem($cv, $item, $results, $p));
-        static::place_new_item($results, false, Globals::CurrentGame()->get_player($p)->location());
+        Globals::CurrentGameF()->get_player($p)->location()->log()->add(new Model_Log_Types_Chem($cv, $item, $results, $p));
+        static::place_new_item($results, false, Globals::CurrentGameF()->get_player($p)->location());
     }
 
     /**
-     * @param null|Model_Player $player
+     * @param null|Interface_Plentity $player
      * @return Model_Items_Abstract_Transport|null
+     * @throws Exception
      */
     public static function get_active_transport($player = null) {
         if ($player === null)
-            $player = Globals::CurrentPlayer();
+            $player = Globals::CurrentPlayerF();
 
         $selected = null;
-        $items = $player->inventory()->get('Model_Items_Abstract_Transport');
+        $items = $player->inventory()->get(Model_Items_Abstract_Transport::cls());
         foreach ($items as $item) {
             /** @var Model_Items_Abstract_Transport $item */
             /** @var Model_Items_Abstract_Transport $selected */
@@ -713,12 +743,13 @@ class Tool_Scripts
     /**
      * @param null|Model_Player|Interface_Plentity $player
      * @return bool
+     * @throws Exception
      */
     public static function is_npc($player = null) {
         if ($player === null)
-            $player = Globals::CurrentPlayer();
+            $player = Globals::CurrentPlayerF();
 
         if (!$player) return false;
-        return $player->type() != Interface_Plentity::IC_NPC_NONPC;
+        return $player->type() !== Interface_Plentity::IC_NPC_NONPC;
     }
 }

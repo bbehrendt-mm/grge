@@ -21,8 +21,8 @@ class Model_Items_Virtual_Hero_Missionary extends Model_Items_Abstract_Virtual {
                 ->description('Verbraucht 50% deiner Gesundheit und wandelt die Hälfte davon in Energie um.')
                 ->effect(
                     Model_Effect::factory()
-                        ->effect(Model_Status::MS_STAT_HEALTH, -floor(Globals::CurrentPlayer()->get_status()->get(Model_Status::MS_STAT_HEALTH)/2))
-                        ->effect(Model_Status::MS_STAT_ENERGY, floor(Globals::CurrentPlayer()->get_status()->get(Model_Status::MS_STAT_HEALTH)/4))
+                        ->effect(Model_Status::MS_STAT_HEALTH, -floor(Globals::CurrentPlayerF()->get_status()->get(Model_Status::MS_STAT_HEALTH)/2))
+                        ->effect(Model_Status::MS_STAT_ENERGY, floor(Globals::CurrentPlayerF()->get_status()->get(Model_Status::MS_STAT_HEALTH)/4))
                         ->message('Statt darauf zu warten dass Gott dich für deine vielen Sünden bestrafst, kannst du das auch einfach selbst tun. Dieses hochspirituelle Erlebnis verschafft dir neue Energie und verstörender Weise auch eine Menge Befriedigung...')
                 )
             , 'hero_job_0')

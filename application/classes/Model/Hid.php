@@ -56,18 +56,20 @@ class Model_Hid {
     public function actions() {
         $tmp = [];
         foreach ($this->actions as $id => $action)
-            if (array_search($id, $this->hidden) === false)
+            if (!in_array($id, $this->hidden))
                 $tmp[$id] = $action['desc'];
 
         return $tmp;
     }
 
     /**
-     * @param $id
+     * @param                                 $id
      * @param Interface_Plentity|Model_Player $player
-     * @param null|Model_Player $side_player
-     * @param null|mixed $argument
+     * @param null|Model_Player               $side_player
+     * @param null|mixed                      $argument
+     *
      * @return bool
+     * @throws Exception
      */
     public function perform($id, $player, $side_player = null, $argument = null) {
         if (!isset($this->actions[$id]))
@@ -76,17 +78,18 @@ class Model_Hid {
         /** @var Model_Action $action */
         $action = $this->actions[$id]['action'];
         if (Globals::hasCurrentGame())
-            foreach (Globals::CurrentGame()->get_initialized_events() as $ev)
+            foreach (Globals::CurrentGameF()->get_initialized_events() as $ev)
                 $ev->event_executeHIDAction($this->base_id, $this->actions[$id]['desc'], $action);
         return $action->execute($player, $side_player, $argument);
     }
 
     /**
-     * @param $id
+     * @param                                 $id
      * @param Interface_Plentity|Model_Player $player
-     * @param null|Model_Player $side_player
-     * @param null|mixed $argument
+     * @param null|Model_Player               $side_player
+     * @param null|mixed                      $argument
      * @return bool
+     * @throws Exception
      */
     public function test($id, $player, $side_player = null, $argument = null) {
         if (!isset($this->actions[$id]))
@@ -107,15 +110,16 @@ class Model_Hid {
 
     /**
      * @param Interface_Plentity $p
-     * @param bool $auto
+     * @param bool               $auto
      * @return array
+     * @throws Exception
      */
     public function simple_effects($p = null, $auto = false) {
-        if ($p === null) $p = Globals::CurrentPlayer();
+        if ($p === null) $p = Globals::CurrentPlayerF();
 
         $tmp = [];
         foreach ($this->actions as $id => $action) {
-            if (array_search($id, $this->hidden) !== false)
+            if (in_array($id, $this->hidden))
                 continue;
 
             /** @var Model_Action $a */
@@ -128,26 +132,27 @@ class Model_Hid {
     }
 
     /**
-     * @param $uid
+     * @param                           $uid
      * @param Interface_Plentity[]|null $list_of_players
      * @return array
+     * @throws Exception
      */
     public function convert($uid = null, $list_of_players = null) {
         $tmp = array();
         foreach ($this->actions as $id => $action) {
-            if (array_search($id, $this->hidden) !== false)
+            if (in_array($id, $this->hidden))
                 continue;
             /** @var Model_Action $a */
             $a = $action['action'];
 
-            foreach (Globals::CurrentGame()->get_initialized_events() as $ev)
+            foreach (Globals::CurrentGameF()->get_initialized_events() as $ev)
                 $ev->event_renderHIDAction($this->base_id, $action['desc'], $a);
 
             if ($list_of_players === null)
-                $list_of_players = [Globals::CurrentPlayer()];
+                $list_of_players = [Globals::CurrentPlayerF()];
 
             foreach ($list_of_players as $p) {
-                if ($a->denied_for($p->type()) || ($p->id() != Globals::CurrentPlayer()->id() && ($a->has_side_effect() || !$a->allow_remote() || !$p->allow(Interface_Plentity::IC_ALLOW_ITEMS_USE)))) continue;
+                if ($a->denied_for($p->type()) || ($p->id() != Globals::CurrentPlayerF()->id() && ($a->has_side_effect() || !$a->allow_remote() || !$p->allow(Interface_Plentity::IC_ALLOW_ITEMS_USE)))) continue;
 
                 $tmp[] = array_merge($a->convert_effects($p), array(
                     'description' => $action['desc'],
@@ -155,11 +160,11 @@ class Model_Hid {
                     'action' => $action['id'],
                     'popup' => $a->popup(),
                     'target' => $uid,
-                    'user' => $p->id() == Globals::CurrentPlayer()->id() ? 0 : $p->id(),
+                    'user' => $p->id() == Globals::CurrentPlayerF()->id() ? 0 : $p->id(),
                     'escort' => $a->has_side_effect(),
                     'requires' => $a->convert_requires($p),
                     'skin' => $a->has_side_effect() ? ('multiplayer ' . $a->buttonskin()) : $a->buttonskin(),
-                    'flags' => $a->flag()
+                    'flags' => $a->get_flag()
                 ));
             }
 

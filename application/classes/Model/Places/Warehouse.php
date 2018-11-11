@@ -2,7 +2,7 @@
 
 class Model_Places_Warehouse extends Model_Places_Abstract_Hideout {
 
-    protected static $name = 'Lagerhaus';
+    protected static $location_name = 'Lagerhaus';
     protected static $description = 'Wie jedes Lagerhaus verfügt auch dieses über einfache Schutzmaßnahmen gegen Diebstahl. Plünderer hat das nicht aufhalten können, aber vielleicht Zombies? Du könntest durchaus versuchen, diesen Ort zu einem Versteck zu machen...';
     protected static $icon = 'home';
     protected static $outside = false;

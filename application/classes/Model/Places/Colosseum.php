@@ -2,7 +2,7 @@
 
 class Model_Places_Colosseum extends Model_Places_Abstract_Place {
 	
-	protected static $name = 'Kolosseum';
+	protected static $location_name = 'Kolosseum';
 	protected static $description = 'Dieses alterwürdige Gebäude hat jahrhundertelang allen Kriegen und dem Zahn der Zeit widerstanden. Selbst die Zombieapokalypse konnte diesem Gebäude nichts anhaben. Heute wird es von einer geheimnissvollen Organisation als Austragungsort des Zombieturniers verwendet.';
     protected static $icon = 'colosseum';
 
@@ -99,7 +99,7 @@ class Model_Places_Colosseum extends Model_Places_Abstract_Place {
 		if ($level < 1) return null;
 		if ($level > 6) $level = 6; 
 		
-		return $rewards[$level][mt_rand(0, count($rewards[$level]) - 1)]();
+		return $rewards[$level][random_int(0, count($rewards[$level]) - 1)]();
 	}
 	
 	private function reward() {
@@ -109,8 +109,9 @@ class Model_Places_Colosseum extends Model_Places_Abstract_Place {
 			$this->inventory->add(new Model_Items_Machete);
 			$this->inventory->add(new Model_Items_Batgun);
 		}
-		
-		for ($i = 1; $i <= ceil($this->stage / 3); $i++) {
+
+		$c = ceil($this->stage / 3);
+		for ($i = 1; $i <= $c; $i++) {
 			$t = $this->reward_roulette($i);
 			$this->inventory->add($t);
 		}
@@ -121,11 +122,11 @@ class Model_Places_Colosseum extends Model_Places_Abstract_Place {
 	}
 	
 	private function check_timer() {
-		if ($this->stage == 0 && Globals::CurrentGame()->duration() > 288) {
-            Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Ohje, du hast die Qualifikationsphase des Spiels verpasst. Jetzt kannst du nicht mehr am Turnier teilnehmen...'));
+		if ($this->stage == 0 && Globals::CurrentGameF()->duration() > 288) {
+            Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String(null, 'Ohje, du hast die Qualifikationsphase des Spiels verpasst. Jetzt kannst du nicht mehr am Turnier teilnehmen...'));
 			return false;
-		} elseif ($this->stage > 0 && (Globals::CurrentGame()->duration() < (288 * ceil($this->stage/2)))) {
-            Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text(null, null, 'Die Vorbereitungen für dieses Match laufen noch. Komm frühestens an Tag :day wieder.', array(':day' => 1+ceil($this->stage/2))));
+		} elseif ($this->stage > 0 && (Globals::CurrentGameF()->duration() < (288 * ceil($this->stage/2)))) {
+            Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String(null, 'Die Vorbereitungen für dieses Match laufen noch. Komm frühestens an Tag :day wieder.', array(':day' => 1+ceil($this->stage/2))));
 			return false;
 		}	
 		return true;
@@ -136,11 +137,11 @@ class Model_Places_Colosseum extends Model_Places_Abstract_Place {
 		
 		$this->battle();
 		
-		if (Globals::PrimaryPlayer()->get_status()->alive()) {
-            Globals::PrimaryPlayer()->log()->add(new Model_Log_Types_Text('Kampf', 'Du hast den Kampf überstanden!', 'Herzlichen Glückwunsch, du hast eine weitere Ebene des Kolosseums gemeistert! Weiter so! Als Belohnung für deinen triumphalen Sieg hast du einige Gegenstände erhalten.'));
+		if (Globals::PrimaryPlayerF()->get_status()->alive()) {
+            Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String('Du hast den Kampf überstanden!', 'Herzlichen Glückwunsch, du hast eine weitere Ebene des Kolosseums gemeistert! Weiter so! Als Belohnung für deinen triumphalen Sieg hast du einige Gegenstände erhalten.'));
 			$this->reward();
 			Tool_Scripts::home()->set_map_points($this->stage);
-            Globals::PrimaryPlayer()->achievements()->achieve(Model_Achievement::MA_GLADIATOR);
+            Globals::PrimaryPlayerF()->achievements()->achieve(Model_Achievement::MA_GLADIATOR);
 			$this->stage++;
 		}
 		

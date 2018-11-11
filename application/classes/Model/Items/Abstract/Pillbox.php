@@ -41,7 +41,7 @@ abstract class Model_Items_Abstract_Pillbox extends Model_Items_Abstract_Stackab
         $tmp = Model_Effect::factory()
             ->consume($this, $full);
         foreach (static::$pill_effects as $stat => $dif)
-            $tmp->effect($stat, $dif * ($full ? $this->count : 1) * (Globals::CurrentPlayer()->get_status()->retrieve('tr_dealer') ? 1.2 : 1));
+            $tmp->effect($stat, $dif * ($full ? $this->count : 1) * (Globals::CurrentPlayerF()->get_status()->retrieve('tr_dealer') ? 1.2 : 1));
 
         if ($full)
             $tmp->message('Wozu lange mit Kleinigkeiten aufhalten? Beipackzettel lesen und Medikamente dosieren kosten doch nur Zeit. Viel hilft viel, also runter mit der ganzen Schachtel!');

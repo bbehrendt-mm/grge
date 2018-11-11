@@ -19,7 +19,7 @@ class Model_Log_Types_Movement extends Model_Log_Message {
         if ($pid === null && $npc)
             throw new Exception('NPC ID missing!');
         elseif ($pid === null)
-            $pid = Globals::PrimaryPlayer()->id();
+            $pid = Globals::PrimaryPlayerF()->id();
 
         if (is_numeric($pid) || $npc)
             parent::__construct([
@@ -39,7 +39,7 @@ class Model_Log_Types_Movement extends Model_Log_Message {
             $data['self'] = false;
             $data['name'] = __($data['name']);
         } else {
-            $obj = $data['npc'] ? Globals::CurrentGame()->get_npc($data['id']) : Globals::CurrentGame()->get_player($data['id']);
+            $obj = $data['npc'] ? Globals::CurrentGameF()->get_npc($data['id']) : Globals::CurrentGameF()->get_player($data['id']);
             $data['name'] = $obj ? $obj->name() : "UNKNOWN [{$data['id']}]";
             if ($data['npc']) $data['self'] = false;
         }

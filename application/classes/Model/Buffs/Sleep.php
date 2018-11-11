@@ -30,8 +30,8 @@ class Model_Buffs_Sleep extends Model_Buffs_Abstract_Buff {
 
 		return parent::unbuff();
 	}
-	
-	protected $effects = Array(
+
+    protected $effects = Array(
 				Model_Status::MS_STAT_ENERGY => Array(
 					Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,

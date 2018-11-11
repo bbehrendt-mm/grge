@@ -7,10 +7,9 @@ class Model_Items_Virtual_Location_Roadblock extends Model_Items_Abstract_Virtua
     );
     protected static $graceful_fail = true;
 
-    private static $elist = array(7 => 5, 6 => 10, 5 => 15, 4 => 30, 3 => 45, 2 => 70, 1 => 95, 0 => 101);
+    private static $elist = array(0 => 101, 1 => 95, 2 => 70, 3 => 45, 4 => 30, 5 => 15, 6 => 10, 7 => 5);
 
     protected function hid() {
-        $phpbb53 = $this;
         return parent::hid()->add_action('Barrikade abbauen', Model_Action::factory()
             ->buttonskin('location')
             ->description('Diese Barrikade sieht ziemlich stabil aus, aber wenn du dich etwas ins Zeug legst kannst du hier bestimmt das eine oder andere nützliche Item ausbauen.')
@@ -22,15 +21,17 @@ class Model_Items_Virtual_Location_Roadblock extends Model_Items_Abstract_Virtua
                 ->custom(function($p) {
                         /** @var Model_Player $p */
 
-                        $items = array('Model_Items_Generic_Table','Model_Items_Generic_Tube','Model_Items_Generic_Metal','Model_Items_Generic_Bed','Model_Items_Generic_Cloth','Model_Items_Generic_Oven','Model_Items_Generic_Motor','Model_Items_Generic_Wood', 'Model_Items_Generic_Pumpkin');
+                        $items = array(Model_Items_Generic_Table::cls(),Model_Items_Generic_Tube::cls(),Model_Items_Generic_Metal::cls(),Model_Items_Generic_Bed::cls(),Model_Items_Generic_Cloth::cls(),Model_Items_Generic_Oven::cls(),Model_Items_Generic_Motor::cls(),Model_Items_Generic_Wood::cls(), Model_Items_Generic_Pumpkin::cls());
 
-                        if (mt_rand(0,10) < 2)
-                            Tool_Scripts::simple_battle(1,0, "Verflucht! Nachdem du etwas Schutt aus dem Weg geräumt hast, springt dich ein Zombie an! Wie zur Hölle ist der da nur rein gekommen??", true, false);
+                        if (random_int(0,10) < 2)
+                            Tool_Scripts::simple_battle(1,0,
+                                'Verflucht! Nachdem du etwas Schutt aus dem Weg geräumt hast, springt dich ein Zombie an! Wie zur Hölle ist der da nur rein gekommen??', true, false);
 
                         else {
                             $p->log()->add('Es hat dich etwas Arbeit gekostet, aber du konntest etwas nützliches aus dieser Barrikade herauszerren.');
-                            $item = $items[mt_rand(0,count($items)-1)];
-                            $count = (mt_rand(0,10) > 8) ? 2 : 1;
+                            $item = $items[random_int(0,count($items)-1)];
+                            $count = (random_int(0,10) > 8) ? 2 : 1;
+                            $tmp = [];
                             for ($i = 0; $i < $count; $i++) $tmp[] = new $item;
                             Tool_Scripts::place_new_item($tmp);
                         }

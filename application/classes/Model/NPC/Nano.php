@@ -60,13 +60,15 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
 
     /**
      * Returns player location object
+     *
      * @return Model_Places_Abstract_Place
+     * @throws Exception
      */
     final public function location() {
-        if (!Globals::CurrentGame()->location($this->location))
-            $this->location_class(Globals::CurrentGame()->map_main()->resolve_fixed_id(1));
+        if (!Globals::CurrentGameF()->location($this->location))
+            $this->location_class(Globals::CurrentGameF()->map_main()->resolve_fixed_id(1));
 
-        return Globals::CurrentGame()->location($this->location);
+        return Globals::CurrentGameF()->location($this->location);
     }
 
     /**
@@ -115,7 +117,7 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
             if ($this->location()) {
                 if ($this->get_status()->get(Model_Status::MS_STAT_ZOMBIFY) >= 50 && ($ghul = $this->generate_zombified_body())) {
                     $this->location()->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_ZOMBIFY, [], $this->id()));
-                    Globals::CurrentGame()->register_ghul($this->location_class(), $ghul);
+                    Globals::CurrentGameF()->register_ghul($this->location_class(), $ghul);
                 } else {
                     foreach ($this->inventory()->get() as $d)
                         $this->location()->inventory()->add($d);
@@ -222,7 +224,7 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
     }
 
     /**
-     * @return Model_Hid|null
+     * @return Model_Hid
      */
     public function hid() {
         return Model_Hid::factory();

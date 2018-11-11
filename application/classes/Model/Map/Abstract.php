@@ -123,8 +123,11 @@ abstract class Model_Map_Abstract {
 
     /**
      * Returns the configuration object
+     *
      * @param String|object|null $type
+     *
      * @return array
+     * @throws Kohana_Exception
      */
     protected function get_config($type = null) {
         return (array)(($type === null) ? Kohana::$config->load("maps/{$this->mapname}.locations") : Tool_System::config_tree("maps/{$this->mapname}.locations", $type));
@@ -181,7 +184,8 @@ abstract class Model_Map_Abstract {
             $target = Array($target);
 
         $target = array_filter($target,function($element) use ($class,$cfg) {
-            return (!isset($this->assoc_cache[$element]) || !isset($this->assoc_cache[$element][$class]) || ($this->assoc_cache[$element][$class] < $cfg['max_local']));
+            return (!isset($this->assoc_cache[$element], $this->assoc_cache[$element][$class])
+                || ($this->assoc_cache[$element][$class] < $cfg['max_local']));
         });
 
         $target_priority = array_filter($target,function($element) use ($class,$cfg) {
@@ -256,7 +260,7 @@ abstract class Model_Map_Abstract {
      * @return bool True when the path was be added
      */
     public function add_route($from, $to, $reverse = true) {
-        if (!isset($this->loc_assoc[$from]) || !isset($this->loc_assoc[$to]) )
+        if (!isset($this->loc_assoc[$from], $this->loc_assoc[$to]))
             return false;
 
         $this->push_route($from, $to);
@@ -297,8 +301,8 @@ abstract class Model_Map_Abstract {
 
         $is_reserved = is_string($location);
         if (is_string($location))
-            $uin = Globals::CurrentGame()->uin()->reserve();
-        elseif (!$location->uin()) $uin = Globals::CurrentGame()->uin()->set($location);
+            $uin = Globals::CurrentGameF()->uin()->reserve();
+        elseif (!$location->uin()) $uin = Globals::CurrentGameF()->uin()->set($location);
         else $uin = $location->uin();
 
         $this->catalog_location($uin, is_string($location) ? $location : get_class($location), $x, $y, $direction, $visible, $dry, $is_reserved, $fixed_id);
@@ -319,10 +323,11 @@ abstract class Model_Map_Abstract {
      * Returns a location object by it's fixed ID
      * @param int $fixed_id
      * @return Model_Places_Abstract_Place|null
-     */
+     * @throws Exception
+*/
     public function get_by_fixed_id($fixed_id) {
         if (isset($this->fixed_id_assoc[$fixed_id]))
-            return Globals::CurrentGame()->uin()->get($this->fixed_id_assoc[$fixed_id], 'Model_Places_Abstract_Place');
+            return Globals::CurrentGameF()->uin()->get($this->fixed_id_assoc[$fixed_id], 'Model_Places_Abstract_Place');
         else return null;
     }
 
@@ -340,7 +345,8 @@ abstract class Model_Map_Abstract {
     /**
      * @param Model_Places_Abstract_Place $location
      * @return bool
-     */
+     * @throws Exception
+*/
     public function insert_location($location) {
         $config = $this->get_config();
         $class = get_class($location);
@@ -375,17 +381,18 @@ abstract class Model_Map_Abstract {
             if ($data['reserved']) {
                 $class = $data['class'];
                 $cls = new $class;
-                Globals::CurrentGame()->uin()->fill_reservation($lid, $cls);
+                Globals::CurrentGameF()->uin()->fill_reservation($lid, $cls);
             }
         }
     }
 
     /**
      * Tries to unvail a new location from $id
-     * @param int $id Current location
+     * @param int $id     Current location
      * @param int $factor Chance modificator
      * @return bool|Model_Places_Abstract_Place|null false, when no location can be unvailed from here; null, when no location was unvailed, otherwise location object
-     */
+     * @throws Exception
+*/
     public function attempt_unvail($id, $factor = 1) {
         if (!isset($this->loc_assoc[$id]))
             return false;
@@ -416,11 +423,11 @@ abstract class Model_Map_Abstract {
             $this->loc_assoc[$spawn]['visible'] = true;
             if ($this->loc_assoc[$spawn]['reserved']) {
                 $class = $this->loc_assoc[$spawn]['class'];
-                Globals::CurrentGame()->uin()->fill_reservation($spawn, new $class);
+                Globals::CurrentGameF()->uin()->fill_reservation($spawn, new $class);
             }
 
             $this->loc_assoc[$id]['dry'] += $dst_config['chance'];
-            return Globals::CurrentGame()->location($spawn);
+            return Globals::CurrentGameF()->location($spawn);
         } else return null;
     }
 

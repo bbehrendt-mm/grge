@@ -84,7 +84,7 @@ class Controller_Ranking extends Controller {
 
             if ($element[0]['uid'])
                 foreach ($element as $sub) {
-                    if ($sub['uid'] == Globals::CurrentUser()->uid())
+                    if ($sub['uid'] == Globals::CurrentUserF()->uid())
                         $tmp['mark'] = true;
 
                     $tmp['players'][(int)$sub['uid']] = [
@@ -107,7 +107,7 @@ class Controller_Ranking extends Controller {
                 'name'      => false,
                 'duration'  => Tool_Numerics::duration_to_string($element['ticks']),
                 'mode'      => __(Tool_Modes::get_mode_by_id($element['board'])),
-                'mark'      => $element['uid'] == Globals::CurrentUser()->uid(),
+                'mark'      => $element['uid'] == Globals::CurrentUserF()->uid(),
                 'players'   => [[
                     'name'  => isset($element['name']) ? $element['name'] : Model_Euser::name_by_id($element['uid']),
                     'id'    => $element['uid'],
@@ -273,13 +273,13 @@ class Controller_Ranking extends Controller {
         $user_pos = [];
         $p = -1; $skip = 0;
         foreach ($lists as $k => &$entry) {
-            if ($entry['uid'] == Globals::CurrentUser()->uid()) {
+            if ($entry['uid'] === Globals::CurrentUserF()->uid()) {
                 $lists[$k]['mark'] = true;
                 $user_pos = $entry;
                 $user_pos['pos'] = $k+1;
             }
 
-            if ($entry['value'] == $p)
+            if ($entry['value'] === $p)
                 $skip++;
             else {
                 $p = $entry['value'];
@@ -288,6 +288,7 @@ class Controller_Ranking extends Controller {
 
             $entry['pos'] = ($k + 1) - $skip;
         }
+        unset($entry);
 
         $this->render([
             'games' => $num_entries,
@@ -308,7 +309,7 @@ class Controller_Ranking extends Controller {
 
         $user_pos = [];
         foreach ($lists as $k => $entry)
-            if ($entry['uid'] == Globals::CurrentUser()->uid()) {
+            if ($entry['uid'] == Globals::CurrentUserF()->uid()) {
                 $lists[$k]['mark'] = true;
                 $user_pos = $entry;
                 $user_pos['pos'] = $k+1;
@@ -466,7 +467,7 @@ class Controller_Ranking extends Controller {
 
     public function action_soul() {
         // Search user
-        $uid = $this->request->param('id', Globals::CurrentUser()->uid());
+        $uid = $this->request->param('id', Globals::CurrentUserF()->uid());
         if (!($name = Model_Euser::name_by_id($uid)))
             return $this->not_found();
 
@@ -494,6 +495,7 @@ class Controller_Ranking extends Controller {
             ];
             $apoints += $achievement['count'] * $achievement['points'];
         }
+        unset($achievement);
 
         $mentor = Model_Euser::mentor_id($uid);
         if ($mentor)
@@ -513,7 +515,7 @@ class Controller_Ranking extends Controller {
             ];
         }, $pupils);
 
-        if ($uid == Globals::CurrentUser()->uid())
+        if ($uid == Globals::CurrentUserF()->uid())
             $mcash = ($mentor || $pupils) ? [
                 'mentor' => [
                     'overall' => Model_Euser::get_mentor_braincoins($mentor, $uid),
@@ -522,16 +524,16 @@ class Controller_Ranking extends Controller {
                 'overall' => Model_Euser::get_mentor_braincoins($uid),
                 'harvest' => Model_Euser::get_mentor_braincoins($uid, null, false)
             ] : false;
-        elseif ($mentor == Globals::CurrentUser()->uid())
+        elseif ($mentor == Globals::CurrentUserF()->uid())
             $mcash = [
                 'mentor' => true,
-                'overall' => Model_Euser::get_mentor_braincoins(Globals::CurrentUser()->uid(), $uid),
-                'harvest' => Model_Euser::get_mentor_braincoins(Globals::CurrentUser()->uid(), $uid, false)
+                'overall' => Model_Euser::get_mentor_braincoins(Globals::CurrentUserF()->uid(), $uid),
+                'harvest' => Model_Euser::get_mentor_braincoins(Globals::CurrentUserF()->uid(), $uid, false)
             ];
-        elseif (in_array(Globals::CurrentUser()->uid(), $pupils))
+        elseif (in_array(Globals::CurrentUserF()->uid(), $pupils))
             $mcash = [
                 'mentor' => false,
-                'overall' => Model_Euser::get_mentor_braincoins($uid, Globals::CurrentUser()->uid()),
+                'overall' => Model_Euser::get_mentor_braincoins($uid, Globals::CurrentUserF()->uid()),
                 'harvest' => 0
             ];
         else $mcash = false;
@@ -542,7 +544,7 @@ class Controller_Ranking extends Controller {
         $this->add_widget(View::factory('pages/soul')
             ->set('season', $season)
             ->set('titles', $titles)
-            ->set('own_soul', $uid == Globals::CurrentUser()->uid())
+            ->set('own_soul', $uid == Globals::CurrentUserF()->uid())
             ->set('soul_owner', $name)
             ->set('soul_id', $uid)
             ->set('avatar', Model_Euser::avatar_by_id($uid))
@@ -560,8 +562,8 @@ class Controller_Ranking extends Controller {
             ->set('mentor', $mentor_data)
             ->set('pupils', $pupils_data)
             ->set('cashout', $mcash)
-            ->set('mentor_ref', $uid == Globals::CurrentUser()->uid() ? Model_Euser::get_mentoring_ref($uid) : false)
-            ->set('allow_mentor', Model_Euser::check_mentor(Globals::CurrentUser()->uid(), $uid))
+            ->set('mentor_ref', $uid == Globals::CurrentUserF()->uid() ? Model_Euser::get_mentoring_ref($uid) : false)
+            ->set('allow_mentor', Model_Euser::check_mentor(Globals::CurrentUserF()->uid(), $uid))
             ->set('gallery', Model_Combat_Handler::gallery_by_player($uid))
             ->set('url', URL::base(true))
 

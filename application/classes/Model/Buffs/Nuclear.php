@@ -9,18 +9,19 @@ class Model_Buffs_Nuclear extends Model_Buffs_Abstract_Buff {
 
     protected $effects = Array(
 				Model_Status::MS_STAT_HEALTH => Array(
-					Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
-					Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
-					Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
-					Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
+			    		Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
+			    		Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
+			    		Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
+			    		Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
 				),
 				Model_Status::MS_STAT_ENERGY => Array(
-					Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
-					Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
-					Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
-					Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
+			    		Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
+			    		Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
+			    		Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
+			    		Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
 				),
-			);
+    );
+    protected function get_effects(): array { return $this->effects; }
 	
 	public function rebuild() {
 		$rad  = $this->assoc_player->get_status()->get(Model_Status::MS_STAT_RADIATION)/100;

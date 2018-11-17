@@ -138,7 +138,8 @@ class Controller_Admin_Cron extends Controller {
                 case 'mail': default:
                 $mail_to = implode(',',(array)Kohana::$config->load('server.externals.cronjob.to'));
                 $mail_title = 'ZombVival System Report ' . date('d.m.Y', strtotime('-1 day'));
-                $header = "MIME-Version: 1.0\r\nContent-type: text/html; charset=iso-8859-1\r\nFrom: ZombVival Report System <" . Kohana::$config->load('server.externals.cronjob.from') . '@' . $_SERVER["SERVER_NAME"] . ">";
+                /** @noinspection HostnameSubstitutionInspection */
+                $header = "MIME-Version: 1.0\r\nContent-type: text/html; charset=iso-8859-1\r\nFrom: ZombVival Report System <" . Kohana::$config->load('server.externals.cronjob.from') . '@' . $_SERVER['SERVER_NAME'] . '>';
                 $ret = mail($mail_to, $mail_title, $content, $header);
                 if (!in_array('screen',$out))
                     echo $ret ? "Mail delivery OK\n" : 'Mail delivery FAILED\n';

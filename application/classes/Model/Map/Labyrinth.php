@@ -11,7 +11,7 @@ class Model_Map_Labyrinth extends Model_Map_Abstract {
     private $entry_class;
     private $entry = [0,0];
 
-    protected $movement_cost_modifier = 0.25;
+    protected static $default_movement_cost_modifier = 0.25;
 
     private $location_directory = [];
     private $placement_directory = [];
@@ -22,7 +22,7 @@ class Model_Map_Labyrinth extends Model_Map_Abstract {
     const MML_FAR = 3;
     const MML_ENTRYPOINT = 4;
 
-    private function valid($x = null, $y = null) {
+    private function valid($x = null, $y = null): bool {
         if ($x !== null && abs($x) > $this->grid) return false;
         if ($y !== null && abs($y) > $this->grid) return false;
         return true;
@@ -33,10 +33,10 @@ class Model_Map_Labyrinth extends Model_Map_Abstract {
         else return $this->mapscheme[$x][$y];
     }
 
-    private function walk($x,$y, $limit) {
-        if (!$this->mapscheme[$x][$y]) return 0;
-
+    private function walk($x,$y, $limit): array {
         $ret = [];
+        if (!$this->mapscheme[$x][$y]) return $ret;
+
         $tempsheme = $this->mapscheme;
 
         $dir = null;
@@ -50,14 +50,14 @@ class Model_Map_Labyrinth extends Model_Map_Abstract {
                 foreach ([[1,1],[-1,-1],[1,-1],[-1,1]] as $diag) {
                     $dx = $tx+$diag[0]; $dy = $ty+$diag[1];
                     if ($this->valid($dx,$dy) && $tempsheme[$dx][$dy] && $tempsheme[$tx][$dy] && $tempsheme[$dx][$ty])
-                        continue(2);
+                        continue 2;
                 }
                 $tmp[] = $direction;
             }
 
             if (empty($tmp)) return $ret;
             else {
-                if (in_array($dir,$tmp) && random_int(0,9) < 7) {}
+                if (in_array($dir,$tmp,true) && random_int(0,9) < 7) {}
                 elseif (empty($ret) || random_int(0,9) < 6) $dir = Tool_Gambling::select($tmp);
                 else return $ret;
 
@@ -71,7 +71,7 @@ class Model_Map_Labyrinth extends Model_Map_Abstract {
         return $ret;
     }
 
-    private function build_space() {
+    private function build_space(): void {
         for ($x = -$this->grid; $x <= $this->grid; $x++) {
             $tmp = [];
             for ($y = -$this->grid; $y <= $this->grid; $y++)
@@ -80,7 +80,7 @@ class Model_Map_Labyrinth extends Model_Map_Abstract {
         }
     }
 
-    private function build_corridors($limit) {
+    private function build_corridors($limit): void {
         $this->entry = [random_int(0,$this->grid), random_int(0,$this->grid)];
         $this->mapscheme[$this->entry[0]][$this->entry[1]] = static::MML_ENTRYPOINT;
         $walker_points = [[$this->entry[0],$this->entry[1]]];
@@ -93,13 +93,15 @@ class Model_Map_Labyrinth extends Model_Map_Abstract {
 
             foreach ($s as $start) {
                 $path = $this->walk($start[0], $start[1], $limit);
-                if (count($path) == 0 || count($path) >= $bias) {
-                    $limit -= count($path);
-                    if (($p = array_search($start,$walker_points)) !== false) unset($walker_points[$p]);
-                    foreach ($path as $spot) {
-                        $walker_points[] = $spot;
-                        $this->mapscheme[$spot[0]][$spot[1]] = static::MML_CORRIDOR;
-                    }
+                $num = count($path);
+                if ($num === 0 || $num >= $bias) {
+                    $limit -= $num;
+                    if (($p = array_search($start,$walker_points,true)) !== false) unset($walker_points[$p]);
+                    if ($num > 0)
+                        foreach ($path as $spot) {
+                            $walker_points[] = $spot;
+                            $this->mapscheme[$spot[0]][$spot[1]] = static::MML_CORRIDOR;
+                        }
                 }
             }
 
@@ -107,15 +109,15 @@ class Model_Map_Labyrinth extends Model_Map_Abstract {
         }
     }
 
-    private function build_intersections() {
+    private function build_intersections(): void {
         foreach ($this->mapscheme as $x => &$col)
             foreach ($col as $y => &$cell)
-                if ($cell == static::MML_CORRIDOR && ($this->get($x+1,$y) || $this->get($x-1,$y)) && ($this->get($x,$y+1) || $this->get($x,$y-1)))
+                if ($cell === static::MML_CORRIDOR && ($this->get($x+1,$y) || $this->get($x-1,$y)) && ($this->get($x,$y+1) || $this->get($x,$y-1)))
                     $cell = static::MML_INTERSECTION;
 
     }
 
-    private function distance_rec(&$map, $rx, $ry, $d) {
+    private function distance_rec(&$map, $rx, $ry, $d): void {
         if (!$this->valid($rx,$ry) || !$this->get($rx,$ry)) return;
 
         if ($map[$rx][$ry] > $d) {
@@ -125,7 +127,7 @@ class Model_Map_Labyrinth extends Model_Map_Abstract {
         }
     }
 
-    private function build_distances() {
+    private function build_distances(): void {
         $map = [];
         for ($x = -$this->grid; $x <= $this->grid; $x++) {
             $tmp = [];
@@ -137,13 +139,13 @@ class Model_Map_Labyrinth extends Model_Map_Abstract {
         $this->distance_rec($map,$this->entry[0],$this->entry[1],0);
         for ($x = -$this->grid; $x <= $this->grid; $x++)
             for ($y = -$this->grid; $y <= $this->grid; $y++)
-                if ($map[$x][$y] > 10 && $this->get($x,$y) == static::MML_CORRIDOR)
+                if ($map[$x][$y] > 10 && $this->get($x,$y) === static::MML_CORRIDOR)
                     $this->mapscheme[$x][$y] = static::MML_FAR;
 
     }
 
-    private function place_rec($x, $y, $root = null) {
-        if (!$this->valid($x,$y) || !$this->get($x,$y) || in_array([$x,$y],array_values($this->placement_directory))) return;
+    private function place_rec($x, $y, $root = null): void {
+        if (!$this->valid($x,$y) || !$this->get($x,$y) || in_array([$x,$y],array_values($this->placement_directory), true)) return;
 
         $cls = !$root ? $this->entry_class : $this->neutral_class;
         $location = new $cls();
@@ -158,7 +160,7 @@ class Model_Map_Labyrinth extends Model_Map_Abstract {
             $this->place_rec($x + $direction[0], $y + $direction[1], $new);
     }
 
-    public function auto_init() {
+    public function auto_init(): void {
         $this->grid = (int)$this->get_local_meta($this->sublocation)['grid'];
         $this->distance = (int)$this->get_local_meta($this->sublocation)['distance'];
 
@@ -176,9 +178,11 @@ class Model_Map_Labyrinth extends Model_Map_Abstract {
         $config = $this->get_config();
 
         //Place locations
-        foreach ($config as $class => $data) if ($data['auto'] && ($data['sub'] === $this->sublocation || (is_array($data['sub']) && in_array($this->sublocation, $data['sub']))))
+        foreach ($config as $class => $data) if ($data['auto'] && ($data['sub'] === $this->sublocation || (is_array($data['sub']) && in_array($this->sublocation, $data['sub'], true))))
             for ($i = 0; $i < $data['num']; $i++)
-                $this->place_location($class, true, $data['contortion'], isset($data['fixed']) ? $data['fixed'] : null);
+                $this->place_location($class, true, $data['contortion'],
+                    $data['fixed'] ?? null
+                );
 
 
         $this->sub_routing->compile();
@@ -193,7 +197,7 @@ class Model_Map_Labyrinth extends Model_Map_Abstract {
      * @return bool
      * @throws Exception
      */
-    public function place_location($location, $visible, $dry = 0, $fixed_id = null) {
+    public function place_location($location, $visible, $dry = 0, $fixed_id = null): bool {
         $class = is_string($location) ? $location : get_class($location);
 
         if (!($cfg = $this->get_config($class)))
@@ -202,12 +206,12 @@ class Model_Map_Labyrinth extends Model_Map_Abstract {
         if (is_string($location) && $visible)
             $location = new $location;
 
-        if (!(Tool_System::instance_of($location, 'Model_Places_Abstract_Place'))
+        if (!Tool_System::instance_of($location, 'Model_Places_Abstract_Place')
             || !($cfg = &$this->get_mutable_config($location))) return false;
 
         $possible_targets = [];
         foreach ($this->location_directory as $id => $type)
-            if (in_array($type, $cfg['root'])) $possible_targets[] = $id;
+            if (in_array($type, $cfg['root'], true)) $possible_targets[] = $id;
 
         if (empty($possible_targets)) return false;
         $list = $this->check_placement_limits($class,$possible_targets);
@@ -220,7 +224,7 @@ class Model_Map_Labyrinth extends Model_Map_Abstract {
         return true;
     }
 
-    public function scheme() {
+    public function scheme(): array {
         return $this->mapscheme;
     }
 }

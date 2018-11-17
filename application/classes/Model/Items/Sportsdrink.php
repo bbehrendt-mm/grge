@@ -15,7 +15,7 @@ class Model_Items_Sportsdrink extends Model_Items_Abstract_Stackable {
 	protected static $autospawn = Array(5,5);
 	protected static $autoappender = Array('Schluck', 'Schluck');
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('Einen Schluck nehmen', Model_Action::factory()
                 ->effect(

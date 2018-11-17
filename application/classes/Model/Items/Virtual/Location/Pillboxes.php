@@ -5,7 +5,7 @@ class Model_Items_Virtual_Location_Pillboxes extends Model_Items_Abstract_Virtua
     private $spawn_twinoid = false;
 
     protected static $graceful_fail = true;
-    protected $remaining = array(
+    protected static $default_action_uses = array(
         'find_pills' => 1
     );
 
@@ -14,7 +14,7 @@ class Model_Items_Virtual_Location_Pillboxes extends Model_Items_Abstract_Virtua
         $this->spawn_twinoid = $twinoid;
     }
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()->add_action('Pillenschachteln durchwühlen', Model_Action::factory()
             ->buttonskin('location')
             ->description('Überall auf dem Boden liegen geöffnete Pillenschachteln. Vermutlich könntest du hier noch einige einzelne Pillen finden, wenn du dich anstrengst.')

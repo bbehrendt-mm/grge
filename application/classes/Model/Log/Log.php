@@ -35,12 +35,15 @@ class Model_Log_Log extends Model {
 		$this->new = [];
 	}
 
-	/**
-	 * Adds a new message to buffer
-	 * @param Interface_Message|String $new_message
-	 * @param array $variables
-	 * @param array $translateables
-	 */
+    /**
+     * Adds a new message to buffer
+     *
+     * @param Interface_Message|String $new_message
+     * @param array                    $variables
+     * @param array                    $translateables
+     *
+     * @throws Exception
+     */
 	public function add($new_message, $variables = [], $translateables = []) {
 		if (is_string($new_message)) {
 			foreach ($translateables as $k => $v)

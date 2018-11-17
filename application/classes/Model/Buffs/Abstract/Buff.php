@@ -26,8 +26,9 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
     /** @var Interface_Plentity  */
 	protected $assoc_player;
 
-	protected $effects = [];
 	protected $lifetime = -1;
+
+	protected function get_effects(): array { return []; }
 
     /**
      * Returns the buff name
@@ -195,11 +196,12 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
      * Returns the effect of this buff on a specified status bar
      * @param number $stat Status bar
      * @param number $type Effect type
-     * @return int
+     * @return float
      */
-    public function effect($stat, $type) {
-		if (isset($this->effects[$stat], $this->effects[$stat][$type]))
-			 return $this->effects[$stat][$type];
+    public function effect($stat, $type): float {
+		$e = $this->get_effects();
+        if (isset($e[$stat][$type]))
+			 return $e[$stat][$type];
 		else return 0;
 	}
 

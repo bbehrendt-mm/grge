@@ -9,7 +9,7 @@ class Model_Items_Pill extends Model_Items_Abstract_Item implements Interface_St
 			'category' => Model_Items_Abstract_Item::MIAI_CAT_DRUG,
 	);
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         $child_effects = !Globals::shadowPlayerExists() && Globals::PrimaryPlayerF()->job(1080);
 
         return parent::hid()

@@ -11,7 +11,7 @@ class Model_Places_Asylumhideout extends Model_Places_Abstract_Hideout implement
     protected static $upgradable = false;
 
     //Base defense
-    protected $defense = 0;
+    protected static $base_defense = 0;
 
     //Base: 15% per day
     protected static $decay_rate = 0;

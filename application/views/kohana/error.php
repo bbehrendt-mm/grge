@@ -136,7 +136,7 @@
                 <h2>Debugging-Informationen</h2>
                 <?php
                 // Unique error identifier
-                $error_id = uniqid('error');
+                $error_id = uniqid('error', false);
 
                 ?>
                 <div id="kohana_error">

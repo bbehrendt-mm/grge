@@ -2,7 +2,7 @@
 
 class Model_Items_Virtual_Location_Hideout extends Model_Items_Abstract_Virtual {
 
-    protected $remaining = array(
+    protected static $default_action_uses = array(
         'hideout_builder' => PHP_INT_MAX,
         'hideout_maker' => PHP_INT_MAX,
         'hideout_sleep' => PHP_INT_MAX,

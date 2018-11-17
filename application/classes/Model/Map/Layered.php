@@ -59,11 +59,11 @@ class Model_Map_Layered extends Model_Map_Circular {
      * @return bool
      * @throws Exception
      */
-    public function place_location($location, $visible, $dry = 0, $fixed_id = null) {
+    public function place_location($location, $visible, $dry = 0, $fixed_id = null): bool {
         if (is_string($location) && $visible)
             $location = new $location;
 
-        if (!(Tool_System::instance_of($location, 'Model_Places_Abstract_Place'))
+        if (!Tool_System::instance_of($location, 'Model_Places_Abstract_Place')
             || !($cfg = &$this->get_mutable_config($location))
             || !($pos = $this->get_random_location_layered($cfg['distance'], $cfg['to'], is_string($location) ? $location : get_class($location), empty($cfg['force_root']) ? $cfg['root'] : array_pop($cfg['force_root'])))) return false;
 

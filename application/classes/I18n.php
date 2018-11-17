@@ -276,10 +276,13 @@ class I18n extends Kohana_I18n {
 
     /**
      * Fetches a translation in a given language for a given string. If there is no translation, the same string will be returned. If the given string is not part of the translation database, it will be added to the missing strings list.
-     * @param string $string String to translate
-     * @param string|null $lang Language (null, to use default language)
-     * @param bool $fallback Attempt to fall back
+     *
+     * @param string      $string   String to translate
+     * @param string|null $lang     Language (null, to use default language)
+     * @param bool        $fallback Attempt to fall back
+     *
      * @return string Translated string
+     * @throws Kohana_Exception
      */
 	private static function get_fallback($string, $lang = NULL, $fallback = true) {
 		// Return identity if input is something other than a string

@@ -9,8 +9,6 @@ class Model_NPC_Event_Rudolph extends Model_NPC_Animal
 
     protected static $escort_functions = [Interface_Plentity::IC_ALLOW_ANY];
 
-    protected $last_hideout = null;
-
     protected static $movement_scaling = 1;
     protected static $alcohol_scaling = 0.33333;
     protected static $inventory_size = 250;

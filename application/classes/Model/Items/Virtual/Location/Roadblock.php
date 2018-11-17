@@ -2,14 +2,14 @@
 
 class Model_Items_Virtual_Location_Roadblock extends Model_Items_Abstract_Virtual {
 
-    protected $remaining = array(
+    protected static $default_action_uses = array(
         'barricade_open' => 7
     );
     protected static $graceful_fail = true;
 
     private static $elist = array(0 => 101, 1 => 95, 2 => 70, 3 => 45, 4 => 30, 5 => 15, 6 => 10, 7 => 5);
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()->add_action('Barrikade abbauen', Model_Action::factory()
             ->buttonskin('location')
             ->description('Diese Barrikade sieht ziemlich stabil aus, aber wenn du dich etwas ins Zeug legst kannst du hier bestimmt das eine oder andere nützliche Item ausbauen.')

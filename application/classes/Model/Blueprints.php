@@ -41,10 +41,12 @@ class Model_Blueprints {
 
     /**
      * @param Model_Places_Abstract_Place|null $location
-     * @param string|null $category
-     * @param string|string[] $id
-     * @param Model_Room|null $room
+     * @param string|null                      $category
+     * @param string|string[]                  $id
+     * @param Model_Room|null                  $room
+     *
      * @return bool|string[]
+     * @throws Exception
      */
     public static function fast_apply($location, $category, $id, $room = null) {
         $b = static::factory($location, $category, true);

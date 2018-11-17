@@ -8,7 +8,7 @@ class Model_Places_Camping_Caravan extends Model_Places_Abstract_Hideout {
     protected static $outside = false;
 
     //Base defense
-    protected $defense = 2;
+    protected static $base_defense = 2;
 
     //Base: 15% per day
     protected static $decay_rate = 0.30;

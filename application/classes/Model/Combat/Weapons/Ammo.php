@@ -4,11 +4,11 @@ abstract class Model_Combat_Weapons_Ammo extends Model_Combat_Weapon
 {
     protected static $ammo = [];
 
-    public function ammo() {
+    public function ammo(): array {
         return static::$ammo;
     }
 
-    public function usable() {
+    public function usable(): bool {
         if (!$this->registered_user) return false;
         foreach ($this->ammo() as $type => $count)
             if (Tool_Scripts::count_available_items($type, true, false, false, $this->registered_user) < $count)
@@ -16,7 +16,7 @@ abstract class Model_Combat_Weapons_Ammo extends Model_Combat_Weapon
         return parent::usable();
     }
 
-    public function get_ammo_icons()
+    public function get_ammo_icons(): array
     {
         $tmp = [];
         foreach ($this->ammo() as $type => $count)
@@ -35,7 +35,7 @@ abstract class Model_Combat_Weapons_Ammo extends Model_Combat_Weapon
      * @return bool
      * @throws Exception
      */
-    public function trigger_usage(Model_Combat_Actor $me, Model_Combat_Actor $opponent, $damage, Model_Combat_Scene $scene) {
+    public function trigger_usage(Model_Combat_Actor $me, Model_Combat_Actor $opponent, $damage, Model_Combat_Scene $scene): bool {
         if ($this->registered_user)
             Tool_Scripts::consume_available_items($this->ammo(), true, false, false, $this->registered_user);
         return parent::trigger_usage($me, $opponent, $damage, $scene);

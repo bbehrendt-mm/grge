@@ -14,7 +14,7 @@ class Model_Items_Virtual_Hero_Soldier extends Model_Items_Abstract_Virtual {
         'name' => 'Heldentaten',
     );
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('Taktik', Model_Action::factory()
                 ->buttonskin('hero hja')

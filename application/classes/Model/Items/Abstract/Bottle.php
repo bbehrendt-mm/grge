@@ -8,7 +8,7 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
 	private $bottle_fillrate;
 	public $bottle_toxicity;
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('Einen Schluck trinken',
                 Model_Action::factory()

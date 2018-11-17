@@ -67,18 +67,18 @@ class Controller_Chat extends Controller {
         return $u;
     }
 
-    private function format($data,$user,$users) {
+    private function format($data,$user,$users): array {
         $d_out = [];
 
         foreach ($data as $mid => $entry) {
             $sender_id = $entry['sender'];
 
-            if ($entry['sender'] == -1) $entry['sender'] = static::CC_VAR_SYSTEM;
-            elseif ($entry['sender'] == -2) $entry['sender'] = static::CC_VAR_MODERATOR;
+            if ($entry['sender'] === -1) $entry['sender'] = static::CC_VAR_SYSTEM;
+            elseif ($entry['sender'] === -2) $entry['sender'] = static::CC_VAR_MODERATOR;
             elseif (isset($users[$entry['sender']][0])) $entry['sender'] = $users[$entry['sender']][0];
             else $entry['sender'] = static::CC_VAR_UNKNOWN;
 
-            $entry['message'] = ($entry['message'] === null) ? null : @unserialize($entry['message']);
+            $entry['message'] = ($entry['message'] === null) ? null : @unserialize($entry['message'], ['allowed_classes' => false]);
 
             switch ($entry['type']) {
                 case static::CC_IGNORE:case static::CC_PING:case static::CC_AUTH:

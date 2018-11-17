@@ -11,7 +11,7 @@ class Model_Items_Present extends Model_Items_Abstract_Item implements Interface
 	
 	protected static $weight = 0;
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('Auspacken', Model_Action::factory()
                 ->allow_remote(false)

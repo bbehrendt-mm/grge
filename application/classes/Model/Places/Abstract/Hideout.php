@@ -16,7 +16,7 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
     protected static $decay_exp = 0.08;
 
     protected $extensions = Array();
-    protected $survival_find = true;
+    protected static $survival_find_available = false;
 
     public function uin($uin = NULL) {
         if ($uin === NULL) return parent::uin();
@@ -25,6 +25,7 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         if (static::$starts_built) $this->setup_new_room($this->room(),[], static::$alternative_default_hideout ? [static::$alternative_default_hideout] : ['hideout']);
 
         $this->inventory->add(new Model_Items_Virtual_Location_Hideout());
+        $this->defense = static::$base_defense;
         return $t;
     }
 
@@ -176,7 +177,8 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         return true;
     }
 
-    protected $defense = 5;
+    protected static $base_defense = 5;
+    protected $defense;
 
     protected $decay = 1;
     protected $patchup = 1;

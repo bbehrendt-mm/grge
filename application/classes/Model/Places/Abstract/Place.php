@@ -197,8 +197,9 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
     public function mapable() {
         return true;
     }
-	
-	protected $survival_find = false;
+
+    protected static $survival_find_available = true;
+	protected $survival_find ;
 	
 	//Create a new inventory and assign a variable name (if a namelist is present from which to choose)
 	public function __construct() {
@@ -224,6 +225,8 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
             $this->variant_name = static::$namelist[$type];
             Globals::CurrentGameF()->ndp_register(static::class, $type);
         }
+
+        $this->survival_find = !static::$survival_find_available;
 
         $this->setup_primary_rooms();
         $this->setup_additional_rooms();
@@ -281,7 +284,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 
 		$this->log->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $pid, $type == Interface_Tickable::IT_TYPE_NPC));
 
-        if ($type == Interface_Tickable::IT_TYPE_PLAYER && $player->job(1060) && !$this->survival_find) {
+        if (!$this->survival_find && $type === Interface_Tickable::IT_TYPE_PLAYER && $player->job(1060)) {
 			
 			$this->survival_find = true;
 			$findings = min(2,max(0,$player->job(false) - 2));
@@ -492,7 +495,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 
     protected function find_building() {
         if (Globals::CurrentPlayerF()->get_status()->retrieve('fragile')) return false;
-        if (!($building = Globals::CurrentGameF()->mapF($this->uin())->attempt_unvail($this->uin(), Globals::CurrentPlayerF()->get_status()->get(Model_Status::MS_CHAR_LOCATION_SPAWNRATE)))) return true;
+        if (!($building = Globals::CurrentGameF()->mapF($this->uin())->attempt_unveil($this->uin(), Globals::CurrentPlayerF()->get_status()->get(Model_Status::MS_CHAR_LOCATION_SPAWNRATE)))) return true;
 
         //Mapper
         if (Globals::CurrentGameF()->config('modules.mapping') && ($items = Globals::CurrentPlayerF()->inventory()->get(Model_Items_Maptool::cls()))) {

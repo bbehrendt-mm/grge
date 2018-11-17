@@ -52,32 +52,29 @@ class Controller_Admin_Files extends Controller_Admin_Admin {
         echo $data;
     }
 
-    public function action_import_translations() {
-        if (!$this->priv_allow_all(['TRANSLATE_MOD'])) die(GRGEError::m(\grge\E_SERVER_ACCESS_DENIED));
+    public function action_import_translations(): bool {
+        if (!self::priv_allow_all(['TRANSLATE_MOD'])) die(GRGEError::m(\grge\E_SERVER_ACCESS_DENIED));
 
         if (!($file = file_get_contents($_FILES['grl']['tmp_name']))) die(GRGEError::m(\grge\E_HTTP_REQUEST_INCOMPLETE));
-        $data = unserialize(gzuncompress($file));
+        $data = unserialize(gzuncompress($file), ['allowed_classes' => false]);
 
         if (!$data || !is_array($data)) die(GRGEError::m(\grge\E_HTTP_REQUEST_POINTLESS));
 
-        echo "GRGE EVIO LANGUAGE IMPORTER V" . static::$evio_version . "<br /><br />";
+        echo 'GRGE EVIO LANGUAGE IMPORTER V' . static::$evio_version . '<br /><br />';
 
         if (!isset($data['data'], $data['meta']) || !is_array($data['meta'])) {
-            if (!($lang = $this->post('lang'))) die(GRGEError::m(\grge\E_HTTP_REQUEST_INCOMPLETE));
+            if (!($lang = self::post('lang'))) die(GRGEError::m(\grge\E_HTTP_REQUEST_INCOMPLETE));
 
-            echo "This seems to be a legacy GRL Package. It cannot be imported ...<br /><br />";
+            echo 'This seems to be a legacy GRL Package. It cannot be imported ...<br /><br />';
             die;
         }
 
 
         echo "Importing from \"{$_FILES['grl']['name']}\" ({$_FILES['grl']['size']} bytes)...<br />-----<br />";
 
-        if (!isset($data['meta']['format'], $data['meta']['version'])
-            || !isset($data['meta']['timestamp'])
-            || !isset($data['meta']['primary'])
-            || !isset($data['meta']['languages'])
+        if (!isset($data['meta']['format'], $data['meta']['version'], $data['meta']['timestamp'], $data['meta']['primary'], $data['meta']['languages'])
         ) {
-            echo "ERROR: Package is missing header information. Aborting.";
+            echo 'ERROR: Package is missing header information. Aborting.';
             return false;
         }
 

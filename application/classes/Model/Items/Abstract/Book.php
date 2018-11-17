@@ -51,7 +51,7 @@ abstract class Model_Items_Abstract_Book extends Model_Items_Abstract_Item {
         return ceil(($this->pages - $this->get_uses($pid))/static::$reading_speed);
     }
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         if ($this->get_uses() >= $this->pages)
             return parent::hid();
         else {

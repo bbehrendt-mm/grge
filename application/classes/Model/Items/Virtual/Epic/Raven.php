@@ -24,7 +24,7 @@ class Model_Items_Virtual_Epic_Raven extends Model_Items_Abstract_Virtual {
         return $a > 0 ? $a : false;
     }
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         $hid = parent::hid();
 
         if (!$this->doped && !$this->get_rest())

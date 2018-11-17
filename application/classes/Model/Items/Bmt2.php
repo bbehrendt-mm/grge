@@ -17,7 +17,7 @@ class Model_Items_Bmt2 extends Model_Items_Bmt {
                 : '');
 	}
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('Supercharger verwenden', Model_Action::factory()
                 ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)

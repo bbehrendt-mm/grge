@@ -11,10 +11,10 @@ class Model_Places_Tentkit extends Model_Places_Abstract_Hideout {
     protected $cursed;
 
     //Base deco value
-    protected static $base_deco_value = 0;
+    //protected static $base_deco_value = 0;
 
     //Base defense
-    protected $defense = 5;
+    //protected static $base_defense = 5;
 
     //Base: 15% per day
     protected static $decay_rate = 0.30;

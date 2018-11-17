@@ -209,11 +209,11 @@ class Model_Effect {
 
     /**
      * @param int|array $stat
-     * @param number|number[]|string $diff
+     * @param number|number[]|string|null $diff
      * @param null|number $diff2
      * @return Model_Effect
      */
-    public function effect($stat, $diff, $diff2 = null) {
+    public function effect($stat, $diff = null, $diff2 = null): Model_Effect {
         if (is_array($stat)) {
             foreach ($stat as $t => $d)
                 $this->effect($t,$d);

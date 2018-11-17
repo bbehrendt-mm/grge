@@ -6,7 +6,7 @@ class Model_Items_Virtual_Location_Room_Cooler extends Model_Items_Abstract_Virt
         Model_Blueprints::fast_apply($this->location(),'rooms','cooler', $this->room());
     }
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()->add_action('Kühlkammer aufbrechen', Model_Action::factory()
             ->buttonskin('location')
             ->description('Der Kühlraum ist fest verschlossen. Es sieht nicht so aus, als wäre er nach der Apokalypse noch einmal geöffnet worden... vielleicht findest du etwas nützliches darin?')

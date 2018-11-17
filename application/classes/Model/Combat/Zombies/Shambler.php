@@ -2,15 +2,13 @@
 
 class Model_Combat_Zombies_Shambler extends Model_Combat_Zombies_Zombie {
 
-    protected $actor_name = 'Vermodernde Zombies';
-    protected $max_health = 4;
-
-    protected $stat_initiative = 2;
-    protected $stat_damage = 2;
-    protected $stat_resistance = 2;
-    protected $stat_accuracy = 2;
-
-    protected $movement_range = 5;
+    protected static $default_name = 'Vermodernde Zombies';
+    protected static $default_max_health = 4;
+    protected static $default_stat_initiative = 2;
+    protected static $default_stat_damage = 2;
+    protected static $default_stat_resistance = 2;
+    protected static $default_stat_accuracy = 2;
+    //protected static $movement_range = 5;
 
     protected static $num_str = 2;
 

@@ -7,8 +7,7 @@ class Model_Buffs_Poison extends Model_Buffs_Abstract_Buff {
 	protected static $desc = 'Du fühlst dich nicht sonderlich gut... was damit zusammenhängen könnte, dass du vergiftet wurdest!';
 	protected static $bid = 'poison';
 
-
-    protected $effects = Array(
+    protected function get_effects(): array { return [
         Model_Status::MS_STAT_ENERGY => Array(
             Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
             Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0.1,
@@ -20,8 +19,8 @@ class Model_Buffs_Poison extends Model_Buffs_Abstract_Buff {
             Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0.2,
             Model_Buffs_Abstract_Buff::MB_RAISE_PRC => -1,
             Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0.5,
-        ),
-    );
+        )
+    ]; }
 
     public function __construct($association = NULL) {
         parent::__construct($association, 2);

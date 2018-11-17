@@ -21,7 +21,7 @@ class Model_Items_Bmt extends Model_Items_Abstract_Item {
                 : '');
 	}
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
 
             ->add_action('Einsetzen', Model_Action::factory()

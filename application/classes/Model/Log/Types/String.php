@@ -5,13 +5,16 @@ class Model_Log_Types_String extends Model_Log_Message {
 	protected static $type = Model_Log_Message::MLM_PRERENDERED_STRING;
 
 	private $var = Array();
-	
-	/**
-	 * Creates a simple text message
-	 * @param String $title Short message title
-	 * @param String $body Message body
-	 * @param Array $variables Variables
-	 */
+
+    /**
+     * Creates a simple text message
+     *
+     * @param String $title     Short message title
+     * @param String $body      Message body
+     * @param Array  $variables Variables
+     *
+     * @throws Exception
+     */
 	public function __construct($title, $body, $variables = []) {
 
 		parent::__construct([

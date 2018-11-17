@@ -15,7 +15,7 @@ class Model_Items_Lunchbox extends Model_Items_Abstract_Stackable {
 	protected static $autospawn = Array(5,5);
 	protected static $autoappender = Array('Ration', 'Rationen');
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('Eine Ration essen', Model_Action::factory()
                 ->effect(

@@ -2,27 +2,27 @@
 
 abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 
-	const MIAI_CAT_GEAR = 1;
-	const MIAI_CAT_FOOD = 2;
-	const MIAI_CAT_DRUG = 4;
-	const MIAI_CAT_FIGHT = 8;
-	const MIAI_CAT_RES = 16;
-	const MIAI_CAT_MISC = 32;
-    const MIAI_CAT_EVENT = 64;
-    const MIAI_CAT_LITERATURE = 128;
-    const MIAI_CAT_BOTTLES = 256;
+	public const MIAI_CAT_GEAR = 1;
+	public const MIAI_CAT_FOOD = 2;
+	public const MIAI_CAT_DRUG = 4;
+	public const MIAI_CAT_FIGHT = 8;
+	public const MIAI_CAT_RES = 16;
+	public const MIAI_CAT_MISC = 32;
+    public const MIAI_CAT_EVENT = 64;
+    public const MIAI_CAT_LITERATURE = 128;
+    public const MIAI_CAT_BOTTLES = 256;
 
-	public static function translateCatID($gid) {
+	public static function translateCatID($gid): string {
 		switch ($gid) {
-			case Model_Items_Abstract_Item::MIAI_CAT_GEAR:          return 'Ausrüstung';
-			case Model_Items_Abstract_Item::MIAI_CAT_FIGHT:         return 'Waffen und Verteidigung';
-			case Model_Items_Abstract_Item::MIAI_CAT_FOOD:          return 'Nahrungsmittel';
-			case Model_Items_Abstract_Item::MIAI_CAT_DRUG:          return 'Drogen und med. Zubehör';
-			case Model_Items_Abstract_Item::MIAI_CAT_RES:           return 'Baumaterialien';
-			case Model_Items_Abstract_Item::MIAI_CAT_EVENT:         return 'Besonderes';
-			case Model_Items_Abstract_Item::MIAI_CAT_LITERATURE:    return 'Lesestoff';
-			case Model_Items_Abstract_Item::MIAI_CAT_BOTTLES:       return 'Wasserbehälter';
-			case Model_Items_Abstract_Item::MIAI_CAT_MISC: default: return 'Sonstiges';
+			case self::MIAI_CAT_GEAR:          return 'Ausrüstung';
+			case self::MIAI_CAT_FIGHT:         return 'Waffen und Verteidigung';
+			case self::MIAI_CAT_FOOD:          return 'Nahrungsmittel';
+			case self::MIAI_CAT_DRUG:          return 'Drogen und med. Zubehör';
+			case self::MIAI_CAT_RES:           return 'Baumaterialien';
+			case self::MIAI_CAT_EVENT:         return 'Besonderes';
+			case self::MIAI_CAT_LITERATURE:    return 'Lesestoff';
+			case self::MIAI_CAT_BOTTLES:       return 'Wasserbehälter';
+			case self::MIAI_CAT_MISC: default: return 'Sonstiges';
 		}
 	}
 
@@ -37,22 +37,22 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
     protected static $carrier_item = false;
     protected static $max_per_player = 0;
 	protected $custom_info = Array();
-    protected static $idea_contest_player = null;
+    protected static $idea_contest_player;
 	
 	public $type = -1;
 	
 	protected static $weight;
 	protected static $essential = false;
 
-    public function is_carrier_item() {
+    public function is_carrier_item(): bool {
         return static::$carrier_item;
     }
 
-    public function get_max_per_player() {
+    public function get_max_per_player(): int {
         return static::$max_per_player;
     }
 
-    public static function idea_contest_player() {
+    public static function idea_contest_player(): ?string {
         return static::$idea_contest_player;
     }
 
@@ -60,7 +60,7 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
      * @return Model_Hid
      * @throws Exception
      */
-    protected function hid() {
+    protected function hid(): Model_Hid {
         $hid = Model_Hid::factory($this, static::class);
 
         if (Globals::hasCurrentGame())
@@ -77,6 +77,8 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
      * Will randomly select a subtype if subtypes are defined for this item class
      *
      * @param null $type
+     *
+     * @throws Exception
      */
 	public function __construct($type = null) {
 		if (count(static::$instances_info) > 0)
@@ -270,8 +272,11 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 
     /**
      * Returns the autoaction-list
+     *
      * @param Interface_Plentity[]|null $players
+     *
      * @return array
+     * @throws Exception
      */
     public function auto_actions($players = null) {
         return $this->hid()->convert($this->uin(), $players);
@@ -293,11 +298,14 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 
     /**
      * Runs any of the items interaction_ functions
-     * @param string $action Action to execute
+     *
+     * @param string             $action   Action to execute
      * @param Interface_Plentity $player
-     * @param null|mixed $argument Optional argument
-     * @param null|Model_Player $side_player
+     * @param null|mixed         $argument Optional argument
+     * @param null|Model_Player  $side_player
+     *
      * @return mixed Return value of the called interaction function
+     * @throws Exception
      */
     public function interact($action, $player, $argument = NULL, $side_player = null) {
         $hid = $this->hid();
@@ -310,9 +318,12 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 
     /**
      * Runs the description of an action ID
-     * @param string $action Action
+     *
+     * @param string             $action Action
      * @param Interface_Plentity $player
+     *
      * @return mixed Action description or null, if ID is invalid
+     * @throws Exception
      */
     public function resolve_action($action, $player) {
         $hid = static::hid();
@@ -328,11 +339,14 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 
     /**
      * Runs any of the items interaction_ functions
-     * @param string $action Action to execute
+     *
+     * @param string             $action   Action to execute
      * @param Interface_Plentity $player
-     * @param null|mixed $argument Optional argument
-     * @param null|Model_Player $side_player
+     * @param null|mixed         $argument Optional argument
+     * @param null|Model_Player  $side_player
+     *
      * @return mixed Return value of the called interaction function
+     * @throws Exception
      */
     public function test_interaction($action, $player, $argument = NULL, $side_player = null) {
         $hid = $this->hid();

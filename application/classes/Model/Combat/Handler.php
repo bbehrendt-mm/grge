@@ -10,7 +10,7 @@ class Model_Combat_Handler {
      * @return int
      * @throws Kohana_Exception
      */
-    public static function upload($game_id, $season, $battle, $fixed = false) {
+    public static function upload($game_id, $season, $battle, $fixed = false): int {
         return DB::insert('battle', ['gameid','season','fixed','data'])->values([$game_id, $season, $fixed, gzcompress(serialize($battle->get_scene()->export()), (int)Kohana::$config->load('server.io.performance.compression_level'))])->execute()[0];
     }
 
@@ -18,7 +18,7 @@ class Model_Combat_Handler {
         return DB::select('bid')->from('battle')->where('gameid','=',$gameid)->where('season','=',$season)->execute()->as_array(null, 'bid');
     }
 
-    private static function can_delete(array $preselection) {
+    private static function can_delete(array $preselection): array {
         return $preselection ? DB::select('tmp_final.bid')->from([
             DB::select('battle.bid',['battle.fixed','c0'], [DB::expr('IFNULL(' . Database::instance()->table_prefix() . 'tmp_gallery.gallery, 0)'), 'c1'], [DB::expr('CASE WHEN ' . Database::instance()->table_prefix() . 'games.timestamp IS NULL THEN 0 ELSE 1 END'), 'c2'])
                 ->from('battle')
@@ -34,7 +34,7 @@ class Model_Combat_Handler {
         return static::delete(static::can_delete(static::by_game($game_id, $season)));
     }
 
-    public static function in_gallery($battle, $user) {
+    public static function in_gallery($battle, $user): bool {
         return count(DB::select('id')->from('battle_gallery')->where('video','=',$battle)->where('user','=',$user)->execute()->as_array()) > 0;
     }
 
@@ -44,17 +44,17 @@ class Model_Combat_Handler {
 
     public static function get_battle_from_gallery($bid, $pid, $raw = false) {
         if ($data = DB::select('battle.data')->from('battle_gallery')->join('battle','LEFT')->on('battle_gallery.video','=','battle.bid')->where('battle_gallery.id','=',$bid)->where('battle_gallery.user','=',$pid)->execute()->get('data'))
-            return $raw ? unserialize(gzuncompress($data)) : Model_Combat_Scene::vitalize(unserialize(gzuncompress($data)));
+            return $raw ? unserialize(gzuncompress($data), false) : Model_Combat_Scene::vitalize(unserialize(gzuncompress($data), ['allowed_classes' => false]));
         return null;
     }
 
     public static function get_battle($bid, $raw = false) {
         if ($data = DB::select('data')->from('battle')->where('bid','=',$bid)->execute()->get('data'))
-            return $raw ? unserialize(gzuncompress($data)) : Model_Combat_Scene::vitalize(unserialize(gzuncompress($data)));
+            return $raw ? unserialize(gzuncompress($data), false) : Model_Combat_Scene::vitalize(unserialize(gzuncompress($data), ['allowed_classes' => false]));
         return null;
     }
 
-    public static function add_to_gallery($battle, $user, $label) {
+    public static function add_to_gallery($battle, $user, $label): void {
         if (!static::in_gallery($battle, $user))
             DB::insert('battle_gallery', ['user','video','label'])->values([$user, $battle, $label])->execute();
         else DB::update('battle_gallery')->set(['label' => $label])->where('video','=',$battle)->where('user','=',$user)->execute();
@@ -64,15 +64,15 @@ class Model_Combat_Handler {
         return $a ? DB::delete('battle')->where('bid','IN', $a)->execute() : 0;
     }
 
-    public static function delete_from_gallery($gid) {
-        DB::delete('battle_gallery')->where('id','=',$gid)->execute();;
+    public static function delete_from_gallery($gid): void {
+        DB::delete('battle_gallery')->where('id','=',$gid)->execute();
         static::delete(static::can_delete([$gid]));
     }
 
     /**
      * @return Kohana_Database_Query_Builder_Select
      */
-    private static function gallery_query() {
+    private static function gallery_query(): Kohana_Database_Query_Builder_Select {
         return DB::select('id', ['user','pid'],'label','bid', 'battle.season',['ranking.gameid','rank_sp'], ['ranking_mp.gameid','rank_mp'])
             ->from('battle_gallery')
             ->join('battle','LEFT')->on('bid','=','video')

@@ -21,7 +21,7 @@ class Model_Items_Xmas_Sweets extends Model_Items_Abstract_Item implements Inter
 
 	protected static $weight = 2;
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('Essen', Model_Action::factory()
                     ->effect(

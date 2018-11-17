@@ -26,7 +26,7 @@ class Model_Items_Leash extends Model_Items_Abstract_Item  {
         return null;
     }
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action(!$this->on ? 'Anlegen' : 'Ablegen', Model_Action::factory()
                 ->allow_auto(false)

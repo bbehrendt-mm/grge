@@ -24,18 +24,20 @@ class Model_Items_Gush extends Model_Combat_Weapons_Throwable {
     /**
      * @param Model_Combat_Actor $me
      * @param Model_Combat_Actor $opponent
-     * @param number $damage
+     * @param number             $damage
      * @param Model_Combat_Scene $scene
+     *
      * @return bool
+     * @throws Exception
      */
-    public function trigger_usage(Model_Combat_Actor $me, Model_Combat_Actor $opponent, $damage, Model_Combat_Scene $scene) {
+    public function trigger_usage(Model_Combat_Actor $me, Model_Combat_Actor $opponent, $damage, Model_Combat_Scene $scene): bool {
         $tmp = parent::trigger_usage($me, $opponent, $damage, $scene);
         $this->int_capacity--;
         $this->usable = $this->int_capacity > 0;
         return $tmp;
     }
 
-    public function generate_wound($damage) {
+    public function generate_wound($damage): ?string {
         if ($damage <= 0) return null;
 
         $injury = random_int(0,100);

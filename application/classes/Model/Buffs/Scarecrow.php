@@ -7,14 +7,14 @@ class Model_Buffs_Scarecrow extends Model_Buffs_Abstract_Passive {
 	protected static $desc = 'Wenn dieses furchtbare Ding dich die ganze Zeit anglotzt ist es kaum möglich, zu entspannen. Bis Halloween vorbei ist wirst du auf jeden Fall keinen geruhsamen Schlaf mehr haben...';
 	protected static $bid = 'scarecrow';
 
-    protected $effects = Array(
-			Model_Status::MS_STAT_SLEEPY => Array(
-					Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
-					Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
-					Model_Buffs_Abstract_Buff::MB_RAISE_PRC => -0.1,
-					Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
-			),
-	);
+    protected function get_effects(): array { return [
+        Model_Status::MS_STAT_SLEEPY => Array(
+            Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
+            Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
+            Model_Buffs_Abstract_Buff::MB_RAISE_PRC => -0.1,
+            Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
+        )
+    ]; }
 
     protected function activator() {
         $r = false;

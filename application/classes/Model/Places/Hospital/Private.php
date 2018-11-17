@@ -8,7 +8,7 @@ class Model_Places_Hospital_Private extends Model_Places_Abstract_Hideout {
     protected static $upgradable = false;
 
     //Base defense
-    protected $defense = 2;
+    protected static $base_defense = 2;
 
     //Base: 15% per day
     protected static $decay_rate = 0.10;

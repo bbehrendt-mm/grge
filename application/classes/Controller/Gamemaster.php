@@ -8,7 +8,7 @@ class Controller_Gamemaster extends Controller {
     /**
      * Makes sure we don't try to use game starter with a game already running
      */
-    public function before() {
+    public function before(): void {
         //Do all the other before stuff
         parent::before();
 
@@ -21,8 +21,11 @@ class Controller_Gamemaster extends Controller {
 
     /**
      * Creates a multiplayer game name in the given language
+     *
      * @param string $lang Language to use (de/en)
+     *
      * @return string Game name, or "##CONSTRUCTOR_LANG_MISSING##" if the language is invalid
+     * @throws Exception
      */
     private static function create_gamename($lang) {
         $list_a = array(

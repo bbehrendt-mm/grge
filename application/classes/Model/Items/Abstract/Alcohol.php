@@ -8,8 +8,8 @@ abstract class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
     protected static $additional_effects = [];
 	protected static $cat = Model_Items_Abstract_Item::MIAI_CAT_FOOD;
 
-    protected function hid() {
-        $a = static::$alcohol * (Tool_Scripts::get_timeofday() == 'evening' ? 0.75 : 1);
+    protected function hid(): Model_Hid {
+        $a = static::$alcohol * (Tool_Scripts::get_timeofday() === 'evening' ? 0.75 : 1);
         return parent::hid()
             ->add_action('Trinken', Model_Action::factory()
                     ->allow_auto(false)

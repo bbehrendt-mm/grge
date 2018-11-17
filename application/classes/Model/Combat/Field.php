@@ -160,9 +160,11 @@ class Model_Combat_Field {
     }
 
     /**
-     * @param $avg_distance
+     * @param     $avg_distance
      * @param int $jitter
+     *
      * @return Model_Combat_Field
+     * @throws Exception
      */
     public function init_positions($avg_distance, $jitter = 3) {
         if (!count($this->combatants))

@@ -11,7 +11,7 @@ class Model_Items_Bodybag extends Model_Items_Abstract_Item implements Interface
 	
 	protected static $weight = 3;
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('Leiche einsacken', Model_Action::factory()
                 ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)

@@ -26,7 +26,7 @@ class Model_Items_Body extends Model_Items_Abstract_Item implements Interface_St
 		if ($desc) $this->custom_info['description'] = $desc;
 	}
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('Fressen', Model_Action::factory()
                     ->effect(

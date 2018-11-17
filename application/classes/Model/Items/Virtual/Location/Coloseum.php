@@ -2,12 +2,11 @@
 
 class Model_Items_Virtual_Location_Coloseum extends Model_Items_Abstract_Virtual {
 
-    protected $remaining = array(
+    protected static $default_action_uses = array(
         'next_battle' => PHP_INT_MAX
     );
 
-    protected function hid() {
-        $phpbb53 = $this;
+    protected function hid(): Model_Hid {
         return parent::hid()->add_action('Den nächsten Kampf austragen!', Model_Action::factory()
             ->buttonskin('location')
             ->effect(Model_Effect::factory()

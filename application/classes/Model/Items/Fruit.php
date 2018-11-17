@@ -19,7 +19,9 @@ class Model_Items_Fruit extends Model_Items_Abstract_Stackable {
 
     /**
      * @param array $effects
-     * @param int $size
+     * @param int   $size
+     *
+     * @throws Exception
      */
     public function __construct(Array $effects, $size) {
         parent::__construct();
@@ -41,7 +43,7 @@ class Model_Items_Fruit extends Model_Items_Abstract_Stackable {
         return $ret;
     }
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()->add_action('Verschlingen', $this->create_action());
     }
 }

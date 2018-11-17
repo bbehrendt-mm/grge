@@ -11,7 +11,7 @@ class Model_Items_Fleshsoup extends Model_Items_Abstract_Item implements Interfa
 
 	protected static $weight = 5;
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('Essen', Model_Action::factory()
                 ->effect(

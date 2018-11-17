@@ -6,10 +6,13 @@ class Model_Map_Circular extends Model_Map_Abstract {
 
     /**
      * Produces a position within $distance from $root
-     * @param int|array $distance Distance; can be a single int value to use as fixed distance, or an array with 2 elements containing boundaries [min,max]
-     * @param string $spawn Spawn class
-     * @param null|int|string|array $root Root position; When omitted, 0/0 is used as position; when given as int, $root is treated as location id; when given as String, $root is interpreted as location classname, if more locations with this classname exist, one will be randomly selected; when given as array, the function will select one of the elements (that can be used to produce a location) randomly or return false when it can't find one
+     *
+     * @param int|array             $distance Distance; can be a single int value to use as fixed distance, or an array with 2 elements containing boundaries [min,max]
+     * @param string                $spawn    Spawn class
+     * @param null|int|string|array $root     Root position; When omitted, 0/0 is used as position; when given as int, $root is treated as location id; when given as String, $root is interpreted as location classname, if more locations with this classname exist, one will be randomly selected; when given as array, the function will select one of the elements (that can be used to produce a location) randomly or return false when it can't find one
+     *
      * @return array|bool false, if no position could be determined; otherwise an array in the format ['x' => x, 'y' => y, 'root' => root location id|null]
+     * @throws Kohana_Exception
      */
     protected function get_random_location($distance, $spawn, $root = null) {
 
@@ -56,7 +59,7 @@ class Model_Map_Circular extends Model_Map_Abstract {
      * @return bool
      * @throws Exception
      */
-    public function place_location($location, $visible, $dry = 0, $fixed_id = null) {
+    public function place_location($location, $visible, $dry = 0, $fixed_id = null): bool {
         if (is_string($location) && $visible)
             $location = new $location;
 
@@ -71,7 +74,7 @@ class Model_Map_Circular extends Model_Map_Abstract {
         return true;
     }
 
-    public function auto_init() {
+    public function auto_init(): void {
         $config = $this->get_config();
 
         $smart_routing = true;

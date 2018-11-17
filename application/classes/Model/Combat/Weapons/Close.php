@@ -9,11 +9,11 @@ abstract class Model_Combat_Weapons_Close extends Model_Combat_Weapons_Energy {
     protected static $aoe = false;
     protected static $friendly_fire = false;
 
-    protected function range() {
+    protected function range(): array {
         return [0, $this->max_range()];
     }
 
-    public function max_range() {
+    public function max_range(): float {
         return static::$max_range;
     }
 }

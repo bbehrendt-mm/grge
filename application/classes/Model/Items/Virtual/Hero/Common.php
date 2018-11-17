@@ -2,7 +2,7 @@
 
 class Model_Items_Virtual_Hero_Common extends Model_Items_Abstract_Virtual {
 
-    protected $remaining = array(
+    protected static $default_action_uses = array(
         'hero_focus' => 1,
         'hero_wof' => 1,
         'hero_sleep' => 1,
@@ -14,7 +14,7 @@ class Model_Items_Virtual_Hero_Common extends Model_Items_Abstract_Virtual {
 			'name' => 'Heldentaten',
 	);
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         $tmp = parent::hid()
             ->add_action('Kraft sammeln', Model_Action::factory()
                     ->buttonskin('hero')

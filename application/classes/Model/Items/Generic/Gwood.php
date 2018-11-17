@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Items_Generic_Gwood extends Model_Items_Generic_Wood implements Interface_Static {
+class Model_Items_Generic_Gwood extends Model_Items_Generic_Wood {
 	
 	protected static $static_info = Array(
 			'name' => 'Goldenes Holzbrett',

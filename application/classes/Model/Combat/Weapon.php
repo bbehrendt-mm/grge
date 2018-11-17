@@ -2,20 +2,20 @@
 
 abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
 
-    const MCW_ANIMATION_NONE = 0;
-    const MCW_ANIMATION_PUNCH = 1;
-    const MCW_ANIMATION_SLASH = 2;
-    const MCW_ANIMATION_SHOT_BAT = 3;
-    const MCW_ANIMATION_SHOT_AMMO = 4;
-    const MCW_ANIMATION_SHOT_WATER = 5;
-    const MCW_ANIMATION_THROW = 6;
-    const MCW_ANIMATION_SLASH_MULTI = 7;
-    const MCW_ANIMATION_SHOT_ENERGY = 8;
-    const MCW_ANIMATION_ZOMBIE_MUNCH = 9;
-    const MCW_ANIMATION_CHAINSAW = 10;
-    const MCW_ANIMATION_SHOT_BOLT = 11;
-    const MCW_ANIMATION_SHOT_SPLINTER = 12;
-    const MCW_ANIMATION_SHOT_RLASER = 13;
+    public const MCW_ANIMATION_NONE = 0;
+    public const MCW_ANIMATION_PUNCH = 1;
+    public const MCW_ANIMATION_SLASH = 2;
+    public const MCW_ANIMATION_SHOT_BAT = 3;
+    public const MCW_ANIMATION_SHOT_AMMO = 4;
+    public const MCW_ANIMATION_SHOT_WATER = 5;
+    public const MCW_ANIMATION_THROW = 6;
+    public const MCW_ANIMATION_SLASH_MULTI = 7;
+    public const MCW_ANIMATION_SHOT_ENERGY = 8;
+    public const MCW_ANIMATION_ZOMBIE_MUNCH = 9;
+    public const MCW_ANIMATION_CHAINSAW = 10;
+    public const MCW_ANIMATION_SHOT_BOLT = 11;
+    public const MCW_ANIMATION_SHOT_SPLINTER = 12;
+    public const MCW_ANIMATION_SHOT_RLASER = 13;
 
     protected static $equipment_type = Model_Items_Abstract_Equipable::MIAE_WEAPON;
 
@@ -39,59 +39,60 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
     /** @var Interface_Plentity|Model_Player */
     protected $registered_user;
 
-    public function ignore_equip() {
+    public function ignore_equip(): void {
         $this->ignore_equip = true;
     }
 
-    public function usable() {
+    public function usable(): bool {
         return $this->is_equipped() || $this->ignore_equip;
     }
 
-    public function get_animation() {
+    public function get_animation(): int {
         return static::$animation;
     }
 
-    public function durabillity() {
+    public function durabillity(): int {
         return static::$durabillity;
     }
 
-    protected function damage() {
+    protected function damage(): array {
         return static::$damage;
     }
 
-    public function accuracy() {
+    public function accuracy(): float {
         return static::$accuracy;
     }
 
-    public function fixed_accuracy() {
+    public function fixed_accuracy(): float {
         return static::$use_fixed_accuracy;
     }
 
-    public function get_ammo_icons() {
+    public function get_ammo_icons(): array {
         return [];
     }
 
-    protected function aoe() {
+    protected function aoe(): bool {
         return static::$aoe;
     }
 
-    protected function friendly_fire() {
+    protected function friendly_fire(): bool {
         return static::$friendly_fire;
     }
 
-    protected function range() {
+    protected function range(): array {
         return static::$range;
     }
 
-    public function min_range() {
+    public function min_range(): float {
         return $this->range()[0];
     }
 
-    public function max_range() {
+    public function max_range(): float {
         return $this->range()[1];
     }
 
-    public function generate_wound($damage) {
+    public function generate_wound(/** @noinspection PhpUnusedParameterInspection */
+        $damage): ?string {
         return null;
     }
 
@@ -99,7 +100,7 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
      * @param Interface_Plentity $p
      * @return Model_Combat_Weapon
      */
-    public function register($p) {
+    public function register($p): self {
         $this->registered_user = $p;
         return $this;
     }
@@ -107,12 +108,12 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
     /**
      * @return Model_Combat_Weapon
      */
-    public function unregister() {
+    public function unregister(): self {
         $this->registered_user = null;
         return $this;
     }
 
-    protected function accuracy_downscale() {
+    protected function accuracy_downscale(): int {
         return static::$accuracy_downscale;
     }
 
@@ -121,14 +122,14 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
      * @param int $modifier
      * @return float
      */
-    private function get_accuracy($distance, $modifier = 1) {
+    private function get_accuracy($distance, $modifier = 1): float {
         $distance = round($distance, 2);
 
         if ($distance < $this->range()[0] || $distance > $this->range()[1]) return 0;
         elseif (static::$use_fixed_accuracy) $tmp = min(1,max(0,$this->accuracy()));
         else $tmp = min(1,max(0,$this->accuracy_downscale() + (1 - ($distance - $this->range()[0])/($this->range()[1] - $this->range()[0])) * ($this->accuracy() - $this->accuracy_downscale())));
 
-        if ($tmp == 1 || $tmp == 0 || $modifier == 1) return $tmp;
+        if ($tmp === 1 || $tmp === 0 || $modifier === 1) return $tmp;
         elseif ($modifier < 1) return $tmp * $modifier;
         else return 1 - (1 - $tmp)/$modifier;
     }
@@ -142,12 +143,12 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
      */
     public function potential_damage($me = null, $other = null, $ignore_range = false, $count = 1) {
         if (!$me || !$other)
-            return $this->damage();
+            return 0;
 
         if (!$this->usable())
             return 0;
         else {
-            list($oh, $ohm, $c) = $other->strength();
+            [$oh, $ohm, $c] = $other->strength();
             $max_damage = $this->aoe() ? ($oh + ($ohm * ($c - 1))) : $oh;
             return min(
                 ($this->damage()[0] * $count + $this->damage()[1] * $count)/2 * ($ignore_range ? 1 : $this->get_accuracy($other->distance_from($me)))
@@ -161,7 +162,7 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
      * @param bool $include_in_range
      * @return Model_Combat_Actor
      */
-    public function closest_foe(Model_Combat_Actor $me, $others, $include_in_range = true) {
+    public function closest_foe(Model_Combat_Actor $me, $others, $include_in_range = true): Model_Combat_Actor {
         $a = PHP_INT_MAX;
         $ret = null;
         foreach ($others as $other)
@@ -190,13 +191,15 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
     /**
      * @param Model_Combat_Actor $me
      * @param Model_Combat_Actor $opponent
-     * @param int $multiply
-     * @param int $accuracy
-     * @param int $atk
-     * @param int $res
+     * @param int                $multiply
+     * @param float              $accuracy
+     * @param int                $atk
+     * @param int                $res
+     *
      * @return number[]
+     * @throws Exception
      */
-    public function calculate_damage(Model_Combat_Actor $me, $opponent, $multiply = 1, $accuracy = 1, $atk = 1, $res = 1) {
+    public function calculate_damage(Model_Combat_Actor $me, $opponent, $multiply = 1, $accuracy = 1.0, $atk = 1, $res = 1): array {
         if (!$this->usable()) return [0,0];
 
         $accuracy = $this->get_accuracy($opponent->distance_from($me), $accuracy);
@@ -223,8 +226,9 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
      * @param Model_Combat_Scene $scene
      * @return bool
      */
-    public function trigger_usage(Model_Combat_Actor $me, Model_Combat_Actor $opponent, $damage, Model_Combat_Scene $scene) {
-        if ($this->durabillity() < 1 && mt_rand()/mt_getrandmax() > $this->durabillity())
+    public function trigger_usage(Model_Combat_Actor $me, Model_Combat_Actor $opponent, $damage, Model_Combat_Scene $scene): bool {
+        $d = $this->durabillity();
+        if ($d < 1 && mt_rand()/mt_getrandmax() > $d)
             $this->weapon_break($me, $opponent, $damage, $scene);
         return true;
     }
@@ -235,7 +239,7 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
      * @param number $damage
      * @param Model_Combat_Scene $scene
      */
-    protected function weapon_break(Model_Combat_Actor $me, Model_Combat_Actor $opponent, $damage, Model_Combat_Scene $scene) {
+    protected function weapon_break(Model_Combat_Actor $me, Model_Combat_Actor $opponent, $damage, Model_Combat_Scene $scene): void {
         $this->broken = true;
         $scene->break_weapon($me, $this);
     }

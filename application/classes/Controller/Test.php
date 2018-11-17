@@ -4,7 +4,7 @@ class Controller_Test extends Controller {
 
     protected static $force_ajax = false;
 
-    public function before() {
+    public function before(): void {
         if (Kohana::$environment !== Kohana::DEVELOPMENT) die('Sorry, Zombies infiltrated the lab.');
 
         //Load session, perform session checks

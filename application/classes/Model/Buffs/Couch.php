@@ -28,6 +28,8 @@ class Model_Buffs_Couch extends Model_Buffs_Abstract_Fragile {
 						Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
 				),				
 			);
+
+    protected function get_effects(): array { return $this->effects; }
 	
 	public function rebuild() {
         $c = 0;

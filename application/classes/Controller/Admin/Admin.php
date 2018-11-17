@@ -7,12 +7,12 @@ abstract class Controller_Admin_Admin extends Controller {
     protected static $allow_skip_login = false;
     protected static $auto_require = [];
 
-    protected static $admin_data = null;
+    protected static $admin_data;
 
-    protected static function priv_get($user, $pw = null) {
+    protected static function priv_get($user, $pw = null): bool {
         if (static::$admin_data === null || $pw) {
             $data = DB::select('relation','data')->from('user_flags')->where('user', '=', $user)->execute()->as_array();
-            $enable = ($pw == null);
+            $enable = ($pw === null);
             $tmp = [];
             foreach ($data as $row) {
                 switch ($row['relation']) {
@@ -25,9 +25,9 @@ abstract class Controller_Admin_Admin extends Controller {
                         break;
                     case 'DISABLE':
                         $enable = false;
-                        break(2);
+                        break 2;
                     case 'LOGIN':
-                        $enable = $enable || ($row['data'] == hash('sha256', $pw, false));
+                        $enable = $enable || ($row['data'] === hash('sha256', $pw, false));
                         break;
                 }
             }
@@ -38,10 +38,10 @@ abstract class Controller_Admin_Admin extends Controller {
 
     /**
      * This function will return true if the current user possesses any of the given permissions AND is denied none of them, or if he has the ROOT permission. If no arguments are given, it will return true.
-     * @param String $args,...
+     * @param string|array $args,...
      * @return bool
      */
-    protected static function priv_allow_any($args) {
+    protected static function priv_allow_any($args): bool {
         if (!static::$admin_data) return false;
 
         if (!is_array($args))
@@ -55,19 +55,16 @@ abstract class Controller_Admin_Admin extends Controller {
         elseif (isset(static::$admin_data['ROOT']) && static::$admin_data['ROOT'])
             return true;
         else foreach ($args as $arg)
-            if (isset(static::$admin_data[$arg]) && static::$admin_data[$arg])
-                return true;
-            elseif (isset(static::$admin_data[$arg]) && !static::$admin_data[$arg])
-                return false;
+            if (isset(static::$admin_data[$arg])) return static::$admin_data[$arg];
         return true;
     }
 
     /**
      * This function will return true if the current user possesses all of the given permissions or if he has the ROOT permission. If no arguments are given, it will return true.
-     * @param String $args,...
+     * @param string|array $args,...
      * @return bool
      */
-    protected static function priv_allow_all($args) {
+    protected static function priv_allow_all($args): bool {
         if (!static::$admin_data) return false;
 
         if (!is_array($args))
@@ -86,28 +83,26 @@ abstract class Controller_Admin_Admin extends Controller {
         return true;
     }
 
-    public function admin_status_get($refresh = 2) {
+    public function admin_status_get($refresh = 2): int {
 
         $admin_state = $this->session->get('admin',null);
 
-        if (!isset($admin_state['ip'], $admin_state['client']) || !$admin_state
-            || !is_array($admin_state)
-            || !isset($admin_state['expires'])
+        if (!$admin_state || !isset($admin_state['ip'], $admin_state['client'], $admin_state['expires'])
+            || $admin_state['ip'] !== $_SERVER['REMOTE_ADDR']
+            || $admin_state['client'] !== $_SERVER['HTTP_USER_AGENT']
             || $admin_state['expires'] < time()
-            || $admin_state['ip'] != $_SERVER['REMOTE_ADDR']
-            || $admin_state['client'] != $_SERVER['HTTP_USER_AGENT']
         )
         {
             $this->admin_status_revoke();
             return 0;
-        } else {
-            if (strtotime("+$refresh minutes") > $admin_state['expires'])
-                $this->admin_status_set(2);
-            return max($admin_state['expires'], strtotime("+$refresh minutes")) - time();
         }
+
+        if (strtotime("+$refresh minutes") > $admin_state['expires'])
+            $this->admin_status_set(2);
+        return max($admin_state['expires'], strtotime("+$refresh minutes")) - time();
     }
 
-    public function admin_status_set($duration = 10) {
+    public function admin_status_set($duration = 10): void {
         $this->session->set('admin', [
             'ip' => $_SERVER['REMOTE_ADDR'],
             'client' => $_SERVER['HTTP_USER_AGENT'],
@@ -115,11 +110,11 @@ abstract class Controller_Admin_Admin extends Controller {
         ]);
     }
 
-    public function admin_status_revoke() {
+    public function admin_status_revoke(): void {
         $this->session->delete('admin');
     }
 
-    protected function force_admin() {
+    protected function force_admin(): void {
         GRGEError::i();
         if (!(static::$allow_skip_login || $this->admin_status_get()) || !static::priv_allow_all(static::$auto_require)) {
             if (!$this->is_ajax_request())
@@ -133,7 +128,7 @@ abstract class Controller_Admin_Admin extends Controller {
         }
     }
 
-    public function before() {
+    public function before(): void {
         parent::before();
 
         //Check admin privileges

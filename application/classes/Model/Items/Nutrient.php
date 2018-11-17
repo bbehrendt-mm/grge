@@ -11,7 +11,7 @@ class Model_Items_Nutrient extends Model_Items_Abstract_Item implements Interfac
 
 	protected static $weight = 3;
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('Verschlingen', Model_Action::factory()
                 ->effect(

@@ -2,7 +2,7 @@
 
 class Model_Items_Virtual_Location_Room_Bedroom extends Model_Items_Abstract_Virtual {
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         $tmp = parent::hid();
 
         $tmp->add_action($this->roomF()->has_content("bedr1") ? 'Ins Bett gehen' : ($this->roomF()->has_content("hay1") ? 'Auf dem Heu schlafem' : 'Auf dem Boden schlafen'), Model_Action::factory()

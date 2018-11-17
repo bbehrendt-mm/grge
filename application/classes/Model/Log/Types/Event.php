@@ -6,10 +6,13 @@ class Model_Log_Types_Event extends Model_Log_Types_String  {
 
     /**
      * Model_Log_Types_Event constructor.
+     *
      * @param String $name
      * @param String $key
-     * @param bool $enabled
+     * @param bool   $enabled
      * @param String $flavour
+     *
+     * @throws Exception
      */
     public function __construct($name, $key, $enabled, $flavour) {
         $this->key = $key;

@@ -4,15 +4,12 @@ class Model_Combat_Zombies_Ghul extends Model_Combat_Zombies_Zombie {
 
     public static $custom_sprite = 'ghul.gif';
 
-    protected $actor_name;
-    protected $max_health = 100;
-
-    protected $stat_initiative = 4;
-    protected $stat_damage = 6;
-    protected $stat_resistance = 2;
-    protected $stat_accuracy = 0;
-
-    protected $movement_range = 5;
+    protected static $default_max_health = 100;
+    protected static $default_stat_initiative = 4;
+    protected static $default_stat_damage = 6;
+    protected static $default_stat_resistance = 2;
+    protected static $default_stat_accuracy = 0;
+    //protected static $movement_range = 5;
 
     protected static $num_str = 100;
 

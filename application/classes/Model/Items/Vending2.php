@@ -11,7 +11,7 @@ class Model_Items_Vending2 extends Model_Items_Abstract_Item {
 
     protected static $weight = 120;
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('Flasche einwerfen', Model_Action::factory()
                 ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)

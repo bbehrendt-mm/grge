@@ -2,14 +2,14 @@
 
 class Model_Items_Virtual_Location_Mapmode extends Model_Items_Abstract_Virtual {
 
-    protected $remaining = array(
+    protected static $default_action_uses = array(
         'hideout_asknews' => PHP_INT_MAX,
         'hideout_cashout' => PHP_INT_MAX,
     );
 
     public $last_news = 0;
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()->add_action('Kartendaten an deine Stadt übermitteln', Model_Action::factory()
                 ->buttonskin('mapmode')
                 ->effect(Model_Effect::factory()

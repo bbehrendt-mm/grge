@@ -27,6 +27,8 @@ class Model_Buffs_Job_Coach extends Model_Buffs_Abstract_Job {
 				Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
 			),
 	);
+
+    protected function get_effects(): array { return $this->effects; }
 	
 	protected function adjust() {
 		$this->effects[Model_Status::MS_CHAR_DAMAGE_RESISTANCE][Model_Buffs_Abstract_Buff::MB_DROP_ACC] = $this->level * 0.025;

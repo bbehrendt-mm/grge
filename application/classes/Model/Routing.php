@@ -1,15 +1,12 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
 class Model_Routing {
-
-    const grid_size = 2;
-
     /**
      * @var array ['x_y' => ['x' => x, 'y' => y]]
      */
     private $nodes = Array();
 
-    private $grid_size = 2;
+    private $grid_size;
 
     private $protected_nodes = array();
 
@@ -27,8 +24,8 @@ class Model_Routing {
         $this->grid_size = $grid;
     }
 
-    private function name($x, $y, $i = 0) {
-        if ($x == -0) $x = 0; if ($y == -0) $y = 0;
+    private function name($x, $y, $i = 0): string {
+        if ($x === -0) $x = 0; if ($y === -0) $y = 0;
         return "{$x}_{$y}_{$i}";
     }
 
@@ -36,11 +33,10 @@ class Model_Routing {
      * Places a node as close as possible to [$x/$y] without overwriting an existing node
      * @param number $x
      * @param number $y
-     * @return null|string
+     * @return string
      */
-    private function place_node($x, $y) {
+    private function place_node($x, $y): string {
         $i = 0;
-        $name = null;
         do {
             $name = $this->name($x, $y, $i);
             $i++;
@@ -51,14 +47,14 @@ class Model_Routing {
 
     /**
      * Adds a node to the map
-     * @param number $x X Position
-     * @param number $y Y Position
+     * @param int $x X Position
+     * @param int $y Y Position
      * @param bool $protected
      * @return string Node ID
      */
-    public function add_node($x, $y, $protected = false) {
-        $x = round($x/$this->grid_size)*$this->grid_size;
-        $y = round($y/$this->grid_size)*$this->grid_size;
+    public function add_node($x, $y, $protected = false): string {
+        $x = (int)round($x/$this->grid_size)*$this->grid_size;
+        $y = (int)round($y/$this->grid_size)*$this->grid_size;
 
         if (!$protected) {
             $name = $this->name($x,$y);
@@ -66,7 +62,7 @@ class Model_Routing {
                 $this->nodes[$name] = Array('x' => $x, 'y' => $y);
         } else {
             $name = $this->place_node($x, $y);
-            $this->regsiter_protected_node($name);
+            $this->register_protected_node($name);
         }
 
         return $name;
@@ -77,12 +73,12 @@ class Model_Routing {
      * @param string|array $id Node
      * @return bool
      */
-    public function check_protection_status($id) {
+    public function check_protection_status($id): bool {
         if (is_array($id))
             foreach ($id as $entry)
-                if (in_array($entry, $this->protected_nodes))
+                if (in_array($entry, $this->protected_nodes, true))
                     return true;
-        else return in_array($id, $this->protected_nodes);
+        else return in_array($id, $this->protected_nodes, true);
         return false;
     }
 
@@ -90,7 +86,7 @@ class Model_Routing {
      * Protects a node
      * @param string $id Node
      */
-    public function regsiter_protected_node($id) {
+    public function register_protected_node($id): void {
         if (!$this->check_protection_status($id))
             $this->protected_nodes[] = $id;
     }
@@ -99,7 +95,7 @@ class Model_Routing {
      * Removes protection from a node
      * @param string $id Node
      */
-    public function unregister_protected_node($id) {
+    public function unregister_protected_node($id): void {
         foreach (array_keys($this->protected_nodes, $id) as $key)
             unset($this->protected_nodes[$key]);
     }
@@ -110,11 +106,11 @@ class Model_Routing {
      * @param string $n2 Node 2
      * @return bool
      */
-    public function link_nodes($n1, $n2) {
+    public function link_nodes($n1, $n2): bool {
         if (!isset($this->nodes[$n1], $this->nodes[$n2]))
             return false;
 
-        if ($n1 == $n2)
+        if ($n1 === $n2)
             return true;
 
         if (!isset($this->links[$n1]))
@@ -122,10 +118,10 @@ class Model_Routing {
         if (!isset($this->links[$n2]))
             $this->links[$n2] = Array();
 
-        if (($this->nodes[$n1]['x'] == $this->nodes[$n2]['x']) || ($this->nodes[$n1]['y'] == $this->nodes[$n2]['y'])) {
-            if (!in_array($n2, $this->links[$n1])) $this->links[$n1][] = $n2;
-            if (!in_array($n1, $this->links[$n2])) $this->links[$n2][] = $n1;
-            $this->direction["{$n1}_{$n2}"] = $this->direction["{$n2}_{$n1}"] = ($this->nodes[$n1]['y'] == $this->nodes[$n2]['y']);
+        if (($this->nodes[$n1]['x'] === $this->nodes[$n2]['x']) || ($this->nodes[$n1]['y'] === $this->nodes[$n2]['y'])) {
+            if (!in_array($n2, $this->links[$n1], true)) $this->links[$n1][] = $n2;
+            if (!in_array($n1, $this->links[$n2], true)) $this->links[$n2][] = $n1;
+            $this->direction["{$n1}_{$n2}"] = $this->direction["{$n2}_{$n1}"] = ($this->nodes[$n1]['y'] === $this->nodes[$n2]['y']);
             return true;
         } elseif (abs($this->nodes[$n1]['x'] - $this->nodes[$n2]['x']) > abs($this->nodes[$n1]['y'] - $this->nodes[$n2]['y']))
             $n3 = $this->add_node($this->nodes[$n2]['x'], $this->nodes[$n1]['y'], $this->check_protection_status(array($n1, $n2)));
@@ -139,11 +135,11 @@ class Model_Routing {
      * @param string $n1 Node 1
      * @param string $n2 Node 2
      */
-    public function unlink_nodes($n1, $n2) {
-        if (in_array($n2, $this->links[$n1]))
+    public function unlink_nodes($n1, $n2): void {
+        if (in_array($n2, $this->links[$n1], true))
             foreach (array_keys($this->links[$n1], $n2) as $key)
                 unset($this->links[$n1][$key]);
-        if (in_array($n1, $this->links[$n2]))
+        if (in_array($n1, $this->links[$n2], true))
             foreach (array_keys($this->links[$n2], $n1) as $key)
                 unset($this->links[$n2][$key]);
         unset($this->direction["{$n1}_{$n2}"], $this->direction["{$n2}_{$n1}"]);
@@ -154,13 +150,13 @@ class Model_Routing {
      * @param string $id Node ID
      * @return array
      */
-    public function build_route_array($id) {
+    public function build_route_array($id): array {
         $map = array();
         $this->rec_route(array($id),0,$id, $map);
         return $map;
     }
 
-    public function get_network() {
+    public function get_network(): array {
         return $this->links;
     }
 
@@ -168,7 +164,7 @@ class Model_Routing {
      * Returns all nodes
      * @return array
      */
-    public function get_nodes() {
+    public function get_nodes(): array {
         return $this->nodes;
     }
 
@@ -179,7 +175,7 @@ class Model_Routing {
      * @param string $id
      * @param array $map
      */
-    private function rec_route($tail, $offset, $id, &$map) {
+    private function rec_route($tail, $offset, $id, &$map): void {
         $map[$id] = array('distance' => $offset, 'tail' => $tail);
 
         if (!isset($this->links[$id]))
@@ -189,7 +185,7 @@ class Model_Routing {
             $tmp_tail = $tail;
             $distance = abs($this->nodes[$id]['x'] - $this->nodes[$to]['x']) + abs($this->nodes[$id]['y'] - $this->nodes[$to]['y']);
 
-            if (!isset($map[$to]) || ($map[$to]['distance'] > ($distance + $offset)) || (($map[$to]['distance'] == ($distance + $offset)) && (count($tmp_tail) < count($map[$to]['tail'])))) {
+            if (!isset($map[$to]) || ($map[$to]['distance'] > ($distance + $offset)) || (($map[$to]['distance'] === ($distance + $offset)) && (count($tmp_tail) < count($map[$to]['tail'])))) {
                 $tmp_tail[] = $to;
                 $this->rec_route($tmp_tail, $distance + $offset, $to, $map);
             }
@@ -202,14 +198,14 @@ class Model_Routing {
      * @param string $n2
      * @return bool
      */
-    private function check_connection($n1, $n2) {
+    private function check_connection($n1, $n2): bool {
         if (!isset($this->nodes[$n1], $this->nodes[$n2]))
             return false;
-        if ($n1 == $n2)
+        if ($n1 === $n2)
             return false;
         if (!isset($this->links[$n1], $this->links[$n2]))
             return false;
-        return (in_array($n1, $this->links[$n2]) && in_array($n2, $this->links[$n1]));
+        return (in_array($n1, $this->links[$n2], true) && in_array($n2, $this->links[$n1], true));
     }
 
     /**
@@ -219,20 +215,20 @@ class Model_Routing {
      * @param string $pnode2
      * @return bool
      */
-    private function check_in_between($node, $pnode1, $pnode2) {
-        if ($node == $pnode1 || $node == $pnode2) return false;
+    private function check_in_between($node, $pnode1, $pnode2): bool {
+        if ($node === $pnode1 || $node === $pnode2) return false;
         if (!isset($this->nodes[$node])) return false;
         if (!$this->check_connection($pnode1, $pnode2))
             return false;
 
-        if ($this->direction["{$pnode1}_{$pnode2}"] && ($this->nodes[$node]['y'] == $this->nodes[$pnode1]['y']))
+        if ($this->direction["{$pnode1}_{$pnode2}"] && ($this->nodes[$node]['y'] === $this->nodes[$pnode1]['y']))
             return
-                (min($this->nodes[$pnode1]['x'], ($this->nodes[$pnode2]['x'])) < $this->nodes[$node]['x'])
-                && (max($this->nodes[$pnode1]['x'], ($this->nodes[$pnode2]['x'])) > $this->nodes[$node]['x']);
-        elseif (!$this->direction["{$pnode1}_{$pnode2}"] && ($this->nodes[$node]['x'] == $this->nodes[$pnode1]['x']))
+                (min($this->nodes[$pnode1]['x'], $this->nodes[$pnode2]['x']) < $this->nodes[$node]['x'])
+                && (max($this->nodes[$pnode1]['x'], $this->nodes[$pnode2]['x']) > $this->nodes[$node]['x']);
+        elseif (!$this->direction["{$pnode1}_{$pnode2}"] && ($this->nodes[$node]['x'] === $this->nodes[$pnode1]['x']))
             return
-                (min($this->nodes[$pnode1]['y'], ($this->nodes[$pnode2]['y'])) < $this->nodes[$node]['y'])
-                && (max($this->nodes[$pnode1]['y'], ($this->nodes[$pnode2]['y'])) > $this->nodes[$node]['y']);
+                (min($this->nodes[$pnode1]['y'], $this->nodes[$pnode2]['y']) < $this->nodes[$node]['y'])
+                && (max($this->nodes[$pnode1]['y'], $this->nodes[$pnode2]['y']) > $this->nodes[$node]['y']);
         else return false;
     }
 
@@ -240,7 +236,7 @@ class Model_Routing {
      * Removes overlapping paths by converging them to a single path that contains all the nodes from the individual paths
      * @return bool
      */
-    private function fix_node_breaks() {
+    private function fix_node_breaks(): bool {
         $ret = false;
         foreach (array_keys($this->nodes) as $node) if (!$this->check_protection_status($node))
             foreach ($this->links as $n1 => $nodes) if (!$this->check_protection_status($n1))
@@ -254,8 +250,9 @@ class Model_Routing {
         return $ret;
     }
 
-    public function compile() {
-        while($this->fix_node_breaks());
+    public function compile(): void {
+        $b = true;
+        while ($b) { $b = $this->fix_node_breaks(); }
     }
 
 

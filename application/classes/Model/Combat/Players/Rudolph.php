@@ -2,13 +2,14 @@
 
 class Model_Combat_Players_Rudolph extends Model_Combat_Players_Player {
 
-    protected $max_health = 200;
+    protected static $default_max_health = 200;
 
-    protected $stat_initiative = 10;
-    protected $stat_damage = 10;
-    protected $stat_resistance = 8;
-    protected $stat_accuracy = 10;
-    protected $movement_range = 33;
+    protected static $default_stat_initiative = 10;
+    protected static $default_stat_damage = 10;
+    protected static $default_stat_resistance = 8;
+    protected static $default_stat_accuracy = 10;
+
+    protected static $movement_range = 33;
     protected $avatar;
 
     protected static $taunts = [
@@ -20,8 +21,10 @@ class Model_Combat_Players_Rudolph extends Model_Combat_Players_Player {
 
     /**
      * @param Interface_Plentity $p
-     * @param string $avatar
+     * @param string             $avatar
+     *
      * @return Model_Combat_Players_Rudolph
+     * @throws Exception
      */
     public static function create_linked_actor($p, $avatar = 'dog.jpg'): Model_Combat_Players_Rudolph {
         /** @var Model_Combat_Players_Rudolph $ret */
@@ -46,27 +49,21 @@ class Model_Combat_Players_Rudolph extends Model_Combat_Players_Player {
         $this->player->get_status()->modify(Model_Status::MS_STAT_HEALTH, -$damage / 2.0, Model_Status::MS_EFFECT_UNSCALE);
     }
 
-    public function customSprite($death_sprite = false) {
+    public function customSprite($death_sprite = false): ?string {
         return $death_sprite ? 'pet_dead.gif' : ($this->ki_mod_is_registered('drunk') ? 'reindeer_on.gif' : 'reindeer.gif');
     }
 
-    /**
-     * @param $damage
-     * @param $kills
-     * @param $death
-     * @param $target
-     */
-    protected function score_kills($damage, $kills, $death, $target) {}
-
-    public function get_avatar() {
+    public function get_avatar(): ?string {
         return 'media/icons/battle/avatar/' . $this->avatar;
     }
 
     /**
      * @param Model_Combat_Weapon|Model_Combat_Weapon[] $weapon
+     *
      * @return Model_Combat_Actor
+     * @throws Exception
      */
-    public function add_weapon($weapon) {
+    public function add_weapon($weapon): Model_Combat_Actor {
         if (!is_array($weapon))
             $weapon->ignore_equip();
 

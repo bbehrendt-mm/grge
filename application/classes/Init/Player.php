@@ -3,12 +3,14 @@
 class Init_Player {
 
     /**
-     * @param $game Model_Game
-     * @param $set Object
+     * @param $game   Model_Game
+     * @param $set    Object
      * @param $userid number
-     * @param $name string
-     * @param $job number
-     * @param $level number
+     * @param $name   string
+     * @param $job    number
+     * @param $level  number
+     *
+     * @throws Exception
      */
     public function __construct(&$game, &$set, $userid, $name, $job, $level) {
 		$this->init($game, $set, $userid, $name, $job, $level);

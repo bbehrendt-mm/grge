@@ -3,7 +3,7 @@
 class Model_Items_Virtual_Location_Room_Community extends Model_Items_Abstract_Virtual {
 
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         $tmp = parent::hid();
 
         if ($this->roomF()->has_content("sofa1"))

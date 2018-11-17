@@ -9,7 +9,7 @@ class Model_Buffs_Metabolism extends Model_Buffs_Abstract_Buff {
     protected static $remotable = false;
     protected static $enabled = true;
 
-    protected $effects = Array(
+    private $effects = Array(
 				Model_Status::MS_STAT_ENERGY => Array(
 					Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
@@ -53,6 +53,7 @@ class Model_Buffs_Metabolism extends Model_Buffs_Abstract_Buff {
 					Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
 				),
 			);
+    protected function get_effects(): array { return $this->effects; }
 	
 	public function rebuild() {
 		if (static::$enabled) {

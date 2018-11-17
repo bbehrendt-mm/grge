@@ -11,11 +11,11 @@ class Model_Combat_Players_Saint extends Model_Combat_Players_Player {
         $this->current_weapon = new Model_Items_Godsword();
     }
 
-    protected function damage($damage, $from = null, $armor_damage = null) {
+    protected function damage($damage, $from = null, $armor_damage = null): void {
         parent::damage(0, $from, 0);
     }
 
-    protected function get_weapon_priority($friends, $foes) {
+    protected function get_weapon_priority($friends, $foes): ?array {
         return null;
     }
 }

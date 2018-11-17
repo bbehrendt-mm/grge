@@ -20,7 +20,8 @@ class Model_Buffs_Alcohol extends Model_Buffs_Abstract_Buff {
 					Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
 				),
-			);
+	);
+    protected function get_effects(): array { return $this->effects; }
 	
 	public function rebuild() {
 		$drunk = $this->assoc_player->get_status()->get(Model_Status::MS_STAT_DRUNK);

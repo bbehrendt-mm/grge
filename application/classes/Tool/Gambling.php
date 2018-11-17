@@ -4,8 +4,11 @@ class Tool_Gambling {
 
     /**
      * Randomizer, expects data to be in the following format: [['chance'=>int, 'value'=>mixed],[...]]
+     *
      * @param mixed[] $data
+     *
      * @return mixed
+     * @throws Exception
      */
     public static function roulette( $data ) {
         $range = 0;
@@ -27,8 +30,11 @@ class Tool_Gambling {
 
     /**
      * Returns a random element from the given array. If the given parameter is not an array, or is empty, null will be returned
+     *
      * @param array $array The array
+     *
      * @return mixed|null
+     * @throws Exception
      */
     public static function select(array $array) {
         if (!is_array($array) || count($array) == 0)
@@ -42,17 +48,21 @@ class Tool_Gambling {
 
     /**
      * @param Interface_Plentity $p
+     *
      * @return bool
+     * @throws Exception
      */
     public static function tumble($p) {
         return (random_int(15, 100) <= $p->get_status()->get(Model_Status::MS_STAT_DRUNK));
     }
 
     /**
-     * @param int $min
-     * @param int $max
+     * @param int      $min
+     * @param int      $max
      * @param callable $func
+     *
      * @return int
+     * @throws Exception
      */
     public static function repeat($min, $max, callable $func) {
         if ($min > $max || $max <= 0) return 0;

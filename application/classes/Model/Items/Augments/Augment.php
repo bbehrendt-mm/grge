@@ -19,6 +19,8 @@ abstract class Model_Items_Augments_Augment extends Model_Items_Abstract_Equipab
      * Will randomly select a subtype if subtypes are defined for this item class
      *
      * @param null $type
+     *
+     * @throws Exception
      */
     public function __construct($type = null) {
         parent::__construct($type);

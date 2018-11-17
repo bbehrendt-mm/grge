@@ -5,11 +5,11 @@ abstract class Model_Combat_Weapons_Fillable extends Model_Combat_Weapon
     public static $ammo_icon;
     protected $fillrate = 0;
 
-    public function usable() {
+    public function usable(): bool {
         return $this->fillrate > 0 && parent::usable();
     }
 
-    public function get_ammo_icons() {
+    public function get_ammo_icons(): array {
         return [static::$ammo_icon];
     }
 
@@ -20,7 +20,7 @@ abstract class Model_Combat_Weapons_Fillable extends Model_Combat_Weapon
      * @param Model_Combat_Scene $scene
      * @return bool
      */
-    public function trigger_usage(Model_Combat_Actor $me, Model_Combat_Actor $opponent, $damage, Model_Combat_Scene $scene) {
+    public function trigger_usage(Model_Combat_Actor $me, Model_Combat_Actor $opponent, $damage, Model_Combat_Scene $scene): bool {
         $this->fillrate--;
         return parent::trigger_usage($me, $opponent, $damage, $scene);
     }

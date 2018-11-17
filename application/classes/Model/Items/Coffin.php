@@ -12,7 +12,7 @@ class Model_Items_Coffin extends Model_Items_Abstract_Item implements Interface_
 	protected static $weight = 300;
     protected static $energy = 8;
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('Öffnen', Model_Action::factory()
                 ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)

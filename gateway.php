@@ -41,7 +41,7 @@
             $data = substr($data,0,-128);
 
             if (hash('sha512',$data,false) !== $hash) return false;
-            if (($data = unserialize($data)) == false) return false;
+            if (($data = unserialize($data, ['allowed_classes' => false])) === false) return false;
             return $data;
         }
 

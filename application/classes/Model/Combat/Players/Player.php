@@ -25,7 +25,9 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
 
     /**
      * @param Model_Player $p
+     *
      * @return Model_Combat_Players_Player
+     * @throws Exception
      */
     public static function create_linked_actor($p) {
 
@@ -57,13 +59,13 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
         return $ret;
     }
 
-    protected function damage($damage, $from = null, $armor_damage = null) {
+    protected function damage($damage, $from = null, $armor_damage = null): void {
         parent::damage($this->player->get_status()->scaling(Model_Status::MS_STAT_HEALTH, Model_Status::MS_EFFECT_BATTLE) * $damage, $from, $armor_damage);
 
         $this->player->get_status()->modify(Model_Status::MS_STAT_HEALTH, -$damage, Model_Status::MS_EFFECT_BATTLE);
     }
 
-    public function customSprite($death_sprite = false) {
+    public function customSprite($death_sprite = false): ?string {
         if (!$death_sprite && $this->player->job(1080))
             return 'child.gif';
         else return parent::customSprite($death_sprite);
@@ -75,19 +77,20 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
      * @return Model_Combat_Actor
      * @throws Exception
      */
-    public function add_weapon($weapon) {
+    public function add_weapon($weapon): Model_Combat_Actor {
         if (!is_array($weapon))
             $weapon->register($this->player);
 
         return parent::add_weapon($weapon);
     }
 
-    public function disengage() {
+    public function disengage(): bool {
         foreach ($this->weapons as $weapon)
             $weapon->unregister();
         /** @var Model_Buffs_Abstract_Buff $w */
         foreach ($this->wounds as $w)
             new $w($this->player->id());
+        return true;
     }
 
     /**
@@ -96,20 +99,20 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
      * @param $death
      * @param $target
      */
-    protected function score_kills($damage, $kills, $death, $target) {
-        if ($kills > 0 && $target->get_type() == static::MCA_TYPE_ZOMBIE)
+    protected function score_kills($damage, $kills, $death, $target): void {
+        if ($kills > 0 && $target->get_type() === static::MCA_TYPE_ZOMBIE)
             $this->player->achievements()->achieve(Model_Achievement::MA_KILLED_ZOMBIES, $kills);
 
         if ($kills > 0 && Tool_System::instance_of($target, 'Model_Combat_Zombies_Ghul'))
             $this->player->achievements()->achieve(Model_Achievement::MA_MERCYKILL, $kills);
     }
 
-    public function get_avatar() {
+    public function get_avatar(): ?string {
         $s = Model_Euser::avatar_by_id($this->player->id());
         return $s ? ('http:' . $s) : null;
     }
 
-    public function enter() {
+    public function enter(): void {
         parent::enter();
         if (static::$show_weapon_switch) $this->scene->switch_weapon($this, $this->current_weapon);
     }

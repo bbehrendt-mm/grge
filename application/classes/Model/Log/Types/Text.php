@@ -10,15 +10,18 @@ class Model_Log_Types_Text extends Model_Log_Message {
 
 	private $var = Array();
 	private $trv = Array();
-	
-	/**
-	 * Creates a simple text message
-	 * @param String $title Short message title
-	 * @param String $head Message headline; will be used as title if no headline is provided
-	 * @param String $body Message body
-	 * @param Array $variables Variables
-	 * @param Array $translateables Variables that need to be translated
-	 */
+
+    /**
+     * Creates a simple text message
+     *
+     * @param String $title          Short message title
+     * @param String $head           Message headline; will be used as title if no headline is provided
+     * @param String $body           Message body
+     * @param Array  $variables      Variables
+     * @param Array  $translateables Variables that need to be translated
+     *
+     * @throws Exception
+     */
 	public function __construct($title, $head, $body, $variables = Array(), $translateables = Array()) {
 
 		parent::__construct([

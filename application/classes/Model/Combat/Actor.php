@@ -2,29 +2,32 @@
 
 class Model_Combat_Actor extends Named {
 
-    const MCA_TYPE_PLAYER = 1;
-    const MCA_TYPE_ZOMBIE = 2;
-    const MCA_TYPE_NPC = 3;
-    const MCA_TYPE_PET = 4;
+    public const MCA_TYPE_PLAYER = 1;
+    public const MCA_TYPE_ZOMBIE = 2;
+    public const MCA_TYPE_NPC = 3;
+    public const MCA_TYPE_PET = 4;
 
-    const MCA_STAT_INI = 1;
-    const MCA_STAT_ATK = 2;
-    const MCA_STAT_DEF = 3;
-    const MCA_STAT_ACC = 4;
+    public const MCA_STAT_INI = 1;
+    public const MCA_STAT_ATK = 2;
+    public const MCA_STAT_DEF = 3;
+    public const MCA_STAT_ACC = 4;
 
     /** @var  Model_Combat_Scene */
     protected $scene;
 
-    protected static $custom_sprite = null;
-    protected static $custom_death_sprite = null;
+    protected static $custom_sprite;
+    protected static $custom_death_sprite;
 
     protected static $escape = false;
+
+    protected static $default_name;
+    protected static $default_max_health;
 
     protected $actor_name;
     protected $type;
     protected $max_health;
     protected $health;
-    protected $count;
+    protected $c_count;
     protected $group_id;
     protected $alive = true;
     protected $pos_x;
@@ -33,17 +36,21 @@ class Model_Combat_Actor extends Named {
 
     protected $next_move = 100;
 
-    protected $stat_initiative = 5;     // Each point increases speed by 5%
-    protected $stat_damage = 5;         // Each point increases damage dealt by 5%
-    protected $stat_resistance = 5;     // Each point reduces damage received by 5%
-    protected $stat_accuracy = 5;       // Each point increases accuracy by 5%
+    protected static $default_stat_initiative = 5;     // Each point increases speed by 5%
+    protected static $default_stat_damage = 5;         // Each point increases damage dealt by 5%
+    protected static $default_stat_resistance = 5;     // Each point reduces damage received by 5%
+    protected static $default_stat_accuracy = 5;       // Each point increases accuracy by 5%
+
+    protected $stat_initiative;     // Each point increases speed by 5%
+    protected $stat_damage;         // Each point increases damage dealt by 5%
+    protected $stat_resistance;     // Each point reduces damage received by 5%
+    protected $stat_accuracy;       // Each point increases accuracy by 5%
 
     protected $escape_modifier = 1;
-
-    protected $movement_range = 5;
+    static protected $movement_range = 5;
 
     protected $field = [64,40];
-    protected $id;
+    protected $a_id;
 
     protected $ai_selfishness = 3;
     protected $ai_comradely = 0.5;
@@ -70,7 +77,7 @@ class Model_Combat_Actor extends Named {
     protected $armor = [];
 
     /** @var Model_Combat_Weapon */
-    protected $current_weapon = null;
+    protected $current_weapon;
 
     protected static $taunts = [
         'drunk' => ['*hicks*']
@@ -84,20 +91,20 @@ class Model_Combat_Actor extends Named {
         return new $s;
     }
 
-    public function unique() {
+    public function unique(): bool {
         return static::$is_unique;
     }
 
-    public function get_random_taunt($cat) {
+    public function get_random_taunt($cat): ?string {
         if (empty(static::$taunts[$cat])) return null;
         else return Tool_Gambling::select(static::$taunts[$cat]);
     }
 
-    public function add_modifier($name,$chance = 1) {
+    public function add_modifier($name,$chance = 1): void {
         $this->ki_modifiers[$name] = $chance;
     }
 
-    public function recalculate_ki_modifiers() {
+    public function recalculate_ki_modifiers(): void {
         $this->current_ki_modifiers = [];
         foreach ($this->ki_modifiers as $name => $chance)
             if ($chance > 0) {
@@ -105,53 +112,61 @@ class Model_Combat_Actor extends Named {
             }
     }
 
-    public function ki_mod_is_active($name) {
-        return in_array($name,$this->current_ki_modifiers);
+    public function ki_mod_is_active($name): bool {
+        return in_array($name, $this->current_ki_modifiers, true);
     }
 
-    public function ki_mod_strength($name) {
-        return isset($this->ki_modifiers[$name]) ? $this->ki_modifiers[$name] : 0;
+    public function ki_mod_strength($name): float {
+        return $this->ki_modifiers[$name] ?? 0;
     }
 
-    public function ki_mod_is_registered($name) {
+    public function ki_mod_is_registered($name): bool {
         return isset($this->ki_modifiers[$name]) && $this->ki_modifiers[$name] > 0;
     }
 
-    public function get_avatar() {
+    public function get_avatar(): ?string {
         return null;
     }
 
-    public function can_escape() {
+    public function can_escape(): bool {
         return static::$escape;
     }
 
-    public function is_escaped() {
+    public function is_escaped(): bool {
         return $this->escaped;
     }
 
-    public function escape($chance = 1) {
+    public function escape($chance = 1): bool {
         if ($this->can_escape()) {
             $this->scene->escape($this, $chance);
             return $this->escaped = true;
         } else return false;
     }
 
-    public function get_escape_modifier() {
+    public function get_escape_modifier(): float {
         return $this->escape_modifier;
     }
 
-    public function customSprite($death_sprite = false) {
+    public function customSprite($death_sprite = false): ?string {
         return $death_sprite ? static::$custom_death_sprite : static::$custom_sprite;
     }
 
     public function __construct() {
+        $this->actor_name = static::$default_name;
+
+        $this->max_health = static::$default_max_health;
         $this->health = $this->max_health;
+
+        $this->stat_initiative = static::$default_stat_initiative;
+        $this->stat_accuracy = static::$default_stat_accuracy;
+        $this->stat_damage = static::$default_stat_damage;
+        $this->stat_resistance = static::$default_stat_resistance;
     }
 
     /**
      * @param Model_Buffs_Abstract_Buff|null $wound
      */
-    public function inflict_wound($wound) {
+    public function inflict_wound($wound): void {
         if ($wound) {
             $this->scene->injury($this, $wound::static_name(), $wound::static_icon());
             $this->wounds[] = $wound;
@@ -162,7 +177,7 @@ class Model_Combat_Actor extends Named {
      * @param Model_Combat_Scene $scene
      * @return Model_Combat_Actor
      */
-    public function set_scene(&$scene) {
+    public function set_scene(&$scene): self {
         $this->scene = $scene;
         return $this;
     }
@@ -174,7 +189,7 @@ class Model_Combat_Actor extends Named {
      * @return Model_Combat_Actor
      * @throws Exception
      */
-    public function register_inventory($inv, $check_equip = true) {
+    public function register_inventory($inv, $check_equip = true): self {
         $this->inventory = $inv;
 
         foreach ($this->inventory->get('Model_Combat_Weapon') as $w)
@@ -193,7 +208,7 @@ class Model_Combat_Actor extends Named {
     /**
      * @return Model_Inventory
      */
-    public function inventory() {
+    public function inventory(): Model_Inventory {
         return $this->inventory;
     }
 
@@ -219,17 +234,20 @@ class Model_Combat_Actor extends Named {
             return [$this->stat_initiative + $tmp[0], $this->stat_damage + $tmp[1], $this->stat_resistance + $tmp[2], $this->stat_accuracy + $tmp[3]];
         }
 
-        else list($this->stat_initiative, $this->stat_damage, $this->stat_resistance, $this->stat_accuracy) = array_map(function($a) {return min(20,max(0,$a));}, [$ini, $dmg, $res, $acc]);
+        else [$this->stat_initiative, $this->stat_damage, $this->stat_resistance, $this->stat_accuracy]
+            = array_map(function($a) {return min(20,max(0,$a));}, [$ini, $dmg, $res, $acc]);
         $this->reset_steps();
         return $this;
     }
 
     /**
-     * @param $distance
+     * @param     $distance
      * @param int $jitter
+     *
      * @return Model_Combat_Actor
+     * @throws Exception
      */
-    public function set_distance($distance, $jitter = 3) {
+    public function set_distance($distance, $jitter = 3): self {
         $this->position([$distance + random_int(-$jitter, $jitter), 12 + random_int(0, $this->field[1] - 12)]);
         return $this;
     }
@@ -240,7 +258,7 @@ class Model_Combat_Actor extends Named {
      * @return Model_Combat_Actor
      * @throws Exception
      */
-    public function add_weapon($weapon) {
+    public function add_weapon($weapon): self {
         if (is_array($weapon))
             foreach ($weapon as $w)
                 $this->add_weapon($w);
@@ -258,7 +276,7 @@ class Model_Combat_Actor extends Named {
      * @param Model_Items_Abstract_Armor|Model_Items_Abstract_Armor[] $armor
      * @return Model_Combat_Actor
      */
-    public function add_armor($armor) {
+    public function add_armor($armor): self {
         if (is_array($armor))
             foreach ($armor as $a)
                 $this->add_armor($a);
@@ -273,8 +291,8 @@ class Model_Combat_Actor extends Named {
     /**
      * @return int[]
      */
-    protected function actual_stats() {
-        list($ini, $atk, $def, $acc) = $this->stats();
+    protected function actual_stats(): array {
+        [$ini, $atk, $def, $acc] = $this->stats();
         return [
             round(100/(1 + $ini * 0.05)),
             1 + $atk * 0.05,
@@ -307,7 +325,7 @@ class Model_Combat_Actor extends Named {
         return $this;
     }
 
-    public function get_type() {
+    public function get_type(): int {
         return $this->type;
     }
 
@@ -318,11 +336,11 @@ class Model_Combat_Actor extends Named {
      * @return int[]|Model_Combat_Actor
      */
     public function strength($health = null, $max_health = null, $count = 1) {
-        if ($health === null) return [$this->health, $this->max_health, $this->count];
+        if ($health === null) return [$this->health, $this->max_health, $this->c_count];
         else {
             $this->health = $health;
-            $this->max_health = ($max_health === null) ? $health : $max_health;
-            $this->count = $count;
+            $this->max_health = $max_health ?? $health;
+            $this->c_count = $count;
         }
         return $this;
     }
@@ -331,9 +349,9 @@ class Model_Combat_Actor extends Named {
      * @param null|int $new
      * @return Model_Combat_Actor
      */
-    public function count($new = null) {
-        if ($new === null) return $this->count;
-        else $this->count = $new;
+    public function count($new = null): Model_Combat_Actor {
+        if ($new === null) return $this->c_count;
+        else $this->c_count = $new;
         return $this;
     }
 
@@ -342,8 +360,8 @@ class Model_Combat_Actor extends Named {
      * @return int|Model_Combat_Actor
      */
     public function id($new_id = null) {
-        if ($new_id === null) return $this->id;
-        else $this->id = $new_id;
+        if ($new_id === null) return $this->a_id;
+        else $this->a_id = $new_id;
         return $this;
     }
 
@@ -357,7 +375,7 @@ class Model_Combat_Actor extends Named {
         elseif ($move) {
             $this->pos_x += $pos[0];
             $this->pos_y += $pos[1];
-        } else list($this->pos_x, $this->pos_y) = $pos;
+        } else [$this->pos_x, $this->pos_y] = $pos;
 
         $this->pos_x = max(0,min($this->field[0], $this->pos_x));
         $this->pos_y = max(0,min($this->field[1], $this->pos_y));
@@ -368,7 +386,7 @@ class Model_Combat_Actor extends Named {
     /**
      * @return bool
      */
-    public function alive() {
+    public function alive(): bool {
         return $this->alive;
     }
 
@@ -383,23 +401,25 @@ class Model_Combat_Actor extends Named {
         return $this;
     }
 
-    protected function reset_steps() {
-        list($this->next_move) = $this->actual_stats();
+    protected function reset_steps(): void {
+        [$this->next_move] = $this->actual_stats();
     }
 
     /**
      * @param Model_Combat_Actor $combatant
      * @return float
      */
-    public function distance_from(Model_Combat_Actor $combatant) {
-        return sqrt(pow($this->pos_x - $combatant->pos_x, 2) + pow($this->pos_y - $combatant->pos_y, 2));
+    public function distance_from(Model_Combat_Actor $combatant): float {
+        return sqrt(
+            (($this->pos_x - $combatant->pos_x) ** 2) + (($this->pos_y - $combatant->pos_y) ** 2)
+        );
     }
 
     protected function rounds_to_use(Model_Combat_Weapon $weapon, $foe) {
         if (is_array($foe))
             return min(array_map(function($a) use ($weapon) {return $this->rounds_to_use($weapon, $a);}, $foe));
         else {
-            if ($this->movement_range <= 0) return PHP_INT_MAX;
+            if (static::$movement_range <= 0) return PHP_INT_MAX;
 
             if ($weapon->in_range($this, $foe))
                 return 0;
@@ -408,7 +428,7 @@ class Model_Combat_Actor extends Named {
             $max = $weapon->max_range();
             $dist = $this->distance_from($foe);
 
-            return ceil(($dist < $min ? ($min - $dist) : ($dist - $max))/$this->movement_range);
+            return ceil(($dist < $min ? ($min - $dist) : ($dist - $max))/static::$movement_range);
         }
     }
 
@@ -419,7 +439,7 @@ class Model_Combat_Actor extends Named {
      * @param bool $ignore_range
      * @return array|null
      */
-    protected function get_attack_priority($friends, $foes, $weapon = null, $ignore_range = false) {
+    protected function get_attack_priority($friends, $foes, $weapon = null, $ignore_range = false): ?array {
         if ($weapon === null)
             $weapon = $this->current_weapon;
 
@@ -429,10 +449,10 @@ class Model_Combat_Actor extends Named {
         foreach ($foes as $foe) {
             $priority = max(1,$foe->can_attack($this) ? $this->ai_selfishness : 1);
             foreach ($friends as $friend)
-                if ($friend->id() != $this->id())
+                if ($friend->id() !== $this->id())
                     $priority += ($foe->can_attack($friend) ? $this->ai_comradely : 0);
 
-            $p = $weapon->potential_damage($this, $foe, $ignore_range, $this->count) * $priority;
+            $p = $weapon->potential_damage($this, $foe, $ignore_range, $this->c_count) * $priority;
             if ($p <= 0) continue;
 
             if (!$ret || $ret[0] < $p)
@@ -451,7 +471,7 @@ class Model_Combat_Actor extends Named {
      * @param Model_Combat_Actor[] $foes
      * @return array|null
      */
-    protected function get_weapon_priority($friends, $foes) {
+    protected function get_weapon_priority($friends, $foes): ?array {
         $tmp = null;
 
         $current_rounds = ($this->current_weapon && $this->current_weapon->usable()) ? $this->rounds_to_use($this->current_weapon, $foes) : -1;
@@ -462,7 +482,7 @@ class Model_Combat_Actor extends Named {
             if (!$res) continue;
             if (!$weapon->in_range($this, $foe)) {
 
-                if ($current_rounds == 0) continue;
+                if ($current_rounds === 0) continue;
                 $rounds = $this->rounds_to_use($weapon, $foe);
                 if ($rounds > 1 && $this->distance_from($foe) < $weapon->min_range()) continue;
 
@@ -475,7 +495,7 @@ class Model_Combat_Actor extends Named {
         }
 
         /** @noinspection PhpUndefinedMethodInspection */
-        if (!$tmp || ($this->current_weapon && $this->current_weapon->usable() && ($this->current_weapon->uin() == $tmp[2]->uin() || get_class($this->current_weapon) == get_class($tmp[2])))) return null;
+        if (!$tmp || ($this->current_weapon && $this->current_weapon->usable() && ($this->current_weapon->uin() === $tmp[2]->uin() || get_class($this->current_weapon) === get_class($tmp[2])))) return null;
         else return [
             $tmp[0] * $this->ai_volatile,
             $tmp[2]
@@ -487,8 +507,8 @@ class Model_Combat_Actor extends Named {
      * @param Model_Combat_Actor[] $foes
      * @return array|null
      */
-    protected function get_movement_priority($friends, $foes) {
-        if ($this->movement_range <= 0) return [];
+    protected function get_movement_priority($friends, $foes): ?array {
+        if (static::$movement_range <= 0) return [];
         if ($this->current_weapon && ($closest_foe = $this->current_weapon->closest_foe($this, $foes, false))) {
             $tmp = $this->get_attack_priority($friends, [$closest_foe], $this->current_weapon, true);
 
@@ -513,7 +533,7 @@ class Model_Combat_Actor extends Named {
      * @param int $death
      * @param Model_Combat_Actor $target
      */
-    protected function score_kills($damage, $kills, $death, $target) {}
+    protected function score_kills($damage, $kills, $death, $target): void {}
 
     /**
      * @param int                     $damage
@@ -522,15 +542,15 @@ class Model_Combat_Actor extends Named {
      *
      * @throws Exception
      */
-    protected function damage($damage, $from = null, $armor_damage = null) {
+    protected function damage($damage, $from = null, $armor_damage = null): void {
         $this->health -= $damage;
 
-        $kills = min($this->count, ($this->health <= 0 ? (floor(abs($this->health) / $this->max_health) + 1) : 0));
-        $this->alive = $kills < $this->count;
+        $kills = min($this->c_count, ($this->health <= 0 ? (floor(abs($this->health) / $this->max_health) + 1) : 0));
+        $this->alive = $kills < $this->c_count;
 
         if ($kills) {
             $this->health = !$this->alive ? 0 : ($this->health + $kills * $this->max_health);
-            $this->count = !$this->alive ? 0 : ($this->count - $kills);
+            $this->c_count = !$this->alive ? 0 : ($this->c_count - $kills);
         }
 
         if ($from)
@@ -554,11 +574,13 @@ class Model_Combat_Actor extends Named {
         }
     }
 
-    public function enter() {}
+    public function enter(): void {}
 
-    public function idle() {}
+    public function idle(): void {}
 
-    public function act_modified_drunk($friends, $foes, $second_act = false) {
+
+    public function act_modified_drunk(/** @noinspection PhpUnusedParameterInspection */
+    $friends, $foes, $second_act = false): void {
         // ToDO: Barf action
 
         if ($second_act) return;
@@ -566,10 +588,10 @@ class Model_Combat_Actor extends Named {
         //Move
         $random_x = random_int(-100,100);
         $random_y = random_int(-100,100);
-        if ($random_x == 0 && $random_y == 0) $random_x = 1;
+        if ($random_x === 0 && $random_y === 0) $random_x = 1;
 
         $length = sqrt($random_x * $random_x + $random_y * $random_y);
-        $dist = min(4,$this->movement_range * (random_int(10,50)/100));
+        $dist = min(4,static::$movement_range * (random_int(10,50)/100));
 
         $this->pos_x += $random_x * ($dist / $length);
         $this->pos_y += $random_y * ($dist / $length);
@@ -585,7 +607,7 @@ class Model_Combat_Actor extends Named {
      * @return void
      * @throws Exception
      */
-    public function act($friends, $foes, $second_act = false) {
+    public function act($friends, $foes, $second_act = false): void {
         if (!$second_act) {
             $this->reset_steps();
             $this->recalculate_ki_modifiers();
@@ -603,16 +625,16 @@ class Model_Combat_Actor extends Named {
 
         $this->scene->dbg_battle_ai($this, $attack, $switch, $move);
 
-        list($ini, $atk, $res, $acc) = $this->actual_stats();
+        [/*$ini*/, $atk, /*$res*/, $acc] = $this->actual_stats();
         $use_second_action = false;
 
         if ($attack && (!$switch || $attack[0] >= $switch[0]) && (!$move || $attack[0] >= $move[0])) {
             // Attack action
             /** @var Model_Combat_Actor $target */
             $target = $attack[1];
-            list($op_ini, $op_atk, $op_res, $op_acc) = $this->actual_stats();
+            [/*$op_ini*/, /*$op_atk*/, $op_res, /*$op_acc*/] = $this->actual_stats();
 
-            list($dmg,$dmg_raw) = $this->current_weapon->calculate_damage($this, $target, $this->count, $acc, $atk, $op_res);
+            [$dmg,$dmg_raw] = $this->current_weapon->calculate_damage($this, $target, $this->c_count, $acc, $atk, $op_res);
             $this->scene->attack($this, $target, $this->current_weapon, $dmg);
             $target->damage($dmg, $this, $dmg_raw);
             $target->inflict_wound($this->current_weapon->generate_wound($dmg));
@@ -639,13 +661,13 @@ class Model_Combat_Actor extends Named {
             $dx = ($target->pos_x - $this->pos_x)/$d;
             $dy = ($target->pos_y - $this->pos_y)/$d;
 
-            if (abs($d_min) <= $this->movement_range) {
+            if (abs($d_min) <= static::$movement_range) {
                 $this->pos_x += $dx * $d_min;
                 $this->pos_y += $dy * $d_min;
-                $use_second_action = (abs($d_min) < $this->movement_range);
+                $use_second_action = (abs($d_min) < static::$movement_range);
             } else {
-                $this->pos_x += $dx * $this->movement_range * $move[2];
-                $this->pos_y += $dy * $this->movement_range * $move[2];
+                $this->pos_x += $dx * static::$movement_range * $move[2];
+                $this->pos_y += $dy * static::$movement_range * $move[2];
             }
 
             $this->pos_x = max(0,min($this->field[0], $this->pos_x));
@@ -663,7 +685,7 @@ class Model_Combat_Actor extends Named {
         if ($use_second_action) $this->act($friends, $foes, true);
     }
 
-    public function disengage() {
+    public function disengage(): bool {
         return true;
     }
 

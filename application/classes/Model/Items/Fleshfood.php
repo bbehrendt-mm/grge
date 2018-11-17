@@ -17,7 +17,7 @@ class Model_Items_Fleshfood extends Model_Items_Abstract_Item implements Interfa
 	
 	protected static $weight = 0.2;
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('Essen', Model_Action::factory()
                 ->effect(

@@ -12,7 +12,7 @@ class Model_Buffs_Drunk extends Model_Buffs_Abstract_Fragile {
         parent::__construct($player_id, 18);
     }
 
-    protected $effects = Array(
+    protected function get_effects(): array { return [
         Model_Status::MS_STAT_ENERGY => Array(
             Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0.6,
             Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
@@ -30,11 +30,11 @@ class Model_Buffs_Drunk extends Model_Buffs_Abstract_Fragile {
             Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
             Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
             Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
-        ),
-    );
+        )
+    ]; }
 
     protected function action_on_complete() {
-        if ($this->associated_to_player() && Tool_Scripts::location_type($this->assoc_player->location_class()) == 2) {
+        if ($this->associated_to_player() && Tool_Scripts::location_type($this->assoc_player->location_class()) === 2) {
 
             $l = $this->assoc_player->location();
             if		($l->has_room('bedroom','bedr3'))	new Model_Buffs_Sleep($this->assoc_player, 3);

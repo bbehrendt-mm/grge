@@ -7,9 +7,12 @@ class Model_Postbox {
 
     /**
      * Receive a message
-     * @param int $uid User id
+     *
+     * @param int    $uid User id
      * @param string $message
      * @param string $title
+     *
+     * @throws Exception
      */
     public function add($uid, $message, $title) {
         $id = time() . random_int(0,99);

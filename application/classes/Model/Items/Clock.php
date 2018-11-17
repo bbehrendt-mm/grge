@@ -11,7 +11,7 @@ class Model_Items_Clock extends Model_Items_Abstract_Item implements Interface_S
 	
 	protected static $weight = 3;
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('Event-Countdown reparieren', Model_Action::factory()
                 ->allow_remote(false)

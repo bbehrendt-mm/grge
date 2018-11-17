@@ -3,7 +3,6 @@
 class Model_Buffs_Daytime extends Model_Buffs_Abstract_Buff {
 
 	protected static $bid = 'daytime';
-	protected static $visible = true;
     protected static $remotable = false;
 
     protected $effects = Array(
@@ -15,20 +14,22 @@ class Model_Buffs_Daytime extends Model_Buffs_Abstract_Buff {
         ),
     );
 
+    protected function get_effects(): array { return $this->effects; }
+
     public function name() {
         switch (Tool_Scripts::get_timeofday($this->assoc_player)) {
-            case "night":
-                return "Tageszeit: Nacht"; break;
-            case "morning":
-                return "Tageszeit: Morgen"; break;
-            case "day":
-                return "Tageszeit: Tag"; break;
-            case "evening":
-                return "Tageszeit: Abend"; break;
+            case 'night':
+                return 'Tageszeit: Nacht'; break;
+            case 'morning':
+                return 'Tageszeit: Morgen'; break;
+            case 'day':
+                return 'Tageszeit: Tag'; break;
+            case 'evening':
+                return 'Tageszeit: Abend'; break;
             // event times
-            case "snowynight":
-                return "Tageszeit: Ewige Nacht"; break;
-            default: return "";
+            case 'snowynight':
+                return 'Tageszeit: Ewige Nacht'; break;
+            default: return '';
         }
     }
 
@@ -39,18 +40,18 @@ class Model_Buffs_Daytime extends Model_Buffs_Abstract_Buff {
     public static function static_icon($s = null) {
         if (!$s) $s = Tool_Scripts::get_timeofday();
         switch ($s) {
-            case "night":
-                return "buffs/dtnight"; break;
-            case "morning":
-                return "buffs/dtmorning"; break;
-            case "day":
-                return "buffs/dtday"; break;
-            case "evening":
-                return "buffs/dtevening"; break;
+            case 'night':
+                return 'buffs/dtnight'; break;
+            case 'morning':
+                return 'buffs/dtmorning'; break;
+            case 'day':
+                return 'buffs/dtday'; break;
+            case 'evening':
+                return 'buffs/dtevening'; break;
 
-            case "snowynight":
-                return "buffs/dtperpetualnight"; break;
-            default: return "";
+            case 'snowynight':
+                return 'buffs/dtperpetualnight'; break;
+            default: return '';
         }
     }
 
@@ -61,18 +62,18 @@ class Model_Buffs_Daytime extends Model_Buffs_Abstract_Buff {
     public static function static_description($s = null) {
         if (!$s) $s = Tool_Scripts::get_timeofday();
         switch ($s) {
-            case "night":
-                return "Der Mond steht hoch am Himmel und die Welt ist in Dunkelheit getaucht. Da Zombies keine sonderlich guten Augen haben, kannst du ihnen nachts leichter entkommen. Allerdings wirst du ohne eine Taschenlampe auch weniger gegenstände finden..."; break;
-            case "morning":
-                return "Morgenstund hat Gold im Mund! Erstens ist dein Kaffee auf magische Art und Weise effektiver als am Rest des Tages, zweitens ist es draußen noch relativ kühl. Du benötigst daher weniger Energie, um Hausverbesserungen durchzuführen."; break;
-            case "day":
-                return "Die Sonne brennt gnadenlos am Himmel. Wenn du dich jetzt im Freien aufhälst, erhöht sich dein Wasserverbrauch. Lange Märsche zu anderen Orten kosten dich nun nicht nur Energie, sie machen dich auch durstig."; break;
-            case "evening":
-                return "Nach einem weiteren harten Tag geht die Sonne nun langsam unter. Jetzt hast du dir wirklich ein Feierabend-Bier verdient, immerhin wirkt Alkohol am Abend aus irgend einem Grund weniger schädlich."; break;
+            case 'night':
+                return 'Der Mond steht hoch am Himmel und die Welt ist in Dunkelheit getaucht. Da Zombies keine sonderlich guten Augen haben, kannst du ihnen nachts leichter entkommen. Allerdings wirst du ohne eine Taschenlampe auch weniger gegenstände finden...'; break;
+            case 'morning':
+                return 'Morgenstund hat Gold im Mund! Erstens ist dein Kaffee auf magische Art und Weise effektiver als am Rest des Tages, zweitens ist es draußen noch relativ kühl. Du benötigst daher weniger Energie, um Hausverbesserungen durchzuführen.'; break;
+            case 'day':
+                return 'Die Sonne brennt gnadenlos am Himmel. Wenn du dich jetzt im Freien aufhälst, erhöht sich dein Wasserverbrauch. Lange Märsche zu anderen Orten kosten dich nun nicht nur Energie, sie machen dich auch durstig.'; break;
+            case 'evening':
+                return 'Nach einem weiteren harten Tag geht die Sonne nun langsam unter. Jetzt hast du dir wirklich ein Feierabend-Bier verdient, immerhin wirkt Alkohol am Abend aus irgend einem Grund weniger schädlich.'; break;
 
-            case "snowynight":
-                return "Es ist kalt, und Schnee weht dir ins Gesicht. An diesem Ort scheint ewige Nacht zu herrschen... ";
-            default: return "";
+            case 'snowynight':
+                return 'Es ist kalt, und Schnee weht dir ins Gesicht. An diesem Ort scheint ewige Nacht zu herrschen... ';
+            default: return '';
         }
     }
 
@@ -88,14 +89,16 @@ class Model_Buffs_Daytime extends Model_Buffs_Abstract_Buff {
             default:
                 $this->effects[Model_Status::MS_STAT_FREEZE][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = 0;
                 $this->effects[Model_Status::MS_STAT_FREEZE][Model_Buffs_Abstract_Buff::MB_DROP_ACC] = 5;
-        };
+        }
 
         //Control sun buff
 
         if ($this->assoc_player->location()) {
-            if ($tod != "day" || !$this->assoc_player->location()->is_outside())
-                $this->assoc_player->get_status()->remove("sun");
-            elseif ($tod == "day" && $this->assoc_player->location()->is_outside() && !$this->assoc_player->get_status()->retrieve("sun"))
+            if ($tod !== 'day' || !$this->assoc_player->location()->is_outside())
+                $this->assoc_player->get_status()->remove('sun');
+            elseif ($tod === 'day' && $this->assoc_player->location()->is_outside() && !$this->assoc_player->get_status()->retrieve(
+                    'sun'
+                ))
                 new Model_Buffs_Sun($this->assoc_player);
         }
 

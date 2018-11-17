@@ -6,32 +6,38 @@ abstract class Model_Factory_Abstract extends Model {
     protected static $expected_result_class;
 
     protected $group = 'default';
-    protected $import_from = null;
+    protected $import_from ;
 
     protected $cache = [];
     protected $equalized = [];
 
+    /**
+     * @param string       $location
+     * @param string|array $group
+     * @param string|array $fallback
+     *
+     * @return mixed|null
+     */
     public static function load($location, $group = 'default', $fallback = ['default']) {
         if ($location === null) {
             $s = static::class;
             return new $s();
         }
-        else {
-            $fallback = is_array($group) ? $group : array_merge([$group], $fallback);
-            $list = Tool_System::instance_of($location, 'Model_Places_Abstract_Place') ? Tool_System::get_class_hierarchy($location) : [$location];
-            foreach ($list as $l_entry)
-                foreach ($fallback as $f_entry)
-                    if ($tmp = Tool_System::simple_config(static::$base . "/{$f_entry}/{$l_entry}"))
-                        return $tmp;
-            return null;
-        }
+
+        $fallback = is_array($group) ? $group : array_merge([$group], $fallback);
+        $list = Tool_System::instance_of($location, 'Model_Places_Abstract_Place') ? Tool_System::get_class_hierarchy($location) : [$location];
+        foreach ($list as $l_entry)
+            foreach ($fallback as $f_entry)
+                if ($tmp = Tool_System::simple_config(static::$base . "/{$f_entry}/{$l_entry}"))
+                    return $tmp;
+        return null;
     }
 
     /**
      * Returns the percentage table
      * @return array
      */
-    public function get() {
+    public function get(): array {
         return $this->equalized;
     }
 
@@ -40,7 +46,7 @@ abstract class Model_Factory_Abstract extends Model {
      * @param $count
      * @return $this
      */
-    public function add($elem, $count) {
+    public function add($elem, $count): self {
         if ($count > 0 && $elem)
             $this->cache[] = ['chance' => $count, 'value' => $elem];
 
@@ -52,7 +58,7 @@ abstract class Model_Factory_Abstract extends Model {
      * @param null $import_from
      * @return $this
      */
-    public static function factory($group = 'default', $import_from = null) {
+    public static function factory($group = 'default', $import_from = null): self {
         $s = static::class;
         return new $s($group, $import_from);
     }
@@ -63,7 +69,7 @@ abstract class Model_Factory_Abstract extends Model {
      * @param array $fallback
      * @return null|Model_Factory_Abstract
      */
-    public static function read($location, $group = 'default', $fallback = ['default']) {
+    public static function read($location, $group = 'default', $fallback = ['default']): ?Model_Factory_Abstract {
         $tmp = static::load($location, $group, $fallback);
         return $tmp ? $tmp->equalize()->clean() : null;
     }
@@ -78,7 +84,7 @@ abstract class Model_Factory_Abstract extends Model {
     /**
      * @return $this
      */
-    protected function clean() {
+    protected function clean(): self {
         $this->cache = [];
         return $this;
     }
@@ -87,12 +93,12 @@ abstract class Model_Factory_Abstract extends Model {
      * @param null|[] $resolve_import_paths
      * @return $this
      */
-    public function equalize($resolve_import_paths = null) {
+    public function equalize($resolve_import_paths = null): self {
         $gs = 0;
         $s = static::class;
 
         if (!$resolve_import_paths)
-            $resolve_import_paths = array_merge([$this->group], $this->import_from ? $this->import_from : []);
+            $resolve_import_paths = array_merge([$this->group], $this->import_from ?: []);
 
         foreach ($this->cache as $entry)
             $gs += $entry['chance'];
@@ -125,7 +131,7 @@ abstract class Model_Factory_Abstract extends Model {
     /**
      * Forces the recalculation of the percentage table, so they add up to 100%.
      */
-    protected function realign() {
+    protected function realign(): void {
         $accum = 0;
         foreach ($this->equalized as $c)
             $accum += $c;
@@ -138,7 +144,7 @@ abstract class Model_Factory_Abstract extends Model {
     /**
      * @return null|string
      */
-    public function get_element() {
+    public function get_element(): ?string {
         $accum = 0;
         $r = (mt_rand()/mt_getrandmax());
         foreach ($this->equalized as $k => $c)

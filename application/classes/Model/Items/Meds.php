@@ -52,7 +52,7 @@ class Model_Items_Meds extends Model_Items_Abstract_Stackable implements Interfa
         return $ret;
     }
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return Tool_Scripts::is_npc() ? parent::hid() : parent::hid()
             ->add_action('Schlucken', $this->create_action());
     }

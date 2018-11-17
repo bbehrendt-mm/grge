@@ -2,13 +2,13 @@
 
 class Model_Combat_Players_Cat extends Model_Combat_Players_Player {
 
-    protected $max_health = 25;
+    protected static $default_max_health = 25;
 
-    protected $stat_initiative = 10;
-    protected $stat_damage = 4;
-    protected $stat_resistance = 1;
-    protected $stat_accuracy = 10;
-    protected $movement_range = 10;
+    protected static $default_stat_initiative = 10;
+    protected static $default_stat_damage = 4;
+    protected static $default_stat_resistance = 1;
+    protected static $default_stat_accuracy = 10;
+    protected static $movement_range = 10;
 
     protected static $show_weapon_switch = false;
     protected $avatar;
@@ -20,8 +20,10 @@ class Model_Combat_Players_Cat extends Model_Combat_Players_Player {
 
     /**
      * @param Interface_Plentity $p
-     * @param string $avatar
+     * @param string             $avatar
+     *
      * @return Model_Combat_Players_Dog
+     * @throws Exception
      */
     public static function create_linked_actor($p, $avatar = 'cat.jpg') {
         /** @noinspection PhpUndefinedMethodInspection */
@@ -39,33 +41,27 @@ class Model_Combat_Players_Cat extends Model_Combat_Players_Player {
         return $ret;
     }
 
-    protected function damage($damage, $from = null, $armor_damage = null) {
+    protected function damage($damage, $from = null, $armor_damage = null): void {
         parent::damage($damage, $from, $armor_damage);
 
         $this->player->get_status()->modify(Model_Status::MS_STAT_HEALTH, -$damage * 4, Model_Status::MS_EFFECT_UNSCALE);
     }
 
-    public function customSprite($death_sprite = false) {
+    public function customSprite($death_sprite = false): ?string {
         return $death_sprite ? 'pet_dead.gif' : 'cat.gif';
     }
 
-    /**
-     * @param $damage
-     * @param $kills
-     * @param $death
-     * @param $target
-     */
-    protected function score_kills($damage, $kills, $death, $target) {}
-
-    public function get_avatar() {
+    public function get_avatar(): ?string {
         return 'media/icons/battle/avatar/' . $this->avatar;
     }
 
     /**
      * @param Model_Combat_Weapon|Model_Combat_Weapon[] $weapon
+     *
      * @return Model_Combat_Actor
+     * @throws Exception
      */
-    public function add_weapon($weapon) {
+    public function add_weapon($weapon): Model_Combat_Actor {
         if (!is_array($weapon))
             $weapon->ignore_equip();
 

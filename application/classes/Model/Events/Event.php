@@ -2,15 +2,15 @@
 
 abstract class Model_Events_Event {
 
-    protected static $event_key = null;
+    protected static $event_key = '';
     protected $active = false;
-    protected static $event_name = null;
+    protected static $event_name = '';
 
     public function __construct() {
         $this->trigger();
     }
 
-    public static function name() {
+    public static function name(): string {
         return static::$event_name;
     }
 
@@ -18,19 +18,19 @@ abstract class Model_Events_Event {
         return Globals::hasCurrentGame() ? Globals::CurrentGameF()->next_tick() : time();
     }
 
-    public static function is_current() {
-        return (static::$event_key ? (Tool_Events::current(static::get_game_time()) == static::$event_key) : false);
+    public static function is_current(): bool {
+        return (static::$event_key ? (Tool_Events::current(static::get_game_time()) === static::$event_key) : false);
     }
 
-    public static function get_key() {
+    public static function get_key(): string {
         return static::$event_key;
     }
 
-    public function is_active() {
+    public function is_active(): bool {
         return $this->active;
     }
 
-    public function trigger() {
+    public function trigger(): void {
         if (static::is_current() && !$this->is_active()) {
             $this->active = $this->trigger_activation();
             if ($this->active) Globals::CurrentGameF()->set_event_index($this);

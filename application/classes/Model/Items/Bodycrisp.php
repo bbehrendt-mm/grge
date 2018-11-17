@@ -12,7 +12,7 @@ class Model_Items_Bodycrisp extends Model_Items_Abstract_Item implements Interfa
 
 	protected static $weight = 80;
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('Fressen', Model_Action::factory()
                     ->effect(

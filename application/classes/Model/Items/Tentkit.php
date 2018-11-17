@@ -11,7 +11,7 @@ class Model_Items_Tentkit extends Model_Items_Abstract_Item implements Interface
 
 	protected static $weight = 5;
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('InstaZELT™ aufstellen', Model_Action::factory()
                 ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)

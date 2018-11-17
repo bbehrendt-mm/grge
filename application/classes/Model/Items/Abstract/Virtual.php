@@ -9,8 +9,15 @@ abstract class Model_Items_Abstract_Virtual extends Model_Items_Abstract_Item {
     protected $loc_id = -1;
     protected $room_id = -1;
 
+    protected static $default_action_uses = false;
+
     /** @var bool|array $remaining  */
-    protected $remaining = false;
+    protected $remaining;
+
+    public function __construct($type = null) {
+        parent::__construct($type);
+        $this->remaining = static::$default_action_uses;
+    }
 
     protected function location() {
         return $this->loc_id >= 0 ? Globals::CurrentGameF()->location($this->loc_id) : null;

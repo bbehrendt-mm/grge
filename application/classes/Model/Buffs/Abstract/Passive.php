@@ -24,7 +24,7 @@ abstract class Model_Buffs_Abstract_Passive extends Model_Buffs_Abstract_Buff {
 		return parent::rebuild();
 	}
 
-    public function effect($stat, $type) {
+    public function effect($stat, $type): float {
         return $this->active ? parent::effect($stat, $type) : 0;
     }
 }

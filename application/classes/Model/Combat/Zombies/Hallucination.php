@@ -5,17 +5,14 @@ class Model_Combat_Zombies_Hallucination extends Model_Combat_Zombies_Zombie {
     public static $custom_sprite = 'zombie_lsd.gif';
     public static $custom_death_sprite = 'zombie_lsd_dead.gif';
 
-    protected $actor_name;
-    protected $max_health = 15;
+    protected static $default_max_health = 15;
+    protected static $default_stat_initiative = 0;
+    protected static $default_stat_damage = 0;
+    protected static $default_stat_resistance = 0;
+    protected static $default_stat_accuracy = 0;
+    protected static $movement_range = 10;
 
-    protected $stat_initiative = 0;
-    protected $stat_damage = 0;
-    protected $stat_resistance = 0;
-    protected $stat_accuracy = 0;
-
-    protected static $num_str = 1;
-
-    protected $movement_range = 10;
+    //protected static $num_str = 1;
 
     public function __construct() {
         parent::__construct();
@@ -23,24 +20,26 @@ class Model_Combat_Zombies_Hallucination extends Model_Combat_Zombies_Zombie {
         $this->actor_name = Tool_Gambling::select(['Schnupfophanten', 'Jigsaw-Nudisten', 'Seehofer', 'Genitalmonster', 'Pokémon', 'Schwiegermütter']);
     }
 
-    protected function get_attack_priority($friends, $foes, $weapon = null, $ignore_range = false) {
+    protected function get_attack_priority($friends, $foes, $weapon = null, $ignore_range = false): ?array {
         return null;
     }
 
-    protected function get_weapon_priority($friends, $foes) {
+    protected function get_weapon_priority($friends, $foes): ?array {
         return null;
     }
 
-    public function get_avatar() {
+    public function get_avatar(): ?string {
         return 'media/icons/battle/avatar/lsd.jpg';
     }
 
     /**
      * @param Model_Combat_Actor[] $friends
      * @param Model_Combat_Actor[] $foes
-     * @param bool $second_act
+     * @param bool                 $second_act
+     *
+     * @throws Exception
      */
-    public function act($friends, $foes, $second_act = false) {
+    public function act($friends, $foes, $second_act = false): void {
         $this->reset_steps();
         if (!$foes) $this->idle();
 

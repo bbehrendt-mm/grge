@@ -18,7 +18,7 @@ abstract class Model_Items_Abstract_Liquid extends Model_Items_Abstract_Item imp
 		return false;
 	}
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('Auflecken',
                 Model_Action::factory()

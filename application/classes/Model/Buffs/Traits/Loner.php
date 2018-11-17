@@ -7,12 +7,12 @@ class Model_Buffs_Traits_Loner extends Model_Buffs_Abstract_Buff {
 	protected static $desc = 'Du bist der Typ, der irgendwie immer da ist, aber den niemand so richtig wahrnimmt. Das hat sich auch in der Zombieapokalypse nicht geändert. Deine Chance, Zombies bei einem Kampf zu entkommen, steigt um 15%. Außerdem wird anderen Spielern im Mehrspielermodus deine Präsenz weniger deutlich angezeigt.';
 	protected static $bid = 'tr_loner';
 
-    protected $effects = Array(
+    protected function get_effects(): array { return [
         Model_Status::MS_CHAR_EVASIVENESS => Array(
             Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0.15,
             Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
             Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
             Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
-        ),
-    );
+        )
+    ]; }
 }

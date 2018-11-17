@@ -39,7 +39,7 @@ abstract class Model_Items_Abstract_Box extends Model_Items_Abstract_Item implem
         }
     }
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         $hid = parent::hid();
         
         if ($this->open)

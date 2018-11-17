@@ -11,7 +11,7 @@ class Model_Items_Powderpack extends Model_Items_Abstract_Item implements Interf
 
 	protected static $weight = 1;
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         $child_effects = !Globals::shadowPlayerExists() && Globals::PrimaryPlayerF()->job(1080);
 
         return parent::hid()

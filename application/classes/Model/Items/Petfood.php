@@ -11,7 +11,7 @@ class Model_Items_Petfood extends Model_Items_Abstract_Item implements Interface
 
 	protected static $weight = 1;
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
     return parent::hid()
         ->add_action('Essen', Model_Action::factory()
             ->allow_for(Interface_Plentity::IC_NPC_NONPC)

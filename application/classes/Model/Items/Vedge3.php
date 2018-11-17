@@ -11,7 +11,7 @@ class Model_Items_Vedge3 extends Model_Items_Abstract_Item implements Interface_
 
 	protected static $weight = 2;
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('Essen', Model_Action::factory()
                 ->effect(

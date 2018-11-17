@@ -14,7 +14,7 @@ class Model_Items_Holybook extends Model_Items_Abstract_Item implements Interfac
 	
 	public $nextuse = 0;
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('Kraft schöpfen', Model_Action::factory()
                 ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)

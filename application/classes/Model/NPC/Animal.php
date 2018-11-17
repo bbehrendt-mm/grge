@@ -66,6 +66,7 @@ abstract class Model_NPC_Animal extends Model_NPC_Nano
 
     /**
      * @return Model_Items_Abstract_Item|null
+     * @throws Exception
      */
     protected function generate_dead_body() {
         return new Model_Items_Body3(true);

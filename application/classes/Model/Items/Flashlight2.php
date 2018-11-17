@@ -11,8 +11,7 @@ class Model_Items_Flashlight2 extends Model_Items_Abstract_Item {
 
 	protected static $weight = 3;
 
-    protected function hid() {
-        $php53pb = $this;
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('Batterie entnehmen', Model_Action::factory()
                 ->fail_message('Der Tank ist zu voll, als dass er einen weiteren Kanister Benzin aufnehmen könnte.')

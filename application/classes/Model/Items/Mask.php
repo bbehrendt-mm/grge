@@ -21,7 +21,7 @@ class Model_Items_Mask extends Model_Items_Abstract_Item implements Interface_St
         $this->level = $set_level;
     }
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         $hid = parent::hid();
 
         $hid->add_action('Sprühregen', Model_Action::factory()

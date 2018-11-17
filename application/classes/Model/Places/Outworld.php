@@ -6,8 +6,8 @@ class Model_Places_Outworld extends Model_Places_Abstract_Node {
 	protected static $description = 'Früher blühte hier das Leben, jetzt findet man hier nur noch Sand und gelegentlich ein paar Zombies, die in kleinen Grüppchen die Ruinen der Zivilisation umstreifen. Unwahrscheinlich, dass du hier etwas nützliches findest. Eventuell findest du aber das ein oder andere Gebäude, das du nach nützlichen Dingen durchsuchen kannst.';
 
 	private $initial_supply = false;
-	
-	protected $survival_find = true;
+
+	protected static $survival_find_available = false;
     protected $tickets = Array();
 	
 	private function initial_supply() {

@@ -4,8 +4,6 @@ class Model_NPC_Dog extends Model_NPC_Animal
 {
     protected static $escort_functions = [Interface_Plentity::IC_ALLOW_ANY];
 
-    protected $last_hideout = null;
-
     protected static $movement_scaling = 0.7;
     protected static $alcohol_scaling = 6;
     protected static $inventory_size = 18;

@@ -1,5 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
+/** @noinspection LowerAccessLevelInspection */
 abstract class Controller extends Kohana_Controller {
 
     /**
@@ -9,7 +10,7 @@ abstract class Controller extends Kohana_Controller {
     protected static $initialize_session = true;
     protected static $force_ajax = true;
     protected static $force_login = false;
-    protected static $menu = null;
+    protected static $menu;
     private $widgets = array();
     private $notifications = array();
     private $data = array();
@@ -25,14 +26,14 @@ abstract class Controller extends Kohana_Controller {
      * Returns true when the current request was made using AJAX calls
      * @return bool
      */
-    protected function is_ajax_request() {
+    protected function is_ajax_request(): bool {
         return ($this->request->headers('X-Requested-With') === 'XMLHttpRequest');
     }
 
     /**
      * This function will cause the script to abort when it was not called using AJAX
      */
-    protected function force_ajax() {
+    protected function force_ajax(): void {
         if (!$this->is_ajax_request()) {
             if ($this->request->action() === 'japi')
                 die(GRGEError::m(\grge\E_HTTP_AJAX_REQUIRED));
@@ -45,7 +46,7 @@ abstract class Controller extends Kohana_Controller {
      * Binds the active user object globally. Returns true, when the object was successfully bound; otherwise false
      * @return bool
      */
-    private function get_user_obj() {
+    private function get_user_obj(): bool {
         if (!Globals::hasCurrentUser())
             Globals::setCurrentUser($this->session->get('user',NULL));
         return Globals::hasCurrentUser();
@@ -54,7 +55,7 @@ abstract class Controller extends Kohana_Controller {
     /**
      * This function will cause the script to abort when the user is not logged in
      */
-    private function force_login() {
+    private function force_login(): void {
         // Get user object, check if it is valid
         if (!$this->get_user_obj() || !Globals::CurrentUserF()->valid()) {
             // If we don't have a user object, destroy the current session and unbind global registers (just to be sure)
@@ -77,6 +78,7 @@ abstract class Controller extends Kohana_Controller {
 
     /**
      * Controller initialization
+     * @noinspection ReturnTypeCanBeDeclaredInspection
      */
     public function before() {
         //Init error class
@@ -85,7 +87,7 @@ abstract class Controller extends Kohana_Controller {
         //Load session
         if (static::$initialize_session) {
             $vcsid = $this->request->is_initial() ? null : $this->request->headers('X-Virtual-Cookie');
-            $this->session = Session::instance(null, $vcsid ? $vcsid : null);
+            $this->session = Session::instance(null, $vcsid ?: null);
 
             // Virtual login
             if ($this->request->is_initial())
@@ -93,7 +95,7 @@ abstract class Controller extends Kohana_Controller {
 
             if (!$this->is_ajax_request())
                 // Preserve initial get/post parameters
-                $this->session->set('request',array_merge($_SERVER,["CLIENT_REQUEST" => $_REQUEST]));
+                $this->session->set('request',array_merge($_SERVER,['CLIENT_REQUEST' => $_REQUEST]));
 
             //Check AJAX
             if (static::$force_ajax)
@@ -124,6 +126,8 @@ abstract class Controller extends Kohana_Controller {
         }
     }
 
+
+    /** @noinspection ReturnTypeCanBeDeclaredInspection */
     public function after() {
         if (static::$allow_etag_cache) {
             $resource = $this->response->body();
@@ -139,14 +143,16 @@ abstract class Controller extends Kohana_Controller {
         }
     }
 
-    public static function dump($title, $object) {
+    public static function dump($title, $object): void {
         self::$dumps[$title] = $object;
     }
 
-    private function daily_login_bonus() {
+    private function daily_login_bonus(): void {
         $last = (int)DB::select('dailylogin')->from('users')->where('uid','=',Globals::CurrentUserF()->uid())->execute()->get('dailylogin',0);
         $num = (int)DB::select('logincount')->from('users')->where('uid','=',Globals::CurrentUserF()->uid())->execute()->get('logincount',0);
-        $today = floor(time()/86400);
+
+        $nulldate = new DateTime(); $nulldate->setTimestamp( 0 );
+        $today = (new DateTime())->diff( $nulldate )->days;
 
         if ($last === $today) return;
         elseif ($last === ($today - 1)) {
@@ -181,7 +187,7 @@ abstract class Controller extends Kohana_Controller {
         }
     }
 
-    public function perform_virtual_login() {
+    public function perform_virtual_login(): void {
         if (!$this->get_user_obj()) return;
         $last_update = $this->session->get('last_virtual_login',0);
 
@@ -194,11 +200,11 @@ abstract class Controller extends Kohana_Controller {
     /**
      * Dummy action; used as a replacement for the actual action when the before-method needs to cancel execution, but can't completely kill the script by dieing
      */
-    public function action_noaction() {}
+    public function action_noaction(): void {}
 
-    public function action_maintenance() {
+    public function action_maintenance(): void {
         if (!Tool_Events::maintenance())
-            $this->redirect(URL::site('landing/redirect',true));
+            self::redirect(URL::site('landing/redirect',true));
         else {
             $this->add_widget(View::factory('pages/maintenance')->set('slot', Tool_Events::active_maintenance_period())->render());
             $this->render();
@@ -209,33 +215,31 @@ abstract class Controller extends Kohana_Controller {
 
     /**
      * Hook for AJAX calls using JAPI
-     * @return bool
      */
-    public function action_japi() {
-        // Get action, build method name by prepending "japi_"
+    public function action_japi(): void {
+        // Get action, build method name using the prefix "japi_"
         $action = $this->request->param('jaction');
         $method = "japi_{$action}";
 
         // Fail if we have no action
         if (!$action)
-            return $this->error(\grge\E_HTTP_REQUEST_INCOMPLETE);
-
+            $this->error(\grge\E_HTTP_REQUEST_INCOMPLETE);
         // Call method, or fail if method does not exists
-        if (method_exists($this, $method))
-            return $this->$method();
-        else return $this->error(\grge\E_HTTP_REQUEST_INVALID, ['uri' => $this->request->uri()]);
+        else if (!method_exists($this, $method))
+            $this->error(\grge\E_HTTP_REQUEST_INVALID, ['uri' => $this->request->uri()]);
+        else $this->$method();
     }
 
     /**
      * Add some default data to the output chain, i.e. menus
      */
-    private function render_defaults() {
+    private function render_defaults(): void {
         $this->add_data('current_url', $this->request->uri(), true);
-        if (!isset($this->widgets['main-menu']) && static::$menu)
+        if (static::$menu && !isset($this->widgets['main-menu']))
             $this->add_menu(static::$menu);
     }
 
-    protected function add_menu($menu, $additional_data = []) {
+    protected function add_menu($menu, $additional_data = []): void {
         $view = View::factory('menus/' . $menu)->set('url_wiki', Tool_Htmlout::get_external_link('wiki'));
 
         foreach ($additional_data as $key => $value)
@@ -244,7 +248,7 @@ abstract class Controller extends Kohana_Controller {
         $this->add_widget('main-menu',$view->render());
     }
 
-    protected function modify_current_url($url) {
+    protected function modify_current_url($url): void {
         $this->add_data('current_url', $url);
     }
 
@@ -253,7 +257,7 @@ abstract class Controller extends Kohana_Controller {
      * @param string $widget Widget name; if content parameter is missing, this will be used instead as context.
      * @param string|null $content Widget content. When missing, the first parameter is interpreted as widget content, using "content" as widget name
      */
-    protected function add_widget($widget, $content = null) {
+    protected function add_widget($widget, $content = null): void {
         if ($content === null) $this->widgets['content'] = $widget;
         else $this->widgets[$widget] = $content;
     }
@@ -264,7 +268,7 @@ abstract class Controller extends Kohana_Controller {
      * @param string|null $content Notification content
      * @param string|bool $title Notification title (optional)
      */
-    protected function add_note($type, $content = null, $title = false) {
+    protected function add_note($type, $content = null, $title = false): void {
         if ($content === null) $this->notifications[] = array('type' => 'info', 'content' => $title, 'title' => false);
         else $this->notifications[] = array('type' => $type, 'content' => $content, 'title' => $title);
         $this->session->set('notifications',$this->notifications);
@@ -276,14 +280,14 @@ abstract class Controller extends Kohana_Controller {
      * @param mixed|null $data Data to add
      * @param bool $no_override If a key with the same name is already set, this controls weather the old key should be overwritten. The default is false (which means the old one will be overwritten)
      */
-    protected function add_data($key, $data = null, $no_override = false) {
+    protected function add_data($key, $data = null, $no_override = false): void {
         if (is_array($key))
             $this->data = array_merge_recursive($this->data, $key);
         elseif (!isset($this->data[$key])) $this->data[$key] = $data;
         elseif (!$no_override) $this->data[$key] = array_merge_recursive($this->data[$key], $data);
     }
 
-    protected function is_silent() {
+    protected function is_silent(): bool {
         return (bool)Request::$current->post('silent');
     }
 
@@ -296,7 +300,7 @@ abstract class Controller extends Kohana_Controller {
      * @return bool Always returns true
      * @throws Kohana_Exception
      */
-    protected function render($obj = null, $skip_notifications = false) {
+    protected function render($obj = null, $skip_notifications = false): bool {
         if ($this->is_silent()) return true;
 
         $this->response->headers('Content-Type', 'application/json');
@@ -313,10 +317,10 @@ abstract class Controller extends Kohana_Controller {
             $version_data = Kohana::$config->load('build.version');
             $this->add_data('profiling', [
                 'version' => "GRGE {$version_data['major']}.{$version_data['minor']}.{$version_data['service']}-{$version_data['maintenance']}-{$version_data['stage']}-{$version_data['build']} ({$version_data['date']})",
-                'path' => $this->request->controller() . ' / ' . ($this->request->action() == 'japi' ? ($this->request->param('jaction') . ' (japi)') : $this->request->action()),
+                'path' => $this->request->controller() . ' / ' . ($this->request->action() === 'japi' ? ($this->request->param('jaction') . ' (japi)') : $this->request->action()),
                 'memory' => number_format((memory_get_peak_usage() - KOHANA_START_MEMORY) / 1024, 2).'KB',
                 'time' => number_format(microtime(TRUE) - KOHANA_START_TIME, 5).'s',
-                'compression' => number_format(($compression[0] == $compression[1]) ? 1 : $compression[1]/$compression[0] ,3)
+                'compression' => number_format(($compression[0] === $compression[1]) ? 1 : $compression[1]/$compression[0] ,3)
             ], true);
         }
 
@@ -327,8 +331,8 @@ abstract class Controller extends Kohana_Controller {
             $this->session->delete('notifications');
         }
 
-        if (Controller::$dumps && Kohana::$environment === Kohana::DEVELOPMENT)
-            $this->add_data('var_dump', Controller::$dumps, true);
+        if (self::$dumps && Kohana::$environment === Kohana::DEVELOPMENT)
+            $this->add_data('var_dump', self::$dumps, true);
 
         // Render
         $this->response->body(json_encode($this->data, JSON_FORCE_OBJECT));
@@ -341,7 +345,7 @@ abstract class Controller extends Kohana_Controller {
      * @param mixed|null $additional_data Optional additional data to add to the output
      * @return bool Always returns false
      */
-    protected function error($c, $additional_data = null) {
+    protected function error($c, $additional_data = null): bool {
         $this->response->headers('Content-Type', 'application/json');
         $tmp = array('error' => array(
             'code' => $c,
@@ -350,15 +354,15 @@ abstract class Controller extends Kohana_Controller {
             'details' => $additional_data,
         ));
 
-        if (Controller::$dumps) $tmp['var_dump'] = Controller::$dumps;
+        if (self::$dumps) $tmp['var_dump'] = self::$dumps;
 
         $this->response->body(json_encode($tmp, JSON_FORCE_OBJECT));
         return false;
     }
 
-    protected function not_found($custom_uri = null) {
+    protected function not_found($custom_uri = null): bool {
         $this->add_widget(View::factory('pages/notfound')
-            ->set('uri', $custom_uri !== null ? $custom_uri : $this->request->uri())
+            ->set('uri', $custom_uri ?? $this->request->uri())
             ->render()
         );
         return $this->render();

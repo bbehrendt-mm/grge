@@ -39,10 +39,12 @@ abstract class Model_Gamelayer_Logic extends Model_Gamelayer_Io {
         unset($this->set['gamedata']->ghuls[$id]);
     }
 
-	/**
-	 * @param $lid
-	 * @return Model_Combat_Zombies_Ghul[]
-	 */
+    /**
+     * @param $lid
+     *
+     * @return Model_Combat_Zombies_Ghul[]
+     * @throws Exception
+     */
     public function get_ghuls($lid) {
         $ret = [];
 

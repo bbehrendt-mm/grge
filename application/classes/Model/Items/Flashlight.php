@@ -13,7 +13,7 @@ class Model_Items_Flashlight extends Model_Items_Abstract_Item implements Interf
 	public $fillrate = 0;
     protected $on = true;
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action(!$this->on ? 'Einschalten' : 'Ausschalten', Model_Action::factory()
                 ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)

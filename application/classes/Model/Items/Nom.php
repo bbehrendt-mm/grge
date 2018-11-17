@@ -11,7 +11,7 @@ class Model_Items_Nom extends Model_Items_Abstract_Item implements Interface_Sta
 
 	protected static $weight = 2;
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('Essen', Model_Action::factory()
                 ->effect(

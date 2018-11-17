@@ -13,7 +13,7 @@ class Model_Items_Xmas_Paraspirin extends Model_Items_Abstract_Stackable impleme
 	protected static $autospawn = Array(5,15);
 	protected static $weight = 1;
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('Schlucken', Model_Action::factory()
                 ->allow_auto(false)

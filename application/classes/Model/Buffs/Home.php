@@ -34,6 +34,8 @@ class Model_Buffs_Home extends Model_Buffs_Abstract_Buff {
         ),
     );
 
+    protected function get_effects(): array { return $this->effects; }
+
     public function rebuild() {
         if (!($hideout = Tool_Scripts::current_location_hideout($this->assoc_player)))
             return parent::rebuild();

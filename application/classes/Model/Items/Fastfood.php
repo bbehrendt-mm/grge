@@ -29,7 +29,7 @@ class Model_Items_Fastfood extends Model_Items_Abstract_Item implements Interfac
 	
 	protected static $weight = 1;
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('Essen', Model_Action::factory()
                 ->effect(

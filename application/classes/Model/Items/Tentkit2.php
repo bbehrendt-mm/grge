@@ -11,7 +11,7 @@ class Model_Items_Tentkit2 extends Model_Items_Tentkit  {
 
 	protected static $weight = 7;
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('InstaZELT™ aufstellen', Model_Action::factory()
                 ->allow_remote(false)

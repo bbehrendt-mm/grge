@@ -6,8 +6,6 @@ class Model_Buffs_Event_Rudolph extends Model_Buffs_Abstract_Passive {
 	protected static $icon = 'rudolph';
 	protected static $desc = 'Es gibt nichts weihnachtlichers, als einen verfallenen Weihnachtsmarkt im Schein der roten Nase eines sturzbetrunkenen Rentiers nach Gegenständen zu durchwühlen. Deine Fundchancen sind stak erhöht.';
 	protected static $bid = 'rudolph';
-	
-	protected $effects = Array();
 
 	protected function activator() {
 	    if (!$this->associated_to_player()) return false;

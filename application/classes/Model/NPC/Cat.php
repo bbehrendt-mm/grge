@@ -8,8 +8,6 @@ class Model_NPC_Cat extends Model_NPC_Animal
         Interface_Plentity::IC_ALLOW_MOVE, Interface_Plentity::IC_ALLOW_MANAGE_ACTIVITY
     ];
 
-    protected $last_hideout = null;
-
     protected static $movement_scaling = 0.7;
     protected static $alcohol_scaling = 10;
     protected static $inventory_size = 5;

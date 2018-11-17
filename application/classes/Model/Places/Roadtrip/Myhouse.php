@@ -8,7 +8,7 @@ class Model_Places_Roadtrip_Myhouse extends Model_Places_Abstract_Hideout {
     protected static $starts_built = false;
 
     //Base defense
-    protected $defense = 35;
+    protected static $base_defense = 35;
 
     //Base: 15% per day
     protected static $decay_rate = 0;

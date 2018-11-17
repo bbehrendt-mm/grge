@@ -2,12 +2,12 @@
 
 class Model_Items_Virtual_Location_Place extends Model_Items_Abstract_Virtual {
 
-    protected $remaining = array(
+    protected static $default_action_uses = array(
         'show_rooms' => PHP_INT_MAX,
     );
 
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()->add_action('Dieser Ort ...', Model_Action::factory()
             ->buttonskin('hideout')
             ->description('Hier kannst du sehen, was es an diesem Ort so zu tun gibt. Möglicherweise kannst du sogar ein paar Ausbauten vornehmen...')

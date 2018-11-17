@@ -2,10 +2,10 @@
 
 abstract class Model_Map_Abstract {
 
-    const MMA_TYPE_OVERVIEW = 1;
-    const MMA_TYPE_LABYRINTH = 2;
+    public const MMA_TYPE_OVERVIEW = 1;
+    public const MMA_TYPE_LABYRINTH = 2;
     
-    const MMA_NUMBER_OF_TAGS = 16;
+    public const MMA_NUMBER_OF_TAGS = 16;
 
     protected static $map_type;
     protected static $map_grid_size = 2;
@@ -14,27 +14,27 @@ abstract class Model_Map_Abstract {
     protected $mucfg = [];
 
     protected $paths = Array();
-    protected $sublocation = null;
+    protected $sublocation;
 
-    protected $loc_notes = Array(
+    protected $loc_notes = [
         /* 15 => Array('tag' => 0, 'text' => '') */
-    );
+    ];
 
-    protected $loc_assoc = Array(
+    protected $loc_assoc = [
          /* 15 => Array('class' => 'Model_Places_Someplace', 'x' => 1, 'y' => 12, 'direction' => 12, 'visible' => false, 'dry' => 2) */
-    );
-    protected $id_assoc = Array(
+    ];
+    protected $id_assoc = [
         /* 'Model_Places_Someplace' => array(15,20) */
-    );
+    ];
 
-    protected $assoc_cache = Array(
+    protected $assoc_cache = [
         /* 12 => Array('Model_Places_Someplace' => 3) */
-    );
+    ];
 
-    protected $pos_cache = Array(
-        'x' => array(),
-        'y' => array(),
-    );
+    protected $pos_cache = [
+        'x' => [],
+        'y' => [],
+    ];
 
     protected $fixed_id_assoc = Array();
 
@@ -50,7 +50,8 @@ abstract class Model_Map_Abstract {
      */
     protected $lib_routing_reverse = Array();
 
-    protected $movement_cost_modifier = 1;
+    protected static $default_movement_cost_modifier = 1;
+    protected $movement_cost_modifier;
 
     public static function get_map_type() {
         return static::$map_type;
@@ -61,7 +62,7 @@ abstract class Model_Map_Abstract {
      * @param null $sub
      * @return Model_Map_Abstract
      */
-    public static function factory($map, $sub = null) {
+    public static function factory($map, $sub = null): Model_Map_Abstract {
         $cls = static::meta($map,$sub)['engine'];
         /** @var Model_Map_Abstract $cls */
         return new $cls($map,$sub);
@@ -70,27 +71,27 @@ abstract class Model_Map_Abstract {
     public function __construct($map, $sub) {
         $this->mapname = $map;
         $this->sublocation = $sub;
+        $this->movement_cost_modifier = static::$default_movement_cost_modifier;
         $this->sub_routing = new Model_Routing(static::$map_grid_size);
     }
 
-    public function get_location_notes($id) {
-        return isset($this->loc_notes[$id]) ? $this->loc_notes[$id] : ['tag' => 0, 'text' => ''];
+    public function get_location_notes($id): array {
+        return $this->loc_notes[$id] ?? ['tag' => 0, 'text' => ''];
     }
 
-    public function set_location_notes($id, $tag, $text) {
-        if ($tag < 0 || $tag > Model_Map_Abstract::MMA_NUMBER_OF_TAGS) $tag = 0;
+    public function set_location_notes($id, $tag, $text): bool {
+        if ($tag < 0 || $tag > self::MMA_NUMBER_OF_TAGS) $tag = 0;
         if (isset($this->loc_assoc[$id])) {
             $this->loc_notes[$id] = ['tag' => $tag, 'text' => $tag > 0 ? $text : ''];
             return true;
         } else return false;
-
     }
 
-    public function get_mapname() {
+    public function get_mapname(): string {
         return $this->mapname;
     }
 
-    public function get_network() {
+    public function get_network(): array {
         return $this->sub_routing->get_network();
     }
 
@@ -99,17 +100,17 @@ abstract class Model_Map_Abstract {
      * @param null|number $set
      * @return int
      */
-    public function movement_modifier($set = null) {
+    public function movement_modifier($set = null): int {
         $t = $this->movement_cost_modifier;
         if ($set !== null)
             $this->movement_cost_modifier = $set;
         return $t;
     }
 
-    protected static function meta($map,$sub = null) {
+    protected static function meta($map,$sub = null): array {
         $cfg = (array)Kohana::$config->load("maps/{$map}.submeta");
-        $type = $sub ? $sub : '.';
-        return array_merge($cfg['..'],isset($cfg[$type]) ? $cfg[$type] : []);
+        $type = $sub ?: '.';
+        return array_merge($cfg['..'], $cfg[$type] ?? []);
     }
 
     /**
@@ -117,7 +118,7 @@ abstract class Model_Map_Abstract {
      * @param String|null $type
      * @return array
      */
-    protected function get_local_meta($type) {
+    protected function get_local_meta($type): array {
         return static::meta($this->mapname,$type);
     }
 
@@ -129,7 +130,7 @@ abstract class Model_Map_Abstract {
      * @return array
      * @throws Kohana_Exception
      */
-    protected function get_config($type = null) {
+    protected function get_config($type = null): array {
         return (array)(($type === null) ? Kohana::$config->load("maps/{$this->mapname}.locations") : Tool_System::config_tree("maps/{$this->mapname}.locations", $type));
     }
 
@@ -139,7 +140,7 @@ abstract class Model_Map_Abstract {
         return $this->mucfg[$addr];
     }
 
-    public function has_location($id) {
+    public function has_location($id): bool {
         return isset($this->loc_assoc[$id]);
     }
 
@@ -156,18 +157,21 @@ abstract class Model_Map_Abstract {
      * @param $from
      * @param $to
      */
-    protected function push_route($from, $to) {
+    protected function push_route($from, $to): void {
         if (!isset($this->paths[$from]))
             $this->paths[$from] = array();
-        if (!in_array($to, $this->paths[$from]))
+        if (!in_array($to, $this->paths[$from], true))
             $this->paths[$from][] = $to;
     }
 
     /**
      * Checks, if a new location ($class) can be connected to $target. If $target is not set, the function will just check if an instance of $class can be places in general.
-     * @param string $class Class of location to place
+     *
+     * @param string         $class  Class of location to place
      * @param null|int|array $target Target location
+     *
      * @return array|bool True, when a single target location was given and $class can be connected to that location; an array, when a target array was given, the array will contain all possible targets; false, when $class can not be connected to any locations in $target
+     * @throws Kohana_Exception
      */
     protected function check_placement_limits($class, $target = null) {
         if (!($cfg = $this->get_config($class)))
@@ -184,18 +188,18 @@ abstract class Model_Map_Abstract {
             $target = Array($target);
 
         $target = array_filter($target,function($element) use ($class,$cfg) {
-            return (!isset($this->assoc_cache[$element], $this->assoc_cache[$element][$class])
+            return (!isset($this->assoc_cache[$element][$class])
                 || ($this->assoc_cache[$element][$class] < $cfg['max_local']));
         });
 
-        $target_priority = array_filter($target,function($element) use ($class,$cfg) {
+        $target_priority = array_filter($target,function($element) {
             return (!isset($this->assoc_cache[$element]) || array_sum($this->assoc_cache[$element]) < 3);
         });
 
         if ($target_priority)
             $target = $target_priority;
 
-        if (count($target) == 0)
+        if (count($target) === 0)
             return false;
         else return $ret_as_array ? array_values($target) : true;
     }
@@ -205,7 +209,7 @@ abstract class Model_Map_Abstract {
      * @param string $class
      * @param int $target
      */
-    protected function update_placement_limits($class, $target) {
+    protected function update_placement_limits($class, $target): void {
         if (!$target) return;
 
         if (!isset($this->assoc_cache[$target]))
@@ -220,7 +224,7 @@ abstract class Model_Map_Abstract {
      * @param number $x
      * @param number $y
      */
-    protected function update_pos_cache($x, $y) {
+    protected function update_pos_cache($x, $y): void {
         $this->pos_cache['x'][] = $x;
         $this->pos_cache['y'][] = $y;
 
@@ -240,7 +244,7 @@ abstract class Model_Map_Abstract {
      * @param bool $reserved
      * @param null|int $fixed_id
      */
-    protected function catalog_location($location_id, $location_class, $x, $y, $direction, $visible, $dry = 0, $reserved = false, $fixed_id = null) {
+    protected function catalog_location($location_id, $location_class, $x, $y, $direction, $visible, $dry = 0, $reserved = false, $fixed_id = null): void {
         $this->loc_assoc[$location_id] = Array('class' => $location_class, 'x' => $x, 'y' => $y, 'direction' => $direction, 'visible' => $visible, 'dry' => $dry, 'reserved' => $reserved);
         if (!isset($this->id_assoc[$location_class]))
             $this->id_assoc[$location_class] = array($location_id);
@@ -259,7 +263,7 @@ abstract class Model_Map_Abstract {
      * @param bool $reverse Auto add the reversed path
      * @return bool True when the path was be added
      */
-    public function add_route($from, $to, $reverse = true) {
+    public function add_route($from, $to, $reverse = true): bool {
         if (!isset($this->loc_assoc[$from], $this->loc_assoc[$to]))
             return false;
 
@@ -277,7 +281,7 @@ abstract class Model_Map_Abstract {
      * @return bool
      * @throws Exception
      */
-    abstract public function place_location($location, $visible, $dry = 0, $fixed_id = null);
+    abstract public function place_location($location, $visible, $dry = 0, $fixed_id = null): bool;
 
     /**
      * @param Model_Places_Abstract_Place|string $location
@@ -293,7 +297,7 @@ abstract class Model_Map_Abstract {
      * @return int
      * @throws Exception
      */
-    public function implant_location($location,$x, $y, $relative, $direction, $branchable, $root, $visible, $dry, $fixed_id) {
+    public function implant_location($location,$x, $y, $relative, $direction, $branchable, $root, $visible, $dry, $fixed_id): int {
         if ($relative) {
             $x += $this->loc_assoc[$root]['x'];
             $y += $this->loc_assoc[$root]['y'];
@@ -325,13 +329,15 @@ abstract class Model_Map_Abstract {
      * @return Model_Places_Abstract_Place|null
      * @throws Exception
 */
-    public function get_by_fixed_id($fixed_id) {
-        if (isset($this->fixed_id_assoc[$fixed_id]))
-            return Globals::CurrentGameF()->uin()->get($this->fixed_id_assoc[$fixed_id], 'Model_Places_Abstract_Place');
-        else return null;
+    public function get_by_fixed_id($fixed_id): ?Model_Places_Abstract_Place {
+        if (isset($this->fixed_id_assoc[$fixed_id])) {
+            /** @var Model_Places_Abstract_Place $ret */
+            $ret = Globals::CurrentGameF()->uin()->get($this->fixed_id_assoc[$fixed_id], 'Model_Places_Abstract_Place');
+            return $ret;
+        } else return null;
     }
 
-    public function add_location($class, $fixed_id = null) {
+    public function add_location($class, $fixed_id = null): bool {
         if (!($data = $this->get_config($class)))
             return false;
 
@@ -347,7 +353,7 @@ abstract class Model_Map_Abstract {
      * @return bool
      * @throws Exception
 */
-    public function insert_location($location) {
+    public function insert_location($location): bool {
         $config = $this->get_config();
         $class = get_class($location);
 
@@ -355,27 +361,27 @@ abstract class Model_Map_Abstract {
             return false;
 
         $data = $config[$class];
-        if (!$this->place_location($location, $data['obvious'], $data['contortion'], isset($data['fixed']) ? $data['fixed'] : null))
+        if (!$this->place_location($location, $data['obvious'], $data['contortion'],$data['fixed'] ?? null))
             return false;
 
         $this->sub_routing->compile();
         return true;
     }
 
-    abstract public function auto_init();
+    abstract public function auto_init(): void;
 
     /**
      * Resolves a fixed ID to an actual ID
      * @param $fixed_id
      * @return null|int
      */
-    public function resolve_fixed_id($fixed_id) {
+    public function resolve_fixed_id($fixed_id): ?int {
         if (isset($this->fixed_id_assoc[$fixed_id]))
-            return$this->fixed_id_assoc[$fixed_id];
+            return $this->fixed_id_assoc[$fixed_id];
         else return null;
     }
 
-    public function uncover_all() {
+    public function uncover_all(): void {
         foreach ($this->loc_assoc as $lid => &$data) if (!$data['visible']) {
             $data['visible'] = true;
             if ($data['reserved']) {
@@ -387,13 +393,14 @@ abstract class Model_Map_Abstract {
     }
 
     /**
-     * Tries to unvail a new location from $id
+     * Tries to unveil a new location from $id
      * @param int $id     Current location
-     * @param int $factor Chance modificator
-     * @return bool|Model_Places_Abstract_Place|null false, when no location can be unvailed from here; null, when no location was unvailed, otherwise location object
+     * @param int $factor Chance modifier
+     * @return bool|Model_Places_Abstract_Place|null false, when no location can be unveiled from here; null, when no location was unveiled, otherwise location object
      * @throws Exception
 */
-    public function attempt_unvail($id, $factor = 1) {
+
+    public function attempt_unveil($id, $factor = 1) {
         if (!isset($this->loc_assoc[$id]))
             return false;
         if (!isset($this->paths[$id]))
@@ -408,7 +415,7 @@ abstract class Model_Map_Abstract {
                 $accum += $dst_config['chance'];
             }
 
-        if ($accum == 0)
+        if ($accum === 0)
             return null;
 
         if ($this->loc_assoc[$id]['dry'] <= -1)
@@ -450,7 +457,7 @@ abstract class Model_Map_Abstract {
      * @param int $max_nodes Maximum number of nodes
      * @return array Format [destination => ['distance' => distance, 'tail' => array containing nodes to cross (without start and end node)],...]
      */
-    public function build_route_array($id, $max_nodes = null) {
+    public function build_route_array($id, $max_nodes = null): array {
         $map = $this->sub_routing->build_route_array($this->lib_routing[$id]);
 
         $ret = array();
@@ -486,16 +493,16 @@ abstract class Model_Map_Abstract {
         return $ret;
     }
 
-    public function get_nodes() {
+    public function get_nodes(): array {
         return $this->sub_routing->get_nodes();
     }
 
     /**
-     * Geturns thge position of a location, or null if $id does not point to a valid location
+     * Returns the position of a location, or null if $id does not point to a valid location
      * @param $id
      * @return array|null
      */
-    public function get_position($id) {
+    public function get_position($id): ?array {
         return isset($this->loc_assoc[$id]) ? array('x' => $this->loc_assoc[$id]['x'], 'y' => $this->loc_assoc[$id]['y']) : null;
     }
 
@@ -506,9 +513,9 @@ abstract class Model_Map_Abstract {
      * @param null $max_nodes
      * @return array|null Null, when there is no such route
      */
-    public function get_route($from, $to, $max_nodes = null) {
+    public function get_route($from, $to, $max_nodes = null): ?array {
         $map = $this->build_route_array($from, $max_nodes);
-        return (isset($map[$to])) ? $map[$to] : null;
+        return $map[$to] ?? null;
     }
 
     public function get_distance($from, $to, $max_nodes = null) {
@@ -519,7 +526,7 @@ abstract class Model_Map_Abstract {
     /**
      * @return array
      */
-    public function get_routes() {
+    public function get_routes(): array {
         $ret = array();
         foreach ($this->paths as $from => $tos) foreach ($tos as $to) if ($this->loc_assoc[$from]['visible'] && $this->loc_assoc[$to]['visible']){
             $key = min($from, $to) . '_' . max($from, $to);
@@ -540,7 +547,7 @@ abstract class Model_Map_Abstract {
      * @param bool $full
      * @return float
      */
-    public function get_discovery_rate($id, $full = false) {
+    public function get_discovery_rate($id, $full = false): float {
         $found = $all = 0;
 
         if (!isset($this->paths[$id]))
@@ -557,10 +564,10 @@ abstract class Model_Map_Abstract {
             $all--;
         }
 
-        return ($all == 0) ? 1 : $found/$all;
+        return ($all === 0) ? 1 : $found/$all;
     }
 
-    public function get_adjacent_regions($id) {
+    public function get_adjacent_regions($id): array {
         if (!isset($this->paths[$id]))
             return [];
 
@@ -578,7 +585,7 @@ abstract class Model_Map_Abstract {
      * @param bool $show_hidden Set true to show locations that are hidden
      * @return int[]
      */
-    public function get_locations($type = null, $show_hidden = false) {
+    public function get_locations($type = null, $show_hidden = false): array {
         $ret = array();
         foreach ($this->loc_assoc as $id => $data)
             if (($data['visible'] || $show_hidden) && ($type === null || Tool_System::instance_of($data['class'], $type)))

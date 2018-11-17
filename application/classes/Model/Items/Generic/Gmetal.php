@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Items_Generic_Gmetal extends Model_Items_Generic_Metal implements Interface_Static {
+class Model_Items_Generic_Gmetal extends Model_Items_Generic_Metal {
 	
 	protected static $static_info = Array(
 			'name' => 'Goldklumpen',

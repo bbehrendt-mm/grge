@@ -85,7 +85,7 @@ abstract class Model_Gamelayer_Storage extends Model {
 			//Decode blob
 			try {
 				$this->check_hash = md5($this->set['gamedata']);
-				$this->set['gamedata'] =  unserialize(gzuncompress($this->set['gamedata']));
+				$this->set['gamedata'] =  unserialize(gzuncompress($this->set['gamedata']), ['allowed_classes' => false]);
                 if ($this->read_only)
                     $this->uin()->set_read_only();
 

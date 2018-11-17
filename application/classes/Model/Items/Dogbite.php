@@ -20,7 +20,7 @@ class Model_Items_Dogbite extends Model_Combat_Weapon {
 
     protected static $weight = 0;
 
-    public function generate_wound($damage) {
+    public function generate_wound($damage): ?string {
         if ($damage <= 0) return null;
 
         $injury = random_int(0,100);

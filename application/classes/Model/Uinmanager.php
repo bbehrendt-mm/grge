@@ -87,7 +87,7 @@ class Model_Uinmanager extends Model {
 		
 		foreach ($set as $obj) {
 			try {
-                $object = unserialize(gzuncompress($obj["data"]));
+                $object = unserialize(gzuncompress($obj["data"]), ['allowed_classes' => ['Interface_Cloudshard']]);
                 $this->cache_set($object);
             } catch (Exception $e) {
                 continue;
@@ -151,12 +151,13 @@ class Model_Uinmanager extends Model {
      * @param number $id Reserved slot ID
      * @param Interface_Cloudshard $data
      * @throws Exception
-     * @return number
+     * @return int
      */
-    public function fill_reservation($id, Interface_Cloudshard &$data) {
-        if (!$data) throw new Exception("Cannot register NULL objects in game cloud!", 1);
+    public function fill_reservation($id, Interface_Cloudshard $data): int {
+        if (!$data) throw new LogicException(
+            'Cannot register NULL objects in game cloud!', 1);
 
-        if (!isset($this->reserved[$id])) throw new Exception("Cloud ID $id is not reserved!", 1);
+        if (!isset($this->reserved[$id])) throw new LogicException("Cloud ID $id is not reserved!", 1);
 
         $data->uin($id);
         $this->cache_set($data, true);

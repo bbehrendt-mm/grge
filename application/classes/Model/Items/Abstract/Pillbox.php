@@ -17,7 +17,7 @@ abstract class Model_Items_Abstract_Pillbox extends Model_Items_Abstract_Stackab
 
     protected static $pill_effects = Array();
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('Eine ' . static::$singular_name . ' schlucken', Model_Action::factory()
                     ->export('succ')

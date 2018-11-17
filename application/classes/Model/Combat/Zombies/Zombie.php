@@ -3,7 +3,6 @@
 abstract class Model_Combat_Zombies_Zombie extends Model_Combat_Actor {
 
     protected static $default_weapon = 'Model_Items_Claw';
-    protected $type = Model_Combat_Actor::MCA_TYPE_ZOMBIE;
     protected $nano_npc;
 
     protected static $taunts = [
@@ -17,6 +16,7 @@ abstract class Model_Combat_Zombies_Zombie extends Model_Combat_Actor {
 
     public function __construct() {
         parent::__construct();
+        $this->type = Model_Combat_Actor::MCA_TYPE_ZOMBIE;
         $this->nano_npc = new Model_NPC_Nano($this->name());
         $this->nano_npc->get_status()->set(Model_Status::MS_STAT_ENERGY, 50);
         $this->nano_npc->location_class(Globals::CurrentPlayerF()->location_class());
@@ -32,7 +32,7 @@ abstract class Model_Combat_Zombies_Zombie extends Model_Combat_Actor {
      * @return Model_Combat_Actor
      * @throws Exception
      */
-    public function add_weapon($weapon) {
+    public function add_weapon($weapon): Model_Combat_Actor {
         if (!is_array($weapon)) {
             $weapon->register($this->nano_npc);
             $weapon->ignore_equip();
@@ -48,7 +48,7 @@ abstract class Model_Combat_Zombies_Zombie extends Model_Combat_Actor {
         return $tmp;
     }
 
-    public function get_avatar() {
+    public function get_avatar(): ?string {
         return 'media/icons/battle/avatar/zombie.jpg';
     }
 }

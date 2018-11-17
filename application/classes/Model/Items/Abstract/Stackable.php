@@ -26,10 +26,13 @@ abstract class Model_Items_Abstract_Stackable extends Model_Items_Abstract_Item 
 	 */
 	protected $count;
 
-	/**
-	 * Stackable basic constructor;
-	 * @param int $size
-	 */
+    /**
+     * Stackable basic constructor;
+     *
+     * @param int $size
+     *
+     * @throws Exception
+     */
 	public function __construct($size = null) {
 		//Parental constructor
 		parent::__construct();

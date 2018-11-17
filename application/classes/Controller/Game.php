@@ -10,20 +10,26 @@ class Controller_Game extends Controller {
     /**
      * Hook for AJAX calls using JAPI
      *
-     * @return bool
      * @throws Kohana_Exception
      */
-    public function action_japi() {
-        if ($this->request->param('jaction') == 'fixlink') return parent::action_japi();
+    public function action_japi(): void {
+        if ($this->request->param('jaction') == 'fixlink') {
+            parent::action_japi();
+            return;
+        }
 
-        if (!Globals::hasCurrentPlayer() || !Globals::hasCurrentGame()) return $this->render(['redirect' => 'landing/redirect']);
+        if (!Globals::hasCurrentPlayer() || !Globals::hasCurrentGame()) {
+            $this->render(['redirect' => 'landing/redirect']);
+            return;
+        }
         
         if (!Globals::PrimaryPlayerF()->get_status()->alive() && !in_array($this->request->param('jaction'), static::$death_allowed_actions)) {
             $this->render_notifications();
-            return $this->render(['redirect' => 'game/redirect']);
+            $this->render(['redirect' => 'game/redirect']);
+            return;
         }
 
-        return parent::action_japi();
+        parent::action_japi();
     }
 
     /**
@@ -189,10 +195,12 @@ class Controller_Game extends Controller {
     }
 
     /**
-     * @param $itemlist Model_Items_Abstract_Item[]
-     * @param bool $short
+     * @param                           $itemlist Model_Items_Abstract_Item[]
+     * @param bool                      $short
      * @param Interface_Plentity[]|null $players
+     *
      * @return array
+     * @throws Exception
      */
     private function group_itemlist($itemlist, $short = false, $players = null) {
         $grouping = Array();

@@ -13,7 +13,7 @@ class Model_Items_Virtual_Hero_Woman extends Model_Items_Abstract_Virtual {
         'name' => 'Heldentaten',
     );
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         $rnd_n = array(
             'die Umwelt',
             'die Kinder',

@@ -2,7 +2,7 @@
 
 class Model_Items_Virtual_Location_Room_Container extends Model_Items_Abstract_Virtual {
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()->add_action('Container öffnen', Model_Action::factory()
             ->buttonskin('location')
             ->description('Hier steht ein verschlossener Baucontainer. Da du nicht hereinschauen kannst, musst du ihn wohl aufmachen, um herauszufinden, was drin ist.')

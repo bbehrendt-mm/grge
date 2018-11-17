@@ -15,7 +15,7 @@ class Model_Items_Virtual_Epic_Fence extends Model_Items_Abstract_Virtual implem
         return $this->power + 4 * Tool_Scripts::count_available_items(Model_Items_Energy::cls(), false);
     }
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         $hid = parent::hid();
 
         if (!$this->on && $this->power)

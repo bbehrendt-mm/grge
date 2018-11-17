@@ -28,7 +28,7 @@ class Model_Items_Phone extends Model_Combat_Weapons_Throwable implements Interf
      * @return bool
      * @throws Exception
      */
-	public function trigger_usage(Model_Combat_Actor $me, Model_Combat_Actor $opponent, $damage, Model_Combat_Scene $scene) {
+	public function trigger_usage(Model_Combat_Actor $me, Model_Combat_Actor $opponent, $damage, Model_Combat_Scene $scene): bool {
 		if ($this->registered_user)
 			$this->registered_user->location()->inventory()->add(new Model_Items_Generic_Electro);
 		return parent::trigger_usage($me, $opponent, $damage, $scene);

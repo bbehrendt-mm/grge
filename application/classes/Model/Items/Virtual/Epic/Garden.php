@@ -98,7 +98,7 @@ class Model_Items_Virtual_Epic_Garden extends Model_Items_Abstract_Virtual {
         $hid->add_action('Düngen', $action, $id);
     }
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         $hid = parent::hid();
 
         if (!$this->get_planted_state())

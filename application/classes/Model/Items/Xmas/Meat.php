@@ -21,7 +21,7 @@ class Model_Items_Xmas_Meat extends Model_Items_Abstract_Item implements Interfa
 
 	protected static $weight = 3;
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('Essen', Model_Action::factory()
                     ->effect(

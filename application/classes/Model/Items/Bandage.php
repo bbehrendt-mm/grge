@@ -11,7 +11,7 @@ class Model_Items_Bandage extends Model_Items_Abstract_Item implements Interface
 	
 	protected static $weight = 2;
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         $is_doc = !Globals::shadowPlayerExists() && Globals::PrimaryPlayerF()->job(10030);
 
         return parent::hid()

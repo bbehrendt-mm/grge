@@ -11,17 +11,17 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
 	/**
 	 * Returns time flow mode
 	 */
-	public function timeflow() {
+	public function timeflow(): int {
 		return $this->set['gamedata']->timing->flow_mode;
 	}
 
-	public function season() {
+	public function season(): int {
 		return $this->set['gamedata']->head->season;
 	}
 
-    public function count($type, $num = null) {
+    public function count($type, $num = null): int {
         if ($num === null)
-            return isset($this->set['gamedata']->counters[$type]) ? $this->set['gamedata']->counters[$type] : 0;
+            return $this->set['gamedata']->counters[$type] ?? 0;
         elseif (isset($this->set['gamedata']->counters[$type]))
             return $this->set['gamedata']->counters[$type] += $num;
         else return $this->set['gamedata']->counters[$type] = $num;
@@ -31,7 +31,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
 	 * Check if game is paused
 	 * @see Model_Gamelayer_Process::paused()
 	 */
-	public function paused() {
+	public function paused(): bool {
 		if (!isset($this->set['gamedata']->head->paused)) $this->set['gamedata']->head->paused = false;
 		return $this->set['gamedata']->head->paused;
 	}
@@ -39,19 +39,19 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
 	/**
 	 * Returns pause lock time
 	 */
-	public function pauselock() {
+	public function pauselock(): bool {
 		if (!isset($this->set['gamedata']->head->pauselock)) $this->set['gamedata']->head->pauselock = 0;
 		return $this->set['gamedata']->head->pauselock;
 	}
 
-    public function getDaytimeOffset() {
+    public function getDaytimeOffset(): int {
         return $this->set['gamedata']->head->daytime_offset;
     }
 	
 	/**
 	 * Pauses game
 	 */
-	public function pause() {
+	public function pause(): void {
 		$this->set['gamedata']->head->pauselock = time();
 		$this->set['gamedata']->head->paused = true;
 	}
@@ -59,7 +59,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
 	/**
 	 * Unpauses game
 	 */
-	public function unpause() {
+	public function unpause(): void {
 		$this->set['gamedata']->head->pauselock = time();
 		$this->set['gamedata']->timing->last_point = time();
 		$this->set['gamedata']->head->paused = false;
@@ -69,7 +69,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
 	 * Changes tick speed
 	 * @param number $new New tick speed (in seconds)
 	 */
-	public function reflow_ticks($new) {
+	public function reflow_ticks($new): void {
 		$this->set['gamedata']->timing->tick_lenght = $new;
 	}
 		
@@ -77,7 +77,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
 	 * Returns true if there are any players still alive in this game
 	 * @see Model_Gamelayer_Process::is_alive()
 	 */
-	public function is_alive() {
+	public function is_alive(): bool {
 		$tmp = false;
 		foreach (array_keys($this->set['gamedata']->players) as $remote_player)
 		    $tmp = $tmp || ($this->get_player($remote_player) !== null && $this->get_player($remote_player)->get_status()->alive());
@@ -88,14 +88,14 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
 	/**
 	 * Returns true if this game can be ranked
 	 */
-	public function is_rankable() {
+	public function is_rankable(): bool {
 		return $this->set['gamedata']->head->rankable;
 	}
 	
 	/**
 	 * Disabled ranking for this game
 	 */
-	public function unrank() {
+	public function unrank(): void {
 		$this->set['gamedata']->head->rankable = false;
 	}
 	
@@ -138,7 +138,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
 	/**
 	 * Returns the exact unix timestamp of the last tick (i.e. the current ingame game time)
 	 */
-	final public function now() {
+	final public function now(): int {
 		return static::$now_is_real_time ? time() : $this->set['gamedata']->timing->last_point;
 	}
 	
@@ -151,15 +151,6 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
 		if ($new === NULL) return $this->set['gamedata']->timing->tick_lenght;
 		else return $this->set['gamedata']->timing->tick_lenght = $new;
 	}
-	
-	/**
-	 * Returns contest data, or null if this is not a contest game
-	 * @return NULL
-	 */
-	final public function contest_data() {
-		if (!isset($this->set['gamedata']->head->contest)) return null;
-		return $this->set['gamedata']->head->contest;
-	}
 
     /**
      * Returns all active contests
@@ -167,18 +158,22 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
      * @return mixed[]
      * @throws Kohana_Exception
      */
-	public static function get_active_contests() {
+	public static function get_active_contests(): array {
 		$contests = Kohana::$config->load('contests');
 		$tmp = Array();
-		foreach ($contests as $id => $contest) if ($contest['start'] < time() && $contest['end'] > time()) $tmp[$id] = $contests[$id];
+		$now = time();
+		foreach ($contests as $id => $contest) if ($contest['start'] < $now && $contest['end'] > $now) $tmp[$id] = $contests[$id];
 		return $tmp;
 	}
-	
-	/**
-	 * Returns contest data of a contest specified by $cid
-	 * @param string $cid
-	 * @return null|mixed
-	 */
+
+    /**
+     * Returns contest data of a contest specified by $cid
+     *
+     * @param string $cid
+     *
+     * @return null|mixed
+     * @throws Kohana_Exception
+     */
 	public static function get_contest_data($cid) {
 		if (!$cid) return null;
 		$contests = Model_Game::get_active_contests();
@@ -231,7 +226,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
      * @param string $key Map ID to determine map, null to get main map
      * @return Model_Map_Abstract|null
      */
-    final public function map_by_id($key) {
+    final public function map_by_id($key): ?Model_Map_Abstract {
         if (!$key || !isset($this->set['gamedata']->maps[$key])) return null;
         else return $this->set['gamedata']->maps[$key];
     }
@@ -240,7 +235,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
      * @param null $lid Location ID to determine map, null to get main map
      * @return string|null
      */
-    final public function mapid($lid = null) {
+    final public function mapid($lid = null): ?string {
         if ($lid === null)
             return 'main';
         else foreach ($this->set['gamedata']->maps as $id => $map)
@@ -254,7 +249,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
      * Returns the main map
      * @return Model_Map_Abstract
      */
-    final public function map_main() {
+    final public function map_main() :Model_Map_Abstract {
         return $this->set['gamedata']->maps['main'];
     }
 
@@ -262,7 +257,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
      * Returns all locations
      * @return int[]
      */
-    final public function locations() {
+    final public function locations(): array {
         $ret = array();
         foreach ($this->set['gamedata']->maps as $map)
             /** @var $map Model_Map_Abstract */
@@ -275,7 +270,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
      * Deletes all maps
      * @param string $map_cfg
      */
-    final public function reset_maps($map_cfg) {
+    final public function reset_maps($map_cfg): void {
         $this->config('game.config.map', $map_cfg);
         $this->set['gamedata']->maps = array();
         $this->set['gamedata']->maps['main'] = Model_Map_Abstract::factory($map_cfg);
@@ -286,7 +281,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
     /**
      * @return Model_Map_Abstract[]
      */
-    final public function maps() {
+    final public function maps(): array {
         return array_values($this->set['gamedata']->maps);
     }
 
@@ -299,8 +294,8 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
      * @return Model_Places_Abstract_Place|null
      * @throws Exception
      */
-	final public function location($lid = NULL) {
-		$location = ($lid !== NULL) ? $lid : Globals::CurrentPlayerF()->location_class();
+	final public function location($lid = NULL): ?Model_Places_Abstract_Place {
+		$location = $lid ?? Globals::CurrentPlayerF()->location_class();
 
         if ($location < 0)
             /** @noinspection PhpUndefinedMethodInspection */
@@ -317,7 +312,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
      * @return Model_Places_Abstract_Place
      * @throws Exception
      */
-    final public function locationF($lid = NULL) {
+    final public function locationF($lid = NULL): Model_Places_Abstract_Place {
         $location = $this->location($lid);
         if ($location !== null) throw new LogicException(
             'Requested invalid location.'
@@ -335,7 +330,8 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
         if (isset($this->set['gamedata']->maps[$mapid]))
             return false;
 
-        $this->set['gamedata']->maps[$mapid] = Model_Map_Abstract::factory(($map_cfg == null) ? $this->config('game.config.map') : $map_cfg, $sublocation);
+        $this->set['gamedata']->maps[$mapid] = Model_Map_Abstract::factory(
+            $map_cfg ?? $this->config('game.config.map'), $sublocation);
 
         /** @noinspection PhpUndefinedMethodInspection */
         $this->set['gamedata']->maps[$mapid]->auto_init();
@@ -343,7 +339,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
         return $this->set['gamedata']->maps[$mapid]->resolve_fixed_id(1);
     }
 
-    final public function unregister_map($mapid) {
+    final public function unregister_map($mapid): void {
         if (!($map = $this->map_by_id($mapid))) return;
         foreach ($map->get_locations() as $location) {
                 $lobj = $this->location($location);
@@ -357,7 +353,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
      * Returns the chat room name for this game
      * @return string
      */
-    final public function chatroom() {
+    final public function chatroom(): string {
         return 'grg_private_' . $this->set['gameid'];
     }
 
@@ -388,13 +384,16 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
         $p = $this->get_player($pid);
         return $p ? $p->name() : '???';
     }
-    
+
     /**
      * Returns a list of all available players
+     *
      * @param boolean $limit_alive Set true if you want only living players to be returned (default: true)
+     *
      * @return Model_Player[]
+     * @throws Exception
      */
-    public function players($limit_alive = true) {
+    public function players($limit_alive = true): array {
     	$ret = Array();
     	foreach ($this->set['gamedata']->players as $player_id => $pid)
             if (!$this->get_player($player_id)) continue;
@@ -407,7 +406,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
      * @param $npcid
      * @return Interface_Plentity|null
      */
-    public function get_npc($npcid) {
+    public function get_npc($npcid): ?Interface_Plentity {
         if (!isset($this->set['gamedata']->npcs[$npcid])) return null;
         else return $this->set['gamedata']->uin->get($this->set['gamedata']->npcs[$npcid], 'Interface_Plentity');
     }
@@ -416,7 +415,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
      * @param bool $limit_alive
      * @return Interface_Plentity[]
      */
-    public function npcs($limit_alive = true) {
+    public function npcs($limit_alive = true): array {
         $ret = Array();
         foreach ($this->set['gamedata']->npcs as $npc_id => $nid)
             if (!$this->get_npc($npc_id)) continue;
@@ -427,11 +426,11 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
 
     /**
      * @param Interface_Plentity $npc
-     * @param null|number|string $id
+     * @param null|int|string $id
      * @return bool
      * @throws Exception
      */
-    public function add_npc(Interface_Plentity $npc, $id = null) {
+    public function add_npc(Interface_Plentity $npc, $id = null): bool {
         if ($id === null)
             $id = $npc->id();
 
@@ -457,9 +456,11 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
 
     /**
      * @param bool $limit_alive
+     *
      * @return Interface_Plentity[]
+     * @throws Exception
      */
-    public function playable_entities($limit_alive = true) {
+    public function playable_entities($limit_alive = true): array {
         return array_merge($this->players($limit_alive), $this->npcs($limit_alive));
     }
 
@@ -468,10 +469,10 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
      * @param string $id Reference ID
      * @param int $type Name ID
      */
-    public function ndp_register($id, $type) {
+    public function ndp_register($id, $type): void {
         if (!isset($this->set['gamedata']->ndp[$id]))
             $this->set['gamedata']->ndp[$id] = array($type);
-        elseif (!in_array($type, $this->set['gamedata']->ndp[$id]))
+        elseif (!in_array($type, $this->set['gamedata']->ndp[$id], true))
             $this->set['gamedata']->ndp[$id][] = $type;
     }
 
@@ -481,24 +482,24 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
      * @param int $type Name id
      * @return bool True, when name id is not yet registered under reference id
      */
-    public function ndp_check($id, $type) {
+    public function ndp_check($id, $type): bool {
         if (!isset($this->set['gamedata']->ndp[$id]))
             return true;
-        else return !in_array($type, $this->set['gamedata']->ndp[$id]);
+        else return !in_array($type, $this->set['gamedata']->ndp[$id], true);
     }
 
     /**
      * Removes all name ids registered under a given reference id
      * @param string $id Reference ID
      */
-    public function ndp_purge($id) {
+    public function ndp_purge($id): void {
         $this->set['gamedata']->ndp[$id] = array();
     }
 
     /**
      * @return Model_Events_Event[]
      */
-    public function get_initialized_events() {
+    public function get_initialized_events(): array {
         if (!isset($this->set['gamedata']->active_events))
             $this->set['gamedata']->active_events = [];
         return $this->set['gamedata']->active_events;
@@ -508,7 +509,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
      * @param Model_Events_Event|string $e
      * @return Model_Events_Event|null
      */
-    public function get_initialized_event($e) {
+    public function get_initialized_event($e): ?Model_Events_Event {
         if (Tool_System::instance_of($e,'Model_Events_Event'))
             $e = $e::get_key();
         $events = $this->get_initialized_events();
@@ -517,7 +518,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
         else return null;
     }
 
-    public function set_event_index(Model_Events_Event $event) {
+    public function set_event_index(Model_Events_Event $event): bool {
         if ($event::is_current() && !$this->get_initialized_event($event)) {
             if ($event->is_active())
                 $this->set['gamedata']->active_events[$event::get_key()] = $event;
@@ -525,7 +526,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
         } else return false;
     }
 
-    public function unset_event_index($event) {
+    public function unset_event_index($event): bool {
         $event = $this->get_initialized_event($event);
         if (!$event) return false;
         elseif (!$event->is_active()) {

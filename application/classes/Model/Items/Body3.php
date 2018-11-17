@@ -18,7 +18,7 @@ class Model_Items_Body3 extends Model_Items_Abstract_Item implements Interface_S
         parent::__construct(null);
     }
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('Fressen', Model_Action::factory()
                     ->effect(

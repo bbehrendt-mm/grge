@@ -3,12 +3,11 @@
 class Model_Items_Virtual_Location_Market extends Model_Items_Abstract_Virtual {
 
     protected static $graceful_fail = true;
-    protected $remaining = array(
+    protected static $default_action_uses = array(
         'wagon_open' => 1
     );
 
-    protected function hid() {
-        $phpbb53 = $this;
+    protected function hid(): Model_Hid {
         return parent::hid()->add_action('Marktwagen freilegen', Model_Action::factory()
             ->buttonskin('location')
             ->requirement(Model_Status::MS_STAT_ENERGY, 10)

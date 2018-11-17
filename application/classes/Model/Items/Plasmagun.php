@@ -14,8 +14,8 @@ class Model_Items_Plasmagun extends Model_Combat_Weapons_Ammo implements Interfa
 	protected static $ammo = ['Model_Items_Battery' => 1];
 	protected static $damage = [40,60];
 	protected static $range = [20,100];
-	protected static $accuracy = 1;
-	protected static $use_fixed_accuracy = true;
+	//protected static $accuracy = 1;
+	//protected static $use_fixed_accuracy = true;
 	protected static $aoe = true;
 
 	// INI, ATK, DEF, ACC
@@ -25,18 +25,19 @@ class Model_Items_Plasmagun extends Model_Combat_Weapons_Ammo implements Interfa
 
 	protected $used = false;
 
-	public function usable() {
+	public function usable(): bool {
 		return !$this->used && parent::usable();
 	}
 
-	public function trigger_usage(Model_Combat_Actor $me, Model_Combat_Actor $opponent, $damage, Model_Combat_Scene $scene) {
+	public function trigger_usage(Model_Combat_Actor $me, Model_Combat_Actor $opponent, $damage, Model_Combat_Scene $scene): bool {
 		parent::trigger_usage($me, $opponent, $damage, $scene);
-		$this->used = true;
+		return ($this->used = true);
 	}
 
-	public function unregister() {
+	public function unregister(): Model_Combat_Weapon {
 		parent::unregister();
 		$this->used = false;
+		return $this;
 	}
 
 }	

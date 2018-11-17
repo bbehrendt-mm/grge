@@ -13,7 +13,7 @@ class Model_Items_Virtual_Hero_Student extends Model_Items_Abstract_Virtual {
         'name' => 'Heldentaten',
     );
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('Sprechstunde', Model_Action::factory()
                 ->buttonskin('hero hja')

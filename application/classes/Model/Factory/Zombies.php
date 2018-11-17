@@ -116,10 +116,12 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
 
     /**
      * @param bool|false $force
-     * @param bool|true $apply_decay
-     * @param int $strength_modifier
-     * @param null|int $fixed_number
+     * @param bool|true  $apply_decay
+     * @param int        $strength_modifier
+     * @param null|int   $fixed_number
+     *
      * @return Model_Combat_Zombies_Zombie[]|null
+     * @throws Exception
      */
     public function spawn($force = false, $apply_decay = true, $strength_modifier = 1, $fixed_number = null) {
         if ($fixed_number === 0 || $fixed_number < 0 || !$this->max_adversaries || !($str = $this->get_strength() * $strength_modifier) || (!$force && (mt_rand()/mt_getrandmax()) > $this->chance))

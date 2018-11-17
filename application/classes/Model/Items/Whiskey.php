@@ -16,7 +16,7 @@ class Model_Items_Whiskey extends Model_Items_Abstract_Alcohol implements Interf
 					'icon' => 'whiskey'),
 	);
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         return (!Globals::shadowPlayerExists() && !Globals::PrimaryPlayerF()->job(10030)) ? parent::hid() : parent::hid()
             ->add_action('Jmd. Wunde auswaschen',
                 Model_Action::factory()

@@ -16,7 +16,7 @@ class Model_Items_Virtual_Location_Room_Generic extends Model_Items_Abstract_Vir
         parent::__construct(null);
     }
 
-    protected function hid() {
+    protected function hid(): Model_Hid {
         $action = Model_Action::factory()
             ->buttonskin('location')
             ->popup($this->custom_popup);

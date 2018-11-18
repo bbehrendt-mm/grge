@@ -35,16 +35,16 @@ class Model_Player extends Model_NPC_Nano {
 
 	public function __wakeup() {
 		//Rebind global player variable
-		if (Globals::hasCurrentUser() && Globals::CurrentUserF()->uid() == $this->id)
+		if (Globals::hasCurrentUser() && Globals::CurrentUserF()->uid() === $this->id)
 		    Globals::setPrimaryPlayer($this);
 	}
 
     public function ai($s = null) {
         if ($s === null) return $this->ai_str;
 
-        if (strlen($s) != 4) return false;
+        if (strlen($s) !== 4) return false;
         for ($i = 0; $i < 4; $i++)
-            if (!in_array($s[$i], ['+','-','0']))
+            if (!in_array($s[$i], ['+', '-', '0'], true))
                 $s[$i] = '0';
 
         return $this->ai_str = $s;
@@ -81,7 +81,7 @@ class Model_Player extends Model_NPC_Nano {
 		$this->kickoff();
 		
 		//Bind global player variable
-		if (Globals::hasCurrentUser() && Globals::CurrentUserF()->uid() == $this->id)
+		if (Globals::hasCurrentUser() && Globals::CurrentUserF()->uid() === $this->id)
 		    Globals::setCurrentPlayer($this);
 	}
 
@@ -100,20 +100,23 @@ class Model_Player extends Model_NPC_Nano {
 	/**
 	 * Initializes this player based on game mode and job level
 	 */
-	private function kickoff() {
+	private function kickoff(): void
+    {
 		//Initial log message
-		if ($this->mode == 2000) $this->log->add(    new Model_Log_Types_String('Das Gemetzel beginnt...', 'Seit Wochen verschanzt du dich in deinem Versteck, doch jetzt platzt dir der Kragen. Das Leben ist scheiße, es gibt keinen Strom, tagsüber ist es heiß und nachts arschkalt, der Sand rieselt dir in jede Ritze. Und alles wegen diesen verfluchten Zombies! ES REICHT! Du schnappst dir deine Waffen und ziehst los, um es dem Gesindel mal ordentlich heimzuzahlen - und wenn es das letzte ist was du tust!'));
-		elseif ($this->mode == 3000) $this->log->add(new Model_Log_Types_String('Das Spiel beginnt...', 'Nachdem du bereits eine Ewigkeit durch die Wüste gelatscht bist, hast du dieses heruntergekommene Versteck gefunden - Perfekt! Du entscheidest dich, es als Operationsbasis für deine Kartografietour zu verwenden und baust dein Funkequipment auf. Zeit, die Umgebung zu erkunden...'));
-		elseif ($this->mode == 4000) $this->log->add(new Model_Log_Types_String('Das Gemetzel beginnt...', 'Ein Zettel ist soeben durch deinen Kamin geflogen... Du siehst ihn dir an und stellst fest, dass es sich um einen Werbeflyer für ein großes Zombieturnier im alten Kolosseum handelt. Das wär doch mal eine gelungene Abwechslung zum "im Versteck verrotten". Zunächst solltest du dich auf den Weg zum Kolosseum machen, um die Qualifikationsrunde zu absolvieren - du hast 24 Stunden Zeit dafür!'));
+		if ($this->mode === 2000) $this->log->add(    new Model_Log_Types_String('Das Gemetzel beginnt...', 'Seit Wochen verschanzt du dich in deinem Versteck, doch jetzt platzt dir der Kragen. Das Leben ist scheiße, es gibt keinen Strom, tagsüber ist es heiß und nachts arschkalt, der Sand rieselt dir in jede Ritze. Und alles wegen diesen verfluchten Zombies! ES REICHT! Du schnappst dir deine Waffen und ziehst los, um es dem Gesindel mal ordentlich heimzuzahlen - und wenn es das letzte ist was du tust!'));
+		elseif ($this->mode === 3000) $this->log->add(new Model_Log_Types_String('Das Spiel beginnt...', 'Nachdem du bereits eine Ewigkeit durch die Wüste gelatscht bist, hast du dieses heruntergekommene Versteck gefunden - Perfekt! Du entscheidest dich, es als Operationsbasis für deine Kartografietour zu verwenden und baust dein Funkequipment auf. Zeit, die Umgebung zu erkunden...'));
+		elseif ($this->mode === 4000) $this->log->add(new Model_Log_Types_String('Das Gemetzel beginnt...', 'Ein Zettel ist soeben durch deinen Kamin geflogen... Du siehst ihn dir an und stellst fest, dass es sich um einen Werbeflyer für ein großes Zombieturnier im alten Kolosseum handelt. Das wär doch mal eine gelungene Abwechslung zum "im Versteck verrotten". Zunächst solltest du dich auf den Weg zum Kolosseum machen, um die Qualifikationsrunde zu absolvieren - du hast 24 Stunden Zeit dafür!'));
 		else $this->log->add(                        new Model_Log_Types_String('Das Spiel beginnt...', 'Du öffnest die Augen und lässt deinen Blick durch dein karges Versteck schweifen. Deine Vorräte sind aufgebraucht, du kannst dich also nicht länger einfach verschanzen...'));
 	}
 
-    final public function get_braincoins() {
+    final public function get_braincoins(): int
+    {
         return $this->braincoins;
     }
 
 
-    protected function generate_dead_body() {
+    protected function generate_dead_body(): ?Model_Items_Abstract_Item
+    {
         return new Model_Items_Body('[nt]' . $this->name, 'Dies ist alles, was von eurem Freund übrig geblieben ist... Naja, immerhin kann man noch eine Suppe draus kochen.');
     }
 
@@ -143,7 +146,8 @@ class Model_Player extends Model_NPC_Nano {
      * Returns player log
      * @return Model_Log_Log
      */
-	final public function log() {
+	final public function log(): \Model_Log_Log
+    {
 		return $this->log;
 	}
 	
@@ -175,7 +179,7 @@ class Model_Player extends Model_NPC_Nano {
 	}
 
 	public function create_combatant() {
-		if ($this->job == 1040 && $this->level >= 5 && random_int(0,15) == 2)
+		if ($this->job === 1040 && $this->level >= 5 && random_int(0,15) === 2)
 			return Model_Combat_Players_Saint::create_linked_actor($this);
 		return Model_Combat_Players_Player::create_linked_actor($this);
 	}
@@ -184,11 +188,13 @@ class Model_Player extends Model_NPC_Nano {
 	 * Get achievement object
 	 * @return Model_Achievement
 	 */
-	public function achievements() {
+	public function achievements(): \Model_Achievement
+    {
 		return $this->achievements;
 	}
 
-    public function battle_stats($new = null) {
+    public function battle_stats($new = null): array
+    {
         if ($new !== null)
             for ($i = 0; $i < 4; $i++)
                 if ($new[$i] !== null)
@@ -204,7 +210,8 @@ class Model_Player extends Model_NPC_Nano {
 		return $this->livetime;	
 	}
 	
-	public function calculate_static_achievements() {
+	public function calculate_static_achievements(): void
+    {
 		//Other endtime achievements
 		$this->achievements->achieve_force(Model_Achievement::MA_SOME_COMPANY, 2 * count(Tool_Scripts::get_home_items(Model_Items_Generic_Bobblehead::cls())) + count(Tool_Scripts::get_home_items(Model_Items_Generic_Teddy::cls())) + count(Tool_Scripts::get_home_items(Model_Items_Body::cls())));
 		$this->achievements->achieve_force(Model_Achievement::MA_PRINCESS, count(Tool_Scripts::get_home_items(Model_Items_Generic_Bed::cls())));
@@ -222,12 +229,12 @@ class Model_Player extends Model_NPC_Nano {
 	 */
 	public function job($compare_job = null, $compare_level = null, $exact = true) {
         if ($compare_job && $compare_level === null)
-            return ($this->job == $compare_job);
+            return ($this->job === $compare_job);
 
         if ($compare_job === null) return $this->job;
 		elseif ($compare_job === false && $compare_level === null) return $this->level;
-		elseif ($compare_job === false) return $exact ? ($compare_level == $this->level) : ($compare_level <= $this->level);
-		else return ($this->job == $compare_job && ($exact ? ($compare_level == $this->level) : ($compare_level <= $this->level)));
+		elseif ($compare_job === false) return $exact ? ($compare_level === $this->level) : ($compare_level <= $this->level);
+		else return ($this->job === $compare_job && ($exact ? ($compare_level === $this->level) : ($compare_level <= $this->level)));
 	}
 
     public function get_points() {
@@ -243,7 +250,8 @@ class Model_Player extends Model_NPC_Nano {
      * @param int  $end
      * @throws Exception
 */
-    public function expire($season, $gameid, $rank = false, $start = 0, $end = 0) {
+    public function expire($season, $gameid, $rank = false, $start = 0, $end = 0): void
+    {
         $this->get_status()->alive(false);
 
         if ($this->points === null)
@@ -272,18 +280,20 @@ class Model_Player extends Model_NPC_Nano {
      * @return Model_Items_Abstract_Equipable[]
      * @throws Exception
      */
-	public function get_equipment($filter = null, $primary = false) {
+	public function get_equipment($filter = null, $primary = false): array
+    {
 		$items = $this->inventory()->get(Model_Items_Abstract_Equipable::cls());
 		return array_values(array_filter($items, function($i) use ($filter, $primary) {
 			/** @var Model_Items_Abstract_Equipable $i */
-			return $i->is_equipped() && ($filter === null || $i->get_equipment_type() == $filter) && (!$primary || $i->is_equipped_primary());
+			return $i->is_equipped() && ($filter === null || $i->get_equipment_type() === $filter) && (!$primary || $i->is_equipped_primary());
 		}));
 	}
 
     /**
      * @return Model_Postbox
      */
-    public function get_postbox() {
+    public function get_postbox(): \Model_Postbox
+    {
         return $this->postbox;
     }
 
@@ -301,7 +311,7 @@ class Model_Player extends Model_NPC_Nano {
         if ($vote === true)
             return $this->timelock;
 
-        if ($this->timelock > time() || $lock_duration === null)
+        if ($lock_duration === null || $this->timelock > time())
             return false;
 
         $this->timevote = $vote;
@@ -312,7 +322,7 @@ class Model_Player extends Model_NPC_Nano {
         return true;
     }
 
-    public function last_action($set = false) {
+    public function last_action($set = false): int {
         if ($set)
             return $this->last_action = time();
         else return $this->last_action;
@@ -335,6 +345,6 @@ class Model_Player extends Model_NPC_Nano {
     }
 
     public function icon() {
-        return $this->job == 1080 ? 'child.gif' : 'adult.gif';
+        return $this->job === 1080 ? 'child.gif' : 'adult.gif';
     }
 }

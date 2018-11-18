@@ -21,7 +21,8 @@ class Model_Items_Pepperspray extends Model_Combat_Weapons_Close implements Inte
 	// INI, ATK, DEF, ACC
 	protected static $effects = [2,0,1,0];
 	
-	public function drop($p = null, $silent = false) {
+	public function drop($p = null, $silent = false): bool
+    {
 		if (!$silent) Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String(null, 'Bist du verrückt? Womit willst du dich wehren, wenn dir einer deiner Mitverdammten ein Kompliment über dein Aussehen machen möchte?'));
 		return false;
 	}

@@ -5,7 +5,8 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
     protected static $auto_require = ['CHEAT'];
     protected static $allow_skip_login = true;
 
-    public function japi_unveil_map() {
+    public function japi_unveil_map(): void
+    {
         if (!Globals::hasCurrentGame() || !Globals::hasPrimaryPlayer()) return;
 
         Globals::CurrentGameF()->mapF(Globals::PrimaryPlayerF()->location_class())->uncover_all();
@@ -13,19 +14,22 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
         $this->render();
     }
 
-    public function japi_force_battle() {
+    public function japi_force_battle(): void
+    {
         $zombies = Globals::PrimaryPlayerF()->location()->zombie_factory()->spawn(true);
         if ($zombies) Tool_Scripts::combat([Tool_Scripts::at_location(Globals::PrimaryPlayerF()->location_class()), $zombies], true, 20, Globals::PrimaryPlayerF()->location());
     }
 
-    public function japi_purge_log() {
+    public function japi_purge_log(): void
+    {
         Globals::PrimaryPlayerF()->log()->clear();
         Globals::PrimaryPlayerF()->location()->log()->clear();
 
         $this->render();
     }
 
-    public function japi_siege() {
+    public function japi_siege(): void
+    {
         if (!Globals::hasCurrentGame() || !Globals::hasPrimaryPlayer()) return;
 
         $z = (int)self::post('z');
@@ -35,7 +39,8 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
         $this->render();
     }
 
-    public function japi_regenerate() {
+    public function japi_regenerate(): void
+    {
         if (!Globals::hasCurrentGame() || !Globals::hasPrimaryPlayer()) return;
 
         Globals::PrimaryPlayerF()->get_status()->set(Model_Status::MS_STAT_ENERGY, 100, Model_Status::MS_STAT_HEALTH, 100, Model_Status::MS_STAT_HUNGER, 100, Model_Status::MS_STAT_THIRST, 100, Model_Status::MS_STAT_SLEEPY, 100);
@@ -43,7 +48,8 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
         $this->render();
     }
 
-    public function japi_spawn_items() {
+    public function japi_spawn_items(): void
+    {
         if (!Globals::hasCurrentGame() || !Globals::hasPrimaryPlayer()) return;
 
         $target_inv = self::post('inventory');
@@ -100,7 +106,8 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
         $this->render();
     }
 
-    public function japi_skip() {
+    public function japi_skip(): void
+    {
         if (!Globals::hasCurrentGame() || !Globals::hasPrimaryPlayer()) return;
 
         $ticks = (int)self::post('ticks');
@@ -110,14 +117,15 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
         $this->render();
     }
 
-    public function japi_custom_battle() {
+    public function japi_custom_battle(): void
+    {
         $config = self::post('data');
         $zombies = [];
 
         foreach ($config as $entry) {
             /** @var Model_Combat_Zombies_Zombie $classpath */
             $classpath = "Model_Combat_Zombies_{$entry['type']}";
-            if (!Tool_System::instance_of($classpath, 'Model_Combat_Zombies_Zombie') || (int)$entry['count'] <= 0 || (int)$entry['distance'] < 0)
+            if ((int)$entry['distance'] < 0 || (int)$entry['count'] <= 0 || !Tool_System::instance_of($classpath, 'Model_Combat_Zombies_Zombie'))
                 continue;
 
             $zombies[] = $classpath::factory()->count((int)$entry['count'])->set_distance((int)$entry['distance']);
@@ -128,18 +136,21 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
         $this->render();
     }
 
-    public function japi_list_zombies() {
+    public function japi_list_zombies(): void
+    {
         $path = APPPATH . 'classes/Model/Combat/Zombies';
         $list = [];
 
         $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
         foreach($files as $name => $file) {
             $filename = $file->getFilename();
-            if ($filename[0] == '.') continue;
+            if ($filename[0] === '.') continue;
             if (substr($filename, -4) !== '.php') continue;
 
-            $filepath = str_replace('\\','/',$file->getPathName());
-            $filepath = str_replace(str_replace('\\','/',$path),'',$filepath);
+            $filepath = str_replace(
+                array('\\', str_replace('\\', '/', $path)), array('/', ''),
+                $file->getPathName()
+            );
 
             /** @var Model_Combat_Zombies_Zombie $classpath */
 
@@ -159,18 +170,21 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
         ]);
     }
 
-    public function japi_list_items() {
+    public function japi_list_items(): void
+    {
         $path = APPPATH . 'classes/Model/Items';
         $list = [];
 
         $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
         foreach($files as $name => $file) {
             $filename = $file->getFilename();
-            if ($filename[0] == '.') continue;
+            if ($filename[0] === '.') continue;
             if (substr($filename, -4) !== '.php') continue;
 
-            $filepath = str_replace('\\','/',$file->getPathName());
-            $filepath = str_replace(str_replace('\\','/',$path),'',$filepath);
+            $filepath = str_replace(
+                array('\\', str_replace('\\', '/', $path)), array('/', ''),
+                $file->getPathName()
+            );
 
             /** @var Model_Items_Abstract_Item $classpath */
             $classpath = 'Model_Items' . substr(str_replace('/','_',$filepath), 0, -4);
@@ -185,7 +199,8 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
 
 
 
-            $use_instances = ($classpath::getNumberOfTypes() > 0) && ($reflection->getConstructor()->getNumberOfRequiredParameters() == 0) && ($parameters[0]->getName() == 'type');
+            $use_instances = ($classpath::getNumberOfTypes() > 0) && ($reflection->getConstructor()->getNumberOfRequiredParameters() === 0) && ($parameters[0]->getName()
+                    === 'type');
 
             for ($t = 0; $t < ($use_instances ? $classpath::getNumberOfTypes() : 1); $t++) {
 
@@ -207,7 +222,7 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
                         'name' => $parameter->getName(),
                         'optional' => $parameter->isOptional(),
                         'default' => $parameter->isDefaultValueAvailable() ? $parameter->getDefaultValue() : null,
-                        'force' => $parameter->getName() == 'type' && $classpath::getNumberOfTypes() <= 1,
+                        'force' => $parameter->getName() === 'type' && $classpath::getNumberOfTypes() <= 1,
                     ];
 
 

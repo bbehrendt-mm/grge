@@ -58,7 +58,9 @@ class Model_Combat_Zombies_Hallucination extends Model_Combat_Zombies_Zombie {
         $this->pos_x = max(0,min($this->field[0], $this->pos_x));
         $this->pos_y = max(0,min($this->field[1], $this->pos_y));
 
-        $dist = sqrt(pow($old_x - $this->pos_x, 2) + pow($old_y - $this->pos_y, 2));
+        $dist = sqrt(
+            (($old_x - $this->pos_x) ** 2) + (($old_y - $this->pos_y) ** 2)
+        );
         $this->scene->move($this, [$this->pos_x, $this->pos_y], $dist, $target);
     }
 

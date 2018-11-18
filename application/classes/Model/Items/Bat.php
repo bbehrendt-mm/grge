@@ -19,7 +19,8 @@ class Model_Items_Bat extends Model_Combat_Weapons_Close implements Interface_St
 
 	protected static $durabillity = 0.8;
 	
-	public function mixchem($chemval) {
+	public function mixchem($chemval): bool
+    {
         $this->consume();
 
         switch ($chemval)

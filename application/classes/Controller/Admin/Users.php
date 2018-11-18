@@ -4,7 +4,8 @@ class Controller_Admin_Users extends Controller_Admin_Admin {
 
     protected static $auto_require = ['USERLIST'];
 
-    public function action_main() {
+    public function action_main(): void
+    {
         //Cache achievements
         $ach = [];
         foreach ((new ReflectionClass('Model_Achievement'))->getConstants() as $aid)
@@ -18,10 +19,11 @@ class Controller_Admin_Users extends Controller_Admin_Admin {
         $this->render();
     }
 
-    public function japi_achievements() {
-        $users = $this->post('users');
-        $aid = (int)$this->post('aid');
-        $count = (int)$this->post('count');
+    public function japi_achievements(): bool
+    {
+        $users = self::post('users');
+        $aid = (int)self::post('aid');
+        $count = (int)self::post('count');
         if (!$users || !$aid || !$count || !is_array($users))
             return $this->render([
                 'success' => 0
@@ -43,12 +45,15 @@ class Controller_Admin_Users extends Controller_Admin_Admin {
         ]);
     }
 
-    public function japi_flag() {
-        $users = $this->post('users');
-        $changes = $this->post('set');
+    public function japi_flag(): bool
+    {
+        $users = self::post('users');
+        $changes = self::post('set');
 
         foreach ($changes as $flag => $change)
-            if ($flag == 'ROOT' && (!static::priv_allow_all('ROOT') || in_array(Globals::CurrentUserF()->uid(), $users))) {
+            if ($flag === 'ROOT' && (!static::priv_allow_all('ROOT') || in_array(
+                        Globals::CurrentUserF()->uid(), $users, true
+                    ))) {
                 return $this->render([
                     'success' => 0
                 ]);
@@ -70,12 +75,13 @@ class Controller_Admin_Users extends Controller_Admin_Admin {
         ]);
     }
 
-    public function japi_info() {
-        $user = $this->post('id');
+    public function japi_info(): bool
+    {
+        $user = self::post('id');
 
         $flags_a = $flags_d = [];
         foreach (DB::select('data','relation')->from('user_flags')->where('user','=',$user)->and_where('relation','IN',['ALLOW','DENY'])->execute()->as_array() as $flag)
-            if ($flag['relation'] == 'ALLOW') $flags_a[$flag['data']] = true;
+            if ($flag['relation'] === 'ALLOW') $flags_a[$flag['data']] = true;
             else $flags_d[$flag['data']] = true;
 
         return $this->render([
@@ -84,18 +90,19 @@ class Controller_Admin_Users extends Controller_Admin_Admin {
                 'denied' => array_keys($flags_d)
             ],
             'admin' => [
-                'access' => (count(DB::select('relation')->from('user_flags')->where('user','=',$user)->and_where('relation','=','LOGIN')->execute()->as_array()) > 0),
-                'disabled' => (count(DB::select('relation')->from('user_flags')->where('user','=',$user)->and_where('relation','=','DISABLED')->execute()->as_array()) > 0)
+                'access' => count(DB::select('relation')->from('user_flags')->where('user','=',$user)->and_where('relation','=','LOGIN')->execute()->as_array()) > 0,
+                'disabled' => count(DB::select('relation')->from('user_flags')->where('user','=',$user)->and_where('relation','=','DISABLED')->execute()->as_array()) > 0
             ]
         ]);
     }
 
-    public function japi_password() {
-        $users = $this->post('users');
-        $to = $this->post('set');
+    public function japi_password(): bool
+    {
+        $users = self::post('users');
+        $to = self::post('set');
 
         // Prevent user from resetting own password
-        if (in_array(Globals::CurrentUserF()->uid(), $users) && !$to)
+        if (!$to && in_array(Globals::CurrentUserF()->uid(), $users, true))
             return $this->render([
                 'success' => 0
             ]);
@@ -111,9 +118,10 @@ class Controller_Admin_Users extends Controller_Admin_Admin {
         ]);
     }
 
-    public function japi_search() {
-        $query = explode(':', $this->post('query'));
-        list($limit,$query) = (count($query) > 1) ? $query : ['n',$query[0]];
+    public function japi_search(): void
+    {
+        $query = explode(':', self::post('query'));
+        [$limit,$query] = (count($query) > 1) ? $query : ['n', $query[0]];
 
         if (!in_array($limit,['i','n','r']))
             $limit = 'n';
@@ -134,7 +142,7 @@ class Controller_Admin_Users extends Controller_Admin_Admin {
 
         foreach ($result as &$entry) {
             $entry['auth'] = [];
-            $entry['access'] = $entry['access'] ? ($entry['access'] == 'ALLOW' ? 1 : -1) : 0;
+            $entry['access'] = $entry['access'] ? ($entry['access'] === 'ALLOW' ? 1 : -1) : 0;
             foreach (Model_Auth_Interface::get_all_providers($entry['uid']) as $provider => $variables)
                 /** @var Model_Auth_Interface $provider */
                 $entry['auth'][$provider::get_service_name()] = [$variables['rid'],$variables['var1'],$variables['var2']];

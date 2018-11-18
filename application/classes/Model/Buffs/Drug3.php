@@ -34,12 +34,13 @@ class Model_Buffs_Drug3 extends Model_Buffs_Abstract_Buff {
         )
     ]; }
 
-	public function unbuff() {
+	public function unbuff(): bool
+    {
 		if ($this->lifetime <= 0)
 			if ($buff = $this->assoc_player->get_status()->retrieve('drug2')) {
 				$buff->unbuff();
 				if ($this->associated_to_player()) $this->assoc_player->log()->add(new Model_Log_Types_String('Drogensucht', 'Du hast unglaubliche Willenskraft bewiesen und den kalten Entzug überstanden! Herzlichen Glückwunsch, deine Drogensucht ist Geschichte!'));
 			}
-		parent::unbuff();
+		return parent::unbuff();
 	}
 }

@@ -40,7 +40,8 @@ class Model_Buffs_Zombify extends Model_Buffs_Abstract_Buff {
                 ),
 			);
 	
-	public function rebuild() {
+	public function rebuild(): bool
+    {
 		$zombify = $this->assoc_player->get_status()->get(Model_Status::MS_STAT_ZOMBIFY);
         $health = $this->assoc_player->get_status()->get(Model_Status::MS_STAT_HEALTH);
 		

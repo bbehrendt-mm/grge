@@ -9,13 +9,15 @@
 if (!isset($path)) $path = '';
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="<?=$lang?>">
 <head>
     <!-- Meta -->
     <meta content="text/html; charset=UTF-8" />
     <meta http-equiv="content-language" content="de">
     <meta name="robots" content="noindex,nofollow" />
     <meta name="author" content="Benjamin 'Brainbox' Behrendt" />
+
+    <title>ZombVival Battle System</title>
 
     <link rel="stylesheet" type="text/css" href="<?=$url?>css/font-awesome.min.css" />
     <style>
@@ -37,10 +39,10 @@ if (!isset($path)) $path = '';
     <div id="preview">
         <div id="prv_big">
             <div style="margin-top: 64px; text-align: center">
-                <img src="<?=$url?>media/icons/battle/logo.png" />
+                <img src="<?=$url?>media/icons/battle/logo.png" alt="Logo"/>
             </div>
             <div style="text-align: center">
-                <img id="loading" src="<?=$url?>media/icons/battle/loading.gif" />
+                <img id="loading" src="<?=$url?>media/icons/battle/loading.gif" alt="Loading"/>
             </div>
             <div style="text-align: center">
                 <div style="display: inline-block; width: 100px;">
@@ -85,7 +87,7 @@ if (!isset($path)) $path = '';
                 var controls = $('#controls');
 
                 $('#output_container').on('mousemove', function() {
-                    if (controls.attr('data-ready') == 1 && !controls.is(':visible'))
+                    if (controls.attr('data-ready') === 1 && !controls.is(':visible'))
                         controls.stop(true,true).fadeIn();
                 }).on('mouseleave', function() {
                     if (controls.is(':visible'))
@@ -111,25 +113,26 @@ if (!isset($path)) $path = '';
                     $.ajax('<?=$url?>japi/embed/battle', {
                         cache: false,
                         type: 'POST',
-                        data: {v: <?=$bid?>, g: <?=$pid === null ? 0 : $pid?>},
+                        data: {v: <?=$bid?>, g: <?=$pid ?? 0?>},
                         headers: {'X-Request-Lang' : lang},
                         timeout: 45000
                     }).done(function(data) {
                         $('#loading').hide();
                         receiver(data);
                     }).fail(function(obj, status) {
+                        var e;
                         if (obj && obj.responseText && 0 < (e = obj.responseText.search('<!-- ### GRG CORE INLINE RENDERING EXCEPTION: ERROR PAGE BEYOND THIS LINE ### -->'))) {
-                            var d = $(obj.responseText.slice(e).replace(/<(\/{0,1})(html|head|body)(.*?)>/g, '<$1var$2$3>'));
-                            jQuery('head').html(d.find('varhead').html());
-                            jQuery('body').html(d.find('varbody').html());
+                            var d = $(obj.responseText.slice(e).replace(/<(\/?)(html|head|body)(.*?)>/g, '<$1var$2$3>'));
+                            $('head').html(d.find('varhead').html());
+                            $('body').html(d.find('varbody').html());
                             eval(d.find('varbody').attr('onload'));
                             return;
                         }
                         var error = $('#error').show();
 
-                        if (status == 'abort')
+                        if (status === 'abort')
                             error.text('Download aborted by client.');
-                        if (status == 'timeout')
+                        if (status === 'timeout')
                             error.text('Connection timeout.');
                         else error.text('Unexpected server error.');
                     });
@@ -142,7 +145,7 @@ if (!isset($path)) $path = '';
                     battle = new Battle('output', data.video);
 
                     $('#c_pause').click(function() {
-                        if ($(this).attr('data-pause') == 1) {
+                        if ($(this).attr('data-pause') === 1) {
                             $(this).attr('data-pause', 0).find('i').removeClass('fa-pause').addClass('fa-play');
                             battle.pause();
                         } else {

@@ -28,7 +28,7 @@ if ( !function_exists('__'))
 
         $lang = explode('-',$lang)[0];
 		$r = empty($values) ? I18n::get($string, $lang) : strtr(I18n::get($string, $lang), $values);
-        return mb_detect_encoding($r) == 'UTF-8' ? $r : utf8_encode($r);
+        return mb_detect_encoding($r) === 'UTF-8' ? $r : utf8_encode($r);
 	}
 }
 
@@ -53,10 +53,11 @@ class I18n extends Kohana_I18n {
     }
 
     public static function get_primary_fallback() {
-        return isset(static::$lang_list[1]) ? static::$lang_list[1] : static::$lang_list[0];
+        return static::$lang_list[1] ?? static::$lang_list[0];
     }
 
-    public static function get_languages($include_primary = false) {
+    public static function get_languages($include_primary = false): array
+    {
         return $include_primary ? static::$lang_list : array_slice(static::$lang_list, 1);
     }
     
@@ -65,19 +66,20 @@ class I18n extends Kohana_I18n {
      * @param string|null $lang Language, or null to use default
      * @return array
      */
-    public static function load($lang = NULL) {
+    public static function load($lang = NULL): array {
         if (!$lang) $lang = static::$lang;
-        if (!in_array($lang, static::$lang_list)) return [];
+        if (!in_array($lang, static::$lang_list, true)) return [];
         if (isset(static::$_cache[$lang])) return static::$_cache[$lang];
 
-        $q = $lang == static::get_primary_language() ? DB::select($lang) : DB::select(static::get_primary_language(), $lang);
+        $q = $lang === static::get_primary_language() ? DB::select($lang) : DB::select(static::get_primary_language(), $lang);
         return static::$_cache[$lang] = $q->from('language')->execute()->as_array(static::get_primary_language(), $lang);
     }
 
-    public static function export() {
+    public static function export(): array
+    {
         return array_map(function($a) {
             foreach (array_keys($a) as $col)
-                if (!in_array($col, static::$lang_list))
+                if (!in_array($col, static::$lang_list, true))
                     unset($a[$col]);
             return $a;
         }, DB::select()->from('language')->execute()->as_array('hash'));
@@ -86,11 +88,13 @@ class I18n extends Kohana_I18n {
     /**
      * Prevents changes to the language files to be written to disc.
      */
-    public static function set_readonly_flag() {
+    public static function set_readonly_flag(): void
+    {
         static::$readonly = true;
     }
 
-    protected static function flush_cache() {
+    protected static function flush_cache(): void
+    {
         static::$_cache = [];
     }
 
@@ -101,11 +105,15 @@ class I18n extends Kohana_I18n {
      * @param string $lang Translation language
      * @return bool True when successfull, otherwise false
      */
-    public static function set($string, $translation, $lang) {
+    public static function set($string, $translation, $lang): bool
+    {
         if (static::$readonly) return true;
         static::flush_cache();
 
-        if ($lang == static::get_primary_language() || !in_array($lang, static::$lang_list))
+        if ($lang === static::get_primary_language() || !in_array(
+                $lang, static::$lang_list, true
+            )
+        )
             return false;
 
         return DB::update('language')->set([$lang => $translation])->where(static::get_primary_language(), '=', $string)->execute() > 0;
@@ -118,11 +126,15 @@ class I18n extends Kohana_I18n {
      * @param string $lang Translation language
      * @return bool True when successfull, otherwise false
      */
-    public static function set_by_id($id, $translation, $lang) {
+    public static function set_by_id($id, $translation, $lang): bool
+    {
         if (static::$readonly) return true;
         static::flush_cache();
 
-        if ($lang == static::get_primary_language() || !in_array($lang, static::$lang_list))
+        if ($lang === static::get_primary_language() || !in_array(
+                $lang, static::$lang_list, true
+            )
+        )
             return false;
 
         return DB::update('language')->set([$lang => $translation])->where('id', '=', $id)->execute() > 0;
@@ -136,7 +148,8 @@ class I18n extends Kohana_I18n {
      * @return bool Success
      * @throws Kohana_Exception
      */
-    public static function set_missing($string) {
+    public static function set_missing($string): bool
+    {
         if (static::$readonly) return true;
 
         $hash = md5($string, true);
@@ -144,7 +157,7 @@ class I18n extends Kohana_I18n {
             return false;
 
         if (Kohana::$environment === Kohana::DEVELOPMENT) {
-            $file = fopen('dbg_translate.list', 'a');
+            $file = fopen('dbg_translate.list', 'ab');
             fwrite($file, "{$string}\n");
             foreach (debug_backtrace() as $entry) {
                 $entry = array_merge(['file' => 'UNKNOWN FILE', 'line' => -1, 'function' => 'UNKNOWN'],$entry);
@@ -157,7 +170,7 @@ class I18n extends Kohana_I18n {
         }
 
         static::flush_cache();
-        list(, $rows) = DB::insert('language', ['hash',static::get_primary_language()])->values([$hash,$string])->execute();
+        [, $rows] = DB::insert('language', ['hash', static::get_primary_language()])->values([$hash, $string])->execute();
         return $rows > 0;
     }
 
@@ -166,23 +179,32 @@ class I18n extends Kohana_I18n {
      * @param string $lang Language
      * @return array
      */
-    public static function get_missing($lang) {
-        if ($lang == static::get_primary_language() || !in_array($lang, static::$lang_list))
+    public static function get_missing($lang): array
+    {
+        if ($lang === static::get_primary_language() || !in_array(
+                $lang, static::$lang_list, true
+            )
+        )
             return [];
 
         return DB::select(static::get_primary_language())->from('language')->where($lang, '=', null)->execute()->as_array(null, static::get_primary_language());
     }
 
-    public static function lock($id) {
+    public static function lock($id): bool
+    {
         return DB::update('language')->set(['lock' => time()])->where('id', '=', $id)->execute() > 0;
     }
 
-    public static function unlock($id) {
+    public static function unlock($id): bool
+    {
         return DB::update('language')->set(['lock' => 0])->where('id', '=', $id)->execute() > 0;
     }
 
-    public static function completion($lang) {
-        $tmp = DB::select([DB::expr("COUNT(`$lang`)"), 'translated'], [DB::expr("COUNT(*)"), 'total'])->from('language')->execute()->as_array();
+    public static function completion($lang): array
+    {
+        $tmp = DB::select([DB::expr("COUNT(`$lang`)"), 'translated'], [DB::expr(
+            'COUNT(*)'
+        ), 'total'])->from('language')->execute()->as_array();
         return [(int)$tmp[0]['translated'], (int)$tmp[0]['total']];
     }
 
@@ -201,7 +223,7 @@ class I18n extends Kohana_I18n {
         if (!$langs) $langs = static::$lang_list;
         $q = DB::select('id')->from('language');
         foreach ($langs as $lang)
-            if (in_array($lang, static::$lang_list))
+            if (in_array($lang, static::$lang_list, true))
                 $q->or_where($lang, 'LIKE', "%{$query}%");
         
         return $q->execute()->as_array(null,'id');
@@ -227,7 +249,8 @@ class I18n extends Kohana_I18n {
      * @param string $id ID of string to remove
      * @return bool Success
      */
-    public static function remove($id) {
+    public static function remove($id): bool
+    {
         static::flush_cache();
 
         return DB::delete('language')->where('id', '=', $id)->execute() > 0;
@@ -245,32 +268,33 @@ class I18n extends Kohana_I18n {
         if (!is_string($string)) return false;
 
         // Don't translate anything that begins with [nt]
-        if (strpos($string, '[nt]') === 0 || !trim($string) || is_numeric($string))
+        if (is_numeric($string) || strpos($string, '[nt]') === 0 || !trim($string))
             return false;
 
         // Load default lang if none is given
-        if ($lang == null) $lang = I18n::$lang;
+        if ($lang === null) $lang = self::$lang;
 
         // Primary language entries always have translations
-        if ($lang == static::get_primary_language())
+        if ($lang === static::get_primary_language())
             return true;
 
         // Check of language is valid
-        if (!in_array($lang, static::$lang_list))
+        if (!in_array($lang, static::$lang_list, true))
             return false;
 
         // Load language table
-        $table = I18n::load($lang);
+        $table = self::load($lang);
 
         // Check if translation exist
-        return isset($table[$string]) && (!$require_different || $table[$string] != $string);
+        return isset($table[$string]) && (!$require_different || $table[$string] !== $string);
     }
 
-    public static function get($string, $lang = NULL) {
+    public static function get($string, $lang = NULL): string {
         return static::get_fallback($string, $lang);
     }
 
-    public static function get_native($string, $lang = NULL) {
+    public static function get_native($string, $lang = NULL): string
+    {
         return static::get_fallback($string, $lang, false);
     }
 
@@ -284,7 +308,7 @@ class I18n extends Kohana_I18n {
      * @return string Translated string
      * @throws Kohana_Exception
      */
-	private static function get_fallback($string, $lang = NULL, $fallback = true) {
+	private static function get_fallback($string, $lang = NULL, $fallback = true): string {
 		// Return identity if input is something other than a string
         if (!is_string($string)) return $string;
 
@@ -293,18 +317,21 @@ class I18n extends Kohana_I18n {
 			return str_replace('[nt]', '', $string);
 
         // Check other stuff
-        if (!trim($string) || is_numeric($string))
+        if (is_numeric($string) || !trim($string))
             return $string;
 
         // Load default lang if none is given
-		if ($lang == null) $lang = I18n::$lang;
+		if ($lang === null) $lang = self::$lang;
 
         // Check of language is valid
-        if ($lang == static::get_primary_language() || !in_array($lang, static::$lang_list))
+        if ($lang === static::get_primary_language() || !in_array(
+                $lang, static::$lang_list, true
+            )
+        )
             return $string;
 
         // Load language table
-		$table = I18n::load($lang);
+		$table = self::load($lang);
 
         // Create entry if it doesn't exist
         if (!isset($table[$string]))
@@ -312,7 +339,10 @@ class I18n extends Kohana_I18n {
 
 		// Return the translated string if it exists; attempt fallback before sending the untranslated string back
         if (!isset($table[$string]) || !$table[$string])
-            return $fallback ? ((!in_array($lang, [static::get_primary_language(), static::get_primary_fallback()])) ? static::get($string, static::get_primary_fallback()) : $string) : $string;
+            return $fallback ? ((!in_array(
+                $lang, [static::get_primary_language(),
+                        static::get_primary_fallback()], true
+            )) ? static::get($string, static::get_primary_fallback()) : $string) : $string;
         else return $table[$string];
 	}
 }

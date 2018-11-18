@@ -42,16 +42,16 @@ abstract class Model_Events_Event {
         }
     }
 
-    abstract protected function trigger_activation();
-    abstract protected function trigger_deactivation();
-    abstract public function tick();
-    abstract public function event_playerCreation(Interface_Plentity $entity);
-    abstract public function event_locationCreation(Model_Places_Abstract_Place $place);
-    abstract public function event_locationTick(Model_Places_Abstract_Place $place);
-    abstract public function event_generateHIDStack(Model_Items_Abstract_Item $item, Model_Hid $hid);
-    abstract public function event_executeHIDAction($cls, $name, Model_Action $action);
-    abstract public function event_renderHIDAction($cls, $name, Model_Action $action);
-    abstract public function event_findItem(Model_Places_Abstract_Place $place, Model_Items_Abstract_Item $item);
-    abstract public function event_blueprintCreation($config_name, $config_category);
+    abstract protected function trigger_activation(): bool;
+    abstract protected function trigger_deactivation(): bool;
+    abstract public function tick(): bool;
+    abstract public function event_playerCreation(Interface_Plentity $entity): void;
+    abstract public function event_locationCreation(Model_Places_Abstract_Place $place): void;
+    abstract public function event_locationTick(Model_Places_Abstract_Place $place): void;
+    abstract public function event_generateHIDStack(Model_Items_Abstract_Item $item, Model_Hid $hid): void;
+    abstract public function event_executeHIDAction($cls, $name, Model_Action $action): void;
+    abstract public function event_renderHIDAction($cls, $name, Model_Action $action): void;
+    abstract public function event_findItem(Model_Places_Abstract_Place $place, Model_Items_Abstract_Item $item): void;
+    abstract public function event_blueprintCreation($config_name, $config_category): ?Model_Blueprints;
 
 }

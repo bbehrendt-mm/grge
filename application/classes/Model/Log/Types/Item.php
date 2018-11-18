@@ -2,17 +2,17 @@
 
 class Model_Log_Types_Item extends Model_Log_Message {
 
-    const MLTI_OTHER = 0;
-    const MLTI_DIGUP = 1;
-    const MLTI_EAGLE = 2;
-    const MLTI_DEATH = 3;
-    const MLTI_ZOMBIFY = 4;
-    const MLTI_GHULKILL = 5;
-    const MLTI_SOUL = 6;
-    const MLTI_VENDING = 7;
-    const MLTI_RAVEN = 8;
-    const MLTI_BOX = 9;
-    const MLTI_DEATH_ENEMY = 10;
+    public const MLTI_OTHER = 0;
+    public const MLTI_DIGUP = 1;
+    public const MLTI_EAGLE = 2;
+    public const MLTI_DEATH = 3;
+    public const MLTI_ZOMBIFY = 4;
+    public const MLTI_GHULKILL = 5;
+    public const MLTI_SOUL = 6;
+    public const MLTI_VENDING = 7;
+    public const MLTI_RAVEN = 8;
+    public const MLTI_BOX = 9;
+    public const MLTI_DEATH_ENEMY = 10;
 
     protected static $type = Model_Log_Message::MLM_ITEM_LOG;
 
@@ -73,7 +73,7 @@ class Model_Log_Types_Item extends Model_Log_Message {
 
                 $lists = [
                     'player' => $name,
-                    'self' => $pl ? ($uin == Globals::PrimaryPlayerF()->id()) : false,
+                    'self' => $pl ? ($uin === Globals::PrimaryPlayerF()->id()) : false,
                     'items' => $lists
                 ];
 
@@ -84,12 +84,19 @@ class Model_Log_Types_Item extends Model_Log_Message {
     }
 
     /**
-     * @param Model_Log_Types_Item $new
+     * @param Model_Log_Types_Item $merger
+     *
      * @return bool
      */
-    public function merge($new) {
-        if (is_a($new, static::class, true) && $new->data['class'] == $this->data['class'] && !in_array($this->data['class'], [static::MLTI_DEATH,static::MLTI_DEATH_ENEMY,static::MLTI_GHULKILL,static::MLTI_ZOMBIFY]))
-            foreach ($new->data['content'] as $tc => $d)
+    public function merge($merger): bool {
+        if ($merger->data['class'] === $this->data['class'] && is_a($merger, static::class, true)
+            && !in_array(
+                $this->data['class'],
+                [static::MLTI_DEATH, static::MLTI_DEATH_ENEMY,
+                 static::MLTI_GHULKILL, static::MLTI_ZOMBIFY], true
+            )
+        )
+            foreach ($merger->data['content'] as $tc => $d)
                 if (!isset($this->data['content'][$tc])) $this->data['content'][$tc] = $d;
                 else foreach ($d as $uin => $items)
                     if (!isset($this->data['content'][$tc][$uin])) $this->data['content'][$tc][$uin] = $items;

@@ -32,7 +32,8 @@ abstract class Model_Combat_Weapons_Energy extends Model_Combat_Weapon {
         return array_merge(parent::get_ammo_icons(), [['::energy', $this->energy()]]);
     }
 
-    public function equip($p = null) {
+    public function equip($p = null): void
+    {
         /** @global Model_Player $player */
         if ($p === null)
             $player = Globals::PrimaryPlayerF();

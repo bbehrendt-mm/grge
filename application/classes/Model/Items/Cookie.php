@@ -23,7 +23,8 @@ class Model_Items_Cookie extends Model_Items_Abstract_Item implements Interface_
             );
     }
 	
-	public function mixchem($chemval) {
+	public function mixchem($chemval): bool
+    {
         $this->consume();
         switch ($chemval)
         {

@@ -12,18 +12,22 @@ class Model_Places_Weaponshop extends Model_Places_Abstract_Place {
 		if ($uin === NULL) return parent::uin();
 		else $t = parent::uin($uin);
 
-		$this->inventory->add(new Model_Items_Vending(get_class($this), "ApocaliCorp. Hunting Supply"));
+		$this->inventory->add(new Model_Items_Vending(get_class($this),
+            'ApocaliCorp. Hunting Supply'
+        ));
 
 		return $t;
 	}
 
-    public function setup_additional_rooms() {
+    public function setup_additional_rooms(): void
+    {
         parent::setup_additional_rooms();
         $this->create_new_room( 5,['inside']);
 
         $this->setup_new_room($this->create_new_room(10,['inside']),
                               Globals::CurrentGameF()->config('modules.armory') ? ['workshop','workshop_weapons_1','workshop_weapons_2'] : ['workshop','workshop_weapons_1'],
                               [],
-                              "Hinterraum");
+            'Hinterraum'
+        );
     }
 }

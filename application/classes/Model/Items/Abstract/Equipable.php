@@ -2,17 +2,17 @@
 
 abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item {
 
-    const MIAE_ARMOR_HELMET = 1;
-    const MIAE_ARMOR_BODY = 2;
-    const MIAE_ARMOR_SHIELD = 3;
-    const MIAE_ARMOR_CAPE = 4;
-    const MIAE_WEAPON = 5;
-    const MIAE_ARMOR_ORGAN = 6;
+    public const MIAE_ARMOR_HELMET = 1;
+    public const MIAE_ARMOR_BODY = 2;
+    public const MIAE_ARMOR_SHIELD = 3;
+    public const MIAE_ARMOR_CAPE = 4;
+    public const MIAE_WEAPON = 5;
+    public const MIAE_ARMOR_ORGAN = 6;
 
-    const MIAE_STAT_INI = 1;
-    const MIAE_STAT_ATK = 2;
-    const MIAE_STAT_DEF = 3;
-    const MIAE_STAT_ACC = 4;
+    public const MIAE_STAT_INI = 1;
+    public const MIAE_STAT_ATK = 2;
+    public const MIAE_STAT_DEF = 3;
+    public const MIAE_STAT_ACC = 4;
 
     protected static $allow_multi_equip = false;
     protected static $allow_primary_equip = false;
@@ -26,7 +26,8 @@ abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item 
     protected $equipped_primary;
     protected $player_id = null;
 
-    public function equip($player = null) {
+    public function equip($player = null): void
+    {
         /** @global Model_Player $player */
         if ($player === null)
             $player = Globals::CurrentPlayerF();
@@ -49,7 +50,7 @@ abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item 
         $this->equip_primary($player);
     }
 
-    public static function convertStringType() {
+    public static function convertStringType(): string {
         switch (static::$equipment_type) {
             case static::MIAE_ARMOR_BODY:   return 'Rüstung';
             case static::MIAE_ARMOR_HELMET: return 'Helm';
@@ -61,19 +62,23 @@ abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item 
         }
     }
 
-    public function allows_primary() {
+    public function allows_primary(): bool
+    {
         return static::$allow_primary_equip;
     }
 
-    public function is_equipped_primary() {
+    public function is_equipped_primary(): bool
+    {
         return static::$allow_primary_equip ? $this->equipped_primary : true;
     }
 
-    public function get_equipment_type() {
+    public function get_equipment_type(): int
+    {
         return static::$equipment_type;
     }
     
-    protected function get_effects() {
+    protected function get_effects(): array
+    {
         return static::$effects;
     }
 
@@ -88,7 +93,8 @@ abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item 
         else return $type === null ? $this->get_effects() : $this->get_effects()[$type - 1];
     }
 
-    public function unequip() {
+    public function unequip(): void
+    {
         $rebuild = $this->is_equipped() && $this->allows_primary() && $this->is_equipped_primary();
 
         $this->equipped = false;
@@ -99,12 +105,14 @@ abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item 
             Tool_Scripts::rebuild_primary_equipment($this->get_equipment_type());
     }
 
-    public function consume() {
+    public function consume(): void
+    {
         $this->unequip();
         parent::consume();
     }
 
-    public function grind() {
+    public function grind(): void
+    {
         $this->unequip();
         parent::grind();
     }
@@ -119,14 +127,15 @@ abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item 
         return parent::drop_dead();
     }
 
-    public function drop($p = null, $silent = false) {
+    public function drop($p = null, $silent = false): bool
+    {
         $r = parent::drop($p, $silent);
         if ($r && $this->is_equipped())
             $this->unequip();
         return $r;
     }
 
-    public function equip_primary($player = null) {
+    public function equip_primary($player = null): void {
         if (!static::$allow_primary_equip)
             return;
 

@@ -32,7 +32,8 @@ class Model_Buffs_Job_Woman extends Model_Buffs_Abstract_Job {
 
 	);
 	
-	protected function adjust() {
+	protected function adjust(): void
+    {
 		$this->effects[Model_Status::MS_CHAR_DAMAGE_RESISTANCE][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = $this->level * 0.020;
         $this->effects[Model_Status::MS_CHAR_DAMAGE_MULTIPLIER][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = $this->level * 0.035;
 	}	

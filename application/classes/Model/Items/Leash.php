@@ -14,11 +14,13 @@ class Model_Items_Leash extends Model_Items_Abstract_Item  {
 
     protected $on = false;
 
-    public function is_active() {
+    public function is_active(): bool
+    {
         return $this->on;
     }
 
-    public function drop($p = null, $silent = false) {
+    public function drop($p = null, $silent = false): bool
+    {
         return false;
     }
 

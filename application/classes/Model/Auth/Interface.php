@@ -9,7 +9,7 @@ abstract class Model_Auth_Interface {
     protected $zvid = -1;
     protected $last_error = null;
 
-    abstract public function connectToLocal($target_id = null);
+    abstract public function connectToLocal($target_id = null): bool;
     abstract public function getRemoteName();
     abstract public function getRemoteAvatarUrl();
 
@@ -17,7 +17,8 @@ abstract class Model_Auth_Interface {
         return static::$service_name;
     }
 
-    public function getLocalID() {
+    public function getLocalID(): int
+    {
         return $this->zvid;
     }
 
@@ -37,20 +38,23 @@ abstract class Model_Auth_Interface {
      * @param int $id ZV User ID
      * @return bool True, if the account method is connected
      */
-    public static function user_is_connected($id) {
-        return DB::select(array(DB::expr('COUNT(*)'), 'num'))->from('profiles_xref')->where('provider','=', static::class)->where('zvid','=',$id)->execute()->get('num',0) == 1;
+    public static function user_is_connected($id): bool
+    {
+        return DB::select(array(DB::expr('COUNT(*)'), 'num'))->from('profiles_xref')->where('provider','=', static::class)->where('zvid','=',$id)->execute()->get('num',0) === 1;
     }
 
     /**
      * Returns true if the user has an authentication method connectd to his account via this provider
      * @return bool True, if the account method is connected
      */
-    public function is_connected() {
+    public function is_connected(): bool
+    {
         return static::user_is_connected($this->zvid);
     }
 
-    protected static function lookup($rid = null, $v1 = null, $v2 = null) {
-        if ($rid == null && $v1 == null && $v2 == null) return -1;
+    protected static function lookup($rid = null, $v1 = null, $v2 = null): int
+    {
+        if ($rid === null && $v1 === null && $v2 === null) return -1;
         $query = DB::select('zvid')->from('profiles_xref')->where('provider','=', static::class);
         if ($rid !== null) $query->where('rid','=',$rid);
         if ($v1 !== null) $query->where('var1','=',$v1);
@@ -63,7 +67,8 @@ abstract class Model_Auth_Interface {
      * Removes this authentication method from a user
      * @param int $id ZV User ID
      */
-    public static function user_unlink($id) {
+    public static function user_unlink($id): void
+    {
         DB::delete('profiles_xref')->where('provider','=', static::class)->where('zvid','=',$id)->execute();
     }
 
@@ -71,14 +76,16 @@ abstract class Model_Auth_Interface {
      * Removes all authentication methods from a user
      * @param int $id ZV User ID
      */
-    public static function user_unlink_all($id) {
+    public static function user_unlink_all($id): void
+    {
         DB::delete('profiles_xref')->where('zvid','=',$id)->execute();
     }
 
     /**
      * Removes this authentication method from a user
      */
-    public function unlink() {
+    public function unlink(): void
+    {
         static::user_unlink($this->zvid);
     }
 
@@ -109,7 +116,8 @@ abstract class Model_Auth_Interface {
      * @return bool
      * @throws Kohana_Exception
      */
-    protected function link($v1 = null, $v2 = null) {
+    protected function link($v1 = null, $v2 = null): bool
+    {
         if (!$this->is_ready()) return false;
         return static::user_link($this->zvid, $this->rid, $v1, $v2);
     }
@@ -123,7 +131,8 @@ abstract class Model_Auth_Interface {
      * @return bool
      * @throws Kohana_Exception
      */
-    protected static function user_link($zvid, $rid, $v1 = null, $v2 = null) {
+    protected static function user_link($zvid, $rid, $v1 = null, $v2 = null): bool
+    {
         if (static::user_is_connected($zvid))
             DB::update('profiles_xref')->set(array('var1' => $v1, 'var2' => $v2))->where('provider','=', static::class)->where('zvid','=',$zvid)->execute();
         else DB::insert('profiles_xref', array('provider', 'rid', 'zvid', 'var1', 'var2'))->values(array(static::class, $rid, $zvid, $v1, $v2))->execute();
@@ -134,7 +143,8 @@ abstract class Model_Auth_Interface {
      * Checks if this authenticator is ready
      * @return bool
      */
-    public function is_ready() {
+    public function is_ready(): bool
+    {
         return $this->ready && $this->zvid > 0 && $this->rid > 0;
     }
 }

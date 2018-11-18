@@ -5,7 +5,9 @@ class Model_Items_Virtual_Location_Room_Bedroom extends Model_Items_Abstract_Vir
     protected function hid(): Model_Hid {
         $tmp = parent::hid();
 
-        $tmp->add_action($this->roomF()->has_content("bedr1") ? 'Ins Bett gehen' : ($this->roomF()->has_content("hay1") ? 'Auf dem Heu schlafem' : 'Auf dem Boden schlafen'), Model_Action::factory()
+        $tmp->add_action($this->roomF()->has_content('bedr1') ? 'Ins Bett gehen' : ($this->roomF()->has_content(
+            'hay1'
+        ) ? 'Auf dem Heu schlafem' : 'Auf dem Boden schlafen'), Model_Action::factory()
             ->buttonskin('hideout')
             ->condition(function($p) {
                 /** @var Model_Player $p */
@@ -26,17 +28,31 @@ class Model_Items_Virtual_Location_Room_Bedroom extends Model_Items_Abstract_Vir
             ->show_as(Model_Effect::factory()
                 ->effect(Model_Status::MS_STAT_ENERGY, '++')
                 ->effect(Model_Status::MS_STAT_SLEEPY, '++')
-                ->effect(Model_Status::MS_STAT_HEALTH, $this->roomF()->has_content("bedr1") ? '++' : 0)
+                ->effect(Model_Status::MS_STAT_HEALTH, $this->roomF()->has_content(
+                    'bedr1'
+                ) ? '++' : 0)
             )
             ->effect(Model_Effect::factory()
                 ->message('Es war ein langer Tag, und du bist froh wenigstens für ein paar Stunden alles um dich herum vergessen zu können ...')
                 ->custom(function($p) {
                         /** @var Model_Player $p */
-                        $d = $this->roomF()->has_content("bedrlights") ? 2 : 5;
+                        $d = $this->roomF()->has_content('bedrlights') ? 2 : 5;
 
-                        if		($this->roomF()->has_content("bedr3") || $this->roomF()->has_content("hay3")) new Model_Buffs_Presleep($p->id(), $this->roomF()->has_content("bedr3") ? 3 : -3, $this->roomF()->has_content("bedr3") ? $d : ($d + 1));
-                        elseif	($this->roomF()->has_content("bedr2") || $this->roomF()->has_content("hay2")) new Model_Buffs_Presleep($p->id(), $this->roomF()->has_content("bedr2") ? 2 : -2, $this->roomF()->has_content("bedr2") ? $d : ($d + 1));
-                        elseif	($this->roomF()->has_content("bedr1") || $this->roomF()->has_content("hay1")) new Model_Buffs_Presleep($p->id(), $this->roomF()->has_content("bedr1") ? 1 : -1, $this->roomF()->has_content("bedr1") ? $d : ($d + 1));
+                        if		($this->roomF()->has_content('bedr3') || $this->roomF()->has_content(
+                                'hay3'
+                            )) new Model_Buffs_Presleep($p->id(), $this->roomF()->has_content(
+                            'bedr3'
+                        ) ? 3 : -3, $this->roomF()->has_content('bedr3') ? $d : ($d + 1));
+                        elseif	($this->roomF()->has_content('bedr2') || $this->roomF()->has_content(
+                                'hay2'
+                            )) new Model_Buffs_Presleep($p->id(), $this->roomF()->has_content(
+                            'bedr2'
+                        ) ? 2 : -2, $this->roomF()->has_content('bedr2') ? $d : ($d + 1));
+                        elseif	($this->roomF()->has_content('bedr1') || $this->roomF()->has_content(
+                                'hay1'
+                            )) new Model_Buffs_Presleep($p->id(), $this->roomF()->has_content(
+                            'bedr1'
+                        ) ? 1 : -1, $this->roomF()->has_content('bedr1') ? $d : ($d + 1));
                         else new Model_Buffs_Presleep($p->id(), 0, 6);
                     })
             )

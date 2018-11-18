@@ -49,49 +49,48 @@ if (!isset($preset_zvid)) $preset_zvid = -1;
 
         <h2><?=__('Logge dich über deinen ::i::Twinoid::/i::-Account ein!');?></h2>
 
-            <div id="custom_login">
-                <div class="row iconize" title="<?=__('Bitte wähle, welches ::i::Motion-Twin::/i::-Spiel du für den Login nutzen möchtest.');?>">
-                    <div class="cell rw-1"><i class="fa fa-gamepad"></i></div>
-                    <div class="cell rw-11">
-                        <label for="service"></label><select class="form_input" id="service">
-                            <?php foreach ($services as $name) { ?>
-                                <option data-description="<?=__('Verwende deinen :name-Account', [':name' => $name]);?>" value="<?=$name?>"><?=$name?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                </div><br />
-
-                <div class="row iconize" title="<?=__('Um deinen geheimen Schlüssel zu erhalten, musst du ZombVival über das ::b::Verzeichnis::/b:: von ::i::Die Verdammten::/i:: betreten.');?>">
-                    <div class="cell rw-1"><i class="fa fa-user"></i></div>
-                    <div class="cell rw-11"><input id="key" type="text" autocomplete="off" class="form_input" placeholder="<?=__('Geheimer Schlüssel');?>" /></div>
-                </div><br />
-
-                <div class="row">
-                    <div class="cell rw-6 rw-lg-12"><label title="<?=__('Aktiviere diese Option, wenn du möchtest, dass deine Daten beim nächsten Besuch von ZombVival automatisch eingetragen werden. ::b::Aktiviere diese Option nicht, wenn du einen öffentlichen Computer verwendest!::/b::');?>"><input type="checkbox" class="form_input" id="remember"><?=__('Daten merken');?></label></div>
+        <div id="custom_login">
+            <div class="row iconize" title="<?=__('Bitte wähle, welches ::i::Motion-Twin::/i::-Spiel du für den Login nutzen möchtest.');?>">
+                <div class="cell rw-1"><i class="fa fa-gamepad"></i></div>
+                <div class="cell rw-11">
+                    <label for="service"></label><select class="form_input" id="service">
+                        <?php foreach ($services as $name) { ?>
+                            <option data-description="<?=__('Verwende deinen :name-Account', [':name' => $name]);?>" value="<?=$name?>"><?=$name?></option>
+                        <?php } ?>
+                    </select>
                 </div>
+            </div><br />
 
-                <div class="row">
-                    <div class="cell hide-desktop rw-12 padded">
-                        <div class="note noclick">
-                            <?=__('Du kannst dich auch auf einem PC einloggen und deine Login-Informationen von dort bequem auf dein mobiles Gerät übertragen lassen!');?>
-                        </div>
-                    </div>
-                    <div class="cell rw-6 ro-6 rw-lg-7 ro-lg-5 rw-sm-12 ro-sm-0">
-                        <div id="confirm" class="btn btn-icon"><span class="btn-icon-inner"><i class="fa fa-arrow-right"></i></span><span id="confirm-content"><?=__('Einloggen');?></span></div>
-                    </div>
-                </div>
+            <div class="row iconize" title="<?=__('Um deinen geheimen Schlüssel zu erhalten, musst du ZombVival über das ::b::Verzeichnis::/b:: von ::i::Die Verdammten::/i:: betreten.');?>">
+                <div class="cell rw-1"><i class="fa fa-user"></i></div>
+                <div class="cell rw-11"><input id="key" type="text" autocomplete="off" class="form_input" placeholder="<?=__('Geheimer Schlüssel');?>" /></div>
+            </div><br />
+
+            <div class="row">
+                <div class="cell rw-6 rw-lg-12"><label title="<?=__('Aktiviere diese Option, wenn du möchtest, dass deine Daten beim nächsten Besuch von ZombVival automatisch eingetragen werden. ::b::Aktiviere diese Option nicht, wenn du einen öffentlichen Computer verwendest!::/b::');?>"><input type="checkbox" class="form_input" id="remember"><?=__('Daten merken');?></label></div>
             </div>
 
-            <div id="profiles">
+            <div class="row">
+                <div class="cell hide-desktop rw-12 padded">
+                    <div class="note noclick">
+                        <?=__('Du kannst dich auch auf einem PC einloggen und deine Login-Informationen von dort bequem auf dein mobiles Gerät übertragen lassen!');?>
+                    </div>
+                </div>
+                <div class="cell rw-6 ro-6 rw-lg-7 ro-lg-5 rw-sm-12 ro-sm-0">
+                    <div id="confirm" class="btn btn-icon"><span class="btn-icon-inner"><i class="fa fa-arrow-right"></i></span><span id="confirm-content"><?=__('Einloggen');?></span></div>
+                </div>
+            </div>
+        </div>
 
-                <div class="row iconize">
-                    <div class="cell rw-6 rw-sm-12">
-                        <br />
-                        <span id="delete" class="link small"><i class="fa fa-trash-o"></i> <?=__('Gespeicherte Daten löschen');?></span>
-                    </div>
-                    <div class="cell rw-6 rw-sm-12">
-                        <div id="custom" class="btn"><?=__('Anderer Account');?></div>
-                    </div>
+        <div id="profiles">
+
+            <div class="row iconize">
+                <div class="cell rw-6 rw-sm-12">
+                    <br />
+                    <span id="delete" class="link small"><i class="fa fa-trash-o"></i> <?=__('Gespeicherte Daten löschen');?></span>
+                </div>
+                <div class="cell rw-6 rw-sm-12">
+                    <div id="custom" class="btn"><?=__('Anderer Account');?></div>
                 </div>
             </div>
         </div>

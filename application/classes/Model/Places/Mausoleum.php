@@ -11,7 +11,9 @@ class Model_Places_Mausoleum extends Model_Places_Abstract_Place {
 		if ($uin === NULL) return parent::uin();
 		else $t = parent::uin($uin);
 
-		$this->inventory->add(new Model_Items_Vending(get_class($this), "Kill-it-Yourself Coffin Dispenser"));
+		$this->inventory->add(new Model_Items_Vending(get_class($this),
+            'Kill-it-Yourself Coffin Dispenser'
+        ));
         return $t;
 	}
 }	

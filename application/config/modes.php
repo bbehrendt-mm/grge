@@ -400,7 +400,7 @@ return array(
                         new Model_Buffs_Alcohol();
                         new Model_Buffs_Zombify();
                         new Model_Buffs_Nuclear();
-                        new Model_Buffs_Heartbeat(null, ($mode == 2000) ? 2016 : -1);
+                        new Model_Buffs_Heartbeat(null, ($mode === 2000) ? 2016 : -1);
                         new Model_Buffs_Backpack();
                         new Model_Buffs_Transport();
                         new Model_Buffs_Flashlight();

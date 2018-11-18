@@ -22,13 +22,15 @@ class Model_Items_Guardshield extends Model_Items_Abstract_Armor {
         parent::__construct(null);
     }
 
-    protected function get_effects() {
+    protected function get_effects(): array
+    {
         return [
             min(0, -10 + 2 * $this->level), 0, 2 * $this->level, 0
         ];
     }
 
-    public function drop($p = null, $silent = false) {
+    public function drop($p = null, $silent = false): bool
+    {
         if (!$silent) Globals::PrimaryPlayerF()->log()->add('Ohne deinen Schild fühlst du dich ziemlich nackt; hauptsächlich, weil du hinter dem Schild tatsächlich keine Kleidung trägst. Du solltest ihn also besser nicht ablegen...');
         return false;
     }
@@ -40,5 +42,6 @@ class Model_Items_Guardshield extends Model_Items_Abstract_Armor {
     /**
      * @param number $damage
      */
-    public function take_damage($damage) {}
+    public function take_damage($damage): void
+    {}
 }	

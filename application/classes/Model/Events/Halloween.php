@@ -11,11 +11,13 @@ class Model_Events_Halloween extends Model_Events_Event {
     private $item_list = [];
     private $clowns = 0;
 
-    public function register_event_map($map) {
+    public function register_event_map($map): void
+    {
         $this->maps[] = $map;
     }
 
-    private function spawn_scarecrow(Model_Places_Abstract_Place $place) {
+    private function spawn_scarecrow(Model_Places_Abstract_Place $place): void
+    {
         $scarecrow = new Model_NPC_Event_Scarecrow();
         $scarecrow->location_class($place->uin());
         Globals::CurrentGameF()->add_npc($scarecrow);
@@ -23,7 +25,8 @@ class Model_Events_Halloween extends Model_Events_Event {
         $this->npc_list[] = $scarecrow->id();
     }
 
-    private function spawn_clown(Model_Places_Abstract_Place $place) {
+    private function spawn_clown(Model_Places_Abstract_Place $place): void
+    {
         if (Tool_System::instance_of($place, Model_Places_Abstract_Hideout::cls()))
             return;
 
@@ -36,7 +39,8 @@ class Model_Events_Halloween extends Model_Events_Event {
         $this->clowns++;
     }
 
-    private function spawn_merchant(Model_Places_Abstract_Place $place) {
+    private function spawn_merchant(Model_Places_Abstract_Place $place): void
+    {
         $merchant = new Model_NPC_Event_Merchant();
         $merchant->location_class($place->uin());
         Globals::CurrentGameF()->add_npc($merchant);
@@ -48,7 +52,8 @@ class Model_Events_Halloween extends Model_Events_Event {
         $this->item_list[] = $i->uin();
     }
 
-    protected function clown_balance() {
+    protected function clown_balance(): void
+    {
         $num_locations = count(Globals::CurrentGameF()->map_main()->get_locations());
         $num_clowns_supposed = ceil($num_locations/7.0);
 
@@ -58,7 +63,8 @@ class Model_Events_Halloween extends Model_Events_Event {
         }
     }
 
-    protected function trigger_activation() {
+    protected function trigger_activation(): bool
+    {
         foreach (Globals::CurrentGameF()->playable_entities() as $pl) if (!Tool_Scripts::is_npc($pl)) {
             new Model_Buffs_Scarecrow($pl);
             /** @var $pl Model_Player */
@@ -70,7 +76,7 @@ class Model_Events_Halloween extends Model_Events_Event {
         foreach (Globals::CurrentGameF()->maps() as $map)
             foreach ($map->get_locations() as $lid) {
 
-                if (Globals::CurrentGameF()->map_main()->resolve_fixed_id(2) != $lid && (Globals::CurrentGameF()->map_main()->resolve_fixed_id(1) == $lid || Tool_Gambling::random(0.2)))
+                if (Globals::CurrentGameF()->map_main()->resolve_fixed_id(2) !== $lid && (Globals::CurrentGameF()->map_main()->resolve_fixed_id(1) === $lid || Tool_Gambling::random(0.2)))
                     $this->spawn_scarecrow(Globals::CurrentGameF()->location($lid));
 
                 if (Tool_System::instance_of(Globals::CurrentGameF()->location($lid), Model_Places_Store::cls()))
@@ -82,7 +88,8 @@ class Model_Events_Halloween extends Model_Events_Event {
         return true;
     }
 
-    protected function trigger_deactivation() {
+    protected function trigger_deactivation(): bool
+    {
         foreach ($this->item_list as $iuin) {
             /** @var Model_Items_Abstract_Item $i */
             $i = Globals::CurrentGameF()->uin()->get($iuin, Model_Items_Abstract_Item::cls());
@@ -122,26 +129,30 @@ class Model_Events_Halloween extends Model_Events_Event {
         return true;
     }
 
-    public function tick() {
+    public function tick(): bool
+    {
         return true;
     }
 
-    public function event_playerCreation(Interface_Plentity $entity) {
+    public function event_playerCreation(Interface_Plentity $entity): void
+    {
         if (!Tool_Scripts::is_npc($entity))
             new Model_Buffs_Scarecrow($entity);
     }
 
-    public function event_locationCreation(Model_Places_Abstract_Place $place) {
+    public function event_locationCreation(Model_Places_Abstract_Place $place): void
+    {
         $this->clown_balance();
 
-        if (!Tool_System::instance_of($place, Model_Places_Abstract_Hideout::cls()) && Tool_Gambling::random(0.2))
+        if (Tool_Gambling::random(0.2) && !Tool_System::instance_of($place, Model_Places_Abstract_Hideout::cls()))
             $this->spawn_scarecrow($place);
 
         if (Tool_System::instance_of($place, Model_Places_Store::cls()))
             $this->spawn_merchant($place);
     }
 
-    private function handle_soulSpawn(Model_Places_Abstract_Place $place) {
+    private function handle_soulSpawn(Model_Places_Abstract_Place $place): void
+    {
         $soul_chance_table = [
             'Model_Places_Hospital_Er' => 0.35,
             'Model_Places_Mental' => 0.3,
@@ -173,23 +184,32 @@ class Model_Events_Halloween extends Model_Events_Event {
      * @param Model_Places_Abstract_Place $place
      * @throws Exception
      */
-    private function handle_horrorActions(Model_Places_Abstract_Place $place) {
-        // Cooler closing
-        if (Tool_System::instance_of($place, Model_Places_Burgerjoint::cls()) && !in_array($place->uin(), $this->horror_list) && Tool_Gambling::random(0.1)) {
-            $this->horror_list[] = $place->uin();
-            /** @var Model_Items_Virtual_Location_Cooler[] $vi */
-            $vi = $place->inventory()->get(Model_Items_Virtual_Location_Cooler::cls());
-            if ($vi && !$vi[0]->remaining_actions('cooler_open')) {
-                $vi[0]->remaining_actions('cooler_open_again_2', 1);
+    private function handle_horrorActions(Model_Places_Abstract_Place $place): void
+    {
+        if (in_array($place->uin(), $this->horror_list, true)) return;
 
-                foreach (Tool_Scripts::at_location($place->uin(), true, false) as $pl) {
-                    $pl->achievements()->achieve(Model_Achievement::MA_HALLOWEEN_15);
-                    $pl->log()->add('Die Tür zur Kühlkammer ist mit einem Knall zugefallen. Komisch, eigentlich warst du dir sicher, sie mit einem Keil gesichert zu haben...');
-                }
-            }
-        }
+        // Cooler closing
+        //ToDo: Fix for new room system
+        //if (Tool_Gambling::random(0.1)
+        //    && Tool_System::instance_of($place, Model_Places_Burgerjoint::cls()) && !in_array(
+        //                    $place->uin(), $this->horror_list, true
+        //                )
+        //) {
+        //    $this->horror_list[] = $place->uin();
+        //    /** @var Model_Items_Virtual_Location_Cooler[] $vi */
+        //    $vi = $place->inventory()->get(Model_Items_Virtual_Location_Cooler::cls());
+        //    if ($vi && !$vi[0]->remaining_actions('cooler_open')) {
+        //        $vi[0]->remaining_actions('cooler_open_again_2', 1);
+
+        //        foreach (Tool_Scripts::at_location($place->uin(), true, false) as $pl) {
+        //            $pl->achievements()->achieve(Model_Achievement::MA_HALLOWEEN_15);
+        //            $pl->log()->add('Die Tür zur Kühlkammer ist mit einem Knall zugefallen. Komisch, eigentlich warst du dir sicher, sie mit einem Keil gesichert zu haben...');
+        //        }
+        //    }
+        //}
+
         // Construction site
-        elseif (Tool_System::instance_of($place, Model_Places_Constructionsite::cls()) && Tool_Gambling::random(0.1)) {
+        if (Tool_Gambling::random(0.1) && Tool_System::instance_of($place, Model_Places_Constructionsite::cls())) {
             foreach (Tool_Scripts::at_location($place->uin(), true, false) as $pl) {
                 $pl->achievements()->achieve(Model_Achievement::MA_HALLOWEEN_15);
                 $pl->log()->add('Du willst dich gerade ausruhen, da hörst du wie etwas hinter dir auf den Boden aufschlägt. Es scheint, als wäre eine Leiche von einem Gerüst gefallen!');
@@ -198,7 +218,11 @@ class Model_Events_Halloween extends Model_Events_Event {
             $place->inventory()->add(new Model_Items_Body('Zerfetzte Leiche','Diese Leiche ist ziemlich verstümmelt. Schwer zu sagen, ob das durch den Sturz passiert ist...'));
         }
         // Toilet
-        elseif (Tool_System::instance_of($place, Model_Places_Toilet::cls()) && !in_array($place->uin(), $this->horror_list) && Tool_Gambling::random(0.2)) {
+        elseif (Tool_Gambling::random(0.2)
+            && Tool_System::instance_of($place, Model_Places_Toilet::cls()) && !in_array(
+                            $place->uin(), $this->horror_list, true
+                        )
+        ) {
             $this->horror_list[] = $place->uin();
 
             foreach (Tool_Scripts::at_location($place->uin(), true, false) as $pl) {
@@ -208,8 +232,9 @@ class Model_Events_Halloween extends Model_Events_Event {
             }
         }
         // Insane Asylum
+        /** @noinspection NotOptimalIfConditionsInspection */
         /** @noinspection PhpUndefinedMethodInspection */
-        elseif (Tool_System::instance_of($place, Model_Places_Mental::cls()) && !in_array($place->uin(), $this->horror_list) && $place->get_mental_state() >= 1) {
+        elseif (Tool_System::instance_of($place, Model_Places_Mental::cls()) && $place->get_mental_state() >= 1) {
             $this->horror_list[] = $place->uin();
 
             $patient = new Model_NPC_Event_Patient();
@@ -222,14 +247,16 @@ class Model_Events_Halloween extends Model_Events_Event {
 
     /**
      * @param Model_Places_Abstract_Place $place
+     *
      * @throws Exception
      */
-    public function event_locationTick(Model_Places_Abstract_Place $place) {
+    public function event_locationTick(Model_Places_Abstract_Place $place): void {
         $this->handle_soulSpawn($place);
         $this->handle_horrorActions($place);
     }
 
-    public function event_generateHIDStack(Model_Items_Abstract_Item $item, Model_Hid $hid) {
+    public function event_generateHIDStack(Model_Items_Abstract_Item $item, Model_Hid $hid): void
+    {
 
         // Cooler closing
         // ToDo: Fix dis!
@@ -252,11 +279,12 @@ class Model_Events_Halloween extends Model_Events_Event {
         //}
     }
 
-    public function event_executeHIDAction($cls, $name, Model_Action $action) {
+    public function event_executeHIDAction($cls, $name, Model_Action $action): void
+    {
         if (!Tool_Gambling::random(0.08)) return;
 
         // DILDO EFFECT UPDATE
-        if (Tool_System::instance_of($cls, Model_Items_Dildo::cls()) && $name == 'Benutzen')
+        if ($name === 'Benutzen' && Tool_System::instance_of($cls, Model_Items_Dildo::cls()))
             $action
                 ->decider(function() {return static::$event_key;})
                 ->effect(Model_Effect::factory()
@@ -267,7 +295,7 @@ class Model_Events_Halloween extends Model_Events_Event {
                     ->message('Als du gerade konzentriert "bei der Arbeit" bist, hörst du plötzlich hinter dir ein Kinderlachen. Du drehst dich erschrocken um, findest hinter dir jedoch nur einen Teddybären...')
                     ,static::$event_key);
         // ALCOHOL EFFECT
-        elseif (Tool_System::instance_of($cls, Model_Items_Abstract_Alcohol::cls()) && $name == 'Trinken')
+        elseif ($name === 'Trinken' && Tool_System::instance_of($cls, Model_Items_Abstract_Alcohol::cls()))
             $action
                 ->decider(function() {return static::$event_key;})
                 ->effect(
@@ -280,20 +308,22 @@ class Model_Events_Halloween extends Model_Events_Event {
                     ,static::$event_key);
     }
 
-    public function event_findItem(Model_Places_Abstract_Place $place, Model_Items_Abstract_Item $item) {
+    public function event_findItem(Model_Places_Abstract_Place $place, Model_Items_Abstract_Item $item): void
+    {
         if (!Tool_Gambling::random(0.1)) return;
 
         if (Tool_System::instance_of($place, Model_Places_Abstract_Node::cls()))
             Tool_Scripts::place_new_item(new Model_Items_Generic_Pumpkin());
     }
 
-    public function event_blueprintCreation($config_name, $config_category) {
+    public function event_blueprintCreation($config_name, $config_category): ?Model_Blueprints
+    {
         $massacre_mode = Globals::hasCurrentGame() && Globals::CurrentGameF()->setting_mode(2000);
 
         $sp_factor = $massacre_mode ? 8 : 1;
 
 
-        if ($config_name == 'Store' && $config_category == 'items') {
+        if ($config_name === 'Store' && $config_category === 'items') {
 
             return Model_Blueprints::factory()
                 ->add_blueprints(
@@ -355,5 +385,6 @@ class Model_Events_Halloween extends Model_Events_Event {
 
     }
 
-    public function event_renderHIDAction($cls, $name, Model_Action $action) {}
+    public function event_renderHIDAction($cls, $name, Model_Action $action): void
+    {}
 }

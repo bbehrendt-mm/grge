@@ -18,7 +18,7 @@ if (!isset($fill_key)) $fill_key = null;
 
         <div class="row iconize">
             <div class="cell rw-1"><i class="fa fa-qrcode"></i></div>
-            <div class="cell rw-11"><input id="key" type="text" autocomplete="off" class="form_input" placeholder="<?=__('PIN');?>" value="<?=$fill_key ? $fill_key : ''?>" /></div>
+            <div class="cell rw-11"><input id="key" type="text" autocomplete="off" class="form_input" placeholder="<?=__('PIN');?>" value="<?=$fill_key ?: ''?>" /></div>
         </div><br />
 
 

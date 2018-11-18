@@ -44,14 +44,15 @@ class Model_NPC_Event_Patient extends Model_NPC_Humanoid
         return Model_Combat_Event_Patient::create_linked_actor($this);
     }
 
-    protected function generate_dead_body() {
+    protected function generate_dead_body(): ?Model_Items_Abstract_Item
+    {
         $b = new Model_Items_Body('Verstörter Patient', 'Der Patient trägt ein Identifikationsarmband, auf dem sich ein Barcode sowie ein Name befindet. Du wirst wohl nie erfahren, wer das war oder was mit ihm in der Irrenanstalt geschehen ist. Wobei... vermutlich willst du das auch lieber gar nicht wissen.');
         $b->give_name(Model_User::random_names(1)[0]);
         return $b;
     }
 
     public function kill() {
-        if ($this->location() && !$this->is_aggresive) $this->location()->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_LEAVE, $this->id(), true));
+        if (!$this->is_aggresive && $this->location()) $this->location()->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_LEAVE, $this->id(), true));
         else parent::kill();
     }
 
@@ -59,7 +60,8 @@ class Model_NPC_Event_Patient extends Model_NPC_Humanoid
         return !$this->is_passified;
     }
 
-    public function hid() {
+    public function hid(): Model_Hid
+    {
         return parent::hid()
             ->add_action('Bestehlen', Model_Action::factory()
                 ->show_as(Model_Effect::factory()
@@ -73,7 +75,7 @@ class Model_NPC_Event_Patient extends Model_NPC_Humanoid
 
                         $cpl = [];
                         foreach (Tool_Scripts::at_location($p->location_class()) as $npl)
-                            if ($npl->id() != $this->id())
+                            if ($npl->id() !== $this->id())
                                 $cpl[] = $npl;
 
                         Tool_Scripts::combat([$cpl,[$this]],false,2,$p->location(),'Der verstörte Patient greift an!');
@@ -81,7 +83,7 @@ class Model_NPC_Event_Patient extends Model_NPC_Humanoid
                 )
             )
             ->add_action('Teddy geben', Model_Action::factory()
-                ->requirement("Model_Items_Generic_Teddy", 1)
+                ->requirement('Model_Items_Generic_Teddy', 1)
                 ->effect(Model_Effect::factory()
                     ->custom(function($p) {
                         /** @var Model_Player $p */
@@ -101,7 +103,7 @@ class Model_NPC_Event_Patient extends Model_NPC_Humanoid
                 )
             )
             ->add_action('Anderen Teddy geben', Model_Action::factory()
-                ->requirement("Model_Items_Generic_Cursed", 1)
+                ->requirement('Model_Items_Generic_Cursed', 1)
                 ->effect(Model_Effect::factory()
                     ->custom(function($p) {
                         /** @var Model_Player $p */

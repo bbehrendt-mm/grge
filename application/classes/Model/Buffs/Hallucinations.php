@@ -7,8 +7,9 @@ class Model_Buffs_Hallucinations extends Model_Buffs_Abstract_Buff {
     protected static $desc = 'Keine Angst, alles ist in Ordnung; das behauptet zumindest der grüne Elefant, der auf deiner Schulter sitzt. Moment, steht da drüben etwa Helmut Berger neben der fliegenden Schokoladenpalme, an der hölzerne Bullenhaie wachens?';
     protected static $bid = 'hallucination';
 
-    public function tick() {
-        if (!$this->assoc_player->get_status()->retrieve('passout') && random_int(0,5) > 4) {
+    public function tick(): bool
+    {
+        if (random_int(0,5) > 4 && !$this->assoc_player->get_status()->retrieve('passout')) {
             $z = array();
             $c = random_int(1,8);
             for ($i = 0; $i < $c; $i++)

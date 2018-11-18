@@ -16,7 +16,8 @@ class Model_Buffs_Daytime extends Model_Buffs_Abstract_Buff {
 
     protected function get_effects(): array { return $this->effects; }
 
-    public function name() {
+    public function name(): string
+    {
         switch (Tool_Scripts::get_timeofday($this->assoc_player)) {
             case 'night':
                 return 'Tageszeit: Nacht'; break;
@@ -33,11 +34,13 @@ class Model_Buffs_Daytime extends Model_Buffs_Abstract_Buff {
         }
     }
 
-    public function icon() {
+    public function icon(): string
+    {
         return static::static_icon(Tool_Scripts::get_timeofday($this->assoc_player));
     }
 
-    public static function static_icon($s = null) {
+    public static function static_icon($s = null): string
+    {
         if (!$s) $s = Tool_Scripts::get_timeofday();
         switch ($s) {
             case 'night':
@@ -55,11 +58,13 @@ class Model_Buffs_Daytime extends Model_Buffs_Abstract_Buff {
         }
     }
 
-    public function description() {
+    public function description(): string
+    {
         return static::static_description(Tool_Scripts::get_timeofday($this->assoc_player));
     }
 
-    public static function static_description($s = null) {
+    public static function static_description($s = null): string
+    {
         if (!$s) $s = Tool_Scripts::get_timeofday();
         switch ($s) {
             case 'night':
@@ -78,7 +83,8 @@ class Model_Buffs_Daytime extends Model_Buffs_Abstract_Buff {
     }
 
 
-    public function rebuild() {
+    public function rebuild(): bool
+    {
         $tod = Tool_Scripts::get_timeofday($this->assoc_player);
 
         switch ($tod) {

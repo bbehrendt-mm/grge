@@ -18,7 +18,7 @@ class Model_Items_Tentkit2 extends Model_Items_Tentkit  {
                 ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
                 ->condition(function($p) {
                     /** @var Model_Player $p */
-                    return (Tool_Scripts::current_location_hideout($p) == null && Globals::CurrentGameF()->map($p->location_class())->get_map_type() == Model_Map_Abstract::MMA_TYPE_OVERVIEW && !Tool_System::instance_of($p->location(), 'Model_Places_Abstract_Xmas'));
+                    return (Tool_Scripts::current_location_hideout($p) === null && Globals::CurrentGameF()->map($p->location_class())->get_map_type() === Model_Map_Abstract::MMA_TYPE_OVERVIEW && !Tool_System::instance_of($p->location(), 'Model_Places_Abstract_Xmas'));
                 })
                 ->fail_message('Du kannst an dieser Stelle kein InstaZELT™ aufstellen.')
                 ->effect(

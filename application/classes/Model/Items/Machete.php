@@ -18,7 +18,8 @@ class Model_Items_Machete extends Model_Combat_Weapons_Close implements Interfac
 
     protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SLASH;
 	
-	public function mixchem($chemval) {
+	public function mixchem($chemval): bool
+    {
 
         switch ($chemval)
         {

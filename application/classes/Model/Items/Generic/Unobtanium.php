@@ -23,6 +23,6 @@ class Model_Items_Generic_Unobtanium extends Model_Items_Abstract_Item implement
     public function __construct($type = null) {
         parent::__construct($type);
         $this->grind();
-        throw new Exception("Attempted to create unobtainable item!");
+        throw new RuntimeException('Attempted to create unobtainable item!');
     }
 }	

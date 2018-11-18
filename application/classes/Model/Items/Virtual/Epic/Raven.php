@@ -7,15 +7,18 @@ class Model_Items_Virtual_Epic_Raven extends Model_Items_Abstract_Virtual {
     private $doped = false;
     private $rest;
 
-    public function get_inventory_size() {
+    public function get_inventory_size(): int
+    {
         return $this->doped ? 60 : 30;
     }
 
-    public function get_inventory_capacity() {
+    public function get_inventory_capacity(): int
+    {
         return $this->doped ? 4 : 3;
     }
 
-    public function is_doped() {
+    public function is_doped(): bool
+    {
         return $this->doped;
     }
 
@@ -62,7 +65,7 @@ class Model_Items_Virtual_Epic_Raven extends Model_Items_Abstract_Virtual {
 
                         $current_location = $p->location_class();
                         $locations = array_filter(Globals::CurrentGameF()->main_map()->build_route_array($current_location), function($location) use ($current_location, $a) {
-                            if ($location['id'] == $current_location || $a[0] > $location['distance'] || $a[1] < $location['distance']) return false;
+                            if ($location['id'] === $current_location || $a[0] > $location['distance'] || $a[1] < $location['distance']) return false;
                             $obj = Globals::CurrentGameF()->location($location['id']);
                             if (!$obj || Tool_System::instance_of($obj, ['Model_Places_Abstract_Hideout', 'Model_Places_Abstract_Node'])) return false;
                             return true;
@@ -78,7 +81,7 @@ class Model_Items_Virtual_Epic_Raven extends Model_Items_Abstract_Virtual {
                             return;
                         }
 
-                        $location = Globals::CurrentGameF()->location(Tool_Gambling::select(array_keys($locations)));
+                        $location = Globals::CurrentGameF()->locationF(Tool_Gambling::select(array_keys($locations)));
 
                         $p->location()->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_LEAVE, 'Corax der Rabe'));
                         $location->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, 'Corax der Rabe'));
@@ -98,8 +101,8 @@ class Model_Items_Virtual_Epic_Raven extends Model_Items_Abstract_Virtual {
                         shuffle($items);
                         foreach (array_merge($items,$location->inventory()->get()) as $item)
                             /** @var Model_Items_Abstract_Item $item */
-                            if (!in_array($item->uin(), $final_ids)) {
-                                if (count($final) >= $max_capacity || $weight >= $max_weight) break;
+                            if (!in_array($item->uin(), $final_ids, true)) {
+                                if ($weight >= $max_weight || count($final) >= $max_capacity) break;
                                 if ($item->weight() + $weight < $max_weight && (Tool_System::instance_of($item, Model_Items_Abstract_Ammo::cls()) || $item->take(true))) {
                                     $final[] = $item;
                                     $final_ids[] = $item->uin();

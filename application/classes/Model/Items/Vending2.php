@@ -19,7 +19,7 @@ class Model_Items_Vending2 extends Model_Items_Abstract_Item {
                     /** @var $p Model_Player */
                     foreach (Tool_Scripts::available_items(Model_Items_Smallbottle::cls(), true, true, false, $p) as $bottle)
                         /** @var Model_Items_Smallbottle $bottle */
-                        if ($bottle->fillrate() == 0) {
+                        if ($bottle->fillrate() === 0) {
                             $bottle->grind();
                             return true;
                         }

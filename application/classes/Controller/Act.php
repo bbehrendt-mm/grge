@@ -9,7 +9,8 @@ class Controller_Act extends Controller_Game {
      *
      * @throws Exception
      */
-    private function inventory_take_drop($action, $items, $p) {
+    private function inventory_take_drop($action, $items, $p): void
+    {
         /**
          * @var Model_Items_Abstract_Item $item
          */
@@ -50,19 +51,20 @@ class Controller_Act extends Controller_Game {
 
                             if (Tool_System::instance_of($item, 'Interface_Static'))
 
-                                foreach ($p->inventory()->get(get_class($item)) as $ep)
-                                    /** @var Model_Items_Abstract_Equipable $ep */
-                                    if ($ep->is_equipped()) {
-                                        $item->equip($p);
-                                        break;
-                                    }
-
+                                if ($item !== null)
+                                    foreach ($p->inventory()->get(get_class($item)) as $ep)
+                                        /** @var Model_Items_Abstract_Equipable $ep */
+                                        if ($ep->is_equipped()) {
+                                            $item->equip($p);
+                                            break;
+                                        }
                         }
                 }
             }
     }
 
-    private function inventory_fill($items) {
+    private function inventory_fill($items): void
+    {
         /**
          * @var Model_Items_Abstract_Item $item
          */
@@ -99,11 +101,12 @@ class Controller_Act extends Controller_Game {
 
     }
 
-    private function inventory_defill($items) {
+    private function inventory_defill($items): void
+    {
         /**
          * @var Model_Items_Abstract_Item $item
          */
-        if (count($items) != 2) return;
+        if (count($items) !== 2) return;
 
         if (!($target = Globals::CurrentGameF()->uin()->get($items[0], Model_Items_Abstract_Item::cls()))) return;
         if (!($source = Globals::CurrentGameF()->uin()->get($items[1], Model_Items_Abstract_Bottle::cls()))) return;
@@ -117,14 +120,15 @@ class Controller_Act extends Controller_Game {
         $target->interaction_fillfrom($source);
     }
 
-    private function inventory_mix($items) {
-        if (count($items) != 2) return;
+    private function inventory_mix($items): void
+    {
+        if (count($items) !== 2) return;
 
         /** @var Model_Items_Chem $chem */
         $chem = null;
         /** @var Model_Items_Abstract_Item $other_item */
         $other_item = null;
-        if ($items[0] != $items[1])
+        if ($items[0] !== $items[1])
             foreach ($items as $itemid) {
                 if (!($item = Globals::CurrentGameF()->uin()->get($itemid, Model_Items_Abstract_Item::cls()))) return;
 
@@ -136,7 +140,7 @@ class Controller_Act extends Controller_Game {
             if (!($chem = Globals::CurrentGameF()->uin()->get($items[0], Model_Items_Chem::cls()))) return;
             foreach (Tool_Scripts::available_items(Model_Items_Chem::cls()) as $potential)
                 /** @var Model_Items_Chem $potential */
-                if ($potential->chem_value() == $chem->chem_value() && $chem->uin() != $potential->uin()) {
+                if ($potential->chem_value() === $chem->chem_value() && $chem->uin() !== $potential->uin()) {
                     $other_item = $potential;
                     break;
                 }
@@ -151,11 +155,12 @@ class Controller_Act extends Controller_Game {
         else Globals::PrimaryPlayerF()->achievements()->achieve(Model_Achievement::MA_NOSCIENCE);
     }
 
-    private function inventory_spill($items, $all = false) {
+    private function inventory_spill($items, $all = false): void
+    {
         /**
          * @var Model_Items_Abstract_Item $item
          */
-        if (count($items) != 1) return;
+        if (count($items) !== 1) return;
 
         /** @var Model_Items_Abstract_Bottle $item */
         if (!($item = Globals::CurrentGameF()->uin()->get($items[0], Model_Items_Abstract_Bottle::cls()))) return;
@@ -163,40 +168,42 @@ class Controller_Act extends Controller_Game {
         $item->interaction_extract($all);
     }
 
-    private function inventory_pill($action, $items, $count) {
-        if (count($items) != 1) return;
+    private function inventory_pill($action, $items, $count): void
+    {
+        if (count($items) !== 1) return;
 
         /** @var Model_Items_Abstract_Pillbox $pillbox */
         if (!($pillbox = Globals::CurrentGameF()->uin()->get($items[0], Model_Items_Abstract_Pillbox::cls()))) return;
 
-        if ($action == 'pilltake') {
+        if ($action === 'pilltake') {
             $before = $pillbox->count();
             $pillbox->merge();
-            if ($before == $pillbox->count())
+            if ($before === $pillbox->count())
                 Globals::PrimaryPlayerF()->log()->add('Hier liegen keine weiteren Kapseln, die du in diese Schachtel legen könntest.');
             elseif ($pillbox->is_stack_full())
                 Globals::PrimaryPlayerF()->log()->add('Mit all den anderen Kapseln konntest du diese Schachtel füllen. Sie enthält nun :max Kapseln.', array(':max' => $pillbox->stack_max_size()));
             else
                 Globals::PrimaryPlayerF()->log()->add( 'Du sammelst alle Kapseln die du dabei hast in dieser Schachtel. Sie ist zwar nicht voll, enthält nun aber immerhin :num Kapseln.', array(':num' => $pillbox->count()));
-        } elseif ($action == 'pilldrop') {
+        } elseif ($action === 'pilldrop') {
             if ($count <= 0 || $count >= $pillbox->count()) return;
 
             $pillbox->consume($count);
             $s = get_class($pillbox);
             Globals::PrimaryPlayerF()->location()->inventory()->add(new $s($count));
 
-            if ($count == 1) Globals::PrimaryPlayerF()->log()->add('Du hast eine Kapsel aus der Verpackung genommen.');
+            if ($count === 1) Globals::PrimaryPlayerF()->log()->add('Du hast eine Kapsel aus der Verpackung genommen.');
             else Globals::PrimaryPlayerF()->log()->add('Du hast :num Kapseln aus der Verpackung genommen.', array(':num' => $count));
         }
     }
 
-    private function inventory_belt($id, $addr, $count) {
+    private function inventory_belt($id, $addr, $count): void
+    {
         /** @var Model_Items_Ammobelt $belt */
         $belt = Globals::CurrentGameF()->uin()->get($id, Model_Items_Ammobelt::cls());
         if (!$belt) return;
 
         foreach ($belt->contains() as $class => $c)
-            if (Tool_System::getClassID($class) == $addr) {
+            if (Tool_System::getClassID($class) === $addr) {
                 if (!$belt->get($class, $count))
                     Globals::PrimaryPlayerF()->log()->add('Soviele hast du nicht dabei.');
                 else
@@ -205,7 +212,8 @@ class Controller_Act extends Controller_Game {
             }
     }
 
-    private function inventory_label($id, $text) {
+    private function inventory_label($id, $text): void
+    {
         /** @var Model_Items_Ammobelt $belt */
         $item = Globals::CurrentGameF()->uin()->get($id, 'Interface_Label');
         if (!$item) return;
@@ -214,7 +222,8 @@ class Controller_Act extends Controller_Game {
         $item->set_label($text);
     }
 
-    private function inventory_equip($id, $action) {
+    private function inventory_equip($id, $action): void
+    {
         /** @var Model_Items_Abstract_Equipable $item */
         $item = Globals::CurrentGameF()->uin()->get($id, Model_Items_Abstract_Equipable::cls());
         if (!$item || !Globals::PrimaryPlayerF()->inventory()->has($item->uin())) return;
@@ -226,7 +235,7 @@ class Controller_Act extends Controller_Game {
 
                     foreach (Globals::PrimaryPlayerF()->inventory()->get(get_class($item)) as $ep)
                         /** @var Model_Items_Abstract_Equipable $ep */
-                        if ($ep->uin() != $item->uin())
+                        if ($ep->uin() !== $item->uin())
                             $ep->equip(Globals::PrimaryPlayerF());
                 break;
             case 'unequip':
@@ -235,7 +244,7 @@ class Controller_Act extends Controller_Game {
 
                     foreach (Globals::PrimaryPlayerF()->inventory()->get(get_class($item)) as $ep)
                         /** @var Model_Items_Abstract_Equipable $ep */
-                        if ($ep->uin() != $item->uin())
+                        if ($ep->uin() !== $item->uin())
                             $ep->unequip();
                 break;
             case 'equip_primary':
@@ -244,7 +253,8 @@ class Controller_Act extends Controller_Game {
         }
     }
 
-    public function japi_inventory() {
+    public function japi_inventory(): void
+    {
         //Block sleeping
         if (Globals::PrimaryPlayerF()->get_status()->retrieve('passout') || Globals::PrimaryPlayerF()->get_status()->retrieve('fragile'))
             return;
@@ -266,7 +276,7 @@ class Controller_Act extends Controller_Game {
             return;
 
         // Remote player
-        if ($p->id() != Globals::PrimaryPlayerF()->id())
+        if ($p->id() !== Globals::PrimaryPlayerF()->id())
             if (!$p->allow(Interface_Plentity::IC_ALLOW_SHOW_INVENTORY))
                 return;
             else switch ($action) {
@@ -290,17 +300,17 @@ class Controller_Act extends Controller_Game {
             $this->inventory_take_drop($action,$items,$p);
         elseif (in_array($action, ['pilldrop','pilltake']))
             $this->inventory_pill($action,$items,(int)self::post('count'));
-        elseif ($action == 'fill')
+        elseif ($action === 'fill')
             $this->inventory_fill($items);
-        elseif ($action == 'defill')
+        elseif ($action === 'defill')
             $this->inventory_defill($items);
-        elseif ($action == 'spill')
+        elseif ($action === 'spill')
             $this->inventory_spill($items, (bool)self::post('all'));
-        elseif ($action == 'mix')
+        elseif ($action === 'mix')
             $this->inventory_mix($items);
-        elseif ($action == 'belt')
+        elseif ($action === 'belt')
             $this->inventory_belt($items[0], self::post('addr'),(int)self::post('count'));
-        elseif ($action == 'label')
+        elseif ($action === 'label')
             $this->inventory_label($items[0], self::post('text'));
         elseif (in_array($action, ['equip','unequip','equip_primary']))
             $this->inventory_equip($items[0], $action);
@@ -311,7 +321,7 @@ class Controller_Act extends Controller_Game {
         $this->japi_data();
     }
 
-    public function japi_cancel() {
+    public function japi_cancel(): bool {
         if (($pid = self::post('p')) && ($p = Globals::CurrentGameF()->get_player($pid))) {
             if (!$p->allow(Interface_Plentity::IC_ALLOW_MANAGE_ACTIVITY)) return $this->japi_data();
         } else $p = Globals::PrimaryPlayerF();
@@ -325,7 +335,8 @@ class Controller_Act extends Controller_Game {
         }
     }
 
-    public static function code_item($id, $action, $side_id = null, $argument = null, $user = null) {
+    public static function code_item($id, $action, $side_id = null, $argument = null, $user = null): void
+    {
         //Block sleeping
         if (Globals::PrimaryPlayerF()->get_status()->retrieve('passout') || Globals::PrimaryPlayerF()->get_status()->retrieve('fragile'))
             return;
@@ -354,7 +365,7 @@ class Controller_Act extends Controller_Game {
         //Get Item, or throw Exception if this UIN does not resolve to a valid item
         /** @var Model_Items_Abstract_Item $item */
         $item = Globals::CurrentGameF()->uin()->get((int)$id, Model_Items_Abstract_Item::cls());
-        if (!Globals::CurrentGameF()->item_available((int)$id, $user ? $user : null) || !$item) {
+        if (!$item || !Globals::CurrentGameF()->item_available((int)$id, $user ?: null)) {
             if (!Globals::shadowPlayerExists()) Globals::PrimaryPlayerF()->log()->add('Die Aktion konnte nicht vollständig ausgeführt werden, da eines oder mehrere der ausgewählten Gegenstände nicht länger in deiner Reichweite sind.');
             return;
         }
@@ -364,8 +375,8 @@ class Controller_Act extends Controller_Game {
             return;
 
         if ($user) $user->item_preaction($item,$action);
-        if ($r = $item->interact($action, $user ? $user : Globals::CurrentPlayerF(), $argument, $side))
-            Globals::CurrentPlayerF()->location()->log()->add(new Model_Log_Types_Transaction(Model_Log_Types_Transaction::MLTT_USE, $item, $user ? $user->id() : Globals::CurrentPlayerF()->id(), $item->resolve_action($action, $user ? $user : Globals::CurrentPlayerF())));
+        if ($r = $item->interact($action, $user ?: Globals::CurrentPlayerF(), $argument, $side))
+            Globals::CurrentPlayerF()->location()->log()->add(new Model_Log_Types_Transaction(Model_Log_Types_Transaction::MLTT_USE, $item, $user ? $user->id() : Globals::CurrentPlayerF()->id(), $item->resolve_action($action, $user ?: Globals::CurrentPlayerF())));
 
         if ($user) {
             $user->item_reaction();
@@ -374,7 +385,8 @@ class Controller_Act extends Controller_Game {
 
     }
 
-    public static function code_npc($id, $action, $side_id = null, $argument = null, $user = null) {
+    public static function code_npc($id, $action, $side_id = null, $argument = null, $user = null): void
+    {
         //Block sleeping
         if (Globals::PrimaryPlayerF()->get_status()->retrieve('passout') || Globals::PrimaryPlayerF()->get_status()->retrieve('fragile'))
             return;
@@ -402,7 +414,7 @@ class Controller_Act extends Controller_Game {
 
         //Get NPC, or throw Exception if this UIN does not resolve to a valid npc or the npc is at a different location
         $npc = Globals::CurrentGameF()->get_npc($id);
-        if (!$npc || ($npc->location_class() != Globals::PrimaryPlayerF()->location_class())) {
+        if (!$npc || ($npc->location_class() !== Globals::PrimaryPlayerF()->location_class())) {
             Globals::PrimaryPlayerF()->log()->add('Die Aktion konnte nicht ausgeführt werden, da der gewählte NPC außerhalb deiner Reichweite ist.');
             return;
         }
@@ -416,7 +428,7 @@ class Controller_Act extends Controller_Game {
         Globals::PrimaryPlayerF()->get_status()->clear_cause_of_death();
     }
 
-    public function japi_item() {
+    public function japi_item(): bool {
         $id = self::post('item');
         if (strpos($id, 'npc//') === 0)
             static::code_npc(substr($id, 5), self::post('action'), self::post('co'), self::post('coarg'), self::post('player'));

@@ -31,7 +31,8 @@ class Model_Buffs_Couch extends Model_Buffs_Abstract_Fragile {
 
     protected function get_effects(): array { return $this->effects; }
 	
-	public function rebuild() {
+	public function rebuild(): bool
+    {
         $c = 0;
         foreach (Tool_Scripts::at_location($this->assoc_player->location_class()) as $p)
             /** @var $p Model_Player */
@@ -41,10 +42,10 @@ class Model_Buffs_Couch extends Model_Buffs_Abstract_Fragile {
         if ($c > 5)
             $c = 5;
 
-        if ($this->level == 1) {
+        if ($this->level === 1) {
             $this->effects[Model_Status::MS_STAT_ENERGY][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = 0.10 + $c * 0.05;
             $this->effects[Model_Status::MS_STAT_SLEEPY][Model_Buffs_Abstract_Buff::MB_DROP_ACC] = 0.25 - $c * 0.05;
-        } elseif ($this->level == 2) {
+        } elseif ($this->level === 2) {
             $this->effects[Model_Status::MS_STAT_ENERGY][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = 0.20 + $c * 0.1;
             $this->effects[Model_Status::MS_STAT_SLEEPY][Model_Buffs_Abstract_Buff::MB_DROP_ACC] = 0.35 - $c * 0.07;
         }

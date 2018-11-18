@@ -2,7 +2,8 @@
 
 class Controller_Admin_Main extends Controller_Admin_Admin {
 
-    public function action_main() {
+    public function action_main(): void
+    {
         $this->add_widget(View::factory('admin/main')
             ->set('user', Globals::CurrentUserF()->name())
             ->set('duration', $this->admin_status_get(0))

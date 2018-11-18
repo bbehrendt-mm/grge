@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection DisconnectedForeachInstructionInspection */
 /**
  * @var number $season Current season
  * @var bool $own_soul Is own soul
@@ -29,7 +29,7 @@
 <div class="value-box">
     <div class="row center">
         <div class="cell rw-3 rw-sm-0 padded nopad-sm">
-            <div class="framed cream inline-block"><img id="avatar" src="<?=$avatar ? $avatar : 'media/img/mugshot.png'?>" alt="<?=$soul_owner?>" /></div>
+            <div class="framed cream inline-block"><img id="avatar" src="<?=$avatar ?: 'media/img/mugshot.png'?>" alt="<?=$soul_owner?>" /></div>
         </div>
         <div class="cell rw-9 rw-sm-12 padded">
             <div class="row center">
@@ -100,7 +100,7 @@
                                     <i class="fa fa-youtube-play pointer" title="<?=__('Abspielen');?>" data-gallery-action="view" data-gallery="<?=$g_entry['pid']?>" data-videoid="<?=$g_entry['id']?>"></i>
                                 </div>
                                 <div class="cell <?=$own_soul ? 'rw-3' : 'rw-6'?> <?=$g_entry['rank_sp'] || $g_entry['rank_mp'] ? '' : 'disabled'?>">
-                                    <i class="fa fa-list pointer" title="<?=__('Ranking-Eintrag öffnen');?>" data-gallery-action="ranking" data-gameid="<?=$g_entry['rank_mp'] ? $g_entry['rank_mp'] : $g_entry['rank_sp']?>" data-season="<?=$g_entry['season']?>" data-is-mp="<?=$g_entry['rank_mp'] ? '1' : '0'?>"></i>
+                                    <i class="fa fa-list pointer" title="<?=__('Ranking-Eintrag öffnen');?>" data-gallery-action="ranking" data-gameid="<?=$g_entry['rank_mp'] ?: $g_entry['rank_sp']?>" data-season="<?= $g_entry['season']?>" data-is-mp="<?= $g_entry['rank_mp'] ? '1' : '0'?>"></i>
                                 </div>
                                 <?php if ($own_soul) { ?>
                                     <div class="cell rw-3">
@@ -130,7 +130,7 @@
                         <div class="cell rw-4 rw-md-6 rw-sm-12 padded">
                             <b><?=__('Dein Mentor');?></b><br />
                             <?php if ($mentor) { ?>
-                                <div data-redirect-uin="<?=$mentor['uid']?>" class="pointer framed mini inline-block"><img class="avatar mini" src="<?=$mentor['avatar'] ? $mentor['avatar'] : 'media/img/mugshot.png'?>" alt="<?=$mentor['name']?>" /></div>
+                                <div data-redirect-uin="<?=$mentor['uid']?>" class="pointer framed mini inline-block"><img class="avatar mini" src="<?=$mentor['avatar'] ?: 'media/img/mugshot.png'?>" alt="<?= $mentor['name']?>" /></div>
                                 <br /><?=$mentor['name']?>
                             <?php } else { ?>
                                 <p class="center"><?=__('Niemand');?></p>
@@ -144,7 +144,7 @@
                             <div class="row left">
                                 <?php foreach ($pupils as $pupil) { ?>
                                     <div class="cell rw-4 rw-md-6 rw-sm-12 padded">
-                                        <div data-redirect-uin="<?=$pupil['uid']?>" class="pointer framed mini inline-block"><img class="avatar mini tiny" src="<?=$pupil['avatar'] ? $pupil['avatar'] : 'media/img/mugshot.png'?>" alt="<?=$pupil['name']?>" /></div>
+                                        <div data-redirect-uin="<?=$pupil['uid']?>" class="pointer framed mini inline-block"><img class="avatar mini tiny" src="<?=$pupil['avatar'] ?: 'media/img/mugshot.png'?>" alt="<?= $pupil['name']?>" /></div>
                                         <?=$pupil['name']?>
                                     </div>
                                 <?php } ?>
@@ -481,7 +481,7 @@
 
         var alias = $(this).addClass('disabled');
 
-        game.network.query('japi/account/mentorize', {uid: <?=(int)$soul_id?>}, function(data) {
+        game.network.query('japi/account/mentorize', {uid: <?=$soul_id?>}, function(data) {
             if (data.success) {
                 game.network.load('ranking/soul/<?=$soul_id?>');
                 game.render.html.notify('success', <?=__j('Du hast einen neuen Mentor gewählt.')?>);

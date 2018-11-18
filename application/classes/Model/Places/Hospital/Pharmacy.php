@@ -10,7 +10,9 @@ class Model_Places_Hospital_Pharmacy extends Model_Places_Abstract_Place {
 
     public function uin($uin = NULL) {
         if ($uin !== null) {
-            $this->inventory->add(new Model_Items_Vending(get_class($this), "MedCo. Pharmacorp."));
+            $this->inventory->add(new Model_Items_Vending(get_class($this),
+                'MedCo. Pharmacorp.'
+            ));
             $this->inventory->add(new Model_Items_Virtual_Location_Pillboxes(true));
         }
         return parent::uin($uin);

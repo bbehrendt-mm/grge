@@ -1,18 +1,21 @@
-<?php defined('SYSPATH') OR die('No direct access allowed.');
+<?php /** @noinspection NotOptimalIfConditionsInspection */
+defined('SYSPATH') OR die('No direct access allowed.');
 
 class Tool_Events {
 
-    const TE_MINUTE = 'i';
-    const TE_HOUR = 'G';
-    const TE_DAY = 'j';
-    const TE_MONTH = 'n';
-    const TE_YEAR = 'Y';
+    public const TE_MINUTE = 'i';
+    public const TE_HOUR = 'G';
+    public const TE_DAY = 'j';
+    public const TE_MONTH = 'n';
+    public const TE_YEAR = 'Y';
 
-    private static function get($what, $time = null) {
+    private static function get($what, $time = null): int
+    {
         return $time ? (int)date($what, $time) : (int)date($what);
     }
 
-    public static function ticket_event($time = null) {
+    public static function ticket_event($time = null): bool
+    {
         return in_array(static::current($time),['xmas','easter']);
     }
 
@@ -33,66 +36,73 @@ class Tool_Events {
 
     }
 
-    public static function event_extended_name($event = null, $time = null) {
+    public static function event_extended_name($event = null, $time = null): ?string
+    {
         if ($cls = static::event_extended_classes($event, $time))
             return $cls::name();
         else return null;
     }
 
-    public static function handle_event_triggers($time = null) {
+    public static function handle_event_triggers($time = null): void
+    {
         if (!Globals::hasCurrentGame()) return;
         $ev = static::current($time);
         if (($cls = static::event_extended_classes($ev)) && !Globals::CurrentGameF()->get_initialized_event($ev))
             new $cls;
     }
 
-    public static function current($time = null) {
+    public static function current($time = null): ?string
+    {
         //Detect halloween (30.10. - 05.11.)
-        if ( (static::get(static::TE_MONTH, $time) == 10 && static::get(static::TE_DAY, $time) >= 30) || (static::get(static::TE_MONTH, $time) == 11 && static::get(static::TE_DAY, $time) <= 5) )
+        if ( (static::get(static::TE_MONTH, $time) === 10 && static::get(static::TE_DAY, $time) >= 30) || (static::get(static::TE_MONTH, $time) === 11 && static::get(static::TE_DAY, $time) <= 5) )
             return 'halloween';
 
         //Detect christmas (6.12. - 26.12.)
-        if (static::get(static::TE_MONTH, $time) == 12 && static::get(static::TE_DAY, $time) >= 6 && static::get(static::TE_DAY, $time) <= 26 )
+        if (static::get(static::TE_MONTH, $time) === 12 && static::get(static::TE_DAY, $time) >= 6 && static::get(static::TE_DAY, $time) <= 26 )
             return 'xmas';
 
         //Detect new year (30.12. - 02.01.)
-        if ( (static::get(static::TE_MONTH, $time) == 12 && static::get(static::TE_DAY, $time) >= 30) || (static::get(static::TE_MONTH, $time) == 1 && static::get(static::TE_DAY, $time) <= 2) )
+        if ( (static::get(static::TE_MONTH, $time) === 12 && static::get(static::TE_DAY, $time) >= 30) || (static::get(static::TE_MONTH, $time) === 1 && static::get(static::TE_DAY, $time) <= 2) )
             return 'newyear';
 
         //Detect easter (25.03.2016 - 01.04.2016)
         switch (static::get(static::TE_YEAR, $time)) {
             case 2016:
-                if (static::get(static::TE_MONTH, $time) == 3 && static::get(static::TE_DAY, $time) >= 25) return 'easter';
+                if (static::get(static::TE_MONTH, $time) === 3 && static::get(static::TE_DAY, $time) >= 25) return 'easter';
                 break;
             case 2017:
-                if (static::get(static::TE_MONTH, $time) == 4 && static::get(static::TE_DAY, $time) >= 14 && static::get(static::TE_DAY, $time) <= 20) return 'easter';
+                if (static::get(static::TE_MONTH, $time) === 4 && static::get(static::TE_DAY, $time) >= 14 && static::get(static::TE_DAY, $time) <= 20) return 'easter';
                 break;
         }
 
         return null;
     }
 
-    public static function current_skin($time = null) {
+    public static function current_skin($time = null): ?string
+    {
         $ev = static::current($time);
         if ($ev && file_exists(APPPATH . "assets/skins/$ev"))
             return $ev;
         else return null;
     }
 
-    public static function is_april_fools() {
-        return (static::get(static::TE_MONTH) == 4 && static::get(static::TE_DAY) == 1) && (Globals::CurrentGameF()->duration() > 300) && !Globals::PrimaryPlayerF()->april_fools();
+    public static function is_april_fools(): bool
+    {
+        return (static::get(static::TE_MONTH) === 4 && static::get(static::TE_DAY) === 1) && (Globals::CurrentGameF()->duration() > 300) && !Globals::PrimaryPlayerF()->april_fools();
     }
 
-    public static function is_october_midness() {
-        return (static::get(static::TE_MONTH) == 10 && static::get(static::TE_DAY) == 14);
+    public static function is_october_midness(): bool
+    {
+        return (static::get(static::TE_MONTH) === 10 && static::get(static::TE_DAY) === 14);
     }
 
-    public static function maintenance($time = null) {
+    public static function maintenance($time = null): bool
+    {
         return (bool)static::active_maintenance_period($time);
     }
 
     public static function active_maintenance_period($time = null) {
-        $time = $time ? $time : time();
+        $time = $time ?: time();
         $current = ($time - strtotime(date('Y-m-d'), $time))/60;
 
         foreach (Kohana::$config->load('server.downtime') as $period)

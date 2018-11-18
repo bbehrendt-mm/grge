@@ -34,7 +34,8 @@ class Model_Items_Body2 extends Model_Items_Abstract_Item implements Interface_S
             );
     }
 	
-	public function mixchem($chemval) {
+	public function mixchem($chemval): bool
+    {
         switch ($chemval)
         {
             case 1:

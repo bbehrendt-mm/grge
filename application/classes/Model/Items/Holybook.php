@@ -37,7 +37,8 @@ class Model_Items_Holybook extends Model_Items_Abstract_Item implements Interfac
 		return null;
 	}
 
-    public function drop($p = null, $silent = false) {
+    public function drop($p = null, $silent = false): bool
+    {
         return false;
     }
 }	

@@ -8,17 +8,20 @@ class Model_Places_Burgerjoint extends Model_Places_Abstract_Place {
     protected static $icon = 'restaurant';
     protected static $outside = false;
 
-    public function setup_additional_rooms() {
+    public function setup_additional_rooms(): void
+    {
         parent::setup_additional_rooms();
 
         $this->setup_new_room($this->create_new_room(10,['inside']),
                               ['kitchen','kitchen_burgerjoint'],
                               [],
-                              "Küchenbereich");
+            'Küchenbereich'
+        );
         $this->setup_new_room($this->create_new_room(10,['inside']),
                               ['cooler_closed'],
                               [],
-                              "Kühlkammer");
+            'Kühlkammer'
+        );
 
         $this->create_new_room(20,['inside']);
     }

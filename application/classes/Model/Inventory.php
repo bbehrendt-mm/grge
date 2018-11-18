@@ -18,7 +18,8 @@ class Model_Inventory extends Model {
     /**
      * Prefetches all items in this inventory
      */
-    public function prefetch() {
+    public function prefetch(): void
+    {
         Globals::CurrentGameF()->uin()->prefetch(array_keys($this->data));
 	}
 
@@ -44,7 +45,8 @@ class Model_Inventory extends Model {
      * Sets a temporal weight limit to override the default limit
      * @param number $limit
      */
-    public function temporal_limit($limit) {
+    public function temporal_limit($limit): void
+    {
 		$this->t_limit = $limit;
 	}
 
@@ -60,7 +62,8 @@ class Model_Inventory extends Model {
     /**
      * Recalculates the current weight of this inventory
      */
-    public function reset_weight() {
+    public function reset_weight(): void
+    {
 		$this->current = 0;
 		foreach (array_keys($this->data) as $uin) {
             /** @var Model_Items_Abstract_Item $item */
@@ -86,7 +89,9 @@ class Model_Inventory extends Model {
     public function add($item): bool {
 		if (!Tool_System::instance_of($item, Model_Items_Abstract_Item::cls())) return false;
 		if ($this->limit() && !($this->carrier_inventory && $item->is_carrier_item()) && ($this->current + $item->weight() > $this->limit())) return false;
-        if ($this->carrier_inventory && ($item->get_max_per_player() > 0) && (count($this->get(get_class($item))) >= $item->get_max_per_player()))
+
+		$max = $item->get_max_per_player();
+		if ($this->carrier_inventory && ($max > 0) && (count($this->get(get_class($item))) >= $max))
             return false;
 		
 		if (!$item->uin()) Globals::CurrentGameF()->uin()->set($item);
@@ -118,7 +123,8 @@ class Model_Inventory extends Model {
      * @return Model_Items_Abstract_Item[]
      * @throws Exception
 */
-    public function get($item_class = NULL) {
+    public function get($item_class = NULL): array
+    {
 		$ret = array();
 		foreach (array_keys($this->data) as $uin) 
 		{
@@ -127,7 +133,8 @@ class Model_Inventory extends Model {
 			{
 				if ($item_class === NULL && Tool_System::instance_of($item, Model_Items_Abstract_Virtual::cls()))
                     continue;
-                if (in_array($item_class, class_implements($item)) || ($item_class === NULL) || ($item instanceof $item_class)) $ret[] = $item;
+                if (($item instanceof $item_class) || $item_class === NULL || in_array($item_class, class_implements($item), true))
+                    $ret[] = $item;
 			} else $this->remove($uin);
 		}
 		return $ret;
@@ -139,11 +146,13 @@ class Model_Inventory extends Model {
      * @return bool
      * @throws Exception
 */
-    public function has($uin) {
+    public function has($uin): bool
+    {
 		return (isset($this->data[$uin]) && Globals::CurrentGameF()->uin()->get($uin));
 	}
 
-    public function grind() {
+    public function grind(): void
+    {
         foreach (array_keys($this->data) as $uin)
             Globals::CurrentGameF()->uin()->remove($uin);
     }

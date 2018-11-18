@@ -5,7 +5,8 @@ class Controller_Admin_Cron extends Controller {
     protected static $force_ajax = false;
     protected static $force_login = false;
 
-    private function auto_process($any = false, $cleanup = true) {
+    private function auto_process($any = false, $cleanup = true): array
+    {
         $auto_proc = array();
         foreach (DB::select('gameid', 'timestamp')->from('games')->where('timestamp', '<', strtotime($any ? '+1 week' : '-1 week'))->execute()->as_array() as $entry) {
             unset($GLOBALS['game'], $GLOBALS['player']);
@@ -59,7 +60,8 @@ class Controller_Admin_Cron extends Controller {
         return $auto_proc;
     }
 
-    private function cleanup() {
+    private function cleanup(): array
+    {
         $junk = DB::select(DB::expr('DISTINCT(`gameid`)'))->from('games_cloud')->where('gameid', 'NOT IN', DB::select('gameid')->from('games'))->execute()->as_array();
 
         $garbage = array();
@@ -73,8 +75,10 @@ class Controller_Admin_Cron extends Controller {
         return $garbage;
     }
 
-    private function read_error_log($time) {
-        $file = APPPATH . "logs/" . date('Y', $time) . "/" . date('m', $time) . "/" . date('d', $time) . EXT;
+    private function read_error_log($time): array
+    {
+        $file = APPPATH . 'logs/' . date('Y', $time) . '/'
+            . date('m', $time) . '/' . date('d', $time) . EXT;
         if (!file_exists($file)) return array();
 
         $lines = file($file);
@@ -86,7 +90,7 @@ class Controller_Admin_Cron extends Controller {
                 if (!$c1 || !$c2) continue;
                 if (!isset($ret[$c1], $ret[$c1][$c2])) continue;
             } else {
-                list(,$c1, $c2, $line) = $matches;
+                [,$c1, $c2, $line] = $matches;
                 if (!isset($ret[$c1])) $ret[$c1] = array($c2 => array());
                 if (!isset($ret[$c1][$c2])) $ret[$c1][$c2] = array();
             }
@@ -95,13 +99,14 @@ class Controller_Admin_Cron extends Controller {
         return $ret;
     }
 
-    public function action_main() {
-        if (Kohana::$config->load('server.externals.cronjob.token') != $this->request->param('key')) die('invalid key');
+    public function action_main(): void
+    {
+        if (Kohana::$config->load('server.externals.cronjob.token') !== $this->request->param('key')) die('invalid key');
         $out = isset($_GET['out']) ? explode(',',$_GET['out']) : array('mail,screen,file');
-        $mode = isset($_GET['mode']) ? $_GET['mode'] : 'logs';
-        $day = isset($_GET['day']) ? $_GET['day'] : 't';
+        $mode = $_GET['mode'] ?? 'logs';
+        $day = $_GET['day'] ?? 't';
 
-        $t = strtotime(($day == 'y') ? '-1 day' : 'today');
+        $t = strtotime(($day === 'y') ? '-1 day' : 'today');
         $auto_proc = $garbage = null;
         switch ($mode) {
             case 'logs':
@@ -141,7 +146,7 @@ class Controller_Admin_Cron extends Controller {
                 /** @noinspection HostnameSubstitutionInspection */
                 $header = "MIME-Version: 1.0\r\nContent-type: text/html; charset=iso-8859-1\r\nFrom: ZombVival Report System <" . Kohana::$config->load('server.externals.cronjob.from') . '@' . $_SERVER['SERVER_NAME'] . '>';
                 $ret = mail($mail_to, $mail_title, $content, $header);
-                if (!in_array('screen',$out))
+                if (!in_array('screen', $out, true))
                     echo $ret ? "Mail delivery OK\n" : 'Mail delivery FAILED\n';
             }
     }

@@ -36,11 +36,13 @@ class Model_Action {
     /**
      * @return Model_Action
      */
-    public static function factory() {
+    public static function factory(): \Model_Action
+    {
         return new self();
     }
 
-    public function setParent(Model_Items_Abstract_Item $parent) {
+    public function setParent(Model_Items_Abstract_Item $parent): void
+    {
         $this->parent = $parent;
         foreach ($this->effects as $e) {
             $e['effect']->setParent($parent);
@@ -68,7 +70,8 @@ class Model_Action {
      * @param number|array $args,...
      * @return Model_Action
      */
-    public function deny_for($args) {
+    public function deny_for($args): \Model_Action
+    {
         if (!is_array($args))
             $args = func_get_args();
 
@@ -80,7 +83,8 @@ class Model_Action {
      * @param number|array $args,...
      * @return Model_Action
      */
-    public function allow_for($args) {
+    public function allow_for($args): \Model_Action
+    {
         if (!is_array($args))
             $args = func_get_args();
 
@@ -92,15 +96,20 @@ class Model_Action {
      * @param $type
      * @return bool
      */
-    public function denied_for($type) {
-        return in_array($type, $this->prevent_user_type) || (count($this->allowed_user_type) && !in_array($type, $this->allowed_user_type));
+    public function denied_for($type): bool
+    {
+        return in_array($type, $this->prevent_user_type, true)
+            || (count($this->allowed_user_type) && !in_array(
+                    $type, $this->allowed_user_type, true
+                ));
     }
 
     /**
      * @param callable $cond
      * @return Model_Action
      */
-    public function condition($cond) {
+    public function condition($cond): \Model_Action
+    {
         $this->condition = $cond;
         return $this;
     }
@@ -153,7 +162,8 @@ class Model_Action {
      * @param number $value
      * @return Model_Action
      */
-    public function requirement($reference, $value) {
+    public function requirement($reference, $value): \Model_Action
+    {
         $this->requirements[$reference] = $value;
         return $this;
     }
@@ -162,7 +172,8 @@ class Model_Action {
      * @param string|null $s
      * @return Model_Action
      */
-    public function argument($s = null) {
+    public function argument($s = null): \Model_Action
+    {
         if ($s === null) return $this->argument;
         $this->argument = $s;
         return $this;
@@ -173,7 +184,8 @@ class Model_Action {
      * @param null|string $id
      * @return Model_Action
      */
-    public function fail_message($message, $id = null) {
+    public function fail_message($message, $id = null): \Model_Action
+    {
         if ($id === null) $this->failmsg = $message;
         else {
             if (!is_array($this->failmsg))
@@ -191,7 +203,8 @@ class Model_Action {
      * @param null|Model_Effect $side_effect
      * @return Model_Action
      */
-    public function effect(Model_Effect $effect, $id = null, $condition = null, $side_effect = null) {
+    public function effect(Model_Effect $effect, $id = null, $condition = null, $side_effect = null): \Model_Action
+    {
         if ($this->parent) $effect->setParent($this->parent);
         if ($side_effect !== null) {
             $this->has_se = true;
@@ -208,7 +221,8 @@ class Model_Action {
      * @param string $id
      * @return Model_Effect|null
      */
-    public function &get_effect($id) {
+    public function &get_effect($id): ?\Model_Effect
+    {
         global $null;
         $null = null;
         if (isset($this->effects[$id]))
@@ -219,7 +233,8 @@ class Model_Action {
     /**
      * @return bool
      */
-    public function has_side_effect() {
+    public function has_side_effect(): bool
+    {
         return $this->has_se;
     }
 
@@ -229,7 +244,8 @@ class Model_Action {
      * @param bool $execute_always
      * @return Model_Action
      */
-    public function show_as($effect, $side_effect = null, $execute_always = false) {
+    public function show_as($effect, $side_effect = null, $execute_always = false): \Model_Action
+    {
         $this->show_as = array('e' => $effect, 's' => $side_effect, 'b' => $execute_always);
         return $this;
     }
@@ -238,7 +254,8 @@ class Model_Action {
      * @param callable $newval
      * @return Model_Action
      */
-    public function decider($newval) {
+    public function decider($newval): \Model_Action
+    {
         $this->decider = $newval;
         return $this;
     }
@@ -258,7 +275,8 @@ class Model_Action {
     /**
      * @return Struct_ItemEntry[]
      */
-    private function get_item_requirements() {
+    private function get_item_requirements(): array
+    {
         $tmp = array();
         foreach ($this->requirements as $class => $count)
             if (!is_numeric($class)) {
@@ -274,7 +292,8 @@ class Model_Action {
     /**
      * @return array
      */
-    private function get_stat_requirements() {
+    private function get_stat_requirements(): array
+    {
         $tmp = array();
         foreach ($this->requirements as $class => $count)
             if (is_numeric($class))
@@ -290,7 +309,8 @@ class Model_Action {
      * @return boolean
      * @throws Exception
      */
-    public function test($player, $side_player = null, $argument = null) {
+    public function test($player, $side_player = null, $argument = null): bool
+    {
         if ($this->popup) return false;
 
         if ($this->condition !== null) {
@@ -318,7 +338,8 @@ class Model_Action {
      * @return boolean
      * @throws Exception
      */
-    public function execute($player, $side_player = null, $argument = null) {
+    public function execute($player, $side_player = null, $argument = null): bool
+    {
         if ($this->popup) return false;
         $no_player = Tool_Scripts::is_npc($player);
 
@@ -392,7 +413,8 @@ class Model_Action {
      * @param string|callable $exp
      * @return Model_Action
      */
-    public function export($exp) {
+    public function export($exp): \Model_Action
+    {
         $this->export = $exp;
         return $this;
     }
@@ -401,7 +423,8 @@ class Model_Action {
      * @param Model_Player $player
      * @return array
      */
-    public function convert_effects($player = null) {
+    public function convert_effects($player = null): array
+    {
         if ($this->show_as !== null)
             /** @noinspection PhpUndefinedMethodInspection */
         return array('effects' => $this->show_as['e']->convert($player));
@@ -415,7 +438,7 @@ class Model_Action {
             /** @var callable $tmp */
             $tmp = $this->export;
             $r = $tmp($player);
-        } elseif (count($this->effects) == 1)
+        } elseif (count($this->effects) === 1)
             $r = 0;
         else $r = null;
 
@@ -423,7 +446,8 @@ class Model_Action {
         return ($r !== null && isset($this->effects[$r])) ? array('effects' => $this->effects[$r]['effect']->convert($player), 'sides' => $this->effects[$r]['side_effect'] ? $this->effects[$r]['side_effect']->convert() : null) : array('effect' => array(array('value' => '???')));
     }
 
-    public function list_effects($player = null) {
+    public function list_effects($player = null): array
+    {
         if ($this->show_as !== null)
             /** @noinspection PhpUndefinedMethodInspection */
             return $this->show_as['e']->stat_list($player);
@@ -437,7 +461,7 @@ class Model_Action {
             /** @var callable $tmp */
             $tmp = $this->export;
             $r = $tmp($player);
-        } elseif (count($this->effects) == 1)
+        } elseif (count($this->effects) === 1)
             $r = 0;
         else $r = null;
 
@@ -445,7 +469,8 @@ class Model_Action {
         return ($r !== null && isset($this->effects[$r])) ? $this->effects[$r]['effect']->stat_list($player) : [];
     }
 
-    public function has_requirements() {
+    public function has_requirements(): bool
+    {
         return count($this->get_stat_requirements()) || count($this->get_item_requirements());
     }
 
@@ -453,7 +478,8 @@ class Model_Action {
      * @param null|Interface_Plentity $player
      * @return array
      */
-    public function convert_requires($player = null) {
+    public function convert_requires($player = null): array
+    {
         $t = array();
         foreach ($this->get_stat_requirements() as $stat => $value)
             $t[] = array('icon' => Model_Effect::translate($stat), 'value' => $value * ($player ? $player->get_status()->scaling($stat, Model_Status::MS_EFFECT_REQUIREMENT) : 1));

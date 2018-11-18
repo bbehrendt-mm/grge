@@ -31,7 +31,8 @@ class Model_NPC_Event_Crow extends Model_NPC_Humanoid
         parent::kill();
     }
 
-    public function hid() {
+    public function hid(): Model_Hid
+    {
         $item_gen = function($p)  {
             /** @var $p Model_Player */
             $locations = Globals::CurrentGameF()->main_map()->build_route_array($p->location()->uin());
@@ -46,46 +47,46 @@ class Model_NPC_Event_Crow extends Model_NPC_Humanoid
             if (count($locations) < 2) {
                 $p->log()->add(new Model_Log_Types_String(null,'KRAAHAHAHA! So ein Pech! Du kennst nicht genügend Orte! KRARAAAAH!'));
                 return;
-            } else {
-                //Place egg1
-                shuffle($locations);
-                $left = $num = random_int(count($locations), 3*count($locations));
-                foreach ($locations as $key) {
-                    $put = random_int(min($left, ceil(count($locations)/5)), min($left, ceil(count($locations)/2)));
-                    $left -= $put;
-                    for ($i = 0; $i < $put; $i++)
-                        Globals::CurrentGameF()->locationF($key)->inventory()->add(new Model_Items_Generic_Egg1(1,true));
-                }
-                $placed1 = $num - $left;
-
-                //Place egg2
-                shuffle($locations);
-                $left = $num = random_int(0, floor(count($locations)/4));
-                foreach ($locations as $key) if ($left > 0) {
-                    --$left;
-                    Globals::CurrentGameF()->locationF($key)->inventory()->add(new Model_Items_Generic_Egg2(1,true));
-                }
-                $placed2 = $num - $left;
-
-                //Place egg3
-                shuffle($locations);
-                $left = $num = random_int(0, floor(count($locations)/10));
-                foreach ($locations as $key) if ($left > 0) {
-                    --$left;
-                    Globals::CurrentGameF()->locationF($key)->inventory()->add(new Model_Items_Generic_Egg3(1,true));
-                }
-
-                $placed3 = $num - $left;
-
-                //Place egg0
-                foreach ($locations as $key)
-                    if (!Globals::CurrentGameF()->locationF($key)->inventory()->get(Model_Items_Abstract_Easteregg::cls()))
-                        Globals::CurrentGameF()->locationF($key)->inventory()->add(new Model_Items_Generic_Egg0(1,true));
-
-                foreach (Globals::CurrentGameF()->players() as $pl)
-                    if ($pl->id() === $p->id()) $pl->log()->add(new Model_Log_Types_String(null,'KRAAH! Danke sehr! Ich habe :e1 farbige, :e2 prächtige und :e3 Designer-Eier für dich versteckt. Viel Spaß beim Suchen, KRAHRAH!', array(':e1' => $placed1,':e2' => $placed2,':e3' => $placed3)));
-                    else $pl->log()->add(new Model_Log_Types_String(null,'Du hörst ein lautes Krähen in der Ferne...'));
             }
+
+            //Place egg1
+            shuffle($locations);
+            $left = $num = random_int(count($locations), 3*count($locations));
+            foreach ($locations as $key) {
+                $put = random_int(min($left, ceil(count($locations)/5)), min($left, ceil(count($locations)/2)));
+                $left -= $put;
+                for ($i = 0; $i < $put; $i++)
+                    Globals::CurrentGameF()->locationF($key)->inventory()->add(new Model_Items_Generic_Egg1(1,true));
+            }
+            $placed1 = $num - $left;
+
+            //Place egg2
+            shuffle($locations);
+            $left = $num = random_int(0, floor(count($locations)/4));
+            foreach ($locations as $key) if ($left > 0) {
+                --$left;
+                Globals::CurrentGameF()->locationF($key)->inventory()->add(new Model_Items_Generic_Egg2(1,true));
+            }
+            $placed2 = $num - $left;
+
+            //Place egg3
+            shuffle($locations);
+            $left = $num = random_int(0, floor(count($locations)/10));
+            foreach ($locations as $key) if ($left > 0) {
+                --$left;
+                Globals::CurrentGameF()->locationF($key)->inventory()->add(new Model_Items_Generic_Egg3(1,true));
+            }
+
+            $placed3 = $num - $left;
+
+            //Place egg0
+            foreach ($locations as $key)
+                if (!Globals::CurrentGameF()->locationF($key)->inventory()->get(Model_Items_Abstract_Easteregg::cls()))
+                    Globals::CurrentGameF()->locationF($key)->inventory()->add(new Model_Items_Generic_Egg0(1,true));
+
+            foreach (Globals::CurrentGameF()->players() as $pl)
+                if ($pl->id() === $p->id()) $pl->log()->add(new Model_Log_Types_String(null,'KRAAH! Danke sehr! Ich habe :e1 farbige, :e2 prächtige und :e3 Designer-Eier für dich versteckt. Viel Spaß beim Suchen, KRAHRAH!', array(':e1' => $placed1,':e2' => $placed2,':e3' => $placed3)));
+                else $pl->log()->add(new Model_Log_Types_String(null,'Du hörst ein lautes Krähen in der Ferne...'));
         };
 
         return parent::hid()

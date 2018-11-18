@@ -24,7 +24,8 @@ class Model_Items_Nom2 extends Model_Items_Abstract_Item implements Interface_St
             );
     }
 	
-	public function mixchem($chemval) {
+	public function mixchem($chemval): bool
+    {
         $this->consume();
         switch ($chemval)
         {

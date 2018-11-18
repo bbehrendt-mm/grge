@@ -9,20 +9,23 @@ class Tool_System {
      * @param string|object|array $super Super class
      * @return bool True, when $class is an instance of or derived from $super
      */
-    public static function instance_of($class, $super) {
+    public static function instance_of($class, $super): bool
+    {
 		if (is_array($super)) {
             foreach ($super as $elem)
                 if (static::instance_of($class,$elem)) return true;
             return false;
         }
 
-        $class = (is_object($class)) ? get_class($class) : $class;
-		$super = (is_object($super)) ? get_class($super) : $super;
+        $class = is_object($class) ? get_class($class) : $class;
+		$super = is_object($super) ? get_class($super) : $super;
 
         if (!class_exists($class) || (!class_exists($super) && !interface_exists($super)))
             return false;
 		
-		return ($class === $super || is_subclass_of($class, $super) || in_array($super, class_implements($class)));
+		return ($class === $super || is_subclass_of($class, $super) || in_array(
+                $super, class_implements($class), true
+            ));
 	}
 
     /**
@@ -30,7 +33,8 @@ class Tool_System {
      * @param Object|string $obj Object or class name
      * @return array
      */
-    public static function get_class_hierarchy($obj) {
+    public static function get_class_hierarchy($obj): array
+    {
         $hierarchy = [];
         if (is_object($obj) || is_string($obj)) {
             $class = is_object($obj) ? get_class($obj) : $obj;
@@ -45,7 +49,7 @@ class Tool_System {
         if (!file_exists(APPPATH . 'config/' . $path . EXT))
             return null;
         else /** @noinspection PhpIncludeInspection */
-            return include(APPPATH . '/config/' . $path . EXT);
+            return include APPPATH . '/config/' . $path . EXT;
     }
 
     /**
@@ -57,7 +61,8 @@ class Tool_System {
      * @return array Accumulated data
      * @throws Kohana_Exception
      */
-    public static function config_tree($base, $subject) {
+    public static function config_tree($base, $subject): array
+    {
         if (!$subject)
             return null;
         if (is_object($subject))
@@ -66,8 +71,8 @@ class Tool_System {
         $accum = array();
 
         $id = $base . '.' . $subject;
-        if (!is_array($base) && isset(Tool_System::$cache[$id]))
-            return Tool_System::$cache[$base . '.' . $subject];
+        if (!is_array($base) && isset(self::$cache[$id]))
+            return self::$cache[$base . '.' . $subject];
 
         $tree = Array();
         while ($subject !== false) {
@@ -77,12 +82,12 @@ class Tool_System {
         $tree = array_reverse($tree);
 
         foreach ($tree as $entry)
-            if ($level = is_array($base) ? (isset($base[$entry]) ? $base[$entry] : array()) : Kohana::$config->load($base . '.' . $entry))
+            if ($level = is_array($base) ? ($base[$entry] ?? array()) : Kohana::$config->load($base . '.' . $entry))
                 /** @noinspection PhpParamsInspection */
                 $accum = array_merge($accum, $level);
 
         if (!is_array($base))
-            Tool_System::$cache[$base . "." . $subject] = $accum;
+            self::$cache[$base . '.' . $subject] = $accum;
 
         return $accum;
     }
@@ -103,8 +108,9 @@ class Tool_System {
      * @return null
      * @throws ReflectionException
 */
-    public static function getItemInstanceName($cls, $inst = -1) {
-        if (!Tool_System::instance_of($cls, Model_Items_Abstract_Item::cls()))
+    public static function getItemInstanceName($cls, $inst = -1): void
+    {
+        if (!self::instance_of($cls, Model_Items_Abstract_Item::cls()))
             return null;
 
         $reflection = new ReflectionClass($cls);
@@ -112,9 +118,10 @@ class Tool_System {
         
         /** @var Model_Items_Abstract_Item $instance */
         $instance =
-            ($reflection->isInstantiable() && $cls::getNumberOfTypes() > 0) && ($reflection->getConstructor()->getNumberOfRequiredParameters() == 0) && ($parameters[0]->getName() == 'type')
+            ($reflection->isInstantiable() && $cls::getNumberOfTypes() > 0) && ($reflection->getConstructor()->getNumberOfRequiredParameters() === 0) && ($parameters[0]->getName()
+                === 'type')
                 ? new $cls($inst < 0 || $inst > ($cls::getNumberOfTypes() - 1) ? 0 : $inst) : null;
-        $singular = $cls::getNumberOfTypes() == 1;
+        $singular = $cls::getNumberOfTypes() === 1;
 
         if ($cls < 0 && $cls::static_name()) return $cls::static_name();
         
@@ -129,8 +136,9 @@ class Tool_System {
      * @return null
      * @throws ReflectionException
 */
-    public static function getItemInstanceIcon($cls, $inst = -1) {
-        if (!Tool_System::instance_of($cls, Model_Items_Abstract_Item::cls()))
+    public static function getItemInstanceIcon($cls, $inst = -1): void
+    {
+        if (!self::instance_of($cls, Model_Items_Abstract_Item::cls()))
             return null;
 
         $reflection = new ReflectionClass($cls);
@@ -138,12 +146,13 @@ class Tool_System {
 
         /** @var Model_Items_Abstract_Item $instance */
         $instance =
-            ($reflection->isInstantiable() && $cls::getNumberOfTypes() > 0) && ($reflection->getConstructor()->getNumberOfRequiredParameters() == 0) && (isset($parameters[0]) && $parameters[0]->getName() == 'type')
+            ($reflection->isInstantiable() && $cls::getNumberOfTypes() > 0) && ($reflection->getConstructor()->getNumberOfRequiredParameters() === 0) && (isset($parameters[0]) && $parameters[0]->getName()
+                === 'type')
                 ? new $cls($inst < 0 || $inst > ($cls::getNumberOfTypes() - 1) ? 0 : $inst) : null;
 
         if (!$instance && $inst >= 0) return null;
 
-        $singular = $cls::getNumberOfTypes() == 1;
+        $singular = $cls::getNumberOfTypes() === 1;
 
         if ($cls < 0 && $cls::static_icon()) return $cls::static_icon();
 
@@ -158,7 +167,7 @@ class Tool_System {
 
         if ($num_season !== null && $num_season > $season) return null;
         elseif ($num_season !== null)
-            return isset($titles[$num_season]) ? $titles[$num_season] : 'Mysteriöse Season';
+            return $titles[$num_season] ?? 'Mysteriöse Season';
         else {
             for ($i = 0; $i <= $season; $i++)
                 if (!isset($titles[$i])) $titles[$i] = 'Mysteriöse Season';

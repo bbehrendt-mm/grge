@@ -132,7 +132,7 @@ abstract class Controller_Admin_Admin extends Controller {
         parent::before();
 
         //Check admin privileges
-        if (Globals::hasCurrentUser() && static::$force_admin) {
+        if (static::$force_admin && Globals::hasCurrentUser()) {
             static::priv_get(Globals::CurrentUserF()->uid());
             $this->force_admin();
         }

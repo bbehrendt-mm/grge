@@ -136,7 +136,8 @@ class Model_Items_Mask extends Model_Items_Abstract_Item implements Interface_St
 		return null;
 	}
 
-    public function drop($p = null, $silent = false) {
+    public function drop($p = null, $silent = false): bool
+    {
         return false;
     }
 }	

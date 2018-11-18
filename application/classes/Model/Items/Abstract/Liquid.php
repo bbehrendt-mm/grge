@@ -14,7 +14,8 @@ abstract class Model_Items_Abstract_Liquid extends Model_Items_Abstract_Item imp
 		return $this->toxicity;
 	}
 	
-	public function take($silent = false) {
+	public function take($silent = false): bool
+    {
 		return false;
 	}
 

@@ -29,7 +29,8 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         return $t;
     }
 
-    public function setup_primary_rooms() {
+    public function setup_primary_rooms(): Model_Room
+    {
         $room = parent::setup_primary_rooms();
         $room->upgrade('Versteck',false,['common_hideout']);
         $room->inventory()->add(new Model_Items_Virtual_Location_Room_Generic(
@@ -39,12 +40,14 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         return $room;
     }
 
-    public function setup_additional_rooms() {
+    public function setup_additional_rooms(): void
+    {
         parent::setup_additional_rooms();
         $this->create_new_room(10,['inside']);
     }
 
-    private function calculate_item_deco() {
+    private function calculate_item_deco(): int
+    {
         $a = 0;
         foreach ($this->inventory()->get() as $item)
             $a += $item->deco();
@@ -64,7 +67,8 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         else return $this->deco_value += $add;
     }
 
-    public function pretick() {
+    public function pretick(): void
+    {
         //Decay
         if ($this->decay < 1) {
             $this->set_decay(static::$decay_rate * (1/288) * $this->patchup * (1 + floor($this->zombie_factory->accumulation())/5), false);
@@ -80,8 +84,10 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         //Accumulate zombies
         $this->zombie_factory->dry_spawn();
 
+        $defense = $this->get_defense();
+
         /** @var Model_Items_Virtual_Epic_Fence $fence */
-        if (($this->get_defense() > 0) && floor($this->zombie_factory->accumulation()) > $this->get_defense() && (!($fence = Tool_Scripts::first_available_item(Model_Items_Virtual_Epic_Fence::cls(), false)) || !$fence->get_status())) {
+        if (($defense > 0) && floor($this->zombie_factory->accumulation()) > $defense && (!($fence = Tool_Scripts::first_available_item(Model_Items_Virtual_Epic_Fence::cls(), false)) || !$fence->get_status())) {
             if ($br = $this->find_rooms('bedroom','bedrwake')) {
                 $br[0]->remove_content('bedrwake');
                 foreach (Tool_Scripts::at_location($this->uin(), true, true) as $s_player)
@@ -109,7 +115,8 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
             $ev->event_locationTick($this);
     }
 
-    public function tick($type = Interface_Tickable::IT_TYPE_PLAYER) {
+    public function tick($type = Interface_Tickable::IT_TYPE_PLAYER): bool
+    {
         //Build chance array
         $chance = Array(Array('chance' => 1500, 'value' => 0),	//Nothing happens
             Array('chance' => 5, 'value' => 1),		//random small energy gain
@@ -143,22 +150,26 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
 
 
 
-    public function enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
+    public function enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER): bool
+    {
         if (!$pid) $player = Globals::CurrentPlayerF();
-        elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGameF()->get_player($pid);
+        elseif ($type === Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGameF()->get_player($pid);
         else $player = Globals::CurrentGameF()->get_npc($pid);
 
-        parent::enter($pid, $type);
+
         new Model_Buffs_Home($player);
+        return parent::enter($pid, $type);
     }
 
     /**
      * @param null $pid
-     * @param int $type
+     * @param int  $type
+     *
      * @return bool
      * @throws Exception
      */
-    public function leave($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
+    public function leave($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER
+    ): bool {
         if (!$pid) $player = Globals::CurrentPlayerF();
         elseif ($type === Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGameF()->get_player($pid);
         else $player = Globals::CurrentGameF()->get_npc($pid);
@@ -183,20 +194,24 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
     protected $decay = 1;
     protected $patchup = 1;
 
-    public function get_defense($actual = false) {
+    public function get_defense($actual = false): float
+    {
         return round($this->defense * ($actual ? 1 : (1 - $this->decay)));
     }
 
-    public function get_decay() {
+    public function get_decay(): int
+    {
         return $this->decay;
     }
 
-    public function get_patchup() {
+    public function get_patchup(): int
+    {
         return $this->patchup;
     }
 
 
-    public function set_decay($val, $absolute = true) {
+    public function set_decay($val, $absolute = true): void
+    {
         if ($absolute)
             $this->decay = $val;
         else $this->decay += $val;
@@ -204,7 +219,8 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         $this->decay = min(1,max(0, $this->decay));
     }
 
-    public function set_patchup($val, $absolute = true) {
+    public function set_patchup($val, $absolute = true): void
+    {
         if ($absolute)
             $this->patchup = $val;
         else $this->patchup += $val;
@@ -212,7 +228,8 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         $this->patchup = max(0, $this->patchup);
     }
 
-    public function inc_defense($val) {
+    public function inc_defense($val): void
+    {
         $this->defense += $val;
         if ($this->defense < 1) $this->defense = 1;
     }

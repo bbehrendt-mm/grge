@@ -4,7 +4,8 @@ class Controller_Admin_Wiki extends Controller_Admin_Admin {
 
     protected static $auto_require = ['WIKI'];
 
-    private function get_model_list($base, $filter_abstract = true) {
+    private function get_model_list($base, $filter_abstract = true): array
+    {
         if (!$base) return [];
 
         $path = APPPATH . 'classes/Model/' . str_replace(['\\','/'], '_', $base);
@@ -13,9 +14,12 @@ class Controller_Admin_Wiki extends Controller_Admin_Admin {
         $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
         foreach($files as $name => $file) {
             $filename = $file->getFilename();
-            if ($filename[0] == '.' || substr($filename, -4) !== '.php') continue;
+            if ($filename[0] === '.' || substr($filename, -4) !== '.php') continue;
 
-            $filepath = str_replace(str_replace('\\', '/', $path), '', str_replace('\\', '/', $file->getPathName()));
+            $filepath = str_replace(
+                array('\\', str_replace('\\', '/', $path)), array('/', ''),
+                $file->getPathName()
+            );
 
             /** @var Model_Places_Abstract_Place $classpath */
             $classpath = "Model_$base" . substr(str_replace('/', '_', $filepath), 0, -4);
@@ -46,7 +50,7 @@ class Controller_Admin_Wiki extends Controller_Admin_Admin {
             foreach ($items as $item => $chance) {
                 $a += $chance;
                 $list[$item] = [
-                    'name' => $item::static_name() ? $item::static_name() : "[[$item]]",
+                    'name' => $item::static_name() ?: "[[$item]]",
                     'icon' => $item::static_icon(),
                     'chance' => round($chance * 100, 2),
                     'expect' => round($rem * $chance, ($rem * $chance > 1) ? 0 : 2),
@@ -85,7 +89,8 @@ class Controller_Admin_Wiki extends Controller_Admin_Admin {
         } else return null;
     }
 
-    private function get_radar_data($classpath) {
+    private function get_radar_data($classpath): array
+    {
         /** @var Model_Factory_Zombies $spawn */
         $spawn = Model_Factory_Zombies::read($classpath);
 
@@ -100,19 +105,20 @@ class Controller_Admin_Wiki extends Controller_Admin_Admin {
         ];
     }
 
-    private function get_type($classpath) {
+    private function get_type($classpath): string {
         if (Tool_System::instance_of($classpath, Model_Places_Abstract_Node::cls()))
             return 'NODE';
         elseif (Tool_System::instance_of($classpath, Model_Places_Abstract_Hideout::cls()))
-            return "HIDEOUT";
+            return 'HIDEOUT';
         elseif (Tool_System::instance_of($classpath, Model_Places_Abstract_Trap::cls()))
-            return "TRAP";
+            return 'TRAP';
         elseif (Tool_System::instance_of($classpath, Model_Places_Abstract_Xmas::cls()))
-            return "XMAS";
+            return 'XMAS';
         else return '';
     }
 
-    private function get_item_locations($locations, $item_findings) {
+    private function get_item_locations($locations, $item_findings): array
+    {
 
         $ret = [];
         $items = $this->get_model_list('Items');
@@ -120,7 +126,7 @@ class Controller_Admin_Wiki extends Controller_Admin_Admin {
         /** @var string|Model_Items_Abstract_Item $item */
         foreach ($items as $item) if (!Tool_System::instance_of($item, Model_Items_Abstract_Virtual::cls())) {
             $tmp = [
-                'name' => $item::static_name() ? $item::static_name() : "[[$item]]",
+                'name' => $item::static_name() ?: "[[$item]]",
                 'icon' => $item::static_icon(),
                 'locations' => [],
                 'count' => 0,
@@ -147,13 +153,15 @@ class Controller_Admin_Wiki extends Controller_Admin_Admin {
         return $ret;
     }
 
-    public function action_main() {
+    public function action_main(): void
+    {
         $this->add_widget(View::factory('admin/wiki/main')
             ->render());
         $this->render();
     }
 
-    public function action_items() {
+    public function action_items(): void
+    {
         $item_list = $this->get_model_list('Items', false);
         $items = [];
 
@@ -165,14 +173,15 @@ class Controller_Admin_Wiki extends Controller_Admin_Admin {
             $parameters = $reflection->getConstructor()->getParameters();
             /** @var Model_Items_Abstract_Item $instance */
             $instance =
-                ($item_class::getNumberOfTypes() > 0) && ($reflection->getConstructor()->getNumberOfRequiredParameters() == 0) && ($parameters[0]->getName() == 'type')
+                ($item_class::getNumberOfTypes() > 0) && ($reflection->getConstructor()->getNumberOfRequiredParameters() === 0) && ($parameters[0]->getName()
+                    === 'type')
                 ? new $item_class() : null;
-            $singular = $item_class::getNumberOfTypes() == 1;
+            $singular = $item_class::getNumberOfTypes() === 1;
 
             $virtual = Tool_System::instance_of($item_class, Model_Items_Abstract_Virtual::cls());
             $trigger = Tool_System::instance_of($item_class, Model_Items_Virtual_Invoke_Abstract::cls());
 
-            if ($virtual) $name = ($trigger ? "[T]" : "[V]") . " " . str_replace($trigger ? 'Model_Items_Virtual_Invoke_' : 'Model_Items_Virtual_','',$item_class);
+            if ($virtual) $name = ($trigger ? '[T]' : '[V]') . ' ' . str_replace($trigger ? 'Model_Items_Virtual_Invoke_' : 'Model_Items_Virtual_','',$item_class);
             else $name = __(Tool_System::getItemInstanceName($item_class));
             if (!$name) $name = $item_class;
 
@@ -199,7 +208,7 @@ class Controller_Admin_Wiki extends Controller_Admin_Admin {
                 if ($class->isAbstract()) $cn = "[$cn]";
 
                 $ancestors[] = $cn;
-                if ($class->getName() == Model_Items_Abstract_Item::cls()) break;
+                if ($class->getName() === Model_Items_Abstract_Item::cls()) break;
             } while ($class = $class->getParentClass());
 
             $alias = [];
@@ -209,13 +218,13 @@ class Controller_Admin_Wiki extends Controller_Admin_Admin {
                     $aicon = Tool_System::getItemInstanceIcon($item_class, $t);
 
                     if (!$aname && !$aicon) continue;
-                    $alias[] = [$aname ? __($aname) : $name, $aicon ? $aicon : $icon];
+                    $alias[] = [$aname ? __($aname) : $name, $aicon ?: $icon];
                 }
             
 
             $code = [];
             foreach ($reflection->getMethods() as $method)
-                if ($method->getDeclaringClass()->getName() == $item_class) {
+                if ($method->getDeclaringClass()->getName() === $item_class) {
                     $mth = [
                         'name' => $method->getName(),
                         'custom' => !$reflection->getParentClass() || !$reflection->getParentClass()->hasMethod($method->getName()),
@@ -226,7 +235,7 @@ class Controller_Admin_Wiki extends Controller_Admin_Admin {
             $static = [];
             $skp = ['static_info','instances_info'];
             foreach ($reflection->getStaticProperties() as $propertyName => $value)
-                if ($value !== null && !in_array($propertyName, $skp)) {
+                if ($value !== null && !in_array($propertyName, $skp, true)) {
                     ob_start();
                     var_dump($value);
                     $static[$propertyName] = ob_get_clean();
@@ -257,7 +266,8 @@ class Controller_Admin_Wiki extends Controller_Admin_Admin {
         $this->render();
     }
     
-    public function action_main_old() {
+    public function action_main_old(): void
+    {
         $locations = $this->get_model_list('Places');
 
         $loc_names = [];

@@ -7,7 +7,8 @@ class Model_Combat_Players_Winchester extends Model_Combat_Players_Cat {
     protected static $default_stat_accuracy = 15;
     protected static $movement_range = 13;
 
-    public static function create_linked_actor($p, $avatar = null) {
+    public static function create_linked_actor($p, $avatar = null): Model_Combat_Players_Player
+    {
         return parent::create_linked_actor($p, 'winchester.jpg');
     }
 }

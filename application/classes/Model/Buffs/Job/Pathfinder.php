@@ -33,7 +33,8 @@ class Model_Buffs_Job_Pathfinder extends Model_Buffs_Abstract_Job {
 
     protected function get_effects(): array { return $this->effects; }
 	
-	protected function adjust() {
+	protected function adjust(): void
+    {
 		$this->effects[Model_Status::MS_CHAR_DISTANCING][Model_Buffs_Abstract_Buff::MB_DROP_ACC] = min(4, $this->level) * 0.05;
 		if ($this->level >= 4) $this->effects[Model_Status::MS_CHAR_EVASIVENESS][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = 0.1;
         if ($this->level >= 5) $this->effects[Model_Status::MS_CHAR_LOCATION_SPAWNRATE][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = 0.15;

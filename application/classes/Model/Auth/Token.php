@@ -37,7 +37,8 @@ class Model_Auth_Token extends Model_Auth_Interface {
         return Model_Euser::avatar_by_id($this->zvid);
     }
 
-    public function connectToLocal($target_id = null) {
+    public function connectToLocal($target_id = null): bool
+    {
         return $this->zvid > 0;
     }
 }

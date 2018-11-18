@@ -2,7 +2,8 @@
 
 class Named {
 
-    public static function cls() {
+    public static function cls(): string
+    {
         return static::class;
     }
 

@@ -16,7 +16,8 @@ class Model_Buffs_Scarecrow extends Model_Buffs_Abstract_Passive {
         )
     ]; }
 
-    protected function activator() {
+    protected function activator(): bool
+    {
         $r = false;
         foreach (Tool_Scripts::at_location($this->assoc_player->location_class(), false, true) as $npc)
             if (Tool_System::instance_of($npc, Model_NPC_Event_Scarecrow::cls())) {

@@ -40,7 +40,8 @@ class Model_Items_Chem extends Model_Items_Abstract_Item implements Interface_St
 		return $this->type + 1;
 	}
 
-	public function mixchem($chemval) {
+	public function mixchem($chemval): bool
+    {
         $mixed = false;
         $ot = $this->chem_value();
 
@@ -51,9 +52,10 @@ class Model_Items_Chem extends Model_Items_Abstract_Item implements Interface_St
             $this->type += $chemval;
             $d = $this->type - 5;
         } else {
+            /** @noinspection NotOptimalIfConditionsInspection */
             if ($chemval > 6)
                 $chemval -= 6;
-            if ($this->type > 5)
+            else
                 $this->type -= 6;
 
             $this->type += $chemval;
@@ -75,7 +77,8 @@ class Model_Items_Chem extends Model_Items_Abstract_Item implements Interface_St
             );
 
             return false;
-        } elseif ($d > 0 && $mixed) {
+        }
+		if ($mixed) {
             $damage = -5 - ($d - 1) * 4;
             $radiation = ($d - 1) * 15;
 
@@ -87,14 +90,13 @@ class Model_Items_Chem extends Model_Items_Abstract_Item implements Interface_St
             );
 
             return false;
-        } else {
-            Tool_Scripts::chem_reaction(
-                null,
-                $chemval, new Model_Items_Chem($ot), new Model_Items_Chem($this->chem_value())
-            );
+        }
+        Tool_Scripts::chem_reaction(
+            null,
+            $chemval, new Model_Items_Chem($ot), new Model_Items_Chem($this->chem_value())
+        );
 
-            if (!Globals::shadowPlayerExists()) Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String(null, 'Du mischt beide Chemikalien zusammen. Es blubbert ein wenig, aber nachdem sich die Blasen gelegt haben stellst du fest, dass du soeben ein Fläschchen mit :result hergestellt hast! Herzlichen Glückwunsch!', array(':result' => [$this->name()])));
-			return true;
-		}
+        if (!Globals::shadowPlayerExists()) Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String(null, 'Du mischt beide Chemikalien zusammen. Es blubbert ein wenig, aber nachdem sich die Blasen gelegt haben stellst du fest, dass du soeben ein Fläschchen mit :result hergestellt hast! Herzlichen Glückwunsch!', array(':result' => [$this->name()])));
+        return true;
 	}
 }	

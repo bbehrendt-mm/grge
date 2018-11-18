@@ -72,15 +72,18 @@ class Model_Items_Present extends Model_Items_Abstract_Item implements Interface
 		$this->p_desc = $desc;
 	}
 	
-	public function name() {
+	public function name(): string
+    {
 		return $this->p_name;
 	}
 	
-	public function description() {
+	public function description(): string
+    {
 		return $this->p_desc;
 	}	
 	
-	public function icon() {	
+	public function icon(): string
+    {
 		if ($this->is_awesome) return  'items/present/big';
 		else return  'items/present/small';
 	}	

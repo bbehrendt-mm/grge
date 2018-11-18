@@ -16,11 +16,11 @@ class Model_Map_Labyrinth extends Model_Map_Abstract {
     private $location_directory = [];
     private $placement_directory = [];
 
-    const MML_WALL = 0;
-    const MML_CORRIDOR = 1;
-    const MML_INTERSECTION = 2;
-    const MML_FAR = 3;
-    const MML_ENTRYPOINT = 4;
+    public const MML_WALL = 0;
+    public const MML_CORRIDOR = 1;
+    public const MML_INTERSECTION = 2;
+    public const MML_FAR = 3;
+    public const MML_ENTRYPOINT = 4;
 
     private function valid($x = null, $y = null): bool {
         if ($x !== null && abs($x) > $this->grid) return false;
@@ -49,6 +49,7 @@ class Model_Map_Labyrinth extends Model_Map_Abstract {
 
                 foreach ([[1,1],[-1,-1],[1,-1],[-1,1]] as $diag) {
                     $dx = $tx+$diag[0]; $dy = $ty+$diag[1];
+                    /** @noinspection NotOptimalIfConditionsInspection */
                     if ($this->valid($dx,$dy) && $tempsheme[$dx][$dy] && $tempsheme[$tx][$dy] && $tempsheme[$dx][$ty])
                         continue 2;
                 }

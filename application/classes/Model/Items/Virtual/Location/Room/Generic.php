@@ -2,12 +2,13 @@
 
 class Model_Items_Virtual_Location_Room_Generic extends Model_Items_Abstract_Virtual {
 
-    protected $text = "Herstellen...";
+    protected $text = 'Herstellen...';
     protected $text_desc = null;
-    protected $custom_popup = "maker";
-    protected $custom_action_id = "lc_lazy_maker";
+    protected $custom_popup = 'maker';
+    protected $custom_action_id = 'lc_lazy_maker';
 
-    public function __construct($text = "Herstellen...", $text_desc = null, $custom_popup = "maker", $custom_action_id = "lc_lazy_maker") {
+    public function __construct($text = 'Herstellen...', $text_desc = null, $custom_popup = 'maker', $custom_action_id = 'lc_lazy_maker'
+    ) {
         $this->text = $text;
         $this->text_desc = $text_desc;
         $this->custom_popup = $custom_popup;

@@ -27,7 +27,7 @@ return Model_Blueprints::factory()
             ->room('cooler')
             ->requires_room('invalid')
             ->requires_room_tag('inside')
-            ->emplaces_action("Einfrieren...")
+            ->emplaces_action('Einfrieren...')
             ->name('Kühlkammer')
     )
 

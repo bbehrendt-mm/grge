@@ -42,7 +42,7 @@ class Model_NPC_Dog extends Model_NPC_Animal
     }
 
     public function allow($type = null) {
-        if ($type == Interface_Plentity::IC_ALLOW_MOVE && $this->is_leashed())
+        if ($type === Interface_Plentity::IC_ALLOW_MOVE && $this->is_leashed())
             return false;
         else return parent::allow($type);
     }
@@ -56,7 +56,7 @@ class Model_NPC_Dog extends Model_NPC_Animal
                 $this->last_hideout = $this->location_class();
 
                 // Go to sleep
-                if ($this->get_status()->get(Model_Status::MS_STAT_SLEEPY) < 75 && !$busy)
+                if (!$busy && $this->get_status()->get(Model_Status::MS_STAT_SLEEPY) < 75)
                     new Model_Buffs_Presleep($this->id(), 3, 2);
             }
         }

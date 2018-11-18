@@ -45,11 +45,13 @@ class Model_Items_Body extends Model_Items_Abstract_Item implements Interface_St
         $this->body_name = $new_name;
     }
 
-    public function label() {
+    public function label(): ?string
+    {
         return $this->body_name;
     }
 	
-	public function mixchem($chemval) {
+	public function mixchem($chemval): bool
+    {
         switch ($chemval)
         {
             case 6:

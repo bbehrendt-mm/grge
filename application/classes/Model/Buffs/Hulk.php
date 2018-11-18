@@ -7,13 +7,15 @@ class Model_Buffs_Hulk extends Model_Buffs_Abstract_Buff {
     protected static $bid = 'hulk';
     protected static $desc = 'UAAAAAAARGH! HOCH DAMIT!';
 
-    protected function apply() {
+    protected function apply(): void
+    {
         parent::apply();
         $this->assoc_player->inventory()->limit($this->assoc_player->inventory()->limit() + 70);
     }
 
-    public function unbuff() {
-        parent::unbuff();
+    public function unbuff(): bool
+    {
         $this->assoc_player->inventory()->limit($this->assoc_player->inventory()->limit() - 70);
+        return parent::unbuff();
     }
 }

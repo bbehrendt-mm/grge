@@ -30,7 +30,8 @@ class Model_Log_Log extends Model {
 	/**
 	 * Clears all stores messages
 	 */
-	public function clear() {
+	public function clear(): void
+    {
 		$this->messages = Array();
 		$this->new = [];
 	}
@@ -44,14 +45,15 @@ class Model_Log_Log extends Model {
      *
      * @throws Exception
      */
-	public function add($new_message, $variables = [], $translateables = []) {
+	public function add($new_message, $variables = [], $translateables = []): void
+    {
 		if (is_string($new_message)) {
 			foreach ($translateables as $k => $v)
 				$variables[$k] = [$v];
             $this->add(new Model_Log_Types_String(null,$new_message,$variables));
         } elseif (Tool_System::instance_of($new_message, 'Model_Log_Message')) {
 
-            if (count($this->messages) == 0 || !$this->messages[count($this->messages)-1]->merge($new_message))
+            if (count($this->messages) === 0 || !$this->messages[count($this->messages)-1]->merge($new_message))
                 $this->messages[] = $new_message;
 
 			foreach ($this->new as &$counter) $counter++;
@@ -67,7 +69,8 @@ class Model_Log_Log extends Model {
 	 * Trims log length to $length
 	 * @param number $length Length to trim message log to
 	 */
-	public function trim($length) {
+	public function trim($length): void
+    {
 		while(count($this->messages) > $length) array_shift($this->messages);
 		foreach ($this->new as &$counter)
 			$counter= min($counter, count($this->messages));
@@ -78,7 +81,8 @@ class Model_Log_Log extends Model {
 	 * @param bool $reverse True if you want LIFO ordering; default is FIFO (false)
 	 * @return Model_Log_Message[]
 	 */
-	public function get_all($reverse = false) {
+	public function get_all($reverse = false): array
+    {
 		return $reverse ? array_reverse($this->messages) : $this->messages;
 	}
 	
@@ -87,7 +91,8 @@ class Model_Log_Log extends Model {
 	 * @param bool $reverse True if you want LIFO ordering; default is FIFO (false)
 	 * @return Model_Log_Message[]
 	 */
-	public function get_new($reverse = false) {
+	public function get_new($reverse = false): array
+    {
 		$ret = array_slice(array_reverse($this->messages), 0, $this->unread());
 		return $reverse ?  $ret : array_reverse($ret);
 	}
@@ -97,7 +102,8 @@ class Model_Log_Log extends Model {
 	 * @param bool $reverse True if you want LIFO ordering; default is FIFO (false)
 	 * @return Model_Log_Message[]
 	 */
-	public function get_old($reverse = false) {
+	public function get_old($reverse = false): array
+    {
 		$ret = array_slice(array_reverse($this->messages), $this->unread());
 		return $reverse ?  $ret : array_reverse($ret);
 	}
@@ -105,7 +111,8 @@ class Model_Log_Log extends Model {
 	/**
 	 * Resets news counter
 	 */
-	public function reset_news_counter() {
+	public function reset_news_counter(): void
+    {
 		$this->unread(0);
 	}
 }

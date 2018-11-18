@@ -37,12 +37,13 @@ class Tool_Gambling {
      * @throws Exception
      */
     public static function select(array $array) {
-        if (!is_array($array) || count($array) == 0)
+        if (!is_array($array) || count($array) === 0)
             return null;
         return array_values($array)[random_int(0,count($array) - 1)];
     }
 
-    public static function random($chance) {
+    public static function random($chance): bool
+    {
         return $chance <= 0 ? false : (mt_rand()/mt_getrandmax() < $chance);
     }
 
@@ -52,7 +53,8 @@ class Tool_Gambling {
      * @return bool
      * @throws Exception
      */
-    public static function tumble($p) {
+    public static function tumble($p): bool
+    {
         return (random_int(15, 100) <= $p->get_status()->get(Model_Status::MS_STAT_DRUNK));
     }
 
@@ -64,7 +66,8 @@ class Tool_Gambling {
      * @return int
      * @throws Exception
      */
-    public static function repeat($min, $max, callable $func) {
+    public static function repeat($min, $max, callable $func): int
+    {
         if ($min > $max || $max <= 0) return 0;
         $count = random_int($min,$max);
         for ($i = 0; $i < $count; $i++) $func();

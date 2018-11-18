@@ -6,15 +6,17 @@ class Controller_Account extends Controller {
      * Login View
      * @throws Kohana_Exception
      */
-    public function action_login() {
+    public function action_login(): void
+    {
         if ($this->session->get('user',NULL)) {
-            $this->redirect(URL::site('lobby/main',true));
+            self::redirect(URL::site('lobby/main',true));
             return;
         }
 
-        $rq = $this->session->get('request',["CLIENT_REQUEST" => []]);
-        $key = isset($rq["CLIENT_REQUEST"]['key']) ? $rq["CLIENT_REQUEST"]['key'] : '';
-        $ref = isset($rq["CLIENT_REQUEST"]['ref']) ? $rq["CLIENT_REQUEST"]['ref'] : (isset($rq["HTTP_REFERER"]) ? $rq["HTTP_REFERER"] : '');
+        $rq = $this->session->get('request',['CLIENT_REQUEST' => []]);
+        $key = $rq['CLIENT_REQUEST']['key'] ?? '';
+        $ref = $rq['CLIENT_REQUEST']['ref'] ??
+            $rq['HTTP_REFERER'] ?? '';
         $pid = -1;
 
         $pre_service = '';
@@ -48,14 +50,15 @@ class Controller_Account extends Controller {
         $this->render();
     }
 
-    public function action_qr() {
+    public function action_qr(): void
+    {
         if ($this->session->get('user',NULL)) {
-            $this->redirect(URL::site('lobby/main',true));
+            self::redirect(URL::site('lobby/main',true));
             return;
         }
 
         $key = $this->request->param('key') ? trim($this->request->param('key')) : null;
-        if (strlen($key) != 4) $key = null;
+        if (strlen($key) !== 4) $key = null;
 
         // Render page
         $this->add_widget(View::factory('pages/qr')
@@ -68,7 +71,8 @@ class Controller_Account extends Controller {
         $this->render();
     }
 
-    public function japi_mkqr() {
+    public function japi_mkqr(): void
+    {
         if (!Globals::hasCurrentUser()) return;
 
         $pin = DB::select('pin')->from('qr')->where('uid','=',Globals::CurrentUserF()->uid())->where('timestamp', '>', time() - 300)->execute()->get('pin', false);
@@ -96,7 +100,8 @@ class Controller_Account extends Controller {
         $this->render(['pin' => $pin]);
     }
 
-    public function action_settings() {
+    public function action_settings(): void
+    {
         // Render page
         $this->add_widget(View::factory('pages/settings')->set('url', URL::base(true))->render());
 
@@ -106,14 +111,14 @@ class Controller_Account extends Controller {
         $this->render();
     }
 
-    public function japi_mentorize() {
+    public function japi_mentorize(): bool {
         if (!Globals::hasCurrentUser()) return $this->render(['success' => 0]);
 
-        $uid = $this->request->current()->post('uid');
-        if (!$uid && $this->request->current()->post('mrk'))
-            $uid = Model_Euser::get_uid_from_mentoring_ref($this->request->current()->post('mrk'));
+        $uid = Request::current()->post('uid');
+        if (!$uid && Request::current()->post('mrk'))
+            $uid = Model_Euser::get_uid_from_mentoring_ref(Request::current()->post('mrk'));
 
-        if ($uid == -1)
+        if ($uid === -1)
             return $this->render([
                 'success' => (int)Globals::CurrentUserF()->set_mentor_id(-1)
             ]);
@@ -125,7 +130,7 @@ class Controller_Account extends Controller {
         ]);
     }
 
-    public function japi_cashout() {
+    public function japi_cashout(): bool {
         if (!Globals::hasCurrentUser()) return $this->render(['success' => 0]);
 
         $cash = Model_Euser::get_mentor_braincoins(Globals::CurrentUserF()->uid(), null, false);
@@ -135,11 +140,11 @@ class Controller_Account extends Controller {
         } else return $this->render(['success' => 0]);
     }
 
-    public function japi_qr() {
+    public function japi_qr(): bool {
         sleep(5);
-        $pin = trim($this->request->current()->post('key'));
+        $pin = trim(Request::current()->post('key'));
 
-        if (!$pin || strlen($pin) != 4)
+        if (!$pin || strlen($pin) !== 4)
             return $this->error(\grge\E_AUTH_INCOMPLETE_REQUEST);
 
         $uid = DB::select('uid')->from('qr')->where('pin','=',$pin)->where('timestamp', '>', time() - 300)->execute()->get('uid', 0);
@@ -164,15 +169,16 @@ class Controller_Account extends Controller {
      * Merge View
      * @throws Kohana_Exception
      */
-    public function action_merge() {
+    public function action_merge(): void
+    {
         if (!$this->session->get('user',NULL)) {
-            $this->redirect(URL::site('account/login',true));
+            self::redirect(URL::site('account/login',true));
             return;
         }
 
-        $rq = $this->session->get('request',["CLIENT_REQUEST" => []]);
-        $key = isset($rq["CLIENT_REQUEST"]['key']) ? $rq["CLIENT_REQUEST"]['key'] : '';
-        $ref = isset($rq["HTTP_REFERER"]) ? $rq["HTTP_REFERER"] : '';
+        $rq = $this->session->get('request',['CLIENT_REQUEST' => []]);
+        $key = $rq['CLIENT_REQUEST']['key'] ?? '';
+        $ref = $rq['HTTP_REFERER'] ?? '';
         $pid = -1;
 
         $pre_service = '';
@@ -191,7 +197,7 @@ class Controller_Account extends Controller {
         /** @var Model_Auth_Legacy $auth */
         if ($auth)
             $pid = $auth::retrieve_user_id($key);
-        else $this->redirect(URL::site('lobby/main',true));
+        else self::redirect(URL::site('lobby/main',true));
         /** @var Model_Auth_Legacy $authenticator */
 
         $authenticator = new $auth($key);
@@ -220,11 +226,11 @@ class Controller_Account extends Controller {
      * Merge View
      * @throws Kohana_Exception
      */
-    public function japi_merge() {
+    public function japi_merge(): bool {
         if (!Globals::hasCurrentUser()) return $this->render();
 
-        $key = $this->post('key');
-        $service = $this->post('service');
+        $key = self::post('key');
+        $service = self::post('service');
 
         if (!$key || !$service || !($cfg = Kohana::$config->load('mt.links.' . $service))) return $this->render();
 
@@ -251,13 +257,17 @@ class Controller_Account extends Controller {
      * License View
      * @throws Kohana_Exception
      */
-    public function action_license() {
+    public function action_license(): void
+    {
         $this->add_widget(View::factory('pages/license')
             ->set('data', array_filter((array)Kohana::$config->load('licenses'), function($entry) {
                 if (!isset($entry['skin'])) return true;
 
-                if (is_array($entry['skin']) && !in_array(Tool_Events::current_skin(), $entry['skin'])) return false;
-                if (is_string($entry['skin']) && $entry['skin'] != Tool_Events::current_skin()) return false;
+                if (is_array($entry['skin']) && !in_array(
+                        Tool_Events::current_skin(), $entry['skin'], true
+                    )
+                ) return false;
+                if (is_string($entry['skin']) && $entry['skin'] !== Tool_Events::current_skin()) return false;
 
                 return true;
             }))
@@ -273,15 +283,15 @@ class Controller_Account extends Controller {
      * @return bool
      * @throws Kohana_Exception
      */
-    public function japi_login($uid = null) {
+    public function japi_login($uid = null): bool {
 
         $nw = 1;
-        $skip = (int)$this->request->current()->post('skip');
+        $skip = (int)Request::current()->post('skip');
 
-        if ($uid == null) {
+        if ($uid === null) {
             //Get key
-            $key = $this->request->current()->post('key');
-            $host = $this->request->current()->post('service');
+            $key  = Request::current()->post('key');
+            $host = Request::current()->post('service');
 
             if (!$key || !$host)
                 return $this->error(\grge\E_AUTH_INCOMPLETE_REQUEST);
@@ -321,9 +331,9 @@ class Controller_Account extends Controller {
         else $wl = false;
 
         //Check if user is banned
-        if ($wl == 'DENY')
+        if ($wl === 'DENY')
             return $this->error(\grge\E_AUTH_ACCOUNT_BANNED);
-        else if (Kohana::$environment != Kohana::DEVELOPMENT && Kohana::$config->load('basic.access.whitelisting') && $wl != 'ALLOW')
+        else if ($wl !== 'ALLOW' && Kohana::$environment !== Kohana::DEVELOPMENT && Kohana::$config->load('basic.access.whitelisting'))
             return $this->error(\grge\E_AUTH_WHITELISTING_FAILED);
 
         //Create user object and try to read from database
@@ -367,7 +377,8 @@ class Controller_Account extends Controller {
     /**
      * Logout API
      */
-    public function japi_logout() {
+    public function japi_logout(): void
+    {
         $this->session->destroy();
         $this->render([
             'redirect' => 'account/login',

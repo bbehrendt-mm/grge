@@ -2,17 +2,17 @@
 
 class Controller_Chat extends Controller {
 
-    const CC_IGNORE = 0;
-    const CC_PING = 1;
-    const CC_MESSAGE = 2;
-    const CC_WHISPER = 3;
-    const CC_STATE = 4;
-    const CC_AUTH = 5;
-    const CC_PIN = 6;
+    public const CC_IGNORE = 0;
+    public const CC_PING = 1;
+    public const CC_MESSAGE = 2;
+    public const CC_WHISPER = 3;
+    public const CC_STATE = 4;
+    public const CC_AUTH = 5;
+    public const CC_PIN = 6;
 
-    const CC_VAR_UNKNOWN= '::?';
-    const CC_VAR_SYSTEM = '::SYSTEM';
-    const CC_VAR_MODERATOR = '::MOD';
+    public const CC_VAR_UNKNOWN= '::?';
+    public const CC_VAR_SYSTEM = '::SYSTEM';
+    public const CC_VAR_MODERATOR = '::MOD';
 
     protected static $initialize_session = false;
     protected static $force_ajax = true;
@@ -26,28 +26,34 @@ class Controller_Chat extends Controller {
         return Gateway\decrypt($token);
     }
 
-    public static function register_user($user_id, $room_id) {
+    public static function register_user($user_id, $room_id): void
+    {
         static::push($room_id, $user_id, -1, static::CC_AUTH);
         static::push($room_id, $user_id, -1, static::CC_PING);
     }
 
-    public static function check_registration($user_id, $room_id) {
+    public static function check_registration($user_id, $room_id): bool
+    {
         return (bool)DB::select([DB::expr('COUNT(`mid`)'),'c'])->from('chat')->where('type','=',static::CC_AUTH)->where('sender','=',$user_id)->execute()->get('c', 0);
     }
 
-    public static function update_registration($user_id, $room_id) {
+    public static function update_registration($user_id, $room_id): bool
+    {
         return (bool)DB::update('chat')->set(['timestamp' => time()])->where('room','=',$room_id)->where('type','=',static::CC_PING)->where('sender','=',$user_id)->execute();
     }
 
-    public static function revoke_registration($user_id, $room_id) {
+    public static function revoke_registration($user_id, $room_id): bool
+    {
         return (bool)DB::delete('chat')->where('room','=',$room_id)->where('type','=',static::CC_AUTH)->where('sender','=',$user_id)->execute();
     }
 
-    public static function purge_room($room_id) {
+    public static function purge_room($room_id): bool
+    {
         return (bool)DB::delete('chat')->where('room','=',$room_id)->execute();
     }
 
-    private function count_messages($user, $timespan) {
+    private function count_messages($user, $timespan): int
+    {
         return (int)DB::select([DB::expr('COUNT(`mid`)'),'c'])->from('chat')->where('timestamp','>',time() - $timespan)->where('sender','=',$user)->execute()->get('c', 0);
     }
 
@@ -92,8 +98,9 @@ class Controller_Chat extends Controller {
                         $d_out[$mid] = ['type' => $entry['type'], 'sender' => $entry['sender'], 'message' => $entry['message'], 'timestamp' => $entry['timestamp']];
                     break;
                 case static::CC_WHISPER:
-                    if ($entry['message'] && ($entry['receiver'] == $user || $sender_id == $user))
-                        $d_out[$mid] = ['type' => $entry['type'], 'sender' => $entry['sender'], 'to' => $sender_id == $user ? (isset($users[$entry['receiver']][0]) ? $users[$entry['receiver']][0] : '???') : false, 'message' => $entry['message'], 'timestamp' => $entry['timestamp']];
+                    if ($entry['message'] && ($entry['receiver'] === $user || $sender_id === $user))
+                        $d_out[$mid] = ['type'           => $entry['type'], 'sender' => $entry['sender'], 'to' => $sender_id === $user ? ($users[$entry['receiver']][0]
+                            ?? '???') : false, 'message' => $entry['message'], 'timestamp' => $entry['timestamp']];
                     break;
                 default: break;
             }
@@ -112,7 +119,7 @@ class Controller_Chat extends Controller {
         $message = $msg;
         $receiver = -1;
 
-        if ($msg[0] === '/') {
+        if (strpos($msg, '/') === 0) {
             $tmp_m = explode(' ', $msg, 2);
             if (count($tmp_m) < 2) $tmp_m[1] = '';
             [$command,$message] = $tmp_m;
@@ -146,16 +153,16 @@ class Controller_Chat extends Controller {
     }
 
     public function japi_default() {
-        if (!($ses = static::detokenize($this->post('t')))) return null;
-        list($user, $game) = $ses;
+        if (!($ses = static::detokenize(self::post('t')))) return null;
+        [$user, $game] = $ses;
         if (!static::check_registration($user, $game)) return null;
         static::update_registration($user, $game);
 
-        $users = static::users($game);
-        $this->transmute($this->post('m'),$user,$game,$users);
+        $users = $this->users($game);
+        $this->transmute(self::post('m'),$user,$game,$users);
 
-        $last = (int)$this->post('l');
-        if ($last == 0)
+        $last = (int)self::post('l');
+        if ($last === 0)
             $result = DB::select('mid','type','message','timestamp','sender','receiver')->from('chat')->where('room','=',$game)->and_where_open()->where('timestamp','>',time() - 1800)->or_where('type','=',static::CC_PIN)->and_where_close()->execute()->as_array('mid');
         else $result = DB::select('mid','type','message','timestamp','sender','receiver')->from('chat')->where('room','=',$game)->where('mid','>',$last)->where('timestamp','>',time() - 1800)->execute()->as_array('mid');
 

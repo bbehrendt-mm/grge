@@ -7,21 +7,25 @@ class Model_Places_Bar extends Model_Places_Abstract_Place {
     protected static $icon = 'bar';
     protected static $outside = false;
 
-    public function tick($type = Interface_Tickable::IT_TYPE_PLAYER) {
-        if (Globals::CurrentPlayerF()->can(Interface_Plentity::IC_TRIGGER_SUPPLIES)) {
-
-            if (Globals::CurrentGameF()->config('places.bar.spawn_winchester') && !Globals::CurrentGameF()->get_npc('winchester')) {
-                $winchester = new Model_NPC_Special_Winchester();
-                $winchester->location_class($this->uin());
-                Globals::CurrentGameF()->add_npc($winchester, 'winchester');
-                $this->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $winchester->id(), true));
-            }
+    public function tick($type = Interface_Tickable::IT_TYPE_PLAYER): bool
+    {
+        if (Globals::CurrentPlayerF()->can(
+                Interface_Plentity::IC_TRIGGER_SUPPLIES
+            )
+            && Globals::CurrentGameF()->config('places.bar.spawn_winchester')
+            && !Globals::CurrentGameF()->get_npc('winchester')
+        ) {
+            $winchester = new Model_NPC_Special_Winchester();
+            $winchester->location_class($this->uin());
+            Globals::CurrentGameF()->add_npc($winchester, 'winchester');
+            $this->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $winchester->id(), true));
         }
 
         return parent::tick($type);
     }
 
-    public function setup_additional_rooms() {
+    public function setup_additional_rooms(): void
+    {
         parent::setup_additional_rooms();
         $this->create_new_room( 5,['inside']);
         $this->create_new_room(10,['inside']);

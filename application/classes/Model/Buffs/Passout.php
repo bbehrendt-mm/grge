@@ -6,7 +6,8 @@ class Model_Buffs_Passout extends Model_Buffs_Abstract_Buff {
 	protected $count = 1;
 	protected static $visible = false;
 	
-	public function rebuild() {
+	public function rebuild(): bool
+    {
 		if ($this->assoc_player->get_status()->get(Model_Status::MS_STAT_HEALTH) < 0.5) $this->unbuff();
 		
 		return parent::rebuild();
@@ -18,13 +19,15 @@ class Model_Buffs_Passout extends Model_Buffs_Abstract_Buff {
 		parent::__construct($player_id);
 	}
 	
-	public function unbuff() {
+	public function unbuff(): bool
+    {
 		$this->count--;
 		if ($this->count <= 0) return parent::unbuff();
         return false;
 	}
 	
-	public function merge($newclass) {
+	public function merge($newclass): void
+    {
 		$this->count++;
 	}
 }

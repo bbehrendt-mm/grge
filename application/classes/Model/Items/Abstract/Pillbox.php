@@ -37,7 +37,8 @@ abstract class Model_Items_Abstract_Pillbox extends Model_Items_Abstract_Stackab
             ->add_action('Ganze Schachtel schlucken', Model_Action::factory()->effect($this->create_effect(true))->allow_auto(false));
     }
 
-    private function create_effect($full = false) {
+    private function create_effect($full = false): \Model_Effect
+    {
         $tmp = Model_Effect::factory()
             ->consume($this, $full);
         foreach (static::$pill_effects as $stat => $dif)
@@ -45,7 +46,7 @@ abstract class Model_Items_Abstract_Pillbox extends Model_Items_Abstract_Stackab
 
         if ($full)
             $tmp->message('Wozu lange mit Kleinigkeiten aufhalten? Beipackzettel lesen und Medikamente dosieren kosten doch nur Zeit. Viel hilft viel, also runter mit der ganzen Schachtel!');
-        else $tmp->message(static::$take_msg . ' ' . (($this->count > 2) ? 'Jetzt sind noch :num Pillen in der Schachtel.' : (($this->count == 2) ? 'In der Schachtel ist nur noch eine Pille. Setze sie mit Bedacht ein!' : 'Die Schachtel ist leer!')), array(':num' => $this->count() - 1));
+        else $tmp->message(static::$take_msg . ' ' . (($this->count > 2) ? 'Jetzt sind noch :num Pillen in der Schachtel.' : (($this->count === 2) ? 'In der Schachtel ist nur noch eine Pille. Setze sie mit Bedacht ein!' : 'Die Schachtel ist leer!')), array(':num' => $this->count() - 1));
 
         return $tmp;
     }

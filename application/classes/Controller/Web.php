@@ -7,9 +7,10 @@ class Controller_Web extends Controller {
 
     protected static $allow_etag_cache = true;
 
-    public function action_skin() {
+    public function action_skin(): void
+    {
         $skin = $this->request->param('skin');
-        if ($skin == 'auto') {
+        if ($skin === 'auto') {
             setcookie('skin', '', 0, URL::base());
             setcookie('skin_cst', '', 0, URL::base());
         } elseif ($skin) {
@@ -20,9 +21,10 @@ class Controller_Web extends Controller {
         $this->request->action('noaction');
     }
 
-    public function action_key() {
+    public function action_key(): void
+    {
         if (!Globals::CurrentUserF()) {
-            $this->response->body("Not logged in!");
+            $this->response->body('Not logged in!');
             return;
         }
 
@@ -31,26 +33,29 @@ class Controller_Web extends Controller {
             /** @var Model_Auth_Interface $provider */
             $entries[$provider::get_service_name()] = [$variables['var1'],$variables['var2']];
 
-        $ret = "Stored login keys for " . Globals::CurrentUserF()->name() . ".<br /><br />";
+        $ret = 'Stored login keys for '
+            . Globals::CurrentUserF()->name() . '.<br /><br />';
         foreach ($entries as $name => $line)
             $ret .= "<b>$name</b> <i>{$line[0]}</i> <i>{$line[1]}</i><br />";
 
-        if (!$entries) $ret = "None!";
+        if (!$entries) $ret = 'None!';
         $this->response->body($ret);
     }
 
-    public function action_framework() {
+    public function action_framework(): void
+    {
         $js = ['jquery.min.js'];
         $css = [];
         foreach (scandir(APPPATH . 'assets/js', SCANDIR_SORT_ASCENDING) as $f) if (!in_array($f, ['.','..','jquery.min.js'])) $js[] = $f;
         foreach (scandir(APPPATH . 'assets/css', SCANDIR_SORT_ASCENDING) as $f) if (!in_array($f, ['.','..'])) $css[] = $f;
 
-        $sid = $this->post('vcsid') ? $this->post('vcsid') : $this->session->id();
+        $sid = self::post('vcsid') ?: $this->session->id();
         //$this->response->headers('Content-Security-Policy', "connect-src 'self';");
         $this->response->body(View::factory('framework')->set('js',$js)->set('css',$css)->set('sid', $sid)->set('dev', Kohana::$environment === Kohana::DEVELOPMENT));
     }
 
-    private function compile_js_module($name, $debug = false, $base_module = []) {
+    private function compile_js_module($name, $debug = false, $base_module = []): string
+    {
         if ($debug)
             I18n::set_readonly_flag();
         $buffer = '';
@@ -70,29 +75,34 @@ class Controller_Web extends Controller {
         return $buffer;
     }
 
-    private function modscript($name, $base = []) {
+    private function modscript($name, $base = []): void
+    {
         $this->response->headers('Content-Type', 'application/javascript; charset=utf-8');
 
         $path = $this->request->param('id');
-        if (!$path || $path == 'deploy')
+        if (!$path || $path === 'deploy')
             $this->response->body($this->compile_js_module($name, false, $base));
-        elseif ($path == 'debug' && Kohana::$environment === Kohana::DEVELOPMENT)
+        elseif ($path === 'debug' && Kohana::$environment === Kohana::DEVELOPMENT)
             $this->response->body($this->compile_js_module($name, true, $base));
     }
 
-    public function action_core() {
+    public function action_core(): void
+    {
         $this->modscript('core');
     }
 
-    public function action_battle() {
+    public function action_battle(): void
+    {
         $this->modscript('battle', ['canvasModule']);
     }
 
-    public function action_map() {
+    public function action_map(): void
+    {
         $this->modscript('map', ['canvasModule']);
     }
 
-    public function action_body() {
+    public function action_body(): void
+    {
         $this->force_ajax();
         
         $season = (int)Kohana::$config->load('server.season');

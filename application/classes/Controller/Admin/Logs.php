@@ -4,14 +4,15 @@ class Controller_Admin_Logs extends Controller_Admin_Admin {
 
     protected static $auto_require = ['LOGVIEW'];
 
-    private function accumulate_logs() {
+    private function accumulate_logs(): array
+    {
         $path = APPPATH . 'logs';
         $list = [];
 
         $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
         foreach($files as $name => $file) {
             $filename = $file->getFilename();
-            if ($filename[0] == '.' || substr($filename, -4) !== '.php') continue;
+            if ($filename[0] === '.' || substr($filename, -4) !== '.php') continue;
 
             $list[] = str_replace(['\\','/'],'-',substr($file->getPath(), strlen($path) + 1) . '\\' . substr($filename, 0, -4));
         }
@@ -20,10 +21,11 @@ class Controller_Admin_Logs extends Controller_Admin_Admin {
         return $list;
     }
 
-    public function japi_fetch() {
-        $id = $this->post('id');
+    public function japi_fetch(): bool
+    {
+        $id = self::post('id');
         $data = explode('-',$id);
-        if (count($data) != 3) return $this->render(['id' => null]);
+        if (count($data) !== 3) return $this->render(['id' => null]);
 
         $file = APPPATH . 'logs/' . $data[0] . '/' . $data[1] . '/' . $data[2] . '.php';
         if (!file_exists($file))
@@ -37,7 +39,7 @@ class Controller_Admin_Logs extends Controller_Admin_Admin {
                 if (!$c1 || !$c2) continue;
                 if (!isset($ret[$c1], $ret[$c1][$c2])) continue;
             } else {
-                list(,$c1, $c2, $line) = $matches;
+                [,$c1, $c2, $line] = $matches;
                 if (!isset($ret[$c1])) $ret[$c1] = array($c2 => array());
                 if (!isset($ret[$c1][$c2])) $ret[$c1][$c2] = array();
             }
@@ -51,7 +53,8 @@ class Controller_Admin_Logs extends Controller_Admin_Admin {
     }
 
 
-    public function action_main() {
+    public function action_main(): void
+    {
 
 
         $this->add_widget(View::factory('admin/logs')

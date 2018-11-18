@@ -14,7 +14,8 @@ class Model_Postbox {
      *
      * @throws Exception
      */
-    public function add($uid, $message, $title) {
+    public function add($uid, $message, $title): void
+    {
         $id = time() . random_int(0,99);
         $this->messages[$id] = array('uid' => $uid, 'message' => $message, 'title' => $title, 'timestamp' => time(), 'read' => false, 'mid' => $id);
         while (count($this->messages) > 50) {
@@ -27,7 +28,8 @@ class Model_Postbox {
      * Delete a message
      * @param $id
      */
-    public function remove($id) {
+    public function remove($id): void
+    {
 
         unset($this->messages[$id]);
     }
@@ -36,7 +38,8 @@ class Model_Postbox {
      * Mark message as read
      * @param $id
      */
-    public function read($id) {
+    public function read($id): void
+    {
         if (isset($this->messages[$id])) $this->messages[$id]['read'] = true;
     }
 
@@ -46,7 +49,8 @@ class Model_Postbox {
      * @param bool $filter_read
      * @return array
      */
-    public function get($reverse = true, $filter_read = false) {
+    public function get($reverse = true, $filter_read = false): array
+    {
         if ($filter_read) {
             $ret = array();
             foreach ($this->messages as $msg)

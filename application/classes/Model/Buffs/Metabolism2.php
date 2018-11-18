@@ -8,12 +8,17 @@ class Model_Buffs_Metabolism2 extends Model_Buffs_Metabolism {
 	protected static $bid = 'metabolism';
     protected static $dominance = Model_Buffs_Abstract_Buff::MBR_PARTIALLY_DOMINANT;
 	
-	public function rebuild() {
-		parent::rebuild();
-        $this->statchange_child();
+	public function rebuild(): bool
+    {
+        if (parent::rebuild()) {
+            $this->statchange_child();
+            return true;
+        }
+        return false;
 	}
 	
-	private function statchange_child() {
+	private function statchange_child(): void
+    {
 		$this->effects[Model_Status::MS_STAT_HUNGER][Model_Buffs_Abstract_Buff::MB_DROP_PRC] = -0.1;
         $this->effects[Model_Status::MS_STAT_THIRST][Model_Buffs_Abstract_Buff::MB_DROP_PRC] = -0.1;
         $this->effects[Model_Status::MS_STAT_DRUNK][Model_Buffs_Abstract_Buff::MB_DROP_ACC] = 0.71;

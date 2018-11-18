@@ -7,7 +7,8 @@ class Model_Places_Home extends Model_Places_Abstract_Hideout {
     protected static $icon = 'home';
     protected static $starts_built = false;
 
-    public function setup_additional_rooms() {
+    public function setup_additional_rooms(): void
+    {
         $this->create_new_room(10,['inside']);
         $this->create_new_room(15,['inside']);
         $this->create_new_room(20,['outside']);
@@ -27,11 +28,13 @@ class Model_Places_Home extends Model_Places_Abstract_Hideout {
 
     private  $map_points = 0;
 
-    public function get_map_points() {
+    public function get_map_points(): int
+    {
         return $this->map_points;
     }
 
-    public function set_map_points($new) {
+    public function set_map_points($new): void
+    {
         $this->map_points = $new;
     }
 

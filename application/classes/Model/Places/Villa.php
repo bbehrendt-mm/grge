@@ -7,7 +7,8 @@ class Model_Places_Villa extends Model_Places_Abstract_Place {
     protected static $icon = 'mansion';
     protected static $outside = false;
 
-    public function setup_additional_rooms() {
+    public function setup_additional_rooms(): void
+    {
         parent::setup_additional_rooms();
         $this->create_new_room(10,['inside']);
         $this->create_new_room(10,['inside']);

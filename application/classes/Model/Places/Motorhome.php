@@ -22,35 +22,43 @@ class Model_Places_Motorhome extends Model_Places_Home {
         'Model_Items_Generic_Sum'   => array(20,20),
     );
 
-    public function get_level_progress() {
+    public function get_level_progress(): int
+    {
         return $this->progress;
     }
 
-    public function get_parts() {
+    public function get_parts(): array
+    {
         return $this->parts;
     }
 
-    public function get_distance() {
+    public function get_distance(): int
+    {
         return $this->km;
     }
 
-    public function get_map_points() {
+    public function get_map_points(): int
+    {
         return $this->get_distance();
     }
 
-    public function get_level() {
+    public function get_level(): int
+    {
         return $this->progress;
     }
 
-    public function is_driving() {
+    public function is_driving(): bool
+    {
         return $this->driving;
     }
 
-    public function mapable() {
+    public function mapable(): bool
+    {
         return !$this->driving && !$this->force_nomap;
     }
 
-    public function setup_additional_rooms() {
+    public function setup_additional_rooms(): void
+    {
         parent::setup_additional_rooms();
         $this->create_new_room(25,['outside']);
 
@@ -61,10 +69,11 @@ class Model_Places_Motorhome extends Model_Places_Home {
         );
     }
 
-    private function mapcontrol($populate) {
+    private function mapcontrol($populate): void
+    {
         foreach (Globals::CurrentGameF()->players(false) as $p) {
             /** @var Model_Player $p */
-            if ($p->location_class() != $this->uin()) {
+            if ($p->location_class() !== $this->uin()) {
                 if ($p->get_status()->alive()) {
                     $p->get_status()->set_cause_of_death('Zurückgelassen');
                     $p->kill();
@@ -74,7 +83,7 @@ class Model_Places_Motorhome extends Model_Places_Home {
         }
 
         foreach (Globals::CurrentGameF()->locations() as $location)
-            if ($location != $this->uin()) {
+            if ($location !== $this->uin()) {
                 $lobj = Globals::CurrentGameF()->location($location);
                 if ($lobj) $lobj->grind();
                 else Globals::CurrentGameF()->uin()->remove($location);
@@ -91,8 +100,9 @@ class Model_Places_Motorhome extends Model_Places_Home {
         Globals::CurrentGameF()->map_main()->insert_location($this);
     }
 
-    private function drivecontrol($start, $break = false) {
-        if ($start == $this->driving)
+    private function drivecontrol($start, $break = false): void
+    {
+        if ($start === $this->driving)
             return;
 
         if (!$start && !$break) {
@@ -141,26 +151,30 @@ class Model_Places_Motorhome extends Model_Places_Home {
         return $w;
     }
 
-    public function weight_max() {
+    public function weight_max(): int
+    {
         return static::$max_weight;
     }
 
-    public function stop_break() {
+    public function stop_break(): void
+    {
         Globals::PrimaryPlayerF()->log()->add('Du fährst deinen Wohnwagen auf den Standstreifen und hälst an. Eine kleine Pause tut gut...');
         $this->drivecontrol(false, true);
     }
 
-    public function stop() {
+    public function stop(): void
+    {
         Globals::PrimaryPlayerF()->log()->add('Du suchst einen geeigneten Parkplatz und hälst das Wohnmobil an. Tja, Zeit sich hier mal etwas umzusehen...');
         $this->drivecontrol(false);
     }
 
-    public function repair($addr, $count) {
+    public function repair($addr, $count): bool
+    {
         if ($this->driving) return false;
         if (Globals::PrimaryPlayerF()->get_status()->retrieve('fragile')) return false;
 
         foreach ($this->parts as $part => &$data) {
-            if (Tool_System::getClassID($part) == $addr) {
+            if (Tool_System::getClassID($part) === $addr) {
                 $num = min($count, $data[1] - $data[0]);
 
                 if ($num <= 0) {
@@ -180,7 +194,8 @@ class Model_Places_Motorhome extends Model_Places_Home {
         return true;
     }
 
-    public function start() {
+    public function start(): void
+    {
         if ($this->driving) return;
         if (Globals::PrimaryPlayerF()->get_status()->retrieve('fragile')) return;
 
@@ -210,11 +225,12 @@ class Model_Places_Motorhome extends Model_Places_Home {
         return $raw_kmh ? $speed : $speed/12;
     }
 
-    public function tick($type = Interface_Tickable::IT_TYPE_PLAYER) {
+    public function tick($type = Interface_Tickable::IT_TYPE_PLAYER): bool
+    {
         if (!$this->driving) {
             foreach (Tool_Scripts::at_location($this->uin()) as $p)
                 $p->get_status()->remove('fragile/driver');
-            return;
+            return true;
         }
         $this->km += $this->get_speed();
 
@@ -233,7 +249,7 @@ class Model_Places_Motorhome extends Model_Places_Home {
                     foreach (Tool_Scripts::at_location($this->uin(), true, true) as $ps) {
                         $ps->get_status()->set_cause_of_death('Autounfall');
                         $ps->get_status()->modify(Model_Status::MS_STAT_HEALTH, -random_int(10,80));
-                        if ($ps->id() != $p->id() && !Tool_Scripts::is_npc($ps))
+                        if (!Tool_Scripts::is_npc($ps) && $ps->id() !== $p->id())
                             $ps->log()->add('Du hast gerade eben noch friedlich aus dem Fenster geschaut, jetzt liegst du plötzlich in einem Trümmerhaufen aus Blech und Blut. :name, dieser verblödete Idiot, hat anscheinend einen Unfall gebaut.', array(':name' => $p->name()));
                     }
 
@@ -245,7 +261,7 @@ class Model_Places_Motorhome extends Model_Places_Home {
                     unset($status_value);
 
                     $this->drivecontrol(false);
-                    return;
+                    return true;
                 }
 
             }
@@ -254,7 +270,7 @@ class Model_Places_Motorhome extends Model_Places_Home {
         $damage = (random_int(0,110) > ($status * 100));
 
         if (!$damage)
-            return;
+            return true;
 
         $c = array(array('chance' => $this->parts['Model_Items_Generic_Sum'][0], 'value' => 'Model_Items_Generic_Sum'));
         if ($status <= .9)  $c[] = array('chance' => $this->parts['Model_Items_Generic_Tube'][0], 'value' => 'Model_Items_Generic_Tube');
@@ -265,16 +281,20 @@ class Model_Places_Motorhome extends Model_Places_Home {
 
         if ($this->motor_status() <= 0)
             $this->drivecontrol(false);
+
+        return true;
     }
 
-    public function pretick() {
+    public function pretick(): void
+    {
         parent::pretick();
 
         if ($this->is_driving())
             $this->zombie_factory()->accumulation(0);
     }
 
-    public function is_upgradable() {
+    public function is_upgradable(): bool
+    {
         return !$this->is_driving() && parent::is_upgradable();
     }
 }	

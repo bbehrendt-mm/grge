@@ -12,7 +12,9 @@ class Model_Places_Mall extends Model_Places_Abstract_Place {
 		if ($uin === NULL) return parent::uin();
 		else $t = parent::uin($uin);
 	
-		$this->inventory->add(new Model_Items_Vending(get_class($this), "Jumbomax Mallmaster"));
+		$this->inventory->add(new Model_Items_Vending(get_class($this),
+            'Jumbomax Mallmaster'
+        ));
         $this->inventory->add(new Model_Items_Vending2());
         return $t;
 	}

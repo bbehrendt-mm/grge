@@ -35,23 +35,27 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
 
     /**
      * @param bool $limit_alive
+     *
      * @return Model_Player[]
      */
-    abstract public function players($limit_alive = true);
+    abstract public function players($limit_alive = true): array;
 
     /**
      * @param bool $limit_alive
+     *
      * @return Interface_Plentity[]
      */
-    abstract public function npcs($limit_alive = true);
+    abstract public function npcs($limit_alive = true): array;
 
     /**
      * @param bool $limit_alive
+     *
      * @return Interface_Plentity[]
      */
-    abstract public function playable_entities($limit_alive = true);
+    abstract public function playable_entities($limit_alive = true): array;
 
-	public function join($sub, $level, $contest_id) {
+	public function join($sub, $level, $contest_id): bool
+    {
 	    if ($this->read_only) return false;
 
         if (isset($this->set['gamedata']->players[Globals::CurrentUserF()->uid()])) return false;
@@ -68,7 +72,7 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
             Controller_Chat::register_user(Globals::PrimaryPlayerF()->id(),$this->id());
 
         /** @var Model_Player $p */
-        foreach ($this->players(true) as $p) if ($p->id() != Globals::PrimaryPlayerF()->id())
+        foreach ($this->players(true) as $p) if ($p->id() !== Globals::PrimaryPlayerF()->id())
             $p->log()->add(new Model_Log_Types_String(null, ':name ist soeben der Partie beigetreten.', array(':name' => Globals::PrimaryPlayerF()->name())));
 		
 		//Create contest ranking
@@ -83,15 +87,16 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
      * Returns the game name, or null if no name is set
      * @return null|string
      */
-    public function name() {
-        return (isset($this->set['gamedata']->head->name)) ? $this->set['gamedata']->head->name : null;
+    public function name(): ?string
+    {
+        return $this->set['gamedata']->head->name ?? null;
     }
 
     public function slots() {
         if (!$this->config('modules.multiplayer')) return false;
 
         $num = DB::select('slots')->from('multiplayer_lobby')->where('gameid', '=', $this->set['gameid'])->execute()->as_array();
-        if (count($num) != 1)
+        if (count($num) !== 1)
             return 0;
         else return (int)$num[0]['slots'];
     }
@@ -127,11 +132,13 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
 	
 	abstract public function duration();
 
-    public function is_retired($uid) {
-        return isset($this->set["gamedata"]->graveyard[$uid]);
+    public function is_retired($uid): bool
+    {
+        return isset($this->set['gamedata']->graveyard[$uid]);
     }
 
-    public function register_death($uid) {
+    public function register_death($uid): void
+    {
         if ($this->read_only) return;
         $p = $this->get_player($uid);
         if (!$p) return;
@@ -145,7 +152,8 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
             DB::insert('mp_lockouts', array('uid', 'timestamp'))->values(array($uid, time()))->execute();
     }
     
-	public function retire($uid, $as_batch = false) {
+	public function retire($uid, $as_batch = false): bool
+    {
         if ($this->is_retired($uid))
             return false;
 
@@ -175,9 +183,10 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
 
     /**
      * @param null|number $pid
+     *
      * @return null|Model_Player
      */
-    abstract public function get_player($pid = NULL);
+    abstract public function get_player($pid = NULL): ?Model_Player;
 
     /**
      * @param string $adress Configuration adress
@@ -186,20 +195,23 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
      */
     abstract public function config($adress, $value = null);
 
-	public function check_players() {
+	public function check_players(): void
+    {
 	    if ($this->read_only) return;
 
-        if (count($this->set["gamedata"]->players) == count($this->set["gamedata"]->graveyard)) {
+        if (count($this->set['gamedata']->players) === count($this->set['gamedata']->graveyard)) {
 			
 			//Create contest ranking
 			if (isset($this->set['gamedata']->head->contest) && $this->set['gamedata']->head->contest)
 				DB::update('contests')->set(array('points' => $this->points(), 'game_id' => -1))->where('game_id', '=', $this->set['gameid'])->execute();
 
             //Create MP ranking
-            if ($this->config('modules.multiplayer') && ($this->set['gamedata']->head->rankable && !(isset($this->set['gamedata']->head->contest) && $this->set['gamedata']->head->contest))) {
+            if (($this->set['gamedata']->head->rankable && !(isset($this->set['gamedata']->head->contest) && $this->set['gamedata']->head->contest))
+                && $this->config('modules.multiplayer')
+            ) {
                 $sum = 0;
 
-                foreach ($this->set["gamedata"]->graveyard as $points)
+                foreach ($this->set['gamedata']->graveyard as $points)
                     if ($this->setting_mode(11000))
                         $sum = max($sum, $points);
                     else $sum += $points;
@@ -212,12 +224,14 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
 		}
 	}
 
-    public function delete_lobby() {
+    public function delete_lobby(): void
+    {
         if (!$this->read_only)
 	        DB::delete('multiplayer_lobby')->where('gameid', '=', $this->set['gameid'])->execute();
     }
 
-	public function purge() {
+	public function purge(): void
+    {
         if ($this->read_only) return;
 
 	    // Chat room
@@ -231,6 +245,6 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
 	
 	public function setting_mode($compare = NULL) {
 		if ($compare === NULL) return $this->set['gamedata']->head->mode;
-		else return ($this->set['gamedata']->head->mode == $compare); 
+		else return ($this->set['gamedata']->head->mode === $compare);
 	}
 }

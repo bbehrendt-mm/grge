@@ -22,7 +22,8 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
      * @param $max
      * @return Model_Factory_Zombies
      */
-    public function set_strength($str, $max) {
+    public function set_strength($str, $max): \Model_Factory_Zombies
+    {
         $this->strength = $str;
         $this->max_adversaries = $max;
         return $this;
@@ -33,7 +34,8 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
      * @param float $block_rate
      * @return $this
      */
-    public function set_chance($encounter_rate, $block_rate = 0.5) {
+    public function set_chance($encounter_rate, $block_rate = 0.5): self
+    {
         $this->chance = $encounter_rate;
         $this->block = $block_rate;
         return $this;
@@ -46,7 +48,8 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
         return max(0,min(1,$s + $since * 0.0007));
     }
 
-    public function reduce_strangth_factor($by) {
+    public function reduce_strangth_factor($by): void
+    {
         $this->strength_factor = $this->get_strength_factor();
         $this->last_decay = Globals::CurrentGameF()->duration();
 
@@ -58,7 +61,8 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
      * @param $max
      * @return Model_Factory_Zombies
      */
-    public function set_range($min, $max) {
+    public function set_range($min, $max): \Model_Factory_Zombies
+    {
         $this->range = [$min, $max];
         return $this;
     }
@@ -72,7 +76,8 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
         return $this->strength * ($include_factor ? ($this->get_game_strength() * $this->get_strength_factor()) : 1);
     }
 
-    public function get_max_group_count() {
+    public function get_max_group_count(): int
+    {
         return $this->max_adversaries;
     }
 
@@ -91,7 +96,8 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
     }
 
     /** @deprecated */
-    public function get_radar_data() {
+    public function get_radar_data(): array
+    {
         $min_cl = null;
         foreach ($this->get() as $zcl => $c)
             /** @var Model_Combat_Zombies_Zombie $zcl */
@@ -106,7 +112,8 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
         return $this->spawn(true, false, 1, $this->accumulation);
     }
 
-    public function dry_spawn($force = false) {
+    public function dry_spawn($force = false): void
+    {
         if (!$this->max_adversaries || !$this->get_strength() || (!$force && (mt_rand()/mt_getrandmax()) < $this->chance))
             return;
 
@@ -123,7 +130,8 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
      * @return Model_Combat_Zombies_Zombie[]|null
      * @throws Exception
      */
-    public function spawn($force = false, $apply_decay = true, $strength_modifier = 1, $fixed_number = null) {
+    public function spawn($force = false, $apply_decay = true, $strength_modifier = 1, $fixed_number = null): ?array
+    {
         if ($fixed_number === 0 || $fixed_number < 0 || !$this->max_adversaries || !($str = $this->get_strength() * $strength_modifier) || (!$force && (mt_rand()/mt_getrandmax()) > $this->chance))
             return null;
 
@@ -170,7 +178,7 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
         } elseif (!$accum_count)
             return null;
 
-        if ($fixed_number && $accum_count != $fixed_number) {
+        if ($fixed_number && $accum_count !== $fixed_number) {
 
             if ($accum_count < $fixed_number) {
                 $f = $fixed_number/$accum_count;

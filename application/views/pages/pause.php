@@ -33,7 +33,7 @@
 (function() {
     $('#persistent').empty();
 
-    var s = <?=(int)$remaining?>;
+    var s = <?=$remaining?>;
     var btn = $('#unpause_btn');
     var txt = $('#blocktext');
 

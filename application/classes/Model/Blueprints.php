@@ -18,13 +18,13 @@ class Model_Blueprints {
      * @return Model_Blueprints
      * @throws Exception
      */
-    public static function factory($location = null, $category = null, $skip_validation = false) {
-        $ret = new Model_Blueprints();
+    public static function factory($location = null, $category = null, $skip_validation = false): Model_Blueprints {
+        $ret = new self();
         if (!$location || !$category) return $ret;
         else {
             foreach (Tool_System::get_class_hierarchy($location) as $name) {
                 $name = str_replace('Model_Places_','',$name, $n);
-                if ($n == 1) {
+                if ($n === 1) {
                     if ($b = Tool_System::simple_config("blueprints/{$category}/" . $name))
                         /** @var Model_Blueprints $b */
                         $ret->merge($b,true);
@@ -66,7 +66,8 @@ class Model_Blueprints {
      * @param callable $c
      * @return Model_Blueprints
      */
-    public function push_stack($c) {
+    public function push_stack($c): \Model_Blueprints
+    {
         $this->processor_stack[] = $c;
         return $this;
     }
@@ -75,7 +76,8 @@ class Model_Blueprints {
      * @param int $n
      * @return Model_Blueprints
      */
-    public function pop_stack($n = 1) {
+    public function pop_stack($n = 1): \Model_Blueprints
+    {
         for ($i = 0; $i < $n; $i++)
             array_pop($this->processor_stack);
         return $this;
@@ -84,7 +86,8 @@ class Model_Blueprints {
     /**
      * @return Model_Blueprints
      */
-    public function drop_stack() {
+    public function drop_stack(): \Model_Blueprints
+    {
         $this->processor_stack = [];
         return $this;
     }
@@ -95,7 +98,8 @@ class Model_Blueprints {
      * @return Model_Blueprints
      * @throws Exception
      */
-    public function add_blueprints($blueprint, $external = false) {
+    public function add_blueprints($blueprint, $external = false): \Model_Blueprints
+    {
         if (is_string($blueprint))
             return $this->add_blueprints(Model_Blueprint::factory()->id($blueprint), $external);
         elseif (is_array($blueprint) && count($blueprint) > 0)
@@ -120,7 +124,8 @@ class Model_Blueprints {
      * @param string $rid
      * @return Model_Blueprint|null
      */
-    public function get_blueprint($rid) {
+    public function get_blueprint($rid): ?\Model_Blueprint
+    {
         if (isset($this->blueprints[$rid]))
             return $this->blueprints[$rid];
         elseif (isset($this->externals[$rid]))
@@ -133,15 +138,16 @@ class Model_Blueprints {
      * @return Model_Blueprint[]
      * @throws Exception
      */
-    public function find_blueprints($rid) {
+    public function find_blueprints($rid): array
+    {
         $ret = [];
         foreach ($this->externals as $blueprint)
             /** @var Model_Blueprint $blueprint */
-            if (in_array($rid, $blueprint->provide()))
+            if (in_array($rid, $blueprint->provide(), true))
                 $ret[] = $blueprint;
         foreach ($this->blueprints as $blueprint)
             /** @var Model_Blueprint $blueprint */
-            if (in_array($rid, $blueprint->provide()))
+            if (in_array($rid, $blueprint->provide(), true))
                 $ret[] = $blueprint;
 
         return $ret;
@@ -152,7 +158,8 @@ class Model_Blueprints {
      * @param bool $dominance
      * @return Model_Blueprints
      */
-    public function merge($other, $dominance = false) {
+    public function merge($other, $dominance = false): \Model_Blueprints
+    {
         $this->blueprints = $dominance ? array_merge($other->blueprints, $this->blueprints) : array_merge($this->blueprints, $other->blueprints);
         $this->externals = $dominance ? array_merge($other->externals, $this->externals) : array_merge($this->externals, $other->externals);
 
@@ -164,7 +171,8 @@ class Model_Blueprints {
     /**
      * @return Model_Blueprints
      */
-    public function externalize() {
+    public function externalize(): \Model_Blueprints
+    {
         $this->externals = array_merge($this->externals, $this->blueprints);
         $this->blueprints = [];
 
@@ -176,7 +184,8 @@ class Model_Blueprints {
      * @return Model_Blueprints
      * @throws Exception
      */
-    public function validate() {
+    public function validate(): \Model_Blueprints
+    {
         $this->drop_stack();
         $preconditions = [];
         foreach ($this->externals as $blueprint)
@@ -201,7 +210,8 @@ class Model_Blueprints {
         if ($deadlock) {
             $info = [];
             foreach ($cache as $blueprint) $info[] = $blueprint->id();
-            throw new Exception('Unable to compile blueprint group: Group contains blueprints with unresolvable requirements. (' . implode(", ", $info) . ')');
+            throw new RuntimeException('Unable to compile blueprint group: Group contains blueprints with unresolvable requirements. (' . implode(
+                    ', ', $info) . ')');
         }
         return $this;
     }
@@ -213,7 +223,8 @@ class Model_Blueprints {
      * @return array
      * @throws Exception
      */
-    public function compile($preconditions, $room, $player) {
+    public function compile($preconditions, $room, $player): array
+    {
         $ret = [];
         foreach ($this->externals as $b)
             /** @var Model_Blueprint $b */
@@ -247,7 +258,7 @@ class Model_Blueprints {
             $r = $b->modify($player, $preconditions, $room)->execute($player, $preconditions, $room);
             if (is_array($r))
                 foreach ($r as $prj) {
-                    if ($prj[0] == '-')
+                    if ($prj[0] === '-')
                         $room->remove_content(substr($prj, 1));
                     else
                         $room->add_content($prj);
@@ -276,7 +287,7 @@ class Model_Blueprints {
 
         if (is_array($r))
             foreach ($r as $prj) {
-                if ($prj[0] == '-')
+                if ($prj[0] === '-')
                     $room->remove_content(substr($prj, 1));
                 else
                     $room->add_content($prj);

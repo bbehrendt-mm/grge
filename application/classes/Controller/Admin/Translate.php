@@ -4,7 +4,8 @@ class Controller_Admin_Translate extends Controller_Admin_Admin {
 
     protected static $auto_require = ['TRANSLATE'];
 
-    private function loader($url) {
+    private function loader($url): void
+    {
         $this->add_widget(View::factory($url)
             ->set('base', 'de')
             ->set('langs', ['en','es','fr'])
@@ -14,34 +15,37 @@ class Controller_Admin_Translate extends Controller_Admin_Admin {
         $this->render();
     }
 
-    public function action_main() {
+    public function action_main(): void
+    {
         $this->loader('admin/translate2');
     }
 
-    public function action_old() {
+    public function action_old(): void
+    {
         $this->loader('admin/translate');
     }
 
-    public function japi_del() {
+    public function japi_del(): bool
+    {
         if (!static::priv_allow_all('TRANSLATE_MOD'))
             return $this->error(\grge\E_SERVER_ACCESS_DENIED);
 
-        $this->render(['success' => (int)I18n::remove($this->post('id'))]);
+        $this->render(['success' => (int)I18n::remove(self::post('id'))]);
         return true;
     }
 
-    public function japi_next() {
+    public function japi_next(): bool
+    {
 
-        $id = (int)$this->post('id');
-        $tr = $this->post('translation');
-        $from = $this->post('from');
-        $to = $this->post('to');
-        $rq_id = (int)$this->post('request');
+        $id = (int)self::post('id');
+        $tr = self::post('translation');
+        $from = self::post('from');
+        $to = self::post('to');
+        $rq_id = (int)self::post('request');
 
         $b = true;
-        if (trim($tr) && $id && $to) {
+        if ($to && $id && trim($tr))
             $this->add_data('success', $b = (bool)I18n::set_by_id($id, $tr, $to));
-        }
 
         if (!$b) return $this->render();
         else I18n::unlock($id);
@@ -66,8 +70,9 @@ class Controller_Admin_Translate extends Controller_Admin_Admin {
 
     }
 
-    public function japi_search() {
-        $q = trim($this->post('q'));
+    public function japi_search(): bool
+    {
+        $q = trim(self::post('q'));
         if (strlen($q) < 4) return $this->render(['result' => []]);
 
         return $this->render(['result' => array_map(function($id) {
@@ -77,34 +82,37 @@ class Controller_Admin_Translate extends Controller_Admin_Admin {
                 'from' => $entry[$this->post('from')],
                 'to'  => $entry[$this->post('to')]
             ];
-        }, I18n::search($q, [$this->post('from'), $this->post('to')]))]);
+        }, I18n::search($q, [self::post('from'), self::post('to')]))]);
     }
 
-    public function japi_add() {
+    public function japi_add(): bool
+    {
         if (!static::priv_allow_all('TRANSLATE_MOD'))
             return $this->error(\grge\E_SERVER_ACCESS_DENIED);
 
-        $this->render(['success' => (int)I18n::set_missing(trim($this->post('q')))]);
+        $this->render(['success' => (int)I18n::set_missing(trim(self::post('q')))]);
         return true;
     }
 
-    public function japi_set() {
+    public function japi_set(): void
+    {
         $this->render(['success' => (int)I18n::set(
-                $this->post('from'),
-                $this->post('to'),
-                $this->post('language')
+                self::post('from'),
+                self::post('to'),
+                self::post('language')
         )]);
     }
 
-    private function get_missing($lang, $mask) {
+    private function get_missing($lang, $mask): bool
+    {
         $tmp = [];
         $tmp_m = [];
         foreach (I18n::get_missing($lang) as $k) {
             $tmp[$k] = $k;
-            if ($mask != 'de')
+            if ($mask !== 'de')
                 $tmp_m[$k] = __($k, -1, $mask);
         }
-        if ($mask == 'de')
+        if ($mask === 'de')
             $tmp_m = [];
 
         return $this->render([
@@ -113,13 +121,14 @@ class Controller_Admin_Translate extends Controller_Admin_Admin {
         ]);
     }
 
-    private function get_auto($lang, $mask) {
+    private function get_auto($lang, $mask): bool
+    {
         $tmp = [];
         $tmp_m = [];
         foreach (I18n::load($lang) as $s => $t)
-            if ($s == $t)
+            if ($s === $t)
                 $tmp[$s] = $t;
-        if ($mask == 'de') $tmp_m = [];
+        if ($mask === 'de') $tmp_m = [];
         else foreach ($tmp as $k)
             $tmp_m[$k] = __($k, -1, $mask);
 
@@ -129,13 +138,15 @@ class Controller_Admin_Translate extends Controller_Admin_Admin {
         ]);
     }
 
-    private function get_all($lang, $mask, $search) {
+    private function get_all($lang, $mask, $search): bool
+    {
         $tmp = [];
         $tmp_m = [];
         foreach (I18n::load($lang) as $s => $t)
-            if (!$search || strpos($s, $search) !== false || strpos($t, $search) !== false || ($mask != 'de' && strpos(__($s, -1, $mask), $search) !== false))
+            if (!$search || strpos($s, $search) !== false || strpos($t, $search) !== false || ($mask
+                    !== 'de' && strpos(__($s, -1, $mask), $search) !== false))
                 $tmp[$s] = $t;
-        if ($mask == 'de') $tmp_m = [];
+        if ($mask === 'de') $tmp_m = [];
         else foreach ($tmp as $k => $v)
             $tmp_m[$k] = __($k, -1, $mask);
 
@@ -145,11 +156,11 @@ class Controller_Admin_Translate extends Controller_Admin_Admin {
         ]);
     }
 
-    public function japi_get() {
-        $lang = $this->post('language');
-        $mask = $this->post('mask');
-        $source = $this->post('source');
-        $search = $this->post('search');
+    public function japi_get(): bool {
+        $lang = self::post('language');
+        $mask = self::post('mask');
+        $source = self::post('source');
+        $search = self::post('search');
 
         switch ($source) {
             case 'prefetch': return $this->get_missing($lang,$mask);

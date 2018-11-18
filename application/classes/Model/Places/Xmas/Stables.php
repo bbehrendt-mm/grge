@@ -37,15 +37,18 @@ class Model_Places_Xmas_Stables extends Model_Places_Abstract_Hideout {
         return parent::uin($new);
     }
 
-    public function setup_additional_rooms() {
+    public function setup_additional_rooms(): void
+    {
         $this->setup_new_room($this->create_new_room(20,['inside']),
                               ['stables'],
                               ['hay1'],
-                              "Stall");
+            'Stall'
+        );
         $this->create_new_room(20,['inside']);
     }
 
-    public function enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
+    public function enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER): bool
+    {
         if (!$this->spawned_rudolph) {
             $ev = Globals::CurrentGameF()->get_initialized_event(Model_Events_Xmas::get_key());
             /** @var $ev Model_Events_Xmas */

@@ -16,7 +16,8 @@ class Model_Items_Bmt extends Model_Items_Abstract_Item {
     protected static $energy_base = 30;
 	public static $health_list = Array(3,5,8,13,21,34,55,89);
 	
-	public function description() {
+	public function description(): string
+    {
 		return  parent::description() . ($this->power >= count(static::$health_list) ? '<b>Die Kontakte dieses Exemplars sind leider komplett verkohlt... Dieses Ding wirst du wohl nicht mehr einsetzen können!</b>'
                 : '');
 	}

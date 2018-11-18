@@ -290,11 +290,12 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
      *
      * @param $lid null|number Optional location id, when missing player location is assumed
      *
-     * @see Model_Gamelayer_Process::location()
      * @return Model_Places_Abstract_Place|null
      * @throws Exception
+     * @see Model_Gamelayer_Process::location()
      */
-	final public function location($lid = NULL): ?Model_Places_Abstract_Place {
+	final public function location($lid = NULL): ?Model_Places_Abstract_Place
+    {
 		$location = $lid ?? Globals::CurrentPlayerF()->location_class();
 
         if ($location < 0)
@@ -308,11 +309,12 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
      *
      * @param $lid null|number Optional location id, when missing player location is assumed
      *
-     * @see Model_Gamelayer_Process::location()
      * @return Model_Places_Abstract_Place
      * @throws Exception
+     * @see Model_Gamelayer_Process::location()
      */
-    final public function locationF($lid = NULL): Model_Places_Abstract_Place {
+    final public function locationF($lid = NULL): Model_Places_Abstract_Place
+    {
         $location = $this->location($lid);
         if ($location !== null) throw new LogicException(
             'Requested invalid location.'
@@ -359,11 +361,13 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
 
     /**
      * Returns the player object associated with $pid; if $pid is not passed, the active player will be returned
+     *
      * @param number|string|null $pid
+     *
      * @return Model_Player|Interface_Plentity|null
      * @throws Exception
      */
-    public function get_player($pid = NULL) {
+    public function get_player($pid = NULL): ?Model_Player {
     	if ($pid === NULL) {
             if (Globals::hasCurrentUser()) $pid = Globals::CurrentUserF()->uid();
             else return null;
@@ -393,7 +397,8 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
      * @return Model_Player[]
      * @throws Exception
      */
-    public function players($limit_alive = true): array {
+    public function players($limit_alive = true): array
+    {
     	$ret = Array();
     	foreach ($this->set['gamedata']->players as $player_id => $pid)
             if (!$this->get_player($player_id)) continue;
@@ -413,6 +418,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
 
     /**
      * @param bool $limit_alive
+     *
      * @return Interface_Plentity[]
      */
     public function npcs($limit_alive = true): array {
@@ -460,7 +466,8 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
      * @return Interface_Plentity[]
      * @throws Exception
      */
-    public function playable_entities($limit_alive = true): array {
+    public function playable_entities($limit_alive = true): array
+    {
         return array_merge($this->players($limit_alive), $this->npcs($limit_alive));
     }
 
@@ -499,7 +506,8 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
     /**
      * @return Model_Events_Event[]
      */
-    public function get_initialized_events(): array {
+    public function get_initialized_events(): array
+    {
         if (!isset($this->set['gamedata']->active_events))
             $this->set['gamedata']->active_events = [];
         return $this->set['gamedata']->active_events;

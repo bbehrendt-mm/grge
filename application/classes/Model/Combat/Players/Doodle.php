@@ -7,7 +7,8 @@ class Model_Combat_Players_Doodle extends Model_Combat_Players_Dog {
     protected static $default_stat_accuracy = 11;
     protected static $movement_range = 10;
 
-    public static function create_linked_actor($p, $avatar = null) {
+    public static function create_linked_actor($p, $avatar = null): Model_Combat_Players_Player
+    {
         return parent::create_linked_actor($p, 'doodle.jpg');
     }
 }

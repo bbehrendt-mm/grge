@@ -2,17 +2,19 @@
 
 abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
 
-	/**
-	 * @param null|number $lid
-	 * @return Model_Places_Abstract_Place|null
-	 */
-	abstract public function location($lid = NULL);
-
-	/**
+    /**
      * @param null|number $lid
+     *
+     * @return Model_Places_Abstract_Place|null
+     */
+	abstract public function location($lid = NULL): ?Model_Places_Abstract_Place;
+
+    /**
+     * @param null|number $lid
+     *
      * @return Model_Places_Abstract_Place
      */
-    abstract public function locationF($lid = NULL);
+    abstract public function locationF($lid = NULL): Model_Places_Abstract_Place;
 
 	abstract public function paused();
 	abstract public function is_alive();
@@ -20,14 +22,15 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
     /**
      * @return Model_Events_Event[]
      */
-    abstract public function get_initialized_events();
+    abstract public function get_initialized_events(): array;
 
 	protected static $now_is_real_time = false;
 
-    abstract public function recalculate_flow();
+    abstract public function recalculate_flow(): void;
     abstract public function next_tick();
 
-	final protected function process_step() {
+	final protected function process_step(): void
+    {
         //Jump processing time
         $this->set['gamedata']->timing->last_point += $this->set['gamedata']->timing->tick_lenght;
 
@@ -57,7 +60,8 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
             $this->recalculate_flow();
     }
 
-    final public function fast_forward($ticks = 0) {
+    final public function fast_forward($ticks = 0): void
+    {
         $original_time = $this->set['gamedata']->timing->last_point;
 
         for ($i = 0; $i < $ticks; $i++)
@@ -70,7 +74,8 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
             Globals::setPrimaryPlayer($this->get_player(Globals::CurrentUserF()->uid()));
     }
 
-	final protected function process() {
+	final protected function process(): void
+    {
 		//If no player is alive, stop time progression
 		if (!$this->is_alive() || $this->paused()) {
 			$this->set['gamedata']->timing->last_point = time();
@@ -108,7 +113,8 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
 		static::$now_is_real_time = true;
 	}
 	
-	protected function tick() {
+	protected function tick(): void
+    {
         //No need to do that if player is already dead
 		if (!$this->is_alive()) return;
 
@@ -132,19 +138,19 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
 		foreach ($this->playable_entities(true) as $pl) {
 			Globals::setCurrentPlayer($pl);
 			
-			if (Globals::CurrentPlayerF()->get_status()->alive()) {
+			if ($pl->get_status()->alive()) {
                 // Tick items
-                foreach (Globals::CurrentPlayerF()->inventory()->get('Interface_Tickable') as $item)
+                foreach ($pl->inventory()->get('Interface_Tickable') as $item)
                     /** @var $item Interface_Tickable */
-                    $item->tick(Globals::CurrentPlayerF()->id(), !Tool_Scripts::is_npc(Globals::CurrentPlayerF()) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC);
+                    $item->tick($pl->id(), !Tool_Scripts::is_npc($pl) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC);
 
-                if (Globals::CurrentPlayerF()->location())
-                    foreach (Globals::CurrentPlayerF()->location()->inventory()->get('Interface_Tickable') as $item)
+                if ($pl->location())
+                    foreach ($pl->location()->inventory()->get('Interface_Tickable') as $item)
                         /** @var $item Interface_Tickable */
-                        $item->tick(Globals::CurrentPlayerF()->location_class(), false);
+                        $item->tick($pl->location_class(), false);
 
-                Globals::CurrentPlayerF()->tick();
-                if (Globals::CurrentPlayerF()->location()) Globals::CurrentPlayerF()->location()->tick(!Tool_Scripts::is_npc(Globals::CurrentPlayerF()) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC);
+                $pl->tick();
+                if ($pl->location()) $pl->location()->tick(!Tool_Scripts::is_npc($pl) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC);
 			}
 		}
 

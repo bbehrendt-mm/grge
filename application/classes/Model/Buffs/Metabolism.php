@@ -9,7 +9,7 @@ class Model_Buffs_Metabolism extends Model_Buffs_Abstract_Buff {
     protected static $remotable = false;
     protected static $enabled = true;
 
-    private $effects = Array(
+    protected $effects = Array(
 				Model_Status::MS_STAT_ENERGY => Array(
 					Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
@@ -55,7 +55,8 @@ class Model_Buffs_Metabolism extends Model_Buffs_Abstract_Buff {
 			);
     protected function get_effects(): array { return $this->effects; }
 	
-	public function rebuild() {
+	public function rebuild(): bool
+    {
 		if (static::$enabled) {
             $this->statchange_misc();
             $this->statchange_energy();
@@ -68,7 +69,8 @@ class Model_Buffs_Metabolism extends Model_Buffs_Abstract_Buff {
 		return parent::rebuild();
 	}
 	
-	private function statchange_hunger() {
+	private function statchange_hunger(): void
+    {
 		$this->effects[Model_Status::MS_STAT_HUNGER] = Array(
 					Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0.15,
@@ -77,7 +79,8 @@ class Model_Buffs_Metabolism extends Model_Buffs_Abstract_Buff {
 				);
 	}
 	
-	private function statchange_thirst() {
+	private function statchange_thirst(): void
+    {
 		$this->effects[Model_Status::MS_STAT_THIRST] = Array(
 				Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
 				Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0.25,
@@ -86,7 +89,8 @@ class Model_Buffs_Metabolism extends Model_Buffs_Abstract_Buff {
 		);
 	}
 	
-	private function statchange_misc() {
+	private function statchange_misc(): void
+    {
 		$this->effects[Model_Status::MS_STAT_DRUNK] = Array(
 				Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
 				Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0.83,
@@ -101,7 +105,8 @@ class Model_Buffs_Metabolism extends Model_Buffs_Abstract_Buff {
 		);
 	}
 	
-	private function statchange_sleepy() {
+	private function statchange_sleepy(): void
+    {
 		$energy = $this->assoc_player->get_status()->get(Model_Status::MS_STAT_ENERGY);
 		
 		$this->effects[Model_Status::MS_STAT_SLEEPY] = Array(
@@ -112,7 +117,8 @@ class Model_Buffs_Metabolism extends Model_Buffs_Abstract_Buff {
 		);
 	}
 	
-	private function statchange_health() {
+	private function statchange_health(): void
+    {
 		$energy = $this->assoc_player->get_status()->get(Model_Status::MS_STAT_ENERGY);
 		$health = $this->assoc_player->get_status()->get(Model_Status::MS_STAT_HEALTH);
 		$hunger = $this->assoc_player->get_status()->get(Model_Status::MS_STAT_HUNGER);
@@ -146,7 +152,8 @@ class Model_Buffs_Metabolism extends Model_Buffs_Abstract_Buff {
 		);	
 	}
 	
-	private function statchange_energy() {
+	private function statchange_energy(): void
+    {
 		$hunger = $this->assoc_player->get_status()->get(Model_Status::MS_STAT_HUNGER);
 		$thirst = $this->assoc_player->get_status()->get(Model_Status::MS_STAT_THIRST);
 		
@@ -159,7 +166,7 @@ class Model_Buffs_Metabolism extends Model_Buffs_Abstract_Buff {
 		elseif	($hunger > 75)	$ndif += 0.05;
 		elseif	($hunger > 60)	$ndif += 0.02;
 	
-		$ndif = $ndif * ($thirst/100);
+		$ndif *= ($thirst / 100);
 	
 		if		($thirst < 10)	$ndif -= 0.04;
 		elseif	($thirst < 20)	$ndif -= 0.02;

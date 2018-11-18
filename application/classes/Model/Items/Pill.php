@@ -165,7 +165,8 @@ class Model_Items_Pill extends Model_Items_Abstract_Item implements Interface_St
 	protected static $weight = 0.1;
 	protected static $cat = Model_Items_Abstract_Item::MIAI_CAT_DRUG;
 	
-	public function mixchem($chemval) {
+	public function mixchem($chemval): bool
+    {
         $this->consume();
         switch ($chemval)
         {
@@ -178,13 +179,14 @@ class Model_Items_Pill extends Model_Items_Abstract_Item implements Interface_St
             case 3:case 4:case 5:
                 Tool_Scripts::chem_reaction(
                     'Du wirfst die Pille in die Chemikalie ... es blubbert ein bisschen, und als du die Pille herausholst stellst du fest, dass sie die Farbe geändert hat!',
-                    $chemval,$this, new Model_Items_Pill);
+                    $chemval,$this, new self
+                );
 
                 return true;
             default:
                 Tool_Scripts::chem_reaction(
                     'Du wirfst die Pille in die Chemikalie ... es blubbert relativ stark. Als du die Pille herausnehmen möchtest stellst du fest, dass plötzlich eine zweite, identische Pille im Reagenzglas liegt! Welch Wunder der Chemie!',
-                    $chemval,$this, [new Model_Items_Pill($this->type),new Model_Items_Pill($this->type)]);
+                    $chemval,$this, [new self($this->type), new self($this->type)]);
                 return true;
         }
 	}

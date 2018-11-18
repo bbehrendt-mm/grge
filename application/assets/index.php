@@ -1,6 +1,6 @@
 <?php
 function kill($str = null) {
-    header("HTTP/1.0 404 Not Found");
+    header('HTTP/1.0 404 Not Found');
     if ($str !== null)
         echo $str;
     exit;
@@ -10,17 +10,17 @@ function typeWrangler(&$file, &$ext) {
     preg_match('/(.*\.)(\w*?)$/',$file, $ext);
 
     if (count($ext) < 3) return false;
-    $base = $ext[1];
-    $ext = $ext[2];
+    $tmp = $ext;
+    [,$base,$ext] = $tmp;
 
     if (!in_array($ext, ['css','js','jpg','bmp','gif','png','ico','webp','eot','svg','ttf','woff']))
         return false;
 
-    if ($ext != 'css')
+    if ($ext !== 'css')
         $base = preg_replace('/^css\//','',$base);
 
-    $skin = isset($_COOKIE['skin']) ? $_COOKIE['skin'] : null;
-    if ($skin && $skin != 'default' && file_exists("skins/$skin/{$base}{$ext}"))
+    $skin = $_COOKIE['skin'] ?? null;
+    if ($skin && $skin !== 'default' && file_exists("skins/$skin/{$base}{$ext}"))
         $base = "skins/$skin/{$base}";
 
     if (in_array($ext, ['jpg','bmp','gif','png','ico']) && file_exists($base . $ext) && file_exists($base . 'webp'))
@@ -34,17 +34,19 @@ function typeWrangler(&$file, &$ext) {
 
     $file = $base . $ext;
     return file_exists($base . $ext);
-};
+}
 
-$f = str_replace($_SERVER['SCRIPT_NAME']."/", '', $_SERVER['PHP_SELF']);
-$f = str_replace('..','.',$f);
+$f = str_replace(
+    array($_SERVER['SCRIPT_NAME'] . '/', '..'), array('', '.'),
+    $_SERVER['PHP_SELF']
+);
 
 if (preg_match('/^skins[\/\\\]/',$f))
     kill("Skin access disabled: $f");
 
+$ext = null;
 if (preg_match('/^skins[\/\\\]/',$f) || !typeWrangler($f,$ext))
     kill("Not found: $f");
-
 
 switch ($ext) {
     case 'css':
@@ -91,8 +93,8 @@ $etag = md5($last_modified . ':' . $f);
 
 $not_modified =
     (isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) || isset($_SERVER['HTTP_IF_NONE_MATCH'])) &&
-    (!isset($_SERVER['HTTP_IF_NONE_MATCH']) || $_SERVER['HTTP_IF_NONE_MATCH'] == $etag) &&
-    (!isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) || $_SERVER['HTTP_IF_MODIFIED_SINCE'] == $last_modified_gmt);
+    (!isset($_SERVER['HTTP_IF_NONE_MATCH']) || $_SERVER['HTTP_IF_NONE_MATCH'] === $etag) &&
+    (!isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) || $_SERVER['HTTP_IF_MODIFIED_SINCE'] === $last_modified_gmt);
 
 if ($not_modified) {
     header('HTTP/1.1 304 Not Modified');

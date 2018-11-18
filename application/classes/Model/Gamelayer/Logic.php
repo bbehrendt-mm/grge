@@ -2,22 +2,22 @@
 
 abstract class Model_Gamelayer_Logic extends Model_Gamelayer_Io {
 
-	const MGLS_Health =  1;
-	const MGLS_Energy =  2;
-	const MGLS_Hunger =  4;
-	const MGLS_Thirst =  8;
-	const MGLS_Drunk  = 16;
-	const MGLS_Sleepy = 32;
+	public const MGLS_Health =  1;
+	public const MGLS_Energy =  2;
+	public const MGLS_Hunger =  4;
+	public const MGLS_Thirst =  8;
+	public const MGLS_Drunk  = 16;
+	public const MGLS_Sleepy = 32;
 
-
-    public function recalculate_flow() {
-        if ($this->timeflow() != 1) return;
+    public function recalculate_flow(): void
+    {
+        if ($this->timeflow() !== 1) return;
         $steps = array(15,30,60,120,300,600,900);
 
         $sum = 0;
         $players = $this->players(true);
 
-        if (count($players) == 0)
+        if (count($players) === 0)
             return;
 
         foreach ($players as $p)
@@ -31,11 +31,13 @@ abstract class Model_Gamelayer_Logic extends Model_Gamelayer_Io {
      * @param number $location
      * @param Model_Combat_Actor $obj
      */
-    public function register_ghul($location, $obj) {
+    public function register_ghul($location, $obj): void
+    {
         $this->set['gamedata']->ghuls[] = array('location' => $location, 'data' => $obj);
     }
 
-    public function unregister_ghul($id) {
+    public function unregister_ghul($id): void
+    {
         unset($this->set['gamedata']->ghuls[$id]);
     }
 
@@ -45,11 +47,12 @@ abstract class Model_Gamelayer_Logic extends Model_Gamelayer_Io {
      * @return Model_Combat_Zombies_Ghul[]
      * @throws Exception
      */
-    public function get_ghuls($lid) {
+    public function get_ghuls($lid): array
+    {
         $ret = [];
 
         foreach ($this->set['gamedata']->ghuls as $k => $gob)
-            if (random_int(0,100) < (($gob['location'] == $lid) ? 30 : 5)) {
+            if (random_int(0,100) < (($gob['location'] === $lid) ? 30 : 5)) {
                 $ret[$k] = $gob['data'];
                 break;
             }
@@ -57,7 +60,8 @@ abstract class Model_Gamelayer_Logic extends Model_Gamelayer_Io {
         return $ret;
     }
 
-	final public function mass_consume($data, $callbacks = NULL) {
+	final public function mass_consume($data, $callbacks = NULL): bool
+    {
 		if ($data === NULL) return false;
 			
 		//Check, if all items are available
@@ -102,7 +106,8 @@ abstract class Model_Gamelayer_Logic extends Model_Gamelayer_Io {
      * @return bool
      * @throws Exception
      */
-	final public function item_available($uin, $perspective = null) {
+	final public function item_available($uin, $perspective = null): bool
+    {
         $at_loc_rooms = false;
         if ($this->location()) foreach ($this->location()->rooms() as $r) if ($r->enabled())
             if ($r->inventory()->has($uin)) {

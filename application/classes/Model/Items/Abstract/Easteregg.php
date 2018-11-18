@@ -14,7 +14,7 @@ abstract class Model_Items_Abstract_Easteregg extends Model_Items_Abstract_Ammo 
 	protected static $autospawn = Array(1,1);
 	protected static $autoappender = Array('Ei', 'Eier');
 
-    public static function getValue() {
+    public static function getValue(): int {
         return static::$value;
     }
 
@@ -23,7 +23,8 @@ abstract class Model_Items_Abstract_Easteregg extends Model_Items_Abstract_Ammo 
         parent::__construct($num, true);
     }
 
-    public function take($silent = false) {
+    public function take($silent = false): bool
+    {
         if (parent::take($silent)) {
             $this->new = false;
             return true;

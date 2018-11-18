@@ -74,11 +74,13 @@ class Model_Places_Xmasfair extends Model_Places_Abstract_Xmas {
         return $t;
     }
 
-    public function get_construction_info() {
+    public function get_construction_info(): array
+    {
         return $this->status;
     }
 
-    public function interaction_xmas($project) {
+    public function interaction_xmas($project): bool
+    {
         if (!isset($this->status[$project]))
             return false;
 
@@ -88,7 +90,7 @@ class Model_Places_Xmasfair extends Model_Places_Abstract_Xmas {
         if (Globals::CurrentGameF()->mass_consume($this->status[$project]['items'])) {
             $this->status[$project]['current'][0]++;
             Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String( null, 'Du hast den Weihnachtsbaum dekoriert. Gut gemacht!'));
-            if ($project == 'tree' || $project == 'treesize') {
+            if ($project === 'tree' || $project === 'treesize') {
                 $this->status['treesize']['current'][1] = 9;
                 $this->status['needles']['current'][1] += 1;
                 $this->status['lametta']['current'][1] += 2;
@@ -110,7 +112,7 @@ class Model_Places_Xmasfair extends Model_Places_Abstract_Xmas {
         return $p;
     }
 
-    public function can_leave_map($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER)
+    public function can_leave_map($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER): bool
     {
         if (($p = Globals::CurrentGameF()->get_player($pid))
             && Tool_System::instance_of($p, Model_NPC_Event_Rudolph::cls())
@@ -119,7 +121,8 @@ class Model_Places_Xmasfair extends Model_Places_Abstract_Xmas {
         return parent::can_leave_map($pid, $type);
     }
 
-    public function leave_map($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
+    public function leave_map($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER): bool
+    {
         if (!$pid) $player = Globals::CurrentPlayerF();
         else $player = Globals::CurrentGameF()->get_player($pid);
         if (!parent::leave($pid, $type)) return false;

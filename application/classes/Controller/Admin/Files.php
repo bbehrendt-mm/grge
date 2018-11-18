@@ -7,24 +7,26 @@ class Controller_Admin_Files extends Controller_Admin_Admin {
 
     private static $evio_version = 2;
 
-    public function action_battle_log() {
-        if (!$this->priv_allow_all(['LOGVIEW'])) die(GRGEError::m(\grge\E_SERVER_ACCESS_DENIED));
+    public function action_battle_log(): void
+    {
+        if (!self::priv_allow_all(['LOGVIEW'])) die(GRGEError::m(\grge\E_SERVER_ACCESS_DENIED));
 
         $data = explode('-', $this->request->param('id'));
-        if (count($data) != 2) {
-            echo "Error."; return;
+        if (count($data) !== 2) {
+            echo 'Error.'; return;
         }
 
-        $battle = ($data[1]==0) ? Model_Combat_Handler::get_battle((int)$data[0], true) : Model_Combat_Handler::get_battle_from_gallery((int)$data[0],(int)$data[1], true);
+        $battle = ($data[1]===0) ? Model_Combat_Handler::get_battle((int)$data[0], true) : Model_Combat_Handler::get_battle_from_gallery((int)$data[0],(int)$data[1], true);
         if (!$battle) {
-            echo "Not found."; return;
+            echo 'Not found.'; return;
         }
 
         echo '<pre>' . Model_Combat_Scene::printRaw($battle) . '</pre>';
     }
 
-    public function action_export_translations() {
-        if (!$this->priv_allow_all(['TRANSLATE_MOD'])) die(GRGEError::m(\grge\E_SERVER_ACCESS_DENIED));
+    public function action_export_translations(): void
+    {
+        if (!self::priv_allow_all(['TRANSLATE_MOD'])) die(GRGEError::m(\grge\E_SERVER_ACCESS_DENIED));
 
         if (!($data = I18n::export())) die(GRGEError::m(\grge\E_HTTP_REQUEST_POINTLESS));
 
@@ -78,26 +80,26 @@ class Controller_Admin_Files extends Controller_Admin_Admin {
             return false;
         }
 
-        if ($data['meta']['format'] !== 'evio' || $data['meta']['version'] != 2) {
+        if ($data['meta']['format'] !== 'evio' || $data['meta']['version'] !== 2) {
             echo "ERROR: Package format is unsupported ({$data['meta']['format']}/{$data['meta']['version']}). Aborting.";
             return false;
         }
 
         if ($data['meta']['primary'] !== I18n::get_primary_language()) {
-            echo "ERROR: Package does not use the correct primary language. Aborting.";
+            echo 'ERROR: Package does not use the correct primary language. Aborting.';
             return false;
         }
 
         $primary = I18n::get_primary_language();
         $languages = I18n::get_languages();
         foreach ($data['meta']['languages'] as $l)
-            if (!in_array($l, $languages))
+            if (!in_array($l, $languages, true))
                 echo "WARNING: Package contains entries for unsupported language '$l'. These entries will be ignored.<br />";
         foreach ($languages as $l)
-            if (!in_array($l, $data['meta']['languages']))
+            if (!in_array($l, $data['meta']['languages'], true))
                 echo "WARNING: Package is missing entries for language '$l'.<br />";
 
-        echo "Package information: " . count($data['data']) . " entries, EVIO version {$data['meta']['version']}, created " . date('c', $data['meta']['timestamp']) . "<br />-----<br />";
+        echo 'Package information: ' . count($data['data']) . " entries, EVIO version {$data['meta']['version']}, created " . date('c', $data['meta']['timestamp']) . '<br />-----<br />';
 
         $compare = I18n::export();
 
@@ -112,48 +114,49 @@ class Controller_Admin_Files extends Controller_Admin_Admin {
             if (!isset($compare[$hash])) {
                 $key = $line[$primary];
                 if (!I18n::set_missing($key)) {
-                    echo "ERROR: Unable to create entry "  . bin2hex($hash) . ". Aborting.";
+                    echo 'ERROR: Unable to create entry '
+                        . bin2hex($hash) . '. Aborting.';
                     return false;
-                };
+                }
                 $compare[$hash] = [$primary => $key];
-                echo "Created entry: " . bin2hex($hash) . "<br />";
+                echo 'Created entry: ' . bin2hex($hash) . '<br />';
             } else $key = $compare[$hash][$primary];
 
             foreach ($languages as $lang) {
 
                 if (!isset($line[$lang])) continue;
 
-                $original = isset($compare[$hash][$lang]) ? $compare[$hash][$lang] : null;
+                $original = $compare[$hash][$lang] ?? null;
 
                 if ($original === null) {
                     if (!I18N::set($key, $line[$lang], $lang)) {
-                        echo "ERROR: Unable to add a translation for '$lang' to " . bin2hex($hash) . ". Aborting.";
+                        echo "ERROR: Unable to add a translation for '$lang' to " . bin2hex($hash) . '. Aborting.';
                         return false;
                     }
-                    echo "Added translation for '$lang' to "  . bin2hex($hash) . "<br />";
+                    echo "Added translation for '$lang' to "  . bin2hex($hash) . '<br />';
                 } elseif ($original !== $line[$lang]) {
                     $conflicts[] = [bin2hex($hash), $key, $original, $line[$lang]];
                     if (!I18N::set($key, $line[$lang], $lang)) {
-                        echo "ERROR: Unable to add a translation for '$lang' to " . bin2hex($hash) . ". Aborting.";
+                        echo "ERROR: Unable to add a translation for '$lang' to " . bin2hex($hash) . '. Aborting.';
                         return false;
                     }
-                    echo "WARNING: Conflict detected in "  . bin2hex($hash) . ". '$lang' contains a different translation.";
+                    echo 'WARNING: Conflict detected in ' . bin2hex($hash) . ". '$lang' contains a different translation.";
                 }
             }
         }
 
-        echo "-----<br />";
+        echo '-----<br />';
 
         if ($conflicts) {
-            echo "<b>Conflict details below:</b> <br />";
-            echo "<table cellpadding=\"5px\"><thead><tr><td>Key</td><td>Text</td><td>Local Translation</td><td>Package Translation</td></tr></thead>";
-            foreach ($conflicts as list($hash, $key, $original, $conflict)) {
+            echo '<b>Conflict details below:</b> <br />';
+            echo '<table cellpadding="5px"><thead><tr><td>Key</td><td>Text</td><td>Local Translation</td><td>Package Translation</td></tr></thead>';
+            foreach ($conflicts as [$hash, $key, $original, $conflict]) {
                 echo "<tr><td>$hash</td><td>$key</td><td>$original</td><td>$conflict</td></tr>";
             }
-            echo "</table>";
+            echo '</table>';
         }
 
-        echo "<br /><br /><b>DONE</b>";
+        echo '<br /><br /><b>DONE</b>';
         return true;
     }
 }

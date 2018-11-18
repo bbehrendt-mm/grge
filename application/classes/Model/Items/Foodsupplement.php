@@ -17,7 +17,8 @@ class Model_Items_Foodsupplement extends Model_Items_Abstract_Pillbox {
         Model_Status::MS_STAT_ENERGY => 2
     );
 	
-	public function mixchem($chemval) {
+	public function mixchem($chemval): bool
+    {
         switch ($chemval)
         {
             case 1:

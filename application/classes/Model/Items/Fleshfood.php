@@ -30,16 +30,17 @@ class Model_Items_Fleshfood extends Model_Items_Abstract_Item implements Interfa
             );
     }
 	
-	public function mixchem($chemval) {
+	public function mixchem($chemval): bool
+    {
         $a = random_int(1,6);
         $b = random_int(3,6);
         $c = random_int(7,12);
         $d = random_int(9,12);
 		$this->consume();
-		if ($chemval == $a || $chemval == $b || $chemval == $c || $chemval == $d) {
+		if ($chemval === $a || $chemval === $b || $chemval === $c || $chemval === $d) {
 			Tool_Scripts::chem_reaction(
                 'Du wirfst die Fetzen in ein Gefäß mit der Chemikalie... und wirst sofort von einem Lichtblitz geblendet! Die Fleischfetzen haben eine Seele freigesetzt!',
-                $chemval, $this, ($chemval == max($a,$b) || $chemval == max($c,$d)) ? new Model_Items_Soul2() : new Model_Items_Soul()
+                $chemval, $this, ($chemval === max($a,$b) || $chemval === max($c,$d)) ? new Model_Items_Soul2() : new Model_Items_Soul()
             );
 		} else {
             switch ($chemval) {

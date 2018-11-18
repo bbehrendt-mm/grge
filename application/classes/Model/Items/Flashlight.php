@@ -51,7 +51,8 @@ class Model_Items_Flashlight extends Model_Items_Abstract_Item implements Interf
 		return $this->fillrate;
 	}
 
-    public function icon() {
+    public function icon(): string
+    {
         return 'items/flashlight_' . ($this->active() ? 'on' : 'off');
     }
 
@@ -59,16 +60,17 @@ class Model_Items_Flashlight extends Model_Items_Abstract_Item implements Interf
         return ($this->fillrate > 0) && $this->on;
     }
 
-    public function tick($pid, $type = Interface_Tickable::IT_TYPE_PLAYER) {
+    public function tick($id, $type = Interface_Tickable::IT_TYPE_PLAYER): void
+    {
         if ($this->fillrate <= 0 || !$this->active())
             return;
 
         switch ($type) {
             case Interface_Tickable::IT_TYPE_PLAYER:
-                if (Globals::CurrentGameF()->get_player($pid)) $this->fillrate--;
+                if (Globals::CurrentGameF()->get_player($id)) $this->fillrate--;
                 break;
             case Interface_Tickable::IT_TYPE_NPC:
-                if (Globals::CurrentGameF()->get_npc($pid)) $this->fillrate--;
+                if (Globals::CurrentGameF()->get_npc($id)) $this->fillrate--;
                 break;
         }
     }

@@ -4,7 +4,8 @@ class Tool_Gamemodes {
 
     private static $usp_cache = array('job' => array(), 'mode' => array());
 
-    private static function get_sp_mode($mode) {
+    private static function get_sp_mode($mode): int
+    {
         $accum = 0;
         foreach (explode(',', $mode) as $imode) {
             if (!isset(static::$usp_cache['mode'][$imode]))
@@ -15,7 +16,8 @@ class Tool_Gamemodes {
         return $accum;
     }
 
-    private static function get_sp_job($job) {
+    private static function get_sp_job($job): int
+    {
         $accum = 0;
         foreach (explode(',', $job) as $ijob) {
             if (!isset(static::$usp_cache['job'][$ijob]))
@@ -41,13 +43,15 @@ class Tool_Gamemodes {
         return array_replace_recursive($inherit, $ret);
     }
 
-    public static function compile_startup_job($job) {
+    public static function compile_startup_job($job): callable
+    {
         $ret = (array)Kohana::$config->load('modes.jobs.' . $job . '.setup');
         if (!$ret) return function($mode, $level) {};
         if (!isset($ret['f'])) $ret['f'] = function($mode, $level) {};
         if (!$ret['inherit']) return $ret['f'];
 
-        $func = isset($ret['f']) ? $ret['f'] : function($mode, $level) {};
+        $func = $ret['f'] ?? function ($mode, $level) {
+            };
         $inherit = array();
         foreach ($ret['inherit'] as $from) $inherit[] = static::compile_startup_job($from);
         return function($mode, $level) use ($inherit, $func) {
@@ -56,7 +60,8 @@ class Tool_Gamemodes {
         };
     }
 
-    private static function compile_requirements(&$rqdb) {
+    private static function compile_requirements(&$rqdb): bool
+    {
         $ret = true;
 
         if (Kohana::$config->load('build.version.stage') < 3 || Tool_Events::is_october_midness())
@@ -84,43 +89,48 @@ class Tool_Gamemodes {
         return $ret;
     }
 
-    public static function get_singleplayer_modes() {
+    public static function get_singleplayer_modes(): array
+    {
         $ret = (array)Kohana::$config->load('modes');
 
         $r = [];
 
         //Modes
         foreach ($ret['modes'] as $id => $mode)
-            if ($mode['type'] == 'single')
+            if ($mode['type'] === 'single')
                 $r[] = $id;
 
         return $r;
     }
 
-    public static function get_multiplayer_modes() {
+    public static function get_multiplayer_modes(): array
+    {
         $ret = (array)Kohana::$config->load('modes');
 
         $r = [];
 
         //Modes
         foreach ($ret['modes'] as $id => $mode)
-            if ($mode['type'] == 'multi_auto' || $mode['type'] == 'multi_custom' || $mode['type'] == 'special_multi_auto')
+            if ($mode['type'] === 'multi_auto' || $mode['type']
+                === 'multi_custom' || $mode['type'] === 'special_multi_auto')
                 $r[] = $id;
 
         return $r;
     }
 
-    public static function is_special_mode($mode, $type = null) {
+    public static function is_special_mode($mode, $type = null): bool
+    {
         if ($type === null) {
             $ret = (array)Kohana::$config->load('modes');
             if (!isset($ret['modes'][$mode])) return false;
             $type = $ret['modes'][$mode]['type'];
         }
 
-        return substr($type, 0, 7) == 'special';
+        return strpos($type, 'special') === 0;
     }
 
-    public static function compile_mode_database($short = false, $custom_mode_callback = null) {
+    public static function compile_mode_database($short = false, $custom_mode_callback = null): array
+    {
         $ret = (array)Kohana::$config->load('modes');
         $joblist = [];
 
@@ -149,7 +159,7 @@ class Tool_Gamemodes {
 
         if ($short)
             foreach ($ret['modes'] as $mid => $m)
-                if ($m['type'] == 'none')
+                if ($m['type'] === 'none')
                     unset($ret['modes'][$mid]);
 
         //Jobs
@@ -175,18 +185,20 @@ class Tool_Gamemodes {
                         $job['level']++;
                     else break;
                 $job['level']++;
-                $job['next_level'] = isset($job['levels'][$job['level']-1]) ? $job['levels'][$job['level']-1] : null;
+                $job['next_level'] = $job['levels'][$job['level'] - 1] ?? null;
             }
         }
 
         return $ret;
     }
 
-    public static function get_job_by_id($jobid) {
+    public static function get_job_by_id($jobid): \Kohana_Config_Group
+    {
         return Kohana::$config->load("modes.jobs.$jobid.meta.name");
     }
 
-    public static function get_board_by_id($bid) {
+    public static function get_board_by_id($bid): \Kohana_Config_Group
+    {
         return Kohana::$config->load("modes.modes.$bid.meta.name");
     }
 
@@ -194,7 +206,8 @@ class Tool_Gamemodes {
      * @return Model_Store_Interface[]
      * @throws ReflectionException
      */
-    public static function get_store_classes() {
+    public static function get_store_classes(): array
+    {
         $accum = [];
         foreach (scandir(APPPATH . 'classes/Model/Store/', SCANDIR_SORT_ASCENDING) as $filename) {
             if (substr($filename,-4) !== '.php') continue;

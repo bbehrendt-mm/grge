@@ -30,18 +30,20 @@ class Model_Effect {
         Model_Status::MS_STAT_RADIATION, Model_Status::MS_STAT_DRUNK, Model_Status::MS_STAT_ZOMBIFY, Model_Status::MS_STAT_FREEZE
     );
 
-    const CFUNC_PROCESS_POST = 1;
-    const CFUNC_PROCESS_PRE = 2;
+    public const CFUNC_PROCESS_POST = 1;
+    public const CFUNC_PROCESS_PRE = 2;
 
     /**
      * Creates an instance of this class
      * @return Model_Effect
      */
-    public static function factory() {
+    public static function factory(): \Model_Effect
+    {
         return new self();
     }
 
-    public function setParent(Model_Items_Abstract_Item $parent) {
+    public function setParent(Model_Items_Abstract_Item $parent): void
+    {
         $this->parent = $parent;
     }
 
@@ -78,7 +80,8 @@ class Model_Effect {
      * @param bool $grind
      * @return Model_Effect
      */
-    public function consume($item = null, $grind = false) {
+    public function consume($item = null, $grind = false): \Model_Effect
+    {
         return $this->custom(function() use ($item, $grind) {
             /** @var Model_Items_Abstract_Item $eitem */
             $eitem = $item ?: $this->parent;
@@ -95,8 +98,8 @@ class Model_Effect {
      * @param bool $all
      * @return Model_Effect
      */
-    public function achieve($achievement, $num = 1, $all = false) {
-        if ($achievement < 0 || $num == 0) return $this;
+    public function achieve($achievement, $num = 1, $all = false): Model_Effect {
+        if ($achievement < 0 || $num === 0) return $this;
 
         if ($all)
             return $this->custom(function() use ($achievement, $num) {
@@ -119,7 +122,7 @@ class Model_Effect {
      * @param bool $all
      * @return Model_Effect
      */
-    public function upgrade_achieve($from, $to, $num = 1, $block = true, $all = false) {
+    public function upgrade_achieve($from, $to, $num = 1, $block = true, $all = false): Model_Effect {
         if ($from < 0) return $this;
 
         if ($all)
@@ -140,7 +143,8 @@ class Model_Effect {
      * @param int|number $lifetime
      * @return Model_Effect
      */
-    public function buff($buff = null, $remove = false, $lifetime = -1) {
+    public function buff($buff = null, $remove = false, $lifetime = -1): \Model_Effect
+    {
         if ($buff === null)
             return $this;
 
@@ -168,7 +172,8 @@ class Model_Effect {
      *
      * @return Model_Effect
      */
-    public function spawn($item, $count = 1, $find = false) {
+    public function spawn($item, $count = 1, $find = false): \Model_Effect
+    {
         if (!Tool_System::instance_of($item, Model_Items_Abstract_Item::cls()))
             return $this;
 
@@ -204,7 +209,7 @@ class Model_Effect {
         if ($stat === null)
             return array_keys($this->effects);
         else
-            return isset($this->effects[$stat]) ? $this->effects[$stat] : null;
+            return $this->effects[$stat] ?? null;
     }
 
     /**
@@ -230,7 +235,8 @@ class Model_Effect {
      * @param null|int $stat Display a stat icon in addition to the question marks
      * @return Model_Effect
      */
-    public function ambiguous_effect($stat = null) {
+    public function ambiguous_effect($stat = null): \Model_Effect
+    {
         return $this->effect(($stat === null) ? -PHP_INT_MAX : -$stat, 1);
     }
 
@@ -239,9 +245,10 @@ class Model_Effect {
      * @param int $pos
      * @param mixed $argument
      */
-    private function call_custom_func($player, $pos, $argument) {
+    private function call_custom_func($player, $pos, $argument): void
+    {
         foreach ($this->custom as $elem)
-            if ($elem['pos'] == $pos)
+            if ($elem['pos'] === $pos)
                 $elem['func']($player, $argument);
     }
 
@@ -250,7 +257,8 @@ class Model_Effect {
      * @param int $pos
      * @return Model_Effect
      */
-    public function custom($func, $pos = 1) {
+    public function custom($func, $pos = 1): \Model_Effect
+    {
         $this->custom[] = array('func' => $func, 'pos' => $pos);
         return $this;
     }
@@ -261,7 +269,8 @@ class Model_Effect {
      *
      * @throws Exception
      */
-    public function execute($player, $argument) {
+    public function execute($player, $argument): void
+    {
         $this->call_custom_func($player, static::CFUNC_PROCESS_PRE, $argument);
 
         if ($this->cod)
@@ -287,8 +296,9 @@ class Model_Effect {
      * @param $stat
      * @return string
      */
-    public static function translate($stat) {
-        return isset(static::$translation_effects[$stat]) ? static::$translation_effects[$stat] : 'undefined';
+    public static function translate($stat): string
+    {
+        return static::$translation_effects[$stat] ?? 'undefined';
     }
 
     /**
@@ -296,13 +306,13 @@ class Model_Effect {
      * @param $dif
      * @return string
      */
-    private static function color($stat, $dif) {
+    private static function color($stat, $dif): string {
         if (is_array($dif)) $dif = $dif[0] + $dif[1];
         if (is_string($dif)) {
             if (strpos($dif, '+') === 0) $dif = 1;
             if (strpos($dif, '-') === 0) $dif = -1;
         }
-        if ($dif == 0) return '';
+        if ($dif === 0) return '';
         elseif ($dif > 0) return (!in_array($stat, static::$reversed_colors, true)) ? 'green' : 'red';
         else return (!in_array($stat, static::$reversed_colors, true)) ? 'red' : 'green';
     }
@@ -313,14 +323,15 @@ class Model_Effect {
      * @param null|Interface_Plentity $player
      * @return string
      */
-    private function convert_val($i, $stat = -1, $player = null) {
+    private function convert_val($i, $stat = -1, $player = null): string
+    {
         if (is_string($i)) return $i;
 
         $factor = ($stat >= 0 && $player) ? $player->get_status()->scaling($stat, Model_Status::MS_EFFECT_ITEM) : 1;
 
         if (is_array($i)) return max(-100,min(100, $i[0] * $factor)) . ' - ' . max(-100,min(100, $i[1] * $factor));
-        if ($i == PHP_INT_MAX) return '+∞';
-        if ($i == -PHP_INT_MAX) return '-∞';
+        if ($i === PHP_INT_MAX) return '+∞';
+        if ($i === -PHP_INT_MAX) return '-∞';
         return max(-100,min(100, round($i * $factor,2)));
     }
 
@@ -328,7 +339,8 @@ class Model_Effect {
      * @param null|Interface_Plentity $player
      * @return array
      */
-    public function convert($player = null) {
+    public function convert($player = null): array
+    {
         $tmp = array();
         foreach ($this->effects as $stat => $dif)
             if ($dif === 0) continue;
@@ -349,11 +361,12 @@ class Model_Effect {
      * @param null|Interface_Plentity $player
      * @return array
      */
-    public function stat_list($player = null) {
+    public function stat_list($player = null): array
+    {
         $accum = [];
         foreach ($this->effects as $stat => $dif) if ($stat >= 0) {
             $dif = is_array($dif) ? ($dif[0] + $dif[1])/2 : (is_numeric($dif) ? $dif : 0);
-            if ($dif == 0) continue;
+            if ($dif === 0) continue;
 
             if ($player) $dif *= $player->get_status()->scaling($stat, Model_Status::MS_EFFECT_ITEM);
             $accum[$stat] = $dif;

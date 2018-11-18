@@ -8,12 +8,14 @@ class Model_Places_Camping_Grill extends Model_Places_Abstract_Node {
     protected static $outside = true;
     protected static $upgradable = false;
 
-    public function setup_additional_rooms() {
+    public function setup_additional_rooms(): void
+    {
         parent::setup_additional_rooms();
 
         $this->setup_new_room($this->create_new_room(20,['outside']),
                               ['bbq_grill'],
                               [],
-                              "Grillstation");
+            'Grillstation'
+        );
     }
 }	

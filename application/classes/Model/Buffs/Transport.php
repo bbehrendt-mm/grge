@@ -16,7 +16,8 @@ class Model_Buffs_Transport extends Model_Buffs_Abstract_Passive {
 				),				
 			);
 	
-	protected function activator() {
+	protected function activator(): bool
+    {
 		$i = $this->associated_to_player() ? Tool_Scripts::get_active_transport($this->assoc_player) : null;
         if ($i !== null) {
             $this->effects[Model_Status::MS_CHAR_DISTANCING][Model_Buffs_Abstract_Buff::MB_DROP_ACC] = $i->speedup();

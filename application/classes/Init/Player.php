@@ -26,7 +26,8 @@ class Init_Player {
      *
      * @throws Exception
      */
-	private function init(&$game, &$set, $userid, $name, $job, $level) {
+	private function init(&$game, &$set, $userid, $name, $job, $level): void
+    {
 		Globals::setPrimaryPlayer(new Model_Player($userid, $name, $set->head->mode, $job, $level));
 		$player_obj = Globals::PrimaryPlayerF();
 		$set->players[$userid] = $set->uin->set($player_obj);

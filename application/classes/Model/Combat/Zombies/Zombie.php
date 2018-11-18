@@ -22,7 +22,8 @@ abstract class Model_Combat_Zombies_Zombie extends Model_Combat_Actor {
         $this->nano_npc->location_class(Globals::CurrentPlayerF()->location_class());
     }
 
-    public static function get_strength_quantifier() {
+    public static function get_strength_quantifier(): int
+    {
         return static::$num_str;
     }
 

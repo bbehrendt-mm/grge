@@ -19,14 +19,15 @@ class Model_Places_Hospital_Morgue extends Model_Places_Abstract_Place {
     }
 
     //Enter location
-    public function can_enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
+    public function can_enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER): bool
+    {
         if (!$pid) $player = Globals::CurrentPlayerF();
-        elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGameF()->get_player($pid);
+        elseif ($type === Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGameF()->get_player($pid);
         else $player = Globals::CurrentGameF()->get_npc($pid);
 
-        if ($type == Interface_Tickable::IT_TYPE_PLAYER && !$player->job(1080))
+        if ($type === Interface_Tickable::IT_TYPE_PLAYER && !$player->job(1080))
             $player->log()->add('Die Tür zur Leichenhalle ist fest versiegelt und lässt sich nicht öffnen. Über dir befindet sich ein kleines Lüftungsgitter, über das du vermutlich in die Leichenhalle gelangen könntest - wenn du hinein passen würdest. Echt Mist dass du kein Kind mehr bist...');
 
-        return $type == Interface_Tickable::IT_TYPE_PLAYER && $player->job(1080);
+        return $type === Interface_Tickable::IT_TYPE_PLAYER && $player->job(1080);
     }
 }	

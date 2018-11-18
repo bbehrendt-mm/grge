@@ -82,7 +82,8 @@ abstract class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
             );
     }
 
-	public function alc_content() {
+	public function alc_content(): int
+    {
 		return static::$alcohol;
 	}
 }	

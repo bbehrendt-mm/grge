@@ -13,7 +13,7 @@ class Model_Buffs_Sleep extends Model_Buffs_Abstract_Buff {
 		$this->level = $level;
 		parent::__construct($player_id, -1);
 
-        if ($this->assoc_player->get_status()->get(Model_Status::MS_STAT_SLEEPY) == 100
+        if ($this->assoc_player->get_status()->get(Model_Status::MS_STAT_SLEEPY) === 100
             || $this->assoc_player->get_status()->get(Model_Status::MS_STAT_HUNGER) < 20
             || $this->assoc_player->get_status()->get(Model_Status::MS_STAT_THIRST) < 20) {
             if ($this->associated_to_player()) $this->assoc_player->log()->add('Du kannst jetzt nicht schlafen!');
@@ -24,7 +24,8 @@ class Model_Buffs_Sleep extends Model_Buffs_Abstract_Buff {
 		new Model_Buffs_Sleeplock($this->assoc_player);
 	}
 	
-	public function unbuff() {
+	public function unbuff(): bool
+    {
 		if ($buff = $this->assoc_player->get_status()->retrieve('passout')) $buff->unbuff();
         if ($buff = $this->assoc_player->get_status()->retrieve('fragile')) $buff->unbuff();
 
@@ -60,8 +61,9 @@ class Model_Buffs_Sleep extends Model_Buffs_Abstract_Buff {
 
     protected function get_effects(): array { return $this->effects; }
 	
-	public function rebuild() {
-		if ($this->assoc_player->get_status()->get(Model_Status::MS_STAT_SLEEPY) == 100) {
+	public function rebuild(): bool
+    {
+		if ($this->assoc_player->get_status()->get(Model_Status::MS_STAT_SLEEPY) === 100) {
 			if ($this->associated_to_player()) $this->assoc_player->achievements()->achieve(Model_Achievement::MA_SLEEP);
 			return $this->unbuff();
 		}
@@ -89,8 +91,8 @@ class Model_Buffs_Sleep extends Model_Buffs_Abstract_Buff {
 				$this->effects[Model_Status::MS_STAT_ENERGY][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = $this->level > 0 ? 0.75 : 0.5;
 				$this->effects[Model_Status::MS_STAT_ENERGY][Model_Buffs_Abstract_Buff::MB_RAISE_PRC] = $this->level > 0 ? 0.5 : 0;
 				$this->effects[Model_Status::MS_STAT_SLEEPY][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = 1;
-				$this->effects[Model_Status::MS_STAT_HEALTH][Model_Buffs_Abstract_Buff::MB_RAISE_PRC] = $this->level > 0 ? 1 : 0;;
-				break;
+				$this->effects[Model_Status::MS_STAT_HEALTH][Model_Buffs_Abstract_Buff::MB_RAISE_PRC] = $this->level > 0 ? 1 : 0;
+                break;
 			case 3:
 				$this->effects[Model_Status::MS_STAT_ENERGY][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = $this->level > 0 ? 1 : 0.75;
 				$this->effects[Model_Status::MS_STAT_ENERGY][Model_Buffs_Abstract_Buff::MB_RAISE_PRC] = $this->level > 0 ? 0.75 : 0;
@@ -99,7 +101,7 @@ class Model_Buffs_Sleep extends Model_Buffs_Abstract_Buff {
 				break;
 		}
 
-        if (Tool_Scripts::get_timeofday($this->assoc_player) == 'snowynight')
+        if (Tool_Scripts::get_timeofday($this->assoc_player) === 'snowynight')
             $this->effects[Model_Status::MS_STAT_FREEZE][Model_Buffs_Abstract_Buff::MB_RAISE_PRC] = 1.5;
 
 		return parent::rebuild();

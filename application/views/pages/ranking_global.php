@@ -39,7 +39,7 @@
 
     <div id="achievement_container" class="center padded cell rw-6 rw-md-12">
         <?php foreach ($achievements as $achievement) if ($achievement['count'] > 0) { ?>
-            <div class="hotbox inline-block <?=$achievement['id'] == $preset ? 'active' : ''?>">
+            <div class="hotbox inline-block <?=$achievement['id'] === $preset ? 'active' : ''?>">
                 <div data-aid="<?=$achievement['id']?>" class="achievement achievement-<?=$achievement['class']?>">
                     <img alt="?" src="media/icons/achievements/<?=$achievement['icon']?>" />
                     <span><?=$achievement['points']?></span>

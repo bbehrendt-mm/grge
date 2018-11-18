@@ -41,23 +41,27 @@ class Model_Places_Asylumhideout extends Model_Places_Abstract_Hideout implement
         return parent::uin($new);
     }
 
-    public function enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
+    public function enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER): bool
+    {
         if (!$pid) $player = Globals::CurrentPlayerF();
-        elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGameF()->get_player($pid);
+        elseif ($type === Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGameF()->get_player($pid);
         else $player = Globals::CurrentGameF()->get_npc($pid);
 
-        parent::enter($pid, $type);
         new Model_Buffs_Home2($player);
+        return parent::enter($pid, $type);
     }
 
-    public function setup_additional_rooms() {
+    public function setup_additional_rooms(): void
+    {
         $this->setup_new_room($this->create_new_room(10,['inside']),
                               ['kitchen','kitchen_cursed'],
                               ['ktc2','ktc3','ktc4'],
-                              "Küchenbereich");
+            'Küchenbereich'
+        );
         $this->setup_new_room($this->create_new_room(10,['inside']),
                               ['bedroom','bedroom_cursed'],
                               ['bedr1','bedr2','bedr3'],
-                              "Schlafzimmer");
+            'Schlafzimmer'
+        );
     }
 }	

@@ -19,7 +19,7 @@ class Controller_Ranking extends Controller {
 
         $p = -1; $skip = 0;
         foreach ($data as $pos => &$entry) {
-            if ($entry['points'] == $p)
+            if ($entry['points'] === $p)
                 $skip++;
             else {
                 $skip = 0;
@@ -29,10 +29,11 @@ class Controller_Ranking extends Controller {
             $entry['pos'] = ($pos + 1) - $skip;
         }
 
-        return array_slice($data, $offset === null ? 0 : $offset, $count, true);
+        return array_slice($data, $offset ?? 0, $count, true);
     }
 
-    private function get_ranking_data_mp(&$raw_count, $season = null, $mode = null, $offset = null, $count = null) {
+    private function get_ranking_data_mp(&$raw_count, $season = null, $mode = null, $offset = null, $count = null): array
+    {
         $base_query = DB::select('ranking_mp.season','ranking_mp.gameid', ['ranking_mp.board','board'], 'ranking_mp.name', 'ranking_mp.points', 'users.uid', array('ranking.ticks', 'pticks'),array('ranking.points', 'ppoints'), array('ranking.job', 'job'), array('users.name', 'player'))->from('ranking_mp')->join('ranking', 'LEFT')->on('ranking_mp.gameid', '=', 'ranking.gameid')->on('ranking_mp.season', '=', 'ranking.season')->join('users', 'LEFT')->on('ranking.uid', '=', 'users.uid');
 
         if ($season !== null) $base_query->where('ranking_mp.season', '=', $season);
@@ -55,7 +56,7 @@ class Controller_Ranking extends Controller {
         $p = -1; $skip = 0;
         foreach ($ranks as $pos => &$r_line)
             foreach ($r_line as &$entry) {
-                if ($entry['points'] == $p)
+                if ($entry['points'] === $p)
                     $skip++;
                 else {
                     $skip = 0;
@@ -65,16 +66,17 @@ class Controller_Ranking extends Controller {
                 $entry['pos'] = ($pos + 1) - $skip;
             }
 
-        return array_slice($ranks, $offset === null ? 0 : $offset, $count, true);
+        return array_slice($ranks, $offset ?? 0, $count, true);
     }
 
-    private function convert_data($lists, $is_mp = false) {
+    private function convert_data($lists, $is_mp = false): array
+    {
         return $is_mp ? array_map(function($element) {
             $tmp = [
                 'season'    => $element[0]['season'],
                 'id'        => $element[0]['gameid'],
                 'score'     => $element[0]['points'],
-                'pos'       => isset($element[0]['pos']) ? $element[0]['pos'] : 0,
+                'pos'       => $element[0]['pos'] ?? 0,
                 'flow'      => 1,
                 'name'      => $element[0]['name'],
                 'duration'  => false,
@@ -84,7 +86,7 @@ class Controller_Ranking extends Controller {
 
             if ($element[0]['uid'])
                 foreach ($element as $sub) {
-                    if ($sub['uid'] == Globals::CurrentUserF()->uid())
+                    if ($sub['uid'] === Globals::CurrentUserF()->uid())
                         $tmp['mark'] = true;
 
                     $tmp['players'][(int)$sub['uid']] = [
@@ -102,29 +104,33 @@ class Controller_Ranking extends Controller {
                 'season'    => $element['season'],
                 'id'        => $element['gameid'],
                 'score'     => $element['points'],
-                'pos'       => isset($element['pos']) ? $element['pos'] : 0,
-                'flow'      => isset($element['flow']) ? $element['flow'] : false,
+                'pos'       => $element['pos'] ?? 0,
+                'flow'      => $element['flow'] ?? false,
                 'name'      => false,
                 'duration'  => Tool_Numerics::duration_to_string($element['ticks']),
                 'mode'      => __(Tool_Modes::get_mode_by_id($element['board'])),
-                'mark'      => $element['uid'] == Globals::CurrentUserF()->uid(),
+                'mark'      => $element['uid'] === Globals::CurrentUserF()->uid(),
                 'players'   => [[
-                    'name'  => isset($element['name']) ? $element['name'] : Model_Euser::name_by_id($element['uid']),
-                    'id'    => $element['uid'],
-                    'job'   => __(Tool_Modes::get_job_by_id($element['job'])),
-                    'life'  => Tool_Numerics::duration_to_string($element['ticks']),
-                    'score' => $element['points']
+                                    'name'  => $element['name'] ??
+                                        Model_Euser::name_by_id(
+                                            $element['uid']
+                                        ),
+                                    'id'    => $element['uid'],
+                                    'job'   => __(Tool_Modes::get_job_by_id($element['job'])),
+                                    'life'  => Tool_Numerics::duration_to_string($element['ticks']),
+                                    'score' => $element['points']
                 ]]
             ];
         }, $lists);
     }
 
-    public function japi_single() {
-        $season = $this->request->current()->post('season');
-        $mode = $this->request->current()->post('mode');
-        $time = $this->request->current()->post('time');
-        $offset = $this->request->current()->post('offset');
-        $length = $this->request->current()->post('length');
+    public function japi_single(): bool
+    {
+        $season = Request::current()->post('season');
+        $mode = Request::current()->post('mode');
+        $time = Request::current()->post('time');
+        $offset = Request::current()->post('offset');
+        $length = Request::current()->post('length');
 
         if (!isset($season, $mode, $time, $offset, $length))
             return $this->error(\grge\E_HTTP_REQUEST_INCOMPLETE);
@@ -138,11 +144,12 @@ class Controller_Ranking extends Controller {
         return true;
     }
 
-    public function japi_multi() {
-        $season = $this->request->current()->post('season');
-        $mode = $this->request->current()->post('mode');
-        $offset = $this->request->current()->post('offset');
-        $length = $this->request->current()->post('length');
+    public function japi_multi(): bool
+    {
+        $season = Request::current()->post('season');
+        $mode = Request::current()->post('mode');
+        $offset = Request::current()->post('offset');
+        $length = Request::current()->post('length');
 
         if (!isset($season, $mode, $offset, $length))
             return $this->error(\grge\E_HTTP_REQUEST_INCOMPLETE);
@@ -156,9 +163,10 @@ class Controller_Ranking extends Controller {
         return true;
     }
 
-    public function japi_soul() {
-        $season = $this->request->current()->post('season');
-        $uid = (int)$this->request->current()->post('uid');
+    public function japi_soul(): void
+    {
+        $season = Request::current()->post('season');
+        $uid = (int)Request::current()->post('uid');
 
         if (!$uid) return;
 
@@ -173,7 +181,7 @@ class Controller_Ranking extends Controller {
             if (!isset($p[$s])) $p[$s] = -1;
             if (!isset($skip[$s])) $skip[$s] = 0;
 
-            if ($entry['points'] == $p[$s])
+            if ($entry['points'] === $p[$s])
                 $skip[$s]++;
             else {
                 $skip[$s] = 0;
@@ -192,7 +200,7 @@ class Controller_Ranking extends Controller {
             if (!isset($p[$s])) $p[$s] = -1;
             if (!isset($skip[$s])) $skip[$s] = 0;
 
-            if ($entry[0]['points'] == $p[$s])
+            if ($entry[0]['points'] === $p[$s])
                 $skip[$s]++;
             else {
                 $skip[$s] = 0;
@@ -205,17 +213,17 @@ class Controller_Ranking extends Controller {
 
         $finalcache = [];
         foreach ($cache as $modecache)
-            $finalcache = array_merge($finalcache,array_filter($modecache, function($e) use ($uid) {return $e['uid'] == $uid;}));
+            $finalcache = array_merge($finalcache,array_filter($modecache, function($e) use ($uid) {return $e['uid'] === $uid;}));
         $finalcache_m = [];
         foreach ($cache_m as $modecache)
             $finalcache_m = array_merge($finalcache_m,array_filter($modecache, function($e) use ($uid) {
                 foreach ($e as $es)
-                    if ($es['uid'] == $uid) return true;
+                    if ($es['uid'] === $uid) return true;
                 return false;
             }));
 
-        usort($finalcache, function($a,$b) {return $a['pos'] == $b['pos'] ? ($b['points'] - $a['points']) : ($a['pos'] - $b['pos']);});
-        usort($finalcache_m, function($a,$b) {return $a[0]['pos'] == $b[0]['pos'] ? ($b[0]['points'] - $a[0]['points']) : ($a[0]['pos'] - $b[0]['pos']);});
+        usort($finalcache, function($a,$b) {return $a['pos'] === $b['pos'] ? ($b['points'] - $a['points']) : ($a['pos'] - $b['pos']);});
+        usort($finalcache_m, function($a,$b) {return $a[0]['pos'] === $b[0]['pos'] ? ($b[0]['points'] - $a[0]['points']) : ($a[0]['pos'] - $b[0]['pos']);});
 
         $ret = [];
         $a = 0;
@@ -243,8 +251,9 @@ class Controller_Ranking extends Controller {
         ]);
     }
 
-    public function japi_search() {
-        $query = $this->request->current()->post('query');
+    public function japi_search(): void
+    {
+        $query = Request::current()->post('query');
         if (!$query || strlen($query) < 3) return;
 
         $this->render([
@@ -252,10 +261,11 @@ class Controller_Ranking extends Controller {
         ]);
     }
 
-    public function japi_achievements() {
-        $aid = (int)$this->request->current()->post('aid');
-        $offset = $this->request->current()->post('offset');
-        $length = $this->request->current()->post('length');
+    public function japi_achievements(): void
+    {
+        $aid = (int)Request::current()->post('aid');
+        $offset = Request::current()->post('offset');
+        $length = Request::current()->post('length');
 
 
         $lists_raw = DB::select('achievements.uid','achievements.aid','users.name',[DB::expr('SUM(value)'),'value'])->from([DB::select('*')->from('achievements')->where('aid',($aid > 0) ? '=' : '>', max(0,$aid)),'achievements'])->group_by('achievements.uid')->group_by('achievements.aid')->join('users','INNER')->on('achievements.uid','=','users.uid')->where('value','>',0)->execute()->as_array();
@@ -300,16 +310,17 @@ class Controller_Ranking extends Controller {
         ]);
     }
 
-    public function japi_soulpoints() {
-        $offset = $this->request->current()->post('offset');
-        $length = $this->request->current()->post('length');
+    public function japi_soulpoints(): void
+    {
+        $offset = Request::current()->post('offset');
+        $length = Request::current()->post('length');
 
         $lists = DB::select('ranking.uid','users.name',[DB::expr('SUM(points)'),'points'])->from('ranking')->group_by('ranking.uid')->join('users','INNER')->on('ranking.uid','=','users.uid')->where('points','>',0)->order_by('points','DESC')->execute()->as_array();
         $num_entries = count($lists);
 
         $user_pos = [];
         foreach ($lists as $k => $entry)
-            if ($entry['uid'] == Globals::CurrentUserF()->uid()) {
+            if ($entry['uid'] === Globals::CurrentUserF()->uid()) {
                 $lists[$k]['mark'] = true;
                 $user_pos = $entry;
                 $user_pos['pos'] = $k+1;
@@ -324,14 +335,15 @@ class Controller_Ranking extends Controller {
         ]);
     }
 
-    public function action_lists() {
+    public function action_lists(): void
+    {
 
         $converter = function($meta) {
             return __($meta['name']);
         };
 
         $season = Kohana::$config->load('server.season');
-        $titles = array_map(function($t) {return __($t);}, Tool_System::getSeasonTitle());
+        $titles = array_map('__', Tool_System::getSeasonTitle());
 
         $this->add_widget(View::factory('pages/ranking')
             ->set('season', $season)
@@ -343,7 +355,8 @@ class Controller_Ranking extends Controller {
         $this->render();
     }
 
-    public function action_global() {
+    public function action_global(): void
+    {
         $known_achievements = DB::select('aid',[DB::expr('SUM(value)'),'value'])->from('achievements')->group_by('aid')->where('value','>',0)->execute()->as_array('aid','value');
         $achievements = [];
         foreach ((new ReflectionClass('Model_Achievement'))->getConstants() as $aid)
@@ -352,11 +365,11 @@ class Controller_Ranking extends Controller {
                 'name' => Model_Achievement::decode_aid($aid),
                 'points' => Model_Achievement::points_aid($aid),
                 'class' => Model_Achievement::class_aid($aid),
-                'count' => isset($known_achievements[$aid]) ? $known_achievements[$aid] : 0,
+                'count' => $known_achievements[$aid] ?? 0,
                 'icon' => "{$aid}.gif",
             ];
 
-        usort($achievements, function($a,$b) {return ($a['points'] == $b['points'] ? -strcmp($a['name'], $b['name']) : $b['points'] - $a['points']);});
+        usort($achievements, function($a,$b) {return ($a['points'] === $b['points'] ? -strcmp($a['name'], $b['name']) : $b['points'] - $a['points']);});
 
         $preset = $this->request->param('id', 0);
         if (!Model_Achievement::is_valid($preset))
@@ -370,16 +383,17 @@ class Controller_Ranking extends Controller {
         $this->render();
     }
 
-    public function action_game() {
+    public function action_game(): bool
+    {
         $data = explode('/', $this->request->param('id', ''));
 
         if (count($data) < 2) $data = [-1,-1];
-        list($season, $gameid) = $data;
+        [$season, $gameid] = $data;
 
         $season = (int)$season;
         $gameid = (int)$gameid;
 
-        if ($season < 0 || $season > (int)Kohana::$config->load('server.season') || $gameid <= 0)
+        if ($gameid <= 0 || $season < 0 || $season > (int)Kohana::$config->load('server.season'))
             return $this->not_found();
 
         $entries = DB::select()->from('ranking')->where('gameid','=',$gameid)->where('season','=',$season)->execute()->as_array();
@@ -390,14 +404,17 @@ class Controller_Ranking extends Controller {
             if ($entry['board'] !== $entries[0]['board'])
                 return $this->not_found();
 
-        $multiplayer = in_array((int)$entries[0]['board'], Tool_Gamemodes::get_multiplayer_modes());
+        $multiplayer = in_array(
+            (int)$entries[0]['board'], Tool_Gamemodes::get_multiplayer_modes(),
+            true
+        );
         if (!$multiplayer && count($entries) > 1)
             return $this->not_found();
 
         // Get multiplayer data
         if ($multiplayer) {
             $mp_entry = DB::select()->from('ranking_mp')->where('gameid','=',$gameid)->where('season','=',$season)->execute()->as_array();
-            if (count($mp_entry) != 1) return $this->not_found();
+            if (count($mp_entry) !== 1) return $this->not_found();
             else $mp_entry = $mp_entry[0];
 
             if ($mp_entry['board'] !== $entries[0]['board']) return $this->not_found();
@@ -465,7 +482,8 @@ class Controller_Ranking extends Controller {
         return $this->render();
     }
 
-    public function action_soul() {
+    public function action_soul(): bool
+    {
         // Search user
         $uid = $this->request->param('id', Globals::CurrentUserF()->uid());
         if (!($name = Model_Euser::name_by_id($uid)))
@@ -473,11 +491,11 @@ class Controller_Ranking extends Controller {
 
         // Get achievements
         $achievements = DB::select('aid', array(DB::expr('SUM(`value`)'), 'value'))->from('achievements')->where('uid', '=', $uid)->group_by('aid')->execute()->as_array();
-        uasort($achievements, function($a, $b) {return (Model_Achievement::points_aid($b['aid']) != Model_Achievement::points_aid($a['aid'])) ? (Model_Achievement::points_aid($b['aid']) - Model_Achievement::points_aid($a['aid'])) : $b['aid'] - $a['aid'];});
+        uasort($achievements, function($a, $b) {return (Model_Achievement::points_aid($b['aid']) !== Model_Achievement::points_aid($a['aid'])) ? (Model_Achievement::points_aid($b['aid']) - Model_Achievement::points_aid($a['aid'])) : $b['aid'] - $a['aid'];});
 
         // Get Ranks
         $spoints = Model_Euser::get_soulpoints($uid, null, null);
-        list($srank, $next_srank) = Model_Euser::group_soulpoints($spoints);
+        [$srank, $next_srank] = Model_Euser::group_soulpoints($spoints);
 
         $kpoints = min(100,max(-100,Model_User::get_karma($uid)))/100;
         $krank = Model_User::group_karma($kpoints);
@@ -515,7 +533,7 @@ class Controller_Ranking extends Controller {
             ];
         }, $pupils);
 
-        if ($uid == Globals::CurrentUserF()->uid())
+        if ($uid === Globals::CurrentUserF()->uid())
             $mcash = ($mentor || $pupils) ? [
                 'mentor' => [
                     'overall' => Model_Euser::get_mentor_braincoins($mentor, $uid),
@@ -524,13 +542,13 @@ class Controller_Ranking extends Controller {
                 'overall' => Model_Euser::get_mentor_braincoins($uid),
                 'harvest' => Model_Euser::get_mentor_braincoins($uid, null, false)
             ] : false;
-        elseif ($mentor == Globals::CurrentUserF()->uid())
+        elseif ($mentor === Globals::CurrentUserF()->uid())
             $mcash = [
                 'mentor' => true,
                 'overall' => Model_Euser::get_mentor_braincoins(Globals::CurrentUserF()->uid(), $uid),
                 'harvest' => Model_Euser::get_mentor_braincoins(Globals::CurrentUserF()->uid(), $uid, false)
             ];
-        elseif (in_array(Globals::CurrentUserF()->uid(), $pupils))
+        elseif (in_array(Globals::CurrentUserF()->uid(), $pupils, true))
             $mcash = [
                 'mentor' => false,
                 'overall' => Model_Euser::get_mentor_braincoins($uid, Globals::CurrentUserF()->uid()),
@@ -544,7 +562,7 @@ class Controller_Ranking extends Controller {
         $this->add_widget(View::factory('pages/soul')
             ->set('season', $season)
             ->set('titles', $titles)
-            ->set('own_soul', $uid == Globals::CurrentUserF()->uid())
+            ->set('own_soul', $uid === Globals::CurrentUserF()->uid())
             ->set('soul_owner', $name)
             ->set('soul_id', $uid)
             ->set('avatar', Model_Euser::avatar_by_id($uid))
@@ -562,7 +580,7 @@ class Controller_Ranking extends Controller {
             ->set('mentor', $mentor_data)
             ->set('pupils', $pupils_data)
             ->set('cashout', $mcash)
-            ->set('mentor_ref', $uid == Globals::CurrentUserF()->uid() ? Model_Euser::get_mentoring_ref($uid) : false)
+            ->set('mentor_ref', $uid === Globals::CurrentUserF()->uid() ? Model_Euser::get_mentoring_ref($uid) : false)
             ->set('allow_mentor', Model_Euser::check_mentor(Globals::CurrentUserF()->uid(), $uid))
             ->set('gallery', Model_Combat_Handler::gallery_by_player($uid))
             ->set('url', URL::base(true))

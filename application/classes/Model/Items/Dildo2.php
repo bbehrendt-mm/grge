@@ -22,7 +22,7 @@ class Model_Items_Dildo2 extends Model_Items_Abstract_Item implements Interface_
                 ->requirement(Model_Items_Generic_Supercharger::cls(), 1)
                 ->condition(function($p) {
                     /** @var Model_Player $p */
-                    if (count(Tool_Scripts::at_location($p->location_class(), true, true)) != 1) return 'peek';
+                    if (count(Tool_Scripts::at_location($p->location_class(), true, true)) !== 1) return 'peek';
                     elseif ($p->get_status()->retrieve('wow')) return 'wow';
                     else return true;
                 })

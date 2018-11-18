@@ -2,7 +2,8 @@
 
 class Model extends Kohana_Model {
 
-    public static function cls() {
+    public static function cls(): string
+    {
         return static::class;
     }
 

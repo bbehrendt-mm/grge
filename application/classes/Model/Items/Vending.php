@@ -28,7 +28,8 @@ class Model_Items_Vending extends Model_Items_Abstract_Item {
 		parent::__construct();
 	}
 	
-	public function name() {
+	public function name(): string
+    {
 		return parent::name() . ' (' . $this->basename . ')';
 	}
 
@@ -48,7 +49,8 @@ class Model_Items_Vending extends Model_Items_Abstract_Item {
             );
     }
 	
-	public function vend($player = null) {
+	public function vend($player = null): bool
+    {
         if ($player === null)
             $player = Globals::CurrentPlayerF();
 		
@@ -59,7 +61,8 @@ class Model_Items_Vending extends Model_Items_Abstract_Item {
         return true;
 	}
 
-    public function mixchem($chemval) {
+    public function mixchem($chemval): bool
+    {
         if ($this->chem_rand_type === null)
             $this->chem_rand_type = random_int(8,12);
 

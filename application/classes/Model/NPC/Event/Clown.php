@@ -42,13 +42,14 @@ class Model_NPC_Event_Clown extends Model_NPC_Humanoid
         return Model_Combat_Event_Clown::create_linked_actor($this);
     }
 
-    protected function generate_dead_body() {
+    protected function generate_dead_body(): ?Model_Items_Abstract_Item
+    {
         $b = new Model_Items_Body('Gruseliger Clown', 'Wirklich lustig war dieser Clown nicht...');
         return $b;
     }
 
     public function kill() {
-        if ($this->location() && !$this->is_aggresive) $this->location()->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_LEAVE, $this->id(), true));
+        if (!$this->is_aggresive && $this->location()) $this->location()->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_LEAVE, $this->id(), true));
         else parent::kill();
     }
 
@@ -56,12 +57,12 @@ class Model_NPC_Event_Clown extends Model_NPC_Humanoid
         return true;
     }
 
-    private function attack() {
+    private function attack(): void {
         $this->is_aggresive = true;
 
         $cpl1 = []; $cpl2 = [];
         foreach (Tool_Scripts::at_location($this->location_class()) as $npl)
-            if (Tool_System::instance_of($npl, Model_NPC_Event_Clown::cls()))
+            if (Tool_System::instance_of($npl, self::cls()))
                 $cpl2[] = $npl;
             else if ($npl->is_fighter()) $cpl1[] = $npl;
 
@@ -78,7 +79,7 @@ class Model_NPC_Event_Clown extends Model_NPC_Humanoid
     public function ai() {
         $busy = $this->get_status()->retrieve('passout') || $this->get_status()->retrieve('fragile');
 
-        if (!count(Tool_Scripts::at_location($this->location_class(), true, false)) && Tool_Gambling::random(0.12)) {
+        if (Tool_Gambling::random(0.12) && !count(Tool_Scripts::at_location($this->location_class(), true, false))) {
             $this->attack();
             return;
         }
@@ -103,7 +104,8 @@ class Model_NPC_Event_Clown extends Model_NPC_Humanoid
         }
     }
 
-    public function hid() {
+    public function hid(): Model_Hid
+    {
         return parent::hid()
             ->add_action('Näher kommen', Model_Action::factory()
                 ->show_as(Model_Effect::factory()

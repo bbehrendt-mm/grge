@@ -12,7 +12,8 @@ class Model_Items_Bmt2 extends Model_Items_Bmt {
     protected static $energy_base = 40;
 	public static $health_list = Array(1,2,3,5,8,13,21,34,55,89);
 	
-	public function description() {
+	public function description(): string
+    {
 		return  parent::description() . ($this->power >= count(static::$health_list) ? '<b>Die Kontakte dieses Geräts sind etwas angekokelt... normale Batterien werden hier wohl nicht mehr funktionieren.</b>'
                 : '');
 	}

@@ -14,7 +14,8 @@ class Tool_Npc {
      * @return array
      * @throws Exception
      */
-    public static function get_satisfactory_item($p, $own, $location, $satisfy = [], $forbid = [], $avoid = [], $auto = true) {
+    public static function get_satisfactory_item($p, $own, $location, $satisfy = [], $forbid = [], $avoid = [], $auto = true): array
+    {
         if (!$satisfy || !($own || $location)) return null;
 
         if (!is_array($satisfy))
@@ -27,7 +28,7 @@ class Tool_Npc {
         $ilist = Tool_Scripts::available_items(null, $own, $location, false, $p);
 
         $fc = function($val, $ar) {
-            list($min, $max) = $ar;
+            [$min, $max] = $ar;
             if ($min === false) $min = -PHP_INT_MAX;
             if ($max === false) $max = PHP_INT_MAX;
 

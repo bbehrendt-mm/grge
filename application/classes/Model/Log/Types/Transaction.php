@@ -2,9 +2,9 @@
 
 class Model_Log_Types_Transaction extends Model_Log_Message {
 
-    const MLTT_UP = 1;
-    const MLTT_DOWN = 2;
-    const MLTT_USE = 3;
+    public const MLTT_UP = 1;
+    public const MLTT_DOWN = 2;
+    public const MLTT_USE = 3;
 
     protected static $type = Model_Log_Message::MLM_TRANSACTION_LOG;
 
@@ -45,7 +45,7 @@ class Model_Log_Types_Transaction extends Model_Log_Message {
         unset($item);
 
         $data['player'] = Globals::CurrentGameF()->get_player($data['uin'])->name();
-        $data['self'] = $data['uin'] == Globals::PrimaryPlayerF()->id();
+        $data['self'] = $data['uin'] === Globals::PrimaryPlayerF()->id();
         $data['action'] = __($data['action']);
         unset($data['uin']);
 
@@ -53,12 +53,18 @@ class Model_Log_Types_Transaction extends Model_Log_Message {
     }
 
     /**
-     * @param Model_Log_Types_Transaction $new
+     * @param Model_Log_Types_Transaction $merger
+     *
      * @return bool
      */
-    public function merge($new) {
-        if (is_a($new, static::class, true) && $new->data['class'] == $this->data['class'] && $new->data['uin'] == $this->data['uin'] && in_array($this->data['class'], [static::MLTT_UP,static::MLTT_DOWN]))
-            $this->data['items'] = array_merge($new->data['items'], $this->data['items']);
+    public function merge($merger): bool {
+        if ($merger->data['uin'] === $this->data['uin']
+            && $merger->data['class'] === $this->data['class'] && is_a($merger, static::class, true)
+            && in_array(
+                $this->data['class'], [static::MLTT_UP, static::MLTT_DOWN], true
+            )
+        )
+            $this->data['items'] = array_merge($merger->data['items'], $this->data['items']);
         else return false;
         return true;
     }

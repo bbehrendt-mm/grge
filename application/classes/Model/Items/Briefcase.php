@@ -12,7 +12,8 @@ class Model_Items_Briefcase extends Model_Items_Abstract_Item {
 	protected static $weight = 0;
 	protected static $essential = true;
 	
-	public function drop($p = null, $silent = false) {
+	public function drop($p = null, $silent = false): bool
+    {
 		if (!$silent && !Globals::shadowPlayerExists()) Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String(null, 'Gehts noch? Welche Frau gibt denn bitte ihre Tasche aus der Hand?'));
 		return false;
 	}

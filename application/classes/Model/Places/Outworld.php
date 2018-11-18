@@ -10,7 +10,8 @@ class Model_Places_Outworld extends Model_Places_Abstract_Node {
 	protected static $survival_find_available = false;
     protected $tickets = Array();
 	
-	private function initial_supply() {
+	private function initial_supply(): void
+    {
         $this->initial_supply = true;
 
         if (Globals::CurrentGameF()->config('places.outworld.spawn_stranger')) {
@@ -42,13 +43,15 @@ class Model_Places_Outworld extends Model_Places_Abstract_Node {
         }
 	}
 
-    public function pretick() {
+    public function pretick(): void
+    {
         //Check for zombie attack
         if ($this->initial_supply || !Globals::CurrentGameF()->config('places.outworld.spawn_stranger'))
             parent::pretick();
     }
 
-	public function tick($type = Interface_Tickable::IT_TYPE_PLAYER) {
+	public function tick($type = Interface_Tickable::IT_TYPE_PLAYER): bool
+    {
         if (Globals::CurrentPlayerF()->can(Interface_Plentity::IC_TRIGGER_SUPPLIES)) {
             if (!$this->initial_supply && (Globals::CurrentGameF()->config('places.outworld.spawn_stranger') || Globals::CurrentGameF()->config('places.outworld.alt_spawn_stranger')))
             {

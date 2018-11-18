@@ -47,7 +47,7 @@
             <div class="article">
                 <div>
                     <b><?=htmlentities($message['title'])?></b>
-                    <span><b><?=isset($players[$message['uid']]) ? $players[$message['uid']] : '???'?></b>, <?=date(__('G:i \U\h\r \a\m d.m.'), $message['timestamp'])?></span>
+                    <span><b><?= $players[$message['uid']] ?? '???' ?></b>, <?=date(__('G:i \U\h\r \a\m d.m.'), $message['timestamp'])?></span>
                 </div>
                 <div><?=nl2br(htmlentities($message['message']))?></div>
                 <div>

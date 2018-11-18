@@ -14,7 +14,8 @@ class Model_Factory_Items extends Model_Factory_Abstract {
      * @return Model_Factory_Items
      * @throws Exception
      */
-    public function set_decay_factor($d) {
+    public function set_decay_factor($d): \Model_Factory_Items
+    {
         $df = Globals::hasCurrentGame() ? Globals::CurrentGameF()->config('places.dryout_factor') : 1;
 
         $this->decay = $d * $df;
@@ -25,7 +26,8 @@ class Model_Factory_Items extends Model_Factory_Abstract {
      * @param number $d
      * @return Model_Factory_Items
      */
-    public function set_fillrate($d) {
+    public function set_fillrate($d): \Model_Factory_Items
+    {
         $this->fillrate = $d;
         return $this;
     }
@@ -37,11 +39,13 @@ class Model_Factory_Items extends Model_Factory_Abstract {
      *
      * @return null|Model_Items_Abstract_Item
      */
-    public function spawn($force = false, $apply_decay = true, $chances_modifier = 1) {
-        if (!$this->equalized || (!$force && (mt_rand()/mt_getrandmax() > ($this->fillrate * $chances_modifier))) || !($k = $this->get_element()))
+    public function spawn($force = false, $apply_decay = true, $chances_modifier = 1): ?\Model_Items_Abstract_Item
+    {
+        if (!$this->equalized || !($k = $this->get_element()) || (!$force && (mt_rand()/mt_getrandmax() > ($this->fillrate * $chances_modifier))))
             return null;
 
         /** @var Model_Items_Virtual_Invoke_Abstract|string $k */
+        /** @noinspection NotOptimalIfConditionsInspection */
         if (Tool_System::instance_of($k, Model_Items_Virtual_Invoke_Abstract::cls()) && !$k::countAsItem())
             $apply_decay = false;
 
@@ -59,8 +63,9 @@ class Model_Factory_Items extends Model_Factory_Abstract {
      * @param int $itd
      * @return null|Model_Items_Abstract_Item
      */
-    public function nd_spawn($itd = 0) {
-        if (!$this->equalized || !($k = $this->get_element()) || $itd >= 10)
+    public function nd_spawn($itd = 0): ?\Model_Items_Abstract_Item
+    {
+        if ($itd >= 10 || !$this->equalized || !($k = $this->get_element()))
             return null;
 
         /** @var Model_Items_Virtual_Invoke_Abstract|string $k */
@@ -75,7 +80,8 @@ class Model_Factory_Items extends Model_Factory_Abstract {
      * @param float $factor Set to 1 for full replenishment, 0 for no effect.
      * @return $this
      */
-    public function replenish($factor = 1.0) {
+    public function replenish($factor = 1.0): self
+    {
         $this->fillrate += (1 - $this->fillrate) * max(0,min(1,$factor));
         return $this;
     }
@@ -85,12 +91,14 @@ class Model_Factory_Items extends Model_Factory_Abstract {
      * @param float $modifier Modification factor
      * @return $this
      */
-    public function modify_decay($modifier) {
+    public function modify_decay($modifier): self
+    {
         $this->decay = max(0,min(1,1 - (1 - $this->decay)/$modifier));
         return $this;
     }
 
-    public function findings_left() {
+    public function findings_left(): int
+    {
         $f = $this->fillrate;
         $r = 0;
         if (!$this->equalized) return 0;

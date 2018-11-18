@@ -9,7 +9,8 @@ class Model_Items_Virtual_Invoke_AnimalForce extends Model_Items_Virtual_Invoke_
         $this->cls = $animal_class;
     }
 
-    public function trigger_spawn(Model_Places_Abstract_Place $location, Interface_Plentity $player) {
+    public function trigger_spawn(Model_Places_Abstract_Place $location, Interface_Plentity $player): void
+    {
 
         switch ($this->cls) {
 

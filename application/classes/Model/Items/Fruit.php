@@ -30,7 +30,8 @@ class Model_Items_Fruit extends Model_Items_Abstract_Stackable {
         $this->count = $size;
     }
 
-    private function create_action() {
+    private function create_action(): \Model_Action
+    {
         $ret = Model_Action::factory();
         $eff = Model_Effect::factory()
             ->consume($this)

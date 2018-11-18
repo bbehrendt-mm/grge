@@ -11,21 +11,23 @@ class Controller_Test extends Controller {
         $this->session = Session::instance();
 
         //Avoid caching!
-        $this->response->headers("Cache-Control: no-cache, must-revalidate");
-        $this->response->headers("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
+        $this->response->headers('Cache-Control: no-cache, must-revalidate');
+        $this->response->headers('Expires: Sat, 26 Jul 1997 05:00:00 GMT');
     }
 
-    public function action_rq() {
-        $this->dump('user_request', $this->session->get('request',[]));
+    public function action_rq(): void
+    {
+        self::dump('user_request', $this->session->get('request',[]));
     }
 
-    public function action_labyrinth() {
+    public function action_labyrinth(): void
+    {
         $m = new Model_Map_Labyrinth('default','hospital');
         $m->auto_init();
 
-        echo "<table>";
+        echo '<table>';
         foreach ($m->scheme() as $col) {
-            echo "<tr>";
+            echo '<tr>';
             foreach ($col as $cell) {
                 switch ($cell) {
                     case Model_Map_Labyrinth::MML_WALL:
@@ -48,8 +50,8 @@ class Controller_Test extends Controller {
                 }
                 echo "<td style='height: 16px; width: 16px; background: $r;'>&nbsp;</td>";
             }
-            echo "</tr>";
+            echo '</tr>';
         }
-        echo "</table>";
+        echo '</table>';
     }
 }

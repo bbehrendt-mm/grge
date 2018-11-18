@@ -1,4 +1,5 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php /** @noinspection NotOptimalIfConditionsInspection */
+defined('SYSPATH') or die('No direct script access.');
 
 class Controller_Game extends Controller {
 
@@ -13,7 +14,7 @@ class Controller_Game extends Controller {
      * @throws Kohana_Exception
      */
     public function action_japi(): void {
-        if ($this->request->param('jaction') == 'fixlink') {
+        if ($this->request->param('jaction') === 'fixlink') {
             parent::action_japi();
             return;
         }
@@ -23,7 +24,12 @@ class Controller_Game extends Controller {
             return;
         }
         
-        if (!Globals::PrimaryPlayerF()->get_status()->alive() && !in_array($this->request->param('jaction'), static::$death_allowed_actions)) {
+        if (!in_array(
+                        $this->request->param('jaction'),
+                        static::$death_allowed_actions, true
+                    )
+            && !Globals::PrimaryPlayerF()->get_status()->alive()
+        ) {
             $this->render_notifications();
             $this->render(['redirect' => 'game/redirect']);
             return;
@@ -118,11 +124,12 @@ class Controller_Game extends Controller {
      * Renderer Subroutine; Render Location Box
      * @throws Exception
      */
-    private function render_location() {
+    private function render_location(): void
+    {
         $radar_scale = Globals::PrimaryPlayerF()->get_status()->retrieve('tr_danger') ? 1 : 4;
 
         // Get Radar data
-        list(, $radar_max, $radar_prop, $radar_increase) = Globals::PrimaryPlayerF()->location()->zombie_factory()->get_radar_data();
+        [, $radar_max, $radar_prop, $radar_increase] = Globals::PrimaryPlayerF()->location()->zombie_factory()->get_radar_data();
 
         // Check if we're at a hideout with active defenses
         $hideout = Tool_Scripts::current_location_hideout();
@@ -131,15 +138,15 @@ class Controller_Game extends Controller {
         // Calculate approx. number of ticks between each blockade increase and random attack; set random attack value to zero if we're at a hideout
         if ($protected_hideout)
             $radar_prop = 0;
-        else $radar_prop = ($radar_prop > 0) ? ceil(pow($radar_prop,-1)) : 0;
-        $radar_increase = ($radar_increase > 0) ? ceil(pow($radar_increase,-1)) : 0;
+        else $radar_prop = ($radar_prop > 0) ? ceil($radar_prop ** -1) : 0;
+        $radar_increase = ($radar_increase > 0) ? ceil($radar_increase ** -1) : 0;
 
         // Calculate danger level
         $danger = ($radar_prop > 0) ? floor($radar_max/4) : 0;              // Base value: Max attack group size
         if (!$protected_hideout && $radar_prop <= 1.5 && $radar_prop > 0)     $danger += 2;    // Increase by 2 if we have a very high attack probability
         elseif (!$protected_hideout && $radar_prop <= 3 && $radar_prop > 0)   ++$danger;    // Increase by 1 if we have a high attack probability
-        elseif ($radar_prop <= 15  || $radar_prop == 0)  --$danger;                           // Decrease by 1 if we have a very low attack probability
-        if ($radar_increase != 0 && $radar_increase <= 3)   ++$danger;   // Increase by 1 if we have a very high blocking speed
+        elseif ($radar_prop <= 15  || $radar_prop === 0)  --$danger;                           // Decrease by 1 if we have a very low attack probability
+        if ($radar_increase !== 0 && $radar_increase <= 3)   ++$danger;   // Increase by 1 if we have a very high blocking speed
         $danger = min(5,max(($radar_prop > 0) ? 1 : 0,$danger));            // Confine danger to 0-5 range
 
         // Get local actions
@@ -202,7 +209,8 @@ class Controller_Game extends Controller {
      * @return array
      * @throws Exception
      */
-    private function group_itemlist($itemlist, $short = false, $players = null) {
+    private function group_itemlist($itemlist, $short = false, $players = null): array
+    {
         $grouping = Array();
         $cache = Array();
 
@@ -288,8 +296,8 @@ class Controller_Game extends Controller {
                 foreach ($item->get_ammo_icons() as $entry) {
                     $c = 1;
                     if (is_array($entry)) {
-                        $c = $entry[1];
-                        $entry = $entry[0];
+                        $tmp = $entry;
+                        [$entry,$c] = $tmp;
                     }
 
                     for ($i = 0; $i < $c; $i++)
@@ -305,7 +313,7 @@ class Controller_Game extends Controller {
                 /** @var Model_Combat_Weapons_Energy $item */
                 $data['weapon'] = [
                     'damage' => $item->potential_damage(),
-                    'ammo' => $ammo ? $ammo : false,
+                    'ammo' => $ammo ?: false,
                     'shots' => Tool_System::instance_of($item, 'Model_Combat_Weapons_Fillable') ? $item->count() : false,
                     'energy' => Tool_System::instance_of($item, 'Model_Combat_Weapons_Energy') ? $item->energy() : 0,
                     'accuracy' => $item->fixed_accuracy() ? $item->accuracy() * 100 : true,
@@ -380,9 +388,10 @@ class Controller_Game extends Controller {
      * @return array|null
      * @throws Exception
      */
-    private function render_inventory($remote = false, $full_data = false) {
+    private function render_inventory($remote = false, $full_data = false): ?array
+    {
         $full_data = !(bool)$remote || $full_data;
-        $p = $remote ? $remote : Globals::PrimaryPlayerF();
+        $p = $remote ?: Globals::PrimaryPlayerF();
 
         // Get heroic actions
         $a = [];
@@ -420,7 +429,8 @@ class Controller_Game extends Controller {
         }
     }
 
-    private function condense_buff($bar) {
+    private function condense_buff($bar): array
+    {
         $ret = Array();
         foreach (Globals::PrimaryPlayerF()->get_status()->buffs() as $buff) {
             $t = ['icon' => $buff->icon(), 'effects' => []];
@@ -428,7 +438,7 @@ class Controller_Game extends Controller {
             foreach ([Model_Buffs_Abstract_Buff::MB_RAISE_ACC, Model_Buffs_Abstract_Buff::MB_DROP_ACC, Model_Buffs_Abstract_Buff::MB_RAISE_PRC, Model_Buffs_Abstract_Buff::MB_DROP_PRC] as $id) {
                 $effect = $buff->effect($bar, $id);
                 $t['effects'][$id] = $effect;
-                $apply = $apply || ($effect != 0);
+                $apply = $apply || ($effect !== 0);
             }
             if ($apply) $ret[] = $t;
         }
@@ -442,8 +452,9 @@ class Controller_Game extends Controller {
      * @return array
      * @throws Exception
      */
-    private function status($type, $remote = false) {
-        $p = $remote ? $remote : Globals::PrimaryPlayerF();
+    private function status($type, $remote = false): array
+    {
+        $p = $remote ?: Globals::PrimaryPlayerF();
         
         return [
             'value' => round($p->get_status()->get($type),2),
@@ -456,8 +467,9 @@ class Controller_Game extends Controller {
      * @return array|null
      * @throws Exception
      */
-    private function render_status($remote = false) {
-        $p = $remote ? $remote : Globals::PrimaryPlayerF();
+    private function render_status($remote = false): ?array
+    {
+        $p = $remote ?: Globals::PrimaryPlayerF();
 
         $cache = [];
         for ($type = 1; $type <= Model_Status::MS_STATUS_COUNT; $type++)
@@ -480,7 +492,8 @@ class Controller_Game extends Controller {
         }
     }
 
-    protected function render_notifications() {
+    protected function render_notifications(): void
+    {
         foreach (Globals::PrimaryPlayerF()->log()->get_all() as $message) {
             $r = $message->as_notification();
             if ($r) $this->add_note($r[0],$r[1],$r[2]);
@@ -489,7 +502,8 @@ class Controller_Game extends Controller {
         Globals::PrimaryPlayerF()->log()->clear();
     }
 
-    protected function render_log() {
+    protected function render_log(): void
+    {
         $ret = [];
         foreach (Globals::PrimaryPlayerF()->location()->log()->get_all(true) as $message)
             $ret[] = array_merge(['new' => false], $message->render());
@@ -498,7 +512,8 @@ class Controller_Game extends Controller {
         $this->add_data('log', $ret);
     }
 
-    private function render_clock() {
+    private function render_clock(): void
+    {
         $this->add_data('clock', [
             'show' => Globals::CurrentGameF()->is_alive() && !Globals::CurrentGameF()->paused() && Globals::PrimaryPlayerF() && Globals::PrimaryPlayerF()->get_status()->alive() && !Tool_Events::is_april_fools(),
             'next_tick' => Globals::CurrentGameF()->next_tick(),
@@ -508,7 +523,8 @@ class Controller_Game extends Controller {
         ]);
     }
 
-    private function render_info() {
+    private function render_info(): void
+    {
         $this->add_data('game', [
             'mode' => __(Tool_Gamemodes::get_board_by_id(Globals::CurrentGameF()->setting_mode())),
             'job' => __(Tool_Gamemodes::get_job_by_id(Globals::PrimaryPlayerF()->job())),
@@ -520,8 +536,9 @@ class Controller_Game extends Controller {
         ]);
     }
 
-    private function render_settings() {
-        $tmp =  (Globals::CurrentGameF()->timeflow() == 0) ? [
+    private function render_settings(): void
+    {
+        $tmp =  (Globals::CurrentGameF()->timeflow() === 0) ? [
             'interval' => (int)Kohana::$config->load('balancing.pause.min_interval'),
             'duration' => (int)Kohana::$config->load('balancing.pause.min_duration'),
         ] : [
@@ -531,7 +548,7 @@ class Controller_Game extends Controller {
             'interval' => (int)Kohana::$config->load('balancing.pause.min_duration'),
         ];
 
-        $lock = ((Globals::CurrentGameF()->timeflow() == 0) ? (Globals::CurrentGameF()->pauselock() + Kohana::$config->load('balancing.pause.min_interval')) : Globals::PrimaryPlayerF()->vote_time(true)) - time();
+        $lock = ((Globals::CurrentGameF()->timeflow() === 0) ? (Globals::CurrentGameF()->pauselock() + Kohana::$config->load('balancing.pause.min_interval')) : Globals::PrimaryPlayerF()->vote_time(true)) - time();
         if ($lock < 0) $lock = false;
 
 
@@ -545,7 +562,8 @@ class Controller_Game extends Controller {
         ]);
     }
 
-    private function render_rpg() {
+    private function render_rpg(): void
+    {
         $char_stats = Globals::PrimaryPlayerF()->battle_stats();
         $tmp_all = [
             Model_Items_Abstract_Equipable::MIAE_STAT_INI => $char_stats[0],
@@ -563,7 +581,7 @@ class Controller_Game extends Controller {
         ];
         foreach (Globals::PrimaryPlayerF()->get_equipment(null, true) as $equipment)
             foreach ([Model_Items_Abstract_Equipable::MIAE_STAT_INI,Model_Items_Abstract_Equipable::MIAE_STAT_ATK,Model_Items_Abstract_Equipable::MIAE_STAT_DEF,Model_Items_Abstract_Equipable::MIAE_STAT_ACC] as $k)
-                if ($equipment->get_stats($k) != 0)
+                if ($equipment->get_stats($k) !== 0)
                     $stats[$k][] = [
                         'type' => $equipment->get_equipment_type(),
                         'value' => $equipment->get_stats($k),
@@ -577,7 +595,8 @@ class Controller_Game extends Controller {
         ]);
     }
 
-    private function render_specials() {
+    private function render_specials(): void
+    {
         // Colosseum
         if (Tool_System::instance_of(Globals::PrimaryPlayerF()->location(), 'Model_Places_Colosseum')) {
             /** @var Model_Places_Colosseum $colosseum */
@@ -601,7 +620,7 @@ class Controller_Game extends Controller {
             $mapper = Globals::PrimaryPlayerF()->inventory()->get(Model_Items_Maptool::cls()); $mapper = $mapper[0];
 
             $this->add_data('location', ['scouting' => [
-                'level' => $mapper->get_map_details() * 33 + ($mapper->get_map_details() == 3 ? 1 : 0),
+                'level' => $mapper->get_map_details() * 33 + ($mapper->get_map_details() === 3 ? 1 : 0),
                 'laser' => Tool_Scripts::count_available_items(Model_Items_Generic_Lasermapper::cls()),
             ]]);
         }
@@ -662,7 +681,8 @@ class Controller_Game extends Controller {
         }
     }
 
-    private function render_epics() {
+    private function render_epics(): void
+    {
         /** @var Model_Items_Virtual_Epic_Garden $garden */
         if ($garden = Tool_Scripts::first_available_item(Model_Items_Virtual_Epic_Garden::cls(),false,true,false))
             $this->add_data('location', ['epc_garden' => [
@@ -697,7 +717,8 @@ class Controller_Game extends Controller {
             ]]);
     }
 
-    protected function render_mp($slim = false) {
+    protected function render_mp($slim = false): void
+    {
         $speeds = [15,30,60,120,300,600,900];
         $jokes = [
             'Letzter Unterhosenwechsel' => 'Vor 12 Wochen',
@@ -712,11 +733,11 @@ class Controller_Game extends Controller {
 
         $players = [];
         foreach (Globals::CurrentGameF()->players(false) as $p) {
-            if ($p->id() == Globals::PrimaryPlayerF()->id()) continue;
+            if ($p->id() === Globals::PrimaryPlayerF()->id()) continue;
 
             $joke = array_keys($jokes)[(Globals::CurrentGameF()->id() + $p->id()) % count($jokes)];
 
-            $local = $p->get_status()->alive() && $p->location_class() == Globals::PrimaryPlayerF()->location_class();
+            $local = $p->get_status()->alive() && $p->location_class() === Globals::PrimaryPlayerF()->location_class();
             $companion = (bool)Tool_Scripts::check_comrade($p);
             $allow = [];
             if ($p->allow(Interface_Plentity::IC_ALLOW_ANY))
@@ -795,9 +816,11 @@ class Controller_Game extends Controller {
 
     /**
      * Renderer API
+     *
+     * @return bool
      * @throws Kohana_Exception
      */
-    public function japi_data() {
+    public function japi_data(): bool {
         if (!Globals::PrimaryPlayerF()->get_status()->alive()) {
             $this->render_notifications();
             return $this->render(['redirect' => 'game/redirect']);
@@ -827,7 +850,7 @@ class Controller_Game extends Controller {
         return true;
     }
 
-    public function japi_fixlink() {
+    public function japi_fixlink(): bool {
         if (!Globals::CurrentGameF() && Globals::CurrentUserF()->get_current_game())
             return $this->render(['success' => DB::delete('xref_game_player')->where('uid','=',Globals::CurrentUserF()->uid())->execute() ? 1 : 0]);
         else return $this->render(['success' => 0]);
@@ -836,7 +859,8 @@ class Controller_Game extends Controller {
     /**
      * Load appropriate game interface (in-game/death/pause/aprils fools)
      */
-    public function action_redirect() {
+    public function action_redirect(): bool
+    {
         //Redirect
         if (!Globals::hasCurrentGame() && !Globals::CurrentUserF()->get_current_game())
             self::redirect(URL::site('gamemaster/lobby',true));
@@ -902,14 +926,15 @@ class Controller_Game extends Controller {
         return $this->render();
     }
 
-    public function action_pm() {
+    public function action_pm(): bool
+    {
         //Redirect
         if (!Globals::CurrentGameF() || !Globals::CurrentUserF()->get_current_game() || !Globals::hasPrimaryPlayer() || !Globals::PrimaryPlayerF()->get_status()->alive() || !Globals::CurrentGameF()->config('modules.multiplayer'))
             self::redirect(URL::site('game/redirect',true));
 
         $players = [];
         foreach (Globals::CurrentGameF()->players(false) as $p)
-            if ($p->id() != Globals::PrimaryPlayerF()->id())
+            if ($p->id() !== Globals::PrimaryPlayerF()->id())
                 $players[$p->id()] = $p->name();
 
         $this->add_widget(View::factory('pages/pm')->set('messages', Globals::PrimaryPlayerF()->get_postbox()->get())->set('players', $players)->render());
@@ -919,12 +944,13 @@ class Controller_Game extends Controller {
         return $this->render();
     }
 
-    public function japi_end() {
+    public function japi_end(): void
+    {
         //Check if player is still alive
         if (!Globals::PrimaryPlayerF()->get_status()->alive())
         {
             if (($r = self::post('ratings')) && Globals::CurrentGameF()->is_rankable() && Globals::CurrentGameF()->points(Globals::PrimaryPlayerF()->id()) > 0)
-                foreach (Globals::CurrentGameF()->players(false) as $p) if ($p->id() != Globals::PrimaryPlayerF()->id() && isset($r[$p->id()]) && is_numeric($r[$p->id()]))
+                foreach (Globals::CurrentGameF()->players(false) as $p) if ($p->id() !== Globals::PrimaryPlayerF()->id() && isset($r[$p->id()]) && is_numeric($r[$p->id()]))
                     Model_User::set_karma($p->id(), Globals::PrimaryPlayerF()->id(), min(2,max(-2,(int)$r[$p->id()])));
 
 
@@ -942,7 +968,8 @@ class Controller_Game extends Controller {
         ]);
     }
 
-    public function japi_logs() {
+    public function japi_logs(): bool
+    {
         $this->render_log();
         $this->render_notifications();
 

@@ -19,7 +19,8 @@ class Model_Items_Bat2 extends Model_Combat_Weapons_Close implements Interface_S
 
 	protected static $durabillity = 0.8;
 	
-	public function mixchem($chemval) {
+	public function mixchem($chemval): bool
+    {
         $this->consume();
         Tool_Scripts::chem_reaction(
             'Sofort als die Chemikalie auf das Holz trifft beginnt sie, zu blubbern und zu zischen. Scheinbar reagiert sie mit dem Lack auf dem Schläger.... und löst das Holz auf. Tja, das war einmal ein Baseballschläger.',

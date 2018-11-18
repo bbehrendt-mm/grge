@@ -366,7 +366,7 @@ class Minifier
 // that spot.
         $this->a = $this->b;
 // If this isn't a string we don't need to do anything.
-        if ($this->a != "'" && $this->a != '"') {
+        if ($this->a !== "'" && $this->a !== '"') {
             return;
         }
 // String type is the quote used, " or '

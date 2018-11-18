@@ -7,14 +7,14 @@ abstract class Model_Items_Abstract_Armor extends Model_Items_Abstract_Equipable
 
     protected static $destroyed;
 
-    public function convertStringProtection() {
-        if (static::$protection > 100) return "Sehr stabil";
-        elseif (static::$protection > 75) return "Stabil";
-        elseif (static::$protection > 50) return "Durchschnittlich";
-        elseif (static::$protection > 25) return "Wackelig";
-        elseif (static::$protection > 10) return "Instabil";
-        elseif (static::$protection > 5) return "Sehr Instabil";
-        else return "Desolat";
+    public function convertStringProtection(): string {
+        if (static::$protection > 100) return 'Sehr stabil';
+        elseif (static::$protection > 75) return 'Stabil';
+        elseif (static::$protection > 50) return 'Durchschnittlich';
+        elseif (static::$protection > 25) return 'Wackelig';
+        elseif (static::$protection > 10) return 'Instabil';
+        elseif (static::$protection > 5) return 'Sehr Instabil';
+        else return 'Desolat';
     }
 
     /**
@@ -30,7 +30,8 @@ abstract class Model_Items_Abstract_Armor extends Model_Items_Abstract_Equipable
         $this->current_protection = static::$protection;
     }
 
-    public function is_destroyed() {
+    public function is_destroyed(): bool
+    {
         return ($this->get_protection() <= 0);
     }
 
@@ -59,7 +60,8 @@ abstract class Model_Items_Abstract_Armor extends Model_Items_Abstract_Equipable
      *
      * @throws Exception
      */
-    public function take_damage($damage) {
+    public function take_damage($damage): void
+    {
         $this->current_protection -= $damage;
         if ($this->get_protection() <= 0) {
             if ($this->player_id && $this->get_destroyed_class() && ($p = Globals::CurrentGameF()->get_player($this->player_id))) {

@@ -4,11 +4,12 @@ class Tool_Admin {
 
     private static $admin_checked = false;
 
-    public static function check_privileges() {
+    public static function check_privileges(): bool
+    {
         return Session::instance()->get('admin',NULL) >= (time() - 600);
     }
 
-    private static function head($action) {
+    private static function head($action): bool {
         Syslogd::sprintln($action);
         Syslogd::in();
         if (!static::$admin_checked) {
@@ -17,11 +18,11 @@ class Tool_Admin {
                 Syslogd::sprintln('OK');
                 static::$admin_checked = true;
                 return true;
-            } else {
-                Syslogd::sprintln('FEHLGESCHLAGEN');
-                Syslogd::out();
-                return false;
             }
+
+            Syslogd::sprintln('FEHLGESCHLAGEN');
+            Syslogd::out();
+            return false;
         } else return true;
     }
 
@@ -34,13 +35,13 @@ class Tool_Admin {
         if (!static::head('Wartungsmodus aktivieren'))
             return false;
 
-        Syslogd::sprint("Schreibe syslock.f ... ");
-        $f = fopen('syslock.f', 'w');
+        Syslogd::sprint('Schreibe syslock.f ... ');
+        $f = fopen('syslock.f', 'wb');
         $r = fwrite($f, $message);
         fclose($f);
 
         if ($f !== false) Syslogd::sprintln("OK, {$r} Bytes geschrieben");
-        else Syslogd::sprintln("FEHLGESCHLAGEN");
+        else Syslogd::sprintln('FEHLGESCHLAGEN');
 
         return static::tail(!($f === false));
     }
@@ -49,11 +50,11 @@ class Tool_Admin {
         if (!static::head('Wartungsmodus deaktivieren'))
             return false;
 
-        Syslogd::sprint("Entferne syslock.f ... ");
-        if (!file_exists('syslock.f')) Syslogd::sprintln("DATEI NICHT GEFUNDEN");
+        Syslogd::sprint('Entferne syslock.f ... ');
+        if (!file_exists('syslock.f')) Syslogd::sprintln('DATEI NICHT GEFUNDEN');
         else {
             unlink('syslock.f');
-            Syslogd::sprintln("OK");
+            Syslogd::sprintln('OK');
         }
 
         return static::tail(true);
@@ -63,64 +64,64 @@ class Tool_Admin {
         if (!static::head('Integritätssicherung'))
             return false;
 
-        Syslogd::sprintln("Inventur durchführen");
+        Syslogd::sprintln('Inventur durchführen');
         Syslogd::in();
 
-        Syslogd::sprint("Hauptindexspeicher... ");
+        Syslogd::sprint('Hauptindexspeicher... ');
         $main = array();
         $ret = DB::select('gameid')->from('games')->execute()->as_array();
         foreach ($ret as $line)
             $main[] = $line['gameid'];
-        Syslogd::sprintln(count($main) . " Einträge");
+        Syslogd::sprintln(count($main) . ' Einträge');
 
-        Syslogd::sprint("Userreferenzspeicher... ");
+        Syslogd::sprint('Userreferenzspeicher... ');
         $references = array();
         $ret = DB::select('gameid')->from('xref_game_player')->execute()->as_array();
         foreach ($ret as $line)
             $references[] = $line['gameid'];
-        Syslogd::sprintln(count($references) . " Einträge");
+        Syslogd::sprintln(count($references) . ' Einträge');
 
-        Syslogd::sprint("Lobbyreferenzspeicher... ");
+        Syslogd::sprint('Lobbyreferenzspeicher... ');
         $references = array();
         $ret = DB::select('gameid')->from('multiplayer_lobby')->execute()->as_array();
         foreach ($ret as $line)
-            if (!in_array($line['gameid'], $references))
+            if (!in_array($line['gameid'], $references, true))
                 $references[] = $line['gameid'];
-        Syslogd::sprintln(count($ret) . " Einträge");
+        Syslogd::sprintln(count($ret) . ' Einträge');
 
         Syslogd::out();
-        Syslogd::sprint("Prüfe vollständigen Abschluss aller Objekte... ");
+        Syslogd::sprint('Prüfe vollständigen Abschluss aller Objekte... ');
         $deathlist = array_merge(array_diff($main, $references), array_diff($references, $main));
-        Syslogd::sprintln(count($deathlist) . " nicht auflösbare Referenzen");
+        Syslogd::sprintln(count($deathlist) . ' nicht auflösbare Referenzen');
 
 
-        Syslogd::sprintln("Cloudshard-Integrität prüfen");
+        Syslogd::sprintln('Cloudshard-Integrität prüfen');
         Syslogd::in();
         $cloudref = array();
-        Syslogd::sprint("Suche Cloudshard-Referenzen... ");
+        Syslogd::sprint('Suche Cloudshard-Referenzen... ');
         DB::select('gameid')->from('games_cloud')->group_by('gameid')->execute()->as_array();
         foreach ($ret as $line)
             $cloudref[] = $line['gameid'];
-        Syslogd::sprintln(count($cloudref) . " Referenzgruppen");
+        Syslogd::sprintln(count($cloudref) . ' Referenzgruppen');
 
-        Syslogd::sprint("Prüfe Gültigkeit... ");
+        Syslogd::sprint('Prüfe Gültigkeit... ');
         $i = 0;
         foreach ($cloudref as $id)
-            if (!in_array($id, $main)) {
+            if (!in_array($id, $main, true)) {
                 $i++;
-                if (!in_array($id, $deathlist))
+                if (!in_array($id, $deathlist, true))
                     $deathlist[] = $id;
             }
-        Syslogd::sprintln($i . " ungültige Referenzen");
+        Syslogd::sprintln($i . ' ungültige Referenzen');
         Syslogd::out();
 
         if (count($deathlist) > 0) {
-            Syslogd::sprintln("Integritätsprobleme: " . count($deathlist));
+            Syslogd::sprintln('Integritätsprobleme: ' . count($deathlist));
             Syslogd::in();
             foreach ($deathlist as $gameid)
                 static::purge_game($gameid);
             Syslogd::out();
-        } else Syslogd::sprintln("Keine Integritätsprobleme gefunden");
+        } else Syslogd::sprintln('Keine Integritätsprobleme gefunden');
 
         return static::tail(true);
     }
@@ -129,15 +130,15 @@ class Tool_Admin {
         if (!static::head('Entferne Referenz: P' . $pid . ' zu {#' . $gameid . '}'))
             return false;
 
-        Syslogd::sprint("Userreferenz... ");
+        Syslogd::sprint('Userreferenz... ');
         DB::delete('xref_game_player')->where('gameid', '=', $gameid)->where('uid', '=', $pid)->execute();
-        Syslogd::sprintln("OK");
+        Syslogd::sprintln('OK');
 
         return static::tail(true);
     }
 
     public static function purge_game($gameid) {
-        if ($gameid == -1) {
+        if ($gameid === -1) {
             if (!static::head('Vollständige Löschung: Alle Spiele'))
                 return false;
 
@@ -145,50 +146,51 @@ class Tool_Admin {
                static::purge_game($line['gameid']);
 
             return static::tail(true);
-        } else {
-            if (!static::head('Vollständige Löschung: {#' . $gameid . '}'))
-                return false;
-
-            Syslogd::sprint("Hauptindex... ");
-            DB::delete('games')->where('gameid', '=', $gameid)->execute();
-            Syslogd::sprintln("OK");
-
-            Syslogd::sprint("Userreferenz... ");
-            $users = DB::select('uid')->from('xref_game_player')->where('gameid', '=', $gameid)->execute()->as_array();
-            DB::delete('xref_game_player')->where('gameid', '=', $gameid)->execute();
-            Syslogd::sprintln("OK");
-
-            Syslogd::sprint("Lobbyreferenz... ");
-            DB::delete('multiplayer_lobby')->where('gameid', '=', $gameid)->execute();
-            Syslogd::sprintln("OK");
-
-            Syslogd::sprint("Cloudshards... ");
-            DB::delete('games_cloud')->where('gameid', '=', $gameid)->execute();
-            Syslogd::sprintln("OK");
-
-            if (count($users) == 0)
-                Syslogd::sprintln("Keine verknüpften Benutzersessions gefunden");
-            else {
-                Syslogd::sprintln(count($users) . " verknüpfte Sessions zurücksetzen");
-                Syslogd::in();
-                foreach ($users as $user)
-                    static::reset_user($user['uid']);
-                Syslogd::out();
-            }
-
-            return static::tail(true);
         }
+
+        if (!static::head('Vollständige Löschung: {#' . $gameid . '}'))
+            return false;
+
+        Syslogd::sprint('Hauptindex... ');
+        DB::delete('games')->where('gameid', '=', $gameid)->execute();
+        Syslogd::sprintln('OK');
+
+        Syslogd::sprint('Userreferenz... ');
+        $users = DB::select('uid')->from('xref_game_player')->where('gameid', '=', $gameid)->execute()->as_array();
+        DB::delete('xref_game_player')->where('gameid', '=', $gameid)->execute();
+        Syslogd::sprintln('OK');
+
+        Syslogd::sprint('Lobbyreferenz... ');
+        DB::delete('multiplayer_lobby')->where('gameid', '=', $gameid)->execute();
+        Syslogd::sprintln('OK');
+
+        Syslogd::sprint('Cloudshards... ');
+        DB::delete('games_cloud')->where('gameid', '=', $gameid)->execute();
+        Syslogd::sprintln('OK');
+
+        if (count($users) === 0)
+            Syslogd::sprintln('Keine verknüpften Benutzersessions gefunden');
+        else {
+            Syslogd::sprintln(count($users) . ' verknüpfte Sessions zurücksetzen'
+            );
+            Syslogd::in();
+            foreach ($users as $user)
+                static::reset_user($user['uid']);
+            Syslogd::out();
+        }
+
+        return static::tail(true);
     }
 
     public static function reset_user($uid) {
-        if (!static::head('Benutzersitzung zurücksetzen: ' . ($uid != -1 ? ('{#' . $uid . '}') : 'Alle')))
+        if (!static::head('Benutzersitzung zurücksetzen: ' . ($uid !== -1 ? ('{#' . $uid . '}') : 'Alle')))
             return false;
 
-        Syslogd::sprint("Datenbank aktualisieren... ");
+        Syslogd::sprint('Datenbank aktualisieren... ');
         $tmp = DB::update('users')->set(array('session' => '#'));
-        if ($uid != -1) $tmp->where('uid', '=', $uid);
+        if ($uid !== -1) $tmp->where('uid', '=', $uid);
         $tmp->execute();
-        Syslogd::sprintln("OK");
+        Syslogd::sprintln('OK');
 
         return static::tail(true);
     }
@@ -197,17 +199,17 @@ class Tool_Admin {
         if (!static::head('Benutzer entfernen: {#' . $uid . '}'))
             return false;
 
-        Syslogd::sprint("Benutzereintrag entfernen... ");
+        Syslogd::sprint('Benutzereintrag entfernen... ');
         DB::delete('users')->where('uid', '=', $uid)->execute();
-        Syslogd::sprintln("OK");
+        Syslogd::sprintln('OK');
 
-        Syslogd::sprint("Auszeichnungen entfernen... ");
+        Syslogd::sprint('Auszeichnungen entfernen... ');
         DB::delete('achievements')->where('uid', '=', $uid)->execute();
-        Syslogd::sprintln("OK");
+        Syslogd::sprintln('OK');
 
-        Syslogd::sprint("Ranking-Einträge entfernen... ");
+        Syslogd::sprint('Ranking-Einträge entfernen... ');
         DB::delete('ranking')->where('uid', '=', $uid)->execute();
-        Syslogd::sprintln("OK");
+        Syslogd::sprintln('OK');
 
         return static::tail(true);
     }
@@ -216,9 +218,9 @@ class Tool_Admin {
         if (!static::head('Bannstatus setzen: {#' . $uid . '} auf ' . $ban))
             return false;
 
-        Syslogd::sprint("Datenbank aktualisieren... ");
+        Syslogd::sprint('Datenbank aktualisieren... ');
         DB::update('users')->set(array('ban' => $ban))->where('uid', '=', $uid)->execute();
-        Syslogd::sprintln("OK");
+        Syslogd::sprintln('OK');
 
         static::reset_user($uid);
 
@@ -229,20 +231,20 @@ class Tool_Admin {
         if (!static::head('Auszeichnung verleihen: {#' . $uid . '}, ' . Model_Achievement::decode_aid($aid) . ' x ' . $count . ', gameid ist ' . $game))
             return false;
 
-        Syslogd::sprint("Suche alte Auszeichnungseinträge... ");
+        Syslogd::sprint('Suche alte Auszeichnungseinträge... ');
         $res = DB::select('value')->from('achievements')->where('gameid', '=', $game)->and_where('uid', '=', $uid)->and_where('aid', '=', $aid)->execute()->as_array();
         if (count($res) > 0) {
-            Syslogd::sprintln($res[0]['value'] . " Einträge gefunden!");
+            Syslogd::sprintln($res[0]['value'] . ' Einträge gefunden!');
             $count += $res[0]['value'];
 
-            Syslogd::sprint("Lösche alte Auszeichnungseinträge... ");
+            Syslogd::sprint('Lösche alte Auszeichnungseinträge... ');
             DB::delete('achievements')->where('gameid', '=', $game)->and_where('uid', '=', $uid)->and_where('aid', '=', $aid)->execute();
-            Syslogd::sprintln("OK");
-        } else Syslogd::sprintln("Keine gefunden");
+            Syslogd::sprintln('OK');
+        } else Syslogd::sprintln('Keine gefunden');
 
-        Syslogd::sprint("Erzeuge neuen Eintrag... ");
+        Syslogd::sprint('Erzeuge neuen Eintrag... ');
         DB::insert('achievements', Array('uid', 'gameid', 'aid', 'value'))->values(Array($uid, $game, $aid, $count))->execute();
-        Syslogd::sprintln("OK");
+        Syslogd::sprintln('OK');
 
         return static::tail(true);
     }
@@ -253,16 +255,16 @@ class Tool_Admin {
 
         $tmp = Globals::CurrentGame();
 
-        Syslogd::sprint("Erzeuge Index...");
+        Syslogd::sprint('Erzeuge Index...');
         $game = new Model_Game();
         $id = $game->start(10000, 1, 300, null, $name);
-        Syslogd::sprintln("OK; ID: " . $id);
+        Syslogd::sprintln('OK; ID: ' . $id);
 
         if ($tmp) Globals::setCurrentGame($tmp);
 
-        Syslogd::sprint("Erzeuge Lobbyeintrag...");
+        Syslogd::sprint('Erzeuge Lobbyeintrag...');
         DB::insert('multiplayer_lobby', array('gameid', 'lang', 'slots', 'name', 'timestamp'))->values(array($id, $lang, $slots, $name, time()))->execute() ;
-        Syslogd::sprintln("OK");
+        Syslogd::sprintln('OK');
 
         return static::tail(true);
     }
@@ -294,18 +296,18 @@ class Tool_Admin {
                 Syslogd::sprintln("Verarbeite Ranking #{$mode}/{$flow}");
                 Syslogd::in();
 
-                Syslogd::sprint("Lade Ranking... ");
+                Syslogd::sprint('Lade Ranking... ');
                 $ranks = DB::select('uid')->from('ranking')->where('season', '=', $season)->and_where('board', '=', $mode)->and_where('flow', '=', $flow)->and_where('start', '>=', 0)->order_by('points', 'DESC')->order_by('ticks', 'DESC')->limit(10)->execute()->as_array();
-                Syslogd::sprintln("OK");
+                Syslogd::sprintln('OK');
 
-                Syslogd::sprintln("Berechne Auszeichnungen... ");
+                Syslogd::sprintln('Berechne Auszeichnungen... ');
                 Syslogd::in();
 
                 foreach ($ranks as $place => $rank) {
 
-                    if		($place == 0) $point = 10;
-                    elseif	($place == 1) $point = 5;
-                    elseif	($place == 2) $point = 3;
+                    if		($place === 0) $point = 10;
+                    elseif	($place === 1) $point = 5;
+                    elseif	($place === 2) $point = 3;
                     else				  $point = 1;
 
                     Syslogd::sprintln("Platz {$place}: Spieler #{$rank['uid']}, {$point} Punkte");
@@ -316,7 +318,7 @@ class Tool_Admin {
                 Syslogd::out();
             }
 
-            Syslogd::sprintln("Vergebe Auszeichnungen");
+            Syslogd::sprintln('Vergebe Auszeichnungen');
             Syslogd::in();
             foreach ($points as $uid => $value)
                 static::achieve($uid, $mode, $value, -100-$season);
@@ -329,18 +331,18 @@ class Tool_Admin {
             Syslogd::in();
             $points = Array();
 
-            Syslogd::sprint("Lade Ranking... ");
+            Syslogd::sprint('Lade Ranking... ');
             $ranks = DB::select(array(DB::expr('GROUP_CONCAT(`uid` SEPARATOR \';\')'), 'uids'))->from('ranking_mp')->join('ranking', 'LEFT')->on('ranking_mp.gameid', '=', 'ranking.gameid')->on('ranking_mp.season', '=', 'ranking.season')->where('ranking_mp.season', '=', $season)->and_where('ranking_mp.board', '=', $mode)->group_by('ranking_mp.gameid')->order_by('ranking_mp.points', 'DESC')->limit(10)->execute()->as_array();
-            Syslogd::sprintln("OK");
+            Syslogd::sprintln('OK');
 
-            Syslogd::sprintln("Berechne Auszeichnungen... ");
+            Syslogd::sprintln('Berechne Auszeichnungen... ');
             Syslogd::in();
 
             foreach ($ranks as $place => $rank) {
 
-                if		($place == 0) $point = 10;
-                elseif	($place == 1) $point = 5;
-                elseif	($place == 2) $point = 3;
+                if		($place === 0) $point = 10;
+                elseif	($place === 1) $point = 5;
+                elseif	($place === 2) $point = 3;
                 else				  $point = 1;
 
                 if (!$rank['uids'])
@@ -354,7 +356,7 @@ class Tool_Admin {
             }
             Syslogd::out();
 
-            Syslogd::sprintln("Vergebe Auszeichnungen");
+            Syslogd::sprintln('Vergebe Auszeichnungen');
             Syslogd::in();
             foreach ($points as $uid => $value)
                 static::achieve($uid, $mode, $value, -100-$season);
@@ -362,21 +364,21 @@ class Tool_Admin {
             Syslogd::out();
         }
 
-        Syslogd::sprintln("Verarbeite Mentorenranking");
+        Syslogd::sprintln('Verarbeite Mentorenranking');
         Syslogd::in();
 
-        Syslogd::sprint("Lade Ranking... ");
+        Syslogd::sprint('Lade Ranking... ');
         $ranks = DB::select(Array(DB::expr('SUM(`points`)'), 'points'), Array('mentor.mentor', 'uid'))->from('ranking')->join('mentor')->on('mentor.uid', '=', 'ranking.uid')->group_by('mentor.mentor')->where('season', '=', $season)->and_where('mentor.mentor', '>', 0)->limit(10)->order_by('points', 'DESC')->execute()->as_array();
-        Syslogd::sprintln("OK");
+        Syslogd::sprintln('OK');
 
-        Syslogd::sprintln("Berechne und vergebe Auszeichnungen... ");
+        Syslogd::sprintln('Berechne und vergebe Auszeichnungen... ');
         Syslogd::in();
 
         foreach ($ranks as $place => $rank) {
 
-            if		($place == 0) $point = 10;
-            elseif	($place == 1) $point = 5;
-            elseif	($place == 2) $point = 3;
+            if		($place === 0) $point = 10;
+            elseif	($place === 1) $point = 5;
+            elseif	($place === 2) $point = 3;
             else				  $point = 1;
 
             Syslogd::sprintln("Platz {$place}: Spieler #{$rank['uid']}, {$point} Punkte");

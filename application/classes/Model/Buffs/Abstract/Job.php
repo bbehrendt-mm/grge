@@ -14,19 +14,22 @@ abstract class Model_Buffs_Abstract_Job extends Model_Buffs_Abstract_Buff {
 		$this->adjust();
 	}
 	
-	abstract protected function adjust();
+	abstract protected function adjust(): void;
 	
-	public function icon() {
-		return "buffs/" . static::$bid . "/" . $this->level;
+	public function icon(): string
+    {
+		return 'buffs/' . static::$bid . '/' . $this->level;
 	}
 	
-	public function name() {
+	public function name(): string
+    {
 		if (isset(static::$name[$this->level - 1]))
             return static::$name[$this->level - 1];
         else return static::$name[count(static::$name) - 1];
 	}
 	
-	public function description() {
+	public function description(): string
+    {
         if (isset(static::$desc[$this->level - 1]))
             return static::$desc[$this->level - 1];
         else return static::$desc[count(static::$name) - 1];

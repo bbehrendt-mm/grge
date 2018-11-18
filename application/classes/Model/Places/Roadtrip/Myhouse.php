@@ -16,30 +16,36 @@ class Model_Places_Roadtrip_Myhouse extends Model_Places_Abstract_Hideout {
     //Exp: 8% per day
     protected static $decay_exp = 0;
 
-    public function setup_additional_rooms() {
+    public function setup_additional_rooms(): void
+    {
         $this->setup_new_room($this->room(),
                               [],
                               ['deffence1','fence']);
         $this->setup_new_room($this->create_new_room( 10,['inside']),
                               ['utilities'],
                               ['gen1','gen2'],
-                              "Keller");
+            'Keller'
+        );
         $this->setup_new_room($this->create_new_room( 10,['inside']),
                               ['bedroom'],
                               ['bedr1','bedr2','bedr3'],
-                              "Schlafzimmer");
+            'Schlafzimmer'
+        );
         $this->setup_new_room($this->create_new_room( 15,['inside']),
                               ['community'],
                               ['sofa1','sofa2'],
-                              "Stube");
+            'Stube'
+        );
         $this->setup_new_room($this->create_new_room( 12,['inside']),
                               ['kitchen'],
                               ['ktc2','ktc3','ktc4'],
-                              "Küche");
+            'Küche'
+        );
         $this->setup_new_room($this->create_new_room( 7,['inside']),
                               ['workshop'],
                               [],
-                              "Garage");
+            'Garage'
+        );
 
         $this->create_new_room(10,['inside']);
     }

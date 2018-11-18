@@ -27,7 +27,8 @@ class Model_Items_Catclaw extends Model_Combat_Weapon {
         $this->neko = $allow_neko;
     }
 
-    public function name() {
+    public function name(): string
+    {
         return Tool_Gambling::random(0.05) ? 'Neko Punch!' : parent::name();
     }
 

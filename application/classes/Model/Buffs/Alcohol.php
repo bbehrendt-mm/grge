@@ -23,7 +23,8 @@ class Model_Buffs_Alcohol extends Model_Buffs_Abstract_Buff {
 	);
     protected function get_effects(): array { return $this->effects; }
 	
-	public function rebuild() {
+	public function rebuild(): bool
+    {
 		$drunk = $this->assoc_player->get_status()->get(Model_Status::MS_STAT_DRUNK);
 		
 		if ($drunk > 0) {

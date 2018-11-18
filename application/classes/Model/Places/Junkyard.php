@@ -24,7 +24,8 @@ class Model_Places_Junkyard extends Model_Places_Abstract_Place {
         else return $this->splinter_load += $dif;
 	}
 	
-	private function initial_supply() {
+	private function initial_supply(): void
+    {
 		$this->initial_supply = true;
 		$this->inventory->add(new Model_Items_Body('Steve', 'Auf seinem blauen Overall ist ein Namensschild - "Steve". Anscheinend hat Steve früher hier gearbeitet. Und handwerklich geschickt war er auch, denn neben ihm findest du einen Splitterwerfer. Du hast ganz schön Glück, dass du ständig Tote findest die cooles Zeug dabei haben, weist du das eigentlich?'));
 		$this->inventory->add(new Model_Items_Splinter);
@@ -33,7 +34,8 @@ class Model_Places_Junkyard extends Model_Places_Abstract_Place {
 		$this->log->add(new Model_Log_Types_String('Ein hilfreicher Fund', 'Neben einem kleinen Schuppen findest du hinter einer Wand aus Kisten eine Leiche. Der arme Kerl wollte sich wohl vor den Zombies verstecken. Scheint nicht geklappt zu haben ...'));
 	}
 	
-	public function tick($type = Interface_Tickable::IT_TYPE_PLAYER) {
+	public function tick($type = Interface_Tickable::IT_TYPE_PLAYER): bool
+    {
 		if (!$this->initial_supply && Globals::CurrentPlayerF()->can(Interface_Plentity::IC_TRIGGER_SUPPLIES))
 		{
 			$this->initial_supply();

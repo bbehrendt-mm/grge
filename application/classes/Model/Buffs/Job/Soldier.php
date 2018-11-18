@@ -21,7 +21,8 @@ class Model_Buffs_Job_Soldier extends Model_Buffs_Abstract_Job {
 
     protected function get_effects(): array { return $this->effects; }
 
-	protected function adjust() {
-		$this->effects[Model_Status::MS_CHAR_ACCURACY][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = $this->level == 1 ? 0.05 : 0.1;
+	protected function adjust(): void
+    {
+		$this->effects[Model_Status::MS_CHAR_ACCURACY][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = $this->level === 1 ? 0.05 : 0.1;
 	}	
 }

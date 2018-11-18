@@ -11,7 +11,8 @@ class Model_Items_Generic_Egg3 extends Model_Items_Abstract_Easteregg implements
 
     protected static $value = 5;
 
-    public function take($silent = false) {
+    public function take($silent = false): bool
+    {
         if ($this->new && !Globals::shadowPlayerExists())
             Globals::PrimaryPlayerF()->achievements()->achieve(Model_Achievement::MA_EASTER);
 

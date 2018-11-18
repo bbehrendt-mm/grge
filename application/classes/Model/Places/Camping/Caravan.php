@@ -16,7 +16,8 @@ class Model_Places_Camping_Caravan extends Model_Places_Abstract_Hideout {
     //Exp: 8% per day
     protected static $decay_exp = 0.10;
 
-    public function setup_additional_rooms() {
+    public function setup_additional_rooms(): void
+    {
         $this->create_new_room( 5,['inside']);
 
         $this->setup_new_room($this->create_new_room( 5,['inside']),
@@ -25,11 +26,13 @@ class Model_Places_Camping_Caravan extends Model_Places_Abstract_Hideout {
         $this->setup_new_room($this->create_new_room( 5,['inside']),
                               ['bedroom'],
                               ['bedr1'],
-                              "Schlafzimmer");
+            'Schlafzimmer'
+        );
         $this->setup_new_room($this->create_new_room( 5,['inside']),
                               ['kitchen'],
                               [],
-                              "Küche");
+            'Küche'
+        );
 
         $this->create_new_room(15,['outside']);
     }

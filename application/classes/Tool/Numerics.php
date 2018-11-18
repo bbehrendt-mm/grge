@@ -3,7 +3,8 @@
 class Tool_Numerics {
 
 	//Makes sure, value is between min and max
-	public static function bounds(&$value, $min, $max) {
+	public static function bounds(&$value, $min, $max): void
+    {
 		if ($min <= $max) $value = min($max, max($min, $value));
 	}
 	
@@ -15,21 +16,20 @@ class Tool_Numerics {
 			$mod = -1;
 			self::swap($value_after, $value_before);
 		//Return 0 if both values are identical
-		} elseif ($value_after == $value_before) return 0;
+		} elseif ($value_after === $value_before) return 0;
 		$ret = 0;
 
 		//Iterate over all steps and memorize the last crossed step
-		$c = count($steps);
-        for ($i = 0; $i < $c; $i++) {
-			if ($value_before >= $steps[$i] && $value_after < $steps[$i]) $ret = $i+1;
-		}
+        foreach ($steps as $i => $iValue)
+			if ($value_before >= $iValue && $value_after < $iValue) $ret = $i+1;
 
-		//Return step ID; negate if values needed to be swapped
+        //Return step ID; negate if values needed to be swapped
 		return $mod*$ret;
 	}
 	
 	//Swaps the contends of both given variables
-	public static function swap(&$a, &$b) {
+	public static function swap(&$a, &$b): void
+    {
 		$t = $a;
 		$a = $b;
 		$b = $t;
@@ -42,7 +42,8 @@ class Tool_Numerics {
 	}
 	
 	//Converts a duration (in ticks) into a readable string
-	public static function duration_to_string( $duration ) {
+	public static function duration_to_string( $duration ): string
+    {
 		$letters = __('WTHM');
 
         if ($duration <= 0) return '0' . $letters[3];
@@ -68,7 +69,8 @@ class Tool_Numerics {
 	}
 	
 	//Converts a duration (in ticks) into a readable string
-	public static function duration_to_split( $duration ) {
+	public static function duration_to_split( $duration ): array
+    {
 		$ret = array();
 			
 		$weeks = floor($duration/2016);

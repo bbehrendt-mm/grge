@@ -18,11 +18,13 @@ class Model_Places_Hotel extends Model_Places_Abstract_Hideout {
     //Exp: 8% per day
     protected static $decay_exp = 0.02;
 
-    public function setup_additional_rooms() {
+    public function setup_additional_rooms(): void
+    {
         for ($i = 0; $i < 6; $i++)
             $this->setup_new_room($this->create_new_room(8,['inside']),
                                   ['bedroom'],
                                   ['bedr1','bedr2','bedr3'],
-                                  "Hotelzimmer");
+                'Hotelzimmer'
+            );
     }
 }	

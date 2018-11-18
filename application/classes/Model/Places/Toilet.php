@@ -8,15 +8,18 @@ class Model_Places_Toilet extends Model_Places_Abstract_Place
     protected static $icon = 'toilet';
     protected static $outside = false;
 
-    public function tick($type = Interface_Tickable::IT_TYPE_PLAYER) {
-        if (Globals::CurrentPlayerF()->can(Interface_Plentity::IC_TRIGGER_SUPPLIES)) {
-
-            if (Globals::CurrentGameF()->config('places.toilet.spawn_sherri') && !Globals::CurrentGameF()->get_npc('sherri')) {
-                $sherri = new Model_NPC_Special_Sherri();
-                $sherri->location_class($this->uin());
-                Globals::CurrentGameF()->add_npc($sherri, 'sherri');
-                $this->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $sherri->id(), true));
-            }
+    public function tick($type = Interface_Tickable::IT_TYPE_PLAYER): bool
+    {
+        if (Globals::CurrentPlayerF()->can(
+                Interface_Plentity::IC_TRIGGER_SUPPLIES
+            )
+            && Globals::CurrentGameF()->config('places.toilet.spawn_sherri')
+            && !Globals::CurrentGameF()->get_npc('sherri')
+        ) {
+            $sherri = new Model_NPC_Special_Sherri();
+            $sherri->location_class($this->uin());
+            Globals::CurrentGameF()->add_npc($sherri, 'sherri');
+            $this->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $sherri->id(), true));
         }
 
         return parent::tick($type);

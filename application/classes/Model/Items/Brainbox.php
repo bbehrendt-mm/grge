@@ -24,7 +24,7 @@ class Model_Items_Brainbox extends Model_Items_Abstract_Stackable {
                             ->effect(Model_Status::MS_STAT_ENERGY, 3)
                             ->effect(Model_Status::MS_STAT_HEALTH, -11)
                             ->consume($this)
-                            ->message('Oh mein Gott, du hast tatsächlich eins der Gehirne GEGESSEN? ' . (($this->count > 2) ? 'Jetzt sind noch :num Gehirne in der Kiste.' : (($this->count == 2) ? 'Ein Gehirn befindet sich noch in der Kiste.' : 'Die Kiste ist leer!')), array(':num' => $this->count - 1))
+                            ->message('Oh mein Gott, du hast tatsächlich eins der Gehirne GEGESSEN? ' . (($this->count > 2) ? 'Jetzt sind noch :num Gehirne in der Kiste.' : (($this->count === 2) ? 'Ein Gehirn befindet sich noch in der Kiste.' : 'Die Kiste ist leer!')), array(':num' => $this->count - 1))
                     )
             );
     }

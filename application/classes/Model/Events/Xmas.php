@@ -8,19 +8,23 @@ class Model_Events_Xmas extends Model_Events_Event {
     private $maps = [];
     private $item_list = [];
 
-    public function register_event_map($map) {
+    public function register_event_map($map): void
+    {
         $this->maps[] = $map;
     }
 
-    public function register_event_item($item) {
+    public function register_event_item($item): void
+    {
         $this->item_list[] = $item;
     }
 
-    public function register_event_npc($npc) {
+    public function register_event_npc($npc): void
+    {
         $this->npc_list[] = $npc;
     }
 
-    public function place_conductor(Model_Places_Abstract_Place $place) {
+    public function place_conductor(Model_Places_Abstract_Place $place): void
+    {
         $conductor = new Model_NPC_Event_Conductor();
         $conductor->location_class($place->uin());
         Globals::CurrentGameF()->add_npc($conductor);
@@ -28,7 +32,7 @@ class Model_Events_Xmas extends Model_Events_Event {
         $this->npc_list[] = $conductor->id();
     }
 
-    protected function trigger_activation()
+    protected function trigger_activation(): bool
     {
         foreach (Globals::CurrentGameF()->playable_entities() as $pl) if (!Tool_Scripts::is_npc($pl)) {
             new Model_Buffs_Event_Rudolph($pl);
@@ -42,7 +46,8 @@ class Model_Events_Xmas extends Model_Events_Event {
         return true;
     }
 
-    protected function trigger_deactivation() {
+    protected function trigger_deactivation(): bool
+    {
         foreach ($this->item_list as $iuin) {
             /** @var Model_Items_Abstract_Item $i */
             $i = Globals::CurrentGameF()->uin()->get($iuin, Model_Items_Abstract_Item::cls());
@@ -85,22 +90,27 @@ class Model_Events_Xmas extends Model_Events_Event {
         return true;
     }
 
-    public function tick() {}
+    public function tick(): bool
+    {}
 
-    public function event_playerCreation(Interface_Plentity $entity) {
+    public function event_playerCreation(Interface_Plentity $entity): void
+    {
         if ($entity->can(Interface_Plentity::IC_TRIGGER_ITEM_FINDINGS))
             new Model_Buffs_Event_Rudolph($entity);
 
     }
 
-    public function event_locationCreation(Model_Places_Abstract_Place $place) {
+    public function event_locationCreation(Model_Places_Abstract_Place $place): void
+    {
         if (Tool_System::instance_of($place, Model_Places_Outworld::cls()))
             $this->place_conductor($place);
     }
 
-    public function event_locationTick(Model_Places_Abstract_Place $place) {}
+    public function event_locationTick(Model_Places_Abstract_Place $place): void
+    {}
 
-    public function event_generateHIDStack(Model_Items_Abstract_Item $item, Model_Hid $hid) {
+    public function event_generateHIDStack(Model_Items_Abstract_Item $item, Model_Hid $hid): void
+    {
         // Coffee
         if (Tool_System::instance_of($item, Model_Items_Coffee2::cls())) {
 
@@ -113,9 +123,10 @@ class Model_Events_Xmas extends Model_Events_Event {
         }
     }
 
-    private function mergedHIDCallback($cls, $name, Model_Action $action) {
+    private function mergedHIDCallback($cls, $name, Model_Action $action): void
+    {
 
-        if (Tool_System::instance_of($cls, Model_Items_Coffee2::cls()) && $name == 'Trinken') {
+        if ($name === 'Trinken' && Tool_System::instance_of($cls, Model_Items_Coffee2::cls())) {
 
             $effect = &$action->get_effect(0);
             if ($effect)
@@ -123,15 +134,18 @@ class Model_Events_Xmas extends Model_Events_Event {
         }
     }
 
-    public function event_executeHIDAction($cls, $name, Model_Action $action) {$this->mergedHIDCallback($cls,$name,$action);}
+    public function event_executeHIDAction($cls, $name, Model_Action $action): void
+    {$this->mergedHIDCallback($cls,$name,$action);}
 
-    public function event_renderHIDAction($cls, $name, Model_Action $action) {$this->mergedHIDCallback($cls,$name,$action);}
+    public function event_renderHIDAction($cls, $name, Model_Action $action): void
+    {$this->mergedHIDCallback($cls,$name,$action);}
 
-    public function event_findItem(Model_Places_Abstract_Place $place, Model_Items_Abstract_Item $item) {}
+    public function event_findItem(Model_Places_Abstract_Place $place, Model_Items_Abstract_Item $item): void
+    {}
 
-    public function event_blueprintCreation($config_name, $config_category)
+    public function event_blueprintCreation($config_name, $config_category): ?Model_Blueprints
     {
-        if ($config_name == 'Abstract_Hideout' && $config_category == 'items') {
+        if ($config_name === 'Abstract_Hideout' && $config_category === 'items') {
             return Model_Blueprints::factory()
                 ->add_blueprints(
                     Model_Blueprint::factory()

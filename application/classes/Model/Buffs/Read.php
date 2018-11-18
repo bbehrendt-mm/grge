@@ -46,7 +46,8 @@ class Model_Buffs_Read extends Model_Buffs_Abstract_Fragile {
         }
 	}
 
-    public function tick() {
+    public function tick(): bool
+    {
         if (!Globals::CurrentGameF()->item_available($this->item_id) || !($item = Globals::CurrentGameF()->uin()->get($this->item_id, Model_Items_Abstract_Book::cls()))) {
             $this->cancel();
             return;
@@ -59,7 +60,8 @@ class Model_Buffs_Read extends Model_Buffs_Abstract_Fragile {
             $this->unbuff();
     }
 	
-	public function cancel() {
+	public function cancel(): bool
+    {
 		if ($buff = $this->assoc_player->get_status()->retrieve('sleep_cozy'))
 			$buff->unbuff();
 		$this->assoc_player->log()->add('Zeit, die Lektüre wegzulegen und wieder in die reale Welt einzusteigen, die in Wahrheit gar nicht real sondern ein Browserspiel ist.');

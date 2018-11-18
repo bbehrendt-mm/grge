@@ -49,32 +49,37 @@ abstract class Model_Items_Abstract_Stackable extends Model_Items_Abstract_Item 
 	public function count() {
 		return $this->count;
 	}
-	
-	/**
-	 * Will consume $count elements (i.e. reduce stack count by $count)
-	 * @param int $count Reduce by; default is 1
-	 * @return int How many elements were actually consumed
-	 * @see Model_Items_Abstract_Item::consume()
-	 */
-	public function consume($count = 1) {
+
+    /**
+     * Will consume $count elements (i.e. reduce stack count by $count)
+     *
+     * @param int $count Reduce by; default is 1
+     *
+     * @return void How many elements were actually consumed
+     * @see Model_Items_Abstract_Item::consume()
+     */
+	public function consume($count = 1): void {
 		if ($this->count > $count) {	//We have enough elements to satisfy the demand
 			$this->count -= $count;		//Reduce count
 			return $count;				
-		} else {						//We don't have enough elements to satisfy the demand
-			parent::consume();			//Destroy stack
-			return $this->count;		//Return how many elements were actually consumed
 		}
-	}
+
+        //We don't have enough elements to satisfy the demand
+        parent::consume();            //Destroy stack
+        return $this->count;        //Return how many elements were actually consumed
+    }
 	
-	public function stackname() {
-		return static::$autoappender[($this->count == 1) ? 0 : 1];
+	public function stackname(): ?string
+    {
+		return static::$autoappender[($this->count === 1) ? 0 : 1];
 	}
 	
 	/**
 	 * Returns true when this object stack is full
 	 * @return boolean
 	 */
-	public function is_stack_full() {
+	public function is_stack_full(): bool
+    {
 		return (static::$max_size > 0) && ($this->count >= static::$max_size);
 	}
 
@@ -82,7 +87,8 @@ abstract class Model_Items_Abstract_Stackable extends Model_Items_Abstract_Item 
      * Returns max stack size
      * @return int
      */
-    public function stack_max_size() {
+    public function stack_max_size(): int
+    {
         return static::$max_size;
     }
 
@@ -103,16 +109,18 @@ abstract class Model_Items_Abstract_Stackable extends Model_Items_Abstract_Item 
 		//Iterate over all targets; do nothing if this stack or the target stack is full
 		/** @var Model_Items_Abstract_Stackable $target */
         foreach ($targets as $target)
-            if (!($this->uin() == $target->uin() || $this->is_stack_full() || $target->is_stack_full()))
-			    $this->count += $target->consume( (static::$max_size == 0) ? PHP_INT_MAX : (static::$max_size - $this->count) );
+            if (!($target->is_stack_full() || $this->is_stack_full() || $this->uin() === $target->uin()))
+			    $this->count += $target->consume( (static::$max_size === 0) ? PHP_INT_MAX : (static::$max_size - $this->count) );
 	}
-	
-	/**
-	 * Splits this stack and creates a new stack with a size of $splitval
-	 * @param int $splitval
-	 * @return Model_Items_Abstract_Stackable The created stack, or null if creating was not succesfull
-	 */
-	protected function split($splitval) {
+
+    /**
+     * Splits this stack and creates a new stack with a size of $splitval
+     *
+     * @param int $splitval
+     *
+     * @return Model_Items_Abstract_Stackable The created stack, or null if creating was not succesfull
+     */
+	protected function split($splitval): Model_Items_Abstract_Stackable {
 		//Check if this stack is big enough to split
 		if ($this->count <= $splitval) return null;
 		

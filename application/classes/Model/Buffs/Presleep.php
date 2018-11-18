@@ -47,8 +47,9 @@ class Model_Buffs_Presleep extends Model_Buffs_Abstract_Fragile {
 
     protected function get_effects(): array { return $this->effects; }
 	
-	public function rebuild() {
-	    if ($this->assoc_player->get_status()->get(Model_Status::MS_STAT_SLEEPY) == 100) {
+	public function rebuild(): bool
+    {
+	    if ($this->assoc_player->get_status()->get(Model_Status::MS_STAT_SLEEPY) === 100) {
 			if ($this->associated_to_player()) $this->assoc_player->achievements()->achieve(Model_Achievement::MA_SLEEP);
 			return $this->unbuff();
 		}
@@ -65,7 +66,7 @@ class Model_Buffs_Presleep extends Model_Buffs_Abstract_Fragile {
         $this->effects[Model_Status::MS_STAT_ENERGY][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = 0.15;
         $this->effects[Model_Status::MS_STAT_SLEEPY][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = 0.15;
 
-        if (Tool_Scripts::get_timeofday($this->assoc_player) == 'snowynight')
+        if (Tool_Scripts::get_timeofday($this->assoc_player) === 'snowynight')
             $this->effects[Model_Status::MS_STAT_FREEZE][Model_Buffs_Abstract_Buff::MB_RAISE_PRC] = 0.5;
 
 		return parent::rebuild();

@@ -2,7 +2,8 @@
 
 class Model_Items_Virtual_Invoke_Animal extends Model_Items_Virtual_Invoke_Abstract {
 
-    public function trigger_spawn(Model_Places_Abstract_Place $location, Interface_Plentity $player) {
+    public function trigger_spawn(Model_Places_Abstract_Place $location, Interface_Plentity $player): void
+    {
         if (!Tool_Gambling::random(0.3/(1+Globals::CurrentGameF()->count('rnd_animals')))) return;
         Globals::CurrentGameF()->count('rnd_animals', 1);
 

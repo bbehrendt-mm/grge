@@ -7,7 +7,8 @@ class Controller_Lobby extends Controller {
     /**
      * News Renderer
      */
-    public function action_main() {
+    public function action_main(): void
+    {
         $this->add_menu('logout');
         $this->add_widget(View::factory('pages/main')
             ->set('ingame', (bool)Globals::CurrentUserF()->get_current_game())
@@ -24,9 +25,10 @@ class Controller_Lobby extends Controller {
     /**
      * New user landing page
      */
-    public function action_newuser() {
+    public function action_newuser(): bool
+    {
         if (Globals::CurrentUserF()->soulpoints() > 0 || Model_Euser::mentor_id(Globals::CurrentUserF()->uid()) !== null) {
-            $this->redirect(URL::site('lobby/main',true));
+            self::redirect(URL::site('lobby/main',true));
             return false;
         }
 
@@ -39,7 +41,7 @@ class Controller_Lobby extends Controller {
 
     private function get_feed($fid, $length, $offset) {
 
-        $cacheable = ($length == 5 && $offset == 0);
+        $cacheable = ($length === 5 && $offset === 0);
         $cache = $cacheable ? Cache::instance()->get("forum_default_$fid", null) : null;
         $cached = !(!$cache || !$cache['time'] || !$cache['data']);
 
@@ -65,13 +67,13 @@ class Controller_Lobby extends Controller {
                 ])), true);
 
                 if ($ret === null)
-                    throw new Exception('Failed to retrieve forum listing.');
+                    throw new RuntimeException('Failed to retrieve forum listing.');
                 else {
                     if ($cacheable) Cache::instance()->set("forum_default_$fid", ['time' => time(), 'data' => $ret]);
                     return $ret;
                 }
             } catch (Exception $e) {
-                return ($cached) ? $cache['data'] : false;
+                return $cached ? $cache['data'] : false;
             }
 
         } else return $cache['data'];
@@ -83,9 +85,10 @@ class Controller_Lobby extends Controller {
      * @return bool
      * @throws Kohana_Exception
      */
-    public function japi_feedproxy() {
+    public function japi_feedproxy(): bool
+    {
         // Get config
-        $offset = max(0,(int)$this->request->current()->post('page') - 1) * 5;
+        $offset = max(0,(int)Request::current()->post('page') - 1) * 5;
         $url = Kohana::$config->load('services.newsfeed.link');
         $fid = Kohana::$config->load('services.newsfeed.topics');
 

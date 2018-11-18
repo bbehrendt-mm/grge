@@ -26,7 +26,8 @@ class Model_Combat_Players_Rudolph extends Model_Combat_Players_Player {
      * @return Model_Combat_Players_Rudolph
      * @throws Exception
      */
-    public static function create_linked_actor($p, $avatar = 'dog.jpg'): Model_Combat_Players_Rudolph {
+    public static function create_linked_actor($p, $avatar = 'dog.jpg'): Model_Combat_Players_Player
+    {
         /** @var Model_Combat_Players_Rudolph $ret */
         $ret = static::factory();
         $ret
@@ -38,7 +39,8 @@ class Model_Combat_Players_Rudolph extends Model_Combat_Players_Player {
         $ret->add_weapon(new Model_Items_Hoof());
         $ret->avatar = $avatar;
 
-        if ($p->get_status()->get(Model_Status::MS_STAT_DRUNK) > 25) $ret->add_modifier("drunk", ($p->get_status()->get(Model_Status::MS_STAT_DRUNK)-25)*(4/300));
+        if ($p->get_status()->get(Model_Status::MS_STAT_DRUNK) > 25) $ret->add_modifier(
+            'drunk', ($p->get_status()->get(Model_Status::MS_STAT_DRUNK)-25)*(4/300));
 
         return $ret;
     }

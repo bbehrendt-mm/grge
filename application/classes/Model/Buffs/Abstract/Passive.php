@@ -4,17 +4,20 @@ abstract class Model_Buffs_Abstract_Passive extends Model_Buffs_Abstract_Buff {
 	
 	protected $active = false;
 	
-	public function visible($remoteable = true) {
+	public function visible($remoteable = true): bool
+    {
 		return parent::visible($remoteable) && $this->active;
 	}
 
-    public function active() {
+    public function active(): bool
+    {
         return $this->active;
     }
 	
-	protected abstract function activator();
+	protected abstract function activator(): bool;
 	
-	public function rebuild() {
+	public function rebuild(): bool
+    {
 		$switch = $this->activator();
 		$update = (!$this->active && $switch) || ($this->active && !$switch);	
 		$this->active = $switch;

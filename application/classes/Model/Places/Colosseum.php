@@ -48,17 +48,19 @@ class Model_Places_Colosseum extends Model_Places_Abstract_Place {
 		return ($this->stage > 15) ? Array('distance' => 100, 'zombies' => Array('Model_Combat_Zombies_Behemoth' => $this->stage - 15)) : static::$stageconf[$this->stage];
 	}
 
-	private function battle() {
+	private function battle(): void
+    {
         $zmb = array();
         if ($this->stage > 15) $zmb[] = Model_Combat_Zombies_Behemoth::factory()->count($this->stage - 15);
         else foreach (static::$stageconf[$this->stage]['zombies'] as $z => $c)
             /** @var Model_Combat_Zombies_Zombie $z */
             $zmb[] = $z::factory()->count($c);
 
-		Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $zmb], false, ($this->stage > 15) ? 60 : static::$stageconf[$this->stage]['distance'], $this, $this->stage == 0 ? 'Der Qualifikationskampf im Kolosseum beginnt!' : ['Der Kampf auf Ebene :level des Kolosseums beginnt!', [':level' => $this->stage]]);
+		Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $zmb], false, ($this->stage > 15) ? 60 : static::$stageconf[$this->stage]['distance'], $this, $this->stage === 0 ? 'Der Qualifikationskampf im Kolosseum beginnt!' : ['Der Kampf auf Ebene :level des Kolosseums beginnt!', [':level' => $this->stage]]);
 	}	
 	
-	private function reward_roulette($level) {
+	private function reward_roulette($level): ?array
+    {
 		
 		$rewards = Array(
 			1 => Array(
@@ -102,8 +104,9 @@ class Model_Places_Colosseum extends Model_Places_Abstract_Place {
 		return $rewards[$level][random_int(0, count($rewards[$level]) - 1)]();
 	}
 	
-	private function reward() {
-		if ($this->stage == 0) {
+	private function reward(): void
+    {
+		if ($this->stage === 0) {
 
 			$this->inventory->add(new Model_Items_Ammobelt);
 			$this->inventory->add(new Model_Items_Machete);
@@ -117,22 +120,26 @@ class Model_Places_Colosseum extends Model_Places_Abstract_Place {
 		}
 	}
 	
-	public function level() {
+	public function level(): int
+    {
 		return $this->stage;
 	}
 	
-	private function check_timer() {
-		if ($this->stage == 0 && Globals::CurrentGameF()->duration() > 288) {
+	private function check_timer(): bool
+    {
+		if ($this->stage === 0 && Globals::CurrentGameF()->duration() > 288) {
             Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String(null, 'Ohje, du hast die Qualifikationsphase des Spiels verpasst. Jetzt kannst du nicht mehr am Turnier teilnehmen...'));
 			return false;
-		} elseif ($this->stage > 0 && (Globals::CurrentGameF()->duration() < (288 * ceil($this->stage/2)))) {
+		}
+		if ($this->stage > 0 && (Globals::CurrentGameF()->duration() < (288 * ceil($this->stage/2)))) {
             Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String(null, 'Die Vorbereitungen für dieses Match laufen noch. Komm frühestens an Tag :day wieder.', array(':day' => 1+ceil($this->stage/2))));
 			return false;
-		}	
+		}
 		return true;
 	}
 	
-	public function interaction_participate() {
+	public function interaction_participate(): bool
+    {
 		if (!$this->check_timer()) return false;
 		
 		$this->battle();

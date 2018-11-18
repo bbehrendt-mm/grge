@@ -39,11 +39,11 @@ if (!isset($services)) $services = array();
     <div class="row center">
         <div class="cell rw-6 padded">
             <b><?=__('Seelenpunkte');?></b><br />
-            <?= $soul_points ? $soul_points : __('Keine');?>
+            <?= $soul_points ?: __('Keine');?>
         </div>
         <div class="cell rw-6 padded">
             <b><span class="hide-sm"><?=__('Auszeichnungspunkte');?></span><span class="hide-md hide-lg hide-desktop"><?=__('AP');?></span></b><br />
-            <?= $ach_points ? $ach_points : __('Keine');?>
+            <?= $ach_points ?: __('Keine');?>
         </div>
     </div>
 </div>
@@ -59,7 +59,7 @@ if (!isset($services)) $services = array();
             <?=__('Dein Tod kam sehr überraschend... Niemand kann genau sagen, was passiert ist. Trotzdem bist du tot.'); ?>.
         <?php } ?>
 
-        <?php if ($soul_points == 0) { ?>
+        <?php if ($soul_points === 0) { ?>
             <?=__('Leider hast du es trotz harter Anstrengungen nicht geschafft, Punkte zu erspielen.');?><br />
             <b><?=__('Viel Glück in deinem nächsten Leben!');?></b>
         <?php } elseif ($rankable) { ?>
@@ -79,8 +79,10 @@ if (!isset($services)) $services = array();
                 <?=__('Leider hast du folgende Auszeichnungen knapp verpasst:');?>
             <?php } ?><br />
 
+            <?php $rank_class = ($rankable && $soul_points > 0) ? '' : 'achievement-missed'; ?>
+
             <?php foreach ($achievements as $achievement) { ?>
-                <div data-aid="<?=$achievement['id']?>" class="achievement <?=($rankable && $soul_points > 0) ? '' : 'achievement-missed'?> achievement-<?=$achievement['class']?>">
+                <div data-aid="<?=$achievement['id']?>" class="achievement <?= /** @noinspection DisconnectedForeachInstructionInspection */$rank_class?> achievement-<?= $achievement['class']?>">
                     <img alt="?" src="media/icons/achievements/<?=$achievement['icon']?>" />
                     <span><?=$achievement['count']?></span>
                 </div>
@@ -99,7 +101,7 @@ if (!isset($services)) $services = array();
         </div>
     </div>
 
-    <?php if ($braincoins != 0) { ?>
+    <?php if ($braincoins !== 0) { ?>
         <div class="cell-small rw-14 ro-5 rw-lg-20 ro-lg-2 rw-md-24 ro-md-0">
             <div class="value-box">
                 <div class="row">
@@ -107,7 +109,7 @@ if (!isset($services)) $services = array();
 
                         <div class="row">
                             <div class="cell rw-2 ro-2"><img src="media/icons/coin.gif" alt="bc" /></div>
-                            <div class="cell rw-8 right"><?=(int)$braincoins_account?></div>
+                            <div class="cell rw-8 right"><?= $braincoins_account ?></div>
 
                             <div class="cell rw-2">+</div>
                             <div class="cell rw-2"><img src="media/icons/items/braincoin.gif" alt="bc" /></div>

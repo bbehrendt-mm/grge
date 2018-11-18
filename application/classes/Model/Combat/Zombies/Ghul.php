@@ -28,7 +28,8 @@ class Model_Combat_Zombies_Ghul extends Model_Combat_Zombies_Zombie {
      * @param null|int $new
      * @return Model_Combat_Zombies_Ghul
      */
-    public function zombiefied_player_id($new = null) {
+    public function zombiefied_player_id($new = null): \Model_Combat_Zombies_Ghul
+    {
         if ($new === null) return $this->player_id;
         else $this->player_id = $new;
         return $this;

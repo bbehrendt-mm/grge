@@ -17,7 +17,8 @@ class Model_Combat_Event_Clown extends Model_Combat_Players_Player {
      * @return Model_Combat_Players_Dog
      * @throws Exception
      */
-    public static function create_linked_actor($p) {
+    public static function create_linked_actor($p): Model_Combat_Players_Player
+    {
         /** @noinspection PhpUndefinedMethodInspection */
         $ret = static::factory()
             ->player($p)

@@ -81,7 +81,7 @@ class Model_Items_Virtual_Hero_Common extends Model_Items_Abstract_Virtual {
                 , 'hero_unaddict')
             ;
 
-        if (Globals::CurrentPlayerF()->get_escape_target() && Globals::CurrentPlayerF()->get_escape_target() != Globals::CurrentPlayerF()->location_class())
+        if (Globals::CurrentPlayerF()->get_escape_target() && Globals::CurrentPlayerF()->get_escape_target() !== Globals::CurrentPlayerF()->location_class())
             $tmp->add_action('Überstürzte Flucht', Model_Action::factory()
                 ->buttonskin('context')
                 ->description('Hast du dich in einer Ruine verlaufen, dann verwende diese Aktion um aus deiner misslichen Lage zu befreien und zum Eingang zurückzukehren. ACHTUNG: Du wirst während der Flucht die meisten deiner Gegenstände verlieren und dir sehr wahrscheinlich eine Verletzung zuziehen. Wird der Fluchtweg von Zombies blockiert, verlierst du 20 Gesundheit für jeden Zombie - du behälst jedoch mindestens 1 Gesundheitspunkt nach der Flucht. Die Zombies werden durch diese Aktion nicht getötet!')

@@ -53,15 +53,15 @@ abstract class Model_Gamelayer_Storage extends Model {
      * Returns this games UIN Manager
      * @return Model_Uinmanager
      */
-    abstract public function uin();
+    abstract public function uin(): Model_Uinmanager;
 	
-	final public function read($gameid, $write_access = true, $process = null) {
+	final public function read($gameid, $write_access = true, $process = null): bool {
 		$this->read_only = !$write_access;
 		if ($process === null) $process = $write_access;
 
 		//Find
         $chk = DB::select('gameid')->from('games')->where('gameid', '=', $gameid)->execute()->as_array();
-        if (count($chk) != 1)
+        if (count($chk) !== 1)
             return false;
 
         $counter = 0; $locked = false;
@@ -72,12 +72,12 @@ abstract class Model_Gamelayer_Storage extends Model {
         }
 
         if (!$locked)
-            throw new Exception('Unable to obtain database lock!');
+            throw new RuntimeException('Unable to obtain database lock!');
 
 		//Load from DB
 		$set = DB::select()->from('games')->where('gameid', '=', $gameid)->execute()->as_array();
 
-		//If request was successfull, import data from DB into local set
+		//If request was successful, import data from DB into local set
 		if ($set && $set[0])
 		{
 			$this->set = $set[0];
@@ -93,7 +93,9 @@ abstract class Model_Gamelayer_Storage extends Model {
 				DB::delete('games')->where('gameid', '=', $this->set['gameid'])->execute();
 				DB::delete('games_cloud')->where('gameid', '=', $this->set['gameid'])->execute();
                 DB::delete('multiplayer_lobby')->where('gameid', '=', $this->set['gameid'])->execute();
-				throw new Exception("Entschuldigung, das hätte nicht passieren dürfen! Dein auf dem Server gespeicherter Spielstand ist beschädigt und muss gelöscht werden. Du kannst dein Spiel nicht fortsetzen. Bitte kontaktiere einen Administrator und teile ihm folgende Fehlermeldung mit: " . $e->getMessage());
+				throw new RuntimeException(
+                    'Entschuldigung, das hätte nicht passieren dürfen! Dein auf dem Server gespeicherter Spielstand ist beschädigt und muss gelöscht werden. Du kannst dein Spiel nicht fortsetzen. Bitte kontaktiere einen Administrator und teile ihm folgende Fehlermeldung mit: '
+                    . $e->getMessage());
 			}
 			
 			//Process ticks
@@ -104,7 +106,8 @@ abstract class Model_Gamelayer_Storage extends Model {
 		} else return false;
 	}
 	
-	final public function write() {
+	final public function write(): void
+    {
         if ($this->read_only)
             return;
 
@@ -115,7 +118,7 @@ abstract class Model_Gamelayer_Storage extends Model {
 		if (isset($this->set['gamedata']->head->contest) && $this->set['gamedata']->head->contest) 
 			DB::update('contests')->set(array('points' => $this->points()))->where('game_id', '=', $this->set['gameid'])->execute();
 			
-		if (Kohana::$config->load('server.io.performance.force_main_rewrite') || $hash != $this->check_hash)
+		if ($hash !== $this->check_hash || Kohana::$config->load('server.io.performance.force_main_rewrite'))
 			DB::update('games')->set(array('timestamp' => $this->set['gamedata']->timing->last_point, 'gamedata' => $data, 'lock' => 0))->where('gameid', '=', $this->set['gameid'])->execute();
 		else DB::update('games')->set(array('lock' => 0))->where('gameid', '=', $this->set['gameid'])->execute();
 		

@@ -25,12 +25,13 @@ class Model_Log_Types_String extends Model_Log_Message {
 		$this->var = $variables;
 	}
 
-	public function as_notification() {
+	public function as_notification(): bool
+    {
 		$d = $this->postprocess($this->data);
 		return [
-			'info',
+            'info',
 			$d['body'],
-			$d['title'] ? $d['title'] : null,
+			$d['title'] ?: null,
 		];
 	}
 

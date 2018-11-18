@@ -4,10 +4,11 @@ class Controller_Admin_Ranking extends Controller_Admin_Admin {
 
     protected static $auto_require = ['RANKING'];
 
-    private function get_ranking_data($use_season = null) {
+    private function get_ranking_data($use_season = null): array
+    {
         $banned_users = array_map(function($a) {return $a['user'];},DB::select('user')->from('user_flags')->where('relation','=','DENY')->where('data','=','WHITELIST')->execute()->as_array());
 
-        if ($use_season == null) {
+        if ($use_season === null) {
             $use_season = [];
             for ($s = 0; $s <= (int)Kohana::$config->load('server.season'); $s++)
                 $use_season[] = $s;
@@ -53,7 +54,8 @@ class Controller_Admin_Ranking extends Controller_Admin_Admin {
         return $data;
     }
 
-    private function extract_achievement_data($ranks) {
+    private function extract_achievement_data($ranks): array
+    {
         $current_season = (int)Kohana::$config->load('server.season');
 
         $results = [];
@@ -63,9 +65,9 @@ class Controller_Admin_Ranking extends Controller_Admin_Admin {
                 $results[$season][$mode] = [];
                 foreach ($data_m as $data_f) {
                     foreach ($data_f as $p => $rank) {
-                        if		($p == 0) $points = 10;
-                        elseif	($p == 1) $points = 5;
-                        elseif	($p == 2) $points = 3;
+                        if		($p === 0) $points = 10;
+                        elseif	($p === 1) $points = 5;
+                        elseif	($p === 2) $points = 3;
                         else			  $points = 1;
 
                         foreach ($rank['uid'] as $uid => $name) {
@@ -77,7 +79,7 @@ class Controller_Admin_Ranking extends Controller_Admin_Admin {
 
                     foreach ($results[$season][$mode] as $uid => $data) {
                         $t = $results[$season][$mode][$uid];
-                        $results[$season][$mode][$uid]['ok'] = ($t['achievements'] == 0 && $season == $current_season) || ($t['achievements'] == $t['points']);
+                        $results[$season][$mode][$uid]['ok'] = ($t['achievements'] === 0 && $season === $current_season) || ($t['achievements'] === $t['points']);
                     }
                 }
             }
@@ -86,7 +88,8 @@ class Controller_Admin_Ranking extends Controller_Admin_Admin {
         return $results;
     }
 
-    private function error_summary($achievements) {
+    private function error_summary($achievements): array
+    {
         $results = [];
         foreach ($achievements as $season => $data_s) {
             $results[$season] = 0;
@@ -97,8 +100,9 @@ class Controller_Admin_Ranking extends Controller_Admin_Admin {
         return $results;
     }
 
-    public function japi_fix() {
-        $season = (int)$this->request->current()->post('season');
+    public function japi_fix(): bool
+    {
+        $season = (int)Request::current()->post('season');
 
         if ($season < 0 || $season >= (int)Kohana::$config->load('server.season'))
             return $this->render(['success' => 0]);
@@ -119,7 +123,8 @@ class Controller_Admin_Ranking extends Controller_Admin_Admin {
         return $this->render(['success' => 1]);
     }
 
-    public function action_main() {
+    public function action_main(): void
+    {
         $season = (int)Kohana::$config->load('server.season');
         $modes_tmp = array_merge(Tool_Gamemodes::get_singleplayer_modes(), Tool_Gamemodes::get_multiplayer_modes());
         $modes = [];

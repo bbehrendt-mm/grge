@@ -2,12 +2,12 @@
 
 class Model_Log_Types_Built extends Model implements Interface_Message {
 
-    const MLTB_BUILD = 1;
-    const MLTB_WORKBENCH = 2;
-    const MLTB_KITCHEN = 3;
-    const MLTB_GENERATOR = 4;
-    const MLTB_DEFENSE = 5;
-    const MLTB_VARIOUS = 6;
+    public const MLTB_BUILD = 1;
+    public const MLTB_WORKBENCH = 2;
+    public const MLTB_KITCHEN = 3;
+    public const MLTB_GENERATOR = 4;
+    public const MLTB_DEFENSE = 5;
+    public const MLTB_VARIOUS = 6;
 
     private $type;
 	private $project;
@@ -31,14 +31,16 @@ class Model_Log_Types_Built extends Model implements Interface_Message {
 		$this->timecode = time();
 	}
 	
-	public function render_title() {
+	public function render_title(): ?string
+    {
         return null;
 	}
 	
-	public function render_body() {
-        $r = "";
+	public function render_body(): ?string
+    {
+        $r = '';
 
-        if (Globals::PrimaryPlayerF()->id() == $this->player)
+        if (Globals::PrimaryPlayerF()->id() === $this->player)
             switch ($this->type) {
                 case static::MLTB_BUILD:
                     $r = 'Du hast dieses Versteck durch ein/eine/einen :project aufgewertet!';
@@ -84,15 +86,17 @@ class Model_Log_Types_Built extends Model implements Interface_Message {
         return __($r, array(':name' => Globals::CurrentGameF()->get_player_name($this->player), ':project' => __($this->project), ':attv' => $this->effects));
 	}
 	
-	public function timecode() {
+	public function timecode(): int
+    {
 		return $this->timecode;
 	}
 
     /**
      * @param Interface_Message $new
+     *
      * @return bool
      */
-    public function merge($new) {
+    public function merge($new): bool {
         return false;
     }
 }

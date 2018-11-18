@@ -2,22 +2,26 @@
 
 abstract class Model_Buffs_Abstract_Buff extends Model {
 
-	const MB_RAISE_ACC = 1;
-	const MB_RAISE_PRC = 2;
-	const MB_DROP_ACC  = 3;
-	const MB_DROP_PRC  = 4;
+	public const MB_RAISE_ACC = 1;
+	public const MB_RAISE_PRC = 2;
+	public const MB_DROP_ACC  = 3;
+	public const MB_DROP_PRC  = 4;
 
-    const MBR_FULLY_RECESSIVE = 1;
-    const MBR_PARTIALLY_RECESSIVE = 2;
-    const MBR_EQUAL = 3;
-    const MBR_PARTIALLY_DOMINANT = 4;
-    const MBR_FULLY_DOMINANT = 5;
-	
+    public const MBR_FULLY_RECESSIVE = 1;
+    public const MBR_PARTIALLY_RECESSIVE = 2;
+    public const MBR_EQUAL = 3;
+    public const MBR_PARTIALLY_DOMINANT = 4;
+    public const MBR_FULLY_DOMINANT = 5;
+
+    /** @var string|null $name */
 	protected static $name;
+    /** @var string|null $icon */
 	protected static $icon;
+    /** @var string|null $desc */
 	protected static $desc;
+    /** @var string|null $bid */
 	protected static $bid;
-    protected static $alt_id = null;
+    protected static $alt_id ;
 	protected static $visible = true;
     protected static $remotable = true;
     protected static $dominance = Model_Buffs_Abstract_Buff::MBR_EQUAL;
@@ -32,103 +36,118 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
 
     /**
      * Returns the buff name
+     *
      * @return string
      */
-    public function name() {
+    public function name(): string {
 		return static::$name;
 	}
 
-    public function get_dominance() {
+    public function get_dominance(): int
+    {
         return static::$dominance;
     }
 
     /**
      * Returns the buff icon path
+     *
      * @return string
      */
-    public function icon() {
+    public function icon(): string {
 		return static::static_icon();
 	}
 
     /**
      * Returns the buff name
+     *
      * @return string
      */
-    public static function static_name() {
+    public static function static_name(): string {
         return static::$name;
     }
 
     /**
      * Returns the buff icon path
+     *
      * @return string
      */
-    public static function static_icon() {
+    public static function static_icon(): string {
         return 'buffs/' . static::$icon;
     }
 
     /**
      * Returns weather the buff should be visualized
-     * @param bool $remotable Get visibillity status for remote player views
+     *
+     * @param bool $remotable Get visibility status for remote player views
+     *
      * @return bool
      */
-    public function visible($remotable = false) {
+    public function visible($remotable = false): bool {
         return $remotable ? (static::$visible && static::$remotable) : static::$visible;
 	}
 
     /**
      * Returns weather the buff should be visualized
-     * @param bool $remotable Get visibillity status for remote player views
+     *
+     * @param bool $remotable Get visibility status for remote player views
+     *
      * @return bool
      */
-    public static function static_visible($remotable = false) {
+    public static function static_visible($remotable = false): bool {
         return $remotable ? (static::$visible && static::$remotable) : static::$visible;
     }
 
     /**
      * Returns the buff description
+     *
      * @return string
      */
-    public function description() {
+    public function description(): string {
 		return static::$desc;
 	}
 
     /**
      * Returns the buff description
+     *
      * @return string
      */
-    public static function static_description() {
+    public static function static_description(): string {
         return static::$desc;
     }
 
     /**
      * Returns the static buff identifier for this buff
+     *
      * @return string
      */
-    public function bid() {
+    public function bid(): string {
 		return static::$bid;
 	}
 
     /**
      * Returns the static buff identifier for this buff
+     *
      * @return string
      */
-    public static function static_bid() {
+    public static function static_bid(): string {
         return static::$bid;
     }
 
     /**
      * Returns the static buff alternative identifier for this buff
+     *
      * @return string
      */
-    public function abid() {
+    public function abid(): string {
         return static::$alt_id;
     }
 
     /**
      * Returns the static buff alternative identifier for this buff
+     *
      * @return string
      */
-    public static function static_abid() {
+    public static function static_abid(): string {
         return static::$alt_id;
     }
 
@@ -147,21 +166,23 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
             $this->assoc_player = $association;
         else $this->assoc_player = Globals::CurrentGameF()->get_player($association);
 
-        if (!$this->assoc_player) throw new Exception('Invalid buff association!');
+        if (!$this->assoc_player) throw new RuntimeException('Invalid buff association!');
 
         $this->assoc_player->get_status()->add($this);
 
 		$this->apply();
 	}
 
-    protected function associated_to_player() {
+    protected function associated_to_player(): bool
+    {
         return Tool_System::instance_of($this->assoc_player, 'Model_Player');
     }
 
     /**
      * Applies the buff effects to the player
      */
-    protected function apply() {
+    protected function apply(): void
+    {
 		$tmp = Array();
 		foreach (array_keys($this->effects) as $key) {
 			$tmp[] = $key;
@@ -172,18 +193,20 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
 
     /**
      * Removes the buff
+     *
      * @return bool
      */
-    public function unbuff() {
+    public function unbuff(): bool {
 		$this->assoc_player->get_status()->remove($this);
         return true;
 	}
 
     /**
      * Recalculates the lifetime after substracting one lifetime tick; will not do anything when auto-unbuff based on lifetime is disabled
+     *
      * @return bool
      */
-    public function tick() {
+    public function tick(): bool {
 		if ($this->lifetime < 0) return true;
 		else {
 			$this->lifetime--;
@@ -207,17 +230,19 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
 
     /**
      * Recalculates the effects of this buff
+     *
      * @return bool
      */
-    public function rebuild() {
+    public function rebuild(): bool {
 		return true;
 	}
 
     /**
      * Gets called when a new buff with the same buff identifier is cast on a player; the function is called on the resident buff, with the new one as argument
+     *
      * @param Model_Buffs_Abstract_Buff $newclass
      */
-    public function merge($newclass) {}
+    public function merge($newclass): void {}
 
     /**
      * Returns the buff lifetime
@@ -229,13 +254,15 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
 
     /**
      * Called before the buff is removed via the player object
+     *
      * @return bool
      */
-    public function remove() {
+    public function remove(): bool {
         return true;
     }
 
-    public function active() {
+    public function active(): bool
+    {
         return true;
     }
 }

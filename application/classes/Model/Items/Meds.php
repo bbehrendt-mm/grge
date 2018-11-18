@@ -16,6 +16,7 @@ class Model_Items_Meds extends Model_Items_Abstract_Stackable implements Interfa
 
 
     private $effects = array();
+    /** @var string|null $label */
     private $label;
 
     public function __construct($type = null) {
@@ -57,15 +58,17 @@ class Model_Items_Meds extends Model_Items_Abstract_Stackable implements Interfa
             ->add_action('Schlucken', $this->create_action());
     }
 
-    public function label() {
+    public function label(): ?string
+    {
         return $this->label;
     }
 
-    public function set_label($new_text) {
+    public function set_label($new_text): void
+    {
         $new = (bool)$this->label;
         $this->label = mb_substr($new_text, 0, 20);
 
-        if ($this->label == '') Globals::PrimaryPlayerF()->log()->add('Du hast die Beschriftung auf diesem Gegenstand weggewischt.');
+        if ($this->label === '') Globals::PrimaryPlayerF()->log()->add('Du hast die Beschriftung auf diesem Gegenstand weggewischt.');
         elseif (!$new) Globals::PrimaryPlayerF()->log()->add('Du hast diesen Gegenstand mit einer Beschriftung versehen.');
         else Globals::PrimaryPlayerF()->log()->add('Du hast die Beschriftung dieses Gegenstands geändert.');
     }

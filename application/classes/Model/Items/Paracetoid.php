@@ -16,7 +16,8 @@ class Model_Items_Paracetoid extends Model_Items_Abstract_Pillbox {
         Model_Status::MS_STAT_HEALTH => 5
     );
 	
-	public function mixchem($chemval) {
+	public function mixchem($chemval): bool
+    {
         switch ($chemval)
         {
             case 1:

@@ -61,7 +61,7 @@
                                 <?=__('Beschwerden sind eine automatisierte Maßnahme, um gegen Griefer im Spiel vorzugehen. Wenn du in einer Mehrspieler-Partie frühzeitig stirbst erhälst du eine Beschwerde, die nach einer gewissen Zeit wieder verschwindet. Hast du mehr als :max aktive Beschwerden angehäuft, kannst du öffentlichen Partien nicht mehr beitreten. Du kannst allerdings weiterhin eigene Spiele starten und passwortgeschützten Partien beitreten.', [':max' => $lock_max]);?><br /><br />
                                 <?php if ($lock) { ?>
                                     <b><?=__('Da du zuviele Beschwerden angehäuft hast, kannst du bis :time nicht mehr an öffentlichen Pastien teilnehmen!', [':time' => date(__('G:i \U\h\r \a\m d.m.'), $lock_timerange[0])]);?></b>
-                                <?php } elseif ($lock_count == 1) { ?>
+                                <?php } elseif ($lock_count === 1) { ?>
                                     <?=__('Du hast momentan ::b::eine::/b:: aktive Beschwerde!');?>
                                 <?php } else { ?>
                                     <?=__('Du hast momentan ::b:::num::/b:: aktive Beschwerden!', [':num' => $lock_count]);?>
@@ -70,7 +70,8 @@
                         </div>
                     <?php } ?>
 
-                    <?php foreach ($database['modes'] as $mid => $data) if ($data['type'] == 'special_multi_auto') { ?>
+                    <?php foreach ($database['modes'] as $mid => $data) if ($data['type']
+                        === 'special_multi_auto') { ?>
                         <div data-special="<?=$mid?>" class="cell rw-6 rw-lg-12 padded">
                             <div class="<?=$data['locked'] ? 'hotbox disabled' : 'hotbox special' ?>">
                                 <b class="head"><?=__($data['meta']['name'])?></b>
@@ -87,7 +88,7 @@
                                 <i class="subtitle">
                                     <img src="media/icons/<?=$game['locked'] ? 'lock.gif' : "lang/{$game['lang']}.png" ?>" alt="<?=$game['locked'] ? 'locked' : $game['lang'] ?>" />
                                     <?=__($database['modes'][$game['mode']]['meta']['name'])?>,
-                                    <?=$game['slots'] == 1 ? __('noch 1 Platz frei') : __('noch :num Plätze frei', [':num' => $game['slots']]) ?>
+                                    <?=$game['slots'] === 1 ? __('noch 1 Platz frei') : __('noch :num Plätze frei', [':num' => $game['slots']]) ?>
                                 </i>
                                 <?php foreach($game['players'] as $player) { ?>
                                     <span data-id="player-<?=$game['gameid']?>-<?=$player['id']?>" class="inline-player"><?=$player['name']?></span>
@@ -101,7 +102,8 @@
                 <div class="row">
                     <div class="cell rw-6 rw-sm-12">
                         <div class="row">
-                            <?php foreach ($database['modes'] as $mid => $data) if ($data['type'] == 'single') { ?>
+                            <?php foreach ($database['modes'] as $mid => $data) if ($data['type']
+                                === 'single') { ?>
                                 <div class="cell rw-6 rw-lg-12 padded">
                                     <div data-modeset="<?=$mid?>" data-set='{"mode":<?=$mid?>,"id":-1,"protect":"","password":"","name":"","slots":"1","init":1}' data-caption="<?=__($data['meta']['name'])?>" class="<?=$data['locked'] ? 'hotbox disabled' : 'hotbox' ?>">
                                         <b class="head"><?=__($data['meta']['name'])?></b>
@@ -114,7 +116,8 @@
                     </div>
                     <div class="cell rw-6 rw-sm-12">
                         <div class="row">
-                            <?php foreach ($database['modes'] as $mid => $data) if ($data['type'] == 'multi_custom') { ?>
+                            <?php foreach ($database['modes'] as $mid => $data) if ($data['type']
+                                === 'multi_custom') { ?>
                                 <div class="cell rw-6 rw-lg-12 padded">
                                     <div data-modeset="<?=$mid?>" data-set='{"mode":<?=$mid?>,"id":-1,"password":"","flow":-1,"init":1}' data-caption="<?=__($data['meta']['name'])?>" class="<?=$data['locked'] ? 'hotbox disabled' : 'hotbox' ?>">
                                         <b class="head"><?=__($data['meta']['name'])?></b>
@@ -195,9 +198,9 @@
                                     <img src="media/icons/lock.gif" alt="x" />
                                 <?php } else if ($midness) { ?>
                                     <img alt="" src="media/icons/midness.gif">
-                                <?php } else if (count($data['levels']) == 0) { ?>
+                                <?php } else if (count($data['levels']) === 0) { ?>
                                     <img src="media/icons/silverstar.gif" alt="+" />
-                                <?php } elseif (count($data['levels']) + 1 == $data['level']) { ?>
+                                <?php } elseif (count($data['levels']) + 1 === $data['level']) { ?>
                                     <img src="media/icons/superstar.gif" alt="++" />
                                 <?php } else for ($i = 0; $i < $data['level']; $i++) { ?>
                                     <img src="media/icons/star.gif" alt="*" />
@@ -320,7 +323,7 @@
                 <div class="cell rw-8 rw-sm-12 padded">
                     <div class="btn btn-icon" id="btn_cancel">
                         <span class="btn-icon-inner"><i class="fa fa-times"></i></span>
-                        </span><?=__($retreat)?>
+                        <span><?=__($retreat)?></span>
                     </div>
                 </div>
                 <div class="cell rw-4 rw-sm-12 padded">
@@ -373,7 +376,7 @@
         foreach ($database['jobs'] as &$jb_entry) {
             unset($jb_entry['levels']);
             foreach ($jb_entry['meta'] as $t => &$jb_meta)
-                if ($t != 'sign')
+                if ($t !== 'sign')
                     $jb_meta = __($jb_meta);
         }
     unset($jb_entry,$jb_meta);

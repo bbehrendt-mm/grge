@@ -4,7 +4,8 @@ abstract class Model_Buffs_Abstract_Fragile extends Model_Buffs_Abstract_Buff {
 	
 	protected static $bid = 'fragile';
     protected static $alt_id = 'fragile';
-	protected static $abortable;
+	/** @var bool $abortable */
+    protected static $abortable = false;
 
     /**
      * This function is called upon aborting the buff
@@ -16,20 +17,22 @@ abstract class Model_Buffs_Abstract_Fragile extends Model_Buffs_Abstract_Buff {
      * Returns weather this buff is abortable
      * @return bool
      */
-    public function abortable() {
+    public function abortable(): bool {
 		return static::$abortable;
 	}
 
     /**
      * Cancels the buff if it is abortable, otherwise returns false
+     *
      * @return bool True, when the buff was removed, otherwise false
      */
-    public function cancel() {
+    public function cancel(): bool {
 		if (static::$abortable)	return parent::unbuff();
         else return false;
 	}
 	
-	public function unbuff() {
+	public function unbuff(): bool
+    {
 		$tmp = parent::unbuff();
         $this->action_on_complete();
         return $tmp;

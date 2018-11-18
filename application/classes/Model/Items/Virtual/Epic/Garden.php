@@ -4,10 +4,10 @@ class Model_Items_Virtual_Epic_Garden extends Model_Items_Abstract_Virtual {
 
     protected static $manual_ui = true;
 
-    const FERTILIZER_FOOD = 1;
-    const FERTILIZER_DRUGS = 2;
-    const FERTILIZER_CHEM = 3;
-    const FERTILIZER_ALCOHOL = 4;
+    public const FERTILIZER_FOOD = 1;
+    public const FERTILIZER_DRUGS = 2;
+    public const FERTILIZER_CHEM = 3;
+    public const FERTILIZER_ALCOHOL = 4;
 
     private $quality;
     private $fertilizer;
@@ -16,7 +16,8 @@ class Model_Items_Virtual_Epic_Garden extends Model_Items_Abstract_Virtual {
     private $next_watering_end;
     private $harvest_at;
 
-    public function get_planted_state() {
+    public function get_planted_state(): bool
+    {
         return $this->planted;
     }
 
@@ -24,7 +25,8 @@ class Model_Items_Virtual_Epic_Garden extends Model_Items_Abstract_Virtual {
         return $this->get_planted_state() ? (min(10,array_sum($this->fertilizer))/10) : 0;
     }
 
-    private function normalize_fertilizer() {
+    private function normalize_fertilizer(): array
+    {
         $a = [];
         if (!$this->fertilizer) $a =  [];
         elseif (array_sum($this->fertilizer) > 10) {
@@ -39,7 +41,8 @@ class Model_Items_Virtual_Epic_Garden extends Model_Items_Abstract_Virtual {
         return $a;
     }
 
-    public function get_harvest_state() {
+    public function get_harvest_state(): bool
+    {
         return $this->planted && (Globals::CurrentGameF()->duration() >= $this->harvest_at);
     }
 
@@ -73,7 +76,8 @@ class Model_Items_Virtual_Epic_Garden extends Model_Items_Abstract_Virtual {
      * @param $items
      * @param $effect
      */
-    private function register_fertilizer(&$hid, $id, $items, $effect) {
+    private function register_fertilizer(&$hid, $id, $items, $effect): void
+    {
         $action = Model_Action::factory()
             ->buttonskin('epic')
             ->flag('as','fertilize')

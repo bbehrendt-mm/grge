@@ -35,12 +35,12 @@ class Model_Room {
         $this->inventory = new Model_Inventory();
     }
 
-    public function id($new_id = null) {
+    public function id($new_id = null): int {
         if ($new_id === null) return $this->local_id;
         else return $this->local_id = $new_id;
     }
 
-    public function enabled($new_val = null) {
+    public function enabled($new_val = null): bool {
         if ($new_val === null) return $this->is_enabled;
         else return $this->is_enabled = $new_val;
     }
@@ -48,7 +48,8 @@ class Model_Room {
     /**
      * @return Model_Inventory
      */
-    public function inventory() {
+    public function inventory(): \Model_Inventory
+    {
         return $this->inventory;
     }
 
@@ -60,7 +61,8 @@ class Model_Room {
      * @return Model_Room
      * @throws Exception
      */
-    public static function factory($id, $space = 10, $tags = []) {
+    public static function factory($id, $space = 10, $tags = []): \Model_Room
+    {
         $instance = new Model_Room($space,$tags);
         $instance->id($id);
         return $instance;
@@ -72,17 +74,17 @@ class Model_Room {
      *
      * @return string
      */
-    public function name($new_name = null, $force = false) {
+    public function name($new_name = null, $force = false): ?string {
         if ($new_name === null || mb_strlen($new_name) < 2) return $this->room_name ?: null;
         else return $this->room_name = $force ? $new_name :  mb_substr($new_name,0,16);
     }
 
-    public function name_is_fixed($s = null) {
+    public function name_is_fixed($s = null): bool {
         if ($s === null) return $this->name_fixed;
         else return ($this->name_fixed = $s);
     }
 
-    public function name_is_custom($b = null) {
+    public function name_is_custom($b = null): bool {
         if ($b === null) return $this->name_custom;
         else return ($this->name_custom = $b);
     }
@@ -90,7 +92,8 @@ class Model_Room {
     /**
      * @return string[]
      */
-    public function get_content() {
+    public function get_content(): array
+    {
         return $this->contains;
     }
 
@@ -98,12 +101,14 @@ class Model_Room {
      * @param bool $limit_free
      * @return int
      */
-    public function get_space($limit_free = false) {
+    public function get_space($limit_free = false): int
+    {
         if ($this->space < 0) return PHP_INT_MAX;
         return $limit_free ? max(0, $this->space - $this->used_space) : $this->space;
     }
 
-    public function deduct_space($space, $can_fail = true) {
+    public function deduct_space($space, $can_fail = true): bool
+    {
         if ($space === 0) return true;
         if ($can_fail && $space < $this->get_space(true)) return false;
         $this->used_space += $space;
@@ -113,7 +118,8 @@ class Model_Room {
     /**
      * @return string|null
      */
-    public function get_usage() {
+    public function get_usage(): ?string
+    {
         return $this->usage ?: null;
     }
 
@@ -122,7 +128,8 @@ class Model_Room {
      * @param bool|string[] $replace_satisfiers
      * @param string[] $new_satisfiers
      */
-    public function upgrade($new_usage, $replace_satisfiers, $new_satisfiers) {
+    public function upgrade($new_usage, $replace_satisfiers, $new_satisfiers): void
+    {
         $this->usage = $new_usage;
         if ($replace_satisfiers === true) $this->satisfies = [];
         elseif (is_array($replace_satisfiers)) {
@@ -142,7 +149,7 @@ class Model_Room {
      * @param string|string[] $type
      * @return bool
      */
-    public function check_room_satisfaction($type) {
+    public function check_room_satisfaction($type): bool {
         if (is_array($type)) {
             foreach ($type as $sub) if (!$this->check_room_satisfaction($sub)) return false;
             return true;
@@ -152,7 +159,8 @@ class Model_Room {
     /**
      * @return array
      */
-    public function get_tags() {
+    public function get_tags(): array
+    {
         return $this->tags;
     }
 
@@ -160,14 +168,16 @@ class Model_Room {
      * @param string $tag
      * @return string|null
      */
-    public static function tag_info($tag) {
+    public static function tag_info($tag): ?string
+    {
         return isset(static::$tag_info[$tag]) ? __(static::$tag_info[$tag]) : null;
     }
 
     /**
      * @return array
      */
-    public function get_friendly_tags() {
+    public function get_friendly_tags(): array
+    {
         $r = [];
         foreach ($this->tags as $tag) $r[$tag] = static::tag_info($tag);
         return $r;
@@ -177,7 +187,7 @@ class Model_Room {
      * @param string|string[] $tags
      * @return bool
      */
-    public function has_tag($tags) {
+    public function has_tag($tags): bool {
         if (is_array($tags)) {
             foreach ($tags as $tag) if (!$this->has_tag($tag)) return false;
             return true;
@@ -188,7 +198,8 @@ class Model_Room {
      * @param string|string[] $a
      * @return bool
      */
-    public function has_content($a) {
+    public function has_content($a): bool
+    {
         if (!is_array($a)) $a = [$a];
         foreach ($a as $entry)
             if (!in_array($entry,$this->contains, false)) return false;
@@ -200,7 +211,8 @@ class Model_Room {
      * @param int $space
      * @return bool
      */
-    public function add_content($a, $space = 0) {
+    public function add_content($a, $space = 0): bool
+    {
         if ($this->get_space(true) < $space) return false;
         if (!is_array($a)) $a = [$a];
 
@@ -211,7 +223,8 @@ class Model_Room {
         return true;
     }
 
-    public function remove_content($a) {
+    public function remove_content($a): void
+    {
         if (!is_array($a))
             $a = [$a];
         $this->contains = array_filter($this->contains, function($elem) use ($a) {
@@ -219,7 +232,8 @@ class Model_Room {
         });
     }
 
-    public function clear() {
+    public function clear(): void
+    {
         $this->used_space = 0;
         $this->contains = [];
         $this->satisfies = ['free'];

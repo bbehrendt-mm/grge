@@ -19,11 +19,12 @@ abstract class Model_Auth_Legacy extends Model_Auth_Interface {
         }
     }
 
-    public function connectToLocal($target_id = null) {
+    public function connectToLocal($target_id = null): bool
+    {
         if ($this->rid < 0) return false;
         if ($this->zvid > 0 && !$target_id) return true;
 
-        $this->zvid = $target_id ? $target_id : static::lookup($this->rid);
+        $this->zvid = $target_id ?: static::lookup($this->rid);
 
         $created = false;
 
@@ -31,7 +32,7 @@ abstract class Model_Auth_Legacy extends Model_Auth_Interface {
             $created = true;
             $this->zvid = Model_Euser::register($this->name,$this->avatar);
         }
-        elseif (!Model_Euser::avatar_by_id($this->zvid) && $this->avatar) Model_Euser::user_update_avatar($this->zvid, $this->avatar);
+        elseif ($this->avatar && !Model_Euser::avatar_by_id($this->zvid)) Model_Euser::user_update_avatar($this->zvid, $this->avatar);
 
         $this->ready = true;
         $this->link($this->sk);
@@ -48,13 +49,16 @@ abstract class Model_Auth_Legacy extends Model_Auth_Interface {
         if (!Kohana::$config->load('mt.links.' . static::$host))
             return null;
         $sk = Kohana::$config->load('mt.links.' . static::$host . '.token');
-        $url = 'http://' . Kohana::$config->load('mt.links.' . static::$host . '.url') . "/xml/" . ($city ? '' : 'ghost') ."?k={$k};sk={$sk}";
+        $url = 'http://' . Kohana::$config->load('mt.links.' . static::$host . '.url') . '/xml/'
+            . ($city ? '' : 'ghost') ."?k={$k};sk={$sk}";
 
         // Get XML
         $context = stream_context_create(['http'=> ['timeout' => 10]]);
         $xml = new DOMDocument( );
         try {
-            if (!$xml->loadXML(mb_convert_encoding(file_get_contents($url, false, $context), "UTF-8", "UTF-8")))
+            if (!$xml->loadXML(mb_convert_encoding(file_get_contents($url, false, $context),
+                'UTF-8', 'UTF-8'
+            )))
                 return null;
             return $xml;
         } catch (Exception $e) {
@@ -62,12 +66,12 @@ abstract class Model_Auth_Legacy extends Model_Auth_Interface {
         }
     }
 
-    public static function getLegacyTownInfo($pid) {
+    public static function getLegacyTownInfo($pid): array {
         if ($xml = self::fetch_player_xml($pid)) {
 
             $xpath = new DOMXPath($xml);
             $error = $xpath->evaluate('string(//error/@code)');
-            if ($error == 'not_in_game')
+            if ($error === 'not_in_game')
                 return [-1,null,null];
             elseif ($error) return [-2,null,null];
 
@@ -86,7 +90,8 @@ abstract class Model_Auth_Legacy extends Model_Auth_Interface {
         $xpath = new DOMXPath($xml);
 
         //Let's check for errors first
-        if ($error = $xpath->evaluate('string(//error/@code)')) if ($error != 'not_in_game')
+        if ($error = $xpath->evaluate('string(//error/@code)')) if ($error
+            !== 'not_in_game')
             return $error;
 
         $this->rid = (int)$xpath->evaluate('string(//owner/citizen/@id)');
@@ -100,7 +105,8 @@ abstract class Model_Auth_Legacy extends Model_Auth_Interface {
         return true;
     }
 
-    private function login_local($secret_key) {
+    private function login_local($secret_key): void
+    {
         $this->zvid = static::lookup(null, $secret_key);
 
         if ($this->zvid >= 0) {
@@ -112,7 +118,8 @@ abstract class Model_Auth_Legacy extends Model_Auth_Interface {
         }
     }
 
-    public static function retrieve_user_id($key) {
+    public static function retrieve_user_id($key): int
+    {
         return (int)DB::select('zvid')->from('profiles_xref')->where('provider','=', static::class)->where('var1','=',$key)->execute()->get('zvid',-1);
     }
 

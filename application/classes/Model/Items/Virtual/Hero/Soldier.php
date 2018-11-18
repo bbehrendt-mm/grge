@@ -21,7 +21,7 @@ class Model_Items_Virtual_Hero_Soldier extends Model_Items_Abstract_Virtual {
                 ->description('Die nächsten 20 Minuten lang wird dein Kampfschaden erhöht.')
                 ->effect(
                     Model_Effect::factory()
-                        ->buff("Model_Buffs_Tactics", false, 4)
+                        ->buff('Model_Buffs_Tactics', false, 4)
                         ->message('Ein guter Soldat kennt seine Umgebung - und nutzt sie zu seinem Vorteil. Wenn du jetzt gegen Zombies kämpfst, werden die ihr blaues Wunder erleben!')
                 )
             , 'hero_job_0')

@@ -14,8 +14,8 @@ class JView extends Kohana_View {
      * @param   array   $data   array of values
      * @return  JView
      */
-    public static function factory($file = NULL, array $data = NULL) {
-        return new JView($file, $data);
+    public static function factory($file = NULL, array $data = NULL): JView {
+        return new self($file, $data);
     }
 
     public function disable_compression() {

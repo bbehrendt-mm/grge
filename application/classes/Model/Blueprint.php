@@ -2,7 +2,7 @@
 
 class Model_Blueprint {
 
-    const BP_MOD_ENERGY = 1;
+    public const BP_MOD_ENERGY = 1;
 
     /**
      * @var Model_Effect $effect
@@ -58,7 +58,8 @@ class Model_Blueprint {
      * Creates a new blueprint instance
      * @return Model_Blueprint
      */
-    public static function factory() {
+    public static function factory(): \Model_Blueprint
+    {
         return new self();
     }
 
@@ -68,7 +69,8 @@ class Model_Blueprint {
      * @param callable $f Modifier function; receives the player and precondition data as parameters; it may also receive additional parameters depending on the mod type
      * @return Model_Blueprint
      */
-    public function add_modifier($mod, $f) {
+    public function add_modifier($mod, $f): \Model_Blueprint
+    {
         switch ($mod) {
             case static::BP_MOD_ENERGY:
                 $this->modifiers[] = function($player, $pre, $room) use ($f) {
@@ -79,7 +81,8 @@ class Model_Blueprint {
         return $this;
     }
 
-    public function add_modifier_builder($daytime_bonus = 0.25, $handyman_bonus = 0.1) {
+    public function add_modifier_builder($daytime_bonus = 0.25, $handyman_bonus = 0.1): void
+    {
         $this->add_modifier(self::BP_MOD_ENERGY, function($pl,$pre,$e) use ($daytime_bonus,$handyman_bonus) { /** @var Model_Player $pl */
             $mod = 1;
             if ($daytime_bonus  !== false && Tool_Scripts::get_timeofday($pl) === 'morning')  $mod -= $daytime_bonus;   // Daytime bonus
@@ -97,7 +100,8 @@ class Model_Blueprint {
      *
      * @return Model_Blueprint
      */
-    public function modify($player, $pre, $room) {
+    public function modify($player, $pre, $room): \Model_Blueprint
+    {
         foreach ($this->modifiers as $mod)
             $mod($player, $pre, $room);
         $this->modifiers = [];
@@ -145,7 +149,8 @@ class Model_Blueprint {
         }
     }
 
-    public function global_blocking($b = null) {
+    public function global_blocking($b = null): bool
+    {
         if ($b === null) {
             return $this->use_global_blocking;
         }
@@ -157,7 +162,8 @@ class Model_Blueprint {
      * @param array|string $name New category name
      * @return Model_Blueprint
      */
-    public function category($name) {
+    public function category($name): \Model_Blueprint
+    {
         if (is_string($name)) {
             if (!in_array($name, $this->categories, false))
                 $this->categories[] = $name;
@@ -172,7 +178,8 @@ class Model_Blueprint {
      * @param callable $c
      * @return Model_Blueprint
      */
-    public function condition($c) {
+    public function condition($c): \Model_Blueprint
+    {
         $this->build_condition = $c;
         return $this;
     }
@@ -182,7 +189,8 @@ class Model_Blueprint {
      * @param callable $c
      * @return Model_Blueprint
      */
-    public function show_condition($c) {
+    public function show_condition($c): \Model_Blueprint
+    {
         $this->opt_show_condition = $c;
         return $this;
     }
@@ -365,7 +373,8 @@ class Model_Blueprint {
      *
      * @return Model_Blueprint
      */
-    public function material($class, $count = 1, $decider = null, $type = null) {
+    public function material($class, $count = 1, $decider = null, $type = null): \Model_Blueprint
+    {
         if (is_array($class))
             foreach ($class as $i_class => $i_count)
                 $this->material($i_class, $i_count,$decider,$type);
@@ -518,7 +527,8 @@ class Model_Blueprint {
      *
      * @return Model_Blueprint
      */
-    public function produces($item, $count = 1, $type = null) {
+    public function produces($item, $count = 1, $type = null): \Model_Blueprint
+    {
         if (is_array($item)) {
             foreach ($item as $i_class => $i_count)
                 $this->produces($i_class, $i_count);
@@ -539,7 +549,8 @@ class Model_Blueprint {
      * @param callable|[callable] $callable
      * @return Model_Blueprint
      */
-    public function produces_advanced(callable $callable) {
+    public function produces_advanced(callable $callable): \Model_Blueprint
+    {
         if (is_array($callable)) {
             foreach ($callable as $func)
                 $this->produces_advanced($func);
@@ -557,7 +568,8 @@ class Model_Blueprint {
      * @param int $count Item count
      * @return Model_Blueprint
      */
-    public function emplaces($item, $count = 1) {
+    public function emplaces($item, $count = 1): \Model_Blueprint
+    {
         if (is_array($item)) {
             foreach ($item as $i_class => $i_count)
                 $this->emplaces($i_class, $i_count);
@@ -579,7 +591,8 @@ class Model_Blueprint {
      * @param string $custom_action_id
      * @return Model_Blueprint
      */
-    public function emplaces_action($text = 'Herstellen...', $text_desc = null, $custom_popup = 'maker', $custom_action_id = 'lc_lazy_maker') {
+    public function emplaces_action($text = 'Herstellen...', $text_desc = null, $custom_popup = 'maker', $custom_action_id = 'lc_lazy_maker'): \Model_Blueprint
+    {
         $this->emplaces_action_data[] = [$text,$text_desc,$custom_popup,$custom_action_id];
         return $this;
     }
@@ -591,7 +604,8 @@ class Model_Blueprint {
      * @param int|null $max Maximum number of kills; only possible if the first parameter is an int
      * @return Model_Blueprint
      */
-    public function zombies($optional, $min,$max = null) {
+    public function zombies($optional, $min,$max = null): \Model_Blueprint
+    {
         if (is_array($min))
             return $this->zombies($optional,$min[0],$min[1]);
 
@@ -611,7 +625,8 @@ class Model_Blueprint {
      * @param int $speed_dif Decay speed difference (positive values INCREASE decay speed)
      * @return Model_Blueprint
      */
-    public function decay($decay_dif, $speed_dif = 0) {
+    public function decay($decay_dif, $speed_dif = 0): \Model_Blueprint
+    {
         $this->decay = $decay_dif;
         $this->decay_speed = $speed_dif;
         return $this;
@@ -622,7 +637,8 @@ class Model_Blueprint {
      * @param int $new Added deco value
      * @return Model_Blueprint
      */
-    public function deco($new) {
+    public function deco($new): \Model_Blueprint
+    {
         $this->deco_value = $new;
         return $this;
     }
@@ -632,7 +648,8 @@ class Model_Blueprint {
  * @param Model_Room|null $room
  * @return bool
  */
-    private function can_prod($preconditions, $room = null) {
+    private function can_prod($preconditions, $room = null): bool
+    {
         if ($this->is_room) return $this->can_prod_room($room);
         if ($this->steps > 0) {
             if ($room === null && !$this->global_blocking()) return true;
@@ -647,15 +664,17 @@ class Model_Blueprint {
      * @param Model_Room|null $room
      * @return bool
      */
-    private function can_prod_room($room = null) {
+    private function can_prod_room($room = null): bool
+    {
         if ($room === null) return true;
         foreach ($this->provides_room as $p)
-            if (!in_array($p, $this->requires_room(), false) && $room->check_room_satisfaction($p))
+            if ($room->check_room_satisfaction($p) && !in_array($p, $this->requires_room(), true))
                 return false;
         return true;
     }
 
-    private function can_req($preconditions, $local = false) {
+    private function can_req($preconditions, $local = false): bool
+    {
         foreach ($local ? $this->requires_local : $this->requires as $r_block) {
             foreach ($r_block as $requirement)
                 if (in_array($requirement, $preconditions, false))
@@ -669,7 +688,8 @@ class Model_Blueprint {
      * @param Model_Room $room
      * @return bool
      */
-    private function can_room($room) {
+    private function can_room($room): bool
+    {
         $t = true;
         foreach ($this->requires_tags as $tag) if (!$room->has_tag($tag)) $t = false;
         return $t &&  $room->check_room_satisfaction($this->requires_room()) && $this->can_req($room->get_content(), true);
@@ -682,7 +702,8 @@ class Model_Blueprint {
      * @param bool $ignore_blocked_slots Set true if you want to ignore blocked slots
      * @return bool
      */
-    public function can($preconditions, $room = null, $ignore_blocked_slots = false) {
+    public function can($preconditions, $room = null, $ignore_blocked_slots = false): bool
+    {
         return ($ignore_blocked_slots || $this->can_prod($preconditions,$room)) && $this->can_req($preconditions) && ($room === null || $this->can_room($room));
     }
 
@@ -773,11 +794,9 @@ class Model_Blueprint {
         foreach ($raw_item_objects as $instance) {
             $player->location()->inventory()->add($instance);
 
-            if (Tool_System::instance_of(
-                    $instance, Model_Items_Abstract_Virtual::cls()
-                )
-                && $instance::setup_location()
-            ) $instance->set_location_info($player->location_class());
+            /** @noinspection NotOptimalIfConditionsInspection */
+            if (Tool_System::instance_of($instance, Model_Items_Abstract_Virtual::cls()) && $instance::setup_location())
+                $instance->set_location_info($player->location_class());
         }
 
 
@@ -815,12 +834,15 @@ class Model_Blueprint {
      * @return array
      * @throws Exception
      */
-    private function apply_room($room,$location) {
+    private function apply_room($room,$location): array
+    {
         if ($this->clear_previous_room()) $room->clear();
 
         $room->upgrade($this->obj_name,$this->clear_previous_room() ? true : ($this->replace_room_satisfaction() ? $this->requires_room() : false),$this->provide_room());
 
-        foreach ($this->emplaces_action_data as list($text,$text_desc,$custom_popup,$custom_action_id)) {
+        foreach ($this->emplaces_action_data as [$text,$text_desc,$custom_popup,$custom_action_id
+        ]
+        ) {
             $room->inventory()->add(new Model_Items_Virtual_Location_Room_Generic($text,$text_desc,$custom_popup,$custom_action_id));
         }
 
@@ -830,11 +852,9 @@ class Model_Blueprint {
                 $room->inventory()->add($instance);
 
                 /** @var Model_Items_Abstract_Virtual $instance */
-                if (Tool_System::instance_of(
-                        $instance, Model_Items_Abstract_Virtual::cls()
-                    )
-                    && $instance::setup_location()
-                ) $instance->set_location_info($location->uin(), $room->id());
+                /** @noinspection NotOptimalIfConditionsInspection */
+                if (Tool_System::instance_of($instance, Model_Items_Abstract_Virtual::cls()) && $instance::setup_location())
+                    $instance->set_location_info($location->uin(), $room->id());
             }
 
         return [];
@@ -889,7 +909,8 @@ class Model_Blueprint {
      * @return array
      * @throws Exception
      */
-    private function materialize($data) {
+    private function materialize($data): array
+    {
         $tmp = [];
         foreach ($data as $entry) {
             /** @var Model_Items_Abstract_Item $class */
@@ -919,7 +940,8 @@ class Model_Blueprint {
      * @return array
      * @throws Exception
      */
-    public function compile($preconditions, $room, $player) {
+    public function compile($preconditions, $room, $player): array
+    {
         $current_steps = $this->completion($preconditions);
         $still_open = $this->can_prod($preconditions, $room);
         $requirements_fulfilled = $this->can_req($preconditions) && $this->can_room($room);

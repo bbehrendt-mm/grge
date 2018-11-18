@@ -1,4 +1,5 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php /** @noinspection NotOptimalIfConditionsInspection */
+defined('SYSPATH') or die('No direct script access.');
 
 class Controller_Map extends Controller_Game {
 
@@ -12,7 +13,8 @@ class Controller_Map extends Controller_Game {
      * @return bool
      * @throws Kohana_Exception
      */
-    public static function code_go($sub, $did, $follow, $support, $companion) {
+    public static function code_go($sub, $did, $follow, $support, $companion): bool
+    {
         //Get all params
         $lid = Globals::CurrentPlayerF()->location_class();
         if ($lid < 0) $lid = Globals::CurrentGameF()->main_map()->resolve_fixed_id(-$lid);
@@ -29,8 +31,10 @@ class Controller_Map extends Controller_Game {
         //Check if any player is passed out or performs a fragile action
         foreach ($companion as $current)
             /** @var Interface_Plentity $current */
-            if (($current->id() != Globals::CurrentPlayerF()->id() && !$current->allow(Interface_Plentity::IC_ALLOW_MOVE)) || $current->get_status()->retrieve('passout') || $current->get_status()->retrieve('fragile')) {
-                if (!Globals::shadowPlayerExists()) Globals::PrimaryPlayerF()->log()->add(($current->id() == Globals::CurrentPlayerF()->id()) ? 'Du kannst dich zur Zeit nicht bewegen...' : ':name kann sich zur Zeit nicht bewegen...', array(':name' => $current->name()));
+            if ($current->get_status()->retrieve('fragile')
+                || $current->get_status()->retrieve('passout') || ($current->id() !== Globals::CurrentPlayerF()->id() && !$current->allow(Interface_Plentity::IC_ALLOW_MOVE))
+            ) {
+                if (!Globals::shadowPlayerExists()) Globals::PrimaryPlayerF()->log()->add(($current->id() === Globals::CurrentPlayerF()->id()) ? 'Du kannst dich zur Zeit nicht bewegen...' : ':name kann sich zur Zeit nicht bewegen...', array(':name' => $current->name()));
                 return false;
             }
 
@@ -148,7 +152,7 @@ class Controller_Map extends Controller_Game {
 
             $location->leave($current->id(), !Tool_Scripts::is_npc($current) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC);
             $current->get_status()->modify(Model_Status::MS_STAT_ENERGY, -$energy, Model_Status::MS_EFFECT_MOVEMENT);
-            if (Tool_Scripts::get_timeofday() === "day")
+            if (Tool_Scripts::get_timeofday() === 'day')
                 $current->get_status()->modify(Model_Status::MS_STAT_THIRST, -$energy * 0.2, Model_Status::MS_EFFECT_MOVEMENT);
             $destination->enter($current->id(), !Tool_Scripts::is_npc($current) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC);
             $current->location_class($did);
@@ -207,7 +211,8 @@ class Controller_Map extends Controller_Game {
         return true;
     }
 
-    public function japi_tag() {
+    public function japi_tag(): bool
+    {
         $lid = (int)self::post('id');
         $tag = (int)self::post('tag');
         $txt = mb_substr(self::post('text'), 0, 32);
@@ -219,7 +224,8 @@ class Controller_Map extends Controller_Game {
         return $this->render(['success' => $r]);
     }
 
-    public function japi_go() {
+    public function japi_go(): bool
+    {
         $did = (int)self::post('to');
         $companion = [];
 
@@ -248,7 +254,8 @@ class Controller_Map extends Controller_Game {
         ]);
     }
 
-    private function mapdata_classic($limit_view = null) {
+    private function mapdata_classic($limit_view = null): bool
+    {
         $read_only = false;
 
         if (Globals::PrimaryPlayerF()->get_status()->retrieve('passout') || Globals::PrimaryPlayerF()->get_status()->retrieve('fragile'))
@@ -329,11 +336,12 @@ class Controller_Map extends Controller_Game {
         ]);
     }
 
-    public function japi_data() {
+    public function japi_data(): bool
+    {
         switch (Globals::CurrentGameF()->mapF(Globals::PrimaryPlayerF()->location_class())->get_map_type()) {
             case Model_Map_Abstract::MMA_TYPE_OVERVIEW: return $this->mapdata_classic();
             case Model_Map_Abstract::MMA_TYPE_LABYRINTH: return null;
-            default: throw new Exception('UNKNOWN_MAP_TYPE');
+            default: throw new RuntimeException('UNKNOWN_MAP_TYPE');
         }
     }
 }

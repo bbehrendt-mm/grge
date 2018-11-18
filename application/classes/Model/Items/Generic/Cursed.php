@@ -20,7 +20,8 @@ class Model_Items_Generic_Cursed extends Model_Items_Abstract_Item {
 	protected static $weight = 2;    
     private $got_ack = false;
 	
-	public function take($silent = false) {
+	public function take($silent = false): bool
+    {
 		if (parent::take($silent))
 		{
 			if (!$this->got_ack) 

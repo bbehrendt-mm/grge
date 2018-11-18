@@ -4,20 +4,20 @@ class Model_Log_Types_Movement extends Model_Log_Message {
 
     protected static $type = Model_Log_Message::MLM_MOVEMENT_EVENT;
 
-    const MOVEMENT_TYPE_ENTER = 1;
-    const MOVEMENT_TYPE_LEAVE = 2;
-    const MOVEMENT_TYPE_PASS = 3;
+    public const MOVEMENT_TYPE_ENTER = 1;
+    public const MOVEMENT_TYPE_LEAVE = 2;
+    public const MOVEMENT_TYPE_PASS = 3;
 
     /**
      * Creates a message that a player has entered or left the place
      * @param number $type
-     * @param null|number|String $pid PID or translatable name
+     * @param null|int|String $pid PID or translatable name
      * @param bool $npc
      * @throws Exception
      */
 	public function __construct($type, $pid = null, $npc = false) {
         if ($pid === null && $npc)
-            throw new Exception('NPC ID missing!');
+            throw new RuntimeException('NPC ID missing!');
         elseif ($pid === null)
             $pid = Globals::PrimaryPlayerF()->id();
 

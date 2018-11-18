@@ -14,7 +14,7 @@
 
         <div class="row center">
             <div class="cell rw-2 rw-lg-0 padded nopad-lg left">
-                <div class="framed main inline-block"><img class="avatar" src="<?=$avatar ? $avatar : 'media/img/mugshot.png'?>" alt="<?=$name?>" /></div>
+                <div class="framed main inline-block"><img class="avatar" src="<?=$avatar ?: 'media/img/mugshot.png'?>" alt="<?=$name?>" /></div>
             </div>
 
             <div class="cell rw-5 rw-lg-6 rw-md-12 left">

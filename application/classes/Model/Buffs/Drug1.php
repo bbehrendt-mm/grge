@@ -16,8 +16,9 @@ class Model_Buffs_Drug1 extends Model_Buffs_Abstract_Buff {
 		}
 	}
 	
-	public function merge($newclass) {
-		if (!$this->assoc_player->get_status()->retrieve('drug2') && random_int(0, 2) < 2) {
+	public function merge($newclass): void
+    {
+		if (random_int(0, 2) < 2 && !$this->assoc_player->get_status()->retrieve('drug2')) {
 			new Model_Buffs_Drug2($this->assoc_player);
             if (!Tool_Scripts::is_npc($this->assoc_player))
                 $this->assoc_player->log()->add(new Model_Log_Types_String('Drogensucht', 'Uups, da hast du es wohl ein wenig übertrieben, jetzt bist du drogensüchtig. Hoffentlich hast du entweder ein volles Pillenschränkchen oder zumindest weitreichende Erfahrung mit Entzugserscheinungen...'));
@@ -26,8 +27,9 @@ class Model_Buffs_Drug1 extends Model_Buffs_Abstract_Buff {
 		Tool_Numerics::bounds($this->lifetime, 0, 300);
 	}
 	
-	public function unbuff() {
+	public function unbuff(): bool
+    {
 		if ($this->assoc_player->get_status()->retrieve('drug2')) new Model_Buffs_Drug3($this->assoc_player, 864);
-		parent::unbuff();
+		return parent::unbuff();
 	}
 }

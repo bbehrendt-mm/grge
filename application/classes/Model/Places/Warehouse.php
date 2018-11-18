@@ -19,7 +19,8 @@ class Model_Places_Warehouse extends Model_Places_Abstract_Hideout {
     //Exp: 8% per day
     protected static $decay_exp = 0.10;
 
-    public function setup_additional_rooms() {
+    public function setup_additional_rooms(): void
+    {
         parent::setup_additional_rooms();
         $this->create_new_room(30,['inside']);
         $this->create_new_room(30,['inside']);

@@ -29,8 +29,8 @@ class Model_Items_Virtual_Hero_Survivalist extends Model_Items_Abstract_Virtual 
                             if ($c > 6) if ($p->location()->find_item(true)) $n++;
                             if ($c > 9) if ($p->location()->find_item(true)) $n++;
 
-                            if ($n == 0) $p->log()->add('Pech gehabt... hier scheinst du nichts finden zu können. Da hast du deine Heldentag wohl verschenkt.');
-                            elseif ($n == 1) $p->log()->add('Na, so ein Glück! Du hast plötzlich und unerwartet einen Gegenstand gefunden! Wo kam der nur her?');
+                            if ($n === 0) $p->log()->add('Pech gehabt... hier scheinst du nichts finden zu können. Da hast du deine Heldentag wohl verschenkt.');
+                            elseif ($n === 1) $p->log()->add('Na, so ein Glück! Du hast plötzlich und unerwartet einen Gegenstand gefunden! Wo kam der nur her?');
                             else $p->log()->add(new Model_Log_Types_String(null,'Na, so ein Glück! Da drehst du dich nur mal kurz um, schon liegen vor dir :num Gegenstände! Wo die wohl hergekommen sind?', array(':num' => $n)));
                         })
                 )

@@ -4,9 +4,10 @@ class Controller_Admin_Account extends Controller_Admin_Admin {
 
     protected static $force_admin = false;
 
-    public function action_login() {
+    public function action_login(): void
+    {
         if ($this->admin_status_get(0)) {
-            $this->redirect(URL::site('admin/main',true));
+            self::redirect(URL::site('admin/main',true));
             return;
         }
 
@@ -17,13 +18,14 @@ class Controller_Admin_Account extends Controller_Admin_Admin {
         $this->render();
     }
 
-    public function japi_login() {
-        $pw = $this->post('password');
+    public function japi_login(): bool
+    {
+        $pw = self::post('password');
         if (!$pw)
             return $this->error(\grge\E_SERVER_LOGIN_REJECTED);
 
         if (static::priv_get(Globals::CurrentUserF()->uid(), $pw))
-            $this->admin_status_set(Kohana::$environment == Kohana::PRODUCTION ? 30 : 120);
+            $this->admin_status_set(Kohana::$environment === Kohana::PRODUCTION ? 30 : 120);
 
         if (!$this->admin_status_get(0))
             return $this->error(\grge\E_SERVER_LOGIN_REJECTED);
@@ -34,7 +36,8 @@ class Controller_Admin_Account extends Controller_Admin_Admin {
         ]);
     }
 
-    public function japi_logout() {
+    public function japi_logout(): void
+    {
         $this->admin_status_revoke();
         $this->render([
             'redirect' => 'lobby/main',

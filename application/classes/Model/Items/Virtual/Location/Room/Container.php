@@ -14,7 +14,8 @@ class Model_Items_Virtual_Location_Room_Container extends Model_Items_Abstract_V
                 ->custom(function($p) {
                     /** @var Model_Player $p */
 
-                    Tool_Scripts::simple_battle(random_int(2, 10),0, "Eine Gruppe Zombies stürmt aus dem Container und greift an!", false, false);
+                    Tool_Scripts::simple_battle(random_int(2, 10),0,
+                        'Eine Gruppe Zombies stürmt aus dem Container und greift an!', false, false);
 
                     if ($p->get_status()->alive())
                     {
@@ -23,7 +24,7 @@ class Model_Items_Virtual_Location_Room_Container extends Model_Items_Abstract_V
                         $r_band = random_int(0, 1);
                         $items = Array();
                         for ($i = 0; $i < $r_lbs; $i++) $items[] = new Model_Items_Lunchbag();
-                        for ($i = 0; $i < $r_chairs; $i++) if (random_int(0, 2) == 2) $items[] = new Model_Items_Gardenchair2(); else $items[] = new Model_Items_Gardenchair();
+                        for ($i = 0; $i < $r_chairs; $i++) if (random_int(0, 2) === 2) $items[] = new Model_Items_Gardenchair2(); else $items[] = new Model_Items_Gardenchair();
                         for ($i = 0; $i < $r_band; $i++) $items[] = new Model_Items_Bandage();
                         if (random_int(1, 10) > 9) $items[] = new Model_Items_Ammo();
 

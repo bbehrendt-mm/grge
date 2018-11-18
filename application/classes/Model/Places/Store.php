@@ -11,7 +11,9 @@ class Model_Places_Store extends Model_Places_Abstract_Place {
 		if ($uin === NULL) return parent::uin();
 		else $t = parent::uin($uin);
 		
-		$this->inventory->add(new Model_Items_Vending(get_class($this), "MicroJam Vendor"));
+		$this->inventory->add(new Model_Items_Vending(get_class($this),
+            'MicroJam Vendor'
+        ));
         $this->inventory->add(new Model_Items_Vending2());
         $this->inventory->add(new Model_Items_Virtual_Location_Market());
 		$this->inventory->add(new Model_Items_Body('Vera Loewenhaupt', 'Dies muss wohl die Namensgeberin des Wagens sein, unter dem sie liegt... allerdings keine Spur von ihren Söhnen.'));
@@ -19,7 +21,8 @@ class Model_Places_Store extends Model_Places_Abstract_Place {
         return $t;
     }
 
-    public function setup_additional_rooms() {
+    public function setup_additional_rooms(): void
+    {
         parent::setup_additional_rooms();
         $this->create_new_room(30,['inside']);
         $this->create_new_room(10,['inside']);

@@ -11,7 +11,7 @@ abstract class Model_Items_Abstract_Book extends Model_Items_Abstract_Item {
 	protected static $cat = Model_Items_Abstract_Item::MIAI_CAT_LITERATURE;
 
     public function __construct($type = null) {
-        if (static::$pagerange != null)
+        if (static::$pagerange !== null)
             $this->pages = random_int(static::$pagerange[0], static::$pagerange[1]);
         parent::__construct($type);
     }
@@ -20,18 +20,20 @@ abstract class Model_Items_Abstract_Book extends Model_Items_Abstract_Item {
         if ($pid === null)
             $pid = Globals::CurrentPlayerF()->id();
 
-        return (isset($this->uses[$pid]) ? $this->uses[$pid] : 0);
+        return ($this->uses[$pid] ?? 0);
     }
 
-    public function label() {
-        if (($read = $this->get_uses()) == 0)
-            return __(":num Seiten", array(':num' => $this->pages));
+    public function label(): ?string
+    {
+        if (($read = $this->get_uses()) === 0)
+            return __(':num Seiten', array(':num' => $this->pages));
         elseif ($read >= $this->pages)
-            return __(":num Seiten (bereits gelesen)", array(':num' => $this->pages));
-        else return __("Noch :left von :num Seiten zu lesen", array(':left' => $this->pages - $read, ':num' => $this->pages));
+            return __(':num Seiten (bereits gelesen)', array(':num' => $this->pages));
+        else return __('Noch :left von :num Seiten zu lesen', array(':left' => $this->pages - $read, ':num' => $this->pages));
     }
 
-    public function read($pid = null) {
+    public function read($pid = null): bool
+    {
         if ($pid === null)
             $pid = Globals::CurrentPlayerF()->id();
 
@@ -47,7 +49,8 @@ abstract class Model_Items_Abstract_Book extends Model_Items_Abstract_Item {
         return true;
     }
 
-    public function remaining_ticks($pid = null) {
+    public function remaining_ticks($pid = null): float
+    {
         return ceil(($this->pages - $this->get_uses($pid))/static::$reading_speed);
     }
 
@@ -73,10 +76,10 @@ abstract class Model_Items_Abstract_Book extends Model_Items_Abstract_Item {
                         ->condition(function($p) {
                             /** @var Model_Player $p */
                             /** @noinspection PhpUndefinedMethodInspection */
-                            if ((Tool_Scripts::location_type($p->location_class()) != 2) || $p->location()->get_defense() < 1)
-                                return "hideout";
+                            if ((Tool_Scripts::location_type($p->location_class()) !== 2) || $p->location()->get_defense() < 1)
+                                return 'hideout';
                             if (!$p->inventory()->has($this->uin()))
-                                return "noinv";
+                                return 'noinv';
                             return true;
                         })
                         ->fail_message('Hier musst du immer wachsam sein; wenn du in Ruhe lesen willst, kehre in dein Versteck zurück.', 'hideout')

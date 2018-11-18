@@ -7,7 +7,8 @@ class Model_Places_Diy extends Model_Places_Abstract_Place {
     protected static $icon = 'diy';
     protected static $outside = false;
 
-    public function setup_additional_rooms() {
+    public function setup_additional_rooms(): void
+    {
         parent::setup_additional_rooms();
         $this->create_new_room(50,['inside']);
     }

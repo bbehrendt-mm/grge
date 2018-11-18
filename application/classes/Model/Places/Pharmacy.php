@@ -9,13 +9,16 @@ class Model_Places_Pharmacy extends Model_Places_Abstract_Place {
 	
 	public function uin($uin = NULL) {
         if ($uin !== null) {
-            $this->inventory->add(new Model_Items_Vending(get_class($this), "MedCo. Pharmacorp."));
+            $this->inventory->add(new Model_Items_Vending(get_class($this),
+                'MedCo. Pharmacorp.'
+            ));
             $this->inventory->add(new Model_Items_Virtual_Location_Pillboxes(false));
         }
         return parent::uin($uin);
 	}
 
-    public function setup_additional_rooms() {
+    public function setup_additional_rooms(): void
+    {
         parent::setup_additional_rooms();
         $this->create_new_room(8,['inside']);
     }

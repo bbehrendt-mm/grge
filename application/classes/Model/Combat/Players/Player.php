@@ -29,7 +29,8 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
      * @return Model_Combat_Players_Player
      * @throws Exception
      */
-    public static function create_linked_actor($p) {
+    public static function create_linked_actor($p): Model_Combat_Players_Player
+    {
 
         $unarmed = new Model_Items_Fist();
         $unarmed->equip($p);
@@ -46,15 +47,21 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
         $ai = $p->ai();
         /** @var Model_Combat_Players_Player $ret */
 
-        $ret->ai_selfishness    = $ai[0] == '-' ? 1.0 : ($ai[0] == '+' ? 9.0 : 3.0 );
-        $ret->ai_comradely      = $ai[1] == '-' ? 0.1 : ($ai[1] == '+' ? 1.5 : 0.5 );
-        $ret->ai_volatile       = $ai[2] == '-' ? 0.5 : ($ai[2] == '+' ? 1.0 : 0.8 );
-        $ret->ai_brashness      = $ai[3] == '-' ? 0.4 : ($ai[3] == '+' ? 0.9 : 0.7 );
+        $ret->ai_selfishness    = strpos($ai, '-') === 0
+            ? 1.0 : (strpos(
+                $ai, '+'
+            ) === 0 ? 9.0 : 3.0 );
+        $ret->ai_comradely      = $ai[1] === '-' ? 0.1 : ($ai[1] === '+' ? 1.5 : 0.5 );
+        $ret->ai_volatile       = $ai[2] === '-' ? 0.5 : ($ai[2] === '+' ? 1.0 : 0.8 );
+        $ret->ai_brashness      = $ai[3] === '-' ? 0.4 : ($ai[3] === '+' ? 0.9 : 0.7 );
 
-        list($ret->stat_initiative, $ret->stat_damage, $ret->stat_resistance, $ret->stat_accuracy) = $p->battle_stats();
+        [$ret->stat_initiative, $ret->stat_damage, $ret->stat_resistance, $ret->stat_accuracy
+            ]
+            = $p->battle_stats();
         $ret->escape_modifier = $p->get_status()->get(Model_Status::MS_CHAR_EVASIVENESS);
 
-        if ($p->get_status()->get(Model_Status::MS_STAT_DRUNK) > 25) $ret->add_modifier("drunk", ($p->get_status()->get(Model_Status::MS_STAT_DRUNK)-25)*(4/300));
+        if ($p->get_status()->get(Model_Status::MS_STAT_DRUNK) > 25) $ret->add_modifier(
+            'drunk', ($p->get_status()->get(Model_Status::MS_STAT_DRUNK)-25)*(4/300));
 
         return $ret;
     }

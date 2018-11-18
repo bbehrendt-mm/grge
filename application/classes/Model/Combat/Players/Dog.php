@@ -25,7 +25,8 @@ class Model_Combat_Players_Dog extends Model_Combat_Players_Player {
      * @return Model_Combat_Players_Dog
      * @throws Exception
      */
-    public static function create_linked_actor($p, $avatar = 'dog.jpg') {
+    public static function create_linked_actor($p, $avatar = 'dog.jpg'): Model_Combat_Players_Player
+    {
         /** @noinspection PhpUndefinedMethodInspection */
         $ret = static::factory()
             ->player($p)
@@ -36,7 +37,8 @@ class Model_Combat_Players_Dog extends Model_Combat_Players_Player {
         /** @var $ret Model_Combat_Players_Dog */
         $ret->avatar = $avatar;
 
-        if ($p->get_status()->get(Model_Status::MS_STAT_DRUNK) > 25) $ret->add_modifier("drunk", ($p->get_status()->get(Model_Status::MS_STAT_DRUNK)-25)*(4/300));
+        if ($p->get_status()->get(Model_Status::MS_STAT_DRUNK) > 25) $ret->add_modifier(
+            'drunk', ($p->get_status()->get(Model_Status::MS_STAT_DRUNK)-25)*(4/300));
 
         return $ret;
     }

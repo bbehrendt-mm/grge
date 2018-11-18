@@ -27,19 +27,51 @@ class Controller_Gamemaster extends Controller {
      * @return string Game name, or "##CONSTRUCTOR_LANG_MISSING##" if the language is invalid
      * @throws Exception
      */
-    private static function create_gamename($lang) {
+    private static function create_gamename($lang): string {
         $list_a = array(
-            'de' => array("Betrunkene", "Flinke",  "Gelähmte", "Euphorische", "Adoptierte", "Nackte", "Weise", "Letzte", "Verlassene", "Optimistische", "Pessimistische", "Konservative", "Liberale", "Französische", "Sozialistische", "Außerirdische", "Überflutete", "Fremde", "Geniale", "Erfahrene", "Verzweifelte", "Resignierte", "Hinkende", "Faule", "Abhängige", "Entspannte", "Abgebrannte", "Langweilige", "Unerfahrene", "Vereiste", "Verschwitzte"),
-            'en' => array("Drunk", "Fast",  "Paralyzed", "Euphoric", "Adopted", "Nude", "Wise", "Last", "Lonely", "Optimistic", "Pessimistic", "Conservative", "Liberal", "French", "Socialistic", "Alien", "Flooded", "Foreign", "Smart", "Experienced", "Desperate", "Resigned", "Limping", "Lazy", "Addicted", "Relaxed", "Burned", "Boring", "Inexperienced", "Frozen", "Sweaty"),
+            'de' => array('Betrunkene', 'Flinke', 'Gelähmte', 'Euphorische',
+                          'Adoptierte', 'Nackte', 'Weise', 'Letzte',
+                          'Verlassene', 'Optimistische', 'Pessimistische',
+                          'Konservative', 'Liberale', 'Französische',
+                          'Sozialistische', 'Außerirdische', 'Überflutete',
+                          'Fremde', 'Geniale', 'Erfahrene', 'Verzweifelte',
+                          'Resignierte', 'Hinkende', 'Faule', 'Abhängige',
+                          'Entspannte', 'Abgebrannte', 'Langweilige',
+                          'Unerfahrene', 'Vereiste', 'Verschwitzte'),
+            'en' => array('Drunk', 'Fast', 'Paralyzed', 'Euphoric', 'Adopted',
+                          'Nude', 'Wise', 'Last', 'Lonely', 'Optimistic',
+                          'Pessimistic', 'Conservative', 'Liberal', 'French',
+                          'Socialistic', 'Alien', 'Flooded', 'Foreign', 'Smart',
+                          'Experienced', 'Desperate', 'Resigned', 'Limping',
+                          'Lazy', 'Addicted', 'Relaxed', 'Burned', 'Boring',
+                          'Inexperienced', 'Frozen', 'Sweaty'),
         );
 
         $list_b = array(
-            'de' => array("Alkoholiker", "Wiesel", "Unfallopfer", "Mädchen", "Chinesen", "Sexsymbole", "Bartträger", "Überlebende", "Liebhaber", "Gewinner", "Verlierer", "Parteianhänger", "Demonstranten", "Bürger", "Kommunisten", "Eroberer", "Grillmeister", "Zombies", "Bäcker", "Journalisten", "Touristen", "Säcke", "Weltkriegsveteranen", "Kiffer", "Entrepreneure", "Präsidenten", "Deutsche", "Amerikaner", "Briten", "Todesdackel", "Meerjungfrauen", "Konformisten", "Hipster", "Fettsäcke", "Nerds"),
-            'en' => array("Alcoholic", "Weasels", "Accident Victims", "Girls", "Chinese", "Sex Symbols", "Bearded Men", "Survivors", "Love Machines", "Winners", "Loosers", "Party members", "Protesters", "Citizens", "Communists", "Conquerors", "Chefs", "Zombies", "Bakers", "Journalists", "Tourists", "Sacks", "World War Veterans", "Stoners", "Entrepreneurs", "Presidents", "Germans", "Americans", "Brits", "Wiener Dogs Of Ultimate Destruction", "Mermaids", "Conformists", "Hipsters", "Fatsos", "Nerds"),
+            'de' => array('Alkoholiker', 'Wiesel', 'Unfallopfer', 'Mädchen',
+                          'Chinesen', 'Sexsymbole', 'Bartträger', 'Überlebende',
+                          'Liebhaber', 'Gewinner', 'Verlierer',
+                          'Parteianhänger', 'Demonstranten', 'Bürger',
+                          'Kommunisten', 'Eroberer', 'Grillmeister', 'Zombies',
+                          'Bäcker', 'Journalisten', 'Touristen', 'Säcke',
+                          'Weltkriegsveteranen', 'Kiffer', 'Entrepreneure',
+                          'Präsidenten', 'Deutsche', 'Amerikaner', 'Briten',
+                          'Todesdackel', 'Meerjungfrauen', 'Konformisten',
+                          'Hipster', 'Fettsäcke', 'Nerds'),
+            'en' => array('Alcoholic', 'Weasels', 'Accident Victims', 'Girls',
+                          'Chinese', 'Sex Symbols', 'Bearded Men', 'Survivors',
+                          'Love Machines', 'Winners', 'Loosers',
+                          'Party members', 'Protesters', 'Citizens',
+                          'Communists', 'Conquerors', 'Chefs', 'Zombies',
+                          'Bakers', 'Journalists', 'Tourists', 'Sacks',
+                          'World War Veterans', 'Stoners', 'Entrepreneurs',
+                          'Presidents', 'Germans', 'Americans', 'Brits',
+                          'Wiener Dogs Of Ultimate Destruction', 'Mermaids',
+                          'Conformists', 'Hipsters', 'Fatsos', 'Nerds'),
         );
 
         if (!isset($list_a[$lang], $list_b[$lang]))
-            return "##CONSTRUCTOR_LANG_MISSING##";
+            return '##CONSTRUCTOR_LANG_MISSING##';
 
         $a = Tool_Gambling::select($list_a[$lang]);
         $b = Tool_Gambling::select($list_b[$lang]);
@@ -52,12 +84,12 @@ class Controller_Gamemaster extends Controller {
      * @param int $id Game ID
      * @return bool True when decreasing the amount of slots was successful; otherwise false.
      */
-    private static function fill_lobby_slot($id) {
+    private static function fill_lobby_slot($id): bool {
         // Get lobby entry
         $data = DB::select('slots')->from('multiplayer_lobby')->where('slots', '>', 0)->where('gameid', '=', $id)->execute()->as_array();
 
         // Check if entry exists
-        if (count($data) != 1)
+        if (count($data) !== 1)
             return false;
 
         // Set new value, or delete entry when number of slots is zero
@@ -78,7 +110,7 @@ class Controller_Gamemaster extends Controller {
      * @return bool Always returns true
      * @throws Exception
      */
-    private function start_singleplayer($mode,$speed,$job,$level,$store) {
+    private function start_singleplayer($mode,$speed,$job,$level,$store): bool {
         // Make a new game
         new Model_Game();
         if (!Globals::CurrentGameF()->start($mode, ($speed < 0) ? 1 : 0, ($speed < 0) ? 300 : $speed, null))
@@ -116,12 +148,12 @@ class Controller_Gamemaster extends Controller {
      * @throws Exception
      * @throws Kohana_Exception
      */
-    private function start_multiplayer($mode,$job,$level,$name,$lang,$slots,$pw,$store = []) {
+    private function start_multiplayer($mode,$job,$level,$name,$lang,$slots,$pw,$store = []): bool {
         // Check if lang is valid
         if (!array_key_exists($lang, static::get_lang_flags()))
             return $this->error(\grge\E_STARTER_INVALID_SETUP);
 
-        list($name_game, $name_lobby) = is_array($name) ? $name : [$name,$name];
+        [$name_game, $name_lobby] = is_array($name) ? $name : [$name, $name];
 
         // Create game
         new Model_Game();
@@ -158,7 +190,7 @@ class Controller_Gamemaster extends Controller {
      * @return bool
      * @throws Exception
      */
-    private function join_multiplayer($id,$job,$level,$pw,$store = []) {
+    private function join_multiplayer($id,$job,$level,$pw,$store = []): bool {
         // Check password
         if (!$this->check_password($id,$pw,false))
             return $this->error(\grge\E_STARTER_INVALID_SETUP);
@@ -200,7 +232,7 @@ class Controller_Gamemaster extends Controller {
      * @throws Exception
      * @throws Kohana_Exception
      */
-    private function fill_multiplayer_lobby() {
+    private function fill_multiplayer_lobby(): void {
         // Get games matching the auto-fill language that have no password
         foreach (Kohana::$config->load('basic.multiplayer.parallel_games') as $lang => $count) {
             $num = DB::select(array(DB::expr('COUNT(*)'), 'num'))->from('multiplayer_lobby')->where('slots', '>', 0)->where('lang', '=', $lang)->and_where('password','=',null)->execute()->as_array();
@@ -237,16 +269,16 @@ class Controller_Gamemaster extends Controller {
      * @param bool $graceful_fail Value to return in case the game doesn't exist
      * @return bool True, when the password matches or there is no password; false, when the password doesn't match; $graceful_fail, when the game does not exist
      */
-    private function check_password($id, $pw, $graceful_fail = false) {
+    private function check_password($id, $pw, $graceful_fail = false): bool {
         // Get lobby entry
         $data = DB::select('password')->from('multiplayer_lobby')->where('slots', '>', 0)->where('gameid', '=', $id)->execute()->as_array();
 
         // In case of missing entry, fail
-        if (count($data) != 1)
+        if (count($data) !== 1)
             return $graceful_fail;
 
         // Check PW
-        return (!$data[0]['password'] || $data[0]['password'] == hash('sha256', $pw, false));
+        return (!$data[0]['password'] || $data[0]['password'] === hash('sha256', $pw, false));
     }
 
     /**
@@ -255,7 +287,7 @@ class Controller_Gamemaster extends Controller {
      * @param int $job Player profession; is checked for existence, lock status and if it is a valid profession for the given game mode
      * @param int $flow Tick length; is checked for existence and validity in relation to the game mode
      * @param int $slots Number of open slots; is only checked for multiplayer games; checked for being in the range for selected game mode
-     * @param int $id Game ID; must be nagative for a newly created game that does not have an ID yet
+     * @param int $id Game ID; must be negative for a newly created game that does not have an ID yet
      * @param string $name Game name; Only checked for multiplayer games; checked for length
      * @return bool|int Returns false if the given setting is invalid; otherwise, returns the player profession level (at least 1)
      */
@@ -270,23 +302,23 @@ class Controller_Gamemaster extends Controller {
             return false;
 
         //Check if job is valid
-        if (!in_array($job, $config['modes'][$mode]['jobs']) || !isset($config['jobs'][$job]) || $config['jobs'][$job]['locked'])
+        if (!isset($config['jobs'][$job]) || $config['jobs'][$job]['locked'] || !in_array($job, $config['modes'][$mode]['jobs'], true))
             return false;
 
         //Check if job is unstartable
-        if ($startup && isset($config['modes'][$mode]['unstartable_jobs']) && in_array($job, $config['modes'][$mode]['unstartable_jobs']))
+        if ($startup && isset($config['modes'][$mode]['unstartable_jobs']) && in_array($job, $config['modes'][$mode]['unstartable_jobs'], true))
             return false;
 
         //Check slots
-        if ($startup && $config['modes'][$mode]['type'] == 'multi_custom' && ($slots < $config['modes'][$mode]['slots'][0] || $slots > $config['modes'][$mode]['slots'][1]))
+        if ($startup && $config['modes'][$mode]['type'] === 'multi_custom' && ($slots < $config['modes'][$mode]['slots'][0] || $slots > $config['modes'][$mode]['slots'][1]))
             return false;
 
         //Check speed
-        if ($flow > 0 && (!in_array($flow,[15,30,60,120,300,600,900]) || $config['modes'][$mode]['type'] != 'single'))
+        if ($flow > 0 && (!in_array($flow,[15,30,60,120,300,600,900], true) || $config['modes'][$mode]['type'] !== 'single'))
             return false;
 
         //Check name
-        if ($startup && $config['modes'][$mode]['type'] == 'multi_custom' && (strlen($name) < 3 || strlen($name) > 96))
+        if ($startup && $config['modes'][$mode]['type'] === 'multi_custom' && (strlen($name) < 3 || strlen($name) > 96))
             return false;
 
         return max(1,(int)$config['jobs'][$job]['level']);
@@ -295,22 +327,21 @@ class Controller_Gamemaster extends Controller {
     /**
      * Password check API
      */
-    public function japi_check_pw() {
-        $pw = $this->request->current()->post('password');
-        $id = (int)$this->request->current()->post('id');
+    public function japi_check_pw(): void {
+        $pw = Request::current()->post('password');
+        $id = (int)Request::current()->post('id');
         $this->render(['proceed' => $this->check_password($id,$pw)]);
     }
 
-    private function start_special_township() {
+    private function start_special_township(): bool {
         // Get POST stuff
-        $service = $this->request->current()->post('service');
+        $service = Request::current()->post('service');
 
         $database = Tool_Gamemodes::compile_mode_database(true, function($mid) {
-            return $mid == 12000;
+            return $mid === 12000;
         });
 
-        if (Kohana::$config->load('build.version.stage') < 3 && substr($service, 0, 3) == 'DBG') {
-
+        if (Kohana::$config->load('build.version.stage') < 3 && strpos( $service, 'DBG') === 0) {
 
             $job_num = (int)substr($service, 4);
 
@@ -325,11 +356,11 @@ class Controller_Gamemaster extends Controller {
         } else
             switch ($service) {
                 case 'Die Verdammten':
-                    list($id, $name, $jobsign) = Model_Auth_Hordesde::getLegacyTownInfo(Globals::CurrentUserF()->uid());
+                    [$id, $name, $jobsign] = Model_Auth_Hordesde::getLegacyTownInfo(Globals::CurrentUserF()->uid());
                     $lang = 'de';
                     break;
                 case 'Die2Nite':
-                    list($id, $name, $jobsign) = Model_Auth_Hordesen::getLegacyTownInfo(Globals::CurrentUserF()->uid());
+                    [$id, $name, $jobsign] = Model_Auth_Hordesen::getLegacyTownInfo(Globals::CurrentUserF()->uid());
                     $lang = 'en';
                     break;
                 default: return $this->error(\grge\E_STARTER_INVALID_SETUP);
@@ -368,26 +399,27 @@ class Controller_Gamemaster extends Controller {
      * @throws Kohana_Exception
      * @throws ReflectionException
      */
-    public function japi_start() {
+    public function japi_start(): bool {
         // Check special
-        $special = (int)$this->request->current()->post('special');
-        if ($special) switch ($special) {
-            case 12000: return $this->start_special_township();
-            default: return $this->error(\grge\E_STARTER_INVALID_SETUP);
+        $special = (int)Request::current()->post('special');
+        if ($special) {
+            if ($special === 12000)
+                return $this->start_special_township();
+            return $this->error(\grge\E_STARTER_INVALID_SETUP);
         }
 
         // Get POST stuff
-        $mode = (int)$this->request->current()->post('mode');
-        $job = (int)$this->request->current()->post('job');
-        $id = (int)$this->request->current()->post('id');
-        $pw = $this->request->current()->post('password');
-        $protect = $this->request->current()->post('protect');
-        $flow = (int)$this->request->current()->post('flow');
-        $name = preg_replace('/[^\w &.,!?\-\+:\/@\(\)=;\|]/', ' ', $this->request->current()->post('name'));
-        $slots = (int)$this->request->current()->post('slots');
-        $lang = $this->request->current()->post('lang');
+        $mode = (int)Request::current()->post('mode');
+        $job = (int)Request::current()->post('job');
+        $id = (int)Request::current()->post('id');
+        $pw = Request::current()->post('password');
+        $protect = Request::current()->post('protect');
+        $flow = (int)Request::current()->post('flow');
+        $name = preg_replace('/[^\w &.,!?\-\+:\/@\(\)=;\|]/', ' ', Request::current()->post('name'));
+        $slots = (int)Request::current()->post('slots');
+        $lang = Request::current()->post('lang');
 
-        $store = $this->request->current()->post('store');
+        $store = Request::current()->post('store');
 
         // Check if all that config stuff is valid
         if (!($level = $this->check_game_params($mode,$job,$flow,$slots,$id,$name)))
@@ -396,13 +428,10 @@ class Controller_Gamemaster extends Controller {
         $list = []; $current_payment = 0;
         if (Kohana::$config->load('balancing.shop.enabled')) {
             $current_payment = -Kohana::$config->load('balancing.shop.free_coins');
-            if (isset($store['purchase'], $store['authorized_payment'])
-                && is_array($store)
-                && is_array($store['purchase'])
-            ) {
+            if (is_array($store) && is_array($store['purchase']) && isset($store['purchase'], $store['authorized_payment'])) {
                 $max_payment = (int)$store['authorized_payment'];
                 foreach (Tool_Gamemodes::get_store_classes() as $store_element)
-                    if ($store_element::is_valid_for($mode,$job,($id <= 0),$id,$flow) && in_array(Tool_System::getClassID($store_element), $store['purchase'])) {
+                    if ($store_element::is_valid_for($mode,$job, $id <= 0,$id,$flow) && in_array(Tool_System::getClassID($store_element), $store['purchase'], true)) {
                         $list[] = $store_element;
                         $current_payment += $store_element::get_cost();
                     }
@@ -430,15 +459,15 @@ class Controller_Gamemaster extends Controller {
         else return false;
     }
 
-    public function japi_eshop() {
+    public function japi_eshop(): void {
         // Get POST stuff
         if (!Kohana::$config->load('balancing.shop.enabled')) return;
 
-        $mode = (int)$this->request->current()->post('mode');
-        $job = (int)$this->request->current()->post('job');
-        $id = (int)$this->request->current()->post('id');
-        $flow = (int)$this->request->current()->post('flow');
-        $init = $this->request->current()->post('init') == '1';
+        $mode = (int)Request::current()->post('mode');
+        $job =  (int)Request::current()->post('job');
+        $id =   (int)Request::current()->post('id');
+        $flow = (int)Request::current()->post('flow');
+        $init = (int)Request::current()->post('init') === 1;
 
         $store = [];
         foreach (Tool_Gamemodes::get_store_classes() as $store_element)
@@ -453,20 +482,20 @@ class Controller_Gamemaster extends Controller {
                 ];
 
         usort($store, function($a,$b) {
-            return ($a['cat'] == $b['cat']) ? ($a['cost'] - $b['cost']) : strcmp($a['cat'],$b['cat']);
+            return ($a['cat'] === $b['cat']) ? ($a['cost'] - $b['cost']) : strcmp($a['cat'],$b['cat']);
         });
 
         $this->render(['store' => $store]);
     }
 
-    private function convert_requirements($req) {
+    private function convert_requirements($req): array {
 
         $ret = [];
         foreach ($req['mode'] as $modeblock => $pair) {
-            $modes = explode(',', "$modeblock");
+            $modes = explode(',', (string)$modeblock);
             foreach ($modes as $c => $m)
                 $modes[$c] = __(Tool_Gamemodes::get_board_by_id($m));
-            if (count($modes) == 1)
+            if (count($modes) === 1)
                 $modes = $modes[0];
             else $modes = implode(', ', array_slice($modes,0,-1)) . ' ' . __('oder') . ' ' . array_slice($modes,-1,1)[0];
             $ret[] = [
@@ -477,10 +506,10 @@ class Controller_Gamemaster extends Controller {
         }
 
         foreach ($req['job'] as $jobblock => $pair) {
-            $jobs = explode(',', "$jobblock");
+            $jobs = explode(',', (string)$jobblock);
             foreach ($jobs as $c => $j)
                 $jobs[$c] = __(Tool_Gamemodes::get_job_by_id($j));
-            if (count($jobs) == 1)
+            if (count($jobs) === 1)
                 $jobs = $jobs[0];
             else $jobs = implode(', ', array_slice($jobs,0,-1)) . ' ' . __('oder') . ' ' . array_slice($jobs,-1,1)[0];
             $ret[] = [
@@ -506,7 +535,7 @@ class Controller_Gamemaster extends Controller {
      * @throws Exception
      * @throws Kohana_Exception
      */
-    public function action_lobby() {
+    public function action_lobby(): void {
         $special_id = $this->request->param('id', 0);
         if (!Tool_Gamemodes::is_special_mode($special_id)) $special_id = 0;
 
@@ -540,7 +569,7 @@ class Controller_Gamemaster extends Controller {
             // Get game mode
             $entry['mode'] = $local_game_obj->setting_mode();
 
-            if (($special_id == 0) != !Tool_Gamemodes::is_special_mode($entry['mode'])) {
+            if (($special_id === 0) !== !Tool_Gamemodes::is_special_mode($entry['mode'])) {
                 unset($data[$k]);
                 continue;
             }
@@ -549,14 +578,14 @@ class Controller_Gamemaster extends Controller {
             $entry['players'] = array();
             foreach ($local_game_obj->players(false) as $p) if ($p) {
                 $entry['players'][] = array('name' => $p->name(), 'id' => (int)$p->id(), 'job' => $p->job(), 'cod' => $p->get_status()->alive() ? null : __($p->get_status()->get_cause_of_death()));
-                if ($p->id() == Globals::CurrentUserF()->uid())
+                if ($p->id() === Globals::CurrentUserF()->uid())
                     $entry['locked'] = true;
             } else $entry['locked'] = true;
         }
         unset($entry);
 
         $database = Tool_Gamemodes::compile_mode_database(true, function($mid) use ($special_id) {
-            return $special_id == 0 || $mid == $special_id;
+            return $special_id === 0 || $mid === $special_id;
         });
 
         foreach ($database['modes'] as &$db_mode)
@@ -567,10 +596,10 @@ class Controller_Gamemaster extends Controller {
         unset($db_job);
 
         // Render
-        $view = View::factory($special_id == 0 ? 'pages/gameselect' : ('pages/games/' . $special_id));
-        switch ($special_id) {
-            case 12000: $this->lobby_special_township($view);
-        }
+        $view = View::factory($special_id === 0 ? 'pages/gameselect' : ('pages/games/' . $special_id));
+        if ($special_id === 12000)
+            $this->lobby_special_township($view);
+
         $this->add_widget($view
                 ->set('database', $database)
                 ->set('games', $data)
@@ -599,7 +628,7 @@ class Controller_Gamemaster extends Controller {
         if (Kohana::$config->load('build.version.stage') < 3) {
 
             $database = Tool_Gamemodes::compile_mode_database(true, function($mid) {
-                return $mid == 12000;
+                return $mid === 12000;
             });
             foreach ($database['jobs'] as $jid => $db_job)
                 if (!$db_job['locked']) {
@@ -612,8 +641,7 @@ class Controller_Gamemaster extends Controller {
 
 
         $towndata = [];
-        foreach ($results as $service => $links) {
-            list($id, $name, $job) = $links;
+        foreach ($results as $service => [$id, $name, $job]) {
 
             if ($id === null || $id < 0) continue;
             else {
@@ -643,12 +671,9 @@ class Controller_Gamemaster extends Controller {
             }
         }
 
-        foreach ($results as $service => $links) {
-            list($id) = $links;
-
+        foreach ($results as $service => [$id])
             if (!isset($towndata[$service]))
                 $towndata[$service] = $id;
-        }
 
         $view
             ->set('mode_name', Tool_Gamemodes::get_board_by_id(12000))

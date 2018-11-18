@@ -6,9 +6,10 @@ class Init_Game {
 		$this->init($game, $set, $gameid, $mode, $flow, $speed, $contest, $name);
 	}
 	
-	private function init(&$game, &$set, $gameid, $mode, $flow, $speed, $contest = null, $name = null) {
+	private function init(&$game, &$set, $gameid, $mode, $flow, $speed, $contest = null, $name = null): void
+    {
         if (!($config_data = Tool_Gamemodes::compile_startup_mode($mode)))
-            throw new Exception('Unable to compile game setup configuration!');
+            throw new RuntimeException('Unable to compile game setup configuration!');
 
 		//Base container
 		$set = new stdClass;

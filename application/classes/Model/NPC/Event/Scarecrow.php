@@ -31,7 +31,8 @@ class Model_NPC_Event_Scarecrow extends Model_NPC_Humanoid
         parent::kill();
     }
 
-    public function hid() {
+    public function hid(): Model_Hid
+    {
         return parent::hid()
             ->add_action('Gehirn einsetzen', Model_Action::factory()
                 ->grind_requirements(false)

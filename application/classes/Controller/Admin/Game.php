@@ -4,10 +4,11 @@ class Controller_Admin_Game extends Controller_Admin_Admin {
 
     protected static $auto_require = ['GAMELIST'];
     
-    public function action_info() {
+    public function action_info(): bool
+    {
 
         $game_id = (int)$this->request->param('id', 0);
-        if ($game_id == 0) return $this->not_found();
+        if ($game_id === 0) return $this->not_found();
 
         $local_game_obj = new Model_Game();
         if (!$local_game_obj->read($game_id, false))

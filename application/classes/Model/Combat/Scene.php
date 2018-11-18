@@ -2,28 +2,29 @@
 
 class Model_Combat_Scene {
 
-    const MCS_EV_NEW_CHALLENGER = 1;           // [ID, Group, Name, Unique, Avatar, Type, [x, y], [Health, Max Health, Count], [Ini, Dmg, Res, Acc], [Norm. Sprite, Death Sprite]]
-    const MCS_EV_NEXT = 2;                     // [ID]
-    const MCS_EV_ATTACK = 3;                   // [Atk-ID, Def-ID, [Ammo-Icons ...], [Wpn-Name, Wpn-Icon, Wpn-Anim], damage]
-    const MCS_EV_DAMAGE = 4;                   // [ID, Damage, Kills, Death]
-    const MCS_EV_INJURY = 5;                   // [ID, [Inj-Name, Inj-Icon]]
-    const MCS_EV_MOVE = 6;                     // [ID, [x, y], distance, [to-id, to-distance]]
-    const MCS_EV_SWITCH = 7;                   // [ID, [Wpn-Name, Wpn-Icon]]
-    const MCS_EV_DBG_AI = 8;                   // [ID, [P_ATK, P_SWC, P_MOV]]
-    const MCS_EV_BREAK = 9;                    // [ID, [Wpn-Name, Wpn-Icon]]
-    const MCS_ATMOSPHERE = 10;                 // [Location]
-    const MCS_EV_ESCAPE = 11;                  // [ID, Chance]
-    const MCS_EV_DIALOG = 12;                  // [ID, Text]
-    const MCS_EV_CHARSFX = 13;                  // [ID, Toggle, Name, Strength]
-
+    public const MCS_EV_NEW_CHALLENGER = 1;           // [ID, Group, Name, Unique, Avatar, Type, [x, y], [Health, Max Health, Count], [Ini, Dmg, Res, Acc], [Norm. Sprite, Death Sprite]]
+    public const MCS_EV_NEXT = 2;                     // [ID]
+    public const MCS_EV_ATTACK = 3;                   // [Atk-ID, Def-ID, [Ammo-Icons ...], [Wpn-Name, Wpn-Icon, Wpn-Anim], damage]
+    public const MCS_EV_DAMAGE = 4;                   // [ID, Damage, Kills, Death]
+    public const MCS_EV_INJURY = 5;                   // [ID, [Inj-Name, Inj-Icon]]
+    public const MCS_EV_MOVE = 6;                     // [ID, [x, y], distance, [to-id, to-distance]]
+    public const MCS_EV_SWITCH = 7;                   // [ID, [Wpn-Name, Wpn-Icon]]
+    public const MCS_EV_DBG_AI = 8;                   // [ID, [P_ATK, P_SWC, P_MOV]]
+    public const MCS_EV_BREAK = 9;                    // [ID, [Wpn-Name, Wpn-Icon]]
+    public const MCS_ATMOSPHERE = 10;                 // [Location]
+    public const MCS_EV_ESCAPE = 11;                  // [ID, Chance]
+    public const MCS_EV_DIALOG = 12;                  // [ID, Text]
+    public const MCS_EV_CHARSFX = 13;                  // [ID, Toggle, Name, Strength]
 
     private $log_data = [];
 
-    public function export() {
+    public function export(): array
+    {
         return $this->log_data;
     }
 
-    public function summarize() {
+    public function summarize(): array
+    {
         $tmp = [];
         $groups = [];
 
@@ -34,7 +35,7 @@ class Model_Combat_Scene {
 
             switch ($type) {
                 case static::MCS_EV_NEW_CHALLENGER:
-                    list($id, $group, $name, $unique, /* $avatar */, $atype, list($x, $y), list($health, $max, $count), list($ini, $dmg, $res, $acc), list($sprite, $sprite_death)) = $entry;
+                    [$id, $group, $name, $unique, /* $avatar */, /*$atype*/, /*[$x, $y]*/, [$health, $max, $count], /*[$ini, $dmg, $res, $acc]*/, [$sprite, $sprite_death]] = $entry;
 
                     if (!isset($tmp[$group])) $tmp[$group] = [];
                     $groups[$id] = $group;
@@ -57,13 +58,14 @@ class Model_Combat_Scene {
                     break;
 
                 case static::MCS_EV_ATTACK:
-                    list($atk, $def, $ammo, list($name, $icon, $animation), $damage) = $entry;
+                    [$atk, /*$def*/, $ammo, /*[$name, $icon, $animation]*/, $damage]
+                        = $entry;
 
                     $tmp[$groups[$atk]][$atk]['dmg_dealt'] += $damage;
                     foreach ($ammo as $a) {
                         if (is_array($a)) {
-                            $c = $a[1];
-                            $a = $a[0];
+                            $tmp = $a;
+                            [$a,$c] = $tmp;
                         } else $c = 1;
 
                         switch ($a) {
@@ -81,14 +83,14 @@ class Model_Combat_Scene {
                     break;
 
                 case static::MCS_EV_DAMAGE:
-                    list($id, $damage, $kills, $death) = $entry;
+                    [$id, $damage, $kills, $death] = $entry;
 
                     $tmp[$groups[$id]][$id]['dmg_taken'] += $damage;
                     $tmp[$groups[$id]][$id]['death'] += $kills;
                     break;
 
                 case static::MCS_EV_INJURY:
-                    list($id, list($name, $icon)) = $entry;
+                    [$id, [$name, $icon]] = $entry;
 
                     if (!isset($tmp[$groups[$id]][$id]['injuries'][$icon]))
                         $tmp[$groups[$id]][$id]['injuries'][$icon] = [1, $name];
@@ -96,7 +98,7 @@ class Model_Combat_Scene {
                     break;
 
                 case static::MCS_EV_BREAK:
-                    list($id, list($wpn_name, $wpn_icon)) = $entry;
+                    [$id, [$wpn_name, $wpn_icon]] = $entry;
 
                     if (!isset($tmp[$groups[$id]][$id]['damaged_items'][$wpn_icon]))
                         $tmp[$groups[$id]][$id]['damaged_items'][$wpn_icon] = [1, $wpn_name];
@@ -109,7 +111,8 @@ class Model_Combat_Scene {
         return $tmp;
     }
 
-    public static function vitalize($log_data = []) {
+    public static function vitalize($log_data = []): array
+    {
         return array_map(
             function($e) {
                  return static::translate_entry($e);
@@ -117,7 +120,7 @@ class Model_Combat_Scene {
             array_values(array_filter($log_data,
                 function($e) {
                     switch ($e[0]) {
-                        case static::MCS_EV_DBG_AI: return Kohana::$environment != Kohana::DEVELOPMENT;
+                        case static::MCS_EV_DBG_AI: return Kohana::$environment !== Kohana::DEVELOPMENT;
                         default: return true;
                     }
                 }
@@ -144,7 +147,8 @@ class Model_Combat_Scene {
         return $entry;
     }
 
-    public static function printRaw($data) {
+    public static function printRaw($data): string
+    {
         return implode("\r\n",array_map(function($v) {return static::entry_to_string($v);}, $data));
     }
 
@@ -152,13 +156,14 @@ class Model_Combat_Scene {
         return implode("\r\n",array_map(function($v) {return static::entry_to_string($v);}, $this->log_data));
     }
 
-    private static function entry_to_string($entry) {
+    private static function entry_to_string($entry): ?string
+    {
         $type = $entry[0];
         $entry = array_slice($entry, 1);
 
         switch ($type) {
             case static::MCS_EV_NEW_CHALLENGER:
-                list($id, $group, $name, /* $unique */, /* $avatar */, $atype, list($x, $y), list($health, $max, $count), list($ini, $dmg, $res, $acc), list($sprite, $sprite_death)) = $entry;
+                [$id, $group, $name, /* $unique */, /* $avatar */, $atype, [$x, $y], [$health, $max, $count], [$ini, $dmg, $res, $acc], /*[$sprite, $sprite_death]*/] = $entry;
                 switch ($atype) {
                     case Model_Combat_Actor::MCA_TYPE_PLAYER:
                         $tmp = "Player $name"; break;
@@ -174,39 +179,41 @@ class Model_Combat_Scene {
 
 
             case static::MCS_EV_NEXT:
-                list($id) = $entry;
+                [$id] = $entry;
                 return "--- Combatant $id is now acting! ---";
 
             case static::MCS_EV_ATTACK:
-                list($atk, $def, $ammo, list($name, $icon, $animation), $damage) = $entry;
+                [$atk, $def, /*$ammo*/, [$name, $icon, $animation], /*$damage*/] = $entry;
                 return "Combatant $atk attacks Combatant $def using $name.";
 
             case static::MCS_EV_DAMAGE:
-                list($id, $damage, $kills, $death) = $entry;
-                return "Combatant $id takes " . round($damage, 2) . " damage, $kills die" . ($death ? " and the group is obliterated." : '.');
+                [$id, $damage, $kills, $death] = $entry;
+                return "Combatant $id takes " . round($damage, 2) . " damage, $kills die" . ($death ? ' and the group is obliterated.'
+                        : '.');
 
             case static::MCS_EV_INJURY:
-                list($id, list($name, $icon)) = $entry;
+                [$id, [$name, $icon]] = $entry;
                 return "Combatant $id has been injured: $name!";
 
             case static::MCS_EV_MOVE:
-                list ($id, list($x, $y), $distance, list($to_id, $dist)) = $entry;
-                return "Combatant $id moves " . round($distance, 2) . " fields to " . round($x, 2) . " / " . round($y, 2) . ($to_id >= 0 ? (", towards Combatant $to_id, remaining distance is " . round($dist, 2) . ".") : ".");
+                [$id, [$x, $y], $distance, [$to_id, $dist]] = $entry;
+                return "Combatant $id moves " . round($distance, 2) . ' fields to '
+                    . round($x, 2) . ' / ' . round($y, 2) . ($to_id >= 0 ? (", towards Combatant $to_id, remaining distance is " . round($dist, 2) . '.') : '.');
 
             case static::MCS_EV_DBG_AI:
-                list($id, list($atk, $swc, $mov)) = $entry;
+                [$id, [$atk, $swc, $mov]] = $entry;
                 return "Combatant $id is thinking: PR:ATK $atk / PR:SWC $swc / PR:MOV $mov.";
 
             case static::MCS_EV_SWITCH:
-                list($id, list($wpn_name, $wpn_icon)) = $entry;
+                [$id, [$wpn_name, $wpn_icon]] = $entry;
                 return "Combatant $id switches weapon to $wpn_name.";
 
             case static::MCS_EV_BREAK:
-                list($id, list($wpn_name, $wpn_icon)) = $entry;
+                [$id, [$wpn_name, $wpn_icon]] = $entry;
                 return "Combatant $id's' weapon $wpn_name broke!";
 
             case static::MCS_EV_ESCAPE:
-                list($id, $chance) = $entry;
+                [$id, $chance] = $entry;
                 return "Combatant $id's' has escaped ($chance)!";
 
             default: return "UNKNOWN SCENE INSTRUCTION ($type)!!! Data is " . json_encode($entry);
@@ -216,7 +223,8 @@ class Model_Combat_Scene {
     /**
      * @param Model_Combat_Actor $combatant
      */
-    public function add_combatant($combatant) {
+    public function add_combatant($combatant): void
+    {
         $this->log_data[] = [
             static::MCS_EV_NEW_CHALLENGER,
 
@@ -239,7 +247,8 @@ class Model_Combat_Scene {
     /**
      * @param Model_Combat_Actor $combatant
      */
-    public function next_combatant($combatant) {
+    public function next_combatant($combatant): void
+    {
         $this->log_data[] = [
             static::MCS_EV_NEXT,
 
@@ -253,7 +262,8 @@ class Model_Combat_Scene {
      * @param Model_Combat_Weapon $weapon
      * @param number $damage
      */
-    public function attack($atk, $def, $weapon, $damage) {
+    public function attack($atk, $def, $weapon, $damage): void
+    {
         $this->log_data[] = [
             static::MCS_EV_ATTACK,
 
@@ -275,7 +285,8 @@ class Model_Combat_Scene {
      * @param number $deaths
      * @param bool $kill
      */
-    public function damage($combatant, $amount, $deaths, $kill) {
+    public function damage($combatant, $amount, $deaths, $kill): void
+    {
         $this->log_data[] = [
             static::MCS_EV_DAMAGE,
 
@@ -291,7 +302,8 @@ class Model_Combat_Scene {
      * @param string $name
      * @param string $icon
      */
-    public function injury($combatant, $name, $icon) {
+    public function injury($combatant, $name, $icon): void
+    {
         $this->log_data[] = [
             static::MCS_EV_INJURY,
 
@@ -310,7 +322,8 @@ class Model_Combat_Scene {
      * @param $distance
      * @param null|Model_Combat_Actor $to
      */
-    public function move($combatant, $pos, $distance, $to = null) {
+    public function move($combatant, $pos, $distance, $to = null): void
+    {
         $this->log_data[] = [
             static::MCS_EV_MOVE,
 
@@ -332,7 +345,8 @@ class Model_Combat_Scene {
      * @param Model_Combat_Actor $combatant
      * @param Model_Combat_Weapon $new_weapon
      */
-    public function switch_weapon($combatant, $new_weapon) {
+    public function switch_weapon($combatant, $new_weapon): void
+    {
         $this->log_data[] = [
             static::MCS_EV_SWITCH,
 
@@ -349,7 +363,8 @@ class Model_Combat_Scene {
      * @param Model_Combat_Actor $combatant
      * @param Model_Combat_Weapon $weapon
      */
-    public function break_weapon($combatant, $weapon) {
+    public function break_weapon($combatant, $weapon): void
+    {
         $this->log_data[] = [
             static::MCS_EV_BREAK,
 
@@ -366,7 +381,8 @@ class Model_Combat_Scene {
      * @param Model_Combat_Actor $combatant
      * @param Model_Items_Abstract_Armor $armor
      */
-    public function break_armor($combatant, $armor) {
+    public function break_armor($combatant, $armor): void
+    {
         $this->log_data[] = [
             static::MCS_EV_BREAK,
 
@@ -385,7 +401,8 @@ class Model_Combat_Scene {
      * @param array|null $ai_swc
      * @param array|null $ai_mov
      */
-    public function dbg_battle_ai($combatant, $ai_atk, $ai_swc, $ai_mov) {
+    public function dbg_battle_ai($combatant, $ai_atk, $ai_swc, $ai_mov): void
+    {
         $this->log_data[] = [
             static::MCS_EV_DBG_AI,
 
@@ -399,7 +416,8 @@ class Model_Combat_Scene {
         ];
     }
 
-    public function set_atmosphere($location) {
+    public function set_atmosphere($location): void
+    {
         $this->log_data[] = [
             static::MCS_ATMOSPHERE,
             $location
@@ -410,7 +428,8 @@ class Model_Combat_Scene {
      * @param Model_Combat_Actor  $combatant
      * @param float $chance
      */
-    public function escape($combatant, $chance) {
+    public function escape($combatant, $chance): void
+    {
         $this->log_data[] = [
             static::MCS_EV_ESCAPE,
 
@@ -423,7 +442,8 @@ class Model_Combat_Scene {
      * @param Model_Combat_Actor $combatant
      * @param string $text
      */
-    public function dialog($combatant, $text) {
+    public function dialog($combatant, $text): void
+    {
         if (empty($text)) return;
         $this->log_data[] = [
             static::MCS_EV_DIALOG,
@@ -439,7 +459,8 @@ class Model_Combat_Scene {
      * @param string $name
      * @param float $strenght
      */
-    public function character_sfx($combatant, $toggle, $name, $strenght = 1.0) {
+    public function character_sfx($combatant, $toggle, $name, $strenght = 1.0): void
+    {
         $this->log_data[] = [
             static::MCS_EV_CHARSFX,
 

@@ -2,7 +2,8 @@
 
 class Model_Items_Virtual_Location_Room_Cooler extends Model_Items_Abstract_Virtual {
 
-    protected function self_upgrade() {
+    protected function self_upgrade(): void
+    {
         Model_Blueprints::fast_apply($this->location(),'rooms','cooler', $this->room());
     }
 
@@ -27,7 +28,8 @@ class Model_Items_Virtual_Location_Room_Cooler extends Model_Items_Abstract_Virt
                 ->message('Die schwere Metalltür, die die Küche vom Kühlraum trennt, ist inzwischen startk verrostet. Nach einiger Anstrengung gelingt es dir aber doch, sie einen Spalt zu öffnen. Du willst gerade hineingehen, als du plötzlich von einem Zombie angefallen wirst! Wie zum Teufel ist der denn da rein gekommen? Zu allem Überfluss ist der Kühlraum (bis auf den Zombie) völlig leer...')
                 ->consume($this)
                 ->custom(function() {
-                    Tool_Scripts::simple_battle(1, 0, "Ein angriffslustiger Zombie springt aus dem Kühlraum und greift an!", true, false);
+                    Tool_Scripts::simple_battle(1, 0,
+                        'Ein angriffslustiger Zombie springt aus dem Kühlraum und greift an!', true, false);
                     $this->self_upgrade();
                 })
             , 'zombie')

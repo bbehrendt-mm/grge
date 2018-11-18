@@ -11,12 +11,13 @@ abstract class Model_Items_Abstract_Ammo extends Model_Items_Abstract_Stackable 
         if (!$no_bonus && Globals::hasCurrentPlayer() && !Globals::shadowPlayerExists() && isset(static::$boni[Globals::PrimaryPlayerF()->job()])) {
             $lv = Globals::PrimaryPlayerF()->job(false);
             while ($lv > 0 && !isset(static::$boni[Globals::PrimaryPlayerF()->job()][$lv])) $lv--;
-            $bonus = isset(static::$boni[Globals::PrimaryPlayerF()->job()][$lv]) ? static::$boni[Globals::PrimaryPlayerF()->job()][$lv] : 1;
+            $bonus = static::$boni[Globals::PrimaryPlayerF()->job()][$lv] ?? 1;
         }
         $this->count = ceil($this->count * $bonus);
 	}
 	
-	public function take($silent = false) {
+	public function take($silent = false): bool
+    {
         return true;
 	}
 }	

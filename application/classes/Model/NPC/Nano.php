@@ -2,14 +2,17 @@
 
 class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
 {
-    private $escape_target_location = null;
+    private $escape_target_location;
 
+    /** @var string|null $name */
     protected $name;
     protected $status;
+    /** @var int|null $location */
     protected $location;
     protected $inventory;
     protected $livetime = 0;
-    protected $id = null;
+    /** @var int|null $id */
+    protected $id;
     protected $escort = false;
     protected $escape = 0;
 
@@ -33,25 +36,29 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
     /**
      * @return Model_Status
      */
-    public function get_status() {
+    public function get_status(): Model_Status
+    {
         return $this->status;
     }
 
     /**
      * @return string
      */
-    public function name() {
+    public function name(): string
+    {
         return static::$translate_name ? __($this->name) : $this->name;
     }
 
     /**
      * Returns player location id or changes it
-     * @param int $newval Set if you want to change locations; the return value will be the new location
+     *
+     * @param int $lc Set if you want to change locations; the return value will be the new location
+     *
      * @return int
      */
-    public function location_class($newval = NULL) {
-        if ($newval !== NULL) {
-            $this->location = $newval;
+    public function location_class($lc = NULL):int {
+        if ($lc !== NULL) {
+            $this->location = $lc;
             $this->escape = 0;
         }
 
@@ -64,7 +71,8 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
      * @return Model_Places_Abstract_Place
      * @throws Exception
      */
-    final public function location() {
+    final public function location(): Model_Places_Abstract_Place
+    {
         if (!Globals::CurrentGameF()->location($this->location))
             $this->location_class(Globals::CurrentGameF()->map_main()->resolve_fixed_id(1));
 
@@ -74,14 +82,16 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
     /**
      * @return Model_Inventory
      */
-    public function inventory() {
+    public function inventory(): Model_Inventory
+    {
         return $this->inventory;
     }
 
     /**
      * @return Model_Items_Abstract_Item|null
      */
-    protected function generate_dead_body() {
+    protected function generate_dead_body(): ?Model_Items_Abstract_Item
+    {
         return null;
     }
 
@@ -115,6 +125,7 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
             $this->inventory = $drop_inv;
 
             if ($this->location()) {
+                /** @noinspection NotOptimalIfConditionsInspection */
                 if ($this->get_status()->get(Model_Status::MS_STAT_ZOMBIFY) >= 50 && ($ghul = $this->generate_zombified_body())) {
                     $this->location()->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_ZOMBIFY, [], $this->id()));
                     Globals::CurrentGameF()->register_ghul($this->location_class(), $ghul);
@@ -125,7 +136,7 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
                     $this->location()->log()->add(new Model_Log_Types_Item(static::$death_is_enemy ? Model_Log_Types_Item::MLTI_DEATH_ENEMY : Model_Log_Types_Item::MLTI_DEATH, $this->inventory()->get(), $this->id()));
                 }
 
-                if (count(Tool_Scripts::at_location($this->location_class(), true, true)) == 0) $this->location()->vacate();
+                if (count(Tool_Scripts::at_location($this->location_class(), true, true)) === 0) $this->location()->vacate();
             }
         }
     }
@@ -148,7 +159,8 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
      * True, when the player is capable of escaping
      * @return bool
      */
-    final public function can_escape() {
+    final public function can_escape(): bool
+    {
         return ($this->escape > 0);
     }
 
@@ -161,7 +173,7 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
 
         $this->livetime++;
 
-        $this->get_status()->set_cause_of_death("Multiorganversagen");
+        $this->get_status()->set_cause_of_death('Multiorganversagen');
         $this->get_status()->tick();
         $this->get_status()->clear_cause_of_death();
     }
@@ -169,7 +181,7 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
     public function ai() {/** NANO NPC must NOT implement any AI! */}
 
     public function can($type) {
-        return in_array($type, static::$abillities);
+        return in_array($type, static::$abillities, true);
     }
 
     public function id() {
@@ -182,23 +194,29 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
 
     /**
      * Returns the companion state, or sets it when newval is given
+     *
      * @param null $newval
+     *
      * @return bool
      */
-    public function companion($newval = null) {
+    public function companion($newval = null): bool {
         if ($newval === null) return $this->escort;
         else return $this->escort = $newval;
     }
 
     public function set_id($new) {
-        if ($this->id !== null && $this->id != $new)
-            throw new Exception('Attempt to rebind PE ID!');
+        if ($this->id !== null && $this->id !== $new)
+            throw new RuntimeException('Attempt to rebind PE ID!');
         $this->id = $new;
     }
 
     public function allow($type = null) {
         if ($type === null) return $this->escort ? static::$escort_functions : [];
-        return $this->escort ? (in_array($type, static::$escort_functions) || in_array(Interface_Plentity::IC_ALLOW_ANY, static::$escort_functions)) : false;
+        return $this->escort ? (in_array($type, static::$escort_functions, true)
+            || in_array(
+                Interface_Plentity::IC_ALLOW_ANY, static::$escort_functions,
+                true
+            )) : false;
     }
 
     public function entity_species() {
@@ -226,7 +244,8 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
     /**
      * @return Model_Hid
      */
-    public function hid() {
+    public function hid(): Model_Hid
+    {
         return Model_Hid::factory();
     }
 

@@ -19,19 +19,22 @@ class Struct_ItemEntry extends Struct {
 
     public $type;
 
-    public function name() {
+    public function name(): string
+    {
         $class = $this->class;
         /** @var Model_Items_Abstract_Item $class */
         return $class::static_name($this->type);
     }
 
-    public function desc() {
+    public function desc(): string
+    {
         $class = $this->class;
         /** @var Model_Items_Abstract_Item $class */
         return $class::static_description($this->type);
     }
 
-    public function icon() {
+    public function icon(): string
+    {
         $class = $this->class;
         /** @var Model_Items_Abstract_Item $class */
         return $class::static_icon($this->type);

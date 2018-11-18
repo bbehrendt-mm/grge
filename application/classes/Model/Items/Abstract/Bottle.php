@@ -29,7 +29,7 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
                             ->ambiguous_effect(Model_Status::MS_STAT_HEALTH)
                             ->custom(function($p) {
                                 /** @var Model_Player $p */
-                                if ($this->toxicity() > 50 && $p->get_status()->get(Model_Status::MS_STAT_HEALTH) > $this->toxicity())
+                                if ($this->toxicity() > max(50, $p->get_status()->get(Model_Status::MS_STAT_HEALTH)))
                                     $p->achievements()->achieve(Model_Achievement::MA_POISON_DRINK);
                             })
                             ->consume($this)
@@ -67,14 +67,13 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
             );
     }
 	
-	public function consume($count = 1) {
+	public function consume($count = 1): void
+    {
 		if ($this->bottle_fillrate > 0)
 		{
 			$this->bottle_toxicity -= ($this->bottle_toxicity * ($count/$this->bottle_fillrate));
 			$this->bottle_fillrate--;
-			return true;
 		}
-		return false;
 	}
 	
 	public function capacity() {
@@ -112,16 +111,18 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
 		return $this->fillrate($num);
 	}
 	
-	public function stackname() {
-		return (static::$capacity == 1) ? 'Ration' : 'Rationen';
+	public function stackname(): ?string
+    {
+		return (static::$capacity === 1) ? 'Ration' : 'Rationen';
 	}
 	
-	public function label() {
+	public function label(): ?string
+    {
 		return $this->label;
 	}
 
     private function drinkmsg() {
-        if ($this->bottle_toxicity == 0) 		return 'Du nimmst einen Schluck aus deiner Flasche. Dein Durst verschwindet und du fühlst dich erfrischt!';
+        if ($this->bottle_toxicity === 0) 		return 'Du nimmst einen Schluck aus deiner Flasche. Dein Durst verschwindet und du fühlst dich erfrischt!';
         elseif ($this->bottle_toxicity <= 5)	return 'Du nimmst einen Schluck aus deiner Flasche. Das Wasser hat einen leicht modrigen Nachgeschmack, dennoch hilft es gegen deinen Durst.';
         elseif ($this->bottle_toxicity <= 10)	return 'Du nimmst einen Schluck aus deiner Flasche. Es fällt dir schwer, den Güllegeschmack des Wassers zu ignorieren, aber irgendwie musst du ja gegen deinen Durst vorgehen.';
         elseif ($this->bottle_toxicity <= 30)	return 'Du nimmst einen Schluck aus deiner Flasche. Das Wasser ist schleimig und verklebt dir die Kehle. Außerdem schmeckt es, als hätte sich darin ein Zombie aufgelöst.';
@@ -153,7 +154,8 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
      * @return bool
      * @throws Exception
      */
-    public function interaction_fill($item) {
+    public function interaction_fill($item): bool
+    {
 		if ($this->bottle_fillrate >= static::$capacity)
 		{
             Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String(null, 'Diese Flasche ist bereits bis zum Rand gefüllt. Du kannst unmöglich eine weitere Ration Wasser darin unterbringen.'));
@@ -162,7 +164,8 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
 		
 		if (!Tool_System::instance_of($item, Model_Items_Abstract_Liquid::cls())) return false;
 		
-		if ($item->toxicity() > $this->bottle_toxicity || $this->bottle_toxicity <= 0) $this->bottle_toxicity += $item->toxicity();
+		if ($this->bottle_toxicity <= 0 || $item->toxicity() > $this->bottle_toxicity)
+		    $this->bottle_toxicity += $item->toxicity();
 		else $this->bottle_toxicity += round( ($item->toxicity()*$item->toxicity())/$this->bottle_toxicity );
 		
 		$item->consume();
@@ -176,7 +179,8 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
      * @return bool
      * @throws Exception
      */
-    public function interaction_fillfrom($item) {
+    public function interaction_fillfrom($item): bool
+    {
 	
 		if ($this->bottle_fillrate >= static::$capacity)
 		{
@@ -210,8 +214,9 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
 		return true;
 	}
 		
-	public function mixchem($chemval) {
-        if ($this->bottle_fillrate == 0) return parent::mixchem($chemval);
+	public function mixchem($chemval): bool
+    {
+        if ($this->bottle_fillrate === 0) return parent::mixchem($chemval);
 
         switch ($chemval)
         {

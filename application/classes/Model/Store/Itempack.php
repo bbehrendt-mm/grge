@@ -7,11 +7,13 @@ abstract class Model_Store_Itempack extends Model_Store_Interface {
 
     protected static $item_list = [];
 
-    public static function is_valid_for($mode,$job,$init,$id,$flow) {
+    public static function is_valid_for($mode,$job,$init,$id,$flow): bool
+    {
         return (static::$personal || $init) && parent::is_valid_for($mode,$job,$init,$id,$flow);
     }
 
-    protected static function get_item_instances() {
+    protected static function get_item_instances(): array
+    {
         $r = [];
         foreach (static::$item_list as $itemclass => $count)
             $r[] = [
@@ -21,7 +23,8 @@ abstract class Model_Store_Itempack extends Model_Store_Interface {
         return $r;
     }
 
-    public static function get_description() {
+    public static function get_description(): string
+    {
         parent::get_description();
         $p = [];
         foreach (static::get_item_instances() as $instance)
@@ -30,7 +33,8 @@ abstract class Model_Store_Itempack extends Model_Store_Interface {
         return '[nt]' . __(parent::get_description()) . ' ' . (static::$personal ? __('Mit diesem Paket werden folgende Gegenstände in deinem Inventar abgelegt:') : __('Mit diesem Paket werden folgende Gegenstände in deinem Versteck abgelegt:')) . ' ' . implode(', ', $p);
     }
 
-    public static function trigger_player_after_init(&$player) {
+    public static function trigger_player_after_init($player): void
+    {
         parent::trigger_player_after_init($player);
 
         foreach (static::get_item_instances() as $instance) {

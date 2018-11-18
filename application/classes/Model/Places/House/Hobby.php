@@ -18,12 +18,13 @@ class Model_Places_House_Hobby extends Model_Places_Abstract_Place {
         return parent::uin($uin);
     }
 
-    public function pretick() {
+    public function pretick(): void
+    {
         foreach (Globals::CurrentGameF()->get_initialized_events() as $ev)
             $ev->event_locationTick($this);
 
-        if (random_int(0,10) > 2) return true;
-        if (count(Tool_Scripts::at_location($this->uin(), true, true)) <= 0) return true;
+        if (random_int(0,10) > 2) return;
+        if (count(Tool_Scripts::at_location($this->uin(), true, true)) <= 0) return;
 
         switch ($this->mentalstate)
         {
@@ -51,7 +52,9 @@ class Model_Places_House_Hobby extends Model_Places_Abstract_Place {
                 if (!Tool_Scripts::is_npc($s_player)) {
                     $s_player->achievements()->achieve(Model_Achievement::MA_SLASHER_KILLER);
 
-                    $s_player->get_status()->set_cause_of_death("Serienkiller-Opfer");
+                    $s_player->get_status()->set_cause_of_death(
+                        'Serienkiller-Opfer'
+                    );
                     $s_player->get_status()->retrieve('heartbeat')->unbuff();
                 } else $s_player->kill();
 
@@ -62,7 +65,5 @@ class Model_Places_House_Hobby extends Model_Places_Abstract_Place {
         }
 
         $this->mentalstate++;
-
-        return true;
     }
 }	

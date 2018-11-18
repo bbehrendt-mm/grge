@@ -35,7 +35,9 @@
                             <div class="cell rw-12 padded">
                                 <?php if ($item['info']['alias']) { ?>
                                     <b>Known aliases: </b>
-                                    <?php foreach ($item['info']['alias'] as list($name, $icon)) { ?>
+                                    <?php foreach ($item['info']['alias'] as [
+                                        $name, $icon]
+                                    ) { ?>
                                         <div class="solid"><img src="media/icons/<?=$icon?>.gif" /> <?=$name?></div>
                                     <?php } ?>
                                 <?php } else { ?>

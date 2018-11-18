@@ -5,7 +5,8 @@ class Model_NPC_Event_RudolphBR extends Model_NPC_Event_Rudolph
     protected static $alcohol_scaling = 0.4;
     protected static $inventory_size = 180;
 
-    protected function auto_drink() {
+    protected function auto_drink(): bool
+    {
         return true;
     }
 

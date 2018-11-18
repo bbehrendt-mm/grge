@@ -4,10 +4,11 @@ class Controller_Admin_Games extends Controller_Admin_Admin {
 
     protected static $auto_require = ['GAMELIST'];
 
-    public function japi_process_tick() {
-        $id = $this->post('gid');
+    public function japi_process_tick(): bool
+    {
+        $id = self::post('gid');
 
-        if ($id === "*")
+        if ($id === '*')
             $list = DB::select('gameid')->from('games')->execute()->as_array(null, 'gameid');
         else $list = [(int)$id];
 
@@ -38,15 +39,16 @@ class Controller_Admin_Games extends Controller_Admin_Admin {
         }
 
         return $this->render([
-            'success' => (empty($failures) ? 0 : (empty($success) ? -2 : -1)),
+            'success' => empty($failures) ? 0 : (empty($success) ? -2 : -1),
             'summary' => ['completed' => $success, 'failed' => $failures]
         ]);
     }
 
-    public function japi_game_update() {
-        $id = $this->post('gid');
+    public function japi_game_update(): bool
+    {
+        $id = self::post('gid');
 
-        if ($id === "*")
+        if ($id === '*')
             $list = DB::select('gameid')->from('games')->execute()->as_array(null, 'gameid');
         else $list = [(int)$id];
 
@@ -68,14 +70,15 @@ class Controller_Admin_Games extends Controller_Admin_Admin {
         }
 
         return $this->render([
-            'success' => (empty($failures) ? 0 : (empty($success) ? -2 : -1)),
+            'success' => empty($failures) ? 0 : (empty($success) ? -2 : -1),
             'summary' => ['completed' => $success, 'failed' => $failures]
         ]);
     }
 
-    public function japi_game_retire() {
-        $game_id = (int)$this->post('gid');
-        $auto = (int)$this->post('auto');
+    public function japi_game_retire(): bool
+    {
+        $game_id = (int)self::post('gid');
+        $auto = (int)self::post('auto');
 
         if (!$game_id) return $this->render(['success' => -1]);
 
@@ -100,8 +103,9 @@ class Controller_Admin_Games extends Controller_Admin_Admin {
         return $this->render(['success' => 0]);
     }
 
-    public function japi_game_delete() {
-        $game_id = (int)$this->post('gid');
+    public function japi_game_delete(): bool
+    {
+        $game_id = (int)self::post('gid');
 
         if (!$game_id) return $this->render(['success' => -1]);
 
@@ -116,9 +120,10 @@ class Controller_Admin_Games extends Controller_Admin_Admin {
         return $this->render(['success' => 0]);
     }
 
-    public function japi_kill() {
-        $game_id = (int)$this->post('gid');
-        $entity_id = $this->post('pid');
+    public function japi_kill(): bool
+    {
+        $game_id = (int)self::post('gid');
+        $entity_id = self::post('pid');
         
         if (!$game_id || !$entity_id) return $this->render(['success' => -1]);
         
@@ -135,16 +140,17 @@ class Controller_Admin_Games extends Controller_Admin_Admin {
         return $this->render(['success' => 0]);
     }
 
-    public function japi_retire() {
-        $game_id = (int)$this->post('gid');
-        $entity_id = (int)$this->post('pid');
+    public function japi_retire(): bool
+    {
+        $game_id = (int)self::post('gid');
+        $entity_id = (int)self::post('pid');
 
         if (!$game_id || !$entity_id) return $this->render(['success' => -1]);
 
         $local_game_obj = new Model_Game();
         if (!$local_game_obj->read($game_id, true)) return $this->render(['success' => -500]);
         if (!($pn = $local_game_obj->get_player($entity_id))) return $this->render(['success' => -2]);
-        if ($pn->get_status()->alive() || $local_game_obj->is_retired($entity_id)) return $this->render(['success' => -400]);
+        if ($local_game_obj->is_retired($entity_id) || $pn->get_status()->alive()) return $this->render(['success' => -400]);
 
         if ($local_game_obj->retire($entity_id))
             DB::update('users')->set(array('session' => '#'))->where('uid', '=', $pn->id())->execute();
@@ -153,7 +159,8 @@ class Controller_Admin_Games extends Controller_Admin_Admin {
         return $this->render(['success' => 0]);
     }
     
-    public function action_main() {
+    public function action_main(): void
+    {
 
         $result = DB::select('games.gameid','games.timestamp','xref_game_player.uid','multiplayer_lobby.lang','multiplayer_lobby.slots','multiplayer_lobby.password','users.name')->from('games')
             ->join('xref_game_player','LEFT')->on('games.gameid','=','xref_game_player.gameid')

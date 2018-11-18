@@ -46,7 +46,7 @@
                     <?php } else { ?>
                         <div data-setservice="<?=$service?>" data-setsign="<?=$game['sign']?>" class="<?=$game['locked'] ? 'hotbox disabled' : 'hotbox special' ?>">
                             <b class="head"><?=$game['name']?></b>
-                            <i class="subtitle"><?=$service?>, <?=__(($game['players'][0] == $game['players'][1]) ? ':num1 Spieler' : ':num1 Spieler, :num2 lebendig', [':num1' => $game['players'][1], ':num2' => $game['players'][0]]);?></i>
+                            <i class="subtitle"><?=$service?>, <?=__(($game['players'][0] === $game['players'][1]) ? ':num1 Spieler' : ':num1 Spieler, :num2 lebendig', [':num1' => $game['players'][1], ':num2' => $game['players'][0]]);?></i>
                         </div>
                     <?php } ?>
                 </div>
@@ -72,9 +72,9 @@
                         <img src="media/icons/lock.gif" alt="x" />
                     <?php } else if ($midness) { ?>
                         <img alt="" src="media/icons/midness.gif">
-                    <?php } else if (count($data['levels']) == 0) { ?>
+                    <?php } else if (count($data['levels']) === 0) { ?>
                         <img src="media/icons/silverstar.gif" alt="+" />
-                    <?php } elseif (count($data['levels']) + 1 == $data['level']) { ?>
+                    <?php } elseif (count($data['levels']) + 1 === $data['level']) { ?>
                         <img src="media/icons/superstar.gif" alt="++" />
                     <?php } else for ($i = 0; $i < $data['level']; $i++) { ?>
                         <img src="media/icons/star.gif" alt="*" />

@@ -38,7 +38,7 @@ class Model_Items_Virtual_Hero_Pathfinder extends Model_Items_Abstract_Virtual {
                 ->description('Für die nächste Reise musst du keine Energie aufbringen.')
                 ->effect(
                     Model_Effect::factory()
-                        ->buff("Model_Buffs_Move")
+                        ->buff('Model_Buffs_Move')
                         ->message('Einmal tief durchatmen, dann kanns losgehen. Die nächste Reise wird ein Klacks für dich!')
                 )
             , 'hero_job_1');

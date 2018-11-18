@@ -44,7 +44,7 @@ class Model_Items_Virtual_Location_Landfill extends Model_Items_Abstract_Virtual
                         }
 
                         $p->achievements()->achieve(Model_Achievement::MA_GARBAGE_GUY, $g);
-                        if ($g == 1) $p->log()->add(new Model_Log_Types_String(null, 'Eigentlich ist es ja Energieverschwendung, den Schredder für dieses bisschen Müll anzuwerfen... Aber hey, immerhin hast du einen Eimer mit Splittern gefüllt!'));
+                        if ($g === 1) $p->log()->add(new Model_Log_Types_String(null, 'Eigentlich ist es ja Energieverschwendung, den Schredder für dieses bisschen Müll anzuwerfen... Aber hey, immerhin hast du einen Eimer mit Splittern gefüllt!'));
                         else $p->log()->add(new Model_Log_Types_String(null, 'Mit unbarmherziger Macht zerstört der Schredder jeden Gegenstand, den du in seinen Schlot wirfst. Am Ende hast du damit :num Eimer mit Splittern gefüllt!', array(':num' => $g)));
 
                         return true;

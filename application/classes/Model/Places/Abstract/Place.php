@@ -5,13 +5,14 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 	protected static $location_name;
     protected static $icon = 'default';
 	protected static $namelist;
+	/** @var string|null $description */
 	protected static $description;
     protected static $outside = true;
 
-    protected static $custom_style = null;
+    protected static $custom_style;
     protected static $upgradable = true;
     protected static $defendable = true;
-    protected static $perpetualDaytime = null;
+    protected static $perpetualDaytime;
 
 	protected static $widget_list = Array(
 				'zombie-radar',
@@ -41,35 +42,42 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 
 	protected static $auto_actions = Array();
 
-	public function widget_list() {
+	public function widget_list(): array
+    {
 		return static::$widget_list;
 	}
 
-	public function is_upgradable() {
+	public function is_upgradable(): bool
+    {
 	    return static::$upgradable;
     }
 
-    public function is_defendable() {
+    public function is_defendable(): bool
+    {
         return static::$defendable;
     }
 
-    public static function get_namelist() {
-        return static::$namelist ? static::$namelist : [static::$location_name];
+    public static function get_namelist(): array
+    {
+        return static::$namelist ?: [static::$location_name];
     }
 
     public static function getCustomStyle() {
         return static::$custom_style;
     }
 
-    public function is_outside() {
+    public function is_outside(): bool
+    {
         return static::$outside;
     }
 
-    public function battle_location_type() {
+    public function battle_location_type(): string
+    {
         return $this->is_outside() ? 'outside' : 'inside';
     }
 
-    public function get_doorways() {
+    public function get_doorways(): array
+    {
         $ret = [];
         foreach ($this->doorway as $dw)
             if (Globals::CurrentGameF()->location($dw))
@@ -77,7 +85,8 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
         return $ret;
     }
 
-    public function register_doorway($lid) {
+    public function register_doorway($lid): void
+    {
         $this->doorway[] = $lid;
     }
 
@@ -121,7 +130,8 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
     /**
      * @return Model_Room[]
      */
-    public function rooms() {
+    public function rooms(): array
+    {
         return $this->rooms;
     }
 
@@ -131,7 +141,8 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
      * @param string|string[] $tags
      * @return bool
      */
-    public function has_room($room_type = '', $contains = '', $tags = '') {
+    public function has_room($room_type = '', $contains = '', $tags = ''): bool
+    {
         return count($this->find_rooms($room_type,$contains,$tags)) > 0;
     }
 
@@ -141,7 +152,8 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
      * @param string|string[] $tags
      * @return Model_Room[]
      */
-    public function find_rooms($room_type = '', $contains = '', $tags = '') {
+    public function find_rooms($room_type = '', $contains = '', $tags = ''): array
+    {
         $ret = [];
         foreach ($this->rooms() as $room)
             if ($room->check_room_satisfaction($room_type) && $room->has_content($contains) && $room->has_tag($tags))
@@ -170,11 +182,13 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
         return $t;
     }
 
-    public function create_new_room($space = -1, $tags = []) {
+    public function create_new_room($space = -1, $tags = []): \Model_Room
+    {
         return $this->rooms[] = Model_Room::factory(count($this->rooms),$space,$tags);
     }
 
-    public function setup_new_room(Model_Room $room, $rtype = [], $upgrades = [], $name = null) {
+    public function setup_new_room(Model_Room $room, $rtype = [], $upgrades = [], $name = null): \Model_Room
+    {
         Model_Blueprints::fast_apply($this, 'rooms', $rtype, $room);
         Model_Blueprints::fast_apply($this, 'upgrades', $upgrades, $room);
         if ($name !== null) $room->name($name);
@@ -184,7 +198,8 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
     /**
      * @return Model_Room
      */
-    public function setup_primary_rooms() {
+    public function setup_primary_rooms(): Model_Room
+    {
         $room = $this->create_new_room(-1,['inside','primary']);
         $room->name($this->name(), true);
         $room->upgrade('Allgemein',true, ['common']);
@@ -192,9 +207,11 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
         return $room;
     }
 
-    public function setup_additional_rooms() {}
+    public function setup_additional_rooms(): void
+    {}
 
-    public function mapable() {
+    public function mapable(): bool
+    {
         return true;
     }
 
@@ -232,7 +249,8 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
         $this->setup_additional_rooms();
 	}
 	
-	public function auto_actions() {
+	public function auto_actions(): array
+    {
 		return static::$auto_actions;
 	}
 	
@@ -240,11 +258,13 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 	 * Returns local zombie factory
 	 * @return Model_Factory_Zombies
 	 */
-	public function zombie_factory() {
+	public function zombie_factory(): \Model_Factory_Zombies
+    {
 		return $this->zombie_factory;
 	}    
 	
-	public function log() {
+	public function log(): \Model_Log_Log
+    {
 		return $this->log;
 	}
 	
@@ -252,37 +272,43 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 		return static::$weight_limit;
 	}
 
-	public function inventory() {
+	public function inventory(): \Model_Inventory
+    {
 		return $this->inventory;
 	}
 	
 	//Enter location
-	public function can_enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
+	public function can_enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER): bool
+    {
 		return true;
 	}
 	
 	//Leave location
-	public function can_leave($pid = null, $ignore_zombies = false, $type = Interface_Tickable::IT_TYPE_PLAYER) {
-        return ($ignore_zombies || ($type == Interface_Tickable::IT_TYPE_PLAYER && Globals::CurrentGameF()->get_player($pid)->can_escape()) || $this->zombie_factory->accumulation() <= 0);
+	public function can_leave($pid = null, $ignore_zombies = false, $type = Interface_Tickable::IT_TYPE_PLAYER): bool
+    {
+        return ($ignore_zombies || ($type === Interface_Tickable::IT_TYPE_PLAYER && Globals::CurrentGameF()->get_player($pid)->can_escape()) || $this->zombie_factory->accumulation() <= 0);
 	}
 
     //Enter map
-    public function can_enter_map($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
+    public function can_enter_map($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER): bool
+    {
         return $this->can_enter($pid, $type);
     }
 
     //Leave map
-    public function can_leave_map($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
+    public function can_leave_map($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER): bool
+    {
         return $this->can_leave($pid, $type);
     }
 	
 	//Enter location
-	public function enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
+	public function enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER): bool
+    {
 		if (!$pid) $player = Globals::CurrentPlayerF();
-		elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGameF()->get_player($pid);
+		elseif ($type === Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGameF()->get_player($pid);
         else $player = Globals::CurrentGameF()->get_npc($pid);
 
-		$this->log->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $pid, $type == Interface_Tickable::IT_TYPE_NPC));
+		$this->log->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $pid, $type === Interface_Tickable::IT_TYPE_NPC));
 
         if (!$this->survival_find && $type === Interface_Tickable::IT_TYPE_PLAYER && $player->job(1060)) {
 			
@@ -305,29 +331,34 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 	}
 	
 	//Leave location
-	public function leave($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
-		$this->log->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_LEAVE, $pid, $type == Interface_Tickable::IT_TYPE_NPC));
+	public function leave($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER): bool
+    {
+		$this->log->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_LEAVE, $pid, $type === Interface_Tickable::IT_TYPE_NPC));
 		if (count(Tool_Scripts::at_location($this->uin(), true, true)) <= 1) $this->vacate();
 		return true;
 	}
 
     //Enter map
-    public function enter_map($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
+    public function enter_map($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER): bool
+    {
         return $this->enter($pid, $type);
     }
 
     //Leave map
-    public function leave_map($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
+    public function leave_map($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER): bool
+    {
         return $this->leave($pid, $type);
     }
 
-    public function pass($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
-        $this->log->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_PASS, $pid, $type == Interface_Tickable::IT_TYPE_NPC));
+    public function pass($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER): bool
+    {
+        $this->log->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_PASS, $pid, $type === Interface_Tickable::IT_TYPE_NPC));
 
         return true;
     }
 	
-	public function vacate() {
+	public function vacate(): void
+    {
 		foreach ($this->inventory->get('Interface_Tmpitem') as $item) $item->consume();
 		$this->log->trim(5);
 	}
@@ -341,7 +372,8 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
      * Will return item icon path
      * @return string
      */
-    public function icon() {
+    public function icon(): string
+    {
         return static::$icon . '.gif';
     }
 
@@ -353,7 +385,10 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
      */
 	public function find_item($force = false, $return = false) {
         // Spawn ticket
-        if (!$return && Tool_Events::ticket_event(Globals::CurrentGameF()->next_tick()) && !Tool_Scripts::is_npc(Globals::CurrentPlayerF()) && !Globals::CurrentPlayerActualF()->golden_ticket()) {
+        if (!$return
+            && !Globals::CurrentPlayerActualF()->golden_ticket()
+            && !Tool_Scripts::is_npc(Globals::CurrentPlayerF()) && Tool_Events::ticket_event(Globals::CurrentGameF()->next_tick())
+        ) {
             $num = max(1,random_int(1,3) - random_int(0,2));
             $tmp = array();
             for ($i = 0; $i < $num; $i++)
@@ -439,7 +474,8 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 		return true;	
 	}
 	
-	public function pretick() {
+	public function pretick(): void
+    {
         //Check for zombie attack
         if ($ghuls = Globals::CurrentGameF()->get_ghuls($this->uin())) {
 
@@ -467,7 +503,8 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
             $ev->event_locationTick($this);
 	}
 
-	public function tick($type = Interface_Tickable::IT_TYPE_PLAYER) {
+	public function tick($type = Interface_Tickable::IT_TYPE_PLAYER): bool
+    {
         if (Globals::CurrentPlayerF()->can(Interface_Plentity::IC_TRIGGER_ITEM_FINDINGS)) $this->find_item();
         if (Globals::CurrentPlayerF()->can(Interface_Plentity::IC_TRIGGER_LOCATION_FINDINGS)) $this->find_building();
 
@@ -493,23 +530,24 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 		return $r;
 	}
 
-    protected function find_building() {
+    protected function find_building(): bool
+    {
         if (Globals::CurrentPlayerF()->get_status()->retrieve('fragile')) return false;
         if (!($building = Globals::CurrentGameF()->mapF($this->uin())->attempt_unveil($this->uin(), Globals::CurrentPlayerF()->get_status()->get(Model_Status::MS_CHAR_LOCATION_SPAWNRATE)))) return true;
 
         //Mapper
         if (Globals::CurrentGameF()->config('modules.mapping') && ($items = Globals::CurrentPlayerF()->inventory()->get(Model_Items_Maptool::cls()))) {
             /** @var $items Model_Items_Maptool[] */
-            if (!($items = Globals::CurrentPlayerF()->inventory()->get(Model_Items_Maptool::cls()))) return false;
+            if (!$items) return false;
             $items[0]->common_discovery(random_int(5, 15));
-            Globals::CurrentPlayerF()->log()->add(new Model_Log_Types_String(null, 'Du hast eine neue Ruine entdeckt und eine grobe Karte mit ihrer Position gezeichnet. Diese Informationen sind sicher nützlich für deine Stadt.... besser wäre es natürlich, du würdest diese Ruine genauer erkunden.'));
+            Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String(null, 'Du hast eine neue Ruine entdeckt und eine grobe Karte mit ihrer Position gezeichnet. Diese Informationen sind sicher nützlich für deine Stadt.... besser wäre es natürlich, du würdest diese Ruine genauer erkunden.'));
         }
 
         $this->log->add(new Model_Log_Types_Building($building, Globals::CurrentPlayerF()->id()));
         return true;
     }
 
-    public function grind() {
+    public function grind(): void {
         $this->inventory()->grind();
         Globals::CurrentGameF()->uin()->remove($this->uin());
     }

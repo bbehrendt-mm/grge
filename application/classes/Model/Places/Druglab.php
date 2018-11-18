@@ -14,7 +14,9 @@ class Model_Places_Druglab extends Model_Places_Abstract_Place {
 		$count = random_int(3,15);
 		for ($i = 0; $i < $count; $i++) $this->inventory->add(new Model_Items_Drugpack());
 		
-		$this->inventory->add(new Model_Items_Vending(get_class($this), "Drogotron"));
+		$this->inventory->add(new Model_Items_Vending(get_class($this),
+            'Drogotron'
+        ));
         return $t;
 	}
 }	

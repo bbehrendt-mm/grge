@@ -63,7 +63,7 @@ class Model_Map_Circular extends Model_Map_Abstract {
         if (is_string($location) && $visible)
             $location = new $location;
 
-        if (!(Tool_System::instance_of($location, 'Model_Places_Abstract_Place'))
+        if (!Tool_System::instance_of($location, 'Model_Places_Abstract_Place')
             || !($cfg = &$this->get_mutable_config($location))
             || !($pos = $this->get_random_location($cfg['distance'], is_string($location) ? $location : get_class($location), empty($cfg['force_root']) ? $cfg['root'] : array_pop($cfg['force_root'])))) return false;
 
@@ -84,7 +84,9 @@ class Model_Map_Circular extends Model_Map_Abstract {
         $iteration = 0;
         while ($keep_going) {
             $keep_going = false;
-            foreach ($config as $class => $data) if ($data['auto'] && ($data['sub'] === $this->sublocation || (is_array($data['sub']) && in_array($this->sublocation, $data['sub'])))) {
+            foreach ($config as $class => $data) if ($data['auto'] && ($data['sub'] === $this->sublocation || (is_array($data['sub']) && in_array(
+                            $this->sublocation, $data['sub'], true
+                        )))) {
 
                 if ($data['iteration'] > $iteration) {
                     $keep_going = true;
@@ -94,7 +96,9 @@ class Model_Map_Circular extends Model_Map_Abstract {
                 if (isset($data['nosmartrouting']) && $data['nosmartrouting'])
                     $smart_routing = false;
 
-                if ($this->place_location($class, $data['obvious'], $data['contortion'], isset($data['fixed']) ? $data['fixed'] : null))
+                if ($this->place_location($class, $data['obvious'], $data['contortion'],
+                    $data['fixed'] ?? null
+                ))
                     /** @noinspection PhpUnusedLocalVariableInspection */
                     $keep_going = true;
 

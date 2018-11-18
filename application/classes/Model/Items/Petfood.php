@@ -32,7 +32,8 @@ class Model_Items_Petfood extends Model_Items_Abstract_Item implements Interface
         );
     }
 	
-	public function mixchem($chemval) {
+	public function mixchem($chemval): bool
+    {
 		$this->consume();
         switch ($chemval)
         {

@@ -12,7 +12,7 @@ return Model_Blueprints::factory()
             ->requires_room('invalid')
             ->requires_room_tag('outside')
             ->name('Grillstation')
-            ->emplaces_action("Grillen ...")
+            ->emplaces_action('Grillen ...')
     )
 
     ->pop_stack()

@@ -14,7 +14,7 @@ class Model_Struct_Item extends Model {
     public function __construct($item,$variant = null) {
         $this->name = $item->name();
         $this->icon = $item->icon();
-        $this->count = (Tool_System::instance_of($item, 'Interface_Countable')) ? $item->count() : null;
+        $this->count = Tool_System::instance_of($item, 'Interface_Countable') ? $item->count() : null;
         $this->variant = $variant;
     }
 
@@ -29,7 +29,7 @@ class Model_Struct_Item extends Model {
     /**
      * @return string
      */
-    public function getIcon()
+    public function getIcon(): string
     {
         return $this->icon;
     }
@@ -37,7 +37,7 @@ class Model_Struct_Item extends Model {
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }

@@ -21,7 +21,8 @@ class Model_Items_Miniknife extends Model_Combat_Weapons_Close implements Interf
 	// INI, ATK, DEF, ACC
 	protected static $effects = [2,0,0,0];
 	
-	public function drop($p = null, $silent = false) {
+	public function drop($p = null, $silent = false): bool
+    {
         if (!$silent) Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String(null, 'Du fühlst dich ohne dein Taschenmesser ziemlich nackt ... du solltest es wirklich nicht einfach ablegen!'));
 		return false;
 	}

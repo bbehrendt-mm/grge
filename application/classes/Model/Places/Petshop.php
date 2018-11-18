@@ -15,11 +15,14 @@ class Model_Places_Petshop extends Model_Places_Abstract_Place {
         Tool_Gambling::repeat(1, 3, function() {$this->inventory->add(new Model_Items_Bone2());});
         Tool_Gambling::repeat(2, 5, function() {$this->inventory->add(new Model_Items_Generic_Bone3());});
 
-		$this->inventory->add(new Model_Items_Vending(get_class($this), "Pettington 40K"));
+		$this->inventory->add(new Model_Items_Vending(get_class($this),
+            'Pettington 40K'
+        ));
         return $t;
 	}
 
-    public function setup_additional_rooms() {
+    public function setup_additional_rooms(): void
+    {
         parent::setup_additional_rooms();
         $this->create_new_room(10,['inside']);
         $this->create_new_room(10,['inside']);

@@ -7,7 +7,8 @@ class Model_Buffs_Flashlight extends Model_Buffs_Abstract_Passive {
 	protected static $desc = 'Du hast eine Taschenlampe bei dir, die dir beim Suchen nach Gegenständen hilft. Der nächtliche Fund-Malus wird negiert, tagsüber findest du in allen geschlossenen Ruinen außerdem schneller neue Gegenstände.';
 	protected static $bid = 'flashlight';
 
-	protected function activator() {
+	protected function activator(): bool
+    {
         if (!$this->associated_to_player()) return false;
 
         foreach ($this->assoc_player->inventory()->get(Model_Items_Flashlight::cls()) as $flashlight)

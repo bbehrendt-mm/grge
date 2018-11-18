@@ -57,8 +57,9 @@ class Model_Items_Virtual_Epic_Fence extends Model_Items_Abstract_Virtual implem
         return $hid;
     }
 
-    public function tick($id, $type = Interface_Tickable::IT_TYPE_PLAYER) {
-        if ($type != Interface_Tickable::IT_TYPE_LOCATION) return;
+    public function tick($id, $type = Interface_Tickable::IT_TYPE_PLAYER): void
+    {
+        if ($type !== Interface_Tickable::IT_TYPE_LOCATION) return;
         if ($this->on) {
             if ($this->power >= 1) $this->power--;
             elseif ($power = Tool_Scripts::first_available_item(Model_Items_Energy::cls(),false)) {

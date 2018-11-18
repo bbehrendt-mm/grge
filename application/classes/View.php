@@ -23,7 +23,7 @@ class View extends Kohana_View {
             $buffer = preg_replace(['/\>[^\S ]+/s','/[^\S ]+\</s','/(\s)+/s'], ['>','<','\\1'], $buffer);
         }
 
-        $compression[1] += strlen($buffer);;
+        $compression[1] += strlen($buffer);
         return $buffer;
     }
 

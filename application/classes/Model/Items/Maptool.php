@@ -30,7 +30,7 @@ class Model_Items_Maptool extends Model_Items_Abstract_Item {
 		else return $this->datamem[$location];
 	}
 	
-	public function calc_duration($step) {
+	public function calc_duration($step): int {
 		$cfg = Array( 	0 => Array( 0 => Array(1 => 4, 2 => 7, 3 => 13), 1 => Array(1 => 7, 2 => 13), 2 => Array(1 => 10) ), 
 						1 => Array( 0 => Array(1 => 3, 2 => 6, 3 => 12), 1 => Array(1 => 6, 2 => 12), 2 => Array(1 =>  9) ),
 						2 => Array( 0 => Array(1 => 3, 2 => 5, 3 => 10), 1 => Array(1 => 5, 2 => 10), 2 => Array(1 =>  8) ),
@@ -44,11 +44,13 @@ class Model_Items_Maptool extends Model_Items_Abstract_Item {
 		else return $cfg[$level][$current][$step];
 	}
 	
-	public function common_discovery($value) {
+	public function common_discovery($value): void
+    {
 		$this->information += $value;
 	}
 
-	public function score($p) {
+	public function score($p): void
+    {
 		$location = Globals::PrimaryPlayerF()->location_class();
 		
 		if (isset($this->datamem[$location]) && $this->datamem[$location] >= 3) return;
@@ -71,7 +73,8 @@ class Model_Items_Maptool extends Model_Items_Abstract_Item {
 		}
 	}
 	
-	public function start_mapping($steps) {
+	public function start_mapping($steps): void
+    {
 		if (Globals::PrimaryPlayerF()->get_status()->retrieve('fragile')) {
             Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String( null, 'Du bist momentan beschäftigt!'));
 			return;
@@ -97,12 +100,14 @@ class Model_Items_Maptool extends Model_Items_Abstract_Item {
 		} else new Model_Buffs_Mapping($steps, $this->calc_duration($steps));
 	}
 	
-	public function drop($p = null, $silent = false) {
+	public function drop($p = null, $silent = false): bool
+    {
 		if (!$silent) Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String( null, 'Das kannst du nicht ablegen...'));
 		return false;
 	}
 	
-	public function retrieve_info($clean = false) {
+	public function retrieve_info($clean = false): int
+    {
 		$tmp = $this->information;
 		if ($clean) $this->information = 0;
 		return $tmp;

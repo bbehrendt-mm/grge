@@ -7,7 +7,8 @@ class Model_Events_Easter extends Model_Events_Event {
 
     private $corax_id = -1;
 
-    protected function trigger_activation() {
+    protected function trigger_activation(): bool
+    {
         $home = Globals::CurrentGameF()->map_main()->resolve_fixed_id(2);
         if ($home === null) return false;
 
@@ -19,17 +20,22 @@ class Model_Events_Easter extends Model_Events_Event {
 
         foreach (Globals::CurrentGameF()->playable_entities() as $pl) if (!Tool_Scripts::is_npc($pl)) {
             /** @var $pl Model_Player */
-            $pl->log()->add(new Model_Log_Types_Event(static::name(),static::get_key(), true, "Der Frühling zeigt seine ersten Blüten."));
+            $pl->log()->add(new Model_Log_Types_Event(static::name(),static::get_key(), true,
+                'Der Frühling zeigt seine ersten Blüten.'
+            ));
         }
 
         return true;
     }
 
-    protected function trigger_deactivation() {
+    protected function trigger_deactivation(): bool
+    {
         foreach (Globals::CurrentGameF()->playable_entities() as $pl) {
             /** @var $pl Model_Player */
             if (!Tool_Scripts::is_npc($pl))
-                $pl->log()->add(new Model_Log_Types_Event(static::name(),static::get_key(), false, "Tja, das wars wohl für dieses Jahr."));
+                $pl->log()->add(new Model_Log_Types_Event(static::name(),static::get_key(), false,
+                    'Tja, das wars wohl für dieses Jahr.'
+                ));
         }
 
         $npc_inst = Globals::CurrentGameF()->get_npc($this->corax_id);
@@ -39,16 +45,25 @@ class Model_Events_Easter extends Model_Events_Event {
         return true;
     }
 
-    public function tick() {
+    public function tick(): bool
+    {
         return true;
     }
 
-    public function event_playerCreation(Interface_Plentity $entity) {}
-    public function event_locationCreation(Model_Places_Abstract_Place $place) {}
-    public function event_locationTick(Model_Places_Abstract_Place $place) {}
-    public function event_generateHIDStack(Model_Items_Abstract_Item $item, Model_Hid $hid) {}
-    public function event_executeHIDAction($cls, $name, Model_Action $action) {}
-    public function event_findItem(Model_Places_Abstract_Place $place, Model_Items_Abstract_Item $item) {}
-    public function event_blueprintCreation($config_name, $config_category) {}
-    public function event_renderHIDAction($cls, $name, Model_Action $action) {}
+    public function event_playerCreation(Interface_Plentity $entity): void
+    {}
+    public function event_locationCreation(Model_Places_Abstract_Place $place): void
+    {}
+    public function event_locationTick(Model_Places_Abstract_Place $place): void
+    {}
+    public function event_generateHIDStack(Model_Items_Abstract_Item $item, Model_Hid $hid): void
+    {}
+    public function event_executeHIDAction($cls, $name, Model_Action $action): void
+    {}
+    public function event_findItem(Model_Places_Abstract_Place $place, Model_Items_Abstract_Item $item): void
+    {}
+    public function event_blueprintCreation($config_name, $config_category): ?Model_Blueprints
+    {}
+    public function event_renderHIDAction($cls, $name, Model_Action $action): void
+    {}
 }

@@ -8,9 +8,10 @@ class Model_Places_House_Secondfloor extends Model_Places_Abstract_Place {
 
 	protected static $weight_limit = 60;
 	
-	public function can_enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
+	public function can_enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER): bool
+    {
         if (!$pid) $player = Globals::CurrentPlayerF();
-        elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGameF()->get_player($pid);
+        elseif ($type === Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGameF()->get_player($pid);
         else $player = Globals::CurrentGameF()->get_npc($pid);
 
         if ($player->inventory()->weight() > static::$weight_limit)
@@ -22,9 +23,10 @@ class Model_Places_House_Secondfloor extends Model_Places_Abstract_Place {
 	}
 	
 	//Enter location
-	public function enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
+	public function enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER): bool
+    {
         if (!$pid) $player = Globals::CurrentPlayerF();
-        elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGameF()->get_player($pid);
+        elseif ($type === Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGameF()->get_player($pid);
         else $player = Globals::CurrentGameF()->get_npc($pid);
 		parent::enter($pid, $type);
 		
@@ -32,9 +34,10 @@ class Model_Places_House_Secondfloor extends Model_Places_Abstract_Place {
 	}
 
     //Leave location
-    public function leave($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER) {
+    public function leave($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER): bool
+    {
         if (!$pid) $player = Globals::CurrentPlayerF();
-        elseif ($type == Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGameF()->get_player($pid);
+        elseif ($type === Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGameF()->get_player($pid);
         else $player = Globals::CurrentGameF()->get_npc($pid);
 
         parent::leave($pid, $type);

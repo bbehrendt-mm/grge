@@ -21,7 +21,7 @@ class Model_Items_Ammobelt extends Model_Items_Abstract_Item {
 		$this->content[Model_Items_Ammo::cls()] = random_int(Globals::CurrentGameF()->config('items.ammobelt.startup_blt.min'), Globals::CurrentGameF()->config('items.ammobelt.startup_blt.max'));
 		
 		//JOB BONUS Soldier
-		if (Globals::CurrentPlayerF() && !Tool_Scripts::is_npc() && Globals::CurrentPlayerF()->job(1020)) switch (Globals::CurrentPlayerF()->job(false))
+		if (Globals::CurrentPlayerActualF() && Globals::CurrentPlayerActualF()->job(1020)) switch (Globals::CurrentPlayerActualF()->job(false))
 		{
 			case 4: $this->content[Model_Items_Ammo::cls()] += random_int(5, 10); break;
 			case 5: $this->content[Model_Items_Ammo::cls()] += random_int(10, 20); break;
@@ -29,19 +29,16 @@ class Model_Items_Ammobelt extends Model_Items_Abstract_Item {
 		}
 	}
 	
-	public function consume() {
-		return false;
-	}
+	public function consume(): void {}
 	
-	public function grind() {
-		return false;
-	}
+	public function grind(): void {}
 	
 	/**
 	 * Adds a stack of items to the belt
 	 * @param Model_Items_Abstract_Ammo $item Stack
 	 */
-	public function add($item) {
+	public function add($item): void
+    {
 		if (!Tool_System::instance_of($item, Model_Items_Abstract_Ammo::cls())) return;
 		
 		if (!isset($this->content[get_class($item)])) $this->content[get_class($item)] = $item->count();
@@ -55,12 +52,13 @@ class Model_Items_Ammobelt extends Model_Items_Abstract_Item {
 	 * @param string $item_class
      * @return int
      */
-	public function has($item_class) {
+	public function has($item_class): int {
 		if (!isset($this->content[$item_class])) return 0;
 		else return $this->content[$item_class];
 	}
 	
-	public function contains() {
+	public function contains(): array
+    {
 		$ret = Array();
 		foreach ($this->content as $class => $value)
             if ($value > 0)
@@ -75,8 +73,8 @@ class Model_Items_Ammobelt extends Model_Items_Abstract_Item {
      * @param int $count
      * @return bool
      */
-	public function get($item_class, $count = 1) {
-		if ($count == 0) return true;
+	public function get($item_class, $count = 1): bool {
+		if ($count === 0) return true;
 		elseif ($count < 0) return false;
 		elseif ($this->has($item_class) < $count) return false;
 		else {
@@ -85,7 +83,8 @@ class Model_Items_Ammobelt extends Model_Items_Abstract_Item {
 		}
 	}
 	
-	public function drop($p = null, $silent = false) {
+	public function drop($p = null, $silent = false): bool
+    {
         if ($p && Tool_Scripts::is_npc($p)) return true;
 
 		if (!$silent) Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String(null, 'Du solltest deinen Munitionsgürtel nicht aus der Hand geben ...'));
@@ -95,7 +94,7 @@ class Model_Items_Ammobelt extends Model_Items_Abstract_Item {
 	public function drop_dead() {
 		$ret = array();
 		foreach ($this->content as $type => $count)
-            if ($type != Model_Items_Braincoin::cls())
+            if ($type !== Model_Items_Braincoin::cls())
 			    $ret[] = new $type($count);
 		return $ret;
 	}

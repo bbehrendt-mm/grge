@@ -37,11 +37,13 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
     protected static $carrier_item = false;
     protected static $max_per_player = 0;
 	protected $custom_info = Array();
-    protected static $idea_contest_player;
+    /** @var string|null $idea_contest_player */
+	protected static $idea_contest_player;
 	
 	public $type = -1;
-	
-	protected static $weight;
+
+	/** @var float $weight */
+	protected static $weight = 0.0;
 	protected static $essential = false;
 
     public function is_carrier_item(): bool {
@@ -85,7 +87,8 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 			$this->type = ($type === null || $type < 0 || $type > (count(static::$instances_info) - 1)) ? random_int(0, count(static::$instances_info) - 1) : $type;
 	}
 
-	public static function getNumberOfTypes() {
+	public static function getNumberOfTypes(): int
+    {
 		return count(static::$instances_info);
 	}
 
@@ -93,7 +96,8 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
      * Returns the number of static variants of this item
      * @return int
      */
-    public function variants() {
+    public function variants(): int
+    {
         return count(static::$instances_info);
     }
 	
@@ -102,8 +106,9 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 	 * @param string $name The type of information (name, icon, description, category)
 	 * @return string
 	 */
-	public static function static_info($name) {
-		return isset(static::$static_info[$name]) ? static::$static_info[$name] : null;
+	public static function static_info($name): string
+    {
+		return static::$static_info[$name] ?? null;
 	}
 
     /**
@@ -114,7 +119,7 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
      *
      * @return string
      */
-    public static function static_typed_info($name, $type = 0) {
+    public static function static_typed_info($name, $type = 0): string {
         //1.Lv: Instance info
         if (isset(static::$instances_info[$type][$name])) return static::$instances_info[$type][$name];
         //2.Lv: Static info
@@ -127,7 +132,7 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 	 * @param string $name The type of information (name, icon, description, category)
 	 * @return string
 	 */
-	private function instance_info($name) {
+	private function instance_info($name): string {
 		//1.Lv: Custom Info
 		if (isset($this->custom_info[$name])) return $this->custom_info[$name];
 		//2.Lv: Static info (if subtype is set)
@@ -142,7 +147,8 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 	 * Will return the item instance category
 	 * @return int
 	 */
-	public function cat() {
+	public function cat(): int
+    {
 		return $this->instance_info('category');
 	}
 
@@ -153,15 +159,17 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
      *
      * @return int
      */
-	public static function static_cat($type = null) {
+	public static function static_cat($type = null): int
+    {
 		return $type === null ? static::static_info('category') : static::static_typed_info('category', $type);
 	}
-	
-	/**
-	 * Will return item instance name
-	 * @return string
-	 */
-	public function name() {
+
+    /**
+     * Will return item instance name
+     *
+     * @return string
+     */
+	public function name(): string {
 		return $this->instance_info('name');
 	}
 
@@ -172,15 +180,17 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
      *
      * @return string
      */
-	public static function static_name($type = null) {
+	public static function static_name($type = null): string
+    {
         return $type === null ? static::static_info('name') : static::static_typed_info('name', $type);
 	}
-	
-	/**
-	 * Will return item instance icon path
-	 * @return string
-	 */
-	public function icon() {
+
+    /**
+     * Will return item instance icon path
+     *
+     * @return string
+     */
+	public function icon(): string {
 		return 'items/' . $this->instance_info('icon');
 	}
 
@@ -191,16 +201,18 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
      *
      * @return string
      */
-	public static function static_icon($type = null) {
+	public static function static_icon($type = null): string
+    {
 	    $tmp = $type === null ? static::static_info('icon') : static::static_typed_info('icon', $type);
 	    return $tmp ? "items/$tmp" : '';
 	}
-	
-	/**
-	 * Will return item instance description
-	 * @return string
-	 */
-	public function description() {
+
+    /**
+     * Will return item instance description
+     *
+     * @return string
+     */
+	public function description(): string {
 		return $this->instance_info('description');
 	}
 
@@ -211,7 +223,8 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
      *
      * @return string
      */
-	public static function static_description($type = null) {
+	public static function static_description($type = null): string
+    {
         return $type === null ? static::static_info('description') : static::static_typed_info('description', $type);
 	}
 
@@ -219,7 +232,8 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
      * Will return item deco value
      * @return int
      */
-    public function deco() {
+    public function deco(): int
+    {
         return $this->instance_info('deco');
     }
 
@@ -230,7 +244,8 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
      *
      * @return int
      */
-    public static function static_deco($type = null) {
+    public static function static_deco($type = null): int
+    {
         return $type === null ? static::static_info('deco') : static::static_typed_info('deco', $type);
     }
 
@@ -238,7 +253,8 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 	 * Will return weigth of this item
 	 * @return int
 	 */
-	public function weight() {
+	public function weight(): int
+    {
 		return static::$weight;
 	}
 	
@@ -246,27 +262,32 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 	 * Returns true if this is an essential item
 	 * @return boolean
 	 */
-	public function is_essential() {
+	public function is_essential(): bool
+    {
 		return static::$essential;
 	}
 
 
     /**
      * Returns weather this item can be taken by a player
+     *
      * @param bool $silent Set true to suppress notifications
+     *
      * @return bool True, when the item can be taken
      */
-    public function take($silent = false) {
+    public function take($silent = false): bool {
 		return true;
 	}
 
     /**
      * Returns weather this item can be dropped by a player
-     * @param Model_Plentity|null $p
-     * @param bool $silent Set true to suppress notifications
+     *
+     * @param Interface_Plentity|null $p
+     * @param bool                    $silent Set true to suppress notifications
+     *
      * @return bool True, when the item can be dropped
      */
-	public function drop($p = null, $silent = false) {
+	public function drop($p = null, $silent = false): bool {
 		return true;
 	}
 
@@ -278,21 +299,24 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
      * @return array
      * @throws Exception
      */
-    public function auto_actions($players = null) {
+    public function auto_actions($players = null): array
+    {
         return $this->hid()->convert($this->uin(), $players);
     }
 
     /**
      * Destroys the item; this function can be overridden by an upstream class to incorperate additional effects or replace the destruction completely
      */
-    public function consume() {
+    public function consume(): void
+    {
 		if ($this->obj_uin) Globals::CurrentGameF()->uin()->remove($this->obj_uin);
 	}
 
     /**
      * Destroys the item; this function may not be overridden as it exists to make sure there is a method to completely destroy an item without regard of the items state
      */
-    public function grind() {
+    public function grind(): void
+    {
 		if ($this->obj_uin) Globals::CurrentGameF()->uin()->remove($this->obj_uin);
 	}
 
@@ -309,7 +333,7 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
      */
     public function interact($action, $player, $argument = NULL, $side_player = null) {
         $hid = $this->hid();
-        $player->get_status()->set_cause_of_death("Vergiftung");
+        $player->get_status()->set_cause_of_death('Vergiftung');
         if ($hid->can($action))
             return $hid->perform($action, $player, $side_player, $argument);
         $player->get_status()->clear_cause_of_death();
@@ -326,15 +350,15 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
      * @throws Exception
      */
     public function resolve_action($action, $player) {
-        $hid = static::hid();
+        $hid = $this->hid();
 
         if ($hid->can($action))
             return $hid->actions()[$action];
         else return null;
     }
 
-    public function simple_effects($p = null, $auto = false) {
-        return static::hid()->simple_effects($p, $auto);
+    public function simple_effects($p = null, $auto = false): array {
+        return $this->hid()->simple_effects($p, $auto);
     }
 
     /**
@@ -361,14 +385,15 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
      * @return bool True, to award the positive chem achievement, false to award the negative one
      * @throws Exception
      */
-    public function mixchem($chemval) {
+    public function mixchem($chemval): bool
+    {
         Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String(null, 'Du schüttest die Chemikalie über diesem Gegenstand aus. Es riecht ein wenig komisch, aber sonst geschieht nichts... Schade.'));
 		return false;
 	}
 	
 	/**
 	 * Returns an item to be used to drop to ground, when a player holding this dies (can also return null or an array)
-	 * @return Model_Items_Abstract_Item
+	 * @return Model_Items_Abstract_Item|Model_Items_Abstract_Item[]|null
 	 */
 	public function drop_dead() {
 		return $this;
@@ -392,17 +417,19 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 
     /**
      * Returns the item stack name, or null when the item has no stack name
+     *
      * @return null|string
      */
-    public function stackname() {
+    public function stackname(): ?string {
 		return null;
 	}
 
     /**
      * Returns the item label, or null when the item has no label
+     *
      * @return null|string
      */
-    public function label() {
+    public function label(): ?string {
 		return null;
 	}
 }	

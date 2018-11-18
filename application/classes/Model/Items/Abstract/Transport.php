@@ -7,11 +7,13 @@ abstract class Model_Items_Abstract_Transport extends Model_Items_Abstract_Item 
 
     protected static $speedup = 0;
 
-    public function active() {
+    public function active(): bool
+    {
         return true;
     }
 
-    public function speedup() {
+    public function speedup(): int
+    {
         return static::$speedup;
     }
 
@@ -20,7 +22,8 @@ abstract class Model_Items_Abstract_Transport extends Model_Items_Abstract_Item 
      * @param number $d
      * @return bool
      */
-    public function trigger_before($p, $d) {
+    public function trigger_before($p, $d): bool
+    {
         return $this->active();
     }
 

@@ -51,8 +51,8 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><?=$_SERVER["SERVER_ADDR"]?></td>
-                        <td><?=$_SERVER["SERVER_NAME"]?></td>
+                        <td><?= $_SERVER['SERVER_ADDR']?></td>
+                        <td><?= $_SERVER['SERVER_NAME']?></td>
                         <td><?=$version?></td>
                     </tr>
                 </tbody>

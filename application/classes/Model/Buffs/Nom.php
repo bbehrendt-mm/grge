@@ -16,7 +16,8 @@ class Model_Buffs_Nom extends Model_Buffs_Abstract_Buff {
         )
     ]; }
 	
-	public function merge($newclass) {
+	public function merge($newclass): void
+    {
 		$this->lifetime = $newclass->lifetime();
 	}
 }

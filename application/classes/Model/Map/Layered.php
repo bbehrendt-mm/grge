@@ -42,8 +42,10 @@ class Model_Map_Layered extends Model_Map_Circular {
         $distance = random_int($distance[0], $distance[1]);
         $factor = ['x' => 0, 'y' => 0];
         switch ($to) {
-            case 'top': case 'bottom': case 'shaft': $factor['y'] = ($to == 'top' || ($to != 'bottom' && random_int(0,1))) ? -1 : 1; break;
-            case 'left': case 'right': case 'level': $factor['x'] = ($to == 'right' || ($to != 'left' && random_int(0,1))) ? 1 : -1; break;
+            case 'top': case 'bottom': case 'shaft': $factor['y'] = ($to
+            === 'top' || ($to !== 'bottom' && random_int(0,1))) ? -1 : 1; break;
+            case 'left': case 'right': case 'level': $factor['x'] = ($to
+            === 'right' || ($to !== 'left' && random_int(0,1))) ? 1 : -1; break;
             case 'same': default: $factor = $data['direction']; break;
         }
 

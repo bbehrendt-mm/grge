@@ -25,7 +25,13 @@ class Tool_Npc {
         if (!is_array($forbid))
             $forbid = [$forbid => [false, 0]];
 
-        $ilist = Tool_Scripts::available_items(null, $own, $location, false, $p);
+        $ilist = Tool_Scripts::get_items(null,
+            Struct_ScriptItemSource::default()
+                ->take_from_player($own)
+                ->take_from_location($location)
+                ->take_from_others(false)
+                ->use_perspective($p)
+        );
 
         $fc = function($val, $ar) {
             [$min, $max] = $ar;

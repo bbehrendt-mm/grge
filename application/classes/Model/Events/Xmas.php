@@ -90,8 +90,7 @@ class Model_Events_Xmas extends Model_Events_Event {
         return true;
     }
 
-    public function tick(): bool
-    {}
+    public function tick(): bool { return true; }
 
     public function event_playerCreation(Interface_Plentity $entity): void
     {

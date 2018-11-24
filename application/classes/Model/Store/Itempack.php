@@ -44,9 +44,13 @@ abstract class Model_Store_Itempack extends Model_Store_Interface {
 
             /** @var Model_Items_Abstract_Item[] $items */
             foreach ($items as $item)
-                if (static::$personal && Tool_System::instance_of($item, 'Model_Items_Abstract_Ammo') && ($belt = Tool_Scripts::first_available_item('Model_Items_Ammobelt')))
+                /**
+                 * @var Model_Items_Ammobelt $belt
+                 * @var Model_Items_Abstract_Ammo $item
+                 */
+                if (static::$personal && Tool_System::instance_of($item, Model_Items_Abstract_Ammo::cls()) && ($belt = Tool_Scripts::first_item(Model_Items_Ammobelt::cls())))
                     $belt->add($item);
-                elseif (static::$personal && !Tool_System::instance_of($item, 'Model_Items_Abstract_Ammo') && $player->inventory()->add($item)) {}
+                elseif (static::$personal && !Tool_System::instance_of($item, Model_Items_Abstract_Ammo::cls()) && $player->inventory()->add($item)) {}
                 else $player->location()->inventory()->add($item);
         }
     }

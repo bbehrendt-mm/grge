@@ -152,7 +152,7 @@ class Controller_Game extends Controller {
         // Get local actions
         $a = [];
         if (!Globals::PrimaryPlayerF()->get_status()->retrieve('fragile'))
-            foreach (Tool_Scripts::available_items(Model_Items_Abstract_Virtual::cls(),false,true,false,Globals::PrimaryPlayerF()) as $a_item)
+            foreach (Tool_Scripts::get_items(Model_Items_Abstract_Virtual::cls(),Struct_ScriptItemSource::onlyLocation()->use_perspective(Globals::PrimaryPlayerF())) as $a_item)
                 /** @var  Model_Items_Abstract_Virtual $a_item */
                 if (!$a_item->use_manual_ui())
                     $a = array_merge($a,$this->prepare_actionlist($a_item->auto_actions(), $a_item));
@@ -399,8 +399,7 @@ class Controller_Game extends Controller {
 
         /** @var Model_Buffs_Abstract_Fragile $buff */
         if (!($buff = $p->get_status()->retrieve('fragile')) && !$remote)
-            foreach (Tool_Scripts::available_items(Model_Items_Abstract_Virtual::cls(),true,false,false,$p) as $a_item)
-                /** @var  Model_Items_Abstract_Virtual $a_item */
+            foreach (Tool_Scripts::get_items(Model_Items_Abstract_Virtual::cls(), Struct_ScriptItemSource::onlyPlayer()->use_perspective($p)) as $a_item)
                 $a = array_merge($a,$this->prepare_actionlist($a_item->auto_actions(), $a_item));
         elseif ($buff) $action = [
             'name' => __($buff->name()),
@@ -621,7 +620,7 @@ class Controller_Game extends Controller {
 
             $this->add_data('location', ['scouting' => [
                 'level' => $mapper->get_map_details() * 33 + ($mapper->get_map_details() === 3 ? 1 : 0),
-                'laser' => Tool_Scripts::count_available_items(Model_Items_Generic_Lasermapper::cls()),
+                'laser' => Tool_Scripts::count_items(Model_Items_Generic_Lasermapper::cls()),
             ]]);
         }
 
@@ -665,7 +664,7 @@ class Controller_Game extends Controller {
                     $entry['requires'][] = [
                         'name' => __($cls::static_name()),
                         'count' => $count,
-                        'have' => Tool_Scripts::count_available_items($cls),
+                        'have' => Tool_Scripts::count_items($cls),
                         'icon' => $cls::static_icon()
                     ];
                 }
@@ -684,7 +683,7 @@ class Controller_Game extends Controller {
     private function render_epics(): void
     {
         /** @var Model_Items_Virtual_Epic_Garden $garden */
-        if ($garden = Tool_Scripts::first_available_item(Model_Items_Virtual_Epic_Garden::cls(),false,true,false))
+        if ($garden = Tool_Scripts::first_item(Model_Items_Virtual_Epic_Garden::cls(),Struct_ScriptItemSource::onlyLocation()))
             $this->add_data('location', ['epc_garden' => [
                 'planted' => $garden->get_planted_state(),
                 'harvest' => $garden->get_harvest_prc(),
@@ -698,7 +697,7 @@ class Controller_Game extends Controller {
             ]]);
 
         /** @var Model_Items_Virtual_Epic_Raven $raven */
-        if ($raven = Tool_Scripts::first_available_item(Model_Items_Virtual_Epic_Raven::cls(),false,true,false))
+        if ($raven = Tool_Scripts::first_item(Model_Items_Virtual_Epic_Raven::cls(),Struct_ScriptItemSource::onlyLocation()))
             $this->add_data('location', ['epc_raven' => [
                 'doped' => $raven->is_doped(),
                 'time' => !$raven->get_rest() ? false : Tool_Numerics::duration_to_string($raven->get_rest()),
@@ -708,11 +707,11 @@ class Controller_Game extends Controller {
             ]]);
 
         /** @var Model_Items_Virtual_Epic_Fence $fence */
-        if ($fence = Tool_Scripts::first_available_item(Model_Items_Virtual_Epic_Fence::cls(),false,true,false))
+        if ($fence = Tool_Scripts::first_item(Model_Items_Virtual_Epic_Fence::cls(),Struct_ScriptItemSource::onlyLocation()))
             $this->add_data('location', ['epc_fence' => [
                 'status' => $fence->get_status(),
                 'time' => (!$fence->get_remaining_power() && !$fence->get_status()) ? false : Tool_Numerics::duration_to_string($fence->get_remaining_power()),
-                'energy' => Tool_Scripts::count_available_items(Model_Items_Energy::cls(), false),
+                'energy' => Tool_Scripts::count_items(Model_Items_Energy::cls(), Struct_ScriptItemSource::onlyLocation()),
                 'actions' => $this->prepare_actionlist($fence->auto_actions()),
             ]]);
     }

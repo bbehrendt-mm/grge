@@ -55,13 +55,14 @@ abstract class Model_Items_Abstract_Stackable extends Model_Items_Abstract_Item 
      *
      * @param int $count Reduce by; default is 1
      *
-     * @return void How many elements were actually consumed
+     * @return int How many elements were actually consumed
      * @see Model_Items_Abstract_Item::consume()
+     * @throws Exception
      */
-	public function consume($count = 1): void {
+	public function consume($count = 1): int {
 		if ($this->count > $count) {	//We have enough elements to satisfy the demand
 			$this->count -= $count;		//Reduce count
-			return $count;				
+			return $count;
 		}
 
         //We don't have enough elements to satisfy the demand
@@ -104,7 +105,7 @@ abstract class Model_Items_Abstract_Stackable extends Model_Items_Abstract_Item 
 		if ($this->is_stack_full()) return;
 		
 		//Get targets if none were passed
-		if ($targets === null) $targets = Tool_Scripts::available_items(get_class($this));
+		if ($targets === null) $targets = Tool_Scripts::get_items(get_class($this));
 		
 		//Iterate over all targets; do nothing if this stack or the target stack is full
 		/** @var Model_Items_Abstract_Stackable $target */

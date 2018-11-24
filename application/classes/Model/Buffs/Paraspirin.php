@@ -19,10 +19,9 @@ class Model_Buffs_Paraspirin extends Model_Buffs_Abstract_Buff {
         $this->assoc_player->get_status()->scaling_add(Model_Status::MS_STAT_DRUNK, Model_Status::MS_EFFECT_BUFF, 'paraspirine', 0);
     }
     
-	public function unbuff(): bool
-    {
+	public function unbuff(): bool {
         $this->assoc_player->get_status()->scaling_remove(Model_Status::MS_STAT_DRUNK, Model_Status::MS_EFFECT_ITEM, 'paraspirine');
         $this->assoc_player->get_status()->scaling_remove(Model_Status::MS_STAT_DRUNK, Model_Status::MS_EFFECT_BUFF, 'paraspirine');
-		parent::unbuff();
+		return parent::unbuff();
 	}
 }

@@ -136,7 +136,7 @@ class Model_Player extends Model_NPC_Nano {
 		$this->calculate_static_achievements();
 
         $this->points = Globals::CurrentGameF()->points($this->id);
-        $this->braincoins = Tool_Scripts::count_available_items(Model_Items_Braincoin::cls(), true, false, false, $this->id);
+        $this->braincoins = Tool_Scripts::count_items(Model_Items_Braincoin::cls(), Struct_ScriptItemSource::onlyPlayer()->use_perspective($this));
         Globals::CurrentGameF()->register_death($this->id);
 
         parent::kill();

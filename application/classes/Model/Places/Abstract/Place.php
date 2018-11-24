@@ -437,7 +437,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 			$c = ceil($c * (1 + (Globals::CurrentPlayerF()->get_status()->get(Model_Status::MS_STAT_DRUNK) / 100)));
 			
 			$item_list = Array();
-			while (((Globals::CurrentPlayerF()->get_status()->get(Model_Status::MS_STAT_ENERGY) * Globals::CurrentPlayerF()->get_status()->get(Model_Status::MS_CHAR_EVASIVENESS)) < $c) && ($items = Tool_Scripts::available_items(Model_Items_Abstract_Escape::cls())))
+			while (((Globals::CurrentPlayerF()->get_status()->get(Model_Status::MS_STAT_ENERGY) * Globals::CurrentPlayerF()->get_status()->get(Model_Status::MS_CHAR_EVASIVENESS)) < $c) && ($items = Tool_Scripts::get_items(Model_Items_Abstract_Escape::cls())))
 			{
 				/** @var $items Model_Items_Abstract_Escape[] */
                 $c -= $items[0]->escape();

@@ -36,8 +36,7 @@ class Model_Places_Tentkit extends Model_Places_Abstract_Hideout {
         return parent::uin($new);
     }
 
-    public function tick($type = Interface_Tickable::IT_TYPE_PLAYER): bool
-    {
+    public function tick($type = Interface_Tickable::IT_TYPE_PLAYER): bool {
         if ($this->cursed) {
             $this->set_decay(1,true);
             foreach (Tool_Scripts::at_location($this->uin(), true, true) as $p)
@@ -49,6 +48,7 @@ class Model_Places_Tentkit extends Model_Places_Abstract_Hideout {
                     $p->get_status()->retrieve('heartbeat')->unbuff();
                 } else $p->kill();
         }
+        return parent::tick($type);
     }
 
     public function can_enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER): bool

@@ -26,7 +26,7 @@ class Controller_Act extends Controller_Game {
 
                 if (Tool_System::instance_of($item, Model_Items_Abstract_Ammo::cls())) {
                     /** @var $belt Model_Items_Ammobelt */
-                    $belt = Tool_Scripts::first_available_item(Model_Items_Ammobelt::cls(), true, false, false, $p);
+                    $belt = Tool_Scripts::first_item(Model_Items_Ammobelt::cls(), Struct_ScriptItemSource::onlyPlayer()->use_perspective($p));
                     if (!$belt) {
                         if (count($items) <= 1) Globals::PrimaryPlayerF()->log()->add($p->id() === Globals::PrimaryPlayerF()->id() ? 'Du benötigst einen Munitionsgürtel, um diesen Gegenstand mitführen zu können.' : 'Dein Freund benötigt einen Munitionsgürtel, um diesen Gegenstand mitführen zu können.');
                         continue;
@@ -138,7 +138,7 @@ class Controller_Act extends Controller_Game {
             }
         else {
             if (!($chem = Globals::CurrentGameF()->uin()->get($items[0], Model_Items_Chem::cls()))) return;
-            foreach (Tool_Scripts::available_items(Model_Items_Chem::cls()) as $potential)
+            foreach (Tool_Scripts::get_items(Model_Items_Chem::cls()) as $potential)
                 /** @var Model_Items_Chem $potential */
                 if ($potential->chem_value() === $chem->chem_value() && $chem->uin() !== $potential->uin()) {
                     $other_item = $potential;

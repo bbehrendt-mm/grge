@@ -76,7 +76,7 @@ class Model_Items_Virtual_Epic_Raven extends Model_Items_Abstract_Virtual {
                             return;
                         }
 
-                        if (!Tool_Scripts::consume_available_items([Model_Items_Basefood::cls() => max(1,2*$arg)], true, true, false, $p)) {
+                        if (!Tool_Scripts::consume_items([Struct_ItemEntry::make(Model_Items_Basefood::cls(), max(1,2*$arg))], Struct_ScriptItemSource::default()->use_perspective($p))) {
                             $p->log()->add('Raben sind keine sonderlich altruistisch eingestellten Tiere... du musst ihn schon ausreichend füttern, wenn du Gegenstände von ihm bekommen möchtest.');
                             return;
                         }

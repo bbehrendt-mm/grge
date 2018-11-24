@@ -66,14 +66,14 @@ abstract class Model_Gamelayer_Logic extends Model_Gamelayer_Io {
 			
 		//Check, if all items are available
 		foreach ($data as $class => $count)
-			if (Tool_Scripts::count_available_items($class) < $count) return false;
+			if (Tool_Scripts::count_items($class) < $count) return false;
 		
 		//Callbacks
 		if ($callbacks)
 			foreach ($data as $class => $count) if (isset($callbacks[$class]))
 			{
 				$tempcount = 0;
-				foreach (Tool_Scripts::available_items($class) as $item) if ($count > 0)
+				foreach (Tool_Scripts::get_items($class) as $item) if ($count > 0)
 					if ($callbacks[$class]($item)) $tempcount++;
 				if ($tempcount < $count) return false;
 			}	
@@ -82,10 +82,10 @@ abstract class Model_Gamelayer_Logic extends Model_Gamelayer_Io {
 		foreach ($data as $class => $count)
 			if (Tool_System::instance_of($class, Model_Items_Abstract_Ammo::cls())) {
 				/** @var $belt Model_Items_Ammobelt[] */
-                if (!$belt = Tool_Scripts::available_items(Model_Items_Ammobelt::cls())) return false;
+                if (!$belt = Tool_Scripts::get_items(Model_Items_Ammobelt::cls())) return false;
 				$belt[0]->get($class, $count);
 			}
-			else foreach (Tool_Scripts::available_items($class) as $item) if ($count > 0) if (!isset($callbacks[$class])
+			else foreach (Tool_Scripts::get_items($class) as $item) if ($count > 0) if (!isset($callbacks[$class])
                 || ($callbacks !== null && isset($callbacks[$class])
                     && $callbacks[$class]($item))
             )

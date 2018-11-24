@@ -275,18 +275,8 @@ class Model_Action {
     /**
      * @return Struct_ItemEntry[]
      */
-    private function get_item_requirements(): array
-    {
-        $tmp = array();
-        foreach ($this->requirements as $class => $count)
-            if (!is_numeric($class)) {
-                $inst = new Struct_ItemEntry();
-                $inst->class = $class;
-                $inst->count = $count;
-                $tmp[] = $inst;
-            }
-
-        return $tmp;
+    private function get_item_requirements(): array {
+        return Struct_ItemEntry::convert($this->requirements);
     }
 
     /**
@@ -324,7 +314,7 @@ class Model_Action {
             if (!$player->get_status()->has($stat, $value, Model_Status::MS_EFFECT_REQUIREMENT))
                 return false;
 
-        if (!Tool_Scripts::has_available_items($this->get_item_requirements(), true, true, false, $player, $this->consume_by_grind))
+        if (!Tool_Scripts::has_items($this->get_item_requirements(), Struct_ScriptItemSource::default()->use_perspective($player)))
             return false;
 
         return true;
@@ -359,7 +349,7 @@ class Model_Action {
                 return false;
             }
 
-        if (!Tool_Scripts::consume_available_item_structs($this->get_item_requirements(), true, true, false, $player, $this->consume_by_grind)) {
+        if (!Tool_Scripts::consume_items($this->get_item_requirements(), Struct_ScriptItemSource::default()->use_perspective($player), $this->consume_by_grind)) {
             if (!$no_player) $player->log()->add('Dir fehlen Gegenstände, um diese Aktion durchzuführen.');
             return false;
         }

@@ -23,24 +23,22 @@ class Model_Places_House_Secondfloor extends Model_Places_Abstract_Place {
 	}
 	
 	//Enter location
-	public function enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER): bool
-    {
+	public function enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER): bool {
         if (!$pid) $player = Globals::CurrentPlayerF();
         elseif ($type === Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGameF()->get_player($pid);
         else $player = Globals::CurrentGameF()->get_npc($pid);
-		parent::enter($pid, $type);
-		
-		$player->inventory()->temporal_limit(static::$weight_limit);
+
+        $player->inventory()->temporal_limit(static::$weight_limit);
+        return parent::enter($pid, $type);
 	}
 
     //Leave location
-    public function leave($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER): bool
-    {
+    public function leave($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER): bool {
         if (!$pid) $player = Globals::CurrentPlayerF();
         elseif ($type === Interface_Tickable::IT_TYPE_PLAYER) $player = Globals::CurrentGameF()->get_player($pid);
         else $player = Globals::CurrentGameF()->get_npc($pid);
 
-        parent::leave($pid, $type);
         $player->inventory()->temporal_limit(NULL);
+        return parent::leave($pid, $type);
     }
 }	

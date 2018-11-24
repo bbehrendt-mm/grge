@@ -305,11 +305,14 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
     }
 
     /**
-     * Destroys the item; this function can be overridden by an upstream class to incorperate additional effects or replace the destruction completely
+     * Destroys the item; this function can be overridden by an upstream class to incorporate additional effects or replace the destruction completely
+     *
+     * @return int The item count, or 1 if this item is not countable
+     * @throws Exception
      */
-    public function consume(): void
-    {
+    public function consume(): int {
 		if ($this->obj_uin) Globals::CurrentGameF()->uin()->remove($this->obj_uin);
+		return $this->count() ?? 1;
 	}
 
     /**

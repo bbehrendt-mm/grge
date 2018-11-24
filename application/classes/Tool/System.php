@@ -48,12 +48,13 @@ class Tool_System {
     public static function simple_config($path) {
         if (!file_exists(APPPATH . 'config/' . $path . EXT))
             return null;
-        else /** @noinspection PhpIncludeInspection */
-            return include APPPATH . '/config/' . $path . EXT;
+
+        /** @noinspection PhpIncludeInspection */
+        return include APPPATH . '/config/' . $path . EXT;
     }
 
     /**
-     * Accumulated configuration entries using classnames as key according to a given derived class instance
+     * Accumulated configuration entries using class names as key according to a given derived class instance
      *
      * @param string|array  $base    Config object to use as base; when given as string, it is interpreted as path to a Kohana config object
      * @param string|object $subject Class instance
@@ -105,11 +106,10 @@ class Tool_System {
     /**
      * @param string|Model_Items_Abstract_Item $cls
      * @param int                              $inst
-     * @return null
+     * @return string|null                     Item name
      * @throws ReflectionException
 */
-    public static function getItemInstanceName($cls, $inst = -1): void
-    {
+    public static function getItemInstanceName($cls, $inst = -1): ?string {
         if (!self::instance_of($cls, Model_Items_Abstract_Item::cls()))
             return null;
 
@@ -133,11 +133,10 @@ class Tool_System {
     /**
      * @param string|Model_Items_Abstract_Item $cls
      * @param int                              $inst
-     * @return null
+     * @return string|null
      * @throws ReflectionException
 */
-    public static function getItemInstanceIcon($cls, $inst = -1): void
-    {
+    public static function getItemInstanceIcon($cls, $inst = -1): ?string {
         if (!self::instance_of($cls, Model_Items_Abstract_Item::cls()))
             return null;
 

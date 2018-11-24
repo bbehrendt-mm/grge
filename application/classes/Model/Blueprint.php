@@ -22,6 +22,7 @@ class Model_Blueprint {
 
     /** @var Struct_ItemMaterial[] $items  */
     private $items = [];
+
     /** @var Struct_ItemEntry[] $produces  */
     private $produces = [];
     private $produces_advanced = [];
@@ -58,9 +59,18 @@ class Model_Blueprint {
      * Creates a new blueprint instance
      * @return Model_Blueprint
      */
-    public static function factory(): \Model_Blueprint
-    {
+    public static function factory(): Model_Blueprint {
         return new self();
+    }
+
+    public function get_item_decider() : callable {
+        $cache = $this->items;
+        return function(Model_Items_Abstract_Item $item) use ($cache) {
+            foreach ($cache as $entry)
+                if (get_class($item) === $entry->class)
+                    return $entry->get_decider()($item);
+            return false;
+        };
     }
 
     /**
@@ -69,8 +79,7 @@ class Model_Blueprint {
      * @param callable $f Modifier function; receives the player and precondition data as parameters; it may also receive additional parameters depending on the mod type
      * @return Model_Blueprint
      */
-    public function add_modifier($mod, $f): \Model_Blueprint
-    {
+    public function add_modifier($mod, $f): Model_Blueprint {
         switch ($mod) {
             case static::BP_MOD_ENERGY:
                 $this->modifiers[] = function($player, $pre, $room) use ($f) {
@@ -750,7 +759,7 @@ class Model_Blueprint {
             return false;
         }
 
-        if (!Tool_Scripts::consume_available_item_structs($this->items, true, true, false, $player, true)) {
+        if (!Tool_Scripts::consume_items($this->items, Struct_ScriptItemSource::default()->use_perspective($player)->use_decider($this->get_item_decider()), true)) {
             $player->log()->add('Dir fehlen Gegenstände, um diese Aktion durchzuführen.');
             return false;
         }
@@ -787,7 +796,7 @@ class Model_Blueprint {
             }
         }
 
-        foreach ($this->produces as $item)
+        foreach ($basic_producer_stack as $item)
             for ($i = 0; $i < $item->count; $i++)
                 $raw_item_objects[] = new $item->class( $item->type );
 
@@ -923,10 +932,9 @@ class Model_Blueprint {
                     'name' => $entry->name(),
                     'icon' => $entry->icon(),
                     'count' => $entry->count,
-                    'have' => Tool_Scripts::count_available_items($class,true,true,false,null,function ($item) use ($entry) {
-                        /** @var Model_Items_Abstract_Item $item */
+                    'have' => Tool_Scripts::count_items($class,Struct_ScriptItemSource::default()->use_decider(function (Model_Items_Abstract_Item $item) use ($entry) {
                         return $entry->type === null ? true : ($item->type === $entry->type);
-                    })
+                    }))
                 ];
             }
         }

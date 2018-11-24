@@ -50,20 +50,12 @@ class Model_Events_Easter extends Model_Events_Event {
         return true;
     }
 
-    public function event_playerCreation(Interface_Plentity $entity): void
-    {}
-    public function event_locationCreation(Model_Places_Abstract_Place $place): void
-    {}
-    public function event_locationTick(Model_Places_Abstract_Place $place): void
-    {}
-    public function event_generateHIDStack(Model_Items_Abstract_Item $item, Model_Hid $hid): void
-    {}
-    public function event_executeHIDAction($cls, $name, Model_Action $action): void
-    {}
-    public function event_findItem(Model_Places_Abstract_Place $place, Model_Items_Abstract_Item $item): void
-    {}
-    public function event_blueprintCreation($config_name, $config_category): ?Model_Blueprints
-    {}
-    public function event_renderHIDAction($cls, $name, Model_Action $action): void
-    {}
+    public function event_playerCreation(Interface_Plentity $entity): void {}
+    public function event_locationCreation(Model_Places_Abstract_Place $place): void {}
+    public function event_locationTick(Model_Places_Abstract_Place $place): void {}
+    public function event_generateHIDStack(Model_Items_Abstract_Item $item, Model_Hid $hid): void {}
+    public function event_executeHIDAction($cls, $name, Model_Action $action): void {}
+    public function event_findItem(Model_Places_Abstract_Place $place, Model_Items_Abstract_Item $item): void {}
+    public function event_blueprintCreation($config_name, $config_category): ?Model_Blueprints { return null; }
+    public function event_renderHIDAction($cls, $name, Model_Action $action): void {}
 }

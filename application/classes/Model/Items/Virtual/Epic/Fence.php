@@ -12,7 +12,7 @@ class Model_Items_Virtual_Epic_Fence extends Model_Items_Abstract_Virtual implem
     }
 
     public function get_remaining_power() {
-        return $this->power + 4 * Tool_Scripts::count_available_items(Model_Items_Energy::cls(), false);
+        return $this->power + 4 * Tool_Scripts::count_items(Model_Items_Energy::cls(), Struct_ScriptItemSource::onlyLocation());
     }
 
     protected function hid(): Model_Hid {
@@ -62,7 +62,7 @@ class Model_Items_Virtual_Epic_Fence extends Model_Items_Abstract_Virtual implem
         if ($type !== Interface_Tickable::IT_TYPE_LOCATION) return;
         if ($this->on) {
             if ($this->power >= 1) $this->power--;
-            elseif ($power = Tool_Scripts::first_available_item(Model_Items_Energy::cls(),false)) {
+            elseif ($power = Tool_Scripts::first_item(Model_Items_Energy::cls(),Struct_ScriptItemSource::onlyLocation())) {
                 $this->power+=3;
                 $power->consume();
             }

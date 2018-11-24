@@ -17,7 +17,7 @@ class Model_Items_Vending2 extends Model_Items_Abstract_Item {
                 ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
                 ->condition(function($p) {
                     /** @var $p Model_Player */
-                    foreach (Tool_Scripts::available_items(Model_Items_Smallbottle::cls(), true, true, false, $p) as $bottle)
+                    foreach (Tool_Scripts::get_items(Model_Items_Smallbottle::cls(), Struct_ScriptItemSource::default()->use_perspective($p)) as $bottle)
                         /** @var Model_Items_Smallbottle $bottle */
                         if ($bottle->fillrate() === 0) {
                             $bottle->grind();

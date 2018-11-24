@@ -93,37 +93,42 @@ class Model_NPC_Event_Crow extends Model_NPC_Humanoid
             ->add_action('Mit Ticket zahlen', Model_Action::factory()
                 ->requirement(Model_Items_Generic_Ticket::cls(), 1)
                 ->effect(Model_Effect::factory()
-                             ->custom($item_gen)
+                     ->custom($item_gen)
                 )
             )
             ->add_action('Mit Leber zahlen', Model_Action::factory()
                 ->effect(Model_Effect::factory()
-                             ->buff('Model_Buffs_Blood')
-                             ->effect(Model_Status::MS_STAT_HEALTH, -95)
-                             ->causeofdeath('Aggressiver Rabe')
-                             ->achieve(Model_Achievement::MA_MASOCHIST)
-                             ->custom($item_gen)
-                             ->custom(function($p) {
-                                 /** @var $p Model_Player */
-                                 if (!$p->get_status()->alive()) $p->achievements()->achieve(Model_Achievement::MA_RAVEN);
-                             }, Model_Effect::CFUNC_PROCESS_POST)
+                     ->buff('Model_Buffs_Blood')
+                     ->effect(Model_Status::MS_STAT_HEALTH, -95)
+                     ->causeofdeath('Aggressiver Rabe')
+                     ->achieve(Model_Achievement::MA_MASOCHIST)
+                     ->custom($item_gen)
+                     ->custom(function(Model_Player $p) {
+                         if (!$p->get_status()->alive()) $p->achievements()->achieve(Model_Achievement::MA_RAVEN);
+                     }, Model_Effect::CFUNC_PROCESS_POST)
                 )
             )
             ->add_action('Gesammelte Eier eintauschen', Model_Action::factory()
                 ->effect(Model_Effect::factory()
-                             ->custom(function($p) {
-                                 /** @var $p Model_Player */
-                                 $e1 = Tool_Scripts::count_available_items(Model_Items_Generic_Egg1::cls(), true, false, false, $p);
-                                 $e2 = Tool_Scripts::count_available_items(Model_Items_Generic_Egg2::cls(), true, false, false, $p);
-                                 $e3 = Tool_Scripts::count_available_items(Model_Items_Generic_Egg3::cls(), true, false, false, $p);
-                                 if (Tool_Scripts::consume_available_items(array(Model_Items_Generic_Egg1::cls() => $e1, Model_Items_Generic_Egg2::cls() => $e2, Model_Items_Generic_Egg3::cls() => $e3), true, false, false, $p)) {
-                                     $c = floor($e1 * Model_Items_Generic_Egg1::getValue() + $e2 * Model_Items_Generic_Egg2::getValue() + $e3 * Model_Items_Generic_Egg3::getValue());
-                                     if ($c > 0) {
-                                         Globals::CurrentUserF()->award_coins($p->id(), $c);
-                                         $p->log()->add(new Model_Log_Types_String(null,'KRAAAAH! Glückwunsch! Für die Eier, die du gesammelt hast, bekommst du :num BrainCoins! KRARAH!', array(':num' => $c)));
-                                     } else $p->log()->add(new Model_Log_Types_String(null,'KRARAHAHAHA! Zu schade! Du hast nicht genug Eier gesammelt um Punkte zu bekommen! KRAAH!'));
-                                 }
-                             })
+                     ->custom(function(Model_Player $p) {
+                         [$e1,$e2,$e3] = Tool_Scripts::count_item_matrix(
+                             [Model_Items_Generic_Egg1::cls(), Model_Items_Generic_Egg2::cls(), Model_Items_Generic_Egg3::cls()],
+                             Struct_ScriptItemSource::onlyPlayer()->use_perspective($p)
+                         );
+
+                         if (Tool_Scripts::consume_items(Struct_ItemEntry::convert( [
+                                Model_Items_Generic_Egg1::cls() => $e1,
+                                Model_Items_Generic_Egg2::cls() => $e2,
+                                Model_Items_Generic_Egg3::cls() => $e3
+                             ] ), Struct_ScriptItemSource::onlyPlayer()->use_perspective($p))) {
+
+                                $c = floor($e1 * Model_Items_Generic_Egg1::getValue() + $e2 * Model_Items_Generic_Egg2::getValue() + $e3 * Model_Items_Generic_Egg3::getValue());
+                                if ($c > 0) {
+                                    Globals::CurrentUserF()->award_coins($p->id(), $c);
+                                    $p->log()->add(new Model_Log_Types_String(null,'KRAAAAH! Glückwunsch! Für die Eier, die du gesammelt hast, bekommst du :num BrainCoins! KRARAH!', array(':num' => $c)));
+                                } else $p->log()->add(new Model_Log_Types_String(null,'KRARAHAHAHA! Zu schade! Du hast nicht genug Eier gesammelt um Punkte zu bekommen! KRAAH!'));
+                         }
+                     })
                 )
             )
             ;

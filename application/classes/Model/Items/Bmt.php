@@ -29,12 +29,12 @@ class Model_Items_Bmt extends Model_Items_Abstract_Item {
                 ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
                 ->requirement(Model_Items_Battery::cls(), 1)
                 ->condition(function()  {
-                    return ($this->power < count($this->health_list));
+                    return ($this->power < count(static::$health_list));
                 })
                 ->fail_message('Das kannst du nicht tun!')
                 ->effect(
                     Model_Effect::factory()
-                        ->effect(Model_Status::MS_STAT_HEALTH, ($this->power >= count($this->health_list)) ? -PHP_INT_MAX : -$this->health_list[$this->power])
+                        ->effect(Model_Status::MS_STAT_HEALTH, ($this->power >= count(static::$health_list)) ? -PHP_INT_MAX : -static::$health_list[$this->power])
                         ->effect(Model_Status::MS_STAT_ENERGY, static::$energy_base)
                         ->remove(Model_Items_Battery::cls(), 1)
                         ->custom(function() {

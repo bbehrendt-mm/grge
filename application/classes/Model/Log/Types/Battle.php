@@ -4,7 +4,7 @@ class Model_Log_Types_Battle extends Model_Log_Message {
 
     protected static $type = Model_Log_Message::MLM_COMBAT;
 
-	public function __construct($title = 'Ein Kampf!', $text = null, $video_id, $summary) {
+	public function __construct($title, $text, $video_id, $summary) {
         parent::__construct([
             'bid' => $video_id,
             'msg' => $title,

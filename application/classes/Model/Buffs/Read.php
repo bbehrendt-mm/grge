@@ -11,6 +11,10 @@ class Model_Buffs_Read extends Model_Buffs_Abstract_Fragile {
 
     private $item_id;
 
+    protected $effects = [];
+
+    protected function get_effects(): array { return $this->effects; }
+
     public function __construct($itemid, $effects, $lifetime, $player_id = null) {
         parent::__construct($player_id, $lifetime);
 

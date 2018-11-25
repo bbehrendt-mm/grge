@@ -71,7 +71,7 @@
                 var disp = document.defaultView.getComputedStyle(elem, null).getPropertyValue('display');
 
             // Toggle the state of the "display" style
-            elem.style.display = disp == 'block' ? 'none' : 'block';
+            elem.style.display = disp === 'block' ? 'none' : 'block';
             return false;
         }
     // ## JS COMPRESS END ## //
@@ -83,8 +83,8 @@
     <div></div>
     <div id="content">
         <h1 style="text-align: center">
-            <img style="margin: 10px; cursor: pointer; height: 22px; width: 32px;" src="media/icons/lang/de.png" onclick="$('.lang-dep').hide(); $('.lang-de').show();">
-            <img style="margin: 10px; cursor: pointer; height: 22px; width: 32px;" src="media/icons/lang/en.png" onclick="$('.lang-dep').hide(); $('.lang-en').show();">
+            <img style="margin: 10px; cursor: pointer; height: 22px; width: 32px;" src="media/icons/lang/de.png" alt="lang-de" onclick="$('.lang-dep').hide(); $('.lang-de').show();">
+            <img style="margin: 10px; cursor: pointer; height: 22px; width: 32px;" src="media/icons/lang/en.png" alt="lang-en" onclick="$('.lang-dep').hide(); $('.lang-en').show();">
         </h1>
         <div class="row lang-dep lang-de">
             <h2>Kritischer Fehler</h2>
@@ -103,8 +103,8 @@
 
             <div style="font-family: monospace">
                 <br />
-                <?php echo $class ?> [ <?php echo $code ?> ]: <?php echo htmlspecialchars( (string) $message, ENT_QUOTES, Kohana::$charset, TRUE); ?><br />
-                Aufgetreten bei <?php echo Debug::path($file) ?> [ <?php echo $line ?> ]
+                <?=$class?> [ <?=$code?> ]: <?=htmlspecialchars( (string) $message, ENT_QUOTES, Kohana::$charset, TRUE); ?><br />
+                Aufgetreten bei <?=Debug::path($file)?> [ <?=$line?> ]
             </div>
         </div>
 

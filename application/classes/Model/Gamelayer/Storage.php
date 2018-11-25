@@ -26,7 +26,8 @@ abstract class Model_Gamelayer_Storage extends Model {
 	final public function __wakeup() {
 		//Rebind global game variable
 		if ($this->set) {
-			Globals::setCurrentGame($this);
+            /** @noinspection PhpParamsInspection */
+            Globals::setCurrentGame($this);
 			
 			//Activate current player
 			if (isset($this->set['gamedata']->players[Globals::CurrentUserF()->uid()]))
@@ -44,7 +45,8 @@ abstract class Model_Gamelayer_Storage extends Model {
 	final public function __construct($global_instance = true) {
 		//Bind global game variable
 		if ($global_instance)
-			Globals::setCurrentGame($this);
+            /** @noinspection PhpParamsInspection */
+            Globals::setCurrentGame($this);
 	}
 
 	abstract protected function process();

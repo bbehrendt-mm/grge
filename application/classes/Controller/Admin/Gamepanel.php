@@ -60,7 +60,7 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
         $instances = 0;
 
         foreach ($sets as $set) {
-            $classname = Model_Items_::cls() . str_replace(['0::','v::','t::'],['Generic_','Virtual_','Virtual_Invoke_'],$set['id']);
+            $classname = 'Model_Items_' . str_replace(['0::','v::','t::'],['Generic_','Virtual_','Virtual_Invoke_'],$set['id']);
 
             if (!class_exists($classname) ||
                 !Tool_System::instance_of($classname, Model_Items_Abstract_Item::cls())) {

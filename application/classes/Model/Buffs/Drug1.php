@@ -7,7 +7,7 @@ class Model_Buffs_Drug1 extends Model_Buffs_Abstract_Buff {
 	protected static $desc = 'Dein Körper ist momentan damit beschäftigt, den Mist wegzuräumen mit dem du ihn gerade geflutet hast. Sei lieber vorsichtig, wenn du jetzt weiter Drogen nimmst wirst du möglicherweise abhängig...';
 	protected static $bid = 'drug1';
 	
-	public function __construct($player_id = NULL, $lifetime) {
+	public function __construct($player_id = null, $lifetime = -1) {
 		parent::__construct($player_id, $lifetime);
 		if ($buff = $this->assoc_player->get_status()->retrieve('drug3')) {
 			$buff->unbuff();

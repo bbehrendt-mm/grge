@@ -68,3 +68,30 @@ class Struct_ScriptItemSource extends Struct {
     public static function onlyPlayer():   self { return self::default()->take_from_location(false); }
 
 }
+
+class Struct_ScriptEffect extends Struct {
+    /** @var string|null $id */
+    public $id;
+
+    /** @var Model_Effect $effect */
+    public $effect;
+
+    /** @var Model_Effect|null $effect */
+    public $side_effect;
+
+    /** @var callable|null $condition */
+    public $condition;
+
+    public function get_condition(): callable {
+        return $this->condition ?? function(Interface_Plentity $p, ?Interface_Plentity $p2, $arg): bool { return true; };
+    }
+
+    public static function make(Model_Effect $effect, ?string $id = null, ?callable $condition = null, ?Model_Effect $side_effect = null): self {
+        $instance = new self();
+        $instance->effect = $effect;
+        $instance->id = $id;
+        $instance->condition = $condition;
+        $instance->side_effect = $side_effect;
+        return $instance;
+    }
+}

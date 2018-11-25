@@ -13,7 +13,7 @@ class Model_Buffs_Paraspirin extends Model_Buffs_Abstract_Buff {
         Tool_Numerics::bounds($this->lifetime, 0, 144);
 	}
 
-    public function __construct($player_id = NULL, $lifetime) {
+    public function __construct($player_id = NULL, $lifetime = -1) {
         parent::__construct($player_id, $lifetime);
         $this->assoc_player->get_status()->scaling_add(Model_Status::MS_STAT_DRUNK, Model_Status::MS_EFFECT_ITEM, 'paraspirine', 8);
         $this->assoc_player->get_status()->scaling_add(Model_Status::MS_STAT_DRUNK, Model_Status::MS_EFFECT_BUFF, 'paraspirine', 0);

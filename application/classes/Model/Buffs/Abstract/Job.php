@@ -5,9 +5,9 @@ abstract class Model_Buffs_Abstract_Job extends Model_Buffs_Abstract_Buff {
 	protected static $name = Array('Lv1', 'Lv2', 'Lv3', 'Lv4', 'Lv5');
 	protected static $desc = Array('Lv1', 'Lv2', 'Lv3', 'Lv4', 'Lv5');
 	
-	protected $level = 1;
+	protected $level;
 	
-	public function __construct($player_id = NULL, $level) {
+	public function __construct($player_id = NULL, $level = 1) {
 		$this->level = $level;
 		parent::__construct($player_id, -1);
 		

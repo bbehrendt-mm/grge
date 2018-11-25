@@ -75,7 +75,7 @@ class Model_Uinmanager extends Model {
 	
 	/**
 	 * Prefetches a list of objects
-	 * @param multitype:number $data
+	 * @param int[] $list
 	 */
 	public function prefetch($list): void
     {

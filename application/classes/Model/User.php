@@ -145,7 +145,7 @@ class Model_User extends Model {
 
 		if (!$a || count($a[0]) !== 3) return null;
 
-		[list(,$name, $id)] = $a;
+		[,$name, $id] = $a;
 		if (!is_numeric($id) || $id < 0) return null;
 
 		$d = DB::select('uid')->from('users')->where('name','LIKE',"{$name}%")->order_by('uid', 'ASC')->execute()->as_array(null, 'uid');
@@ -189,10 +189,9 @@ class Model_User extends Model {
      * @return boolean
      * @throws Kohana_Exception
 */
-	public function set_mentor_id($mentor_id): bool
-    {
+	public function set_mentor_id($mentor_id): bool {
 		if ($mentor_id !== -1 && !static::check_mentor($this->set['uid'], $mentor_id)) return false;
-		return DB::insert('mentor', array('uid', 'mentor'))->values(array($this->set['uid'], $mentor_id))->execute();
+		return DB::insert('mentor', array('uid', 'mentor'))->values(array($this->set['uid'], $mentor_id))->execute() !== null;
 	}
 	
 	public function get_current_game() {

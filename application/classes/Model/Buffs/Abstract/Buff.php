@@ -184,7 +184,7 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
     protected function apply(): void
     {
 		$tmp = Array();
-		foreach (array_keys($this->effects) as $key) {
+		foreach (array_keys($this->get_effects()) as $key) {
 			$tmp[] = $key;
 			$tmp[] = 0;
 		}

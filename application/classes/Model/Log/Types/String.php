@@ -11,7 +11,7 @@ class Model_Log_Types_String extends Model_Log_Message {
      *
      * @param String $title     Short message title
      * @param String $body      Message body
-     * @param Array  $variables Variables
+     * @param array  $variables Variables
      *
      * @throws Exception
      */
@@ -25,7 +25,7 @@ class Model_Log_Types_String extends Model_Log_Message {
 		$this->var = $variables;
 	}
 
-	public function as_notification(): bool
+	public function as_notification(): ?array
     {
 		$d = $this->postprocess($this->data);
 		return [

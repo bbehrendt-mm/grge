@@ -318,8 +318,7 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
     /**
      * Destroys the item; this function may not be overridden as it exists to make sure there is a method to completely destroy an item without regard of the items state
      */
-    public function grind(): void
-    {
+    public function grind(): void {
 		if ($this->obj_uin) Globals::CurrentGameF()->uin()->remove($this->obj_uin);
 	}
 

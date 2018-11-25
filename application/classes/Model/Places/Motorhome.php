@@ -123,7 +123,6 @@ class Model_Places_Motorhome extends Model_Places_Home {
         }
 
         Globals::CurrentGameF()->delete_lobby();
-        $this->impaler = 0;
         foreach ($this->rooms as $room)
             if ($room->has_tag('outside')) $room->clear();
 

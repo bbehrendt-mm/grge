@@ -62,9 +62,9 @@ class Model_Log_Message extends Model {
         ];
     }
 
-    public function as_notification(): bool
+    public function as_notification(): ?array
     {
-        return false;
+        return null;
     }
 
     /**

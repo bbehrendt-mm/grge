@@ -9,16 +9,18 @@
 
 class Model_Action {
 
-    private $decider = null;
-    private $export = null;
-    private $effects = array();
-    private $condition = null;
-    private $failmsg = null;
+    private $action_decider;
+    private $action_export;
+    /** @var Struct_ScriptEffect[] $effect_list */
+    private $effect_list = [];
+    /** @var callable|null $condition */
+    private $action_condition;
+    private $failmsg;
     private $requirements = array();
-    private $show_as = null;
-    private $argument = null;
-    private $description = null;
-    private $skin = null;
+    private $action_show_as;
+    private $action_argument;
+    private $action_description;
+    private $skin;
     private $allow_remote_execution = true;
     private $allow_autonomous_execution = true;
     private $prevent_user_type = [];
@@ -29,9 +31,9 @@ class Model_Action {
     private $consume_by_grind = true;
 
     private $has_se = false;
-    private $popup = null;
+    private $action_popup;
 
-    private $parent = null;
+    private $parent;
 
     /**
      * @return Model_Action
@@ -44,9 +46,9 @@ class Model_Action {
     public function setParent(Model_Items_Abstract_Item $parent): void
     {
         $this->parent = $parent;
-        foreach ($this->effects as $e) {
-            $e['effect']->setParent($parent);
-            if ($e['side_effect']) $e['side_effect']->setParent($parent);
+        foreach ($this->effect_list as $e) {
+            $e->effect->setParent($parent);
+            if ($e->side_effect !== null) $e->side_effect->setParent($parent);
         }
     }
 
@@ -108,9 +110,8 @@ class Model_Action {
      * @param callable $cond
      * @return Model_Action
      */
-    public function condition($cond): \Model_Action
-    {
-        $this->condition = $cond;
+    public function condition($cond): \Model_Action {
+        $this->action_condition = $cond;
         return $this;
     }
 
@@ -121,13 +122,13 @@ class Model_Action {
 
     /**
      * @param $txt
-     * @return Model_Action|String
+     * @return Model_Action|string
      */
     public function description($txt = null) {
         if ($txt !== null) {
-            $this->description = $txt;
+            $this->action_description = $txt;
             return $this;
-        } else return $this->description;
+        } else return $this->action_description;
     }
 
     /**
@@ -174,8 +175,8 @@ class Model_Action {
      */
     public function argument($s = null): \Model_Action
     {
-        if ($s === null) return $this->argument;
-        $this->argument = $s;
+        if ($s === null) return $this->action_argument;
+        $this->action_argument = $s;
         return $this;
     }
 
@@ -211,8 +212,8 @@ class Model_Action {
             if ($this->parent) $side_effect->setParent($this->parent);
         }
         if ($id === null)
-            $this->effects[] = array('effect' => $effect, 'condition' => $condition, 'side_effect' => $side_effect, 'id' => $id);
-        else $this->effects[$id] = array('effect' => $effect, 'condition' => $condition, 'side_effect' => $side_effect, 'id' => $id);
+            $this->effect_list[] = Struct_ScriptEffect::make($effect,$id,$condition,$side_effect);
+        else $this->effect_list[$id] = Struct_ScriptEffect::make($effect,$id,$condition,$side_effect);
 
         return $this;
     }
@@ -221,13 +222,9 @@ class Model_Action {
      * @param string $id
      * @return Model_Effect|null
      */
-    public function &get_effect($id): ?\Model_Effect
-    {
-        global $null;
-        $null = null;
-        if (isset($this->effects[$id]))
-            return $this->effects[$id]['effect'];
-        else return $null;
+    public function get_effect($id): ?Model_Effect {
+        return isset($this->effect_list[$id]) ?
+            $this->effect_list[$id]->effect : null;
     }
 
     /**
@@ -246,7 +243,7 @@ class Model_Action {
      */
     public function show_as($effect, $side_effect = null, $execute_always = false): \Model_Action
     {
-        $this->show_as = array('e' => $effect, 's' => $side_effect, 'b' => $execute_always);
+        $this->action_show_as = array('e' => $effect, 's' => $side_effect, 'b' => $execute_always);
         return $this;
     }
 
@@ -256,7 +253,7 @@ class Model_Action {
      */
     public function decider($newval): \Model_Action
     {
-        $this->decider = $newval;
+        $this->action_decider = $newval;
         return $this;
     }
 
@@ -265,9 +262,9 @@ class Model_Action {
      * @return string|Model_Action
      */
     public function popup($pp = null) {
-        if ($pp === null) return $this->popup;
+        if ($pp === null) return $this->action_popup;
         else {
-            $this->popup = $pp;
+            $this->action_popup = $pp;
             return $this;
         }
     }
@@ -301,12 +298,12 @@ class Model_Action {
      */
     public function test($player, $side_player = null, $argument = null): bool
     {
-        if ($this->popup) return false;
+        if ($this->action_popup) return false;
 
-        if ($this->condition !== null) {
+        if ($this->action_condition !== null) {
             /** @var callable $cf */
-            $cf = $this->condition;
-            if (($r = $cf($player, $side_player, $argument)) !== true)
+            $cf = $this->action_condition;
+            if ($cf($player, $side_player, $argument) !== true)
                 return false;
         }
 
@@ -330,12 +327,12 @@ class Model_Action {
      */
     public function execute($player, $side_player = null, $argument = null): bool
     {
-        if ($this->popup) return false;
+        if ($this->action_popup) return false;
         $no_player = Tool_Scripts::is_npc($player);
 
-        if ($this->condition !== null) {
+        if ($this->action_condition !== null) {
             /** @var callable $cf */
-            $cf = $this->condition;
+            $cf = $this->action_condition;
             if (($r = $cf($player, $side_player, $argument)) !== true) {
                 if ($this->failmsg && !$no_player)
                     $player->log()->add(is_array($this->failmsg) ? $this->failmsg[$r] : $this->failmsg);
@@ -357,44 +354,38 @@ class Model_Action {
         foreach ($this->get_stat_requirements() as $stat => $value)
             $player->get_status()->modify($stat, -$value, Model_Status::MS_EFFECT_REQUIREMENT);
 
-        $tmp = array();
-        foreach ($this->effects as $id => $effect)
-            if ( !$effect['condition'] || $effect['condition']($player, $side_player, $argument))
+        /** @var Struct_ScriptEffect[] $tmp */
+        $tmp = [];
+        foreach ($this->effect_list as $id => $effect)
+            if ( $effect->get_condition()($player, $side_player, $argument))
                 $tmp[$id] = $effect;
 
         if (!count($tmp))
             return false;
 
-        if ($this->decider !== null) {
+        if ($this->action_decider !== null) {
             /** @var callable $func */
-            $func = $this->decider;
+            $func = $this->action_decider;
             /** @noinspection PhpIllegalArrayKeyTypeInspection */
-            $tmp = $tmp[$func($player, $side_player, array_keys($this->effects))];
+            $tmp = $tmp[$func($player, $side_player, array_keys($this->effect_list))];
         } else {
             $tmp2 = array_keys($tmp);
             $tmp = $tmp[$tmp2[random_int(0, count($tmp) - 1)]];
         }
 
-        /**
-         * @var $effect Model_Effect
-         * @var $side_effect Model_Effect
-         */
-        $effect = $tmp['effect'];
-        $side_effect = $tmp['side_effect'];
-
-        if (!$effect || ($side_player && !$side_effect) || (!$side_player && $side_effect))
+        if (($side_player && !$tmp->side_effect) || (!$side_player && $tmp->side_effect))
             return false;
 
-        if ($this->show_as !== null && $this->show_as['b']) {
+        if ($this->action_show_as !== null && $this->action_show_as['b']) {
             /** @noinspection PhpUndefinedMethodInspection */
-            $this->show_as['e']->execute($player, $argument);
-            if ($this->show_as['s']) /** @noinspection PhpUndefinedMethodInspection */
-                $this->show_as['s']->execute($side_player, $argument);
+            $this->action_show_as['e']->execute($player, $argument);
+            if ($this->action_show_as['s']) /** @noinspection PhpUndefinedMethodInspection */
+                $this->action_show_as['s']->execute($side_player, $argument);
         }
 
-        $effect->execute($player, $argument);
-        if ($side_effect)
-            $side_effect->execute($side_player, $argument);
+        $tmp->effect->execute($player, $argument);
+        if ($tmp->side_effect)
+            $tmp->side_effect->execute($side_player, $argument);
 
         return true;
     }
@@ -405,7 +396,7 @@ class Model_Action {
      */
     public function export($exp): \Model_Action
     {
-        $this->export = $exp;
+        $this->action_export = $exp;
         return $this;
     }
 
@@ -415,48 +406,46 @@ class Model_Action {
      */
     public function convert_effects($player = null): array
     {
-        if ($this->show_as !== null)
+        if ($this->action_show_as !== null)
             /** @noinspection PhpUndefinedMethodInspection */
-        return array('effects' => $this->show_as['e']->convert($player));
+        return array('effects' => $this->action_show_as['e']->convert($player));
 
-        if (!$this->effects)
-            return array();
+        if (!$this->effect_list) return [];
 
-        if ($this->export && is_string($this->export))
-            $r = $this->export;
-        elseif ($this->export) {
+        if ($this->action_export && is_string($this->action_export))
+            $r = $this->action_export;
+        elseif ($this->action_export) {
             /** @var callable $tmp */
-            $tmp = $this->export;
+            $tmp = $this->action_export;
             $r = $tmp($player);
-        } elseif (count($this->effects) === 1)
+        } elseif (count($this->effect_list) === 1)
             $r = 0;
         else $r = null;
 
-        /** @noinspection PhpUndefinedMethodInspection */
-        return ($r !== null && isset($this->effects[$r])) ? array('effects' => $this->effects[$r]['effect']->convert($player), 'sides' => $this->effects[$r]['side_effect'] ? $this->effects[$r]['side_effect']->convert() : null) : array('effect' => array(array('value' => '???')));
+        return ($r !== null && isset($this->effect_list[$r])) ? array('effects' => $this->effect_list[$r]->effect->convert($player), 'sides' => $this->effect_list[$r]->side_effect ? $this->effect_list[$r]->side_effect->convert() : null) : array('effect' => array(array('value' => '???')));
     }
 
     public function list_effects($player = null): array
     {
-        if ($this->show_as !== null)
+        if ($this->action_show_as !== null)
             /** @noinspection PhpUndefinedMethodInspection */
-            return $this->show_as['e']->stat_list($player);
+            return $this->action_show_as['e']->stat_list($player);
 
-        if (!$this->effects)
+        if (!$this->effect_list)
             return [];
 
-        if ($this->export && is_string($this->export))
-            $r = $this->export;
-        elseif ($this->export) {
+        if ($this->action_export && is_string($this->action_export))
+            $r = $this->action_export;
+        elseif ($this->action_export) {
             /** @var callable $tmp */
-            $tmp = $this->export;
+            $tmp = $this->action_export;
             $r = $tmp($player);
-        } elseif (count($this->effects) === 1)
+        } elseif (count($this->effect_list) === 1)
             $r = 0;
         else $r = null;
 
         /** @noinspection PhpUndefinedMethodInspection */
-        return ($r !== null && isset($this->effects[$r])) ? $this->effects[$r]['effect']->stat_list($player) : [];
+        return ($r !== null && isset($this->effect_list[$r])) ? $this->effect_list[$r]->effect->stat_list($player) : [];
     }
 
     public function has_requirements(): bool

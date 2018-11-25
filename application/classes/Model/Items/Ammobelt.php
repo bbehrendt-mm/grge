@@ -29,9 +29,7 @@ class Model_Items_Ammobelt extends Model_Items_Abstract_Item {
 		}
 	}
 	
-	public function consume(): void {}
-	
-	public function grind(): void {}
+	public function consume(): int { return 0; }
 	
 	/**
 	 * Adds a stack of items to the belt

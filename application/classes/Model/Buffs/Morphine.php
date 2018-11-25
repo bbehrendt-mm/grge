@@ -15,7 +15,7 @@ class Model_Buffs_Morphine extends Model_Buffs_Abstract_Buff {
         $this->assoc_player->log()->add('Du spürst, wie deine Muskeln erschlaffen und dein Bewusstsein dich verlässt. Am Ende bleibt dir nichts als Dunkelheit. Herzlichen Glückwunsch, du bist tot.');
 	}
 
-    public function __construct($player_id = NULL, $lifetime) {
+    public function __construct($player_id = NULL, $lifetime = -1) {
         parent::__construct($player_id, $lifetime);
         $this->assoc_player->get_status()->scaling_add(Model_Status::MS_STAT_HEALTH, Model_Status::MS_EFFECT_GLOBAL, 'morphine', 0.25);
     }

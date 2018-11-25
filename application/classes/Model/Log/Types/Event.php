@@ -29,7 +29,7 @@ class Model_Log_Types_Event extends Model_Log_Types_String  {
         );
     }
 
-    public function as_notification(): bool
+    public function as_notification(): ?array
     {
         $tmp = parent::as_notification();
         $tmp[0] = "event {$this->key}";

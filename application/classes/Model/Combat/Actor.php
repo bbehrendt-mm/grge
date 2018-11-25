@@ -164,7 +164,7 @@ class Model_Combat_Actor extends Named {
     }
 
     /**
-     * @param Model_Buffs_Abstract_Buff|null $wound
+     * @param Model_Buffs_Abstract_Buff|string|null $wound
      */
     public function inflict_wound($wound): void {
         if ($wound) {

@@ -67,13 +67,13 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
             );
     }
 	
-	public function consume($count = 1): void
-    {
-		if ($this->bottle_fillrate > 0)
-		{
+	public function consume($count = 1): int {
+		if ($this->bottle_fillrate > 0) {
 			$this->bottle_toxicity -= ($this->bottle_toxicity * ($count/$this->bottle_fillrate));
 			$this->bottle_fillrate--;
+			return 1;
 		}
+		return 0;
 	}
 	
 	public function capacity() {

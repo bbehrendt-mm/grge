@@ -49,8 +49,8 @@ class Model_Combat_Zombies_Hallucination extends Model_Combat_Zombies_Zombie {
         $old_x = $this->pos_x;
         $old_y = $this->pos_y;
 
-        $dx = ($target->pos_x - $this->pos_x)/$d * min($this->movement_range, $d);
-        $dy = ($target->pos_y - $this->pos_y)/$d * min($this->movement_range, $d);
+        $dx = ($target->pos_x - $this->pos_x)/$d * min(static::$movement_range, $d);
+        $dy = ($target->pos_y - $this->pos_y)/$d * min(static::$movement_range, $d);
 
         $this->pos_x += $dx + ($d < 10 ? random_int(-3,3) : 0);
         $this->pos_y += $dy + ($d < 10 ? random_int(-3,3) : 0);

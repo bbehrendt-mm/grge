@@ -57,11 +57,15 @@ class Model_Places_Colosseum extends Model_Places_Abstract_Place {
             $zmb[] = $z::factory()->count($c);
 
 		Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $zmb], false, ($this->stage > 15) ? 60 : static::$stageconf[$this->stage]['distance'], $this, $this->stage === 0 ? 'Der Qualifikationskampf im Kolosseum beginnt!' : ['Der Kampf auf Ebene :level des Kolosseums beginnt!', [':level' => $this->stage]]);
-	}	
-	
-	private function reward_roulette($level): ?array
-    {
-		
+	}
+
+    /**
+     * @param $level
+     *
+     * @return Model_Items_Abstract_Item|null
+     * @throws Exception
+     */
+	private function reward_roulette($level): ?Model_Items_Abstract_Item {
 		$rewards = Array(
 			1 => Array(
 				0 => function() {return new Model_Items_Lunchbox(3);},

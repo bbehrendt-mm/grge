@@ -105,10 +105,9 @@ abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item 
             Tool_Scripts::rebuild_primary_equipment($this->get_equipment_type());
     }
 
-    public function consume(): void
-    {
+    public function consume(): int {
         $this->unequip();
-        parent::consume();
+        return parent::consume();
     }
 
     public function grind(): void

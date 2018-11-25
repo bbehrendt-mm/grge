@@ -43,6 +43,7 @@ class Controller_Lobby extends Controller {
 
         $cacheable = ($length === 5 && $offset === 0);
         $cache = $cacheable ? Cache::instance()->get("forum_default_$fid", null) : null;
+        if ($cache === null) $cache = unserialize($cache, ['allowed_classes' => false]);
         $cached = !(!$cache || !$cache['time'] || !$cache['data']);
 
         if (!$cached || $cache['time'] < (time() - 300)) {
@@ -69,7 +70,7 @@ class Controller_Lobby extends Controller {
                 if ($ret === null)
                     throw new RuntimeException('Failed to retrieve forum listing.');
                 else {
-                    if ($cacheable) Cache::instance()->set("forum_default_$fid", ['time' => time(), 'data' => $ret]);
+                    if ($cacheable) Cache::instance()->set("forum_default_$fid", serialize(['time' => time(), 'data' => $ret]));
                     return $ret;
                 }
             } catch (Exception $e) {

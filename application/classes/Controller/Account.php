@@ -157,12 +157,10 @@ class Controller_Account extends Controller {
         else return $this->error(\grge\E_AUTH_INVALID_KEY);
     }
 
-    public function japi_remove_tokens() {
-        if (!Globals::hasCurrentUser()) return false;
-
+    public function japi_remove_tokens(): void {
+        if (!Globals::hasCurrentUser()) return;
         Model_Auth_Token::user_unlink(Globals::CurrentUserF()->uid());
-
-        return $this->japi_logout();
+        $this->japi_logout();
     }
 
     /**

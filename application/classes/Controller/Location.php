@@ -153,7 +153,7 @@ class Controller_Location extends Controller_Game {
         $blueprints = Model_Blueprints::factory(Globals::PrimaryPlayerF()->location(), 'rooms', true);
         $externals = Model_Blueprints::factory(Globals::PrimaryPlayerF()->location(), 'upgrades', true)->externalize();
 
-        if ($build = self::post('build') && Globals::PrimaryPlayerF()->location()->is_upgradable())
+        if (($build = self::post('build')) && Globals::PrimaryPlayerF()->location()->is_upgradable())
             Globals::PrimaryPlayerF()->achievements()->achieve(Model_Achievement::MA_ROOM_BUILDER, $this->exec_build($blueprints, $build, $room) ? 1 : 0);
 
         $blueprints->merge($externals)->validate();
@@ -175,7 +175,7 @@ class Controller_Location extends Controller_Game {
         $blueprints = Model_Blueprints::factory(Globals::PrimaryPlayerF()->location(), 'upgrades',true);
         $externals = Model_Blueprints::factory(Globals::PrimaryPlayerF()->location(), 'rooms',true)->externalize();
 
-        if ($build = self::post('build') && Globals::PrimaryPlayerF()->location()->is_upgradable())
+        if (($build = self::post('build')) && Globals::PrimaryPlayerF()->location()->is_upgradable())
             Globals::PrimaryPlayerF()->achievements()->achieve(Model_Achievement::MA_CONSTRUCTIONS, $this->exec_build($blueprints, $build, $room) ? 1 : 0);
 
         $blueprints->merge($externals)->validate();

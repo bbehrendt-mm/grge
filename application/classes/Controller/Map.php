@@ -91,7 +91,7 @@ class Controller_Map extends Controller_Game {
                 if (!Globals::shadowPlayerExists()) Globals::PrimaryPlayerF()->log()->add((count($companion) === 1) ? 'Hier kommst du nicht weiter... du musst deine Reise nach :od unterbrechen und bei :ad eine Pause machen.' : 'Hier kommt ihr nicht weiter... ihr müsst eure Reise nach :od unterbrechen und bei :ad eine Pause machen..', [], array(':od' => $destination->name(), ':ad' => $last_pass->name()));
                 $destination = $last_pass;
                 $did = $last_pass->uin();
-                if (!($route = Globals::CurrentGameF()->map($lid)->get_route($lid, $last_pass->uin())))
+                if (!($route = Globals::CurrentGameF()->mapF($lid)->get_route($lid, $last_pass->uin())))
                     return false;
             }
 
@@ -99,7 +99,7 @@ class Controller_Map extends Controller_Game {
             $distance = $route['distance'];
         } else {
             foreach ($companion as $current)
-                if (!$location->can_leave_map($current->id(), !Tool_Scripts::is_npc($current) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC) || !$destination->can_enter_map($current->id(), !Tool_Scripts::is_npc($current) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC)) {
+                if (!$destination || !$location->can_leave_map($current->id(), !Tool_Scripts::is_npc($current) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC) || !$destination->can_enter_map($current->id(), !Tool_Scripts::is_npc($current) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC)) {
                     if (!Globals::shadowPlayerExists()) {
                         if ($current->id() === Globals::CurrentPlayerF()->id())
                             Globals::PrimaryPlayerF()->log()->add(((count($companion) === 1) ? 'Du kannst diese Reise nicht antreten.' : 'Ihr könnt diese Reise nicht antreten.'));
@@ -292,7 +292,7 @@ class Controller_Map extends Controller_Game {
             $pass[$id]['zombies'] = $location->zombie_pop();
             $pass[$id]['name'] = __($location->name());
             $pass[$id]['icon'] = $location->icon();
-            $pass[$id]['note'] = Globals::CurrentGameF()->map($lid)->get_location_notes($id);
+            $pass[$id]['note'] = Globals::CurrentGameF()->mapF($lid)->get_location_notes($id);
             $pass[$id]['skip_ro'] = (count($data['tail']) === 2) && Tool_System::instance_of($location,'Model_Places_Tentkit');
 
             $pass[$id]['classes'] = array();

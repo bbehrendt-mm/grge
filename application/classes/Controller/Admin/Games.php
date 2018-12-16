@@ -86,7 +86,9 @@ class Controller_Admin_Games extends Controller_Admin_Admin {
         if (!$local_game_obj->read($game_id, true)) return $this->render(['success' => -500]);
         foreach ($local_game_obj->players(true) as $pn) {
             $pn->get_status()->set_cause_of_death('Kopfschuss');
-            $pn->get_status()->retrieve('heartbeat')->unbuff();
+            $buff = $pn->get_status()->retrieve('heartbeat');
+            if ($buff) $buff->unbuff();
+            else $pn->kill();
         }
 
         if ($auto) {
@@ -133,7 +135,9 @@ class Controller_Admin_Games extends Controller_Admin_Admin {
         if (!$pn->get_status()->alive()) return $this->render(['success' => -400]);
 
         $pn->get_status()->set_cause_of_death('Kopfschuss');
-        $pn->get_status()->retrieve('heartbeat')->unbuff();
+        $buff = $pn->get_status()->retrieve('heartbeat');
+        if ($buff) $buff->unbuff();
+        else $pn->kill();
 
         $local_game_obj->write();
 

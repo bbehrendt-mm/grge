@@ -55,7 +55,9 @@ class Model_Places_House_Hobby extends Model_Places_Abstract_Place {
                     $s_player->get_status()->set_cause_of_death(
                         'Serienkiller-Opfer'
                     );
-                    $s_player->get_status()->retrieve('heartbeat')->unbuff();
+                    $buff = $s_player->get_status()->retrieve('heartbeat');
+                    if ($buff) $buff->unbuff();
+                    else $s_player->kill();
                 } else $s_player->kill();
 
                 $this->mentalstate = 3;

@@ -160,8 +160,8 @@ class Controller_Game extends Controller {
         // Get doorways
         $doorways = array();
         foreach (Globals::PrimaryPlayerF()->location()->get_doorways() as $did) {
-            $doorways[$did]['location'] = __(Globals::CurrentGameF()->location($did)->name());
-            $doorways[$did]['name'] = __(Globals::CurrentGameF()->map($did)->get_sublocation_description());
+            $doorways[$did]['location'] = __(Globals::CurrentGameF()->locationF($did)->name());
+            $doorways[$did]['name'] = __(Globals::CurrentGameF()->mapF($did)->get_sublocation_description());
         }
         if (!count($doorways)) $doorways = false;
 
@@ -182,7 +182,7 @@ class Controller_Game extends Controller {
                 'defense' => $hideout->get_defense(false),
                 'deco' => $hideout->deco(null, false),
             ] : false,
-            'discovery' => Tool_System::instance_of(Globals::PrimaryPlayerF()->location(), 'Model_Places_Abstract_Node') ? round(100*Globals::CurrentGameF()->map(Globals::PrimaryPlayerF()->location_class())->get_discovery_rate(Globals::PrimaryPlayerF()->location_class(), true)) : false,
+            'discovery' => Tool_System::instance_of(Globals::PrimaryPlayerF()->location(), 'Model_Places_Abstract_Node') ? round(100*Globals::CurrentGameF()->mapF(Globals::PrimaryPlayerF()->location_class())->get_discovery_rate(Globals::PrimaryPlayerF()->location_class(), true)) : false,
             'radar' => [
                 'danger' => $danger,
                 'min' => 0,

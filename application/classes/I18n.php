@@ -46,7 +46,7 @@ class I18n extends Kohana_I18n {
 	protected static $cache = array();
     protected static $readonly = false;
 
-	protected static $lang_list = array('de', 'en', 'es', 'fr');
+	protected static $lang_list = array('de', 'en', 'es', 'fr', 'ru');
 
     public static function get_primary_language() {
         return static::$lang_list[0];

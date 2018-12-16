@@ -8,7 +8,7 @@ class Controller_Admin_Translate extends Controller_Admin_Admin {
     {
         $this->add_widget(View::factory($url)
             ->set('base', 'de')
-            ->set('langs', ['en','es','fr'])
+            ->set('langs', ['en','es','fr','ru'])
             ->set('adv_priv', static::priv_allow_all('TRANSLATE_MOD'))
             ->render());
 

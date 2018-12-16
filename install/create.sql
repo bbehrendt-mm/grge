@@ -58,7 +58,8 @@ CREATE TABLE IF NOT EXISTS ___PREFIX___language (
   `de` mediumtext NOT NULL,
   `en` mediumtext,
   `es` mediumtext,
-  `fr` mediumtext
+  `fr` mediumtext,
+  `ru` mediumtext
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS ___PREFIX___mentor (

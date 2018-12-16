@@ -82,7 +82,7 @@ elseif (isset($headers['X-Request-Lang']))
 $lang = strtolower($lang);
 $lang_parts = explode('-', $lang);
 
-if (in_array($lang_parts[0], array('de', 'en','es','fr')))
+if (in_array($lang_parts[0], array('de','en','es','fr','ru')))
 	I18n::lang($lang);
 else I18n::lang('en');
 

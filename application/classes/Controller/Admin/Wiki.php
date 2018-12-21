@@ -70,13 +70,11 @@ class Controller_Admin_Wiki extends Controller_Admin_Admin {
         $spawn = Model_Factory_Zombies::read($classpath);
 
         if ($spawn) {
-            $a = 0;
-
             $zombies = $spawn->get();
             arsort($zombies);
             /** @var string|Model_Combat_Zombies_Zombie $zomb */
             foreach ($zombies as $zomb => $chance) {
-                $a += $chance;
+                /** @noinspection PhpUndefinedMethodInspection */
                 $list[$zomb] = [
                     'name' => ($tmp = (new $zomb())->name()) ? $tmp : "[[$zomb]]",
                     'icon' => 'zombie',
@@ -170,21 +168,12 @@ class Controller_Admin_Wiki extends Controller_Admin_Admin {
             $reflection = new ReflectionClass($item_class);
             if (!$reflection->isInstantiable()) continue;
 
-            $parameters = $reflection->getConstructor()->getParameters();
-            /** @var Model_Items_Abstract_Item $instance */
-            $instance =
-                ($item_class::getNumberOfTypes() > 0) && ($reflection->getConstructor()->getNumberOfRequiredParameters() === 0) && ($parameters[0]->getName()
-                    === 'type')
-                ? new $item_class() : null;
-            $singular = $item_class::getNumberOfTypes() === 1;
-
             $virtual = Tool_System::instance_of($item_class, Model_Items_Abstract_Virtual::cls());
             $trigger = Tool_System::instance_of($item_class, Model_Items_Virtual_Invoke_Abstract::cls());
 
             if ($virtual) $name = ($trigger ? '[T]' : '[V]') . ' ' . str_replace($trigger ? 'Model_Items_Virtual_Invoke_' : 'Model_Items_Virtual_','',$item_class);
             else $name = __(Tool_System::getItemInstanceName($item_class));
             if (!$name) $name = $item_class;
-
 
             if ($virtual) $icon = $trigger ? 'items/any2' : 'items/any';
             else $icon = Tool_System::getItemInstanceIcon($item_class);

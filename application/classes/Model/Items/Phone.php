@@ -14,9 +14,6 @@ class Model_Items_Phone extends Model_Combat_Weapons_Throwable implements Interf
 	protected static $damage = [5,15];
 	protected static $range = [1,20];
 	protected static $accuracy = 0.85;
-	protected static $use_fixed_accuracy = true;
-	protected static $aoe = false;
-	protected static $friendly_fire = false;
 	protected static $energy = 3;
 
     /**

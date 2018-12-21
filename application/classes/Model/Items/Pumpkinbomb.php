@@ -15,9 +15,7 @@ class Model_Items_Pumpkinbomb extends Model_Combat_Weapons_Throwable implements 
 	protected static $damage = [60,100];
 	protected static $range = [0,8];
 	protected static $accuracy = 0.85;
-	protected static $use_fixed_accuracy = true;
 	protected static $aoe = true;
-	protected static $friendly_fire = false;
 	protected static $energy = 10;
 
 	// INI, ATK, DEF, ACC

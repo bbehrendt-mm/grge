@@ -56,13 +56,13 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
      *
      * @return int
      */
-    public function location_class($lc = NULL):int {
-        if ($lc !== NULL) {
+    public function location_class($lc = null):int {
+        if ($lc !== null) {
             $this->location = $lc;
             $this->escape = 0;
         }
 
-        return $this->location;
+        return $this->location ?? -2;
     }
 
     /**

@@ -3,7 +3,6 @@
 class Controller_Admin_Cron extends Controller {
 
     protected static $force_ajax = false;
-    protected static $force_login = false;
 
     private function auto_process($any = false, $cleanup = true): array
     {

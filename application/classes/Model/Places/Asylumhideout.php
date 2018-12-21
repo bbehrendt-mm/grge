@@ -25,9 +25,9 @@ class Model_Places_Asylumhideout extends Model_Places_Abstract_Hideout implement
             $f2 = random_int(2,20);
             $f3 = random_int(3,10);
             $users = Model_User::random_names($f1);
-            for ($i = 0; $i < $f1; $i++) {
+            foreach ($users as $iValue) {
                 $b = new Model_Items_Body('Toter Patient', 'Der Patient trägt ein Identifikationsarmband, auf dem sich ein Barcode sowie ein Name befindet. Du wirst wohl nie erfahren, wer das war oder was mit ihm in der Irrenanstalt geschehen ist. Wobei... vermutlich willst du das auch lieber gar nicht wissen.');
-                $b->give_name($users[$i]);
+                $b->give_name($iValue);
                 $this->inventory()->add($b);
             }
             for ($i = 0; $i < $f2; $i++)

@@ -7,7 +7,7 @@ class Model_Buffs_Couch extends Model_Buffs_Abstract_Fragile {
 	protected static $icon = 'couch';
 
     protected static $abortable = true;
-	private $level = 0;
+	private $level;
 	
 	public function __construct($player_id, $level) {
 		$this->level = $level;

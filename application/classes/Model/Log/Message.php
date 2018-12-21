@@ -16,7 +16,7 @@ class Model_Log_Message extends Model {
     protected $data = [];
     protected $uid;
     private $timestamp;
-    private $ticks = -1;
+    private $ticks;
     protected static $type;
 
     /**

@@ -28,8 +28,5 @@ class Model_Items_Vedge5 extends Model_Combat_Weapons_Throwable implements Inter
 	protected static $damage = [30,40];
 	protected static $range = [1,18];
 	protected static $accuracy = 0.9;
-	protected static $use_fixed_accuracy = true;
 	protected static $aoe = true;
-	protected static $friendly_fire = false;
-	protected static $energy = 1;
 }	

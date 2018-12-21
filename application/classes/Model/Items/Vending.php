@@ -4,7 +4,7 @@ class Model_Items_Vending extends Model_Items_Abstract_Item {
 
     /** @var  Model_Factory_Items $factory */
 	protected $factory;
-    private $chem_rand_type = null;
+    private $chem_rand_type;
 	
 	protected static $static_info = Array(
 			'name' => 'Verkaufsautomat',
@@ -23,8 +23,9 @@ class Model_Items_Vending extends Model_Items_Abstract_Item {
         $this->basetype = $basecfg;
 		$this->basename = $name;
 
-        /** @noinspection PhpUndefinedMethodInspection */
-        $this->factory = Model_Factory_Items::read($basecfg, Globals::CurrentGameF()->config('game.config.itemset'))->set_decay_factor(0);
+        /** @var Model_Factory_Items factory */
+        $this->factory = Model_Factory_Items::read($basecfg, Globals::CurrentGameF()->config('game.config.itemset'));
+        $this->factory->set_decay_factor(0);
 		parent::__construct();
 	}
 	

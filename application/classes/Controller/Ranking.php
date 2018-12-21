@@ -584,9 +584,9 @@ class Controller_Ranking extends Controller {
             ->set('allow_mentor', Model_Euser::check_mentor(Globals::CurrentUserF()->uid(), $uid))
             ->set('gallery', Model_Combat_Handler::gallery_by_player($uid))
             ->set('url', URL::base(true))
-
             ->render()
         );
+
         return $this->render();
     }
 }

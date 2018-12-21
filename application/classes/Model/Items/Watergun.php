@@ -16,10 +16,8 @@ class Model_Items_Watergun extends Model_Items_Abstract_Wbgun {
 
 	protected static $damage = [5,20];
 	protected static $range = [0,10];
-	protected static $accuracy = 1;
 	protected static $use_fixed_accuracy = false;
 	protected static $aoe = true;
-	protected static $friendly_fire = false;
 
 	protected static $accuracy_downscale = 0.5;
 }	

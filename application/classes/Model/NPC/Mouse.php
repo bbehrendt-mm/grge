@@ -42,10 +42,6 @@ class Model_NPC_Mouse extends Model_NPC_Animal
         return false;
     }
 
-    public function create_combatant() {
-        return null;
-    }
-
     public function entity_species() {
         return 'Maus';
     }

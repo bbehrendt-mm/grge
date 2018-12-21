@@ -6,7 +6,7 @@ class Init_Game {
 		$this->init($game, $set, $gameid, $mode, $flow, $speed, $contest, $name);
 	}
 	
-	private function init(&$game, &$set, $gameid, $mode, $flow, $speed, $contest = null, $name = null): void
+	private function init(Model_Game $game, &$set, $gameid, $mode, $flow, $speed, $contest = null, $name = null): void
     {
         if (!($config_data = Tool_Gamemodes::compile_startup_mode($mode)))
             throw new RuntimeException('Unable to compile game setup configuration!');
@@ -44,7 +44,7 @@ class Init_Game {
 		//Contest info
 		$set->head->contest = Model_Game::get_contest_data($contest);
 		
-		//UIN Inted
+		//UIN Init'ed
 		$set->uin = new Model_Uinmanager($gameid);
 
         //Players
@@ -57,7 +57,8 @@ class Init_Game {
         $set->counters = [];
 
 		//Map
-		$set->maps['main'] = Model_Map_Abstract::factory($config_data['config']['game.config.map']);
-        $set->maps['main']->auto_init();
+        $map = Model_Map_Abstract::factory($config_data['config']['game.config.map']);
+        $map->auto_init();
+		$set->maps['main'] = $map;
 	}
 }

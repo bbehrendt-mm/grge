@@ -5,9 +5,6 @@ class Model_Items_Fist extends Model_Combat_Weapon {
     protected static $damage = [0.2,1];
     protected static $range = [0,1];
     protected static $accuracy = 0.75;
-    protected static $use_fixed_accuracy = true;
-    protected static $aoe = false;
-    protected static $friendly_fire = false;
 
     protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_PUNCH;
 

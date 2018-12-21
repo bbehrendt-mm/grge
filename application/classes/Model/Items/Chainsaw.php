@@ -18,10 +18,7 @@ class Model_Items_Chainsaw extends Model_Combat_Weapons_Fillable implements Inte
 
 	protected static $damage = [20,20];
 	protected static $range = [0,5];
-	protected static $accuracy = 1;
-	protected static $use_fixed_accuracy = true;
 	protected static $aoe = true;
-	protected static $friendly_fire = false;
 	public static $ammo_icon = 'items/gas';
 
     protected function hid(): Model_Hid {

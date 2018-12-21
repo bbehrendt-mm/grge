@@ -15,8 +15,4 @@ class Model_Items_Bone2 extends Model_Combat_Weapons_Throwable implements Interf
 	protected static $damage = [1,2];
 	protected static $range = [1,20];
 	protected static $accuracy = 0.3;
-	protected static $use_fixed_accuracy = true;
-	protected static $aoe = false;
-	protected static $friendly_fire = false;
-	protected static $energy = 1;
 }	

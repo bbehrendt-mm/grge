@@ -15,7 +15,6 @@ class Model_Items_Rifle extends Model_Combat_Weapons_Ammo implements Interface_S
 	protected static $ammo = ['Model_Items_Ammo' => 1];
 	protected static $damage = [15,20];
 	protected static $range = [1,100];
-	protected static $accuracy = 1;
 	protected static $use_fixed_accuracy = false;
 	protected static $aoe = true;
 

@@ -79,7 +79,7 @@ class Model_Events_Xmas extends Model_Events_Event {
                 if ($map) {
                     foreach ($map->get_locations() as $subloc)
                         foreach (Tool_Scripts::at_location($subloc) as $p) {
-                            Globals::CurrentGameF()->location($subloc)->leave($p->id(), Tool_Scripts::is_npc($p) ? Interface_Tickable::IT_TYPE_NPC : Interface_Tickable::IT_TYPE_PLAYER);
+                            Globals::CurrentGameF()->locationF($subloc)->leave($p->id(), Tool_Scripts::is_npc($p) ? Interface_Tickable::IT_TYPE_NPC : Interface_Tickable::IT_TYPE_PLAYER);
                             $p->location_class($d_loc->uin());
                             $d_loc->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $p->id(), Tool_Scripts::is_npc($p)));
                         }

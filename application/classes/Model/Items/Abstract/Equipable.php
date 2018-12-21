@@ -22,9 +22,9 @@ abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item 
     protected static $equipment_type = 0;
     // INI, ATK, DEF, ACC
     protected static $effects = [0,0,0,0];
-    protected $equipped;
-    protected $equipped_primary;
-    protected $player_id = null;
+    protected $equipped = false;
+    protected $equipped_primary = false;
+    protected $player_id;
 
     public function equip($player = null): void
     {
@@ -69,7 +69,7 @@ abstract class Model_Items_Abstract_Equipable extends Model_Items_Abstract_Item 
 
     public function is_equipped_primary(): bool
     {
-        return static::$allow_primary_equip ? $this->equipped_primary : true;
+        return static::$allow_primary_equip ? $this->equipped_primary : $this->is_equipped();
     }
 
     public function get_equipment_type(): int

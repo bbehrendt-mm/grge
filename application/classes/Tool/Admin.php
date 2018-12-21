@@ -326,10 +326,12 @@ class Tool_Admin {
             Syslogd::out();
         }
 
+        $points = [];
         foreach ($modes_mp as $mode) {
+            $points = [];
             Syslogd::sprintln("Verarbeite MP-Ranking #{$mode}");
             Syslogd::in();
-            $points = Array();
+
 
             Syslogd::sprint('Lade Ranking... ');
             $ranks = DB::select(array(DB::expr('GROUP_CONCAT(`uid` SEPARATOR \';\')'), 'uids'))->from('ranking_mp')->join('ranking', 'LEFT')->on('ranking_mp.gameid', '=', 'ranking.gameid')->on('ranking_mp.season', '=', 'ranking.season')->where('ranking_mp.season', '=', $season)->and_where('ranking_mp.board', '=', $mode)->group_by('ranking_mp.gameid')->order_by('ranking_mp.points', 'DESC')->limit(10)->execute()->as_array();

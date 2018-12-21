@@ -13,7 +13,6 @@ class Model_Items_Miniknife extends Model_Combat_Weapons_Close implements Interf
 	protected static $weight = 0;
 
     protected static $damage = [1,2];
-    protected static $energy = 1;
     protected static $max_range = 0.5;
 
 	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SLASH;

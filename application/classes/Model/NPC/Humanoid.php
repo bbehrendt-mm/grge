@@ -3,7 +3,7 @@
 abstract class Model_NPC_Humanoid extends Model_NPC_Nano
 {
     protected static $entity_type = Interface_Plentity::IC_NPC_HUMANOID;
-    protected $last_hideout = null;
+    protected $last_hideout;
 
     protected static $inventory_size = 100;
     protected static $namelist = [];

@@ -14,13 +14,17 @@ class Model_Items_Virtual_Location_Mapmode extends Model_Items_Abstract_Virtual 
                 ->buttonskin('mapmode')
                 ->effect(Model_Effect::factory()
                     ->custom(function() {
-                            if (!($items = Globals::PrimaryPlayerF()->inventory()->get(Model_Items_Maptool::cls()))) return;
-                            $points = $items[0]->retrieve_info(true);
+                            if (!($item = Tool_Scripts::first_item(Model_Items_Maptool::cls(), Struct_ScriptItemSource::onlyPlayer()))) return;
+                            /** @var Model_Items_Maptool $item */
+                            $points = $item->retrieve_info(true);
 
                             if ($points <= 0) Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String( null, 'Du hast leider keine neuen Informationen, die du an deine Stadt senden könntest...'));
                             else {
 
-                                Globals::PrimaryPlayerF()->location()->set_map_points(Globals::PrimaryPlayerF()->location()->get_map_points() + $points);
+                                $location = Globals::PrimaryPlayerF()->location();
+                                /** @var $location Model_Places_Home */
+
+                                $location->set_map_points($location->get_map_points() + $points);
                                 Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String( null, 'Deine Stadt ist dir äußerst dankbar für diese neuen Informationen.'));
                             }
                         })

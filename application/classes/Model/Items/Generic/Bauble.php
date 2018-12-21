@@ -25,8 +25,5 @@ class Model_Items_Generic_Bauble extends Model_Combat_Weapons_Throwable implemen
     protected static $damage = [4,10];
     protected static $range = [1,40];
     protected static $accuracy = 0.7;
-    protected static $use_fixed_accuracy = true;
-    protected static $aoe = false;
-    protected static $friendly_fire = false;
     protected static $energy = 0;
 }	

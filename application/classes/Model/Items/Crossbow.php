@@ -18,7 +18,6 @@ class Model_Items_Crossbow extends Model_Combat_Weapons_Ammo implements Interfac
 	protected static $range = [5,50];
 	protected static $accuracy = 0.8;
 	protected static $use_fixed_accuracy = false;
-	protected static $aoe = false;
 
 	// INI, ATK, DEF, ACC
 	protected static $effects = [-1,0,0,0];

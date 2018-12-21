@@ -20,5 +20,4 @@ class Model_Items_Beer extends Model_Items_Abstract_Alcohol implements Interface
     );
 	
 	protected static $weight = 5;
-	protected static $alcohol = 10;
 }	

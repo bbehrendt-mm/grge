@@ -10,10 +10,6 @@ class Model_NPC_Event_RudolphBR extends Model_NPC_Event_Rudolph
         return true;
     }
 
-    protected function generate_zombified_body() {
-        return null;
-    }
-
     public function is_fighter() {
         return true;
     }

@@ -335,7 +335,37 @@ abstract class Controller extends Kohana_Controller {
             $this->add_data('var_dump', self::$dumps, true);
 
         // Render
-        $this->response->body(json_encode($this->data, JSON_FORCE_OBJECT));
+        $return_string = json_encode($this->data, JSON_FORCE_OBJECT);
+        if ($return_string === false) {
+            $code =  json_last_error();
+
+            switch ($code) {
+                case JSON_ERROR_UTF8:
+                    $fun = null;
+                    $fun = function(string $domain, $data) use (&$fun) {
+                        foreach ($data as $key => $entry)
+                            if (is_array($entry)) $fun( empty($domain) ? $key : "$domain.$key", $entry );
+                            else if (is_string($entry) && !mb_check_encoding($entry)) {
+                                $failed_string = iconv("UTF-8","UTF-8//TRANSLIT",$entry);
+                                $correct_string = iconv("UTF-8","UTF-8//IGNORE",$entry);
+                                $len = strlen($correct_string);
+                                for ($i = 0; $i < $len; $i++) if ($correct_string[$i] !== $entry[$i]) break;
+                                $seq = $failed_string[$i];
+                                $seq_before = substr($correct_string, max(0,$i-64), 64);
+                                $seq_after  = substr($correct_string, $i, 64);
+                                throw new RuntimeException("Data transfer failed. Malformed UTF8 character '$seq' detected in property \"" . (empty($domain) ? 'ROOT' : $domain) . "\" between '$seq_before' and '$seq_after'.");
+                            }
+
+                    };
+                    $fun('JSON', $this->data);
+                    throw new RuntimeException('Data transfer failed. Malformed UTF8 character detected.');
+                    break;
+                default: throw new RuntimeException("Data transfer failed. Encoding error $code: " . json_last_error_msg());
+            }
+        }
+
+        $this->response->body($return_string);
+
         return true;
     }
 

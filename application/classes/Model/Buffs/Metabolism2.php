@@ -4,8 +4,6 @@ class Model_Buffs_Metabolism2 extends Model_Buffs_Metabolism {
 	
 	protected static $name = 'Kindlicher Metabolismus';
 	protected static $icon = 'metabolism2';
-	protected static $desc = 'In deinem Körper laufen jederzeit unglaublich viele biochemische Prozesse ab, die zwar kein Mensch versteht, aber die dich irgendwie am Laufen halten. ';
-	protected static $bid = 'metabolism';
     protected static $dominance = Model_Buffs_Abstract_Buff::MBR_PARTIALLY_DOMINANT;
 	
 	public function rebuild(): bool

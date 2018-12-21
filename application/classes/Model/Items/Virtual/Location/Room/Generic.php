@@ -3,7 +3,7 @@
 class Model_Items_Virtual_Location_Room_Generic extends Model_Items_Abstract_Virtual {
 
     protected $text = 'Herstellen...';
-    protected $text_desc = null;
+    protected $text_desc;
     protected $custom_popup = 'maker';
     protected $custom_action_id = 'lc_lazy_maker';
 

@@ -19,7 +19,7 @@ abstract class Model_Store_Trait extends Model_Store_Interface {
         return $b::static_description();
     }
 
-    public static function trigger_player_after_init($player): void
+    public static function trigger_player_after_init(Model_Player $player): void
     {
         parent::trigger_player_after_init($player);
 

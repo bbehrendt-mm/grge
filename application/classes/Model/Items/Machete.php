@@ -14,7 +14,6 @@ class Model_Items_Machete extends Model_Combat_Weapons_Close implements Interfac
 
     protected static $damage = [5,8];
     protected static $energy = 5;
-    protected static $max_range = 1;
 
     protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SLASH;
 	

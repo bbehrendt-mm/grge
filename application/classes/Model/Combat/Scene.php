@@ -35,7 +35,8 @@ class Model_Combat_Scene {
 
             switch ($type) {
                 case static::MCS_EV_NEW_CHALLENGER:
-                    [$id, $group, $name, $unique, /* $avatar */, /*$atype*/, /*[$x, $y]*/, [$health, $max, $count], /*[$ini, $dmg, $res, $acc]*/, [$sprite, $sprite_death]] = $entry;
+                    /** @noinspection PhpUnusedLocalVariableInspection */
+                    [$id, $group, $name, $unique, /* $avatar */, /*$atype*/,/*[$x, $y]*/, [$health, $max, $count],/*[$ini, $dmg, $res, $acc]*/, [$sprite, $sprite_death]] = $entry;
 
                     if (!isset($tmp[$group])) $tmp[$group] = [];
                     $groups[$id] = $group;
@@ -83,7 +84,7 @@ class Model_Combat_Scene {
                     break;
 
                 case static::MCS_EV_DAMAGE:
-                    [$id, $damage, $kills, $death] = $entry;
+                    [$id, $damage, $kills, /*$death*/] = $entry;
 
                     $tmp[$groups[$id]][$id]['dmg_taken'] += $damage;
                     $tmp[$groups[$id]][$id]['death'] += $kills;
@@ -183,6 +184,7 @@ class Model_Combat_Scene {
                 return "--- Combatant $id is now acting! ---";
 
             case static::MCS_EV_ATTACK:
+                /** @noinspection PhpUnusedLocalVariableInspection */
                 [$atk, $def, /*$ammo*/, [$name, $icon, $animation], /*$damage*/] = $entry;
                 return "Combatant $atk attacks Combatant $def using $name.";
 
@@ -192,6 +194,7 @@ class Model_Combat_Scene {
                         : '.');
 
             case static::MCS_EV_INJURY:
+                /** @noinspection PhpUnusedLocalVariableInspection */
                 [$id, [$name, $icon]] = $entry;
                 return "Combatant $id has been injured: $name!";
 
@@ -205,10 +208,12 @@ class Model_Combat_Scene {
                 return "Combatant $id is thinking: PR:ATK $atk / PR:SWC $swc / PR:MOV $mov.";
 
             case static::MCS_EV_SWITCH:
+                /** @noinspection PhpUnusedLocalVariableInspection */
                 [$id, [$wpn_name, $wpn_icon]] = $entry;
                 return "Combatant $id switches weapon to $wpn_name.";
 
             case static::MCS_EV_BREAK:
+                /** @noinspection PhpUnusedLocalVariableInspection */
                 [$id, [$wpn_name, $wpn_icon]] = $entry;
                 return "Combatant $id's' weapon $wpn_name broke!";
 

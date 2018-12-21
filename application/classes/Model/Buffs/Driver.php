@@ -9,8 +9,6 @@ class Model_Buffs_Driver extends Model_Buffs_Abstract_Fragile {
 
     protected static $allow_npc_assoc = false;
 
-    protected static $abortable = false;
-
     protected function get_effects(): array { return [
         Model_Status::MS_STAT_ENERGY => Array(
             Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,

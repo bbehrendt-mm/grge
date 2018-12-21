@@ -5,8 +5,8 @@ abstract class Model_Auth_Legacy extends Model_Auth_Interface {
     protected static $host;
 
     private $sk;
-    private $name = null;
-    private $avatar = null;
+    private $name;
+    private $avatar;
 
     public static function get_service_name() {
         return static::$host;

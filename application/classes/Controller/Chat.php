@@ -15,7 +15,6 @@ class Controller_Chat extends Controller {
     public const CC_VAR_MODERATOR = '::MOD';
 
     protected static $initialize_session = false;
-    protected static $force_ajax = true;
 
     public static function tokenize($user_id, $room_id, $require_registration) {
         return ($require_registration && !static::check_registration($user_id, $room_id)) ? null : Gateway\encrypt([$user_id,$room_id]);

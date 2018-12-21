@@ -428,7 +428,7 @@ class Controller_Gamemaster extends Controller {
         $list = []; $current_payment = 0;
         if (Kohana::$config->load('balancing.shop.enabled')) {
             $current_payment = -Kohana::$config->load('balancing.shop.free_coins');
-            if (is_array($store) && is_array($store['purchase']) && isset($store['purchase'], $store['authorized_payment'])) {
+            if (is_array($store) && isset($store['purchase'], $store['authorized_payment']) && is_array($store['purchase']) ) {
                 $max_payment = (int)$store['authorized_payment'];
                 foreach (Tool_Gamemodes::get_store_classes() as $store_element)
                     if ($store_element::is_valid_for($mode,$job, $id <= 0,$id,$flow) && in_array(Tool_System::getClassID($store_element), $store['purchase'], true)) {

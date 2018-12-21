@@ -11,7 +11,6 @@ class Model_Items_Noselaser extends Model_Combat_Weapons_Ammo implements Interfa
 
 	protected static $weight = 0;
 
-	protected static $ammo = [];
 	protected static $damage = [10,30];
 	protected static $range = [10,90];
 	protected static $accuracy = 0.95;

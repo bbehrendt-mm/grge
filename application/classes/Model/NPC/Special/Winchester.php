@@ -3,8 +3,6 @@
 class Model_NPC_Special_Winchester extends Model_NPC_Cat
 {
     protected static $movement_scaling = 0.5;
-    protected static $alcohol_scaling = 10;
-    protected static $inventory_size = 5;
     protected static $comfort_threshold = 60;
 
     public function __construct() {

@@ -43,7 +43,7 @@ class Controller_Lobby extends Controller {
 
         $cacheable = ($length === 5 && $offset === 0);
         $cache = $cacheable ? Cache::instance()->get("forum_default_$fid", null) : null;
-        if ($cache === null) $cache = unserialize($cache, ['allowed_classes' => false]);
+        if (is_string($cache)) $cache = unserialize($cache, ['allowed_classes' => false]);
         $cached = !(!$cache || !$cache['time'] || !$cache['data']);
 
         if (!$cached || $cache['time'] < (time() - 300)) {

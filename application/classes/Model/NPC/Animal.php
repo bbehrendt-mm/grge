@@ -3,7 +3,7 @@
 abstract class Model_NPC_Animal extends Model_NPC_Nano
 {
     protected static $entity_type = Interface_Plentity::IC_NPC_ANIMAL;
-    protected $last_hideout = null;
+    protected $last_hideout;
 
     protected static $movement_scaling = 1;
     protected static $alcohol_scaling = 1;

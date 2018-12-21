@@ -7,7 +7,6 @@ class Model_Items_Pamphlet extends Model_Items_Abstract_Book {
         Model_Status::MS_STAT_ENERGY => 0.2
     );
 
-    protected static $reading_speed = 1;
     protected static $pagerange = array(66,99);
     protected static $weight = 6;
 

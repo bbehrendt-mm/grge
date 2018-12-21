@@ -9,7 +9,6 @@ class Model_Items_Soul2 extends Model_Items_Abstract_Ammo implements Interface_A
 			'category' => Model_Items_Abstract_Item::MIAI_CAT_EVENT,
 	);
 	
-	protected static $weight = 0;	
-	protected static $autospawn = Array(1,1);
+	protected static $weight = 0;
 	protected static $autoappender = Array('Seele', 'Seelen');
 }	

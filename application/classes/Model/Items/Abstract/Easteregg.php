@@ -10,8 +10,7 @@ abstract class Model_Items_Abstract_Easteregg extends Model_Items_Abstract_Ammo 
 	protected static $weight = 0;
     protected static $value = 0;
     protected $new = false;
-	
-	protected static $autospawn = Array(1,1);
+
 	protected static $autoappender = Array('Ei', 'Eier');
 
     public static function getValue(): int {

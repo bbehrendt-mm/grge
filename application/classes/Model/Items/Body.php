@@ -18,7 +18,7 @@ class Model_Items_Body extends Model_Items_Abstract_Item implements Interface_St
 	);
 	
 	protected static $weight = 95;
-    protected $body_name = null;
+    protected $body_name;
 	
 	public function __construct($name = null, $desc = null) {
 		parent::__construct();

@@ -28,12 +28,13 @@ abstract class Model_Store_Itempack extends Model_Store_Interface {
         parent::get_description();
         $p = [];
         foreach (static::get_item_instances() as $instance)
+            /** @var Model_Items_Abstract_Item[] $instance */
             $p[] = ((!is_object($instance['i']) || $instance['i']->count() === null) ? $instance['c'] : $instance['i']->count()) . ' x ' . __($instance['i']::static_name());
 
         return '[nt]' . __(parent::get_description()) . ' ' . (static::$personal ? __('Mit diesem Paket werden folgende Gegenstände in deinem Inventar abgelegt:') : __('Mit diesem Paket werden folgende Gegenstände in deinem Versteck abgelegt:')) . ' ' . implode(', ', $p);
     }
 
-    public static function trigger_player_after_init($player): void
+    public static function trigger_player_after_init(Model_Player $player): void
     {
         parent::trigger_player_after_init($player);
 

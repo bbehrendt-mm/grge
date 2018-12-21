@@ -6,7 +6,6 @@ class Model_Places_Tentkit extends Model_Places_Abstract_Hideout {
     protected static $description = 'Das InstaZELT™ ist die perfekte mobile Unterkunft für Campingtrips, mehrtägige Open-Air-Konzerte und iPhone-Releases. Leider stellen die meisten Käufer eines InstaZELT™s relativ schnell fest, dass sich dieses Zelt zwar kinderleicht aufbauen, danach aber nicht mehr abbauen lässt. Manche würde das als einen Designfehler bezeichnen... ';
     protected static $icon = 'itent';
     protected static $upgradable = false;
-    protected static $starts_built = false;
 
     protected $cursed;
 
@@ -45,7 +44,7 @@ class Model_Places_Tentkit extends Model_Places_Abstract_Hideout {
                     $p->log()->add('Gerade hast du es dir bequem gemacht, da hörst du hinter dir plötzlich die Zeltplane reißen. Noch bevor du dich umdrehen kannst spürst du einen stechenden Schmerz im Rücken - herzlichen Glückwunsch, du bist tot.');
                     $p->achievements()->achieve(Model_Achievement::MA_SLASHER_KILLER);
                     $p->get_status()->set_cause_of_death('Serienkiller-Opfer');
-                    $p->get_status()->retrieve('heartbeat')->unbuff();
+                    $p->get_status()->retrieveF('heartbeat')->unbuff();
                 } else $p->kill();
         }
         return parent::tick($type);

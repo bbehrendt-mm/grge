@@ -42,7 +42,7 @@ class Model_Status {
 
     protected $fixed_thresholds = [];
     
-    protected $cod = null;
+    protected $cod ;
     protected $alive = true;
 
     public function __wakeup() {
@@ -101,8 +101,6 @@ class Model_Status {
      * @return number
      */
     public function simulate($stat, $effect, $type = Model_Status::MS_EFFECT_UNSCALE, $normalize = true) {
-        $v = 0;
-
         //Check if value is set already and calculate change
         if (!isset($this->status_bars[$stat]))
             $v = ($stat >= self::MS_THRESHOLD) ? $this->get_fixed_threshold($stat) : 0;
@@ -309,7 +307,7 @@ class Model_Status {
             $obj = $tmp[0];
 
             if (isset($this->buffs[$obj], $tmp[1])
-                && $this->retrieve($obj)->abid() !== $tmp[1]
+                && $this->retrieveF($obj)->abid() !== $tmp[1]
             )
                 return;
 
@@ -325,7 +323,7 @@ class Model_Status {
      * @param string $id
      * @return Model_Buffs_Abstract_Buff|null
      */
-    public function retrieve($id): ?\Model_Buffs_Abstract_Buff
+    public function retrieve(string $id): ?Model_Buffs_Abstract_Buff
     {
         $tmp = explode('/', $id);
         $id = $tmp[0];
@@ -338,6 +336,18 @@ class Model_Status {
 
         if (isset($this->buffs[$id])) return $this->buffs[$id];
         else return NULL;
+    }
+
+    /**
+     * If a buff specified by $id is set, this function retrieves it, otherwise an exception is raised.
+     * @param string $id
+     * @return Model_Buffs_Abstract_Buff
+     */
+    public function retrieveF(string $id): Model_Buffs_Abstract_Buff
+    {
+        $v = $this->retrieve($id);
+        if ($v === null) throw new LogicException('Attempt to retrieve non-existing buff.');
+        return $v;
     }
 
     /**

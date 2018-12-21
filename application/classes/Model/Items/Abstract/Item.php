@@ -106,7 +106,7 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 	 * @param string $name The type of information (name, icon, description, category)
 	 * @return string
 	 */
-	public static function static_info($name): string
+	public static function static_info($name): ?string
     {
 		return static::$static_info[$name] ?? null;
 	}
@@ -119,7 +119,7 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
      *
      * @return string
      */
-    public static function static_typed_info($name, $type = 0): string {
+    public static function static_typed_info($name, $type = 0): ?string {
         //1.Lv: Instance info
         if (isset(static::$instances_info[$type][$name])) return static::$instances_info[$type][$name];
         //2.Lv: Static info
@@ -132,7 +132,7 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 	 * @param string $name The type of information (name, icon, description, category)
 	 * @return string
 	 */
-	private function instance_info($name): string {
+	private function instance_info($name): ?string {
 		//1.Lv: Custom Info
 		if (isset($this->custom_info[$name])) return $this->custom_info[$name];
 		//2.Lv: Static info (if subtype is set)
@@ -180,7 +180,7 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
      *
      * @return string
      */
-	public static function static_name($type = null): string
+	public static function static_name($type = null): ?string
     {
         return $type === null ? static::static_info('name') : static::static_typed_info('name', $type);
 	}
@@ -234,7 +234,7 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
      */
     public function deco(): int
     {
-        return $this->instance_info('deco');
+        return $this->instance_info('deco') ?? 0;
     }
 
     /**

@@ -11,6 +11,6 @@ return array(
 		'basemode' => 1000,
 		'speedrange' => Array(3,4,5,6),
 		'subrange' => Array(1,2),
-		'result' => function($gameobject) {if (!Tool_System::instance_of($gameobject, 'Model_Game')) return 0; return $gameobject->duration();}
+		'result' => function(Model_Game $gameobject) {if (!Tool_System::instance_of($gameobject, 'Model_Game')) return 0; return $gameobject->duration();}
 	)
 );

@@ -28,7 +28,7 @@ abstract class Model_Store_Interface extends Model {
     /**
      * @param Model_Player $player
      */
-    public static function trigger_player_after_init($player): void
+    public static function trigger_player_after_init(Model_Player $player): void
     {}
 
     /**

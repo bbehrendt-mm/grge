@@ -13,7 +13,6 @@ class Model_Items_Bat extends Model_Combat_Weapons_Close implements Interface_St
 
 	protected static $damage = [3,6];
 	protected static $energy = 3;
-	protected static $max_range = 1;
 
     protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_PUNCH;
 

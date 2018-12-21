@@ -10,8 +10,5 @@ class Model_Items_Augments_Class2 extends Model_Items_Augments_Augment {
     );
 
     protected static $num_aug_plus = 2;
-    protected static $num_aug_minus = 0;
     protected static $num_aug_sum_plus = 6;
-    protected static $num_aug_sum_minus = 0;
-
 }	

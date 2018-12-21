@@ -2,7 +2,7 @@
 
 class Model_Items_Virtual_Location_Pillboxes extends Model_Items_Abstract_Virtual {
 
-    private $spawn_twinoid = false;
+    private $spawn_twinoid;
 
     protected static $graceful_fail = true;
     protected static $default_action_uses = array(

@@ -14,13 +14,13 @@ class View extends Kohana_View {
         if (Kohana::$config->load('server.io.performance.output_compression')) {
 
             // Find and compress javascript
-            $pattern = '/(\/\/ ## JS COMPRESS BEGIN ## \/\/.*?\/\/ ## JS COMPRESS END ## \/\/)/s';
-            while (preg_match($pattern, $buffer, $script)) {
-                $buffer = preg_replace($pattern, Minifier::minify($script[0]), $buffer, 1);
-            }
+            $pattern = '/(\/\/ ## JS COMPRESS BEGIN ## \/\/(.*?)\/\/ ## JS COMPRESS END ## \/\/)/su';
+
+            while (preg_match($pattern, $buffer, $script))
+                $buffer = preg_replace($pattern, Minifier::minify($script[2]), $buffer, 1);
 
             // Compress HTML
-            $buffer = preg_replace(['/\>[^\S ]+/s','/[^\S ]+\</s','/(\s)+/s'], ['>','<','\\1'], $buffer);
+            $buffer = preg_replace(['/\>[^\S ]+/s','/[^\S ]+\</s','/(\s)+/su'], ['>','<','\\1'], $buffer);
         }
 
         $compression[1] += strlen($buffer);

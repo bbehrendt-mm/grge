@@ -13,7 +13,7 @@ function typeWrangler(&$file, &$ext) {
     $tmp = $ext;
     [,$base,$ext] = $tmp;
 
-    if (!in_array($ext, ['css','js','jpg','bmp','gif','png','ico','webp','eot','svg','ttf','woff']))
+    if (!in_array($ext, ['css','js','map','jpg','bmp','gif','png','ico','webp','eot','svg','ttf','woff']))
         return false;
 
     if ($ext !== 'css')
@@ -54,6 +54,15 @@ switch ($ext) {
         break;
     case 'js':
         header('Content-Type: application/javascript');
+        break;
+    case 'map':
+
+        if (!in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1','::1'], true)){
+            http_response_code(404);
+            die();
+        }
+
+        header('Content-Type: application/octet-stream');
         break;
     case 'jpg':
         header('Content-Type: image/jpeg');

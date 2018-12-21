@@ -2,7 +2,7 @@
 
 abstract class Model_Items_Abstract_Box extends Model_Items_Abstract_Item implements Interface_Countable {
 
-    protected static $config = null;
+    protected static $config;
     protected static $content = 1;
     protected static $energy = 0;
 

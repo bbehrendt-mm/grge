@@ -14,9 +14,6 @@ class Model_Items_Batgunsnp extends Model_Combat_Weapons_Ammo implements Interfa
 	protected static $ammo = ['Model_Items_Battery' => 1];
 	protected static $damage = [50,100];
 	protected static $range = [20,100];
-	protected static $accuracy = 1;
-	protected static $use_fixed_accuracy = true;
-	protected static $aoe = false;
 
 	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SHOT_BAT;
 

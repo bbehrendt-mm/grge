@@ -5,7 +5,7 @@ class Model_Hid {
     private $actions = array();
     private $hidden = array();
     private $base_id;
-    private $parent = null;
+    private $parent;
 
     public static function factory(Model_Items_Abstract_Item $parent = null, $bs = null): \Model_Hid
     {

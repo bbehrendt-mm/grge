@@ -16,7 +16,6 @@ class Model_Items_Batgun2 extends Model_Combat_Weapons_Ammo implements Interface
 	protected static $range = [1,60];
 	protected static $accuracy = 0.7;
 	protected static $use_fixed_accuracy = false;
-	protected static $aoe = false;
 
 	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SHOT_BAT;
 }	

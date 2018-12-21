@@ -316,7 +316,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
     final public function locationF($lid = NULL): Model_Places_Abstract_Place
     {
         $location = $this->location($lid);
-        if ($location !== null) throw new LogicException(
+        if ($location === null) throw new LogicException(
             'Requested invalid location.'
         );
         return $location;

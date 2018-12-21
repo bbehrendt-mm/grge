@@ -20,7 +20,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 				'description',
 			);
 	
-	protected static $weight_limit = NULL;
+	protected static $weight_limit;
 
 	protected $variant_name;
 	
@@ -225,8 +225,10 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 		$this->log = new Model_Log_Log();
 		/** @var Model_Factory_Zombies zombie_factory */
         $this->zombie_factory = Model_Factory_Zombies::read(static::class, Globals::CurrentGameF()->config('game.config.spawn'));
-        $this->item_factory = Model_Factory_Items::read(static::class, Globals::CurrentGameF()->config('game.config.itemset'))->modify_decay(Globals::CurrentGameF()->config('places.dryout_factor'));
-		
+        /** @var Model_Factory_Items item_factory */
+        $this->item_factory = Model_Factory_Items::read(static::class, Globals::CurrentGameF()->config('game.config.itemset'));
+		$this->item_factory->modify_decay(Globals::CurrentGameF()->config('places.dryout_factor'));
+
 		if (static::$namelist) {
             $list = array();
             $c = count(static::$namelist);
@@ -286,7 +288,8 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 	//Leave location
 	public function can_leave($pid = null, $ignore_zombies = false, $type = Interface_Tickable::IT_TYPE_PLAYER): bool
     {
-        return ($ignore_zombies || ($type === Interface_Tickable::IT_TYPE_PLAYER && Globals::CurrentGameF()->get_player($pid)->can_escape()) || $this->zombie_factory->accumulation() <= 0);
+        if (!($p = Globals::CurrentGameF()->get_player($pid))) return false;
+        return ($ignore_zombies || ($type === Interface_Tickable::IT_TYPE_PLAYER && $p->can_escape()) || $this->zombie_factory->accumulation() <= 0);
 	}
 
     //Enter map

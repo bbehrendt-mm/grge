@@ -104,7 +104,7 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
      * @param $damage
      * @param $kills
      * @param $death
-     * @param $target
+     * @param Model_Combat_Actor $target
      */
     protected function score_kills($damage, $kills, $death, $target): void {
         if ($kills > 0 && $target->get_type() === static::MCA_TYPE_ZOMBIE)

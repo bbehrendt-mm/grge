@@ -15,9 +15,4 @@ abstract class Model_Items_Abstract_Ammo extends Model_Items_Abstract_Stackable 
         }
         $this->count = ceil($this->count * $bonus);
 	}
-	
-	public function take($silent = false): bool
-    {
-        return true;
-	}
 }	

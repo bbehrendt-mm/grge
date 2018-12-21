@@ -7,7 +7,4 @@ class Model_Combat_Zombies_Mutant extends Model_Combat_Zombies_Starver {
     protected static $default_name = 'Untotes Strahlenopfer';
     protected static $default_max_health = 2;
     protected static $default_movement_range = 5;
-
-    protected static $num_str = 1;
-
 }

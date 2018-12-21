@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection ALL */
 
 class Model_Blueprint {
 

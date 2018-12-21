@@ -10,7 +10,6 @@ class Model_Items_Bolts extends Model_Items_Abstract_Ammo implements Interface_A
 	);
 
 	protected static $weight = 0;
-	
-	protected static $autospawn = Array(1,1);
+
 	protected static $autoappender = Array('Stück', 'Stück');
 }	

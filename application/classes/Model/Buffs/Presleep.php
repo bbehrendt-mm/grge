@@ -7,7 +7,7 @@ class Model_Buffs_Presleep extends Model_Buffs_Abstract_Fragile {
 	protected static $icon = 'sleep_pre';
 
     protected static $abortable = true;
-	private $level = 0;
+	private $level;
 
     protected function action_on_complete() {
         new Model_Buffs_Sleep($this->assoc_player, $this->level);

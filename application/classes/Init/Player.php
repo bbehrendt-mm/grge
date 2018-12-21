@@ -33,8 +33,12 @@ class Init_Player {
 		$set->players[$userid] = $set->uin->set($player_obj);
 		
 		//Enter home
-        $set->maps['main']->get_by_fixed_id(2)->enter();
-        $player_obj->location_class($set->maps['main']->get_by_fixed_id(2)->uin());
+        /** @var Model_Map_Abstract $main */
+        $main = $set->maps['main'];
+        /** @var Model_Places_Abstract_Place $home */
+        $home = $main->get_by_fixed_id(2);
+        $home->enter();
+        $player_obj->location_class($home->uin());
 
         $init = Tool_Gamemodes::compile_startup_job($job);
         $init($game->setting_mode(), $level);

@@ -7,7 +7,7 @@ class Model_Buffs_Sleep extends Model_Buffs_Abstract_Buff {
 	protected static $bid = 'sleep_cozy';
 	protected static $icon = 'sleep_cozy';
 	
-	private $level = 0;
+	private $level;
 	
 	public function __construct($player_id, $level) {
 		$this->level = $level;

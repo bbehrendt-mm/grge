@@ -67,7 +67,7 @@ class Controller_Admin_Users extends Controller_Admin_Admin {
 
         foreach ($users as $this_user)
             foreach ($changes as $flag => $change)
-                if ($change <> 0)
+                if ($change !== 0)
                     DB::insert('user_flags', ['user','relation','data'])->values([$this_user, $change > 0 ? 'ALLOW' : 'DENY', $flag])->execute();
 
         return $this->render([

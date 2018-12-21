@@ -9,8 +9,6 @@ class Model_Items_Generic_Egg0 extends Model_Items_Abstract_Easteregg implements
 			'category' => Model_Items_Abstract_Item::MIAI_CAT_EVENT,
 	);
 
-    protected static $value = 0;
-
     public function count() {
         return 0;
     }

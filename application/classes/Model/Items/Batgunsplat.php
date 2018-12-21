@@ -15,7 +15,6 @@ class Model_Items_Batgunsplat extends Model_Combat_Weapons_Ammo implements Inter
 	protected static $damage = [20,50];
 	protected static $range = [0,10];
 	protected static $accuracy = 0.9;
-	protected static $use_fixed_accuracy = true;
 	protected static $aoe = true;
 
 	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SHOT_BAT;

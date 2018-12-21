@@ -4,8 +4,8 @@ class Model_Auth_Token extends Model_Auth_Interface {
 
     protected static $service_name = 'ZV-Token';
 
-    private $name = null;
-    private $avatar = null;
+    private $name;
+    private $avatar;
 
     public function __construct($token) {
         $this->zvid = static::lookup(null, $token);

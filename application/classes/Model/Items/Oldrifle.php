@@ -15,9 +15,7 @@ class Model_Items_Oldrifle extends Model_Combat_Weapons_Ammo implements Interfac
 	protected static $ammo = ['Model_Items_Ammo' => 1];
 	protected static $damage = [5,20];
 	protected static $range = [5,100];
-	protected static $accuracy = 1;
 	protected static $use_fixed_accuracy = false;
-	protected static $aoe = false;
 
 	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SHOT_AMMO;
 

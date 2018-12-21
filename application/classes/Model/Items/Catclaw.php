@@ -4,10 +4,6 @@ class Model_Items_Catclaw extends Model_Combat_Weapon {
 
     protected static $damage = [2,3];
     protected static $range = [0,2];
-    protected static $accuracy = 1;
-    protected static $use_fixed_accuracy = true;
-    protected static $aoe = false;
-    protected static $friendly_fire = false;
 
     protected $neko = false;
 

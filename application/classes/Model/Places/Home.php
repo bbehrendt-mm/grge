@@ -5,7 +5,6 @@ class Model_Places_Home extends Model_Places_Abstract_Hideout {
     protected static $location_name = 'Versteck';
     protected static $description = 'In deinem Versteck bist du vor Zombieangriffen geschützt und kannst dich von deinen Aktionen in der Aussenwelt erholen - zumindest, wenn du dich gut verbarrikadiert hast! Unglücklicherweise kannst du nicht für immer hier sitzen bleiben - das wirst du spätestens dann merken, wenn deine gesammelten Vorräte aufgebraucht sind ...';
     protected static $icon = 'home';
-    protected static $starts_built = false;
 
     public function setup_additional_rooms(): void
     {
@@ -16,15 +15,6 @@ class Model_Places_Home extends Model_Places_Abstract_Hideout {
 
     //Base deco value
     protected static $base_deco_value = -20;
-
-    //Base defense
-    protected static $base_defense = 5;
-
-    //Base: 15% per day
-    protected static $decay_rate = 0.15;
-
-    //Exp: 8% per day
-    protected static $decay_exp = 0.08;
 
     private  $map_points = 0;
 

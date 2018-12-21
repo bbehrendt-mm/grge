@@ -22,7 +22,7 @@ class Model_Euser extends Model_User {
     }
 
     public static function register($name, $avatar) {
-        [$insert_id, $affected_rows] = DB::insert('users', array('name', 'avatar'))->values(array($name, $avatar))->execute();
+        [$insert_id, ] = DB::insert('users', array('name', 'avatar'))->values(array($name, $avatar))->execute();
         return $insert_id;
     }
 

@@ -14,9 +14,6 @@ class Model_Items_Concrete extends Model_Combat_Weapons_Throwable implements Int
 	protected static $damage = [4,10];
 	protected static $range = [0,30];
 	protected static $accuracy = 0.65;
-	protected static $use_fixed_accuracy = true;
-	protected static $aoe = false;
-	protected static $friendly_fire = false;
 	protected static $energy = 2;
 
     /**

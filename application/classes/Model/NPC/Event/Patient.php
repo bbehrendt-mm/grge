@@ -6,8 +6,6 @@ class Model_NPC_Event_Patient extends Model_NPC_Humanoid
     protected static $buffs_place_various = false;
     protected static $death_is_enemy = true;
 
-    protected static $abillities = [];
-
     protected $is_aggresive = false;
     protected $is_passified = false;
 

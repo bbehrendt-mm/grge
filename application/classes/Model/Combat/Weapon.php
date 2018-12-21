@@ -162,7 +162,7 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
      * @param bool $include_in_range
      * @return Model_Combat_Actor
      */
-    public function closest_foe(Model_Combat_Actor $me, $others, $include_in_range = true): Model_Combat_Actor {
+    public function closest_foe(Model_Combat_Actor $me, $others, $include_in_range = true): ?Model_Combat_Actor {
         $a = PHP_INT_MAX;
         $ret = null;
         foreach ($others as $other)

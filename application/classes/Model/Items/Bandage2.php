@@ -1,4 +1,5 @@
-<?php defined('SYSPATH') OR die('No direct access allowed.');
+<?php /** @noinspection ALL */
+defined('SYSPATH') OR die('No direct access allowed.');
 
 class Model_Items_Bandage2 extends Model_Items_Abstract_Item implements Interface_Static {
 

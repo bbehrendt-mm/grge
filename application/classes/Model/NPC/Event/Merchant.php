@@ -6,8 +6,6 @@ class Model_NPC_Event_Merchant extends Model_NPC_Humanoid
     protected static $buffs_metabolism_name = 'Model_Buffs_Event_Fakemetabolism';
     protected static $buffs_place_various = false;
 
-    protected static $abillities = [];
-
     protected static $handle_death = false;
 
     public function __construct($name = null) {

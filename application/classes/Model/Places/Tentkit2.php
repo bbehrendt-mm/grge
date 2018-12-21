@@ -14,9 +14,6 @@ class Model_Places_Tentkit2 extends Model_Places_Tentkit {
     //Base: 15% per day
     protected static $decay_rate = 0.15;
 
-    //Exp: 8% per day
-    protected static $decay_exp = 0;
-
     public function uin($new = null) {
         $t = parent::uin($new);
 

@@ -10,7 +10,7 @@ Options -Indexes
 RewriteEngine On
 
 # Catch media querys
-RewriteCond %{REQUEST_URI} \.(css|js|jpg|bmp|gif|png|ico|webp|eot|svg|ttf|woff)$ [NC]
+RewriteCond %{REQUEST_URI} \.(css|js|map|jpg|bmp|gif|png|ico|webp|eot|svg|ttf|woff)$ [NC]
 RewriteRule (.*) application/assets/index.php/$1 [L]
 
 # Allow any files or directories that exist to be displayed directly

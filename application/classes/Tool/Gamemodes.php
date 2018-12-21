@@ -192,12 +192,12 @@ class Tool_Gamemodes {
         return $ret;
     }
 
-    public static function get_job_by_id($jobid): \Kohana_Config_Group
+    public static function get_job_by_id($jobid): ?string
     {
         return Kohana::$config->load("modes.jobs.$jobid.meta.name");
     }
 
-    public static function get_board_by_id($bid): \Kohana_Config_Group
+    public static function get_board_by_id($bid): ?string
     {
         return Kohana::$config->load("modes.modes.$bid.meta.name");
     }

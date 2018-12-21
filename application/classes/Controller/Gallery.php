@@ -2,8 +2,6 @@
 
 class Controller_Gallery extends Controller {
 
-    protected static $force_ajax = true;
-
     public function japi_rename(): bool
     {
         $id = (int)self::post('id');

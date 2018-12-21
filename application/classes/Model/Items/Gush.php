@@ -14,9 +14,6 @@ class Model_Items_Gush extends Model_Combat_Weapons_Throwable {
 	protected static $damage = [1,3];
 	protected static $range = [0,100];
 	protected static $accuracy = 0.66;
-	protected static $use_fixed_accuracy = true;
-	protected static $aoe = false;
-	protected static $friendly_fire = false;
 	protected static $energy = 0;
 
     protected $int_capacity = 6;

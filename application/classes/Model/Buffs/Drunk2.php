@@ -6,7 +6,5 @@ class Model_Buffs_Drunk2 extends Model_Buffs_Abstract_Fragile {
     protected static $desc = 'Du bist aktuell mit dem Bewältigen deiner alkoholbedingten Gleichgewichtsprobleme beschäftigt.';
     protected static $icon = 'tumble_drunk';
 
-    protected static $abortable = false;
-
     protected function action_on_complete() {}
 }

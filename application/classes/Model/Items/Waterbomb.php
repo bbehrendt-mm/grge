@@ -14,10 +14,7 @@ class Model_Items_Waterbomb extends Model_Combat_Weapons_Throwable implements In
 	protected static $damage = [5,50];
 	protected static $range = [1,18];
 	protected static $accuracy = 0.8;
-	protected static $use_fixed_accuracy = true;
 	protected static $aoe = true;
-	protected static $friendly_fire = false;
-	protected static $energy = 1;
 	
 	public function interaction_fillfrom($id) {
         Globals::PrimaryPlayerF()->log()->add('Diese Wasserbombe ist bereits gefüllt.');

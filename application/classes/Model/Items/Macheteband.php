@@ -14,7 +14,6 @@ class Model_Items_Macheteband extends Model_Combat_Weapons_Close implements Inte
 
     protected static $damage = [5,12];
     protected static $energy = 2;
-    protected static $max_range = 1;
 
 	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SLASH;
 

@@ -10,7 +10,7 @@ class Model_Buffs_Morphine extends Model_Buffs_Abstract_Buff {
 	public function merge($newclass): void
     {
         $this->assoc_player->get_status()->set_cause_of_death('Morphium-Überdosis');
-        $this->assoc_player->get_status()->retrieve('heartbeat')->unbuff();
+        $this->assoc_player->get_status()->retrieveF('heartbeat')->unbuff();
         $this->assoc_player->get_status()->alive(false);
         $this->assoc_player->log()->add('Du spürst, wie deine Muskeln erschlaffen und dein Bewusstsein dich verlässt. Am Ende bleibt dir nichts als Dunkelheit. Herzlichen Glückwunsch, du bist tot.');
 	}

@@ -6,13 +6,13 @@ class Model_Effect {
     private $m_variables = array();
     private $m_translateables = array();
 
-    private $cod = null;
+    private $cod;
 
     private $effects = array();
     private $buffs = array();
     private $custom = array();
 
-    private $parent = null;
+    private $parent;
 
     private static $translation_effects = array(
         Model_Status::MS_STAT_HEALTH => 'status_health',

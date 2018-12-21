@@ -2,11 +2,11 @@
 
 class Globals extends Model {
 
-    private static $current_user = null;
-    private static $current_game = null;
+    private static $current_user;
+    private static $current_game;
 
-    private static $primary_player = null;
-    private static $current_player = null;
+    private static $primary_player;
+    private static $current_player;
 
     /**
      * Resets the currently active user object.

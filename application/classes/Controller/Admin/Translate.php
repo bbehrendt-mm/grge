@@ -45,7 +45,7 @@ class Controller_Admin_Translate extends Controller_Admin_Admin {
 
         $b = true;
         if ($to && $id && trim($tr))
-            $this->add_data('success', $b = (bool)I18n::set_by_id($id, $tr, $to));
+            $this->add_data('success', $b = I18n::set_by_id($id, $tr, $to));
 
         if (!$b) return $this->render();
         else I18n::unlock($id);

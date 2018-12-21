@@ -71,9 +71,12 @@ class Tool_System {
 
         $accum = array();
 
-        $id = $base . '.' . $subject;
-        if (!is_array($base) && isset(self::$cache[$id]))
-            return self::$cache[$base . '.' . $subject];
+        if (!is_array($base)) {
+            $id = $base . '.' . $subject;
+            if (isset(self::$cache[$id]))
+                return self::$cache[$id];
+        }
+
 
         $tree = Array();
         while ($subject !== false) {

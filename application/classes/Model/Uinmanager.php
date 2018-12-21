@@ -2,7 +2,7 @@
 
 class Model_Uinmanager extends Model {
 	
-	private $game_id = null;
+	private $game_id;
 	private $data = Array();
 	private $prefetch = Array();
 	private $cleanup = Array();
@@ -96,7 +96,7 @@ class Model_Uinmanager extends Model {
 		
 		foreach ($set as $obj) {
 			try {
-                $object = unserialize(gzuncompress($obj['data']), ['allowed_classes' => ['Interface_Cloudshard']]);
+                $object = unserialize(gzuncompress($obj['data']), ['allowed_classes' => true]);
                 $this->cache_set($object);
             } catch (Exception $e) {
                 continue;
@@ -135,7 +135,7 @@ class Model_Uinmanager extends Model {
     {
 		if (isset($this->data[$uin])) return $this->passthrough($this->data[$uin]['obj'], $expected_class, $heritage);
 
-		$this->prefetch(Array($uin));
+		$this->prefetch([$uin]);
 		$this->fetch();
 		
 		if (isset($this->data[$uin])) return $this->passthrough($this->data[$uin]['obj'], $expected_class, $heritage);

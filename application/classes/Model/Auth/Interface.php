@@ -7,7 +7,7 @@ abstract class Model_Auth_Interface {
     protected $ready = false;
     protected $rid = -1;
     protected $zvid = -1;
-    protected $last_error = null;
+    protected $last_error;
 
     abstract public function connectToLocal($target_id = null): bool;
     abstract public function getRemoteName();
@@ -38,9 +38,8 @@ abstract class Model_Auth_Interface {
      * @param int $id ZV User ID
      * @return bool True, if the account method is connected
      */
-    public static function user_is_connected($id): bool
-    {
-        return DB::select(array(DB::expr('COUNT(*)'), 'num'))->from('profiles_xref')->where('provider','=', static::class)->where('zvid','=',$id)->execute()->get('num',0) === 1;
+    public static function user_is_connected($id): bool {
+        return DB::select(array(DB::expr('COUNT(*)'), 'num'))->from('profiles_xref')->where('provider','=', static::class)->where('zvid','=',$id)->execute()->get('num',0) === '1';
     }
 
     /**

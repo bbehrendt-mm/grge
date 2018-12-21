@@ -13,7 +13,7 @@ class Model_Player extends Model_NPC_Nano {
 	private $job;
 	private $level;
 
-    private $points = null;
+    private $points;
     private $braincoins = 0;
 	
 	private $achievements;

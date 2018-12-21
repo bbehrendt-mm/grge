@@ -23,6 +23,7 @@ class Model_Items_Virtual_Location_Greenhouse extends Model_Items_Abstract_Virtu
 
                         $tox = 0;
                         foreach ($water as $item) {
+                            /** @var Model_Items_Abstract_Liquid $item */
                             $tox += $item->toxicity();
                             $item->consume();
                         }

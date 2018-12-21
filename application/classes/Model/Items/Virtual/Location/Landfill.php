@@ -3,7 +3,6 @@
 class Model_Items_Virtual_Location_Landfill extends Model_Items_Abstract_Virtual {
 
     protected static $graceful_fail = true;
-    private $spawn_twinoid = false;
 
     protected static $default_action_uses = array(
         'count' => PHP_INT_MAX,
@@ -12,12 +11,15 @@ class Model_Items_Virtual_Location_Landfill extends Model_Items_Abstract_Virtual
     );
 
     protected function hid(): Model_Hid {
-        $tar = floor(Globals::CurrentPlayerF()->location()->splinters()/10);
+        $loc = Globals::CurrentPlayerF()->location();
+        /** @var $loc Model_Places_Junkyard */
+        $tar = floor($loc->splinters()/10);
         return parent::hid()->add_action('Splitter zählen', Model_Action::factory()
             ->buttonskin('location')
-            ->effect(Model_Effect::factory()->custom(function($p) {
-                    /** @var Model_Player $p */
-                    $p->log()->add(new Model_Log_Types_String(null,'Hier lagern momentan :num Eimer voller Splitter, aus denen du :num2 Splitterkugeln formen könntest.', array(':num' => $p->location()->splinters(), ':num2' => floor($p->location()->splinters()/10))));
+            ->effect(Model_Effect::factory()->custom(function(Model_Player $p) {
+                    $location = Globals::CurrentPlayerF()->location();
+                    /** @var $location Model_Places_Junkyard */
+                    $p->log()->add(new Model_Log_Types_String(null,'Hier lagern momentan :num Eimer voller Splitter, aus denen du :num2 Splitterkugeln formen könntest.', array(':num' => $location->splinters(), ':num2' => floor($location->splinters()/10))));
                 }))
             ,'count')
             ->add_action('Schredder verwenden', Model_Action::factory()
@@ -38,7 +40,9 @@ class Model_Items_Virtual_Location_Landfill extends Model_Items_Abstract_Virtual
                         $g = 0;
                         foreach ($p->location()->inventory()->get() as $item) if (!$item->is_essential())
                         {
-                            $p->location()->splinters($item->weight());
+                            $location = $p->location();
+                            /** @var $location Model_Places_Junkyard */
+                            $location->splinters($item->weight());
                             $g += $item->weight();
                             $item->grind();
                         }
@@ -55,17 +59,19 @@ class Model_Items_Virtual_Location_Landfill extends Model_Items_Abstract_Virtual
                 ->buttonskin('location')
                 ->description('Aus 10 Eimern mit Splittern kannst du eine Splitterkugel pressen, die du als Munition verwenden kannst.')
                 ->requirement(Model_Status::MS_STAT_ENERGY, 50)
-                ->condition(function($p) {
-                    /** @var Model_Player $p */
-                    return ($p->location()->splinters() > 10);
+                ->condition(function(Interface_Plentity $p) {
+                    $location = $p->location();
+                    /** @var $location Model_Places_Junkyard */
+                    return ($location->splinters() > 10);
                 })
                 ->fail_message('Du brauchst mehr Splitter, um eine solide Splitterkugel zu bauen.')
                 ->effect(Model_Effect::factory()
                     ->spawn(new Model_Items_Splinter($tar))
                     ->message('Du setzt deine ganze Kraft ein, um die Splitter in der Presse bestmöglich zu komprimieren. Als Belohnung für deine Leistung hälst du nun :num neue Splitterkugeln in der Hand.', array(':num' => $tar))
-                    ->custom(function($p) {
-                        /** @var Model_Player $p */
-                        $p->location()->splinters(floor($p->location()->splinters()/10) * -10);
+                    ->custom(function(Interface_Plentity $p) {
+                        $location = $p->location();
+                        /** @var $location Model_Places_Junkyard */
+                        $location->splinters(floor($location->splinters()/10) * -10);
                         return true;
                     })
                 )

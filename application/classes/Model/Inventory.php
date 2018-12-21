@@ -3,11 +3,11 @@
 class Model_Inventory extends Model {
 	
 	private $data = array();
-	private $limit = NULL;
-	private $t_limit = NULL;
-	private $current = NULL;
-    private $current_full = NULL;
-    private $carrier_inventory = null;
+	private $limit;
+	private $t_limit;
+	private $current;
+    private $current_full;
+    private $carrier_inventory;
 
 	//Create inventory, set weight limit
 	public function __construct($weight_limit = NULL, $carrier = false) {
@@ -133,7 +133,7 @@ class Model_Inventory extends Model {
 			{
 				if ($item_class === NULL && Tool_System::instance_of($item, Model_Items_Abstract_Virtual::cls()))
                     continue;
-                if (($item instanceof $item_class) || $item_class === NULL || in_array($item_class, class_implements($item), true))
+                if ($item_class === NULL || ($item instanceof $item_class) || in_array($item_class, class_implements($item), true))
                     $ret[] = $item;
 			} else $this->remove($uin);
 		}

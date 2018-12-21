@@ -13,7 +13,4 @@ class Model_Combat_Zombies_Ghulcat extends Model_Combat_Zombies_Ghul {
     protected static $default_stat_resistance = 5;
     protected static $default_stat_accuracy = 12;
     protected static $movement_range = 12;
-
-    protected static $num_str = 100;
-
 }

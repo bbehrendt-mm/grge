@@ -187,7 +187,9 @@ return Model_Blueprints::factory()
     ->pop_stack()
 
     // ++ STACK -> All blueprints below need the basic workbench and benefit from suspender upgrade
-    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires_room('workshop')->category('Werkbank')->add_modifier(Model_Blueprint::BP_MOD_ENERGY, function($pl,$pre,$e,$room) {/** @var Model_Player $pl */
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires_room('workshop')->category('Werkbank')->add_modifier(Model_Blueprint::BP_MOD_ENERGY, function($pl,
+        /** @noinspection PhpUnusedParameterInspection */
+        $pre,$e,$room) {/** @var Model_Player $pl */
         /** @var Model_Player $pl */
         /** @var Model_Room $room */
         $mod = 1;

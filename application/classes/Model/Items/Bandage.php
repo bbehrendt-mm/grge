@@ -36,7 +36,8 @@ class Model_Items_Bandage extends Model_Items_Abstract_Item implements Interface
                 Model_Action::factory()
                     ->allow_remote(false)
                     ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
-                    ->condition(function($p, $s) {
+                    ->condition(function(/** @noinspection PhpUnusedParameterInspection */
+                        $p, $s) {
                         /** @var Model_Player $s */
                         return $s->get_status()->get(Model_Status::MS_STAT_HEALTH) <= 50 || $s->get_status()->retrieve('blood');
                     })

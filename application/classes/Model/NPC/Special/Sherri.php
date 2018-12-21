@@ -3,8 +3,6 @@
 class Model_NPC_Special_Sherri extends Model_NPC_Mouse
 {
     protected static $movement_scaling = 0.1;
-    protected static $alcohol_scaling = 100;
-    protected static $inventory_size = 1;
     protected static $comfort_threshold = 90;
 
     public function __construct() {

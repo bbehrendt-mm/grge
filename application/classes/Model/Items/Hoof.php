@@ -5,9 +5,7 @@ class Model_Items_Hoof extends Model_Combat_Weapon {
     protected static $damage = [4,10];
     protected static $range = [0,2];
     protected static $accuracy = 0.9;
-    protected static $use_fixed_accuracy = true;
     protected static $aoe = true;
-    protected static $friendly_fire = false;
 
     protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_PUNCH;
 

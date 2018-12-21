@@ -9,7 +9,6 @@ class Model_NPC_Event_Rudolph extends Model_NPC_Animal
 
     protected static $escort_functions = [Interface_Plentity::IC_ALLOW_ANY];
 
-    protected static $movement_scaling = 1;
     protected static $alcohol_scaling = 0.33333;
     protected static $inventory_size = 250;
     protected static $comfort_threshold = 55;
@@ -125,10 +124,6 @@ class Model_NPC_Event_Rudolph extends Model_NPC_Animal
     public function dispense_light(): bool
     {
         return $this->is_drunk() && !$this->get_status()->retrieve('fragile') && $this->light;
-    }
-
-    protected function generate_zombified_body() {
-        return null;
     }
 
     public function is_fighter() {

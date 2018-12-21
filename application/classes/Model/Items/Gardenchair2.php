@@ -14,7 +14,6 @@ class Model_Items_Gardenchair2 extends Model_Items_Abstract_Chair implements Int
 
 	protected static $damage = [3,6];
 	protected static $energy = 6;
-	protected static $max_range = 1;
 
 	protected static $durabillity = 0.7;
 

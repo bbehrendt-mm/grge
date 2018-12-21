@@ -14,8 +14,7 @@ class Model_Items_Fruit extends Model_Items_Abstract_Stackable {
     protected static $autospawn = Array(0,0);
     protected static $autoappender = Array('Portion', 'Portionen');
 
-
-    private $effects = array();
+    private $effects;
 
     /**
      * @param array $effects

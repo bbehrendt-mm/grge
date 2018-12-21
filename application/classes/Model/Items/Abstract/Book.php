@@ -6,7 +6,7 @@ abstract class Model_Items_Abstract_Book extends Model_Items_Abstract_Item {
     protected $uses = array();
     protected $pages = 0;
     protected static $reading_speed = 1;
-    protected static $pagerange = null;
+    protected static $pagerange;
 
 	protected static $cat = Model_Items_Abstract_Item::MIAI_CAT_LITERATURE;
 

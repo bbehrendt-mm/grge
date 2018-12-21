@@ -9,7 +9,6 @@ class Model_Items_Twinoid extends Model_Items_Abstract_Pillbox {
 			'category' => Model_Items_Abstract_Item::MIAI_CAT_DRUG,
 	);
 
-    protected static $autospawn = Array(1,1);
     protected static $take_msg = 'Direkt nachdem du die Twinoid schluckst fühlst du dich wieder besser!';
     protected static $singular_name = 'Twinoid';
     protected static $pill_effects = Array(

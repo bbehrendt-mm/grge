@@ -5,7 +5,7 @@ class Model_Struct_Item extends Model {
     private $name;
     private $icon;
     private $count;
-    private $variant = null;
+    private $variant;
 
     /**
      * @param Model_Items_Abstract_Item $item

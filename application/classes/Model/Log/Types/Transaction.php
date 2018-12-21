@@ -44,7 +44,7 @@ class Model_Log_Types_Transaction extends Model_Log_Message {
             ];
         unset($item);
 
-        $data['player'] = Globals::CurrentGameF()->get_player($data['uin'])->name();
+        $data['player'] = Globals::CurrentGameF()->get_player_name($data['uin']);
         $data['self'] = $data['uin'] === Globals::PrimaryPlayerF()->id();
         $data['action'] = __($data['action']);
         unset($data['uin']);

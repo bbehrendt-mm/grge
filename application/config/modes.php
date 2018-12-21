@@ -1,4 +1,5 @@
-<?php defined('SYSPATH') or die('No direct access allowed.');
+<?php /** @noinspection ALL */
+defined('SYSPATH') or die('No direct access allowed.');
 
 return array(
     'modes' => array(

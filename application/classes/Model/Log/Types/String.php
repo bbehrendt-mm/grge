@@ -4,7 +4,7 @@ class Model_Log_Types_String extends Model_Log_Message {
 
 	protected static $type = Model_Log_Message::MLM_PRERENDERED_STRING;
 
-	private $var = Array();
+	private $var;
 
     /**
      * Creates a simple text message

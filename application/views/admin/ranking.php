@@ -22,7 +22,7 @@
                 </div>
 
                 <?php foreach ($errors as $season => $count) { ?>
-                    <div class="row <?=$count == 0 ? '' : 'bg-red'?>">
+                    <div class="row <?=$count === 0 ? '' : 'bg-red'?>">
                         <div class="cell padded rw-5">Season <?=$season?></div>
                         <div class="cell padded rw-3"><?=$count?></div>
                         <div class="cell padded rw-4">

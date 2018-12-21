@@ -9,9 +9,7 @@ class Model_Items_Augments_CClass1 extends Model_Items_Augments_Augment {
         'category' => Model_Items_Abstract_Item::MIAI_CAT_GEAR,
     );
 
-    protected static $num_aug_plus = 1;
     protected static $num_aug_minus = 1;
-    protected static $num_aug_sum_plus = 5;
     protected static $num_aug_sum_minus = 2;
 
 }	

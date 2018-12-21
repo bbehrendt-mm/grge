@@ -24,12 +24,8 @@
 
         this.pretick = pretick_action;
 
-        var alias = this;
-        this.tick_function = function() {
-            Object.keys(alias.timelines).forEach(function(key) {
-                console.log(key, obj[key]);
-            });
-        }
+        if (pretick_action) createjs.Ticker.addEventListener("tick", this.pretick);
+        createjs.Ticker.addEventListener("tick", this.stage);
 
         createjs.Ticker.framerate = fps;
     };
@@ -42,7 +38,9 @@
     };
 
     CanvasAnimationModule.prototype.end = function() {
-        createjs.Ticker.removeAllEventListeners("tick");
+        //createjs.Ticker.removeAllEventListeners("tick");
+        createjs.Ticker.removeEventListener("tick", this.pretick);
+        createjs.Ticker.removeEventListener("tick", this.stage);
     };
 
     CanvasAnimationModule.prototype.on = function(event, f) {

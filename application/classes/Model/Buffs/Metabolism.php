@@ -119,11 +119,9 @@ class Model_Buffs_Metabolism extends Model_Buffs_Abstract_Buff {
 	
 	private function statchange_health(): void
     {
-		$energy = $this->assoc_player->get_status()->get(Model_Status::MS_STAT_ENERGY);
 		$health = $this->assoc_player->get_status()->get(Model_Status::MS_STAT_HEALTH);
 		$hunger = $this->assoc_player->get_status()->get(Model_Status::MS_STAT_HUNGER);
 		$thirst = $this->assoc_player->get_status()->get(Model_Status::MS_STAT_THIRST);
-		$sleepy = $this->assoc_player->get_status()->get(Model_Status::MS_STAT_SLEEPY);
 		
 		$ndif = 1;
 		if		($thirst > 90)	$ndif += 0.003;

@@ -347,9 +347,9 @@ class Model_Combat_Actor extends Named {
 
     /**
      * @param null|int $new
-     * @return Model_Combat_Actor
+     * @return Model_Combat_Actor|int
      */
-    public function count($new = null): Model_Combat_Actor {
+    public function count($new = null) {
         if ($new === null) return $this->c_count;
         else $this->c_count = $new;
         return $this;

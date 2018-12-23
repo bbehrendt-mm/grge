@@ -20,14 +20,24 @@ class Model_Log_Types_Battle extends Model_Log_Message {
 
         else unset($data['bdy']);
 
-        foreach ($data['sum'] as &$group)
+        foreach ($data['sum'] as &$group) {
             foreach ($group as &$entry) {
-                if (!$entry['unique']) $entry['name'] = __($entry['name']);
-                foreach ($entry['injuries'] as &$inj) $inj[1] = _($inj[1]);
-                unset($inj);
-                foreach ($entry['damaged_items'] as &$itm) $itm[1] = _($itm[1]);
+                if (isset($entry['name']) && !empty($entry['unique']))
+                    $entry['name'] = __($entry['name']);
+
+                if (isset($entry['injuries'])) {
+                    foreach ($entry['injuries'] as &$inj) $inj[1] = _($inj[1]);
+                    unset($inj);
+                }
+
+                if (isset($entry['damaged_items'])) {
+                    foreach ($entry['damaged_items'] as &$itm) $itm[1] = _($itm[1]);
+                    unset($itm);
+                }
             }
-        unset($group,$entry,$itm);
+            unset($group,$entry);
+        }
+
 
         $data['gallery'] = ($gid = Model_Combat_Handler::in_gallery($data['bid'], Globals::PrimaryPlayerF()->id())) ? [
             'id' => $gid,

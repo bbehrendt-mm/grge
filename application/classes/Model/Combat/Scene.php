@@ -65,8 +65,8 @@ class Model_Combat_Scene {
                     $tmp[$groups[$atk]][$atk]['dmg_dealt'] += $damage;
                     foreach ($ammo as $a) {
                         if (is_array($a)) {
-                            $tmp = $a;
-                            [$a,$c] = $tmp;
+                            $cpy = $a;
+                            [$a,$c] = $cpy;
                         } else $c = 1;
 
                         switch ($a) {

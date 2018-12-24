@@ -20,7 +20,7 @@ class View extends Kohana_View {
                 $buffer = preg_replace($pattern, Minifier::minify($script[2]), $buffer, 1);
 
             // Compress HTML
-            $buffer = preg_replace(['/\>[^\S ]+/s','/[^\S ]+\</s','/(\s)+/su'], ['>','<','\\1'], $buffer);
+            $buffer = preg_replace(['/\>[^\S ]+/su','/[^\S ]+\</su','/(\s)+/su'], ['>','<','\\1'], $buffer);
         }
 
         $compression[1] += strlen($buffer);

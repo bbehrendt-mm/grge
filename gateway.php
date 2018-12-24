@@ -93,7 +93,7 @@
         if (!$maintenance && !$gateway_control) return 0;
         else foreach (apache_request_headers() as $header => $value) {
             if (strtolower($header) == 'x-requested-with' && strtolower($value) == 'xmlhttprequest') {
-                header('Content-Type: application/json');
+                header('Content-Type: application/json; charset=utf-8');
                 echo json_encode([
                     'error' => [
                         'code' => 'GRGE-0002-0004',

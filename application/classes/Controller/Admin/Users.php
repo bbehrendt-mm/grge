@@ -14,6 +14,7 @@ class Controller_Admin_Users extends Controller_Admin_Admin {
         $this->add_widget(View::factory('admin/users')
             ->set('permissions',['ROOT','TRANSLATE','TRANSLATE_MOD','USERLIST','GAMELIST','WHITELIST','CHEAT','RANKING','WIKI','LOGVIEW'])
             ->set('achievements', $ach)
+            //->set('achievements', [1 => 'a', 2 => "Gnadenstoß "])
             ->render());
 
         $this->render();

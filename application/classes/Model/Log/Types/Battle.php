@@ -35,9 +35,9 @@ class Model_Log_Types_Battle extends Model_Log_Message {
                     unset($itm);
                 }
             }
-            unset($group,$entry);
+            unset($entry);
         }
-
+        unset($group);
 
         $data['gallery'] = ($gid = Model_Combat_Handler::in_gallery($data['bid'], Globals::PrimaryPlayerF()->id())) ? [
             'id' => $gid,

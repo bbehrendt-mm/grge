@@ -303,7 +303,7 @@ abstract class Controller extends Kohana_Controller {
     protected function render($obj = null, $skip_notifications = false): bool {
         if ($this->is_silent()) return true;
 
-        $this->response->headers('Content-Type', 'application/json');
+        $this->response->headers('Content-Type', 'application/json; charset=utf-8');
 
         // Invoke render_defaults() or add_data() depending on the object parameter
         if ($obj === null) {
@@ -376,7 +376,7 @@ abstract class Controller extends Kohana_Controller {
      * @return bool Always returns false
      */
     protected function error($c, $additional_data = null): bool {
-        $this->response->headers('Content-Type', 'application/json');
+        $this->response->headers('Content-Type', 'application/json; charset=utf-8');
         $tmp = array('error' => array(
             'code' => $c,
             'name' => GRGEError::r($c),

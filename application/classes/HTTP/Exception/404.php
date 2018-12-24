@@ -18,7 +18,7 @@ class HTTP_Exception_404 extends Kohana_HTTP_Exception_404 {
 
         if ($this->_request->headers('X-Requested-With') === 'XMLHttpRequest') {
 
-            $response->headers('Content-Type', 'application/json');
+            $response->headers('Content-Type', 'application/json; charset=utf-8');
 
             if ($this->_request->action() === 'japi')
                 $response->body(json_encode(['error' => array(

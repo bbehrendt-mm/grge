@@ -10,16 +10,16 @@ class Model_Items_Chem extends Model_Items_Abstract_Item implements Interface_St
 	);
 	
 	protected static $instances_info = Array(
-			Array(	'name' => 'Farbige Substanz (Milosat)',			'icon' => 'chem/chem1'),
+			Array(	'name' => 'Farbige Substanz (Milosat)',		'icon' => 'chem/chem1'),
 			Array(	'name' => 'Farbige Substanz (Karmigol)',		'icon' => 'chem/chem2'),
 			Array(	'name' => 'Farbige Substanz (Neotrigin)',		'icon' => 'chem/chem3'),
 			Array(	'name' => 'Farbige Substanz (Limosuptin)',		'icon' => 'chem/chem4'),
-			Array(	'name' => 'Farbige Substanz (Gatonoptium)',		'icon' => 'chem/chem5'),
+			Array(	'name' => 'Farbige Substanz (Gatonoptium)',	'icon' => 'chem/chem5'),
 			Array(	'name' => 'Farbige Substanz (Betakosimtat)',	'icon' => 'chem/chem6'),
 
             Array(	'name' => 'Seltsame Substanz (Milodrin)',		'icon' => 'chem/chem1s'),
             Array(	'name' => 'Seltsame Substanz (Karmitain)',		'icon' => 'chem/chem2s'),
-            Array(	'name' => 'Seltsame Substanz (Neotrigmat)',		'icon' => 'chem/chem3s'),
+            Array(	'name' => 'Seltsame Substanz (Neotrigmat)',	'icon' => 'chem/chem3s'),
             Array(	'name' => 'Seltsame Substanz (Limosuritat)',	'icon' => 'chem/chem4s'),
             Array(	'name' => 'Seltsame Substanz (Gatonoptigin)',	'icon' => 'chem/chem5s'),
             Array(	'name' => 'Seltsame Substanz (Betakosidatin)',	'icon' => 'chem/chem6s'),

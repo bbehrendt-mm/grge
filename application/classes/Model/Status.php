@@ -13,16 +13,19 @@ class Model_Status {
     public const MS_STAT_FREEZE = 9;
 
     public const MS_STATUS_COUNT = 9;
+
     public const MS_THRESHOLD = 512;
 
-    public const MS_CHAR_DISTANCING = 512;
-    public const MS_CHAR_EVASIVENESS = 513;
-    public const MS_CHAR_ACCURACY = 514;
-    public const MS_CHAR_DAMAGE_RESISTANCE = 515;
-    public const MS_CHAR_BULKYNESS = 516;
-    public const MS_CHAR_DAMAGE_MULTIPLIER = 517;
+    public const MS_CHAR_DISTANCING         = 512;
+    public const MS_CHAR_EVASIVENESS        = 513;
+    public const MS_CHAR_ACCURACY           = 514;
+    public const MS_CHAR_DAMAGE_RESISTANCE  = 515;
+    public const MS_CHAR_BULKYNESS          = 516;
+    public const MS_CHAR_DAMAGE_MULTIPLIER  = 517;
     public const MS_CHAR_LOCATION_SPAWNRATE = 518;
-    public const MS_CHAR_ITEM_SPAWNRATE = 519;
+    public const MS_CHAR_ITEM_SPAWNRATE     = 519;
+
+    public const MS_CHAR_COUNT = 8;
 
     public const MS_EFFECT_GENERIC = 0;
     public const MS_EFFECT_ITEM = 1;
@@ -83,9 +86,9 @@ class Model_Status {
     /**
      * Returns a specific status value; if this value has not been set, returns 0
      * @param int $stat
-     * @return int
+     * @return float
      */
-    public function get($stat): int {
+    public function get($stat): float {
         if (!isset($this->status_bars[$stat])) return ($stat >= self::MS_THRESHOLD) ? $this->get_fixed_threshold($stat) : 0;
         elseif ($stat >= self::MS_THRESHOLD)
             return max(0,1 + $this->buffs_by_stat($stat));
@@ -148,9 +151,9 @@ class Model_Status {
      * Returns the scaling factor for a given stat
      * @param int $stat Status
      * @param int $type Effect Type
-     * @return number
+     * @return float
      */
-    public function scaling($stat, $type) {
+    public function scaling($stat, $type): float {
         if ($type === static::MS_EFFECT_UNSCALE || $stat >= self::MS_THRESHOLD || !isset($this->scaling_effects[$stat]))
             return 1;
 
@@ -216,8 +219,7 @@ class Model_Status {
      * @param int $type
      * @throws Exception When $args is wrong format
      */
-    public function modify($args, $type = Model_Status::MS_EFFECT_UNSCALE): void
-    {
+    public function modify($args, $type = Model_Status::MS_EFFECT_UNSCALE): void {
         if (!is_array($args)) {
             $args = func_get_args();
             $type = (count($args) % 2) ? array_splice($args, -1, 1)[0] : static::MS_EFFECT_UNSCALE;
@@ -245,8 +247,7 @@ class Model_Status {
     /**
      * Rebuilds all buffs
      */
-    private function rebuild_buffs(): void
-    {
+    private function rebuild_buffs(): void {
         /**
          * @var $buff Model_Buffs_Abstract_Buff
          */
@@ -254,22 +255,18 @@ class Model_Status {
             $buff->rebuild();
     }
 
-    public function rebuild(): void
-    {
+    public function rebuild(): void {
         $this->rebuild_buffs();
     }
 
-    public function tick(): void
-    {
+    public function tick(): void {
         $tmp = [];
         foreach (array_keys($this->status_bars) as $stat) {
             $tmp[] = $stat;
             $tmp[] = $this->buffs_by_stat($stat);
         }
 
-
         $this->modify($tmp, static::MS_EFFECT_BUFF);
-
         foreach ($this->buffs as $buff) $buff->tick();
     }
 
@@ -353,9 +350,9 @@ class Model_Status {
     /**
      * Return status effects one one specific stat caused by buffs
      * @param int $stat
-     * @return int
+     * @return float
      */
-    final public function buffs_by_stat($stat): int
+    final public function buffs_by_stat($stat): float
     {
         /**
          * @var $buff Model_Buffs_Abstract_Buff

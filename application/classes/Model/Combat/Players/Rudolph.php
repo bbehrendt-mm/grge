@@ -13,8 +13,9 @@ class Model_Combat_Players_Rudolph extends Model_Combat_Players_Player {
     protected $avatar;
 
     protected static $taunts = [
-        'drunk' => ['... hihihiiii *hicks*', 'Aussm ... Weeeeeeg! *hicks*', '*hicks* Lalalaaaaaa' ],
-        'begin' => ['Euch mach ich fertig!', 'Jetzt gibt\'s aufs Maul!']
+        'drunk' =>   ['... hihihiiii *hicks*', 'Aussm ... Weeeeeeg! *hicks*', '*hicks* Lalalaaaaaa' ],
+        'berserk' => ['WEIHNACHTEN, IHR MOTHERFUCKER!!!'],
+        'begin' =>   ['Euch mach ich fertig!', 'Jetzt gibt\'s aufs Maul!']
     ];
 
     protected static $show_weapon_switch = false;
@@ -39,8 +40,7 @@ class Model_Combat_Players_Rudolph extends Model_Combat_Players_Player {
         $ret->add_weapon(new Model_Items_Hoof());
         $ret->avatar = $avatar;
 
-        if ($p->get_status()->get(Model_Status::MS_STAT_DRUNK) > 25) $ret->add_modifier(
-            'drunk', ($p->get_status()->get(Model_Status::MS_STAT_DRUNK)-25)*(4/300));
+        $ret->transfer_stats($p);
 
         return $ret;
     }

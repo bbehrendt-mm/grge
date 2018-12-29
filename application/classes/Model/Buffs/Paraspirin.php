@@ -7,7 +7,7 @@ class Model_Buffs_Paraspirin extends Model_Buffs_Abstract_Buff {
 	protected static $desc = 'Du hast Paraspirin geschluckt, und bist damit endlich deine quälenden Kopfschmerzen los. Allerdings solltest du von Alkohol jetzt erst einmal etwas Abstand nehmen...';
 	protected static $bid = 'paraspirine';
     
-	public function merge($newclass): void
+	public function merge(Model_Buffs_Abstract_Buff $newclass): void
     {
         $this->lifetime += $newclass->lifetime();
         Tool_Numerics::bounds($this->lifetime, 0, 144);

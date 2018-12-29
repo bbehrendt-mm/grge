@@ -9,8 +9,9 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
     protected static $escape = true;
 
     protected static $taunts = [
-        'drunk' => ['*hicks*'],
-        'begin' => ['Ihr kriegt mich nicht!','Nicht heute!','Verflucht!','ZOMBIES!']
+        'drunk'   => ['*hicks*'],
+        'berserk' => ['AAAAAAAAAAAARGH!!!!!!!!!'],
+        'begin'   => ['Ihr kriegt mich nicht!','Nicht heute!','Verflucht!','ZOMBIES!']
     ];
 
     /**
@@ -21,6 +22,19 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
         if ($p === null) return $this->player;
         else $this->player = $p;
         return $this;
+    }
+
+    /**
+     * @param Interface_Plentity $p
+     */
+    public function transfer_stats(Interface_Plentity $p) : void {
+        $this->escape_modifier = $p->get_status()->get(Model_Status::MS_CHAR_EVASIVENESS);
+
+        if ($p->get_status()->get(Model_Status::MS_STAT_DRUNK) > 25) $this->add_modifier(
+            'drunk', ($p->get_status()->get(Model_Status::MS_STAT_DRUNK)-25)*(4/300));
+
+        if ($p->get_status()->retrieve('spray2')) $this->add_modifier(
+            'berserk', 0.75);
     }
 
     /**
@@ -41,7 +55,6 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
             ->player($p)
             ->name($p->name(), Model_Combat_Actor::MCA_TYPE_PLAYER)
             ->strength($p->get_status()->get(Model_Status::MS_STAT_HEALTH), 100, 1)
-            ->register_inventory($p->inventory())
             ->add_weapon($unarmed);
 
         $ai = $p->ai();
@@ -58,10 +71,9 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
         [$ret->stat_initiative, $ret->stat_damage, $ret->stat_resistance, $ret->stat_accuracy
             ]
             = $p->battle_stats();
-        $ret->escape_modifier = $p->get_status()->get(Model_Status::MS_CHAR_EVASIVENESS);
 
-        if ($p->get_status()->get(Model_Status::MS_STAT_DRUNK) > 25) $ret->add_modifier(
-            'drunk', ($p->get_status()->get(Model_Status::MS_STAT_DRUNK)-25)*(4/300));
+        $ret->transfer_stats($p);
+        $ret->register_inventory($p->inventory());
 
         return $ret;
     }
@@ -101,12 +113,16 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
     }
 
     /**
-     * @param $damage
-     * @param $kills
-     * @param $death
+     * @param                    $damage
+     * @param                    $kills
+     * @param                    $death
      * @param Model_Combat_Actor $target
+     *
+     * @throws Exception
      */
     protected function score_kills($damage, $kills, $death, $target): void {
+        if (Tool_Scripts::is_npc($this->player)) return;
+
         if ($kills > 0 && $target->get_type() === static::MCA_TYPE_ZOMBIE)
             $this->player->achievements()->achieve(Model_Achievement::MA_KILLED_ZOMBIES, $kills);
 

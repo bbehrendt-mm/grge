@@ -14,8 +14,9 @@ class Model_Combat_Players_Cat extends Model_Combat_Players_Player {
     protected $avatar;
 
     protected static $taunts = [
-        'drunk' => ['Miiiiii.... *hicks*'],
-        'begin' => ['MIAU!','*zisch*']
+        'drunk' =>   ['Miiiiii.... *hicks*'],
+        'berserk' => ['*zisch*'],
+        'begin' =>   ['MIAU!','*zisch*']
     ];
 
     /**
@@ -37,8 +38,7 @@ class Model_Combat_Players_Cat extends Model_Combat_Players_Player {
         /** @var $ret Model_Combat_Players_Cat */
         $ret->avatar = $avatar;
 
-        if ($p->get_status()->get(Model_Status::MS_STAT_DRUNK) > 25) $ret->add_modifier(
-            'drunk', ($p->get_status()->get(Model_Status::MS_STAT_DRUNK)-25)*(4/300));
+        $ret->transfer_stats($p);
 
         return $ret;
     }

@@ -26,7 +26,7 @@ class Model_Buffs_Poison extends Model_Buffs_Abstract_Buff {
         parent::__construct($association, 2);
     }
 
-	public function merge($newclass): void
+	public function merge(Model_Buffs_Abstract_Buff $newclass): void
     {
 		$this->lifetime += $newclass->lifetime();
         $this->lifetime = min(24, $this->lifetime);

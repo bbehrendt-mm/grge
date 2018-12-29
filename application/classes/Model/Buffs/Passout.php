@@ -26,7 +26,7 @@ class Model_Buffs_Passout extends Model_Buffs_Abstract_Buff {
         return false;
 	}
 	
-	public function merge($newclass): void
+	public function merge(Model_Buffs_Abstract_Buff $newclass): void
     {
 		$this->count++;
 	}

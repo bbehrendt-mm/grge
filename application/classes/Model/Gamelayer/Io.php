@@ -367,7 +367,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
      * @return Model_Player|Interface_Plentity|null
      * @throws Exception
      */
-    public function get_player($pid = NULL): ?Model_Player {
+    public function get_player($pid = NULL): ?Interface_Plentity {
     	if ($pid === NULL) {
             if (Globals::hasCurrentUser()) $pid = Globals::CurrentUserF()->uid();
             else return null;

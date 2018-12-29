@@ -4594,24 +4594,64 @@ core = {
             case 7: return 'rad';
             case 8: return 'zmb';
             case 9: return 'freeze';
+
+            case 512: return 'char_mv';
+            case 513: return 'char_eva';
+            case 514: return 'char_acc';
+            case 515: return 'char_def';
+            case 516: return 'char_bulk';
+            case 517: return 'char_atk';
+            case 518: return 'char_find_loc';
+            case 519: return 'char_find_item';
+            
             default: return 'unknown';
         }
     };
 
+    var num_decode_states = function(n) {
+        switch (n) {
+            case 1:
+            case 2:
+            case 3:
+            case 5:
+                return 5;
+            case 4:
+                return 4;
+            default: return 1;
+        }
+    };
+
+    var num_decode_char = function(n) {
+        return n >= 512;
+    };
+
+    var num_decode_icon_name = function(n,v) {
+        var icon_name_base = 'media/icons/bars/' + num_decode_str(n);
+        var icons = num_decode_states(n);
+
+        if (icons <= 1 || num_decode_char(n)) icon_name_base += '.gif';
+        else {
+            var n = Math.min(Math.floor( v / (100 / icons)) + 1, icons);
+            icon_name_base += ('-' + n + '.gif');
+        }
+
+        return icon_name_base;
+    }
+
     var num_decode_inverse = function(n) {
         switch (n) {
-            case 1: return false;
-            case 2: return false;
-            case 3: return false;
-            case 4: return false;
-            case 5: return false;
             case 6: return true;
             case 7: return true;
             case 8: return true;
             case 9: return true;
+
+            case 512: return true;
+
             default: return false;
         }
     };
+
+
 
     var num_decode_color = function(n) {
         switch (n) {
@@ -4639,6 +4679,16 @@ core = {
             case 7: return "Verstrahlung";
             case 8: return "Zombie-Infektion";
             case 9: return "Eisige K\u00e4lte";
+
+            case 512: return "Reisekosten";
+            case 513: return "Ausweichen";
+            case 514: return "Treffergenauigkeit";
+            case 515: return "Schadensresistenz";
+            case 516: return "Rammen";
+            case 517: return "Schadens-Multiplikator";
+            case 518: return "Fundrate (Orte)";
+            case 519: return "Fundrate (Items)";
+
             default: return'???';
         }
     };
@@ -4654,6 +4704,15 @@ core = {
             case 7: return "Du warst Strahlung ausgesetzt! Das ist relativ ungesund, und dein K\u00f6rper kann die strahlenden Partikel nur langsam abbauen. W\u00e4hrend eine geringe Strahlendosis noch vertretbar ist, k\u00f6nnen h\u00f6here Strahlenmengen schnell dein Leben bedrohen!";
             case 8: return "Ohje, das ist gar nicht gut... Offensichtlich bist du mit dem Zombievirus infiziert. Du solltest unbedingt ein Heilmittel finden, ansonsten wirst du sehr bald ins Unleben \u00fcbertreten...";
             case 9: return "Der kalte Wind bl\u00e4st dir um die Ohren... allzu lange kann du hier nicht bleiben, wenn du nicht erfrieren willst.";
+
+            case 512: return "Nicht jedem fallen lange M\u00e4rsche durch das \u00d6dland gleich leicht ...";
+            case 513: return "\u00dcberlebenstipp #34: Gegen schwere Verletzungen ist es hilfreich, sich einfach nicht treffen zu lassen.";
+            case 514: return "\u00dcberlebenstipp #35: Auch die beste Waffe hilft nicht, wenn du damit nichts triffst.";
+            case 515: return "Eine Konfrontation mit Zombies muss nicht gleich dein Ende bedeuten - zumindest, wenn du in der Lage bist, etwas Schaden einzustecken, ohne direkt zu sterben ...";
+            case 516: return "Wenn du planst, durch eine Horde Zombies einfach hindurchzurennen, solltest du dir vorher eventuell etwas Bauchfett anfressen.";
+            case 517: return "Es kommt nicht auf die L\u00e4nge deiner Machete an, sondern darauf, wie kunstvoll du sie schwingst.";
+            case 518: return "Wenn du dich ein bisschen mehr auf Objekte in der Entfernung konzentrierst findest du \u00fcberraschenderweise leichter Dinge, die nicht direkt vor die liegen.";
+            case 519: return "Wenn du ab und zu einmal einen Blick auf den Boden wirfst findest du \u00fcberraschenderweise manchmal sogar n\u00fctzliche Items!";
             default: return'???';
         }
     };
@@ -4749,13 +4808,26 @@ core = {
     };
 
     var make_bar = function(type, value, effects, inline) {
+        var char = num_decode_char(type);
+        var cb;
+        if (char) {
+            value *= 100;
+            var w = Math.min(50,Math.abs(100 - value)/2);
+            var l = value < 100 ? (50 - w) : 50;
+
+            cb = $('<div />').addClass(value < 100 ? 'negative' : 'positive').css({position: 'relative', left: l + '%', width: w + '%'});
+            //cb = $('<div />').css({width: value + '%', background: num_decode_color(type)});
+        } else cb = $('<div />').css({width: value + '%', background: num_decode_color(type)});
+
         var bar = $('<div />').addClass('cell rw-' + (inline ? 12 : 4)).append(
             $('<div />').addClass('bar').append(
-                $('<img />').attr('src', 'media/icons/status_' + num_decode_str(type) + '.gif')
+                $('<img />').attr('src', num_decode_icon_name(type,value))
             ).append(
-                $('<div />').addClass('background').append(
-                    $('<div />').css({width: value + '%', background: num_decode_color(type)})
-                ).append($('<div />').addClass('label').text(Math.round(value * 10)/10))
+                $('<div />').addClass('background')
+                    .append(cb)
+                    .append(
+                        $('<div />').addClass('label').text(Math.round(value * 10)/10 + (char ? ' %' : ''))
+                    )
             )
         );
 
@@ -4796,7 +4868,7 @@ core = {
 
             $.each(hidden,function(k,v) {
                 v = parseInt(v);
-                $('<img />').addClass('status').attr('src','media/icons/status_' + num_decode_str(v) + '.gif').attr('title','-').qtip(game.render.html.qtip.ingame('bottom', {
+                $('<img />').addClass('status').attr('src',num_decode_icon_name(v,bars[v].value)).attr('title','-').qtip(game.render.html.qtip.ingame('bottom', {
                         render: function (event, api) {
                             var content = $(this).find('.qtip-content').empty().append(
                                 $('<b />').addClass('header hold').text(num_decode_title(v))
@@ -4840,7 +4912,9 @@ core = {
     };
 
     core.parts.status_bars = function(target, data, small) {
-        var order = [5,3,1,4,null,2];
+        var order = [
+            5,3,1,
+            4,               null              ,2        ];
 
         if (small) {
             $.each(order, function(k,v) {

@@ -19,9 +19,9 @@ class Model_Buffs_Exited extends Model_Buffs_Abstract_Buff {
     /**
      * Gets called when a new buff with the same buff identifier is cast on a player; the function is called on the resident buff, with the new one as argument
      *
-     * @param Model_Buffs_Exited $newclass
+     * @param Model_Buffs_Abstract_Buff $newclass
      */
-    public function merge($newclass): void {
+    public function merge(Model_Buffs_Abstract_Buff $newclass): void {
         $this->lifetime += $newclass->lifetime;
     }
 }

@@ -14,7 +14,7 @@ class Tool_Npc {
      * @return array
      * @throws Exception
      */
-    public static function get_satisfactory_item($p, $own, $location, $satisfy = [], $forbid = [], $avoid = [], $auto = true): array
+    public static function get_satisfactory_item($p, $own, $location, $satisfy = [], $forbid = [], $avoid = [], $auto = true): ?array
     {
         if (!$satisfy || !($own || $location)) return null;
 

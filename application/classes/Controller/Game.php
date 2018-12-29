@@ -451,12 +451,10 @@ class Controller_Game extends Controller {
      * @return array
      * @throws Exception
      */
-    private function status($type, $remote = false): array
-    {
+    private function status($type, $remote = false): array {
         $p = $remote ?: Globals::PrimaryPlayerF();
-        
         return [
-            'value' => round($p->get_status()->get($type),2),
+            'value' => round($p->get_status()->get($type),$type >= Model_Status::MS_THRESHOLD ? 4 : 2),
             'buffs' => $remote ? [] : $this->condense_buff($type)
         ];
     }
@@ -473,6 +471,9 @@ class Controller_Game extends Controller {
         $cache = [];
         for ($type = 1; $type <= Model_Status::MS_STATUS_COUNT; $type++)
             if ($type <= 5 || $p->get_status()->get($type))
+                $cache[$type] = $this->status($type, $remote);
+        for ($type = Model_Status::MS_THRESHOLD; $type < (Model_Status::MS_THRESHOLD + Model_Status::MS_CHAR_COUNT); $type++)
+            if ($p->get_status()->get($type) !== 1.0)
                 $cache[$type] = $this->status($type, $remote);
 
         $buffs = [];

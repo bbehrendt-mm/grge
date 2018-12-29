@@ -242,7 +242,7 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
      *
      * @param Model_Buffs_Abstract_Buff $newclass
      */
-    public function merge($newclass): void {}
+    public function merge(Model_Buffs_Abstract_Buff $newclass): void {}
 
     /**
      * Returns the buff lifetime

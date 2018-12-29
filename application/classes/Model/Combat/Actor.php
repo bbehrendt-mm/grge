@@ -112,8 +112,11 @@ class Model_Combat_Actor extends Named {
             }
     }
 
-    public function ki_mod_is_active($name): bool {
-        return in_array($name, $this->current_ki_modifiers, true);
+    public function ki_mod_is_active($name, bool $rethrow = false): bool {
+        if (!$rethrow)
+            return in_array($name, $this->current_ki_modifiers, true);
+        if (!$this->ki_mod_is_registered($name)) return false;
+        return Tool_Gambling::random($this->ki_modifiers[$name]);
     }
 
     public function ki_mod_strength($name): float {
@@ -192,10 +195,11 @@ class Model_Combat_Actor extends Named {
     public function register_inventory($inv, $check_equip = true): self {
         $this->inventory = $inv;
 
-        foreach ($this->inventory->get('Model_Combat_Weapon') as $w)
-            /** @var Model_Combat_Weapon $w */
-            if (!$check_equip || $w->is_equipped())
-                $this->add_weapon($w);
+        if (!$this->ki_mod_is_registered('berserk'))
+            foreach ($this->inventory->get('Model_Combat_Weapon') as $w)
+                /** @var Model_Combat_Weapon $w */
+                if (!$check_equip || $w->is_equipped())
+                    $this->add_weapon($w);
 
         foreach ($this->inventory->get(Model_Items_Abstract_Armor::cls()) as $a)
             /** @var Model_Items_Abstract_Armor $a */
@@ -440,6 +444,9 @@ class Model_Combat_Actor extends Named {
      * @return array|null
      */
     protected function get_attack_priority($friends, $foes, $weapon = null, $ignore_range = false): ?array {
+        if ($this->ki_mod_is_active('drunk', true) && $this->ki_mod_is_active('berserk'))
+            return $this->get_attack_priority([], array_merge($friends),$weapon,$ignore_range);
+
         if ($weapon === null)
             $weapon = $this->current_weapon;
 
@@ -494,10 +501,12 @@ class Model_Combat_Actor extends Named {
                 $tmp = $res;
         }
 
+        $berserk = $this->ki_mod_is_active('berserk');
+
         /** @noinspection PhpUndefinedMethodInspection */
         if (!$tmp || ($this->current_weapon && $this->current_weapon->usable() && ($this->current_weapon->uin() === $tmp[2]->uin() || get_class($this->current_weapon) === get_class($tmp[2])))) return null;
         else return [
-            $tmp[0] * $this->ai_volatile,
+            $tmp[0] * $this->ai_volatile * ($berserk ? 100 : 1),
             $tmp[2]
         ];
     }
@@ -630,15 +639,28 @@ class Model_Combat_Actor extends Named {
 
         if ($attack && (!$switch || $attack[0] >= $switch[0]) && (!$move || $attack[0] >= $move[0])) {
             // Attack action
-            /** @var Model_Combat_Actor $target */
-            $target = $attack[1];
-            [/*$op_ini*/, /*$op_atk*/, $op_res, /*$op_acc*/] = $this->actual_stats();
+            $num_of_attacks = 1;
+            if ($this->ki_mod_is_active('berserk')) {
+                $this->scene->dialog($this,$this->get_random_taunt('berserk'));
+                $num_of_attacks += random_int(1,6);
+            }
 
-            [$dmg,$dmg_raw] = $this->current_weapon->calculate_damage($this, $target, $this->c_count, $acc, $atk, $op_res);
-            $this->scene->attack($this, $target, $this->current_weapon, $dmg);
-            $target->damage($dmg, $this, $dmg_raw);
-            $target->inflict_wound($this->current_weapon->generate_wound($dmg));
-            $this->current_weapon->trigger_usage($this, $target, $dmg, $this->scene);
+            for ($id_atk = 0; $id_atk < $num_of_attacks; $id_atk++) {
+                if (!$attack) break;
+
+                /** @var Model_Combat_Actor $target */
+                $target = $attack[1];
+                [/*$op_ini*/, /*$op_atk*/, $op_res, /*$op_acc*/] = $this->actual_stats();
+
+                [$dmg,$dmg_raw] = $this->current_weapon->calculate_damage($this, $target, $this->c_count, $acc, $atk, $op_res);
+                $this->scene->attack($this, $target, $this->current_weapon, $dmg);
+                $target->damage($dmg, $this, $dmg_raw);
+                $target->inflict_wound($this->current_weapon->generate_wound($dmg));
+                $this->current_weapon->trigger_usage($this, $target, $dmg, $this->scene);
+
+                if ($id_atk < ($num_of_attacks - 1))
+                    $attack = $this->get_attack_priority($friends, $foes);
+            }
 
         } elseif ($switch && (!$attack || $switch[0] > $attack[0]) && (!$move || $switch[0] > $move[0])) {
             // Switch action

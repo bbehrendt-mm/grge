@@ -1,75 +1,134 @@
 (function() {
     var num_decode_str = function(n) {
         switch (n) {
-            case 1: return 'hunger';
-            case 2: return 'thirst';
-            case 3: return 'health';
-            case 4: return 'sleepy';
-            case 5: return 'energy';
-            case 6: return 'drunk';
-            case 7: return 'rad';
-            case 8: return 'zmb';
-            case 9: return 'freeze';
+            case <?=Model_Status::MS_STAT_HUNGER   ?>: return 'hunger';
+            case <?=Model_Status::MS_STAT_THIRST   ?>: return 'thirst';
+            case <?=Model_Status::MS_STAT_HEALTH   ?>: return 'health';
+            case <?=Model_Status::MS_STAT_SLEEPY   ?>: return 'sleepy';
+            case <?=Model_Status::MS_STAT_ENERGY   ?>: return 'energy';
+            case <?=Model_Status::MS_STAT_DRUNK    ?>: return 'drunk';
+            case <?=Model_Status::MS_STAT_RADIATION?>: return 'rad';
+            case <?=Model_Status::MS_STAT_ZOMBIFY  ?>: return 'zmb';
+            case <?=Model_Status::MS_STAT_FREEZE   ?>: return 'freeze';
+
+            case <?=Model_Status::MS_CHAR_DISTANCING        ?>: return 'char_mv';
+            case <?=Model_Status::MS_CHAR_EVASIVENESS       ?>: return 'char_eva';
+            case <?=Model_Status::MS_CHAR_ACCURACY          ?>: return 'char_acc';
+            case <?=Model_Status::MS_CHAR_DAMAGE_RESISTANCE ?>: return 'char_def';
+            case <?=Model_Status::MS_CHAR_BULKYNESS         ?>: return 'char_bulk';
+            case <?=Model_Status::MS_CHAR_DAMAGE_MULTIPLIER ?>: return 'char_atk';
+            case <?=Model_Status::MS_CHAR_LOCATION_SPAWNRATE?>: return 'char_find_loc';
+            case <?=Model_Status::MS_CHAR_ITEM_SPAWNRATE    ?>: return 'char_find_item';
+            
             default: return 'unknown';
         }
     };
 
+    var num_decode_states = function(n) {
+        switch (n) {
+            case <?=Model_Status::MS_STAT_HUNGER?>:
+            case <?=Model_Status::MS_STAT_THIRST?>:
+            case <?=Model_Status::MS_STAT_HEALTH?>:
+            case <?=Model_Status::MS_STAT_ENERGY?>:
+                return 5;
+            case <?=Model_Status::MS_STAT_SLEEPY?>:
+                return 4;
+            default: return 1;
+        }
+    };
+
+    var num_decode_char = function(n) {
+        return n >= <?=Model_Status::MS_THRESHOLD?>;
+    };
+
+    var num_decode_icon_name = function(n,v) {
+        var icon_name_base = 'media/icons/bars/' + num_decode_str(n);
+        var icons = num_decode_states(n);
+
+        if (icons <= 1 || num_decode_char(n)) icon_name_base += '.gif';
+        else {
+            var n = Math.min(Math.floor( v / (100 / icons)) + 1, icons);
+            icon_name_base += ('-' + n + '.gif');
+        }
+
+        return icon_name_base;
+    }
+
     var num_decode_inverse = function(n) {
         switch (n) {
-            case 1: return false;
-            case 2: return false;
-            case 3: return false;
-            case 4: return false;
-            case 5: return false;
-            case 6: return true;
-            case 7: return true;
-            case 8: return true;
-            case 9: return true;
+            case <?=Model_Status::MS_STAT_DRUNK    ?>: return true;
+            case <?=Model_Status::MS_STAT_RADIATION?>: return true;
+            case <?=Model_Status::MS_STAT_ZOMBIFY  ?>: return true;
+            case <?=Model_Status::MS_STAT_FREEZE   ?>: return true;
+
+            case <?=Model_Status::MS_CHAR_DISTANCING   ?>: return true;
+
             default: return false;
         }
     };
 
+
+
     var num_decode_color = function(n) {
         switch (n) {
-            case 1: return '#FF4A19';
-            case 2: return '#1C44D2';
-            case 3: return '#A819FF';
-            case 4: return '#589BF2';
-            case 5: return '#00D47A';
-            case 6: return '#ECCB19';
-            case 7: return '#A1E900';
-            case 8: return '#906C04';
-            case 9: return '#96FFFF';
+            case <?=Model_Status::MS_STAT_HUNGER   ?>: return '#FF4A19';
+            case <?=Model_Status::MS_STAT_THIRST   ?>: return '#1C44D2';
+            case <?=Model_Status::MS_STAT_HEALTH   ?>: return '#A819FF';
+            case <?=Model_Status::MS_STAT_SLEEPY   ?>: return '#589BF2';
+            case <?=Model_Status::MS_STAT_ENERGY   ?>: return '#00D47A';
+            case <?=Model_Status::MS_STAT_DRUNK    ?>: return '#ECCB19';
+            case <?=Model_Status::MS_STAT_RADIATION?>: return '#A1E900';
+            case <?=Model_Status::MS_STAT_ZOMBIFY  ?>: return '#906C04';
+            case <?=Model_Status::MS_STAT_FREEZE   ?>: return '#96FFFF';
             default: return'#999999';
         }
     };
 
     var num_decode_title = function(n) {
         switch (n) {
-            case 1: return <?=__j('Hunger')?>;
-            case 2: return <?=__j('Durst')?>;
-            case 3: return <?=__j('Gesundheit')?>;
-            case 4: return <?=__j('Müdigkeit')?>;
-            case 5: return <?=__j('Energie')?>;
-            case 6: return <?=__j('Alkohol')?>;
-            case 7: return <?=__j('Verstrahlung')?>;
-            case 8: return <?=__j('Zombie-Infektion')?>;
-            case 9: return <?=__j('Eisige Kälte')?>;
+            case <?=Model_Status::MS_STAT_HUNGER   ?>: return <?=__j('Hunger')?>;
+            case <?=Model_Status::MS_STAT_THIRST   ?>: return <?=__j('Durst')?>;
+            case <?=Model_Status::MS_STAT_HEALTH   ?>: return <?=__j('Gesundheit')?>;
+            case <?=Model_Status::MS_STAT_SLEEPY   ?>: return <?=__j('Müdigkeit')?>;
+            case <?=Model_Status::MS_STAT_ENERGY   ?>: return <?=__j('Energie')?>;
+            case <?=Model_Status::MS_STAT_DRUNK    ?>: return <?=__j('Alkohol')?>;
+            case <?=Model_Status::MS_STAT_RADIATION?>: return <?=__j('Verstrahlung')?>;
+            case <?=Model_Status::MS_STAT_ZOMBIFY  ?>: return <?=__j('Zombie-Infektion')?>;
+            case <?=Model_Status::MS_STAT_FREEZE   ?>: return <?=__j('Eisige Kälte')?>;
+
+            case <?=Model_Status::MS_CHAR_DISTANCING        ?>: return <?=__j('Reisekosten')?>;
+            case <?=Model_Status::MS_CHAR_EVASIVENESS       ?>: return <?=__j('Ausweichen')?>;
+            case <?=Model_Status::MS_CHAR_ACCURACY          ?>: return <?=__j('Treffergenauigkeit')?>;
+            case <?=Model_Status::MS_CHAR_DAMAGE_RESISTANCE ?>: return <?=__j('Schadensresistenz')?>;
+            case <?=Model_Status::MS_CHAR_BULKYNESS         ?>: return <?=__j('Rammen')?>;
+            case <?=Model_Status::MS_CHAR_DAMAGE_MULTIPLIER ?>: return <?=__j('Schadens-Multiplikator')?>;
+            case <?=Model_Status::MS_CHAR_LOCATION_SPAWNRATE?>: return <?=__j('Fundrate (Orte)')?>;
+            case <?=Model_Status::MS_CHAR_ITEM_SPAWNRATE    ?>: return <?=__j('Fundrate (Items)')?>;
+
             default: return'???';
         }
     };
 
     var num_decode_description = function(n) {
         switch (n) {
-            case 1: return <?=__j('Mit leerem Magen fällt der Kampf ums Überleben schwer. Iss regelmäßig, ansonsten verlierst du Energie und Gesundheit.')?>;
-            case 2: return <?=__j('Es ist nicht leicht, in der Ödnis Wasser zu finden - nichtsdestotrotz ist es essentiell für dein Überleben.')?>;
-            case 3: return <?=__j('Du stirbst, wenn deine Gesundheit den Wert 0 erreicht. Gesundheit regeneriert sich von alleine, wenn du genug gegessen und getrunken hast. Du kannst deine Gesundheit aber auch durch die Verwendung verschiedener Items verbessern.')?>;
-            case 4: return <?=__j('Zombies müssen nicht schlafen - du hingegen schon! Du solltest Übermüdung um jeden Preis vermeiden, also schlafe regelmäßig.')?>;
-            case 5: return <?=__j('Du brauchst Energie, um Aktionen durchführen zu können. Energie regeneriert sich von alleine, wenn du bei guter Gesundheit und nicht hungrig/durstig bist. Es gibt allerdings auch einige Items, die Energie regenerieren.')?>;
-            case 6: return <?=__j('Mit ordentlich Promille im Blut wird das Leben nach der Apokalypse gleich viel erträglicher. Leider wird es auch kürzer, denn wenn du völlig abgefüllt in der Ecke liegst, kannst du dich nicht wirklich gut gegen Zombies verteidigen. Wenigstens um die Langzeitschäden an deiner Leber brauchst du dich nicht mehr zu sorgen ...')?>;
-            case 7: return <?=__j('Du warst Strahlung ausgesetzt! Das ist relativ ungesund, und dein Körper kann die strahlenden Partikel nur langsam abbauen. Während eine geringe Strahlendosis noch vertretbar ist, können höhere Strahlenmengen schnell dein Leben bedrohen!')?>;
-            case 8: return <?=__j('Ohje, das ist gar nicht gut... Offensichtlich bist du mit dem Zombievirus infiziert. Du solltest unbedingt ein Heilmittel finden, ansonsten wirst du sehr bald ins Unleben übertreten...')?>;
-            case 9: return <?=__j('Der kalte Wind bläst dir um die Ohren... allzu lange kann du hier nicht bleiben, wenn du nicht erfrieren willst.')?>;
+            case <?=Model_Status::MS_STAT_HUNGER   ?>: return <?=__j('Mit leerem Magen fällt der Kampf ums Überleben schwer. Iss regelmäßig, ansonsten verlierst du Energie und Gesundheit.')?>;
+            case <?=Model_Status::MS_STAT_THIRST   ?>: return <?=__j('Es ist nicht leicht, in der Ödnis Wasser zu finden - nichtsdestotrotz ist es essentiell für dein Überleben.')?>;
+            case <?=Model_Status::MS_STAT_HEALTH   ?>: return <?=__j('Du stirbst, wenn deine Gesundheit den Wert 0 erreicht. Gesundheit regeneriert sich von alleine, wenn du genug gegessen und getrunken hast. Du kannst deine Gesundheit aber auch durch die Verwendung verschiedener Items verbessern.')?>;
+            case <?=Model_Status::MS_STAT_SLEEPY   ?>: return <?=__j('Zombies müssen nicht schlafen - du hingegen schon! Du solltest Übermüdung um jeden Preis vermeiden, also schlafe regelmäßig.')?>;
+            case <?=Model_Status::MS_STAT_ENERGY   ?>: return <?=__j('Du brauchst Energie, um Aktionen durchführen zu können. Energie regeneriert sich von alleine, wenn du bei guter Gesundheit und nicht hungrig/durstig bist. Es gibt allerdings auch einige Items, die Energie regenerieren.')?>;
+            case <?=Model_Status::MS_STAT_DRUNK    ?>: return <?=__j('Mit ordentlich Promille im Blut wird das Leben nach der Apokalypse gleich viel erträglicher. Leider wird es auch kürzer, denn wenn du völlig abgefüllt in der Ecke liegst, kannst du dich nicht wirklich gut gegen Zombies verteidigen. Wenigstens um die Langzeitschäden an deiner Leber brauchst du dich nicht mehr zu sorgen ...')?>;
+            case <?=Model_Status::MS_STAT_RADIATION?>: return <?=__j('Du warst Strahlung ausgesetzt! Das ist relativ ungesund, und dein Körper kann die strahlenden Partikel nur langsam abbauen. Während eine geringe Strahlendosis noch vertretbar ist, können höhere Strahlenmengen schnell dein Leben bedrohen!')?>;
+            case <?=Model_Status::MS_STAT_ZOMBIFY  ?>: return <?=__j('Ohje, das ist gar nicht gut... Offensichtlich bist du mit dem Zombievirus infiziert. Du solltest unbedingt ein Heilmittel finden, ansonsten wirst du sehr bald ins Unleben übertreten...')?>;
+            case <?=Model_Status::MS_STAT_FREEZE   ?>: return <?=__j('Der kalte Wind bläst dir um die Ohren... allzu lange kann du hier nicht bleiben, wenn du nicht erfrieren willst.')?>;
+
+            case <?=Model_Status::MS_CHAR_DISTANCING        ?>: return <?=__j('Nicht jedem fallen lange Märsche durch das Ödland gleich leicht ...')?>;
+            case <?=Model_Status::MS_CHAR_EVASIVENESS       ?>: return <?=__j('Überlebenstipp #34: Gegen schwere Verletzungen ist es hilfreich, sich einfach nicht treffen zu lassen.')?>;
+            case <?=Model_Status::MS_CHAR_ACCURACY          ?>: return <?=__j('Überlebenstipp #35: Auch die beste Waffe hilft nicht, wenn du damit nichts triffst.')?>;
+            case <?=Model_Status::MS_CHAR_DAMAGE_RESISTANCE ?>: return <?=__j('Eine Konfrontation mit Zombies muss nicht gleich dein Ende bedeuten - zumindest, wenn du in der Lage bist, etwas Schaden einzustecken, ohne direkt zu sterben ...')?>;
+            case <?=Model_Status::MS_CHAR_BULKYNESS         ?>: return <?=__j('Wenn du planst, durch eine Horde Zombies einfach hindurchzurennen, solltest du dir vorher eventuell etwas Bauchfett anfressen.')?>;
+            case <?=Model_Status::MS_CHAR_DAMAGE_MULTIPLIER ?>: return <?=__j('Es kommt nicht auf die Länge deiner Machete an, sondern darauf, wie kunstvoll du sie schwingst.')?>;
+            case <?=Model_Status::MS_CHAR_LOCATION_SPAWNRATE?>: return <?=__j('Wenn du dich ein bisschen mehr auf Objekte in der Entfernung konzentrierst findest du überraschenderweise leichter Dinge, die nicht direkt vor die liegen.')?>;
+            case <?=Model_Status::MS_CHAR_ITEM_SPAWNRATE    ?>: return <?=__j('Wenn du ab und zu einmal einen Blick auf den Boden wirfst findest du überraschenderweise manchmal sogar nützliche Items!')?>;
             default: return'???';
         }
     };
@@ -165,13 +224,26 @@
     };
 
     var make_bar = function(type, value, effects, inline) {
+        var char = num_decode_char(type);
+        var cb;
+        if (char) {
+            value *= 100;
+            var w = Math.min(50,Math.abs(100 - value)/2);
+            var l = value < 100 ? (50 - w) : 50;
+
+            cb = $('<div />').addClass(value < 100 ? 'negative' : 'positive').css({position: 'relative', left: l + '%', width: w + '%'});
+            //cb = $('<div />').css({width: value + '%', background: num_decode_color(type)});
+        } else cb = $('<div />').css({width: value + '%', background: num_decode_color(type)});
+
         var bar = $('<div />').addClass('cell rw-' + (inline ? 12 : 4)).append(
             $('<div />').addClass('bar').append(
-                $('<img />').attr('src', 'media/icons/status_' + num_decode_str(type) + '.gif')
+                $('<img />').attr('src', num_decode_icon_name(type,value))
             ).append(
-                $('<div />').addClass('background').append(
-                    $('<div />').css({width: value + '%', background: num_decode_color(type)})
-                ).append($('<div />').addClass('label').text(Math.round(value * 10)/10))
+                $('<div />').addClass('background')
+                    .append(cb)
+                    .append(
+                        $('<div />').addClass('label').text(Math.round(value * 10)/10 + (char ? ' %' : ''))
+                    )
             )
         );
 
@@ -212,7 +284,7 @@
 
             $.each(hidden,function(k,v) {
                 v = parseInt(v);
-                $('<img />').addClass('status').attr('src','media/icons/status_' + num_decode_str(v) + '.gif').attr('title','-').qtip(game.render.html.qtip.ingame('bottom', {
+                $('<img />').addClass('status').attr('src',num_decode_icon_name(v,bars[v].value)).attr('title','-').qtip(game.render.html.qtip.ingame('bottom', {
                         render: function (event, api) {
                             var content = $(this).find('.qtip-content').empty().append(
                                 $('<b />').addClass('header hold').text(num_decode_title(v))
@@ -256,7 +328,10 @@
     };
 
     core.parts.status_bars = function(target, data, small) {
-        var order = [5,3,1,4,null,2];
+        var order = [
+            <?=Model_Status::MS_STAT_ENERGY?>,<?=Model_Status::MS_STAT_HEALTH?>,<?=Model_Status::MS_STAT_HUNGER?>,
+            <?=Model_Status::MS_STAT_SLEEPY?>,               null              ,<?=Model_Status::MS_STAT_THIRST?>
+        ];
 
         if (small) {
             $.each(order, function(k,v) {

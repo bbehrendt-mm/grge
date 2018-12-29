@@ -186,7 +186,7 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
      *
      * @return null|Model_Player
      */
-    abstract public function get_player($pid = NULL): ?Model_Player;
+    abstract public function get_player($pid = NULL): ?Interface_Plentity;
 
     /**
      * @param string $adress Configuration adress

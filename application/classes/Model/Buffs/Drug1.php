@@ -16,7 +16,7 @@ class Model_Buffs_Drug1 extends Model_Buffs_Abstract_Buff {
 		}
 	}
 	
-	public function merge($newclass): void
+	public function merge(Model_Buffs_Abstract_Buff $newclass): void
     {
 		if (random_int(0, 2) < 2 && !$this->assoc_player->get_status()->retrieve('drug2')) {
 			new Model_Buffs_Drug2($this->assoc_player);

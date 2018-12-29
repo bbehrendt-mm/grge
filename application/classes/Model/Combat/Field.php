@@ -93,11 +93,15 @@ class Model_Combat_Field {
             $this->scene->add_combatant($combatant);
             $combatant->enter();
 
-            if ($combatant->ki_mod_is_registered('drunk')) {
-                $this->scene->dialog($combatant,$combatant->get_random_taunt('drunk'));
-                $this->scene->character_sfx($combatant,true,'drunk',$combatant->ki_mod_strength('drunk'));
+            if ($combatant->ki_mod_is_registered('drunk'))   $this->scene->character_sfx($combatant,true,'drunk',$combatant->ki_mod_strength('drunk'));
+            if ($combatant->ki_mod_is_registered('berserk')) $this->scene->character_sfx($combatant,true,'berserk',$combatant->ki_mod_strength('berserk'));
 
-            } else $this->scene->dialog($combatant,$combatant->get_random_taunt('begin'));
+            if ($combatant->ki_mod_is_registered('drunk'))
+                $this->scene->dialog($combatant,$combatant->get_random_taunt('drunk'));
+            else if ($combatant->ki_mod_is_registered('berserk'))
+                $this->scene->dialog($combatant,$combatant->get_random_taunt('berserk'));
+            else
+                $this->scene->dialog($combatant,$combatant->get_random_taunt('begin'));
         }
         
         // Escape calculations

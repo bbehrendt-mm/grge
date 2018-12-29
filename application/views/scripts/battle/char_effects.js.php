@@ -40,6 +40,23 @@
 
     }
 
+    var ef_berserk = function(id,strength) {
+
+        if (!this.combatants[id].sfx.berserk && strength <= 0) return;
+
+        var anger = new createjs.Shape();
+        anger.graphics
+            .beginFill("#ff0000")
+            .drawRoundRect(0, 0,2,2,1)
+            .drawRoundRect(0,-8,2,6,1);
+
+        anger.x = 2;
+        anger.y = -10;
+        anger.z = this.combatants[id].container.z + 0.1;
+
+        this.combatants[id].container.addChild(anger);
+    }
+
     Battle.prototype.addCombatantEffect = function(id,toggle,name,strength) {
         this.combatants[id].sfx[name] = toggle && strength > 0;
         if (this.combatants[id].sfx[name])
@@ -48,6 +65,9 @@
                 case 'drunk':
                    ef_drunk.call(this,id,strength);
                    break;
+                case 'berserk':
+                    ef_berserk.call(this,id,strength);
+                    break;
                 default: console.error("Unknown C-SFX: " + name);
 
             }

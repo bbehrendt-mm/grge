@@ -11,11 +11,17 @@
 
 @status-line-color: #a5a5a5;
 
+@status-calc-color-positive: #c0ffc9;
+@status-calc-color-negative: #ff8e90;
+@status-calc-color-fade: 50%;
+
 .bar {
   padding: 4px; margin: 4px; .whitebox(3%, 10%);
   >.background {
     position: relative; display: inline-block; width: ~"calc(100% - 20px)"; background: @bar-inner-color; border-top: 1px solid @bar-inner-border-color; box-shadow: inset 0 0 3px fade(@bar-inner-border-color, @bar-inner-shadow-strength); border-radius: 2px; height: @bar-default-height; float: right; overflow: hidden;
     > div:first-child {
+      &.negative {background: @status-calc-color-negative}
+      &.positive {background: @status-calc-color-positive}
       height: @bar-default-height;
       &::after {height: 100%; content: " "; background: linear-gradient(to bottom, fade(@bar-shade-color, @bar-shade-opacity-start) 0%, fade(@bar-shade-color, @bar-shade-opacity-end) 100%); display: block;}
     }
@@ -30,10 +36,6 @@
   }
   >img.status + img.buff {padding-left: 2px; border-left: 2px solid @status-line-color;}
 }
-
-@status-calc-color-positive: #c0ffc9;
-@status-calc-color-negative: #ff8e90;
-@status-calc-color-fade: 50%;
 
 .statcalc {
   >h4 {margin-top: 5px; margin-bottom: 5px;}

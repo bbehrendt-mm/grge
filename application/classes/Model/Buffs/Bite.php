@@ -11,7 +11,7 @@ class Model_Buffs_Bite extends Model_Buffs_Abstract_Buff {
         parent::__construct($association, 1);
     }
 
-	public function merge($newclass): void
+	public function merge(Model_Buffs_Abstract_Buff $newclass): void
     {
 		$this->lifetime += $newclass->lifetime();
 	}

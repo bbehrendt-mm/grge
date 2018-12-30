@@ -58,11 +58,10 @@ class Model_Log_Types_Transaction extends Model_Log_Message {
      * @return bool
      */
     public function merge($merger): bool {
-        if ($merger->data['uin'] === $this->data['uin']
-            && $merger->data['class'] === $this->data['class'] && is_a($merger, static::class, true)
-            && in_array(
-                $this->data['class'], [static::MLTT_UP, static::MLTT_DOWN], true
-            )
+        /** @noinspection NotOptimalIfConditionsInspection */
+        if (is_a($merger, static::class, true) &&
+            $merger->data['uin'] === $this->data['uin'] && $merger->data['class'] === $this->data['class']
+            && in_array($this->data['class'], [static::MLTT_UP, static::MLTT_DOWN], true)
         )
             $this->data['items'] = array_merge($merger->data['items'], $this->data['items']);
         else return false;

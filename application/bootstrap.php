@@ -114,7 +114,7 @@ Kohana::init(array(
 	'base_url'   => '/grge/',
     'caching'    => Kohana::$environment === Kohana::PRODUCTION,
     'profile'    => Kohana::$environment !== Kohana::PRODUCTION,
-    'errors' => false,
+    'errors' => true,
 ));
 
 /**

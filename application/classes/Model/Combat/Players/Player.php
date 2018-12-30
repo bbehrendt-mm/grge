@@ -28,7 +28,11 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
      * @param Interface_Plentity $p
      */
     public function transfer_stats(Interface_Plentity $p) : void {
-        $this->escape_modifier = $p->get_status()->get(Model_Status::MS_CHAR_EVASIVENESS);
+
+        $this->mod_damage     = $p->get_status()->get(Model_Status::MS_CHAR_DAMAGE_MULTIPLIER);
+        $this->mod_resistance = $p->get_status()->get(Model_Status::MS_CHAR_DAMAGE_RESISTANCE);
+        $this->mod_accuracy   = $p->get_status()->get(Model_Status::MS_CHAR_ACCURACY);
+        $this->mod_escape     = $p->get_status()->get(Model_Status::MS_CHAR_EVASIVENESS);
 
         if ($p->get_status()->get(Model_Status::MS_STAT_DRUNK) > 25) $this->add_modifier(
             'drunk', ($p->get_status()->get(Model_Status::MS_STAT_DRUNK)-25)*(4/300));

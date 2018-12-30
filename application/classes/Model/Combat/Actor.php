@@ -46,7 +46,11 @@ class Model_Combat_Actor extends Named {
     protected $stat_resistance;     // Each point reduces damage received by 5%
     protected $stat_accuracy;       // Each point increases accuracy by 5%
 
-    protected $escape_modifier = 1;
+    protected $mod_damage = 1.0;
+    protected $mod_resistance = 1.0;
+    protected $mod_accuracy = 1.0;
+    protected $mod_escape = 1.0;
+
     static protected $movement_range = 5;
 
     protected $field = [64,40];
@@ -147,7 +151,7 @@ class Model_Combat_Actor extends Named {
     }
 
     public function get_escape_modifier(): float {
-        return $this->escape_modifier;
+        return $this->mod_escape;
     }
 
     public function customSprite($death_sprite = false): ?string {
@@ -235,7 +239,14 @@ class Model_Combat_Actor extends Named {
                 foreach ($this->current_weapon->get_stats() as $id => $v)
                     $tmp[$id] += $v;
 
-            return [$this->stat_initiative + $tmp[0], $this->stat_damage + $tmp[1], $this->stat_resistance + $tmp[2], $this->stat_accuracy + $tmp[3]];
+            return array_map(
+                function($a) {
+                    return min(20,max(0,$a));},
+                    [$this->stat_initiative + $tmp[0],
+                     $this->stat_damage + $tmp[1],
+                     $this->stat_resistance + $tmp[2],
+                     $this->stat_accuracy + $tmp[3]
+                    ]);
         }
 
         else [$this->stat_initiative, $this->stat_damage, $this->stat_resistance, $this->stat_accuracy]
@@ -299,9 +310,9 @@ class Model_Combat_Actor extends Named {
         [$ini, $atk, $def, $acc] = $this->stats();
         return [
             round(100/(1 + $ini * 0.05)),
-            1 + $atk * 0.05,
-            1 - $def * 0.05,
-            1 + $acc * 0.05,
+            $this->mod_damage + $atk * 0.05,
+            (1 - $def * 0.05) / $this->mod_resistance,
+            $this->mod_accuracy + $acc * 0.05,
         ];
     }
 

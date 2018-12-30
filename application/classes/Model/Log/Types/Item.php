@@ -89,7 +89,8 @@ class Model_Log_Types_Item extends Model_Log_Message {
      * @return bool
      */
     public function merge($merger): bool {
-        if (isset($merger->data['class'], $this->data['class']) && $merger->data['class'] === $this->data['class'] && is_a($merger, static::class, true)
+        /** @noinspection NotOptimalIfConditionsInspection */
+        if (is_a($merger, static::class, true) && $merger->data['class'] === $this->data['class']
             && !in_array(
                 $this->data['class'],
                 [static::MLTI_DEATH, static::MLTI_DEATH_ENEMY,

@@ -22,8 +22,8 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
     protected static $allow_multi_equip = true;
     protected static $allow_primary_equip = true;
 
-    protected static $damage = [1,1];
-    protected static $range = [0,PHP_INT_MAX];
+    protected static $damage = [1.0,1.0];
+    protected static $range = [0.0,PHP_INT_MAX];
     protected static $accuracy = 1;
     protected static $use_fixed_accuracy = true;
     protected static $accuracy_downscale = 0;
@@ -213,7 +213,7 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
                 if (mt_rand()/mt_getrandmax() > $accuracy) $actual_multiply--;
         }
 
-        $raw = ($actual_multiply <= 0 ? 0 : random_int($this->damage()[0] * $actual_multiply, $this->damage()[1] * $actual_multiply));
+        $raw = ($actual_multiply <= 0 ? 0 : (random_int(100 * $this->damage()[0] * $actual_multiply, 100 * $this->damage()[1] * $actual_multiply) / 100.0));
         if (!$this->aoe())
             $raw = min($raw, $opponent->strength()[0]);
         return [$raw * (1 + ($atk - $res)), $raw * $atk];

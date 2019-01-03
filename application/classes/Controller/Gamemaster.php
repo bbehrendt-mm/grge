@@ -241,11 +241,13 @@ class Controller_Gamemaster extends Controller {
             // As long there is not enough of them, make more games
             while($num < $count) {
                 $name = static::create_gamename($lang);
-                $game = new Model_Game(false);
+                $game = new Model_Game(true);
                 if (($id = $game->start(10000, 1, 300, null, $name)) && DB::insert('multiplayer_lobby', array('gameid', 'lang', 'slots', 'name', 'timestamp'))->values(array($id, $lang, Kohana::$config->load('basic.multiplayer.capacity'), $name, time()))->execute() )
                     $num++;
                 else break;
             }
+
+            Globals::resetCurrentGame();
         }
     }
 

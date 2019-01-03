@@ -9,40 +9,36 @@
             'Brainbox' => '0758397bf35982c7f07e467e074348730fdd6c80db7473f6d6bd144142731e7059406f62bf549c260ed4aa1b5454e6412f20fcbdd7411e3028310c314f457e1c',
         ];
 
-        $encryption_mode = "rijndael-256";
         $encryption_key = '169a3f7b4da04886085949edbe3d70ce204dd7e6c4a9503b1a14f84073a90168';
 
         function encrypt($data) {
-            global $encryption_mode,$encryption_key;
-            $key = pack('H*', $encryption_key);
+            global $encryption_key;
+            $key = substr($encryption_key,0,SODIUM_CRYPTO_SECRETBOX_KEYBYTES);
 
-            $data = serialize($data);
-            $data .= hash('sha512',$data,false);
-
-            $iv_size = mcrypt_get_iv_size($encryption_mode, MCRYPT_MODE_CBC);
-            $iv = mcrypt_create_iv($iv_size, MCRYPT_DEV_RANDOM);
-            if ($iv === false) die('IV UNAVAILABLE!');
-
-            return base64_encode($iv . mcrypt_encrypt($encryption_mode,$key,$data,MCRYPT_MODE_CBC,$iv));
+            $nonce = random_bytes(SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
+            $cipher = base64_encode(
+                $nonce . \sodium_crypto_secretbox(serialize($data),$nonce,$key)
+            );
+            return $cipher;
         }
 
         function decrypt($cipher) {
-            global $encryption_mode,$encryption_key;
-            $key = pack('H*', $encryption_key);
+            global $encryption_key;
+            $key = substr($encryption_key,0,SODIUM_CRYPTO_SECRETBOX_KEYBYTES);
 
-            $cipher = base64_decode($cipher);
-            $iv_size = mcrypt_get_iv_size($encryption_mode, MCRYPT_MODE_CBC);
+            $decoded = base64_decode($cipher);
+            if ($decoded === false) return false;
+            if (mb_strlen($decoded, '8bit') < (SODIUM_CRYPTO_SECRETBOX_NONCEBYTES + SODIUM_CRYPTO_SECRETBOX_MACBYTES))
+                return false;
 
-            if (strlen($cipher) < $iv_size) return false;
+            $nonce = mb_substr($decoded, 0, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES, '8bit');
+            $ciphertext = mb_substr($decoded, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES, null, '8bit');
 
-            $data = trim(mcrypt_decrypt($encryption_mode,$key,substr($cipher, $iv_size),MCRYPT_MODE_CBC,substr($cipher, 0, $iv_size)));
+            $plain = sodium_crypto_secretbox_open($ciphertext, $nonce, $key);
+            if ($plain === false) return false;
 
-            $hash = substr($data,-128);
-            $data = substr($data,0,-128);
-
-            if (hash('sha512',$data,false) !== $hash) return false;
-            if (($data = unserialize($data, ['allowed_classes' => false])) === false) return false;
-            return $data;
+            sodium_memzero($ciphertext);
+            return unserialize($plain, array('allowed_classes' => true));
         }
 
         $gateway_control = isset($_REQUEST['gw']) ? (empty($_REQUEST['gw']) ? true : $_REQUEST['gw']) : false;

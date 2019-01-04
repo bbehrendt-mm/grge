@@ -6,7 +6,7 @@ core = {
     parts: {},
     snippets: {},
 
-    version: '2.2.0-0-0-423',
+    version: '2.2.0-3-0-503',
 
     last: {},
     plugins: {},
@@ -3162,7 +3162,7 @@ core = {
                                 if (new_name !== null) {
                                     var alias = $(this);
                                     alias.empty().append(NF.fa('cog',true)).addClass('disabled');
-                                    core.command('location/rename_room', {r: 0, n: new_name}, true, function(data) {
+                                    core.command('location/rename_room', {r: room.id, n: new_name}, true, function(data) {
                                         alias.empty().removeClass('disabled').append(NF.fa('pencil-square-o'));
                                         if (!data.success) game.render.html.notify('error',"Ein Fehler ist aufgetreten.");
                                         else {

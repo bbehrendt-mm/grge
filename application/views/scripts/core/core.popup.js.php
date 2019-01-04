@@ -379,7 +379,7 @@ core.popup = {
                                 if (new_name !== null) {
                                     var alias = $(this);
                                     alias.empty().append(NF.fa('cog',true)).addClass('disabled');
-                                    core.command('location/rename_room', {r: 0, n: new_name}, true, function(data) {
+                                    core.command('location/rename_room', {r: room.id, n: new_name}, true, function(data) {
                                         alias.empty().removeClass('disabled').append(NF.fa('pencil-square-o'));
                                         if (!data.success) game.render.html.notify('error',<?=__j('Ein Fehler ist aufgetreten.')?>);
                                         else {

@@ -328,7 +328,6 @@ class I18n extends Kohana_I18n {
                 $lang, static::$lang_list, true
             )
         )
-            return $string;
 
         // Load language table
 		$table = self::load($lang);

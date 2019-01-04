@@ -75,7 +75,7 @@ class Controller_Map extends Controller_Game {
                         || !$last_pass->can_leave($current->id(), Tool_System::instance_of($lp,'Model_Places_Tentkit'), !Tool_Scripts::is_npc($current) ? Interface_Tickable::IT_TYPE_PLAYER : Interface_Tickable::IT_TYPE_NPC)
                     )
                         break 2;
-                //$last_pass = $lp;
+                $last_pass = $lp;
                 foreach ($companion as $current)
                     if (!Tool_Scripts::is_npc($current))
                         $current->disable_escape();

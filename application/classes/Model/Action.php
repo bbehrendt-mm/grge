@@ -273,7 +273,11 @@ class Model_Action {
      * @return Struct_ItemEntry[]
      */
     private function get_item_requirements(): array {
-        return Struct_ItemEntry::convert($this->requirements);
+        $tmp = array();
+        foreach ($this->requirements as $class => $count)
+            if (!is_numeric($class))
+                $tmp[$class] = $count;
+        return Struct_ItemEntry::convert($tmp);
     }
 
     /**

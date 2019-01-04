@@ -388,9 +388,10 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
      */
 	public function find_item($force = false, $return = false) {
         // Spawn ticket
+        /** @noinspection NotOptimalIfConditionsInspection */
         if (!$return
-            && !Globals::CurrentPlayerActualF()->golden_ticket()
             && !Tool_Scripts::is_npc(Globals::CurrentPlayerF()) && Tool_Events::ticket_event(Globals::CurrentGameF()->next_tick())
+            && !Globals::CurrentPlayerActualF()->golden_ticket()
         ) {
             $num = max(1,random_int(1,3) - random_int(0,2));
             $tmp = array();

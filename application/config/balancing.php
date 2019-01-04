@@ -7,7 +7,7 @@ return array(
 	),
     'shop' => array(
         'enabled' => true,
-        'free_coins' => 100
+        'free_coins' => 250
     ),
     'mentor' => array(
         'sp_threshold' => 100,

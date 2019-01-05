@@ -26,7 +26,8 @@ class Model_Items_Maptool extends Model_Items_Abstract_Item {
 	
 	public function get_map_details() {
 		$location = Globals::CurrentPlayerF()->location_class();
-		if (!isset($this->datamem[$location])) return 0;
+		if (!Globals::CurrentGameF()->map_main()->has_location($location)) return -1;
+		else if (!isset($this->datamem[$location])) return 0;
 		else return $this->datamem[$location];
 	}
 	

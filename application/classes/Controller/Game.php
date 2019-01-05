@@ -619,10 +619,12 @@ class Controller_Game extends Controller {
             /** @var Model_Items_Maptool $mapper */
             $mapper = Globals::PrimaryPlayerF()->inventory()->get(Model_Items_Maptool::cls()); $mapper = $mapper[0];
 
-            $this->add_data('location', ['scouting' => [
-                'level' => $mapper->get_map_details() * 33 + ($mapper->get_map_details() === 3 ? 1 : 0),
-                'laser' => Tool_Scripts::count_items(Model_Items_Generic_Lasermapper::cls()),
-            ]]);
+            $level = $mapper->get_map_details();
+            if ($level >= 0)
+                $this->add_data('location', ['scouting' => [
+                    'level' => $level * 33 + ($level === 3 ? 1 : 0),
+                    'laser' => Tool_Scripts::count_items(Model_Items_Generic_Lasermapper::cls()),
+                ]]);
         }
 
         // Roadtrip

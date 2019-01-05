@@ -13,7 +13,7 @@ class Model_Buffs_Sleep extends Model_Buffs_Abstract_Buff {
 		$this->level = $level;
 		parent::__construct($player_id, -1);
 
-        if ($this->assoc_player->get_status()->get(Model_Status::MS_STAT_SLEEPY) === 100
+        if ($this->assoc_player->get_status()->get(Model_Status::MS_STAT_SLEEPY) >= 100
             || $this->assoc_player->get_status()->get(Model_Status::MS_STAT_HUNGER) < 20
             || $this->assoc_player->get_status()->get(Model_Status::MS_STAT_THIRST) < 20) {
             if ($this->associated_to_player()) $this->assoc_player->log()->add('Du kannst jetzt nicht schlafen!');
@@ -63,7 +63,7 @@ class Model_Buffs_Sleep extends Model_Buffs_Abstract_Buff {
 	
 	public function rebuild(): bool
     {
-		if ($this->assoc_player->get_status()->get(Model_Status::MS_STAT_SLEEPY) === 100) {
+		if ($this->assoc_player->get_status()->get(Model_Status::MS_STAT_SLEEPY) >= 100) {
 			if ($this->associated_to_player()) $this->assoc_player->achievements()->achieve(Model_Achievement::MA_SLEEP);
 			return $this->unbuff();
 		}

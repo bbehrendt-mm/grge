@@ -364,14 +364,21 @@ core.popup = {
 
                 var room_identifier = room.name ? room.name : (room.type ? room.type : <?=__j('Unbenutzter Raum')?>);
                 var room_name = room.name;
-                var current, name_field;
+                var room_type = room.type ? room.type : <?=__j('Unbenutzter Raum')?>;
+                var current, name_field, type_field;
                 main_row.append(NF.cell(true,{desktop: 6, md: 12}).append(
                     current = $('<div/>').addClass('flatbox').append(
                         NF.row()
                             .append(NF.cell(false,11)
-                                .append(NF.row()
-                                    .append(NF.cell(false,12,0,'center').append(name_field = $('<h3/>').text(room.name ? room.name : <?=__j('Namenloser Raum')?>)))
-                                    .append(NF.cell(false,12,0,'center').append(NF.n('div','small i').text(room.type ? room.type : <?=__j('Unbenutzter Raum')?>)))
+                                .append(
+                                    room.name ?
+                                        NF.row()
+                                            .append(NF.cell(false,12,0,'center').append(name_field = $('<h3/>').text(room.name)))
+                                            .append(NF.cell(false,12,0,'center').append(type_field = NF.n('div','small i').text(room_type)))
+                                    :
+                                        NF.row()
+                                            .append(NF.cell(false,12,0,'center').append(name_field = $('<h3/>').text(room_type)))
+                                            .append(NF.cell(false,12,0,'center').append(type_field = NF.n('div','small i').text('')))
                                 )
                             ).append(room.options.rename ? NF.cell(true, 1,0,'center pointer').append(NF.fa('pencil-square-o')).click(function() {
                                 var new_name = prompt(<?=__j('Bitte gib einen neuen Namen ein:')?>, room_name);
@@ -384,7 +391,8 @@ core.popup = {
                                         if (!data.success) game.render.html.notify('error',<?=__j('Ein Fehler ist aufgetreten.')?>);
                                         else {
                                             room_name = data.result;
-                                            name_field.text(data.result ? data.result : <?=__j('Namenloser Raum')?>);
+                                            name_field.text(data.result ? data.result : room_type);
+                                            type_field.text(data.result ? room_type : '')
                                         }
                                     });
                                 }
@@ -414,11 +422,11 @@ core.popup = {
                 var action_row;
 
                 current.append(action_row = NF.row().addClass(room.options.enabled ? '' : 'disabled')
-                    .append(NF.cell(true,{desktop: 4, lg: 6, sm: 12},0,'center').append(btn_add = NF.button(<?=__j('Ausbauen...')?>).addClass('btn-zv btn-zv-skinned-location').addClass(room.options.add ? '' : 'disabled')))
-                    .append(NF.cell(true,{desktop: 4, lg: 6, sm: 12},0,'center').append(btn_con =  NF.button(<?=__j('Umbauen...')?>).addClass('btn-zv btn-zv-skinned-location').addClass(room.options.construct ? '' : 'disabled')))
+                    .append(NF.cell(true,{desktop: 6, sm: 12},0,'center').append(btn_add = NF.button(<?=__j('Ausbauen...')?>).addClass('btn-zv btn-zv-skinned-location').addClass(room.options.add ? '' : 'disabled')))
+                    .append(NF.cell(true,{desktop: 6, sm: 12},0,'center').append(btn_con =  NF.button(<?=__j('Umbauen...')?>).addClass('btn-zv btn-zv-skinned-location').addClass(room.options.construct ? '' : 'disabled')))
                 );
                 $.each(room.options.actions, function(aid,hid) {
-                    action_row.append(NF.cell(true,{desktop: 4, lg: 6, sm: 12},0,'center').append(core.snippets.button(
+                    action_row.append(NF.cell(true,{desktop: 12, sm: 12},0,'center').append(core.snippets.button(
                         hid,
                         function() {popup.trigger('unpop');},
                         'tooltip',

@@ -41,6 +41,26 @@ return Model_Blueprints::factory()
             ->space(1)
     )
 
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->room('outside_defense')
+            ->requires_room('free')
+            ->requires_room_tag('outside')
+            ->name('Verteidigungslinie')
+            ->description('Wie uns Plants Vs. Zombies gelehrt hat, lässt sich ein Petuniengarten wunderbar für die Verteidigung des eigenen Verstecks nutzen.')
+            ->energy(5)
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->room('radiotower')
+            ->requires_room('invalid')
+            ->requires_room_tag('inside')
+            ->clear_previous_room(true)
+            ->emplaces(Model_Items_Virtual_Location_Mapmode::cls())
+            ->name('Funkraum')
+    )
+
     //++ STACK -> EPIC FOUNDATIONS
     ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->energy(15)->message('Du hast die Arbeiten an einem epischen Projekt in deinem Versteck begonnen. Viel Erfolg!')->effect(Model_Effect::factory()->achieve(Model_Achievement::MA_EPIC_BEGIN, 1, true));})
 

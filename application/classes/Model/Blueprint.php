@@ -158,12 +158,18 @@ class Model_Blueprint {
         }
     }
 
-    public function global_blocking($b = null): bool
-    {
-        if ($b === null) {
+    /**
+     * @param bool $b
+     *
+     * @return Model_Blueprint|bool
+     */
+    public function global_blocking(?bool $b = null) {
+        if ($b === null)
             return $this->use_global_blocking;
+        else {
+            $this->use_global_blocking = $b;
+            return $this;
         }
-        return $this->use_global_blocking = true;
     }
 
     /**

@@ -75,7 +75,8 @@ class Model_Room {
      * @return string
      */
     public function name($new_name = null, $force = false): ?string {
-        if ($new_name === null || mb_strlen($new_name) < 2) return $this->room_name ?: null;
+        if ($new_name === null || (mb_strlen($new_name) < 2 && $new_name !== '')) return $this->room_name ?: null;
+        else if ($new_name === '') return $this->room_name = null;
         else return $this->room_name = $force ? $new_name :  mb_substr($new_name,0,16);
     }
 

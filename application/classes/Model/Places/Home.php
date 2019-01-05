@@ -16,8 +16,14 @@ class Model_Places_Home extends Model_Places_Abstract_Hideout {
 
     public function setup_additional_rooms(): void
     {
-        $this->create_new_room(10,['inside']);
+        if (Globals::CurrentGameF()->config('modules.mapping'))
+            $this->setup_new_room($this->create_new_room(5,['inside']),
+                ['radiotower'],
+                []
+            );
+        else $this->create_new_room(10,['inside']);
         $this->create_new_room(15,['inside']);
+        $this->create_new_room(20,['outside']);
         $this->create_new_room(20,['outside']);
     }
 
@@ -31,17 +37,7 @@ class Model_Places_Home extends Model_Places_Abstract_Hideout {
         return $this->map_points;
     }
 
-    public function set_map_points($new): void
-    {
+    public function set_map_points($new): void {
         $this->map_points = $new;
-    }
-
-
-    public function uin($new = null) {
-        if ($new !== null)
-            if (Globals::CurrentGameF()->config('modules.mapping'))
-                $this->inventory->add(new Model_Items_Virtual_Location_Mapmode());
-
-        return parent::uin($new);
     }
 }	

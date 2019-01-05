@@ -71,7 +71,6 @@ class Model_Room {
     /**
      * @param string|null $new_name
      * @param bool        $force
-     *
      * @return string
      */
     public function name($new_name = null, $force = false): ?string {

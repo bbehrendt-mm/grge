@@ -206,6 +206,7 @@ return Model_Blueprints::factory()
             ->message('Dank deinem neuen KingSize-Bett hast du nun extra viel Platz, dich Nachts vor Angst in deinem Bett herumzuwälzen.')
             ->deco(1)
             ->energy(5)
+            ->space(5)
             ->material([Model_Items_Generic_Bed::cls() => 1, Model_Items_Generic_Cloth::cls() => 3])
     )
 

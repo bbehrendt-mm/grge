@@ -106,6 +106,38 @@ return Model_Blueprints::factory()
             ->energy(15)
             ->space(6)
     )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->room('roofing1')
+            ->silence_room_usage(true)
+            ->requires_room('free')
+            ->requires_room_tag('outside')
+            ->replace_room_tags(['outside'],['inside'])
+            ->replace_room_satisfaction(false)
+            ->material([Model_Items_Generic_Wood::cls() => 20])
+            ->provide_room(['roofing'])
+            ->name('Improvisierte Überdachung')
+            ->description('3.5 Wände und 0.75 Decken kommen einem richtigen Raum doch schon ziemlich nahe, oder?')
+            ->energy(25)
+            ->space(5)
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->room('roofing2')
+            ->silence_room_usage(true)
+            ->requires_room('free')
+            ->requires_room_tag('outside')
+            ->replace_room_tags(['outside'],['inside'])
+            ->replace_room_satisfaction(false)
+            ->material([Model_Items_Generic_Wood::cls() => 10, Model_Items_Generic_Sum::cls() => 3])
+            ->provide_room(['roofing'])
+            ->name('Professionelle Überdachung')
+            ->description('Blickdicht, Windgeschützt und außerdem hübsch tapeziert; so muss ein richtiger Raum aussehen!')
+            ->energy(20)
+    )
+
     ->pop_stack()
 
     ;

@@ -19,6 +19,7 @@ class Model_Blueprint {
 
     private $obj_name;
     private $obj_description;
+    private $obj_copy_usage = true;
 
     /** @var Struct_ItemMaterial[] $items  */
     private $items = [];
@@ -37,6 +38,9 @@ class Model_Blueprint {
     private $removes = [];
     private $room_requirements = [];
     private $use_global_blocking = true;
+
+    private $remove_tags = [];
+    private $add_tags = [];
 
     private $energy = 0;
     private $decay = 0;
@@ -275,6 +279,16 @@ class Model_Blueprint {
         }
     }
 
+    public function silence_room_usage($b = null) {
+        if (!$this->is_room) throw new LogicException('Using SILENCE on non-room!');
+
+        if ($b === null) return !$this->obj_copy_usage;
+        else {
+            $this->obj_copy_usage = !$b;
+            return $this;
+        }
+    }
+
     /**
      * @param bool|null $v
      * @return Model_Blueprint|bool
@@ -288,6 +302,21 @@ class Model_Blueprint {
             $this->room_clear_sat = $v;
             return $this;
         }
+    }
+
+    /**
+     * @param array $remove
+     * @param array $add
+     *
+     * @return Model_Blueprint
+     */
+    public function replace_room_tags(array $remove, array $add): Model_Blueprint {
+        if (!$this->is_room) throw new LogicException('Using TAG_REPLACE on non-room!');
+
+        $this->remove_tags = array_merge($remove, $this->remove_tags);
+        $this->add_tags = array_merge($add, $this->add_tags);
+
+        return $this;
     }
 
     /**
@@ -853,13 +882,16 @@ class Model_Blueprint {
     {
         if ($this->clear_previous_room()) $room->clear();
 
-        $room->upgrade($this->obj_name,$this->clear_previous_room() ? true : ($this->replace_room_satisfaction() ? $this->requires_room() : false),$this->provide_room());
+        $room->upgrade($this->silence_room_usage() ? null : $this->obj_name,$this->clear_previous_room() ? true : ($this->replace_room_satisfaction() ? $this->requires_room() : false),$this->provide_room());
 
         foreach ($this->emplaces_action_data as [$text,$text_desc,$custom_popup,$custom_action_id
         ]
         ) {
             $room->inventory()->add(new Model_Items_Virtual_Location_Room_Generic($text,$text_desc,$custom_popup,$custom_action_id));
         }
+
+        $room->remove_tag($this->remove_tags);
+        $room->add_tag($this->add_tags);
 
         foreach ($this->emplaces as $item => $count)
             for ($i = 0; $i < $count; $i++) {
@@ -892,7 +924,7 @@ class Model_Blueprint {
             $location->deco($this->deco_value);
         }
 
-        $room->deduct_space($this->space());
+        if (!$room->deduct_space($this->space())) throw new LogicException("Precondition failed: SPACE_CALCULATION");
 
         if ($this->is_room) return $this->apply_room($room,$location);
 

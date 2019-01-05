@@ -110,7 +110,7 @@ class Model_Room {
     public function deduct_space($space, $can_fail = true): bool
     {
         if ($space === 0) return true;
-        if ($can_fail && $space < $this->get_space(true)) return false;
+        if ($can_fail && $space > $this->get_space(true)) return false;
         $this->used_space += $space;
         return true;
     }
@@ -130,7 +130,7 @@ class Model_Room {
      */
     public function upgrade($new_usage, $replace_satisfiers, $new_satisfiers): void
     {
-        $this->usage = $new_usage;
+        $this->usage = $new_usage ?: $this->usage;
         if ($replace_satisfiers === true) $this->satisfies = [];
         elseif (is_array($replace_satisfiers)) {
             $tmp = [];
@@ -193,6 +193,23 @@ class Model_Room {
             return true;
         } else return $tags === '' ? true : in_array($tags,$this->tags,false);
     }
+
+    /**
+     * @param string|string[] $tags
+     */
+    public function remove_tag($tags): void {
+        if (is_array($tags)) foreach ($tags as $tag) $this->remove_tag($tag);
+        else $this->tags = array_filter($this->tags, function($tag) use ($tags) { return $tag !== $tags; });
+    }
+
+    /**
+     * @param string|string[] $tags
+     */
+    public function add_tag($tags): void {
+        if (is_array($tags)) foreach ($tags as $tag) $this->add_tag($tag);
+        else if (!$this->has_tag($tags)) $this->tags[] = $tags;
+    }
+
 
     /**
      * @param string|string[] $a

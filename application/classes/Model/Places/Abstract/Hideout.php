@@ -199,12 +199,11 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         return round($this->defense * ($actual ? 1 : (1 - $this->decay)));
     }
 
-    public function get_decay(): int
-    {
+    public function get_decay(): float {
         return $this->decay;
     }
 
-    public function get_patchup(): int
+    public function get_patchup(): float
     {
         return $this->patchup;
     }

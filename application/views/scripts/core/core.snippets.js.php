@@ -531,10 +531,12 @@
                             });
                         });
 
-                    if (cache.length) {
+                    if (cache.length || blueprint.globally_blocked) {
                         content.append($('<span />').text(<?=__j('Verhindert')?>));
+                        if (blueprint.globally_blocked)
+                            content.append($('<div />').addClass('point').text(blueprint.name + " (" + <?=__j('in anderen Räumen')?> + ")"));
                         $.each(cache, function(k,v) {
-                            content.append($('<div />').addClass('point').text(v));
+                            content.append($('<div />').addClass('point').text(v + (!blueprint.globally_blocked ? '' : (" (" + <?=__j('an diesem Ort')?> + ")"))));
                         })
                     }
                 }

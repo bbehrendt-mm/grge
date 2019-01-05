@@ -4568,10 +4568,12 @@ core = {
                             });
                         });
 
-                    if (cache.length) {
+                    if (cache.length || blueprint.globally_blocked) {
                         content.append($('<span />').text("Verhindert"));
+                        if (blueprint.globally_blocked)
+                            content.append($('<div />').addClass('point').text(blueprint.name + " (" + "in anderen R\u00e4umen" + ")"));
                         $.each(cache, function(k,v) {
-                            content.append($('<div />').addClass('point').text(v));
+                            content.append($('<div />').addClass('point').text(v + (!blueprint.globally_blocked ? '' : (" (" + "an diesem Ort" + ")"))));
                         })
                     }
                 }

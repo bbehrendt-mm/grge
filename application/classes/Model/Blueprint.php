@@ -37,7 +37,7 @@ class Model_Blueprint {
     private $provides_room = [];
     private $removes = [];
     private $room_requirements = [];
-    private $use_global_blocking = true;
+    private $use_global_blocking = false;
 
     private $remove_tags = [];
     private $add_tags = [];
@@ -73,7 +73,7 @@ class Model_Blueprint {
             foreach ($cache as $entry)
                 if (get_class($item) === $entry->class)
                     return $entry->get_decider()($item);
-            return false;
+            return true;
         };
     }
 

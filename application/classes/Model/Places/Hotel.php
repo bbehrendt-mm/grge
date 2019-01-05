@@ -21,7 +21,7 @@ class Model_Places_Hotel extends Model_Places_Abstract_Hideout {
     public function setup_additional_rooms(): void
     {
         for ($i = 0; $i < 6; $i++)
-            $this->setup_new_room($this->create_new_room(8,['inside']),
+            $this->setup_new_room($this->create_new_room(10,['inside']),
                                   ['bedroom'],
                                   ['bedr1','bedr2','bedr3'],
                 'Hotelzimmer'

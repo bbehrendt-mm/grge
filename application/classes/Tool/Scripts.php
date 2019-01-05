@@ -215,7 +215,6 @@ class Tool_Scripts
         $source = $source ?: new Struct_ScriptItemSource();
 
         $player = $source->get_player();
-
         $proto = [];
 
         if ($source->from_player)

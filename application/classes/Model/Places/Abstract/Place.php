@@ -120,10 +120,9 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
     public function rooms_contain($chk = null) {
         $accum = [];
         $res = false;
-        if ($chk === null)
-            foreach ($this->rooms as $room)
-                if ($chk === null) $accum = array_merge($accum, $room->get_content());
-                else $res = $res || $room->check_room_satisfaction($chk);
+        foreach ($this->rooms as $room)
+            if ($chk === null) $accum = array_merge($accum, $room->get_content(), $room->get_satisfaction());
+            else $res = $res || $room->check_room_satisfaction($chk);
         return ($chk === null) ? array_unique($accum) : $res;
     }
 

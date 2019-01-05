@@ -44,6 +44,7 @@ return Model_Blueprints::factory()
     ->add_blueprints(
         Model_Blueprint::factory()
             ->room('outside_defense')
+            ->global_blocking(false)
             ->requires_room('free')
             ->requires_room_tag('outside')
             ->name('Verteidigungslinie')

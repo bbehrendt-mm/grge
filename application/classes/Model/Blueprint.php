@@ -694,7 +694,7 @@ class Model_Blueprint {
  */
     private function can_prod($preconditions, $room = null): bool
     {
-        if ($this->is_room) return $this->can_prod_room($room);
+        if ($this->is_room) return $this->can_prod_room($room, $preconditions);
         if ($this->steps > 0) {
             if ($room === null && !$this->global_blocking()) return true;
             foreach ($this->provides as $p)
@@ -706,14 +706,21 @@ class Model_Blueprint {
 
     /**
      * @param Model_Room|null $room
+     * @param array $preconditions
      * @return bool
      */
-    private function can_prod_room($room = null): bool
+    private function can_prod_room($room = null, $preconditions = []): bool
     {
+        foreach ($this->provides_room as $p)
+            if (in_array($p, $preconditions, true))
+                return false;
+
         if ($room === null) return true;
+
         foreach ($this->provides_room as $p)
             if ($room->check_room_satisfaction($p) && !in_array($p, $this->requires_room(), true))
                 return false;
+
         return true;
     }
 
@@ -748,7 +755,7 @@ class Model_Blueprint {
      */
     public function can($preconditions, $room = null, $ignore_blocked_slots = false): bool
     {
-        return ($ignore_blocked_slots || $this->can_prod($preconditions,$room)) && $this->can_req($preconditions) && ($room === null || $this->can_room($room));
+        return ($ignore_blocked_slots || $this->can_prod($preconditions,$room)) && $this->can_req($preconditions) && ($room === null || $this->can_room($room, $preconditions));
     }
 
 

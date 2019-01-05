@@ -97,6 +97,10 @@ class Model_Room {
         return $this->contains;
     }
 
+    public function get_satisfaction(): array {
+        return $this->satisfies;
+    }
+
     /**
      * @param bool $limit_free
      * @return int

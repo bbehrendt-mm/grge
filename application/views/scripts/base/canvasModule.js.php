@@ -24,9 +24,6 @@
 
         this.pretick = pretick_action;
 
-        if (pretick_action) createjs.Ticker.addEventListener("tick", this.pretick);
-        createjs.Ticker.addEventListener("tick", this.stage);
-
         createjs.Ticker.framerate = fps;
     };
 
@@ -38,7 +35,6 @@
     };
 
     CanvasAnimationModule.prototype.end = function() {
-        //createjs.Ticker.removeAllEventListeners("tick");
         createjs.Ticker.removeEventListener("tick", this.pretick);
         createjs.Ticker.removeEventListener("tick", this.stage);
     };
@@ -58,7 +54,7 @@
     CanvasAnimationModule.prototype.begin = function() {
         if (this.pretick) createjs.Ticker.addEventListener("tick", this.pretick);
         var alias = this;
-        createjs.Ticker.addEventListener("tick", function() {alias.stage.update();});
+        createjs.Ticker.addEventListener("tick", alias.stage);
 
         if (this.loadstate)
             this.waiting = true;
@@ -138,8 +134,6 @@
     }
 
     CanvasAnimationModule.prototype.getTimeline = function(timeline = "default") {
-        //if (typeof this.timelines[timeline] === "undefined")
-        //    this.timelines[timeline] = new createjs.Timeline();
         return this.timelines[timeline];
     }
 })();

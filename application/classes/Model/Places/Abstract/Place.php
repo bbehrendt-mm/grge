@@ -539,7 +539,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
         if (!($building = Globals::CurrentGameF()->mapF($this->uin())->attempt_unveil($this->uin(), Globals::CurrentPlayerF()->get_status()->get(Model_Status::MS_CHAR_LOCATION_SPAWNRATE)))) return true;
 
         //Mapper
-        if (Globals::CurrentGameF()->config('modules.mapping') && ($items = Globals::CurrentPlayerF()->inventory()->get(Model_Items_Maptool::cls()))) {
+        if (Globals::CurrentGameF()->config('modules.mapping') && Globals::CurrentGameF()->main_map()->has_location($this->uin()) && ($items = Globals::CurrentPlayerF()->inventory()->get(Model_Items_Maptool::cls()))) {
             /** @var $items Model_Items_Maptool[] */
             if (!$items) return false;
             $items[0]->common_discovery(random_int(5, 15));

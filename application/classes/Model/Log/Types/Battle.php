@@ -22,7 +22,7 @@ class Model_Log_Types_Battle extends Model_Log_Message {
 
         foreach ($data['sum'] as &$group) {
             foreach ($group as &$entry) {
-                if (isset($entry['name']) && !empty($entry['unique']))
+                if (isset($entry['name']) && empty($entry['unique']))
                     $entry['name'] = __($entry['name']);
 
                 if (isset($entry['injuries'])) {

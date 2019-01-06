@@ -37,8 +37,6 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
     protected static $carrier_item = false;
     protected static $max_per_player = 0;
 	protected $custom_info = Array();
-    /** @var string|null $idea_contest_player */
-	protected static $idea_contest_player;
 	
 	public $type = -1;
 
@@ -52,10 +50,6 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 
     public function get_max_per_player(): int {
         return static::$max_per_player;
-    }
-
-    public static function idea_contest_player(): ?string {
-        return static::$idea_contest_player;
     }
 
     /**

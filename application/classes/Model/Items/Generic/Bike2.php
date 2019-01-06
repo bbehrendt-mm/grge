@@ -10,8 +10,6 @@ class Model_Items_Generic_Bike2 extends Model_Items_Abstract_Transport implement
 	);
 
     protected static $weight = 60;
-    protected static $icon_ext = 'png';
-    protected static $idea_contest_player = 'ExoticAsAlways';
     protected static $speedup = 0.25;
 
     /**

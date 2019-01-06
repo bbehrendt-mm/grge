@@ -15,6 +15,7 @@ class Model_Buffs_Transport extends Model_Buffs_Abstract_Passive {
 						Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
 				),				
 			);
+    protected function get_effects(): array { return $this->effects; }
 	
 	protected function activator(): bool
     {

@@ -231,7 +231,7 @@
             var w = Math.min(50,Math.abs(100 - value)/2);
             var l = value < 100 ? (50 - w) : 50;
 
-            cb = $('<div />').addClass(value < 100 ? 'negative' : 'positive').css({position: 'relative', left: l + '%', width: w + '%'});
+            cb = $('<div />').addClass((num_decode_inverse(type) ? (value > 100) : (value < 100)) ? 'negative': 'positive').css({position: 'relative', left: l + '%', width: w + '%'});
             //cb = $('<div />').css({width: value + '%', background: num_decode_color(type)});
         } else cb = $('<div />').css({width: value + '%', background: num_decode_color(type)});
 

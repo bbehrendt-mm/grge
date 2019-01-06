@@ -16,12 +16,24 @@ div.log_box, div.chat {
     padding: 5px 2px;
     &:not(.pointer) {cursor: default;}
 
-    &:first-child {border-top-right-radius: @log-radius; border-top-left-radius: @log-radius;}
+    &:first-child {
+      border-top-right-radius: @log-radius; border-top-left-radius: @log-radius;
+      &> .timestamp {margin-top: 7px;}
+    }
     &:last-child {border-bottom-right-radius: @log-radius; border-bottom-left-radius: @log-radius;}
     &+.message {border-top: 1px solid #d3d3d3;}
 
+    &.pointer {
+      position: relative;
+      &::after {
+        position: absolute; top: 5px; right: 0; font-family: FontAwesome; font-style: normal; font-weight: bold;
+        content: "\f107"; font-size: 15px; pointer-events: none;
+      }
+    }
+
     &> .timestamp {
-      display: inline-block; width: 80px; padding-left: 5px; text-align: center; position: relative; vertical-align: top; color: @log-timestamp-color;
+      display: inline-block; width: 80px; padding-left: 5px; text-align: center; position: relative;
+      vertical-align: top; color: @log-timestamp-color; font-size: 12px; margin-top: 4px;
       &.new::before {
         background: @zv-color-main-dark; color: @zv-color-secondary; position: absolute; top: 0; left: -15px; height: 24px; width: 24px;
         font-family: FontAwesome; font-style: normal; font-weight: normal; content: "\f12a"; font-size: 22px; border-radius: 12px; pointer-events: none;

@@ -107,7 +107,7 @@ return array(
                     'items.pill.use_default_effect_proc'    => false,
                     'items.bottle.allow_full_detox'         => false,
 
-                    'ranking.points.survival.factor'        => 1.5,
+                    'ranking.points.survival.factor'        => 2.5,
                 ),
                 'spawn' => array(),
             ),

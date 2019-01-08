@@ -126,11 +126,13 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
         $active_locations = array_keys($active_locations);
 
 		foreach ($active_locations as $lid)
-		    if ($this->location($lid)) {
-                $this->location($lid)->pretick();
-                foreach ($this->location($lid)->inventory()->get('Interface_Tickable') as $item)
+		    if ($loc = $this->location($lid)) {
+		        Globals::setCurrentLocation($loc);
+                $loc->pretick();
+                foreach ($loc->inventory()->get('Interface_Tickable') as $item)
                     /** @var $item Interface_Tickable */
                     $item->tick($lid, Interface_Tickable::IT_TYPE_LOCATION);
+                Globals::resetCurrentLocation();
             }
 
 		

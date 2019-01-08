@@ -19,7 +19,11 @@ abstract class Model_Combat_Zombies_Zombie extends Model_Combat_Actor {
         $this->type = Model_Combat_Actor::MCA_TYPE_ZOMBIE;
         $this->nano_npc = new Model_NPC_Nano($this->name());
         $this->nano_npc->get_status()->set(Model_Status::MS_STAT_ENERGY, 50);
-        $this->nano_npc->location_class(Globals::CurrentPlayerF()->location_class());
+        $this->nano_npc->location_class(
+            Globals::hasCurrentLocation() ?
+                Globals::getCurrentLocationF()->uin() :
+                -1
+        );
     }
 
     public static function get_strength_quantifier(): int

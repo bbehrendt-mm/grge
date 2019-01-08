@@ -4,9 +4,74 @@ class Globals extends Model {
 
     private static $current_user;
     private static $current_game;
+    private static $current_location;
 
     private static $primary_player;
     private static $current_player;
+
+    /**
+     * Returns true if a current location is explicitly set.
+     * @return bool
+     */
+    public static function hasExplicitCurrentLocation(): bool {
+        return static::$current_location === null;
+    }
+
+    /**
+     * Returns true if a current location is explicitly set or can be inferred
+     * from the current player.
+     * @return bool
+     */
+    public static function hasCurrentLocation(): bool {
+        return
+            static::hasCurrentPlayer() ||
+            static::hasExplicitCurrentLocation();
+    }
+
+    /**
+     * Resets the currently active location
+     */
+    public static function resetCurrentLocation(): void {
+        static::$current_location = null;
+    }
+
+    /**
+     * @param Model_Places_Abstract_Place|null $location Active location
+     */
+    public static function setCurrentLocation(?Model_Places_Abstract_Place $location): void {
+        if ($location === null || static::hasExplicitCurrentLocation())
+            static::resetCurrentLocation();
+        if ($location !== null)
+            static::$current_location = $location;
+    }
+
+    /**
+     * Returns the currently active location, or NULL if no location is active.
+     *
+     * @return Model_Places_Abstract_Place|null
+     * @throws Exception
+     */
+    public static function getCurrentLocation(): ?Model_Places_Abstract_Place {
+        if (static::hasCurrentPlayer())
+            return static::CurrentPlayerF()->location();
+        if (static::hasExplicitCurrentLocation())
+            return static::$current_location;
+        return null;
+    }
+
+    /**
+     * Returns the currently active location.
+     *
+     * @return Model_Places_Abstract_Place
+     * @throws Exception When no location is active
+     */
+    public static function getCurrentLocationF(): Model_Places_Abstract_Place {
+        $location = self::getCurrentLocation();
+        if ($location === null) throw new LogicException(
+            'Attempted to fetch the current location object when no location object was bound.'
+        );
+        return $location;
+    }
 
     /**
      * Resets the currently active user object.

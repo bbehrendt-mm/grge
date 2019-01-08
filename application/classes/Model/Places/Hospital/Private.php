@@ -16,11 +16,18 @@ class Model_Places_Hospital_Private extends Model_Places_Abstract_Hideout {
     //Exp: 8% per day
     protected static $decay_exp = 0.15;
 
-    public function uin($new = null) {
-        if ($new !== null)
-            $this->setup_new_room($this->room(), ['bedroom'], ['bedr1','bedr2','bedr3']);
+    public function setup_primary_rooms(): Model_Room {
+        $room = parent::setup_primary_rooms();
+        Model_Blueprints::fast_apply($this, 'upgrades', ['hideout'], $room);
 
-        return parent::uin($new);
+        return $room;
+    }
+
+    public function setup_additional_rooms(): void {
+        $this->setup_new_room($this->create_new_room(10,['inside']),
+            ['bedroom'],
+            ['bedr1','bedr2','bedr3']
+        );
     }
 
 }	

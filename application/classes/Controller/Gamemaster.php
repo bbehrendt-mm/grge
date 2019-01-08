@@ -538,7 +538,7 @@ class Controller_Gamemaster extends Controller {
      * @throws Kohana_Exception
      */
     public function action_lobby(): void {
-        $special_id = $this->request->param('id', 0);
+        $special_id = (int)$this->request->param('id', 0);
         if (!Tool_Gamemodes::is_special_mode($special_id)) $special_id = 0;
 
         // Make sure there are enough open games in the lobby

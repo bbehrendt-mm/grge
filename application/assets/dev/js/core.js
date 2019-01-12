@@ -3026,7 +3026,8 @@ core = {
         if (!popup) popup = core.popup.spawn_window('', true, {desktop: 700, lg: '100%'},{desktop: 450, lg: '100%'});
 
         var header = core.popup.get_window_titlebar(popup);
-        popup.empty();
+
+        if (!frame) popup.empty();
 
         if (!frame)
             frame = NF.row().appendTo(

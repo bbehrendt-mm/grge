@@ -14,14 +14,13 @@ class Model_Places_Tentkit2 extends Model_Places_Tentkit {
     //Base: 15% per day
     protected static $decay_rate = 0.15;
 
-    public function uin($new = null) {
-        $t = parent::uin($new);
-
-        if ($new !== null)
-            $this->setup_new_room($this->room(),
-                                  [],
-                                  ['bedr2']);
-        return $t;
+    public function setup_primary_rooms(): Model_Room
+    {
+        $room = parent::setup_primary_rooms();
+        $this->setup_new_room($room,
+            [],
+            ['bedr2']);
+        return $room;
     }
 
     public function can_enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER): bool

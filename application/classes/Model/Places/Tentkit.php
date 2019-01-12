@@ -26,14 +26,20 @@ class Model_Places_Tentkit extends Model_Places_Abstract_Hideout {
         parent::__construct();
     }
 
-    public function uin($new = null) {
-        if ($new !== null)
-            $this->setup_new_room($this->room(),
-                                  ['bedroom'],
-                                  ['bedr1']);
+    public function setup_primary_rooms(): Model_Room
+    {
+        $room = $this->create_new_room(-1,['inside','primary']);
+        Model_Blueprints::fast_apply($this, 'upgrades', ['hideout'], $room);
+        $room->name($this->name(), true);
+        $room->name_is_fixed(true);
+        $this->setup_new_room($room,
+            ['bedroom'],
+            ['bedr1']);
 
-        return parent::uin($new);
+        return $room;
     }
+
+    public function setup_additional_rooms(): void {}
 
     public function tick($type = Interface_Tickable::IT_TYPE_PLAYER): bool {
         if ($this->cursed) {

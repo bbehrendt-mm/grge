@@ -2,8 +2,8 @@
 
 class Model_Buffs_Job_Pathfinder extends Model_Buffs_Abstract_Job {
 	
-	protected static $name = Array('Pfadfinder-Frischling', 'Pfadfinder', 'Erfahrender Pfadfinder', 'Pfadfinder-Experte', 'Pfadfindermeister');
-	protected static $desc = Array(	'In deiner kurzen Zeit bei den Pfadfindern hast du zumindest deine Gehtechnik perfektionieren können. Du benötigst nun geringfügig weniger Energie, um an neue Orte zu gelangen.',
+	protected static $namelist = Array('Pfadfinder-Frischling', 'Pfadfinder', 'Erfahrender Pfadfinder', 'Pfadfinder-Experte', 'Pfadfindermeister');
+	protected static $desclist = Array(	'In deiner kurzen Zeit bei den Pfadfindern hast du zumindest deine Gehtechnik perfektionieren können. Du benötigst nun geringfügig weniger Energie, um an neue Orte zu gelangen.',
 									'Du weist, dass der offensichtliche Weg nicht immer der effektivste ist. Deine Fähigkeit Wege zu optimieren hilft dir, Energie zu sparen.',
 									'Weder Stock noch Stein können dich aufhalten. Wo andere Umwege machen, läufst du einfach mitten durch. Deine Kenntnis der Umgebung reduziert deine Bewegungskosten merklich.',
 									'Überall siehst du Schlupflöcher, kleine Felsspalten und überwucherte Trampelpfade. Kein noch so versteckter Weg bleibt dir verborgen. Du kannst nicht nur auf bekannten Wegen gewaltig Energie sparen, sondern auch versuchen, komplett neue Pfade zu entdecken.',

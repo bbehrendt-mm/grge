@@ -2,8 +2,8 @@
 
 class Model_Buffs_Job_Woman extends Model_Buffs_Abstract_Job {
 	
-	protected static $name = Array('Matriarchiale Kampfkunst', 'Matriarchiale Kampfkunst', 'Matriarchiale Kampfkunst', 'Matriarchiale Kampfkunst', 'Matriarchiale Kampfkunst', 'Matriarchiale Kampfkunst', 'Matriarchiale Kampfkunst', 'Matriarchiale Kampfkunst', 'Matriarchiale Kampfkunst', 'Matriarchiale Kampfkunst');
-	protected static $desc = Array(	'Mit einer richtig angepissten Emanzipationsterroristin legen sich selbst Zombies nur ungerne an. Du richtest im Kampf wesentlich mehr Schaden an, steckst dafür aber auch etwas mehr Schaden ein.',
+	protected static $namelist = Array('Matriarchiale Kampfkunst', 'Matriarchiale Kampfkunst', 'Matriarchiale Kampfkunst', 'Matriarchiale Kampfkunst', 'Matriarchiale Kampfkunst', 'Matriarchiale Kampfkunst', 'Matriarchiale Kampfkunst', 'Matriarchiale Kampfkunst', 'Matriarchiale Kampfkunst', 'Matriarchiale Kampfkunst');
+	protected static $desclist = Array(	'Mit einer richtig angepissten Emanzipationsterroristin legen sich selbst Zombies nur ungerne an. Du richtest im Kampf wesentlich mehr Schaden an, steckst dafür aber auch etwas mehr Schaden ein.',
 									'Mit einer richtig angepissten Emanzipationsterroristin legen sich selbst Zombies nur ungerne an. Du richtest im Kampf wesentlich mehr Schaden an, steckst dafür aber auch etwas mehr Schaden ein.',
 									'Mit einer richtig angepissten Emanzipationsterroristin legen sich selbst Zombies nur ungerne an. Du richtest im Kampf wesentlich mehr Schaden an, steckst dafür aber auch etwas mehr Schaden ein.',
 									'Mit einer richtig angepissten Emanzipationsterroristin legen sich selbst Zombies nur ungerne an. Du richtest im Kampf wesentlich mehr Schaden an, steckst dafür aber auch etwas mehr Schaden ein.',

@@ -176,8 +176,7 @@ class Model_Status {
 
     public function scaling_remove($stat, $type, $name): void
     {
-        if (isset($this->scaling_effects[$stat], $this->scaling_effects[$stat][$type], $this->scaling_effects[$stat][$type][$name])
-        )
+        if (isset($this->scaling_effects[$stat][$type][$name]))
             unset($this->scaling_effects[$stat][$type][$name]);
     }
 

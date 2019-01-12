@@ -40,7 +40,7 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
      * @return string
      */
     public function name(): string {
-		return static::$name;
+		return static::$name ?: '???';
 	}
 
     public function get_dominance(): int
@@ -63,7 +63,7 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
      * @return string
      */
     public static function static_name(): string {
-        return static::$name;
+        return static::$name ?: '???';
     }
 
     /**
@@ -72,7 +72,7 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
      * @return string
      */
     public static function static_icon(): string {
-        return 'buffs/' . static::$icon;
+        return 'buffs/' . (static::$icon ?: 'any');
     }
 
     /**
@@ -103,7 +103,7 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
      * @return string
      */
     public function description(): string {
-		return static::$desc;
+		return static::$desc ?: '';
 	}
 
     /**
@@ -112,7 +112,7 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
      * @return string
      */
     public static function static_description(): string {
-        return static::$desc;
+        return static::$desc ?: '';
     }
 
     /**
@@ -121,7 +121,7 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
      * @return string
      */
     public function bid(): string {
-		return static::$bid;
+		return static::$bid ?: 'null';
 	}
 
     /**
@@ -130,7 +130,7 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
      * @return string
      */
     public static function static_bid(): string {
-        return static::$bid;
+        return static::$bid ?: 'null';
     }
 
     /**

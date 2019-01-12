@@ -2,8 +2,8 @@
 
 class Model_Buffs_Job_Coach extends Model_Buffs_Abstract_Job {
 	
-	protected static $name = Array('Footballer-Statur');
-	protected static $desc = Array(	'Dank deiner beeindruckenden Statur kannst du mehr Schaden einstecken und bei der Flucht ein paar Extra-Zombies aus dem Weg räumen.');
+	protected static $namelist = Array('Footballer-Statur');
+	protected static $desclist = Array(	'Dank deiner beeindruckenden Statur kannst du mehr Schaden einstecken und bei der Flucht ein paar Extra-Zombies aus dem Weg räumen.');
 	
 	protected static $bid = 'coach';
 	

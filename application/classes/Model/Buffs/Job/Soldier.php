@@ -2,8 +2,8 @@
 
 class Model_Buffs_Job_Soldier extends Model_Buffs_Abstract_Job {
 	
-	protected static $name = Array('Reservist', 'Soldat', 'Soldat', 'Soldat', 'Soldat');
-	protected static $desc = Array(	'Du beherrscht die Grundlagen des bewaffneten Kampfes. Waffe ausrichten, Abzug drücken, Zombies beim Umfallen zugucken. Leider ist dein Wissen eher theoretischer Natur, dennoch erhälst du einen Bonus beim Einsatz von Waffen.',
+	protected static $namelist = Array('Reservist', 'Soldat', 'Soldat', 'Soldat', 'Soldat');
+	protected static $desclist = Array(	'Du beherrscht die Grundlagen des bewaffneten Kampfes. Waffe ausrichten, Abzug drücken, Zombies beim Umfallen zugucken. Leider ist dein Wissen eher theoretischer Natur, dennoch erhälst du einen Bonus beim Einsatz von Waffen.',
 									'All deine Waffen bedienst du routiniert. Während sich andere in den eigenen Fuß schießen, feuerst du einem 200m entfernten Zombie den linken Backenzahn aus dem verfaulenden Mund. Du erhälst einen ordentlichen Bonus beim Einsatz von Waffen.',
 									'All deine Waffen bedienst du routiniert. Während sich andere in den eigenen Fuß schießen, feuerst du einem 200m entfernten Zombie den linken Backenzahn aus dem verfaulenden Mund. Du erhälst einen ordentlichen Bonus beim Einsatz von Waffen.',
 									'All deine Waffen bedienst du routiniert. Während sich andere in den eigenen Fuß schießen, feuerst du einem 200m entfernten Zombie den linken Backenzahn aus dem verfaulenden Mund. Du erhälst einen ordentlichen Bonus beim Einsatz von Waffen.',

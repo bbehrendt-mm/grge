@@ -239,6 +239,58 @@ core = {
                     }))))
         );
     };
+    var ui_show_buffs = function(target,data) {
+
+        var inv, ul;
+
+        inv = $('<div />')
+            .addClass('row inventory flatbox').appendTo(target).hide()
+            .append($('<b />').text('Buffs'))
+            .append(ul = $('<ul />'));
+
+        $.each(data.buffs, function(k,v) {
+            var li = core.snippets.item('[' + v.id + '] ' + v.desc, v.name, v.icon,0,false,true);
+            ul.append(li);
+            
+            li.click(function() {
+                var data = {
+                    'id': v.id,
+                    'params': []
+                };
+
+                var param_ok = true;
+                $.each(v.params, function(inner, param) {
+                    if (param.force)
+                        data.params[param.num] = param.default;
+                    else {
+                        var value = prompt(v.id + ' - Parameter ' + param.name + ' (' + (param.optional ? ('optional, default is "' + param.default + '"') : 'required') + ')', param.default);
+                        if (value === null) {
+                            if (param.optional) value = param.default;
+                            else {
+                                param_ok = false;
+                                return false;
+                            }
+                        }
+
+                        data.params[param.num] = value;
+                    }
+
+                    core.parts.admin.execute('admin/japi/gamepanel/spawn_buff', {buff: data});
+                });
+
+                if (!param_ok) return;
+
+                spawn.append(
+                    core.snippets.item('[' + v.id + '] ' + v.desc, v.name, v.icon,count,false,false).click(function() {
+                        $(this).remove();
+                    }).data('data',data)
+                );
+            });
+        });
+
+        inv.slideDown();
+    };
+
 
     var ui_show_items = function(target,data) {
 
@@ -392,6 +444,10 @@ core = {
 
         $('<div />').addClass('btn small').text('Create item...').click(function() {
             core.parts.admin.loader(target,'admin/japi/gamepanel/list_items', ui_show_items)
+        }).appendTo(ret);
+
+        $('<div />').addClass('btn small').text('Assign buff').click(function() {
+            core.parts.admin.loader(target,'admin/japi/gamepanel/list_buffs', ui_show_buffs)
         }).appendTo(ret);
 
         $('<div />').addClass('btn small').text('Unveil Map').click(function() {

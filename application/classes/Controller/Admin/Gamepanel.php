@@ -48,6 +48,39 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
         $this->render();
     }
 
+    public function japi_spawn_buff(): void
+    {
+        if (!Globals::hasCurrentGame() || !Globals::hasPrimaryPlayer()) return;
+        $buff = self::post('buff');
+        if (!$buff) return;
+
+        $classname = 'Model_Buffs_' . $buff['id'];
+        if (!class_exists($classname) || !Tool_System::instance_of($classname, Model_Buffs_Abstract_Buff::cls())) {
+            $this->add_note('error',"{$buff['id']} is not a valid buff class!");
+            return;
+        }
+
+        $reflector = new ReflectionClass($classname);
+
+        if (!$reflector->isInstantiable()) {
+            $this->add_note('error',"{$buff['id']} is not an instantiable buff class.");
+            return;
+        }
+
+        if (!isset($buff['params'])) $buff['params'] = [];
+        foreach ($buff['params'] as &$v)
+            if ($v === 'null') $v = null;
+        unset($v);
+        $buff['params'][0] = null;
+
+        try {
+            $reflector->newInstanceArgs($buff['params']);
+        } catch (Exception $e) {
+            $this->add_note('error',"Failed to instantiate {$buff['id']}! " . $e->getMessage());
+            return;
+        }
+    }
+
     public function japi_spawn_items(): void
     {
         if (!Globals::hasCurrentGame() || !Globals::hasPrimaryPlayer()) return;
@@ -167,6 +200,59 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
 
         $this->render([
             'zombies' => $list
+        ]);
+    }
+
+    public function japi_list_buffs(): void
+    {
+        $path = APPPATH . 'classes/Model/Buffs';
+        $list = [];
+
+        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
+        foreach($files as $name => $file) {
+            $filename = $file->getFilename();
+            if ($filename[0] === '.') continue;
+            if (substr($filename, -4) !== '.php') continue;
+
+            $filepath = str_replace(
+                array('\\', str_replace('\\', '/', $path)), array('/', ''),
+                $file->getPathName()
+            );
+
+            /** @var Model_Buffs_Abstract_Buff $classpath */
+            $classpath = 'Model_Buffs' . substr(str_replace('/','_',$filepath), 0, -4);
+            $reflection = new ReflectionClass($classpath);
+            if (!$reflection->isInstantiable()) continue;
+            if (!Tool_System::instance_of($classpath, Model_Buffs_Abstract_Buff::cls())) continue;
+
+            $tmp = [];
+            $parameters = $reflection->getConstructor()->getParameters();
+
+            /** @var Model_Buffs_Abstract_Buff|null $instance */
+            $inum = 0;
+
+            foreach ($parameters as $parameter)
+                $tmp[] = [
+                    'num' => $inum++,
+                    'name' => $parameter->getName(),
+                    'optional' => $parameter->isOptional(),
+                    'default' => $parameter->isDefaultValueAvailable() ? $parameter->getDefaultValue() : null,
+                    'force' => $parameter->getName() === 'association',
+                ];
+
+
+            $list[] = [
+                'id' => str_replace(['Model_Buffs_'],[''],$classpath),
+                'name' => __($classpath::static_name()),
+                'desc' => __($classpath::static_description()),
+                'icon' => $classpath::static_icon(),
+                'params' => $tmp
+            ];
+
+        }
+
+        $this->render([
+            'buffs' => $list
         ]);
     }
 

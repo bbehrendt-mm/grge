@@ -16,7 +16,8 @@ class Model_Places_House_Secondfloor extends Model_Places_Abstract_Place {
 
         if ($player->inventory()->weight() > static::$weight_limit)
 		{
-			$this->log->add(new Model_Log_Types_String(null, 'Du versuchst, die Treppe in die erste Etage hinaufzusteigen. Das Holz knirscht unter deinen Füßen und du merkst, wie der Boden langsam nachgibt. Sofort springst du zurück - du bist zu schwer beladen, um hier hochzulaufen. Lege ein paar schwere Sachen aus deinem Rucksack ab und versuche es dann erneut.'));
+			if (!Tool_Scripts::is_npc())
+		        $player->log()->add(new Model_Log_Types_String(null, 'Du versuchst, die Treppe in die erste Etage hinaufzusteigen. Das Holz knirscht unter deinen Füßen und du merkst, wie der Boden langsam nachgibt. Sofort springst du zurück - du bist zu schwer beladen, um hier hochzulaufen. Lege ein paar schwere Sachen aus deinem Rucksack ab und versuche es dann erneut.'));
 			return false;
 		}	
 		return parent::can_enter($pid, $type);

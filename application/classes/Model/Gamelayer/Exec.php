@@ -148,7 +148,7 @@ abstract class Model_Gamelayer_Exec extends Model_Gamelayer_Storage {
         else
             $lobby_open = DB::delete('multiplayer_lobby')->where('gameid', '=', $this->set['gameid'])->and_where('slots', '>', 0)->execute() > 0;
 
-        if ($lobby_open && $p->get_lifetime() < 288 && Kohana::$config->load('build.version.stage') < 3)
+        if ($lobby_open && $p->get_lifetime() < 288  && Kohana::$config->load('build.version.stage') >= 3 && count($this->players(false)) > 1)
             DB::insert('mp_lockouts', array('uid', 'timestamp'))->values(array($uid, time()))->execute();
     }
     

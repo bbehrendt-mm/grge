@@ -6,7 +6,7 @@ class Model_Items_Virtual_Invoke_AnimalForce extends Model_Items_Virtual_Invoke_
 
     public function __construct($animal_class) {
         parent::__construct();
-        $this->cls = $animal_class;
+        $this->cls = (int)$animal_class;
     }
 
     public function trigger_spawn(Model_Places_Abstract_Place $location, Interface_Plentity $player): void
@@ -14,15 +14,15 @@ class Model_Items_Virtual_Invoke_AnimalForce extends Model_Items_Virtual_Invoke_
 
         switch ($this->cls) {
 
-            case 000: $npc = Model_NPC_Cat::cls(); break;
-            case 001: $npc = Model_NPC_Special_Winchester::cls(); break;
+            case   0: $npc = Model_NPC_Cat::cls(); break;
+            case   1: $npc = Model_NPC_Special_Winchester::cls(); break;
 
-            case 010: $npc = Model_NPC_Dog::cls(); break;
-            case 011: $npc = Model_NPC_Special_Dogmeat::cls(); break;
-            case 012: $npc = Model_NPC_Special_Doodle::cls(); break;
+            case  10: $npc = Model_NPC_Dog::cls(); break;
+            case  11: $npc = Model_NPC_Special_Dogmeat::cls(); break;
+            case  12: $npc = Model_NPC_Special_Doodle::cls(); break;
 
-            case 020: $npc = Model_NPC_Mouse::cls(); break;
-            case 021: $npc = Model_NPC_Special_Sherri::cls(); break;
+            case  20: $npc = Model_NPC_Mouse::cls(); break;
+            case  21: $npc = Model_NPC_Special_Sherri::cls(); break;
 
             case 101: $npc = Model_NPC_Event_Rudolph::cls(); break;
             case 102: $npc = Model_NPC_Event_RudolphBR::cls(); break;
@@ -35,7 +35,6 @@ class Model_Items_Virtual_Invoke_AnimalForce extends Model_Items_Virtual_Invoke_
 
             default: return;
         }
-
 
         /** @var Model_NPC_Animal $npc */
         $npc = new $npc();

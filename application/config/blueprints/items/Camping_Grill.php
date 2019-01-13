@@ -5,7 +5,7 @@ return Model_Blueprints::factory()
     ->add_blueprints(Model_Blueprint::factory()->id('ktc_grill')->name('Grillstation'), true)
 
     // ++ STACK -> All blueprints below can be produced indefinitely and require local facilities
-    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->steps(0)->requires('ktc_grill');})
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->steps(0)->requires_room('bbq_grill');})
 
     ->add_blueprints(
         Model_Blueprint::factory()

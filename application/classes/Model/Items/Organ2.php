@@ -4,7 +4,7 @@ class Model_Items_Organ2 extends Model_Items_Abstract_Item implements Interface_
 
 	protected static $static_info = Array(
 			'name' => 'Generisches Tierorgan',
-			'icon' => 'organ',
+			'icon' => 'organ2',
 			'description' => 'Jeder Veterinär wird dir bestätigen können, dass es sich hierbei um ein generisches Organ handelt, welches sich an einer umspezifizierten Position in verschiedenen Tieren befindet und allgemeine Körperfunktionen übernimmt.',
 			'category' => Model_Items_Abstract_Item::MIAI_CAT_DRUG,
             'deco' => -10

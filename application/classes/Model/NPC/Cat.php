@@ -9,7 +9,7 @@ class Model_NPC_Cat extends Model_NPC_Animal
     ];
 
     protected static $movement_scaling = 0.7;
-    protected static $alcohol_scaling = 10;
+    protected static $alcohol_scaling = 9;
     protected static $inventory_size = 5;
     protected static $comfort_threshold = 70;
     

@@ -9,7 +9,7 @@ class Model_Items_Knife extends Model_Combat_Weapons_Close implements Interface_
 			'category' => Model_Items_Abstract_Item::MIAI_CAT_FIGHT,
 	);
 
-	protected static $weight = 10;
+	protected static $weight = 3;
 	protected static $essential = true;
 
 	protected static $damage = [2,3];

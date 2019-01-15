@@ -16,7 +16,7 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
 
     public function japi_force_battle(): void
     {
-        $zombies = Globals::PrimaryPlayerF()->location()->zombie_factory()->spawn(true);
+        $zombies = Globals::PrimaryPlayerF()->location()->modify_spawned_zombies( Globals::PrimaryPlayerF()->location()->zombie_factory()->spawn(true) );
         if ($zombies) Tool_Scripts::combat([Tool_Scripts::at_location(Globals::PrimaryPlayerF()->location_class()), $zombies], true, 20, Globals::PrimaryPlayerF()->location());
     }
 

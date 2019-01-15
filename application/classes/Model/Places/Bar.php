@@ -7,6 +7,19 @@ class Model_Places_Bar extends Model_Places_Abstract_Place {
     protected static $icon = 'bar';
     protected static $outside = false;
 
+    /**
+     * @param Model_Combat_Actor[]|null $data
+     *
+     * @return Model_Combat_Actor[]
+     * @throws Exception
+     */
+    public function modify_spawned_zombies(?array $data): array {
+        $data = parent::modify_spawned_zombies($data);
+        foreach ($data as &$entry)
+            $entry->add_modifier('drunk', random_int(20,100) / 100.0);
+        return $data;
+    }
+
     public function tick($type = Interface_Tickable::IT_TYPE_PLAYER): bool
     {
         if (Globals::CurrentPlayerF()->can(

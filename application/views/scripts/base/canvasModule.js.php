@@ -17,9 +17,12 @@
 
         this.state = 'created';
 
+
         this.callback_start = function() {};
         this.callback_finish = function() {};
 
+        this.globalPlaySpeed = 1;
+        this.timelineSpeeds = [];
         this.timelines = {};
 
         this.pretick = pretick_action;
@@ -117,14 +120,33 @@
         return container;
     };
 
+    CanvasAnimationModule.prototype.setPlaySpeed = function(value, timeline = "default") {
+        if (typeof this.timelines[timeline] === "undefined") return;
+        this.timelineSpeeds[timeline] = value;
+        var alias = this;
+
+        $.each(this.timelines[timeline].tweens, function(index) {
+            alias.timelines[timeline].tweens[index].timeScale = value;
+        });
+    }
+
+    CanvasAnimationModule.prototype.getPlaySpeed = function(timeline = "default") {
+        if (typeof this.timelines[timeline] === "undefined") return this.globalPlaySpeed;
+        return this.timelineSpeeds[timeline];
+    }
+
     CanvasAnimationModule.prototype.createTween = function(target, props, timeline = "default") {
-        if (typeof this.timelines[timeline] === "undefined")
+        if (typeof this.timelines[timeline] === "undefined") {
             this.timelines[timeline] = new createjs.Timeline({loop: true});
+            this.timelineSpeeds[timeline] = this.globalPlaySpeed;
+        }
 
         var tween;
         var alias = this;
 
         tween = new createjs.Tween(target,props);
+        tween.timeScale = this.timelineSpeeds[timeline];
+
         var default_paused = tween.paused;
         this.timelines[timeline].addTween(tween);
         tween.paused = (typeof default_paused === "undefined") ? false : default_paused;

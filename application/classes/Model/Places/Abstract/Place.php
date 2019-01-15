@@ -430,7 +430,16 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
     public function hero_replensish($val = 0.75): void {
         $this->item_factory->replenish($val);
     }
-	
+
+    /**
+     * @param Model_Combat_Actor[]|null $data
+     *
+     * @return Model_Combat_Actor[]
+     */
+    public function modify_spawned_zombies(?array $data): array {
+	    return $data ?: [];
+    }
+
 	public function break_out($fight): bool {
 		if (!$fight) {
 			//Attempt to flee
@@ -468,7 +477,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 			} else Globals::CurrentPlayerActualF()->log()->add(new Model_Log_Types_String('Fehlgeschlagene Flucht!', 'Schreiend und mit geschlossenen Augen rennst du auf die Zombies zu. Die sind von dieser Aktion so überrascht, dass du die meisten von ihnen einfach aus dem Weg stoßen kannst - aber leider nicht alle. Ein Zombie steht dir mitten im Weg, und wirft dich zu Boden als du versuchst, ihn umzurennen. Zwar kannst du schnell wieder aufspringen, bist nun aber von geifernden Zombies umzingelt. Flucht ist keine Option mehr, du wirst kämpfen müssen.'));
 		}
 
-        $zombies = $this->zombie_factory->release();
+        $zombies =  $this->modify_spawned_zombies( $this->zombie_factory->release() );
         $zc = 0;
         foreach ($zombies as $zombie) $zc += $zombie->count();
         $battle = Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $zombies], false, 10, $this, 'Du greifst die Zombies an, die den Weg versperren!');
@@ -498,7 +507,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
                 }
 
         } else {
-            $zombies = $this->zombie_factory()->spawn();
+            $zombies = $this->modify_spawned_zombies($this->zombie_factory()->spawn());
             if ($zombies) Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $zombies], true, 20, $this, 'Zombies greifen an!');
         }
 

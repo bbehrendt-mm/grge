@@ -25,8 +25,10 @@ if (!isset($path)) $path = '';
         #play:hover, #replay:hover {background: rgb(202,4,50); background: linear-gradient(to bottom, rgba(202,4,50,1) 0%,rgba(180,2,44,1) 44%,rgba(150,0,35,1) 100%); border: 3px solid rgb(202,4,50);}
 
         #controls {font-size: 0}
-        #controls > div {cursor: pointer; font-size: 15px; color: white; height: 18px; width: 32px; padding: 2px; margin: 0; display: inline-block; text-align: center; background: #14171A; border-top: 1px solid #252C33}
-        #controls > div:hover {background: #2b323a; text-shadow: 0 0 2px rgba(255,255,255,0.8);}
+        #controls > div {font-family: sans-serif; font-size: 15px; color: white; height: 18px; width: 32px; padding: 10px; margin: 0; display: inline-block; text-align: center; background: #14171A; border-top: 1px solid #252C33}
+        #controls > div.info {font-weight: bold; cursor: default;}
+        #controls > div:not(.info) {cursor: pointer;}
+        #controls > div:hover:not(.info) {background: #2b323a; text-shadow: 0 0 2px rgba(255,255,255,0.8);}
         #controls > div:last-child {border-right: 1px solid #252C33; border-top-right-radius: 8px}
     </style>
 
@@ -64,10 +66,13 @@ if (!isset($path)) $path = '';
     <div id="output_container" style="z-index: 1; width: 640px; height: 400px; position: relative;">
         <canvas style="position: absolute; width: 100%; height: 100%" width="640" height="400" id="output"></canvas>
         <div id="controls" data-ready="0" style="display: none; position: absolute; bottom: 0; left: 0; z-index: 2">
+            <div id="c_speed" class="info" style="width: 45px;">1x</div>
             <div id="c_replay"><i class="fa fa-repeat"></i></div>
             <div id="c_fullscreen"><i class="fa fa-expand"></i></div>
             <div id="c_nofullscreen"><i class="fa fa-compress"></i></div>
+            <div id="c_backward"><i class="fa fa-backward"></i></div>
             <div id="c_pause" data-pause="1"><i class="fa fa-pause"></i></div>
+            <div id="c_forward"><i class="fa fa-forward"></i></div>
         </div>
         <div id="finish" style=" display: none; position: absolute; top: 0; left: 0; height: 400px; width: 640px; background: rgba(0,0,0,0.5)">
             <div id="replay" style="position: absolute; top: 150px; width: 100px; padding: 10px; left: 237px;" >
@@ -87,7 +92,7 @@ if (!isset($path)) $path = '';
                 var controls = $('#controls');
 
                 $('#output_container').on('mousemove', function() {
-                    if (controls.attr('data-ready') === 1 && !controls.is(':visible'))
+                    if (controls.attr('data-ready') === '1' && !controls.is(':visible'))
                         controls.stop(true,true).fadeIn();
                 }).on('mouseleave', function() {
                     if (controls.is(':visible'))
@@ -145,13 +150,35 @@ if (!isset($path)) $path = '';
                     battle = new Battle('output', data.video);
 
                     $('#c_pause').click(function() {
-                        if ($(this).attr('data-pause') === 1) {
+                        if ($(this).attr('data-pause') === '1') {
                             $(this).attr('data-pause', 0).find('i').removeClass('fa-pause').addClass('fa-play');
                             battle.pause();
+                            $('#c_speed').text( 'P' );
                         } else {
                             $(this).attr('data-pause', 1).find('i').removeClass('fa-play').addClass('fa-pause');
                             battle.unpause();
+                            battle.setPlaySpeed(1);
+                            $('#c_speed').text( '1x' );
                         }
+                    });
+                    $('#c_forward').click(function() {
+                        var pause = $('#c_pause');
+                        if (pause.attr('data-pause') !== '1')
+                            pause.trigger('click');
+                        if (battle.getPlaySpeed() >= 4  )      { battle.setPlaySpeed(6.0); $('#c_speed').text( '6x' ); }
+                        else if (battle.getPlaySpeed() >= 2  ) { battle.setPlaySpeed(4.0); $('#c_speed').text( '4x' ); }
+                        else if (battle.getPlaySpeed() >= 1  ) { battle.setPlaySpeed(2.0); $('#c_speed').text( '2x' ); }
+                        else if (battle.getPlaySpeed() >= 0.5) { battle.setPlaySpeed(1.0); $('#c_speed').text( '1x' ); }
+                        else                                   { battle.setPlaySpeed(0.5); $('#c_speed').text('0.5x'); }
+                    });
+                    $('#c_backward').click(function() {
+                        var pause = $('#c_pause');
+                        if (pause.attr('data-pause') !== '1') return;
+                        if (battle.getPlaySpeed() > 4  )      { battle.setPlaySpeed(4.00); $('#c_speed').text(  '4x' ); }
+                        else if (battle.getPlaySpeed() > 2  ) { battle.setPlaySpeed(2.00); $('#c_speed').text(  '2x' ); }
+                        else if (battle.getPlaySpeed() > 1  ) { battle.setPlaySpeed(1.00); $('#c_speed').text(  '1x' ); }
+                        else if (battle.getPlaySpeed() > 0.5) { battle.setPlaySpeed(0.50); $('#c_speed').text( '0.5x'); }
+                        else                                  { battle.setPlaySpeed(0.25); $('#c_speed').text('0.25x'); }
                     });
                     $('#c_replay').click(function() {
                         battle.reset();

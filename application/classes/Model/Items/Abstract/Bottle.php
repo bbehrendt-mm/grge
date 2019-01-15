@@ -81,7 +81,7 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
 	}
 	
 	public function fillrate($take = NULL) {
-		if ($take === NULL) return $this->bottle_fillrate;
+		if ($take === NULL) return (int)$this->bottle_fillrate;
 		elseif (($take > 0) && ($take <= $this->bottle_fillrate)) {
 			$this->consume($take);
 			return true;

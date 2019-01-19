@@ -85,7 +85,7 @@ abstract class Model_Items_Abstract_Virtual extends Model_Items_Abstract_Item {
         return false;
     }
 
-    public function can_drop(&$message): bool {
+    public function can_drop(&$message, $p = null): bool {
         return false;
     }
 

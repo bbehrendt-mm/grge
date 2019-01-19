@@ -2921,6 +2921,11 @@ core = {
             }).trigger('reposition').appendTo(wrapper);
 
         var z = game.render.html.modal.blend(function() {
+
+            setTimeout(function() {
+                core.command();
+            }, 100);
+
             popup.trigger('close').addClass('disabled').css({
                 '-webkit-filter': (game.mobile || game.s.quality() <= 2) ? '' : 'blur(5px)',
                 'filter': (game.mobile || game.s.quality() <= 2) ? '' : 'blur(5px)'
@@ -3032,7 +3037,10 @@ core = {
     },
 
     genericBlueprintLoader: function(type, room, popup, data, frame, filters, ret) {
-        if (!popup) popup = core.popup.spawn_window('', true, {desktop: 700, lg: '100%'},{desktop: 450, lg: '100%'});
+        if (!popup) {
+            popup = core.popup.spawn_window('', true, {desktop: 700, lg: '100%'},{desktop: 450, lg: '100%'});
+            frame = null;
+        }
 
         var header = core.popup.get_window_titlebar(popup);
 
@@ -3128,12 +3136,6 @@ core = {
                     popup.addClass('disabled');
                     core.command('location/' + type, {build: k, r: bdata.room}, true, function(new_data) {
                         popup.removeClass('disabled');
-
-                        popup.off('close').on('close', function() {
-                            setTimeout(function() {
-                                core.command();
-                            }, 100);
-                        });
 
                         if (type == 'tine') ret.click();
                         else {

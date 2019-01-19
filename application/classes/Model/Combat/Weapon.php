@@ -139,11 +139,11 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
      * @param Model_Combat_Actor $other
      * @param bool $ignore_range
      * @param int $count
-     * @return float|int
+     * @return float|array
      */
     public function potential_damage($me = null, $other = null, $ignore_range = false, $count = 1) {
         if (!$me || !$other)
-            return 0;
+            return $this->damage();
 
         if (!$this->usable())
             return 0;

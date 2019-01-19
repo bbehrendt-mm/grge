@@ -15,8 +15,15 @@ class Model_Places_Roadtrip_Myhouse extends Model_Places_Abstract_Hideout {
     //Exp: 8% per day
     protected static $decay_exp = 0;
 
-    public function setup_additional_rooms(): void
-    {
+    public function setup_primary_rooms(): Model_Room {
+        $room = parent::setup_primary_rooms();
+        Model_Blueprints::fast_apply($this, 'upgrades', ['hideout'], $room);
+
+        return $room;
+    }
+
+
+    public function setup_additional_rooms(): void  {
         $this->setup_new_room($this->room(),
                               [],
                               ['deffence1','fence']);

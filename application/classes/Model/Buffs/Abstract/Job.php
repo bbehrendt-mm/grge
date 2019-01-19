@@ -53,9 +53,9 @@ abstract class Model_Buffs_Abstract_Job extends Model_Buffs_Abstract_Buff {
 	
 	public function description(): string
     {
-        if (isset(static::$desc[$this->level - 1]))
-            return static::$desc[$this->level - 1];
-        else return static::$desc[count(static::$namelist) - 1];
+        if (isset(static::$desclist[$this->level - 1]))
+            return static::$desclist[$this->level - 1];
+        else return static::$desclist[count(static::$namelist) - 1];
 	}
 	
 }

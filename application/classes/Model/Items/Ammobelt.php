@@ -80,14 +80,12 @@ class Model_Items_Ammobelt extends Model_Items_Abstract_Item {
 			return true;
 		}
 	}
-	
-	public function drop($p = null, $silent = false): bool
-    {
-        if ($p && Tool_Scripts::is_npc($p)) return true;
 
-		if (!$silent) Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String(null, 'Du solltest deinen Munitionsgürtel nicht aus der Hand geben ...'));
-		return false;
-	}
+    public function can_drop(&$message, $p = null): bool {
+        if ($p && Tool_Scripts::is_npc($p)) return true;
+        $message = 'Du solltest deinen Munitionsgürtel nicht aus der Hand geben ...';
+	    return false;
+    }
 	
 	public function drop_dead() {
 		$ret = array();

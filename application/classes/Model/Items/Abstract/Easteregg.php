@@ -22,11 +22,8 @@ abstract class Model_Items_Abstract_Easteregg extends Model_Items_Abstract_Ammo 
         parent::__construct($num, true);
     }
 
-    public function take($silent = false): bool
-    {
-        if (parent::take($silent)) {
-            $this->new = false;
-            return true;
-        } else return false;
+    public function take(): bool {
+        if (!parent::take()) return false;
+        return !($this->new = false);
     }
 }	

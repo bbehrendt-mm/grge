@@ -19,8 +19,7 @@ class Model_Items_Leash extends Model_Items_Abstract_Item  {
         return $this->on;
     }
 
-    public function drop($p = null, $silent = false): bool
-    {
+    public function can_drop(&$message, $p = null): bool {
         return false;
     }
 

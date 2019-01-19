@@ -347,22 +347,24 @@ class Tool_Scripts
         if ($log) $location->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_DIGUP, $item));
         $try_to_take = Tool_System::instance_of($item, 'Interface_Autotaker');
 
+        $msg = '';
+
         if ($try_to_take) {
 
             if (Tool_System::instance_of($item, Model_Items_Abstract_Ammo::cls())) {
                 /** @var $belt Model_Items_Ammobelt */
                 $belt = self::first_item(Model_Items_Ammobelt::cls(), Struct_ScriptItemSource::onlyPlayer());
                 /** @var Model_Items_Abstract_Ammo $item */
-                if ($belt && $item->take()) {
+                if ($belt && $item->can_take($msg)) {
+                    if (!$item->take()) throw new LogicException('Inconsistent item transfer behaviour detected.');
                     $belt->add($item);
                     return true;
                 }
 
-            } else {
+            } else if ($item->can_take($msg)) {
                 Globals::CurrentPlayerF()->inventory()->add($item);
-                if (!$item->take(true))
-                    Globals::CurrentPlayerF()->inventory()->remove($item->uin());
-                else return true;
+                if (!$item->take()) throw new LogicException('Inconsistent item transfer behaviour detected.');
+                return true;
             }
         }
 

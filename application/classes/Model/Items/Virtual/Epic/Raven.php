@@ -102,8 +102,9 @@ class Model_Items_Virtual_Epic_Raven extends Model_Items_Abstract_Virtual {
                         foreach (array_merge($items,$location->inventory()->get()) as $item)
                             /** @var Model_Items_Abstract_Item $item */
                             if (!in_array($item->uin(), $final_ids, true)) {
+                                $msg = '';
                                 if ($weight >= $max_weight || count($final) >= $max_capacity) break;
-                                if ($item->weight() + $weight < $max_weight && (Tool_System::instance_of($item, Model_Items_Abstract_Ammo::cls()) || $item->take(true))) {
+                                if ($item->weight() + $weight < $max_weight && (Tool_System::instance_of($item, Model_Items_Abstract_Ammo::cls()) || $item->can_take($msg))) {
                                     $final[] = $item;
                                     $final_ids[] = $item->uin();
                                     $weight += $item->weight();

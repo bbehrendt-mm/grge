@@ -13,11 +13,13 @@ class Model_Items_Generic_Egg0 extends Model_Items_Abstract_Easteregg implements
         return 0;
     }
 
-    public function take($silent = false): bool
-    {
-        if ($this->new && !Globals::shadowPlayerExists())
+    public function take(): bool {
+        $new = $this->new;
+        if (!parent::take()) return false;
+
+        if ($new && !Globals::shadowPlayerExists())
             Globals::PrimaryPlayerF()->achievements()->achieve(Model_Achievement::MA_EASTER_BAD);
 
-        return parent::take($silent);
+        return true;
     }
 }	

@@ -9,11 +9,10 @@ class Model_Items_Energy extends Model_Items_Abstract_Item implements Interface_
 			'category' => Model_Items_Abstract_Item::MIAI_CAT_MISC,
 	);
 
-	protected static $weight = 0;	
-	
-	public function take($silent = false): bool
-    {
-		if (!$silent && !Tool_Scripts::is_npc()) Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String(null, 'Du kannst Energie nicht transportieren.'));
-		return false;
-	}
+	protected static $weight = 0;
+
+    public function can_take(&$message): bool {
+        $message = 'Du kannst Energie nicht transportieren.';
+        return false;
+    }
 }	

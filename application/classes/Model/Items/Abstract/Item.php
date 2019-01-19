@@ -264,14 +264,16 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
 
     /**
      * Returns weather this item can be taken by a player
-     *
-     * @param bool $silent Set true to suppress notifications
-     *
      * @return bool True, when the item can be taken
      */
-    public function take($silent = false): bool {
-		return true;
+    public function take(): bool {
+		$m = '';
+        return $this->can_take($m);
 	}
+
+	public function can_take(string &$message): bool {
+        return true;
+    }
 
     /**
      * Returns weather this item can be dropped by a player
@@ -282,8 +284,13 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
      * @return bool True, when the item can be dropped
      */
 	public function drop($p = null, $silent = false): bool {
-		return true;
+        $m = '';
+        return $this->can_drop($m, $p);
 	}
+
+    public function can_drop(&$message, $p = null): bool {
+        return true;
+    }
 
     /**
      * Returns the autoaction-list

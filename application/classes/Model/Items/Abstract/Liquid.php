@@ -13,11 +13,11 @@ abstract class Model_Items_Abstract_Liquid extends Model_Items_Abstract_Item imp
 	public function toxicity() {
 		return $this->toxicity;
 	}
-	
-	public function take($silent = false): bool
-    {
-		return false;
-	}
+
+    public function can_take(&$message): bool {
+        $message = 'Du benötigst ein Gefäß, um diese Flüssigkeit zu transportieren.';
+        return false;
+    }
 
     protected function hid(): Model_Hid {
         return parent::hid()

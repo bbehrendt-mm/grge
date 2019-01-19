@@ -81,13 +81,11 @@ abstract class Model_Items_Abstract_Virtual extends Model_Items_Abstract_Item {
         }
     }
 
-    public function take($silent = false): bool
-    {
+    public function can_take(&$message): bool {
         return false;
     }
 
-    public function drop($p = null, $silent = false): bool
-    {
+    public function can_drop(&$message): bool {
         return false;
     }
 

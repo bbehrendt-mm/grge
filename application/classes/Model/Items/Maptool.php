@@ -100,12 +100,10 @@ class Model_Items_Maptool extends Model_Items_Abstract_Item {
 			$this->score($steps);
 		} else new Model_Buffs_Mapping($steps, $this->calc_duration($steps));
 	}
-	
-	public function drop($p = null, $silent = false): bool
-    {
-		if (!$silent) Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String( null, 'Das kannst du nicht ablegen...'));
-		return false;
-	}
+
+    public function can_drop(&$message, $p = null): bool {
+        return false;
+    }
 	
 	public function retrieve_info($clean = false): int
     {

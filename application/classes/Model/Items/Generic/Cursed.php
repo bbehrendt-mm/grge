@@ -20,17 +20,14 @@ class Model_Items_Generic_Cursed extends Model_Items_Abstract_Item {
 	protected static $weight = 2;    
     private $got_ack = false;
 	
-	public function take($silent = false): bool
-    {
-		if (parent::take($silent))
-		{
-			if (!$this->got_ack) 
-            {
-                $this->got_ack = true;
-                if (!Globals::shadowPlayerExists())
-                    Globals::PrimaryPlayerF()->achievements()->achieve(Model_Achievement::MA_HORROR);
-            }
-			return true;
-		} else return false;
+	public function take(): bool {
+		if (!parent::take()) return false;
+
+        if (!$this->got_ack) {
+            $this->got_ack = true;
+            if (!Globals::shadowPlayerExists())
+                Globals::PrimaryPlayerF()->achievements()->achieve(Model_Achievement::MA_HORROR);
+        }
+        return true;
 	}
 }	

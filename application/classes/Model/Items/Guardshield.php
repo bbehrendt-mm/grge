@@ -29,9 +29,8 @@ class Model_Items_Guardshield extends Model_Items_Abstract_Armor {
         ];
     }
 
-    public function drop($p = null, $silent = false): bool
-    {
-        if (!$silent) Globals::PrimaryPlayerF()->log()->add('Ohne deinen Schild fühlst du dich ziemlich nackt; hauptsächlich, weil du hinter dem Schild tatsächlich keine Kleidung trägst. Du solltest ihn also besser nicht ablegen...');
+    public function can_drop(&$message, $p = null): bool {
+        $message = 'Ohne deinen Schild fühlst du dich ziemlich nackt; hauptsächlich, weil du hinter dem Schild tatsächlich keine Kleidung trägst. Du solltest ihn also besser nicht ablegen...';
         return false;
     }
 

@@ -102,12 +102,14 @@ class Model_Items_Virtual_Hero_Common extends Model_Items_Abstract_Virtual {
                                 if ($npc->allow(Interface_Plentity::IC_ALLOW_MOVE))
                                     $pl[] = $npc;
 
+                        $m = '';
                         foreach ($pl as $pc) {
                             $damage = min($pc->get_status()->get(Model_Status::MS_STAT_HEALTH) - 1, $pc->location()->zombie_pop() * 20);
                             $injury = random_int(0,100) < (50 + $damage);
 
                             foreach ($pc->inventory()->get() as $item)
-                                if (!$item->is_essential() && $item->drop()) {
+                                if (!$item->is_essential() && $item->can_drop($m)) {
+                                    $item->drop();
                                     $pc->inventory()->remove($item->uin());
                                     $pc->location()->inventory()->add($item);
                                 }

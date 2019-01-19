@@ -37,8 +37,8 @@ class Model_Items_Holybook extends Model_Items_Abstract_Item implements Interfac
 		return null;
 	}
 
-    public function drop($p = null, $silent = false): bool
-    {
+    public function can_drop(&$message, $p = null): bool {
+        $message = 'Deine Heilige Schrift aus der Hand geben? UNDENKBAR!';
         return false;
     }
 }	

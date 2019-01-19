@@ -11,18 +11,41 @@ class Controller_Act extends Controller_Game {
      */
     private function inventory_take_drop($action, $items, $p): void
     {
+        $inventory_full_message = false;
+
         /**
          * @var Model_Items_Abstract_Item $item
          */
         foreach ($items as $itemid)
             if ($action === 'drop') {
                 if (!($item = Globals::CurrentGameF()->uin()->get($itemid, Model_Items_Abstract_Item::cls()))) continue;
-                if (!$item->drop($p)) continue;
+
+                $message = '';
+                if (!$item->can_drop($message, $p)) {
+                    if (!empty($message))
+                        Globals::PrimaryPlayerF()->log()->add($message);
+                    else if (count($items) <= 1) Globals::PrimaryPlayerF()->log()->add($p->id() === Globals::PrimaryPlayerF()->id() ? 'Du kannst diesen Gegenstand nicht ablegen.' : 'Dein Freund kann diesen Gegenstand nicht ablegen.');
+                    continue;
+                }
+
                 if (!$p->inventory()->remove($itemid)) continue;
-                if (!$p->location()->inventory()->add($item)) $p->inventory()->add($item);
+                if (!$p->location()->inventory()->add($item)) {
+                    $p->inventory()->add($item);
+                    continue;
+                }
+                if (!$item->drop($p)) throw new LogicException('Inconsistent item transfer behaviour detected.');
                 else $p->location()->log()->add(new Model_Log_Types_Transaction(Model_Log_Types_Transaction::MLTT_DOWN, $item, $p->id()));
+
             } elseif ($action === 'take') {
                 if (!($item = Globals::CurrentGameF()->uin()->get($itemid, Model_Items_Abstract_Item::cls()))) continue;
+
+                $message = '';
+                if (!$item->can_take($message)) {
+                    if (!empty($message))
+                        Globals::PrimaryPlayerF()->log()->add($message);
+                    else if (count($items) <= 1) Globals::PrimaryPlayerF()->log()->add($p->id() === Globals::PrimaryPlayerF()->id() ? 'Du kannst diesen Gegenstand nicht aufheben.' : 'Dein Freund kann diesen Gegenstand nicht aufheben.');
+                    continue;
+                }
 
                 if (Tool_System::instance_of($item, Model_Items_Abstract_Ammo::cls())) {
                     /** @var $belt Model_Items_Ammobelt */
@@ -33,15 +56,23 @@ class Controller_Act extends Controller_Game {
                     }
 
                     /** @var Model_Items_Abstract_Ammo $item */
-                    if ($item->take(count($items) > 1)) {
+                    if ($item->take()) {
                         $p->location()->log()->add(new Model_Log_Types_Transaction(Model_Log_Types_Transaction::MLTT_UP, $item, $p->id()));
                         $belt->add($item);
-                    }
+                    } else throw new LogicException('Inconsistent item transfer behaviour detected.');
 
                 } else {
-                    if (!$item->take(count($items) > 1)) continue;
                     if (!$p->location()->inventory()->remove($itemid)) continue;
-                    if (!$p->inventory()->add($item)) $p->location()->inventory()->add($item);
+                    if (!$p->inventory()->add($item)) {
+                        if (!$inventory_full_message) {
+                            Globals::PrimaryPlayerF()->log()->add($p->id() === Globals::PrimaryPlayerF()->id() ? 'Dein Rucksack ist voll.' : 'Der Rucksack deines Freundes ist voll.');
+                            $inventory_full_message = true;
+                        }
+
+                        $p->location()->inventory()->add($item);
+                        continue;
+                    }
+                    if (!$item->take()) throw new LogicException('Inconsistent item transfer behaviour detected.');
                     else
                         $p->location()->log()->add(new Model_Log_Types_Transaction(Model_Log_Types_Transaction::MLTT_UP, $item, $p->id()));
                         if (!Tool_Scripts::is_npc($p) && Tool_System::instance_of($item, Model_Items_Abstract_Equipable::cls())) {

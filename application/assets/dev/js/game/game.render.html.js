@@ -104,11 +104,11 @@ game.render.html = {
                 width: 96,
                 'margin-left': 252,
                 opacity: 0,
-                transform: game.s.quality() > 1 ? 'scale(0.5)' : 'scale(1)'
+                transform: game.s.quality() > 1 ? 'scale(0.5)' : 'scale(1.0)'
             }).animate({
                 opacity: 1,
-                transform: 'scale(1)'
-            }, 200, 'swing', function() {
+                transform: 'scale(1.0)'
+            }, 400, 'swing', function() {
                 notification.animate({
                     width: 600,
                     'margin-left': 0

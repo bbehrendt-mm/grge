@@ -57,16 +57,29 @@ class Model_Places_Motorhome extends Model_Places_Home {
         return !$this->driving && !$this->force_nomap;
     }
 
+    public function setup_primary_rooms(): Model_Room
+    {
+        $room = $this->create_new_room(5,['inside','primary']);
+
+        $room->name('Wohnmobil', true);
+        $room->name_is_fixed(true);
+
+        $room->upgrade('Wohnmobil',false,['common','common_hideout']);
+        $room->inventory()->add(new Model_Items_Virtual_Location_Room_Generic(
+            'Verteidigen...', null, 'fighter'
+        ));
+
+        Model_Blueprints::fast_apply($this, 'rooms', ['motorhome'], $room);
+        Model_Blueprints::fast_apply($this, 'upgrades', ['hideout','bedr1','sofa1','gen1','gen2','ktc2'], $room);
+
+        return $room;
+    }
+
     public function setup_additional_rooms(): void
     {
-        parent::setup_additional_rooms();
         $this->create_new_room(25,['outside']);
-
-        $this->setup_new_room($this->create_new_room(15,['inside']),
-                              ['motorhome'],
-                              ['bedr1','sofa1','gen1','gen2','ktc2'],
-            'Wohnmobil'
-        );
+        $this->create_new_room(25,['outside']);
+        $this->create_new_room(25,['outside']);
     }
 
     private function mapcontrol($populate): void
@@ -124,7 +137,11 @@ class Model_Places_Motorhome extends Model_Places_Home {
 
         Globals::CurrentGameF()->delete_lobby();
         foreach ($this->rooms as $room)
-            if ($room->has_tag('outside')) $room->clear();
+            if (!$room->has_tag('primary')) {
+                $room->clear();
+                $room->remove_tag('inside');
+                $room->add_tag('outside');
+            }
 
         $this->force_nomap = (!$start && $break);
 

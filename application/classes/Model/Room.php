@@ -259,6 +259,7 @@ class Model_Room {
         $this->contains = [];
         $this->satisfies = ['free'];
         $this->room_name = '';
+        $this->usage = '';
         $this->inventory()->grind();
     }
 

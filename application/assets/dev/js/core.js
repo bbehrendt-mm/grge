@@ -1368,11 +1368,12 @@ core = {
                                 var row;
                                 content.append(row = NF.row());
                                 $.each([1,2,5,10], function(k,i) {
-                                    row.append($('<div />').addClass('cell rw-3 smallpad').append(
-                                        $('<div />').addClass('btn').append($('<i />').addClass('fa fa-wrench')).append($('<span />').text(' x ' + i)).click(function() {
-                                            core.command('location/caravan', {'do': 'repair', addr: v.addr, count: i});
-                                        })
-                                    ))
+                                    if (i <= v.max)
+                                        row.append($('<div />').addClass('cell rw-3 smallpad').append(
+                                            $('<div />').addClass('btn').append($('<i />').addClass('fa fa-wrench')).append($('<span />').text(' x ' + i)).click(function() {
+                                                core.command('location/caravan', {'do': 'repair', addr: v.addr, count: i});
+                                            }).addClass(((v.max - v.count) < i) ? 'disabled' : '')
+                                        ))
                                 })
                             } else content.append($('<div />').text("W\u00e4hrend der Fahrt kannst du keine Reparaturen vornehmen!"))
                         }

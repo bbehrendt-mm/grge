@@ -157,6 +157,7 @@ class Tool_Scripts
                 }
         }
 
+        if ($source === null) $source = Struct_ScriptItemSource::default();
         $player = $source->get_player();
 
         if ($source->from_player)   $player->inventory()->reset_weight();

@@ -181,7 +181,7 @@ class Model_Places_Motorhome extends Model_Places_Home {
                     return true;
                 }
 
-                if (Tool_Scripts::consume_items([Struct_ItemEntry::make($part, $num)])) {
+                if (Tool_Scripts::consume_items([Struct_ItemEntry::make($part, $num)], Struct_ScriptItemSource::default())) {
                     $data[0] += $num;
                     Globals::PrimaryPlayerF()->log()->add('Sehr gut, die Ersatzteile haben genau gepasst. Du hast den Wohnwagen repariert.');
                 } else Globals::PrimaryPlayerF()->log()->add('Leider fehlen dir hierfür die Ersatzteile...');

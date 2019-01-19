@@ -54,15 +54,15 @@
                 .append(
                     $('<div />').addClass('btn btn-zv').text(<?=__j('Überblicken')?>).click(function() {
                         core.command('location/scout', {speed: 1});
-                    })
+                    }).addClass(data.level > 66 ? 'disabled' : '')
                 ).append(
                     $('<div />').addClass('btn btn-zv').text(<?=__j('Skizzieren')?>).click(function() {
                         core.command('location/scout', {speed: 2});
-                    })
+                    }).addClass(data.level > 33 ? 'disabled' : '')
                 ).append(
                     $('<div />').addClass('btn btn-zv').text(<?=__j('Vermessen')?>).click(function() {
                         core.command('location/scout', {speed: 3});
-                    })
+                    }).addClass(data.level > 0 ? 'disabled' : '')
                 ).append(
                     $('<div />').addClass('btn btn-zv ' + (data.laser ? '' : 'disabled')).text(<?=__j('Lasermessgerät einsetzen')?>).click(function() {
                         core.command('location/scout', {speed: 'item'});
@@ -682,10 +682,17 @@
             )
         }
 
+        if (data.radar.zombies > 0)
+            actions.append($('<div />').addClass('cell padded justify rw-12').append(
+                $('<div />').addClass('note margin-bottom')
+                    .text(data.hideout ?
+                        <?=__j('Zombies blockieren den Weg. Besiege sie, um diesen Ort verlassen zu können.')?> :
+                        <?=__j('Zombies blockieren den Weg. Besiege sie oder versuche zu fliehen, um diesen Ort verlassen zu können.')?>)
+            ));
+
         actions.append(
-            $('<div />').addClass('cell padded justify rw-' + (data.doorways ? (data.lomap ? '8' : '10') : '12')).append(
-                data.radar.zombies > 0 ? $('<div />').addClass('note margin-bottom').text(data.hideout ? <?=__j('Zombies blockieren den Weg. Besiege sie, um diesen Ort verlassen zu können.')?> : <?=__j('Zombies blockieren den Weg. Besiege sie oder versuche zu fliehen, um diesen Ort verlassen zu können.')?>) : false
-            ).append(core.snippets.button(<?=__j('Karte');?>, function() {
+            $('<div />').addClass('cell padded justify rw-' + (data.doorways ? (data.lomap ? '8' : '10') : '12'))
+            .append(core.snippets.button(<?=__j('Karte');?>, function() {
                 core.popup.map();
             })).addClass(data.lomap ? 'disabled' : '')
         );

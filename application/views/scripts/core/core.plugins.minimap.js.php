@@ -66,18 +66,19 @@
             });
     };
 
+    core.plugins.Minimap.prototype.handleEvent = function(e) {
+        this.stage.update();
+        var ctx = $(this.canvas).get(0).getContext('2d');
+        ctx.putImageData(this.postProcessing(ctx.getImageData(0,0,this.size,this.size)),0,0);
+    }
+
     core.plugins.Minimap.prototype.startStop = function(start) {
         if (start) {
             createjs.Ticker.removeAllEventListeners('tick');
-            var alias = this;
             createjs.Ticker.timingMode = 'synched';
             createjs.Ticker.framerate = 60;
-            createjs.Ticker.addEventListener("tick", function() {
-                alias.stage.update();
-                var ctx = $(alias.canvas).get(0).getContext('2d');
-                ctx.putImageData(alias.postProcessing(ctx.getImageData(0,0,alias.size,alias.size)),0,0);
-            });
-        } else createjs.Ticker.reset();
+            createjs.Ticker.addEventListener("tick", this);
+        } else createjs.Ticker.removeEventListener("tick", this);
     };
 
     /**

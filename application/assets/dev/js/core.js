@@ -1313,15 +1313,15 @@ core = {
                 .append(
                     $('<div />').addClass('btn btn-zv').text("\u00dcberblicken").click(function() {
                         core.command('location/scout', {speed: 1});
-                    })
+                    }).addClass(data.level > 66 ? 'disabled' : '')
                 ).append(
                     $('<div />').addClass('btn btn-zv').text("Skizzieren").click(function() {
                         core.command('location/scout', {speed: 2});
-                    })
+                    }).addClass(data.level > 33 ? 'disabled' : '')
                 ).append(
                     $('<div />').addClass('btn btn-zv').text("Vermessen").click(function() {
                         core.command('location/scout', {speed: 3});
-                    })
+                    }).addClass(data.level > 0 ? 'disabled' : '')
                 ).append(
                     $('<div />').addClass('btn btn-zv ' + (data.laser ? '' : 'disabled')).text("Lasermessger\u00e4t einsetzen").click(function() {
                         core.command('location/scout', {speed: 'item'});
@@ -1941,10 +1941,17 @@ core = {
             )
         }
 
+        if (data.radar.zombies > 0)
+            actions.append($('<div />').addClass('cell padded justify rw-12').append(
+                $('<div />').addClass('note margin-bottom')
+                    .text(data.hideout ?
+                        "Zombies blockieren den Weg. Besiege sie, um diesen Ort verlassen zu k\u00f6nnen." :
+                        "Zombies blockieren den Weg. Besiege sie oder versuche zu fliehen, um diesen Ort verlassen zu k\u00f6nnen.")
+            ));
+
         actions.append(
-            $('<div />').addClass('cell padded justify rw-' + (data.doorways ? (data.lomap ? '8' : '10') : '12')).append(
-                data.radar.zombies > 0 ? $('<div />').addClass('note margin-bottom').text(data.hideout ? "Zombies blockieren den Weg. Besiege sie, um diesen Ort verlassen zu k\u00f6nnen." : "Zombies blockieren den Weg. Besiege sie oder versuche zu fliehen, um diesen Ort verlassen zu k\u00f6nnen.") : false
-            ).append(core.snippets.button("Karte", function() {
+            $('<div />').addClass('cell padded justify rw-' + (data.doorways ? (data.lomap ? '8' : '10') : '12'))
+            .append(core.snippets.button("Karte", function() {
                 core.popup.map();
             })).addClass(data.lomap ? 'disabled' : '')
         );
@@ -2643,18 +2650,19 @@ core = {
             });
     };
 
+    core.plugins.Minimap.prototype.handleEvent = function(e) {
+        this.stage.update();
+        var ctx = $(this.canvas).get(0).getContext('2d');
+        ctx.putImageData(this.postProcessing(ctx.getImageData(0,0,this.size,this.size)),0,0);
+    }
+
     core.plugins.Minimap.prototype.startStop = function(start) {
         if (start) {
             createjs.Ticker.removeAllEventListeners('tick');
-            var alias = this;
             createjs.Ticker.timingMode = 'synched';
             createjs.Ticker.framerate = 60;
-            createjs.Ticker.addEventListener("tick", function() {
-                alias.stage.update();
-                var ctx = $(alias.canvas).get(0).getContext('2d');
-                ctx.putImageData(alias.postProcessing(ctx.getImageData(0,0,alias.size,alias.size)),0,0);
-            });
-        } else createjs.Ticker.reset();
+            createjs.Ticker.addEventListener("tick", this);
+        } else createjs.Ticker.removeEventListener("tick", this);
     };
 
     /**

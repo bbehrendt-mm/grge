@@ -908,7 +908,7 @@ return array(
         10020 => array(
             'meta' => array(
                 'name' => 'Football-Coach',
-                'caption' => 'Als Football-Coach bist du ein Meister subtiler Künste wie &quot;Frontal durch Zombiehorden brechen&quot;, außerdem kannst du im Kampf einiges einstecken, ohne dich zu verletzen. Mit ein bisschen Übung gelingt es dir eventuell sogar, eine Meute von belagernden Zombies so zu durchberechen, dass auch andere Spieler dir folgen können.',
+                'caption' => 'Als Football-Coach bist du ein Meister subtiler Künste wie "Frontal durch Zombiehorden brechen", außerdem kannst du im Kampf einiges einstecken, ohne dich zu verletzen. Mit ein bisschen Übung gelingt es dir eventuell sogar, eine Meute von belagernden Zombies so zu durchberechen, dass auch andere Spieler dir folgen können.',
             ),
 
             'requirements' => array(

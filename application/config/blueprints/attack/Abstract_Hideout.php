@@ -8,7 +8,7 @@ return Model_Blueprints::factory()
     ->add_blueprints(
         Model_Blueprint::factory()
             ->id('z:impale')
-            ->requires('impaler')
+            ->requires_local('impaler')
             ->name('Falltür öffnen')
             ->remove('impaler')
             ->energy(2)

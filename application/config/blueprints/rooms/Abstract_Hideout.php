@@ -49,6 +49,7 @@ return Model_Blueprints::factory()
             ->requires_room_tag('outside')
             ->name('Verteidigungslinie')
             ->description('Wie uns Plants Vs. Zombies gelehrt hat, lässt sich ein Petuniengarten wunderbar für die Verteidigung des eigenen Verstecks nutzen.')
+            ->emplaces_action('Verteidigen...', null, 'fighter')
             ->energy(5)
     )
 

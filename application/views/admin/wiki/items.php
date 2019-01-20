@@ -62,7 +62,7 @@
                             <div class="cell rw-12 padded">
                                 <?php if ($item['properties']) { ?>
                                     <div class="row">
-                                        <div class="cell ro-1 rw-12">
+                                        <div class="cell ro-1 rw-11">
                                             <div class=row>
                                                 <div class="cell rw-12"><b>Static Properties</b></div>
                                             </div>

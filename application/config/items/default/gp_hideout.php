@@ -32,6 +32,7 @@
         ->add(Model_Items_Flashlight::cls()          , 2)
         ->add(Model_Items_Tentkit::cls()             , 1)
         ->add(Model_Items_Generic_Belt::cls()        , 1)
+        ->add(Model_Items_Bigbottle::cls(), 1)
         ->add('gp_petstuff', 1)
 
         ->add(Model_Items_Virtual_Invoke_Animal::cls()        , 1)

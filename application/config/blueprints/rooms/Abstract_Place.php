@@ -49,7 +49,10 @@ return Model_Blueprints::factory()
             ->requires_room('kitchen')
             ->requires_room_tag('inside')
             ->replace_room_satisfaction(false)
-            ->material([Model_Items_Bottle::cls() => 5, Model_Items_Generic_Tube::cls() => 2])
+            ->material([Model_Items_Generic_Tube::cls() => 2])
+            ->material([Model_Items_Smallbottle::cls() => 4, Model_Items_Bigbottle::cls() => 1], 1, function(Model_Items_Abstract_Bottle $b) {
+                return $b->fillrate() === 0;
+            })
             ->provide_room(['kitchen_lv1'])
             ->name('Drogenküche')
             ->description('Warum sollte man nur Nahrungsmittel kochen? Mit ein wenig zusätzlicher Ausrüstung kannst du auch leckere 5-Sterne-Drogen zubereiten!')

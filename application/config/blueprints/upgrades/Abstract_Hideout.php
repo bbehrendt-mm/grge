@@ -35,7 +35,7 @@ return Model_Blueprints::factory()
             ->name('Flaschensammlung')
             ->description('Nichts schmückt eine Wohnung mehr als ein riesiger Haufen leerer Bierflaschen.')
             ->deco(10)
-            ->material(Model_Items_Smallbottle::cls(), 6, function($i) {/** @var Model_Items_Smallbottle $i */ return $i->count() === 0;})
+            ->material(Model_Items_Smallbottle::cls(), 6, function(Model_Items_Smallbottle $i) {return $i->fillrate() === 0;})
     )
 
     ->add_blueprints(

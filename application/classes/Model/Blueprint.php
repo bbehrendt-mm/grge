@@ -421,7 +421,7 @@ class Model_Blueprint {
     {
         if (is_array($class))
             foreach ($class as $i_class => $i_count)
-                $this->material($i_class, $i_count,$decider,$type);
+                $this->material($i_class, $i_count * $count,$decider,$type);
 
         else  {
             $inst = new Struct_ItemMaterial();

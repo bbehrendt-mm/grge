@@ -6,4 +6,5 @@
         ->add(Model_Items_Nutrient::cls() , 1)
         ->add(Model_Items_Lunchbag::cls() , 1)
         ->add(Model_Items_Money::cls()	 , 1)
+        ->add(Model_Items_Bigbottle::cls(), 1)
         ;

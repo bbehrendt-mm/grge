@@ -414,7 +414,12 @@
                     }))
                 }
 
-                if (blueprint.build)
+                if (!blueprint.build_local && blueprint.build && !blueprint.globally_blocked)
+                    content
+                        .append($('<div />').addClass('info').text(<?=__j('Du hast dieses Projekt bereits in einem anderen Raum gebaut.')?>))
+                        .append('<span class="separator" />');
+
+                if (blueprint.build_local || (blueprint.build && blueprint.globally_blocked))
                     content.append($('<div />').addClass(blueprint.zombies ? 'point failure' : 'point success').text(blueprint.zombies ? <?=__j('Diese Verteidigungsmöglichkeit wurde bereits eingesetzt.')?> : <?=__j('Dieses Projekt wurde bereits gebaut.')?>));
                 else if (!blueprint.slot_open)
                     content.append($('<div />').addClass('point failure').text(<?=__j('Du hast bereits ein ähnliches Projekt gebaut.')?>));

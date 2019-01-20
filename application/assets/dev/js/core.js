@@ -4514,7 +4514,12 @@ core = {
                     }))
                 }
 
-                if (blueprint.build)
+                if (!blueprint.build_local && blueprint.build && !blueprint.globally_blocked)
+                    content
+                        .append($('<div />').addClass('info').text("Du hast dieses Projekt bereits in einem anderen Raum gebaut."))
+                        .append('<span class="separator" />');
+
+                if (blueprint.build_local || (blueprint.build && blueprint.globally_blocked))
                     content.append($('<div />').addClass(blueprint.zombies ? 'point failure' : 'point success').text(blueprint.zombies ? "Diese Verteidigungsm\u00f6glichkeit wurde bereits eingesetzt." : "Dieses Projekt wurde bereits gebaut."));
                 else if (!blueprint.slot_open)
                     content.append($('<div />').addClass('point failure').text("Du hast bereits ein \u00e4hnliches Projekt gebaut."));

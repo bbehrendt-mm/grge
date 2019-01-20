@@ -711,8 +711,9 @@ class Model_Blueprint {
      */
     private function can_prod_room($room = null, $preconditions = []): bool
     {
+        if (!$this->use_global_blocking && $room === null) return true;
         foreach ($this->provides_room as $p)
-            if (in_array($p, $preconditions, true))
+            if (in_array($p, $this->use_global_blocking ? $preconditions : $room->get_content(), true))
                 return false;
 
         if ($room === null) return true;

@@ -27,9 +27,51 @@ return Model_Blueprints::factory()
     // ++ STACK -> All blueprints below need the hideout
     ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires('hideout');})
 
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->category('Dekoration')->space(1)->requires_room_tag('inside');})
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('bottlecol')
+            ->name('Flaschensammlung')
+            ->description('Nichts schmückt eine Wohnung mehr als ein riesiger Haufen leerer Bierflaschen.')
+            ->deco(10)
+            ->material(Model_Items_Smallbottle::cls(), 6, function($i) {/** @var Model_Items_Smallbottle $i */ return $i->count() === 0;})
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('garland_ca')
+            ->provide('garland')
+            ->name('Kapitalistische Girlande')
+            ->description('Stelle deinen Reichtum mit dieser dekorativen Girlande zur Schau.')
+            ->deco(15)
+            ->material([Model_Items_Money::cls() => 5, Model_Items_Generic_Wire::cls() => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('garland_ma')
+            ->provide('garland')
+            ->name('Makabere Girlande')
+            ->description('Es gibt nichts, aus dem man besser eine dekorative Girlande bauen kann als abgenagte Knochen! ... moment ...')
+            ->deco(15)
+            ->material([Model_Items_Bone::cls() => 5, Model_Items_Generic_Wire::cls() => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('garland_co')
+            ->provide('garland')
+            ->name('Elektrisierende Girlande')
+            ->description('Diese hübsch glitzernde Girlande wertet dein Versteck dekorativ auf. Pass nur auf, dass dir keine Batteriesäure auf den Kopf tropft...')
+            ->deco(15)
+            ->material([Model_Items_Battery::cls() => 15, Model_Items_Generic_Wire::cls() => 1])
+    )
+
+    ->pop_stack()
+
     // ++ STACK -> HIDEOUT category
     ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires_room('common_hideout');})
-
 
     ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->category('Reparatur');})
 
@@ -68,6 +110,7 @@ return Model_Blueprints::factory()
     )
 
     ->pop_stack()
+
     ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->category('Verteidigung');})
 
     // Defense
@@ -265,45 +308,6 @@ return Model_Blueprints::factory()
             ->description('Stattet dein Versteck mit hübschen Vorhängen aus und verbessert so den Dekorationswert.')
             ->deco(5)
             ->material([Model_Items_Generic_Cloth::cls() => 4])
-    )
-
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('bottlecol')
-            ->name('Flaschensammlung')
-            ->description('Nichts schmückt eine Wohnung mehr als ein riesiger Haufen leerer Bierflaschen.')
-            ->deco(10)
-            ->material(Model_Items_Smallbottle::cls(), 6, function($i) {/** @var Model_Items_Smallbottle $i */ return $i->count() === 0;})
-    )
-
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('garland_ca')
-            ->provide('garland')
-            ->name('Kapitalistische Girlande')
-            ->description('Stelle deinen Reichtum mit dieser dekorativen Girlande zur Schau.')
-            ->deco(15)
-            ->material([Model_Items_Money::cls() => 5, Model_Items_Generic_Wire::cls() => 1])
-    )
-
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('garland_ma')
-            ->provide('garland')
-            ->name('Makabere Girlande')
-            ->description('Es gibt nichts, aus dem man besser eine dekorative Girlande bauen kann als abgenagte Knochen! ... moment ...')
-            ->deco(15)
-            ->material([Model_Items_Bone::cls() => 5, Model_Items_Generic_Wire::cls() => 1])
-    )
-
-    ->add_blueprints(
-        Model_Blueprint::factory()
-            ->id('garland_co')
-            ->provide('garland')
-            ->name('Elektrisierende Girlande')
-            ->description('Diese hübsch glitzernde Girlande wertet dein Versteck dekorativ auf. Pass nur auf, dass dir keine Batteriesäure auf den Kopf tropft...')
-            ->deco(15)
-            ->material([Model_Items_Battery::cls() => 15, Model_Items_Generic_Wire::cls() => 1])
     )
 
     // -- ++ STACK -> GENERATOR category

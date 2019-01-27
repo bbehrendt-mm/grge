@@ -25,7 +25,7 @@ class Model_Log_Types_Item extends Model_Log_Message {
      * @throws Exception
      */
     public function __construct($type, $item, $uin = null) {
-        if (!$uin) $uin =  Globals::PrimaryPlayerF()->id();
+        if (!$uin) $uin =  Globals::CurrentPlayerF()->id();
 
         if (!is_array($item))
             $item = [$item];

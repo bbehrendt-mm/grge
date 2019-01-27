@@ -5,7 +5,7 @@
         ->add(Model_Items_Generic_Tube::cls()		, 2)
         ->add(Model_Items_Generic_Wire::cls()        , 2)
         ->add(Model_Items_Generic_Bed::cls()		    , 2)
-        ->add(Model_Items_Generic_Electro::cls()	    , 2)
+        ->add(Model_Items_Generic_Electro2::cls()	    , 1)
         ->add(Model_Items_Generic_Pressure::cls()	, 2)
         ->add(Model_Items_Generic_Sum::cls()		    , 2)
         

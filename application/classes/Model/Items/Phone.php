@@ -27,7 +27,7 @@ class Model_Items_Phone extends Model_Combat_Weapons_Throwable implements Interf
      */
 	public function trigger_usage(Model_Combat_Actor $me, Model_Combat_Actor $opponent, $damage, Model_Combat_Scene $scene): bool {
 		if ($this->registered_user)
-			$this->registered_user->location()->inventory()->add(new Model_Items_Generic_Electro);
+			$this->registered_user->location()->inventory()->add( Tool_Gambling::random(0.1) ? new Model_Items_Generic_Electro2 : new Model_Items_Generic_Electro);
 		return parent::trigger_usage($me, $opponent, $damage, $scene);
 	}
 }	

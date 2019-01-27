@@ -4,6 +4,7 @@ abstract class Model_Items_Abstract_Wbgun extends Model_Combat_Weapons_Fillable 
 
 	protected static $capacity = 0;
 	public static $ammo_icon = 'items/water_variant';
+	protected static $fillrate_multiplier = 10;
 
 	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SHOT_WATER;
 
@@ -23,7 +24,7 @@ abstract class Model_Items_Abstract_Wbgun extends Model_Combat_Weapons_Fillable 
 		
 		if (Tool_System::instance_of($item, Model_Items_Abstract_Bottle::cls())) {
 			/** @var $item Model_Items_Abstract_Bottle */
-            if ($item->get_water(1)) $this->fillrate+= 10;
+            if ($item->get_water(1)) $this->fillrate += static::$fillrate_multiplier;
 			else Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String( null, 'Leider ist in dieser Flasche nicht mehr genug Wasser, um diesen Gegenstand zu füllen ...'));
 
             return true;
@@ -49,7 +50,7 @@ abstract class Model_Items_Abstract_Wbgun extends Model_Combat_Weapons_Fillable 
 	}
 	
 	public function fillrate() {
-		return ceil($this->fillrate/10);
+		return ceil($this->fillrate/static::$fillrate_multiplier);
 	}
 
     public function count() {

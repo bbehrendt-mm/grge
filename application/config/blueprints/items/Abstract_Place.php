@@ -75,6 +75,38 @@ return Model_Blueprints::factory()
             ->produces([Model_Items_Nom2::cls() => 1])
     )
 
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:k_frz_body1')
+            ->requires_local('ktc_cool')
+            ->material([Model_Items_Body::cls() => 1, Model_Items_Energy::cls() => 1])
+            ->produces([Model_Items_BodyF::cls() => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:k_frz_body2')
+            ->requires_local('ktc_cool')
+            ->material([Model_Items_Body2::cls() => 1, Model_Items_Energy::cls() => 1])
+            ->produces([Model_Items_BodyF2::cls() => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:k_frz_body3')
+            ->requires_local('ktc_cool')
+            ->material([Model_Items_Body3::cls() => 1, Model_Items_Energy::cls() => 1])
+            ->produces([Model_Items_BodyF3::cls() => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:k_frz_snow')
+            ->requires_local('ktc_cool')
+            ->material([Model_Items_Generic_Waterb::cls() => 1, Model_Items_Energy::cls() => 1])
+            ->produces([Model_Items_Snowball::cls() => 10])
+    )
+
     // SLAUGHTERHOUSE
     // ++ STACK -> All blueprints below need the SLAUGHTERHOUSE kitchen
     ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires_room('kitchen_slaughter');})
@@ -183,6 +215,24 @@ return Model_Blueprints::factory()
             ->material(Model_Items_Generic_Spraycan::cls(), 1, null, 1)
             ->material(Model_Items_Chem::cls(), 2, null, 0)
             ->material(Model_Items_Chem::cls(), 3, null, 11)
+            ->produces(Model_Items_Spray::cls(), 1, 1)
+    )
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:cspray3')
+            ->energy(5)
+            ->material(Model_Items_Generic_Spraycan::cls(), 1, null, 1)
+            ->material(Model_Items_Chem::cls(), 2, null, 2)
+            ->material(Model_Items_Chem::cls(), 3, null, 3)
+            ->produces(Model_Items_Spray::cls(), 1, 1)
+    )
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:cspray4')
+            ->energy(5)
+            ->material(Model_Items_Generic_Spraycan::cls(), 1, null, 1)
+            ->material(Model_Items_Chem::cls(), 2, null, 2)
+            ->material(Model_Items_Chem::cls(), 3, null, 10)
             ->produces(Model_Items_Spray::cls(), 1, 1)
     )
 
@@ -585,18 +635,49 @@ return Model_Blueprints::factory()
         Model_Blueprint::factory()
             ->id('i:aug_3')
             ->energy(30)
-            ->material([Model_Items_Organ::cls() => 1,Model_Items_Organ2::cls() => 2,Model_Items_Generic_Metal::cls() => 2, Model_Items_Generic_Electro::cls() => 1, Model_Items_Generic_Sum::cls() => 2])
+            ->material([Model_Items_Organ::cls() => 1,Model_Items_Organ2::cls() => 2,Model_Items_Generic_Metal::cls() => 2, Model_Items_Generic_Electro2::cls() => 1, Model_Items_Generic_Sum::cls() => 2])
             ->produces([Model_Items_Augments_Class2::cls() => 1])
     )
     ->add_blueprints(
         Model_Blueprint::factory()
             ->id('i:aug_4')
             ->energy(30)
-            ->material([Model_Items_Organ3::cls() => 1,Model_Items_Organ2::cls() => 2,Model_Items_Generic_Metal::cls() => 2, Model_Items_Generic_Electro::cls() => 1, Model_Items_Generic_Sum::cls() => 2])
+            ->material([Model_Items_Organ3::cls() => 1,Model_Items_Organ2::cls() => 2,Model_Items_Generic_Metal::cls() => 2, Model_Items_Generic_Electro2::cls() => 1, Model_Items_Generic_Sum::cls() => 2])
             ->produces([Model_Items_Augments_Cclass2::cls() => 1])
     )
 
     // -- STACK -> All blueprints below NO LONGER need the basic workbench
+    ->pop_stack()
+
+    // ++ STACK -> All blueprints below need the electronic workshop
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->requires_room('workshop_electro');})
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:uelec1')
+            ->energy(5)
+            ->material([Model_Items_Generic_Electro::cls() => 2, Model_Items_Generic_Sum::cls() => 1, Model_Items_Generic_Metal::cls() => 2])
+            ->produces([Model_Items_Generic_Electro2::cls() => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:uelec2')
+            ->energy(5)
+            ->material([Model_Items_Generic_Electro2::cls() => 2, Model_Items_Generic_Electro::cls() => 2, Model_Items_Generic_Tube::cls() => 2, Model_Items_Generic_Wire::cls() => 2])
+            ->produces([Model_Items_Generic_Electro3::cls() => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:pgen')
+            ->energy(25)
+            ->material([Model_Items_Generic_Motor::cls() => 1, Model_Items_Generic_Electro2::cls() => 1, Model_Items_Generic_Metal::cls() => 8, Model_Items_Generic_Tube::cls() => 2, Model_Items_Generic_Sum::cls() => 6])
+            ->produces([Model_Items_Generator::cls() => 1])
+    )
+
+
+    // -- STACK -> All blueprints below NO LONGER need the electronic workbench
     ->pop_stack()
 
     ->drop_stack();

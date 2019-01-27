@@ -7,6 +7,16 @@ class Model_Places_Druglab extends Model_Places_Abstract_Place {
     protected static $icon = 'lab';
     protected static $outside = false;
 
+    public function setup_additional_rooms(): void {
+        parent::setup_additional_rooms();
+        $this->setup_new_room($this->create_new_room( 20,['inside']),
+                              ['kitchen', 'kitchen_meth'],
+                              [],
+                              'Drogenküche'
+        );
+        $this->create_new_room(15,['inside']);
+    }
+
 	public function uin($uin = NULL) {
 		if ($uin === NULL) return parent::uin();
 		else $t = parent::uin($uin);

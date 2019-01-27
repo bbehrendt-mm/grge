@@ -33,4 +33,37 @@ return Model_Blueprints::factory()
             ->produces([Model_Items_Generic_Water0::cls() => 1])
     )
 
-    ->drop_stack();
+    ->pop_stack()
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->steps(0)->requires_room('cooler')->category(
+        'Kühlkammer'
+    );})
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:frz_body1')
+            ->material([Model_Items_Body::cls() => 1])
+            ->produces([Model_Items_BodyF::cls() => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:frz_body2')
+            ->material([Model_Items_Body2::cls() => 1])
+            ->produces([Model_Items_BodyF2::cls() => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:frz_body3')
+            ->material([Model_Items_Body3::cls() => 1])
+            ->produces([Model_Items_BodyF3::cls() => 1])
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:frz_snow')
+            ->material([Model_Items_Generic_Waterb::cls() => 1])
+            ->produces([Model_Items_Snowball::cls() => 10])
+    )
+
+    ->pop_stack();

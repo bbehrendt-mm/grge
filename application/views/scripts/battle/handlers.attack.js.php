@@ -215,6 +215,13 @@
         });
     };
 
+    animations[<?=Model_Combat_Weapon::MCW_ANIMATION_SHOT_SNOW?>] = function(id_atk, id_def, scale, wpn_icon, damage) {
+        var alias = this;
+        animation_shoot.call(this, id_atk, id_def, 'ammo/snowball.gif', 0.5, 1.1, function() {
+            alias.proceed();
+        });
+    };
+
     animations[<?=Model_Combat_Weapon::MCW_ANIMATION_SHOT_BOLT?>] = function(id_atk, id_def, scale, wpn_icon, damage) {
         var alias = this;
         animation_shoot.call(this, id_atk, id_def, 'ammo/bolt.gif', 0.8, 1, function() {

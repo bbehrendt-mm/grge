@@ -43,6 +43,16 @@ return Model_Blueprints::factory()
             ->material([Model_Items_Generic_Oven::cls() => 1])
     )
 
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('ktc_cool')
+            ->name('Kühlschrank')
+            ->description('Schaltet zusätzliche Optionen in der Küche frei.')
+            ->message('Das zentrale Utensil jeder Küche - der Wasserkocher - steht nun auch dir zur Verfügung. Nutze ihn Weise, und missbrauche seine Kräfte nicht!')
+            ->energy(10)
+            ->material([Model_Items_Generic_Cooler::cls() => 1, Model_Items_Generic_Sum::cls() => 2, Model_Items_Generic_Tube::cls() => 2, Model_Items_Generic_Electro::cls() => 1, Model_Items_Generic_Metal::cls() => 2])
+    )
+
     // -- STACK -> All blueprints below NO LONGER need the kitchen
     ->pop_stack()
 

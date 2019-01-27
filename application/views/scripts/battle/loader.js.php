@@ -57,6 +57,9 @@
                     case <?=Model_Combat_Weapon::MCW_ANIMATION_SHOT_AMMO?>:
                         alias.addResource('ammo/ammo.gif');
                         break;
+                    case <?=Model_Combat_Weapon::MCW_ANIMATION_SHOT_SNOW?>:
+                        alias.addResource('ammo/snowball.gif');
+                        break;
                     case <?=Model_Combat_Weapon::MCW_ANIMATION_SHOT_WATER?>:
                         alias.addResource('ammo/water.gif');
                         break;

@@ -3,6 +3,7 @@
 abstract class Model_Combat_Weapons_Throwable extends Model_Combat_Weapons_Energy
 {
     protected $usable = true;
+    protected static $usable_by_child = true;
 
     protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_THROW;
 

@@ -52,7 +52,7 @@ return Model_Blueprints::factory()
 			->id('i:wplasma')
 			->message('Gut, dass dieser hochgradig experimentelle Plasmablitz-Generator eine absolut standartkonforme Bauform sowie Anschlüsse besitzt, sodass du ihn mit Bauteilen deines Batteriewerfers und Revolvers in eine tödliche Waffe verwandeln kannst. Fast könnte man meinen, das ganze wäre ziemlich unrealistisch.... aber nur fast!')
 			->energy(60)
-			->material([Model_Items_Generic_Plasma::cls() => 1, Model_Items_Generic_Electro::cls() => 1, Model_Items_Handgun::cls() => 1, Model_Items_Batgun::cls() => 1])
+			->material([Model_Items_Generic_Plasma::cls() => 1, Model_Items_Generic_Electro3::cls() => 1, Model_Items_Handgun::cls() => 1, Model_Items_Batgun::cls() => 1])
 			->produces([Model_Items_Plasmagun::cls() => 1])
 	)
 
@@ -73,5 +73,14 @@ return Model_Blueprints::factory()
 			->material([Model_Items_Generic_Tube::cls() => 5, Model_Items_Generic_Sum::cls() => 2, Model_Items_Batgun2::cls() => 1])
 			->produces([Model_Items_Batgunsnp::cls() => 1])
 	)
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:wsnowgun')
+            ->message('Warum sollte man nur Batterien abschießen können?')
+            ->energy(5)
+            ->material([Model_Items_Generic_Pressure::cls() => 1, Model_Items_Generic_Cooler::cls() => 1, Model_Items_Batgun::cls() => 1, Model_Items_Generic_Tube::cls() => 1])
+            ->produces([Model_Items_Snowgun::cls() => 1])
+    )
 
 	->drop_stack();

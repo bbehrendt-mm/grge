@@ -133,7 +133,7 @@ class Model_NPC_Nano extends Model_Cloudshard implements Interface_Plentity
                     foreach ($this->inventory()->get() as $d)
                         $this->location()->inventory()->add($d);
 
-                    $this->location()->log()->add(new Model_Log_Types_Item(static::$death_is_enemy ? Model_Log_Types_Item::MLTI_DEATH_ENEMY : Model_Log_Types_Item::MLTI_DEATH, $this->inventory()->get(), $this->id()));
+                    $this->location()->log()->add(new Model_Log_Types_Item(static::$death_is_enemy ? Model_Log_Types_Item::MLTI_DEATH_ENEMY : (static::$entity_type === Interface_Plentity::IC_NPC_ANIMAL ? Model_Log_Types_Item::MLTI_DEATH_PET : Model_Log_Types_Item::MLTI_DEATH), $this->inventory()->get(), $this->id()));
                 }
 
                 if (count(Tool_Scripts::at_location($this->location_class(), true, true)) === 0) $this->location()->vacate();

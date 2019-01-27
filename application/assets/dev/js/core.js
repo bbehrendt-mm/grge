@@ -2207,7 +2207,7 @@ core = {
                 case 2:
                     header = ":itemdef entdeckt!";
                     break;
-                case 3:
+                case 3: case 11:
                     header = ":name ist von uns gegangen...";
                     break;
                 case 4:
@@ -2246,6 +2246,9 @@ core = {
                 switch (data['class']) {
                     case 3:
                         sub.append($('<p />').text(game.i18n(data.self ? "Du hast soeben deinen letzten Atemzug getan und deiner Gemeinschaft das wenige, was du hattest, hinterlassen. Das wars dann wohl..." : "Heute ist ein trauriger Tag f\u00fcr eure kleine Gemeinschaft, denn sie ist soeben wieder etwas geschrumpft. Nur einige sterbliche \u00dcberreste sind noch zur\u00fcck geblieben...",{':name': data.primary})));
+                        break;
+                    case 11:
+                        sub.append($('<p />').text(game.i18n("Es ist immer traurig, wenn ein Haustier von uns geht. Nur einige sterbliche \u00dcberreste sind von :name zur\u00fcck geblieben...",{':name': data.primary})));
                         break;
                     case 4:
                         sub.append($('<p />').text(game.i18n(data.self ? "Du hast dich soeben in einen Zombie verwandelt!" : "Heute ist ein trauriger Tag f\u00fcr eure kleine Gemeinschaft, denn sie ist soeben wieder etwas geschrumpft. Die Zombiehorden hingegen haben Zuwachs zu verzeichnen...",{':name': data.primary})));

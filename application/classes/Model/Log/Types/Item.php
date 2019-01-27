@@ -13,6 +13,7 @@ class Model_Log_Types_Item extends Model_Log_Message {
     public const MLTI_RAVEN = 8;
     public const MLTI_BOX = 9;
     public const MLTI_DEATH_ENEMY = 10;
+    public const MLTI_DEATH_PET = 11;
 
     protected static $type = Model_Log_Message::MLM_ITEM_LOG;
 
@@ -93,7 +94,7 @@ class Model_Log_Types_Item extends Model_Log_Message {
         if (is_a($merger, static::class, true) && $merger->data['class'] === $this->data['class']
             && !in_array(
                 $this->data['class'],
-                [static::MLTI_DEATH, static::MLTI_DEATH_ENEMY,
+                [static::MLTI_DEATH, static::MLTI_DEATH_ENEMY, static::MLTI_DEATH_PET,
                  static::MLTI_GHULKILL, static::MLTI_ZOMBIFY], true
             )
         )

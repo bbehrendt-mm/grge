@@ -134,7 +134,7 @@
                 case <?=Model_Log_Types_Item::MLTI_EAGLE?>:
                     header = <?=__j(':itemdef entdeckt!')?>;
                     break;
-                case <?=Model_Log_Types_Item::MLTI_DEATH?>:
+                case <?=Model_Log_Types_Item::MLTI_DEATH?>: case <?=Model_Log_Types_Item::MLTI_DEATH_PET?>:
                     header = <?=__j(':name ist von uns gegangen...')?>;
                     break;
                 case <?=Model_Log_Types_Item::MLTI_ZOMBIFY?>:
@@ -173,6 +173,9 @@
                 switch (data['class']) {
                     case <?=Model_Log_Types_Item::MLTI_DEATH?>:
                         sub.append($('<p />').text(game.i18n(data.self ? <?=__j('Du hast soeben deinen letzten Atemzug getan und deiner Gemeinschaft das wenige, was du hattest, hinterlassen. Das wars dann wohl...')?> : <?=__j('Heute ist ein trauriger Tag für eure kleine Gemeinschaft, denn sie ist soeben wieder etwas geschrumpft. Nur einige sterbliche Überreste sind noch zurück geblieben...')?>,{':name': data.primary})));
+                        break;
+                    case <?=Model_Log_Types_Item::MLTI_DEATH_PET?>:
+                        sub.append($('<p />').text(game.i18n(<?=__j('Es ist immer traurig, wenn ein Haustier von uns geht. Nur einige sterbliche Überreste sind von :name zurück geblieben...')?>,{':name': data.primary})));
                         break;
                     case <?=Model_Log_Types_Item::MLTI_ZOMBIFY?>:
                         sub.append($('<p />').text(game.i18n(data.self ? <?=__j('Du hast dich soeben in einen Zombie verwandelt!')?> : <?=__j('Heute ist ein trauriger Tag für eure kleine Gemeinschaft, denn sie ist soeben wieder etwas geschrumpft. Die Zombiehorden hingegen haben Zuwachs zu verzeichnen...')?>,{':name': data.primary})));

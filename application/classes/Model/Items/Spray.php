@@ -48,6 +48,7 @@ class Model_Items_Spray extends Model_Items_Abstract_Item implements Interface_S
 
         return parent::hid()
             ->add_action('Applizieren', Model_Action::factory()
+                ->allow_remote($this->type != 3)
                 ->effect(Model_Effect::factory()
                     ->consume($this)
                     ->spawn(Model_Items_Generic_Spraycan::cls(), 1)

@@ -39,7 +39,7 @@ abstract class Model_Items_Abstract_Wbgun extends Model_Combat_Weapons_Fillable 
 
 		if (Tool_System::instance_of($item, Model_Items_Abstract_Liquid::cls())) {
 			/** @var $item Model_Items_Abstract_Liquid */
-            $this->fillrate += 10;
+            $this->fillrate += static::$fillrate_multiplier;
 			$item->consume();
 		} else return false;
         return false;

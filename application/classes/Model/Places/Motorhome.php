@@ -121,7 +121,7 @@ class Model_Places_Motorhome extends Model_Places_Home {
         if (!$start && !$break) {
             $this->progress++;
             Globals::CurrentGameF()->config('zombies.accum', Globals::CurrentGameF()->config('zombies.accum') + 0.15);
-            Globals::CurrentGameF()->config('places.dryout_factor', Globals::CurrentGameF()->config('places.dryout_factor') + 0.15);
+            Globals::CurrentGameF()->config('places.dryout_factor', Globals::CurrentGameF()->config('places.dryout_factor') + 0.1);
             Globals::CurrentGameF()->config('places.outworld.location_density', Globals::CurrentGameF()->config('places.outworld.location_density') + 0.05);
             Globals::CurrentGameF()->config('places.outworld.alt_spawn_stranger', false);
         }

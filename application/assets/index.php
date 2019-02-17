@@ -1,4 +1,5 @@
 <?php
+
 function kill($str = null) {
     header('HTTP/1.0 404 Not Found');
     if ($str !== null)
@@ -6,7 +7,7 @@ function kill($str = null) {
     exit;
 }
 
-function typeWrangler(&$file, &$ext) {
+function typeWrangler(&$file, &$ext, bool $probe_low = false) {
     preg_match('/(.*\.)(\w*?)$/',$file, $ext);
 
     if (count($ext) < 3) return false;
@@ -16,12 +17,25 @@ function typeWrangler(&$file, &$ext) {
     if (!in_array($ext, ['css','js','map','jpg','bmp','gif','png','ico','webp','eot','svg','ttf','woff']))
         return false;
 
+    $headers = getallheaders();
+    $save_data_header =
+        (isset($headers['Save-Data']) && strtolower($headers['Save-Data']) === 'on') ||
+        (isset($_COOKIE['save-data']) && $_COOKIE['save-data'] === '1');
+
     if ($ext !== 'css')
         $base = preg_replace('/^css\//','',$base);
 
     $skin = $_COOKIE['skin'] ?? null;
     if ($skin && $skin !== 'default' && file_exists("skins/$skin/{$base}{$ext}"))
         $base = "skins/$skin/{$base}";
+
+    if (!$probe_low && $save_data_header) {
+        $ff = $base . 'low.' . $ext;
+        if (typeWrangler($ff, $ext, true)) {
+            $file = $ff;
+            return true;
+        }
+    }
 
     if (in_array($ext, ['jpg','bmp','gif','png','ico']) && file_exists($base . $ext) && file_exists($base . 'webp'))
         $ext = 'webp';
@@ -32,8 +46,7 @@ function typeWrangler(&$file, &$ext) {
                 break;
             }
 
-    $file = $base . $ext;
-    return file_exists($base . $ext);
+    return file_exists($file = $base . $ext);
 }
 
 $f = str_replace(
@@ -107,13 +120,18 @@ $not_modified =
 
 if ($not_modified) {
     header('HTTP/1.1 304 Not Modified');
+    header('Vary: Accept-Encoding');
     exit();
 }
 
 header('ETag: ' . $etag);
 header('Last-Modified: ' . $last_modified_gmt);
 header('Content-Length: ' . filesize($f));
-header('Cache-Control: no-cache, must-revalidate');
+header('Cache-Control: must-revalidate');
 header('Pragma: no-cache');
+header('Vary: Accept-Encoding');
+
+
+
 readfile($f);
 exit;

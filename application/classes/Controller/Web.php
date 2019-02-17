@@ -21,6 +21,25 @@ class Controller_Web extends Controller {
         $this->request->action('noaction');
     }
 
+    public function action_save(): void
+    {
+        $opt = $this->request->param('opt');
+        if      (in_array(strtolower($opt), ['1','on','yes'])) $opt = 1;
+        else if (in_array(strtolower($opt), ['0','off','no'])) $opt = 0;
+        else {
+            $this->response->body(View::factory('redirect')->set('url',URL::base())->set('path','dev/null')->set('sid', $this->session->id()));
+            $this->request->action('noaction');
+        }
+
+        if ($opt === 0)
+            setcookie('save-data', '', 0, URL::base());
+        else
+            setcookie('save-data', '1', 0, URL::base());
+
+        $this->response->body(View::factory('redirect')->set('url',URL::base())->set('path','dev/null')->set('sid', $this->session->id()));
+        $this->request->action('noaction');
+    }
+
     public function action_key(): void
     {
         if (!Globals::CurrentUserF()) {

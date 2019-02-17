@@ -1,2 +1,3 @@
 # Turn on URL rewriting
 RewriteEngine Off
+AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript

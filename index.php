@@ -1,5 +1,9 @@
 <?php
 define('INDEX_CALL', true);
+
+ini_set ( 'zlib.output_compression', 'on' );
+ini_set ( 'zlib.output_compression_level', '9' );
+
 if ((include 'gateway.php') !== 0) die;
 
 ignore_user_abort(true);

@@ -33,8 +33,9 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
         if (!Globals::hasCurrentGame() || !Globals::hasPrimaryPlayer()) return;
 
         $z = (int)self::post('z');
-        if ($z >= 0)
+        if ($z > 0)
             Globals::PrimaryPlayerF()->location()->zombie_factory()->accumulation($z);
+        elseif ($z < 0) Globals::PrimaryPlayerF()->location()->zombie_factory()->reduce_accum(-$z);
 
         $this->render();
     }

@@ -11,7 +11,8 @@
     </div>
 
     <div class="cell ro-1 rw-10 padded">
-        <a href="#" data-hrefto="items"><i class="fa fa-arrow-circle-right"></i> Item Database</a>
+        <a href="#" data-hrefto="items"><i class="fa fa-arrow-circle-right"></i> Item Database</a> <br>
+        <a href="#" data-hrefto="locations"><i class="fa fa-arrow-circle-right"></i> Location Database</a>
     </div>
 </div>
 

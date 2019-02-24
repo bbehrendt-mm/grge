@@ -14,7 +14,8 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
 
     private $range = [10,30];
 
-    private $accumulation = 0;
+    private $accumulated_zombies = [];
+
     private $last_decay = 0;
 
     /**
@@ -81,6 +82,18 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
         return $this->max_adversaries;
     }
 
+    public function reduce_accum(int $num) {
+        if ($this->accumulation() >= $num)
+            $this->accumulated_zombies = [];
+        else
+            for ($i = 0; $i < $num; $i++) {
+
+                $target = Tool_Gambling::select(array_keys($this->accumulated_zombies));
+                $this->accumulated_zombies[$target]--;
+                if ($this->accumulated_zombies[$target] <= 0) unset($this->accumulated_zombies[$target]);
+
+            }
+    }
 
     /**
      * @param null|int $set
@@ -88,79 +101,86 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
      */
     public function accumulation($set = null) {
         if ($set === null)
-            return $this->accumulation;
+            return array_reduce($this->accumulated_zombies, function(int $carry, $item) {
+                return $carry + $item;
+            }, 0);
         else {
-            $this->accumulation = $set;
+            $this->accumulated_zombies = [];
+
+            if ($set > 0) {
+                $accum_army = $this->generate_zombie_list($this->get_strength(), $set);
+
+                foreach ($accum_army as $entry) {
+                    if (!isset($this->accumulated_zombies[$entry['class']])) $this->accumulated_zombies[$entry['class']] = $entry['count'];
+                    else $this->accumulated_zombies[$entry['class']] += $entry['count'];
+                }
+            }
+
+
             return $this;
         }
     }
 
-    /** @deprecated */
-    public function get_radar_data(): array
-    {
-        $min_cl = null;
+    public function get_accumulated_zombie_types(): array {
+        return $this->accumulated_zombies;
+    }
+
+    public function stat_max_zombie_count(): int  {
+        $min_str = null;
         foreach ($this->get() as $zcl => $c)
             /** @var Model_Combat_Zombies_Zombie $zcl */
-            if ($min_cl === null || $min_cl > $zcl::get_strength_quantifier())
-                $min_cl = $zcl::get_strength_quantifier();
-        $min_cl = $min_cl > 0 ? floor($this->strength/$min_cl) : 0;
+            if ($min_str === null || $min_str > $zcl::get_strength_quantifier())
+                $min_str = $zcl::get_strength_quantifier();
+        return $min_str > 0 ? floor($this->get_strength(true)/$min_str) : 0;
+    }
 
-        return [1, $min_cl, $this->chance * (1 - $this->block), $this->chance * $this->block];
+    public function stat_chance(): float {
+        return $this->chance;
+    }
+
+    public function stat_blocking_factor(): float {
+        return $this->block;
+    }
+
+    public function stat_chance_battle(): float {
+        return $this->chance * (1.0 - $this->block);
+    }
+
+    public function stat_chance_block(): float {
+        return $this->chance * $this->block;
     }
 
     public function release() {
-        return $this->spawn(true, false, 1, $this->accumulation);
+
+        $ret = [];
+        foreach ($this->accumulated_zombies as $z => $count)
+            if ($count > 0) {
+                /** @var Model_Combat_Zombies_Zombie $z */
+                $ret[] = $z::factory()->count($count)->set_distance(random_int($this->range[0], $this->range[1]), 0);
+            }
+
+        return $ret;
     }
 
-    public function dry_spawn($force = false): void
-    {
-        if (!$this->max_adversaries || !$this->get_strength() || (!$force && (mt_rand()/mt_getrandmax()) < $this->chance))
-            return;
-
-        if ((mt_rand()/mt_getrandmax()) < $this->block)
-            $this->accumulation++;
-    }
-
-    /**
-     * @param bool|false $force
-     * @param bool|true  $apply_decay
-     * @param int        $strength_modifier
-     * @param null|int   $fixed_number
-     *
-     * @return Model_Combat_Zombies_Zombie[]|null
-     * @throws Exception
-     */
-    public function spawn($force = false, $apply_decay = true, $strength_modifier = 1, $fixed_number = null): ?array
-    {
-        if ($fixed_number === 0 || $fixed_number < 0 || !$this->max_adversaries || !($str = $this->get_strength() * $strength_modifier) || (!$force && (mt_rand()/mt_getrandmax()) > $this->chance))
-            return null;
-
-        if (!$force && !$fixed_number && (mt_rand()/mt_getrandmax()) < $this->block) {
-            $this->accumulation++;
-            return null;
-        }
-
+    public function generate_zombie_list(float $strength, int $fixed_number): array {
         $army = [];
         for ($i = 0; $i < $this->max_adversaries; $i++) {
             /** @var Model_Combat_Zombies_Zombie $tmp */
             $tmp = $this->get_element();
             $army[] = $tmp;
         }
-
-        if ($force && !$army)
-            $army = [Model_Combat_Zombies_Shambler::cls()];
-        elseif (!$army) return null;
+        if (empty($army)) return [];
 
         usort($army, function($a, $b) {
-           /**
-            * @var Model_Combat_Zombies_Zombie $a
-            * @var Model_Combat_Zombies_Zombie $b
-            */
+            /**
+             * @var Model_Combat_Zombies_Zombie $a
+             * @var Model_Combat_Zombies_Zombie $b
+             */
             return $b::get_strength_quantifier() - $a::get_strength_quantifier();
         });
 
         $accum_count = 0;
-        $accum_str = $str;
+        $accum_str = $strength;
         $accum_army = [];
         foreach ($army as $zclass) {
             /** @var Model_Combat_Zombies_Zombie $zclass */
@@ -172,15 +192,13 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
             $accum_army[] = ['count' => $num, 'class' => $zclass];
         }
 
-        if (!$accum_count && $force) {
-            $accum_count = 1;
-            $accum_army = [['count' => 1, 'class' => Model_Combat_Zombies_Shambler::cls()]];
-        } elseif (!$accum_count)
-            return null;
+        if (!$accum_count)
+            return [];
 
         if ($fixed_number && $accum_count !== $fixed_number) {
 
             if ($accum_count < $fixed_number) {
+
                 $f = $fixed_number/$accum_count;
 
                 $accum_count = 0;
@@ -204,6 +222,33 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
 
         }
 
+        return $accum_army;
+    }
+
+    /**
+     * @param bool|false $force
+     * @param int        $strength_modifier
+     * @param null|int   $fixed_number
+     *
+     * @return Model_Combat_Zombies_Zombie[]|null
+     * @throws Exception
+     */
+    public function spawn($force = false, $strength_modifier = 1, $fixed_number = null): ?array
+    {
+        if ($fixed_number === 0 || $fixed_number < 0 || !$this->max_adversaries || !($str = $this->get_strength() * $strength_modifier) || (!$force && (mt_rand()/mt_getrandmax()) > $this->chance))
+            return null;
+
+        $accum_army = $this->generate_zombie_list($str, (int)$fixed_number);
+        if ($force && empty($accum_army)) $accum_army = ['class' => Model_Combat_Zombies_Shambler::cls(), 'count' => $fixed_number ?? 1];
+
+        if (!$force && !$fixed_number && (mt_rand()/mt_getrandmax()) < $this->block) {
+            foreach ($accum_army as $entry) {
+                if (!isset($this->accumulated_zombies[$entry['class']])) $this->accumulated_zombies[$entry['class']] = $entry['count'];
+                else $this->accumulated_zombies[$entry['class']] += $entry['count'];
+            }
+            return null;
+        }
+
         $ret = [];
         foreach ($accum_army as $entry)
             if ($entry['count'] > 0) {
@@ -212,9 +257,21 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
                 $ret[] = $z::factory()->count($entry['count'])->set_distance(random_int($this->range[0], $this->range[1]), 0);
             }
 
-        if ($apply_decay)
-            $this->reduce_strangth_factor(($str - $accum_str)/(6 * $str));
-
         return $ret;
+    }
+
+    public function dry_spawn($force = false): void
+    {
+        if (!$this->max_adversaries || !$this->get_strength() || (!$force && (mt_rand()/mt_getrandmax()) < $this->chance))
+            return;
+
+        if ($force || (mt_rand()/mt_getrandmax()) < $this->block) {
+            $accum_army = $this->generate_zombie_list($this->get_strength(), 0);
+            foreach ($accum_army as $entry) {
+                if (!isset($this->accumulated_zombies[$entry['class']])) $this->accumulated_zombies[$entry['class']] = $entry['count'];
+                else $this->accumulated_zombies[$entry['class']] += $entry['count'];
+            }
+        }
+
     }
 }	

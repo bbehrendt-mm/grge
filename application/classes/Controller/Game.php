@@ -128,26 +128,27 @@ class Controller_Game extends Controller {
     {
         $radar_scale = Globals::PrimaryPlayerF()->get_status()->retrieve('tr_danger') ? 1 : 4;
 
-        // Get Radar data
-        [, $radar_max, $radar_prop, $radar_increase] = Globals::PrimaryPlayerF()->location()->zombie_factory()->get_radar_data();
+        // Get zombie factory;
+        $factory = Globals::PrimaryPlayerF()->location()->zombie_factory();
+        $radar_prop = $factory->stat_chance();
+        $acc_zombies = $factory->get_accumulated_zombie_types();
 
         // Check if we're at a hideout with active defenses
         $hideout = Tool_Scripts::current_location_hideout();
         $protected_hideout = $hideout && $hideout->get_defense() > 0;
 
         // Calculate approx. number of ticks between each blockade increase and random attack; set random attack value to zero if we're at a hideout
-        if ($protected_hideout)
-            $radar_prop = 0;
-        else $radar_prop = ($radar_prop > 0) ? ceil($radar_prop ** -1) : 0;
-        $radar_increase = ($radar_increase > 0) ? ceil($radar_increase ** -1) : 0;
+        $radar_prop = ($radar_prop > 0) ? ceil($radar_prop ** -1) : 0;
 
         // Calculate danger level
-        $danger = ($radar_prop > 0) ? floor($radar_max/4) : 0;              // Base value: Max attack group size
-        if (!$protected_hideout && $radar_prop <= 1.5 && $radar_prop > 0)     $danger += 2;    // Increase by 2 if we have a very high attack probability
-        elseif (!$protected_hideout && $radar_prop <= 3 && $radar_prop > 0)   ++$danger;    // Increase by 1 if we have a high attack probability
-        elseif ($radar_prop <= 15  || $radar_prop === 0)  --$danger;                           // Decrease by 1 if we have a very low attack probability
-        if ($radar_increase !== 0 && $radar_increase <= 3)   ++$danger;   // Increase by 1 if we have a very high blocking speed
-        $danger = min(5,max(($radar_prop > 0) ? 1 : 0,$danger));            // Confine danger to 0-5 range
+        $normalized_danger = $factory->get_strength() * $factory->stat_chance();
+
+        $danger = 0;
+        if ($normalized_danger >  0 && $danger <=  1) $danger = 1;
+        if ($normalized_danger >  1 && $danger <=  2) $danger = 2;
+        if ($normalized_danger >  2 && $danger <=  5) $danger = 3;
+        if ($normalized_danger >  5 && $danger <= 10) $danger = 4;
+        if ($normalized_danger > 10)                  $danger = 5;
 
         // Get local actions
         $a = [];
@@ -164,6 +165,11 @@ class Controller_Game extends Controller {
             $doorways[$did]['name'] = __(Globals::CurrentGameF()->mapF($did)->get_sublocation_description());
         }
         if (!count($doorways)) $doorways = false;
+
+        $z_list = [];
+        foreach ($acc_zombies as $z_class => $z_count)
+            /** @var $z_class Model_Combat_Zombies_Zombie */
+            $z_list[] = ['icon' => $z_class::static_sprite(), 'count' => $z_count];
 
         // Add render data
         $this->add_data('location', [
@@ -182,15 +188,21 @@ class Controller_Game extends Controller {
                 'defense' => (int)$hideout->get_defense(false),
                 'deco' => $hideout->deco(null, false),
             ] : false,
-            'discovery' => Tool_System::instance_of(Globals::PrimaryPlayerF()->location(), 'Model_Places_Abstract_Node') ? round(100*Globals::CurrentGameF()->mapF(Globals::PrimaryPlayerF()->location_class())->get_discovery_rate(Globals::PrimaryPlayerF()->location_class(), true)) : false,
+            'discovery' => Tool_System::instance_of(Globals::PrimaryPlayerF()->location(), Model_Places_Abstract_Node::cls()) ?     round(100*Globals::CurrentGameF()->mapF(Globals::PrimaryPlayerF()->location_class())->get_discovery_rate(Globals::PrimaryPlayerF()->location_class(), true)) : false,
+            'spawnrate' => !Tool_System::instance_of(Globals::PrimaryPlayerF()->location(), Model_Places_Abstract_Hideout::cls()) ? round(100*Globals::CurrentPlayerActualF()->location()->item_factory()->get_fillrate()) : false,
             'radar' => [
                 'danger' => $danger,
-                'min' => 0,
-                'max' => ceil($radar_max/$radar_scale)*$radar_scale,
+                'max' => ceil( $factory->stat_max_zombie_count() /$radar_scale)*$radar_scale,
+
                 'prop' => $radar_prop * 5,
-                'inc' => $radar_increase * 5,
+                'c' => $factory->stat_chance(),
+                'bd' => $protected_hideout ? 100 : round($factory->stat_blocking_factor() * 100),
+
                 'hideout' => (bool)$hideout,
-                'zombies' => Globals::PrimaryPlayerF()->location()->zombie_pop()
+                'zombies' => [
+                    'pop' => Globals::PrimaryPlayerF()->location()->zombie_pop(),
+                    'list' => $z_list
+                ]
             ]
         ]);
 

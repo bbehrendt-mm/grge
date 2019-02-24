@@ -154,6 +154,10 @@ class Model_Combat_Actor extends Named {
         return $this->mod_escape;
     }
 
+    public static function static_sprite(): ?string {
+        return static::$custom_sprite ?? null;
+    }
+
     public function customSprite($death_sprite = false): ?string {
         return $death_sprite ? static::$custom_death_sprite : static::$custom_sprite;
     }

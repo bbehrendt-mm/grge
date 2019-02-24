@@ -42,7 +42,7 @@ class Model_Items_Mask extends Model_Items_Abstract_Item implements Interface_St
                         ->custom(function($p) {
                             /** @var Model_Player $p */
                             $kills = ceil($p->location()->zombie_pop()/($this->level >= 2 ? 2 : 4));
-                            $p->location()->zombie_factory()->accumulation($p->location()->zombie_pop() - $kills);
+                            $p->location()->zombie_factory()->reduce_accum($kills);
                             $p->achievements()->achieve(Model_Achievement::MA_KILLED_ZOMBIES, $kills);
 
                             $this->nextuse = Globals::CurrentGameF()->duration() + 288;
@@ -119,7 +119,7 @@ class Model_Items_Mask extends Model_Items_Abstract_Item implements Interface_St
                                 $pl->get_status()->modify([Model_Status::MS_STAT_HEALTH, random_int(-15, -2)], Model_Status::MS_EFFECT_UNSCALE);
 
                             $kills = ceil($p->location()->zombie_pop()/1.5);
-                            $p->location()->zombie_factory()->accumulation($p->location()->zombie_pop() - $kills);
+                            $p->location()->zombie_factory()->reduce_accum($p->location()->zombie_pop());
                             $p->achievements()->achieve(Model_Achievement::MA_KILLED_ZOMBIES, $kills);
 
                             $p->location()->hero_replensish(0.5);

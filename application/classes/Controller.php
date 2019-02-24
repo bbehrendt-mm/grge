@@ -144,7 +144,12 @@ abstract class Controller extends Kohana_Controller {
     }
 
     public static function dump($title, $object): void {
-        self::$dumps[$title] = $object;
+        $use_title = $title;
+        $i = 0;
+        while (array_key_exists($use_title, self::$dumps))
+            $use_title = $title . '-' . (++$i);
+
+        self::$dumps[$use_title] = $object;
     }
 
     private function daily_login_bonus(): void {

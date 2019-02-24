@@ -26,6 +26,10 @@ abstract class Model_Combat_Zombies_Zombie extends Model_Combat_Actor {
         );
     }
 
+    public static function static_sprite(): ?string {
+        return parent::static_sprite() ?? 'zombie.gif';
+    }
+
     public static function get_strength_quantifier(): int
     {
         return static::$num_str;

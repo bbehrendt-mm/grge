@@ -75,6 +75,11 @@
                                     <td><b>Max. Gruppen</b></td>
                                     <td><?=$radar[$lc_index]['groups']?></td>
                                 </tr><tr>
+                                    <td><b>N. Stärke</b></td>
+                                    <td><?=$radar[$lc_index]['n_strength']?></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr><tr>
                                     <td><b>Chance (Atk.)</b></td>
                                     <td><?=$radar[$lc_index]['c_attack']?>%</td>
                                     <td><b>Chance (Blk.)</b></td>

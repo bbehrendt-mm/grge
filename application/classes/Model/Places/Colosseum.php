@@ -10,11 +10,6 @@ class Model_Places_Colosseum extends Model_Places_Abstract_Place {
 
 	private $stage = 0;
 
-	protected static $widget_list = Array(
-			'colosseum',
-			'description',
-	);
-
     public function uin($uin = NULL) {
         if ($uin !== null)
             $this->inventory->add(new Model_Items_Virtual_Location_Coloseum());

@@ -14,6 +14,10 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
         'begin'   => ['Ihr kriegt mich nicht!','Nicht heute!','Verflucht!','ZOMBIES!']
     ];
 
+    public static function static_sprite(): ?string {
+        return parent::static_sprite() ?? 'player.gif';
+    }
+
     /**
      * @param null|Model_Player $p
      * @return Model_Combat_Players_Player|Model_Player

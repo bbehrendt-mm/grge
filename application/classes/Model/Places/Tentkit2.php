@@ -9,7 +9,7 @@ class Model_Places_Tentkit2 extends Model_Places_Tentkit {
     protected static $base_deco_value = 15;
 
     //Base defense
-    protected static $base_defense = 8;
+    protected static $base_defense = 22;
 
     //Base: 15% per day
     protected static $decay_rate = 0.15;

@@ -5,30 +5,19 @@ class Model_Factory_Items extends Model_Factory_Abstract {
     protected static $base = 'items';
     protected static $expected_result_class = 'Model_Items_Abstract_Item';
 
-    private $fillrate = 1;
+    private $fillrate = 1.0;
     private $decay = 0.1;
 
     /**
-     * @param number $d
+     * @param float $d
      *
      * @return Model_Factory_Items
      * @throws Exception
      */
-    public function set_decay_factor($d): \Model_Factory_Items
+    public function set_decay_factor(float $d): \Model_Factory_Items
     {
         $df = Globals::hasCurrentGame() ? Globals::CurrentGameF()->config('places.dryout_factor') : 1;
-
         $this->decay = $d * $df;
-        return $this;
-    }
-
-    /**
-     * @param number $d
-     * @return Model_Factory_Items
-     */
-    public function set_fillrate($d): \Model_Factory_Items
-    {
-        $this->fillrate = $d;
         return $this;
     }
 
@@ -91,10 +80,16 @@ class Model_Factory_Items extends Model_Factory_Abstract {
      * @param float $modifier Modification factor
      * @return $this
      */
-    public function modify_decay($modifier): self
+    public function modify_decay(float $modifier): self
     {
-        $this->decay = max(0,min(1,1 - (1 - $this->decay)/$modifier));
+        if ($modifier === 1.0) return $this;
+        $this->decay = $modifier < 1.0 ? ( $this->decay * $modifier ) : ( 1.0 - (1.0 - $this->decay)/$modifier );
+        $this->decay = max(0.0,min(1.0,$this->decay));
         return $this;
+    }
+
+    public function get_fillrate(): float {
+        return $this->fillrate;
     }
 
     public function findings_left(): int

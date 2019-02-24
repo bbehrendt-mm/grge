@@ -33,128 +33,156 @@ class Controller_Admin_Wiki extends Controller_Admin_Admin {
         return $list;
     }
 
-    private function get_item_spawns($classpath) {
-        $list = [];
-
-        /** @var Model_Factory_Items $spawn */
-        $spawn = Model_Factory_Items::read($classpath);
-
-        if ($spawn) {
-            $a = 0;
-            $rem = $spawn->findings_left();
-
-            $items = $spawn->get();
-            arsort($items);
-
-            /** @var string|Model_Items_Abstract_Item $item */
-            foreach ($items as $item => $chance) {
-                $a += $chance;
-                $list[$item] = [
-                    'name' => $item::static_name() ?: "[[$item]]",
-                    'icon' => $item::static_icon(),
-                    'chance' => round($chance * 100, 2),
-                    'expect' => round($rem * $chance, ($rem * $chance > 1) ? 0 : 2),
-                ];
-            }
-
-            if ($a) $list[''] = $rem;
-
-            return $list;
-        } else return null;
-    }
-
-    private function get_zombie_spawns($classpath) {
-        $list = [];
-
-        /** @var Model_Factory_Zombies $spawn */
-        $spawn = Model_Factory_Zombies::read($classpath);
-
-        if ($spawn) {
-            $zombies = $spawn->get();
-            arsort($zombies);
-            /** @var string|Model_Combat_Zombies_Zombie $zomb */
-            foreach ($zombies as $zomb => $chance) {
-                /** @noinspection PhpUndefinedMethodInspection */
-                $list[$zomb] = [
-                    'name' => ($tmp = (new $zomb())->name()) ? $tmp : "[[$zomb]]",
-                    'icon' => 'zombie',
-                    'chance' => round($chance * 100, 2),
-                    'expect' => floor($spawn->get_strength(false)/$zomb::get_strength_quantifier()),
-                ];
-            }
-
-            return $list;
-        } else return null;
-    }
-
-    private function get_radar_data($classpath): array
-    {
-        /** @var Model_Factory_Zombies $spawn */
-        $spawn = Model_Factory_Zombies::read($classpath);
-
-        $rad = $spawn->get_radar_data();
-        $rad[2] *= 100; $rad[3] *= 100;
-
-        return [
-            'strength' => $spawn->get_strength(false),
-            'groups' => $spawn->get_max_group_count(),
-            'c_attack' => $rad[2],
-            'c_block' => $rad[3]
-        ];
-    }
-
-    private function get_type($classpath): string {
-        if (Tool_System::instance_of($classpath, Model_Places_Abstract_Node::cls()))
-            return 'NODE';
-        elseif (Tool_System::instance_of($classpath, Model_Places_Abstract_Hideout::cls()))
-            return 'HIDEOUT';
-        elseif (Tool_System::instance_of($classpath, Model_Places_Abstract_Trap::cls()))
-            return 'TRAP';
-        elseif (Tool_System::instance_of($classpath, Model_Places_Abstract_Xmas::cls()))
-            return 'XMAS';
-        else return '';
-    }
-
-    private function get_item_locations($locations, $item_findings): array
-    {
-
-        $ret = [];
-        $items = $this->get_model_list('Items');
-
-        /** @var string|Model_Items_Abstract_Item $item */
-        foreach ($items as $item) if (!Tool_System::instance_of($item, Model_Items_Abstract_Virtual::cls())) {
-            $tmp = [
-                'name' => $item::static_name() ?: "[[$item]]",
-                'icon' => $item::static_icon(),
-                'locations' => [],
-                'count' => 0,
-            ];
-
-            foreach ($locations as $location)
-                $tmp['locations'][$location] = 0;
-
-            $ret[$item] = $tmp;
-        }
-
-        foreach ($locations as $location)
-            if (isset($item_findings[$location]))
-                foreach ($item_findings[$location] as $item => $entry) if (isset($ret[$item])) {
-                    $ret[$item]['locations'][$location] = $entry['expect'];
-                    $ret[$item]['count'] += $entry['expect'];
-                }
-
-        foreach ($ret as &$listing)
-            arsort($listing['locations']);
-        unset($listing);
-        uasort($ret, function($a, $b) {return $b['count'] - $a['count'];});
-
-        return $ret;
-    }
-
     public function action_main(): void
     {
         $this->add_widget(View::factory('admin/wiki/main')
             ->render());
+        $this->render();
+    }
+
+    public function action_locations(): void
+    {
+        $location_list = $this->get_model_list('Places', false);
+        $locations = [];
+
+        foreach ($location_list as $location_class) {
+            /** @var Model_Places_Abstract_Place|string $location_class */
+            $reflection = new ReflectionClass($location_class);
+            if (!$reflection->isInstantiable()) continue;
+
+            $hideout = Tool_System::instance_of($location_class, Model_Places_Abstract_Hideout::cls());
+            $node = Tool_System::instance_of($location_class, Model_Places_Abstract_Node::cls());
+
+            $name_list = $location_class::get_namelist();
+            $name_count = count($name_list);
+            $name = __($name_list[0]);
+            if ($hideout) $name = "[H] $name";
+            else if ($node) $name = "[N] $name";
+
+            $icon = $location_class::get_icon();
+
+            $ancestors = [];
+            $class = $reflection;
+
+            $trn = [
+                Model_Places_Abstract_Place::cls() => 'GRGE Location Base Class',
+                Model_Places_Abstract_Node::cls() => 'Node',
+                Model_Places_Abstract_Hideout::cls() => 'Hideout',
+                Model_Places_Abstract_Trap::cls() => 'Trap',
+                Model_Places_Abstract_Xmas::cls() => 'XMAS'
+            ];
+
+            do {
+                $cn = $class->getName();
+
+                if (isset($trn[$cn])) $cn = $trn[$cn];
+                else $cn = str_replace(['Model_Places_Abstract_','Model_Places_'],'', $cn);
+
+                if ($class->isAbstract()) $cn = "[$cn]";
+
+                $ancestors[] = $cn;
+                if ($class->getName() === Model_Places_Abstract_Place::cls()) break;
+            } while ($class = $class->getParentClass());
+
+            $alias = [];
+
+            if ($name_count > 1)
+                for ($t = 1; $t < $name_count; $t++) {
+                    $aname =$name_list[$t];
+                    if (!$aname) continue;
+                    $alias[] = [__($aname) , $icon];
+                }
+
+
+            $code = [];
+            foreach ($reflection->getMethods() as $method)
+                if ($method->getDeclaringClass()->getName() === $location_class) {
+                    $mth = [
+                        'name' => $method->getName(),
+                        'custom' => !$reflection->getParentClass() || !$reflection->getParentClass()->hasMethod($method->getName()),
+                    ];
+                    $code[] = $mth;
+                }
+
+            $static = [];
+            $skp = ['location_name','description','icon','namelist'];
+            foreach ($reflection->getStaticProperties() as $propertyName => $value)
+                if ($value !== null && !in_array($propertyName, $skp, true)) {
+                    ob_start();
+                    var_dump($value);
+                    $static[$propertyName] = ob_get_clean();
+                }
+
+
+            /** @var Model_Factory_Zombies $spawn */
+            $spawn = Model_Factory_Zombies::read($location_class);
+            $zombies = $spawn->get();
+
+            $z_range = [];
+            $z_avg = 0;
+            foreach ($zombies as $z_class => $chance) {
+                /** @var $z_class Model_Combat_Zombies_Zombie */
+                $strength = (float)$z_class::get_strength_quantifier();
+
+                $z_avg += $strength * $chance;
+                $z_range = (empty($z_range))
+                    ? [$strength,$strength]
+                    : [min($strength,$z_range[0]),max($strength,$z_range[1])];
+            }
+
+            /** @var Model_Factory_Zombies $spawn */
+            $items = Model_Factory_Items::read($location_class);
+
+            $item_chances = [];
+            foreach ($items->get() as $item_class => $chance)
+                $item_chances[] = [
+                    'name' => Tool_System::instance_of($item_class, Model_Items_Abstract_Virtual::cls())
+                        ? $item_class
+                        : __(Tool_System::getItemInstanceName($item_class)),
+                    'icon' => Tool_System::instance_of($item_class, Model_Items_Abstract_Virtual::cls())
+                        ? 'items/any'
+                        : Tool_System::getItemInstanceIcon($item_class),
+                    'chance' => $chance
+                ];
+
+            uasort($item_chances, function($a,$b) {
+                return $a['chance'] < $b['chance'];
+            });
+
+            $max_str =  $spawn->get_strength(false);
+
+            $tmp = [
+                'info' => [
+                    'name' => $name,
+                    'icon' => $icon,
+                    'alias' => $alias,
+                    'danger' => [
+                        'str' => $max_str,
+                        'chn' => $spawn->stat_chance(),
+                        'blk' => $spawn->stat_blocking_factor(),
+                        'ndg' => $spawn->get_strength(false) * $spawn->stat_chance(),
+                        'num' => empty($z_range)
+                            ? [0,0,0]
+                            : [ floor($max_str / $z_range[1]), floor($max_str / $z_avg), floor($max_str / $z_range[0]) ],
+                        'rte' => round(12 * ($z_avg * $spawn->stat_chance() * $spawn->stat_blocking_factor()), 2)
+                    ]
+                ],
+                'items' => $item_chances,
+                'lineage' => $ancestors,
+                'code' => $code,
+                'properties' => $static
+            ];
+
+            $locations[$location_class] = $tmp;
+        }
+
+        uasort($locations, function($a,$b) {
+            return strcmp($a['info']['name'], $b['info']['name']);
+        });
+
+        $this->add_widget(View::factory('admin/wiki/locations')
+                              ->set('locations', $locations)
+                              ->render());
         $this->render();
     }
 
@@ -254,37 +282,4 @@ class Controller_Admin_Wiki extends Controller_Admin_Admin {
             ->render());
         $this->render();
     }
-    
-    public function action_main_old(): void
-    {
-        $locations = $this->get_model_list('Places');
-
-        $loc_names = [];
-        $loc_items = [];
-        $loc_zombies = [];
-        $loc_radar = [];
-        $loc_type = [];
-
-        /** @var string|Model_Places_Abstract_Place $location */
-        foreach ($locations as $location) {
-            $loc_names[$location] = implode(' / ', $location::get_namelist());
-            if ($tmp = $this->get_item_spawns($location)) $loc_items[$location] = $tmp;
-            if ($tmp = $this->get_zombie_spawns($location)) $loc_zombies[$location] = $tmp;
-            $loc_radar[$location] = $this->get_radar_data($location);
-            $loc_type[$location] = $this->get_type($location);
-        }
-
-        $this->add_widget(View::factory('admin/wiki')
-            ->set('index', $locations)
-            ->set('names', $loc_names)
-            ->set('items', $loc_items)
-            ->set('zombies', $loc_zombies)
-            ->set('radar', $loc_radar)
-            ->set('types', $loc_type)
-            ->set('atlas', $this->get_item_locations($locations, $loc_items))
-            ->render());
-
-        $this->render();
-    }
-
 }

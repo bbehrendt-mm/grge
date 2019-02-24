@@ -7,7 +7,7 @@ class Model_Places_Vault extends Model_Places_Abstract_Hideout {
     protected static $icon = 'home';
 
     //Base defense
-    protected static $base_defense = 30;
+    protected static $base_defense = 100;
 
     //Base: 15% per day
     protected static $decay_rate = 0.05;

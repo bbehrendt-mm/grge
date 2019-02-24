@@ -11,7 +11,7 @@ class Model_Places_Treehouse extends Model_Places_Abstract_Hideout {
     protected static $base_deco_value = 15;
 
     //Base defense
-    protected static $base_defense = 10;
+    protected static $base_defense = 30;
 
     //Base: 15% per day
     //protected static $decay_rate = 0.15;

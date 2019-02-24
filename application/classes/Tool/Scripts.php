@@ -171,8 +171,10 @@ class Tool_Scripts
     }
 
     public static function getBrainCoinLikelinessLevel($lid = null) {
-        // Get Radar data
-        [/*$radar_min*/, $radar_max, $radar_prop, $radar_increase] = $lid ? Globals::CurrentGameF()->locationF($lid)->zombie_factory()->get_radar_data() : Globals::CurrentPlayerF()->location()->zombie_factory()->get_radar_data();
+        // Get zombie factory;
+        $factory = $lid ? Globals::CurrentGameF()->locationF($lid)->zombie_factory() : Globals::CurrentPlayerF()->location()->zombie_factory();
+        $radar_prop = $factory->stat_chance_battle();
+        $radar_increase = $factory->stat_chance_block();
 
         // Check if we're at a hideout with active defenses
         $hideout = self::current_location_hideout();
@@ -185,7 +187,7 @@ class Tool_Scripts
         $radar_increase = ($radar_increase > 0) ? ceil($radar_increase ** -1) : 0;
 
         // Calculate danger level
-        $danger = ($radar_prop > 0) ? floor($radar_max/4) : 0;              // Base value: Max attack group size
+        $danger = ($radar_prop > 0) ? floor($factory->stat_max_zombie_count() / 4) : 0;              // Base value: Max attack group size
         if (!$protected_hideout && $radar_prop <= 1.5 && $radar_prop > 0)     $danger += 2;    // Increase by 2 if we have a very high attack probability
         elseif (!$protected_hideout && $radar_prop <= 3 && $radar_prop > 0)   ++$danger;    // Increase by 1 if we have a high attack probability
         elseif ($radar_prop <= 15  || $radar_prop === 0)  --$danger;                           // Decrease by 1 if we have a very low attack probability

@@ -10,7 +10,7 @@ class Model_Places_Hotel extends Model_Places_Abstract_Hideout {
     protected static $base_deco_value = -25;
 
     //Base defense
-    protected static $base_defense = 4;
+    protected static $base_defense = 12;
 
     //Base: 15% per day
     protected static $decay_rate = 0.35;

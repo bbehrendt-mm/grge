@@ -13,12 +13,6 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
     protected static $upgradable = true;
     protected static $defendable = true;
     protected static $perpetualDaytime;
-
-	protected static $widget_list = Array(
-				'zombie-radar',
-				'mapper',
-				'description',
-			);
 	
 	protected static $weight_limit;
 
@@ -40,13 +34,6 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
     protected $doorway = array();
     protected static $auto_doorways = array();
 
-	protected static $auto_actions = Array();
-
-	public function widget_list(): array
-    {
-		return static::$widget_list;
-	}
-
 	public function is_upgradable(): bool
     {
 	    return static::$upgradable;
@@ -60,6 +47,10 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
     public static function get_namelist(): array
     {
         return static::$namelist ?: [static::$location_name];
+    }
+
+    public static function get_icon(): string {
+	    return static::$icon;
     }
 
     public static function getCustomStyle() {
@@ -250,11 +241,6 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
         $this->setup_additional_rooms();
 	}
 	
-	public function auto_actions(): array
-    {
-		return static::$auto_actions;
-	}
-	
 	/**
 	 * Returns local zombie factory
 	 * @return Model_Factory_Zombies
@@ -262,9 +248,14 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 	public function zombie_factory(): \Model_Factory_Zombies
     {
 		return $this->zombie_factory;
-	}    
-	
-	public function log(): \Model_Log_Log
+	}
+
+    public function item_factory(): \Model_Factory_Items
+    {
+        return $this->item_factory;
+    }
+
+    public function log(): \Model_Log_Log
     {
 		return $this->log;
 	}
@@ -461,8 +452,8 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
             Globals::CurrentPlayerF()->get_status()->modify(Model_Status::MS_STAT_ENERGY, -10);
 			if ((Globals::CurrentPlayerF()->get_status()->get(Model_Status::MS_STAT_ENERGY) * Globals::CurrentPlayerF()->get_status()->get(Model_Status::MS_CHAR_EVASIVENESS)) >= $c) {
 				$c = $this->zombie_pop();
-                $this->zombie_pop(true);
-				$this->zombie_factory()->accumulation(ceil($c/(1.05 * Globals::CurrentPlayerF()->get_status()->get(Model_Status::MS_CHAR_BULKYNESS))));
+                $dec = $c - ceil($c/(1.05 * Globals::CurrentPlayerF()->get_status()->get(Model_Status::MS_CHAR_BULKYNESS)));
+				$this->zombie_factory()->reduce_accum($dec);
 
                 Globals::CurrentPlayerF()->enable_escape();
 				

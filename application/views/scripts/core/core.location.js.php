@@ -253,9 +253,9 @@
         }
 
         // Create zombie count
-        if (data.zombies == 0)
+        if (data.zombies.pop == 0)
             zombie_text = <?=__j('Keine Zombies')?>;
-        else if (data.zombies == 1)
+        else if (data.zombies.pop == 1)
             zombie_text = <?=__j('1 Zombie')?>;
         else zombie_text = <?=__j(':num Zombies')?>;
 
@@ -266,41 +266,51 @@
             )
         ).append(
             $('<div />').addClass('cell rw-6 padded').append(
-                siege = $('<div />').addClass('widget siege alert-' + (data.zombies > 0 ? '4' : '0')).text(game.i18n(zombie_text, {':num': data.zombies}))
+                siege = $('<div />').addClass('widget siege alert-' + (data.zombies.pop > 0 ? '4' : '0')).text(game.i18n(zombie_text, {':num': data.zombies.pop}))
             )
         );
 
         var tooltip = [];
-        if (data.prop == 0 && !data.hideout) tooltip.push(<?=__j('Hier musst du vorerst keine Angst unerwarteten Angriffen haben.')?>);
-        else if (data.prop == 0 && data.hideout) tooltip.push(<?=__j('Du bist hier so lange sicher, wie dein Versteck den Zombies widerstehen kann.')?>);
+        if (data.c <= 0) tooltip.push(<?=__j('Dieses Versteck werden die Zombies niemals finden!')?>);
         else {
-            tooltip.push(<?=__j('Dein Gespühr sagt dir, dass du auf Zombie-Gruppen mit einer Größe von bis zu :max Zombies gefasst sein solltest.')?>);
-            tooltip.push(<?=__j('Rechne damit, etwa alle :pc_min Minuten auf Zombies zu treffen.')?>);
+
+            if (data.prop == 0)
+                tooltip.push(<?=__j('Hier musst du vorerst keine Angst unerwarteten Angriffen haben.')?>);
+            else {
+                tooltip.push(<?=__j('Dein Gespühr sagt dir, dass du auf Zombie-Gruppen mit einer Größe von bis zu :max Zombies gefasst sein solltest.')?>);
+                tooltip.push(<?=__j('Rechne damit, etwa alle :pc_min Minuten auf Zombies zu treffen.')?>);
+            }
+
+            if (data.bd == 0) tooltip.push(<?=__j('Die Zombies haben hier keine Gelegenheit, dir den Weg zu versperren.')?>);
+            else if (data.bd >= 100 && data.hideout)  tooltip.push(<?=__j('Solange dein Versteck dich schützt, werden die Zombies dich nicht angreifen. Allerdings können sie den Ausgang blockieren ...')?>);
+            else if (data.bd >= 100 && !data.hideout) tooltip.push(<?=__j('Die Zombies hier werden dich nicht direkt angreifen.')?>);
+            else tooltip.push(<?=__j('Mit einer Chance von :bd_prc werden die Zombies nicht sofort angreifen.')?>);
         }
-        if (!data.hideout)
-            if (data.inc == 0) tooltip.push(<?=__j('Die Zombies haben hier keine Gelegenheit, dir den Weg zu versperren.')?>);
-            else tooltip.push(<?=__j('Die Zombies könnten sich hier versammeln und dir den Fluchtweg abschneiden... So wies aussieht würden sie dafür vermutlich um die :sg_min Minuten benötigen.')?>);
-        else
-            if (data.inc == 0) tooltip.push(<?=__j('Dieses Versteck werden die Zombies niemals finden!')?>);
-            else tooltip.push(<?=__j('Es ist nur eine Frage der Zeit, bis dieses Versteck von Zombies umstellt wird. So wies aussieht würden sie dafür vermutlich um die :sg_min Minuten benötigen.')?>);
 
         radar.attr('title',
-            game.i18n(tooltip.join('<br /><br />'), {':min': '<b>' + data.min + '</b>',':max': '<b>' + data.max + '</b>',':pc_min': '<b>' + data.prop + '</b>',':sg_min': '<b>' + data.inc + '</b>'})
+            game.i18n(tooltip.join('<br /><br />'), {':max': '<b>' + data.max + '</b>',':pc_min': '<b>' + data.prop + '</b>',':bd_prc': '<b>' + data.bd + '%</b>'})
         ).qtip(game.render.html.qtip.ingame('bottom'));
 
         siege.attr('title','-').qtip(game.render.html.qtip.ingame('bottom',{
             render: function(event,api) {
                 var content = $(this).find('.qtip-content').empty();
-                if (data.zombies == 0)
+                if (data.zombies.pop == 0)
                     content.append(<?=__j('Es sieht so aus, als könntest du diesen Ort momentan ohne Probleme verlassen. Du solltest trotzdem regelmäßig nachschauen, ob Zombies eventuell den Weg blockieren.')?>);
                 else {
-                    var fight, flee;
                     if (data.hideout)
                         content.append(<?=__j('Die Zombies haben dein Versteck aufgespürt. Von hier kannst du nicht mehr fliehen - du musst die Zombies bekämpfen!')?>);
                     else content.append(<?=__j('Es geht weder vor noch zurück - Zombies blockieren den Ausgang! Du kannst entweder eine waghalsige Flucht versuchen oder den Weg freizuräumen. Eins steht fest: Von alleine werden diese Zombies hier nicht verschwinden...')?>);
 
+                    var row;
+                    content.append('<br />').append(row = $('<div>').addClass('row'));
+                    $.each(data.zombies.list, function(index, elem) {
+                        row
+                            .append( $('<div>').addClass('cell rw-6 padded right').append($('<img>').attr('src', 'media/icons/battle/sprites/' + elem.icon)) )
+                            .append( $('<div>').addClass('cell rw-6 padded left').text( 'x ' + elem.count ) )
+                    });
+
                     content
-                        .append('<br /><br />')
+                        .append('<br />')
                         .append(core.snippets.button(<?=__j('Weg freikämpfen')?>, function() {
                             api.hide();
                             core.command('location/fight');
@@ -315,28 +325,55 @@
         }));
     };
 
-    var locationradar = function(data, target) {
-        $(target).empty().append(
-            $('<div />').addClass('cell rw-12 padded').append(
+    var locationradar = function(data_dis, data_spawn, target) {
+        $(target).empty();
+        if (data_dis === false && data_spawn === false) return;
 
-                $('<div />').addClass('widget radar').append(
-                    $('<span />').text(<?=__j('Erkundungsrate')?>)
-                ).append(
-                    $('<div />').addClass('discoverybar').append($('<div />').css('width', data + '%'))
+        var single = (data_dis === false && data_spawn !== false) || (data_dis !== false && data_spawn === false);
+        if (data_dis !== false)
+            $(target).append(
+                $('<div />').addClass('cell padded').addClass(single ? 'rw-12' : 'rw-6').append(
+
+                    $('<div />').addClass('widget radar').append(
+                        $('<span />').text(<?=__j('Erkundungsrate')?>)
+                    ).append(
+                        $('<div />').addClass('discoverybar').append($('<div />').css('width', data_dis + '%'))
+                    )
+                        .attr('title', '-')
+                        .qtip(game.render.html.qtip.ingame('top', {
+                            render: function() {
+                                var content = $(this).find('.qtip-content').empty()
+                                    .append($('<span />').text(data_dis >= 100 ? <?=__j('Du hast diesen Ort vollständig ausgekundschaftet - von hier aus wirst du keine neuen Ruinen entdecken können.')?> : <?=__j('Du bist momentan auf der Suche nach neuen Orten. Jedes mal, wenn der Ereigniscountdown abläuft, hast du die Chance einen neuen Ort zu entdecken.')?>))
+                                if (data_dis <= 100)
+                                    content
+                                        .append($('<span />').addClass('separator'))
+                                        .append($('<div />').addClass('center').text(game.i18n(<?=__j('Aktueller Wert: :num')?>, {':num': Math.round(data_dis) + '%'})))
+                            }
+                        }))
                 )
-                    .attr('title', '-')
-                    .qtip(game.render.html.qtip.ingame('top', {
-                        render: function(ev,api) {
-                            var content = $(this).find('.qtip-content').empty()
-                                .append($('<span />').text(data >= 100 ? <?=__j('Du hast diesen Ort vollständig ausgekundschaftet - von hier aus wirst du keine neuen Ruinen entdecken können.')?> : <?=__j('Du bist momentan auf der Suche nach neuen Orten. Jedes mal, wenn der Ereigniscountdown abläuft, hast du die Chance einen neuen Ort zu entdecken.')?>))
-                            if (data <= 100)
-                                content
+            );
+
+        if (data_spawn !== false) {
+            $(target).append(
+                $('<div />').addClass('cell padded').addClass(single ? 'rw-12' : 'rw-6').append(
+                    $('<div />').addClass('widget radar').append(
+                        $('<span />').text(<?=__j('Fundrate')?>)
+                    ).append(
+                        $('<div />').addClass('spawnbar').append($('<div />').css('width', data_spawn + '%'))
+                    )
+                        .attr('title', '-')
+                        .qtip(game.render.html.qtip.ingame('top', {
+                            render: function () {
+                                $(this).find('.qtip-content')
+                                    .empty()
+                                    .append($('<span />').text(<?=__j('Du bist momentan auf der Suche nach neuen Gegenständen. Jedes mal, wenn der Ereigniscountdown abläuft, hast du die Chance ein Item zu finden. Mit jedem Fund wird die Chance auf einen weiteren Fund jedoch reduziert.')?>))
                                     .append($('<span />').addClass('separator'))
-                                    .append($('<div />').addClass('center').text(game.i18n(<?=__j('Aktueller Wert: :num')?>, {':num': Math.round(data) + '%'})))
-                        }
-                    }))
-            )
-        );
+                                    .append($('<div />').addClass('center').text(game.i18n(<?=__j('Aktueller Wert: :num')?>, {':num': Math.round(data_spawn) + '%'})))
+                            }
+                        }))
+                )
+            );
+        }
     };
 
     var garden = function(data, target) {
@@ -568,7 +605,7 @@
             $('<div />').addClass('cell padded').addClass(data.lomap ? 'rw-4 rw-lg-6 rw-md-12' : 'rw-6 rw-lg-12').append(
                 zradar = NF.row()
             ).append(
-                lradar = data.discovery !== false ? NF.row() : null
+                lradar = (data.discovery !== false || data.spawnrate !== false) ? NF.row() : null
             ).append(
                 hideout = data.hideout ? NF.row() : null
             ).append(
@@ -794,8 +831,7 @@
         }
 
         zombieradar(data.radar, zradar);
-        if (data.discovery !== false)
-            locationradar(data.discovery, lradar);
+        locationradar(data.discovery, data.spawnrate, lradar);
         if (hideout)
             hideoutstats(data.hideout, hideout);
         if (data.colosseum)

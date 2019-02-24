@@ -30,7 +30,7 @@
                             <i style="font-size: 14px; font-weight: bolder" class="fa fa-angle-left"></i> <span style="font-size: 10px;"><?=$anc?></span>
                         <?php } ?>
                     </div>
-                    <div class="cell padded rw-11 ro-1">
+                    <div class="cell padded rw-12">
                         <div class="row">
                             <div class="cell rw-12 padded">
                                 <?php if ($item['info']['alias']) { ?>
@@ -62,7 +62,7 @@
                             <div class="cell rw-12 padded">
                                 <?php if ($item['properties']) { ?>
                                     <div class="row">
-                                        <div class="cell ro-1 rw-11">
+                                        <div class="cell rw-12">
                                             <div class=row>
                                                 <div class="cell rw-12"><b>Static Properties</b></div>
                                             </div>

@@ -188,7 +188,7 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         return true;
     }
 
-    protected static $base_defense = 5;
+    protected static $base_defense = 15;
     protected $defense;
 
     protected $decay = 1;

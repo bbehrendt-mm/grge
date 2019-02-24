@@ -872,7 +872,7 @@ class Model_Blueprint {
             else {
                 $player->log()->add('Du hast :num Zombies vernichtet!', array(':num' => $z));
                 $player->achievements()->achieve(Model_Achievement::MA_KILLED_ZOMBIES, $z);
-                $player->location()->zombie_factory()->accumulation($player->location()->zombie_pop() - $z);
+                $player->location()->zombie_factory()->reduce_accum($z);
             }
         } elseif ($this->user_message) $player->log()->add($this->user_message);
 

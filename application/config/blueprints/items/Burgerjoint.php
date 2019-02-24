@@ -62,7 +62,7 @@ return Model_Blueprints::factory()
     ->add_blueprints(
         Model_Blueprint::factory()
             ->id('i:frz_snow')
-            ->material([Model_Items_Generic_Waterb::cls() => 1])
+            ->material([Model_Items_Generic_Waterv::cls() => 1])
             ->produces([Model_Items_Snowball::cls() => 10])
     )
 

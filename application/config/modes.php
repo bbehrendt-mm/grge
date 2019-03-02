@@ -23,7 +23,8 @@ return array(
                     'places.bar.spawn_winchester'           => false,
                     'places.toilet.spawn_sherri'            => false,
                     'places.general.spawn_random_animals'   => true,
-                    'items.bottle.allow_full_detox'         => true,
+                    'items.bottle.allow_full_detox'         => false,
+                    'items.bottle.detox_amount'             => 100,
                     'items.water.tox_dirty'                 => 8,
                     'items.water.tox_polluted'              => 15,
                     'items.ammobelt.startup_bat.min'        => 10,
@@ -105,7 +106,7 @@ return array(
                     'items.water.tox_polluted'              => 45,
                     'places.dryout_factor'                  => 1.15,
                     'items.pill.use_default_effect_proc'    => false,
-                    'items.bottle.allow_full_detox'         => false,
+                    'items.bottle.detox_amount'             => 50,
 
                     'ranking.points.survival.factor'        => 2.5,
                 ),

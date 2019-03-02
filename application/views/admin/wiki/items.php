@@ -48,6 +48,22 @@
 
                         <div class="row">
                             <div class="cell rw-12 padded">
+                                <div class=row>
+                                    <div class="cell rw-12"><b><?=!empty($item['locations']) ? 'Location Configuration' : 'This item does not drop' ?></b></div>
+                                </div>
+                                <div class=row>
+                                    <?php foreach ($item['locations'] as $entry) { ?>
+                                        <div class="cell-small rw-3 left smallpad"><div class="solid" title="<?=htmlentities($entry['name'])?>">
+                                                <img alt="?" src="media/icons/places/<?=$entry['icon']?>.gif" />
+                                                <?=round(100*$entry['chance'], $entry['chance'] < 0.01 ? 2 : 0)?>%
+                                            </div></div>
+                                    <?php }?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="cell rw-12 padded">
                                 <?php if ($item['code']) { ?>
                                     <b>Implemented Methods: </b>
                                     <?php foreach ($item['code'] as $entry) { ?>

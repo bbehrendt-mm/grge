@@ -8,6 +8,6 @@
         ->add(Model_Items_Nutrient::cls()		, 1)
         ->add(Model_Items_Pill::cls()			, 1)
         ->add(Model_Items_Bandage::cls()			, 1)
-        ->add(Model_Items_Generic_Micropur::cls(), 1)
+        ->add(Model_Items_Generic_Micropur::cls(), 2)
         ->add(Model_Items_Meds::cls()            , 2)
         ;

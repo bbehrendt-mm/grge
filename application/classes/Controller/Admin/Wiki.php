@@ -191,6 +191,29 @@ class Controller_Admin_Wiki extends Controller_Admin_Admin {
         $item_list = $this->get_model_list('Items', false);
         $items = [];
 
+        $location_list = $this->get_model_list('Places', true);
+        $loc_by_itemclass = [];
+
+        foreach ($location_list as $location_class) {
+            $name = __($location_class::get_namelist()[0]);
+            $icon = $location_class::get_icon();
+
+            $items_list = Model_Factory_Items::read($location_class);
+            foreach ($items_list->get() as $item_class => $chance) {
+                if (!isset($loc_by_itemclass[$item_class])) $loc_by_itemclass[$item_class] = [];
+
+                $loc_by_itemclass[$item_class][] = [
+                    'name' => $name, 'icon' => $icon, 'chance' => $chance
+                ];
+            }
+        }
+
+        foreach ( $loc_by_itemclass as &$list )
+            uasort($list, function($a,$b) {
+                return $a['chance'] < $b['chance'];
+            });
+        unset($list);
+
         foreach ($item_list as $item_class) {
             /** @var Model_Items_Abstract_Item|string $item_class */
             $reflection = new ReflectionClass($item_class);
@@ -265,6 +288,7 @@ class Controller_Admin_Wiki extends Controller_Admin_Admin {
                     'icon' => $icon,
                     'alias' => $alias,
                 ],
+                'locations' => $loc_by_itemclass[$item_class] ?? [],
                 'lineage' => $ancestors,
                 'code' => $code,
                 'properties' => $static

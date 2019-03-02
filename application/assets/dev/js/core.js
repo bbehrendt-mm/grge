@@ -1717,7 +1717,7 @@ core = {
         if (fetch_btn) content.append($('<div />').addClass(game.touch() ? 'cell rw-12 padded justify' : 'cell rw-6 rw-sm-12 padded justify').append(fetch_btn.clone(false).click(function() {
 
             var popup = core.popup.spawn({desktop: 600, md: '100%'});
-            var select, food;
+            var select, form, food1, food2;
 
             popup.append(
                 $('<h2 />').addClass('center').text("Zielgebiet ausw\u00e4hlen")
@@ -1726,7 +1726,8 @@ core = {
                     $('<div />').addClass('note').text(game.i18n("Hier kannst du ausw\u00e4hlen, wie weit der Rabe fliegen soll, um eine Ruine auszuw\u00e4hlen. F\u00fcr eine gr\u00f6\u00dfere Distanz musst du selbstverst\u00e4ndlich mehr Futter springen lassen. Der Rabe wird zuf\u00e4llig eine Ruine (die kein Aussichtspunkt und auch kein Versteck ist) in dem gew\u00e4hlten Bereich ausw\u00e4hlen und dort dreimal nach Gegenst\u00e4nden suchen. Gefundene Gegenst\u00e4nde wird er zu dir bringen, zumindest so lange er sie tragen kann. Falls er nichts findet oder die gefundenen Gegenst\u00e4nde ihn nicht auslasten, wird er Gegenst\u00e4nde vom Boden aufheben. Der Rabe kann nicht mehr als :capacity Gegenst\u00e4nde mit einem Gesamtgewicht von :size tragen!",{':size': data.size, ':capacity': data.capacity}))
                 )).append($('<div />').addClass('cell rw-12 padded').append(
                     select = $('<select />').addClass('form_input').change(function() {
-                        food.empty().attr('title', "Gew\u00f6hnliche Nahrung").append($('<img />').attr('src','media/icons/items/basefood/generic.gif')).append($('<span />').text(' x ' + Math.max(1,$(this).val() * 2))).qtip(game.render.html.qtip.ingame('bottom'));
+                        food1.empty().attr('title', "Gew\u00f6hnliche Nahrung").append($('<img />').attr('src','media/icons/items/basefood/generic.gif')).append($('<span />').text(' x ' + Math.max(1,$(this).val() * 2))).qtip(game.render.html.qtip.ingame('bottom'));
+                        food2.empty().attr('title', "Knochen mit Fleisch").append($('<img />').attr('src','media/icons/items/rawmeat.gif'))         .append($('<span />').text(' x ' + Math.max(1,parseInt($(this).val()) + 1))).qtip(game.render.html.qtip.ingame('bottom'));
                     })
                         .append($('<option />').attr('value',0).text(game.i18n("N\u00e4here Umgebung (Distanz bis :m2)",{':m1': 0, ':m2': 15})))
                         .append($('<option />').attr('value',1).text(game.i18n("Entfernte Regionen (Distanz zwischen :m1 und :m2)",{':m1': 16, ':m2': 50})))
@@ -1734,8 +1735,20 @@ core = {
                 ))
             ).append(
                 NF.row()
-                    .append($('<div />').addClass('cell rw-10 rw-sm-12 padded').text("F\u00fcr die gew\u00e4hlte Distanz ben\u00f6tigt der Rabe folgendes Futter:"))
-                    .append(food = $('<div />').addClass('cell rw-2 rw-sm-12 padded'))
+                    .append($('<div />').addClass('cell rw-8 rw-sm-12 padded').text("F\u00fcr die gew\u00e4hlte Distanz ben\u00f6tigt der Rabe folgendes Futter:"))
+                    .append(form = $('<div />').addClass('cell rw-4 rw-sm-12 padded')
+                        .append($('<div />').addClass('row')
+                            .append($('<label />').addClass('cell rw-12 padded right')
+                                .append( $('<input value="1" name="r_food" type="radio" checked="checked" />') )
+                                .append(food1 = $('<span />'))
+                            )
+                            .append($('<label />').addClass('cell rw-12 padded right')
+                                .append( $('<input value="2" name="r_food" type="radio" />') )
+                                .append(food2 = $('<span />'))
+                            )
+                        )
+                    )
+                    //.append(food1 = $('<div />').addClass('cell rw-2 rw-sm-12 padded'))
             ).append(
                 NF.row()
                     .append($('<div />').addClass('cell rw-6 rw-sm-12 padded').append($('<div />').addClass('btn').text("Abbrechen").click(function() {
@@ -1743,10 +1756,12 @@ core = {
                     })))
                     .append($('<div />').addClass('cell rw-6 rw-sm-12 padded').append($('<div />').addClass('btn').text("Raben aussenden").click(function() {
                         popup.trigger('unpop');
-                        fetch_btn.trigger('click', [select.val()]);
+                        var i = parseInt( form.find('input[type=radio]:checked').val() );
+                        fetch_btn.trigger('click', [[select.val(), i]]);
                     })))
             );
 
+            form.find('input[type=checkbox], input[type=radio]').customRadioCheck();
             select.trigger('change').selectric();
 
         })));

@@ -50,7 +50,11 @@ class Model_Items_Virtual_Epic_Raven extends Model_Items_Abstract_Virtual {
                 ->effect(Model_Effect::factory()
                     ->custom(function($p, $a) {
                         /** @var Model_Player $p */
-                        $arg = max(0,min((int)$a,2));
+                        if (!is_array($a)) return;
+
+                        list($arg,$arg2) = $a;
+                        $arg =  max(0,min((int)$arg, 2));
+                        $arg2 = max(1,min((int)$arg2,2));
 
                         switch ($arg) {
                             case 0: $a = [0,15]; break;
@@ -76,7 +80,16 @@ class Model_Items_Virtual_Epic_Raven extends Model_Items_Abstract_Virtual {
                             return;
                         }
 
-                        if (!Tool_Scripts::consume_items([Struct_ItemEntry::make(Model_Items_Basefood::cls(), max(1,2*$arg))], Struct_ScriptItemSource::default()->use_perspective($p))) {
+                        switch ($arg2) {
+                            case 1:
+                                $req = Struct_ItemEntry::make(Model_Items_Basefood::cls(), max(1,2*$arg));
+                                break;
+                            case 2:
+                                $req = Struct_ItemEntry::make(Model_Items_Rawmeat::cls(), max(1,1+$arg));
+                                break;
+                            default: return;
+                        }
+                        if (!Tool_Scripts::consume_items([$req], Struct_ScriptItemSource::default()->use_perspective($p))) {
                             $p->log()->add('Raben sind keine sonderlich altruistisch eingestellten Tiere... du musst ihn schon ausreichend füttern, wenn du Gegenstände von ihm bekommen möchtest.');
                             return;
                         }

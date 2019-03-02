@@ -57,6 +57,10 @@ abstract class Model_Map_Abstract {
         return static::$map_type;
     }
 
+    public function transport_distance_modifies(float $d): float {
+        return $d;
+    }
+
     /**
      * @param $map
      * @param null $sub

@@ -52,6 +52,10 @@ class Model_Map_Layered extends Model_Map_Circular {
         return array('x' => $distance * $factor['x'] + $data['x'], 'y' => $distance * $factor['y'] + $data['y'], 'root' => $root_location_id, 'direction' => ($root_location_id === null) ? null : $factor);
     }
 
+    public function transport_distance_modifies(float $d): float {
+        return 0;
+    }
+
     /**
      * Adds a location to the map. Position and connection paths are automatically set based on map configuration
      * @param Model_Places_Abstract_Place|string $location

@@ -44,7 +44,8 @@ class Controller_Map extends Controller_Game {
         if ($sub && !in_array($did, $location->get_doorways(), true)) return false;
 
         //Get map type
-        $map_type = Globals::CurrentGameF()->mapF($lid)->get_map_type();
+        $map = Globals::CurrentGameF()->mapF($lid);
+        $map_type = $map->get_map_type();
 
         if (!$sub) {
             if ($map_type === Model_Map_Abstract::MMA_TYPE_LABYRINTH) {
@@ -200,7 +201,7 @@ class Controller_Map extends Controller_Game {
             }
 
             if ($transport = Tool_Scripts::get_active_transport($current))
-                $transport->trigger_after($current, $distance);
+                $transport->trigger_after($current, $map->transport_distance_modifies( $distance ));
         }
         Globals::CurrentPlayerF()->get_status()->modify(Model_Status::MS_STAT_ENERGY, -$overhead * 1.2, Model_Status::MS_EFFECT_MOVEMENT);
 

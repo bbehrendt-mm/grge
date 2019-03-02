@@ -22,6 +22,10 @@ class Model_Map_Labyrinth extends Model_Map_Abstract {
     public const MML_FAR = 3;
     public const MML_ENTRYPOINT = 4;
 
+    public function transport_distance_modifies(float $d): float {
+        return 0;
+    }
+
     private function valid($x = null, $y = null): bool {
         if ($x !== null && abs($x) > $this->grid) return false;
         if ($y !== null && abs($y) > $this->grid) return false;

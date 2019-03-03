@@ -222,7 +222,8 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
      * @return float
      */
     public function effect($stat, $type): float {
-		$e = $this->get_effects();
+		if (!$this->active()) return 0;
+        $e = $this->get_effects();
         if (isset($e[$stat][$type]))
 			 return $e[$stat][$type];
 		else return 0;

@@ -30,6 +30,16 @@ class Model_Items_Spray extends Model_Items_Abstract_Item implements Interface_S
             'icon'        => 'spray/spray4',
             'description' => 'Dieses Spray wirkt wie ein Raumerfrischer aus dem Fichtelgebirge - allerdings versprüht es nicht nur angenehmen Duft, sondern auch Gesundheit an alle Spieler und Tiere in der Umgebung.',
         ],
+        [
+            'name'        => 'Augentropfen (G²KB)',
+            'icon'        => 'spray/spray5',
+            'description' => 'Dieses Spray verleiht dir den Röntgenblick - zumindest für eine begrenzte Zeit. Auf jeden Fall wirst du damit jeden noch so gut versteckten Gegenstand finden!',
+        ],
+        [
+            'name'        => 'Nachtsicht-Augentropfen (G²KaBe)',
+            'icon'        => 'spray/spray6',
+            'description' => 'Dieses Spray ermöglicht es dir, selbst in völliger Finsternis zu sehen. Sollte nicht tagsüber eingesetzt werden ...',
+        ],
     ];
 
     protected static $weight = 2;
@@ -41,6 +51,8 @@ class Model_Items_Spray extends Model_Items_Abstract_Item implements Interface_S
                 case 1: return 'apl2';
                 case 2: return 'apl3';
                 case 3: return 'apl4';
+                case 4: return 'apl5';
+                case 5: return 'apl6';
 
                 default: return 'apl0';
             }
@@ -87,6 +99,19 @@ class Model_Items_Spray extends Model_Items_Abstract_Item implements Interface_S
                              })
                              ->spawn(Model_Items_Generic_Spraycan::cls(), 1)
                     ,'apl4')
+
+                ->effect(Model_Effect::factory()
+                             ->consume($this)
+                             ->buff(Model_Buffs_Spray4::cls(), false, 36)
+                             ->spawn(Model_Items_Generic_Spraycan::cls(), 1)
+                    ,'apl5')
+
+                ->effect(Model_Effect::factory()
+                             ->consume($this)
+                             ->buff(Model_Buffs_Spray5::cls(), false, 36)
+                             ->spawn(Model_Items_Generic_Spraycan::cls(), 1)
+                    ,'apl6')
+
                 ->export($f)
                 ->decider($f)
             );

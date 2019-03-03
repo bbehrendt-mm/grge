@@ -24,5 +24,6 @@ class Model_Buffs_Metabolism2 extends Model_Buffs_Metabolism {
         $this->effects[Model_Status::MS_STAT_SLEEPY][Model_Buffs_Abstract_Buff::MB_DROP_PRC] = 0.15;
         $this->effects[Model_Status::MS_STAT_HEALTH][Model_Buffs_Abstract_Buff::MB_RAISE_PRC] = 1.5;
         $this->effects[Model_Status::MS_STAT_ENERGY][Model_Buffs_Abstract_Buff::MB_RAISE_PRC] = 1.4;
+        $this->effects[Model_Status::MS_CHAR_ITEM_SPAWNRATE][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = 0.5;
 	}
 }

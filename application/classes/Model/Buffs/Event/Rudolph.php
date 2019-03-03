@@ -7,6 +7,17 @@ class Model_Buffs_Event_Rudolph extends Model_Buffs_Abstract_Passive {
 	protected static $desc = 'Es gibt nichts weihnachtlichers, als einen verfallenen Weihnachtsmarkt im Schein der roten Nase eines sturzbetrunkenen Rentiers nach Gegenständen zu durchwühlen. Deine Fundchancen sind stak erhöht.';
 	protected static $bid = 'rudolph';
 
+    protected function get_effects(): array {
+        return [
+            Model_Status::MS_CHAR_ITEM_SPAWNRATE => [
+                Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0.5,
+                Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
+                Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
+                Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
+            ]
+        ];
+    }
+
 	protected function activator(): bool
     {
 	    if (!$this->associated_to_player()) return false;

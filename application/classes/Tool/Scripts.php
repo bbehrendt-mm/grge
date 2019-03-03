@@ -557,48 +557,7 @@ class Tool_Scripts
             $player = Globals::CurrentPlayerF();
         else $player = Globals::CurrentGameF()->get_player($pid);
 
-        $c = 1;
-
-        $is_night = in_array(static::get_timeofday(), ['night','snowynight']);
-        $is_light = false;
-
-        //Flashlight Effect
-        if (!$is_night && !$player->location()->is_outside() && ($fb = $player->get_status()->retrieve('flashlight')) && $fb->active())
-            $c *= 1.2;
-        elseif (($fb = $player->get_status()->retrieve('flashlight')) && $fb->active())
-            $is_light = true;
-
-        // Rudolphs Nose
-        if (($rn = $player->get_status()->retrieve('rudolph')) && $rn->active())
-            $c *= 1.5;
-
-        //Night Malus
-        if ($is_night && !$is_light)
-            $c *= 0.25;
-        //Fatigue Malus
-        if ($player->get_status()->get(Model_Status::MS_STAT_SLEEPY) < 50)
-            $c *= ($player->get_status()->get(Model_Status::MS_STAT_SLEEPY)/50);
-
-        //Fatigue Bonus
-        if ($player->get_status()->get(Model_Status::MS_STAT_SLEEPY) > 90)
-            $c *= ($player->get_status()->get(Model_Status::MS_STAT_SLEEPY)/90);
-
-        //Drunk Malus
-        $c *= (1 - ($player->get_status()->get(Model_Status::MS_STAT_DRUNK)/100));
-
-        //Survivalist Boni
-        if (!self::is_npc($player) && $player->job(1060)) {
-            if ($player->job(1060, 5, false)) $c *= 1.15;
-            elseif ($player->job(1060, 2, false)) $c *= 1.05;
-        }
-
-        //Child Bonus
-        if (!self::is_npc($player) && $player->job(1080)) $c *= 1.5;
-
-        //Item Spawnrate Stat
-        $c *= $player->get_status()->get(Model_Status::MS_CHAR_ITEM_SPAWNRATE);
-
-        return $c;
+        return $player->get_status()->get(Model_Status::MS_CHAR_ITEM_SPAWNRATE);
     }
 
     /**

@@ -52,6 +52,12 @@ class Model_Buffs_Metabolism extends Model_Buffs_Abstract_Buff {
 					Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
 					Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
 				),
+                Model_Status::MS_CHAR_ITEM_SPAWNRATE => Array(
+                    Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
+                    Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
+                    Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
+                    Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
+                ),
 			);
     protected function get_effects(): array { return $this->effects; }
 	

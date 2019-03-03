@@ -5,8 +5,29 @@ class Model_Buffs_Daytime extends Model_Buffs_Abstract_Buff {
 	protected static $bid = 'daytime';
     protected static $remotable = false;
 
+    protected static $default_effects = Array(
+        Model_Status::MS_STAT_FREEZE => Array(
+            Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
+            Model_Buffs_Abstract_Buff::MB_DROP_ACC => 5,
+            Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
+            Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
+        ),
+        Model_Status::MS_CHAR_ITEM_SPAWNRATE => Array(
+            Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
+            Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
+            Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
+            Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
+        ),
+    );
+
     protected $effects = Array(
         Model_Status::MS_STAT_FREEZE => Array(
+            Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
+            Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
+            Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
+            Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
+        ),
+        Model_Status::MS_CHAR_ITEM_SPAWNRATE => Array(
             Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
             Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
             Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
@@ -85,16 +106,24 @@ class Model_Buffs_Daytime extends Model_Buffs_Abstract_Buff {
 
     public function rebuild(): bool
     {
+
+        $this->effects = static::$default_effects;
+
         $tod = Tool_Scripts::get_timeofday($this->assoc_player);
 
         switch ($tod) {
             case 'snowynight':
                 $this->effects[Model_Status::MS_STAT_FREEZE][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = 0.75;
                 $this->effects[Model_Status::MS_STAT_FREEZE][Model_Buffs_Abstract_Buff::MB_DROP_ACC] = 0;
+                $this->effects[Model_Status::MS_CHAR_ITEM_SPAWNRATE][Model_Buffs_Abstract_Buff::MB_DROP_ACC] = 0.85;
+                break;
+            case 'night':
+                $this->effects[Model_Status::MS_STAT_FREEZE][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = 0.75;
+                $this->effects[Model_Status::MS_STAT_FREEZE][Model_Buffs_Abstract_Buff::MB_DROP_ACC] = 0;
+                $this->effects[Model_Status::MS_CHAR_ITEM_SPAWNRATE][Model_Buffs_Abstract_Buff::MB_DROP_ACC] = 0.75;
                 break;
             default:
-                $this->effects[Model_Status::MS_STAT_FREEZE][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = 0;
-                $this->effects[Model_Status::MS_STAT_FREEZE][Model_Buffs_Abstract_Buff::MB_DROP_ACC] = 5;
+                break;
         }
 
         //Control sun buff

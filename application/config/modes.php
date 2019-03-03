@@ -400,6 +400,7 @@ return array(
                         //Buffs
                         new Model_Buffs_Metabolism();
                         new Model_Buffs_Alcohol();
+                        new Model_Buffs_Fatigue();
                         new Model_Buffs_Zombify();
                         new Model_Buffs_Nuclear();
                         new Model_Buffs_Heartbeat(null, ($mode === 2000) ? 2016 : -1);
@@ -618,6 +619,7 @@ return array(
             'levels' => array(100, 250,  500, 1000, 2000),
             'setup' => array('inherit' => array(1010), 'f' => function($mode, $level) {
                     Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Virtual_Hero_Survivalist($level));
+                    new Model_Buffs_Job_Survivalist(null, $level);
                     Globals::CurrentPlayerActualF()->battle_stats([null,null,6,null]); // INI ATK DEF ACC
                 }),
         ),

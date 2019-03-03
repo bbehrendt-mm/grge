@@ -9,7 +9,7 @@ class Model_Items_Shield2 extends Model_Items_Abstract_Armor {
             'category' => Model_Items_Abstract_Item::MIAI_CAT_GEAR,
     );
 	
-	protected static $weight = 17;
+	protected static $weight = 15;
 
     // INI, ATK, DEF, ACC
     protected static $effects = [-5,0,8,0];

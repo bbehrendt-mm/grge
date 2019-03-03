@@ -17,8 +17,8 @@ class Model_Buffs_Morphine extends Model_Buffs_Abstract_Buff {
 
     public function __construct($player_id = NULL, $lifetime = -1) {
         parent::__construct($player_id, $lifetime);
-        $this->assoc_player->get_status()->scaling_add(Model_Status::MS_STAT_HEALTH, Model_Status::MS_EFFECT_ITEM  , 'morphine', 0.25);
-        $this->assoc_player->get_status()->scaling_add(Model_Status::MS_STAT_HEALTH, Model_Status::MS_EFFECT_BATTLE, 'morphine', 0.25);
+        $this->assoc_player->get_status()->scaling_add(Model_Status::MS_STAT_HEALTH, Model_Status::MS_EFFECT_ITEM  , 'morphine', 0.25, [ Model_Status::MS_EFFECT_FLAG_LIMIT_SCALING_TO_NEG ]);
+        $this->assoc_player->get_status()->scaling_add(Model_Status::MS_STAT_HEALTH, Model_Status::MS_EFFECT_BATTLE, 'morphine', 0.25, [ Model_Status::MS_EFFECT_FLAG_LIMIT_SCALING_TO_NEG ]);
     }
     
 	public function unbuff(): bool

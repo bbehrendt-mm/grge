@@ -36,6 +36,8 @@ class Model_Status {
     public const MS_EFFECT_REQUIREMENT = 6;
     public const MS_EFFECT_BATTLE = 7;
 
+    public const MS_EFFECT_FLAG_LIMIT_SCALING_TO_POS = 1;
+    public const MS_EFFECT_FLAG_LIMIT_SCALING_TO_NEG = 2;
 
     /** @var Model_Buffs_Abstract_Buff[] */
     protected $buffs = [];
@@ -109,7 +111,7 @@ class Model_Status {
             $v = ($stat >= self::MS_THRESHOLD) ? $this->get_fixed_threshold($stat) : 0;
         else $v = $this->status_bars[$stat];
 
-        $v += $effect * $this->scaling($stat, $type);
+        $v += $effect * $this->scaling($stat, $type, $effect);
 
         //Enforce bounds (0/100)
         if ($normalize)
@@ -151,27 +153,36 @@ class Model_Status {
      * Returns the scaling factor for a given stat
      * @param int $stat Status
      * @param int $type Effect Type
+     * @param float $target_val
      * @return float
      */
-    public function scaling($stat, $type): float {
+    public function scaling($stat, $type, float $target_val = 0): float {
         if ($type === static::MS_EFFECT_UNSCALE || $stat >= self::MS_THRESHOLD || !isset($this->scaling_effects[$stat]))
             return 1;
 
         return
             (
                 (isset($this->scaling_effects[$stat][$type]) && !empty($this->scaling_effects[$stat][$type]))
-                    ? array_reduce($this->scaling_effects[$stat][$type], function($a, $b) {return $a * $b;}, 1)
+                    ? array_reduce($this->scaling_effects[$stat][$type], function($a, $b) use ($target_val) {
+                        $val = $b[0];
+                        $flags = $b[1] ?? [];
+
+                        if (in_array( self::MS_EFFECT_FLAG_LIMIT_SCALING_TO_POS, $flags ) && $target_val < 0) $val = 1;
+                        if (in_array( self::MS_EFFECT_FLAG_LIMIT_SCALING_TO_NEG, $flags ) && $target_val > 0) $val = 1;
+
+                        return $a * $val;
+                    }, 1)
                     : 1
             ) * (
-                ($type !== static::MS_EFFECT_GLOBAL) ? $this->scaling($stat, static::MS_EFFECT_GLOBAL) : 1
+                ($type !== static::MS_EFFECT_GLOBAL) ? $this->scaling($stat, static::MS_EFFECT_GLOBAL, $target_val) : 1
             );
     }
 
-    public function scaling_add($stat, $type, $name, $value): void
+    public function scaling_add($stat, $type, $name, $value, array $flags = []): void
     {
         if ($type === static::MS_EFFECT_UNSCALE) return;
         if (!isset($this->scaling_effects[$stat])) $this->scaling_effects[$stat] = [$type => []];
-        $this->scaling_effects[$stat][$type][$name] = $value;
+        $this->scaling_effects[$stat][$type][$name] = [$value, $flags];
     }
 
     public function scaling_remove($stat, $type, $name): void
@@ -183,11 +194,11 @@ class Model_Status {
     public function miss($stat, $req, $type) {
         if ($stat >= self::MS_THRESHOLD || $req <= 0) return 0;
         elseif (!isset($this->status_bars[$stat])) return $req;
-        else return max(0,$req * $this->scaling($stat, $type) - $this->status_bars[$stat]);
+        else return max(0,$req * $this->scaling($stat, $type, -$req) - $this->status_bars[$stat]);
     }
 
     /**
-     * Returns true if the player fullfills all given status requirements
+     * Returns true if the player fulfills all given status requirements
      * @param number|array $args,...  Supposed to be in this format: [stat1, req1, stat2, req2, ...]. Character effects (CHAR) will be ignored!
      * @param int $type
      * @return bool
@@ -203,7 +214,7 @@ class Model_Status {
         $i = 0;
         while ($i < count($args)) {
             if ($args[$i] >= self::MS_THRESHOLD) continue;
-            elseif (!isset($this->status_bars[$args[$i]]) || ($this->status_bars[$args[$i]] < $args[$i+1] * $this->scaling($args[$i], $type))) return false;
+            elseif (!isset($this->status_bars[$args[$i]]) || ($this->status_bars[$args[$i]] < $args[$i+1] * $this->scaling($args[$i], $type, -$args[$i+1]))) return false;
 
             //Jump to next pair
             $i += 2;
@@ -231,7 +242,7 @@ class Model_Status {
             if (!isset($this->status_bars[$args[$i]]))
                 $this->status_bars[$args[$i]] = ($args[$i] >= self::MS_THRESHOLD) ? 1 : 0;
 
-            $this->status_bars[$args[$i]] += $args[$i+1] * $this->scaling($args[$i], $type);
+            $this->status_bars[$args[$i]] += $args[$i+1] * $this->scaling($args[$i], $type, $args[$i+1]);
 
             //Enforce bounds (0/100)
             $this->status_bars[$args[$i]] = min(max($this->status_bars[$args[$i]],0),100);

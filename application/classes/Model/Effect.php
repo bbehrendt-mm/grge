@@ -327,11 +327,16 @@ class Model_Effect {
     {
         if (is_string($i)) return $i;
 
-        $factor = ($stat >= 0 && $player) ? $player->get_status()->scaling($stat, Model_Status::MS_EFFECT_ITEM) : 1;
+        if (is_array($i)) {
+            $factor_0 = ($stat >= 0 && $player) ? $player->get_status()->scaling($stat, Model_Status::MS_EFFECT_ITEM, $i[0]) : 1;
+            $factor_1 = ($stat >= 0 && $player) ? $player->get_status()->scaling($stat, Model_Status::MS_EFFECT_ITEM, $i[1]) : 1;
+            return max(-100,min(100, $i[0] * $factor_0)) . ' - ' . max(-100,min(100, $i[1] * $factor_1));
+        }
 
-        if (is_array($i)) return max(-100,min(100, $i[0] * $factor)) . ' - ' . max(-100,min(100, $i[1] * $factor));
         if ($i === PHP_INT_MAX) return '+∞';
         if ($i === -PHP_INT_MAX) return '-∞';
+
+        $factor = ($stat >= 0 && $player) ? $player->get_status()->scaling($stat, Model_Status::MS_EFFECT_ITEM, (float)$i) : 1;
         return max(-100,min(100, round($i * $factor,2)));
     }
 
@@ -368,7 +373,7 @@ class Model_Effect {
             $dif = is_array($dif) ? ($dif[0] + $dif[1])/2 : (is_numeric($dif) ? $dif : 0);
             if ($dif === 0) continue;
 
-            if ($player) $dif *= $player->get_status()->scaling($stat, Model_Status::MS_EFFECT_ITEM);
+            if ($player) $dif *= $player->get_status()->scaling($stat, Model_Status::MS_EFFECT_ITEM, $dif);
             $accum[$stat] = $dif;
         }
 

@@ -30,8 +30,8 @@ class Model_Items_Virtual_Location_Landfill extends Model_Items_Abstract_Virtual
                     /** @var Model_Player $p */
                     $g = 0;
                         foreach ($p->location()->inventory()->get() as $item) if (!$item->is_essential())
-                        $g += $item->weight();
-                    return ($g > 0);
+                        $g += $item->weight() * 1.333;
+                    return ($g >= 1);
                 })
                 ->fail_message('Hier gibt es nichts, was du schreddern könntest...')
                 ->effect(Model_Effect::factory()
@@ -43,9 +43,10 @@ class Model_Items_Virtual_Location_Landfill extends Model_Items_Abstract_Virtual
                             $location = $p->location();
                             /** @var $location Model_Places_Junkyard */
                             $location->splinters($item->weight());
-                            $g += $item->weight();
+                            $g += $item->weight() * 1.333;
                             $item->grind();
                         }
+                        $g = floor($g);
 
                         $p->achievements()->achieve(Model_Achievement::MA_GARBAGE_GUY, $g);
                         if ($g === 1) $p->log()->add(new Model_Log_Types_String(null, 'Eigentlich ist es ja Energieverschwendung, den Schredder für dieses bisschen Müll anzuwerfen... Aber hey, immerhin hast du einen Eimer mit Splittern gefüllt!'));

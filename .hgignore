@@ -3,5 +3,5 @@ application/logs/*
 .idea/*
 *.orig
 application/cache/*
-store/*
+re:^store/
 dbg_translate.list

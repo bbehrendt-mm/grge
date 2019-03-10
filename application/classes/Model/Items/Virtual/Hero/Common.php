@@ -17,7 +17,7 @@ class Model_Items_Virtual_Hero_Common extends Model_Items_Abstract_Virtual {
     protected function hid(): Model_Hid {
         $tmp = parent::hid()
             ->add_action('Kraft sammeln', Model_Action::factory()
-                    ->buttonskin('hero')
+                    ->buttonskin('hero_common')
                     ->description('Reduziert jede deiner Statusleisten um 15% und fügt die abgezogenen Punkte deiner Energie hinzu.')
                     ->effect(
                         Model_Effect::factory()
@@ -30,7 +30,7 @@ class Model_Items_Virtual_Hero_Common extends Model_Items_Abstract_Virtual {
                     )
             , 'hero_focus')
             ->add_action('Glücksrad', Model_Action::factory()
-                    ->buttonskin('hero')
+                    ->buttonskin('hero_common')
                     ->description('Setzt eine zufällige Statusleiste auf 100')
                     ->show_as(Model_Effect::factory()
                         ->message('Gott würfelt nicht - denn er ist zu beschäftigt damit, am Glücksrad zu drehen. Eine deiner Statusleisten wurde auf 100 gesetzt; hoffentlich bist du mit dem Ergebnis zufrieden...')
@@ -52,7 +52,7 @@ class Model_Items_Virtual_Hero_Common extends Model_Items_Abstract_Virtual {
                     )
                 , 'hero_wof')
             ->add_action('Winterschlaf', Model_Action::factory()
-                    ->buttonskin('hero')
+                    ->buttonskin('hero_common')
                     ->description('Du fällst an Ort und Stelle in einen erholsamen Schlaf.')
                     ->effect(
                         Model_Effect::factory()
@@ -65,7 +65,7 @@ class Model_Items_Virtual_Hero_Common extends Model_Items_Abstract_Virtual {
                     )
                 , 'hero_sleep')
             ->add_action('Willenskraft', Model_Action::factory()
-                    ->buttonskin('hero')
+                    ->buttonskin('hero_common')
                     ->description('Beendet Entzugserscheinungen auf der Stelle.')
                     ->effect(
                         Model_Effect::factory()

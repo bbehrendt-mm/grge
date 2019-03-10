@@ -78,6 +78,11 @@
 @buttons-blue-font-color: @zv-color-secondary;
 @buttons-blue-icon-mask: #BABABA;
 
+@buttons-yellow-background-color: #d7d900;
+@buttons-yellow-border-color: #928300;
+@buttons-yellow-font-color: #000000;
+@buttons-yellow-icon-mask: #212121;
+
 @buttons-green-background-color: #00944f;
 @buttons-green-border-color: #00522a;
 @buttons-green-font-color: @zv-color-secondary;
@@ -101,6 +106,8 @@
 .btn {
   .generic-button(@buttons-main-background-color, @buttons-main-border-color, @buttons-main-font-color, @buttons-main-icon-mask, 1.2em, 3px 10px);
   &.blue, &.btn-zv.btn-zv-skinned-hero {.generic-button-color(@buttons-blue-background-color, @buttons-blue-border-color, @buttons-blue-font-color, @buttons-blue-icon-mask)}
+  &.btn-zv.btn-zv-skinned-hero_common {.generic-button-color(lighten(@buttons-blue-background-color, 15%), lighten(@buttons-blue-border-color, 15%), @buttons-blue-font-color, @buttons-blue-icon-mask)}
+  &.yellow, &.btn-zv.btn-zv-skinned-hero_shop {.generic-button-color(@buttons-yellow-background-color, @buttons-yellow-border-color, @buttons-yellow-font-color, @buttons-yellow-icon-mask)}
   &.green, &.btn-zv.btn-zv-skinned-context {.generic-button-color(@buttons-green-background-color, @buttons-green-border-color, @buttons-green-font-color, @buttons-green-icon-mask)}
   &.purple, &.btn-zv.btn-zv-skinned-epic {.generic-button-color(@buttons-purple-background-color, @buttons-purple-border-color, @buttons-purple-font-color, @buttons-purple-icon-mask)}
 

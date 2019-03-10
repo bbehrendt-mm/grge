@@ -411,6 +411,13 @@ core.popup = {
                     .append(tag_list = NF.cell(true,4,0, 'right'))
                 );
 
+                if (room.def != 0 || room.deco != 0) current.append(NF.row('marked')
+                    .append(NF.cell(false, 3,0, 'smallpad sidepad right').append(NF.img('media/icons/deco.gif')))
+                    .append(NF.cell(false, 3,0, 'smallpad sidepad left') .append(NF.n('span', '', room.deco)))
+                    .append(NF.cell(false, 3,0, 'smallpad sidepad right').append(NF.img('media/icons/defense.gif')))
+                    .append(NF.cell(false, 3,0, 'smallpad sidepad left') .append(NF.n('span', '', room.def)))
+                ); else current.append($('<span />').addClass('separator'));
+
                 if (tag_list)
                     $.each(room.tags, function(k,v) {
                         tag_list.append(NF.img('media/icons/places/rtags/' + k + '.gif').attr('title',v).qtip(game.render.html.qtip.ingame('bottom')));

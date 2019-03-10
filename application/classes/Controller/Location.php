@@ -75,6 +75,8 @@ class Controller_Location extends Controller_Game {
                 'name' => $room->name_is_custom() ? $room->name() : __($room->name()),
                 'size' => $room->get_space() === PHP_INT_MAX ? null : ($room->get_space() + count($room->inventory()->get())),
                 'free' => $room->get_space() === PHP_INT_MAX ? null : $room->get_space(true),
+                'def'  => $room->defense(),
+                'deco' => $room->deco(),
                 'type' => $room->get_usage(),
                 'tags' => $room->get_friendly_tags(),
                 'options' => [

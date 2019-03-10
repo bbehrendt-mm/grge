@@ -19,6 +19,9 @@ class Model_Room {
 
     protected $inventory;
 
+    protected $defense = 0.0;
+    protected $deco = 0.0;
+
     protected $is_enabled = true;
 
     protected static $tag_info = [
@@ -51,6 +54,30 @@ class Model_Room {
     public function inventory(): \Model_Inventory
     {
         return $this->inventory;
+    }
+
+    public function defense(): float {
+        return $this->defense;
+    }
+
+    public function set_defense(float $val): void {
+        $this->defense = $val;
+    }
+
+    public function modify_defense(float $val): float {
+        return $this->defense += $val;
+    }
+
+    public function deco(): float {
+        return $this->deco;
+    }
+
+    public function set_deco(float $val): void {
+        $this->deco = $val;
+    }
+
+    public function modify_deco(float $val): float {
+        return $this->deco += $val;
     }
 
     /**
@@ -260,6 +287,8 @@ class Model_Room {
         $this->satisfies = ['free'];
         $this->room_name = '';
         $this->usage = '';
+        $this->deco = 0;
+        $this->defense = 0;
         $this->inventory()->grind();
     }
 

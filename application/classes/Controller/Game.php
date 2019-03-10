@@ -186,7 +186,7 @@ class Controller_Game extends Controller {
                 'state' => (int)round((1 - $hideout->get_decay()) * 100),
                 'max_defense' => (int)$hideout->get_defense(true),
                 'defense' => (int)$hideout->get_defense(false),
-                'deco' => $hideout->deco(null, false),
+                'deco' => $hideout->deco(false),
             ] : false,
             'discovery' => Tool_System::instance_of(Globals::PrimaryPlayerF()->location(), Model_Places_Abstract_Node::cls()) ?     round(100*Globals::CurrentGameF()->mapF(Globals::PrimaryPlayerF()->location_class())->get_discovery_rate(Globals::PrimaryPlayerF()->location_class(), true)) : false,
             'spawnrate' => !Tool_System::instance_of(Globals::PrimaryPlayerF()->location(), Model_Places_Abstract_Hideout::cls()) ? round(100*Globals::CurrentPlayerActualF()->location()->item_factory()->get_fillrate()) : false,

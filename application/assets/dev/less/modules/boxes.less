@@ -117,6 +117,8 @@
 @flatbox-color-header-shine: #D9D9D9;
 @flatbox-color-bold: #ea4803;
 @flatbox-color-bold-sub: #404346;
+@flatbox-color-seperator: #b3bcbf;
+@flatbox-color-marked: lighten(@flatbox-color-seperator, 25%);
 
 .flatbox {
   border: 1px solid @flatbox-color-border; background: @flatbox-color-bg; box-shadow: 0 0 4px black; padding-bottom: 8px; color: @flatbox-color-text;
@@ -128,6 +130,8 @@
   +.inventory{margin-top: 5px}
 
   & .flatbox {box-shadow: none; border: 1px solid @flatbox-color-bg; background: darken(@flatbox-color-bg, 5%)}
+  .separator {display: block; height: 1px; background: @flatbox-color-seperator; margin: 4px;}
+  .row.marked { background: @flatbox-color-marked; border: 1px solid @flatbox-color-seperator; }
 }
 
 .license {.whitebox;}

@@ -928,8 +928,9 @@ class Model_Blueprint {
             /** @var Model_Places_Abstract_Hideout $location */
             $location->set_decay($this->decay/100, false);
             $location->set_patchup($this->decay_speed, false);
-            $location->inc_defense($this->defense);
-            $location->deco($this->deco_value);
+
+            $room->modify_defense( $this->defense );
+            $room->modify_deco( $this->deco_value );
         }
 
         if (!$room->deduct_space($this->space())) throw new LogicException("Precondition failed: SPACE_CALCULATION");

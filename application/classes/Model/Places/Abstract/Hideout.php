@@ -7,7 +7,8 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
     protected static $alternative_default_hideout;
 
     protected static $base_deco_value = 0;
-    private $deco_value = 0;
+
+    protected static $base_defense = 15;
 
     //Base: 15% per day
     protected static $decay_rate = 0.15;
@@ -25,7 +26,6 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         if (static::$starts_built) $this->setup_new_room($this->room(),[], static::$alternative_default_hideout ? [static::$alternative_default_hideout] : ['hideout']);
 
         $this->inventory->add(new Model_Items_Virtual_Location_Hideout());
-        $this->defense = static::$base_defense;
         return $t;
     }
 
@@ -55,16 +55,14 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
     }
 
     /**
-     * @param null $add
      * @param bool $accum
      * @return number|number[]
      */
-    public function deco($add = null, $accum = true) {
-        if ($add === null) {
-            $tmp = [static::$base_deco_value, ceil($this->decay * -40), $this->deco_value, $this->calculate_item_deco()];
-            return $accum ? array_sum($tmp) : $tmp;
-        }
-        else return $this->deco_value += $add;
+    public function deco($accum = true) {
+        $room_deco = 0;
+        foreach ($this->rooms() as $room) $room_deco += $room->deco();
+        $tmp = [static::$base_deco_value, ceil($this->decay * -40), $room_deco, $this->calculate_item_deco()];
+        return $accum ? array_sum($tmp) : $tmp;
     }
 
     public function pretick(): void
@@ -188,15 +186,14 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         return true;
     }
 
-    protected static $base_defense = 15;
-    protected $defense;
-
     protected $decay = 1;
     protected $patchup = 1;
 
     public function get_defense($actual = false): float
     {
-        return round($this->defense * ($actual ? 1 : (1 - $this->decay)));
+        $defense = static::$base_defense;
+        foreach ($this->rooms() as $room) $defense += $room->defense();
+        return round($defense * ($actual ? 1 : (1 - $this->decay)));
     }
 
     public function get_decay(): float {
@@ -225,11 +222,5 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         else $this->patchup += $val;
 
         $this->patchup = max(0, $this->patchup);
-    }
-
-    public function inc_defense($val): void
-    {
-        $this->defense += $val;
-        if ($this->defense < 1) $this->defense = 1;
     }
 }	

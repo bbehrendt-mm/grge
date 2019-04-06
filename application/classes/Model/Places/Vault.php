@@ -10,7 +10,7 @@ class Model_Places_Vault extends Model_Places_Abstract_Hideout {
     protected static $base_defense = 100;
 
     //Base: 15% per day
-    protected static $decay_rate = 0.05;
+    protected static $decay_rate = 0.02;
 
     //Exp: 8% per day
     protected static $decay_exp = 0.01;

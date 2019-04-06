@@ -13,7 +13,7 @@ class Model_Places_Warehouse extends Model_Places_Abstract_Hideout {
     protected static $base_defense = 5;
 
     //Base: 15% per day
-    protected static $decay_rate = 0.10;
+    protected static $decay_rate = 0.08;
 
     //Exp: 8% per day
     protected static $decay_exp = 0.10;

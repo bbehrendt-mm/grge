@@ -10,11 +10,11 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
 
     protected static $base_defense = 15;
 
-    //Base: 15% per day
-    protected static $decay_rate = 0.15;
+    //Base: 10% per day
+    protected static $decay_rate = 0.10;
 
-    //Exp: 8% per day
-    protected static $decay_exp = 0.08;
+    //Exp: 5% per day
+    protected static $decay_exp = 0.05;
 
     protected $extensions = Array();
     protected static $survival_find_available = false;

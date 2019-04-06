@@ -12,11 +12,9 @@ class Model_Places_House extends Model_Places_Abstract_Hideout {
     //Base defense
     protected static $base_defense = 45;
 
-    //Base: 15% per day
-    protected static $decay_rate = 0.10;
+    protected static $decay_rate = 0.08;
 
-    //Exp: 8% per day
-    protected static $decay_exp = 0.05;
+    protected static $decay_exp = 0.04;
 
     public function uin($new = null) {
         if ($new !== null)

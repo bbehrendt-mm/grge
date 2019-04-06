@@ -274,8 +274,14 @@ abstract class Controller extends Kohana_Controller {
      * @param string|bool $title Notification title (optional)
      */
     protected function add_note($type, $content = null, $title = false): void {
-        if ($content === null) $this->notifications[] = array('type' => 'info', 'content' => $title, 'title' => false);
-        else $this->notifications[] = array('type' => $type, 'content' => $content, 'title' => $title);
+        if ($content === null) $notification = ['type' => 'info', 'content' => $title, 'title' => false];
+        else $notification = ['type' => $type, 'content' => $content, 'title' => $title];
+
+        foreach ($this->notifications as $n)
+            if ($n['type'] === $notification['type'] && $n['content'] === $notification['content'] && $n['title'] === $notification['title'])
+                return;
+
+        $this->notifications[] = $notification;
         $this->session->set('notifications',$this->notifications);
     }
 

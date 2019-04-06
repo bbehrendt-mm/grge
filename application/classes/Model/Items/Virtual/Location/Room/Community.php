@@ -7,7 +7,7 @@ class Model_Items_Virtual_Location_Room_Community extends Model_Items_Abstract_V
         $tmp = parent::hid();
 
         if ($this->roomF()->has_content('sofa1'))
-            parent::hid()->add_action('In der Sitzecke entspannen', Model_Action::factory()
+            $tmp->add_action('In der Sitzecke entspannen', Model_Action::factory()
                     ->buttonskin('hideout')
                     ->condition(function($p) {
                         /** @var Model_Player $p */

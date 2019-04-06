@@ -630,7 +630,7 @@
             ).append(
                 spc_roadtrip = data.caravan ? NF.row() : null
             ).append(
-                actions = NF.row()
+                actions = NF.row('hideout-actions')
             ).append(
                 epic = (data.epc_garden || data.epc_raven || data.epc_fence) ? NF.row() : null
             )
@@ -663,12 +663,6 @@
 
             }
         }
-
-        $.each(data.actions, function(k,v) {
-            actions.append(
-                $('<div />').addClass(game.touch() ? 'cell rw-12 padded justify' : 'cell rw-6 rw-sm-12 padded justify').append(core.snippets.button(v, null, 'tooltip'))
-            )
-        });
 
         if (data.xmasfair) {
             actions.append(
@@ -743,11 +737,18 @@
                         <?=__j('Zombies blockieren den Weg. Besiege sie oder versuche zu fliehen, um diesen Ort verlassen zu können.')?>)
             ));
 
+        $.each(data.actions, function(k,v) {
+            actions.append(
+                $('<div />').addClass(game.touch() ? 'cell rw-12 padded justify' : 'cell rw-6 rw-sm-12 padded justify').append(core.snippets.button(v, null, 'tooltip'))
+            )
+        });
+
+        var map_size = (data.doorways ? (data.lomap ? 2 : 4) : 6) + (game.touch() ? 6 : 0)
         actions.append(
-            $('<div />').addClass('cell padded justify rw-' + (data.doorways ? (data.lomap ? '8' : '10') : '12'))
+            $('<div />').addClass('cell padded justify rw-' + map_size)
             .append(core.snippets.button(<?=__j('Karte');?>, function() {
                 core.popup.map();
-            })).addClass(data.lomap ? 'disabled' : '')
+            }, true)).addClass(data.lomap ? 'disabled' : '')
         );
 
         if (data.doorways) {

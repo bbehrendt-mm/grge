@@ -63,7 +63,7 @@
     //Ext mode: extend (default), static, tooltip
     core.snippets.button = function(action, call, ext_mode, custom_popup_handler) {
         if (typeof action === "string")
-            return $('<div />').addClass('btn').text(action).click(call);
+            return $('<div />').addClass('btn').addClass(ext_mode === true ? 'btn-zv' : '').click(call).append(NF.n('span', '', action));
         else {
 
             ext_mode = ext_mode || 'extend';

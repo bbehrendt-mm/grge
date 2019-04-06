@@ -60,6 +60,34 @@ abstract class Model_Gamelayer_Logic extends Model_Gamelayer_Io {
         return $ret;
     }
 
+    final public function get_zombie_spawn_protection_factor(bool $hideout): float {
+        $ph1 = (int)$this->config('zombies.protection.phases.1');
+        $ph2 = $ph1 + (int)$this->config('zombies.protection.phases.2');
+        $ph3 = $ph2 + (int)$this->config('zombies.protection.phases.3');
+
+        if ($this->duration() <= $ph1)
+            return $hideout ? 1.00 : 0.50;
+        else if ($this->duration() <= $ph2)
+            return $hideout ? 0.50 : 0.25;
+        else if ($this->duration() <= $ph3)
+            return $hideout ? 0.10 : 0.00;
+        else return 0.00;
+    }
+
+    final public function get_zombie_block_protection_factor(bool $hideout): float {
+        $ph1 = (int)$this->config('zombies.protection.phases.1');
+        $ph2 = $ph1 + (int)$this->config('zombies.protection.phases.2');
+        $ph3 = $ph2 + (int)$this->config('zombies.protection.phases.3');
+
+        if ($this->duration() <= $ph1)
+            return 1.00;
+        else if ($this->duration() <= $ph2)
+            return $hideout ? 0.75 : 0.50;
+        else if ($this->duration() <= $ph3)
+            return $hideout ? 0.25 : 0.00;
+        else return 0.00;
+    }
+
 	final public function mass_consume($data, $callbacks = NULL): bool
     {
 		if ($data === NULL) return false;

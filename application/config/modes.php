@@ -13,8 +13,10 @@ return array(
                 'inherit' => array(),
                 'config' => array(
                     'zombies.accum'                         => 1,
-                    'zombies.cowardly'                      => false,
                     'zombies.escape_threshold'              => 10,
+                    'zombies.protection.phases.1'           => 288,
+                    'zombies.protection.phases.2'           => 288,
+                    'zombies.protection.phases.3'           => 576,
                     'places.dryout_factor'                  => 0.75,
                     'places.outworld.spawn_dogmeat'         => false,
                     'places.outworld.spawn_stranger'        => false,
@@ -100,6 +102,9 @@ return array(
                 'inherit' => array(1000),
                 'config' => array(
                     'zombies.escape_threshold'              => 20,
+                    'zombies.protection.phases.1'           => 144,
+                    'zombies.protection.phases.2'           => 144,
+                    'zombies.protection.phases.3'           => 288,
                     'places.outworld.spawn_stranger'        => true,
                     'places.outworld.location_density'      => 0.3,
                     'items.water.tox_dirty'                 => 15,
@@ -135,7 +140,6 @@ return array(
                 'inherit' => array(0),
                 'config' => array(
                     'zombies.escape_threshold'          => 0,
-                    'zombies.cowardly'                  => true,
                     'items.ammobelt.startup_bat.min'    => 150,
                     'items.ammobelt.startup_bat.max'    => 150,
                     'items.ammobelt.startup_blt.min'    => 65,

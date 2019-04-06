@@ -18,6 +18,12 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
 
     private $last_decay = 0;
 
+    private $hideout_mode = false;
+
+    public function enable_hideout_mode(): void {
+        $this->hideout_mode = true;
+    }
+
     /**
      * @param $str
      * @param $max
@@ -235,13 +241,20 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
      */
     public function spawn($force = false, $strength_modifier = 1, $fixed_number = null): ?array
     {
+        if (!$force && Tool_Gambling::random( Globals::CurrentGameF()->get_zombie_spawn_protection_factor( $this->hideout_mode ) ))
+            return null;
+
         if ($fixed_number === 0 || $fixed_number < 0 || !$this->max_adversaries || !($str = $this->get_strength() * $strength_modifier) || (!$force && (mt_rand()/mt_getrandmax()) > $this->chance))
             return null;
 
         $accum_army = $this->generate_zombie_list($str, (int)$fixed_number);
         if ($force && empty($accum_army)) $accum_army = ['class' => Model_Combat_Zombies_Shambler::cls(), 'count' => $fixed_number ?? 1];
 
-        if (!$force && !$fixed_number && (mt_rand()/mt_getrandmax()) < $this->block) {
+        if (!$force && !$fixed_number && Tool_Gambling::random($this->block)) {
+
+            if (Tool_Gambling::random( Globals::CurrentGameF()->get_zombie_block_protection_factor( $this->hideout_mode ) ))
+                return null;
+
             foreach ($accum_army as $entry) {
                 if (!isset($this->accumulated_zombies[$entry['class']])) $this->accumulated_zombies[$entry['class']] = $entry['count'];
                 else $this->accumulated_zombies[$entry['class']] += $entry['count'];
@@ -263,6 +276,12 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
     public function dry_spawn($force = false): void
     {
         if (!$this->max_adversaries || !$this->get_strength() || (!$force && (mt_rand()/mt_getrandmax()) < $this->chance))
+            return;
+
+        if (!$force && (
+                Tool_Gambling::random( Globals::CurrentGameF()->get_zombie_spawn_protection_factor( $this->hideout_mode ) ) ||
+                Tool_Gambling::random( Globals::CurrentGameF()->get_zombie_block_protection_factor( $this->hideout_mode ) )
+            ))
             return;
 
         if ($force || (mt_rand()/mt_getrandmax()) < $this->block) {

@@ -208,7 +208,7 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
     protected static $survival_find_available = true;
 	protected $survival_find ;
 	
-	//Create a new inventory and assign a variable name (if a namelist is present from which to choose)
+	//Create a new inventory and assign a variable name (if a name list is present from which to choose)
 	public function __construct() {
 		$this->inventory = new Model_Inventory;
 

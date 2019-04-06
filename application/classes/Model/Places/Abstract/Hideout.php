@@ -26,6 +26,7 @@ abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place
         if (static::$starts_built) $this->setup_new_room($this->room(),[], static::$alternative_default_hideout ? [static::$alternative_default_hideout] : ['hideout']);
 
         $this->inventory->add(new Model_Items_Virtual_Location_Hideout());
+        $this->zombie_factory->enable_hideout_mode();
         return $t;
     }
 

@@ -21,7 +21,7 @@ class Model_Items_Rawmeat3 extends Model_Items_Abstract_Item implements Interfac
                         ->effect(Model_Status::MS_STAT_ZOMBIFY, 5)
                         ->consume($this)
                         ->spawn(Model_Items_Bone::cls())
-                        ->message('Es schmeckt ein bisschen nach Hähnchen .... und zwar nach einem Hähnchen, dass 4 Wochen lang in der Sonne verwest ist, danach vond en Toten erweckt und mit einer rostigen Machete abgeschlachtet wurde!')
+                        ->message('Es schmeckt ein bisschen nach Hähnchen .... und zwar nach einem Hähnchen, dass 4 Wochen lang in der Sonne verwest ist, danach von den Toten erweckt und mit einer rostigen Machete abgeschlachtet wurde!')
                 )
             );
     }

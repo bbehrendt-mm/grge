@@ -184,9 +184,13 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
     public function in_range(Model_Combat_Actor $me, $foes) {
         if (is_array($foes))
             return array_filter($foes, function($c) use ($me) {
-                return $this->get_accuracy($me->distance_from($c)) > 0;
+                $d = $me->distance_from($c);
+                return ($d >= $this->range()[0] && $d <= $this->range()[1]);
             });
-        else return $this->get_accuracy($me->distance_from($foes)) > 0;
+        else {
+            $d = $me->distance_from($foes);
+            return ($d >= $this->range()[0] && $d <= $this->range()[1]);
+        }
     }
 
     /**

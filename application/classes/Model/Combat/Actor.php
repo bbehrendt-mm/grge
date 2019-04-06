@@ -508,7 +508,7 @@ class Model_Combat_Actor extends Named {
                 $rounds = $this->rounds_to_use($weapon, $foe);
                 if ($rounds > 1 && $this->distance_from($foe) < $weapon->min_range()) continue;
 
-                $factor = max(0, min(1,$current_rounds < 0 ? 1 : ($current_rounds/$rounds)));
+                $factor = max(0, min(1,($current_rounds < 0 || $rounds == 0) ? 1 : ($current_rounds/$rounds)));
                 $res[0] = ($rounds > 1 && $this->distance_from($foe) < $weapon->min_range()) ? 0 : ($res[0] * $this->ai_brashness * $factor);
             }
 

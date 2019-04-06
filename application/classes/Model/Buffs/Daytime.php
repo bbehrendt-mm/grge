@@ -118,8 +118,6 @@ class Model_Buffs_Daytime extends Model_Buffs_Abstract_Buff {
                 $this->effects[Model_Status::MS_CHAR_ITEM_SPAWNRATE][Model_Buffs_Abstract_Buff::MB_DROP_ACC] = 0.85;
                 break;
             case 'night':
-                $this->effects[Model_Status::MS_STAT_FREEZE][Model_Buffs_Abstract_Buff::MB_RAISE_ACC] = 0.75;
-                $this->effects[Model_Status::MS_STAT_FREEZE][Model_Buffs_Abstract_Buff::MB_DROP_ACC] = 0;
                 $this->effects[Model_Status::MS_CHAR_ITEM_SPAWNRATE][Model_Buffs_Abstract_Buff::MB_DROP_ACC] = 0.75;
                 break;
             default:

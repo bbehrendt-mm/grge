@@ -20,6 +20,7 @@ return array(
                     'places.dryout_factor'                  => 0.75,
                     'places.outworld.spawn_dogmeat'         => false,
                     'places.outworld.spawn_stranger'        => false,
+                    'places.outworld.spawn_stranger_ext'    => false,
                     'places.outworld.alt_spawn_stranger'    => false,
                     'places.outworld.location_density'      => 1,
                     'places.bar.spawn_winchester'           => false,
@@ -65,6 +66,7 @@ return array(
                 'inherit' => array(0),
                 'config' => array(
                     'places.outworld.spawn_stranger'        => true,
+                    'places.outworld.spawn_stranger_ext'    => true,
                     'places.outworld.spawn_dogmeat'         => true,
                     'places.bar.spawn_winchester'           => true,
                     'places.toilet.spawn_sherri'            => true,
@@ -107,6 +109,7 @@ return array(
                     'zombies.protection.phases.2'           => 144,
                     'zombies.protection.phases.3'           => 288,
                     'places.outworld.spawn_stranger'        => true,
+                    'places.outworld.spawn_stranger_ext'    => false,
                     'places.outworld.location_density'      => 0.3,
                     'items.water.tox_dirty'                 => 15,
                     'items.water.tox_polluted'              => 45,
@@ -250,8 +253,9 @@ return array(
             'setup' => array(
                 'inherit' => array(0),
                 'config' => array(
-                    'places.outworld.spawn_stranger'    =>  false,
-                    'places.outworld.alt_spawn_stranger'=>  true,
+                    'places.outworld.spawn_stranger'    => false,
+                    'places.outworld.spawn_stranger_ext'=> false,
+                    'places.outworld.alt_spawn_stranger'=> true,
                     'places.outworld.spawn_dogmeat'     => true,
                     'places.bar.spawn_winchester'       => true,
                     'places.toilet.spawn_sherri'        => true,
@@ -363,8 +367,9 @@ return array(
             'setup' => array(
                 'inherit' => array(0),
                 'config' => array(
-                    'places.outworld.spawn_stranger'    =>  false,
-                    'places.outworld.alt_spawn_stranger'=>  true,
+                    'places.outworld.spawn_stranger'    => false,
+                    'places.outworld.spawn_stranger_ext'=> false,
+                    'places.outworld.alt_spawn_stranger'=> true,
                     'places.outworld.spawn_dogmeat'     => true,
                     'places.bar.spawn_winchester'       => true,
                     'places.toilet.spawn_sherri'        => true,

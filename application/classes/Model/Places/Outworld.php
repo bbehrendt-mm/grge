@@ -28,6 +28,12 @@ class Model_Places_Outworld extends Model_Places_Abstract_Node {
             $bottle->add_water(3, 25);
             $this->inventory->add($bottle);
 
+            if (Globals::CurrentGameF()->config('places.outworld.spawn_stranger_ext')) {
+                $this->inventory->add(new Model_Items_Lunchbag);
+                $this->inventory->add(new Model_Items_Lunchbag);
+                $this->inventory->add(new Model_Items_Bandage2);
+            }
+
             $this->log->add(new Model_Log_Types_String('Ein hilfreicher Fund', 'Nach nur ein paar Metern findest du ein notdürftig aufgeschlagenes Lager - der Besitzer ist wohl im Schlaf überrascht worden. Naja, wenigstens wird er dann wohl nichts mehr dagegen haben wenn du dich an seiner Ausrüstung bedienst ...'));
         }
 

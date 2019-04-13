@@ -140,6 +140,10 @@ return array(
                 'inherit' => array(0),
                 'config' => array(
                     'zombies.escape_threshold'          => 0,
+                    'zombies.protection.phases.1'       => 0,
+                    'zombies.protection.phases.2'       => 0,
+                    'zombies.protection.phases.3'       => 0,
+
                     'items.ammobelt.startup_bat.min'    => 150,
                     'items.ammobelt.startup_bat.max'    => 150,
                     'items.ammobelt.startup_blt.min'    => 65,

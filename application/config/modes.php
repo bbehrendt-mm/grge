@@ -39,6 +39,7 @@ return array(
                     'modules.additionalchems'               => true,
                     'modules.multiplayer'                   => false,
                     'game.bhav.infections'                  => false,
+                    'game.bhav.time_offset_range'           => [72,144],
                     'game.lobby.persistent'                 => false,
                     'game.config.map'                       => 'default',
                     'game.config.itemset'                   => 'default',
@@ -112,6 +113,8 @@ return array(
                     'places.dryout_factor'                  => 1.15,
                     'items.pill.use_default_effect_proc'    => false,
                     'items.bottle.detox_amount'             => 50,
+
+                    'game.bhav.time_offset_range'           => [60,216],
 
                     'ranking.points.survival.factor'        => 2.5,
                 ),

@@ -32,7 +32,10 @@ class Init_Game {
 		$set->head->paused = false;
 		$set->head->pauselock = 0;
         $set->head->name = $name;
-        $set->head->daytime_offset = random_int(60,216);
+        $set->head->daytime_offset = random_int(
+            $config_data['config']['game.bhav.time_offset_range'][0],
+            $config_data['config']['game.bhav.time_offset_range'][1]
+        );
 
         //Config
         foreach ($config_data['config'] as $key => $value)

@@ -16,7 +16,7 @@ class Model_Items_Nom extends Model_Items_Abstract_Item implements Interface_Sta
             ->add_action('Essen', Model_Action::factory()
                 ->effect(
                     Model_Effect::factory()
-                        ->effect(Model_Status::MS_STAT_HUNGER, 35)
+                        ->effect(Model_Status::MS_STAT_HUNGER, 30)
                         ->buff('Model_Buffs_Nom', false, 36)
                         ->consume($this)
                         ->message('Lecker! Es geht doch nichts über etwas Selbstgekochtes!')

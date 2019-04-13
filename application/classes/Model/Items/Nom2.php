@@ -11,13 +11,16 @@ class Model_Items_Nom2 extends Model_Items_Abstract_Item implements Interface_St
 
 	protected static $weight = 2;
 
+	protected static $hunger = 40;
+	protected static $buff_duration = 72;
+
     protected function hid(): Model_Hid {
         return parent::hid()
             ->add_action('Essen', Model_Action::factory()
                 ->effect(
                     Model_Effect::factory()
-                        ->effect(Model_Status::MS_STAT_HUNGER, 50)
-                        ->buff('Model_Buffs_Nom', false, 72)
+                        ->effect(Model_Status::MS_STAT_HUNGER, static::$hunger)
+                        ->buff('Model_Buffs_Nom', false, static::$buff_duration)
                         ->consume($this)
                         ->message('Superlecker! Es geht doch nichts über etwas Selbstgekochtes!')
                 )

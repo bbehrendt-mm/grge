@@ -77,6 +77,51 @@ return Model_Blueprints::factory()
 
     ->add_blueprints(
         Model_Blueprint::factory()
+            ->id('i:nomv1')
+            ->requires_local('ktc4')
+            ->material(Model_Items_Basefood::cls(),         2, null, 5)
+            ->material(Model_Items_Basefood::cls(),         1, null, 7)
+            ->material(Model_Items_Generic_Spice::cls(),    1, null, 0)
+            ->energy(15)
+            ->produces(Model_Items_Nomv::cls(), 1, 0)
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:nomv2')
+            ->requires_local('ktc4')
+            ->material(Model_Items_Basefood::cls(),         1, null, 0)
+            ->material(Model_Items_Basefood::cls(),         1, null, 1)
+            ->material(Model_Items_Basefood::cls(),         1, null, 2)
+            ->material(Model_Items_Generic_Spice::cls(),    1, null, 0)
+            ->energy(15)
+            ->produces(Model_Items_Nomv::cls(), 1, 1)
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:nomv3')
+            ->requires_local('ktc2')
+            ->material(Model_Items_Basefood::cls(),         1, null, 0)
+            ->material(Model_Items_Basefood::cls(),         1, null, 3)
+            ->material(Model_Items_Basefood::cls(),         2, null, 4)
+            ->energy(5)
+            ->produces(Model_Items_Nomv::cls(), 1, 2)
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('i:nomv4')
+            ->requires_local('ktc4')
+            ->material(Model_Items_Basefood::cls(),         2, null, 5)
+            ->material(Model_Items_Rawmeat2::cls(),         1, null, 0)
+            ->material(Model_Items_Generic_Spice::cls(),    1, null, 0)
+            ->energy(15)
+            ->produces(Model_Items_Nomv::cls(), 1, 3)
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
             ->id('i:k_frz_body1')
             ->requires_local('ktc_cool')
             ->material([Model_Items_Body::cls() => 1, Model_Items_Energy::cls() => 1])

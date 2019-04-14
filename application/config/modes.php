@@ -423,6 +423,7 @@ return array(
                         new Model_Buffs_Backpack();
                         new Model_Buffs_Transport();
                         new Model_Buffs_Flashlight();
+                        new Model_Buffs_Flashlight2();
                         new Model_Buffs_Daytime();
                         new Model_Buffs_Freeze();
 

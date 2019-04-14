@@ -101,7 +101,6 @@ return Model_Blueprints::factory()
     ->add_blueprints(
         Model_Blueprint::factory()
             ->id('i:nomv3')
-            ->requires_local('ktc2')
             ->material(Model_Items_Basefood::cls(),         1, null, 0)
             ->material(Model_Items_Basefood::cls(),         1, null, 3)
             ->material(Model_Items_Basefood::cls(),         2, null, 4)

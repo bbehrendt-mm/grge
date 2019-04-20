@@ -10,12 +10,12 @@ class Model_Buffs_Hulk extends Model_Buffs_Abstract_Buff {
     protected function apply(): void
     {
         parent::apply();
-        $this->assoc_player->inventory()->limit($this->assoc_player->inventory()->limit() + 70);
+        $this->assoc_player->inventory()->limit($this->assoc_player->inventory()->global_limit() + 70);
     }
 
     public function unbuff(): bool
     {
-        $this->assoc_player->inventory()->limit($this->assoc_player->inventory()->limit() - 70);
+        $this->assoc_player->inventory()->limit($this->assoc_player->inventory()->global_limit() - 70);
         return parent::unbuff();
     }
 }

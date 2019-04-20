@@ -27,9 +27,10 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
                             ->effect(Model_Status::MS_STAT_THIRST, 25)
                             ->effect(Model_Status::MS_STAT_HEALTH, -$this->bottle_toxicity)
                             ->ambiguous_effect(Model_Status::MS_STAT_HEALTH)
-                            ->custom(function($p) {
-                                /** @var Model_Player $p */
-                                if ($this->toxicity() > max(50, $p->get_status()->get(Model_Status::MS_STAT_HEALTH)))
+                            ->custom(function(Interface_Plentity $p) {
+                                /** @var Model_Player|Interface_Plentity $p */
+                                if (!Tool_Scripts::is_npc($p) &&
+                                    $this->toxicity() > max(50, $p->get_status()->get(Model_Status::MS_STAT_HEALTH)))
                                     $p->achievements()->achieve(Model_Achievement::MA_POISON_DRINK);
                             })
                             ->consume($this)

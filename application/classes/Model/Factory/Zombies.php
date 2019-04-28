@@ -89,7 +89,7 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
     }
 
     public function reduce_accum(int $num) {
-        if ($this->accumulation() >= $num)
+        if ($this->accumulation() <= $num)
             $this->accumulated_zombies = [];
         else
             for ($i = 0; $i < $num; $i++) {

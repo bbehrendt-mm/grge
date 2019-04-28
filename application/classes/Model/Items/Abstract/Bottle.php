@@ -50,7 +50,7 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
                             ->custom(function() {
                                 if (Globals::CurrentGameF()->config('items.bottle.allow_full_detox')) $this->bottle_toxicity = 0;
                                 else {
-                                    $detox_amount = floor(Globals::CurrentGameF()->config('items.bottle.allow_full_detox') / $this->fillrate());
+                                    $detox_amount = floor(Globals::CurrentGameF()->config('items.bottle.detox_amount') / $this->fillrate());
                                     $this->bottle_toxicity = max($this->bottle_toxicity - $detox_amount, 0);
                                 }
                             })

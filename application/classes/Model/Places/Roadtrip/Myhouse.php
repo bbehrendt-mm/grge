@@ -31,28 +31,28 @@ class Model_Places_Roadtrip_Myhouse extends Model_Places_Abstract_Hideout {
                               ['utilities'],
                               ['gen1','gen2'],
             'Keller'
-        );
+        )->set_default_state();
         $this->setup_new_room($this->create_new_room( 10,['inside']),
                               ['bedroom'],
                               ['bedr1','bedr2','bedr3'],
             'Schlafzimmer'
-        );
+        )->set_default_state();
         $this->setup_new_room($this->create_new_room( 15,['inside']),
                               ['community'],
                               ['sofa1','sofa2'],
             'Stube'
-        );
+        )->set_default_state();
         $this->setup_new_room($this->create_new_room( 12,['inside']),
                               ['kitchen'],
                               ['ktc2','ktc3','ktc4'],
             'Küche'
-        );
+        )->set_default_state();
         $this->setup_new_room($this->create_new_room( 7,['inside']),
                               ['workshop'],
                               [],
             'Garage'
-        );
+        )->set_default_state();
 
-        $this->create_new_room(10,['inside']);
+        $this->create_new_room(10,['inside'])->set_default_state();
     }
 }	

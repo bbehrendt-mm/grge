@@ -14,6 +14,7 @@ class Model_Log_Types_Item extends Model_Log_Message {
     public const MLTI_BOX = 9;
     public const MLTI_DEATH_ENEMY = 10;
     public const MLTI_DEATH_PET = 11;
+    public const MLTI_ROOM_REVERT = 12;
 
     protected static $type = Model_Log_Message::MLM_ITEM_LOG;
 

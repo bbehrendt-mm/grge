@@ -27,7 +27,7 @@ class Model_Places_Hospital_Private extends Model_Places_Abstract_Hideout {
         $this->setup_new_room($this->create_new_room(10,['inside']),
             ['bedroom'],
             ['bedr1','bedr2','bedr3']
-        );
+        )->set_default_state();
     }
 
 }	

@@ -4,6 +4,9 @@ class Model_Room {
 
     protected $local_id = -1;
 
+    /** @var null|Model_Room */
+    protected $default_room = null;
+
     protected $space;
     protected $tags = [];
 
@@ -278,6 +281,75 @@ class Model_Room {
         $this->contains = array_filter($this->contains, function($elem) use ($a) {
             return !in_array($elem, $a, false);
         });
+    }
+
+    public function reset_default_state(): void {
+        $this->default_room = null;
+    }
+
+    public function set_default_state(): void {
+        $this->default_room = new Model_Room();
+
+        $this->default_room->space = $this->space;
+        $this->default_room->tags  = $this->tags;
+
+        $this->default_room->room_name    = $this->room_name;
+        $this->default_room->name_custom  = $this->name_custom;
+
+        $this->default_room->usage      = $this->usage;
+        $this->default_room->satisfies  = $this->satisfies;
+
+        $this->default_room->contains    = $this->contains;
+        $this->default_room->used_space  = $this->used_space;
+
+        $this->default_room->defense  = $this->defense;
+        $this->default_room->deco     = $this->deco;
+
+        foreach ($this->inventory()->get() as $item)
+            $this->default_room->inventory->add( $item );
+    }
+
+    /**
+     * @return Model_Items_Abstract_Item[]
+     */
+    public function revert_default_state(): array {
+        if (!$this->has_explicit_default()) return [];
+
+        $this->space = $this->default_room->space;
+        $this->tags  = $this->default_room->tags;
+
+        $this->room_name    = $this->default_room->room_name;
+        $this->name_custom  = $this->default_room->name_custom;
+
+        $this->usage      = $this->default_room->usage;
+        $this->satisfies  = $this->default_room->satisfies;
+
+        $this->contains    = $this->default_room->contains;
+        $this->used_space  = $this->default_room->used_space;
+
+        $this->defense  = $this->default_room->defense;
+        $this->deco     = $this->default_room->deco;
+
+        $discard_item_list = [];
+        foreach ($this->inventory->get(Model_Items_Abstract_Item::cls()) as $item)
+            if (!$this->default_room->inventory->has( $item->uin() ))
+                $discard_item_list[] = $this->inventory->remove( $item->uin() );
+
+        return $discard_item_list;
+    }
+
+    public function has_explicit_default(): bool {
+        return $this->default_room !== null;
+    }
+
+    public function has_different_default(): bool {
+        if (!$this->has_explicit_default()) return false;
+        return
+            !empty(array_diff( $this->default_room->satisfies, $this->satisfies )) ||
+            !empty(array_diff( $this->satisfies, $this->default_room->satisfies )) ||
+            !empty(array_diff( $this->default_room->tags, $this->tags )) ||
+            !empty(array_diff( $this->tags, $this->default_room->tags )) ||
+            $this->usage != $this->default_room->usage || $this->used_space != $this->default_room->used_space;
     }
 
     public function clear(): void

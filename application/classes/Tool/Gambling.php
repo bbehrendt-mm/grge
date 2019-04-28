@@ -42,8 +42,9 @@ class Tool_Gambling {
         return array_values($array)[random_int(0,count($array) - 1)];
     }
 
-    public static function random($chance): bool
+    public static function random(float $chance): bool
     {
+        if ($chance >= 1) return true;
         return $chance <= 0 ? false : (mt_rand()/mt_getrandmax() < $chance);
     }
 

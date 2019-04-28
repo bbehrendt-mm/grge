@@ -15,4 +15,9 @@ class Model_Items_Energy extends Model_Items_Abstract_Item implements Interface_
         $message = 'Du kannst Energie nicht transportieren.';
         return false;
     }
+
+    public function can_drop(&$message, $p = null): bool {
+        $message = 'Du kannst Energie nicht transportieren.';
+        return false;
+    }
 }	

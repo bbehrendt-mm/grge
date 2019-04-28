@@ -105,14 +105,15 @@ class Tool_Scripts
     }
 
     /**
-     * @param Struct_ItemEntry[]           $items
+     * @param Struct_ItemEntry[] $items
      * @param Struct_ScriptItemSource|null $source
-     * @param bool                         $grind
+     * @param bool $grind
      *
+     * @param array|null $retlist
      * @return bool
      * @throws Exception
      */
-    public static function consume_items($items, ?Struct_ScriptItemSource $source = null, bool $grind = false): bool
+    public static function consume_items($items, ?Struct_ScriptItemSource $source = null, bool $grind = false, ?array &$retlist = null): bool
     {
         foreach ($items as $item)
             if (static::count_items($item->class, $source) < $item->count)
@@ -149,9 +150,10 @@ class Tool_Scripts
                 }
 
             } else
-                foreach (static::get_items($item->class, $source) as $instance) {
+                foreach (static::get_items($item->class, $source, true) as $instance) {
                     if ($grind)
                         $instance->grind();
+                    else if ($retlist !== null) $retlist[] = $instance;
                     else $instance->consume();
                     if (--$remaining <= 0) break;
                 }
@@ -208,28 +210,39 @@ class Tool_Scripts
     /**
      * Returns a list of available items
      *
-     * @param string|null                  $classname Restrict items to a specific class and its descendants
+     * @param string|null $classname Restrict items to a specific class and its descendants
      * @param Struct_ScriptItemSource|null $source
      *
+     * @param bool $detach_from_inv
      * @return Model_Items_Abstract_Item[]
      * @throws Exception
      */
-    public static function get_items(?string $classname, ?Struct_ScriptItemSource $source = null): array {
+    public static function get_items(?string $classname, ?Struct_ScriptItemSource $source = null, bool $detach_from_inv = false): array {
         $source = $source ?: new Struct_ScriptItemSource();
 
         $player = $source->get_player();
         $proto = [];
 
-        if ($source->from_player)
-            $proto = array_merge($proto, $player->inventory()->get($classname));
+        if ($source->from_player) {
+            $items = $player->inventory()->get($classname);
+            if ($detach_from_inv) foreach ($items as $item) $proto[] = $player->inventory()->remove( $item->uin() );
+            else $proto = array_merge($proto, $items);
+        }
 
-        if ($source->from_location && $player->location())
-            $proto = array_merge($proto, $player->location()->inventory()->get($classname));
+
+        if ($source->from_location && $player->location()) {
+            $items = $player->location()->inventory()->get($classname);
+            if ($detach_from_inv) foreach ($items as $item) $proto[] = $player->location()->inventory()->remove( $item->uin() );
+            else $proto = array_merge($proto, $items);
+        }
 
         if ($source->from_others && !self::is_npc($player))
             foreach (self::at_location($player->location_class(), true, true) as $s_player)
-                if ($s_player->uin() !== $player->uin())
-                    $proto = array_merge($proto, $s_player->inventory()->get($classname));
+                if ($s_player->uin() !== $player->uin()) {
+                    $items = $s_player->inventory()->get($classname);
+                    if ($detach_from_inv) foreach ($items as $item) $proto[] = $s_player->inventory()->remove( $item->uin() );
+                    else $proto = array_merge($proto, $items);
+                }
 
         return array_values(array_filter($proto, $source->get_decider()));
     }
@@ -326,13 +339,14 @@ class Tool_Scripts
 
     /**
      * Places a newly spawned item in the current locations inventory or tries to add it to the finders inventory
-     * @param Model_Items_Abstract_Item|Model_Items_Abstract_Item[] $item         The item (can also be an array of items)
-     * @param boolean                                               $log          True if you want a log message to be created
-     * @param Model_Places_Abstract_Place                           $use_location The location; if not set, the current location is used
+     * @param Model_Items_Abstract_Item|Model_Items_Abstract_Item[] $item The item (can also be an array of items)
+     * @param boolean $log True if you want a log message to be created
+     * @param Model_Places_Abstract_Place $use_location The location; if not set, the current location is used
+     * @param int $logtype
      * @return boolean
      * @throws Exception
      */
-    public static function place_new_item($item, $log = true, $use_location = null): bool
+    public static function place_new_item($item, $log = true, $use_location = null, $logtype = Model_Log_Types_Item::MLTI_DIGUP): bool
     {
         $location = $use_location ?: Globals::CurrentPlayerF()->location();
 
@@ -343,11 +357,11 @@ class Tool_Scripts
         //Recursive call for multiple items
         if (is_array($item)) {
             foreach ($item as $single) static::place_new_item($single, false, $location);
-            if ($log) $location->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_DIGUP, $item));
+            if ($log) $location->log()->add(new Model_Log_Types_Item($logtype, $item));
             return true;
         }
 
-        if ($log) $location->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_DIGUP, $item));
+        if ($log) $location->log()->add(new Model_Log_Types_Item($logtype, $item));
         $try_to_take = Tool_System::instance_of($item, 'Interface_Autotaker');
 
         $msg = '';

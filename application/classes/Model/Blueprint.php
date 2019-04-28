@@ -15,6 +15,10 @@ class Model_Blueprint {
     private $room_clear = false;
     private $room_clear_sat = true;
 
+    private $room_new_default = false;
+    private $room_remove_default = false;
+    private $room_content_scapability = 0.0;
+
     private $space_requirement = 0;
 
     private $obj_name;
@@ -126,10 +130,22 @@ class Model_Blueprint {
      * @param number|null $set
      * @return Model_Blueprint|int
      */
-    public function space($set = null) {
+    public function space(?int $set = null) {
         if ($set === null) return $this->space_requirement;
         else {
             $this->space_requirement = $set;
+            return $this;
+        }
+    }
+
+    /**
+     * @param float|null $set
+     * @return Model_Blueprint|float
+     */
+    public function scrapability(?float $set = null) {
+        if ($set === null) return $this->room_content_scapability;
+        else {
+            $this->room_content_scapability = min( max(0.0, $set), 1.0 );
             return $this;
         }
     }
@@ -189,6 +205,22 @@ class Model_Blueprint {
         } elseif (is_array($name))
             foreach ($name as $elem)
                 $this->category($elem);
+        return $this;
+    }
+
+    /**
+     * @return Model_Blueprint
+     */
+    public function create_new_default_state() : Model_Blueprint {
+        $this->room_new_default = true;
+        return $this;
+    }
+
+    /**
+     * @return Model_Blueprint
+     */
+    public function reset_default_state() : Model_Blueprint {
+        $this->room_remove_default = true;
         return $this;
     }
 
@@ -802,10 +834,23 @@ class Model_Blueprint {
             return false;
         }
 
-        if (!Tool_Scripts::consume_items($this->items, Struct_ScriptItemSource::default()->use_perspective($player)->use_decider($this->get_item_decider()), true)) {
+        /** @var Model_Items_Abstract_Item[] $consumed_items */
+        $consumed_items = [];
+
+        if (!Tool_Scripts::consume_items($this->items, Struct_ScriptItemSource::default()->use_perspective($player)->use_decider($this->get_item_decider()), false, $consumed_items)) {
             $player->log()->add('Dir fehlen Gegenstände, um diese Aktion durchzuführen.');
             return false;
         }
+
+        /** @var Model_Items_Abstract_Item[] $consumed_items */
+        $scrapped_items = [];
+        $m = "";
+        foreach ($consumed_items as $item)
+            if (Tool_Gambling::random( $this->room_content_scapability ) && $item->can_drop($m) ) {
+                $item->drop();
+                $room->inventory()->add($item);
+            } else $item->grind();
+        $consumed_items = [];
 
         $raw_item_objects = [];
 
@@ -911,6 +956,9 @@ class Model_Blueprint {
                 if (Tool_System::instance_of($instance, Model_Items_Abstract_Virtual::cls()) && $instance::setup_location())
                     $instance->set_location_info($location->uin(), $room->id());
             }
+
+        if ($this->room_remove_default)  $room->reset_default_state();
+        elseif ($this->room_new_default) $room->set_default_state();
 
         return [];
     }
@@ -1089,7 +1137,8 @@ class Model_Blueprint {
             'occupies_room' => $room_occ_data,
             'hidden' => $hidden,
             'zombies' => $z,
-            'confirm' => $this->confirmation
+            'confirm' => $this->confirmation,
+            'revert_warning' => $room->has_explicit_default() && ( $this->room_remove_default || $this->room_new_default )
         ];
     }
 

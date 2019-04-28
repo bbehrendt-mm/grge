@@ -77,9 +77,9 @@ class Model_Places_Motorhome extends Model_Places_Home {
 
     public function setup_additional_rooms(): void
     {
-        $this->create_new_room(25,['outside']);
-        $this->create_new_room(25,['outside']);
-        $this->create_new_room(25,['outside']);
+        $this->create_new_room(25,['outside'])->set_default_state();
+        $this->create_new_room(25,['outside'])->set_default_state();
+        $this->create_new_room(25,['outside'])->set_default_state();
     }
 
     private function mapcontrol($populate): void

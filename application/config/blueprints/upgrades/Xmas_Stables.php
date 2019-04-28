@@ -7,7 +7,7 @@ return Model_Blueprints::factory()
         $b->add_modifier_builder();
     })
 
-    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->category('Schlafzimmer')->requires_room('stables');})
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->category('Schlafzimmer')->requires_room('stables')->scrapability(1.0);})
 
     ->add_blueprints(
         Model_Blueprint::factory()

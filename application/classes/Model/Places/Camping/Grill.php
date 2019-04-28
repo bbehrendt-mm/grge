@@ -15,6 +15,6 @@ class Model_Places_Camping_Grill extends Model_Places_Abstract_Node {
                               ['bbq_grill'],
                               [],
             'Grillstation'
-        );
+        )->set_default_state();
     }
 }	

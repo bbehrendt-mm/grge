@@ -22,12 +22,12 @@ class Model_Places_Weaponshop extends Model_Places_Abstract_Place {
     public function setup_additional_rooms(): void
     {
         parent::setup_additional_rooms();
-        $this->create_new_room( 5,['inside']);
+        $this->create_new_room( 5,['inside'])->set_default_state();
 
         $this->setup_new_room($this->create_new_room(10,['inside']),
                               Globals::CurrentGameF()->config('modules.armory') ? ['workshop','workshop_weapons_1','workshop_weapons_2'] : ['workshop','workshop_weapons_1'],
                               [],
             'Hinterraum'
-        );
+        )->set_default_state();
     }
 }

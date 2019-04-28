@@ -8,7 +8,7 @@ return Model_Blueprints::factory()
 
     // ++ STACK -> All blueprints below benefit from daytime and handyman bonus, and give builder achievement
     ->push_stack(function(&$b) {/** @var Model_Blueprint $b */
-        $b->add_modifier_builder();
+        $b->scrapability(0.9)->add_modifier_builder();
     })
 
     // Kitchen

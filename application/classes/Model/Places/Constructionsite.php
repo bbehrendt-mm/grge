@@ -10,8 +10,8 @@ class Model_Places_Constructionsite extends Model_Places_Abstract_Place {
     {
         parent::setup_additional_rooms();
 
-        $this->create_new_room(40,['outside']);
-        $this->create_new_room(40,['outside']);
+        $this->create_new_room(40,['outside'])->set_default_state();;
+        $this->create_new_room(40,['outside'])->set_default_state();;
 
         for ($i = 0; $i < 3; $i++)
             $this->setup_new_room($this->create_new_room(6,['inside']),

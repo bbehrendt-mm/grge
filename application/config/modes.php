@@ -615,8 +615,8 @@ return array(
                         Globals::CurrentGameF()->main_map()->add_location('Model_Places_Villa');
 
                     if ($level >= 4) {
-                        Tool_Scripts::home(Globals::CurrentGameF())->setup_new_room(Tool_Scripts::home(Globals::CurrentGameF())->create_new_room(10, ['inside']), ['bedroom'], ['bedr1']);
-                        Tool_Scripts::home(Globals::CurrentGameF())->setup_new_room(Tool_Scripts::home(Globals::CurrentGameF())->create_new_room(10, ['inside']), ['workshop'], []);
+                        Tool_Scripts::home(Globals::CurrentGameF())->setup_new_room(Tool_Scripts::home(Globals::CurrentGameF())->create_new_room(10, ['inside']), ['bedroom'], ['bedr1'])->set_default_state();
+                        Tool_Scripts::home(Globals::CurrentGameF())->setup_new_room(Tool_Scripts::home(Globals::CurrentGameF())->create_new_room(10, ['inside']), ['workshop'], [])->set_default_state();
                     }
                 }),
         ),

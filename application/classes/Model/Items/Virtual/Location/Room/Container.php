@@ -32,6 +32,7 @@ class Model_Items_Virtual_Location_Room_Container extends Model_Items_Abstract_V
                     }
 
                     Model_Blueprints::fast_apply($this->location(),'rooms','free', $this->room());
+                    $this->room()->set_default_state();
                 })
             )
         );

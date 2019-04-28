@@ -2280,6 +2280,9 @@ core = {
                 case 10:
                     header = ":name ist besiegt!";
                     break;
+                case 12:
+                    header = ":name hat einen Raum abgerissen.";
+                    break;
                 default:
                     header = ":itemdef erhalten!";
                     break;
@@ -2310,6 +2313,9 @@ core = {
                         break;
                     case 10:
                         sub.append($('<p />').text(game.i18n(data.self ? '' : "Es war ein harter Kampf, aber ihr konntet :name bezwingen. Alles, was von ihm noch \u00fcbrig ist, liegt nun ausgebreitet vor euch.",{':name': data.primary})));
+                        break;
+                    case 12:
+                        sub.append($('<p />').text(game.i18n(data.self ? "Du hast einen Raum abgerissen und dabei einige Gegenst\u00e4nde retten k\u00f6nnen." : ":name hat einen Raum abgerissen und dabei einige Gegenst\u00e4nde retten k\u00f6nnen.",{':name': data.primary})));
                         break;
                 }
 
@@ -3179,6 +3185,9 @@ core = {
                     if (v.confirm && !window.confirm(game.i18n(v.confirm, {':name': v.name})))
                         return;
 
+                    if (v.revert_warning && !window.confirm("Wenn diese Erweiterung einmal gebaut wurde, kann sie nicht mehr abgerissen werden. Fortfahren?"))
+                        return;
+
                     var prev_scroll = $('.popup').find('>*:first-child').scrollTop();
                     popup.addClass('disabled');
                     core.command('location/' + type, {build: k, r: bdata.room}, true, function(new_data) {
@@ -3326,13 +3335,50 @@ core = {
                         tag_list.append(NF.img('media/icons/places/rtags/' + k + '.gif').attr('title',v).qtip(game.render.html.qtip.ingame('bottom')));
                     });
 
-                var btn_add, btn_con;
-                var action_row;
+                var btn_add, btn_con, btn_rev, btn_rev_cancel, btn_rev_confirm;
+                var action_row, revert_row;
 
                 current.append(action_row = NF.row().addClass(room.options.enabled ? '' : 'disabled')
                     .append(NF.cell(true,{desktop: 6, sm: 12},0,'center').append(btn_add = NF.button("Ausbauen...").addClass('btn-zv btn-zv-skinned-location').addClass(room.options.add ? '' : 'disabled')))
                     .append(NF.cell(true,{desktop: 6, sm: 12},0,'center').append(btn_con =  NF.button("Umbauen...").addClass('btn-zv btn-zv-skinned-location').addClass(room.options.construct ? '' : 'disabled')))
+                    .append(!room.options.revert ? null : NF.cell(true,{desktop: 6, sm: 12},0,'center').append(btn_rev =  NF.button("Abrei\u00dfen...").addClass('btn-zv btn-zv-skinned-location')))
                 );
+
+                if (room.options.revert) {
+                    current.append(revert_row = NF.row()
+                        .append(NF.cell(true,12,0).append( NF.info( "Beim Abrei\u00dfen eines Raumes werden alle \u00c4nderungen an diesem Raum verworfen und der Ursprungszustand wiederhergestellt. M\u00f6glicherweise erh\u00e4lst du sogar einige Gegenst\u00e4nde, welche f\u00fcr den Ausbau verwendet wurden, zur\u00fcck." ) ))
+                        .append(NF.cell(true,{desktop: 6, sm: 12},0,'center').append(btn_rev_cancel  = NF.button("Abbrechen").addClass('btn-zv btn-zv-skinned-location')))
+                        .append(NF.cell(true,{desktop: 6, sm: 12},0,'center').append(btn_rev_confirm = NF.button("Abrei\u00dfen").addClass('btn-zv btn-zv-skinned-location')))
+                    );
+                    revert_row.hide();
+                    btn_rev.click(function() {
+                        action_row.slideUp();
+                        revert_row.slideDown();
+                    });
+                    btn_rev_cancel.click(function() {
+                        action_row.slideDown();
+                        revert_row.slideUp();
+                    });
+                    btn_rev_confirm.click(function() {
+
+                        var alias = $(this);
+                        popup.addClass('disabled');
+
+                        core.command('location/revert_room', {r: room.id}, true, function(data) {
+                            popup.removeClass('disabled');
+
+                            if (!data.success) game.render.html.notify('error',"Ein Fehler ist aufgetreten.");
+                            else {
+                                popup.closest('.popup').off('close').on('close', function() {
+                                    setTimeout(function() {core.command();}, 100);
+                                })
+                                core.popup.rooms(popup);
+                            }
+
+                        });
+                    })
+                }
+
                 $.each(room.options.actions, function(aid,hid) {
                     action_row.append(NF.cell(true,{desktop: 12, sm: 12},0,'center').append(core.snippets.button(
                         hid,

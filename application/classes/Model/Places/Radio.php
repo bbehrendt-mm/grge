@@ -10,9 +10,9 @@ class Model_Places_Radio extends Model_Places_Abstract_Place {
     public function setup_additional_rooms(): void
     {
         parent::setup_additional_rooms();
-        $this->create_new_room(4,['inside']);
-        $this->create_new_room(4,['inside']);
-        $this->create_new_room(4,['inside']);
-        $this->create_new_room(8,['inside']);
+        $this->create_new_room(4,['inside'])->set_default_state();
+        $this->create_new_room(4,['inside'])->set_default_state();
+        $this->create_new_room(4,['inside'])->set_default_state();
+        $this->create_new_room(8,['inside'])->set_default_state();
     }
 }	

@@ -13,8 +13,8 @@ class Model_Places_Druglab extends Model_Places_Abstract_Place {
                               ['kitchen', 'kitchen_meth'],
                               [],
                               'Drogenküche'
-        );
-        $this->create_new_room(15,['inside']);
+        )->set_default_state();
+        $this->create_new_room(15,['inside'])->set_default_state();;
     }
 
 	public function uin($uin = NULL) {

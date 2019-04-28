@@ -16,13 +16,13 @@ class Model_Places_Burgerjoint extends Model_Places_Abstract_Place {
                               ['kitchen','kitchen_burgerjoint'],
                               [],
             'Küchenbereich'
-        );
+        )->set_default_state();
         $this->setup_new_room($this->create_new_room(10,['inside']),
                               ['cooler_closed'],
                               [],
             'Kühlkammer'
         );
 
-        $this->create_new_room(20,['inside']);
+        $this->create_new_room(20,['inside'])->set_default_state();;
     }
 }	

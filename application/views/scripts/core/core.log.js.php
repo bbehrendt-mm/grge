@@ -155,6 +155,9 @@
                 case <?=Model_Log_Types_Item::MLTI_DEATH_ENEMY?>:
                     header = <?=__j(':name ist besiegt!')?>;
                     break;
+                case <?=Model_Log_Types_Item::MLTI_ROOM_REVERT?>:
+                    header = <?=__j(':name hat einen Raum abgerissen.')?>;
+                    break;
                 default:
                     header = <?=__j(':itemdef erhalten!')?>;
                     break;
@@ -185,6 +188,9 @@
                         break;
                     case <?=Model_Log_Types_Item::MLTI_DEATH_ENEMY?>:
                         sub.append($('<p />').text(game.i18n(data.self ? '' : <?=__j('Es war ein harter Kampf, aber ihr konntet :name bezwingen. Alles, was von ihm noch übrig ist, liegt nun ausgebreitet vor euch.')?>,{':name': data.primary})));
+                        break;
+                    case <?=Model_Log_Types_Item::MLTI_ROOM_REVERT?>:
+                        sub.append($('<p />').text(game.i18n(data.self ? <?=__j('Du hast einen Raum abgerissen und dabei einige Gegenstände retten können.')?> : <?=__j(':name hat einen Raum abgerissen und dabei einige Gegenstände retten können.')?>,{':name': data.primary})));
                         break;
                 }
 

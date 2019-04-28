@@ -18,22 +18,22 @@ class Model_Places_Camping_Caravan extends Model_Places_Abstract_Hideout {
 
     public function setup_additional_rooms(): void
     {
-        $this->create_new_room( 5,['inside']);
+        $this->create_new_room( 5,['inside'])->set_default_state();
 
         $this->setup_new_room($this->create_new_room( 5,['inside']),
                               ['utilities'],
-                              ['gen1']);
+                              ['gen1'])->set_default_state();
         $this->setup_new_room($this->create_new_room( 5,['inside']),
                               ['bedroom'],
                               ['bedr1'],
             'Schlafzimmer'
-        );
+        )->set_default_state();
         $this->setup_new_room($this->create_new_room( 5,['inside']),
                               ['kitchen'],
                               [],
             'Küche'
-        );
+        )->set_default_state();
 
-        $this->create_new_room(15,['outside']);
+        $this->create_new_room(15,['outside'])->set_default_state();
     }
 }	

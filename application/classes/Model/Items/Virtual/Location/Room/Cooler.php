@@ -5,6 +5,7 @@ class Model_Items_Virtual_Location_Room_Cooler extends Model_Items_Abstract_Virt
     protected function self_upgrade(): void
     {
         Model_Blueprints::fast_apply($this->location(),'rooms','cooler', $this->room());
+        $this->room()->set_default_state();
     }
 
     protected function hid(): Model_Hid {

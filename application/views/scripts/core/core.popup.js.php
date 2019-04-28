@@ -276,6 +276,9 @@ core.popup = {
                     if (v.confirm && !window.confirm(game.i18n(v.confirm, {':name': v.name})))
                         return;
 
+                    if (v.revert_warning && !window.confirm(<?=__j('Wenn diese Erweiterung einmal gebaut wurde, kann sie nicht mehr abgerissen werden. Fortfahren?')?>))
+                        return;
+
                     var prev_scroll = $('.popup').find('>*:first-child').scrollTop();
                     popup.addClass('disabled');
                     core.command('location/' + type, {build: k, r: bdata.room}, true, function(new_data) {
@@ -423,13 +426,50 @@ core.popup = {
                         tag_list.append(NF.img('media/icons/places/rtags/' + k + '.gif').attr('title',v).qtip(game.render.html.qtip.ingame('bottom')));
                     });
 
-                var btn_add, btn_con;
-                var action_row;
+                var btn_add, btn_con, btn_rev, btn_rev_cancel, btn_rev_confirm;
+                var action_row, revert_row;
 
                 current.append(action_row = NF.row().addClass(room.options.enabled ? '' : 'disabled')
                     .append(NF.cell(true,{desktop: 6, sm: 12},0,'center').append(btn_add = NF.button(<?=__j('Ausbauen...')?>).addClass('btn-zv btn-zv-skinned-location').addClass(room.options.add ? '' : 'disabled')))
                     .append(NF.cell(true,{desktop: 6, sm: 12},0,'center').append(btn_con =  NF.button(<?=__j('Umbauen...')?>).addClass('btn-zv btn-zv-skinned-location').addClass(room.options.construct ? '' : 'disabled')))
+                    .append(!room.options.revert ? null : NF.cell(true,{desktop: 6, sm: 12},0,'center').append(btn_rev =  NF.button(<?=__j('Abreißen...')?>).addClass('btn-zv btn-zv-skinned-location')))
                 );
+
+                if (room.options.revert) {
+                    current.append(revert_row = NF.row()
+                        .append(NF.cell(true,12,0).append( NF.info( <?=__j('Beim Abreißen eines Raumes werden alle Änderungen an diesem Raum verworfen und der Ursprungszustand wiederhergestellt. Möglicherweise erhälst du sogar einige Gegenstände, welche für den Ausbau verwendet wurden, zurück.')?> ) ))
+                        .append(NF.cell(true,{desktop: 6, sm: 12},0,'center').append(btn_rev_cancel  = NF.button(<?=__j('Abbrechen')?>).addClass('btn-zv btn-zv-skinned-location')))
+                        .append(NF.cell(true,{desktop: 6, sm: 12},0,'center').append(btn_rev_confirm = NF.button(<?=__j('Abreißen')?>).addClass('btn-zv btn-zv-skinned-location')))
+                    );
+                    revert_row.hide();
+                    btn_rev.click(function() {
+                        action_row.slideUp();
+                        revert_row.slideDown();
+                    });
+                    btn_rev_cancel.click(function() {
+                        action_row.slideDown();
+                        revert_row.slideUp();
+                    });
+                    btn_rev_confirm.click(function() {
+
+                        var alias = $(this);
+                        popup.addClass('disabled');
+
+                        core.command('location/revert_room', {r: room.id}, true, function(data) {
+                            popup.removeClass('disabled');
+
+                            if (!data.success) game.render.html.notify('error',"Ein Fehler ist aufgetreten.");
+                            else {
+                                popup.closest('.popup').off('close').on('close', function() {
+                                    setTimeout(function() {core.command();}, 100);
+                                })
+                                core.popup.rooms(popup);
+                            }
+
+                        });
+                    })
+                }
+
                 $.each(room.options.actions, function(aid,hid) {
                     action_row.append(NF.cell(true,{desktop: 12, sm: 12},0,'center').append(core.snippets.button(
                         hid,

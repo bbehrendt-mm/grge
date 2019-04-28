@@ -21,28 +21,28 @@ class Model_Places_Vault extends Model_Places_Abstract_Hideout {
                               ['utilities'],
                               ['gen1','gen2'],
             'Reaktorraum'
-        );
+        )->set_default_state();
         $this->setup_new_room($this->create_new_room( 8,['inside']),
                               ['bedroom'],
                               ['bedr1'],
             'Schlafzimmer'
-        );
+        )->set_default_state();
         $this->setup_new_room($this->create_new_room( 8,['inside']),
                               ['kitchen'],
                               [],
             'Küche'
-        );
+        )->set_default_state();
         $this->setup_new_room($this->create_new_room( 8,['inside']),
                               ['workshop'],
                               [],
             'Werkstatt'
-        );
+        )->set_default_state();
 
-        $this->create_new_room(8,['inside']);
-        $this->create_new_room(8,['inside']);
-        $this->create_new_room(8,['inside']);
-        $this->create_new_room(8,['inside']);
-        $this->create_new_room(8,['inside']);
+        $this->create_new_room(8,['inside'])->set_default_state();
+        $this->create_new_room(8,['inside'])->set_default_state();
+        $this->create_new_room(8,['inside'])->set_default_state();
+        $this->create_new_room(8,['inside'])->set_default_state();
+        $this->create_new_room(8,['inside'])->set_default_state();
     }
 
 }	

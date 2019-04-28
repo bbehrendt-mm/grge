@@ -10,11 +10,11 @@ class Model_Places_Villa extends Model_Places_Abstract_Place {
     public function setup_additional_rooms(): void
     {
         parent::setup_additional_rooms();
-        $this->create_new_room(10,['inside']);
-        $this->create_new_room(10,['inside']);
-        $this->create_new_room(10,['inside']);
-        $this->create_new_room(15,['inside']);
-        $this->create_new_room(20,['inside']);
-        $this->create_new_room(20,['inside']);
+        $this->create_new_room(10,['inside'])->set_default_state();
+        $this->create_new_room(10,['inside'])->set_default_state();
+        $this->create_new_room(10,['inside'])->set_default_state();
+        $this->create_new_room(15,['inside'])->set_default_state();
+        $this->create_new_room(20,['inside'])->set_default_state();
+        $this->create_new_room(20,['inside'])->set_default_state();
     }
 }	

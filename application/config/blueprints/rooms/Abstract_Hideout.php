@@ -64,7 +64,7 @@ return Model_Blueprints::factory()
     )
 
     //++ STACK -> EPIC FOUNDATIONS
-    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->energy(15)->message('Du hast die Arbeiten an einem epischen Projekt in deinem Versteck begonnen. Viel Erfolg!')->effect(Model_Effect::factory()->achieve(Model_Achievement::MA_EPIC_BEGIN, 1, true));})
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->energy(15)->reset_default_state()->message('Du hast die Arbeiten an einem epischen Projekt in deinem Versteck begonnen. Viel Erfolg!')->effect(Model_Effect::factory()->achieve(Model_Achievement::MA_EPIC_BEGIN, 1, true));})
 
     ->add_blueprints(
         Model_Blueprint::factory()

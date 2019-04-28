@@ -43,8 +43,8 @@ class Model_Places_Xmas_Stables extends Model_Places_Abstract_Hideout {
                               ['stables'],
                               ['hay1'],
             'Stall'
-        );
-        $this->create_new_room(20,['inside']);
+        )->set_default_state();
+        $this->create_new_room(20,['inside'])->set_default_state();
     }
 
     public function enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER): bool {

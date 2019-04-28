@@ -25,6 +25,6 @@ class Model_Places_Hotel extends Model_Places_Abstract_Hideout {
                                   ['bedroom'],
                                   ['bedr1','bedr2','bedr3'],
                 'Hotelzimmer'
-            );
+            )->set_default_state();
     }
 }	

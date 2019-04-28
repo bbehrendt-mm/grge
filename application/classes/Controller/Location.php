@@ -83,6 +83,7 @@ class Controller_Location extends Controller_Game {
                     'rename' => Globals::PrimaryPlayerF()->location()->is_upgradable() && !$room->name_is_fixed(),
                     'add' => Globals::PrimaryPlayerF()->location()->is_upgradable() && $room->get_usage() !== null,
                     'construct' => Globals::PrimaryPlayerF()->location()->is_upgradable() && ($id !== 0),
+                    'revert'  => $room->has_different_default(),
                     'actions' => $hid,
                     'enabled' => $room->enabled()
                 ]
@@ -90,6 +91,7 @@ class Controller_Location extends Controller_Game {
         }
         $this->render(['rooms' => $data]);
     }
+
     public function japi_rename_room(): bool
     {
         $room_id = self::post('r');
@@ -107,6 +109,34 @@ class Controller_Location extends Controller_Game {
 
         return $this->render(['success' => 1, 'result' => $room->name()]);
     }
+
+    public function japi_revert_room(): bool
+    {
+        $room_id = self::post('r');
+
+        if ($room_id === null)
+            return $this->render(['success' => 0]);
+
+        $room = Globals::PrimaryPlayerF()->location()->room((int)$room_id);
+        if ($room === null || !$room->has_different_default())
+            return $this->render(['success' => 0]);
+
+        $back_items = $room->revert_default_state();
+
+        $valid_items = [];
+        foreach ($back_items as $item)
+            if (Tool_System::instance_of($item, Model_Items_Abstract_Virtual::cls()))
+                $item->grind();
+            else $valid_items[] = $item;
+
+        if (!empty($valid_items)) {
+            Globals::PrimaryPlayerF()->log()->add('Du hast einen Raum abgerissen und dabei einige Gegenstände retten können.');
+            Tool_Scripts::place_new_item($valid_items, true, null, Model_Log_Types_Item::MLTI_ROOM_REVERT);
+        } else Globals::PrimaryPlayerF()->log()->add('Du hast einen Raum abgerissen. Allerdings konntest du dabei keine Gegenstände retten...');
+
+        return $this->render(['success' => 1]);
+    }
+
 
     /**
      * @param Model_Blueprints $blueprints

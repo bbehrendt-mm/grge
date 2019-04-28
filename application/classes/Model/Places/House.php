@@ -25,30 +25,30 @@ class Model_Places_House extends Model_Places_Abstract_Hideout {
 
     public function setup_additional_rooms(): void
     {
-        $this->create_new_room( 5,['inside']);
+        $this->create_new_room( 5,['inside'])->set_default_state();
 
         $this->setup_new_room($this->create_new_room( 5,['inside']),
                               ['utilities'],
                               ['gen1'],
             'Keller'
-        );
+        )->set_default_state();
         $this->setup_new_room($this->create_new_room( 10,['inside']),
                               ['bedroom'],
                               ['bedr1', 'bedr2', 'bedr3'],
             'Schlafzimmer'
-        );
+        )->set_default_state();
         $this->setup_new_room($this->create_new_room( 12,['inside']),
                               ['kitchen'],
                               ['ktc2', 'ktc3', 'ktc4'],
             'Küche'
-        );
+        )->set_default_state();
         $this->setup_new_room($this->create_new_room( 12,['inside']),
                               ['workshop'],
                               [],
             'Werkstatt'
-        );
+        )->set_default_state();
 
-        $this->create_new_room(15,['inside']);
+        $this->create_new_room(15,['inside'])->set_default_state();
     }
 
 }	

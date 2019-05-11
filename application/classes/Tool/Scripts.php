@@ -150,7 +150,7 @@ class Tool_Scripts
                 }
 
             } else
-                foreach (static::get_items($item->class, $source, true) as $instance) {
+                while ( $instance = static::first_item($item->class, $source, true) ) {
                     if ($grind)
                         $instance->grind();
                     else if ($retlist !== null) $retlist[] = $instance;
@@ -224,14 +224,16 @@ class Tool_Scripts
         $proto = [];
 
         if ($source->from_player) {
-            $items = $player->inventory()->get($classname);
+            /** @var Model_Items_Abstract_Item[] $items */
+            $items = array_values(array_filter($player->inventory()->get($classname), $source->get_decider()));
             if ($detach_from_inv) foreach ($items as $item) $proto[] = $player->inventory()->remove( $item->uin() );
             else $proto = array_merge($proto, $items);
         }
 
 
         if ($source->from_location && $player->location()) {
-            $items = $player->location()->inventory()->get($classname);
+            /** @var Model_Items_Abstract_Item[] $items */
+            $items = array_values(array_filter($player->location()->inventory()->get($classname), $source->get_decider()));
             if ($detach_from_inv) foreach ($items as $item) $proto[] = $player->location()->inventory()->remove( $item->uin() );
             else $proto = array_merge($proto, $items);
         }
@@ -239,7 +241,8 @@ class Tool_Scripts
         if ($source->from_others && !self::is_npc($player))
             foreach (self::at_location($player->location_class(), true, true) as $s_player)
                 if ($s_player->uin() !== $player->uin()) {
-                    $items = $s_player->inventory()->get($classname);
+                    /** @var Model_Items_Abstract_Item[] $items */
+                    $items = array_values(array_filter($s_player->inventory()->get($classname), $source->get_decider()));
                     if ($detach_from_inv) foreach ($items as $item) $proto[] = $s_player->inventory()->remove( $item->uin() );
                     else $proto = array_merge($proto, $items);
                 }
@@ -250,17 +253,53 @@ class Tool_Scripts
     /**
      * Returns the first available item from a list
      *
-     * @param string                       $classname Restrict items to a specific class and its descendants
+     * @param string $classname Restrict items to a specific class and its descendants
      * @param Struct_ScriptItemSource|null $source
      *
+     * @param bool $detach_from_inv
      * @return Model_Items_Abstract_Item|null
      * @throws Exception
      */
 
-    public static function first_item(string $classname, ?Struct_ScriptItemSource $source = null): ?Model_Items_Abstract_Item {
-        $l = static::get_items($classname, $source);
+    public static function first_item(string $classname, ?Struct_ScriptItemSource $source = null, bool $detach_from_inv = false): ?Model_Items_Abstract_Item {
+        $source = $source ?: new Struct_ScriptItemSource();
 
-        return $l ? $l[0] : null;
+        $player = $source->get_player();
+        $ret_item = null;
+
+        if ($source->from_player) {
+            /** @var Model_Items_Abstract_Item[] $items */
+            $items = array_values(array_filter($player->inventory()->get($classname), $source->get_decider()));
+            if ( !empty($items) ) {
+                $ret_item = $items[0];
+                if ($detach_from_inv) $player->inventory()->remove( $ret_item->uin() );
+            }
+        }
+
+        if ($ret_item === null && $source->from_location && $player->location()) {
+            /** @var Model_Items_Abstract_Item[] $items */
+            $items = array_values(array_filter($player->location()->inventory()->get($classname), $source->get_decider()));
+            if ( !empty($items) ) {
+                $ret_item = $items[0];
+                if ($detach_from_inv) $player->location()->inventory()->remove( $ret_item->uin() );
+            }
+        }
+
+        if ($source->from_others && !self::is_npc($player)) {
+
+            foreach (self::at_location($player->location_class(), true, true) as $s_player)
+                if ($ret_item === null && $s_player->uin() !== $player->uin()) {
+                    /** @var Model_Items_Abstract_Item[] $items */
+                    $items = array_values(array_filter($s_player->inventory()->get($classname), $source->get_decider()));
+
+                    if ( !empty($items) ) {
+                        $ret_item = $items[0];
+                        if ($detach_from_inv) $s_player->inventory()->remove( $ret_item->uin() );
+                    }
+                }
+        }
+
+        return $ret_item;
     }
 
 
@@ -465,7 +504,7 @@ class Tool_Scripts
             $l = $player->location();
             return $l;
         }
-            
+
         else return null;
     }
 
@@ -495,7 +534,7 @@ class Tool_Scripts
                     $non_combatants[$fraction][] = $member;
                     $no_nc = false;
                 }
-                    
+
                 else $actual_combatants[$fraction][] = $member;
             }
         }
@@ -548,7 +587,7 @@ class Tool_Scripts
      * @param Model_Player|null $p
      * @return string ("night", "morning", "day", "evening")
      * @throws Kohana_Exception
-*/
+     */
     public static function get_timeofday($p = null): ?string
     {
         if ($p && $p->location()->getPerpetualDayTime())

@@ -137,7 +137,7 @@ class Model_Places_Motorhome extends Model_Places_Home {
 
         Globals::CurrentGameF()->delete_lobby();
         foreach ($this->rooms as $room)
-            if (!$room->has_tag('primary')) {
+            if (!$room->has_tag('primary') && !$room->has_tag('addcaravan')) {
                 $room->clear();
                 $room->remove_tag('inside');
                 $room->add_tag('outside');
@@ -312,5 +312,9 @@ class Model_Places_Motorhome extends Model_Places_Home {
     public function is_upgradable(): bool
     {
         return !$this->is_driving() && parent::is_upgradable();
+    }
+
+    public function add_permanent_room() {
+        $this->create_new_room(20,['inside','addcaravan'])->set_default_state();
     }
 }	

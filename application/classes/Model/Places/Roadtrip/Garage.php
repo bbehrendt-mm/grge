@@ -7,4 +7,25 @@ class Model_Places_Roadtrip_Garage extends Model_Places_Abstract_Place {
     protected static $icon = 'garage';
     protected static $outside = false;
 
+    /**
+     * @param bool $force
+     * @param bool $return
+     * @return bool|Model_Items_Abstract_Item|null
+     * @throws Exception
+     */
+    public function find_item($force = false, $return = false) {
+        // Spawn caravan
+        /** @noinspection NotOptimalIfConditionsInspection */
+        if (!$return && !$force && Globals::CurrentGame()->setting_mode(11000)
+            && !Tool_Scripts::is_npc(Globals::CurrentPlayerF()) && !Globals::CurrentPlayerActualF()->caravan()
+            && Tool_Gambling::random(0.25)
+        ) {
+
+            Tool_Scripts::place_new_item(new Model_Items_Generic_Caravan());
+            Globals::CurrentPlayerActualF()->caravan(true);
+        }
+
+        return parent::find_item($force, $return);
+    }
+
 }	

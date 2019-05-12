@@ -30,7 +30,8 @@ class Model_Room {
     protected static $tag_info = [
         'inside' => 'Innen',
         'outside' => 'Außen',
-        'primary' => 'Hauptraum'
+        'primary' => 'Hauptraum',
+        'addcaravan' => 'Anhänger'
     ];
 
     public function __construct($space = 10, $tags = []) {

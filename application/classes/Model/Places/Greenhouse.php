@@ -16,4 +16,29 @@ class Model_Places_Greenhouse extends Model_Places_Abstract_Place {
         return parent::uin($uin);
     }
 
+    protected static $user_rooms_allowed = 1;
+    protected static $user_rooms_size = 6;
+    public function setup_user_room(): ?Model_Room
+    {
+        $room = parent::setup_user_room();
+        if ($room !== null) {
+            $room->name( "Lagerraum", true  );
+            $room->add_tag(["inside"]);
+            $room->set_default_state();
+
+            $room->add_content('storage');
+            for ($i = 0; $i < 10; $i++) {
+                $cls = Tool_Gambling::roulette([
+                    ['chance'=> 1, 'value'=> Model_Items_Vedge::cls()],
+                    ['chance'=> 2, 'value'=> Model_Items_Vedge2::cls()],
+                    ['chance'=> 3, 'value'=> Model_Items_Vedge3::cls()],
+                    ['chance'=> 4, 'value'=> Model_Items_Vedge4::cls()],
+                    ['chance'=> 1, 'value'=> Model_Items_Vedge5::cls()],
+                ]);
+                $room->inventory()->add( new $cls );
+            }
+        }
+        return $room;
+    }
+
 }	

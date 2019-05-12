@@ -40,4 +40,16 @@ class Model_Places_Home extends Model_Places_Abstract_Hideout {
     public function set_map_points($new): void {
         $this->map_points = $new;
     }
+
+    protected static $user_rooms_allowed = 1;
+    protected static $user_rooms_size = 20;
+    public function setup_user_room(): ?Model_Room
+    {
+        $room = parent::setup_user_room();
+        if ($room !== null) {
+            $room->add_tag(["inside"]);
+            Model_Blueprints::fast_apply($this, 'rooms', ['broken_room'], $room);
+        }
+        return $room;
+    }
 }	

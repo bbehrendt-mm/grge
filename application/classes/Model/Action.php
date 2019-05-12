@@ -163,7 +163,7 @@ class Model_Action {
      * @param number $value
      * @return Model_Action
      */
-    public function requirement($reference, $value): \Model_Action
+    public function requirement($reference, $value): Model_Action
     {
         $this->requirements[$reference] = $value;
         return $this;

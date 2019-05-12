@@ -13,6 +13,16 @@ return Model_Blueprints::factory()
         $b->add_modifier_builder();
     })
 
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->room('broken_room')
+            ->requires_room('invalid')
+            ->requires_room_tag('inside')
+            ->clear_previous_room(true)
+            ->emplaces(Model_Items_Virtual_Location_Room_Broken::cls())
+            ->name('Eingestürzter Anbau')
+    )
+
     /** KITCHEN */
 
     ->add_blueprints(Model_Blueprint::factory()->room('kitchen_lv1')->name('Ausgebaute Küche'), true)

@@ -18,5 +18,21 @@ class Model_Places_Mall extends Model_Places_Abstract_Place {
         $this->inventory->add(new Model_Items_Vending2());
         return $t;
 	}
+
+    protected static $user_rooms_allowed = 1;
+    protected static $user_rooms_size = 25;
+    public function setup_user_room(): ?Model_Room
+    {
+        $room = parent::setup_user_room();
+        if ($room !== null) {
+            $room->name( "Pausenraum", true  );
+            $room->add_tag(["inside"]);
+            $room->set_default_state();
+
+            Model_Blueprints::fast_apply($this, 'rooms', "kitchen", $room);
+            Model_Blueprints::fast_apply($this, 'upgrades', ["ktc2","ktc3","ktc4"],  $room);
+        }
+        return $room;
+    }
 	
 }	

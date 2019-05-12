@@ -16,4 +16,17 @@ class Model_Places_Mausoleum extends Model_Places_Abstract_Place {
         ));
         return $t;
 	}
+
+    protected static $user_rooms_allowed = 1;
+    protected static $user_rooms_size = 5;
+    public function setup_user_room(): ?Model_Room
+    {
+        $room = parent::setup_user_room();
+        if ($room !== null) {
+            $room->name( "Dampe's Raum", true  );
+            $room->add_tag(["inside"]);
+            $room->set_default_state();
+        }
+        return $room;
+    }
 }	

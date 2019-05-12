@@ -25,4 +25,17 @@ class Model_Places_Burgerjoint extends Model_Places_Abstract_Place {
 
         $this->create_new_room(20,['inside'])->set_default_state();;
     }
+
+    protected static $user_rooms_allowed = 1;
+    protected static $user_rooms_size = 15;
+    public function setup_user_room(): ?Model_Room
+    {
+        $room = parent::setup_user_room();
+        if ($room !== null) {
+            $room->name( "Spielplatz-Plastikschloss", true  );
+            $room->add_tag(["inside"]);
+            $room->set_default_state();
+        }
+        return $room;
+    }
 }	

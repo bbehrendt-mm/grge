@@ -27,4 +27,20 @@ class Model_Places_Hotel extends Model_Places_Abstract_Hideout {
                 'Hotelzimmer'
             )->set_default_state();
     }
+
+    protected static $user_rooms_allowed = 1;
+    protected static $user_rooms_size = 10;
+    public function setup_user_room(): ?Model_Room
+    {
+        $room = parent::setup_user_room();
+        if ($room !== null) {
+            $room->name( "Weiteres Hotelzimmer", true  );
+            $room->add_tag(["inside"]);
+
+            Model_Blueprints::fast_apply($this, 'rooms',    ['bedroom'], $room);
+            Model_Blueprints::fast_apply($this, 'upgrades', ['bedr1','bedr2','bedr3'], $room);
+            $room->set_default_state();
+        }
+        return $room;
+    }
 }	

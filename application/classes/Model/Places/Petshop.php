@@ -27,4 +27,27 @@ class Model_Places_Petshop extends Model_Places_Abstract_Place {
         $this->create_new_room(10,['inside'])->set_default_state();
         $this->create_new_room(10,['inside'])->set_default_state();
     }
+
+    protected static $user_rooms_allowed = 1;
+    protected static $user_rooms_size = 8;
+    public function setup_user_room(): ?Model_Room
+    {
+        $room = parent::setup_user_room();
+        if ($room !== null) {
+            $room->name( "Lagerraum", true  );
+            $room->add_tag(["inside"]);
+            $room->set_default_state();
+
+            $room->add_content('storage');
+            for ($i = 0; $i < 15; $i++) {
+                $cls = Tool_Gambling::roulette([
+                    ['chance'=> 1, 'value'=> Model_Items_Petfood::cls()],
+                    ['chance'=> 1, 'value'=> Model_Items_Petfood2::cls()],
+                    ['chance'=> 4, 'value'=> Model_Items_Petfood3::cls()]
+                ]);
+                $room->inventory()->add( new $cls );
+            }
+        }
+        return $room;
+    }
 }	

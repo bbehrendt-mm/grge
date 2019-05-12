@@ -24,4 +24,17 @@ class Model_Places_Toilet extends Model_Places_Abstract_Place
 
         return parent::tick($type);
     }
+
+    protected static $user_rooms_allowed = 5;
+    protected static $user_rooms_size = 1;
+    public function setup_user_room(): ?Model_Room
+    {
+        $room = parent::setup_user_room();
+        if ($room !== null) {
+            $room->name( "Toilettenkabine", true );
+            $room->add_tag(["inside"]);
+            $room->set_default_state();
+        }
+        return $room;
+    }
 }

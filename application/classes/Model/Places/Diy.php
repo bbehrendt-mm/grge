@@ -12,4 +12,20 @@ class Model_Places_Diy extends Model_Places_Abstract_Place {
         parent::setup_additional_rooms();
         $this->create_new_room(50,['inside'])->set_default_state();
     }
+
+    protected static $user_rooms_allowed = 1;
+    protected static $user_rooms_size = 15;
+    public function setup_user_room(): ?Model_Room
+    {
+        $room = parent::setup_user_room();
+        if ($room !== null) {
+            $room->name( "Pausenraum", true  );
+            $room->add_tag(["inside"]);
+            $room->set_default_state();
+
+            Model_Blueprints::fast_apply($this, 'rooms', "kitchen", $room);
+            Model_Blueprints::fast_apply($this, 'upgrades', ["ktc2"],  $room);
+        }
+        return $room;
+    }
 }	

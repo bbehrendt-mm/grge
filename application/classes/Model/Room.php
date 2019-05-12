@@ -347,6 +347,7 @@ class Model_Room {
         return
             !empty(array_diff( $this->default_room->satisfies, $this->satisfies )) ||
             !empty(array_diff( $this->satisfies, $this->default_room->satisfies )) ||
+            !empty(array_diff( $this->contains, $this->default_room->contains )) ||
             !empty(array_diff( $this->default_room->tags, $this->tags )) ||
             !empty(array_diff( $this->tags, $this->default_room->tags )) ||
             $this->usage != $this->default_room->usage || $this->used_space != $this->default_room->used_space;

@@ -13,6 +13,10 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
     protected static $upgradable = true;
     protected static $defendable = true;
     protected static $perpetualDaytime;
+
+    protected static $user_rooms_allowed = 0;
+    protected static $user_rooms_size = 10;
+    protected $user_room_count = 0;
 	
 	protected static $weight_limit;
 
@@ -172,12 +176,12 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
         return $t;
     }
 
-    public function create_new_room($space = -1, $tags = []): \Model_Room
+    public function create_new_room($space = -1, $tags = []): Model_Room
     {
         return $this->rooms[] = Model_Room::factory(count($this->rooms),$space,$tags);
     }
 
-    public function setup_new_room(Model_Room $room, $rtype = [], $upgrades = [], $name = null): \Model_Room
+    public function setup_new_room(Model_Room $room, $rtype = [], $upgrades = [], $name = null): Model_Room
     {
         Model_Blueprints::fast_apply($this, 'rooms', $rtype, $room);
         Model_Blueprints::fast_apply($this, 'upgrades', $upgrades, $room);
@@ -199,6 +203,21 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 
     public function setup_additional_rooms(): void
     {}
+
+    public function user_room_available(): bool {
+        return $this->user_room_count < static::$user_rooms_allowed;
+    }
+
+    public function setup_user_room(): ?Model_Room
+    {
+        $success = $this->user_room_available();
+        if ($success) {
+            $room = $this->create_new_room(static::$user_rooms_size,[]);
+            $this->user_room_count++;
+            return $room;
+        }
+        return null;
+    }
 
     public function mapable(): bool
     {

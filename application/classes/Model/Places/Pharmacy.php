@@ -22,4 +22,29 @@ class Model_Places_Pharmacy extends Model_Places_Abstract_Place {
         parent::setup_additional_rooms();
         $this->create_new_room(8,['inside'])->set_default_state();
     }
+
+    protected static $user_rooms_allowed = 1;
+    protected static $user_rooms_size = 20;
+    public function setup_user_room(): ?Model_Room
+    {
+        $room = parent::setup_user_room();
+        if ($room !== null) {
+            $room->name( "Lagerraum", true  );
+            $room->add_tag(["inside"]);
+            $room->set_default_state();
+
+            $room->add_content('storage');
+            for ($i = 0; $i < 15; $i++) {
+                $cls = Tool_Gambling::roulette([
+                    ['chance'=> 5, 'value'=> Model_Items_Pill::cls()],
+                    ['chance'=> 2, 'value'=> Model_Items_Paracetin::cls()],
+                    ['chance'=> 2, 'value'=> Model_Items_Paracetoid::cls()],
+                    ['chance'=> 2, 'value'=> Model_Items_Paralaxium::cls()],
+                    ['chance'=> 1, 'value'=> Model_Items_Twinoid::cls()],
+                ]);
+                $room->inventory()->add( new $cls );
+            }
+        }
+        return $room;
+    }
 }

@@ -43,4 +43,17 @@ class Model_Places_Bar extends Model_Places_Abstract_Place {
         $this->create_new_room( 5,['inside'])->set_default_state();
         $this->create_new_room(10,['inside'])->set_default_state();
     }
+
+    protected static $user_rooms_allowed = 1;
+    protected static $user_rooms_size = 10;
+    public function setup_user_room(): ?Model_Room
+    {
+        $room = parent::setup_user_room();
+        if ($room !== null) {
+            $room->name( "Dunkler Keller", true  );
+            $room->add_tag(["inside"]);
+            $room->set_default_state();
+        }
+        return $room;
+    }
 }	

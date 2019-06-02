@@ -14,9 +14,9 @@ class Model_Items_Virtual_Hero_ShopEagleEye extends Model_Items_Abstract_Virtual
 	);
 
 	protected function candidates(Model_Player $p): array {
-        return array_keys( array_filter( $p->location()->item_factory()->get(), function(float $v) {
-            return $v <= 0.1;
-        }));
+        return array_keys( array_filter( $p->location()->item_factory()->get(), function(float $v, string $k) {
+            return $v <= 0.1 && !Tool_System::instance_of($k, Model_Items_Abstract_Virtual::cls());
+        }, ARRAY_FILTER_USE_BOTH));
     }
 
     protected function hid(): Model_Hid {

@@ -3,7 +3,9 @@
 @clockbox-text-color: white;
 
 div.clockbox {
-  transition: background 1s ease;background: fade(@zv-color-main, 50%); border: 2px solid @zv-color-main; box-shadow: 0 0 3px black; width: 100%; text-align: center; color: @clockbox-text-color;
+  transition: background 1s ease;background: fade(@zv-color-main, 50%); border: 2px solid @zv-color-main;
+  box-shadow: 0 0 3px black; width: 100%; text-align: center; color: @clockbox-text-color;
+  &:not(.pointer) { cursor: default; }
   &.pointer:hover {background: fade(lighten(@zv-color-main,10%), 90%)}
   > .datebox {
     font-size: 12px;

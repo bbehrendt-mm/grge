@@ -366,6 +366,37 @@
         var clockbox = $('<div />').addClass('clockbox').appendTo(target);
         var countdown = $('<div />').addClass('countdown').appendTo(clockbox);
 
+        clockbox.attr('title','-').qtip(game.render.html.qtip.ingame('bottom', {
+            render: function(event,api) {
+                var content = $(this).find('.qtip-content').empty();
+
+                content.append(NF.info( <?=__j('Mit jedem Ablauf des Countdowns vergehen 5 Minuten in Spielzeit. Zudem können bestimmte Events ausgelöst werden, wie beispielsweise der Fund eines neuen Gegenstands oder ein Zombie-Angriff.')?> ));
+                content.append($('<span />').addClass('separator'));
+                content.append( NF.row()
+                    .append( NF.cell(true,12,0, 'b center').text( <?=__j('Tageszeiten');?> ) )
+                ).append( NF.row()
+                    .append( NF.cell(true,5, 0, "right") .text( <?=__j('Morgens');?> ) )
+                    .append( NF.cell(true,2, 0, "center").append(NF.img( 'media/icons/buffs/dtmorning.gif' )) )
+                    .append( NF.cell(true,5, 0, "left" ) .text( "6:00 - 9:59" ) )
+                ).append( NF.row()
+                    .append( NF.cell(true,5, 0, "right").text( <?=__j('Tag');?> ) )
+                    .append( NF.cell(true,2, 0, "center").append(NF.img( 'media/icons/buffs/dtday.gif' )) )
+                    .append( NF.cell(true,5, 0, "left" ).text( "10:00 - 17:59" ) )
+                ).append( NF.row()
+                    .append( NF.cell(true,5, 0, "right").text( <?=__j('Abends');?> ) )
+                    .append( NF.cell(true,2, 0, "center").append(NF.img( 'media/icons/buffs/dtevening.gif' )) )
+                    .append( NF.cell(true,5, 0, "left" ).text( "18:00 - 21:59" ) )
+                ).append( NF.row()
+                    .append( NF.cell(true,5, 0, "right").text( <?=__j('Nacht');?> ) )
+                    .append( NF.cell(true,2, 0, "center").append(NF.img( 'media/icons/buffs/dtnight.gif' )) )
+                    .append( NF.cell(true,5, 0, "left" ).text( "22:00 - 5:59" ) )
+                )
+
+                content.append(NF.info( <?=__j('Die Tageszeit hat Einfluss auf bestimmte Spielparameter. So sind beispielsweise manche Aktionen zu bestimmten Tageszeiten effektiver. In der Statusleiste findest du weitere Details über die Auswirkungen der aktuellen Tageszeit.')?> ));
+
+            }
+        }));
+
         var timestr, datestr;
         $('<div />').addClass('datebox').append(
             $('<div />').addClass('row hide-sm').append(

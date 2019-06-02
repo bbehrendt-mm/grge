@@ -19,6 +19,18 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
 		return $this->set['gamedata']->head->season;
 	}
 
+	public function set_property(string $key, $val): void {
+	    if (!isset( $this->set['gamedata']->props )) $this->set['gamedata']->props = [];
+
+        $this->set['gamedata']->props[$key] = $val;
+    }
+
+    public function get_property(string $key, $default) {
+        if (!isset( $this->set['gamedata']->props )) $this->set['gamedata']->props = [];
+
+        return isset($this->set['gamedata']->props[$key]) ? $this->set['gamedata']->props[$key] : $default;
+    }
+
     public function count($type, $num = null): int {
         if ($num === null)
             return $this->set['gamedata']->counters[$type] ?? 0;

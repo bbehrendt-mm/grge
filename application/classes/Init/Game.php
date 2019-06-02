@@ -63,5 +63,8 @@ class Init_Game {
         $map = Model_Map_Abstract::factory($config_data['config']['game.config.map']);
         $map->auto_init();
 		$set->maps['main'] = $map;
+
+		//Generic Props
+        $set->props = [];
 	}
 }

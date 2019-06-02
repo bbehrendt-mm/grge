@@ -17,12 +17,12 @@ class Model_Places_Roadtrip_Garage extends Model_Places_Abstract_Place {
         // Spawn caravan
         /** @noinspection NotOptimalIfConditionsInspection */
         if (!$return && !$force && Globals::CurrentGame()->setting_mode(11000)
-            && !Tool_Scripts::is_npc(Globals::CurrentPlayerF()) && !Globals::CurrentPlayerActualF()->caravan()
+            && !Tool_Scripts::is_npc(Globals::CurrentPlayerF()) && !Globals::CurrentGame()->get_property( "roadtrip.caravan_found", false )
             && Tool_Gambling::random(0.25)
         ) {
 
             Tool_Scripts::place_new_item(new Model_Items_Generic_Caravan());
-            Globals::CurrentPlayerActualF()->caravan(true);
+            Globals::CurrentGame()->get_property( "roadtrip.caravan_found", true );
         }
 
         return parent::find_item($force, $return);

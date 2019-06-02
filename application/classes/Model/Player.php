@@ -24,7 +24,6 @@ class Model_Player extends Model_NPC_Nano {
 
     private $april = false;
     private $got_ticket = false;
-    private $got_caravan = false;
 
     private $ai_str = '0000';
 
@@ -98,12 +97,6 @@ class Model_Player extends Model_NPC_Nano {
         else return $this->got_ticket = $set;
     }
 
-    final public function caravan($set = null) {
-        if ($set === null)
-            return $this->got_caravan;
-        else return $this->got_caravan = $set;
-    }
-	
 	/**
 	 * Initializes this player based on game mode and job level
 	 */

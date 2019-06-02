@@ -48,6 +48,8 @@ class Model_Places_House extends Model_Places_Abstract_Hideout {
             'Werkstatt'
         )->set_default_state();
 
+        $this->create_new_room(20,['outside'])->set_default_state();
+
         $this->create_new_room(15,['inside'])->set_default_state();
     }
 

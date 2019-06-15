@@ -7,23 +7,23 @@ class Model_Places_Junkyard extends Model_Places_Abstract_Place {
 	protected static $description = 'Obwohl hier schon seit Jahren kein neuer Müll mehr gelagert wurde kannst du die Mülldeponie noch immer meilenweit riechen. Das allermeiste, was du hier aus den Müllbergen ziehen kannst, ist zu nichts mehr zu gebrauchen. Allerdings kannst du ja immer auf einen Glücksfund hoffen.';
 
     protected static $icon = 'landfill';
-	
-	private $splinter_load = 0;
+
 	private $initial_supply = false;
 
-    public function uin($new = null) {
-        if ($new !== null) {
-            $this->inventory->add(new Model_Items_Virtual_Location_Landfill());
-        }
-        return parent::uin($new);
+    public function setup_additional_rooms(): void {
+        parent::setup_additional_rooms();
+
+        $this->setup_new_room($this->create_new_room(5,['outside']),
+                              ['lf_dump'],
+                              []
+        )->set_default_state();
+
+        $this->setup_new_room($this->create_new_room(50,['outside']),[],[])->set_default_state();
+        $this->setup_new_room($this->create_new_room(50,['outside']),[],[])->set_default_state();
+        $this->setup_new_room($this->create_new_room(50,['outside']),[],[])->set_default_state();
+        $this->setup_new_room($this->create_new_room(50,['outside']),[],[])->set_default_state();
     }
-	
-	public function splinters($dif = null) {
-		if ($dif === null)
-            return $this->splinter_load;
-        else return $this->splinter_load += $dif;
-	}
-	
+
 	private function initial_supply(): void
     {
 		$this->initial_supply = true;

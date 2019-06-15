@@ -86,6 +86,9 @@ abstract class Model_Auth_Legacy extends Model_Auth_Interface {
     private function login_remote($secret_key) {
         $xml = static::fetch_xml($secret_key);
 
+        // Do not continue of XML is empty
+        if (!$xml) return 'connection_error';
+
         //Create xpath selector
         $xpath = new DOMXPath($xml);
 

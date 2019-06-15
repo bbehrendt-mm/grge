@@ -192,7 +192,7 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
 			return true;
 		}
 	
-		if (!Tool_System::instance_of($item, self::cls())) return false;
+		if (!Tool_System::instance_of($item, Model_Items_Abstract_Bottle::cls())) return false;
 	
 		if ($item->toxicity() >= $this->bottle_toxicity) $this->bottle_toxicity += $item->toxicity();
 		else $this->bottle_toxicity += round( ($item->toxicity()*$item->toxicity())/$this->bottle_toxicity );

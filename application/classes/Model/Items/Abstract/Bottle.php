@@ -125,7 +125,7 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
 		return $this->label;
 	}
 
-    private function drinkmsg() {
+    private function drinkmsg():string {
         if ($this->bottle_toxicity === 0) 		return 'Du nimmst einen Schluck aus deiner Flasche. Dein Durst verschwindet und du fühlst dich erfrischt!';
         elseif ($this->bottle_toxicity <= 5)	return 'Du nimmst einen Schluck aus deiner Flasche. Das Wasser hat einen leicht modrigen Nachgeschmack, dennoch hilft es gegen deinen Durst.';
         elseif ($this->bottle_toxicity <= 10)	return 'Du nimmst einen Schluck aus deiner Flasche. Es fällt dir schwer, den Güllegeschmack des Wassers zu ignorieren, aber irgendwie musst du ja gegen deinen Durst vorgehen.';
@@ -134,7 +134,7 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
         else 							return 'Das Wasser in deiner Flasche hat inzwischen eine teerartige Konsistenz erreicht. Herzlichen Glückwunsch, das Innere der Flasche ist vermutlich auf Jahrzehnte verseucht. Nachdem du einen Schluck genommen hast fühlst du sofort, wie alle deine Organe weggeätzt werden. Lecker!';
     }
 
-    private function cleanmsg() {
+    private function cleanmsg():string {
         $tox = max(0, Globals::CurrentGameF()->config('items.bottle.allow_full_detox') ? 0 : $this->bottle_toxicity - 50);
         if ($tox <= 2)		return 'Du wirfst die Tablette ins Wasser - es sprudelt ein wenig, danach verbreitet sich angenehmer Zitronenduft. Deine Wasserflasche ist wieder komplett gereinigt!';
         elseif ($tox <= 10)	return 'Du wirfst die Tablette ins Wasser - es sprudelt ein wenig, danach verbreitet sich angenehmer Zitronenduft. Zwar ist das Wasser noch immer nicht ganz sauber, aber wesentlich trinkbarer als zuvor!';
@@ -143,7 +143,7 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
         else			    return 'Du wirfst die Tablette ins Wasser - es dauert eine Weile, bis sie in dem zähflüssigen Inhalt deiner Flasche versinkt. Um die Tablette herum löst sich der Schleim etwas auf, der größte Teil des Wassers in der Flasche zeigt sich jedoch von deinen Reinigungsversuchen unbeeindruckt.';
     }
 
-    private function observemsg() {
+    private function observemsg():string  {
         if ($this->bottle_toxicity <= 2) 		return 'Das Wasser in der Flasche scheint relativ klar zu sein ...';
         elseif ($this->bottle_toxicity <= 10) 	return 'Das Wasser in der Flasche ist etwas löhmerig ...';
         elseif ($this->bottle_toxicity <= 30)	return 'Ein modriger Geruch steigt aus der Flasche auf... Aber wer wird schon wählerisch sein, wenn es um Wasser geht?';

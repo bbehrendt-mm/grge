@@ -5201,7 +5201,7 @@ core = {
 
             var datetime = new Date(ingame);
             var date = ["So","Mo","Di","Mi","Do","Fr","Sa"][datetime.getDay()] + ', ' + datetime.toLocaleDateString();
-            var time = datetime.getHours() + ':' + (datetime.getMinutes() < 10 ? '0' + datetime.getMinutes() : datetime.getMinutes());
+            var time = datetime.getUTCHours() + ':' + (datetime.getUTCMinutes() < 10 ? '0' + datetime.getUTCMinutes() : datetime.getUTCMinutes());
 
             datestr.softText(date);
             timestr.softText(time);

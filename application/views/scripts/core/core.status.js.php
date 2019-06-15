@@ -432,7 +432,7 @@
 
             var datetime = new Date(ingame);
             var date = [<?=__j('So')?>,<?=__j('Mo')?>,<?=__j('Di')?>,<?=__j('Mi')?>,<?=__j('Do')?>,<?=__j('Fr')?>,<?=__j('Sa')?>][datetime.getDay()] + ', ' + datetime.toLocaleDateString();
-            var time = datetime.getHours() + ':' + (datetime.getMinutes() < 10 ? '0' + datetime.getMinutes() : datetime.getMinutes());
+            var time = datetime.getUTCHours() + ':' + (datetime.getUTCMinutes() < 10 ? '0' + datetime.getUTCMinutes() : datetime.getUTCMinutes());
 
             datestr.softText(date);
             timestr.softText(time);

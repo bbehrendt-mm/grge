@@ -575,6 +575,7 @@ class Tool_Scripts
         $ticks = $t + Globals::CurrentGameF()->getDaytimeOffset();
         $days = floor($ticks/288);
         $d = new DateTime();
+        $d->setTimezone(new DateTimeZone('UTC'));
         $d->setDate(1998,(int)Kohana::$config->load('server.season'),2);
         $d->setTime(floor(($ticks%288)/12), 5 * ($ticks%12), 0);
         $d->add(new DateInterval("P{$days}D"));

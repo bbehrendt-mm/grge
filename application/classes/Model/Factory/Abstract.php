@@ -24,7 +24,7 @@ abstract class Model_Factory_Abstract extends Model {
             return new $s();
         }
 
-        $fallback = is_array($group) ? $group : array_merge([$group], $fallback);
+        $fallback = is_array($group) ? array_merge($group, $fallback) : array_merge([$group], $fallback);
         $list = Tool_System::instance_of($location, 'Model_Places_Abstract_Place') ? Tool_System::get_class_hierarchy($location) : [$location];
         foreach ($list as $l_entry)
             foreach ($fallback as $f_entry)

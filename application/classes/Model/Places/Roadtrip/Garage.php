@@ -28,4 +28,13 @@ class Model_Places_Roadtrip_Garage extends Model_Places_Abstract_Place {
         return parent::find_item($force, $return);
     }
 
+    public function setup_additional_rooms(): void
+    {
+        parent::setup_additional_rooms();
+        $this->setup_new_room($this->create_new_room(35,['inside']),
+            ['workshop','workshop_garage'],
+            []
+        )->set_default_state();
+    }
+
 }	

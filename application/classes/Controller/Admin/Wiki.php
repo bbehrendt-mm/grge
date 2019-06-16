@@ -198,7 +198,8 @@ class Controller_Admin_Wiki extends Controller_Admin_Admin {
             $name = __($location_class::get_namelist()[0]);
             $icon = $location_class::get_icon();
 
-            $items_list = Model_Factory_Items::read($location_class);
+            $items_list = Model_Factory_Items::read($location_class, 'roadtrip');
+            if (empty($items_list)) continue;
             foreach ($items_list->get() as $item_class => $chance) {
                 if (!isset($loc_by_itemclass[$item_class])) $loc_by_itemclass[$item_class] = [];
 

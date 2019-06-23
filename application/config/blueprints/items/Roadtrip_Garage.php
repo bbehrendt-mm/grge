@@ -15,7 +15,7 @@ return Model_Blueprints::factory()
 			//->message('Deine Machete sieht schon ziemlich stumpf und rostig aus, also bringst du sie mit diesem praktischen Schleifstein wieder auf Vordermann.')
 			->energy(15)
 			->material([Model_Items_Generic_Metal::cls() => 3])
-			->produces([Model_Items_Generic_Sum::cls() => 2])
+			->produces([Model_Items_Generic_Sum::cls() => 3])
 	)
 
     ->add_blueprints(
@@ -24,7 +24,7 @@ return Model_Blueprints::factory()
             //->message('Deine Machete sieht schon ziemlich stumpf und rostig aus, also bringst du sie mit diesem praktischen Schleifstein wieder auf Vordermann.')
             ->energy(45)
             ->material([Model_Items_Generic_Crmetal::cls() => 3])
-            ->produces([Model_Items_Generic_Sum::cls() => 2])
+            ->produces([Model_Items_Generic_Sum::cls() => 3])
     )
 
 	->drop_stack();

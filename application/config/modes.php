@@ -12,7 +12,9 @@ return array(
             'setup' => array(
                 'inherit' => array(),
                 'config' => array(
-                    'zombies.accum'                         => 1,
+                    'zombies.accum'                         => 0.6,
+                    'zombies.power'                         => 0.8,
+                    'zombies.curve'                         => 0.25,
                     'zombies.escape_threshold'              => 10,
                     'zombies.protection.phases.1'           => 288,
                     'zombies.protection.phases.2'           => 288,
@@ -104,6 +106,9 @@ return array(
             'setup' => array(
                 'inherit' => array(1000),
                 'config' => array(
+                    'zombies.accum'                         => 0.8,
+                    'zombies.power'                         => 1.0,
+                    'zombies.curve'                         => 0.3,
                     'zombies.escape_threshold'              => 20,
                     'zombies.protection.phases.1'           => 144,
                     'zombies.protection.phases.2'           => 144,

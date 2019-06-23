@@ -33,6 +33,12 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
     {
         $this->strength = $str;
         $this->max_adversaries = $max;
+
+        $game = Globals::CurrentGame();
+        $factor = $game ? $game->config('zombies.power') : 1.0;
+
+        if ($factor > 0) $this->strength *= $factor;
+
         return $this;
     }
 
@@ -45,6 +51,12 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
     {
         $this->chance = $encounter_rate;
         $this->block = $block_rate;
+
+        $game = Globals::CurrentGame();
+        $factor = $game ? $game->config('zombies.accum') : 1.0;
+
+        if ($factor > 0) $this->chance *= $factor;
+
         return $this;
     }
 
@@ -75,7 +87,9 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
     }
 
     protected function get_game_strength() {
-        return 1 + max(0, (Globals::CurrentGameF()->duration()/2016) - 1) * 0.3;
+        $curve = Globals::CurrentGameF()->config('zombies.curve');
+        if ($curve <= 0) $curve = 0.3;
+        return 1 + max(0, (Globals::CurrentGameF()->duration()/2016) - 1) * $curve;
     }
 
     public function get_strength($include_factor = true) {
@@ -149,11 +163,11 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
     }
 
     public function stat_chance_battle(): float {
-        return $this->chance * (1.0 - $this->block);
+        return $this->stat_chance() * (1.0 - $this->stat_blocking_factor());
     }
 
     public function stat_chance_block(): float {
-        return $this->chance * $this->block;
+        return $this->stat_chance() * $this->stat_blocking_factor();
     }
 
     public function release() {
@@ -170,7 +184,7 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
 
     public function generate_zombie_list(float $strength, int $fixed_number): array {
         $army = [];
-        for ($i = 0; $i < $this->max_adversaries; $i++) {
+        for ($i = 0; $i < $this->get_max_group_count(); $i++) {
             /** @var Model_Combat_Zombies_Zombie $tmp */
             $tmp = $this->get_element();
             $army[] = $tmp;
@@ -244,7 +258,7 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
         if (!$force && Tool_Gambling::random( Globals::CurrentGameF()->get_zombie_spawn_protection_factor( $this->hideout_mode ) ))
             return null;
 
-        if ($fixed_number === 0 || $fixed_number < 0 || !$this->max_adversaries || !($str = $this->get_strength() * $strength_modifier) || (!$force && (mt_rand()/mt_getrandmax()) > $this->chance))
+        if ($fixed_number === 0 || $fixed_number < 0 || !$this->get_max_group_count() || !($str = $this->get_strength() * $strength_modifier) || (!$force && (mt_rand()/mt_getrandmax()) > $this->stat_chance()))
             return null;
 
         $accum_army = $this->generate_zombie_list($str, (int)$fixed_number);
@@ -275,7 +289,7 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
 
     public function dry_spawn($force = false): void
     {
-        if (!$this->max_adversaries || !$this->get_strength() || (!$force && (mt_rand()/mt_getrandmax()) < $this->chance))
+        if (!$this->get_max_group_count() || !$this->get_strength() || (!$force && (mt_rand()/mt_getrandmax()) < $this->stat_chance()))
             return;
 
         if (!$force && (

@@ -60,11 +60,11 @@ class Tool_Gamemodes {
         };
     }
 
-    private static function compile_requirements(&$rqdb): bool
+    private static function compile_requirements(&$rqdb, bool $premium = false): bool
     {
         $ret = true;
 
-        if (Kohana::$config->load('build.version.stage') < 3 || Tool_Events::is_october_midness())
+        if ( Kohana::$config->load('build.version.stage') < 3 || (!$premium && Tool_Events::is_october_midness()))
             return true;
 
         foreach ($rqdb['mode'] as $key => &$requirement) {
@@ -172,8 +172,10 @@ class Tool_Gamemodes {
             if ($short)
                 unset($job['setup']);
 
+            $premium = isset($job['meta']['premium']) && $job['meta']['premium'];
+
             $job['level'] = 0;
-            $job['locked'] = !static::compile_requirements($job['requirements']);
+            $job['locked'] = !static::compile_requirements($job['requirements'], $premium);
             $job['points'] = static::get_sp_job($jid);
             if (Kohana::$config->load('build.version.stage') < 3 || Tool_Events::is_october_midness()) {
                 $job['level'] = count($job['levels']) + 1;
@@ -190,6 +192,11 @@ class Tool_Gamemodes {
         }
 
         return $ret;
+    }
+
+    public static function get_job_premium_state_by_id($jobid): bool
+    {
+        return Kohana::$config->load("modes.jobs.$jobid.meta.premium") == 1;
     }
 
     public static function get_job_by_id($jobid): ?string

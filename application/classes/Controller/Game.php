@@ -931,7 +931,9 @@ class Controller_Game extends Controller {
                 ->set('time', Tool_Numerics::duration_to_string(Globals::PrimaryPlayerF()->get_lifetime()))
                 ->set('split_time', Tool_Numerics::duration_to_split(Globals::PrimaryPlayerF()->get_lifetime()))
                 ->set('cause_of_death', Globals::PrimaryPlayerF()->get_status()->get_cause_of_death())
-                ->set('braincoins', Globals::PrimaryPlayerF()->get_braincoins() * (Globals::PrimaryPlayerF()->get_lifetime() >= 288 ? 1 : -1))
+                ->set('braincoins',      Globals::PrimaryPlayerF()->get_braincoins(false) * (Globals::PrimaryPlayerF()->get_lifetime() >= 288 ? 1 : -1))
+                ->set('braincoins_real',   Globals::PrimaryPlayerF()->get_braincoins(true) * (Globals::PrimaryPlayerF()->get_lifetime() >= 288 ? 1 : -1))
+                ->set('braincoins_factor', Globals::PrimaryPlayerF()->get_braincoin_factor())
                 ->set('braincoins_account', Model_User::get_coins(Globals::PrimaryPlayerF()->id()))
                 ->set('ratings', $player_ratings ?: null)
                 ->render());

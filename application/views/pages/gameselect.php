@@ -190,7 +190,8 @@
                 <h2><?=__('Wähle deinen Beruf!');?></h2>
                 <?php foreach ($database['jobs'] as $jid => $data) { ?>
                     <div class="cell rw-3 rw-lg-6 rw-sm-12 padded">
-                        <div data-jobset="<?=$jid?>" data-set='{"job":<?=$jid?>}' data-caption="<?=__($data['meta']['name'])?>" class="<?=$data['locked'] ? 'hotbox disabled' : 'hotbox' ?>">
+                        <?php $premium = isset($data['meta']['premium']) && $data['meta']['premium']; ?>
+                        <div data-jobset="<?=$jid?>" data-jobgroup="<?=$premium ? '1' : '0'?>" data-set='{"job":<?=$jid?>}' data-caption="<?=__($data['meta']['name'])?>" class="hotbox <?=$data['locked'] ? 'disabled' : '' ?> <?=$premium ? 'black' : '' ?>">
                             <b class="head"><?=__($data['meta']['name'])?></b>
                             <i class="subtitle"><?=__(':num Seelenpunkte', [':num' => $data['points']])?></i>
                             <div class="center">
@@ -209,6 +210,17 @@
                         </div>
                     </div>
                 <?php } ?>
+                <div class="row" data-premium-group="job">
+                    <h2><?=__('Darfs etwas Premium sein?');?></h2>
+                    <div class="help noclick">
+                        <h4><?=__('Premium-Berufe');?></h4>
+                        <?=__('Premium-Berufe haben besonders hohe Freischalte-Bedingungen. Sie gewähren dafür zusätzlich zu ihren einzigartigen Berufsboni allerdings auch einen BrainCoin-Bonus.');?>
+                        <?=__('Spieler die einen Premium-Beruf gewählt haben, werden zudem in Rankings besonders hervorgehoben. Einen Bonus auf die Ranking-Platzierung oder die gewonnenen Seelenpunkte erhalten sie jedoch nicht.');?>
+                        <br /><br />
+                        <?=__('Im Gegensatz zu anderen Berufen werden Premium-Berufe NICHT im Rahmen von Events, wie beispielsweise October Midness, für alle Spieler freigeschaltet.');?>
+                    </div>
+                    <div class="row" data-premium-sink="job"></div>
+                </div>
             </div>
 
             <!-- Select Timeflow -->
@@ -388,6 +400,8 @@
 
     var games = <?=json_encode($games)?>;
     var database = <?=json_encode($database)?>;
+
+    $('[data-premium-sink=job]').append( $('[data-jobgroup=1]').parent() );
 
     var rebuild = function() {
         var has = $('#data-container').find('> input').map(function() {
@@ -583,10 +597,14 @@
 
         var alias = $(this);
 
+        var found_premium_jobs = false;
         $.each(database.modes[$(this).data('modeset')].jobs, function(k,v) {
-            if (!start_game || $.inArray(v, database.modes[alias.data('modeset')].unstartable_jobs) < 0)
-            $('[data-jobset=' + v + ']').parent().show();
+            if (!start_game || $.inArray(v, database.modes[alias.data('modeset')].unstartable_jobs) < 0) {
+                $('[data-jobset=' + v + ']').parent().show();
+                if (database.jobs[v].meta.premium) found_premium_jobs = true;
+            }
         });
+        $('[data-premium-group=job]').toggle(found_premium_jobs);
 
         if (database.modes[$(this).data('modeset')].slots) {
             var ssel = $('#slots_in');

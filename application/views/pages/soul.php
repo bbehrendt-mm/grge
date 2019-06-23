@@ -249,7 +249,9 @@
                 </div>
                 <?php foreach ($tables['job'] as $entry) { ?>
                     <div class="row">
-                        <div class="cell padded rw-8 rw-sm-9"><?=__($entry['name']);?></div>
+                        <div class="cell padded rw-8 rw-sm-9">
+                            <span class="<?=$entry['premium'] ? 'inline-premium black' : ''?>"><?=__($entry['name']);?></span>
+                        </div>
                         <div class="cell padded rw-4 rw-sm-3"><?=$entry['points'];?></div>
                     </div>
                 <?php } ?>
@@ -331,7 +333,7 @@
                         $('<div class="cell padded rw-2 rw-md-0"></div>').text(elem.duration).appendTo(entry);
                         $('<div class="cell-small padded rw-5 rw-md-6"></div>').html(elem.mode).appendTo(entry);
                         $('<div class="cell-small padded rw-1 rw-md-2"></div>').append($('<img />').attr('src','media/icons/flow' + elem.flow + '.gif').attr('title',elem.flow == 0 ? <?=__j('Klassischer Zeitfluss')?> : <?=__j('Variabler Zeitfluss')?>).qtip(game.render.html.qtip.player('left'))).appendTo(entry);
-                        $('<div class="cell padded rw-4 rw-lg-5"></div>').html(elem.players["0"].job).appendTo(entry);
+                        $('<div class="cell padded rw-4 rw-lg-5"></div>').html('<span class="' + (elem.players["0"].premium ? 'inline-premium black' : '') + '">' + elem.players["0"].job + '</span>').appendTo(entry);
 
                         entry.click(function() {
                             window.open('ranking/game/' + season + '/' +  elem.id);
@@ -370,10 +372,11 @@
                             $.each(elem.players, function(k,v) {
                                 has_players = true;
                                 var player = $('<span class="inline-player">' + v.name + '</span>').appendTo(pl);
+                                if (v.premium) player.addClass('black');
 
                                 var qtmp = NF.row();
                                 NF.cell(true, 4, 0, 'right').append($('<b />').text(<?=__j('Beruf');?>)).appendTo(qtmp);
-                                NF.cell(true, 8, 0, 'center').text(v.job).appendTo(qtmp);
+                                NF.cell(true, 8, 0, 'center').append($('<span />').addClass(v.premium ? 'inline-premium black' : '').text(v.job)).appendTo(qtmp);
                                 NF.cell(true, 4, 0, 'right').append($('<b />').text(<?=__j('Überlebt');?>)).appendTo(qtmp);
                                 NF.cell(true, 8, 0, 'center').text(v.life).appendTo(qtmp);
                                 NF.cell(true, 4, 0, 'right').append($('<b />').text(<?=__j('Punkte');?>)).appendTo(qtmp);

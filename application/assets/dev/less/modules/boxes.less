@@ -28,10 +28,13 @@
 
 @whitebox-color-bg: #fafafa;
 @whitebox-color-border: #e9e9e9;
+@blackbox-color-bg: #262626;
+@blackbox-color-border: #1d1d1d;
 
 //noinspection CssOverwrittenProperties
 .colorbox(@inner, @outer) {border-radius: 4px; background: @inner; .incomplete-border-definition(1px solid @outer, true, true, false, true); border-bottom: 4px solid @outer; box-shadow: 0 4px 8px rgba(0,0,0,0.3);}
-.whitebox(@darkness: 0%; @border-darkness: @darkness) {.colorbox(darken(@whitebox-color-bg, @darkness), darken(@whitebox-color-border, @border-darkness));}
+.whitebox(@darkness:  0%; @border-darkness:   @darkness)  {.colorbox(darken(@whitebox-color-bg, @darkness),    darken(@whitebox-color-border, @border-darkness));}
+.blackbox(@bightness: 0%; @border-brightness: @bightness) {.colorbox(lighten(@blackbox-color-bg, @bightness),  lighten(@blackbox-color-border, @border-brightness));}
 
 .impactbox(@border-color, @base-color) {border-radius: 5px; background: @base-color; border: 1px solid @border-color; border-bottom: 4px solid @border-color; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.8);}
 
@@ -151,6 +154,9 @@
 @hotbox-subtitle-color: #7b7b7b;
 @hotbox-special-color: #a5056a;
 
+@hotbox-black-title-color: #fd9700;
+@hotbox-black-subtitle-color: #e5e5e5;
+
 @keyframes rotate_a {
   from {transform: rotate(0deg);}
   to {transform: rotate(360deg);}
@@ -161,7 +167,21 @@
 }
 
 .hotbox {
-  .whitebox; .no-select; overflow: hidden;
+
+  & >.head {display: block;}
+  & >.subtitle {display: block;font-variant: small-caps;}
+
+  &:not(.black) {
+    .whitebox;
+    & >.head {color: @hotbox-title-color;}
+    & >.subtitle {color: @hotbox-subtitle-color;}
+  };
+  &.black {
+    .blackbox;
+    & >.head {color: @hotbox-black-title-color;}
+    & >.subtitle {color: @hotbox-black-subtitle-color;}
+  };
+  .no-select; overflow: hidden;
 
   &.special>.head {
     margin-left: 20px; position: relative;
@@ -174,13 +194,12 @@
   }
 
   margin: 3px; padding: 5px; cursor: pointer; transition: background 250ms ease, border-color 500ms ease; vertical-align: bottom;
-  &:hover {.whitebox(5%)}
+  &:not(.black):hover {.whitebox(5%)}
+  &.black:hover {.blackbox(10%)}
   &.active {.colorbox(@zv-color-main, @zv-color-main-dark)}
   &.active:hover {.colorbox(lighten(@zv-color-main, 10%), lighten(@zv-color-main-dark, 10%))}
   &:active {margin-top: 5px !important; border-bottom-width: 2px !important;}
 
-  >.head {display: block; color: @hotbox-title-color;}
-  >.subtitle {display: block; color: @hotbox-subtitle-color; font-variant: small-caps;}
   &.disabled>.head {
     padding-left: 24px; position: relative;
     &::before {.font-awesome-insert('\f023'; 24px;); left: 0; top: 0;}
@@ -199,6 +218,10 @@
 @player-badge-green-outer: #62825e;
 @player-badge-green-shine: #b1d2a3;
 
+@player-badge-black-inner: #131313;
+@player-badge-black-outer: #0a0a0a;
+@player-badge-black-shine: #212121;
+
 @player-badge-icon-background: #FFFFFF;
 
 .inline-entity(@symbol) {
@@ -215,10 +238,12 @@
 
   &.red {background: @player-badge-red-inner; border: 1px solid @player-badge-red-outer; box-shadow: 0 0 1px 1px fade(@player-badge-red-shine, 80%) inset, 0 1px 0 rgba(0,0,0,.3);}
   &.green {background: @player-badge-green-inner; border: 1px solid @player-badge-green-outer; box-shadow: 0 0 1px 1px fade(@player-badge-green-shine, 80%) inset, 0 1px 0 rgba(0,0,0,.3);}
+  &.black {background: @player-badge-black-inner; border: 1px solid @player-badge-black-outer; box-shadow: 0 0 1px 1px fade(@player-badge-black-shine, 80%) inset, 0 1px 0 rgba(0,0,0,.3);}
 }
 
 .inline-player {.inline-entity("\f007")};
 .inline-npc {.inline-entity("\f085")};
+.inline-premium {.inline-entity("\f005")};
 
 .framed {
   border: 6px solid @zv-color-main-dark; box-shadow: 0 0 5px black, inset 0 0 5px black;border-radius: 5px; position: relative; font-size: 0;

@@ -7,6 +7,11 @@ class Tool_Modes {
         return Kohana::$config->load("modes.jobs.$jobid.meta.name");
     }
 
+    public static function get_job_premium_state_by_id($jobid): bool
+    {
+        return Kohana::$config->load("modes.jobs.$jobid.meta.premium") == 1;
+    }
+
     public static function get_mode_by_id($bid): ?string
     {
         return Kohana::$config->load("modes.modes.$bid.meta.name");

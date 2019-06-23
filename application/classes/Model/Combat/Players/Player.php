@@ -53,8 +53,8 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
      */
     public static function create_linked_actor($p): Model_Combat_Players_Player
     {
-
-        $unarmed = new Model_Items_Fist();
+        $is_wolfman = $p->job(1061);
+        $unarmed = $is_wolfman ? new Model_Items_Dogbite() : new Model_Items_Fist();
         $unarmed->equip($p);
         $unarmed->register($p);
 

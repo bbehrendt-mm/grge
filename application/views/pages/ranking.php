@@ -152,10 +152,11 @@
                         $.each(elem.players, function (k, v) {
                             has_players = true;
                             var player = $('<span class="inline-player">' + v.name + '</span>').appendTo(pl);
+                            if (v.premium) player.addClass('black');
 
                             var qtmp = NF.row();
                             NF.cell(true, 4, 0, 'right').append($('<b />').text(<?=__j('Beruf');?>)).appendTo(qtmp);
-                            NF.cell(true, 8, 0, 'center').text(v.job).appendTo(qtmp);
+                            NF.cell(true, 8, 0, 'center').append($('<span />').addClass(v.premium ? 'inline-premium black' : '').text(v.job)).appendTo(qtmp);
                             NF.cell(true, 4, 0, 'right').append($('<b />').text(<?=__j('Überlebt');?>)).appendTo(qtmp);
                             NF.cell(true, 8, 0, 'center').text(v.life).appendTo(qtmp);
                             NF.cell(true, 4, 0, 'right').append($('<b />').text(<?=__j('Punkte');?>)).appendTo(qtmp);
@@ -167,8 +168,9 @@
                         pl.html('--');
                 } else {
                     $('<div class="cell padded rw-2 rw-lg-3 rw-md-0"></div>').html(elem.duration).appendTo(entry);
-                    $('<div class="cell padded rw-3 rw-md-4"></div>').html('<span class="inline-player">' + elem.players["0"].name + '</span>').appendTo(entry);
-                    $('<div class="cell padded rw-4 rw-md-6"></div>').html(elem.players["0"].job).appendTo(entry);
+                    $('<div class="cell padded rw-3 rw-md-4"></div>').html('<span class="inline-player ' + (elem.players["0"].premium ? 'black' : '') + '">' + elem.players["0"].name + '</span>').appendTo(entry);
+
+                    $('<div class="cell padded rw-4 rw-md-6"></div>').html('<span class="' + (elem.players["0"].premium ? 'inline-premium black' : '') + '">' + elem.players["0"].job + '</span>').appendTo(entry);
                 }
 
                 entry.click(function() {

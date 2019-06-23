@@ -15,6 +15,7 @@ class Model_Player extends Model_NPC_Nano {
 
     private $points;
     private $braincoins = 0;
+    private $braincoin_factor = 1.0;
 	
 	private $achievements;
 
@@ -48,6 +49,14 @@ class Model_Player extends Model_NPC_Nano {
                 $s[$i] = '0';
 
         return $this->ai_str = $s;
+    }
+
+    public function set_braincoin_factor(float $v): void {
+        $this->braincoin_factor = $v;
+    }
+
+    public function get_braincoin_factor(): float {
+	    return $this->braincoin_factor;
     }
 
     /**
@@ -109,9 +118,9 @@ class Model_Player extends Model_NPC_Nano {
 		else $this->log->add(                        new Model_Log_Types_String('Das Spiel beginnt...', 'Du öffnest die Augen und lässt deinen Blick durch dein karges Versteck schweifen. Deine Vorräte sind aufgebraucht, du kannst dich also nicht länger einfach verschanzen...'));
 	}
 
-    final public function get_braincoins(): int
+    final public function get_braincoins(bool $include_factor = true): int
     {
-        return $this->braincoins;
+        return $include_factor ? floor($this->braincoins * $this->braincoin_factor) : $this->braincoins;
     }
 
 

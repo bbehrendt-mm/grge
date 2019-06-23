@@ -93,6 +93,7 @@ class Controller_Ranking extends Controller {
                         'name' => $sub['player'],
                         'id' => $sub['uid'],
                         'job' => __(Tool_Modes::get_job_by_id($sub['job'])),
+                        'premium' => Tool_Modes::get_job_premium_state_by_id($sub['job']),
                         'life' => Tool_Numerics::duration_to_string($sub['pticks']),
                         'score' => $sub['ppoints']
                     ];
@@ -117,6 +118,7 @@ class Controller_Ranking extends Controller {
                                         ),
                                     'id'    => $element['uid'],
                                     'job'   => __(Tool_Modes::get_job_by_id($element['job'])),
+                                    'premium' => Tool_Modes::get_job_premium_state_by_id($element['job']),
                                     'life'  => Tool_Numerics::duration_to_string($element['ticks']),
                                     'score' => $element['points']
                 ]]
@@ -211,14 +213,17 @@ class Controller_Ranking extends Controller {
             $cache_m[$s][] = $entry;
         }
 
+        Controller::dump('r', [$cache, $cache_m]);
+
+
         $finalcache = [];
         foreach ($cache as $modecache)
-            $finalcache = array_merge($finalcache,array_filter($modecache, function($e) use ($uid) {return $e['uid'] === $uid;}));
+            $finalcache = array_merge($finalcache,array_filter($modecache, function($e) use ($uid) {return $e['uid'] == $uid;}));
         $finalcache_m = [];
         foreach ($cache_m as $modecache)
             $finalcache_m = array_merge($finalcache_m,array_filter($modecache, function($e) use ($uid) {
                 foreach ($e as $es)
-                    if ($es['uid'] === $uid) return true;
+                    if ($es['uid'] == $uid) return true;
                 return false;
             }));
 
@@ -575,7 +580,7 @@ class Controller_Ranking extends Controller {
             ->set('achievements', $achievements)
             ->set('tables', [
                 'mode' => array_map(function($a) {return ['name' => Tool_Gamemodes::get_board_by_id($a['board']), 'points' => $a['points']];}, DB::select('board', [DB::expr('SUM(points)'), 'points'])->from('ranking')->where('uid','=',$uid)->where('season', '>=', 0)->group_by('board','uid')->order_by('board', 'ASC')->execute()->as_array()),
-                'job' => array_map(function($a) {return ['name' => Tool_Gamemodes::get_job_by_id($a['job']), 'points' => $a['points']];}, DB::select('job', [DB::expr('SUM(points)'), 'points'])->from('ranking')->where('uid','=',$uid)->where('season', '>=', 0)->group_by('job','uid')->order_by('job', 'ASC')->execute()->as_array())
+                'job' => array_map(function($a) {return ['name' => Tool_Gamemodes::get_job_by_id($a['job']), 'premium' => Tool_Gamemodes::get_job_premium_state_by_id($a['job']), 'points' => $a['points']];}, DB::select('job', [DB::expr('SUM(points)'), 'points'])->from('ranking')->where('uid','=',$uid)->where('season', '>=', 0)->group_by('job','uid')->order_by('job', 'ASC')->execute()->as_array())
             ])
             ->set('mentor', $mentor_data)
             ->set('pupils', $pupils_data)

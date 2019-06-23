@@ -7,6 +7,8 @@
  * @var int $ach_points Amount of achievement points the player has earned
  * @var bool $rankable True, if the game is rankable
  * @var int $braincoins Number of earned braincoins
+ * @var int $braincoins_real Number of earned braincoins after factor
+ * @var int $braincoins_factor Braincoin factor
  * @var int $braincoins_account Number of braincoins in the users account
  * @var array $achievements Achievements
  * @var array $ratings Player Ratings
@@ -102,7 +104,7 @@ if (!isset($services)) $services = array();
     </div>
 
     <?php if ($braincoins !== 0) { ?>
-        <div class="cell-small rw-14 ro-5 rw-lg-20 ro-lg-2 rw-md-24 ro-md-0">
+        <div class="cell-small rw-16 ro-4 rw-lg-20 ro-lg-2 rw-md-24 ro-md-0">
             <div class="value-box">
                 <div class="row">
                     <div class="cell rw-3 rw-sm-4 padded" style="opacity: <?=$braincoins>0 ? 1 : 0.5?>">
@@ -110,14 +112,23 @@ if (!isset($services)) $services = array();
                         <div class="row">
                             <div class="cell rw-2 ro-2"><img src="media/icons/coin.gif" alt="bc" /></div>
                             <div class="cell rw-8 right"><?= $braincoins_account ?></div>
-
+                        </div>
+                        <div class="row">
                             <div class="cell rw-2">+</div>
                             <div class="cell rw-2"><img src="media/icons/items/braincoin.gif" alt="bc" /></div>
                             <div class="cell rw-8 right"><?=abs($braincoins)?></div>
-
+                        </div>
+                        <?php if ($braincoins_real != $braincoins) { ?>
+                            <div class="row">
+                                <div class="cell rw-2"><?=abs($braincoins_real) < abs($braincoins) ? '-' : '+'?></div>
+                                <div class="cell rw-2"><img src="media/icons/items/braincoin.gif" alt="bc" /></div>
+                                <div class="cell rw-8 right"><?=abs($braincoins - $braincoins_real)?></div>
+                            </div>
+                        <?php } ?>
+                        <div class="row">
                             <div class="cell rw-2">=</div>
                             <div class="cell rw-2"><img src="media/icons/coin.gif" alt="bc" /></div>
-                            <div class="cell rw-8 right"><b><?=abs($braincoins)+$braincoins_account?></b></div>
+                            <div class="cell rw-8 right"><b><?=abs($braincoins_real)+$braincoins_account?></b></div>
 
                         </div>
                     </div>

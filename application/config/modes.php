@@ -62,7 +62,7 @@ return array(
             ),
             'type' => 'single',
             'requirements' => array('mode' => array(),'job' => array(),'ext' => array(),'ext_note' => array()),
-            'jobs' => array(1011, 1012, 1020, 1030, 1040, 1050, 1060, 1070),
+            'jobs' => array(1011, 1012, 1013, 1020, 1021, 1030, 1031, 1040, 1041, 1050, 1051, 1060, 1061, 1070, 1071),
             'unstartable_jobs' => array(),
             'setup' => array(
                 'inherit' => array(0),
@@ -519,6 +519,34 @@ return array(
                     Globals::CurrentPlayerActualF()->battle_stats([6,4,null,null]); // INI ATK DEF ACC
                 }),
         ),
+        1013 => array(
+            'meta' => array(
+                'name' => 'Bürger erster Klasse',
+                'caption' => 'Ein ganz normaler Bürger mit mehrheitsfähiger Hautfarbe und sexueller Orientierung.',
+                'premium' => true,
+            ),
+
+            'requirements' => array(
+                'mode' => array(),
+                'job' => array('1011,1012' => 2000, 1020 => 1000, 1030 => 1000, 1040 => 1000, 1050 => 1000, 1060 => 1000, 1070 => 1000),
+                'ext' => array(),
+                'ext_note' => array(),
+            ),
+
+            'levels' => array(),
+            'setup' => array('inherit' => array(1010), 'f' => function($mode, $level) {
+                Globals::CurrentPlayerActualF()->set_braincoin_factor(1.25);
+
+                Globals::CurrentPlayerF()->inventory()->limit(110);
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Briefcase);
+
+                $item = new Model_Items_Miniknife();
+                Globals::CurrentPlayerF()->inventory()->add($item);
+                $item->equip(Globals::CurrentPlayerF());
+
+                Globals::CurrentPlayerActualF()->battle_stats([6,6,null,null]); // INI ATK DEF ACC
+            }),
+        ),
         1020 => array(
             'meta' => array(
                 'name' => 'Ehemaliger Soldat',
@@ -540,7 +568,7 @@ return array(
                     Globals::CurrentPlayerF()->battle_stats([null,6,null,null]); // INI ATK DEF ACC
                     switch ($level) {
                         case 3: case 4:	$item = new Model_Items_Handgun(); Globals::CurrentPlayerActualF()->battle_stats([null,null,null,6]); break;
-                        case 5:			$item = new Model_Items_Rifle(); Globals::CurrentPlayerActualF()->battle_stats([null,null,null,8]); break;
+                        case 5:	case 6:	$item = new Model_Items_Rifle(); Globals::CurrentPlayerActualF()->battle_stats([null,null,null,8]); break;
                     }
                     if ($item) {
                         Globals::CurrentPlayerF()->inventory()->add($item);
@@ -549,6 +577,35 @@ return array(
 
                 }),
         ),
+        1021 => array(
+            'meta' => array(
+                'name' => 'Elite-Soldat',
+                'caption' => 'Unterscheidet sich von einem normalen Soldaten im wesentlichen durch seine bessere Ausrüstung und höhere Bereitschaft, Kriegsverbrechen an unschuldigen Zivilisten zu begehen.',
+                'premium' => true,
+            ),
+
+            'requirements' => array(
+                'mode' => array(),
+                'job' => array('1011,1012' => 1000, 1020 => 2000, 1030 => 1000, 1040 => 1000, 1050 => 1000, 1060 => 1000, 1070 => 1000),
+                'ext' => array(),
+                'ext_note' => array(),
+            ),
+
+            'levels' => array(),
+            'setup' => array('inherit' => array(1010), 'f' => function($mode, $level) {
+                Globals::CurrentPlayerActualF()->set_braincoin_factor(1.10);
+
+                new Model_Buffs_Job_Soldier(null, 6);
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Virtual_Hero_Soldier(10));
+                Globals::CurrentPlayerF()->battle_stats([null,8,null,10]); // INI ATK DEF ACC
+                $item = new Model_Items_Rifle(); Globals::CurrentPlayerActualF()->battle_stats([null,null,null,8]);
+                Globals::CurrentPlayerF()->inventory()->add($item);
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Batgunsnp());
+                $item->equip(Globals::CurrentPlayerF());
+
+            }),
+        ),
+
         1030 => array(
             'meta' => array(
                 'name' => 'Pfadfinder',
@@ -569,6 +626,37 @@ return array(
                     Globals::CurrentPlayerActualF()->battle_stats([7,null,null,null]); // INI ATK DEF ACC
                 }),
         ),
+
+        1031 => array(
+            'meta' => array(
+                'name' => 'Pfadfinderführer',
+                'caption' => 'Steht total darauf, sich mit einer kleinen Gruppe von Kindern in einem Wald zu verstecken.',
+                'premium' => 1,
+            ),
+
+            'requirements' => array(
+                'mode' => array(),
+                'job' => array('1011,1012' => 1000, 1020 => 1000, 1030 => 2000, 1040 => 1000, 1050 => 1000, 1060 => 1000, 1070 => 1000),
+                'ext' => array(),
+                'ext_note' => array(),
+            ),
+
+            'levels' => array(),
+            'setup' => array('inherit' => array(1010), 'f' => function($mode, $level) {
+                Globals::CurrentPlayerActualF()->set_braincoin_factor(1.10);
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Virtual_Hero_Pathfinder(10));
+
+                $bottle = new Model_Items_Bottle();
+                $bottle->add_water(4, 0);
+                Globals::CurrentPlayerF()->inventory()->add($bottle);
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Lunchbox());
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Paralaxium(5));
+
+                new Model_Buffs_Job_Pathfinder(null, 6);
+                Globals::CurrentPlayerActualF()->battle_stats([9,null,null,null]); // INI ATK DEF ACC
+            }),
+        ),
+
         1040 => array(
             'meta' => array(
                 'name' => 'Missionar',
@@ -593,6 +681,31 @@ return array(
                         Globals::CurrentGameF()->main_map()->add_location('Model_Places_Cathedral');
                 }),
         ),
+
+        1041 => array(
+            'meta' => array(
+                'name' => 'Emeritierter Papst',
+                'caption' => 'Ist nicht mehr ganz der Jüngste, konnte aber bis jetzt überleben, da die Zombies Probleme haben, ihn von anderen Zombies zu unterscheiden.',
+                'premium' => true,
+            ),
+
+            'requirements' => array(
+                'mode' => array(),
+                'job' => array('1011,1012' => 1000, 1020 => 1000, 1030 => 1000, 1040 => 2000, 1050 => 1000, 1060 => 1000, 1070 => 1000),
+                'ext' => array(),
+                'ext_note' => array(),
+            ),
+
+            'levels' => array(),
+            'setup' => array('inherit' => array(1010), 'f' => function($mode, $level) {
+                Globals::CurrentPlayerActualF()->set_braincoin_factor(1.1);
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Holybook);
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Virtual_Hero_Missionary(10));
+                Globals::CurrentPlayerActualF()->battle_stats([3,2,2,2]); // INI ATK DEF ACC
+                Globals::CurrentGameF()->main_map()->add_location('Model_Places_Cathedral2');
+            }),
+        ),
+
         1050 => array(
             'meta' => array(
                 'name' => 'Reicher Schnösel',
@@ -625,6 +738,38 @@ return array(
                     }
                 }),
         ),
+
+        1051 => array(
+            'meta' => array(
+                'name' => 'Mitglied der 1%',
+                'caption' => 'Kann kein Geld an Bankomaten abheben, da die beim Anzeigen des Kontostandes immer abstürzen.',
+                'premium' => true,
+            ),
+
+            'requirements' => array(
+                'mode' => array(),
+                'job' => array('1011,1012' => 1000, 1020 => 1000, 1030 => 1000, 1040 => 1000, 1050 => 2000, 1060 => 1000, 1070 => 1000),
+                'ext' => array(),
+                'ext_note' => array(),
+            ),
+
+            'levels' => array(),
+            'setup' => array('inherit' => array(1010), 'f' => function($mode, $level) {
+                Globals::CurrentPlayerActualF()->set_braincoin_factor(1.1);
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Virtual_Hero_Snot(10));
+                Globals::CurrentPlayerF()->get_status()->set(	Model_Status::MS_STAT_HUNGER,100,Model_Status::MS_STAT_THIRST,100);
+
+                for ($i = 0; $i < 10; $i++) {
+                    Globals::CurrentPlayerF()->location()->inventory()->add(new Model_Items_Generic_Gwood);
+                    Globals::CurrentPlayerF()->location()->inventory()->add(new Model_Items_Generic_Gmetal);
+                }
+                Globals::CurrentGameF()->main_map()->add_location('Model_Places_Villa');
+                Tool_Scripts::home(Globals::CurrentGameF())->setup_new_room(Tool_Scripts::home(Globals::CurrentGameF())->create_new_room(10, ['inside']), ['bedroom'], ['bedr1', 'bedr2', 'bedr3'])->set_default_state();
+                Tool_Scripts::home(Globals::CurrentGameF())->setup_new_room(Tool_Scripts::home(Globals::CurrentGameF())->create_new_room(10, ['inside']), ['workshop'], [])->set_default_state();
+                Tool_Scripts::home(Globals::CurrentGameF())->setup_new_room(Tool_Scripts::home(Globals::CurrentGameF())->create_new_room(10, ['inside']), ['kitchen'], ['ktc2'])->set_default_state();
+            }),
+        ),
+
         1060 => array(
             'meta' => array(
                 'name' => 'Survivalist',
@@ -640,11 +785,36 @@ return array(
 
             'levels' => array(100, 250,  500, 1000, 2000),
             'setup' => array('inherit' => array(1010), 'f' => function($mode, $level) {
-                    Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Virtual_Hero_Survivalist($level));
-                    new Model_Buffs_Job_Survivalist(null, $level);
-                    Globals::CurrentPlayerActualF()->battle_stats([null,null,6,null]); // INI ATK DEF ACC
-                }),
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Virtual_Hero_Survivalist($level));
+                new Model_Buffs_Job_Survivalist(null, $level);
+                Globals::CurrentPlayerActualF()->battle_stats([null,null,6,null]); // INI ATK DEF ACC
+            }),
         ),
+
+        1061 => array(
+            'meta' => array(
+                'name' => 'Wolfsmensch',
+                'caption' => 'Ist vermutlich kein Werwolf, hat sich jedoch seit 1972 weder gewaschen noch rasiert.',
+                'premium' => true,
+            ),
+
+            'requirements' => array(
+                'mode' => array(),
+                'job' => array('1011,1012' => 2000, 1020 => 1000, 1030 => 1000, 1040 => 1000, 1050 => 1000, 1060 => 1000, 1070 => 1000),
+                'ext' => array(),
+                'ext_note' => array(),
+            ),
+
+            'levels' => array(),
+            'setup' => array('inherit' => array(1010), 'f' => function($mode, $level) {
+                Globals::CurrentPlayerActualF()->set_braincoin_factor(1.1);
+                Globals::CurrentPlayerF()->get_status()->set(	Model_Status::MS_STAT_HUNGER,100,Model_Status::MS_STAT_THIRST,100);
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Virtual_Hero_Survivalist(10));
+                new Model_Buffs_Job_Survivalist(null, 6);
+                Globals::CurrentPlayerActualF()->battle_stats([9,9,7,null]); // INI ATK DEF ACC
+            }),
+        ),
+
         1070 => array(
             'meta' => array(
                 'name' => 'Muskelprotz',
@@ -675,6 +845,34 @@ return array(
                         Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Bmt2);
                 }),
         ),
+
+        1071 => array(
+            'meta' => array(
+                'name' => 'Mr. Gigantic',
+                'caption' => 'Kann sich aufgrund seiner extremen Muskelmasse seit Jahren nicht mehr bücken, weswegen er gelegentlich mit dem Kopf gegen die Decke stößt und diese dabei durchbricht.',
+                'premium' => true,
+            ),
+
+            'requirements' => array(
+                'mode' => array(),
+                'job' => array('1011,1012' => 2000, 1020 => 1000, 1030 => 1000, 1040 => 1000, 1050 => 1000, 1060 => 1000, 1070 => 1000),
+                'ext' => array(),
+                'ext_note' => array(),
+            ),
+
+            'levels' => array(),
+            'setup' => array('inherit' => array(1010), 'f' => function($mode, $level) {
+                Globals::CurrentPlayerActualF()->set_braincoin_factor(1.1);
+                Globals::CurrentPlayerF()->inventory()->limit(180);
+                Globals::CurrentPlayerActualF()->battle_stats([null,10,4,4]); // INI ATK DEF ACC
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Virtual_Hero_Muscle(10));
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Bmt);
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Bmt2);
+                for ($i = 0; $i < 8; $i++) Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Meds());
+
+            }),
+        ),
+
         1080 => array(
             'meta' => array(
                 'name' => 'Kind',

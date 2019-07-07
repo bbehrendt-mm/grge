@@ -19,7 +19,17 @@ class Model_Items_Body extends Model_Items_Abstract_Item implements Interface_St
 	
 	protected static $weight = 95;
     protected $body_name;
-	
+
+    protected $count_towards_achievement = true;
+
+    public function set_enable_achievement(bool $val) {
+        $this->count_towards_achievement = $val;
+    }
+
+    public function get_enable_achievement() {
+        return $this->count_towards_achievement;
+    }
+
 	public function __construct($name = null, $desc = null) {
 		parent::__construct();
 		if ($name) $this->custom_info['name'] = $name;

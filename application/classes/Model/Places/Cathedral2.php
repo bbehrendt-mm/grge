@@ -15,7 +15,11 @@ class Model_Places_Cathedral2 extends Model_Places_Abstract_Hideout {
 		else $t = parent::uin($uin);
 		
 		$count = random_int(20,30);
-		for ($i = 0; $i < $count; $i++) $this->inventory->add(new Model_Items_Body('Zerfetztes Gemeindemitglied', 'Es gibt Momente, da kann der Glaube Berge versetzen und selbst die größten Probleme klein erscheinen lassen. Und dann gibt es Momente, in denen sollte man seine Gebete lieber beim Laufen sprechen, anstatt starr auf einer Kirchenbank zu verharren!'));
+		for ($i = 0; $i < $count; $i++)  {
+		    $item = new Model_Items_Body('Zerfetztes Gemeindemitglied', 'Es gibt Momente, da kann der Glaube Berge versetzen und selbst die größten Probleme klein erscheinen lassen. Und dann gibt es Momente, in denen sollte man seine Gebete lieber beim Laufen sprechen, anstatt starr auf einer Kirchenbank zu verharren!');
+		    $item->set_enable_achievement( false );
+		    $this->inventory->add( $item );
+        }
 	    return $t;
     }
 

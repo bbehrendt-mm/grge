@@ -221,8 +221,13 @@ class Model_Player extends Model_NPC_Nano {
 	
 	public function calculate_static_achievements(): void
     {
-		//Other endtime achievements
-		$this->achievements->achieve_force(Model_Achievement::MA_SOME_COMPANY, 2 * count(Tool_Scripts::get_home_items(Model_Items_Generic_Bobblehead::cls())) + count(Tool_Scripts::get_home_items(Model_Items_Generic_Teddy::cls())) + count(Tool_Scripts::get_home_items(Model_Items_Body::cls())));
+        // Get bodies with the achievement flag
+		$bodies = array_filter(Tool_Scripts::get_home_items(Model_Items_Body::cls()), function(Model_Items_Body $item) {
+            return $item->get_enable_achievement();
+        });
+
+        //Other end-time achievements
+		$this->achievements->achieve_force(Model_Achievement::MA_SOME_COMPANY, 2 * count(Tool_Scripts::get_home_items(Model_Items_Generic_Bobblehead::cls())) + count(Tool_Scripts::get_home_items(Model_Items_Generic_Teddy::cls())) + count($bodies));
 		$this->achievements->achieve_force(Model_Achievement::MA_PRINCESS, count(Tool_Scripts::get_home_items(Model_Items_Generic_Bed::cls())));
 		$this->achievements->achieve_force(Model_Achievement::MA_ITEM_COUNT, count(Tool_Scripts::get_home_items(Model_Items_Abstract_Item::cls())));
 	

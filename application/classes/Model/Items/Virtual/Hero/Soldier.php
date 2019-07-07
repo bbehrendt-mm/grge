@@ -4,7 +4,7 @@ class Model_Items_Virtual_Hero_Soldier extends Model_Items_Abstract_Virtual {
 
     public function __construct($level = 1) {
         parent::__construct();
-        $actions = $level >= 10 ? 1 : 5;
+        $actions = $level >= 10 ? 5 : 1;
         $this->remaining = array(
             'hero_job_0' => $actions,
             'hero_job_1' => $level >= 6 ? $actions : 0,

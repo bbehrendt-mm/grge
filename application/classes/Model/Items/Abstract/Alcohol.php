@@ -73,7 +73,7 @@ abstract class Model_Items_Abstract_Alcohol extends Model_Items_Abstract_Item {
                     ->decider(function($p) use ($a) {
                         /** @var Model_Player $p */
                         $ca = $p->get_status()->simulate(Model_Status::MS_STAT_DRUNK, $a, Model_Status::MS_EFFECT_ITEM, false);
-                        $as_child = (!Tool_Scripts::is_npc($p) && $p->job(1080));
+                        $as_child = (!Tool_Scripts::is_npc($p) && $p->job_child());
                         if ($ca > 100) return 's2';
                         if ($ca > 90) return $as_child ? 's5' : 's4';
                         return $as_child ? 's3' : 's1';

@@ -93,7 +93,7 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
     }
 
     public function customSprite($death_sprite = false): ?string {
-        if (!$death_sprite && $this->player->job(1080))
+        if (!$death_sprite && $this->player->job_child())
             return 'child.gif';
         else return parent::customSprite($death_sprite);
     }

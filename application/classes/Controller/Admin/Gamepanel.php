@@ -49,6 +49,17 @@ class Controller_Admin_Gamepanel extends Controller_Admin_Admin {
         $this->render();
     }
 
+    public function japi_heroic(): void
+    {
+        if (!Globals::hasCurrentGame() || !Globals::hasPrimaryPlayer()) return;
+
+        foreach (Globals::PrimaryPlayerF()->inventory()->get(Model_Items_Abstract_Virtual::cls()) as $item)
+            /** @var Model_Items_Abstract_Virtual $item */
+            $item->set_remaining_actions(10);
+
+        $this->render();
+    }
+
     public function japi_spawn_buff(): void
     {
         if (!Globals::hasCurrentGame() || !Globals::hasPrimaryPlayer()) return;

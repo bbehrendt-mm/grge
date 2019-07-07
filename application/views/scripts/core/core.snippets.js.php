@@ -189,6 +189,7 @@
                     if (ext.children().length) button.append(ext);
                     break;
                 case 'tooltip':case 'nested':
+                    console.log(action);
                     if (!action.tooltip && action.remaining < 0 && !ext.children().length) break;
 
                     var template = (ext_mode == 'nested') ? game.render.html.qtip.help : game.render.html.qtip.ingame;
@@ -196,6 +197,8 @@
                     button.attr('title','-').qtip(template((ext_mode == 'nested') ? {desktop: 'right', lg: 'top'} : 'bottom',{
                         render: function(event,api) {
                             $(this).css('width',$(this).css('max-width'));
+
+                            if (action.skin.search('action-drunk') >= 0) $(this).css('filter','blur(3px)');
 
                             var content = $(this).find('.qtip-content').empty().append(
                                 (ext_mode == 'nested') ? null : $('<b />').addClass('header').text(action.description)

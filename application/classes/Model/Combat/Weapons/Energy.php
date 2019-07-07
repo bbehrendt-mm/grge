@@ -39,6 +39,7 @@ abstract class Model_Combat_Weapons_Energy extends Model_Combat_Weapon {
             $player = Globals::PrimaryPlayerF();
         else $player = $p;
 
+        // Ignore Wunderkind!
         if (!Tool_Scripts::is_npc($player) && $player->job(1080)) {
             $player->log()->add('Als Kind kannst du diese Waffe nicht ausrüsten!');
             return;

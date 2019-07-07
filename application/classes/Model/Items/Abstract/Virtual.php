@@ -58,6 +58,14 @@ abstract class Model_Items_Abstract_Virtual extends Model_Items_Abstract_Item {
         return isset($this->remaining[$action]);
     }
 
+    public function set_remaining_actions($set): void {
+        if ($this->remaining === false)
+            return;
+
+        foreach ($this->remaining as $action => &$num)
+            $num = $set;
+    }
+
     public function remaining_actions($action = null, $set = null) {
         if ($this->remaining === false)
             return PHP_INT_MAX;

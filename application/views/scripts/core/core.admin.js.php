@@ -283,6 +283,10 @@
             core.parts.admin.execute('admin/japi/gamepanel/regenerate', {});
         }).appendTo(ret);
 
+        $('<div />').addClass('btn small').text('Reinstate heroic actions').click(function() {
+            core.parts.admin.execute('admin/japi/gamepanel/heroic', {});
+        }).appendTo(ret);
+
         $('<div />').addClass('btn small').text('Force Battle').click(function() {
             core.parts.admin.execute('admin/japi/gamepanel/force_battle', {});
         }).appendTo(ret);

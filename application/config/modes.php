@@ -252,7 +252,7 @@ return array(
             'type' => 'multi_auto',
             'requirements' => array('mode' => array(),'job' => array(),'ext' => array(),'ext_note' => array()),
 
-            'jobs' => array(10010,10020,10030,10040,1080),
+            'jobs' => array(10010,10011,10020,10021,10030,10031,10040,10041,1080,1081),
             'unstartable_jobs' => array(),
 
             'setup' => array(
@@ -291,7 +291,7 @@ return array(
             'slots' => array(2,5),
             'requirements' => array('mode' => array(),'job' => array(),'ext' => array(),'ext_note' => array()),
 
-            'jobs' => array(10010,10020,10030,10040,1080),
+            'jobs' => array(10010,10011,10020,10021,10030,10031,10040,10041,1080,1081),
             'unstartable_jobs' => array(),
 
             'setup' => array(
@@ -311,7 +311,7 @@ return array(
             'slots' => array(6,10),
             'requirements' => array('mode' => array(),'job' => array(),'ext' => array(),'ext_note' => array()),
 
-            'jobs' => array(10010,10020,10030,10040,1080),
+            'jobs' => array(10010,10011,10020,10021,10030,10031,10040,10041,1080,1081),
             'unstartable_jobs' => array(),
 
             'setup' => array(
@@ -331,7 +331,7 @@ return array(
             'slots' => array(2,5),
             'requirements' => array('mode' => array(),'job' => array(10010 => 150),'ext' => array(),'ext_note' => array()),
 
-            'jobs' => array(10020,10030,10040,1080),
+            'jobs' => array(10020,10021,10030,10031,10040,10041,1080,1081),
             'unstartable_jobs' => array(1080),
 
             'setup' => array(
@@ -631,7 +631,7 @@ return array(
             'meta' => array(
                 'name' => 'Pfadfinderführer',
                 'caption' => 'Steht total darauf, sich mit einer kleinen Gruppe von Kindern in einem Wald zu verstecken.',
-                'premium' => 1,
+                'premium' => true,
             ),
 
             'requirements' => array(
@@ -897,6 +897,47 @@ return array(
                     Globals::CurrentPlayerActualF()->battle_stats([12,2,2,null]); // INI ATK DEF ACC
                 }),
         ),
+
+        1081 => array(
+            'meta' => array(
+                'name' => 'Wunderkind',
+                'caption' => 'Verbindet die meisten Vorteile des Kind-seins mit denen des Erwachsen-seins; bis auf diese eine Sache natürlich, für die man üblicherweise einen Vertreter des anderen geschlechts benötigt ...',
+                'premium' => true,
+            ),
+
+            'requirements' => array(
+                'mode' => array(),
+                'job' => array(1080 => 5500, 10010 => 1300, 10020 => 1300, 10030 => 1300, 10040 => 1300),
+                'ext' => array(),
+                'ext_note' => array(),
+            ),
+
+            'levels' => array(),
+            'setup' => array('inherit' => array(10000), 'f' => function($mode, $level) {
+                new Model_Buffs_Metabolism3();
+                new Model_Buffs_Wunderkind();
+
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Virtual_Hero_Child($level));
+
+                $foreign_heroic = new Model_Items_Virtual_Hero_Eclair(1, true);
+                $foreign_heroic->set_remaining_actions(2);
+                Globals::CurrentPlayerF()->inventory()->add($foreign_heroic);
+
+                $foreign_heroic = new Model_Items_Virtual_Hero_Hunter(1, true);
+                $foreign_heroic->set_remaining_actions(2);
+                Globals::CurrentPlayerF()->inventory()->add($foreign_heroic);
+
+                $foreign_heroic = new Model_Items_Virtual_Hero_Survivalist(1, true);
+                $foreign_heroic->set_remaining_actions(2);
+                Globals::CurrentPlayerF()->inventory()->add($foreign_heroic);
+
+                Globals::CurrentPlayerF()->inventory()->limit(80);
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Generic_Teddy());
+
+                Globals::CurrentPlayerF()->get_status()->scaling_add(Model_Status::MS_STAT_DRUNK, Model_Status::MS_EFFECT_GLOBAL, 'child_booze', 3);
+                Globals::CurrentPlayerActualF()->battle_stats([12,null,null,null]); // INI ATK DEF ACC
+            }),
+        ),
         2000 => array(
             'setup' => array('inherit' => array(0), 'f' => function($mode, $level) {
                     Globals::CurrentPlayerF()->get_status()->set(	Model_Status::MS_STAT_HUNGER,	100,
@@ -1128,6 +1169,32 @@ return array(
                     $item->equip(Globals::CurrentPlayerF());
                 }),
         ),
+        10011 => array(
+            'meta' => array(
+                'name' => 'Mr. President',
+                'caption' => 'Musste leider feststellen, dass eine Mauer zu Mexiko nur sehr eingeschränkt gegen eine Zombie-Edpidemie hilft.',
+                'premium' => true,
+            ),
+
+            'requirements' => array(
+                'mode' => array(),
+                'job' => array(10010 => 5500, 10020 => 1300, 10030 => 1300, 10040 => 1300),
+                'ext' => array(),
+                'ext_note' => array(),
+            ),
+
+            'levels' => array(),
+            'setup' => array('inherit' => array(10000), 'f' => function($mode, $level) {
+                Globals::CurrentPlayerActualF()->set_braincoin_factor(1.25);
+
+                Globals::CurrentPlayerActualF()->battle_stats([6,6,null,null]); // INI ATK DEF ACC
+
+
+                $item = new Model_Items_Machete2P();
+                Globals::CurrentPlayerF()->inventory()->add($item);
+                $item->equip(Globals::CurrentPlayerF());
+            }),
+        ),
         10020 => array(
             'meta' => array(
                 'name' => 'Football-Coach',
@@ -1151,6 +1218,35 @@ return array(
                     Globals::CurrentPlayerActualF()->battle_stats([null,null,5 + floor($level/2),null]); // INI ATK DEF ACC
                 }),
         ),
+        10021 => array(
+            'meta' => array(
+                'name' => 'Profi Football-Spieler',
+                'caption' => 'Die Leute sagen dir, dass du ein berühmter Football-Star bist - aber mittlerweile hast du so viele Gehirnerschütterungen abbekommen, dass du dich daran nicht mehr erinnern kannst.',
+                'premium' => true,
+            ),
+
+            'requirements' => array(
+                'mode' => array(),
+                'job' => array(10010 => 1300, 10020 => 5500, 10030 => 1300, 10040 => 1300),
+                'ext' => array(),
+                'ext_note' => array(),
+            ),
+
+            'levels' => array(),
+            'setup' => array('inherit' => array(10000), 'f' => function($mode, $level) {
+                Globals::CurrentPlayerActualF()->set_braincoin_factor(1.1);
+
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Virtual_Hero_Coach(20));
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Virtual_Hero_CoachPremium(2));
+
+                $item = new Model_Items_Machete2();
+                Globals::CurrentPlayerF()->inventory()->add($item);
+                $item->equip(Globals::CurrentPlayerF());
+
+                new Model_Buffs_Job_Coach(null, 10);
+                Globals::CurrentPlayerActualF()->battle_stats([6,6,10,4]); // INI ATK DEF ACC
+            }),
+        ),
         10030 => array(
             'meta' => array(
                 'name' => 'Medizinstudent',
@@ -1172,6 +1268,36 @@ return array(
                     $item->equip(Globals::CurrentPlayerF());
                     Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Bandage());
                 }),
+        ),
+        10031 => array(
+            'meta' => array(
+                'name' => 'Star-Chirurg',
+                'caption' => 'Kann einem Patienten bei Bedarf mit verbundenen Augen und nur seiner linken Hand ein beliebiges Organ entfernen, während er mit der rechten hand Skalpelle jongliert.',
+                'premium' => true,
+            ),
+
+            'requirements' => array(
+                'mode' => array(),
+                'job' => array(10010 => 1300, 10020 => 1300, 10030 => 5500, 10040 => 1300),
+                'ext' => array(),
+                'ext_note' => array(),
+            ),
+
+            'levels' => array(),
+            'setup' => array('inherit' => array(10000), 'f' => function($mode, $level) {
+                Globals::CurrentPlayerActualF()->set_braincoin_factor(1.1);
+
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Virtual_Hero_Student(20));
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Virtual_Hero_StudentPremium(2));
+
+                $item = new Model_Items_Machete2();
+                Globals::CurrentPlayerF()->inventory()->add($item);
+                $item->equip(Globals::CurrentPlayerF());
+
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Bandage());
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Morphine());
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Uniheal());
+            }),
         ),
         10040 => array(
             'meta' => array(
@@ -1195,6 +1321,31 @@ return array(
                     Globals::CurrentPlayerActualF()->battle_stats([null,5 + floor($level/2),null,null]); // INI ATK DEF ACC
                     new Model_Buffs_Job_Woman(null, $level);
                 }),
+        ),
+        10041 => array(
+            'meta' => array(
+                'name' => '9Gagger',
+                'caption' => 'Ist sich sicher, dass es nur zwei Geschlechter gibt (obwohl er bisher nur sein eigenes gesehen hat) und das Schwule, Schwarze und Muslime ihm das Recht wegnehmen wollen, sich zu erotischen MLP-FanFics die Gurke zu schälen.',
+                'premium' => true,
+            ),
+
+            'requirements' => array(
+                'mode' => array(),
+                'job' => array(10010 => 1300, 10020 => 1300, 10030 => 1300, 10040 => 5500),
+                'ext' => array(),
+                'ext_note' => array(),
+            ),
+
+            'levels' => array(),
+            'setup' => array('inherit' => array(10000), 'f' => function($mode, $level) {
+                Globals::CurrentPlayerActualF()->set_braincoin_factor(1.1);
+
+                Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Virtual_Hero_Woman($level));
+
+                $item = new Model_Items_Machete2();
+                Globals::CurrentPlayerF()->inventory()->add($item);
+                $item->equip(Globals::CurrentPlayerF());
+            }),
         ),
 
         12000 => array(

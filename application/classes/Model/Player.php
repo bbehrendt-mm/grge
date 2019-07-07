@@ -251,6 +251,10 @@ class Model_Player extends Model_NPC_Nano {
 		else return ($this->job === $compare_job && ($exact ? ($compare_level === $this->level) : ($compare_level <= $this->level)));
 	}
 
+    public function job_child(): bool {
+        return $this->job(1080) || $this->job(1081);
+    }
+
     public function get_points() {
         return $this->points;
     }
@@ -359,6 +363,6 @@ class Model_Player extends Model_NPC_Nano {
     }
 
     public function icon() {
-        return $this->job === 1080 ? 'child.gif' : 'adult.gif';
+        return $this->job_child() ? 'child.gif' : 'adult.gif';
     }
 }

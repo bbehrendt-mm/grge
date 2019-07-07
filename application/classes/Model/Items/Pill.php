@@ -10,7 +10,7 @@ class Model_Items_Pill extends Model_Items_Abstract_Item implements Interface_St
 	);
 
     protected function hid(): Model_Hid {
-        $child_effects = !Globals::shadowPlayerExists() && Globals::PrimaryPlayerF()->job(1080);
+        $child_effects = !Globals::shadowPlayerExists() && Globals::PrimaryPlayerF()->job_child();
 
         return parent::hid()
             ->add_action('Runter damit!', Model_Action::factory()

@@ -104,6 +104,8 @@
 @buttons-consequence-group-default-color: black;
 
 .btn {
+  &.btn-zv-skinned-hero.action-drunk { filter: blur(3px); }
+
   .generic-button(@buttons-main-background-color, @buttons-main-border-color, @buttons-main-font-color, @buttons-main-icon-mask, 1.2em, 3px 10px);
   &.blue, &.btn-zv.btn-zv-skinned-hero {.generic-button-color(@buttons-blue-background-color, @buttons-blue-border-color, @buttons-blue-font-color, @buttons-blue-icon-mask)}
   &.btn-zv.btn-zv-skinned-hero_common {.generic-button-color(lighten(@buttons-blue-background-color, 15%), lighten(@buttons-blue-border-color, 15%), @buttons-blue-font-color, @buttons-blue-icon-mask)}

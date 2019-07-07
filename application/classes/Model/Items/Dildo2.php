@@ -13,7 +13,7 @@ class Model_Items_Dildo2 extends Model_Items_Abstract_Item implements Interface_
 	protected static $weight = 1;
 
     protected function hid(): Model_Hid {
-        if (Tool_Scripts::is_npc() || (!Globals::shadowPlayerExists() && Globals::PrimaryPlayerF()->job(1080)))
+        if (Tool_Scripts::is_npc() || (!Globals::shadowPlayerExists() && Globals::PrimaryPlayerF()->job_child()))
             return parent::hid();
         return parent::hid()
             ->add_action('Benutzen', Model_Action::factory()

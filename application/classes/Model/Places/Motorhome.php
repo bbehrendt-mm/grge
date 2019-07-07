@@ -162,7 +162,7 @@ class Model_Places_Motorhome extends Model_Places_Home {
         $w = $this->inventory()->weight();
         foreach (Globals::CurrentGameF()->players(false) as $p)
             /** @var Model_Player $p */
-            $w += $p->inventory()->weight() + ($p->job(1080) ? 25 : 50);
+            $w += $p->inventory()->weight() + ($p->job_child() ? 25 : 50);
 
         return $w;
     }
@@ -215,6 +215,7 @@ class Model_Places_Motorhome extends Model_Places_Home {
         if ($this->driving) return;
         if (Globals::PrimaryPlayerF()->get_status()->retrieve('fragile')) return;
 
+        // Ignore Wunderkind
         if (Globals::PrimaryPlayerF()->job(1080)) {
             Globals::PrimaryPlayerF()->log()->add('Es hat diverse Vorteile, ein Kind zu sein. Die Tatsache, dass du nicht Autofahren kannst, ist keiner davon.');
             return;

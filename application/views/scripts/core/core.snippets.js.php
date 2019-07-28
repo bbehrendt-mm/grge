@@ -189,7 +189,6 @@
                     if (ext.children().length) button.append(ext);
                     break;
                 case 'tooltip':case 'nested':
-                    console.log(action);
                     if (!action.tooltip && action.remaining < 0 && !ext.children().length) break;
 
                     var template = (ext_mode == 'nested') ? game.render.html.qtip.help : game.render.html.qtip.ingame;

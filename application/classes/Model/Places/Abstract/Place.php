@@ -322,10 +322,10 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 
 		$this->log->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $pid, $type === Interface_Tickable::IT_TYPE_NPC));
 
-        if (!$this->survival_find && $type === Interface_Tickable::IT_TYPE_PLAYER && $player->job(1060)) {
+        if (!$this->survival_find && $type === Interface_Tickable::IT_TYPE_PLAYER && ($player->job(1060) || $player->job(1061))) {
 			
 			$this->survival_find = true;
-			$findings = min(2,max(0,$player->job(false) - 2));
+			$findings = $player->job(1060) ? min(2,max(0,$player->job(false) - 2)) : 5;
 			
 			if ($findings > 0) {
 				$items = [];

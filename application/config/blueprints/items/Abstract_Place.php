@@ -330,7 +330,7 @@ return Model_Blueprints::factory()
     )
 
     // ++ STACK -> All blueprints below can only be built by a survivalist
-    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->show_condition(function($player) {/** @var Model_Player $player */return $player->job(1060);});})
+    ->push_stack(function(&$b) {/** @var Model_Blueprint $b */$b->show_condition(function($player) {/** @var Model_Player $player */return $player->job(1060) || $player->job(1061);});})
 
     ->add_blueprints(
         Model_Blueprint::factory()

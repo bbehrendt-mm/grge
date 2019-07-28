@@ -4410,7 +4410,7 @@ core = {
                         render: function(event,api) {
                             $(this).css('width',$(this).css('max-width'));
 
-                            if (action.skin.search('action-drunk') >= 0) $(this).css('filter','blur(3px)');
+                            if (action.skin && action.skin.search('action-drunk') >= 0) $(this).css('filter','blur(3px)');
 
                             var content = $(this).find('.qtip-content').empty().append(
                                 (ext_mode == 'nested') ? null : $('<b />').addClass('header').text(action.description)

@@ -14,8 +14,10 @@ class Model_Items_Generic_Plasticbag extends Model_Items_Abstract_Item implement
 	private function produce_waterbomb() {
 		$this->consume();
 		
-		if (!Globals::shadowPlayerExists() && Globals::PrimaryPlayerF()->job(1040, 4, false))
-			Globals::CurrentPlayerF()->location()->inventory()->add(new Model_Items_Hwaterbomb);
+		if (!Globals::shadowPlayerExists() &&
+            (Globals::PrimaryPlayerF()->job(1040, 4, false) || Globals::PrimaryPlayerF()->job(1041)))
+
+		    Globals::CurrentPlayerF()->location()->inventory()->add(new Model_Items_Hwaterbomb);
 		else Globals::CurrentPlayerF()->location()->inventory()->add(new Model_Items_Waterbomb);
 	}
 	

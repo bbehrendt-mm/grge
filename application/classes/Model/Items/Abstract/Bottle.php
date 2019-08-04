@@ -231,7 +231,7 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
             case 10:
                 $res = [];
                 while ($this->fillrate(1))
-                    $res[] = Globals::PrimaryPlayerF()->job(1040) ? new Model_Items_Wine() : new Model_Items_Beer();
+                    $res[] = Globals::PrimaryPlayerF()->job([1040,1041]) ? new Model_Items_Wine() : new Model_Items_Beer();
                 $this->bottle_toxicity = 0;
 
                 Tool_Scripts::chem_reaction(

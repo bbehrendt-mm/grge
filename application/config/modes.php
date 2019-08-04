@@ -701,6 +701,7 @@ return array(
                 Globals::CurrentPlayerActualF()->set_braincoin_factor(1.1);
                 Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Holybook);
                 Globals::CurrentPlayerF()->inventory()->add(new Model_Items_Virtual_Hero_Missionary(10));
+                for ($i = 0; $i < 6; $i++) Globals::CurrentPlayerF()->location()->inventory()->add(new Model_Items_Wine);
                 Globals::CurrentPlayerActualF()->battle_stats([3,2,2,2]); // INI ATK DEF ACC
                 Globals::CurrentGameF()->main_map()->add_location('Model_Places_Cathedral2');
             }),

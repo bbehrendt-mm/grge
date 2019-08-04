@@ -188,7 +188,7 @@ class Model_Player extends Model_NPC_Nano {
 	}
 
 	public function create_combatant() {
-		if ($this->job === 1040 && $this->level >= 5 && random_int(0,15) === 2)
+		if (($this->job === 1040 || ($this->job === 1040 && $this->level >= 5)) && random_int(0,15) === 2)
 			return Model_Combat_Players_Saint::create_linked_actor($this);
 		return Model_Combat_Players_Player::create_linked_actor($this);
 	}
@@ -236,14 +236,21 @@ class Model_Player extends Model_NPC_Nano {
 	
 	/**
 	 * Returns player job details
-	 * @param null|boolean|number $compare_job Null: Return job id; false: Compare level only; any number: Compare job
+	 * @param null|boolean|number|number[] $compare_job Null: Return job id; false: Compare level only; any number: Compare job
 	 * @param null|number $compare_level Null: Return level ($compare_job needs to be false!); any number: Compare job and level
 	 * @param boolean $exact True to check if level matches exactly; false to check if level is equal or greater than given level
 	 * @return int|boolean
 	 */
 	public function job($compare_job = null, $compare_level = null, $exact = true) {
-        if ($compare_job && $compare_level === null)
-            return ($this->job === $compare_job);
+        // Compare jobs
+	    if ($compare_job && $compare_level === null) {
+            if (is_array( $compare_job )) {
+                foreach ($compare_job as $job_entry)
+                    if ( $this->job( $job_entry ) ) return true;
+                return false;
+            } else return ($this->job === $compare_job);
+        }
+
 
         if ($compare_job === null) return $this->job;
 		elseif ($compare_job === false && $compare_level === null) return $this->level;

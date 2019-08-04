@@ -25,7 +25,7 @@
             $(target).append(container);
 
             if (!remote) {
-                if (v.widgets && v.widgets.includes('water'))
+                if (!(v.widgets && v.widgets.includes('water')))
                     container.click(function(e, force) {
                         var o;
                         if (o = $(this).data('click-override'))

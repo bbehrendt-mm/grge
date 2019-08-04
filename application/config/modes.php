@@ -100,7 +100,7 @@ return array(
                 'ext_note' => array(),
             ),
 
-            'jobs' => array(1020, 1030, 1040, 1050, 1060, 1070),
+            'jobs' => array(1020, 1021, 1030, 1031, 1040, 1041, 1050, 1051, 1060, 1061, 1070, 1071),
             'unstartable_jobs' => array(),
 
             'setup' => array(

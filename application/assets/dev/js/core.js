@@ -700,7 +700,7 @@ core = {
             $(target).append(container);
 
             if (!remote) {
-                if (!v.is_water)
+                if (v.widgets && v.widgets.includes('water'))
                     container.click(function(e, force) {
                         var o;
                         if (o = $(this).data('click-override'))
@@ -742,7 +742,7 @@ core = {
             container.attr('data-id', v.uin);
             if (v.fill)
                 container.attr('data-is-fillable', v.count < v.fill.capacity);
-            if (v.is_water || (v.fill && !v.fill.fixed && v.count > 0))
+            if ((v.widgets && v.widgets.includes('water')) || (v.fill && !v.fill.fixed && v.count > 0))
                 container.attr('data-is-spillable', true);
 
             var notes = [];
@@ -783,7 +783,7 @@ core = {
                     );
 
                     var subhead = $();
-                    if (v.label && !v.custom_label)
+                    if (v.label && !(v.widgets && v.widgets.includes('label')))
                         subhead = subhead.add($('<i />').addClass('info center').text(v.label));
                     if (v.count && !v.fill)  subhead = subhead.add($('<i />').addClass('info center').text(v.count + (v.capacity ? (' / ' + v.capacity + ' ') : ' ' ) + v.stack));
                     if (v.weight) subhead = subhead.add($('<i />').addClass('info center').text("Gewicht" + ': ' + v.weight));
@@ -791,7 +791,7 @@ core = {
                     if (subhead.length)
                         content.append(subhead).append('<span class="separator" />');
 
-                    if (v.custom_label) {
+                    if (v.widgets && v.widgets.includes('label')) {
                         content
                             .append(
                                 NF.row().append(
@@ -821,7 +821,7 @@ core = {
                             ).append('<span class="separator" />');
                     }
 
-                    if (v.is_chem) {
+                    if (v.widgets && v.widgets.includes('chem')) {
                         content.append(
                             $('<div />').addClass('note').text("Du kannst diese Chemikalie mit beliebigen anderen Gegenst\u00e4nden kombinieren. Welchen Effekt das hat... das wirst du selbst herausfinden m\u00fcssen.")
                         ).append(
@@ -896,6 +896,11 @@ core = {
                         if (v.count > 1 && !v.fill.fixed)
                             fillbox.append($('<div />').addClass('fillbox pointer').css('vertical-align', 'top').append(NF.fa('arrow-down')).click(function() {
                                 core.command('act/inventory',{action: 'spill', items: [v.uin], all: true, player: $('[data-pid-selected="1"]').attr('data-pid')});
+                            }));
+
+                        if (v.count < v.fill.capacity && !v.fill.fixed)
+                            fillbox.append($('<div />').addClass('fillbox pointer').css('vertical-align', 'top').append(NF.fa('arrow-up')).click(function() {
+                                core.command('act/inventory',{action: 'fill', items: [v.uin], all: true, player: $('[data-pid-selected="1"]').attr('data-pid')});
                             }));
 
                         content.append('<span class="separator" />');
@@ -1004,7 +1009,7 @@ core = {
 
                     }
 
-                    if (v.static > 1 && !v.is_water) {
+                    if (v.static > 1 && !(v.widgets && v.widgets.includes('water'))) {
                         content.append('<span class="separator" />').append(core.snippets.button(rucksack ? "Alle ablegen" : "Alle mitnehmen", function() {
                             core.command('act/inventory',{action: rucksack ? 'drop' : 'take', items: $.objToArray(v.set, true), player: $('.inventory_player[data-pid-selected=1]').data('pid')});
                         }));
@@ -1042,7 +1047,7 @@ core = {
                         if (targets.length <= 1) auto_tab.hide();
                     }
 
-                    if (v.is_pillbox) {
+                    if (v.widgets && v.widgets.includes('pillbox')) {
                         var pillrow;
                         content.append('<span class="separator" />').append(
                             pillrow = NF.row()
@@ -4347,8 +4352,17 @@ core = {
             button
                 .addClass('btn btn-zv ' + (action.skin ? 'btn-zv-skinned-' + action.skin : '') + (action.user != '0' ? ' btn-icon' : '') )
                 .attr('data-target', action.user == '0' ? "Du" : core.last.players.others[action.user]['name'])
-                .append(action.user != '0' ? NF.n('span','btn-icon-inner', NF.fa('external-link-square')) : '')
-                .append(NF.n('span', '', action.description))
+                .append(action.user != '0' ? NF.n('span','btn-icon-inner', NF.fa('external-link-square')) : '');
+
+            if (action.skin && action.skin == 'batch')
+                button
+                    .append(NF.n('span', 'small', "Alle Items diesen Typs"))
+                    .append(NF.n('span', '', action.description));
+            else
+                button
+                    .append(NF.n('span', '', action.description));
+
+            button
                 .click(function (e,arg) {
                     // Hide all QTips
                     $('.qtip').qtip('hide');
@@ -4401,7 +4415,6 @@ core = {
                     if (ext.children().length) button.append(ext);
                     break;
                 case 'tooltip':case 'nested':
-                    console.log(action);
                     if (!action.tooltip && action.remaining < 0 && !ext.children().length) break;
 
                     var template = (ext_mode == 'nested') ? game.render.html.qtip.help : game.render.html.qtip.ingame;

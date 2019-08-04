@@ -68,6 +68,46 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
                         Model_Effect::factory()
                             ->message($this->observemsg())
                     )
+            )
+            ->add_action( 'Füllen' ,
+                          Model_Action::factory()
+                              ->buttonskin( 'batch' )
+                              ->allow_remote(false)
+                              ->effect(
+                                  Model_Effect::factory()
+                                      ->custom( function(Model_Player $p) {
+                                          $bottles = Tool_Scripts::get_items( static::cls() );
+                                          $water = Tool_Scripts::get_items( Model_Items_Abstract_Liquid::cls() );
+
+                                          while (!empty($bottles) && !empty($water)) {
+
+                                              /** @var Model_Items_Abstract_Bottle $latest_bottle */
+                                              $latest_bottle = array_pop($bottles);
+
+                                              while ( $latest_bottle->count() < $latest_bottle->capacity() && !empty($water) )
+                                                  $latest_bottle->interaction_fill( array_pop($water) );
+                                          }
+                                      } )
+                              )
+            )
+            ->add_action( 'Leeren' ,
+                          Model_Action::factory()
+                              ->buttonskin( 'batch' )
+                              ->allow_remote(false)
+                              ->effect(
+                                  Model_Effect::factory()
+                                      ->custom( function(Model_Player $p) {
+                                          $bottles = Tool_Scripts::get_items( static::cls() );
+
+                                          while (!empty($bottles)) {
+
+                                              /** @var Model_Items_Abstract_Bottle $latest_bottle */
+                                              $latest_bottle = array_pop($bottles);
+                                              if ($latest_bottle->count() > 0)
+                                                $latest_bottle->interaction_extract(true);
+                                          }
+                                      } )
+                              )
             );
     }
 	
@@ -203,7 +243,7 @@ abstract class Model_Items_Abstract_Bottle extends Model_Items_Abstract_Label im
 		return true;
 	}
 	
-	public function interaction_extract($all = false) {
+	public function interaction_extract(bool $all = false) {
 		if ($this->bottle_fillrate <= 0) {
             Globals::PrimaryPlayerF()->log()->add(new Model_Log_Types_String(null, 'Diese Flasche ist leider leer...'));
 			return true;

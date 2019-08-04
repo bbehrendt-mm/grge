@@ -335,9 +335,6 @@ class Controller_Game extends Controller {
 
             // No item specifics for short
             if (!$short) {
-                if (Tool_System::instance_of($item, 'Interface_Label'))
-                    $data['custom_label'] = true;
-
                 if (Tool_System::instance_of($item, 'Interface_Countable') && !Tool_System::instance_of($item, Model_Items_Abstract_Bottle::cls())) {
                     $data['count'] = $item->count();
                     $data['capacity'] = $item->capacity();
@@ -368,14 +365,21 @@ class Controller_Game extends Controller {
                     ];
                 }
 
+                $data['widgets'] = [];
+
+                if (Tool_System::instance_of($item, 'Interface_Label'))
+                    $data['widgets'][] = 'label';
+
                 if (Tool_System::instance_of($item, Model_Items_Abstract_Liquid::cls()))
-                    $data['is_water'] = true;
+                    $data['widgets'][] = 'water';
 
                 if (Tool_System::instance_of($item, Model_Items_Chem::cls()))
-                    $data['is_chem'] = true;
+                    $data['widgets'][] = 'chem';
 
                 if (Tool_System::instance_of($item, Model_Items_Abstract_Pillbox::cls()))
-                    $data['is_pillbox'] = true;
+                    $data['widgets'][] = 'pillbox';
+
+                $data['widgets'] = implode( " ",  $data['widgets']);
             }
 
 

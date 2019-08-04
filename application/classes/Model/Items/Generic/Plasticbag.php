@@ -10,7 +10,30 @@ class Model_Items_Generic_Plasticbag extends Model_Items_Abstract_Item implement
 	);
 	
 	protected static $weight = 1;
-	
+
+    protected function hid(): Model_Hid {
+        return parent::hid()
+            ->add_action( 'Füllen' ,
+                          Model_Action::factory()
+                              ->buttonskin( 'batch' )
+                              ->allow_remote(false)
+                              ->effect(
+                                  Model_Effect::factory()
+                                      ->custom( function(Model_Player $p) {
+                                          $bottles = Tool_Scripts::get_items( static::cls() );
+                                          $water = Tool_Scripts::get_items( Model_Items_Abstract_Liquid::cls() );
+
+                                          while (!empty($bottles) && !empty($water)) {
+
+                                              /** @var Model_Items_Abstract_Wbgun $latest_bottle */
+                                              $latest_bottle = array_pop($bottles);
+                                              $latest_bottle->interaction_fill( array_pop($water) );
+                                          }
+                                      } )
+                              )
+            );
+    }
+
 	private function produce_waterbomb() {
 		$this->consume();
 		

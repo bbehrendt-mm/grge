@@ -94,7 +94,7 @@ class Controller_Act extends Controller_Game {
             }
     }
 
-    private function inventory_fill($items): void
+    private function inventory_fill($items, bool $all = false): void
     {
         /**
          * @var Model_Items_Abstract_Item $item
@@ -102,7 +102,7 @@ class Controller_Act extends Controller_Game {
         $bottle = false;
         $water = [];
 
-        if (count($items) < 2) return;
+        if (count($items) < 1 || (count($items) < 2 && !$all) ) return;
 
         foreach ($items as $itemid) {
             if (!($item = Globals::CurrentGameF()->uin()->get($itemid, Model_Items_Abstract_Item::cls()))) continue;
@@ -121,14 +121,21 @@ class Controller_Act extends Controller_Game {
             return;
         }
 
-        if (!$bottle || !$water) return;
+        if (!$bottle) return;
+        if ($all && $bottle->capacity() >= ( $bottle->count() + count($water) ) )
+            $water = array_merge( $water, Tool_Scripts::get_items( Model_Items_Abstract_Liquid::cls() ) );
+
+        if (!$water) return;
 
         /**
          * @var Model_Items_Abstract_Bottle $bottle
          * @var Model_Items_Abstract_Liquid $water_item
          */
-        foreach ($water as $water_item)
+        foreach ($water as $water_item) {
             $bottle->interaction_fill($water_item);
+            if ($bottle->capacity() <= $bottle->count()) break;
+        }
+
 
     }
 
@@ -186,7 +193,7 @@ class Controller_Act extends Controller_Game {
         else Globals::PrimaryPlayerF()->achievements()->achieve(Model_Achievement::MA_NOSCIENCE);
     }
 
-    private function inventory_spill($items, $all = false): void
+    private function inventory_spill($items, bool $all = false): void
     {
         /**
          * @var Model_Items_Abstract_Item $item
@@ -332,7 +339,7 @@ class Controller_Act extends Controller_Game {
         elseif (in_array($action, ['pilldrop','pilltake']))
             $this->inventory_pill($action,$items,(int)self::post('count'));
         elseif ($action === 'fill')
-            $this->inventory_fill($items);
+            $this->inventory_fill($items, (bool)self::post('all'));
         elseif ($action === 'defill')
             $this->inventory_defill($items);
         elseif ($action === 'spill')

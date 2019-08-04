@@ -73,6 +73,11 @@
 @buttons-main-font-color: @zv-color-secondary;
 @buttons-main-icon-mask: #BABABA;
 
+@buttons-main-alt-background-color: #943d01;
+@buttons-main-alt-border-color: #6c1f01;
+@buttons-main-alt-font-color: @zv-color-secondary;
+@buttons-main-alt-icon-mask: #BABABA;
+
 @buttons-blue-background-color: #005694;
 @buttons-blue-border-color: #001952;
 @buttons-blue-font-color: @zv-color-secondary;
@@ -112,10 +117,14 @@
   &.yellow, &.btn-zv.btn-zv-skinned-hero_shop {.generic-button-color(@buttons-yellow-background-color, @buttons-yellow-border-color, @buttons-yellow-font-color, @buttons-yellow-icon-mask)}
   &.green, &.btn-zv.btn-zv-skinned-context {.generic-button-color(@buttons-green-background-color, @buttons-green-border-color, @buttons-green-font-color, @buttons-green-icon-mask)}
   &.purple, &.btn-zv.btn-zv-skinned-epic {.generic-button-color(@buttons-purple-background-color, @buttons-purple-border-color, @buttons-purple-font-color, @buttons-purple-icon-mask)}
+  &.orange, &.btn-zv.btn-zv-skinned-batch {.generic-button-color(@buttons-main-alt-background-color, @buttons-main-alt-border-color, @buttons-main-alt-font-color, @buttons-main-alt-icon-mask)}
 
   &.btn-zv {
     padding-bottom: 0; font-size: 12px;
-    >span {display: block; padding-bottom: 3px;}
+    >span {
+      display: block; padding-bottom: 3px;
+      &.small { font-variant: small-caps; font-size: 10px; padding: 0; }
+    }
     >div.consequence {
       text-align: left; background: @buttons-consequence-background-color; border: 1px solid @buttons-consequence-border-color;
       border-bottom: none; margin: 5px 5px 0; border-top-left-radius: 3px; border-top-right-radius: 3px;

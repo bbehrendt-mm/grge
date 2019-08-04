@@ -25,7 +25,7 @@
             $(target).append(container);
 
             if (!remote) {
-                if (!v.is_water)
+                if (v.widgets && v.widgets.includes('water'))
                     container.click(function(e, force) {
                         var o;
                         if (o = $(this).data('click-override'))
@@ -67,7 +67,7 @@
             container.attr('data-id', v.uin);
             if (v.fill)
                 container.attr('data-is-fillable', v.count < v.fill.capacity);
-            if (v.is_water || (v.fill && !v.fill.fixed && v.count > 0))
+            if ((v.widgets && v.widgets.includes('water')) || (v.fill && !v.fill.fixed && v.count > 0))
                 container.attr('data-is-spillable', true);
 
             var notes = [];
@@ -108,7 +108,7 @@
                     );
 
                     var subhead = $();
-                    if (v.label && !v.custom_label)
+                    if (v.label && !(v.widgets && v.widgets.includes('label')))
                         subhead = subhead.add($('<i />').addClass('info center').text(v.label));
                     if (v.count && !v.fill)  subhead = subhead.add($('<i />').addClass('info center').text(v.count + (v.capacity ? (' / ' + v.capacity + ' ') : ' ' ) + v.stack));
                     if (v.weight) subhead = subhead.add($('<i />').addClass('info center').text(<?=__j('Gewicht')?> + ': ' + v.weight));
@@ -116,7 +116,7 @@
                     if (subhead.length)
                         content.append(subhead).append('<span class="separator" />');
 
-                    if (v.custom_label) {
+                    if (v.widgets && v.widgets.includes('label')) {
                         content
                             .append(
                                 NF.row().append(
@@ -146,7 +146,7 @@
                             ).append('<span class="separator" />');
                     }
 
-                    if (v.is_chem) {
+                    if (v.widgets && v.widgets.includes('chem')) {
                         content.append(
                             $('<div />').addClass('note').text(<?=__j('Du kannst diese Chemikalie mit beliebigen anderen Gegenständen kombinieren. Welchen Effekt das hat... das wirst du selbst herausfinden müssen.')?>)
                         ).append(
@@ -221,6 +221,11 @@
                         if (v.count > 1 && !v.fill.fixed)
                             fillbox.append($('<div />').addClass('fillbox pointer').css('vertical-align', 'top').append(NF.fa('arrow-down')).click(function() {
                                 core.command('act/inventory',{action: 'spill', items: [v.uin], all: true, player: $('[data-pid-selected="1"]').attr('data-pid')});
+                            }));
+
+                        if (v.count < v.fill.capacity && !v.fill.fixed)
+                            fillbox.append($('<div />').addClass('fillbox pointer').css('vertical-align', 'top').append(NF.fa('arrow-up')).click(function() {
+                                core.command('act/inventory',{action: 'fill', items: [v.uin], all: true, player: $('[data-pid-selected="1"]').attr('data-pid')});
                             }));
 
                         content.append('<span class="separator" />');
@@ -329,7 +334,7 @@
 
                     }
 
-                    if (v.static > 1 && !v.is_water) {
+                    if (v.static > 1 && !(v.widgets && v.widgets.includes('water'))) {
                         content.append('<span class="separator" />').append(core.snippets.button(rucksack ? <?=__j('Alle ablegen')?> : <?=__j('Alle mitnehmen')?>, function() {
                             core.command('act/inventory',{action: rucksack ? 'drop' : 'take', items: $.objToArray(v.set, true), player: $('.inventory_player[data-pid-selected=1]').data('pid')});
                         }));
@@ -367,7 +372,7 @@
                         if (targets.length <= 1) auto_tab.hide();
                     }
 
-                    if (v.is_pillbox) {
+                    if (v.widgets && v.widgets.includes('pillbox')) {
                         var pillrow;
                         content.append('<span class="separator" />').append(
                             pillrow = NF.row()

@@ -3,36 +3,36 @@
 class Model_Items_Vending extends Model_Items_Abstract_Item {
 
     /** @var  Model_Factory_Items $factory */
-	protected $factory;
+    protected $factory;
     private $chem_rand_type;
-	
-	protected static $static_info = Array(
-			'name' => 'Verkaufsautomat',
-			'icon' => 'vending',
-			'description' => 'Dieser Verkaufsautomat sieht ziemlich heruntergekommen aus. Die Scheibe ist verdreckt und die Beschriftungen der einzelnen Knöpfe sind nicht mehr lesbar. Vielleicht wirfst du einfach mal Geld ein und schaust, ob etwas heraus kommt?',
-			'category' => Model_Items_Abstract_Item::MIAI_CAT_MISC,
-            'deco' => 5,
-	);
-	
-	protected $basetype;
-	protected $basename;
-	
-	protected static $weight = 120;
 
-	public function __construct($basecfg, $name) {
+    protected static $static_info = Array(
+        'name' => 'Verkaufsautomat',
+        'icon' => 'vending',
+        'description' => 'Dieser Verkaufsautomat sieht ziemlich heruntergekommen aus. Die Scheibe ist verdreckt und die Beschriftungen der einzelnen Knöpfe sind nicht mehr lesbar. Vielleicht wirfst du einfach mal Geld ein und schaust, ob etwas heraus kommt?',
+        'category' => Model_Items_Abstract_Item::MIAI_CAT_MISC,
+        'deco' => 5,
+    );
+
+    protected $basetype;
+    protected $basename;
+
+    protected static $weight = 120;
+
+    public function __construct($basecfg, $name) {
         $this->basetype = $basecfg;
-		$this->basename = $name;
+        $this->basename = $name;
 
         /** @var Model_Factory_Items factory */
         $this->factory = Model_Factory_Items::read($basecfg, Globals::CurrentGameF()->config('game.config.itemset'));
         $this->factory->set_decay_factor(0);
-		parent::__construct();
-	}
-	
-	public function name(): string
+        parent::__construct();
+    }
+
+    public function name(): string
     {
-		return parent::name() . ' (' . $this->basename . ')';
-	}
+        return parent::name() . ' (' . $this->basename . ')';
+    }
 
     protected function hid(): Model_Hid {
         return parent::hid()
@@ -44,23 +44,45 @@ class Model_Items_Vending extends Model_Items_Abstract_Item {
                         ->ambiguous_effect()
                         ->achieve(Model_Achievement::MA_CAPITALISM)
                         ->custom(function($p) {
-                            $this->vend($p);
+                            $this->vend($p, 1);
+                        })
+                )
+            )->add_action('Alles Geld einwerfen', Model_Action::factory()
+                ->deny_for(Interface_Plentity::IC_NPC_ANIMAL)
+                ->effect(
+                    Model_Effect::factory()
+                        ->ambiguous_effect()
+                        ->custom(function(Model_Player $p) {
+
+                            $money = floor( Tool_Scripts::count_items( Model_Items_Money::cls(), Struct_ScriptItemSource::default()->use_perspective($p) ) / 4.0 );
+                            if ($money == 0)
+                                $p->log()->add( 'Du hast nicht genug Geld.' );
+                            else if (Tool_Scripts::consume_items(
+                                Struct_ItemEntry::convert([Model_Items_Money::cls() => $money * 4]),
+                                Struct_ScriptItemSource::default()->use_perspective($p)
+                            )) $this->vend($p, $money);
                         })
                 )
             );
     }
-	
-	public function vend($player = null): bool
+
+    public function vend($player = null, int $num = 1): bool
     {
         if ($player === null)
-            $player = Globals::CurrentPlayerF();
-		
-		$item = $this->factory->nd_spawn();
-		if (!$item) $item = new Model_Items_Money(4);
-        Tool_Scripts::place_new_item($item, false);
-		$player->location()->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_VENDING, $item));
+            $player = Globals::CurrentPlayerActualF();
+
+        $items = [];
+        for ($i = 0; $i < $num; $i++) {
+            $item = $this->factory->nd_spawn();
+            if (!$item) $item = new Model_Items_Money(4);
+            else $player->achievements()->achieve( Model_Achievement::MA_CAPITALISM, 1 );
+            $items[] = $item;
+        }
+
+        Tool_Scripts::place_new_item($items, false);
+        $player->location()->log()->add(new Model_Log_Types_Item(Model_Log_Types_Item::MLTI_VENDING, $items));
         return true;
-	}
+    }
 
     public function mixchem($chemval): bool
     {

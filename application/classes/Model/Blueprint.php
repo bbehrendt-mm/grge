@@ -1028,7 +1028,7 @@ class Model_Blueprint {
                     'icon' => $entry->icon(),
                     'count' => $entry->count,
                     'have' => Tool_Scripts::count_items($class,Struct_ScriptItemSource::default()->use_decider(function (Model_Items_Abstract_Item $item) use ($entry) {
-                        return $entry->type === null ? true : ($item->type === $entry->type);
+                        return $entry->type === null ? true : ($item->type == $entry->type);
                     }))
                 ];
             }

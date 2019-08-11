@@ -1,6 +1,12 @@
 <?php
 /**
  * @var $url
+ * @var $avatar
+ * @var $user
+ * @var $id
+ * @var $dv_id
+ * @var $d2n_id
+ * @var $token
  */
 ?>
 
@@ -9,15 +15,79 @@
 <div class="row"><div class="cell rw-12 padded"><div class="note"><?=__('Hier kannst du einige Einstellungen für dein ZombVival-Profil vornehmen.');?></div></div></div>
 <br />
 
-<div class="row">
+
+
+<ul class="tabline">
+    <li data-controls="settings_avatar" class="active"><?=__('Avatar & Name')?></li>
+    <li data-controls="settings_login" class=""><?=__('Login')?></li>
+    <li data-controls="settings_ui" class=""><?=__('Benutzeroberfläche')?></li>
+</ul>
+
+<div class="row settings-tab" id="settings_avatar">
+    <div class="cell rw-12">
+        <div class="row">
+            <div class="cell rw-2 rw-sm-12 padded left">
+                <div class="framed main inline-block">
+                    <img class="avatar" src="<?=$avatar ?: 'media/img/mugshot.png'?>" alt="<?=$user?>">
+                </div>
+            </div>
+            <div class="cell rw-10 rw-sm-12 left">
+                <div class="row">
+                    <div class="cell rw-12 padded">
+                        <span style="font-size: 20px; font-weight: bold"><?=$user?></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <?php if ($dv_id >= 0 || $d2n_id >= 0) { ?>
+                        <div class="cell rw-12 padded">
+                            <div id="profile_sync_button" class="btn small"><?=__('Mit MotionTwin abgleichen');?></div>
+                        </div>
+                    <?php } ?>
+                    <?php if ($avatar) { ?>
+                        <div class="cell rw-12 padded">
+                            <div id="profile_sync_button" class="btn small"><?=__('Profilbild entfernen');?></div>
+                        </div>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row settings-tab" id="settings_login">
+    <div class="cell rw-12">
+        <div class="row">
+            <div class="cell rw-6 rw-md-12 padded">
+                <div class="row">
+                    <div class="cell rw-12"><b><?=__('Verknüpfte Accounts')?></b></div>
+                    <?php if ($dv_id >= 0) {?>
+                        <div class="cell ro-1 ro-md-0 rw-11 rw-md-12 padded">Die Verdammten <span class="small">(<?=__('ID-Nr.')?> <?=$dv_id?>)</span></div>
+                    <?php } ?>
+                    <?php if ($d2n_id >= 0) {?>
+                        <div class="cell ro-1 ro-md-0 rw-11 rw-md-12 padded">Die2Nite <span class="small">(<?=__('ID-Nr.')?> <?=$d2n_id?> )</span></div>
+                    <?php } ?>
+                    <div class="cell rw-12 padded">
+                        <div id="profile_qr" class="btn btn-icon"><span class="btn-icon-inner"><i class="fa fa-mobile"></i></span><span id="confirm-content"><?=__('Smartphone oder Tablet verknüpfen');?></span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="cell rw-6 rw-md-12 padded">
+                <?php if ($token) {?>
+                <div class="note">
+                    <?=__('Hierdurch werden Login-Daten zu deinem Profil auf diesem sowie allen anderen PCs, auf denen sie gespeichert sind, unbrauchbar gemacht. Um dich nach Anwenden dieser Option wieder einzuloggen, musst du deinen DV oder D2N Schlüssel verwenden.');?>
+                    <div id="profile_reset_token" class="btn"><?=__('Gespeicherte Logins zurücksetzen');?></div>
+                </div>
+                <?php } ?>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row settings-tab" id="settings_ui">
 
     <div class="cell rw-10 ro-1 rw-lg-12 ro-lg-0">
         <div class="row">
-
-            <div class="cell rw-12 center">
-                <h2><?=__('Benutzeroberfläche')?></h2>
-            </div>
-
             <div class="cell rw-4 rw-md-12 padded">
 
                 <label for="quality"><b><?=__('Darstellungsqualität');?></b></label><br />
@@ -59,11 +129,6 @@
         <br /><br />
 
         <div class="row">
-
-            <div class="cell rw-12 center">
-                <h2><?=__('Im Spiel')?></h2>
-            </div>
-
             <div class="cell rw-4 rw-md-12 padded">
                 <label for="heroic_ui"><b><?=__('Anzeige der Heldentaten');?></b></label><br />
                 <select id="heroic_ui" data-associated-setting="heroid_ui"  data-default="inline">
@@ -92,32 +157,22 @@
 
 </div>
 
-<br /><br />
-
-<div class="row">
-
-    <div class="cell rw-12 center">
-        <h2><?=__('Login')?></h2>
-
-    </div>
-    <div class="cell rw-12">
-        <div class="row">
-            <div class="cell rw-6 rw-md-12 padded">
-                <div id="profile_qr" class="btn btn-icon"><span class="btn-icon-inner"><i class="fa fa-mobile"></i></span><span id="confirm-content"><?=__('Smartphone oder Tablet verknüpfen');?></span></div>
-            </div>
-            <div class="cell rw-6 rw-md-12 padded">
-                <div class="note">
-                    <?=__('Hierdurch werden Login-Daten zu deinem Profil auf diesem sowie allen anderen PCs, auf denen sie gespeichert sind, unbrauchbar gemacht. Um dich nach Anwenden dieser Option wieder einzuloggen, musst du deinen DV oder D2N Schlüssel verwenden.');?>
-                    <div id="profile_reset_token" class="btn"><?=__('Gespeicherte Logins zurücksetzen');?></div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-
 <script type="application/javascript">
 // ## JS COMPRESS BEGIN ## //
+
+    $('.tabline').children('li').click(function () {
+        if ($(this).hasClass('active')) return;
+
+        var target = $(this).data('controls');
+        $('.settings-tab').not('#' + target).slideUp();
+        $('.settings-tab').filter('#' + target).slideDown();
+        $('.tabline').children('li').removeClass('active');
+        $(this).addClass('active');
+    });
+    $('.settings-tab').hide();
+    $('.settings-tab').filter( '#' + $('.tabline').children('li:first-child').data('controls') ).show();
+
+
     $('#profile_reset_token').click(function() {
         if (!confirm(<?=__j('Bist du sicher?')?>)) return;
 

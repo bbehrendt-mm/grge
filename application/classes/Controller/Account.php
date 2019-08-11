@@ -102,8 +102,24 @@ class Controller_Account extends Controller {
 
     public function action_settings(): void
     {
+        // Account Providers
+        $accounts = Model_Auth_Legacy::get_all_providers( Globals::CurrentUserF()->uid() );
+
+        Controller::dump('a', $accounts);
+
         // Render page
-        $this->add_widget(View::factory('pages/settings')->set('url', URL::base(true))->render());
+        $this->add_widget(
+            View::factory('pages/settings')
+                ->set('url', URL::base(true))
+                ->set('avatar', Model_Euser::avatar_by_id(Globals::CurrentUserF()->uid()))
+                ->set('user',   Globals::CurrentUserF()->name())
+                ->set('id', Globals::CurrentUserF()->uid())
+                ->set('dv_id',  isset( $accounts['Model_Auth_Hordesde'] ) ? (int)$accounts['Model_Auth_Hordesde']['rid'] : -1)
+                ->set('d2n_id', isset( $accounts['Model_Auth_Hordesen'] ) ? (int)$accounts['Model_Auth_Hordesen']['rid'] : -1)
+                ->set('token',  isset( $accounts['Model_Auth_Token'] )    ? true : false)
+                ->set('local_login',  false)
+                ->render()
+        );
 
         // Render menu
         $this->add_menu('logout');

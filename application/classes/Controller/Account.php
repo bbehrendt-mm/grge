@@ -100,12 +100,46 @@ class Controller_Account extends Controller {
         $this->render(['pin' => $pin]);
     }
 
-    public function action_settings(): void
+    public function japi_sync_mt(): void
     {
         // Account Providers
         $accounts = Model_Auth_Legacy::get_all_providers( Globals::CurrentUserF()->uid() );
 
-        Controller::dump('a', $accounts);
+        $authenticator = null;
+        if ( isset( $accounts['Model_Auth_Hordesde'] ) ) {
+            $authenticator = new Model_Auth_Hordesde($accounts['Model_Auth_Hordesde']['var1'], false);
+            if (!$authenticator->connectToLocal() || !$authenticator->is_ready()) $authenticator = null;
+        }
+        if ( !$authenticator && isset( $accounts['Model_Auth_Hordesde'] ) ) {
+            $authenticator = new Model_Auth_Hordesen($accounts['Model_Auth_Hordesen']['var1'], false);
+            if (!$authenticator->connectToLocal() || !$authenticator->is_ready()) $authenticator = null;
+        }
+
+        if (!$authenticator) {
+            $this->render(['success' => false]);
+            return;
+        }
+
+        $hash = md5( $authenticator->getRemoteName() . '/' . $authenticator->getRemoteAvatarUrl());
+
+        $this->render([
+            'success' => true,
+            'control' => $hash,
+            'avatar' => [
+                'old' => Model_Euser::avatar_by_id(Globals::CurrentUserF()->uid()),
+                'new' => $authenticator->getRemoteAvatarUrl(),
+            ],
+            'name' => [
+                'old' => Globals::CurrentUserF()->name(),
+                'new' => $authenticator->getRemoteName()
+            ],
+        ]);
+    }
+
+    public function action_settings(): void
+    {
+        // Account Providers
+        $accounts = Model_Auth_Legacy::get_all_providers( Globals::CurrentUserF()->uid() );
 
         // Render page
         $this->add_widget(

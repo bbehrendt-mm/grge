@@ -15,7 +15,8 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Generated files" level="project" />
     <orderEntry type="library" name="Custom Libraries" level="project" />
-    <orderEntry type="library" name="jQuery-2.0.0" level="project" />
+    <orderEntry type="library" name="jQuery" level="project" />
+    <orderEntry type="library" name="@types/jquery" level="application" />
     <orderEntry type="library" name="@types/jquery" level="application" />
   </component>
 </module>

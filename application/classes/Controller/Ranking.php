@@ -213,9 +213,6 @@ class Controller_Ranking extends Controller {
             $cache_m[$s][] = $entry;
         }
 
-        Controller::dump('r', [$cache, $cache_m]);
-
-
         $finalcache = [];
         foreach ($cache as $modecache)
             $finalcache = array_merge($finalcache,array_filter($modecache, function($e) use ($uid) {return $e['uid'] == $uid;}));

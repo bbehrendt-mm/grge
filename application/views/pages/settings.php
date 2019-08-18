@@ -160,20 +160,65 @@
 <script type="application/javascript">
 // ## JS COMPRESS BEGIN ## //
 
-    $('.tabline').children('li').click(function () {
-        if ($(this).hasClass('active')) return;
+    (function() {
+        var tabline = $('.tabline');
+        var tabs = $('.settings-tab');
 
-        var target = $(this).data('controls');
-        $('.settings-tab').not('#' + target).slideUp();
-        $('.settings-tab').filter('#' + target).slideDown();
-        $('.tabline').children('li').removeClass('active');
-        $(this).addClass('active');
+        tabline.children('li').on('click',function () {
+            if ($(this).hasClass('active')) return;
+
+            var target = $(this).data('controls');
+            tabs.not('#' + target).slideUp();
+            tabs.filter('#' + target).slideDown();
+            $('.tabline').children('li').removeClass('active');
+            $(this).addClass('active');
+        });
+        tabs.hide();
+        tabs.filter( '#' + tabline.children('li:first-child').data('controls') ).show();
+    })();
+
+    $('#profile_sync_button').on('click', function() {
+        var popup = core.popup.spawn(500);
+        var loader = core.snippets.wait();
+        popup.append( loader );
+
+        game.network.query('japi/account/sync_mt', {}, function(data) {
+
+            if (!data['success']) {
+                popup.trigger('unpop');
+                game.render.html.notify('error', <?=__j('Beim Abrufen der Daten von MotionTwin ist ein Fehler aufgetreten.')?>);
+                return;
+            }
+
+            popup
+                .append(
+                    NF.row().append( NF.cell(true, 12).append( NF.n('span', '', <?=__j('Möchtest du deine aktuellen Profilinformationen ersetzen?')?> ) ))
+                ).append(
+                    NF.row()
+                        .append( NF.cell(true, 4, 0, 'right').append(NF.n('div', 'framed main inline-block').append($('<img src="' + data.avatar.old + '" alt="old_avatar" />'))) )
+                        .append( NF.cell(true, 8, 0, 'left')
+                            .append(NF.n('div', 'b', data.name.old))
+                            .append(NF.n('div', 'i', <?=__j('Dies ist dein aktuelles, von ZombVival gespeichertes Profil.')?>))
+                        )
+                ).append(
+                    NF.row().append( NF.cell(true, 12, 0, 'center').append( NF.fa('arrow-down') ))
+                ).append(
+                    NF.row()
+                        .append( NF.cell(true, 4, 0, 'right').append(NF.n('div', 'framed main inline-block').append($('<img src="' + data.avatar.new + '" alt="old_avatar" />'))) )
+                        .append( NF.cell(true, 8, 0, 'left')
+                            .append(NF.n('div', 'b', data.name.new))
+                            .append(NF.n('div', 'i', <?=__j('Dies sind deine aktuellen Profildaten, die bei MotionTwin gespeichert sind.')?>))
+                        )
+                )
+
+        }, function() {
+            loader.hide();
+        })
+
     });
-    $('.settings-tab').hide();
-    $('.settings-tab').filter( '#' + $('.tabline').children('li:first-child').data('controls') ).show();
 
 
-    $('#profile_reset_token').click(function() {
+    $('#profile_reset_token').on('click',function() {
         if (!confirm(<?=__j('Bist du sicher?')?>)) return;
 
         $('#content').addClass('disabled');
@@ -188,7 +233,7 @@
         })
     });
 
-    $('#profile_qr').click(function() {
+    $('#profile_qr').on('click', function() {
         var popup = core.popup.spawn({desktop: 424, sm: '100%'});
         var content, qr_area;
         popup.append(

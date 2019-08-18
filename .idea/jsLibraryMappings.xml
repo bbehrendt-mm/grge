@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="file://$PROJECT_DIR$/application" libraries="{Custom Libraries, Generated files, HTML, HTTP Response Handler, Node.js Core, jQuery-2.0.0}" />
-    <file url="PROJECT" libraries="{@types/jquery, jQuery-2.0.0}" />
+    <file url="file://$PROJECT_DIR$/application" libraries="{Custom Libraries, Generated files, HTML, HTTP Response Handler, Node.js Core, jQuery}" />
+    <file url="PROJECT" libraries="{@types/jquery, jQuery}" />
   </component>
 </project>

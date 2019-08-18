@@ -16,7 +16,7 @@ abstract class Model_Auth_Legacy extends Model_Auth_Interface {
         if (is_string($tmp_error = $this->login_remote($secret_key))) {
             $this->last_error = $tmp_error;
             if ($allow_fallback) $this->login_local($secret_key);
-        }
+        } else $this->ready = true;
     }
 
     public function connectToLocal($target_id = null): bool

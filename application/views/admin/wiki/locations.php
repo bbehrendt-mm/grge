@@ -20,14 +20,16 @@
             <div class="row">
                 <div class="cell padded rw-4">Location Name</div>
                 <div class="cell padded rw-1">N.Dg.</div>
-                <div class="cell padded rw-7">Hierarchy</div>
+                <div class="cell padded rw-1">B/H</div>
+                <div class="cell padded rw-6">Hierarchy</div>
             </div>
             <?php foreach ($locations as $location) { ?>
                 <div class="row pointer" data-roll="1">
                     <div class="cell-small padded rw-1"><img src="media/icons/places/<?=$location['info']['icon']?>.gif" /></div>
                     <div class="cell-small padded rw-7"><?=$location['info']['name']?></div>
                     <div class="cell padded rw-1"><?=round($location['info']['danger']['ndg'],2)?></div>
-                    <div class="cell padded rw-7">
+                    <div class="cell padded rw-1"><?=round($location['info']['danger']['rte'],2)?></div>
+                    <div class="cell padded rw-6">
                         <?php foreach ($location['lineage'] as $anc) { ?>
                             <i style="font-size: 14px; font-weight: bolder" class="fa fa-angle-left"></i> <span style="font-size: 10px;"><?=$anc?></span>
                         <?php } ?>

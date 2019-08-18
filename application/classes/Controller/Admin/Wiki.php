@@ -164,7 +164,7 @@ class Controller_Admin_Wiki extends Controller_Admin_Admin {
                         'num' => empty($z_range)
                             ? [0,0,0]
                             : [ floor($max_str / $z_range[1]), floor($max_str / $z_avg), floor($max_str / $z_range[0]) ],
-                        'rte' => round(12 * ($z_avg * $spawn->stat_chance() * $spawn->stat_blocking_factor()), 2)
+                        'rte' => empty($z_range) ? 0 : round(12 * ($z_range[1] * $spawn->stat_chance() * $spawn->stat_blocking_factor()), 2)
                     ]
                 ],
                 'items' => $item_chances,

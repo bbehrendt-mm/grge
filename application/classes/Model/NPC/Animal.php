@@ -56,6 +56,7 @@ abstract class Model_NPC_Animal extends Model_NPC_Nano
         new Model_Buffs_Transport($this);
         new Model_Buffs_Daytime($this);
         new Model_Buffs_Freeze($this);
+        new Model_Buffs_Flashlight2($this);
 
         $this->companion(true);
     }

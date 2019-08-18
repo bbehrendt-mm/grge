@@ -29,7 +29,7 @@ class Model_Buffs_Flashlight2 extends Model_Buffs_Abstract_Passive {
 
 	protected function activator(): bool
     {
-        if (!$this->associated_to_player()) return false;
+        if (!$this->assoc_player) return false;
 
         foreach ($this->assoc_player->inventory()->get(Model_Items_Flashlight::cls()) as $flashlight)
             /** @var $flashlight Model_Items_Flashlight */

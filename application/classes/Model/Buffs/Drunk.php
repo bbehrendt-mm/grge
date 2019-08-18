@@ -8,6 +8,7 @@ class Model_Buffs_Drunk extends Model_Buffs_Abstract_Fragile {
 
     public function __construct($player_id) {
         parent::__construct($player_id, 18);
+        new Model_Buffs_Passout($this->assoc_player);
     }
 
     protected function get_effects(): array { return [
@@ -33,6 +34,8 @@ class Model_Buffs_Drunk extends Model_Buffs_Abstract_Fragile {
 
     protected function action_on_complete() {
         if ($this->associated_to_player() && Tool_Scripts::location_type($this->assoc_player->location_class()) === 2) {
+
+            if ($buff = $this->assoc_player->get_status()->retrieve('passout')) $buff->unbuff();
 
             $l = $this->assoc_player->location();
             if		($l->has_room('bedroom','bedr3'))	new Model_Buffs_Sleep($this->assoc_player, 3);

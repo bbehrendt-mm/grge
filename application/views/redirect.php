@@ -1,8 +1,8 @@
 <?php
     /**
      * @var string $url
-     * @var string $path
-     * @var string $sid
+     * @var string|null $path
+     * @var array|null $others
      */
 ?>
 <html>
@@ -21,8 +21,12 @@
 <body>
     Redirecting ...
 
-    <form action="<?=$url?>" method="get" style="display: none">
-        <input type="hidden" name="r" value="<?=$path?>">
+    <form action="<?=$url?>" method="<?=empty($others) ? 'get' : 'post'?>" style="display: none">
+        <?php if ($path !== null) { ?>
+            <input type="hidden" name="r" value="<?=$path?>">
+        <?php } else if (!empty($others)) foreach ($others as $key => $val) if ($val !== null) { ?>
+            <input type="hidden" name="<?=$key?>" value="<?=htmlspecialchars($val)?>">
+        <?php } ?>
     </form>
 
     <script type="text/javascript">

@@ -28,6 +28,7 @@ return array(
 	'io' => array(
 		'security' => array(
 			'unisessions' => true,
+            'strict_https' => true,
 		),
 		'performance' => array(
 			'use_cloud' => true,

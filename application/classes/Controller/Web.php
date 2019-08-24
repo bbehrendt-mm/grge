@@ -63,6 +63,25 @@ class Controller_Web extends Controller {
 
     public function action_framework(): void
     {
+        $force_https = Kohana::$config->load('server.io.security.strict_https');
+
+        if ($force_https && strpos($this->request->url(true), 'https://') !== 0) {
+            $target_url = $this->request->url('https');
+            if (substr($target_url, -1) === '/') $target_url = substr($target_url, 0, -1);
+            $target_url .= Url::query();
+            $target_post = $this->request->post();
+            if (!isset($target_post['ref'])) $target_post['ref'] = $this->request->referrer() ?: null;
+            $this->response->body(
+                View::factory('redirect')
+                    ->set('url', $target_url)
+                    ->set('path', null)
+                    ->set('others', $target_post)
+            );
+
+            return;
+
+        }
+
         $js = ['jquery.min.js'];
         $css = [];
         foreach (scandir(APPPATH . 'assets/js', SCANDIR_SORT_ASCENDING) as $f) if (!in_array($f, ['.','..','jquery.min.js'])) $js[] = $f;

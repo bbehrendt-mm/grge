@@ -111,7 +111,7 @@ Kohana::$environment = ($_SERVER['SERVER_NAME'] !== 'localhost') ? Kohana::PRODU
  * - boolean  caching     enable or disable internal caching                 FALSE
  */
 Kohana::init(array(
-	'base_url'   => '/grge/',
+	'base_url'   => '/grge',
     'caching'    => Kohana::$environment === Kohana::PRODUCTION,
     'profile'    => Kohana::$environment !== Kohana::PRODUCTION,
     'errors' => true,

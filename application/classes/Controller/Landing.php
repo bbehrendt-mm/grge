@@ -33,6 +33,7 @@ class Controller_Landing extends Controller {
     public function action_redirect(): void
     {
         //Get redirect
+
         $rq = $this->session->get('request',['CLIENT_REQUEST' => []]);
         if (isset($rq['CLIENT_REQUEST']['r']) && $rq['CLIENT_REQUEST']['r']) {
             $url = $rq['CLIENT_REQUEST']['r'];

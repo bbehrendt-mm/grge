@@ -100,6 +100,16 @@ class Controller_Account extends Controller {
         $this->render(['pin' => $pin]);
     }
 
+    public function japi_remove_avatar(): void
+    {
+        Globals::CurrentUserF()->remove_avatar( );
+        $this->render([
+            'success' => true,
+            'id' => Globals::CurrentUserF()->uid()
+        ]);
+        return;
+    }
+
     public function japi_sync_mt(): void
     {
         // Account Providers
@@ -121,10 +131,22 @@ class Controller_Account extends Controller {
         }
 
         $hash = md5( $authenticator->getRemoteName() . '/' . $authenticator->getRemoteAvatarUrl());
+        $control = $this->request->post('control', null);
+
+        if ($control !== null) {
+
+            if ($control !== $hash) {
+                $this->render(['success' => false]);
+                return;
+            }
+
+            Globals::CurrentUserF()->update( $authenticator->getRemoteName(), $authenticator->getRemoteAvatarUrl() );
+        }
 
         $this->render([
             'success' => true,
             'control' => $hash,
+            'id' => Globals::CurrentUserF()->uid(),
             'avatar' => [
                 'old' => Model_Euser::avatar_by_id(Globals::CurrentUserF()->uid()),
                 'new' => $authenticator->getRemoteAvatarUrl(),

@@ -28,13 +28,13 @@
         <div class="row">
             <div class="cell rw-2 rw-sm-12 padded left">
                 <div class="framed main inline-block">
-                    <img class="avatar" src="<?=$avatar ?: 'media/img/mugshot.png'?>" alt="<?=$user?>">
+                    <img id="av_img" class="avatar" src="<?=$avatar ?: 'media/img/mugshot.png'?>" alt="<?=$user?>">
                 </div>
             </div>
             <div class="cell rw-10 rw-sm-12 left">
                 <div class="row">
                     <div class="cell rw-12 padded">
-                        <span style="font-size: 20px; font-weight: bold"><?=$user?></span>
+                        <span id="av_name" style="font-size: 20px; font-weight: bold"><?=$user?></span>
                     </div>
                 </div>
                 <div class="row">
@@ -45,7 +45,7 @@
                     <?php } ?>
                     <?php if ($avatar) { ?>
                         <div class="cell rw-12 padded">
-                            <div id="profile_sync_button" class="btn small"><?=__('Profilbild entfernen');?></div>
+                            <div id="profile_noav_button" class="btn small"><?=__('Profilbild entfernen');?></div>
                         </div>
                     <?php } ?>
                 </div>
@@ -177,6 +177,32 @@
         tabs.filter( '#' + tabline.children('li:first-child').data('controls') ).show();
     })();
 
+    $('#profile_noav_button').on('click', function() {
+        if (confirm( <?=__j('Bist du sicher, dass du dein Profilbild entfernen möchtest?')?> )) {
+
+            $('#profile_noav_button').addClass('disabled');
+            game.network.query('japi/account/remove_avatar', {}, function(data) {
+
+                if (!data.success) {
+
+                    game.render.html.notify('error', <?=__j('Beim Aktualisieren der Daten ist ein Fehler aufgetreten.')?>);
+                    $('#profile_noav_button').removeClass('disabled');
+
+                } else {
+
+                    game.render.html.notify('success', <?=__j('Dein Profil wurde aktualisiert.')?>);
+                    $('#av_img').attr('src', 'media/img/mugshot.png');
+
+                    var profiles = game.storage.get('login','profiles',{});
+                    if (profiles && profiles[data.id]) profiles[data.id].avatar = null;
+                    game.storage.set('login','profiles',profiles);
+                }
+
+            });
+
+        }
+    });
+
     $('#profile_sync_button').on('click', function() {
         var popup = core.popup.spawn(500);
         var loader = core.snippets.wait();
@@ -184,15 +210,25 @@
 
         game.network.query('japi/account/sync_mt', {}, function(data) {
 
-            if (!data['success']) {
+            if (!data.success) {
                 popup.trigger('unpop');
                 game.render.html.notify('error', <?=__j('Beim Abrufen der Daten von MotionTwin ist ein Fehler aufgetreten.')?>);
                 return;
             }
 
+            if (data.avatar.old === data.avatar.new && data.name.old === data.name.new) {
+                popup.trigger('unpop');
+                game.render.html.notify('success', <?=__j('Deine Profil ist aktuell. Es ist keine Synchronisierung nötig.')?>);
+                return;
+            }
+
+            var pp_close, pp_accept;
+
             popup
                 .append(
-                    NF.row().append( NF.cell(true, 12).append( NF.n('span', '', <?=__j('Möchtest du deine aktuellen Profilinformationen ersetzen?')?> ) ))
+                    NF.row().append( NF.cell(true, 12).append( NF.n('span', 'b', <?=__j('Möchtest du deine aktuellen Profilinformationen ersetzen?')?> ) ))
+                ).append(
+                    NF.row().append( NF.cell(true, 12).append( NF.info(<?=__j('Wenn du dich derzeit in einem Spiel befindest und deinen Namen änderst, wirst du in deinem aktuellen Spiel weiterhin mit deinem alten Namen angezeigt werden.')?> ) ))
                 ).append(
                     NF.row()
                         .append( NF.cell(true, 4, 0, 'right').append(NF.n('div', 'framed main inline-block').append($('<img src="' + data.avatar.old + '" alt="old_avatar" />'))) )
@@ -209,7 +245,37 @@
                             .append(NF.n('div', 'b', data.name.new))
                             .append(NF.n('div', 'i', <?=__j('Dies sind deine aktuellen Profildaten, die bei MotionTwin gespeichert sind.')?>))
                         )
-                )
+                ).append(
+                    NF.row()
+                        .append( NF.cell(true, 5, 0).append( pp_close = NF.button(<?=__j('Abbrechen')?>, false, 'fa-times') ) )
+                        .append( NF.cell(true, 5, 2).append( pp_accept = NF.button(<?=__j('Ersetzen')?>, false, 'fa-check') ) )
+                );
+
+            pp_close.on('click', function() { popup.trigger('unpop'); });
+            pp_accept.on('click', function() {
+                pp_close.addClass('disabled');
+                pp_accept.addClass('disabled');
+
+                game.network.query('japi/account/sync_mt', {control: data.control}, function(data) {
+                    pp_close.removeClass('disabled');
+                    pp_accept.removeClass('disabled');
+                    if (data.success) {
+                        game.render.html.notify('success', <?=__j('Dein Profil wurde aktualisiert.')?>);
+                        popup.trigger('unpop');
+
+                        $('#av_img').attr('src', data.avatar.new ? data.avatar.new : 'media/img/mugshot.png');
+                        $('#av_name').html( data.name.new );
+
+                        var profiles = game.storage.get('login','profiles',{});
+                        if (profiles && profiles[data.id]) {
+                            profiles[data.id].name   = data.name.new;
+                            profiles[data.id].avatar = data.avatar.new;
+                        }
+                        game.storage.set('login','profiles',profiles);
+
+                    } else game.render.html.notify('error', <?=__j('Beim Aktualisieren der Daten ist ein Fehler aufgetreten.')?>);
+                });
+            });
 
         }, function() {
             loader.hide();

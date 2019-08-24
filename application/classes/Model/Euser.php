@@ -26,6 +26,27 @@ class Model_Euser extends Model_User {
         return $insert_id;
     }
 
+    public static function update_by_id($id, ?string $name = null, ?string $avatar = null) {
+        $data = [];
+        if ($name !== null) $data['name'] = $name;
+        if ($avatar !== null) $data['avatar'] = $avatar;
+        if ($name === null && $avatar === null) return;
+
+        DB::update('users')->set($data)->where('uid', '=', $id)->execute();
+    }
+
+    public function update(?string $name = null, ?string $avatar = null) {
+        static::update_by_id( $this->uid(), $name, $avatar );
+    }
+
+    public static function remove_avatar_by_id($id) {
+        DB::update('users')->set(['avatar' => null])->where('uid', '=', $id)->execute();
+    }
+
+    public function remove_avatar() {
+        static::remove_avatar_by_id( $this->uid() );
+    }
+
     /**
      * Loads lockout data into cache
      */
@@ -71,16 +92,5 @@ class Model_Euser extends Model_User {
     {
         $this->cache_lockouts();
         return static::$cache['lockout']['count'];
-    }
-
-    public static function user_update_avatar($id, $url): void
-    {
-        if (!$url) $url = null;
-        DB::update('users')->set(['avatar' => $url])->where('uid', '=', $id)->execute();
-    }
-
-    public function update_avatar($url): void
-    {
-        static::user_update_avatar($this->uid(), $url);
     }
 }

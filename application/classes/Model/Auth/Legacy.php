@@ -32,7 +32,7 @@ abstract class Model_Auth_Legacy extends Model_Auth_Interface {
             $created = true;
             $this->zvid = Model_Euser::register($this->name,$this->avatar);
         }
-        elseif ($this->avatar && !Model_Euser::avatar_by_id($this->zvid)) Model_Euser::user_update_avatar($this->zvid, $this->avatar);
+        elseif ($this->avatar && !Model_Euser::avatar_by_id($this->zvid)) Model_Euser::update_by_id($this->zvid, null, $this->avatar);
 
         $this->ready = true;
         $this->link($this->sk);

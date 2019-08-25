@@ -7,6 +7,7 @@
  * @var $dv_id
  * @var $d2n_id
  * @var $token
+ * @var $mail
  */
 ?>
 
@@ -75,11 +76,46 @@
                 <?php if ($token) {?>
                 <div class="note">
                     <?=__('Hierdurch werden Login-Daten zu deinem Profil auf diesem sowie allen anderen PCs, auf denen sie gespeichert sind, unbrauchbar gemacht. Um dich nach Anwenden dieser Option wieder einzuloggen, musst du deinen DV oder D2N Schlüssel verwenden.');?>
-                    <div id="profile_reset_token" class="btn"><?=__('Gespeicherte Logins zurücksetzen');?></div>
                 </div>
+                <div id="profile_reset_token" class="btn"><?=__('Gespeicherte Logins zurücksetzen');?></div>
                 <?php } ?>
             </div>
 
+        </div>
+
+        <div class="row">
+            <div class="cell rw-12"><b><?=__('Passwort-Login')?></b></div>
+            <?php if ($mail) {?>
+
+            <?php } else { ?>
+
+                <div class="cell rw-6 padded">
+                    <div class="row iconize" title="<?=__('Bitte gib deine E-Mail Adresse hier ein. Deine Adresse wird ausschließlich für den Login verwendet.');?>">
+                        <div class="padded cell rw-1"><i class="fa fa-envelope"></i></div>
+                        <div class="padded cell rw-11"><input id="email" type="email" autocomplete="on" class="form_input" placeholder="<?=__('Deine E-Mail Adresse');?>" /></div>
+                    </div>
+                    <div class="row iconize" title="<?=__('Gib dein Passwort ein.');?>">
+                        <div class="padded cell rw-1"><i class="fa fa-key"></i></div>
+                        <div class="padded cell rw-11"><input id="pass1" type="password" autocomplete="off" class="form_input" placeholder="<?=__('Passwort');?>" /></div>
+                    </div>
+                    <div class="row iconize" title="<?=__('Gib dein Passwort erneut ein.');?>">
+                        <div class="padded cell rw-1"><i class="fa fa-key"></i></div>
+                        <div class="padded cell rw-11"><input id="pass2" type="password" autocomplete="off" class="form_input" placeholder="<?=__('Passwort wiederholen');?>" /></div>
+                    </div>
+                    <div class="row">
+                        <div class="padded cell rw-6 ro-6 rw-lg-8 ro-lg-4 rw-md-10 ro-md-2 rw-sm-12 ro-sm-0">
+                            <div id="profile_add_pw" class="btn btn-icon"><span class="btn-icon-inner"><i class="fa fa-check"></i></span><span id="confirm-content"><?=__('OK');?></span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cell rw-6 padded">
+                    <div class="note">
+                        <?=__('Wenn du dich in Zukunft gerne mit deiner E-Mail Adresse und einem Passwort anmelden möchtest, kannst du diese Daten hier eintragen. Der Login über DV/D2N wird danach dennoch weiterhin möglich sein.')?>
+                    </div>
+                </div>
+
+            <?php } ?>
         </div>
     </div>
 </div>
@@ -161,6 +197,8 @@
 // ## JS COMPRESS BEGIN ## //
 
     (function() {
+        $('#content').find('.row.iconize, label').qtip(game.render.html.qtip.help({desktop: 'right', lg: 'top'}));
+
         var tabline = $('.tabline');
         var tabs = $('.settings-tab');
 

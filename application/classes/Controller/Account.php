@@ -166,6 +166,7 @@ class Controller_Account extends Controller {
         // Render page
         $this->add_widget(
             View::factory('pages/settings')
+                ->set('mail', Model_Auth_Password::user_getEmail( Globals::CurrentUserF()->uid() ))
                 ->set('url', URL::base(true))
                 ->set('avatar', Model_Euser::avatar_by_id(Globals::CurrentUserF()->uid()))
                 ->set('user',   Globals::CurrentUserF()->name())
@@ -392,7 +393,7 @@ class Controller_Account extends Controller {
 
             $uid = $authenticator->getLocalID();
         } else
-            $authenticator =  $authenticator = new Model_Auth_Token(Model_Auth_Token::token($uid));
+            $authenticator = new Model_Auth_Token(Model_Auth_Token::token($uid));
 
 
         //Get whitelisting entry

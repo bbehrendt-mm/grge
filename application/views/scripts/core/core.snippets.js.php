@@ -269,17 +269,6 @@
             //if (bp.hidden && !bp.build) return false;
 
             var gb_ok = true;
-            $.each(bp.requires, function(k,v) {
-                var ok = false;
-
-                $.each(v, function(ki,vi) {if (lib[vi] && lib[vi].build)  ok = true;});
-                if (!ok)
-                    $.each(v, function(ki,vi) {if (lib[vi] && lib[vi].slot_open && rq_all_check(lib[vi])) ok = true;});
-
-                if (!ok)
-                    return gb_ok = false;
-            });
-
             if (gb_ok) $.each(bp.requires_local, function(k,v) {
                 var ok = false;
 

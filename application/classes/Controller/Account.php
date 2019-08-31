@@ -110,6 +110,58 @@ class Controller_Account extends Controller {
         return;
     }
 
+    public function japi_cancel_pw(): void {
+        if (!Model_Auth_Password::user_is_connected( Globals::CurrentUserF()->uid() )) {
+            $this->render(['success' => false]);
+            return;
+        }
+
+        Model_Auth_Password::user_unlink( Globals::CurrentUserF()->uid() );
+        $this->render(['success' => true]);
+    }
+
+    public function japi_make_pw(): void
+    {
+        $id = Globals::CurrentUserF()->uid();
+        $mail = Request::current()->post('email') ?: null;
+        $pass = Request::current()->post('pass') ?: null;
+
+        if (strlen( $pass ) < 5) {
+            $this->render(['success' => false, 'error' => 'pass']);
+            return;
+        }
+        if (!Model_Auth_Password::check_email_validity( $mail )) {
+            $this->render(['success' => false, 'error' => 'email']);
+            return;
+        }
+
+        if (!Model_Auth_Password::create( $id, $mail, $pass )) {
+            $this->render(['success' => false]);
+            return;
+        }
+
+        Controller::dump('key', Model_Auth_Password::user_activation_key( $id ));
+        $this->render(['success' => true]);
+    }
+
+    public function japi_activate_pw(): void
+    {
+        $id = Globals::CurrentUserF()->uid();
+        $token = Request::current()->post('t') ?: null;
+
+        if (!Model_Auth_Password::user_pending_activation( $id )) {
+            $this->render(['success' => false]);
+            return;
+        }
+
+        if ($token !== Model_Auth_Password::user_activation_key( $id )) {
+            $this->render(['success' => false]);
+            return;
+        }
+
+        $this->render(['success' => Model_Auth_Password::user_activate( $id )]);
+    }
+
     public function japi_sync_mt(): void
     {
         // Account Providers
@@ -163,10 +215,15 @@ class Controller_Account extends Controller {
         // Account Providers
         $accounts = Model_Auth_Legacy::get_all_providers( Globals::CurrentUserF()->uid() );
 
+        if (Model_Auth_Password::user_is_activated( Globals::CurrentUserF()->uid() )) $pw_stage = 2;
+        else if (Model_Auth_Password::user_pending_activation( Globals::CurrentUserF()->uid() )) $pw_stage = 1;
+        else $pw_stage = 0;
+
         // Render page
         $this->add_widget(
             View::factory('pages/settings')
                 ->set('mail', Model_Auth_Password::user_getEmail( Globals::CurrentUserF()->uid() ))
+                ->set('pw_stage', $pw_stage)
                 ->set('url', URL::base(true))
                 ->set('avatar', Model_Euser::avatar_by_id(Globals::CurrentUserF()->uid()))
                 ->set('user',   Globals::CurrentUserF()->name())
@@ -356,11 +413,14 @@ class Controller_Account extends Controller {
      */
     public function japi_login($uid = null): bool {
 
+        sleep(3);
+
         $nw = 1;
         $skip = (int)Request::current()->post('skip');
 
         if ($uid === null) {
             //Get key
+            $mail = Request::current()->post('user');
             $key  = Request::current()->post('key');
             $host = Request::current()->post('service');
 
@@ -369,6 +429,9 @@ class Controller_Account extends Controller {
 
             $authenticator = null;
             switch ($host) {
+                case 'grge':
+                    $authenticator = new Model_Auth_Password($mail, $key);
+                    break;
                 case 'Die Verdammten':
                     $authenticator = new Model_Auth_Hordesde($key, true);
                     break;

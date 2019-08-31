@@ -25,17 +25,38 @@ class Model_Auth_Password extends Model_Auth_Interface {
         } else $this->last_error = 'invalid_keys';
     }
 
-    public static function create($id, $email, $password): bool {
+    public static function check_email_validity( string $email): bool {
+        return (!empty(trim($email))) && preg_match( '/^([^@\\/\\\\\\s])+@([^@\\/\\\\\\s])+\.([^@\\/\\\\\\s])+$/', $email );
+    }
+
+    public static function create($id, $email, $password, bool $activate = false): bool {
         // Check
         $pw = static::hash_password( $password );
         if (!$pw || empty($email) || static::lookup(null, $email) >= 0 || static::user_is_connected($id))
             return false;
 
-        //if (empty($email) || !preg_match( '/^([^@\\/\\\\\\s])+@([^@\\/\\\\\\s])+\.([^@\\/\\\\\\s])+$/', $email ))
-        //    return false;
+        if (!static::check_email_validity($email))
+            return false;
 
-        static::user_link($id,$id,$email,$pw);
+        static::user_link($id,$activate ? $id : -42,$email,$pw);
         return true;
+    }
+
+    public static function user_is_activated($id): bool {
+        return static::user_get_rid( $id ) > 0;
+    }
+
+    public static function user_pending_activation($id): bool {
+        return static::user_get_rid($id) === -42;
+    }
+
+    public static function user_activation_key($id): ?string {
+        if (!static::user_pending_activation($id)) return null;
+
+        $data = static::user_get_values($id);
+        if (!$data) return null;
+
+        return substr(md5($data[1]), 0, 6);
     }
 
     public function getEmail(): ?string {
@@ -49,14 +70,22 @@ class Model_Auth_Password extends Model_Auth_Interface {
         return $data ? $data[0] : null;
     }
 
+    public static function user_activate( $id ): bool {
+        if (!static::user_pending_activation( $id )) return false;
+        $data = static::user_get_values( $id );
+        if (!$data) return false;
+
+        static::user_link($id,$id,$data[0],$data[1]);
+        return true;
+    }
+
     public static function update($id, $password): bool {
+        if (!static::user_is_activated($id)) return false;
+
         // Check
         $pw = static::hash_password( $password );
         if (!$pw || !static::user_is_connected($id))
             return false;
-
-        //if (empty($email) || !preg_match( '/^([^@\\/\\\\\\s])+@([^@\\/\\\\\\s])+\.([^@\\/\\\\\\s])+$/', $email ))
-        //    return false;
 
         $data = static::user_get_values( $id );
         if (!$data) return false;
@@ -77,4 +106,6 @@ class Model_Auth_Password extends Model_Auth_Interface {
     {
         return $this->zvid > 0;
     }
+
+
 }

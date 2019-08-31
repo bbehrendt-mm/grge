@@ -8,6 +8,7 @@
  * @var $d2n_id
  * @var $token
  * @var $mail
+ * @var $pw_stage
  */
 ?>
 
@@ -85,11 +86,23 @@
 
         <div class="row">
             <div class="cell rw-12"><b><?=__('Passwort-Login')?></b></div>
-            <?php if ($mail) {?>
+            <div class="cell rw-6">
 
-            <?php } else { ?>
+                <div id="pass_email_form">
+                    <div class="row">
+                        <div class="cell padded rw-6 left">
+                            <b><?=__('Deine E-Mail Adresse: ');?></b><br />
+                            <i class="fa fa-envelope-o"></i>
+                            <span id="email_content"><?=$mail?></span>
+                        </div>
+                        <div class="cell padded rw-6 right">
+                            <i class="fa fa-trash-o"></i> <a id="profile_cancel_pw" href="#"><?=__('Löschen');?></a>
+                        </div>
+                    </div>
 
-                <div class="cell rw-6 padded">
+                </div>
+
+                <div id="pass_create_form">
                     <div class="row iconize" title="<?=__('Bitte gib deine E-Mail Adresse hier ein. Deine Adresse wird ausschließlich für den Login verwendet.');?>">
                         <div class="padded cell rw-1"><i class="fa fa-envelope"></i></div>
                         <div class="padded cell rw-11"><input id="email" type="email" autocomplete="on" class="form_input" placeholder="<?=__('Deine E-Mail Adresse');?>" /></div>
@@ -104,18 +117,53 @@
                     </div>
                     <div class="row">
                         <div class="padded cell rw-6 ro-6 rw-lg-8 ro-lg-4 rw-md-10 ro-md-2 rw-sm-12 ro-sm-0">
-                            <div id="profile_add_pw" class="btn btn-icon"><span class="btn-icon-inner"><i class="fa fa-check"></i></span><span id="confirm-content"><?=__('OK');?></span></div>
+                            <div id="profile_add_pw" class="btn btn-icon"><span class="btn-icon-inner"><i class="fa fa-check"></i></span><span><?=__('OK');?></span></div>
                         </div>
                     </div>
                 </div>
 
-                <div class="cell rw-6 padded">
-                    <div class="note">
-                        <?=__('Wenn du dich in Zukunft gerne mit deiner E-Mail Adresse und einem Passwort anmelden möchtest, kannst du diese Daten hier eintragen. Der Login über DV/D2N wird danach dennoch weiterhin möglich sein.')?>
+                <div id="pass_activate_form">
+                    <div class="row iconize" title="<?=__('Bitte gib den Aktivierungsschlüssel ein, den du per E-Mail erhalten hast.');?>">
+                        <div class="padded cell rw-1"><i class="fa fa-key"></i></div>
+                        <div class="padded cell rw-11"><input id="atoken" type="text" autocomplete="off" class="form_input" placeholder="<?=__('Aktivierungsschlüssel');?>" /></div>
+                    </div>
+                    <div class="row">
+                        <div class="padded cell rw-6 rw-lg-4 rw-md-12">
+                            <a id="profile_resend_atoken" href="#"><?=__('Aktivierungsschlüssel erneut senden');?></a>
+                        </div>
+                        <div class="padded cell rw-6 rw-lg-8 rw-md-12">
+                            <div id="profile_activate_pw" class="btn btn-icon"><span class="btn-icon-inner"><i class="fa fa-check"></i></span><span><?=__('OK');?></span></div>
+                        </div>
                     </div>
                 </div>
 
-            <?php } ?>
+                <div id="pass_alter_form">
+                    <div class="row iconize" title="<?=__('Gib dein altes Passwort ein.');?>">
+                        <div class="padded cell rw-1"><i class="fa fa-key"></i></div>
+                        <div class="padded cell rw-11"><input id="pass_old" type="password" autocomplete="off" class="form_input" placeholder="<?=__('Altes Passwort');?>" /></div>
+                    </div>
+                    <div class="row iconize" title="<?=__('Gib ein neues Passwort ein.');?>">
+                        <div class="padded cell rw-1"><i class="fa fa-key"></i></div>
+                        <div class="padded cell rw-11"><input id="pass_new1" type="password" autocomplete="off" class="form_input" placeholder="<?=__('Neues Passwort');?>" /></div>
+                    </div>
+                    <div class="row iconize" title="<?=__('Gib dein neues Passwort erneut ein.');?>">
+                        <div class="padded cell rw-1"><i class="fa fa-key"></i></div>
+                        <div class="padded cell rw-11"><input id="pass_new2" type="password" autocomplete="off" class="form_input" placeholder="<?=__('Neues Passwort wiederholen');?>" /></div>
+                    </div>
+                    <div class="row">
+                        <div class="padded cell rw-8 ro-4 rw-lg-10 ro-lg-2 rw-md-12 ro-md-0">
+                            <div id="profile_alter_pw" class="btn btn-icon"><span class="btn-icon-inner"><i class="fa fa-check"></i></span><span><?=__('Passwort ändern');?></span></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="cell rw-6 padded">
+                <div class="note">
+                    <?=__('Wenn du dich in Zukunft gerne mit deiner E-Mail Adresse und einem Passwort anmelden möchtest, kannst du diese Daten hier eintragen. Der Login über DV/D2N wird danach dennoch weiterhin möglich sein.')?>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -198,6 +246,23 @@
 
     (function() {
         $('#content').find('.row.iconize, label').qtip(game.render.html.qtip.help({desktop: 'right', lg: 'top'}));
+
+        if ( !'<?=$mail?>' ) $('#pass_email_form').hide();
+        $('#pass_create_form, #pass_activate_form, #pass_alter_form').hide();
+        switch (<?=$pw_stage?>) {
+            case 0:
+                $('#pass_create_form').show();
+                break;
+            case 1:
+                $('#pass_activate_form').show();
+                break;
+            case 2:
+                $('#pass_alter_form').show();
+                break;
+            default: break;
+        }
+
+        console.log(<?=$pw_stage?>);
 
         var tabline = $('.tabline');
         var tabs = $('.settings-tab');
@@ -321,6 +386,103 @@
 
     });
 
+    $('#profile_add_pw').on('click', function() {
+        var mail = $('#email').val();
+        var pass1 = $('#pass1').val();
+        var pass2 = $('#pass2').val();
+
+        if (!mail || !pass1 || !pass2) {
+            game.render.html.notify('error', <?=__j('Bitte fülle alle Felder aus.')?>);
+            return;
+        }
+
+        if (pass1 !== pass2) {
+            game.render.html.notify('error', <?=__j('Die eingegebenen Passwörter stimmen nicht überein.')?>);
+            return;
+        }
+
+        if (pass1.length < 5) {
+            game.render.html.notify('error', <?=__j('Dein Passwort muss aus mindestens 5 Zeichen bestehen.')?>);
+            return;
+        }
+
+        $('#content').addClass('disabled');
+        game.network.query('japi/account/make_pw', {email: mail, pass: pass1}, function(data) {
+            $('#content').removeClass('disabled');
+
+            if (!data.success) {
+                if (data.error && data.error === 'email') {
+                    game.render.html.notify('error', <?=__j('Die eingegebene E-Mail Adresse ist ungültig.')?>);
+                    return;
+                }
+
+                game.render.html.notify('error', <?=__j('Beim Verarbeiten der Daten ist ein Fehler aufgetreten.')?>);
+                return;
+            }
+
+            game.render.html.notify('info', <?=__j('Wir haben einen Aktivierungscode an deine E-Mail Adresse geschickt. Bitte gib diesen Code ein, um deine Zugangsdaten freizuschalten.')?>, <?=__j('Sie haben Post!')?>);
+            $('#email_content').text( mail );
+
+            $('#pass_create_form').slideUp(100);
+            $('#pass_email_form').slideDown(100);
+            $('#pass_activate_form').slideDown(100);
+
+        }, function() {
+            $('#profile_add_pw').removeClass('disabled');
+        })
+    });
+
+    $('#profile_activate_pw').on('click', function() {
+        var token = $('#atoken').val();
+
+        if (!token) {
+            game.render.html.notify('error', <?=__j('Bitte fülle alle Felder aus.')?>);
+            return;
+        }
+
+        $('#content').addClass('disabled');
+        game.network.query('japi/account/activate_pw', {t: token}, function(data) {
+            $('#content').removeClass('disabled');
+
+            if (!data.success) {
+                game.render.html.notify('error', <?=__j('Beim Verarbeiten der Daten ist ein Fehler aufgetreten.')?>);
+                return;
+            }
+
+            game.render.html.notify('success', <?=__j('Deine Zugangsdaten wurden freigeschaltet.')?>);
+
+            $('#pass_activate_form').slideUp(100);
+            $('#pass_alter_form').slideDown(100);
+
+        }, function() {
+            $('#content').removeClass('disabled');
+        })
+    });
+
+    $('#profile_cancel_pw').on('click', function() {
+        if (!confirm(<?=__j('Bist du sicher, dass du die Verknüpfung mit deiner E-Mail Adresse aufheben möchtest? Du kannst dich dann nicht länger über deine E-Mail Adresse anmelden.')?>))
+            return;
+
+        $('#content').addClass('disabled');
+        game.network.query('japi/account/cancel_pw', {}, function(data) {
+            $('#content').removeClass('disabled');
+
+            if (!data.success) {
+                game.render.html.notify('error', <?=__j('Beim Verarbeiten der Daten ist ein Fehler aufgetreten.')?>);
+                return;
+            }
+
+            game.render.html.notify('info', <?=__j('Deine E-Mail Adresse und Passwort wurden aus der Datenbank entfernt.')?>);
+
+            $('#pass_activate_form').slideUp(100);
+            $('#pass_alter_form').slideUp(100);
+            $('#pass_email_form').slideUp(100);
+            $('#pass_create_form').slideDown(100);
+
+        }, function() {
+            $('#content').removeClass('disabled');
+        })
+    });
 
     $('#profile_reset_token').on('click',function() {
         if (!confirm(<?=__j('Bist du sicher?')?>)) return;

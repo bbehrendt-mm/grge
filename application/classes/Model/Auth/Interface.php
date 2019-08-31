@@ -39,7 +39,7 @@ abstract class Model_Auth_Interface {
      * @return bool True, if the account method is connected
      */
     public static function user_is_connected($id): bool {
-        return DB::select(array(DB::expr('COUNT(*)'), 'num'))->from('profiles_xref')->where('provider','=', static::class)->where('zvid','=',$id)->execute()->get('num',0) === '1';
+        return $id <= 0 ? false : DB::select(array(DB::expr('COUNT(*)'), 'num'))->from('profiles_xref')->where('provider','=', static::class)->where('zvid','=',$id)->execute()->get('num',0) === '1';
     }
 
     /**
@@ -60,6 +60,12 @@ abstract class Model_Auth_Interface {
         if ($v2 !== null) $query->where('var2','=',$v2);
 
         return (int)$query->execute()->get('zvid',-1);
+    }
+
+    protected static function user_get_rid( $id ) {
+        if ($id <= 0) return -1;
+        $query = DB::select('rid')->from('profiles_xref')->where('provider','=', static::class)->where('zvid','=',$id);
+        return (int)$query->execute()->get('rid',-1);
     }
 
     /**
@@ -133,7 +139,7 @@ abstract class Model_Auth_Interface {
     protected static function user_link($zvid, $rid, $v1 = null, $v2 = null): bool
     {
         if (static::user_is_connected($zvid))
-            DB::update('profiles_xref')->set(array('var1' => $v1, 'var2' => $v2))->where('provider','=', static::class)->where('zvid','=',$zvid)->execute();
+            DB::update('profiles_xref')->set(array('rid' => $rid, 'var1' => $v1, 'var2' => $v2))->where('provider','=', static::class)->where('zvid','=',$zvid)->execute();
         else DB::insert('profiles_xref', array('provider', 'rid', 'zvid', 'var1', 'var2'))->values(array(static::class, $rid, $zvid, $v1, $v2))->execute();
         return true;
     }

@@ -51,7 +51,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
 	/**
 	 * Returns pause lock time
 	 */
-	public function pauselock(): bool {
+	public function pauselock(): int {
 		if (!isset($this->set['gamedata']->head->pauselock)) $this->set['gamedata']->head->pauselock = 0;
 		return $this->set['gamedata']->head->pauselock;
 	}

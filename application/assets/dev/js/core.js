@@ -6,7 +6,7 @@ core = {
     parts: {},
     snippets: {},
 
-    version: '2.2.1-4-0-588',
+    version: '2.2.1-5-0-589',
 
     last: {},
     plugins: {},
@@ -1794,7 +1794,7 @@ core = {
     };
 
     core.parts.location = function(data, target) {
-        var zradar, hideout, actions, spc_colosseum, spc_scout, spc_roadtrip, desc, epic, lradar;
+        var zradar, hideout, actions, actions_rooms, spc_colosseum, spc_scout, spc_roadtrip, desc, epic, lradar;
 
         $(target).empty().addClass('row location_box ' + (data.meta.outside ? 'outside' : 'inside')).append(
             $('<h2 />').text(data.meta.name)
@@ -1900,11 +1900,16 @@ core = {
             ).append(
                 actions = NF.row('hideout-actions')
             ).append(
+                actions_rooms = NF.row('hideout-actions-rooms')
+            ).append(
                 epic = (data.epc_garden || data.epc_raven || data.epc_fence) ? NF.row() : null
             )
         ).append(
             desc = $('<div />').addClass('cell padded justify').addClass(data.lomap ? 'rw-4' : 'rw-6').append($('<span />').addClass('hide-mobile').text(data.meta.desc))
         );
+
+        if (game.storage.get('settings','show_room_actions', 'main') != 'main')
+            actions_rooms.hide();
 
         if (core.last.players) {
             var area = [];
@@ -2005,8 +2010,13 @@ core = {
                         "Zombies blockieren den Weg. Besiege sie oder versuche zu fliehen, um diesen Ort verlassen zu k\u00f6nnen.")
             ));
 
-        $.each(data.actions, function(k,v) {
+        $.each(data.actions[0], function(k,v) {
             actions.append(
+                $('<div />').addClass(game.touch() ? 'cell rw-12 padded justify' : 'cell rw-6 rw-sm-12 padded justify').append(core.snippets.button(v, null, 'tooltip'))
+            )
+        });
+        $.each(data.actions[1], function(k,v) {
+            actions_rooms.append(
                 $('<div />').addClass(game.touch() ? 'cell rw-12 padded justify' : 'cell rw-6 rw-sm-12 padded justify').append(core.snippets.button(v, null, 'tooltip'))
             )
         });

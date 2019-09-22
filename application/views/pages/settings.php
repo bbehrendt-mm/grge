@@ -236,8 +236,17 @@
                     <option value="gt"><?=__('Spielzeit');?></option>
                 </select>
             </div>
+
+            <div class="cell rw-4 rw-md-12 padded">
+                <label for="show_room_actions"><b><?=__('Aktionsanzeige für Räume');?></b></label><br />
+                <select id="show_room_actions" data-associated-setting="show_room_actions"  data-default="main">
+                    <option value="main"><?=__('Auf Hauptseite & Raumübersicht');?></option>
+                    <option value="popup"><?=__('Nur in Raumübersicht');?></option>
+                </select>
+            </div>
         </div>
     </div>
+
 
 </div>
 

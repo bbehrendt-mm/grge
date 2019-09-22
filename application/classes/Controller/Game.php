@@ -151,12 +151,20 @@ class Controller_Game extends Controller {
         if ($normalized_danger > 10)                  $danger = 5;
 
         // Get local actions
-        $a = [];
-        if (!Globals::PrimaryPlayerF()->get_status()->retrieve('fragile'))
+        $a = []; $b = [];
+        if (!Globals::PrimaryPlayerF()->get_status()->retrieve('fragile')) {
             foreach (Tool_Scripts::get_items(Model_Items_Abstract_Virtual::cls(),Struct_ScriptItemSource::onlyLocation()->use_perspective(Globals::PrimaryPlayerF())) as $a_item)
                 /** @var  Model_Items_Abstract_Virtual $a_item */
                 if (!$a_item->use_manual_ui())
                     $a = array_merge($a,$this->prepare_actionlist($a_item->auto_actions(), $a_item));
+
+            foreach ( Globals::PrimaryPlayerF()->location()->rooms() as $room )
+                foreach ($room->inventory()->get( Model_Items_Abstract_Virtual::cls() ) as $b_item)
+                    /** @var  Model_Items_Abstract_Virtual $b_item */
+                    if (!$b_item->use_manual_ui())
+                        $b = array_merge($b,$this->prepare_actionlist($b_item->auto_actions(), $b_item));
+        }
+
 
         // Get doorways
         $doorways = array();
@@ -180,7 +188,7 @@ class Controller_Game extends Controller {
                 'outside' => Globals::PrimaryPlayerF()->location()->is_outside(),
                 'css' => Globals::PrimaryPlayerF()->location()->getCustomStyle(),
             ],
-            'actions' => $a,
+            'actions' => [$a,$b],
             'doorways' => $doorways,
             'hideout' => $hideout ? [
                 'state' => (int)round((1 - $hideout->get_decay()) * 100),

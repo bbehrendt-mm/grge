@@ -6,7 +6,7 @@ core = {
     parts: {},
     snippets: {},
 
-    version: '2.2.1-5-0-589',
+    version: '2.2.1-6-0-590',
 
     last: {},
     plugins: {},
@@ -3604,7 +3604,9 @@ core = {
                         });
 
                     var no_go = false;
-                    if ((data.read_only && !data.locations[id].skip_ro) || (data.locations[id].energy > data.radius && !escortables) || id == data.current) {
+                    var same_location = id == data.current;
+
+                    if ((data.read_only && !data.locations[id].skip_ro) || (data.locations[id].energy > data.radius && !escortables)) {
                         if (event == 'altclick')
                             no_go = true;
                         else return;
@@ -3629,7 +3631,7 @@ core = {
                         var title;
                         esc_popup.append($('<h2 />').addClass('center').text(data.locations[id].name));
 
-                        if (game.touch())
+                        if (game.touch() && !same_location)
                             esc_popup.append(NF.row('center').append(
                                     NF.cell(false, 3)
                                         .append(NF.img('media/icons/distance.gif'))
@@ -3649,48 +3651,49 @@ core = {
                                     )
                                 );
 
-                        esc_popup.append(
-                            NF.row().append(title = NF.cell(true, 12).text("Wenn du dich alleine f\u00fcrchtest, kannst du andere Spieler bitten, dich zu begleiten. Oder noch besser, schick sie am besten direkt vor, nicht dass noch jemand (z.B. du) verletzt wird!"))
-                        );
-
-                        var check_row = $('<form />').addClass('row').appendTo(esc_popup);
-
-                        if (escortables && data.players && data.players.others)
-                            $.each(data.players.others, function(id, player) {
-                                if (player.local && (player.allow === true || player.allow[6]))
-                                    check_row.append($('<div />').addClass('cell rw-6 padded').append(
-                                        $('<label />').text(player.name).prepend($('<input />').attr('type','checkbox').attr('data-id', player.id))
-                                    ))
-                            });
-
-
-                        if (only_remote)
+                        if (!same_location) {
                             esc_popup.append(
-                                NF.row().append(NF.cell(true, 12, 0, 'center b text-red').text("Dieser Ort ist zu weit f\u00fcr dich entfernt!"))
-                            );
-                        else if (no_go)
-                            esc_popup.append(
-                                NF.row().append(NF.cell(true, 12, 0, 'center b text-red').text("Du kannst dich momentan nicht bewegen."))
+                                NF.row().append(title = NF.cell(true, 12).text("Wenn du dich alleine f\u00fcrchtest, kannst du andere Spieler bitten, dich zu begleiten. Oder noch besser, schick sie am besten direkt vor, nicht dass noch jemand (z.B. du) verletzt wird!"))
                             );
 
-                        if (check_row.children().length) {
-                            var bhav;
+                            var check_row = $('<form />').addClass('row').appendTo(esc_popup);
 
-                            check_row
-                                .prepend($('<div />').addClass('cell rw-12 padded').append($('<b />').text("Wer soll alles mitkommen?")))
-                                .append($('<div />').addClass('cell rw-12 padded').append($('<b />').text("Und wie siehts mit dir aus?")))
-                                .append($('<div />').addClass('cell rw-12 padded').append(
-                                    bhav = $('<select />')
-                                        .append($('<option />').val('2').prop('disabled', only_remote).text("Mitgehen und helfen"))
-                                        .append($('<option />').val('1').prop('disabled', only_remote).text("Nur mitgehen"))
-                                        .append($('<option />').val('0').prop('disabled', no_go).text("Die Stellung halten"))
-                                        .val(only_remote ? '0' : '1')
-                                ));
+                            if (escortables && data.players && data.players.others)
+                                $.each(data.players.others, function(id, player) {
+                                    if (player.local && (player.allow === true || player.allow[6]))
+                                        check_row.append($('<div />').addClass('cell rw-6 padded').append(
+                                            $('<label />').text(player.name).prepend($('<input />').attr('type','checkbox').attr('data-id', player.id))
+                                        ))
+                                });
 
-                            bhav.selectric();
-                            check_row.find(':checkbox').customRadioCheck();
+                            if (only_remote)
+                                esc_popup.append(
+                                    NF.row().append(NF.cell(true, 12, 0, 'center b text-red').text("Dieser Ort ist zu weit f\u00fcr dich entfernt!"))
+                                );
+                            else if (no_go)
+                                esc_popup.append(
+                                    NF.row().append(NF.cell(true, 12, 0, 'center b text-red').text("Du kannst dich momentan nicht bewegen."))
+                                );
 
-                        } else title.text("Bist du sicher, dass du diesen Ort betreten m\u00f6chtest? Er ist weit weg, und riecht auch bestimmt nicht sehr gut...");
+                            if (check_row.children().length) {
+                                var bhav;
+
+                                check_row
+                                    .prepend($('<div />').addClass('cell rw-12 padded').append($('<b />').text("Wer soll alles mitkommen?")))
+                                    .append($('<div />').addClass('cell rw-12 padded').append($('<b />').text("Und wie siehts mit dir aus?")))
+                                    .append($('<div />').addClass('cell rw-12 padded').append(
+                                        bhav = $('<select />')
+                                            .append($('<option />').val('2').prop('disabled', only_remote).text("Mitgehen und helfen"))
+                                            .append($('<option />').val('1').prop('disabled', only_remote).text("Nur mitgehen"))
+                                            .append($('<option />').val('0').prop('disabled', no_go).text("Die Stellung halten"))
+                                            .val(only_remote ? '0' : '1')
+                                    ));
+
+                                bhav.selectric();
+                                check_row.find(':checkbox').customRadioCheck();
+
+                            } else title.text("Bist du sicher, dass du diesen Ort betreten m\u00f6chtest? Er ist weit weg, und riecht auch bestimmt nicht sehr gut...");
+                        }
 
                         var marker_tx, no_marker_tx, marker;
                         var open_editor = function() {
@@ -3755,7 +3758,7 @@ core = {
                         var confirm_btn;
                         esc_popup.append(NF.row()
                             .append($('<div />').addClass('cell rw-8 rw-sm-12 padded').append(
-                                confirm_btn = $('<div />').addClass('btn').toggleClass('disabled', no_go).text("Los gehts!").click(function() {
+                                confirm_btn = same_location ? null : $('<div />').addClass('btn').toggleClass('disabled', no_go).text("Los gehts!").click(function() {
 
                                     if (marker.is(':visible') && !savebtn.hasClass('disabled') && !confirm("Der Kartenmarker wurde noch nicht gespeichert. Bist du sicher, dass du den ausgew\u00e4hlten Ort besuchen m\u00f6chtest?"))
                                         return;
@@ -3787,7 +3790,7 @@ core = {
                                     });
                                 })))
                             .append($('<div />').addClass('cell rw-4 rw-sm-12 padded').append(
-                                $('<div />').addClass('btn').text("Abbrechen").click(function() {
+                                $('<div />').addClass('btn').text(same_location ? "Schlie\u00dfen" : "Abbrechen").click(function() {
                                     esc_popup.trigger('unpop');
                                 })))
                         );
@@ -3802,7 +3805,7 @@ core = {
 
                                 })
                             });
-                    } else {
+                    } else if ( !same_location ) {
                         popup.addClass('disabled');
                         core.command('map/go', {to: id, follow: 1}, true, function(data) {
                             popup.removeClass('disabled');

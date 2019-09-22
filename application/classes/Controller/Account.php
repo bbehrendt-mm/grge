@@ -140,8 +140,18 @@ class Controller_Account extends Controller {
             return;
         }
 
-        Controller::dump('key', Model_Auth_Password::user_activation_key( $id ));
-        $this->render(['success' => true]);
+        $ret = mail(
+            $mail,
+            'ZombVival - ' . __('E-Mail Adresse bestätigen'),
+            View::factory('mail/passkey')->set('username', Globals::CurrentUserF()->name())->set('key', Model_Auth_Password::user_activation_key( $id )),
+            [
+                'MIME-Version' => '1.0',
+                'Content-type' => 'text/html; charset=UTF-8',
+                'From' => __('Zombie-Briefträger') . ' <mailzombie@' . $_SERVER['SERVER_NAME'] . '>'
+            ]
+        );
+
+        $this->render(['success' => $ret]);
     }
 
     public function japi_activate_pw(): void

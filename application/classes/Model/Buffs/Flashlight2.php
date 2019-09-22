@@ -8,7 +8,7 @@ class Model_Buffs_Flashlight2 extends Model_Buffs_Abstract_Passive {
 	protected static $bid = 'flashlight2';
 
     protected function get_effects(): array {
-        if (!$this->associated_to_player()) return [];
+        if (!$this->assoc_player) return [];
 
         $is_night = in_array(Tool_Scripts::get_timeofday(), ['night','snowynight']);
         $is_inside = !$this->assoc_player->location()->is_outside();
@@ -31,7 +31,7 @@ class Model_Buffs_Flashlight2 extends Model_Buffs_Abstract_Passive {
     {
         if (!$this->assoc_player) return false;
 
-        foreach ($this->assoc_player->inventory()->get(Model_Items_Flashlight::cls()) as $flashlight)
+        if ($this->associated_to_player()) foreach ($this->assoc_player->inventory()->get(Model_Items_Flashlight::cls()) as $flashlight)
             /** @var $flashlight Model_Items_Flashlight */
             if ($flashlight->active()) return false;
 

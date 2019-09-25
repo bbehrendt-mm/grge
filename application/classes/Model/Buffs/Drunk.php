@@ -33,10 +33,9 @@ class Model_Buffs_Drunk extends Model_Buffs_Abstract_Fragile {
     ]; }
 
     protected function action_on_complete() {
-        if ($this->associated_to_player() && Tool_Scripts::location_type($this->assoc_player->location_class()) === 2) {
+        if ($this->assoc_player && $buff = $this->assoc_player->get_status()->retrieve('passout')) $buff->unbuff();
 
-            if ($buff = $this->assoc_player->get_status()->retrieve('passout')) $buff->unbuff();
-
+        if ($this->assoc_player && Tool_Scripts::location_type($this->assoc_player->location_class()) === 2) {
             $l = $this->assoc_player->location();
             if		($l->has_room('bedroom','bedr3'))	new Model_Buffs_Sleep($this->assoc_player, 3);
             elseif	($l->has_room('bedroom','bedr2'))	new Model_Buffs_Sleep($this->assoc_player, 2);

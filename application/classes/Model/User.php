@@ -11,28 +11,34 @@ class Model_User extends Model {
 		return ($ret && ($ret === $this->sid));
 	}
 	
-	public static function name_by_id($uid) {
-		$set = DB::select('name')->from('users')->where('uid', '=', $uid)->execute()->as_array();
+	public static function name_by_id($uid, bool $legacy_name = true) {
+		$set = DB::select('name', 'local_name')->from('users')->join('user_data','LEFT')->on('users.uid','=','user_data.user')->where('uid', '=', $uid)->execute()->as_array();
 		if (!isset($set[0])) return NULL;
-		return $set[0]['name'];
+		return ($legacy_name || $set[0]['local_name'] === null) ? $set[0]['name'] : $set[0]['local_name'];
 	}
 
-    public static function avatar_by_id($uid) {
-        $set = DB::select('avatar')->from('users')->where('uid', '=', $uid)->execute()->as_array();
+    public static function avatar_by_id($uid, bool $legacy_avarar = true) {
+        $set = DB::select('avatar','local_avatar_name','access')->from('users')->join('user_data','LEFT')->on('users.uid','=','user_data.user')->where('uid', '=', $uid)->execute()->as_array();
         if (!isset($set[0])) return NULL;
-        $avatar = $set[0]['avatar'];
-        if (strpos($avatar, 'http:') === 0) $avatar = substr($avatar,5);
-        return $avatar;
+
+        if ($legacy_avarar || $set[0]['local_avatar_name'] === null) {
+            $avatar = $set[0]['avatar'];
+            if (strpos($avatar, 'http:') === 0) $avatar = substr($avatar,5);
+            return $avatar;
+        } else return "cdn/avatar/{$set[0]['access']}";
     }
 	
 	public function read($uid): bool {
 		//Load from DB	
-		$set = DB::select()->from('users')->where('uid', '=', $uid)->execute()->as_array();
-		
+		$set = DB::select('users.*','local_name','access','local_avatar_name')->from('users')->where('uid', '=', $uid)->join('user_data','LEFT')->on('users.uid','=','user_data.user')->execute()->as_array();
+
 		//If request was successfull, import data from DB into local set
 		if ($set && $set[0])
 		{
 			$this->set = $set[0];
+
+			$this->set['canonical_name'] = $this->set['name'];
+			if ($this->set['local_name'] !== null ) $this->set['name'] = $this->set['local_name'];
 
 			//Write session ID to DB
 			DB::update('users')->set(array('session' => $this->sid))->where('uid', '=', $uid)->execute();
@@ -126,7 +132,7 @@ class Model_User extends Model {
 	}
 
 	public static function get_mentoring_ref($uid) {
-		$name = strtoupper(substr(static::name_by_id($uid), 0, 3));
+		$name = strtoupper(substr(static::name_by_id($uid, true), 0, 3));
 
 		$nid = array_search($uid,
             DB::select('uid')->from('users')->where('name', 'LIKE', "{$name}%")
@@ -139,6 +145,29 @@ class Model_User extends Model {
 
 		return $name . $nid;
 	}
+
+    public function fakename() {
+        //Get fake name
+
+        $data = [
+            'A' => ['Adel','as','Asgrappa'],    'B' => ['Bern','burg','Boob'],        'C' => ['Christ','chael','Carabiner'],
+            'D' => ['Don','del','Duck'],        'E' => ['Edel','el','Eisenfaust'],    'F' => ['Fried','fein','Fickenwirth'],
+            'G' => ['Ger','gard','Guggngumpf'], 'H' => ['Hans', 'hard','Hobelmeier'], 'I' => ['Ing', 'it','Iksbat'],
+            'J' => ['Jon','jer','Jodelei'],     'K' => ['Kars','ko','Krabmeyr'],      'L' => ['Lu','ly','Lameburn'],
+            'M' => ['Mich','mark','Mullhard'],  'N' => ['Nor','ny','Northberg'],      'O' => ['Odal','ot','Obrmayr'],
+            'P' => ['Pat','prick','Pastenkopf'],'Q' => ['Qual','quarg','Quoquol'],    'R' => ['Ru','rand','Rummelrammel'],
+            'S' => ['Sieg','son','Shytbag'],    'T' => ['Thor','ton','Teabaggerton'], 'U' => ['Ulf','ur','Underdigger'],
+            'V' => ['Vera','val','Voxtail'],    'W' => ['War','wy','Wartface'],       'X' => ['Xen','xy','Xenophil'],
+            'Y' => ['Yan','y','Ynnerburg'],     'Z' => ['Zeist','zzy','Zapmeister']
+        ];
+
+        $key = static::get_mentoring_ref($this->uid());
+        $first1 = isset($data[$key[0]]) ? $data[$key[0]][0] : "Obkura";
+        $first2 = isset($data[$key[1]]) ? $data[$key[1]][1] : "mysty";
+        $last = isset($data[$key[2]]) ? $data[$key[2]][2] : "Strangelover";
+
+        return "{$first1}{$first2} {$last}";
+    }
 
 	public static function get_uid_from_mentoring_ref($mref) {
 		preg_match_all('/^(.{1,3})(\d\d\d)$/',$mref, $a, PREG_SET_ORDER);
@@ -203,9 +232,9 @@ class Model_User extends Model {
 		else return false;
 	}
 	
-	public function name() {
+	public function name(bool $canonical = false) {
 		//Get username
-		return $this->set['name'];
+		return $canonical ? $this->set['canonical_name'] : $this->set['name'];
 	}
 	
 	public function uid() {

@@ -5,7 +5,7 @@ class Controller_Admin_Main extends Controller_Admin_Admin {
     public function action_main(): void
     {
         $this->add_widget(View::factory('admin/main')
-            ->set('user', Globals::CurrentUserF()->name())
+            ->set('user', Globals::CurrentUserF()->name(true))
             ->set('duration', $this->admin_status_get(0))
             ->set('expires', date('r',$this->admin_status_get(0) + time()))
 

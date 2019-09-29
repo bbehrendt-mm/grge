@@ -37,6 +37,14 @@ define('grge\E_STARTER_LOBBY_UPDATE_FAILURE', 'GRGE-0005-0006');
 
 define('grge\E_GAME_INDEX_ERROR', 'GRGE-0006-0000');
 
+define('grge\E_IMAGE_CORRUPTED', 'GRGE-0007-0000');
+define('grge\E_IMAGE_RESOLUTION_REJECTED', 'GRGE-0007-0001');
+define('grge\E_IMAGE_TRANSFORMATION_FAILURE', 'GRGE-0007-0002');
+define('grge\E_IMAGE_TOO_LARGE', 'GRGE-0007-0003');
+define('grge\E_IMAGE_FORMAT_UNSUPPORTED', 'GRGE-0007-0004');
+define('grge\E_IMAGE_OUTPUT_TOO_LARGE', 'GRGE-0007-0005');
+define('grge\E_IMAGE_PIPELINE_FAILURE', 'GRGE-0007-0006');
+
 class GRGEError {
 
     public static function i(): bool
@@ -98,6 +106,14 @@ class GRGEError {
             case grge\E_STARTER_LOBBY_UPDATE_FAILURE:   return 'The game lobby could not be updated.';
 
             case grge\E_GAME_INDEX_ERROR:              return 'The game index file could not be loaded.';
+
+            case grge\E_IMAGE_CORRUPTED:               return 'The image file is corrupted.';
+            case grge\E_IMAGE_RESOLUTION_REJECTED:     return 'The resolution is not acceptable.';
+            case grge\E_IMAGE_TRANSFORMATION_FAILURE:  return 'Unable to transform the image to the required resolution.';
+            case grge\E_IMAGE_TOO_LARGE:               return 'The image file is too large to process.';
+            case grge\E_IMAGE_OUTPUT_TOO_LARGE:        return 'The image pipeline produced an image that is too large to store.';
+            case grge\E_IMAGE_FORMAT_UNSUPPORTED:      return 'The image format is not supported.';
+            case grge\E_IMAGE_PIPELINE_FAILURE:        return 'The image processing pipeline crashed with an unexpected error.';
 
             default:                                    return 'Undocumented error.';
         }

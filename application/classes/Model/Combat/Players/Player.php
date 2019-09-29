@@ -139,8 +139,7 @@ class Model_Combat_Players_Player extends Model_Combat_Actor {
     }
 
     public function get_avatar(): ?string {
-        $s = Model_Euser::avatar_by_id($this->player->id());
-        return $s ? ('http:' . $s) : null;
+        return Model_Euser::avatar_by_id($this->player->id(), false);
     }
 
     public function enter(): void {

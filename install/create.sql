@@ -146,6 +146,21 @@ CREATE TABLE IF NOT EXISTS ___PREFIX___chat (
   `timestamp` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE IF NOT EXISTS ___PREFIX___user_data (
+  `user` int(11) NOT NULL,
+  `local_name` text,
+  `access` char(32) NOT NULL,
+  `local_avatar` longblob,
+  `local_avatar_name` char(32) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+ALTER TABLE ___PREFIX___user_data
+  ADD PRIMARY KEY (`user`),
+  ADD UNIQUE KEY `access` (`access`);
+
+ALTER TABLE ___PREFIX___user_data
+  ADD CONSTRAINT ___PREFIX___user_data_ibfk_1 FOREIGN KEY (`user`) REFERENCES ___PREFIX___users (`uid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 ALTER TABLE ___PREFIX___achievements
   ADD PRIMARY KEY (uid,gameid,season,aid);
 

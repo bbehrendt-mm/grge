@@ -23,20 +23,54 @@ class Model_Euser extends Model_User {
 
     public static function register($name, $avatar) {
         [$insert_id, ] = DB::insert('users', array('name', 'avatar'))->values(array($name, $avatar))->execute();
+        static::create_profile_data_if_missing($insert_id, true);
         return $insert_id;
     }
 
-    public static function update_by_id($id, ?string $name = null, ?string $avatar = null) {
-        $data = [];
-        if ($name !== null) $data['name'] = $name;
-        if ($avatar !== null) $data['avatar'] = $avatar;
-        if ($name === null && $avatar === null) return;
-
-        DB::update('users')->set($data)->where('uid', '=', $id)->execute();
+    public static function create_profile_data_if_missing( int $uid, bool $force = false ) {
+        $ex = 0;
+        if (!$force) [$ex,] = DB::select(array(DB::expr('COUNT(*)'), 'num'))->from('user_data')->where('user', '=', $uid)->execute()->as_array(null,'num');
+        if ($force || (int)$ex === 0) DB::insert( 'user_data', ['user','access'] )->values(array($uid, md5(':' . $uid . 'this_is_random')))->execute();
     }
 
-    public function update(?string $name = null, ?string $avatar = null) {
+    public static function update_name_override_by_id( int $id, ?string $new_name = null ): void {
+        DB::update('user_data' )->set(['local_name' => $new_name])->where('user', '=', $id)->execute();
+    }
+
+    public static function update_avatar_override_by_id( int $id, ?string $avatar = null, ?string $format = null ): void {
+        if ($avatar === null || $format === null)
+            $avatar = $format = null;
+        DB::update('user_data' )->set(['local_avatar' => $avatar, 'local_avatar_name' => $format ? (time() . ".{$format}") : null])->where('user', '=', $id)->execute();
+    }
+
+    public function update_name_override( ?string $new_name = null ): void {
+        static::update_name_override_by_id( $this->uid() );
+        $this->read( $this->uid() );
+    }
+
+    public function update_avatar_override( ?string $avatar = null, ?string $format = null  ): void {
+        static::update_avatar_override_by_id( $this->uid(), $avatar, $format );
+        $this->read( $this->uid() );
+    }
+
+    public function get_access_code_by_id(int $user): string {
+        $d = DB::select('access')->from('user_data')->where('user', '=', $user)->execute()->as_array(null,'access');
+        return sizeof($d) === 1 ? $d[0] : null;
+    }
+
+    public function get_access_code() {
+        return $this->set['access'];
+    }
+
+    public static function update_by_id(int $id, ?string $name = null, ?string $avatar = null): void {
+        if ($name === null && $avatar === null) return;
+        if ($avatar !== null) DB::update('users')->set(['avatar' => $avatar])->where('uid', '=', $id)->execute();
+        if ($name !== null) static::update_by_id( $id, $name );
+    }
+
+    public function update(?string $name = null, ?string $avatar = null): void {
         static::update_by_id( $this->uid(), $name, $avatar );
+        $this->read( $this->uid() );
     }
 
     public static function remove_avatar_by_id($id) {

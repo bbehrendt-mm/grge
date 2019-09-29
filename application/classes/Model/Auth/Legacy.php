@@ -32,7 +32,7 @@ abstract class Model_Auth_Legacy extends Model_Auth_Interface {
             $created = true;
             $this->zvid = Model_Euser::register($this->name,$this->avatar);
         }
-        elseif ($this->avatar && !Model_Euser::avatar_by_id($this->zvid)) Model_Euser::update_by_id($this->zvid, null, $this->avatar);
+        elseif ($this->avatar && !Model_Euser::avatar_by_id($this->zvid, true)) Model_Euser::update_by_id($this->zvid, null, $this->avatar);
 
         $this->ready = true;
         $this->link($this->sk);
@@ -114,8 +114,8 @@ abstract class Model_Auth_Legacy extends Model_Auth_Interface {
 
         if ($this->zvid >= 0) {
             $this->rid = (int)DB::select('rid')->from('profiles_xref')->where('provider','=', static::class)->where('zvid','=',$this->zvid)->execute()->get('rid',-1);
-            $this->name = Model_Euser::name_by_id($this->zvid);
-            $this->avatar = Model_Euser::avatar_by_id($this->zvid);
+            $this->name = Model_Euser::name_by_id($this->zvid, true);
+            $this->avatar = Model_Euser::avatar_by_id($this->zvid, true);
 
             $this->ready = true;
         }

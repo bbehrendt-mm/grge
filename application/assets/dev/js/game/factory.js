@@ -64,8 +64,10 @@ NF.info = function(txt) {
     return NF.n('div','note',txt);
 };
 
-NF.input = function(type, content) {
-    return NF.n('input', 'form_input').val(content).attr('type',type);
+NF.input = function(type, content, attrs) {
+    var node = NF.n('input', 'form_input').val(content).attr('type',type);
+    $.each(attrs, function(k,v) { node.attr(k,v) } );
+    return node;
 };
 
 NF.separator = function(n) {

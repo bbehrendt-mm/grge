@@ -34,6 +34,7 @@ game.network = {
                         alert('REQUEST ERROR: 404 REQUEST HANDLER NOT FOUND!' + (data.error.details.uri ? ('\nURI: ' + data.error.details.uri) : ''));
                         return game.reset();
                     default:
+                        console.error(data.error.name, data.error.code, data.error.message);
                         break;
                 }
 

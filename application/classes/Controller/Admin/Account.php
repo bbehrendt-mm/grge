@@ -12,7 +12,7 @@ class Controller_Admin_Account extends Controller_Admin_Admin {
         }
 
         $this->add_widget(View::factory('admin/login')
-            ->set('user', Globals::CurrentUserF()->name())
+            ->set('user', Globals::CurrentUserF()->name(true))
             ->render());
 
         $this->render();

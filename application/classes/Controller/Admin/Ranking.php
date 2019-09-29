@@ -26,7 +26,7 @@ class Controller_Admin_Ranking extends Controller_Admin_Admin {
                     $data[$s][$mode][$flow] = $result;
                     foreach ($data[$s][$mode][$flow] as $id => $rank) {
                         $uid = (int)$rank['uid'];
-                        if (!isset($user_name_cache[$uid])) $user_name_cache[$uid] = Model_User::name_by_id($uid);
+                        if (!isset($user_name_cache[$uid])) $user_name_cache[$uid] = Model_User::name_by_id($uid, false);
                         $data[$s][$mode][$flow][$id]['uid'] = [$uid => $user_name_cache[$uid]];
                     }
 
@@ -43,7 +43,7 @@ class Controller_Admin_Ranking extends Controller_Admin_Admin {
                     $c = [];
                     foreach (explode(';', $rank['uid']) as $uid) {
                         if (!($uid = (int)$uid)) continue;
-                        if (!isset($user_name_cache[$uid])) $user_name_cache[$uid] = Model_User::name_by_id($uid);
+                        if (!isset($user_name_cache[$uid])) $user_name_cache[$uid] = Model_User::name_by_id($uid, false);
                         $c[$uid] = $user_name_cache[$uid];
                     }
                     $data[$s][$mode][$flow][$id]['uid'] = $c;

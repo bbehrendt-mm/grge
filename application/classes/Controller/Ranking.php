@@ -114,7 +114,7 @@ class Controller_Ranking extends Controller {
                 'players'   => [[
                                     'name'  => $element['name'] ??
                                         Model_Euser::name_by_id(
-                                            $element['uid']
+                                            $element['uid'], false
                                         ),
                                     'id'    => $element['uid'],
                                     'job'   => __(Tool_Modes::get_job_by_id($element['job'])),
@@ -258,8 +258,15 @@ class Controller_Ranking extends Controller {
         $query = Request::current()->post('query');
         if (!$query || strlen($query) < 3) return;
 
+        $data = DB::select(['uid','id'],'name','avatar','local_name')->from('users')->join('user_data','LEFT')->on('users.uid','=','user_data.user')->where('name','LIKE',"%{$query}%")->or_where('local_name','LIKE',"%{$query}%")->execute()->as_array();
+
+        foreach ($data as &$entry) {
+            if ($entry['local_name'] !== null) $entry['name'] = $entry['local_name'];
+            unset($entry['local_name']);
+        }
+
         $this->render([
-            'users' => DB::select(['uid','id'],'name','avatar')->from('users')->where('name','LIKE',"%{$query}%")->execute()->as_array()
+            'users' => $data
         ]);
     }
 
@@ -436,7 +443,7 @@ class Controller_Ranking extends Controller {
 
             $user = [
                 'id' => (int)$entry['uid'],
-                'name' => Model_User::name_by_id((int)$entry['uid']),
+                'name' => Model_User::name_by_id((int)$entry['uid'], false),
                 'score_sp' => (int)$entry['points'],
                 'score_ap' => 0,
                 'ticks' => (int)$entry['ticks'],
@@ -488,7 +495,7 @@ class Controller_Ranking extends Controller {
     {
         // Search user
         $uid = $this->request->param('id', Globals::CurrentUserF()->uid());
-        if (!($name = Model_Euser::name_by_id($uid)))
+        if (!($name = Model_Euser::name_by_id($uid, false)))
             return $this->not_found();
 
         // Get achievements
@@ -520,8 +527,8 @@ class Controller_Ranking extends Controller {
         $mentor = Model_Euser::mentor_id($uid);
         if ($mentor)
             $mentor_data = [
-                'name' => Model_Euser::name_by_id($mentor),
-                'avatar' => Model_Euser::avatar_by_id($mentor),
+                'name' => Model_Euser::name_by_id($mentor, false),
+                'avatar' => Model_Euser::avatar_by_id($mentor, false),
                 'uid' => $mentor
             ];
         else $mentor_data = $mentor;
@@ -529,8 +536,8 @@ class Controller_Ranking extends Controller {
         $pupils = Model_Euser::apprentice_id($uid);
         $pupils_data = array_map(function($auid) {
             return [
-                'name' => Model_Euser::name_by_id($auid),
-                'avatar' => Model_Euser::avatar_by_id($auid),
+                'name' => Model_Euser::name_by_id($auid, false),
+                'avatar' => Model_Euser::avatar_by_id($auid, false),
                 'uid' => $auid
             ];
         }, $pupils);
@@ -567,7 +574,7 @@ class Controller_Ranking extends Controller {
             ->set('own_soul', $uid === Globals::CurrentUserF()->uid())
             ->set('soul_owner', $name)
             ->set('soul_id', $uid)
-            ->set('avatar', Model_Euser::avatar_by_id($uid))
+            ->set('avatar', Model_Euser::avatar_by_id($uid, false))
             ->set('points_soul', $spoints)
             ->set('points_ach', $apoints)
             ->set('points_karma', $kpoints)

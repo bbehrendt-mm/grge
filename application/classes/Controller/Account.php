@@ -172,6 +172,83 @@ class Controller_Account extends Controller {
         $this->render(['success' => Model_Auth_Password::user_activate( $id )]);
     }
 
+    public function japi_upload_avatar():void {
+
+        if (!extension_loaded('imagick')){
+            $this->render(['success' => false]);
+            return;
+        }
+
+        $payload = base64_decode(Request::current()->post('data'), true) ?: null;
+        if (strlen( $payload ) > 3145728) {
+            $this->error(\grge\E_IMAGE_TOO_LARGE);
+            return;
+        }
+
+        if (!$payload) {
+            $this->render(['success' => false]);
+            return;
+        }
+
+        $im_image = new Imagick();
+        $proessed_image_data = null;
+
+        try {
+            if (!$im_image->readImageBlob($payload)) {
+                $this->error(\grge\E_IMAGE_CORRUPTED);
+                return;
+            }
+
+            if (!in_array($im_image->getImageFormat(), ['GIF','JPEG','BMP','PNG','WEBP'])) {
+                $this->error(\grge\E_IMAGE_FORMAT_UNSUPPORTED);
+                return;
+            }
+
+            $w = $im_image->getImageWidth();
+            $h = $im_image->getImageHeight();
+
+            if ($w / $h < 0.1 || $h / $w < 0.1 || $h < 16 || $w < 16) {
+                $this->error(\grge\E_IMAGE_RESOLUTION_REJECTED);
+                return;
+            }
+
+            if ( max($w,$h) > 200 && !$im_image->resizeImage( min(200,max(100,$w,$h)), min(200,max(100,$w,$h)), imagick::FILTER_SINC, 0, true )){
+                $this->error(\grge\E_IMAGE_TRANSFORMATION_FAILURE);
+                return;
+            }
+
+            $im_image->setImageBackgroundColor('black');
+            $im_image->setImageAlphaChannel(Imagick::ALPHACHANNEL_REMOVE);
+            if ($im_image->getImageFormat() !== "GIF")
+                $im_image = $im_image->mergeImageLayers(Imagick::LAYERMETHOD_FLATTEN);
+
+            switch ($im_image->getImageFormat()) {
+                case 'JPEG':
+                    $im_image->setImageCompressionQuality ( 90 );
+                    break;
+                case 'PNG':
+                    $im_image->setOption('png:compression-level', 9);
+                    break;
+                case 'GIF':
+                    $im_image->setOption('optimize', true);
+                    break;
+                default: break;
+            }
+
+            $proessed_image_data = $im_image->getImagesBlob();
+            if (strlen($proessed_image_data) > 1048576){
+                $this->error(\grge\E_IMAGE_OUTPUT_TOO_LARGE);
+                return;
+            }
+        } catch (Exception $e) {
+            $this->error(\grge\E_IMAGE_PIPELINE_FAILURE);
+            return;
+        }
+
+        Globals::CurrentUserF()->update_avatar_override( $proessed_image_data, strtolower( $im_image->getImageFormat() ) );
+        $this->render(['success' => true, 'access' => Globals::CurrentUserF()->get_access_code()]);
+    }
+
     public function japi_sync_mt(): void
     {
         // Account Providers
@@ -202,7 +279,12 @@ class Controller_Account extends Controller {
                 return;
             }
 
-            Globals::CurrentUserF()->update( $authenticator->getRemoteName(), $authenticator->getRemoteAvatarUrl() );
+            Globals::CurrentUserF()->update_avatar_override( null, null);
+
+            if ($authenticator->getRemoteName() === Globals::CurrentUserF()->name( true ) ) {
+                Globals::CurrentUserF()->update_name_override( $authenticator->getRemoteName() );
+                Globals::CurrentUserF()->update( null, $authenticator->getRemoteAvatarUrl() );
+            } else Globals::CurrentUserF()->update( $authenticator->getRemoteName(), $authenticator->getRemoteAvatarUrl() );
         }
 
         $this->render([
@@ -210,7 +292,7 @@ class Controller_Account extends Controller {
             'control' => $hash,
             'id' => Globals::CurrentUserF()->uid(),
             'avatar' => [
-                'old' => Model_Euser::avatar_by_id(Globals::CurrentUserF()->uid()),
+                'old' => Model_Euser::avatar_by_id(Globals::CurrentUserF()->uid(), false),
                 'new' => $authenticator->getRemoteAvatarUrl(),
             ],
             'name' => [
@@ -235,8 +317,11 @@ class Controller_Account extends Controller {
                 ->set('mail', Model_Auth_Password::user_getEmail( Globals::CurrentUserF()->uid() ))
                 ->set('pw_stage', $pw_stage)
                 ->set('url', URL::base(true))
-                ->set('avatar', Model_Euser::avatar_by_id(Globals::CurrentUserF()->uid()))
+                ->set('avatar', Model_Euser::avatar_by_id(Globals::CurrentUserF()->uid(), false))
                 ->set('user',   Globals::CurrentUserF()->name())
+                ->set('user_c',   Globals::CurrentUserF()->name(true))
+                ->set('fake',   Globals::CurrentUserF()->fakename())
+                ->set('mentor', Model_Euser::get_mentoring_ref(Globals::CurrentUserF()->uid()))
                 ->set('id', Globals::CurrentUserF()->uid())
                 ->set('dv_id',  isset( $accounts['Model_Auth_Hordesde'] ) ? (int)$accounts['Model_Auth_Hordesde']['rid'] : -1)
                 ->set('d2n_id', isset( $accounts['Model_Auth_Hordesen'] ) ? (int)$accounts['Model_Auth_Hordesen']['rid'] : -1)
@@ -468,6 +553,7 @@ class Controller_Account extends Controller {
         } else
             $authenticator = new Model_Auth_Token(Model_Auth_Token::token($uid));
 
+        Model_Euser::create_profile_data_if_missing( $uid );
 
         //Get whitelisting entry
         $wl = DB::select('relation')->from('user_flags')->where('user','=',$uid)->and_where('relation','IN',['ALLOW','DENY'])->and_where('data','=','WHITELIST')->execute()->as_array();

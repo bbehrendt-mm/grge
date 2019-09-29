@@ -3,6 +3,9 @@
  * @var $url
  * @var $avatar
  * @var $user
+ * @var $user_c
+ * @var $mentor
+ * @var $fake
  * @var $id
  * @var $dv_id
  * @var $d2n_id
@@ -28,29 +31,56 @@
 <div class="row settings-tab" id="settings_avatar">
     <div class="cell rw-12">
         <div class="row">
-            <div class="cell rw-2 rw-sm-12 padded left">
-                <div class="framed main inline-block">
-                    <img id="av_img" class="avatar" src="<?=$avatar ?: 'media/img/mugshot.png'?>" alt="<?=$user?>">
-                </div>
-            </div>
-            <div class="cell rw-10 rw-sm-12 left">
-                <div class="row">
-                    <div class="cell rw-12 padded">
-                        <span id="av_name" style="font-size: 20px; font-weight: bold"><?=$user?></span>
+            <div class="padded cell ro-3 rw-6 ro-lg-2 rw-lg-8 ro-md-1 rw-md-10 ro-sm-0 rw-sm-12">
+                <div class="flatbox zv-license">
+                    <div class="row">
+                        <div class="cell rw-12">
+                            <h3><?=__('ZombVival SurvivorID');?></h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="cell rw-4 padded left">
+                            <div class="zv-license-pic">
+                                <img id="av_img" class="avatar" src="<?=$avatar ?: 'media/img/mugshot.png'?>" alt="<?=$user?>">
+                            </div>
+                        </div>
+                        <div class="cell rw-8 padded left">
+                            <div class="row">
+                                <div class="cell rw-12 padded">
+                                    <span id="av_name" class="zv-license-main"><?=$user?></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="cell rw-12 padded">
+                                    <span id="av_mentor" class="zv-license-info">
+                                        <?=$fake?><br/>
+                                        &lt;&lt;<?=$mentor?><?=str_pad(str_pad($id,3,"0",STR_PAD_LEFT),8,"<",STR_PAD_LEFT)?>&lt;&lt;O8L5
+                                        <?php if ($user !== $user_c) { ?><br/><?=$user_c?><?php } ?>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <?php if ($dv_id >= 0 || $d2n_id >= 0) { ?>
-                        <div class="cell rw-12 padded">
-                            <div id="profile_sync_button" class="btn small"><?=__('Mit MotionTwin abgleichen');?></div>
-                        </div>
-                    <?php } ?>
-                    <?php if ($avatar) { ?>
-                        <div class="cell rw-12 padded">
-                            <div id="profile_noav_button" class="btn small"><?=__('Profilbild entfernen');?></div>
-                        </div>
-                    <?php } ?>
+            </div>
+
+        </div>
+
+    </div>
+    <br /><br />
+    <div class="cell rw-12">
+        <div class="row">
+            <div class="cell rw-12">
+                <h2><?=__('Aktionen')?></h2>
+            </div>
+            <?php if ($dv_id >= 0 || $d2n_id >= 0) { ?>
+                <div class="padded cell rw-3 rw-lg-4 rw-md-6 rw-sm-12">
+                    <div id="profile_sync_button" class="btn"><?=__('Mit MotionTwin abgleichen');?></div>
                 </div>
+            <?php } ?>
+
+            <div class="padded cell rw-3 rw-lg-4 rw-md-6 rw-sm-12">
+                <div id="profile_addav_button" class="btn"><?=__('Profilbild ändern');?></div>
             </div>
         </div>
     </div>
@@ -289,30 +319,170 @@
         tabs.filter( '#' + tabline.children('li:first-child').data('controls') ).show();
     })();
 
-    $('#profile_noav_button').on('click', function() {
-        if (confirm( <?=__j('Bist du sicher, dass du dein Profilbild entfernen möchtest?')?> )) {
+    $('#profile_addav_button').on('click', function() {
+        var popup = core.popup.spawn({desktop: 700, lg:'100%'});
 
-            $('#profile_noav_button').addClass('disabled');
-            game.network.query('japi/account/remove_avatar', {}, function(data) {
+        var file_selector, file_name_box, file_name, file_info_box, file_type, file_res, file_size, file_type_icon, file_size_icon, file_res_icon;
+
+        var preview_box, preview_image;
+        var btn_confirm, btn_cancel;
+
+        var file_content, file_mime;
+
+        popup.append($('<form/>')
+            .append(
+                NF.row()
+                    .append( NF.cell(true,12).append( NF.info()
+                            .append(NF.n('p','',<?=__j('Hier kannst du ein eigenes Profilbild hochladen. Dein Bild sollte quadratisch sein und mindestens eine Auflösung 100x100 Pixeln haben.')?>))
+                            .append(NF.n('p','',<?=__j('Unterstützt werden Bilder in den Formaten GIF, JPEG, PNG, BMP und WebP mit einer Dateigröße von maximal :size.', [':size' => '3 MiB'])?>))
+                            .append(NF.n('p','',<?=__j('Nachdem du ein Bild ausgewählt hast, wird dir eine Vorschau des Bildes angezeigt. Je nach Dateityp und Qualität des Bildes unterscheidet sich diese Vorschau möglicherweise geringfügig von dem finalen Bild, welches der Server nach dem Hochladen berechnet und abspeichert.')?>))
+                    ) )
+                    .append( NF.cell(true,12)
+                        .append(NF.row()
+                            .append(NF.cell(true,{desktop:6,md:12},{desktop:3,md:0}).append(
+                                $('<label for="av_file_sel" />').append(NF.button(<?=__j('Bild auswählen')?>, false, 'image'))
+                            ))
+                            .append(file_name_box = NF.cell(false,12).append(NF.n('div','flatbox small center').append(
+                                NF.row().append(NF.cell(true,12).append(file_name = NF.n('div').css({'word-wrap': 'break-word'})))
+                            )))
+                        )
+                        .append(NF.row().append(NF.cell(false,12).append(file_selector = NF.input('file',null,{id: "av_file_sel", name: "av_file_sel", accept: ".gif,.jpg,.jpeg,.jif,.jfif,.png,.webp,.bmp"}))))
+                        .append(file_info_box = NF.n('div','flatbox').append(NF.row()
+                            .append(NF.cell(true,5).append(NF.n('span','b',<?=__j('Dateityp')?>)))
+                            .append(NF.cell(true,5).append(file_type = NF.n('div')))
+                            .append(NF.cell(true,2).append(file_type_icon = NF.n('div','right')))
+
+                            .append(NF.cell(true,5).append(NF.n('span','b',<?=__j('Größe')?>)))
+                            .append(NF.cell(true,5).append(file_size = NF.n('div')))
+                            .append(NF.cell(true,2).append(file_size_icon = NF.n('div','right')))
+
+                            .append(NF.cell(true,5).append(NF.n('span','b',<?=__j('Auflösung')?>)))
+                            .append(NF.cell(true,5).append(file_res = NF.n('div')))
+                            .append(NF.cell(true,2).append(file_res_icon = NF.n('div','right')))
+                        ))
+                    )
+
+            ).append(
+                preview_box = NF.row()
+                    .append(NF.cell(true,6)
+                        .append(NF.row()
+                            .append(NF.cell(true,12,0,'center')
+                                .append(NF.n('div','framed main inline-block').append(preview_image = NF.n('img','avatar')))
+                            )
+                        )
+                    ).append(NF.cell(true,6)
+                        .append(btn_confirm = NF.button(<?=__j('Bild hochladen')?>, false, 'upload'))
+                        .append(btn_cancel = NF.button(<?=__j('Abbrechen' )?>, false, 'times'))
+                    )
+            )
+        );
+
+        btn_confirm.addClass('disabled');
+        btn_cancel.on('click', function() {popup.trigger('unpop');});
+
+        btn_confirm.on('click', function() {
+            popup.addClass('disabled');
+            game.network.query('japi/account/upload_avatar', {data: btoa(file_content), mime: file_mime}, function(data) {
+                popup.removeClass('disabled');
 
                 if (!data.success) {
 
-                    game.render.html.notify('error', <?=__j('Beim Aktualisieren der Daten ist ein Fehler aufgetreten.')?>);
-                    $('#profile_noav_button').removeClass('disabled');
-
+                    if (data.error)
+                        alert(data.error.code + ' [' + data.error.name + ']: ' + data.error.message);
+                    else
+                        game.render.html.notify('error', <?=__j('Beim Aktualisieren der Daten ist ein Fehler aufgetreten.')?>);
                 } else {
-
                     game.render.html.notify('success', <?=__j('Dein Profil wurde aktualisiert.')?>);
-                    $('#av_img').attr('src', 'media/img/mugshot.png');
-
-                    var profiles = game.storage.get('login','profiles',{});
-                    if (profiles && profiles[data.id]) profiles[data.id].avatar = null;
-                    game.storage.set('login','profiles',profiles);
+                    $('#av_img')
+                        .attr('src', '')
+                        .attr('src', 'cdn/avatar/' + data.access + '?' + new Date().getTime());
+                    popup.trigger('unpop');
                 }
 
             });
+        });
 
-        }
+        preview_image.on('load', function() {
+            var w = preview_image[0].naturalWidth;
+            var h = preview_image[0].naturalHeight;
+
+            file_res.text( w + ' x ' + h );
+
+            var unlock = true;
+            var perfect = false;
+
+            if (h === w && h >= 100)
+                perfect = true;
+            else if ( h < 16 || w < 16 )
+                unlock = false;
+            else if ( h / w < 0.1 || w / h < 0.1 )
+                unlock = false;
+
+            if (unlock) {
+                preview_box.show();
+                btn_confirm.removeClass('disabled');
+            }
+
+            file_res_icon.empty().append(NF.fa(unlock ? ( perfect ? 'check-circle' : 'minus-circle' ) : 'times-circle'));
+        });
+        preview_image.on('error', function() {
+            file_content = file_mime = null;
+            file_type.text(<?=__j('Unbekannt')?>);
+            file_type_icon.empty().append(NF.fa('times-circle'));
+        });
+
+        preview_box.hide();
+        file_info_box.hide();
+        file_name_box.hide();
+        file_selector.hide();
+        file_selector.on('change', function(e) {
+
+            file_content = file_mime = null;
+
+            preview_box.hide();
+            btn_confirm.addClass('disabled');
+
+            var files = e.target.files;
+            if (files.length !== 1) return;
+            var file = files[0];
+
+            file_name.text(file.name);
+            file_name_box.show();
+            file_info_box.show();
+
+            var valid_filetype = true;
+            var type_info = file.type.split('/',2);
+            if (type_info.length < 2 || type_info[0] !== 'image') {
+                valid_filetype = false;
+                type_info = ['unknown','unknown'];
+            }
+
+            var size_info;
+            if      (file.size >= 1073741824) size_info = [Math.round(file.size/107374182.4)/10,'GiB'];
+            else if (file.size >=    1048576) size_info = [Math.round(file.size/   104857.6)/10,'MiB'];
+            else if (file.size >=       1024) size_info = [Math.round(file.size/       1024)   ,'KiB'];
+            else                              size_info = [           file.size                ,'B'  ];
+
+            var valid_filesize = file.size > 0 && file.size <= 3145728; //3MB
+
+            file_type.text( type_info[1] );
+            file_type_icon.empty().append(NF.fa(valid_filetype ? 'check-circle' : 'times-circle'));
+            file_size.text( size_info[0] + ' ' + size_info[1]);
+            file_size_icon.empty().append(NF.fa(valid_filesize ? 'check-circle' : 'times-circle'));
+            file_res.text( '???' );
+            file_res_icon.empty().append(NF.fa('times-circle'));
+
+            if (valid_filesize && valid_filetype) {
+
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    file_content = e.target.result;
+                    file_mime = type_info[1];
+                    preview_image.attr('src', 'data:image/' + type_info[1] + ';base64,' + btoa(e.target.result));
+                };
+                reader.readAsBinaryString(file);
+            }
+        });
     });
 
     $('#profile_sync_button').on('click', function() {
@@ -343,7 +513,7 @@
                     NF.row().append( NF.cell(true, 12).append( NF.info(<?=__j('Wenn du dich derzeit in einem Spiel befindest und deinen Namen änderst, wirst du in deinem aktuellen Spiel weiterhin mit deinem alten Namen angezeigt werden.')?> ) ))
                 ).append(
                     NF.row()
-                        .append( NF.cell(true, 4, 0, 'right').append(NF.n('div', 'framed main inline-block').append($('<img src="' + data.avatar.old + '" alt="old_avatar" />'))) )
+                        .append( NF.cell(true, 4, 0, 'right').append(NF.n('div', 'framed main inline-block').append($('<img class="avatar" src="' + data.avatar.old + '" alt="old_avatar" />'))) )
                         .append( NF.cell(true, 8, 0, 'left')
                             .append(NF.n('div', 'b', data.name.old))
                             .append(NF.n('div', 'i', <?=__j('Dies ist dein aktuelles, von ZombVival gespeichertes Profil.')?>))

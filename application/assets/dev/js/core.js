@@ -6,7 +6,7 @@ core = {
     parts: {},
     snippets: {},
 
-    version: '2.2.1-6-0-590',
+    version: '2.2.1-61-0-591',
 
     last: {},
     plugins: {},

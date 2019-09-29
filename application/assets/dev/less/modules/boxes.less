@@ -263,5 +263,17 @@
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.80);
     text-align: center; line-height: 96px; font-size: 72px; cursor: pointer;
   }
+}
 
+.flatbox.zv-license {
+  position: relative; background: url("media/img/pass-back.jpg") center center/cover no-repeat;
+  margin-top: 25px; transform: rotate(-3deg);
+  &::before {
+    content: " "; position: absolute; background: url("media/img/pass-grime.png") center center/cover no-repeat;
+    left: 0; right: 0; top: 0; bottom: 0; pointer-events: none;
+  }
+  h3 { color: white; background: rgba(255, 32, 0, 0.7); }
+  .zv-license-pic img { margin: 4px; border: 5px solid white; box-shadow: 0 0 2px black; transform: rotate(5deg);}
+  .zv-license-main { font-size: 20px; font-weight: bold; }
+  .zv-license-info { font-size: 16px; font-weight: bold; color: #a6a6a6; }
 }

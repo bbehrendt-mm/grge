@@ -12,7 +12,7 @@ class Controller_Lobby extends Controller {
         $this->add_menu('logout');
         $this->add_widget(View::factory('pages/main')
             ->set('ingame', (bool)Globals::CurrentUserF()->get_current_game())
-            ->set('avatar', Model_Euser::avatar_by_id(Globals::CurrentUserF()->uid()))
+            ->set('avatar', Model_Euser::avatar_by_id(Globals::CurrentUserF()->uid(), false))
             ->set('name', Globals::CurrentUserF()->name())
             ->set('mentor', Model_Euser::get_mentoring_ref(Globals::CurrentUserF()->uid()))
             ->set('cashout', Model_Euser::get_mentor_braincoins(Globals::CurrentUserF()->uid(), null, false))

@@ -124,10 +124,10 @@ class Controller_Admin_Users extends Controller_Admin_Admin {
         $query = explode(':', self::post('query'));
         [$limit,$query] = (count($query) > 1) ? $query : ['n', $query[0]];
 
-        if (!in_array($limit,['i','n','r']))
+        if (!in_array($limit,['i','n','r','cn','ln']))
             $limit = 'n';
 
-        $result = DB::select('uid','name','flags.access')->from('users')->join([DB::select('user',['relation','access'])->from('user_flags')->where('data','=','WHITELIST'),'flags'],'LEFT')->on('users.uid','=','flags.user');
+        $result = DB::select('uid','name','flags.access')->from('users')->join('user_data','LEFT')->on('users.uid','=','user_data.user')->join([DB::select('user',['relation','access'])->from('user_flags')->where('data','=','WHITELIST'),'flags'],'LEFT')->on('users.uid','=','flags.user');
         switch($limit) {
             case 'i':
                 $result->where('uid','=',(int)$query);
@@ -135,8 +135,14 @@ class Controller_Admin_Users extends Controller_Admin_Admin {
             case 'r':
                 $result->where('uid','IN',DB::select(['zvid','uid'])->distinct(true)->from('profiles_xref')->where('rid','=',(int)$query));
                 break;
-            case 'n': default:
+            case 'cn':
                 $result->where('name','LIKE',"%{$query}%");
+                break;
+            case 'ln':
+                $result->where('local_name','LIKE',"%{$query}%");
+                break;
+            case 'n': default:
+                $result->where('name','LIKE',"%{$query}%")->or_where('local_name','LIKE',"%{$query}%");
                 break;
         }
         $result = $result->execute()->as_array();

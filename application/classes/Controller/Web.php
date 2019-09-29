@@ -139,6 +139,42 @@ class Controller_Web extends Controller {
         $this->modscript('map', ['canvasModule']);
     }
 
+    public function action_avatar(): void {
+        $key = $this->request->param('id');
+        $data = DB::select('local_avatar','local_avatar_name')->from('user_data')->where('access','=', $key)->and_where('local_avatar_name', 'IS NOT', null)->execute()->as_array();
+
+        if (sizeof($data) !== 1) {
+            $this->response->status(404);
+            die('Not found.');
+        }
+
+        $data = $data[0];
+
+        [$ts,$type] = explode('.', $data['local_avatar_name']);
+
+        $etag = md5($ts);
+        $not_modified = $this->request->headers( 'If-None-Match' ) === $etag;
+
+        if ($not_modified) {
+            $this->response->status(304);
+            $this->response->headers('Vary','Accept-Encoding');
+            $this->response->body('');
+            return;
+        }
+
+        $this->response->headers([
+            'ETag' => $etag,
+            'Content-Length' => strlen($data['local_avatar']),
+            'Content-Type' => "image/{$type}",
+            'Cache-Control' => 'must-revalidate',
+            'Pragma' => 'no-cache',
+            'Vary' => 'Accept-Encoding'
+         ]);
+
+        $this->response->body( $data['local_avatar'] );
+
+    }
+
     public function action_body(): void
     {
         $this->force_ajax();

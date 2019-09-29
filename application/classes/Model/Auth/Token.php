@@ -12,8 +12,8 @@ class Model_Auth_Token extends Model_Auth_Interface {
 
         if ($this->zvid >= 0) {
             $this->rid = $this->zvid;
-            $this->name = Model_Euser::name_by_id($this->zvid);
-            $this->avatar = Model_Euser::avatar_by_id($this->zvid);
+            $this->name = Model_Euser::name_by_id($this->zvid, true);
+            $this->avatar = Model_Euser::avatar_by_id($this->zvid, true);
 
             $this->ready = true;
         } else $this->last_error = 'invalid_keys';
@@ -30,11 +30,11 @@ class Model_Auth_Token extends Model_Auth_Interface {
     }
 
     public function getRemoteName() {
-        return Model_Euser::name_by_id($this->zvid);
+        return Model_Euser::name_by_id($this->zvid, true);
     }
 
     public function getRemoteAvatarUrl() {
-        return Model_Euser::avatar_by_id($this->zvid);
+        return Model_Euser::avatar_by_id($this->zvid, true);
     }
 
     public function connectToLocal($target_id = null): bool

@@ -242,7 +242,7 @@ class Model_Room {
      */
     public function add_tag($tags): void {
         if (is_array($tags)) foreach ($tags as $tag) $this->add_tag($tag);
-        else if (!$this->has_tag($tags)) $this->tags[] = $tags;
+        elseif (!$this->has_tag($tags)) $this->tags[] = $tags;
     }
 
 
@@ -363,6 +363,7 @@ class Model_Room {
         $this->usage = '';
         $this->deco = 0;
         $this->defense = 0;
+        $this->default_room = null;
         $this->inventory()->grind();
     }
 

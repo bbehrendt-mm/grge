@@ -124,7 +124,7 @@ class Model_NPC_Event_Patient extends Model_NPC_Humanoid
 
                         $ev = Globals::CurrentGameF()->get_initialized_event(Model_Events_Halloween::get_key());
                         /** @var $ev Model_Events_Halloween */
-                        if ($ev) $ev->register_event_map($mid);
+                        if ($ev) $ev->register_event_map_id($mid);
 
                         $this->is_passified = true;
                         $this->kill();

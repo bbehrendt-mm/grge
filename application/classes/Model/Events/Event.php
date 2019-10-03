@@ -6,8 +6,24 @@ abstract class Model_Events_Event {
     protected $active = false;
     protected static $event_name = '';
 
+    private $npc_list = [];
+    private $item_list = [];
+    private $map_list = [];
+
     public function __construct() {
         $this->trigger();
+    }
+
+    public function register_event_map_id($map): void {
+        $this->map_list[] = $map;
+    }
+
+    public function register_npc_id($npc): void {
+        $this->npc_list[] = $npc;
+    }
+
+    public function register_item_id($iid): void {
+        $this->item_list[] = $iid;
     }
 
     public static function name(): string {
@@ -43,7 +59,38 @@ abstract class Model_Events_Event {
     }
 
     abstract protected function trigger_activation(): bool;
-    abstract protected function trigger_deactivation(): bool;
+    protected function trigger_deactivation(): bool
+    {
+        foreach ($this->item_list as $iuin) {
+            /** @var Model_Items_Abstract_Item $i */
+            $i = Globals::CurrentGameF()->uin()->get($iuin, Model_Items_Abstract_Item::cls());
+            if ($i) $i->grind();
+        }
+
+        foreach ($this->npc_list as $npc) {
+            $npc_inst = Globals::CurrentGameF()->get_npc($npc);
+            if ($npc_inst && $npc_inst->get_status()->alive())
+                $npc_inst->kill();
+        }
+
+        $d_loc = Globals::CurrentGameF()->map_main()->get_by_fixed_id(1);
+        if ($d_loc)
+            foreach ($this->map_list as $map_id) {
+                $map = Globals::CurrentGameF()->map_by_id($map_id);
+                if ($map) {
+                    foreach ($map->get_locations() as $subloc)
+                        foreach (Tool_Scripts::at_location($subloc) as $p) {
+                            Globals::CurrentGameF()->locationF($subloc)->leave($p->id(), Tool_Scripts::is_npc($p) ? Interface_Tickable::IT_TYPE_NPC : Interface_Tickable::IT_TYPE_PLAYER);
+                            $p->location_class($d_loc->uin());
+                            $d_loc->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $p->id(), Tool_Scripts::is_npc($p)));
+                        }
+                }
+                Globals::CurrentGameF()->unregister_map($map_id);
+            }
+
+        return true;
+    }
+
     abstract public function tick(): bool;
     abstract public function event_playerCreation(Interface_Plentity $entity): void;
     abstract public function event_locationCreation(Model_Places_Abstract_Place $place): void;

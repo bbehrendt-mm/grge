@@ -4,32 +4,13 @@ class Model_Events_Xmas extends Model_Events_Event {
     protected static $event_key = 'xmas';
     protected static $event_name = 'Weihnachts-Event';
 
-    private $npc_list = [];
-    private $maps = [];
-    private $item_list = [];
-
-    public function register_event_map($map): void
-    {
-        $this->maps[] = $map;
-    }
-
-    public function register_event_item($item): void
-    {
-        $this->item_list[] = $item;
-    }
-
-    public function register_event_npc($npc): void
-    {
-        $this->npc_list[] = $npc;
-    }
-
     public function place_conductor(Model_Places_Abstract_Place $place): void
     {
         $conductor = new Model_NPC_Event_Conductor();
         $conductor->location_class($place->uin());
         Globals::CurrentGameF()->add_npc($conductor);
         $place->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $conductor->id(), true));
-        $this->npc_list[] = $conductor->id();
+        $this->register_npc_id($conductor->id());
     }
 
     protected function trigger_activation(): bool
@@ -48,11 +29,7 @@ class Model_Events_Xmas extends Model_Events_Event {
 
     protected function trigger_deactivation(): bool
     {
-        foreach ($this->item_list as $iuin) {
-            /** @var Model_Items_Abstract_Item $i */
-            $i = Globals::CurrentGameF()->uin()->get($iuin, Model_Items_Abstract_Item::cls());
-            if ($i) $i->grind();
-        }
+        $b = parent::trigger_deactivation();
 
         foreach (Globals::CurrentGameF()->playable_entities() as $pl) {
             $pl->get_status()->set(Model_Status::MS_STAT_FREEZE,0);
@@ -66,28 +43,7 @@ class Model_Events_Xmas extends Model_Events_Event {
                 $i->grind();
         }
 
-        foreach ($this->npc_list as $npc) {
-            $npc_inst = Globals::CurrentGameF()->get_npc($npc);
-            if ($npc_inst && $npc_inst->get_status()->alive())
-                $npc_inst->kill();
-        }
-
-        $d_loc = Globals::CurrentGameF()->map_main()->get_by_fixed_id(1);
-        if ($d_loc)
-            foreach ($this->maps as $map_id) {
-                $map = Globals::CurrentGameF()->map_by_id($map_id);
-                if ($map) {
-                    foreach ($map->get_locations() as $subloc)
-                        foreach (Tool_Scripts::at_location($subloc) as $p) {
-                            Globals::CurrentGameF()->locationF($subloc)->leave($p->id(), Tool_Scripts::is_npc($p) ? Interface_Tickable::IT_TYPE_NPC : Interface_Tickable::IT_TYPE_PLAYER);
-                            $p->location_class($d_loc->uin());
-                            $d_loc->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_ENTER, $p->id(), Tool_Scripts::is_npc($p)));
-                        }
-                }
-                Globals::CurrentGameF()->unregister_map($map_id);
-            }
-
-        return true;
+        return $b;
     }
 
     public function tick(): bool { return true; }

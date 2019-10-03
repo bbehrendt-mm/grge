@@ -177,7 +177,7 @@ class Controller_Game extends Controller {
         $z_list = [];
         foreach ($acc_zombies as $z_class => $z_count)
             /** @var $z_class Model_Combat_Zombies_Zombie */
-            $z_list[] = ['icon' => $z_class::static_sprite(), 'count' => $z_count];
+            if ($z_count > 0) $z_list[] = ['icon' => $z_class::static_sprite(), 'count' => $z_count];
 
         // Add render data
         $this->add_data('location', [
@@ -200,7 +200,7 @@ class Controller_Game extends Controller {
             'spawnrate' => !Tool_System::instance_of(Globals::PrimaryPlayerF()->location(), Model_Places_Abstract_Hideout::cls()) ? round(100*Globals::CurrentPlayerActualF()->location()->item_factory()->get_fillrate()) : false,
             'radar' => [
                 'danger' => $danger,
-                'max' => ceil( $factory->stat_max_zombie_count() /$radar_scale)*$radar_scale,
+                'max' => max(1,ceil( $factory->stat_max_zombie_count() /$radar_scale)*$radar_scale),
 
                 'prop' => $radar_prop * 5,
                 'c' => $factory->stat_chance(),

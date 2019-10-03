@@ -61,6 +61,8 @@
         var vec = to(this.combatants[from_id].pos, this.combatants[to_id].pos, false);
         var l = length(vec);
 
+        if (l <= 1.0) { callback(); return; }
+
         var projectile = this.createCentralizedBitmapContainer(icon);
 
         var from = this.transform(this.combatants[from_id].pos);
@@ -98,6 +100,8 @@
         var vec = to(this.combatants[from_id].pos, this.combatants[to_id].pos, false);
         var n = to(this.combatants[from_id].pos, this.combatants[to_id].pos, true);
         var l = length(vec);
+
+        if (l <= 1.0) { callback(); return; }
 
         var projectile = this.createCentralizedBitmapContainer(icon);
 

@@ -48,6 +48,7 @@ abstract class Model_NPC_Animal extends Model_NPC_Nano
         $this->inventory()->limit(static::$inventory_size);
 
         new Model_Buffs_Metabolism($this);
+        new Model_Buffs_Fatigue($this);
         new Model_Buffs_Alcohol($this);
         new Model_Buffs_Zombify($this);
         new Model_Buffs_Nuclear($this);

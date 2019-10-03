@@ -262,7 +262,7 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
             return null;
 
         $accum_army = $this->generate_zombie_list($str, (int)$fixed_number);
-        if ($force && empty($accum_army)) $accum_army = ['class' => Model_Combat_Zombies_Shambler::cls(), 'count' => $fixed_number ?? 1];
+        if ($force && empty($accum_army)) $accum_army = [['class' => Model_Combat_Zombies_Shambler::cls(), 'count' => $fixed_number ?? 1]];
 
         if (!$force && !$fixed_number && Tool_Gambling::random($this->block)) {
 

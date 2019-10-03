@@ -28,10 +28,10 @@ class Model_Log_Message extends Model {
      */
     public function __construct($data, $uid = null) {
         $this->data = $data;
-        $this->uid = $uid ?? Globals::hasPrimaryPlayer()
+        $this->uid = $uid ?? (Globals::hasPrimaryPlayer()
                 ? Globals::PrimaryPlayerF()->id()
                 : (Globals::hasCurrentUser() ? Globals::CurrentUserF()->uid()
-                    : -1);
+                    : -1) );
         $this->timestamp = Globals::CurrentGameF() ? Globals::CurrentGameF()->now() : time();
         $this->ticks = Globals::CurrentGameF() ? Globals::CurrentGameF()->duration() : -1;
     }

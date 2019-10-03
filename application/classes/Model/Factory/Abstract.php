@@ -152,4 +152,8 @@ abstract class Model_Factory_Abstract extends Model {
                 return $k;
         return null;
     }
+
+    public function is_empty(): bool {
+        return empty($this->equalized);
+    }
 }	

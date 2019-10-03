@@ -196,8 +196,12 @@ class Controller_Game extends Controller {
                 'defense' => (int)$hideout->get_defense(false),
                 'deco' => $hideout->deco(false),
             ] : false,
-            'discovery' => Tool_System::instance_of(Globals::PrimaryPlayerF()->location(), Model_Places_Abstract_Node::cls()) ?     round(100*Globals::CurrentGameF()->mapF(Globals::PrimaryPlayerF()->location_class())->get_discovery_rate(Globals::PrimaryPlayerF()->location_class(), true)) : false,
-            'spawnrate' => !Tool_System::instance_of(Globals::PrimaryPlayerF()->location(), Model_Places_Abstract_Hideout::cls()) ? round(100*Globals::CurrentPlayerActualF()->location()->item_factory()->get_fillrate()) : false,
+            'discovery' => Tool_System::instance_of(Globals::PrimaryPlayerF()->location(), Model_Places_Abstract_Node::cls())
+                ? round(100*Globals::CurrentGameF()->mapF(Globals::PrimaryPlayerF()->location_class())->get_discovery_rate(Globals::PrimaryPlayerF()->location_class(), true))
+                : false,
+            'spawnrate' => !Tool_System::instance_of(Globals::PrimaryPlayerF()->location(), Model_Places_Abstract_Hideout::cls()) && !Globals::PrimaryPlayerF()->location()->item_factory()->is_empty()
+                ? round(100*Globals::CurrentPlayerActualF()->location()->item_factory()->get_fillrate())
+                : false,
             'radar' => [
                 'danger' => $danger,
                 'max' => max(1,ceil( $factory->stat_max_zombie_count() /$radar_scale)*$radar_scale),

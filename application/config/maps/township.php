@@ -12,8 +12,9 @@ return [
         'hospital'  => [
             'name' => 'Krankenhaus',
             'engine' => 'Model_Map_Labyrinth',
+            'skin' => 'hospital',
             'grid' => 6, 'size' => 75, 'distance' => 2,
-            'neutral_class' => 'Model_Places_Hospital_Korridor', 'entry_class' => 'Model_Places_Hospital_Lobby',
+            'neutral_class' => Model_Places_Hospital_Korridor::cls(), 'entry_class' => Model_Places_Hospital_Lobby::cls(),
         ],
         'camping'   => ['name' => 'Campingplatz'],
         'thouse'    => ['name' => 'Baumhaus'],
@@ -82,5 +83,6 @@ return [
         'Model_Places_Colosseum'			=> Array('auto' => false, 'sub' => null, 'iteration' =>  0, 'distance' => array( 5, 5), 'num' =>  1, 'max_local' =>  1, 'contortion' =>  0, 'chance' =>   0, 'obvious' => false, 'branchable' => false, 'root' => 'Model_Places_Outworld'),
 
         'Model_Places_Asylumhideout'        => Array('auto' => true, 'sub' => 'ashide', 'iteration' => 0, 'distance' => array( 0, 0), 'num' =>  1, 'max_local' =>  1, 'contortion' =>  0, 'chance' =>   2, 'obvious' => true,  'branchable' => true, 'root' => null, 'fixed' => 1),
+        'Model_Places_Strangewood_Entry'	=> Array('auto' => false, 'sub' => null, 'iteration' =>  0, 'distance' => array(5,15),    'num' =>  1, 'max_local' =>  1, 'contortion' =>  0, 'chance' =>   0, 'obvious' => false, 'branchable' => false, 'root' => 'Model_Places_Outworld'),
     ]
 ];

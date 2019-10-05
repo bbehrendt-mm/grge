@@ -11,6 +11,7 @@ abstract class Model_Map_Abstract {
     protected static $map_grid_size = 2;
 
     protected $mapname = 'default';
+    protected $mapskin = 'default';
     protected $mucfg = [];
 
     protected $paths = Array();
@@ -77,6 +78,10 @@ abstract class Model_Map_Abstract {
         $this->sublocation = $sub;
         $this->movement_cost_modifier = static::$default_movement_cost_modifier;
         $this->sub_routing = new Model_Routing(static::$map_grid_size);
+    }
+
+    public function get_skin() {
+        return $this->mapskin;
     }
 
     public function get_location_notes($id): array {
@@ -341,12 +346,12 @@ abstract class Model_Map_Abstract {
         } else return null;
     }
 
-    public function add_location($class, $fixed_id = null): bool {
+    public function add_location($class, $fixed_id = null, bool $visible = true): bool {
         if (!($data = $this->get_config($class)))
             return false;
 
 
-        if ($this->place_location($class, true, $data['contortion'], $fixed_id)) {
+        if ($this->place_location($class, $visible, $data['contortion'], $fixed_id)) {
             $this->sub_routing->compile();
             return true;
         } else return false;

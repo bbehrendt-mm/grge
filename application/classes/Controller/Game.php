@@ -115,7 +115,8 @@ class Controller_Game extends Controller {
                     'left' => $in_corridor ? $mp_left : null,
                     'bottom' => $in_corridor ? $mp_bottom : null,
                     'right' => $in_corridor ? $mp_right : null,
-                    'others' => $mp_others
+                    'others' => $mp_others,
+                    'skin' => $map->get_skin(),
                 ];
         } else return null;
     }

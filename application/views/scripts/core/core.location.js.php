@@ -551,7 +551,7 @@
             var renderer = core.cache_get('minimap_stage');
 
             if (renderer) renderer.reset(mapbg.find('canvas').get(0));
-            else renderer = new core.plugins.Minimap(mapbg.find('canvas').get(0));
+            else renderer = new core.plugins.Minimap(mapbg.find('canvas').get(0), data.lomap.skin);
             renderer.addEnvironment(0,0, data.lomap.top ? data.lomap.top.id : 0, data.lomap.bottom ? data.lomap.bottom.id : 0, data.lomap.left ? data.lomap.left.id : 0, data.lomap.right ? data.lomap.right.id : 0, data.lomap.current.zombies,  data.lomap.current.players);
 
             core.cache_put('minimap_stage', renderer);

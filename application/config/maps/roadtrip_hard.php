@@ -10,7 +10,14 @@ return [
             'name' => 'Krankenhaus',
             'engine' => 'Model_Map_Labyrinth',
             'grid' => 8, 'size' => 75, 'distance' => 2,
-            'neutral_class' => 'Model_Places_Hospital_Korridor', 'entry_class' => 'Model_Places_Hospital_Lobby',
+            'neutral_class' => Model_Places_Hospital_Korridor::cls(), 'entry_class' => Model_Places_Hospital_Lobby::cls(),
+        ],
+        'swood'  => [
+            'name' => 'Strangewood',
+            'engine' => 'Model_Map_Labyrinth',
+            'skin' => 'hospital',
+            'grid' => 25, 'size' => 200, 'distance' => 2,
+            'neutral_class' => Model_Places_Strangewood_Path::cls(), 'entry_class' => Model_Places_Strangewood_Exit::cls(),
         ],
         'camping'   => ['name' => 'Campingplatz'],
         'thouse'    => ['name' => 'Baumhaus'],
@@ -75,5 +82,6 @@ return [
         'Model_Places_Toilet'				=> Array('auto' => true, 'sub' => array(null,'camping'), 'iteration' => 10, 'distance' => array(5,10), 'num' =>  4, 'max_local' =>  1, 'contortion' =>  0, 'chance' =>   3, 'obvious' => false, 'branchable' => true,  'root' => array('Model_Places_Outworld','Model_Places_Remote','Model_Places_Plaza','Model_Places_Camping_Office','Model_Places_Camping_Grill')),
 
         'Model_Places_Asylumhideout'        => Array('auto' => true, 'sub' => 'ashide', 'iteration' => 0, 'distance' => array( 0, 0), 'num' =>  1, 'max_local' =>  1, 'contortion' =>  0, 'chance' =>   2, 'obvious' => true,  'branchable' => true, 'root' => null, 'fixed' => 1),
+        'Model_Places_Strangewood_Entry'	=> Array('auto' => false, 'sub' => null, 'iteration' =>  0, 'distance' => array(5,15),    'num' =>  1, 'max_local' =>  1, 'contortion' =>  0, 'chance' =>   0, 'obvious' => false, 'branchable' => false, 'root' => 'Model_Places_Outworld'),
     ]
 ];

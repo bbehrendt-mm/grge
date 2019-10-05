@@ -171,6 +171,7 @@ class Model_Map_Labyrinth extends Model_Map_Abstract {
 
         $this->neutral_class = $this->get_local_meta($this->sublocation)['neutral_class'];
         $this->entry_class = $this->get_local_meta($this->sublocation)['entry_class'];
+        $this->mapskin = $this->get_local_meta($this->sublocation)['skin'];
 
         $this->build_space();
         $this->build_corridors((int)$this->get_local_meta($this->sublocation)['size']);

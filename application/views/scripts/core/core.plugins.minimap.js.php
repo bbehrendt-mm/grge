@@ -1,5 +1,5 @@
 (function() {
-    core.plugins.Minimap = function(canvas) {
+    core.plugins.Minimap = function(canvas,skin) {
         this.canvas = $(canvas).get(0);
         this.size = Math.min(canvas.width, canvas.height);
         this.environments = [];
@@ -8,6 +8,8 @@
         this.player = null;
         this.autorender = false;
         this.images = {final: false, count: 0, ready: 0, cache: []};
+
+        this.skin = skin;
         if (!this.initialize())
             alert('plugin:minimap init failed');
     };
@@ -29,9 +31,19 @@
         this.images.cache[path].src = path;
     };
 
-    core.plugins.Minimap.prototype.getImage = function(path) {
+    core.plugins.Minimap.prototype.getImage = function(path, dx = null, dy = null ) {
         if (!this.images.cache[path]) return null;
-        return this.images.cache[path];
+        else if (dx === null && dy === null) return this.images.cache[path];
+
+        var new_img = new createjs.Bitmap(this.images.cache[path]);
+        var px = this.images.cache[path].width, py = this.images.cache[path].height;
+        if (dx === null) dx = px * (dy/py);
+        if (dy === null) dy = py * (dx/px);
+        dx = Math.max(1,Math.ceil(dx)); dy = Math.max(1,Math.ceil(dy));
+        new_img.scaleX = dx/px; new_img.scaleY = dy/py;
+        new_img.cache(0,0,dx,dy,1);
+
+        return new_img.cacheCanvas;
     };
 
     /**
@@ -94,7 +106,12 @@
         this.stage = new createjs.Stage($(this.canvas).attr({height: this.size, width: this.size}).get(0));
         this.stage.regX = this.stage.regY = .5;
 
-        this.requestImage('media/icons/minimap/floor.png', true);
+        this.requestImage('media/icons/minimap/' + this.skin + '/floor.png', true);
+        this.requestImage('media/icons/minimap/' + this.skin + '/wall.png', true);
+        this.requestImage('media/icons/minimap/' + this.skin + '/ceil_v.png', true);
+        this.requestImage('media/icons/minimap/' + this.skin + '/ceil_h.png', true);
+        this.requestImage('media/icons/minimap/' + this.skin + '/ceil_ci.png', true);
+        this.requestImage('media/icons/minimap/' + this.skin + '/ceil_co.png', true);
 
         this.startStop(true);
         return true;
@@ -132,7 +149,7 @@
      */
     core.plugins.Minimap.prototype.shift = function(x, y, duration, callback) {
         var alias = this;
-        setTimeout(callback, duration);
+        setTimeout(callback, duration + 500);
 
         createjs.Tween.get(this.player)
             .to({x: this.player.x + (x * 0.1 * this.size), y: this.player.y + (y * 0.1 * this.size)}, duration/5, createjs.Ease.getPowInOut(2))
@@ -145,6 +162,7 @@
                 .call(function() {
                     v.x -= x;
                     v.y -= y;
+                    //callback();
                 });
         });
         return this;
@@ -178,11 +196,22 @@
             var wall_height = alias.size/8;
             var m = alias.size/2 - c_width/2;
 
+            if (alias.skin == 'swood') {
+                ceil_width *= 2;
+                wall_height *= 1.5;
+            }
+
             if (!v.container) {
                 v.container = new createjs.Container();
 
                 var floor = new createjs.Shape();
-                floor.graphics.beginBitmapFill(alias.getImage('media/icons/minimap/floor.png')).rect(0,0,alias.size,alias.size);
+                floor.graphics.beginBitmapFill(alias.getImage('media/icons/minimap/' + alias.skin + '/floor.png')).rect(0,0,alias.size,alias.size);
+
+                var wallbitmap = alias.getImage('media/icons/minimap/' + alias.skin + '/wall.png', null, wall_height);
+                var ceilvbitmap = alias.getImage('media/icons/minimap/' + alias.skin + '/ceil_v.png', ceil_width-1, null);
+                var ceilhbitmap = alias.getImage('media/icons/minimap/' + alias.skin + '/ceil_h.png', null, ceil_width-1);
+                var ceilcibitmap = alias.getImage('media/icons/minimap/' + alias.skin + '/ceil_ci.png', ceil_width, ceil_width);
+                var ceilcobitmap = alias.getImage('media/icons/minimap/' + alias.skin + '/ceil_co.png', ceil_width, ceil_width);
 
                 var walls = new createjs.Shape();
                 walls.graphics.beginFill('#000000')
@@ -201,43 +230,63 @@
                 };
 
                 var frameColor = '#462D21';
-                var wallColors = ['#00934C','#00D37A'];
-
-                //Columns
-                walls.graphics.beginFill(frameColor)
-                    .rect(dots.topleft[0],dots.topleft[1],          -ceil_width,-ceil_width)
-                    .rect(dots.topright[0],dots.topright[1],        ceil_width,-ceil_width)
-                    .rect(dots.bottomleft[0],dots.bottomleft[1],    -ceil_width,ceil_width)
-                    .rect(dots.bottomright[0],dots.bottomright[1],  ceil_width,ceil_width);
 
                 if (v.top) {
-                    walls.graphics.beginFill(frameColor)
+                    walls.graphics
+                        .beginBitmapFill(ceilvbitmap, null, new createjs.Matrix2D().translate(dots.topleft[0],dots.topleft[1]))
                         .rect(dots.topleft[0],dots.topleft[1],      -ceil_width, -(m - wall_height))
+                        .beginBitmapFill(ceilvbitmap, null, new createjs.Matrix2D().translate(dots.topright[0],dots.topright[1]).rotate(180))
                         .rect(dots.topright[0],dots.topright[1],    ceil_width, -(m - wall_height));
                 } else {
-                    walls.graphics.beginFill(frameColor).rect(dots.topleft[0] - ceil_width, dots.topleft[1], c_width + 2* ceil_width, -ceil_width);
-                    walls.graphics.beginLinearGradientFill([wallColors[0],wallColors[1],wallColors[1],wallColors[0]], [0,0.1,0.9,1],0,m - wall_height,0,m).rect(dots.topleft[0], dots.topleft[1], c_width, wall_height);
+                    walls.graphics.beginBitmapFill(ceilhbitmap, null, new createjs.Matrix2D().translate(dots.topleft[0] - ceil_width, dots.topleft[1]))
+                        .rect(dots.topleft[0] - ceil_width, dots.topleft[1], c_width + 2* ceil_width, -ceil_width);
+                    walls.graphics.beginBitmapFill(wallbitmap).rect(dots.topleft[0], dots.topleft[1], c_width, wall_height);
                 }
 
                 if (v.left) {
-                    walls.graphics.beginFill(frameColor)
+                    walls.graphics
+                        .beginBitmapFill(ceilhbitmap, null, new createjs.Matrix2D().translate(dots.topleft[0],dots.topleft[1]))
                         .rect(dots.topleft[0],dots.topleft[1],          -m, -ceil_width)
+                        .beginBitmapFill(ceilhbitmap, null, new createjs.Matrix2D().translate(dots.bottomleft[0],dots.bottomleft[1]).rotate(180))
                         .rect(dots.bottomleft[0],dots.bottomleft[1],    -m, ceil_width);
-                    walls.graphics.beginLinearGradientFill([wallColors[0],wallColors[1],wallColors[1],wallColors[0]], [0,0.1,0.9,1],0,m - wall_height,0,m).rect(dots.topleft[0], dots.topleft[1],-m, wall_height);
-                } else walls.graphics.beginFill(frameColor).rect(dots.topleft[0], dots.topleft[1] - ceil_width, -ceil_width, c_width + 2* ceil_width + wall_height);
+                    walls.graphics.beginBitmapFill(wallbitmap).rect(dots.topleft[0], dots.topleft[1],-m, wall_height);
+                } else walls.graphics.beginBitmapFill(ceilvbitmap, null, new createjs.Matrix2D().translate(dots.topleft[0], dots.topleft[1]))
+                    .rect(dots.topleft[0], dots.topleft[1] - ceil_width, -ceil_width, c_width + 2* ceil_width + wall_height);
 
                 if (v.bottom) {
-                    walls.graphics.beginFill(frameColor)
+                    walls.graphics
+                        .beginBitmapFill(ceilvbitmap, null, new createjs.Matrix2D().translate(dots.bottomleft[0],dots.bottomleft[1]))
                         .rect(dots.bottomleft[0],dots.bottomleft[1],      -ceil_width, m)
+                        .beginBitmapFill(ceilvbitmap, null, new createjs.Matrix2D().translate(dots.bottomright[0],dots.bottomright[1]).rotate(180))
                         .rect(dots.bottomright[0],dots.bottomright[1],    ceil_width, m);
-                } else walls.graphics.beginFill(frameColor).rect(dots.bottomleft[0] - ceil_width, dots.bottomleft[1], c_width + 2* ceil_width, ceil_width);
+                } else walls.graphics.beginBitmapFill(ceilhbitmap, null, new createjs.Matrix2D().translate(dots.bottomleft[0] - ceil_width, dots.bottomleft[1]).rotate(180))
+                    .rect(dots.bottomleft[0] - ceil_width, dots.bottomleft[1], c_width + 2* ceil_width, ceil_width);
 
                 if (v.right) {
-                    walls.graphics.beginFill(frameColor)
+                    walls.graphics
+                        .beginBitmapFill(ceilhbitmap, null, new createjs.Matrix2D().translate(dots.topright[0],dots.topright[1]))
                         .rect(dots.topright[0],dots.topright[1],          m, -ceil_width)
+                        .beginBitmapFill(ceilhbitmap, null, new createjs.Matrix2D().translate(dots.bottomright[0],dots.bottomright[1]).rotate(180))
                         .rect(dots.bottomright[0],dots.bottomright[1],    m, ceil_width);
-                    walls.graphics.beginLinearGradientFill([wallColors[0],wallColors[1],wallColors[1],wallColors[0]], [0,0.1,0.9,1],0,m - wall_height,0,m).rect(dots.topright[0], dots.topright[1],m, wall_height);
-                } else walls.graphics.beginFill(frameColor).rect(dots.topright[0], dots.topright[1] - ceil_width, ceil_width, c_width + 2* ceil_width + wall_height);
+                    walls.graphics.beginBitmapFill(wallbitmap).rect(dots.topright[0], dots.topright[1],m, wall_height);
+                } else walls.graphics.beginBitmapFill(ceilvbitmap, null, new createjs.Matrix2D().translate(dots.topright[0], dots.topright[1]).rotate(180))
+                    .rect(dots.topright[0], dots.topright[1] - ceil_width, ceil_width, c_width + 2* ceil_width + wall_height);
+
+                //Columns
+                if (!v.left == !v.top) walls.graphics
+                    .beginBitmapFill(v.left ? ceilcibitmap : ceilcobitmap, null, new createjs.Matrix2D().translate(dots.topleft[0],dots.topleft[1]))
+                    .rect(dots.topleft[0],dots.topleft[1],          -ceil_width,-ceil_width);
+                if (!v.right == !v.top) walls.graphics
+                    .beginBitmapFill(v.right ? ceilcibitmap : ceilcobitmap, null, new createjs.Matrix2D().translate(dots.topright[0],dots.topright[1]).rotate(90))
+                    .rect(dots.topright[0],dots.topright[1],        ceil_width,-ceil_width);
+                if (!v.left == !v.bottom) walls.graphics
+                    .beginBitmapFill(v.left ? ceilcibitmap : ceilcobitmap, null, new createjs.Matrix2D().translate(dots.bottomleft[0],dots.bottomleft[1]).rotate(-90))
+                    .rect(dots.bottomleft[0],dots.bottomleft[1],    -ceil_width,ceil_width);
+                if (!v.right == !v.bottom) walls.graphics
+                    .beginBitmapFill(v.right ? ceilcibitmap : ceilcobitmap, null, new createjs.Matrix2D().translate(dots.bottomright[0],dots.bottomright[1]).rotate(180))
+                    .rect(dots.bottomright[0],dots.bottomright[1],  ceil_width,ceil_width);
+
+                console.log(v);
 
                 var i;
                 var actors = [];

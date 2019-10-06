@@ -309,7 +309,14 @@ class Globals extends Model {
      */
     public static function shadowPlayerExists(): bool
     {
-        return (static::$current_player !== null && static::$primary_player !== null);
+        if     ( static::$current_player === null) return false;
+        elseif ( static::$primary_player === null ) return true;
+
+        try {
+            return static::CurrentPlayerF()->uin() !== static::PrimaryPlayerF()->uin();
+        } catch (Exception $e) {
+            return false;
+        }
     }
 
 }

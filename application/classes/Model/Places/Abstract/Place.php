@@ -301,6 +301,8 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
         return ($ignore_zombies || ($type === Interface_Tickable::IT_TYPE_PLAYER && $p->can_escape()) || $this->zombie_factory->accumulation() <= 0);
 	}
 
+	public function pre_render(): void {}
+
     //Enter map
     public function can_enter_map($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER): bool
     {

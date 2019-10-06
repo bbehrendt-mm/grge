@@ -115,6 +115,14 @@ class Model_Factory_Zombies extends Model_Factory_Abstract {
             }
     }
 
+    public function add_accumulated_zombies($cls, $num) {
+        if ($num <= 0) return $this;
+
+        if (!isset($this->accumulated_zombies[$cls])) $this->accumulated_zombies[$cls] = $num;
+        else $this->accumulated_zombies[$cls] += $num;
+        return $this;
+    }
+
     /**
      * @param null|int $set
      * @return Model_Factory_Zombies|int

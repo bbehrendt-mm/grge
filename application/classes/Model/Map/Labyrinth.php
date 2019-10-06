@@ -149,6 +149,14 @@ class Model_Map_Labyrinth extends Model_Map_Abstract {
 
     }
 
+    public function get_locations_at( $x, $y ): array {
+        $r = [];
+        foreach ($this->placement_directory as $id => &$coords)
+            if ($coords[0] == $x && $coords[1] == $y)
+                $r[] = $id;
+        return $r;
+    }
+
     private function place_rec($x, $y, $root = null): void {
         if (!$this->valid($x,$y) || !$this->get($x,$y) || in_array([$x,$y],array_values($this->placement_directory), true)) return;
 
@@ -224,7 +232,8 @@ class Model_Map_Labyrinth extends Model_Map_Abstract {
         if (!$list) return false;
         shuffle($list);
 
-        $this->implant_location($location, 0, 0, true, null, true, $list[0], $visible,$dry,$fixed_id);
+        $id = $this->implant_location($location, 0, 0, true, null, true, $list[0], $visible,$dry,$fixed_id);
+        $this->placement_directory[$id] = $this->placement_directory[$list[0]];
         $this->update_placement_limits($class, $list[0]);
 
         return true;

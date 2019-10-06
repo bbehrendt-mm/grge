@@ -301,12 +301,12 @@
                         content.append(<?=__j('Die Zombies haben dein Versteck aufgespürt. Von hier kannst du nicht mehr fliehen - du musst die Zombies bekämpfen!')?>);
                     else content.append(<?=__j('Es geht weder vor noch zurück - Zombies blockieren den Ausgang! Du kannst entweder eine waghalsige Flucht versuchen oder den Weg freizuräumen. Eins steht fest: Von alleine werden diese Zombies hier nicht verschwinden...')?>);
 
-                    var row;
-                    content.append('<br />').append(row = $('<div>').addClass('row'));
+                    content.append('<br />');
                     $.each(data.zombies.list, function(index, elem) {
-                        row
+                        content.append(NF.row()
                             .append( $('<div>').addClass('cell rw-6 padded right').append($('<img>').attr('src', 'media/icons/battle/sprites/' + elem.icon)) )
                             .append( $('<div>').addClass('cell rw-6 padded left').text( 'x ' + elem.count ) )
+                        )
                     });
 
                     content

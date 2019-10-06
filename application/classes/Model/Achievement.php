@@ -62,6 +62,7 @@ class Model_Achievement extends Model {
     public const MA_ANONYMOUS = 58;
     public const MA_PETA = 59;
     public const MA_ROOM_BUILDER = 60;
+    public const MA_HALLOWEEN_19 = 61;
 
     public const MA_TRANSLATOR_ES = 500;
 
@@ -138,8 +139,9 @@ class Model_Achievement extends Model {
         Model_Achievement::MA_HALLOWEEN_15                  => array('name' => 'Hast du das auch gehört??', 'points' =>  5,),
         Model_Achievement::MA_PILL_EVENT                    => array('name' => 'Professioneller Pillendreher', 'points' => 500,),
         Model_Achievement::MA_ANONYMOUS                     => array('name' => 'Chaostage', 'points' => 1,),
-        Model_Achievement::MA_PETA			                => array('name' => 'Freund von PETA', 'points' => 15,),
-        Model_Achievement::MA_ROOM_BUILDER			        => array('name' => 'Bausparvertrag', 'points' =>  8,),
+        Model_Achievement::MA_PETA			                => array('name' => 'Freund von PETA', 'points' => 15),
+        Model_Achievement::MA_ROOM_BUILDER			        => array('name' => 'Bausparvertrag', 'points' =>  8),
+        Model_Achievement::MA_HALLOWEEN_19			        => array('name' => 'Strangewood', 'points' =>  5),
 
         Model_Achievement::MA_TRANSLATOR_ES			        => array('name' => 'Traductor maestro', 'points' => 500,),
         Model_Achievement::MA_BETA_S9			            => array('name' => 'Season 9 Beta-Tester', 'points' => 1, 'class' => 10),

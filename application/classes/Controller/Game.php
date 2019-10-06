@@ -127,6 +127,8 @@ class Controller_Game extends Controller {
      */
     private function render_location(): void
     {
+        Globals::PrimaryPlayerF()->location()->pre_render();
+
         $radar_scale = Globals::PrimaryPlayerF()->get_status()->retrieve('tr_danger') ? 1 : 4;
 
         // Get zombie factory;

@@ -1569,12 +1569,12 @@ core = {
                         content.append("Die Zombies haben dein Versteck aufgesp\u00fcrt. Von hier kannst du nicht mehr fliehen - du musst die Zombies bek\u00e4mpfen!");
                     else content.append("Es geht weder vor noch zur\u00fcck - Zombies blockieren den Ausgang! Du kannst entweder eine waghalsige Flucht versuchen oder den Weg freizur\u00e4umen. Eins steht fest: Von alleine werden diese Zombies hier nicht verschwinden...");
 
-                    var row;
-                    content.append('<br />').append(row = $('<div>').addClass('row'));
+                    content.append('<br />');
                     $.each(data.zombies.list, function(index, elem) {
-                        row
+                        content.append(NF.row()
                             .append( $('<div>').addClass('cell rw-6 padded right').append($('<img>').attr('src', 'media/icons/battle/sprites/' + elem.icon)) )
                             .append( $('<div>').addClass('cell rw-6 padded left').text( 'x ' + elem.count ) )
+                        )
                     });
 
                     content

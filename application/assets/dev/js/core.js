@@ -2015,10 +2015,12 @@ core = {
                 $('<div />').addClass(game.touch() ? 'cell rw-12 padded justify' : 'cell rw-6 rw-sm-12 padded justify').append(core.snippets.button(v, null, 'tooltip'))
             )
         });
-        $.each(data.actions[1], function(k,v) {
-            actions_rooms.append(
-                $('<div />').addClass(game.touch() ? 'cell rw-12 padded justify' : 'cell rw-6 rw-sm-12 padded justify').append(core.snippets.button(v, null, 'tooltip'))
-            )
+        $.each(data.actions[1], function(rid,list) {
+            $.each(list, function(k,v) {
+                actions_rooms.append(
+                    $('<div />').addClass(game.touch() ? 'cell rw-12 padded justify' : 'cell rw-6 rw-sm-12 padded justify').append(core.snippets.button(v, null, 'tooltip',null,rid))
+                )
+            });
         });
 
         var map_size = (data.doorways ? (data.lomap ? 2 : 4) : 6) + (game.touch() ? 6 : 0)
@@ -3288,14 +3290,14 @@ core = {
         } else build_func(data);
     },
 
-    builder: function() {
-        core.popup.genericBlueprintLoader('builder',0);
+    builder: function(r = 0) {
+        core.popup.genericBlueprintLoader('builder',r);
     },
-    maker: function() {
-        core.popup.genericBlueprintLoader('maker',0);
+    maker: function(r = 0) {
+        core.popup.genericBlueprintLoader('maker',r);
     },
-    fighter: function() {
-        core.popup.genericBlueprintLoader('fighter',0);
+    fighter: function(r = 0) {
+        core.popup.genericBlueprintLoader('fighter',r);
     },
     
     rooms: function(popup) {
@@ -4340,7 +4342,7 @@ core = {
     };
 
     //Ext mode: extend (default), static, tooltip
-    core.snippets.button = function(action, call, ext_mode, custom_popup_handler) {
+    core.snippets.button = function(action, call, ext_mode, custom_popup_handler, room = 0) {
         if (typeof action === "string")
             return $('<div />').addClass('btn').addClass(ext_mode === true ? 'btn-zv' : '').click(call).append(NF.n('span', '', action));
         else {
@@ -4432,7 +4434,7 @@ core = {
                     if (action.popup) {
                         if (custom_popup_handler)
                             custom_popup_handler(action.popup);
-                        else core.popup[action.popup]();
+                        else core.popup[action.popup](room);
                         return;
                     }
 

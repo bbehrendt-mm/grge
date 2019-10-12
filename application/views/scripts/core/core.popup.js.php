@@ -311,14 +311,14 @@ core.popup = {
         } else build_func(data);
     },
 
-    builder: function() {
-        core.popup.genericBlueprintLoader('builder',0);
+    builder: function(r = 0) {
+        core.popup.genericBlueprintLoader('builder',r);
     },
-    maker: function() {
-        core.popup.genericBlueprintLoader('maker',0);
+    maker: function(r = 0) {
+        core.popup.genericBlueprintLoader('maker',r);
     },
-    fighter: function() {
-        core.popup.genericBlueprintLoader('fighter',0);
+    fighter: function(r = 0) {
+        core.popup.genericBlueprintLoader('fighter',r);
     },
     
     rooms: function(popup) {

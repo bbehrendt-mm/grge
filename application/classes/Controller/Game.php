@@ -161,11 +161,14 @@ class Controller_Game extends Controller {
                 if (!$a_item->use_manual_ui())
                     $a = array_merge($a,$this->prepare_actionlist($a_item->auto_actions(), $a_item));
 
-            foreach ( Globals::PrimaryPlayerF()->location()->rooms() as $room )
+            foreach ( Globals::PrimaryPlayerF()->location()->rooms() as $rid => $room ) {
+                $b[$rid] = [];
                 foreach ($room->inventory()->get( Model_Items_Abstract_Virtual::cls() ) as $b_item)
                     /** @var  Model_Items_Abstract_Virtual $b_item */
                     if (!$b_item->use_manual_ui())
-                        $b = array_merge($b,$this->prepare_actionlist($b_item->auto_actions(), $b_item));
+                        $b[$rid] = array_merge($b[$rid],$this->prepare_actionlist($b_item->auto_actions(), $b_item));
+            }
+
         }
 
 

@@ -747,10 +747,12 @@
                 $('<div />').addClass(game.touch() ? 'cell rw-12 padded justify' : 'cell rw-6 rw-sm-12 padded justify').append(core.snippets.button(v, null, 'tooltip'))
             )
         });
-        $.each(data.actions[1], function(k,v) {
-            actions_rooms.append(
-                $('<div />').addClass(game.touch() ? 'cell rw-12 padded justify' : 'cell rw-6 rw-sm-12 padded justify').append(core.snippets.button(v, null, 'tooltip'))
-            )
+        $.each(data.actions[1], function(rid,list) {
+            $.each(list, function(k,v) {
+                actions_rooms.append(
+                    $('<div />').addClass(game.touch() ? 'cell rw-12 padded justify' : 'cell rw-6 rw-sm-12 padded justify').append(core.snippets.button(v, null, 'tooltip',null,rid))
+                )
+            });
         });
 
         var map_size = (data.doorways ? (data.lomap ? 2 : 4) : 6) + (game.touch() ? 6 : 0)

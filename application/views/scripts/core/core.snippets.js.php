@@ -61,7 +61,7 @@
     };
 
     //Ext mode: extend (default), static, tooltip
-    core.snippets.button = function(action, call, ext_mode, custom_popup_handler) {
+    core.snippets.button = function(action, call, ext_mode, custom_popup_handler, room = 0) {
         if (typeof action === "string")
             return $('<div />').addClass('btn').addClass(ext_mode === true ? 'btn-zv' : '').click(call).append(NF.n('span', '', action));
         else {
@@ -153,7 +153,7 @@
                     if (action.popup) {
                         if (custom_popup_handler)
                             custom_popup_handler(action.popup);
-                        else core.popup[action.popup]();
+                        else core.popup[action.popup](room);
                         return;
                     }
 

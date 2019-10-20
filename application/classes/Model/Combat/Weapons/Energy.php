@@ -10,7 +10,7 @@ abstract class Model_Combat_Weapons_Energy extends Model_Combat_Weapon {
     }
 
     public function usable(): bool {
-        return parent::usable() && $this->registered_user && $this->registered_user->get_status()->has(Model_Status::MS_STAT_ENERGY, $this->energy(), Model_Status::MS_EFFECT_REQUIREMENT);
+        return parent::usable() && ((!$this->registered_user && $this->usable_without_player) || ($this->registered_user && $this->registered_user->get_status()->has(Model_Status::MS_STAT_ENERGY, $this->energy(), Model_Status::MS_EFFECT_REQUIREMENT)));
     }
 
     /**

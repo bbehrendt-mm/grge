@@ -4,12 +4,18 @@ abstract class Model_Combat_Weapons_Ammo extends Model_Combat_Weapon
 {
     protected static $ammo = [];
 
+    protected $build_in_ammo = PHP_INT_MAX;
+
     public function ammo(): array {
         return static::$ammo;
     }
 
+    public function set_built_in_ammo(int $set) {
+        $this->build_in_ammo = $set;
+    }
+
     public function usable(): bool {
-        if (!$this->registered_user) return false;
+        if (!$this->registered_user) return ($this->usable_without_player && $this->build_in_ammo > 0);
         foreach ($this->ammo() as $type => $count)
             if (Tool_Scripts::count_items($type, Struct_ScriptItemSource::onlyPlayer()->use_perspective($this->registered_user)) < $count)
                 return false;
@@ -38,6 +44,7 @@ abstract class Model_Combat_Weapons_Ammo extends Model_Combat_Weapon
     public function trigger_usage(Model_Combat_Actor $me, Model_Combat_Actor $opponent, $damage, Model_Combat_Scene $scene): bool {
         if ($this->registered_user)
             Tool_Scripts::consume_items(Struct_ItemEntry::convert($this->ammo()), Struct_ScriptItemSource::onlyPlayer()->use_perspective($this->registered_user));
+        else $this->build_in_ammo--;
         return parent::trigger_usage($me, $opponent, $damage, $scene);
     }
 }

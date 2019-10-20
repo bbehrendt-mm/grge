@@ -89,6 +89,8 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
         return static::$perpetualDaytime;
     }
 
+    public function trigger_item_action(?Model_Items_Abstract_Item $item) {}
+
     /**
      * @param int $id
      * @return Model_Room|null

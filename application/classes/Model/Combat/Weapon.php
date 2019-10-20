@@ -35,6 +35,11 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
     protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_NONE;
     protected $ignore_equip = false;
 
+    protected $usable_without_player = false;
+    public function enable_use_without_player(bool $set = true) {
+        $this->usable_without_player = $set;
+    }
+
     protected $broken = false;
 
     /** @var Interface_Plentity|Model_Player */

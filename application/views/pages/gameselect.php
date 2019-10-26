@@ -771,11 +771,12 @@
             })}, 3000);
     });
 
-    $('#lang_in').val(game.lang()).selectric({
+    var lng = game.lang() ? game.lang().split('-')[0].toLowerCase() : 'en';
+    $('#lang_in').val(lng).selectric({
         optionsItemBuilder: function(a) {
             return '<img src="media/icons/lang/' + a.value + '.png" alt="" />' + a.text;
         }
-    });
+    }).trigger('change');
     rebuild();
 // ## JS COMPRESS END ## //
 </script>

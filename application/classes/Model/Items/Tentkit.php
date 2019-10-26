@@ -28,8 +28,12 @@ class Model_Items_Tentkit extends Model_Items_Abstract_Item implements Interface
                             $cursed = Tool_System::instance_of($p->location(), ['Model_Places_Mental','Model_Places_House_Hobby']);
 
                             $id = Globals::CurrentGameF()->mapF($p->location_class())->implant_location(new Model_Places_Tentkit($cursed),0,0,true,null,false,$p->location_class(),true,true,null);
-                            $p->location()->leave($p->id(), Interface_Tickable::IT_TYPE_PLAYER);
-                            $p->location_class($id);
+                            if (Globals::CurrentGameF()->location($id)->can_enter($p->id()) && $p->location()->can_leave($p->id())) {
+                                $p->location()->leave($p->id(), Interface_Tickable::IT_TYPE_PLAYER);
+                                Globals::CurrentGameF()->location($id)->enter($p->id());
+                                $p->location_class($id);
+                            }
+
                         })
                         ->consume($this)
                         ->message('Einfach diesen Nippel durch die Lasche ziehen .... PUFF, mit einem Schlag stehst du in einem InstaZELT™!')

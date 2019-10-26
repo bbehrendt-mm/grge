@@ -52,7 +52,7 @@ class Model_Places_Strangewood_Clearing extends Model_Places_Abstract_Trap {
             if ($spawn === 'special') {
 
                 foreach (Tool_Scripts::at_location($this->uin(), true, false) as $p)
-                    $p->achievements()->achieve( Model_Achievement::MA_HALLOWEEN_19_2, 1 );
+                    $p->achievements()->achieve( Model_Achievement::MA_HALLOWEEN_19_2, 5 );
 
                 $spawn = [ Model_Combat_Zombies_Halloween_Woodghost::cls(), 1 ];
             }

@@ -204,6 +204,10 @@ class Tool_Gamemodes {
         return Kohana::$config->load("modes.jobs.$jobid.meta.name");
     }
 
+    public static function job_valid($jobid): bool {
+        return (bool)Kohana::$config->load("modes.jobs.$jobid");
+    }
+
     public static function get_board_by_id($bid): ?string
     {
         return Kohana::$config->load("modes.modes.$bid.meta.name");

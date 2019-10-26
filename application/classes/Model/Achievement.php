@@ -79,6 +79,7 @@ class Model_Achievement extends Model {
     public const MA_RANKING_MULTI_PRIVATE_SMALL = 10100;
     public const MA_RANKING_MULTI_PRIVATE_LARGE = 10200;
     public const MA_RANKING_MULTI_PRIVATE_ROADTRIP = 11000;
+    public const MA_RANKING_MULTI_PRIVATE_TOWNSHIP = 12000;
 
     private static $data = array(
         Model_Achievement::MA_KILLED_ZOMBIES 		        => array('name' => 'Getötete Zombies', 'points' => 0,),
@@ -156,17 +157,22 @@ class Model_Achievement extends Model {
         Model_Achievement::MA_RANKING_MULTI_OPEN            => array('name' => 'Einer Für Alle!', 'points' => 50,),
         Model_Achievement::MA_RANKING_MULTI_PRIVATE_SMALL	=> array('name' => 'Kleiner Elitärer Club', 'points' => 40,),
         Model_Achievement::MA_RANKING_MULTI_PRIVATE_LARGE   => array('name' => 'Großer Elitärer Club', 'points' => 40,),
-        Model_Achievement::MA_RANKING_MULTI_PRIVATE_ROADTRIP=> array('name' => 'Roadkill-Experte', 'points' => 50,)
+        Model_Achievement::MA_RANKING_MULTI_PRIVATE_ROADTRIP=> array('name' => 'Roadkill-Experte', 'points' => 50,),
+        Model_Achievement::MA_RANKING_MULTI_PRIVATE_TOWNSHIP=> array('name' => 'Verdammte Verdammte', 'points' => 50,)
     );
     
 	private $container = Array();
 	
-	static public function points_aid($aid) {
+	public static function points_aid($aid) {
 		if (!isset(static::$data[$aid])) return 0;
         else return static::$data[$aid]['points'];
 	}
 
-    static public function class_aid($aid): int {
+	public static function icon_aid($aid): ?string {
+	    return self::is_valid($aid) ? "$aid" : null;
+    }
+
+    public static function class_aid($aid): int {
         if (!self::is_valid($aid)) return 0;
         if (isset(static::$data[$aid]['class'])) return static::$data[$aid]['class'];
 
@@ -180,11 +186,11 @@ class Model_Achievement extends Model {
         else return 6;
     }
 
-	static public function is_valid($aid): bool {
+	public static function is_valid($aid): bool {
         return isset(static::$data[$aid]);
     }
 
-	static public function decode_aid($aid): string {
+	public static function decode_aid($aid): string {
         if (!isset(static::$data[$aid])) return "Mysteriöse Auszeichnung #{$aid}";
         else return static::$data[$aid]['name'];
 	}
@@ -241,7 +247,7 @@ class Model_Achievement extends Model {
 	 * @return int
 	 */
 	public function get_achievements($achievement): int {
-		if (!isset($this->container[$achievement])) return 0;
+		if (!static::is_valid($achievement) || !isset($this->container[$achievement])) return 0;
 		else return (int)floor($this->container[$achievement]);
 	}
 	
@@ -277,6 +283,9 @@ class Model_Achievement extends Model {
 	}
 	
 	public function get_all(): array {
-		return $this->container;
+		$tmp = [];
+		foreach ($this->container as $aid => $data)
+		    if (static::is_valid($aid)) $tmp[$aid] = $data;
+	    return $tmp;
 	}
 }	

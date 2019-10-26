@@ -929,7 +929,7 @@ class Controller_Game extends Controller {
                 $a_points += Model_Achievement::points_aid($aid) * $value;
                 $a_data[$aid] = [
                     'id' => $aid,
-                    'icon' => $aid . '.gif',
+                    'icon' => Model_Achievement::icon_aid($aid) . '.gif',
                     'name' => Model_Achievement::decode_aid($aid),
                     'class' => Model_Achievement::class_aid($aid),
                     'count' => $value

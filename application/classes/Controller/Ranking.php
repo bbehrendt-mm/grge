@@ -369,14 +369,15 @@ class Controller_Ranking extends Controller {
         $known_achievements = DB::select('aid',[DB::expr('SUM(value)'),'value'])->from('achievements')->group_by('aid')->where('value','>',0)->execute()->as_array('aid','value');
         $achievements = [];
         foreach ((new ReflectionClass('Model_Achievement'))->getConstants() as $aid)
-            $achievements[$aid] = [
-                'id' => $aid,
-                'name' => Model_Achievement::decode_aid($aid),
-                'points' => Model_Achievement::points_aid($aid),
-                'class' => Model_Achievement::class_aid($aid),
-                'count' => $known_achievements[$aid] ?? 0,
-                'icon' => "{$aid}.gif",
-            ];
+            if (Model_Achievement::is_valid($aid))
+                $achievements[$aid] = [
+                    'id' => $aid,
+                    'name' => Model_Achievement::decode_aid($aid),
+                    'points' => Model_Achievement::points_aid($aid),
+                    'class' => Model_Achievement::class_aid($aid),
+                    'count' => $known_achievements[$aid] ?? 0,
+                    'icon' => Model_Achievement::icon_aid($aid) . '.gif',
+                ];
 
         usort($achievements, function($a,$b) {return ($a['points'] === $b['points'] ? -strcmp($a['name'], $b['name']) : $b['points'] - $a['points']);});
 
@@ -450,16 +451,19 @@ class Controller_Ranking extends Controller {
                 'achievements' => DB::select('aid','value')->from('achievements')->where('gameid','=',$gameid)->where('season','=',$season)->where('uid','=', (int)$entry['uid'])->execute()->as_array()
             ];
 
+            $a_back = $user['achievements'];
             $user['achievements'] = array_map(function($e) {
                 return [
                     'name' => Model_Achievement::decode_aid($e['aid']),
                     'points' => Model_Achievement::points_aid($e['aid']),
                     'class' => Model_Achievement::class_aid($e['aid']),
                     'count' => (int)$e['value'],
-                    'icon' => "{$e['aid']}.gif",
+                    'icon' => Model_Achievement::icon_aid($e['aid']) . '.gif',
                     'id' => (int)$e['aid']
                 ];
-            }, $user['achievements']);
+            }, array_filter($a_back, function($v) {
+                return Model_Achievement::is_valid($v['aid']);
+            }));
 
             foreach ($user['achievements'] as $uae) {
                 $user['score_ap'] += $uae['points'] * $uae['count'];
@@ -511,11 +515,14 @@ class Controller_Ranking extends Controller {
 
         $apoints = 0;
 
-        foreach ($achievements as &$achievement) {
+        $a_filtered = array_filter($achievements, function($v) {
+            return Model_Achievement::is_valid($v['aid']);
+        });
+        foreach ($a_filtered as &$achievement) {
             $achievement = [
                 'id' => $achievement['aid'],
                 'name' => Model_Achievement::decode_aid($achievement['aid']),
-                'icon' => "{$achievement['aid']}.gif",
+                'icon' => Model_Achievement::icon_aid($achievement['aid']) . '.gif',
                 'class' => Model_Achievement::class_aid($achievement['aid']),
                 'points' => Model_Achievement::points_aid($achievement['aid']),
                 'count' => $achievement['value'],
@@ -581,7 +588,7 @@ class Controller_Ranking extends Controller {
             ->set('rank_soul', $srank)
             ->set('next_rank_points', $next_srank)
             ->set('rank_karma', $krank)
-            ->set('achievements', $achievements)
+            ->set('achievements', $a_filtered)
             ->set('tables', [
                 'mode' => array_map(function($a) {return ['name' => Tool_Gamemodes::get_board_by_id($a['board']), 'points' => $a['points']];}, DB::select('board', [DB::expr('SUM(points)'), 'points'])->from('ranking')->where('uid','=',$uid)->where('season', '>=', 0)->group_by('board','uid')->order_by('board', 'ASC')->execute()->as_array()),
                 'job' => array_map(function($a) {return ['name' => Tool_Gamemodes::get_job_by_id($a['job']), 'premium' => Tool_Gamemodes::get_job_premium_state_by_id($a['job']), 'points' => $a['points']];}, DB::select('job', [DB::expr('SUM(points)'), 'points'])->from('ranking')->where('uid','=',$uid)->where('season', '>=', 0)->group_by('job','uid')->order_by('job', 'ASC')->execute()->as_array())

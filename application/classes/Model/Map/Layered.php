@@ -62,10 +62,11 @@ class Model_Map_Layered extends Model_Map_Circular {
      * @param boolean $visible
      * @param int $dry
      * @param null|int $fixed_id Fixed ID
+     * @param bool $ignore_limits
      * @return bool
-     * @throws Exception
+     * @throws Kohana_Exception
      */
-    public function place_location($location, $visible, $dry = 0, $fixed_id = null): bool {
+    public function place_location($location, $visible, $dry = 0, $fixed_id = null, $ignore_limits = false): bool {
         if (is_string($location) && $visible)
             $location = new $location;
 

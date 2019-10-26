@@ -43,21 +43,21 @@ abstract class Model_Combat_Weapon extends Model_Items_Abstract_Equipable {
     protected $broken = false;
 
     /** @var Interface_Plentity|Model_Player */
-    protected $registered_user;
+    protected $registered_user = null;
 
     public function ignore_equip(): void {
         $this->ignore_equip = true;
     }
 
     public function usable(): bool {
-        return $this->is_equipped() || $this->ignore_equip;
+        return !$this->broken && ($this->is_equipped() || $this->ignore_equip);
     }
 
     public function get_animation(): int {
         return static::$animation;
     }
 
-    public function durabillity(): int {
+    public function durabillity(): float {
         return static::$durabillity;
     }
 

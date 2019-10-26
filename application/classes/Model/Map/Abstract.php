@@ -287,10 +287,10 @@ abstract class Model_Map_Abstract {
      * @param boolean $visible
      * @param int $dry
      * @param null|int $fixed_id Fixed ID
+     * @param bool $ignore_limits
      * @return bool
-     * @throws Exception
      */
-    abstract public function place_location($location, $visible, $dry = 0, $fixed_id = null): bool;
+    abstract public function place_location($location, $visible, $dry = 0, $fixed_id = null, $ignore_limits = false): bool;
 
     /**
      * @param Model_Places_Abstract_Place|string $location

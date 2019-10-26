@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-abstract class Model_Places_Strangewood_Singleplayer extends Model_Places_Strangewood_Final {
+class Model_Places_Strangewood_Singleplayer extends Model_Places_Strangewood_Final {
 
     protected function name_by_profession($p) : string {
         switch ($p) {
@@ -85,14 +85,14 @@ abstract class Model_Places_Strangewood_Singleplayer extends Model_Places_Strang
                 $z1 = Model_Combat_Zombies_Ghul::factory()->name($p === 1012 ? 'Bill' : 'Barbara')->strength(35, 100, 1);
                 $w1 = new Model_Items_Miniknife();
                 $w1->enable_use_without_player();
-                $z1->add_weapon($w1);
+                $z1->add_weapon_default($w1);
                 $zombies[] = $z1;
 
                 $z2 = Model_Combat_Zombies_Ghul::factory()->name('Kenny')->strength(25, 50, 1);
                 for ($i = 0; $i < 5; $i++) {
                     $w2 = new Model_Items_Concrete();
                     $w2->enable_use_without_player();
-                    $z2->add_weapon($w2);
+                    $z2->add_weapon_default($w2);
                 }
 
                 $zombies[] = $z2;
@@ -103,18 +103,19 @@ abstract class Model_Places_Strangewood_Singleplayer extends Model_Places_Strang
                 $w1 = new Model_Items_Batgunsplat();
                 $w1->enable_use_without_player();
                 $w1->set_built_in_ammo(1);
-                $z1->add_weapon($w1);
+                $z1->add_weapon_default($w1);
                 $zombies[] = $z1;
                 break;
 
             case 2020:                                                   // Killer
                 $d = ['Adam','Arliss','Kevyn','Dorian','Tim'];
                 foreach ($d as $name) {
-                    $z = Model_Combat_Zombies_Ghul::factory()->name($name)->strength(20, 100, 1);
-                    $w = new Model_Items_Oldrifle();
+                    $z = Model_Combat_Zombies_Ghul::factory()->name($name)->strength(5, 100, 1);
+                    $z->stats(0,0,0,0);
+                    $w = new Model_Items_Oldrifle2();
                     $w->enable_use_without_player();
-                    $w->set_built_in_ammo(2);
-                    $z->add_weapon($w);
+                    $w->set_built_in_ammo(1);
+                    $z->add_weapon_default($w);
                     $zombies[] = $z;
                 }
                 break;
@@ -124,7 +125,7 @@ abstract class Model_Places_Strangewood_Singleplayer extends Model_Places_Strang
                 for ($i = 0; $i < 10; $i++) {
                     $w = new Model_Items_Concrete();
                     $w->enable_use_without_player();
-                    $z->add_weapon($w);
+                    $z->add_weapon_default($w);
                 }
 
                 $zombies[] = $z;
@@ -133,10 +134,10 @@ abstract class Model_Places_Strangewood_Singleplayer extends Model_Places_Strang
             case  300:case 1040:case 1041:                               // Priest
                 $d = ['Ash','Cheryl','Scott','Linda','Shelly'];
                 foreach ($d as $name) {
-                    $z = Model_Combat_Zombies_Ghul::factory()->name($name)->strength(12, 100, 1);
+                    $z = Model_Combat_Zombies_Ghul::factory()->name($name)->strength(5, 100, 1);
                     $w = new Model_Items_Miniknife();
                     $w->enable_use_without_player();
-                    $z->add_weapon($w);
+                    $z->add_weapon_default($w);
                     $zombies[] = $z;
                 }
                 break;
@@ -144,10 +145,10 @@ abstract class Model_Places_Strangewood_Singleplayer extends Model_Places_Strang
             case  400:case 1050:case 1051:                               // Rich git
                 $d = ['Annie','Jake','Bobby Joe','Henrietta','Ed'];
                 foreach ($d as $name) {
-                    $z = Model_Combat_Zombies_Ghul::factory()->name($name)->strength(12, 100, 1);
+                    $z = Model_Combat_Zombies_Ghul::factory()->name($name)->strength(5, 100, 1);
                     $w = new Model_Items_Concrete();
                     $w->enable_use_without_player();
-                    $z->add_weapon($w);
+                    $z->add_weapon_default($w);
                     $zombies[] = $z;
                 }
                 break;
@@ -156,25 +157,37 @@ abstract class Model_Places_Strangewood_Singleplayer extends Model_Places_Strang
                 $z1 = Model_Combat_Zombies_Ghul::factory()->name('Jay')->strength(5, 100, 1);
                 $w1 = new Model_Items_Machete2P();
                 $w1->enable_use_without_player();
-                $z1->add_weapon($w1);
+                $z1->add_weapon_default($w1);
                 $zombies[] = $z1;
 
                 $z2 = Model_Combat_Zombies_Ghul::factory()->name('Bob')->strength(25, 100, 1);
                 $w2 = new Model_Items_Bat();
                 $w2->enable_use_without_player();
-                $z2->add_weapon($w2);
+                $z2->add_weapon_default($w2);
                 $zombies[] = $z2;
                 break;
 
-            case 1060:case 1061:                                        // Survivalist & Wolfman
-                $z = Model_Combat_Zombies_Ghul::factory()->name($p === 1060 ? 'Bob' : 'Jay')->strength(100, 100, 1);
+            case 1060:                                  // Survivalist
+                $z = Model_Combat_Zombies_Ghul::factory()->name('Bob')->strength(25, 100, 1);
+                $w = new Model_Items_Bat2();
+                $w->enable_use_without_player();
+                $z->add_weapon_default($w);
+                $zombies[] = $z;
+                break;
+
+            case 1061:                                  // Wolfman
+                $z = Model_Combat_Zombies_Ghul::factory()->name('Jay')->strength(15, 100, 1);
+                $w = new Model_Items_Machete2P();
+                $w->enable_use_without_player();
+                $z->add_weapon_default($w);
                 $zombies[] = $z;
                 break;
 
             case 1070:case 1071:case 2010:case 4010:                    // Muscleman & Berserker
                 $z = Model_Combat_Zombies_Ghul::factory()->name('Hollywood')->strength(50, 100, 1);
+                $z->stats(15,12,null,10);
                 $w = new Model_Items_Gush();
-                $z->add_weapon($w);
+                $z->add_weapon_default($w);
                 $zombies[] = $z;
                 break;
 
@@ -182,6 +195,7 @@ abstract class Model_Places_Strangewood_Singleplayer extends Model_Places_Strang
                 $d = ['Homer','Marge','Bart','Lisa','Maggie','Abraham','Jacqueline','Patty','Selma'];
                 foreach ($d as $name) {
                     $z = Model_Combat_Zombies_Ghul::factory()->name($name)->strength(1, 100, 1);
+                    $z->stats(10,20,null,null);
                     $zombies[] = $z;
                 }
                 break;

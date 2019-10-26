@@ -155,7 +155,7 @@ abstract class Model_Items_Abstract_Item extends Model_Cloudshard {
      */
 	public static function static_cat($type = null): int
     {
-		return $type === null ? static::static_info('category') : static::static_typed_info('category', $type);
+		return $type === null ? (int)static::static_info('category') : (int)static::static_typed_info('category', $type);
 	}
 
     /**

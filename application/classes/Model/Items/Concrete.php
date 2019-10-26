@@ -26,7 +26,7 @@ class Model_Items_Concrete extends Model_Combat_Weapons_Throwable implements Int
      * @throws Exception
      */
 	public function trigger_usage(Model_Combat_Actor $me, Model_Combat_Actor $opponent, $damage, Model_Combat_Scene $scene): bool {
-        if ($this->registered_user)
+        if (!Tool_Scripts::is_npc($this->registered_user))
             $this->registered_user->achievements()->achieve(Model_Achievement::MA_ANONYMOUS);
 		return parent::trigger_usage($me, $opponent, $damage, $scene);
 	}

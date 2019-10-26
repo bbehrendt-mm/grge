@@ -20,7 +20,7 @@
             .beginBitmapFill(avatar_bmp.cacheCanvas,"no-repeat",mtx)
             .drawCircle(32,32,24);
 
-        var nametxt = new createjs.Text((c.type == <?=Model_Combat_Actor::MCA_TYPE_ZOMBIE?> && c.health.count > 0 ? (c.health.count + ' x ') : '') + c.name, "bold 15px Arial", "#ffffff");
+        var nametxt = new createjs.Text((c.type === <?=Model_Combat_Actor::MCA_TYPE_ZOMBIE?> && !c.unique && c.health.count > 0 ? (c.health.count + ' x ') : '') + c.name, "bold 15px Arial", "#ffffff");
         nametxt.x = 64;
         nametxt.y = 8;
 

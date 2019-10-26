@@ -73,7 +73,7 @@
         blackbox.scaleX = 0;
         blackbox.z = -99;
 
-        var txt = new createjs.Text(type === <?=Model_Combat_Actor::MCA_TYPE_ZOMBIE?> ? (this.combatants[id].health.count + ' x ' + name) : name, 'bold ' + Math.min(22,sph-2) + 'px sans-serif', '#ffffff');
+        var txt = new createjs.Text((type === <?=Model_Combat_Actor::MCA_TYPE_ZOMBIE?> && !unique) ? (this.combatants[id].health.count + ' x ' + name) : name, 'bold ' + Math.min(22,sph-2) + 'px sans-serif', '#ffffff');
         var length = txt.getBounds().width + spwb * 2;
         var height = txt.getBounds().height;
         txt.x = spwb;

@@ -291,6 +291,15 @@ class Model_Combat_Actor extends Named {
         return $this;
     }
 
+    public function add_weapon_default($weapon): self {
+        $this->add_weapon($weapon);
+        if (is_array($weapon) && !empty($weapon))
+            $this->current_weapon = $weapon[count($weapon)-1];
+        else $this->current_weapon = $weapon;
+
+        return $this;
+    }
+
     /**
      * @param Model_Items_Abstract_Armor|Model_Items_Abstract_Armor[] $armor
      * @return Model_Combat_Actor

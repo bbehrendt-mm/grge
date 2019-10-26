@@ -208,10 +208,11 @@ class Model_Map_Labyrinth extends Model_Map_Abstract {
      * @param boolean $visible
      * @param int $dry
      * @param null|int $fixed_id Fixed ID
+     * @param bool $ignore_limits
      * @return bool
-     * @throws Exception
+     * @throws Kohana_Exception
      */
-    public function place_location($location, $visible, $dry = 0, $fixed_id = null): bool {
+    public function place_location($location, $visible, $dry = 0, $fixed_id = null, $ignore_limits = false): bool {
         $class = is_string($location) ? $location : get_class($location);
 
         if (!($cfg = $this->get_config($class)))
@@ -228,7 +229,8 @@ class Model_Map_Labyrinth extends Model_Map_Abstract {
             if (in_array($type, $cfg['root'], true)) $possible_targets[] = $id;
 
         if (empty($possible_targets)) return false;
-        $list = $this->check_placement_limits($class,$possible_targets);
+        $list = $ignore_limits ? $possible_targets : $this->check_placement_limits($class,$possible_targets);
+
         if (!$list) return false;
         shuffle($list);
 

@@ -14,6 +14,7 @@ class Model_Items_Machete2P extends Model_Combat_Weapons_Close implements Interf
 
     protected static $damage = [5,15];
     protected static $energy = 2;
+    protected static $aoe = true;
 
     protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SLASH;
 }	

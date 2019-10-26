@@ -15,6 +15,7 @@ class Model_Items_Macheteduo extends Model_Combat_Weapons_Close implements Inter
 	protected static $damage = [9,20];
 	protected static $energy = 10;
 	protected static $max_range = 3;
+    protected static $aoe = true;
 
 	protected static $animation = Model_Combat_Weapon::MCW_ANIMATION_SLASH_MULTI;
 

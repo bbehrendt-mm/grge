@@ -23,6 +23,11 @@ class Model_Places_Strangewood_Forrester extends Model_Places_Abstract_Hideout {
         return parent::uin($new);
     }
 
+    public function battle_location_type(): string
+    {
+        return $this->is_outside() ? 'hw19_outside' : 'hw19_inside';
+    }
+
     public function setup_additional_rooms(): void
     {
         $this->create_new_room( 5,['inside'])->set_default_state();

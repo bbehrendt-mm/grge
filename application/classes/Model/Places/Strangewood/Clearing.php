@@ -9,6 +9,11 @@ class Model_Places_Strangewood_Clearing extends Model_Places_Abstract_Trap {
 
     protected $zombies_spawned = false;
 
+    public function battle_location_type(): string
+    {
+        return $this->is_outside() ? 'hw19_outside' : 'hw19_inside';
+    }
+
     public function uin($uin = NULL) {
         $t = parent::uin($uin);
         if ($uin !== null) {

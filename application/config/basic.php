@@ -15,5 +15,5 @@ return array(
     'access' => array(
         'whitelisting' => true,
     ),
-    'event' => 'halloween'
+    'event' => null
 );

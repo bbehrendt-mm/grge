@@ -66,4 +66,9 @@ abstract class Model_Places_Strangewood_Final extends Model_Places_Abstract_Trap
         return !$blocked && parent::can_enter($pid,$type);
     }
 
+    public function battle_location_type(): string
+    {
+        return $this->is_outside() ? 'hw19_outside' : 'hw19_inside';
+    }
+
 }

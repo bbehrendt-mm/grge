@@ -53,6 +53,7 @@
                             <div class="row">
                                 <div class="cell rw-12 padded">
                                     <span id="av_mentor" class="zv-license-info">
+                                        <b><?=__('Bürgerlicher Name');?>:</b><br />
                                         <?=$fake?><br/>
                                         &lt;&lt;<?=$mentor?><?=str_pad(str_pad($id,3,"0",STR_PAD_LEFT),8,"<",STR_PAD_LEFT)?>&lt;&lt;O8L5
                                         <?php if ($user !== $user_c) { ?><br/><?=$user_c?><?php } ?>

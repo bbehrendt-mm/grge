@@ -10,6 +10,11 @@ class Model_Places_Strangewood_Path extends Model_Places_Abstract_Trap implement
 
     protected $player_ids = [];
 
+    public function battle_location_type(): string
+    {
+        return $this->is_outside() ? 'hw19_outside' : 'hw19_inside';
+    }
+
     public function enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER): bool {
         $b = parent::enter($pid, $type);
         if ($b && Tool_Scripts::is_npc(Globals::CurrentGameF()->get_player($pid) ) && !isset($this->player_ids[$pid] )) {

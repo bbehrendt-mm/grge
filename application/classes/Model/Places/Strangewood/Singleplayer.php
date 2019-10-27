@@ -244,39 +244,49 @@ class Model_Places_Strangewood_Singleplayer extends Model_Places_Strangewood_Fin
 
             //<editor-fold desc="Multi Player Professions">
             case 10010: case 10011:                                      // Politician & Presitent
-                $z = Model_Combat_Zombies_Ghul::factory()->name('Pepper')->strength(50, 50, 10);
+                $z = Model_Combat_Zombies_Ghul::factory()->name('Pepper')->strength(50, 50, 1);
                 $w = new Model_Items_Knife();
                 $w->enable_use_without_player();
                 $z->add_weapon_default($w);
                 $zombies[] = $z;
                 break;
             case 10020: case 10021:                                                 // Football Coach
-                $z = Model_Combat_Zombies_Ghul::factory()->set_unique(false)->name('Football Player')->strength(120, 120, 1);
+                $z = Model_Combat_Zombies_Ghul::factory()->set_unique(false)->name('Football Spieler')->strength(120, 120, 1);
+                $z->stats(10,20,20,20);
                 $zombies[] = $z;
                 break;
             case 10030: case 10031: case 10040:                                    // Med Student & Surgeon & WRA
-                $z = Model_Combat_Zombies_Ghul::factory()->set_unique(false)->name('Patient')->strength(1, 100, 10);
+                $z = Model_Combat_Zombies_Ghul::factory()->set_unique(false)->name('Patient')->strength(1, 1, 5);
                 $w = new Model_Items_Gush();
                 $w->enable_use_without_player();
                 $z->add_weapon_default($w);
+                $z->stats(0,0,0,0);
                 $zombies[] = $z;
                 break;
             case 10041:                                                  // Nerd
-                $z = Model_Combat_Zombies_Ghul::factory()->name('Irgendjemand')->strength(25, 100, 10);
-                for ($i = 0; $i < 10; $i++) {
-                    $w = new Model_Items_Concrete();
-                    $w->enable_use_without_player();
-                    $z->add_weapon_default($w);
-                }
+                $z = Model_Combat_Zombies_Ghul::factory()->set_unique(false)->name('Irgendjemand')->strength(5, 5, 5);
+                $w = new Model_Items_Concrete();
+                $w->enable_use_without_player();
+                $z->add_weapon_default($w);
                 $zombies[] = $z;
                 break;
             case 12010: case 12020: case 12030: case 12040: case 12050:  // Townships Professions
             case 12060: case 12070: case 12080:
-                $z = Model_Combat_Zombies_Ghul::factory()->set_unique(false)->name('Stadtbewohner')->strength(5, 5, 39);
-                $w = new Model_Items_Miniknife();
-                $w->enable_use_without_player();
-                $z->add_weapon_default($w);
-                $zombies[] = $z;
+                $z1 = Model_Combat_Zombies_Ghul::factory()->set_unique(false)->name('Stadtbewohner')->strength(2, 2, 10);
+                $z1->stats(0,0,0,0);
+                $zombies[] = $z1;
+                $z2 = Model_Combat_Zombies_Ghul::factory()->set_unique(false)->name('Stadtbewohner')->strength(2, 2, 20);
+                $z2->stats(0,0,0,0);
+                $zombies[] = $z2;
+                $z3 = Model_Combat_Zombies_Ghul::factory()->set_unique(false)->name('Stadtbewohner')->strength(2, 2, 2);
+                $z3->stats(0,0,0,0);
+                $w3 = new Model_Items_Concrete();
+                $w3->enable_use_without_player();
+                $z3->add_weapon_default($w3);
+                $zombies[] = $z3;
+                $z4 = Model_Combat_Zombies_Ghul::factory()->set_unique(false)->name('Stadtbewohner')->strength(2, 2, 7);
+                $z4->stats(0,0,0,0);
+                $zombies[] = $z4;
                 break;
             //</editor-fold>
 
@@ -349,11 +359,11 @@ class Model_Places_Strangewood_Singleplayer extends Model_Places_Strangewood_Fin
                 $d = ['Football Player'];
                 break;
             case 10030: case 10031: case 10040:                                    // Med Student & Surgeon & WRA
-                for ($i = 0; $i < 10; $i++)
+                for ($i = 0; $i < 5; $i++)
                     $d[] = 'Patient';
                 break;
             case 10041:                                                  // Nerd
-                for ($i = 0; $i < 10; $i++)
+                for ($i = 0; $i < 5; $i++)
                     $d[] = 'Irgendjemand';
                 break;
             case 12010: case 12020: case 12030: case 12040: case 12050:  // Townships Professions

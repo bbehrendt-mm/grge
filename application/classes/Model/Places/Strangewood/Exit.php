@@ -9,6 +9,11 @@ class Model_Places_Strangewood_Exit extends Model_Places_Abstract_Place implemen
 
     protected $processed_players = [];
 
+    public function battle_location_type(): string
+    {
+        return $this->is_outside() ? 'hw19_outside' : 'hw19_inside';
+    }
+
     //Enter map
     public function enter_map($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER): bool
     {

@@ -11,17 +11,26 @@ class Model_Combat_Zombies_Ghul extends Model_Combat_Zombies_Zombie {
     protected static $default_stat_accuracy = 0;
     //protected static $movement_range = 5;
 
+    protected $unique_stat = true;
+
     protected static $num_str = 100;
 
     protected $player_id;
-
-    protected static $is_unique = true;
 
     /**
      * @return Model_Combat_Zombies_Ghul
      */
     public static function factory(): Model_Combat_Actor {
         return parent::factory();
+    }
+
+    public function set_unique(bool $b): self {
+        $this->unique_stat = $b;
+        return $this;
+    }
+
+    public function unique(): bool {
+        return $this->unique_stat;
     }
 
     /**

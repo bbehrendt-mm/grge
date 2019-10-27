@@ -4,6 +4,8 @@ class Model_Places_Strangewood_Singleplayer extends Model_Places_Strangewood_Fin
 
     protected function name_by_profession($p) : string {
         switch ($p) {
+
+            //<editor-fold desc="Single Player Professions">
             case    0:case 1011:case 1012:case 1013:case 2030:case 3010: // Citizen
                 return "Verfallener Bungalow";
             case  100:case 1020:case 1021:case 2020:                     // Soldier & Killer
@@ -20,6 +22,23 @@ class Model_Places_Strangewood_Singleplayer extends Model_Places_Strangewood_Fin
                 return "Überwucherte Lichtung";
             case 3030:                                                   // Tech
                 return "Verfallener Bunker";
+            //</editor-fold>
+
+            //<editor-fold desc="Multi Player Professions">
+            case 10010: case 10011:                                      // Politician & Presitent
+                return "Überwucherter Helikopter-Landeplatz";
+            case 10020: case 10021:                                      // Football Coach & Player
+                return "Überwuchertes Football-Feld";
+            case 10030: case 10031:                                      // Med Student & Surgeon
+                return "Verfallenes Labor";
+            case 10040:                                                  // WRA
+                return "Verfallenes Büro";
+            case 10041:                                                  // Nerd
+                return "Überwucherter Keller";
+            case 12010: case 12020: case 12030: case 12040: case 12050:  // Townships Professions
+            case 12060: case 12070: case 12080:
+                return "Ruinen einer Stadt";
+            //</editor-fold>
 
             default: return "Die Geheime Ruine";
         }
@@ -27,6 +46,7 @@ class Model_Places_Strangewood_Singleplayer extends Model_Places_Strangewood_Fin
 
     protected function desc_by_profession($p) : string {
         switch ($p) {
+            //<editor-fold desc="Single Player Professions">
             case    0:case 1011:case 1012:case 1013:case 2030:case 3010: // Citizen
                 return "Du erinnerst dich an diesen Ort... Als die Zombie-Apokalypse began, hast du hier mit deiner Familie deinen Sommerurlaub verbracht. Ihr habt Türen und Fenster blockiert und auf Hilfe gewartet, die jedoch nie kam. Irgendwann wurden Nahrung und Wasser knapp, also hast du heimlich die Eingangstür aufgeschlossen und dich im Badezimmer versteckt...";
 
@@ -56,6 +76,25 @@ class Model_Places_Strangewood_Singleplayer extends Model_Places_Strangewood_Fin
 
             case 3030:                                                  // Tech
                 return "Du erinnerst dich an diesen Ort... deine Firma wurde beauftragt, in diesem ehemaligen Bunker einen Server-Raum für einen internationalen Konzern einzurichten. Als die Zombie-Apokalypse begann, hast du dich mit deinen Kollegen in diesem Bunker versteckt. Eure Vorräte waren begrenzt - also hast du deine Kollegen unter einem Vorwand in den Server-Raum gelockt, die Argon-Brandschutzanlage ausgelöst und deine Kollegen ersticken lassen ...";
+            //</editor-fold>
+
+            //<editor-fold desc="Multi Player Professions">
+            case 10010: case 10011:                                      // Politician & Presitent
+                return "Du erinnerst dich an diesen Ort... Als die ersten Berichte über eine Angriffe von Untoten aufkamen, befandest du dich gerade in deinem monatlichen Golf-Urlaub. Selbstverständlich hast du sofort einen Helikopter rufen lassen, der dich in Sicherheit bringt. Und wenn deine persönliche Assistenten willens gewäsen wäre, dir ein paar intime Gefälligkeiten zu erweisen, hättest du sie vielleicht sogar mitgenommen.";
+            case 10020:                                                  // Football Coach
+                return "Du erinnerst dich an diesen Ort... Vor Jahren hat deine Mannschaft hier gespielt. Einer deiner Spieler hatte seit einer ganzen Weile ein massives Aggressionsproblem, was dich allerdings nie groß gekümmert hat - immerhin war er der einzig wirklich talentierte Spieler, den du hattest. Zumindest, bis er nach einer herben Niederlage mitten auf dem Platz zwei Spieler aus der gegnerischen Mannschaft angegriffen und totgeschlagen hat...";
+            case 10021:                                                  // Football Player
+                return "Du erinnerst dich an diesen Ort... zumindest dunkel. Dein Gedächnis ist nach all den Schlägen auf den Kopf in deiner Karriere nicht mehr das allerbeste. Du hast hier dein letztes Spiel gespielt, bevor du für eine lange Zeit umziehen musstest... An die Details kannst du dich jedoch nicht mehr erinnern.";
+            case 10030: case 10031:                                      // Med Student & Surgeon
+                return "Du erinnerst dich an diesen Ort... du hast hier zusammen mit anderen Medizinern Medikamententests beaufsichtigt. Leider kam später heraus, dass dieses Labor - genau wie seine zwielichtigen Kunden - nie eine Lizenz für solche Tests besessen haben und die meisten Probanden auch nur bedingt freiwillig teilgenommen haben.";
+            case 10040:                                                  // WRA
+                return "Du erinnerst dich an diesen Ort... früher hast du hier gearbeitet! Deine Aufgabe war es, die Einhaltung rechtlicher und ethischer Vorgaben bei medizinischen Forschungsinstituten zu überwachen und entsprechende Kontrollen zu koordinieren. Zumindest in der Theorie - in der Praxis hast du einfach alles unterschrieben, was man dir vorgelegt hat. Immerhin warst du viel zu beschäftigt, Dinge zu finden, die dich als Frau diskriminieren und gegen die man protestieren kann.";
+            case 10041:                                                  // Nerd
+                return "Du erinnerst dich an diesen Ort... hier stand früher ein mehrstöckiges Wohnhaus, in dessen Keller du ein Apartment gemietet hattest. Die meiste Zeit hast du darin vor dem PC zugebracht und dir Verschwörungstheorien ausgedacht. Bevölkerungsaustausch, jüdische Weltverschwörung, ChemTrails - das übliche eben. Als die Zombie-Apokalypse began, hast du eine Liste mit Namen und Adressen der \"Schuldigen\" veröffentlicht - die nur ganz zufällig nur aus Leuten bestand, die du persönlich nicht leiden konntest. Von den meisten davon hat man dann auch nie wieder gehört ...";
+            case 12010: case 12020: case 12030: case 12040: case 12050:  // Townships Professions
+            case 12060: case 12070: case 12080:
+                return "Du erinnerst dich an diesen Ort... nach der Zombie-Apokalypse hast du mit 39 anderen Menschen an diesem Ort gewohnt. Allerdings haben die sich stur geweigert, dich zum Bürgermeister zu machen. Also hast du eines Tages alle Vorräte aus der Bank gestohlen, den Schließmechanismus des Stadttors sabotiert und dich in die Wüste abgesetzt.";
+            //</editor-fold>
 
             default: return "Du hast keinerlei Erinnerungen an diesen Ort ...";
         }
@@ -63,7 +102,8 @@ class Model_Places_Strangewood_Singleplayer extends Model_Places_Strangewood_Fin
 
     protected function out_by_profession($p) : bool {
         switch ($p) {
-            case 1070:case 1071:case 2010:                                         // Muscleman & Berserker
+            case 1070:case 1071:case 2010:case 10020:case 10021:case 12010: case 12020: case 12030: case 12040:
+            case 12050:case 12060: case 12070: case 12080:
                 return true;
 
             default: return false;
@@ -81,6 +121,7 @@ class Model_Places_Strangewood_Singleplayer extends Model_Places_Strangewood_Fin
 
         switch ($p) {
 
+            //<editor-fold desc="Single Player Professions">
             case    0:case 1011:case 1012:case 1013:case 2030:case 3010: // Citizen
                 $z1 = Model_Combat_Zombies_Ghul::factory()->name($p === 1012 ? 'Bill' : 'Barbara')->strength(35, 100, 1);
                 $w1 = new Model_Items_Miniknife();
@@ -199,6 +240,46 @@ class Model_Places_Strangewood_Singleplayer extends Model_Places_Strangewood_Fin
                     $zombies[] = $z;
                 }
                 break;
+            //</editor-fold>
+
+            //<editor-fold desc="Multi Player Professions">
+            case 10010: case 10011:                                      // Politician & Presitent
+                $z = Model_Combat_Zombies_Ghul::factory()->name('Pepper')->strength(50, 50, 10);
+                $w = new Model_Items_Knife();
+                $w->enable_use_without_player();
+                $z->add_weapon_default($w);
+                $zombies[] = $z;
+                break;
+            case 10020: case 10021:                                                 // Football Coach
+                $z = Model_Combat_Zombies_Ghul::factory()->set_unique(false)->name('Football Player')->strength(120, 120, 1);
+                $zombies[] = $z;
+                break;
+            case 10030: case 10031: case 10040:                                    // Med Student & Surgeon & WRA
+                $z = Model_Combat_Zombies_Ghul::factory()->set_unique(false)->name('Patient')->strength(1, 100, 10);
+                $w = new Model_Items_Gush();
+                $w->enable_use_without_player();
+                $z->add_weapon_default($w);
+                $zombies[] = $z;
+                break;
+            case 10041:                                                  // Nerd
+                $z = Model_Combat_Zombies_Ghul::factory()->name('Irgendjemand')->strength(25, 100, 10);
+                for ($i = 0; $i < 10; $i++) {
+                    $w = new Model_Items_Concrete();
+                    $w->enable_use_without_player();
+                    $z->add_weapon_default($w);
+                }
+                $zombies[] = $z;
+                break;
+            case 12010: case 12020: case 12030: case 12040: case 12050:  // Townships Professions
+            case 12060: case 12070: case 12080:
+                $z = Model_Combat_Zombies_Ghul::factory()->set_unique(false)->name('Stadtbewohner')->strength(5, 5, 39);
+                $w = new Model_Items_Miniknife();
+                $w->enable_use_without_player();
+                $z->add_weapon_default($w);
+                $zombies[] = $z;
+                break;
+            //</editor-fold>
+
             default:
                 $z = Model_Combat_Zombies_Ghul::factory()->name('Gabriel')->strength(100, 100, 1);
                 $zombies[] = $z;
@@ -218,6 +299,7 @@ class Model_Places_Strangewood_Singleplayer extends Model_Places_Strangewood_Fin
         $p = Globals::CurrentPlayerActualF()->job();
 
         switch ($p) {
+            //<editor-fold desc="Single Player Professions">
             case    0:case 1011:case 1012:case 1013:case 2030:case 3010: // Citizen
                 $d = [$p === 1012 ? 'Bill' : 'Barbara', 'Kenny'];
                 break;
@@ -257,6 +339,30 @@ class Model_Places_Strangewood_Singleplayer extends Model_Places_Strangewood_Fin
             case 3030:                                                  // Tech
                 $d = ['Homer','Marge','Bart','Lisa','Maggie','Abraham','Jacqueline','Patty','Selma'];
                 break;
+            //</editor-fold>
+
+            //<editor-fold desc="Multi Player Professions">
+            case 10010: case 10011:                                      // Politician & Presitent
+                $d = ['Pepper'];
+                break;
+            case 10020: case 10021:                                                 // Football Coach
+                $d = ['Football Player'];
+                break;
+            case 10030: case 10031: case 10040:                                    // Med Student & Surgeon & WRA
+                for ($i = 0; $i < 10; $i++)
+                    $d[] = 'Patient';
+                break;
+            case 10041:                                                  // Nerd
+                for ($i = 0; $i < 10; $i++)
+                    $d[] = 'Irgendjemand';
+                break;
+            case 12010: case 12020: case 12030: case 12040: case 12050:  // Townships Professions
+            case 12060: case 12070: case 12080:
+                for ($i = 0; $i < 10; $i++)
+                    $d[] = 'Stadtbewohner';
+                break;
+            //</editor-fold>
+
             default:
                 $d = ['Gabriel'];
                 break;

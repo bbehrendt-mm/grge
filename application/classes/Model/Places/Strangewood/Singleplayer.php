@@ -296,10 +296,12 @@ class Model_Places_Strangewood_Singleplayer extends Model_Places_Strangewood_Fin
                 break;
         }
 
+        Globals::CurrentPlayerActualF()->log()->add('VERFLUCHT! Als du dich der Leiche näherst, wirst du von Zombies überrascht!');
         Tool_Scripts::combat([Tool_Scripts::at_location($this->uin()), $zombies], false, 15, $this, 'Ein Überraschungsangriff!');
 
         if (Globals::CurrentPlayerActualF()->get_status()->alive())
-            Globals::CurrentPlayerActualF()->achievements()->achieve( Model_Achievement::MA_HALLOWEEN_19_2, 1 );
+            Globals::CurrentPlayerActualF()->achievements()->achieve( Model_Achievement::MA_PUZZLE_PIECE, 1 );
+        Globals::CurrentPlayerActualF()->achievements()->achieve( Model_Achievement::MA_HALLOWEEN_19_2, 1 );
 
         $this->unlock();
     }

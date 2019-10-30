@@ -47,7 +47,10 @@ class Model_NPC_Event_Clown extends Model_NPC_Humanoid
     }
 
     public function kill() {
-        if (!$this->is_aggresive && $this->location()) $this->location()->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_LEAVE, $this->id(), true));
+        if (!$this->is_aggresive && $this->location()) {
+            $this->location()->log()->add(new Model_Log_Types_Movement(Model_Log_Types_Movement::MOVEMENT_TYPE_LEAVE, $this->id(), true));
+            $this->status->alive(false);
+        }
         else parent::kill();
     }
 

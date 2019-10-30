@@ -63,14 +63,14 @@ class Model_Events_Halloween extends Model_Events_Event {
         }
 
         foreach (Globals::CurrentGameF()->maps() as $map)
-            foreach ($map->get_locations() as $lid) {
+            if ($map->get_mapname() !== 'swood')
+                foreach ($map->get_locations() as $lid) {
+                    if (Globals::CurrentGameF()->map_main()->resolve_fixed_id(2) !== $lid && (Globals::CurrentGameF()->map_main()->resolve_fixed_id(1) === $lid || Tool_Gambling::random(0.2)))
+                        $this->spawn_scarecrow(Globals::CurrentGameF()->location($lid));
 
-                if (Globals::CurrentGameF()->map_main()->resolve_fixed_id(2) !== $lid && (Globals::CurrentGameF()->map_main()->resolve_fixed_id(1) === $lid || Tool_Gambling::random(0.2)))
-                    $this->spawn_scarecrow(Globals::CurrentGameF()->location($lid));
-
-                if (Tool_System::instance_of(Globals::CurrentGameF()->location($lid), Model_Places_Store::cls()))
-                    $this->spawn_merchant(Globals::CurrentGameF()->location($lid));
-            }
+                    if (Tool_System::instance_of(Globals::CurrentGameF()->location($lid), Model_Places_Store::cls()))
+                        $this->spawn_merchant(Globals::CurrentGameF()->location($lid));
+                }
 
         $this->clown_balance();
 

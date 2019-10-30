@@ -17,7 +17,7 @@ class Model_Places_Strangewood_Path extends Model_Places_Abstract_Trap implement
 
     public function enter($pid = null, $type = Interface_Tickable::IT_TYPE_PLAYER): bool {
         $b = parent::enter($pid, $type);
-        if ($b && Tool_Scripts::is_npc(Globals::CurrentGameF()->get_player($pid) ) && !isset($this->player_ids[$pid] )) {
+        if ($b && !Tool_Scripts::is_npc(Globals::CurrentGameF()->get_player($pid) ) && !isset($this->player_ids[$pid] )) {
             $this->player_ids[$pid] = true;
             Globals::CurrentGameF()->get_player($pid)->achievements()->achieve(Model_Achievement::MA_HALLOWEEN_19_1);
         }

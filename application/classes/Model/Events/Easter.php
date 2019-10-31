@@ -4,8 +4,25 @@ class Model_Events_Easter extends Model_Events_Event {
 
     protected static $event_key = 'easter';
     protected static $event_name = 'Oster-Event';
+    protected static $uses_ticked = true;
+
+    protected static $dm_days  = 14;
 
     private $corax_id = -1;
+
+    protected static function get_start(int $y0 = 0): ?DateTime {
+
+        $y = (int)((new DateTime())->format('Y'))+$y0;
+
+        $k = floor( $y / 100 );
+        $q = floor( $k /   4 );
+        $d = (19 * ($y % 19) + ((15 + $k - ( floor( (8*$k + 13) / 25 ) ) - $q) % 30)) % 30;
+
+        $d_offset = $d + ((2 * ($y % 4) + 4 * ($y % 7) + 6 * $d + ((4  + $k - $q) % 7)) % 7);
+
+        $origin = new DateTime( "$y-3-22");
+        return $origin->add( new DateInterval("P{$d_offset}D") )->sub(new DateInterval('P5D'));;
+    }
 
     protected function trigger_activation(): bool
     {

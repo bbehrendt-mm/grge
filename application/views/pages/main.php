@@ -5,6 +5,7 @@
  * @var string $name
  * @var int $pupils
  * @var int $bc
+ * @var array $next_events
  */
 ?>
 <h1 class="noclick"><i class="fa fa-arrow-circle-right"></i><?=__('Willkommen')?></h1>
@@ -50,7 +51,14 @@
             </div>
         </div>
 
-
+        <?php if ($next_events) { ?>
+            <h2 class="center"><?=__('Kommende Events')?></h2>
+            <?php foreach ($next_events as $event) { ?>
+                <div>
+                    <b><?=__($event['name'])?></b> - <i><?=$event['begin']->format('r');?></i>
+                </div>
+            <?php } ?>
+        <?php } ?>
 
         <h2 class="center"><?=__('Neuigkeiten')?></h2>
         <div id="newsboard"></div>

@@ -2,9 +2,17 @@
 
 abstract class Model_Events_Event {
 
-    protected static $event_key = '';
-    protected $active = false;
     protected static $event_name = '';
+    protected static $event_key = '';
+    protected static $uses_ticked = false;
+
+    // dm_begin and dm_end are arrays in the form of [day, month, relative year].
+    // dm_begin is the first day of the event, dm_end is the day AFTER the end of the event
+    protected static $dm_begin = null;  // Example [ 5, 3,0] for Mar05 or [10,12,0] for Dec12
+    protected static $dm_end   = null;  // Example [19, 3,0] for Mar19 or [ 2, 1,1] for Jan02, next year
+    protected static $dm_days  = null;
+
+    protected $active = false;
 
     private $npc_list = [];
     private $item_list = [];
@@ -12,6 +20,55 @@ abstract class Model_Events_Event {
 
     public function __construct() {
         $this->trigger();
+    }
+
+    protected static function get_start(int $y = 0): ?DateTime {
+        if (static::$dm_begin !== null)
+            return new DateTime( ((int)((new DateTime())->format('Y'))+$y+static::$dm_begin[2]) . '-' . static::$dm_begin[1] . '-' . static::$dm_begin[0]);
+        elseif ( static::$dm_days !== null && $end = static::get_end($y) )
+            return $end->sub( new DateInterval('P' . static::$dm_days . 'D') );
+        else return null;
+    }
+
+    protected static function get_end(int $y = 0): ?DateTime {
+        if (static::$dm_end !== null)
+            return new DateTime( ((int)((new DateTime())->format('Y'))+$y+static::$dm_end[2]) . '-' . static::$dm_end[1] . '-' . static::$dm_end[0]);
+        elseif ( static::$dm_days !== null && $end = static::get_start($y) )
+            return $end->add( new DateInterval('P' . static::$dm_days . 'D') );
+        else return null;
+    }
+
+    public static function get_season(?DateTime &$begin, ?DateTime &$end, $offset = null): bool {
+        $now = new DateTime();
+        if ($auto_adv = ($offset === null)) $offset = 0;
+
+        if (($tmp_end = static::get_end(0+$offset)) === null) return false;
+        if ($auto_adv && $tmp_end < $now) {
+            $tmp_start = static::get_start(1+$offset);
+            $tmp_end   = static::get_end(1+$offset);
+        } else $tmp_start = static::get_start(0+$offset);
+
+        if ($tmp_start !== null && $tmp_end !== null) {
+            $begin = $tmp_start;
+            $end = $tmp_end;
+            return true;
+        } else return false;
+    }
+
+    public static function check_season(DateTime $d): bool {
+        $i = 0; $j = 0;
+        while ( static::get_season($a, $b, $i) && abs($i) < 5 ) {
+            if      ($a <= $d && $b > $d) return true;
+            elseif ($j === 0) {
+                if ($a > $d) $j = -1;
+                if ($b < $d) $j =  1;
+                $i += $j;
+            } else {
+                if ( ($j < 0 && $a < $d) || ($j > 0 && $b > $d)) return false;
+                $i += $d;
+            }
+        }
+        return false;
     }
 
     public function register_event_map_id($map): void {
@@ -40,6 +97,10 @@ abstract class Model_Events_Event {
 
     public static function get_key(): string {
         return static::$event_key;
+    }
+
+    public static function uses_ticket(): bool {
+        return static::$uses_ticked;
     }
 
     public function is_active(): bool {

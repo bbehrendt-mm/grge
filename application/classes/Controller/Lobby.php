@@ -9,6 +9,16 @@ class Controller_Lobby extends Controller {
      */
     public function action_main(): void
     {
+        $render_event = function($e) {
+            /** @var $cls Model_Events_Event */
+            list($start,$end,$cls) = $e;
+            return [
+                'begin' => $start,
+                'end'   => $end,
+                'name'  => $cls::name()
+            ];
+        };
+
         $this->add_menu('logout');
         $this->add_widget(View::factory('pages/main')
             ->set('ingame', (bool)Globals::CurrentUserF()->get_current_game())
@@ -18,6 +28,8 @@ class Controller_Lobby extends Controller {
             ->set('cashout', Model_Euser::get_mentor_braincoins(Globals::CurrentUserF()->uid(), null, false))
             ->set('pupils', count(Globals::CurrentUserF()->get_apprentice_id()))
             ->set('bc', Model_Euser::get_coins(Globals::CurrentUserF()->uid()))
+
+            ->set('next_events', array_map($render_event,Tool_Events::next_events()))
             ->render());
         $this->render();
     }

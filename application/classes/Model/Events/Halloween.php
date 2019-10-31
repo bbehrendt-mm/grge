@@ -5,6 +5,9 @@ class Model_Events_Halloween extends Model_Events_Event {
     protected static $event_key = 'halloween';
     protected static $event_name = 'Halloween-Event';
 
+    protected static $dm_begin = [23,10,0];
+    protected static $dm_end   = [06,11,0];
+
     private $horror_list = [];
     private $clowns = 0;
 

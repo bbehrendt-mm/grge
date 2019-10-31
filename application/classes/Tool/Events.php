@@ -9,6 +9,15 @@ class Tool_Events {
     public const TE_MONTH = 'n';
     public const TE_YEAR = 'Y';
 
+    private static $event_plugin_list = ['Model_Events_Halloween', 'Model_Events_Xmas', 'Model_Events_Easter'];
+
+    /**
+     * @return Model_Events_Event[]|string[]
+     */
+    private static function get_plugins(): array {
+        return static::$event_plugin_list;
+    }
+
     private static function get($what, $time = null): int
     {
         return $time ? (int)date($what, $time) : (int)date($what);
@@ -16,7 +25,8 @@ class Tool_Events {
 
     public static function ticket_event($time = null): bool
     {
-        return in_array(static::current($time),['xmas','easter']);
+        $cls = static::event_extended_classes(null,$time);
+        return $cls === null ? false : $cls::uses_ticket();
     }
 
     /**
@@ -24,63 +34,62 @@ class Tool_Events {
      * @param int|null $time
      * @return null|string|Model_Events_Event
      */
-    public static function event_extended_classes($event = null, $time = null) {
+    public static function event_extended_classes($event = null, ?int $time = null) {
         if ($event === null) $event = static::current($time);
 
-        switch ($event) {
-            case 'halloween': return 'Model_Events_Halloween'; break;
-            case 'xmas': return 'Model_Events_Xmas'; break;
-            case 'easter': return 'Model_Events_Easter'; break;
-            default: return null;
-        }
-
+        foreach (static::get_plugins() as $plugin)
+            if ($plugin::get_key() === $event) return $plugin;
+        return null;
     }
 
-    public static function event_extended_name($event = null, $time = null): ?string
+    public static function event_extended_name($event = null, ?int $time = null): ?string
     {
         if ($cls = static::event_extended_classes($event, $time))
             return $cls::name();
         else return null;
     }
 
-    public static function handle_event_triggers($time = null): void
+    public static function handle_event_triggers(?int $time = null): void
     {
         if (!Globals::hasCurrentGame()) return;
         $ev = static::current($time);
         if (($cls = static::event_extended_classes($ev)) && !Globals::CurrentGameF()->get_initialized_event($ev))
-            new $cls;
+            new $cls();
     }
 
-    public static function current($time = null): ?string
+    public static function current(?int $time = null): ?string
     {
         if ($ev = Kohana::$config->load('basic.event')) return $ev;
 
-        //Detect halloween (30.10. - 05.11.)
-        if ( (static::get(static::TE_MONTH, $time) === 10 && static::get(static::TE_DAY, $time) >= 31) || (static::get(static::TE_MONTH, $time) === 11 && static::get(static::TE_DAY, $time) <= 21) )
-            return 'halloween';
-
-        //Detect christmas (6.12. - 26.12.)
-        if (static::get(static::TE_MONTH, $time) === 12 && static::get(static::TE_DAY, $time) >= 6 && static::get(static::TE_DAY, $time) <= 26 )
-            return 'xmas';
-
-        //Detect new year (30.12. - 02.01.)
-        if ( (static::get(static::TE_MONTH, $time) === 12 && static::get(static::TE_DAY, $time) >= 30) || (static::get(static::TE_MONTH, $time) === 1 && static::get(static::TE_DAY, $time) <= 2) )
-            return 'newyear';
-
-        //Detect easter (25.03.2016 - 01.04.2016)
-        switch (static::get(static::TE_YEAR, $time)) {
-            case 2016:
-                if (static::get(static::TE_MONTH, $time) === 3 && static::get(static::TE_DAY, $time) >= 25) return 'easter';
-                break;
-            case 2017:
-                if (static::get(static::TE_MONTH, $time) === 4 && static::get(static::TE_DAY, $time) >= 14 && static::get(static::TE_DAY, $time) <= 20) return 'easter';
-                break;
-        }
+        $now = new DateTime();
+        $now->setTimestamp($time ?: time());
+        foreach (static::get_plugins() as $plugin)
+            if ($plugin::check_season($now)) return $plugin::get_key();
 
         return null;
     }
 
-    public static function current_skin($time = null): ?string
+    public static function next_events(?DateTime $until = null): array {
+        $now = new DateTime();
+        $until = $until ?: (new DateTime())->add(new DateInterval('P600D'));
+        $ret = [];
+
+        foreach (static::get_plugins() as $plugin) {
+            $i = 0;
+            while ( $plugin::get_season($a,$b, $i) && $a < $until && $i < 5 ) {
+                if ($a > $now) {
+                    Controller::dump('event', [ $plugin::get_key(), $i, $a->format('r'), $b->format('r') ]);
+                    $ret[] = [$a,$b,$plugin];
+                }
+                $i++;
+            }
+        }
+
+        usort( $ret, function($a,$b) { if ($a[0] == $b[0]) return 0; return ($a[0] < $b[0]) ? -1 : 1; } );
+        return $ret;
+    }
+
+    public static function current_skin(?int $time = null): ?string
     {
         $ev = static::current($time);
         if ($ev && file_exists(APPPATH . "assets/skins/$ev"))
@@ -98,12 +107,12 @@ class Tool_Events {
         return (static::get(static::TE_MONTH) === 10 && static::get(static::TE_DAY) === 14);
     }
 
-    public static function maintenance($time = null): bool
+    public static function maintenance(?int $time = null): bool
     {
         return (bool)static::active_maintenance_period($time);
     }
 
-    public static function active_maintenance_period($time = null) {
+    public static function active_maintenance_period(?int $time = null) {
         $time = $time ?: time();
         $current = ($time - strtotime(date('Y-m-d'), $time))/60;
 

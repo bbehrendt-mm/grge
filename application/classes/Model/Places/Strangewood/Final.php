@@ -9,7 +9,7 @@ abstract class Model_Places_Strangewood_Final extends Model_Places_Abstract_Trap
     protected static $icon = 'swood';
 
     protected function unlock() {
-        //$this->unlocked = true;
+        $this->unlocked = true;
     }
 
     abstract protected function initialize();

@@ -2,9 +2,15 @@
 
 abstract class Model_Events_Event {
 
+    public const MEE_EFFECT_UNLOCK = 1;
+    public const MEE_EFFECT_FOOLS  = 2;
+    public const MEE_EFFECT_TICKET = 3;
+
     protected static $event_name = '';
     protected static $event_key = '';
-    protected static $uses_ticked = false;
+    protected static $show_info = true;
+
+    protected static $additional_effects = [];
 
     // dm_begin and dm_end are arrays in the form of [day, month, relative year].
     // dm_begin is the first day of the event, dm_end is the day AFTER the end of the event
@@ -20,6 +26,10 @@ abstract class Model_Events_Event {
 
     public function __construct() {
         $this->trigger();
+    }
+
+    public static function additional_effect(int $e): bool {
+        return in_array( $e, static::$additional_effects );
     }
 
     protected static function get_start(int $y = 0): ?DateTime {
@@ -55,7 +65,7 @@ abstract class Model_Events_Event {
         } else return false;
     }
 
-    public static function check_season(DateTime $d): bool {
+    public static function check_season(DateTime $d, ?DateTime &$a = null, ?DateTime &$b = null): bool {
         $i = 0; $j = 0;
         while ( static::get_season($a, $b, $i) && abs($i) < 5 ) {
             if      ($a <= $d && $b > $d) return true;
@@ -87,20 +97,23 @@ abstract class Model_Events_Event {
         return static::$event_name;
     }
 
+    public static function visible(): bool {
+        return static::$show_info;
+    }
+
     protected static function get_game_time() {
         return Globals::hasCurrentGame() ? Globals::CurrentGameF()->next_tick() : time();
     }
 
     public static function is_current(): bool {
-        return (static::$event_key ? (Tool_Events::current(static::get_game_time()) === static::$event_key) : false);
+        foreach (Tool_Events::current_events(static::get_game_time()) as $event)
+            if (Tool_System::instance_of( get_called_class(), $event ))
+                return true;
+        return false;
     }
 
-    public static function get_key(): string {
+    public static function get_key(): ?string {
         return static::$event_key;
-    }
-
-    public static function uses_ticket(): bool {
-        return static::$uses_ticked;
     }
 
     public function is_active(): bool {

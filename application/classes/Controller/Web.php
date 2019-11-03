@@ -185,11 +185,14 @@ class Controller_Web extends Controller {
         $version_data = Kohana::$config->load('build.version');
         $beta = $version_data['stage'] < 3;
 
+        $evs = Tool_Events::current_events();
+        $ev_name = count($evs) === 1 ? $evs[0]::name() : null;
+
         $this->add_widget(':body', View::factory('body')
             ->set('season', Kohana::$config->load('server.season'))
             ->set('title', $title)
             ->set('beta', $beta)
-            ->set('event', Tool_Events::event_extended_name())
+            ->set('event', $ev_name)
             ->set('version', "GRGE {$version_data['major']}.{$version_data['minor']}.{$version_data['service']}-{$version_data['maintenance']}-{$version_data['stage']}-{$version_data['build']} ({$version_data['date']})")
             ->render());
         $this->modify_current_url('');

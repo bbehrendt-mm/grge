@@ -280,3 +280,55 @@
     font-size: 16px; font-weight: bold; color: #a6a6a6;
   }
 }
+
+.event-outline-shadow(@shadow,@stroke,@strokewidth) {
+  text-shadow: 0 0 6px @shadow, 0 0 4px @shadow, 0 0 2px @shadow, @strokewidth 0 0 @stroke, 0 @strokewidth 0 @stroke, 0 -@strokewidth 0 @stroke, -@strokewidth 0 0 @stroke, @strokewidth @strokewidth 0 @stroke, -@strokewidth -@strokewidth 0 @stroke, @strokewidth -@strokewidth 0 @stroke, -@strokewidth @strokewidth 0 @stroke;
+}
+
+.event {
+  margin: 24px 0; background: @whitebox-color-bg; display: flow-root; overflow: hidden;
+  border: 2px solid @whitebox-color-border; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  >*{padding: 10px 24px}
+  >.header {
+    >:first-child { font-size: 24px; font-variant: small-caps; }
+    >:last-child { font-size: 20px; float: right; }
+  }
+  >.content {
+    display: flow-root; clear: both; margin-top: 10px; font-size: 12px; text-align: right; background: rgba(0,0,0,0.5);
+    >div:last-child {float: right; padding-left: 24px;}
+  }
+
+  &.event-halloween {
+    color: wheat;
+    border: 2px solid #940004;
+    .event-outline-shadow(black,black,1px);
+    &.event-current  { background: url("media/img/ev_schedule_halloween.jpg") center / cover; }
+    &.event-upcoming { background: url("media/img/ev_schedule_halloween.jpg") bottom left / cover; }
+  }
+
+  &.event-xmas {
+    color: #f55036;
+    border: 2px solid #e5e5e5;
+    .event-outline-shadow(rgba(0, 255, 31, 0.5), rgba(0,0,0,0),1px);
+    &.event-current  { background: url("media/img/ev_schedule_xmas.jpg") center / cover; }
+    &.event-upcoming { background: url("media/img/ev_schedule_xmas.jpg") bottom left / cover; }
+    >.content { text-shadow: 0 0 2px black; color: rgb(0, 255, 31)
+    }
+  }
+
+  &.event-easter {
+    color: #f5afed;
+    border: 2px solid #15981d;
+    .event-outline-shadow(black,black,1px);
+    &.event-current  { background: url("media/img/ev_schedule_easter.jpg") top right / cover; }
+    &.event-upcoming { background: url("media/img/ev_schedule_easter.jpg") center right / cover; }
+  }
+
+  &.event-midness {
+    color: #00f5cc;
+    border: 2px solid #980c50;
+    .event-outline-shadow(blue,black,1px);
+    &.event-current  { background: url("media/img/ev_schedule_midness.jpg") center / cover; }
+    &.event-upcoming { background: url("media/img/ev_schedule_midness.jpg") center / cover; }
+  }
+}

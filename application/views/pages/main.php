@@ -5,6 +5,7 @@
  * @var string $name
  * @var int $pupils
  * @var int $bc
+ * @var array $current_events
  * @var array $next_events
  */
 ?>
@@ -51,11 +52,36 @@
             </div>
         </div>
 
+        <?php if ($current_events) { ?>
+            <h2 class="center"><?=__('Aktuelle Events')?></h2>
+            <?php foreach ($current_events as $event) { ?>
+                <div class="event event-current event-<?=$event['key']?>">
+                    <div class="header">
+                        <b><?=__($event['name'])?></b>
+                        <i data-has-date="1" data-ts-start="<?=$event['begin']?>" data-ts-end="<?=$event['end']?>"></i>
+                    </div>
+                </div>
+            <?php } ?>
+        <?php } ?>
+
         <?php if ($next_events) { ?>
             <h2 class="center"><?=__('Kommende Events')?></h2>
             <?php foreach ($next_events as $event) { ?>
-                <div>
-                    <b><?=__($event['name'])?></b> - <i><?=$event['begin']->format('r');?></i>
+                <div class="event event-upcoming event-<?=$event['key']?>">
+                    <div class="header">
+                        <b><?=__($event['name'])?></b>
+                        <i data-has-date="1" data-ts-start="<?=$event['begin']?>" data-ts-end="<?=$event['end']?>"></i>
+                    </div>
+                    <div class="content">
+                        <div>
+
+                        </div>
+                        <div>
+                            <span data-ts-start="<?=$event['begin']?>"></span><br />
+                            <span data-ts-end="<?=$event['end']?>"></span><br />
+                            <b><?=__('Alle Zeitangaben sind in lokaler Zeit.');?></b>
+                        </div>
+                    </div>
                 </div>
             <?php } ?>
         <?php } ?>
@@ -68,6 +94,58 @@
 <script type="application/javascript">
 // ## JS COMPRESS BEGIN ## //
     game.storage.set('news','last-seen',Date.now());
+
+    var update_event_dates = function() {};
+    update_event_dates = function() {
+        var updated = false;
+        $('.event [data-has-date]').each(function() {
+            var now = Date.now();
+            var begin = parseInt($(this).data('ts-start')) * 1000;
+            var end = parseInt($(this).data('ts-end')) * 1000;
+
+            if (end < now || end <= begin) return;
+
+            var event_running = begin <= now && end > now;
+            var ts = (event_running ? end : begin) - now;
+
+            var days =    Math.floor( ts / 86400000 );
+            var hours =   Math.floor( (ts-86400000*days) / 3600000 );
+            var minutes = Math.floor( (ts-86400000*days-3600000*hours) / 60000 );
+            var seconds = Math.floor( (ts-86400000*days-3600000*hours-minutes*60000) / 1000 );
+
+            var base_str;
+            if      (days > 1)   base_str = event_running ? <?=__j(':n_days Tage');?> : <?=__j(':n_days Tagen');?>;
+            else if (days === 1) base_str = <?=__j(':n_days Tag');?>;
+            else                 base_str = <?=__j(':n_hours::n_mins::n_secs');?>;
+
+            if (minutes < 10) minutes = '0' + minutes;
+            if (seconds < 10) seconds = '0' + seconds;
+
+            base_str = game.i18n( base_str, { ':n_days': days, ':n_hours': hours, ':n_mins': minutes, ':n_secs': seconds} );
+
+            $(this).text(  game.i18n(
+                event_running ? <?=__j('Noch :time');?> : <?=__j('Startet in :time');?>, {':time': base_str})
+            );
+
+            updated = true;
+        });
+        if (updated) window.setTimeout(update_event_dates, 1000);
+    };
+    update_event_dates();
+
+    $('.event .content [data-ts-start]').each(function() {
+        var ts = parseInt($(this).data('ts-start')) * 1000;
+        $(this).text(game.i18n(<?=__j('Startet :datetime')?>, {
+            ':datetime': (new Date( ts )).toLocaleString()
+        }) );
+    });
+
+    $('.event .content [data-ts-end]').each(function() {
+        var ts = parseInt($(this).data('ts-end')) * 1000;
+        $(this).text(game.i18n(<?=__j('Endet :datetime')?>, {
+            ':datetime': (new Date( ts )).toLocaleString()
+    }) );
+});
 
     $('#game-btn').click(function() {
         game.network.load('<?=$ingame ? 'game/redirect' : 'gamemaster/lobby' ?>');

@@ -4,7 +4,8 @@ class Model_Events_Easter extends Model_Events_Event {
 
     protected static $event_key = 'easter';
     protected static $event_name = 'Oster-Event';
-    protected static $uses_ticked = true;
+
+    protected static $additional_effects = [Model_Events_Event::MEE_EFFECT_TICKET];
 
     protected static $dm_days  = 14;
 

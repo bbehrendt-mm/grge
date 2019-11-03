@@ -3,7 +3,8 @@ class Model_Events_Xmas extends Model_Events_Event {
 
     protected static $event_key = 'xmas';
     protected static $event_name = 'Weihnachts-Event';
-    protected static $uses_ticked = true;
+
+    protected static $additional_effects = [Model_Events_Event::MEE_EFFECT_TICKET];
 
     protected static $dm_begin = [06,12,0];
     protected static $dm_end   = [27,12,0];

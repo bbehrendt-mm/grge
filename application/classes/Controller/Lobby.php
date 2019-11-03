@@ -10,12 +10,17 @@ class Controller_Lobby extends Controller {
     public function action_main(): void
     {
         $render_event = function($e) {
-            /** @var $cls Model_Events_Event */
+            /**
+             * @var $cls Model_Events_Event
+             * @var $start DateTime
+             * @var $end DateTime
+             */
             list($start,$end,$cls) = $e;
             return [
-                'begin' => $start,
-                'end'   => $end,
-                'name'  => $cls::name()
+                'begin' => $start->getTimestamp(),
+                'end'   => $end->getTimestamp(),
+                'name'  => $cls::name(),
+                'key'   => $cls::get_key(),
             ];
         };
 
@@ -29,7 +34,8 @@ class Controller_Lobby extends Controller {
             ->set('pupils', count(Globals::CurrentUserF()->get_apprentice_id()))
             ->set('bc', Model_Euser::get_coins(Globals::CurrentUserF()->uid()))
 
-            ->set('next_events', array_map($render_event,Tool_Events::next_events()))
+            ->set('current_events', array_map($render_event,array_filter(Tool_Events::current_events_info(), function($e) { return $e[2]::visible(); })))
+            ->set('next_events', array_map($render_event,array_filter(Tool_Events::next_events_info(), function($e) { return $e[2]::visible(); })))
             ->render());
         $this->render();
     }

@@ -81,6 +81,7 @@
                 alias.begin();
         };
 
+        if (path.slice(0,2) === '//') path = 'http:' + path;
         this.ressources[name].src = /^(\w*?):\/\//.test(path) ? path : ('<?=URL::base(true)?>' + path);
     };
 

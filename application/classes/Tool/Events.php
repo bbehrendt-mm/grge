@@ -28,7 +28,9 @@ class Tool_Events {
 
     public static function ticket_event($time = null): bool
     {
-        foreach (static::current_events() as $event)
+        if (!Globals::hasCurrentGame()) return false;
+
+        foreach (Globals::CurrentGameF()->get_initialized_events() as $event)
             if ($event::additional_effect(Model_Events_Event::MEE_EFFECT_TICKET))
                 return true;
         return false;
@@ -37,6 +39,9 @@ class Tool_Events {
     public static function handle_event_triggers(?int $time = null): void
     {
         if (!Globals::hasCurrentGame()) return;
+
+        if (Globals::CurrentGameF()->config('game.config.event_blacklist'))
+            return;
 
         foreach (static::current_events() as $current_event)
             if (($key = $current_event::get_key()) && !Globals::CurrentGameF()->get_initialized_event($key))
@@ -58,9 +63,15 @@ class Tool_Events {
         $now->setTimestamp( $time ?: time() );
         $ret = [];
 
-        foreach (static::get_plugins() as $plugin)
-            if ($plugin::check_season($now,$a,$b))
+        $defined_key = Kohana::$config->load('basic.event');
+
+        foreach (static::get_plugins() as $plugin) {
+            if ($defined_key !== null && $plugin::get_key() === $defined_key)
+                $ret[] = [$now,$now,$plugin];
+            elseif ($plugin::check_season($now,$a,$b))
                 $ret[] = [$a,$b,$plugin];
+        }
+
 
         usort( $ret, function($a,$b) { if ($a[0] == $b[0]) return 0; return ($a[0] < $b[0]) ? -1 : 1; } );
         return $ret;

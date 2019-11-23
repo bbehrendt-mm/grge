@@ -46,7 +46,9 @@ return array(
                     'game.lobby.persistent'                 => false,
                     'game.config.map'                       => 'default',
                     'game.config.itemset'                   => 'default',
-                    'game.config.spawn'                     => 'default'
+                    'game.config.spawn'                     => 'default',
+                    'game.config.event_blacklist'           => false,
+
                 ),
                 'spawn' => array(),
             ),
@@ -129,6 +131,51 @@ return array(
                 'spawn' => array(),
             ),
         ),
+        1110 => array(
+            'meta' => array(
+                'name' => 'Nordpol Survival',
+                'caption' => 'Du dachtest, im Ewigen Eis wärst du vor Zombies sicher?',
+                'headline' => 'Ice Ice Baby',
+                'body' => 'Wer ist dein größter Feind - die Zombies oder die Kälte?'
+            ),
+            'type' => 'single',
+            'eventkey' => 'xmas',
+            'requirements' => array(
+                'mode' => array(),
+                'job' => array(),
+                'ext' => array(),
+                'ext_note' => array(),
+            ),
+            'jobs' => array(1020, 1021, 1030, 1031, 1040, 1041, 1050, 1051, 1060, 1061, 1070, 1071),
+            'unstartable_jobs' => [],
+
+            'setup' => array(
+                'inherit' => array(1000),
+                'config' => array(
+                    'zombies.accum'                         => 0.5,
+                    'zombies.power'                         => 2.0,
+                    'zombies.curve'                         => 0.35,
+                    'zombies.escape_threshold'              => 20,
+                    'zombies.protection.phases.1'           => 72,
+                    'zombies.protection.phases.2'           => 72,
+                    'zombies.protection.phases.3'           => 144,
+                    'places.outworld.spawn_stranger'        => true,
+                    'places.outworld.spawn_stranger_ext'    => false,
+                    'places.outworld.location_density'      => 0.3,
+                    'items.water.tox_dirty'                 => 5,
+                    'items.water.tox_polluted'              => 10,
+                    'places.dryout_factor'                  => 0.75,
+                    'items.pill.use_default_effect_proc'    => false,
+                    'items.bottle.detox_amount'             => 300,
+
+                    'game.bhav.time_offset_range'           => [60,216],
+                    'game.config.event_blacklist'           => true,
+
+                    'ranking.points.survival.factor'        => 2.5,
+                ),
+                'spawn' => array(),
+            ),
+        ),
         2000 => array(
             'meta' => array(
                 'name' => 'Zombie-Massaker',
@@ -168,6 +215,8 @@ return array(
                     'ranking.points.home.offset'        => 0,
                     'ranking.points.home.stretch'       => 1,
                     'ranking.points.home.threshold'     => 0,
+
+                    'game.config.event_blacklist'       => true,
                 ),
                 'spawn' => array(),
             ),

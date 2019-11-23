@@ -157,6 +157,9 @@
 @hotbox-black-title-color: #fd9700;
 @hotbox-black-subtitle-color: #e5e5e5;
 
+@hotbox-event-title-color: #52002a;
+@hotbox-event-subtitle-color: #7b5900;
+
 @keyframes rotate_a {
   from {transform: rotate(0deg);}
   to {transform: rotate(360deg);}
@@ -191,6 +194,11 @@
     }
     &::before {animation: rotate_a 4s linear 0s infinite}
     &::after {animation: rotate_b 4s linear 0s infinite}
+  }
+
+  &.eventbox {
+    & >.head {color: @hotbox-event-title-color; text-align: center; font-size: 22px; margin: 4px;}
+    & >.subtitle {color: @hotbox-event-subtitle-color; text-align: center; margin: 2px; }
   }
 
   margin: 3px; padding: 5px; cursor: pointer; transition: background 250ms ease, border-color 500ms ease; vertical-align: bottom;

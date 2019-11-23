@@ -105,9 +105,9 @@
                             <?php foreach ($database['modes'] as $mid => $data) if ($data['type']
                                 === 'single') { ?>
                                 <div class="cell rw-6 rw-lg-12 padded">
-                                    <div data-modeset="<?=$mid?>" data-set='{"mode":<?=$mid?>,"id":-1,"protect":"","password":"","name":"","slots":"1","init":1}' data-caption="<?=__($data['meta']['name'])?>" class="<?=$data['locked'] ? 'hotbox disabled' : 'hotbox' ?>">
+                                    <div data-modeset="<?=$mid?>" data-set='{"mode":<?=$mid?>,"id":-1,"protect":"","password":"","name":"","slots":"1","init":1}' data-caption="<?=__($data['meta']['name'])?>" class="<?=$data['locked'] ? 'hotbox disabled' : 'hotbox' ?> <?=!empty($data['eventkey']) ? 'eventbox' : ''?>">
                                         <b class="head"><?=__($data['meta']['name'])?></b>
-                                        <i class="subtitle"><?=__('Einzelspieler-Modus');?></i>
+                                        <i class="subtitle"><?=__('Einzelspieler-Modus');?><?=!empty($data['eventkey']) ? (', ' . __('Nur für kurze Zeit!')) : ''?></i>
                                         <?=__($data['meta']['caption'])?>
                                     </div>
                                 </div>
@@ -589,6 +589,13 @@
 
     $('[data-special]').click(function() {
         game.network.load('gamemaster/lobby/' + $(this).data('special'))
+    });
+
+    $('.eventbox').each(function() {
+        var parent_cell = $(this).parent('.cell');
+        var parent_row = parent_cell.parent('.row');
+        parent_cell.removeClass('rw-6').addClass('rw-12');
+        parent_row.prepend(parent_cell);
     });
 
     $('[data-modeset]').click(function() {

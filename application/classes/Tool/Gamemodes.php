@@ -141,6 +141,27 @@ class Tool_Gamemodes {
 
         //Modes
         foreach ($ret['modes'] as $mid => &$mode) {
+
+            if (!empty($mode['eventkey'])) {
+
+                $match = false;
+                if (!is_array($mode['eventkey'])) $mode['eventkey'] = [$mode['eventkey']];
+
+                $current_events = Tool_Events::current_events();
+
+                foreach ( $mode['eventkey'] as $key ) {
+                    if ($key === true) $match |= !empty($current_events);
+                    else foreach ($current_events as $e)
+                        $match |= $key === $e::get_key();
+                }
+
+                if (!$match) {
+                    unset($ret['modes'][$mid]);
+                    continue;
+                }
+
+            }
+
             if (!$custom_mode_callback($mid, $mode)) {
                 unset($ret['modes'][$mid]);
                 continue;

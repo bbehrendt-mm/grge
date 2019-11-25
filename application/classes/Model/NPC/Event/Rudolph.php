@@ -197,6 +197,12 @@ class Model_NPC_Event_Rudolph extends Model_NPC_Animal
             $dialog_passout = ['Baaaaaaaaaaaaaaaah.......', '* hicks *',
                                'Uuuuuuuuuuuh.......'];
 
+            if (Tool_System::instance_of($this->location(), Model_Places_Northpole_House_Secondfloor::cls())) {
+                $dialog_sober[] = 'Der Boden hier ist ganz schön wackelig... Ich glaube, wenn ich nicht vorsichtig bin, breche ich hier durch.';
+                $dialog_tipsy[] = 'Kommt mir das nur so vor, oder ist der Boden hier ganz schön wackelig...?';
+                $dialog_drunk[] = 'Irrenwie... isses grad ganschön schwer... *hicks* ... graaade scho stehn...';
+            }
+
             if ($this->get_status()->get(Model_Status::MS_STAT_HEALTH) > 50) {
                 $dialog_sober = array_merge($dialog_sober, ['Könntest du mich mal am Rücken kratzen?',
                                                             'Ich fühl mich super!',

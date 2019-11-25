@@ -55,7 +55,7 @@
         <?php if ($current_events) { ?>
             <h2 class="center"><?=__('Aktuelle Events')?></h2>
             <?php foreach ($current_events as $event) { ?>
-                <div class="event event-current event-<?=$event['key']?>">
+                <div class="event-base event-current event-<?=$event['key']?>">
                     <div class="header">
                         <b><?=__($event['name'])?></b>
                         <i data-has-date="1" data-ts-start="<?=$event['begin']?>" data-ts-end="<?=$event['end']?>"></i>
@@ -67,7 +67,7 @@
         <?php if ($next_events) { ?>
             <h2 class="center"><?=__('Kommende Events')?></h2>
             <?php foreach ($next_events as $event) { ?>
-                <div class="event event-upcoming event-<?=$event['key']?>">
+                <div class="event-base event-upcoming event-<?=$event['key']?>">
                     <div class="header">
                         <b><?=__($event['name'])?></b>
                         <i data-has-date="1" data-ts-start="<?=$event['begin']?>" data-ts-end="<?=$event['end']?>"></i>
@@ -98,7 +98,7 @@
     var update_event_dates = function() {};
     update_event_dates = function() {
         var updated = false;
-        $('.event [data-has-date]').each(function() {
+        $('.event-base [data-has-date]').each(function() {
             var now = Date.now();
             var begin = parseInt($(this).data('ts-start')) * 1000;
             var end = parseInt($(this).data('ts-end')) * 1000;
@@ -133,14 +133,14 @@
     };
     update_event_dates();
 
-    $('.event .content [data-ts-start]').each(function() {
+    $('.event-base .content [data-ts-start]').each(function() {
         var ts = parseInt($(this).data('ts-start')) * 1000;
         $(this).text(game.i18n(<?=__j('Startet :datetime')?>, {
             ':datetime': (new Date( ts )).toLocaleString()
         }) );
     });
 
-    $('.event .content [data-ts-end]').each(function() {
+    $('.event-base .content [data-ts-end]').each(function() {
         var ts = parseInt($(this).data('ts-end')) * 1000;
         $(this).text(game.i18n(<?=__j('Endet :datetime')?>, {
             ':datetime': (new Date( ts )).toLocaleString()

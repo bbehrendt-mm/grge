@@ -3,9 +3,10 @@
 abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
 
     private $config_defaults = array(
-        'game.config.map'       => 'default', //CONFIG UPDATE: 6 => 6.5
-        'game.config.itemset'   => 'default', //CONFIG UPDATE: 6 => 6.5
-        'game.config.spawn'     => 'default'
+        // S9 - CU1 => S9 CU2
+        'game.config.buffs.auto_player'         => [],
+        'game.config.buffs.auto_npc'            => [],
+        'game.config.event_blacklist'           => false,
     );
 
 	/**
@@ -466,7 +467,11 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
         $npc->set_id($id);
         $this->set['gamedata']->npcs[$id] = $npc->uin();
 
-        foreach ($this->get_initialized_events() as $ev)
+        foreach ($this->config('game.config.buffs.auto_npc') as $buff_cls)
+            /** @var Model_Buffs_Abstract_Buff $buff_cls */
+            new $buff_cls($npc);
+
+            foreach ($this->get_initialized_events() as $ev)
             $ev->event_playerCreation($npc);
 
         return $id;

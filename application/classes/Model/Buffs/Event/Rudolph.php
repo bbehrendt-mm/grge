@@ -8,9 +8,18 @@ class Model_Buffs_Event_Rudolph extends Model_Buffs_Abstract_Passive {
 	protected static $bid = 'rudolph';
 
     protected function get_effects(): array {
+        if (!$this->associated()) return [];
+
+        $is_night = in_array(Tool_Scripts::get_timeofday(), ['night','snowynight']);
+        $is_inside = !$this->assoc_player->location()->is_outside();
+
+        $def = 0;
+        if (!$is_night && $is_inside) $def = 0.1;
+        elseif ($is_night) $def = 0.5;
+
         return [
             Model_Status::MS_CHAR_ITEM_SPAWNRATE => [
-                Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0.5,
+                Model_Buffs_Abstract_Buff::MB_RAISE_ACC => $def,
                 Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,
                 Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
                 Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
@@ -20,7 +29,7 @@ class Model_Buffs_Event_Rudolph extends Model_Buffs_Abstract_Passive {
 
 	protected function activator(): bool
     {
-	    if (!$this->associated_to_player()) return false;
+	    if (!$this->associated()) return false;
 
         foreach (Tool_Scripts::at_location($this->assoc_player->location_class(), false, true) as $npc)
             /** @var Model_NPC_Event_Rudolph $npc */

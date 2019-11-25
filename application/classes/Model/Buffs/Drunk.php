@@ -5,6 +5,7 @@ class Model_Buffs_Drunk extends Model_Buffs_Abstract_Fragile {
     protected static $name = 'Schlafen';
     protected static $desc = 'Du hast es mit deinem Alkoholkonsum etwas übertrieben und bist eingeschlafen.';
     protected static $icon = 'sleep_drunk';
+    protected static $alt_id = 'sleep_drunk';
 
     public function __construct($player_id) {
         parent::__construct($player_id, 18);

@@ -11,6 +11,8 @@ class Model_Items_Halloween_Jacket extends Model_Items_Abstract_Armor {
 	
 	protected static $weight = 2;
 
+    protected static $temperature_isolation_abs = 5.0;
+
     // INI, ATK, DEF, ACC
     protected static $effects = [-1,0,4,0];
 

@@ -511,8 +511,24 @@ class Controller_Game extends Controller {
                 $cache[$type] = $this->status($type, $remote);
 
         $buffs = [];
-        foreach ($p->get_status()->buffs() as $buff) if ($buff->visible() && (!$remote || $buff->visible(true)))
-            $buffs[] = ['icon' => $buff->icon(), 'name' => __($buff->name()), 'desc' => $remote ? '' : __($buff->description()), 'time' => $buff->lifetime() < 0 ? false : Tool_Numerics::duration_to_string($buff->lifetime())];
+        foreach ($p->get_status()->buffs() as $buff) if ($buff->visible() && (!$remote || $buff->visible(true))) {
+            $data = ['icon' => $buff->icon(), 'name' => __($buff->name()), 'desc' => $remote ? '' : __($buff->description()), 'time' => $buff->lifetime() < 0 ? false : Tool_Numerics::duration_to_string($buff->lifetime())];
+
+            /** @var Model_Buffs_Temperature $buff */
+            if (Tool_System::instance_of($buff, Model_Buffs_Temperature::cls()) && $buff->get_surrounding_temperature() !== null) {
+                $data['additional'] = ['temperature' => [
+                    'body' => $buff->get_body_temperature(),
+                    'base' => $buff->get_surrounding_temperature(),
+                    'gain' => $buff->get_temperature_gain(),
+                    'isoa' => $buff->get_absolute_isolation(),
+                    'isob' => $buff->get_relative_isolation(),
+                    'fire' => $buff->get_fire_temperature(),
+                    'overall' => $buff->calc_temperature_gradient()
+                ]];
+            }
+
+            $buffs[] = $data;
+        }
 
         $tmp = [
             'bars' => $cache,

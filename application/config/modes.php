@@ -48,6 +48,8 @@ return array(
                     'game.config.itemset'                   => 'default',
                     'game.config.spawn'                     => 'default',
                     'game.config.event_blacklist'           => false,
+                    'game.config.buffs.auto_player'         => [],
+                    'game.config.buffs.auto_npc'            => [],
 
                 ),
                 'spawn' => array(),
@@ -169,9 +171,16 @@ return array(
                     'items.bottle.detox_amount'             => 300,
 
                     'game.bhav.time_offset_range'           => [60,216],
+
+                    'game.config.map'                       => 'xmas_sv',
+                    'game.config.itemset'                   => 'xmas_sv',
+                    'game.config.spawn'                     => 'xmas_sv',
                     'game.config.event_blacklist'           => true,
 
                     'ranking.points.survival.factor'        => 2.5,
+
+                    'game.config.buffs.auto_player'         => ['Model_Buffs_Event_Rudolph', 'Model_Buffs_Temperature'],
+                    'game.config.buffs.auto_npc'            => ['Model_Buffs_Event_Rudolph', 'Model_Buffs_Temperature'],
                 ),
                 'spawn' => array(),
             ),

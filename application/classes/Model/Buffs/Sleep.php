@@ -8,7 +8,11 @@ class Model_Buffs_Sleep extends Model_Buffs_Abstract_Buff {
 	protected static $icon = 'sleep_cozy';
 	
 	private $level;
-	
+
+	public function get_level(): int {
+	    return $this->level;
+    }
+
 	public function __construct($player_id, $level) {
 		$this->level = $level;
 		parent::__construct($player_id, -1);

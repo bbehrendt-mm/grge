@@ -109,6 +109,9 @@ class Model_Buffs_Daytime extends Model_Buffs_Abstract_Buff {
 
         $this->effects = static::$default_effects;
 
+        if ($this->associated() && $this->assoc_player->get_status()->retrieve('temperature'))
+            $this->effects[Model_Status::MS_STAT_FREEZE][Model_Buffs_Abstract_Buff::MB_DROP_ACC] = 0;
+
         $tod = Tool_Scripts::get_timeofday($this->assoc_player);
 
         switch ($tod) {

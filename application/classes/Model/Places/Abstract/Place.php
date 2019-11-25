@@ -38,6 +38,27 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
     protected $doorway = array();
     protected static $auto_doorways = array();
 
+    protected static $temperature_engine = null;
+
+    public function get_base_temperature(): ?float {
+        return static::$temperature_engine;
+    }
+
+    public function get_temperature(): ?float {
+        $t = $this->get_base_temperature();
+        if ($t === null) return null;
+
+        $tod = Tool_Scripts::get_timeofday();
+        if ($this->is_outside() && $tod === 'day')   $t += 10;
+        if ($this->is_outside() && $tod === 'night') $t -= 10;
+
+        if (!$this->is_outside() && $tod === 'day')   $t += 3;
+        if (!$this->is_outside() && $tod === 'night') $t -= 3;
+        if (!$this->is_outside()) $t += max(0, 4 * (count(Tool_Scripts::at_location($this->uin())) - 1));
+
+        return $t;
+    }
+
 	public function is_upgradable(): bool
     {
 	    return static::$upgradable;

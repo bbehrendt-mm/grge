@@ -43,6 +43,10 @@ class Init_Player {
         $init = Tool_Gamemodes::compile_startup_job($job);
         $init($game->setting_mode(), $level);
 
+        foreach ($game->config('game.config.buffs.auto_player') as $buff_cls)
+            /** @var Model_Buffs_Abstract_Buff $buff_cls */
+            new $buff_cls($player_obj);
+
         foreach ($game->get_initialized_events() as $ev)
             $ev->event_playerCreation($player_obj);
 	}

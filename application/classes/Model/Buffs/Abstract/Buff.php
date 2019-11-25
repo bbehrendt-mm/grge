@@ -173,6 +173,11 @@ abstract class Model_Buffs_Abstract_Buff extends Model {
 		$this->apply();
 	}
 
+    protected function associated(): bool
+    {
+        return !empty($this->assoc_player);
+    }
+
     protected function associated_to_player(): bool
     {
         return Tool_System::instance_of($this->assoc_player, 'Model_Player');

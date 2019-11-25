@@ -11,6 +11,8 @@ class Model_Items_Vest extends Model_Items_Abstract_Armor {
 	
 	protected static $weight = 4;
 
+    protected static $temperature_isolation_abs = 3.0;
+
     // INI, ATK, DEF, ACC
     protected static $effects = [0,0,4,0];
 

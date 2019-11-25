@@ -5,7 +5,18 @@ abstract class Model_Items_Abstract_Armor extends Model_Items_Abstract_Equipable
     protected static $protection = 1;
     protected $current_protection;
 
+    protected static $temperature_isolation_abs = 0.0;
+    protected static $temperature_isolation_rel = 0.0;
+
     protected static $destroyed;
+
+    public function getAbsoluteTemperatureIsoloation(): float {
+        return static::$temperature_isolation_abs;
+    }
+
+    public function getRelativeTemperatureIsoloation(): float {
+        return static::$temperature_isolation_rel;
+    }
 
     public function convertStringProtection(): string {
         if (static::$protection > 100) return 'Sehr stabil';

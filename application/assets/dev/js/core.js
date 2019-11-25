@@ -5157,6 +5157,47 @@ core = {
                                 $('<span />').text(v.desc)
                             );
 
+                            if (v.additional) {
+
+                                if (v.additional.temperature) {
+
+                                    content
+                                        .append(NF.row().append(NF.cell(true,12).append(NF.info("Der Temperatureffekt berechnet sich aus der Differenz deiner K\u00f6rpertemperatur und der Umgebungstemperatur. Mithilfe deiner Kleidung und deines Metabolismus kannst du diesen Unterschied ausgleichen. Um den Metabolismus-Wert hoch zu halten kannst du essen oder Alkohol trinken."))))
+
+                                        .append('<span class="separator" />')
+
+                                        .append(NF.row()
+                                            .append(NF.cell(true,6,0,'b right').text("K\u00f6rpertemperatur"))
+                                            .append(NF.cell(true,6,0,'left').text(Math.round10(v.additional.temperature.body) + ' ��C'))
+                                        )
+                                        .append(NF.row()
+                                            .append(NF.cell(true,6,0,'b right').text("Umgebungstemperatur"))
+                                            .append(NF.cell(true,6,0,'left').text(Math.round10(v.additional.temperature.base) + ' ��C'))
+                                        )
+
+                                        .append('<span class="separator" />')
+
+                                        .append(NF.row()
+                                            .append(NF.cell(true,6,0,'b right').text("Metabolismus"))
+                                            .append(NF.cell(true,6,0,'left').text('+' + Math.round10(v.additional.temperature.gain) + ' ��C'))
+                                        )
+
+                                        .append(NF.row()
+                                            .append(NF.cell(true,6,0,'b right').text("Kleidung"))
+                                            .append(NF.cell(true,6,0,'left').text('+' + Math.round10(v.additional.temperature.isoa) + ' ��C'))
+                                        )
+
+                                        .append(v.additional.temperature.fire == 0 ? null : NF.row()
+                                            .append(NF.cell(true,6,0,'b right').text("Feuer"))
+                                            .append(NF.cell(true,6,0,'left').text('+' + Math.round10(v.additional.temperature.fire) + ' ��C'))
+                                        )
+
+                                        .append('<span class="separator" />')
+                                        .append(NF.row().append(NF.cell(true,12,0,'b center').text(  (v.additional.temperature.overall > 0 ? '+' : '') + Math.round10(v.additional.temperature.overall) + ' ��C')))
+                                }
+
+                            }
+
                             if (v.time)
                                 content.append(
                                     $('<span />').addClass('separator')

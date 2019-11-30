@@ -88,6 +88,11 @@
             if (v[0] == <?=Model_Combat_Scene::MCS_EV_ESCAPE?>) {
                 alias.addResource('escape.gif');
             }
+
+            if (v[0] == <?=Model_Combat_Scene::MCS_EV_CHARPPU?>) {
+                console.log(v);
+                if ( v[3]) alias.addResource( v[3] );
+            }
         });
 
         alias.queueResource('field.png', '<?=URL::base(true)?>media/icons/battle/fields/' + location + '/floor.png');

@@ -11,13 +11,16 @@ class Model_NPC_Event_Rudolph extends Model_NPC_Animal
 
     protected static $alcohol_scaling = 0.33333;
     protected static $inventory_size = 250;
-    protected static $comfort_threshold = 55;
+    protected static $comfort_threshold = 50;
+    protected static $freeze_factor = 0.0;
 
     protected $am_stat_before = Model_NPC_Event_Rudolph::RDLPH_EVENT_STAT_UNDEFINED;
     protected $am_stat_latest = Model_NPC_Event_Rudolph::RDLPH_EVENT_STAT_UNDEFINED;
     protected $am_strong = false;
     protected $am_auto = false;
     protected $am_item = true;
+    protected $am_electro = false;
+    protected $am_ferm = false;
 
     protected $light = false;
     
@@ -38,7 +41,7 @@ class Model_NPC_Event_Rudolph extends Model_NPC_Animal
             Model_Status::MS_STAT_SLEEPY, 100
         );
 
-        $this->get_status()->scaling_add(Model_Status::MS_STAT_FREEZE, Model_Status::MS_EFFECT_GLOBAL, 'rudolph_freeze', 0);
+        $this->get_status()->scaling_add(Model_Status::MS_STAT_FREEZE, Model_Status::MS_EFFECT_GLOBAL, 'rudolph_freeze', static::$freeze_factor);
     }
 
     protected function set_am_stat(): void
@@ -52,6 +55,8 @@ class Model_NPC_Event_Rudolph extends Model_NPC_Animal
         $this->am_strong = false;
         $this->am_auto = false;
         $this->am_item = false;
+        $this->am_electro = false;
+        $this->am_ferm = false;
     }
 
     public function tick()
@@ -73,15 +78,19 @@ class Model_NPC_Event_Rudolph extends Model_NPC_Animal
             $this->get_status()->get(Model_Status::MS_STAT_DRUNK) < 90;
     }
 
+    public function ai_tumble() {
+        new Model_Buffs_Drunk2($this, random_int(1,5));
+        $this->location()->log()->add(
+            'Ohje... :name hat anscheinend das Gleichgewicht verloren.', [':name' => $this->name()]);
+    }
+
     public function ai() {
         $busy = $this->get_status()->retrieve('passout') || $this->get_status()->retrieve('fragile');
 
         if (!$busy && $this->is_drunk()) {
 
             if (Tool_Gambling::random(($this->get_status()->get(Model_Status::MS_STAT_DRUNK) - 40) / 200)) {
-                new Model_Buffs_Drunk2($this, random_int(1,5));
-                $this->location()->log()->add(
-                    'Ohje... :name hat anscheinend das Gleichgewicht verloren.', [':name' => $this->name()]);
+                $this->ai_tumble();
             } elseif (Tool_Gambling::random(($this->get_status()->get(Model_Status::MS_STAT_DRUNK) - 40) / 75)) {
 
                 $events = array(':name hat dir gerade auf deine Schuhe gepinkelt...',
@@ -143,11 +152,19 @@ class Model_NPC_Event_Rudolph extends Model_NPC_Animal
         $hid = parent::hid();
         $selection = [];
 
-        if (($this->am_stat_latest !== $this->am_stat_before) || $this->am_strong || $this->am_auto || $this->am_item) {
+        if (($this->am_stat_latest !== $this->am_stat_before) || $this->am_strong || $this->am_auto || $this->am_item || $this->am_electro || $this->am_ferm) {
 
             if ($this->am_auto) {
                 if ($this->am_stat_latest === static::RDLPH_EVENT_STAT_TIPSY) $selection = ['Ich... ähm... bin sicher die Flasche war vorher schon leer!', 'Verflucht, schon leer...'];
                 if ($this->am_stat_latest === static::RDLPH_EVENT_STAT_DRUNK) $selection = ['Guckmal... hihi... dassss habich mit eiiiiiinem Zug leer getrunken.'];
+            } elseif ($this->am_ferm) {
+                if ($this->am_stat_latest === static::RDLPH_EVENT_STAT_TIPSY) $selection = ['*rülps* Mein Magen grummelt ...'];
+                if ($this->am_stat_latest === static::RDLPH_EVENT_STAT_DRUNK) $selection = ['*rülps* Hihihiiii...'];
+            }elseif ($this->am_electro) {
+                if ($this->am_stat_latest === static::RDLPH_EVENT_STAT_TIPSY) $selection = ['*BZZT* WA... Was war dass denn?', '*BZZT* Hast du diesen Blitz eben auch gesehen?'];
+                if ($this->am_stat_before === static::RDLPH_EVENT_STAT_SOBER && $this->am_stat_latest === static::RDLPH_EVENT_STAT_DRUNK)
+                    $selection = ['*BZZT* Oooh.... OK Leute.... wer... weeeeer ha\'mir die Flasche über\'re Rüber g\'zogn...? '];
+                elseif ($this->am_stat_latest === static::RDLPH_EVENT_STAT_DRUNK) $selection = ['*BZZT* Farben... ÜÜÜÜÜÜÜBERALL...'];
             } else {
 
                 if ($this->am_stat_before === static::RDLPH_EVENT_STAT_SOBER) {

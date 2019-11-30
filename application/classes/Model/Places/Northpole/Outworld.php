@@ -14,5 +14,5 @@ class Model_Places_Northpole_Outworld extends Model_Places_Outworld {
         }
     }
 
-    protected static $temperature_engine = -10;
+    protected static $temperature_engine = 0;
 }	

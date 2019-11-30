@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place {
+abstract class Model_Places_Abstract_Hideout extends Model_Places_Abstract_Place implements Interface_Pretickable {
 
     protected static $outside = false;
     protected static $starts_built = false;

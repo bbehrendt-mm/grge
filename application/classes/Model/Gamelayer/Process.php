@@ -125,9 +125,21 @@ abstract class Model_Gamelayer_Process extends Model_Gamelayer_Exec {
                 $active_locations[$plentity->location_class()] = true;
         $active_locations = array_keys($active_locations);
 
+        $passive_locations = [];
+        foreach ($this->set['gamedata']->maps as $map)
+            /** @var Model_Map_Abstract $map */
+            foreach ($map->get_locations('Interface_Pretickable') as $lid)
+                if ($loc = $this->location($lid)) {
+                    Globals::setCurrentLocation($loc);
+                    $loc->passive_pretick();
+                    Globals::resetCurrentLocation();
+            }
+
 		foreach ($active_locations as $lid)
 		    if ($loc = $this->location($lid)) {
 		        Globals::setCurrentLocation($loc);
+		        if (!Tool_System::instance_of($loc,'Interface_Pretickable'))
+		            $loc->passive_pretick();
                 $loc->pretick();
                 foreach ($loc->inventory()->get('Interface_Tickable') as $item)
                     /** @var $item Interface_Tickable */

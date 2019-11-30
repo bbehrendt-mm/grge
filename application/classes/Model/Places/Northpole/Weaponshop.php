@@ -8,5 +8,5 @@ class Model_Places_Northpole_Weaponshop extends Model_Places_Weaponshop {
     protected static $icon = 'gun';
     protected static $outside = false;
 
-    protected static $temperature_engine = -10;
+    protected static $temperature_engine = 0;
 }

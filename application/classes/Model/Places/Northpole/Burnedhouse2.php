@@ -8,5 +8,5 @@ class Model_Places_Northpole_Burnedhouse2 extends Model_Places_Burnedhouse {
 
     protected static $auto_doorways = array();
 
-    protected static $temperature_engine = -7;
+    protected static $temperature_engine = 3;
 }	

@@ -605,30 +605,45 @@ class Model_Combat_Actor extends Named {
                     $this->scene->break_armor($this, $armor);
             }
         }
+
+        if ($damage > 0 && $this->ki_mod_is_active('sleep')) {
+            $this->scene->dialog($this, '!');
+            $this->add_modifier('sleep', 0);
+        }
     }
 
     public function enter(): void {}
 
     public function idle(): void {}
 
-
+    /**
+     * @param Model_Combat_Actor[] $friends
+     * @param Model_Combat_Actor[] $foes
+     * @param bool                 $second_act
+     *
+     * @return void
+     * @throws Exception
+     */
     public function act_modified_drunk(/** @noinspection PhpUnusedParameterInspection */
     $friends, $foes, $second_act = false): void {
         // ToDO: Barf action
 
         if ($second_act) return;
 
+        /** @var Model_Combat_Actor|null $target_foe */
+        $target_foe = Tool_Gambling::select($foes);
+        $random_x = $target_foe ? ($target_foe->pos_x - $this->pos_x) : 0;
+        $random_y = $target_foe ? ($target_foe->pos_y - $this->pos_y) : 0;
+
         //Move
-        $random_x = random_int(-100,100);
-        $random_y = random_int(-100,100);
+        $random_x += random_int(-40,40);
+        $random_y += random_int(-40,40);
         if ($random_x === 0 && $random_y === 0) $random_x = 1;
 
         $length = sqrt($random_x * $random_x + $random_y * $random_y);
         $dist = min(4,static::$movement_range * (random_int(10,50)/100));
 
-        $this->pos_x += $random_x * ($dist / $length);
-        $this->pos_y += $random_y * ($dist / $length);
-
+        $this->position([$random_x * ($dist / $length), $random_y * ($dist / $length)], true);
         $this->scene->move($this, [$this->pos_x, $this->pos_y], $dist);
     }
 
@@ -644,6 +659,16 @@ class Model_Combat_Actor extends Named {
         if (!$second_act) {
             $this->reset_steps();
             $this->recalculate_ki_modifiers();
+        }
+
+        if ($this->ki_mod_is_active('sleep')) {
+            if (Tool_Gambling::random( $this->ki_mod_strength('sleep') )) {
+                $this->scene->dialog($this, '... zzZZzzZZ ...');
+                return;
+            } else {
+                $this->scene->dialog($this, '!');
+                $this->add_modifier('sleep', 0);
+            }
         }
 
         if ($this->ki_mod_is_active('drunk') && Tool_Gambling::random(0.8)) {

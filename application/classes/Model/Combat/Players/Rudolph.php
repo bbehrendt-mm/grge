@@ -22,12 +22,15 @@ class Model_Combat_Players_Rudolph extends Model_Combat_Players_Player {
 
     /**
      * @param Interface_Plentity $p
-     * @param string             $avatar
+     * @param string $avatar
      *
+     * @param bool $laser
+     * @param bool $passive_laser
+     * @param bool $reload_laser
      * @return Model_Combat_Players_Rudolph
      * @throws Exception
      */
-    public static function create_linked_actor($p, $avatar = 'dog.jpg'): Model_Combat_Players_Player
+    public static function create_linked_actor($p, $avatar = 'dog.jpg', bool $laser = false, bool $passive_laser = false, bool $reload_laser = false): Model_Combat_Players_Player
     {
         /** @var Model_Combat_Players_Rudolph $ret */
         $ret = static::factory();
@@ -36,7 +39,9 @@ class Model_Combat_Players_Rudolph extends Model_Combat_Players_Player {
             ->name($p->name(), Model_Combat_Actor::MCA_TYPE_PLAYER)
             ->strength($p->get_status()->get(Model_Status::MS_STAT_HEALTH) * 2, 200, 1);
 
-        if ($p->get_status()->get(Model_Status::MS_STAT_DRUNK) > 50) $ret->add_weapon(new Model_Items_Noselaser());
+        if ($laser && ($p->get_status()->get(Model_Status::MS_STAT_DRUNK) > 50 || $passive_laser))
+            $ret->add_weapon(new Model_Items_Noselaser(null, $reload_laser));
+
         $ret->add_weapon(new Model_Items_Hoof());
         $ret->avatar = $avatar;
 

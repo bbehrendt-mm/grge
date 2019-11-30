@@ -7,5 +7,5 @@ class Model_Places_Northpole_Druglab extends Model_Places_Druglab {
     protected static $icon = 'lab';
     protected static $outside = false;
 
-    protected static $temperature_engine = -14;
+    protected static $temperature_engine = -4;
 }	

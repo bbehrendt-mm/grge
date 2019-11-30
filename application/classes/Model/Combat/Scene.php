@@ -14,7 +14,8 @@ class Model_Combat_Scene {
     public const MCS_ATMOSPHERE = 10;                 // [Location]
     public const MCS_EV_ESCAPE = 11;                  // [ID, Chance]
     public const MCS_EV_DIALOG = 12;                  // [ID, Text]
-    public const MCS_EV_CHARSFX = 13;                  // [ID, Toggle, Name, Strength]
+    public const MCS_EV_CHARSFX = 13;                 // [ID, Toggle, Name, Strength]
+    public const MCS_EV_CHARPPU = 14;                 // [ID, Text, Icon]
 
     private $log_data = [];
 
@@ -140,6 +141,9 @@ class Model_Combat_Scene {
                 break;
             case static::MCS_EV_INJURY: case static::MCS_EV_SWITCH: case static::MCS_EV_BREAK:
                 $entry[2][0] = __($entry[2][0]);
+                break;
+            case static::MCS_EV_CHARPPU:
+                if ($entry[4]) $entry[2] = __($entry[2]);
                 break;
 
             default: break;
@@ -455,6 +459,25 @@ class Model_Combat_Scene {
 
             $combatant->id(),
             $text
+        ];
+    }
+
+    /**
+     * @param Model_Combat_Actor $combatant
+     * @param string $text
+     * @param string|null $icon
+     * @param bool $translate
+     */
+    public function popup($combatant, string $text, ?string $icon = null, bool $translate = true): void
+    {
+        if (empty($text) && empty($icon)) return;
+        $this->log_data[] = [
+            static::MCS_EV_CHARPPU,
+
+            $combatant->id(),
+            $text,
+            $icon,
+            $translate
         ];
     }
 

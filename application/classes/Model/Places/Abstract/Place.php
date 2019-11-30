@@ -38,11 +38,19 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
     protected $doorway = array();
     protected static $auto_doorways = array();
 
+    protected $temperature_buildup = 0.0;
+
     protected static $temperature_engine = null;
+    protected $temperature_scale     = 0.05;
+    protected $temperature_deisolation = 0.15;
 
     public function get_base_temperature(): ?float {
-        return static::$temperature_engine;
+        $b = static::$temperature_engine;
+        if ($b === null) return $b;
+        else return $b + (Globals::CurrentGameF()->duration() / 288) * Globals::CurrentGameF()->config('game.bhav.daily_temperature_change');
     }
+
+
 
     public function get_temperature(): ?float {
         $t = $this->get_base_temperature();
@@ -54,9 +62,8 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 
         if (!$this->is_outside() && $tod === 'day')   $t += 3;
         if (!$this->is_outside() && $tod === 'night') $t -= 3;
-        if (!$this->is_outside()) $t += max(0, 4 * (count(Tool_Scripts::at_location($this->uin())) - 1));
 
-        return $t;
+        return $t + $this->temperature_buildup;
     }
 
 	public function is_upgradable(): bool
@@ -398,6 +405,9 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
     {
 		foreach ($this->inventory->get('Interface_Tmpitem') as $item) $item->consume();
 		$this->log->trim(5);
+
+		if (!Tool_System::instance_of($this,'Interface_Pretickable'))
+		    $this->temperature_buildup = 0;
 	}
 	
 	//Return name
@@ -520,7 +530,29 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
 
 		return true;	
 	}
-	
+
+	public function passive_pretick(): void {
+        // Temperature
+        $bt = $this->get_base_temperature(); $t0 = $this->get_temperature();
+        if (!$this->is_outside() && $bt !== null) {
+
+            foreach ($this->inventory()->get(Model_Items_Generic_Fire::cls()) as $f)
+                $this->temperature_buildup += $this->temperature_scale * 2 * max(0,( 30 - max(0,$t0) ));
+            foreach ($this->inventory()->get(Model_Items_Generic_Fire2::cls()) as $f)
+                $this->temperature_buildup += $this->temperature_scale * 2.5 * max(0,( 50 - max(0,$t0) ));
+
+            foreach (Tool_Scripts::at_location($this->uin(),true,true) as $p)
+                if ($buff = $p->get_status()->retrieve('temperature')) {
+                    /** @var Model_Buffs_Temperature $buff */
+                    if ($buff->get_temperature_gain() > $t0)
+                        $this->temperature_buildup += $this->temperature_scale * ( $buff->get_temperature_gain() - max(0,$t0) );
+                }
+
+            $t = $this->get_temperature();
+            $this->temperature_buildup -= max(0,$t - $bt) * $this->temperature_deisolation;
+        }
+    }
+
 	public function pretick(): void
     {
         //Check for zombie attack

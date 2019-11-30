@@ -8,5 +8,5 @@ class Model_Places_Northpole_Burgerjoint extends Model_Places_Burgerjoint {
     protected static $icon = 'restaurant';
     protected static $outside = false;
 
-    protected static $temperature_engine = -10;
+    protected static $temperature_engine = 0;
 }	

@@ -18,4 +18,9 @@
         this.addCombatantEffect(id,tg,name,s);
         this.proceed();
     };
+
+    Battle.prototype.events[<?=Model_Combat_Scene::MCS_EV_CHARPPU?>] = function(id, txt, ico, translate) {
+        this.characterPopupMessage(id, txt, ico);
+        this.proceed();
+    };
 })();

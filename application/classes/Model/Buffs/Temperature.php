@@ -10,6 +10,7 @@ class Model_Buffs_Temperature extends Model_Buffs_Abstract_Buff {
     protected static $visible = true;
 
     protected $calculated_temperature = 0.0;
+    protected $calculated_dyno = 0.0;
 
     protected $target_temperature = 36.0;
     protected $temperature_gain   = 21.0;
@@ -57,6 +58,10 @@ class Model_Buffs_Temperature extends Model_Buffs_Abstract_Buff {
         if ($this->assoc_player->get_status()->retrieve('fragile/sleep_drunk'))
             $factor -= 0.95;
 
+        if (Tool_System::instance_of($this->assoc_player, Model_NPC_Event_RudolphBR::cls()))
+            /** @var Model_NPC_Event_RudolphBR $this->assoc_player */
+            $factor += $this->assoc_player->thermo_factor();
+
         return max(0, $default_gain * $factor);
     }
 
@@ -101,6 +106,8 @@ class Model_Buffs_Temperature extends Model_Buffs_Abstract_Buff {
      */
     public function rebuild(): bool {
         $this->calculated_temperature = $this->calc_temperature_gradient();
+        if (Tool_System::instance_of($this->assoc_player, Model_NPC_Event_RudolphBR::cls()))
+            $this->calculated_dyno = $this->assoc_player->dyno_factor();
         return parent::rebuild();
     }
 
@@ -109,6 +116,12 @@ class Model_Buffs_Temperature extends Model_Buffs_Abstract_Buff {
             Model_Status::MS_STAT_FREEZE => Array(
                 Model_Buffs_Abstract_Buff::MB_RAISE_ACC => -1 * min(0,$this->calculated_temperature / 10.0),
                 Model_Buffs_Abstract_Buff::MB_DROP_ACC => max(0,$this->calculated_temperature / 10.0),
+                Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
+                Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
+            ),
+            Model_Status::MS_STAT_DRUNK => Array(
+                Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0,
+                Model_Buffs_Abstract_Buff::MB_DROP_ACC => max(0,$this->calculated_dyno),
                 Model_Buffs_Abstract_Buff::MB_RAISE_PRC => 0,
                 Model_Buffs_Abstract_Buff::MB_DROP_PRC => 0,
             )

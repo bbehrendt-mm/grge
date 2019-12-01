@@ -8,6 +8,7 @@ abstract class Model_Gamelayer_Io extends Model_Gamelayer_Process {
         'game.config.buffs.auto_npc'            => [],
         'game.config.event_blacklist'           => false,
         'game.bhav.daily_temperature_change'    => 0,
+        'game.bhav.braincoin_scaling'           => 1.0,
     );
 
 	/**

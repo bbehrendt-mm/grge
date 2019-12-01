@@ -2,10 +2,19 @@
 
 class Model_Places_Northpole_Druglab extends Model_Places_Druglab {
 	
-	protected static $location_name = 'Drogenlabor';
-	protected static $description = 'In diesem heruntergekommenen Schuppen wurden jahrelang diverse Mittelchen mit eher kontroverser Wirkung produziert. Es ist immer noch einiges an Equipment da, das du sicher für irgendwas nutzen kannst. Leider haben auch die Zombies Gefallen an diesem Örtchen gefunden... allerdings weniger wegen dem Equipment, sondern eher wegen den wehrlosen Junkies, die sich hier herumtreiben.';
+	protected static $location_name = 'Dr. Cringles Forschungslabor';
+	protected static $description = 'Über dem Eingang dieses Labors steht in großen Buchstaben "LPT" geschrieben... was immer das bedeuten mag. Offensichtlich wurde hier Forschung an Rentieren betrieben ...';
     protected static $icon = 'lab';
     protected static $outside = false;
 
     protected static $temperature_engine = -4;
+
+    public function setup_additional_rooms(): void {
+        parent::setup_additional_rooms();
+        $this->setup_new_room($this->create_new_room( 5,['inside']),
+                              ['rudolph_upgrader'],
+                              [],
+                              'Operationssaal'
+        )->set_default_state();
+    }
 }	

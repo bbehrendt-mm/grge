@@ -196,13 +196,14 @@ class Tool_Scripts
         if ($radar_increase !== 0 && $radar_increase <= 3)   ++$danger;   // Increase by 1 if we have a very high blocking speed
         $danger = min(5,max(($radar_prop > 0) ? 1 : 0,$danger));            // Confine danger to 0-5 range
 
+        $bcl = Globals::CurrentGameF()->config('game.bhav.braincoin_scaling');
+
         switch ($danger) {
-            case 0: return 0;
-            case 1: return 0.003;
-            case 2: return 0.01;
-            case 3: return 0.04;
-            case 4: return 0.08;
-            case 5: return 0.15;
+            case 1: return $bcl * 0.003;
+            case 2: return $bcl * 0.01;
+            case 3: return $bcl * 0.04;
+            case 4: return $bcl * 0.08;
+            case 5: return $bcl * 0.15;
             default: return 0;
         }
     }
@@ -311,7 +312,7 @@ class Tool_Scripts
      * @return Interface_Plentity[]|Model_Player[]
      * @throws Exception
      */
-    public static function at_location($lid = null, $include_players = true, $include_npcs = true): array
+    public static function at_location(?int $lid = null, bool $include_players = true, bool $include_npcs = true): array
     {
         if (!$include_players && !$include_npcs) return [];
         if ($lid === null) $lid = Globals::CurrentPlayerF()->location_class();

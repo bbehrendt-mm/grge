@@ -66,12 +66,13 @@ class Model_Factory_Items extends Model_Factory_Abstract {
 
     /**
      * Replenishes the dryout. Set factor to 1 to completely reset dryout.
-     * @param float $factor Set to 1 for full replenishment, 0 for no effect.
+     * @param float $factor Set to 1 for full replenishment, 0 for no effect. If negative, dryout is increased.
      * @return $this
      */
     public function replenish($factor = 1.0): self
     {
-        $this->fillrate += (1 - $this->fillrate) * max(0,min(1,$factor));
+        if ($factor > 0)     $this->fillrate += (1 - $this->fillrate) * max(0,min(1,$factor));
+        elseif ($factor < 0) $this->fillrate *= max(0,min(1,1.0+$factor));
         return $this;
     }
 

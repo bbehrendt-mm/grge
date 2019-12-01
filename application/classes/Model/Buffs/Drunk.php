@@ -7,8 +7,8 @@ class Model_Buffs_Drunk extends Model_Buffs_Abstract_Fragile {
     protected static $icon = 'sleep_drunk';
     protected static $alt_id = 'sleep_drunk';
 
-    public function __construct($player_id) {
-        parent::__construct($player_id, 18);
+    public function __construct($player_id, $lifetime = 18) {
+        parent::__construct($player_id, $lifetime);
         new Model_Buffs_Passout($this->assoc_player);
     }
 

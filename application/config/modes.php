@@ -42,6 +42,7 @@ return array(
                     'modules.additionalchems'               => true,
                     'modules.multiplayer'                   => false,
                     'game.bhav.infections'                  => false,
+                    'game.bhav.braincoin_scaling'           => 1.0,
                     'game.bhav.time_offset_range'           => [72,144],
                     'game.bhav.daily_temperature_change'    =>  0,
                     'game.lobby.persistent'                 => false,
@@ -179,7 +180,9 @@ return array(
                     'game.config.event_blacklist'           => true,
 
                     'ranking.points.survival.factor'        => 2.5,
+
                     'game.bhav.daily_temperature_change'    => -5,
+                    'game.bhav.braincoin_scaling'           => 0.05,
 
                     'game.config.buffs.auto_player'         => ['Model_Buffs_Event_Rudolph', 'Model_Buffs_Temperature'],
                     'game.config.buffs.auto_npc'            => ['Model_Buffs_Event_Rudolph', 'Model_Buffs_Temperature'],

@@ -152,7 +152,13 @@ class Model_NPC_Event_Rudolph extends Model_NPC_Animal
         $hid = parent::hid();
         $selection = [];
 
-        if (($this->am_stat_latest !== $this->am_stat_before) || $this->am_strong || $this->am_auto || $this->am_item || $this->am_electro || $this->am_ferm) {
+        if ($this->get_status()->retrieve('fragile/befuddled')) {
+
+            if ($this->am_stat_latest === static::RDLPH_EVENT_STAT_SOBER) $selection = ['Ooh, sich seh Sterne... Wo bin ich?', 'Mein Hirn fühlt sich an wie aus Watte...'];
+            if ($this->am_stat_latest === static::RDLPH_EVENT_STAT_TIPSY) $selection = ['Warte... ich glaub ich kann aufstehen ... Oh, oder nicht...', 'Wow, was... was war in der Spritze...?'];
+            if ($this->am_stat_latest === static::RDLPH_EVENT_STAT_DRUNK) $selection = ['... BLAAAARG .... *sabber*'];
+
+        } elseif (($this->am_stat_latest !== $this->am_stat_before) || $this->am_strong || $this->am_auto || $this->am_item || $this->am_electro || $this->am_ferm) {
 
             if ($this->am_auto) {
                 if ($this->am_stat_latest === static::RDLPH_EVENT_STAT_TIPSY) $selection = ['Ich... ähm... bin sicher die Flasche war vorher schon leer!', 'Verflucht, schon leer...'];
@@ -265,9 +271,11 @@ class Model_NPC_Event_Rudolph extends Model_NPC_Animal
         if (!$this->dispense_light())
             $hid->add_action('Nasale Beleuchtung aktivieren', Model_Action::factory()
                 ->condition(function() {
+                    if ($fragile = $this->get_status()->retrieve('fragile/sleep_drunk')) return 'drunk';
+                    if ($fragile = $this->get_status()->retrieve('fragile/tumble'))      return 'drunk2';
+                    if ($fragile = $this->get_status()->retrieve('fragile/befuddled'))   return 'befuddled';
+                    if ($fragile = $this->get_status()->retrieve('fragile'))   return 'fragile';
                     if (!$this->is_drunk()) return 'sober';
-                    if (($fragile = $this->get_status()->retrieve('fragile')) && Tool_System::instance_of($fragile, 'Model_Buffs_Drunk')) return 'drunk';
-                    if (($fragile = $this->get_status()->retrieve('fragile')) && Tool_System::instance_of($fragile, 'Model_Buffs_Drunk2')) return 'drunk2';
                     return true;
                 })
                 ->fail_message(
@@ -276,6 +284,10 @@ class Model_NPC_Event_Rudolph extends Model_NPC_Animal
                     'Das war wohl zu viel des Guten... dein Rentier liegt lallend am Boden. Auf die Beleuchtung musst du wohl für eine Weile verzichten...', 'drunk')
                 ->fail_message(
                     'Das war wohl zu viel des Guten... dein Rentier kann sich kaum auf den Beinen halten. Auf die Beleuchtung musst du wohl für eine Weile verzichten...', 'drunk2')
+                ->fail_message(
+                    'Dein Rentier sitzt teilnahmslos in einer Ecke und starrt ins Leere. Aktuell kannst du von ihm wohl keine Hilfe erwarten.', 'befuddled')
+                ->fail_message(
+                    'Dein Rentier ist gerade beschäftigt.', 'fragile')
                 ->effect(Model_Effect::factory()
                     ->message(
                         'Wunderbar, im Schein der roten Nase lässt es sich gleich viel besser nach Items suchen!'

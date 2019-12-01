@@ -6,18 +6,21 @@ class Model_NPC_Event_RudolphBR extends Model_NPC_Event_Rudolph
     protected static $inventory_size = 180;
     protected static $freeze_factor = 1.0;
 
-    protected $upgrade_electro = true;
+    protected $num_upgrades = 0;
+    protected $upgrade_electro = false;
 
-    protected $upgrade_provide_laser = true;
-    protected $upgrade_passive_laser = true;
-    protected $upgrade_reload_laser = true;
+    protected $upgrade_provide_laser = false;
+    protected $upgrade_passive_laser = false;
+    protected $upgrade_reload_laser = false;
 
-    protected $upgrade_gyro = true;
+    protected $upgrade_gyro = false;
 
-    protected $upgrade_thermo = true;
-    protected $upgrade_fermo = true;
+    protected $upgrade_thermo = false;
+    protected $upgrade_fermo = false;
 
-    protected $upgrade_eye = true;
+    protected $upgrade_eye = false;
+    protected $upgrade_eye2 = false;
+
 
     protected $fermo_target = 0;
 
@@ -64,11 +67,12 @@ class Model_NPC_Event_RudolphBR extends Model_NPC_Event_Rudolph
             }
         }
 
-        if ($this->upgrade_eye) {
-            $busy = $this->get_status()->retrieve('passout') || $this->get_status()->retrieve('fragile');
+        $busy = $this->get_status()->retrieve('passout') || $this->get_status()->retrieve('fragile');
+        $d = $this->get_status()->get(Model_Status::MS_STAT_DRUNK);
 
-            $d = $this->get_status()->get(Model_Status::MS_STAT_DRUNK);
-            if (!$busy && Tool_Gambling::random( 0.15 - ($d/100.0) )) {
+        if ($this->upgrade_eye && !$busy) {
+
+            if (Tool_Gambling::random( 0.15 - ($d/100.0) )) {
                 $extra = Tool_Gambling::random( 0.25 - ($d/10.0) );
 
                 $item = $extra
@@ -93,6 +97,21 @@ class Model_NPC_Event_RudolphBR extends Model_NPC_Event_Rudolph
             }
         }
 
+        if ($this->upgrade_eye2 && !$busy && Tool_Gambling::random(0.05) && !$this->location()->item_factory()->is_empty()) {
+
+            if ($d < 1) {
+                $this->location()->item_factory()->replenish(0.4);
+                foreach (Tool_Scripts::at_location($this->location_class(), true, false) as $p)
+                    $p->log()->add(':name hat Geröll weggeräumt, unter dem sich möglicherweise neue Gegenstände befinden!', [':name' => $this->name()]);
+            } elseif ($d >= 50) {
+                $this->location()->item_factory()->replenish(-0.4);
+                foreach (Tool_Scripts::at_location($this->location_class(), true, false) as $p)
+                    $p->log()->add('Auf seiner taumelnden Suche nach neuen Gegenständen ist :name gegen eine instabile Wand gestopert! Dabei wurde ein Teil der Ruine verschüttet, in dem wir jetzt keine Items mehr finden können...', [':name' => $this->name()]);
+            } else
+                foreach (Tool_Scripts::at_location($this->location_class(), true, false) as $p)
+                    $p->log()->add(':name sucht angestrengt nach neuen Gegenständen, hat aber Probleme, sich zu konzentrieren...', [':name' => $this->name()]);
+        }
+
 
     }
 
@@ -108,78 +127,106 @@ class Model_NPC_Event_RudolphBR extends Model_NPC_Event_Rudolph
     {
         $hid = parent::hid();
 
+        $busy = $this->get_status()->retrieve('passout') || $this->get_status()->retrieve('fragile');
+
         // Bat+A
-        $hid
-            ->add_action('Stromstoß', Model_Action::factory()
-            ->requirement(Model_Items_Battery::cls(), 1)
-            ->show_as(Model_Effect::factory()->buff(Model_Buffs_Exited::cls(), false, 2)->effect(Model_Status::MS_STAT_DRUNK, 10))
-            ->effect(Model_Effect::factory()
-                ->custom(function(Model_Player $p) {
-                    if ($this->get_status()->get(Model_Status::MS_STAT_DRUNK) > 90 && !$this->upgrade_gyro) {
-                        $p->log()->add(':name zuckt hoch und steht für einen kurzen Moment kerzengerade - nur um Sekunden später wie ein Wackelpudding hin- und herzuschaukeln. Vielleicht hast du es mit den Elektroschocks etwas übertrieben?', [':name' => $this->name()]);
-                        new Model_Buffs_Drunk2($this,8);
-                    } else {
-                        $p->log()->add('So ein kleiner Stromstoß mitten ins zentrale Nervensystem kann sicherlich nicht schaden... oder?');
-                        new Model_Buffs_Exited($this,2);
-                    }
+        if ($this->upgrade_electro && !$busy)
+        {
+            $hid
+                ->add_action('Stromstoß', Model_Action::factory()
+                    ->requirement(Model_Items_Battery::cls(), 1)
+                    ->show_as(Model_Effect::factory()->buff(Model_Buffs_Exited::cls(), false, 2)->effect(Model_Status::MS_STAT_DRUNK, 10))
+                    ->effect(Model_Effect::factory()
+                                 ->custom(function(Model_Player $p) {
+                                     if ($this->get_status()->get(Model_Status::MS_STAT_DRUNK) > 90 && !$this->upgrade_gyro) {
+                                         $p->log()->add(':name zuckt hoch und steht für einen kurzen Moment kerzengerade - nur um Sekunden später wie ein Wackelpudding hin- und herzuschaukeln. Vielleicht hast du es mit den Elektroschocks etwas übertrieben?', [':name' => $this->name()]);
+                                         new Model_Buffs_Drunk2($this,8);
+                                     } else {
+                                         $p->log()->add('So ein kleiner Stromstoß mitten ins zentrale Nervensystem kann sicherlich nicht schaden... oder?');
+                                         new Model_Buffs_Exited($this,2);
+                                     }
 
-                    $this->get_status()->modify(Model_Status::MS_STAT_DRUNK, 10);
-                    $this->set_am_stat();
-                    $this->am_electro = true;
-                })
-            )
-        )->add_action('Starker Stromstoß', Model_Action::factory()
-                ->requirement(Model_Items_Generic_Supercharger::cls(), 1)
-                ->show_as(Model_Effect::factory()->buff(Model_Buffs_Exited::cls(), false, 10)->effect(Model_Status::MS_STAT_DRUNK, 100))
-                ->effect(Model_Effect::factory()
-                             ->custom(function(Model_Player $p) {
-                                 if ($this->get_status()->get(Model_Status::MS_STAT_DRUNK) > 10 && !$this->upgrade_gyro) {
-                                     $p->log()->add(':name zuckt hoch und steht für einen kurzen Moment kerzengerade - nur um Sekunden später wie ein Wackelpudding hin- und herzuschaukeln. Vielleicht hast du es mit den Elektroschocks etwas übertrieben?', [':name' => $this->name()]);
-                                     new Model_Buffs_Drunk2($this, $this->get_status()->get(Model_Status::MS_STAT_DRUNK) > 50 ? 16 : 8);
-                                 } else {
-                                     $p->log()->add('So ein kleiner Stromstoß mitten ins zentrale Nervensystem kann sicherlich nicht schaden... oder?');
-                                     new Model_Buffs_Exited($this,10);
-                                 }
+                                     $this->get_status()->modify(Model_Status::MS_STAT_DRUNK, 10);
+                                     $this->set_am_stat();
+                                     $this->am_electro = true;
+                                 })
+                    )
+                )->add_action('Starker Stromstoß', Model_Action::factory()
+                    ->requirement(Model_Items_Generic_Supercharger::cls(), 1)
+                    ->show_as(Model_Effect::factory()->buff(Model_Buffs_Exited::cls(), false, 10)->effect(Model_Status::MS_STAT_DRUNK, 100))
+                    ->effect(Model_Effect::factory()
+                                 ->custom(function(Model_Player $p) {
+                                     if ($this->get_status()->get(Model_Status::MS_STAT_DRUNK) > 10 && !$this->upgrade_gyro) {
+                                         $p->log()->add(':name zuckt hoch und steht für einen kurzen Moment kerzengerade - nur um Sekunden später wie ein Wackelpudding hin- und herzuschaukeln. Vielleicht hast du es mit den Elektroschocks etwas übertrieben?', [':name' => $this->name()]);
+                                         new Model_Buffs_Drunk2($this, $this->get_status()->get(Model_Status::MS_STAT_DRUNK) > 50 ? 16 : 8);
+                                     } else {
+                                         $p->log()->add('So ein kleiner Stromstoß mitten ins zentrale Nervensystem kann sicherlich nicht schaden... oder?');
+                                         new Model_Buffs_Exited($this,10);
+                                     }
 
-                                 $this->get_status()->modify(Model_Status::MS_STAT_DRUNK, 100);
-                                 $this->set_am_stat();
-                                 $this->am_electro = true;
-                             })
-                )
-        );
+                                     $this->get_status()->modify(Model_Status::MS_STAT_DRUNK, 100);
+                                     $this->set_am_stat();
+                                     $this->am_electro = true;
+                                 })
+                    )
+                );
+        }
+
 
         //Ferm+A
-        if ($this->fermo_target != 0)
-        $hid
-            ->add_action('Fermentor ausschalten', Model_Action::factory()
-                ->effect(Model_Effect::factory()
-                     ->custom(function(Model_Player $p) {
-                         $this->fermo_target = 0;
-                         $p->log()->add('Du hast den Fermentor von :name ausgeschaltet.', [':name' => $this->name()]);
-                     })
-                )
-            );
-        if ($this->fermo_target != 55)
-            $hid
-                ->add_action('Fermentor auf mittlere Stufe stellen', Model_Action::factory()
-                    ->effect(Model_Effect::factory()
-                                 ->custom(function(Model_Player $p) {
-                                     $this->fermo_target = 55;
-                                     $p->log()->add('Du hast den Fermentor von :name auf die mittlere Stufe eingestellt.', [':name' => $this->name()]);
-                                 })
-                    )
-                );
-        if ($this->fermo_target != 90)
-            $hid
-                ->add_action('Fermentor auf höchste Stufe stellen', Model_Action::factory()
-                    ->effect(Model_Effect::factory()
-                                 ->custom(function(Model_Player $p) {
-                                     $this->fermo_target = 90;
-                                     $p->log()->add('Du hast den Fermentor von :name auf die höchste Stufe eingestellt.', [':name' => $this->name()]);
-                                 })
-                    )
-                );
+        if ($this->upgrade_fermo)
+        {
+            if ($this->fermo_target != 0)
+                $hid
+                    ->add_action('Fermentor ausschalten', Model_Action::factory()
+                        ->effect(Model_Effect::factory()
+                                     ->custom(function(Model_Player $p) {
+                                         $this->fermo_target = 0;
+                                         $p->log()->add('Du hast den Fermentor von :name ausgeschaltet.', [':name' => $this->name()]);
+                                     })
+                        )
+                    );
+            if ($this->fermo_target != 55)
+                $hid
+                    ->add_action('Fermentor auf mittlere Stufe stellen', Model_Action::factory()
+                        ->effect(Model_Effect::factory()
+                                     ->custom(function(Model_Player $p) {
+                                         $this->fermo_target = 55;
+                                         $p->log()->add('Du hast den Fermentor von :name auf die mittlere Stufe eingestellt.', [':name' => $this->name()]);
+                                     })
+                        )
+                    );
+            if ($this->fermo_target != 90)
+                $hid
+                    ->add_action('Fermentor auf höchste Stufe stellen', Model_Action::factory()
+                        ->effect(Model_Effect::factory()
+                                     ->custom(function(Model_Player $p) {
+                                         $this->fermo_target = 90;
+                                         $p->log()->add('Du hast den Fermentor von :name auf die höchste Stufe eingestellt.', [':name' => $this->name()]);
+                                     })
+                        )
+                    );
+        }
+
 
         return $hid;
     }
+
+    public function install_upgrade_getup_counter(): int {
+        return $this->num_upgrades++;
+    }
+
+    public function set_upgrade_electro(bool $b) { $this->upgrade_electro = $b; }
+
+    public function set_upgrade_provide_laser(bool $b) { $this->upgrade_provide_laser = $b; }
+    public function set_upgrade_passive_laser(bool $b) { $this->upgrade_passive_laser = $b; }
+    public function set_upgrade_reload_laser(bool $b)  { $this->upgrade_reload_laser = $b; }
+
+    public function set_upgrade_gyro(bool $b) { $this->upgrade_gyro = $b;  }
+
+    public function set_upgrade_thermo(bool $b) { $this->upgrade_thermo = $b;  }
+    public function set_upgrade_fermo(bool $b) { $this->upgrade_fermo = $b;  }
+
+    public function set_upgrade_eye(bool $b) { $this->upgrade_eye = $b;  }
+    public function set_upgrade_eye2(bool $b) { $this->upgrade_eye2 = $b;  }
 }

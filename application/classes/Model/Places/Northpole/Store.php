@@ -8,4 +8,6 @@ class Model_Places_Northpole_Store extends Model_Places_Store {
     protected static $icon = 'store';
 
     protected static $temperature_engine = 0;
+    protected $temperature_scale     = 0.05;
+    protected $temperature_deisolation = 0.18;
 }	

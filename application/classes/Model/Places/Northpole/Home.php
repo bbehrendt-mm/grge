@@ -7,4 +7,6 @@ class Model_Places_Northpole_Home extends Model_Places_Home {
     protected static $icon = 'home';
 
     protected static $temperature_engine = 2;
+    protected $temperature_scale     = 0.06;
+    protected $temperature_deisolation = 0.15;
 }	

@@ -9,4 +9,6 @@ class Model_Places_Northpole_Burgerjoint extends Model_Places_Burgerjoint {
     protected static $outside = false;
 
     protected static $temperature_engine = 0;
+    protected $temperature_scale     = 0.05;
+    protected $temperature_deisolation = 0.25;
 }	

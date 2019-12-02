@@ -50,7 +50,10 @@ abstract class Model_Places_Abstract_Place extends Model_Cloudshard {
         else return $b + (Globals::CurrentGameF()->duration() / 288) * Globals::CurrentGameF()->config('game.bhav.daily_temperature_change');
     }
 
-
+    public function increase_isolation_prc(float $f) {
+        if ($f > 0.0) $this->temperature_deisolation *= min(1.0,max(1.0 - $f, 0.0));
+        else $this->temperature_deisolation += ($this->temperature_deisolation * -$f);
+    }
 
     public function get_temperature(): ?float {
         $t = $this->get_base_temperature();

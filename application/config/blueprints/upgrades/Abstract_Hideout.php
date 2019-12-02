@@ -81,6 +81,41 @@ return Model_Blueprints::factory()
 
     ->add_blueprints(
         Model_Blueprint::factory()
+            ->id('hideoutfxtm1')
+            ->name('Einfache Isolation')
+            ->description('Beschleunigt das Aufwärmen und verlangsamt das Abkühlen dieses Ortes.')
+            ->steps(1)
+            ->energy(20)
+            ->material(Model_Items_Generic_Wood::cls(),7)
+            ->show_condition(function (Model_Player $p) {
+                return $p->location()->get_base_temperature() !== null;
+            })
+            ->produces_advanced(function(Model_Player $p, bool $do) {
+                if ($do) $p->location()->increase_isolation_prc(0.33);
+                return [];
+            })
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
+            ->id('hideoutfxtm2')
+            ->name('Gründliche Isolation')
+            ->requires('hideoutfxtm1')
+            ->description('Beschleunigt das Aufwärmen und verlangsamt das Abkühlen dieses Ortes.')
+            ->steps(1)
+            ->energy(20)
+            ->material(Model_Items_Generic_Wood::cls(),3)->material(Model_Items_Generic_Cloth::cls(), 5)
+            ->show_condition(function (Model_Player $p) {
+                return $p->location()->get_base_temperature() !== null;
+            })
+            ->produces_advanced(function(Model_Player $p, bool $do) {
+                if ($do) $p->location()->increase_isolation_prc(0.5);
+                return [];
+            })
+    )
+
+    ->add_blueprints(
+        Model_Blueprint::factory()
             ->id('hideoutfx1')
             ->name('Notdürftige Reparatur')
             ->description('Repariert dein Versteck, beschleunigt jedoch auch dessen Verfall.')

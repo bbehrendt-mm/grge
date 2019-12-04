@@ -150,7 +150,7 @@ return array(
                 'ext' => array(),
                 'ext_note' => array(),
             ),
-            'jobs' => array(1020, 1021, 1030, 1031, 1040, 1041, 1050, 1051, 1060, 1061, 1070, 1071),
+            'jobs' => array(1011, 1012, 1013, 1020, 1021, 1030, 1031, 1040, 1041, 1050, 1051, 1060, 1061, 1070, 1071),
             'unstartable_jobs' => [],
 
             'setup' => array(
@@ -182,6 +182,7 @@ return array(
 
                     'game.bhav.daily_temperature_change'    => -5,
                     'game.bhav.braincoin_scaling'           => 0.05,
+                    'places.bar.spawn_winchester'           => false,
 
                     'game.config.buffs.auto_player'         => ['Model_Buffs_Event_Rudolph', 'Model_Buffs_Temperature'],
                     'game.config.buffs.auto_npc'            => ['Model_Buffs_Event_Rudolph', 'Model_Buffs_Temperature'],

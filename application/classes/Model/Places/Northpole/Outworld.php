@@ -2,8 +2,28 @@
 
 class Model_Places_Northpole_Outworld extends Model_Places_Outworld {
 	
-	protected static $location_name = 'Die Umgebung des Verstecks';
-	protected static $description = 'Früher blühte hier das Leben, jetzt findet man hier nur noch Sand und gelegentlich ein paar Zombies, die in kleinen Grüppchen die Ruinen der Zivilisation umstreifen. Unwahrscheinlich, dass du hier etwas nützliches findest. Eventuell findest du aber das ein oder andere Gebäude, das du nach nützlichen Dingen durchsuchen kannst.';
+	protected static $location_name = 'Die Eiswüste';
+    protected static $icon = 'np_desert';
+	protected static $description = 'Dieser Ort bietet große optische Abwechslung - zwischen Schneebergen, Schneebergen und noch mehr Schneebergen ragen Schneeberge in die Höhe.';
+
+    protected function spawn_stranger_normal() {
+        $this->inventory->add(new Model_Items_Body('Leiche eines Elfen', 'Sieht so aus, als wäre der arme Tropf von Geschenken erschlagen worden, die aus Santas Schlitten gefallen sind...'));
+        $this->inventory->add(new Model_Items_Paracetoid());
+        $this->inventory->add(new Model_Items_Paracetin());
+        $this->inventory->add(new Model_Items_Machete());
+        $this->inventory->add(new Model_Items_Ammobelt());
+        $this->inventory->add(new Model_Items_Batgun());
+        $this->inventory->add(new Model_Items_Matches(4));
+
+        //Water bottle
+        $bottle = new Model_Items_Bottle();
+        $bottle->add_water(4, 0);
+        $this->inventory->add($bottle);
+
+        $this->inventory->add(new Model_Items_Lunchbag());
+        $this->inventory->add(new Model_Items_Whiskey());
+        $this->inventory->add(new Model_Items_Whiskey());
+    }
 
 	protected function spawn_companion() {
         if (!Globals::CurrentGameF()->get_npc('rudolph_br')) {

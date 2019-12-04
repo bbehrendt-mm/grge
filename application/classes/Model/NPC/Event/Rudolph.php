@@ -147,6 +147,12 @@ class Model_NPC_Event_Rudolph extends Model_NPC_Animal
         return 'Dieses majestätische Tier ist mit einer leuchtenden roten Nase ausgestattet, die beim Suchen nach items sicherlich sehr hilfreich ist.';
     }
 
+    public function can($type) {
+        if ($this->is_drunk() && in_array($type, [Interface_Plentity::IC_TRIGGER_SUPPLIES], true))
+            return false;
+        return Model_NPC_Nano::can($type);
+    }
+
     public function hid(): Model_Hid
     {
         $hid = parent::hid();

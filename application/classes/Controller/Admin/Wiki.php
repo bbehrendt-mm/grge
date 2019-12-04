@@ -45,6 +45,9 @@ class Controller_Admin_Wiki extends Controller_Admin_Admin {
         $location_list = $this->get_model_list('Places', false);
         $locations = [];
 
+        $groups = explode(',', $this->request->param('id', 'default'));
+        list($item_group,$zed_group) = count($groups) > 1 ? $groups : [$groups[0],$groups[0]];
+
         foreach ($location_list as $location_class) {
             /** @var Model_Places_Abstract_Place|string $location_class */
             $reflection = new ReflectionClass($location_class);
@@ -115,7 +118,7 @@ class Controller_Admin_Wiki extends Controller_Admin_Admin {
 
 
             /** @var Model_Factory_Zombies $spawn */
-            $spawn = Model_Factory_Zombies::read($location_class);
+            $spawn = Model_Factory_Zombies::read($location_class, $zed_group);
             $zombies = $spawn->get();
 
             $z_range = [];
@@ -131,7 +134,7 @@ class Controller_Admin_Wiki extends Controller_Admin_Admin {
             }
 
             /** @var Model_Factory_Zombies $spawn */
-            $items = Model_Factory_Items::read($location_class);
+            $items = Model_Factory_Items::read($location_class, $item_group);
 
             $item_chances = [];
             foreach ($items->get() as $item_class => $chance)
@@ -194,11 +197,13 @@ class Controller_Admin_Wiki extends Controller_Admin_Admin {
         $location_list = $this->get_model_list('Places', true);
         $loc_by_itemclass = [];
 
+        $item_group = $this->request->param('id', 'default');
+
         foreach ($location_list as $location_class) {
             $name = __($location_class::get_namelist()[0]);
             $icon = $location_class::get_icon();
 
-            $items_list = Model_Factory_Items::read($location_class, 'roadtrip');
+            $items_list = Model_Factory_Items::read($location_class, $item_group);
             if (empty($items_list)) continue;
             foreach ($items_list->get() as $item_class => $chance) {
                 if (!isset($loc_by_itemclass[$item_class])) $loc_by_itemclass[$item_class] = [];

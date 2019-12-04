@@ -2,5 +2,8 @@
 
     return Model_Factory_Items::factory()
         ->add(Model_Items_Beer::cls()	, 2)
-        ->add(Model_Items_Whiskey::cls()	, 1)
+        ->add(Model_Items_Whiskey::cls()	, 2)
+        ->add(Model_Items_Wine::cls()	, 2)
+        ->add(Model_Items_Xmas_Rubbing::cls()	, 1)
+        ->add(Model_Items_Xmas_Drink::cls()	, 1)
         ;

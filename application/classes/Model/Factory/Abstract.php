@@ -28,8 +28,11 @@ abstract class Model_Factory_Abstract extends Model {
         $list = Tool_System::instance_of($location, 'Model_Places_Abstract_Place') ? Tool_System::get_class_hierarchy($location) : [$location];
         foreach ($list as $l_entry)
             foreach ($fallback as $f_entry)
-                if ($tmp = Tool_System::simple_config(static::$base . "/{$f_entry}/{$l_entry}"))
+                if ($tmp = Tool_System::simple_config(static::$base . "/{$f_entry}/{$l_entry}")) {
+                    $tmp->set_environment($group,$fallback);
                     return $tmp;
+                }
+
         return null;
     }
 
@@ -75,6 +78,10 @@ abstract class Model_Factory_Abstract extends Model {
     }
 
     public function __construct($group = 'default', $import_from = null) {
+        $this->set_environment($group,$import_from);
+    }
+
+    public function set_environment($group = 'default', $import_from = null) {
         $this->group = $group;
         if ($import_from && is_string($import_from))
             $import_from = [$import_from];

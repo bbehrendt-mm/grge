@@ -2,9 +2,6 @@
 
     return Model_Factory_Items::factory()
         ->add(Model_Items_Nutrient::cls()		, 1)
-        ->add(Model_Items_Pill::cls()			, 1)
-        ->add(Model_Items_Bandage::cls()			, 1)
-        ->add(Model_Items_Generic_Spice::cls()   , 1)
         ->add(Model_Items_Petfood::cls(), 2)
         ->add(Model_Items_Petfood3::cls(), 3)
         ;

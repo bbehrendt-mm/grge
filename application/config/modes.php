@@ -176,7 +176,6 @@ return array(
 
                     'game.config.map'                       => 'xmas_sv',
                     'game.config.itemset'                   => 'xmas_sv',
-                    'game.config.spawn'                     => 'xmas_sv',
                     'game.config.event_blacklist'           => true,
 
                     'ranking.points.survival.factor'        => 2.5,

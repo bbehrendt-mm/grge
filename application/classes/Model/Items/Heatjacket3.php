@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Model_Items_Heatjacket1 extends Model_Items_Abstract_Armor {
+class Model_Items_Heatjacket3 extends Model_Items_Abstract_Armor {
 	
 	protected static $static_info = Array(
 			'name' => 'Winterjacke',

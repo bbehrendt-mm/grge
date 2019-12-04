@@ -42,11 +42,15 @@
             <div class="cell rw-5 rw-lg-6 rw-md-12">
 
                 <div class="row">
-                    <div class="cell rw-12 rw-md-6 padded">
+                    <div class="cell rw-12 rw-md-6 smallpad">
                         <div class="btn" id="game-btn"><?=$ingame ? __('Zurück zum Spiel') : __('Ein Spiel starten') ?></div>
                     </div>
-                    <div class="cell rw-12 rw-md-6 padded">
+                    <div class="cell rw-12 rw-md-6 smallpad">
                         <div class="btn" id="profile-btn"><?=__('Mein Profil');?></div>
+                    </div>
+
+                    <div class="cell rw-12 rw-md-6 smallpad">
+                        <a href="https://discord.gg/5nrbgVb" target="_blank" class="display-block btn discord"><?=__('Besuch uns auf Discord');?></a>
                     </div>
                 </div>
             </div>

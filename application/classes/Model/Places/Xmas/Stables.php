@@ -58,7 +58,7 @@ class Model_Places_Xmas_Stables extends Model_Places_Abstract_Hideout {
                 $rudolph->location_class($this->uin());
                 Globals::CurrentGameF()->add_npc($rudolph);
 
-                $ev->register_event_npc($rudolph->id());
+                $ev->register_npc_id($rudolph->id());
             }
         }
         return parent::enter($pid, $type);

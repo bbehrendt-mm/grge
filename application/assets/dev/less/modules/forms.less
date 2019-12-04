@@ -108,6 +108,11 @@
 @buttons-consequence-group-color: #363636;
 @buttons-consequence-group-default-color: black;
 
+@buttons-discord-background-color: #7289da;
+@buttons-discord-border-color: #5567aa;
+@buttons-discord-font-color: white;
+@buttons-discord-icon-mask: white;
+
 .btn {
   &.btn-zv-skinned-hero.action-drunk { filter: blur(3px); }
 
@@ -118,6 +123,7 @@
   &.green, &.btn-zv.btn-zv-skinned-context {.generic-button-color(@buttons-green-background-color, @buttons-green-border-color, @buttons-green-font-color, @buttons-green-icon-mask)}
   &.purple, &.btn-zv.btn-zv-skinned-epic {.generic-button-color(@buttons-purple-background-color, @buttons-purple-border-color, @buttons-purple-font-color, @buttons-purple-icon-mask)}
   &.orange, &.btn-zv.btn-zv-skinned-batch {.generic-button-color(@buttons-main-alt-background-color, @buttons-main-alt-border-color, @buttons-main-alt-font-color, @buttons-main-alt-icon-mask)}
+  &.discord {.generic-button-color(@buttons-discord-background-color, @buttons-discord-border-color, @buttons-discord-font-color, @buttons-discord-icon-mask)}
 
   &.btn-zv {
     padding-bottom: 0; font-size: 12px;

@@ -13,7 +13,7 @@ class Model_Items_Generic_Fire2 extends Model_Items_Generic_Fire {
     public function __construct($type = null)
     {
         parent::__construct($type);
-        $this->charges = 60;
+        $this->charges = 30;
     }
 
 }	

@@ -5,10 +5,10 @@ return array(
         'major'         => 2,
         'minor'         => 2,
         'service'       => 2,
-        'maintenance'   => 1,
-        'build'         => 616,
+        'maintenance'   => 10,
+        'build'         => 630,
 
         'stage'         => 0,               //0=nightly, 1=alpha, 2=beta, 3=rc, 4=final
-        'date'	        => '05.11.2019',
+        'date'	        => '05.12.2019',
     ),
 );

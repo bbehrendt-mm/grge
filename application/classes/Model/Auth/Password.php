@@ -38,7 +38,7 @@ class Model_Auth_Password extends Model_Auth_Interface {
         if (!static::check_email_validity($email))
             return false;
 
-        static::user_link($id,$activate ? $id : -42,$email,$pw);
+        static::user_link($id,$activate ? $id : (-42*$id),$email,$pw);
         return true;
     }
 
@@ -47,7 +47,7 @@ class Model_Auth_Password extends Model_Auth_Interface {
     }
 
     public static function user_pending_activation($id): bool {
-        return static::user_get_rid($id) === -42;
+        return static::user_get_rid($id) <= -42;
     }
 
     public static function user_activation_key($id): ?string {

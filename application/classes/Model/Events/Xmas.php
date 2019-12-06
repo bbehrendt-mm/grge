@@ -74,9 +74,9 @@ class Model_Events_Xmas extends Model_Events_Event {
         // Coffee
         if (Tool_System::instance_of($item, Model_Items_Coffee2::cls())) {
 
-            $action = &$hid->get_action('Trinken',true);
+            $action = $hid->get_action('Trinken',true);
 
-            if ($action) $effect = &$action->get_effect(0);
+            if ($action) $effect = $action->get_effect(0);
             else $effect = null;
             if ($effect)
                 $effect->effect(Model_Status::MS_STAT_FREEZE, -30);
@@ -88,7 +88,7 @@ class Model_Events_Xmas extends Model_Events_Event {
 
         if ($name === 'Trinken' && Tool_System::instance_of($cls, Model_Items_Coffee2::cls())) {
 
-            $effect = &$action->get_effect(0);
+            $effect = $action->get_effect(0);
             if ($effect)
                 $effect->effect(Model_Status::MS_STAT_FREEZE, -30);
         }

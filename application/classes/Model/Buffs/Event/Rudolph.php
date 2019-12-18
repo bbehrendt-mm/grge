@@ -10,7 +10,7 @@ class Model_Buffs_Event_Rudolph extends Model_Buffs_Abstract_Passive {
     protected function get_effects(): array {
         if (!$this->associated()) return [];
 
-        $is_night = in_array(Tool_Scripts::get_timeofday(), ['night','snowynight']);
+        $is_night = in_array(Tool_Scripts::get_timeofday($this->assoc_player), ['night','snowynight']);
         $is_inside = !$this->assoc_player->location()->is_outside();
 
         $def = 0;

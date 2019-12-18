@@ -8,11 +8,14 @@ class Model_Buffs_Drunk extends Model_Buffs_Abstract_Fragile {
     protected static $alt_id = 'sleep_drunk';
 
     public function __construct($player_id, $lifetime = 18) {
+        if ($lifetime < 0) $lifetime = 18;
         parent::__construct($player_id, $lifetime);
         new Model_Buffs_Passout($this->assoc_player);
     }
 
-    protected function get_effects(): array { return [
+    protected function get_effects(): array {
+        if ($this->lifetime() < 0) $this->lifetime = 2;
+    return [
         Model_Status::MS_STAT_ENERGY => Array(
             Model_Buffs_Abstract_Buff::MB_RAISE_ACC => 0.6,
             Model_Buffs_Abstract_Buff::MB_DROP_ACC => 0,

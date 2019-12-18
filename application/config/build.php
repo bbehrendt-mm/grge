@@ -5,8 +5,8 @@ return array(
         'major'         => 2,
         'minor'         => 2,
         'service'       => 2,
-        'maintenance'   => 12,
-        'build'         => 632,
+        'maintenance'   => 13,
+        'build'         => 633,
 
         'stage'         => 0,               //0=nightly, 1=alpha, 2=beta, 3=rc, 4=final
         'date'	        => '18.12.2019',

@@ -376,7 +376,7 @@ class Controller_Act extends Controller_Game {
     public static function code_item($id, $action, $side_id = null, $argument = null, $user = null): void
     {
         //Block sleeping
-        if (Globals::PrimaryPlayerF()->get_status()->retrieve('passout') || Globals::PrimaryPlayerF()->get_status()->retrieve('fragile'))
+        if (Globals::CurrentPlayerF()->get_status()->retrieve('passout') || Globals::CurrentPlayerF()->get_status()->retrieve('fragile'))
             return;
 
         $user = $user ? Globals::CurrentGameF()->get_player($user) : null;
@@ -396,7 +396,7 @@ class Controller_Act extends Controller_Game {
 
         //Block sleeping (again)
         if ($user && (!$user->allow(Interface_Plentity::IC_ALLOW_ITEMS_USE) || $user->get_status()->retrieve('passout') || $user->get_status()->retrieve('fragile'))) {
-            Globals::PrimaryPlayerF()->log()->add('Dieser Spieler kann aktuell keinen Gegenstand verwenden.');
+            if (!Globals::shadowPlayerExists()) Globals::PrimaryPlayerF()->log()->add('Dieser Spieler kann aktuell keinen Gegenstand verwenden.');
             return;
         }
 

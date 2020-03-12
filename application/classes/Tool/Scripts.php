@@ -496,9 +496,10 @@ class Tool_Scripts
      * @throws Exception
      */
     public static function current_location_hideout($p = null): ?Model_Places_Abstract_Hideout {
-        if ($p === null)
-            $player = Globals::CurrentPlayerF();
-        else $player = $p;
+        if ($p === null) {
+            $player = Globals::CurrentPlayer();
+            if (!$player) return null;
+        } else $player = $p;
 
         if (static::location_type($player->location_class()) === 2) {
             /** @var Model_Places_Abstract_Hideout $l */
